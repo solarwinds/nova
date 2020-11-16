@@ -1,0 +1,48 @@
+<div class="nui-textbox nui-textbox-number"
+     [class.nui-textbox--disabled]="disabled"
+     [class.has-error]="hasError()">
+    <div class="has-feedback" [ngStyle]="{'width': customBoxWidth}">
+        <input class="form-control input-control nui-textbox__input"
+               #numberInput
+               step="any"
+               [disabled]="disabled"
+               type="number"
+               [ngModel]="value"
+               (ngModelChange)="onValueChange($event)"
+               [ngModelOptions]="{standalone: true}"
+               [min]="minValue"
+               [max]="maxValue"
+               [attr.name]="name"
+               (blur)="onBlurEventEmit($event)"
+               (keydown)="preventNonNumericalInput($event)"
+               (paste)="preventNonNumericalPaste($event)"
+               [placeholder]="placeholder"
+               [readonly]="readonly"
+               [attr.aria-label]="ariaLabel"/>
+    </div>
+    <span class="nui-textbox-number__buttons">
+        <span class="nui-textbox-number__updown nui-textbox-number__up-button">
+            <button nui-button
+                    type="button"
+                    displayStyle="action"
+                    icon="caret-up"
+                    [isRepeat]="isRepeatable"
+                    [disabled]="readonly || disabled || compareMax()"
+                    (click)="addNumber(step);"
+                    aria-label="Up">
+            </button>
+        </span>
+        <span class="nui-textbox-number__updown nui-textbox-number__updown-divider"></span>
+        <span class="nui-textbox-number__updown nui-textbox-number__down-button">
+            <button nui-button
+                    type="button"
+                    displayStyle="action"
+                    icon="caret-down"
+                    [isRepeat]="isRepeatable"
+                    [disabled]="readonly || disabled || compareMin()"
+                    (click)="addNumber(-step);"
+                    aria-label="Down">
+            </button>
+        </span>
+    </span>
+</div>

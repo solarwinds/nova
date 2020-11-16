@@ -1,0 +1,12 @@
+<div class="nui-widget-editor-accordion">
+    <nui-expander [open]="open" (openChange)="openChange($event)">
+        <div nuiExpanderHeader
+             class="d-flex align-items-start"
+             [class.error-state]="state === 'critical'"
+             [class.warning-state]="state === 'warning'">
+            <ng-content select="[accordionHeader]"></ng-content>
+            <nui-icon *ngIf="showOpenStateIcon" class="nui-widget-editor-accordion__edit-icon" [icon]="open ? 'triangle-down' : 'triangle-left'"></nui-icon>
+        </div>
+        <ng-content></ng-content>
+    </nui-expander>
+</div>

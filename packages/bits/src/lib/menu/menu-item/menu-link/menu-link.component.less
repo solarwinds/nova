@@ -1,0 +1,19 @@
+@import (reference) "../../../../styles/nui-framework-variables.less";
+@import (reference) "../../../../styles/mixins.less";
+
+.nui-menu .nui-menu-item, .nui-menu-popup-host .nui-menu-item, .nui-menu-popup .nui-menu-item {
+    .nui-menu-item__link {
+        line-height: @nui-line-height-default;
+    }
+    &.nui-menu-item--disabled {
+        > .nui-menu-item__link {
+            .setCssVariable(color, nui-color-off);
+            &:focus {
+                outline: 0;
+            }
+            &:hover {
+                cursor: not-allowed;
+            }
+        }
+    }
+}

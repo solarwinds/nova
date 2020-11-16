@@ -1,0 +1,17 @@
+<nui-repeat [itemsSource]="data"
+            [repeatItemTemplateRef]="repeatItemTemplate">
+</nui-repeat>
+
+<ng-template #repeatItemTemplate let-item="item">
+    <ng-container nuiComponentPortal
+                    #componentPortal="nuiComponentPortal"
+                    [componentId]="configuration.componentType"
+                    [componentType]="configuration.componentType"
+                    [properties]="getPropsFor(item)"
+                    [outputs]="['navigated']"
+                    (output)="onListItemEvent(item)"
+                      >
+        <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)"></ng-template>
+    </ng-container>
+</ng-template>
+

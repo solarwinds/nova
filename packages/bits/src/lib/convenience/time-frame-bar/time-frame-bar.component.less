@@ -1,0 +1,33 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+
+.nui-time-frame-bar {
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    grid-gap: @nui-space-xs;
+    grid-template-columns: 1fr auto auto auto 1fr;
+    grid-template-areas: "left-content   prev picker-label next   right-content";
+
+    .left-content {
+        grid-area: left-content;
+        justify-self: start;
+    }
+
+    .prev {
+        grid-area: prev;
+    }
+
+    .picker-label {
+        grid-area: picker-label;
+        cursor: pointer;
+    }
+
+    .next {
+        grid-area: next;
+    }
+
+    .right-content {
+        grid-area: right-content;
+        justify-self: end;
+    }
+}

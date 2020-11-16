@@ -1,0 +1,15 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins";
+
+.nui-theme-switcher-container {
+    display: flex;
+    justify-content: flex-end;
+    width: calc(100% + 2 * @nui-space-sm);
+    margin-top: -@nui-space-sm;
+    padding: @nui-space-sm;
+    transform: translate(-@nui-space-sm, 0);
+    position: sticky;
+    z-index: @zindex-navbar;
+    top: 0;
+    .setCssVariable(background-color, nui-color-bg-light);
+}

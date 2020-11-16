@@ -1,0 +1,189 @@
+﻿@import (reference) "../../styles/nui-framework-variables";
+@import (reference) "../../styles/mixins/border-radius";
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/nui-framework-typography.less";
+
+.nui .nui-chips {
+    display: flex;
+    margin-top: 15px;
+    .setCssVariable(background-color, nui-color-bg-light);
+    padding: @nui-space-md @nui-space-md (@nui-space-md - @nui-space-xs) @nui-space-md;
+
+    nui-chip, .nui-chips__group-name {
+        margin-bottom: @nui-space-xs;
+    }
+
+    &:first-child {
+        margin-top: 0;
+    }
+
+    &-overflowed__counter {
+        font-size: 11px;
+        cursor: pointer;
+    }
+
+    .group-last .nui-chip__value {
+        margin-right: @nui-space-xs;
+    }
+
+    &__title-cell {
+        white-space: nowrap;
+        vertical-align: top;
+        line-height: @line-height-computed;
+        padding: 0 @nui-space-xs @nui-space-xs 0;
+        margin: 0;
+    }
+
+    &__main-cell {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 0;
+    }
+
+    &__clear-cell {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    &__group-name, &__group-values, &__clear {
+        display: inline-block;
+        font-size: @nui-font-size-small;
+        line-height: @nui-line-height-default;
+    }
+
+    &__group {
+        nui-chip {
+            &:last-of-type {
+                .nui-chip__value {
+                    border-radius: 0 @nui-radius-default @nui-radius-default 0;
+                }
+            }
+        }
+
+        &-label {
+            .nui-text-small-secondary();
+            white-space: nowrap;
+            margin-right: 1px;
+            padding: 0 @nui-space-sm;
+            line-height: @nui-line-height-default;
+        }
+
+        &-values {
+            cursor: pointer;
+            margin-right: @nui-space-xs;
+        }
+
+        &-values&-noname {
+            margin-right: 0;
+        }
+    }
+    &__flat-values {
+        nui-chip {
+            &:first-of-type {
+                .nui-chip__value {
+                    border-radius: @nui-radius-default 0 0 @nui-radius-default;
+                }
+            }
+            &:last-of-type {
+                .nui-chip__value {
+                    border-radius: 0 @nui-radius-default @nui-radius-default 0;
+                }
+            }
+            &:only-of-type {
+                .nui-chip__value {
+                    .border-radius(@nui-radius-default);
+                }
+            }
+        }
+    }
+    &__clear {
+        vertical-align: top;
+        cursor: pointer;
+        margin-left: @nui-space-sm;
+    }
+
+    &__vertical {
+        padding: 0;
+        flex-wrap: wrap;
+        nui-chip, .nui-chips__group-name {
+            margin-bottom: 0;
+        }
+        .group-last .nui-chip__value {
+            margin-right: 0;
+            margin-bottom: @nui-space-xs;
+        }
+        .nui-chips {
+            &__title-cell {
+                order: 1;
+                flex-grow: 1;
+            }
+            &__flat-values {
+                nui-chip {
+                    &:first-of-type {
+                        .nui-chip__value {
+                            border-radius: @nui-radius-default @nui-radius-default 0 0;
+                        }
+                    }
+                    &:last-of-type {
+                        .nui-chip__value {
+                            border-radius: 0 0 @nui-radius-default @nui-radius-default;
+                        }
+                    }
+                    &:only-of-type {
+                        .nui-chip__value {
+                            .border-radius(@nui-radius-default);
+                        }
+                    }
+                }
+            }
+            &__main-cell {
+                order: 3;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                .nui-chips__flat-values {
+                    padding-bottom: @nui-space-xs;
+                }
+                .nui-chips__group-name {
+                    width: 100%;
+                    border-radius: @nui-radius-default @nui-radius-default 0 0;
+                }
+                .nui-chips__group-values {
+                    display: flex;
+                    width: 100%;
+                    flex-direction: column;
+                    .nui-chips__value-remove {
+                        float: right;
+                    }
+                }
+                .nui-chips__group {
+                    display: block;
+                    nui-chip {
+                        &:last-of-type {
+                            .nui-chip__value {
+                                border-radius: 0 0 @nui-radius-default @nui-radius-default;
+                            }
+                        }
+                    }
+                }
+                .nui-chips__group-name {
+                    display: block;
+                }
+
+                nui-chip {
+                    width: 100%;
+                    .nui-chip__value-name {
+                        max-width: 100%;
+                    }
+                }
+            }
+            &__clear {
+                vertical-align: baseline;
+            }
+
+            &__clear-cell {
+                order: 2;
+            }
+        }
+    }
+}

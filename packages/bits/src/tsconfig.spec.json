@@ -1,0 +1,26 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "baseUrl": "./",
+    "types": [
+      "jasmine",
+      "node",
+      "highlight.js"
+    ],
+    "paths": {
+        "highlight.js": ["../node_modules/highlight.js/lib/highlight.js"] // to ensure we load highlight without languages
+    }
+  },
+  "files": [
+    "test.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "**/*.spec.ts",
+    "**/*.d.ts"
+  ],
+  "exclude": [
+      "../node_modules"
+  ]
+}

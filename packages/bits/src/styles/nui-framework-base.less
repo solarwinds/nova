@@ -1,0 +1,354 @@
+@import (reference) "nui-framework-variables.less";
+@import (reference) "mixins/vendor-prefixes";
+@import (reference) "mixins.less";
+
+html {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+body {
+    font-family: @font-family-open-sans;
+    font-size: @nui-font-size-default;
+    line-height: @line-height-base;
+    .setCssVariable(color, text-color);
+    .setCssVariable(background-color, body-bg);
+    margin: 0;
+}
+
+// Several classes in Bootstrap :extend the .clearfix class which has the unfortunate side effect
+// of doubling the .nui namespace (.nui .nui) rendering them effectively useless
+// so adding them back in framework to get proper clearfixes going on
+.clearfix:before,
+.clearfix:after,
+.dl-horizontal dd:before,
+.dl-horizontal dd:after,
+.container:before,
+.container:after,
+.container-fluid:before,
+.container-fluid:after,
+.row:before,
+.row:after,
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after,
+.btn-toolbar:before,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:before,
+.btn-group-vertical > .btn-group:after,
+.nav:before,
+.nav:after,
+.navbar:before,
+.navbar:after,
+.navbar-header:before,
+.navbar-header:after,
+.navbar-collapse:before,
+.navbar-collapse:after,
+.pager:before,
+.pager:after,
+.panel-body:before,
+.panel-body:after,
+.dialog-footer:before,
+.dialog-footer:after {
+    content: " ";
+    display: table;
+    width: 0px;
+}
+
+.clearfix:after,
+.dl-horizontal dd:after,
+.container:after,
+.container-fluid:after,
+.row:after,
+.form-horizontal .form-group:after,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:after,
+.nav:after,
+.navbar:after,
+.navbar-header:after,
+.navbar-collapse:after,
+.pager:after,
+.panel-body:after,
+.dialog-footer:after {
+    clear: both;
+}
+
+// overrides for button classes
+// TYPE.LESS OVERRIDES
+blockquote, .blockquote-reverse {
+    border-left: 0;
+    border-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.lead {
+    margin-bottom: @nui-space-sm;
+}
+
+.text-primary, .text-success, .text-info, .text-warning, .text-danger {
+    font-weight: @nui-font-weight-semibold;
+}
+
+.nui-help-hint {
+    .setCssVariable(color, nui-color-text-secondary);
+    font-size: @nui-font-size-small;
+    padding: @padding-xs-vertical 0 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropup,
+.navbar-fixed-bottom .dropdown {
+    // Reverse the caret
+    .caret {
+        border-top: 0;
+        border-bottom: 0;
+        content: "";
+    }
+}
+
+// TABLES.LESS OVERRIDES
+.table {
+    border-collapse: separate;
+
+    > thead {
+        .setCssVariable(background-color, nui-color-bg-workspace);
+        .setCssVariable(color, nui-color-text-secondary);
+        border: 1px solid @nui-color-bg-workspace;
+        border: 1px solid var(--nui-color-bg-workspace,@nui-color-bg-workspace);
+
+        > th {
+            font-weight: @nui-font-weight-semibold;
+        }
+    }
+
+    > tbody > tr > td, > tbody > tr > th {
+        border-top: 1px solid @nui-color-bg-light;
+        border-top: 1px solid var(--nui-color-bg-light,@nui-color-bg-light);
+        border-bottom: 1px solid @nui-color-bg-light;
+        border-bottom: 1px solid var(--nui-color-bg-light,@nui-color-bg-light);
+        border-left: 0;
+        border-right: 0;
+        &:first-child {
+            border-left: 1px solid @nui-color-bg-light;
+            border-left: 1px solid var(--nui-color-bg-light,@nui-color-bg-light);
+        }
+
+        &:last-child {
+            border-right: 1px solid @nui-color-bg-light;
+            border-right: 1px solid var(--nui-color-bg-light,@nui-color-bg-light);
+        }
+    }
+
+    > thead, > tbody, > tfoot {
+        > tr {
+            > th, > td {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+        }
+    }
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.list-group {
+    > .list-group-item {
+        border: none;
+        margin: 0;
+    }
+
+    &.list-group-striped {
+        > .list-group-item {
+            &:nth-of-type(odd) {
+                .setCssVariable(background-color, nui-color-bg-secondary);
+            }
+
+            &.nui-listitem {
+                &.nui-listitem--selected {
+                    .listitem--selected();
+                }
+            }
+        }
+    }
+}
+
+.table-striped {
+    > tbody > tr:nth-of-type(odd) > td, > tbody > tr:nth-of-type(odd) > th {
+        .setCssVariable(border-top-color, nui-color-bg-secondary);
+        .setCssVariable(border-bottom-color, nui-color-bg-secondary);
+        &:first-child {
+            .setCssVariable(border-left-color, nui-color-bg-secondary);
+        }
+
+        &:last-child {
+            .setCssVariable(border-right-color, nui-color-bg-secondary);
+        }
+    }
+}
+
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
+    border-color: @nui-color-line-active !important;
+    border-color: var(--nui-color-line-active) !important;
+}
+
+.table > thead > tr > td.active,
+.table > tbody > tr > td.active,
+.table > tfoot > tr > td.active,
+.table > thead > tr > th.active,
+.table > tbody > tr > th.active,
+.table > tfoot > tr > th.active,
+.table > thead > tr.active > td,
+.table > tbody > tr.active > td,
+.table > tfoot > tr.active > td,
+.table > thead > tr.active > th,
+.table > tbody > tr.active > th,
+.table > tfoot > tr.active > th {
+    .setCssVariable(border-top-color, nui-color-selected);
+    .setCssVariable(border-bottom-color, nui-color-selected);
+}
+
+.table > thead > tr > td.success,
+.table > tbody > tr > td.success,
+.table > tfoot > tr > td.success,
+.table > thead > tr > th.success,
+.table > tbody > tr > th.success,
+.table > tfoot > tr > th.success,
+.table > thead > tr.success > td,
+.table > tbody > tr.success > td,
+.table > tfoot > tr.success > td,
+.table > thead > tr.success > th,
+.table > tbody > tr.success > th,
+.table > tfoot > tr.success > th {
+    .setCssVariable(border-top-color, nui-color-line-ok);
+    .setCssVariable(border-bottom-color, nui-color-line-ok);
+    .setCssVariable(color, nui-color-text-default);
+}
+
+.table > thead > tr > td.info,
+.table > tbody > tr > td.info,
+.table > tfoot > tr > td.info,
+.table > thead > tr > th.info,
+.table > tbody > tr > th.info,
+.table > tfoot > tr > th.info,
+.table > thead > tr.info > td,
+.table > tbody > tr.info > td,
+.table > tfoot > tr.info > td,
+.table > thead > tr.info > th,
+.table > tbody > tr.info > th,
+.table > tfoot > tr.info > th {
+    .setCssVariable(border-top-color, nui-color-line-info);
+    .setCssVariable(border-bottom-color, nui-color-line-info);
+    .setCssVariable(color, nui-color-text-default);
+}
+
+.table > thead > tr > td.warning,
+.table > tbody > tr > td.warning,
+.table > tfoot > tr > td.warning,
+.table > thead > tr > th.warning,
+.table > tbody > tr > th.warning,
+.table > tfoot > tr > th.warning,
+.table > thead > tr.warning > td,
+.table > tbody > tr.warning > td,
+.table > tfoot > tr.warning > td,
+.table > thead > tr.warning > th,
+.table > tbody > tr.warning > th,
+.table > tfoot > tr.warning > th {
+    .setCssVariable(border-top-color, nui-color-line-warning);
+    .setCssVariable(border-bottom-color, nui-color-line-warning);
+    .setCssVariable(color, nui-color-text-default);
+}
+
+.table > thead > tr > td.danger,
+.table > tbody > tr > td.danger,
+.table > tfoot > tr > td.danger,
+.table > thead > tr > th.danger,
+.table > tbody > tr > th.danger,
+.table > tfoot > tr > th.danger,
+.table > thead > tr.danger > td,
+.table > tbody > tr.danger > td,
+.table > tfoot > tr.danger > td,
+.table > thead > tr.danger > th,
+.table > tbody > tr.danger > th,
+.table > tfoot > tr.danger > th {
+    .setCssVariable(border-top-color, nui-color-line-critical);
+    .setCssVariable(border-bottom-color, nui-color-line-critical);
+    .setCssVariable(color, nui-color-text-critical);
+}
+
+.table-bordered {
+    border: 1px solid @nui-color-line-default;
+    border: 1px solid var(--nui-color-line-default,@nui-color-line-default);
+
+}
+// FORMS.LESS OVERRIDES
+textarea.form-control {
+    height: auto;
+}
+
+select.form-control {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.form-inline > .form-group {
+    margin-right: @nui-space-sm * 3;
+
+    label {
+        margin-right: @nui-space-sm;
+    }
+}
+
+.has-error .form-control {
+    .setCssVariable(border-color, nui-color-line-critical);
+}
+
+.has-warning .form-control {
+    .setCssVariable(background-color, nui-color-semantic-warning-bg);
+    .setCssVariable(border-color, nui-color-line-warning);
+    .setCssVariable(color, nui-color-text-default);
+    font-weight: @nui-font-weight-semibold;
+}
+
+// we don't want Chrome to show blue outlines around all clickable items (it shows it for buttons anyway)
+[role="button"] {
+    outline: none;
+}
+
+// common styling mixin for text inputs / textareas
+.nui-input-text() {
+    &:focus, &:active {
+        .setCssVariable(border-color, nui-color-active-hover);
+        box-shadow: inset 0 1px 3px @nui-color-input-box-shadow;
+        box-shadow: inset 0 1px 3px var(--nui-color-input-box-shadow,@nui-color-input-box-shadow);
+    }
+    &[disabled] {
+        &:hover, &:focus, &:active {
+            .setCssVariable(border-color, nui-color-input-box-shadow-hover);
+            border-color: var(--nui-color-input-box-shadow-hover,@nui-color-input-box-shadow-hover);
+        }
+    }
+    &::-ms-clear {
+        display: none;
+    }
+}
+
+// style override for uib-typeahead,
+// otherwise it loses specificity fight because of .nui namespace nesting for .dropdown-menu base styles
+[uib-typeahead-popup].dropdown-menu {
+    display: block;
+}
+
+.nui-no-animate {
+    .transition(none) !important;
+    .animation(none 0s) !important;
+}
+
+.generic-control() {
+    .setCssVariable(border-color, nui-color-line-default);    
+    border-width: @nui-line-default;
+    border-style: @nui-border-solid;
+    border-radius: @nui-radius-default;
+}

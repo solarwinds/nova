@@ -1,0 +1,79 @@
+//
+// Customized bootstrap
+// library, overriding variables and mixins where needed
+//
+
+// Core variables and mixins
+@import "nui-framework-variables.less"; //includes nui-framework-colors.less;
+@import "mixins.less";
+@import "nui-framework-fonts.less";
+
+// Fix for problem discussed here (brought into nui by bootstrap-port-less):
+// https://github.com/less/less.js/issues/2206#issuecomment-58660295
+.grid-column {
+    position: relative;
+    width: 100%;
+    min-height: 1px; // Prevent columns from collapsing when empty
+    padding-right: (@grid-gutter-width / 2);
+    padding-left: (@grid-gutter-width / 2);
+};
+
+// Fix for problem with scrollbar for Firefox:
+* {
+    scrollbar-width: thin;
+}
+html {
+    scrollbar-color: fade(@black, 20%) @nui-color-bg-scroll_handle_container;
+}
+html.dark-nova-theme {
+    scrollbar-color: fade(@white, 20%) @nui-color-bg-scroll_handle_container;
+}
+
+.nui {
+    @import (less) "../../node_modules/animate.css/animate.css";
+
+    // Reset and dependencies
+    @import "normalize.less";
+
+    // Core CSS
+    @import "scaffolding.less";
+    @import "type.less";
+    @import "code.less";
+    @import "grid.less";
+    @import "scrollbar.less";
+
+    // Components
+    @import "components/tables.less";
+    @import "components/forms.less";
+    @import "components/buttons.less";
+    @import "components/button-groups.less";
+    @import "components/scroll-shadows.less";
+    @import "components/combobox-v2-addons.less";
+    @import "components/badge.less";
+    @import "components/tag.less";
+    @import "components/tree.less";
+
+    // Layouts
+    @import "layouts/flex.less";
+
+    // Utility classes
+    @import "../../node_modules/bootstrap-less-port/less/utilities/_sizing";
+    @import "../../node_modules/bootstrap-less-port/less/utilities/_spacing";
+    @import "utilities.less";
+    @import "responsive-utilities.less";
+
+    @import "nui-framework-base.less";
+
+    @import "nui-framework-typography.less";
+
+    @import "debug.less";
+}
+
+// Fix for problem introduced here:
+// https://github.com/necolas/normalize.css/commit/0c90242399c09af53850d52e992c977a538a8424#diff-bb3dde41d97f19be8ab7b4780a915d5eR332
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: inherit;
+}

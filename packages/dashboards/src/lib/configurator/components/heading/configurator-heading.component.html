@@ -1,0 +1,12 @@
+<div class="configurator-heading d-flex justify-content-between align-items-center p-4">
+    <span class="nui-text-panel nui-text-ellipsis" [title]="configuratorTitle">
+        {{configuratorTitle}}
+    </span>
+    <button nui-button
+            type="button"
+            displayStyle="action"
+            icon="close"
+            [disabled]="disableCloseButton"
+            (click)="this.close.emit()">
+    </button>
+</div>

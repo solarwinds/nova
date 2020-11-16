@@ -1,0 +1,94 @@
+<nui-widget-editor-accordion [formGroup]="form" [state]="form | nuiWidgetEditorAccordionFormState | async">
+    <div accordionHeader
+         class="d-flex align-items-center px-4 py-2">
+        <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'widget_pie-chart' | async"></nui-icon>
+        <div class="d-flex flex-column ml-4 pt-1">
+            <span class="nui-text-label" i18n>Chart Options</span>
+            <div class="nui-text-secondary" [title]="chartTitle">
+                {{ chartTitle }}
+            </div>
+        </div>
+    </div>
+    <div class="proportional-widget-chart-options-configuration__accordion-content">
+        <div class="mb-4">
+            <nui-form-field caption="Chart Type" i18n-caption
+                            [control]="form.controls['type']">
+                <nui-select-v2 formControlName="type"
+                               placeholder="Select chart type"
+                               i18n-placeholder>
+                    <nui-select-v2-option *ngFor="let chartTypeSelectViewModel of chartTypeSelectViewModels"
+                                        [value]="chartTypeSelectViewModel.value">
+                        {{chartTypeSelectViewModel.label}}
+                    </nui-select-v2-option>
+                </nui-select-v2>
+                <nui-validation-message for="required" i18n>
+                    This field is required
+                </nui-validation-message>
+            </nui-form-field>
+        </div>
+
+        <!-- Donut chart content formatter -->
+        <div class="mb-4">
+            <ng-container formGroupName="contentFormatter" *ngIf="form.get('type')?.value ===  'DonutChart'">
+                <nui-form-field caption="Content format" i18n-caption
+                                class="mb-4"
+                                [showOptionalText]="false"
+                                [control]="form.controls['componentType']">
+                    <nui-select-v2 formControlName="componentType">
+                        <nui-select-v2-option *ngFor="let contentFormatter of contentFormatters"
+                                              [value]="contentFormatter.componentType">
+                            {{contentFormatter.label}}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                    <nui-validation-message for="required" i18n>
+                        This field is required
+                    </nui-validation-message>
+                </nui-form-field>
+
+                <!-- Donut formatter configurator's portal goes here. Make form working in scope of NUI-5014 -->
+                    <ng-container *ngIf="!!this.getConfigurationComponent()"
+                                  nuiComponentPortal
+                                  [componentId]="this.getConfigurationComponent()"
+                                  [componentType]="this.getConfigurationComponent()"
+                                  [properties]="configurationComponentProperties"
+                                  #componentPortal="nuiComponentPortal"
+                                  [outputs]="['formReady']"
+                                  (output)="onFormReady($event.payload)">
+                    <ng-template [cdkPortalOutlet]="componentPortal.portal"
+                                 (attached)="componentPortal.attached($event)"></ng-template>
+                </ng-container>
+            </ng-container>
+        </div>
+
+        <div class="mb-4">
+            <nui-form-field caption="Legend" i18n-caption
+                            [showOptionalText]="false"
+                            [control]="form.controls['legendPlacement']">
+                <nui-select-v2 formControlName="legendPlacement">
+                    <nui-select-v2-option *ngFor="let option of chartOptions.legendPlacementOptions" [value]="option.id">
+                        {{option.label}}
+                    </nui-select-v2-option>
+                </nui-select-v2>
+                <nui-validation-message for="required" i18n>
+                    This field is required
+                </nui-validation-message>
+            </nui-form-field>
+        </div>
+        <ng-container formGroupName="legendFormatter">
+            <nui-form-field caption="Legend format" i18n-caption
+                            [showOptionalText]="false"
+                            [control]="form.controls['componentType']">
+                <nui-select-v2 formControlName="componentType">
+                    <nui-select-v2-option *ngFor="let legendFormatter of legendFormatters"
+                                        [value]="legendFormatter.componentType">
+                        {{legendFormatter.label}}
+                    </nui-select-v2-option>
+                </nui-select-v2>
+                <nui-validation-message for="required" i18n>
+                    This field is required
+                </nui-validation-message>
+            </nui-form-field>
+        </ng-container>
+    </div>
+</nui-widget-editor-accordion>
+

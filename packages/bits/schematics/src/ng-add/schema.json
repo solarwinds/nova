@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsNovaAdd",
+    "title": "ng-add schematic for nova-bits",
+    "type": "object",
+    "description": "bootstraps a project for nova-bits consumption",
+    "properties": {
+        "project": {
+            "type": "string",
+            "description": "The name of the project.",
+            "$default": {
+                "$source": "projectName"
+            }
+        },
+        "skipProviders": {
+            "type": "boolean",
+            "description": "Skip provider imports",
+            "default": false
+        },
+        "skipCss": {
+            "type": "boolean",
+            "description": "Skip importing css & setting styles",
+            "default": false
+        },
+        "skipTsConfig": {
+            "type": "boolean",
+            "description": "Skip updating the tsconfig",
+            "default": false
+        },
+        "skipAngularLocalize": {
+            "type": "boolean",
+            "description": "Skip invoking 'ng add' for @angular/localize",
+            "default": false
+        }
+    },
+    "required": []
+}

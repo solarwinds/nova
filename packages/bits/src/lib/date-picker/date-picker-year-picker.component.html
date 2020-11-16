@@ -1,0 +1,54 @@
+<table *ngIf="datePicker.datepickerMode === 'year'" role="grid">
+    <thead>
+        <tr>
+            <th>
+                <button nui-button
+                        type="button"
+                        icon="caret-left"
+                        displayStyle="action"
+                        (click)="datePicker.move(-1, $event)"
+                        tabindex="-1"></button>
+            </th>
+            <th [attr.colspan]="3">
+                <button nui-button
+                        type="button"
+                        [id]="datePicker.uniqueId + '-title'"
+                        displayStyle="action"
+                        role="heading"
+                        [disabled]="datePicker.datepickerMode === datePicker.maxMode"
+                        class="change-mode-button"
+                        [ngClass]="{disabled: datePicker.datepickerMode === datePicker.maxMode}"
+                        (click)="datePicker.toggleMode($event)"
+                        tabindex="-1">
+                    <span>{{ title }}</span>
+                </button>
+            </th>
+            <th>
+                <button nui-button
+                        type="button"
+                        icon="caret-right"
+                        displayStyle="action"
+                        (click)="datePicker.move(1, $event)"
+                        tabindex="-1">
+                </button>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of rows">
+            <td *ngFor="let cell of row"
+                class="text-center year"
+                role="gridcell">
+                <button nui-button
+                        type="button"
+                        displayStyle="action"
+                        [ngClass]="{'selected': cell.selected, disabled: cell.disabled}"
+                        [disabled]="cell.disabled"
+                        (click)="datePicker.select(cell.date, $event)"
+                        tabindex="-1">
+                    <span [ngClass]="{'text-info': cell.current}">{{ cell.label }}</span>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

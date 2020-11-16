@@ -1,0 +1,21 @@
+<div *ngIf="plugin && plugin.dataPoints">
+    <div *ngFor="let item of plugin.dataPoints | keyvalue; trackBy: trackByFn">
+        <ng-template #tooltipTemplate>
+            <ng-container *ngTemplateOutlet="template; context: {dataPoint:item.value}"></ng-container>
+        </ng-template>
+
+        <div nuiChartTooltip
+             *ngIf="plugin.dataPointPositions[item.key]"
+             [attr.series-id]="item.key"
+             [template]="tooltipTemplate"
+             [openRemoteControl]="openTooltips"
+             [closeRemoteControl]="closeTooltips"
+             [positions]="plugin.dataPointPositions[item.key].overlayPositions"
+             class="chart-tooltips__popover"
+             [style.left.px]="plugin.dataPointPositions[item.key].x"
+             [style.top.px]="plugin.dataPointPositions[item.key].y"
+             [style.height.px]="plugin.dataPointPositions[item.key].height"
+             [style.width.px]="plugin.dataPointPositions[item.key].width"
+        ></div>
+    </div>
+</div>

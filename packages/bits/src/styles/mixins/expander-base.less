@@ -1,0 +1,114 @@
+@import (reference) "../nui-framework-variables.less";
+@import (reference) "../mixins.less";
+@import (reference) "../nui-framework-typography.less";
+
+.expander() {
+    .expander-icon() {
+        align-items: center;
+        align-self: flex-start;
+        display: flex;
+        flex-shrink: 0;
+        height: 30px;
+        justify-content: center;
+        width: 30px;
+    }
+
+    &--expanded {
+        padding-bottom: @nui-space-xs;
+    }
+
+    &__icon {
+        .expander-icon();
+        margin-left: -7px;
+    }
+
+    &__header {
+        align-items: center;
+        border-radius: @nui-radius-default;
+        cursor: pointer;
+        display: flex;
+        .no-select();
+
+        &:hover {
+            .setCssVariable(background-color, nui-color-bg-transparent-hover);
+        }
+
+        &-title {
+            line-height: @nui-line-height-default;
+            .text-overflow(ellipsis);
+            .nui-text-label(@nui-color-text-default, nui-color-text-default);
+        }
+
+        &-icon {
+            .expander-icon();
+        }
+
+        &-content {
+            align-items: center;
+            display: flex;
+            flex-grow: 2;
+            justify-content: flex-start;
+            padding-left: @nui-space-xs;
+            min-width: 0;
+            padding-right: @nui-space-xs;
+
+            &-icon {
+                align-items: center;
+                align-self: flex-start;
+                flex-shrink: 0;
+                height: 30px;
+                justify-content: center;
+                width: 30px;
+            }
+
+            &--with-icon {
+                padding-left: 0;
+            }
+
+            &-wrapper {
+                display: flex;
+                flex-grow: 2;
+                min-width: 0;
+                width: 100%;
+            }
+        }
+
+        &.nui-expander__header--empty {
+            &.nui-expander__header {
+                display: inline-flex;
+            }
+
+            .nui-expander__header-content {
+                padding-left:0;
+                padding-right: 0;
+            }
+        }
+    }
+
+    &__custom-header {
+        width: 100%;
+
+        &--empty {
+            display: flex;
+            width: auto;
+        }
+    }
+
+    &__body {
+        border: none;
+        border-left: dotted @nui-line-medium @nui-color-line-default;
+        border-left: dotted @nui-line-medium var(--nui-color-line-default, @nui-color-line-default);
+        color: @nui-color-bg-dark;
+        color: var(--nui-color-text-default, #111);
+        margin-left: (@nui-space-md - 1);
+        padding-left: (@nui-space-md - 1);
+
+        &.hide-left-border {
+            border-left: 0;
+        }
+
+        &.ng-animating {
+            overflow: hidden;
+        }
+    }
+}

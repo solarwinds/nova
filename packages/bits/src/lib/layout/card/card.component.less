@@ -1,0 +1,55 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+
+:host {
+    padding: @nui-space-md;
+    width: 100%;
+    &.card-direction-column {
+        display: flex;
+        flex-direction: column;
+    }
+    &.card-direction-row {
+        display: flex;
+        flex-direction: row;
+    }
+}
+:host-context(nui-sheet.sheet-direction-column :not(nui-card-group)) {
+    &:not(:last-of-type) {
+        .setCssVariable(border-bottom-color, nui-color-line-default);
+        .setCssVariable(border-bottom-width, nui-line-default);
+        border-bottom-style: solid;
+    }
+}
+:host-context(nui-sheet.sheet-direction-column) {
+    &:not(:only-child):only-of-type {
+        .setCssVariable(border-bottom-color, nui-color-line-default);
+        .setCssVariable(border-bottom-width, nui-line-default);
+        border-bottom-style: solid;
+    }
+}
+:host-context(nui-sheet nui-card-group.card-group-direction-column) {
+    &:not(:last-of-type) {
+        .setCssVariable(border-bottom-color, nui-color-line-default);
+        .setCssVariable(border-bottom-width, nui-line-default);
+        border-bottom-style: solid;
+    }
+    &:only-child {
+        .setCssVariable(border-bottom-color, nui-color-line-default);
+        .setCssVariable(border-bottom-width, nui-line-default);
+        border-bottom-style: solid;
+    }
+}
+:host-context(nui-sheet nui-card-group.card-group-direction-row) {
+    &:not(:last-of-type) {
+        .setCssVariable(border-right-color, nui-color-line-default);
+        .setCssVariable(border-right-width, nui-line-default);
+        border-right-style: solid;
+    }
+}
+:host-context(nui-sheet.sheet-direction-row) {
+    &:not(:last-of-type) {
+        .setCssVariable(border-right-color, nui-color-line-default);
+        .setCssVariable(border-right-width, nui-line-default);
+        border-right-style: solid;
+    }
+}

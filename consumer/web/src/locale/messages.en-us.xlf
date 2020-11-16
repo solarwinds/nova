@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" 
+  xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="43b9aa976da2ad347fd9919eb4a52c01bc91ccb4" datatype="html">
+        <source>Rubber Duck</source>
+        <target>Rubber Duck</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5604c78b7b117f9bf78ac3b98e744c3ed42e4e56" datatype="html">
+        <source>Ask your question</source>
+        <target>Ask your question</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ac8ebcbfb4ea01bc2df9e7ca5bafa64cb83d3e26" datatype="html">
+        <source>All questions</source>
+        <target>All questions</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/main/main.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f5cc271e1d5364b6e58e26a9d7a3eddbba5c206a" datatype="html">
+        <source>
+    Page not found!
+  </source>
+        <target state="final">
+    Page not found!
+  </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/views/not-found/not-found.component.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="179334a75ec12175b1c4848546dcef1c39d46b20" datatype="html">
+        <source>Lazy</source>
+        <target>Lazy</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/plugin/lazy/lazy.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f7f6d84e6b93ab92084e8b17c0c9d26b92ff2323" datatype="html">
+        <source>This code was dynamically downloaded.</source>
+        <target>This code was dynamically downloaded.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/plugin/lazy/lazy.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="31b313f259698d9dd67fbc8ae51a309819a2e87e" datatype="html">
+        <source>with styles</source>
+        <target>with styles</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/plugin/lazy/lazy.component.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
+        <source>Login</source>
+        <target state="final">Login</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/app.component.ts</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="242a52e1940cbcdc92343e53365013f6e20b575f" datatype="html">
+        <source>Enter credentials</source>
+        <target state="final">Enter credentials</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3f570962677d099e8acaf3531118ab7a354e2788" datatype="html">
+        <source>Invalid username or password!</source>
+        <target state="final">Invalid username or password!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="287d3301a32a65a1b31116bda5d3a6463158c42a" datatype="html">
+        <source>Sign in</source>
+        <target state="final">Sign in</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/login/login.component.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

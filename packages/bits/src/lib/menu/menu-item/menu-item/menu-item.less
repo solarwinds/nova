@@ -1,0 +1,93 @@
+@import (reference) "../../../../styles/nui-framework-variables.less";
+@import (reference) "../../../../styles/mixins.less";
+
+@nui-menu-item-max-height: 300px;
+
+.nui-menu-item {
+    display: list-item;
+    list-style-type: none;
+    white-space: nowrap;
+    margin-bottom: 1px;
+    font-size: @nui-font-size-default;
+    .setCssVariable(background-color, nui-color-bg-transparent);
+    &:not(.nui-menu-item--header) {
+        min-height: @nui-space-md * 2;
+    }
+
+    & .nui-icon {
+        margin-right: @nui-space-xs;
+    }
+
+    &:not(.nui-menu-item--header):hover {
+        .setCssVariable(background-color, nui-color-bg-transparent-hover);
+
+        .nui-checkbox__label {
+            .setCssVariable(background-color, transparent);
+        }
+    }
+
+    &.nui-menu-item--header {
+        padding: @nui-space-xs @nui-space-sm;
+        text-transform: uppercase;
+        cursor: default;
+        font-size: @nui-font-size-small;
+        .setCssVariable(color, nui-color-text-secondary);
+        line-height: @nui-line-height-small;
+    }
+
+    &.nui-menu-item__default,
+    .nui-checkbox__transclude,
+    > .nui-menu-item__link,
+    > .nui-menu-item__switch,
+    > .nui-menu-item__option {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    > .nui-menu-item__link,
+    > .nui-menu-item__switch,
+    > .nui-menu-item__option,
+    > .nui-menu-item__default {
+        display: flex;
+        align-items: center;
+        padding: @nui-space-xs @nui-space-sm;
+        text-decoration: none;
+        &:active, &:focus {
+            .focus-outline-inset();
+        }
+    }
+
+    &.checked {
+        .setCssVariable(background-color, nui-color-selected);
+        font-weight: @nui-font-weight-semibold;
+        &:hover {
+            .setCssVariable(background-color, nui-color-selected-hover);
+            font-weight: @nui-font-weight-semibold;
+            cursor: pointer;
+        }
+    }
+
+    .nui-menu-item__default {
+        padding: 5px 10px;
+        cursor: pointer;
+        .setCssVariable(color, nui-color-text-default);
+        &:hover {
+            .setCssVariable(color, nui-color-text-default-hover);
+        }
+    }
+
+    &--active {
+        .setCssVariable(background-color, nui-color-bg-light-hover);
+        .focus-outline-inset();
+        &.nui-menu-item--selected, &.nui-menu-item.checked {
+            .setCssVariable(background-color, nui-color-selected-hover);
+        }
+    }
+
+    &.nui-menu-item--selected {
+        .setCssVariable(background-color, nui-color-selected);
+        font-weight: @nui-font-weight-semibold;
+        &:hover {
+            .setCssVariable(background-color, nui-color-selected-hover);
+        }
+    }
+}

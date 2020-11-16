@@ -1,0 +1,44 @@
+<div class="w-100 d-flex flex-wrap align-items-center pt-2">
+
+    <ng-content select="[selectedItems]"></ng-content>
+
+    <input class="nui-combobox-v2__input pb-2"
+        type="text"
+        [attr.aria-label]="ariaLabel"
+        [class.has-error]="isInErrorState"
+        [disabled]="isDisabled"
+        [(ngModel)]="inputValue"
+        [placeholder]="placeholder"
+        (input)="handleInput(input.value)"
+        (keydown)="onKeyDown($event)"
+        (click)="selectTextInInput()"
+        #input />
+</div>
+<button tabindex="-1"
+    *ngIf="isRemoveValueEnabled && (selectedOptions[0] || inputValue)"
+    nui-button
+    class="nui-combobox-v2__remove-value action"
+    (click)="clearValue($event);"
+    [isEmpty]="true"
+    icon="remove"
+    type="button"
+    [nuiTooltip]="clearValueButtonTooltip"
+    [class.disabled]="isDisabled"
+    [disabled]="isDisabled">
+</button>
+<button tabindex="-1"
+    class="nui-combobox-v2__toggle action"
+    nui-button
+    type="button"
+    [isEmpty]="true"
+    icon="caret-down"
+    [class.rotate]="isDropdownOpen"
+    [class.disabled]="isDisabled"
+    [disabled]="isDisabled"
+    (click)="selectTextInInput()">
+</button>
+<nui-overlay [toggleReference]="elRef.nativeElement"
+              [viewportMargin]="popupViewportMargin"
+              [overlayConfig]="overlayConfig">
+    <ng-content></ng-content>
+</nui-overlay>

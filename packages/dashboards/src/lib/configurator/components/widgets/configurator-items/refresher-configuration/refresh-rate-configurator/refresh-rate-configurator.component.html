@@ -1,0 +1,20 @@
+<form [formGroup]="form" class="d-flex flex-column">
+    <div class="d-flex flex-row">
+        <nui-textbox-number formControlName="number"
+                            customBoxWidth="90px"
+                            [minValue]="minSeconds"
+                            [maxValue]="maxSeconds"
+                            (valueChange)="valueChangeFix()"></nui-textbox-number>
+
+        <nui-select-v2 formControlName="unit" class="ml-3">
+            <nui-select-v2-option *ngFor="let item of displayedUnitItems" [value]="item">
+                {{item.label}}
+            </nui-select-v2-option>
+        </nui-select-v2>
+    </div>
+    <nui-form-field [control]="form.get('number')">
+        <nui-validation-message for="invalidNumber">
+            {{ getNumberValidationMessage() }}
+        </nui-validation-message>
+    </nui-form-field>
+</form>

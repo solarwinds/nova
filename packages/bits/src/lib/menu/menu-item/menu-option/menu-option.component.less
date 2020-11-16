@@ -1,0 +1,39 @@
+@import (reference) "../../../../styles/nui-framework-variables.less";
+@import (reference) "../../../../styles/mixins.less";
+
+.nui-menu .nui-menu-item, .nui-menu-popup-host .nui-menu-item, .nui-menu-popup .nui-menu-item {
+    .nui-menu-item__option {
+        padding: 0 @nui-space-xs;
+        .nui-checkbox__label {
+            font-weight: @nui-font-weight-regular;
+            font-size: @nui-font-size-default;
+            width: 100%;
+        }
+
+        .nui-menu-item__checkbox > .nui-checkbox {
+            padding: 0;
+        }
+        .nui-checkbox__translucent {
+            cursor: not-allowed;
+        }
+    }
+
+    &.nui-menu-item--disabled {
+        > .nui-menu-item__option {
+            .setCssVariable(color, nui-color-off);
+            &:focus {
+                outline: 0;
+            }
+        }
+    }
+
+    &.checked {
+        > .nui-menu-item__option {
+            color:red;
+            .nui-checkbox__label:hover {
+                background-color: transparent;
+            }
+        }
+    }
+}
+

@@ -1,0 +1,121 @@
+@import (reference) "../nui-framework-variables";
+@import (reference) "../mixins.less";
+
+.tag() {
+    padding: 0 @nui-space-sm;
+    display: inline-flex;
+    align-items: center;
+    outline: none;
+    margin-right: 1px;
+    box-sizing: border-box;
+    height: @nui-tag-height;
+    border-radius: @nui-tag-border-radius;
+    font-size: @nui-font-size-small;
+    border: @nui-line-default solid  gray;
+    .setCssVariable(border-color, gray);
+}
+
+.nui-tag {
+    .tag();
+
+    &-default {
+        .setCssVariable(background, nui-color-bg-accordion_header);
+    }
+
+    &-info {
+        .setCssVariable(background-color, nui-color-semantic-info);
+    }
+
+    &-ok {
+        .setCssVariable(background-color, nui-color-semantic-ok);
+    }
+
+    &-warning {
+        .setCssVariable(background-color, nui-color-semantic-warning);
+    }
+
+    &-critical {
+        .setCssVariable(background-color, nui-color-semantic-critical);
+    }
+
+    &-text-light {
+        .setCssVariable(color, nui-color-text-light);
+    }
+
+
+    &-with-border {
+        &-info {
+            .setCssVariable(background, nui-color-semantic-info-bg); 
+            .setCssVariable(border-color, nui-color-line-info); 
+        }
+    
+        &-ok {
+            .setCssVariable(background, nui-color-semantic-ok-bg);
+            .setCssVariable(border-color, nui-color-line-ok); 
+        }
+    
+        &-warning {
+            .setCssVariable(background, nui-color-semantic-warning-bg);
+            .setCssVariable(border-color, nui-color-line-warning); 
+        }
+    
+        &-critical {
+            .setCssVariable(background, nui-color-semantic-critical-bg); 
+            .setCssVariable(border-color, nui-color-line-critical); 
+        }
+    }
+
+
+    // classes for hover
+    &-with-hover-styles {
+        &.nui-tag:hover {
+            .setCssVariable(background-color, nui-color-bg-accordion_header);
+        }
+
+        &.nui-tag-default:hover {
+            .setCssVariable(background-color, nui-color-bg-accordion_header-hover);
+        }
+
+        &.nui-tag-info:hover {
+            .setCssVariable(background-color, nui-color-semantic-info-hover);
+        }
+
+        &.nui-tag-ok:hover {
+            .setCssVariable(background-color, nui-color-semantic-ok-hover);
+        }
+
+        &.nui-tag-warning:hover {
+            .setCssVariable(background-color, nui-color-semantic-warning-hover);
+        }
+
+        &.nui-tag-critical:hover {
+            .setCssVariable(background-color, nui-color-semantic-critical-hover);
+        }
+
+        &.nui-tag-with-border-info:hover {
+            .setCssVariable(background-color, nui-color-semantic-info-bg-hover);
+            .setCssVariable(border-color, nui-color-semantic-info-hover);
+        }
+
+        &.nui-tag-with-border-ok:hover {
+            .setCssVariable(background-color, nui-color-semantic-ok-bg-hover);
+            .setCssVariable(border-color, nui-color-semantic-ok-hover);
+        }
+
+        &.nui-tag-with-border-warning:hover {
+            .setCssVariable(background-color, nui-color-semantic-warning-bg-hover);
+            .setCssVariable(border-color, nui-color-semantic-warning-hover);
+        }
+
+        &.nui-tag-with-border-critical:hover {
+            .setCssVariable(background-color, nui-color-semantic-critical-bg-hover);
+            .setCssVariable(border-color, nui-color-semantic-critical-hover);
+        }
+    }
+
+    &-with-icon {
+        nui-icon {
+            padding-right: 6px;
+        }
+    }    
+}

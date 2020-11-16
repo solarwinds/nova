@@ -1,0 +1,48 @@
+@import (reference) "nui-framework-variables";
+@import (reference) "mixins/expander-base";
+
+:host {
+    .app-filtered-view-with-list-list-repeat {
+        margin: @nui-space-sm @nui-space-md;
+        width: 100%;
+    }
+
+    .app-filtered-view-with-list-list-selector {
+        flex-grow: 0;
+        margin-left: @nui-space-md;
+    }
+
+    .app-filtered-view-with-list-list-sorter {
+        flex-grow: 0;
+        margin-left: @nui-space-md;
+    }
+
+    .app-filtered-view-with-list-list-search {
+        flex-grow: 1;
+        margin-right: @nui-space-md;
+    }
+
+    .app-filtered-view-with-list-list-paginator {
+        flex-grow: 1;
+        margin: 0 @nui-space-md;
+    }
+}
+
+.nui-tree {
+    .expander();
+
+    &__body {
+        &--collapsed {
+            overflow: hidden;
+        }
+    }
+
+    &__leaf {
+        display: flex;
+        align-items: center;
+    }
+
+    &__invisible {
+        display: none;
+    }
+}

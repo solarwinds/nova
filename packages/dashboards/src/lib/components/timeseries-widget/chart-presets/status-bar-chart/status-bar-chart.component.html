@@ -1,0 +1,20 @@
+<div *ngIf="chartAssist" class="p-3 status-bar-chart">
+    <div class="d-flex" *ngFor="let spark of chartAssist.sparks; trackBy: chartAssist.trackByFn">
+        <nui-chart class="d-flex flex-grow-1" [chart]="spark.chart"
+                   [nuiChartCollectionId]="collectionId"></nui-chart>
+        <div class="d-flex flex-column pl-2"
+             *ngIf="spark.chartSeriesSet?.length > 0 && spark.chartSeriesSet[0]; let series">
+            <nui-legend class="status-bar-chart__legend" [active]="chartAssist.isLegendActive">
+                <nui-legend-series [descriptionPrimary]="series.legendDescriptionPrimary"
+                                   [descriptionSecondary]="series.legendDescriptionSecondary">
+                    <div class="status-bar-chart__legend__tile d-flex justify-content-center align-items-center">
+                        <div class="w-100 h-100 status-bar-chart__legend__tile__background"
+                            [style.background-color]="getDataPointData(series,'color')">
+                        </div>
+                        <nui-icon *ngIf="getDataPointData(series,'icon'); let icon;" class="status-bar-chart__legend__tile__icon" [icon]="icon"></nui-icon>
+                    </div>
+                </nui-legend-series>
+            </nui-legend>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+@import (reference) "../nui-framework-variables";
+@import (reference) "../mixins";
+
+//
+// Buttons
+// --------------------------------------------------
+@btn-padding-base-vertical: @nui-space-xs;
+@btn-padding-base-horizontal: @nui-space-sm;
+
+@btn-padding-large-vertical: 13px;
+@btn-padding-large-horizontal: @nui-space-md;
+
+@btn-padding-small-vertical: 2px;
+@btn-padding-small-horizontal: @nui-space-sm;
+
+@btn-padding-xs-vertical: @padding-xs-vertical;
+@btn-padding-xs-horizontal: @nui-space-xs;
+
+@btn-padding-is-empty: 6px;
+@btn-padding-compact: 9px;
+
+@btn-line-height-base: 1.385em;
+@btn-line-height-large: 1.4;
+@btn-line-height-small: @nui-line-height-default;
+
+@nui-button-border-width: 1px;
+
+// Base styles
+// --------------------------------------------------
+
+.btn {
+  .generic-control();
+  display: inline-block;
+  margin-bottom: 0; // For input.btn
+  font-weight: @nui-font-weight-regular;
+  text-align: center;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  white-space: nowrap;
+  box-shadow: none;
+  .button-size(@btn-padding-base-vertical; @btn-padding-base-horizontal; @nui-font-size-default; @btn-line-height-base; @nui-radius-default);
+  .user-select(none);
+
+  &,
+  &:active,
+  &.active {
+    &:focus,
+    &.focus {
+      .tab-focus();
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &.focus {
+    .setCssVariable(color, nui-color-text-link);
+    text-decoration: none;
+  }
+
+  &:active,
+  &.active {
+    outline: 0;
+    background-image: none;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+  }
+
+  &.disabled,
+  &[disabled] {
+    pointer-events: none;
+    box-shadow: none;
+  }
+
+  a& {
+    &.disabled {
+      pointer-events: none; // Future-proof disabling of clicks on `<a>` elements
+    }
+  }
+}
+
+
+// Alternate buttons
+// --------------------------------------------------
+.btn-default {
+  .button-default();
+}

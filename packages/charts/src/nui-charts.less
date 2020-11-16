@@ -1,0 +1,75 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+@import (reference) "nui-charts-variables.less";
+
+.nui-chart-layout {
+    display: grid;
+    grid-template:
+        "axis-label-left    axis-label-right    ."          0fr
+        "chart              chart               legend"     1fr
+        "axis-label-bottom  axis-label-bottom   ."          0fr
+        "legend-bottom      legend-bottom       ."          0fr
+        ~"/"1fr                1fr                 auto;
+
+    .axis-label-left {
+        grid-area: axis-label-left;
+        justify-self: start;
+        margin-bottom: @nui-space-xs;
+        margin-right: @nui-space-xs;
+    }
+
+    .axis-label-right {
+        grid-area: axis-label-right;
+        justify-self: end;
+        margin-bottom: @nui-space-xs;
+        margin-left: @nui-space-xs;
+    }
+
+    .axis-label-bottom {
+        grid-area: axis-label-bottom;
+        justify-self: center;
+        margin-top: @nui-space-xs;
+    }
+
+    .chart {
+        grid-area: chart;
+        display: flex;
+        justify-content: stretch;
+
+        &.has-overlay {
+            position: relative;
+
+            & .overlay {
+                position: absolute;
+                box-sizing: border-box;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                pointer-events: none;
+            }
+        }
+    }
+
+    .legend {
+        grid-area: legend;
+        align-self: start;
+        padding-left: @nui-space-xs;
+        // TODO: Merge this class with .legend (breaking change)
+        // https://jira.solarwinds.com/browse/NUI-3766
+        &.scrollable {
+            overflow: auto;
+            height: 100%;
+        }
+    }
+
+    .legend-bottom {
+        grid-area: legend-bottom;
+        justify-self: center;
+        margin-top: @nui-space-xs;
+    }
+
+    @media print {
+        break-inside: avoid;
+    }
+}

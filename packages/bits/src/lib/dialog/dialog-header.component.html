@@ -1,0 +1,19 @@
+<div class="dialog-header {{severityClass}}">
+    <div class="severity-text">
+        <nui-icon *ngIf="severityIcon" [icon]="severityIcon"></nui-icon>
+        <h1 class="dialog-title">{{title}}</h1>
+    </div>
+    <div class="btn-group">
+        <ng-content></ng-content>
+        <!-- We set [nuiSetFocus] to a Close button below in order to trap the focus inside cdk focusTrap -->
+        <button nui-button
+                nuiSetFocus="true"
+                preventScroll="true"
+                type="button"
+                displayStyle="action"
+                icon="close"
+                aria-label="Close"
+                (click)="innerClose($event)">
+        </button>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+//
+// Utility classes
+// --------------------------------------------------
+.overflow-hidden {
+    overflow: hidden !important;
+}
+
+.overflow-auto {
+    overflow: auto !important;
+}
+
+// Floats
+// -------------------------
+
+.clearfix {
+  .clearfix();
+}
+.center-block {
+  .center-block();
+}
+.pull-right {
+  float: right !important;
+}
+.pull-left {
+  float: left !important;
+}
+
+
+// Toggling content
+// -------------------------
+
+// Note: Deprecated .hide in favor of .hidden or .sr-only (as appropriate) in v3.0.1
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.invisible {
+  visibility: hidden;
+}
+.text-hide {
+  .text-hide();
+}
+
+
+// Hide from screenreaders and browsers
+//
+// Credit: HTML5 Boilerplate
+
+.hidden {
+  display: none !important;
+}
+
+
+// For Affix plugin
+// -------------------------
+
+.affix {
+  position: fixed;
+}
+
+.highlight {
+    &-on {
+        .transition(0.5s linear all);
+
+        &.info {
+            background-color: @nui-color-semantic-info-bg !important;
+            background-color: var(--nui-color-semantic-info-bg,@nui-color-semantic-info-bg) !important;
+        }
+        &.success {
+            background-color: @nui-color-semantic-ok-bg !important;
+            background-color: var(--nui-color-semantic-ok-bg,@nui-color-semantic-ok-bg) !important;
+        }
+        &.warning {
+            background-color: @nui-color-semantic-warning-bg !important;
+            background-color: var(--nui-color-semantic-warning-bg,@nui-color-semantic-warning-bg) !important;
+        }
+        &.error {
+            background-color: @nui-color-semantic-critical-bg !important;
+            background-color: var(--nui-color-semantic-critical-bg,@nui-color-semantic-critical-bg) !important;
+        }
+    }
+    &-fadeout {
+        background-color: transparent;
+        .transition(0.5s linear all);
+    }
+}
+
+.nui-ignore-highlight .nui-highlighted {
+    background-color: transparent !important;
+}
+
+.nui-highlighted {
+    background-color: @nui-color-search_highlight !important;
+    background-color: var(--nui-color-search_highlight,@nui-color-search_highlight) !important;
+}

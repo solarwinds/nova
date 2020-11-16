@@ -1,0 +1,44 @@
+<nui-widget-editor-accordion [formGroup]="form" [state]="form | nuiWidgetEditorAccordionFormState | async">
+    <div accordionHeader class="d-flex align-items-center pl-4 py-2">
+        <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'tag' | async"></nui-icon>
+        <div class="d-flex flex-column ml-4 pt1">
+            <span class="nui-text-label" i18n>Embedded Content</span>
+            <div class="nui-text-secondary">
+                Show the specific HTML I supply
+            </div>
+        </div>
+    </div>
+    <div class="embedded-configurator-section__accordion-content">
+        <ng-container nuiComponentPortal
+                        #componentPortal="nuiComponentPortal"
+                        [componentType]="messageComponent.componentType"
+                        [properties]="messageComponent.properties">
+            <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)"></ng-template>
+        </ng-container>
+        <nui-form-field [control]="form.get('mode')"
+                        caption="What do you want to show in the widget?"
+                        i18n-caption>
+            <nui-radio-group formControlName="mode"
+                            [(value)]="mode"
+                            name="mode"
+                            required>
+                <nui-radio [value]="modes[0].value">
+                    {{modes[0].displayValue}}
+                </nui-radio>
+                <nui-form-field [control]="form.get('urlCustomContent')">
+                    <nui-textbox formControlName="urlCustomContent">
+                    </nui-textbox>
+                </nui-form-field>
+                <nui-radio [value]="modes[1].value">
+                    {{modes[1].displayValue}}
+                </nui-radio>
+                <nui-form-field [control]="form.get('htmlCustomContent')">
+                    <nui-textbox class="textarea-scrollable"
+                                formControlName="htmlCustomContent"
+                                rows="7">
+                    </nui-textbox>
+                </nui-form-field>                
+            </nui-radio-group>
+        </nui-form-field>
+    </div>
+</nui-widget-editor-accordion>

@@ -1,0 +1,20 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../out-tsc/spec",
+        "types": [
+            "d3",
+            "d3-selection-multi",
+            "jasmine",
+            "node"
+        ]
+    },
+    "files": [
+        "./src/test.ts",
+        "./src/polyfills.ts"
+    ],
+    "include": [
+        "**/*.spec.ts",
+        "**/*.d.ts"
+    ]
+}

@@ -1,0 +1,126 @@
+﻿@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/nui-framework-typography.less";
+@import (reference) "../../styles/mixins.less";
+
+.nui-progress {
+    display: none;
+
+    &--shown {
+        display: block;
+    }
+
+    &__header {
+        text-align: center;
+
+        &--stacked{
+            text-align: left;
+        };
+    }
+
+    &__bar {
+        width: 100%;
+        .setCssVariable(background-color, nui-color-bg-workspace);
+        height: @nui-space-xs;
+        margin: @nui-space-xs 0;
+
+        &-value {
+            width: 0;
+            height: 100%;
+            .setCssVariable(background-color, nui-color-progress);
+            transition: 1s linear;
+            position: relative;
+            overflow: hidden;
+        }
+
+        &--compact {
+            margin: 0;
+        }
+
+        &:not(.nui-progress--indeterminate) {
+            .nui-progress__bar-value {
+                &:before,
+                &:after {
+                    content: "";
+                    position: absolute;
+                    width: 5px;
+                    height: 5px;
+                    .setCssVariable(background-color, nui-progress-ripple-color);
+                    opacity: 0;
+                    transform: scale(1, 1);
+                    border-radius: 100%;
+                    transform-origin: 0 50%;
+                    transition: all 500ms ease-in-out;
+                }
+
+                &:before {
+                    animation: progress-bar-ripple 1.2s ease-in-out 200ms infinite;
+                }
+
+                &:after {
+                    animation: progress-bar-ripple 1.2s ease-in-out 400ms infinite;
+                }
+            }
+
+            @keyframes progress-bar-ripple {
+                0% { transform: scale(0, 1); opacity: 0.8; }
+                30% { opacity: 0.3; }
+                50% { transform: scale(200, 1); opacity: 0; }
+                100% { transform: scale(200, 1); opacity: 0; }
+            }
+        }
+    }
+
+    &__message {
+        display: block;
+    }
+
+    &__hint {
+        text-align: center;
+
+        &--stacked {
+            text-align: left;
+        }
+
+        .nui-text-small-secondary {
+            display: block;
+        }
+    }
+
+    &__number {
+        position: relative;
+        top: -1px;
+        margin-left: @nui-space-xs;
+    }
+
+    &__container {
+        max-height: 15px;
+        display: flex;
+        align-items: center;
+    }
+
+    &--indeterminate {
+        .nui-progress__bar-value {
+            animation-name: indeterminate-progress;
+            animation-duration: 1.6s;
+            animation-iteration-count: infinite;
+            animation-timing-function: cubic-bezier(.30,.5,.30,.90);
+        }
+
+        @keyframes indeterminate-progress {
+            50% {
+                margin-left: 25%;
+                width: 50%;
+            }
+
+            100% {
+                margin-left: 100%;
+            }
+        }
+    }
+
+    &__cancel.nui-button {
+        position: relative;
+        top: -1px;
+        margin-left: @nui-space-xs;
+    }
+}

@@ -1,0 +1,106 @@
+@import (reference) "../nui-framework-variables";
+
+@dnd-item-border-width: @nui-line-default;
+@dnd-zone-border-width: @nui-line-fat;
+@dnd-zone-icon-size: 40px;
+
+/** draggable items states */
+.nui-dnd-hover-state {
+    background: @nui-color-bg-content-hover;
+}
+
+.nui-dnd-raised-state {
+    z-index: 1;
+
+    box-sizing: border-box;
+    box-shadow: @nui-shadow-elevated;
+}
+
+.nui-dnd-preview {
+    border: @dnd-item-border-width @nui-color-line-default solid;
+    .nui-dnd-hover-state();
+    .nui-dnd-raised-state();
+}
+
+.nui-dnd-dropzone {
+    /** dropzone states */
+    &.nui-dnd-dropzone--active {
+        border: @dnd-zone-border-width dashed @nui-color-semantic-unknown !important;
+    }
+
+    &.nui-dnd-dropzone--drop-allowed {
+        cursor: move;
+        border: @dnd-zone-border-width solid @nui-color-selected-contrast !important;
+        background-color: @nui-color-selected-active;
+    };
+    &.nui-dnd-dropzone--drop-not-allowed {
+        cursor: move;
+        border: @dnd-zone-border-width solid @nui-color-semantic-critical !important;
+        background-color: @nui-color-busy-destructive;
+    }
+
+    /** other customziations */
+    .centered-overlay, .nui-icon-item:before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        .translate(-50%, -50%);
+    }
+
+    .nui-icon-item {
+        &:before {
+            border-radius: 50%;
+            content: "";
+            display: block;
+            height: @dnd-zone-icon-size;
+            width: @dnd-zone-icon-size;
+            z-index: -1;
+        }
+    }
+
+    // @TODO fix/remove this hacking style once nui-icon gets proper support for size, bg color and fill color
+    .drop-circle{
+        &-permanent {
+            & .nui-icon-item {
+                &:before {
+                    background-color: @nui-color-bg-content;
+                }
+                svg {
+                    & polygon {
+                        fill: @nui-color-icon-highlight;
+                    }
+                }
+            }
+        }
+
+        &-allowed {
+            & .nui-icon-item {
+                &:before {
+                    background-color: @nui-color-selected-contrast;
+                }
+
+                svg {
+                    & polygon {
+                        clip-path: circle(5px);
+                        fill: @nui-color-icon-inverse;
+                    }
+                }
+            }
+        }
+
+        &-not-allowed {
+            & .nui-icon-item {
+                &:before {
+                    background-color: @nui-color-semantic-critical;
+                }
+
+                svg {
+                    & path {
+                        clip-path: circle(5px);
+                        fill: @nui-color-icon-inverse;
+                    }
+                }
+            }
+        }
+    }
+}

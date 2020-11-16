@@ -1,0 +1,16 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+
+.base-menu() {
+    [hidden] {
+        display: none !important;
+    }
+
+    //Bug with scroll in firefox: https://bugzilla.mozilla.org/show_bug.cgi?id=1424328
+    @-moz-document url-prefix() {
+        .nui-menu-item {
+            padding-right: 15px;
+        }
+    }
+}

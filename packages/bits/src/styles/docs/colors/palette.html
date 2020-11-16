@@ -1,0 +1,38 @@
+<link rel="stylesheet" type="text/css" href="_nui-css-url_">
+
+<base href="/">
+
+<div class="nui nui-demo panel-body component-demo-card" ng-controller="ExamplePaletteController as ctrl">
+    <h1 id="usage-warning">These colors should not be directly used in implemented components!  Instead, use the colors in the "Semantic" tab.</h1>
+    <p>The reason there are 2 different palettes is that this palette defines every color that is used.  The semantic palette described HOW the colors are used. </p>
+    <p>Breaking it up like this allows us to change every instance of a color, or a small subset of a color (i.e change all blue borders to purple).</p>
+    <div class="nui-color-palette">
+        <div ng-repeat="(key, value) in ctrl.palette">
+            <h3>{{::key}}</h3>
+            <div class="doc-color-row">
+                <div class="doc-color-swatch" ng-repeat="item in value">
+                    <div class="doc-color-swatch-block" ng-class="item.color | limitTo:1000:1"></div>
+
+                    <div class="doc-color-swatch-label doc-color-swatch-label-primary">
+                        {{::item.color}}
+                    </div>
+                    <div class="doc-color-swatch-label doc-color-swatch-label-secondary">
+                        {{::item.secondary}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    /* this is not a nice way, but otherwise whe would need to create a new ng-docs template*/
+    div.tabbable, a.edit-example.pull-right, #source {
+        display: none;
+    }
+
+    .panel-body {
+        padding: 15px;
+    }
+</style>

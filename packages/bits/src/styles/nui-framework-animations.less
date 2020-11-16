@@ -1,0 +1,19 @@
+@fast-animation-duration: 0.2s;
+
+.nui-fade(@full-opacity: 1) {
+
+    &.ng-enter, &.ng-leave {
+        transition: all ease-in-out @fast-animation-duration;
+    }
+
+    &.ng-enter,
+    &.ng-leave.ng-leave-active {
+        opacity: 0;
+    }
+
+    &.ng-leave,
+    &.ng-enter.ng-enter-active {
+        opacity: @full-opacity;
+    }
+
+}

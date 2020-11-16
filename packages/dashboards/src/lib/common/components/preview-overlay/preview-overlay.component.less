@@ -1,0 +1,30 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins";
+
+:host {
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.5s; // TODO: duration constant?
+    position: absolute;
+    z-index: @zindex-busy-in-modal;
+    .setCssVariable(background-color, nui-color-bg-content_popover);
+    height: 100%;
+    width: 100%;
+
+    &:hover {
+        opacity: 0.96;
+    }
+
+    .content {
+        padding: @nui-space-sm;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: @nui-space-xxs;
+        bottom: @nui-space-xxs;
+        left: @nui-space-xxs;
+        cursor: not-allowed;
+    }
+}

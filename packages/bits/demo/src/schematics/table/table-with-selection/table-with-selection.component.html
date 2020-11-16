@@ -1,0 +1,63 @@
+<h2>Selection result</h2>
+<div class="flex-row-container">
+    <span class="flex-independent-row-item">{{selection | json}}</span>
+</div>
+<div class="app-table-with-selection__container">
+    <div class="app-table-with-selection-searchable__search">
+        <nui-search [value]="searchTerm"
+                    (search)="onSearch()"
+                    (cancel)="onSearchCancel()">
+        </nui-search>
+    </div>
+
+    <table nui-table [dataSource]="items"
+           [sortable]="true"
+           [sortedColumn]="sortedColumn"
+           (sortOrderChanged)="sortData($event)"
+           [(selection)]="selection"
+           (selectionChange)="onSelectionChanged($event)"
+           [selectable]="true"
+           [trackBy]="trackBy">
+        <ng-container nuiColumnDef="name">
+            <th nui-header-cell *nuiHeaderCellDef i18n> Name</th>
+            <td nui-cell *nuiCellDef="let element"> {{element.name}}</td>
+        </ng-container>
+
+        <ng-container nuiColumnDef="location">
+            <th nui-header-cell *nuiHeaderCellDef i18n> Location</th>
+            <td nui-cell *nuiCellDef="let element"> {{element.location}}</td>
+        </ng-container>
+
+        <ng-container nuiColumnDef="status">
+            <th nui-header-cell *nuiHeaderCellDef i18n> Status</th>
+            <td nui-cell *nuiCellDef="let element"> {{element.status}}</td>
+        </ng-container>
+
+        <tr nui-header-row *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr nui-row *nuiRowDef="let row; columns: displayedColumns" [rowObject]="row"></tr>
+    </table>
+
+    <footer class="app-table-with-selection-scrolling-footer">
+        <div *ngIf="isBusy; else defaultText">
+            <nui-progress [show]="true" [compactMode]="true"></nui-progress>
+            <div class="d-flex justify-content-center align-items-center">Loading next {{pageSize}} items...</div>
+        </div>
+        <ng-template #defaultText>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="p-1 d-flex">
+                    <div class="d-flex pt-3 pb-3" i18n>
+                        Showing {{items.length}}
+                        of {{totalItems}}
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </footer>
+</div>
+
+<nui-paginator [(page)]="page"
+               [pageSize]="pageSize"
+               [pageSizeSet]="[10,20,50,100]"
+               [total]="totalItems"
+               (pagerAction)="changePagination($event)">
+</nui-paginator>

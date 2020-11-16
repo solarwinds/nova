@@ -1,0 +1,23 @@
+<ng-template #repeatItemColorBoxTemplate let-item="item">
+    <div class="color-box {{item.color}}"></div>
+    <div [attr.class]="item.disabled ? 'nui-text-secondary--disabled' : null">
+        {{item.color}}
+    </div>
+</ng-template>
+
+<ng-template #actionsContent let-item="item">
+        <div >
+            <button nui-button [attr.disabled]="item.disabled ? '' : null" type="button" displayStyle="action" icon="menu" (click)="handleClick($event)"></button>
+            <button nui-button [attr.disabled]="item.disabled ? '' : null" type="button" displayStyle="action" icon="caret-right" (click)="handleClick($event)"></button>
+        </div>
+</ng-template>
+
+<div class="example">
+    <nui-repeat id="nui-demo-multi-repeat-disabled-items"
+              [itemsSource]="colorsWithIsDisabledProperty"
+              selectionMode="multi"
+              [selection]="selectedColorsWithIsDisabledProperty"
+              [repeatItemTemplateRef]="repeatItemColorBoxTemplate"
+              [actionsTemplateRef]="actionsContent">
+    </nui-repeat>
+</div>

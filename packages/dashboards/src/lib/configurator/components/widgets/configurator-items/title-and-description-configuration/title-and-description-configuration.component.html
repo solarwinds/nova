@@ -1,0 +1,46 @@
+<nui-widget-editor-accordion [formGroup]="form" [state]="form | nuiWidgetEditorAccordionFormState | async">
+    <div accordionHeader
+         class="d-flex align-items-center px-4 py-2">
+        <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'widget_list' | async"></nui-icon>
+        <div class="d-flex flex-column ml-4 pt-1">
+            <span class="nui-text-label" i18n>Title and Description</span>
+            <div [title]="getSecondaryText()" class="nui-text-secondary">{{getSecondaryText()}}</div>
+        </div>
+    </div>
+    <div class="title-and-description-configuration__accordion-content">
+        <div class="mb-4">
+            <nui-form-field caption="Widget title" i18n-caption [control]="form.get('title')">
+                <nui-textbox id="kpi-widget-title" formControlName="title" placeholder="Set widget title" i18n-placeholder></nui-textbox>
+                <nui-validation-message for="required" i18n>
+                    This field is required
+                </nui-validation-message>
+            </nui-form-field>
+        </div>
+
+        <div class="mb-4">
+            <nui-form-field caption="Widget subtitle" i18n-caption [control]="form.get('subtitle')">
+                <nui-textbox id="kpi-widget-subtitle" formControlName="subtitle" placeholder="Do not show a subtitle" i18n-placeholder></nui-textbox>
+            </nui-form-field>
+        </div>
+
+        <div class="mb-4">
+            <nui-form-field caption="Widget link URL" i18n-caption [control]="form.get('url')">
+                <nui-textbox id="kpi-widget-url" formControlName="url" placeholder="Do not link to another page" i18n-placeholder></nui-textbox>
+            </nui-form-field>
+        </div>
+
+        <div class="mb-4">
+            <nui-form-field caption="Widget description" i18n-caption
+                            [control]="form.get('description')"
+                            hint="This won't be shown on the widget, but can be helpful for
+                          other users who want to re-use this widget on their own dashboards" i18n-hint>
+                <nui-textbox formControlName="description" placeholder="No description"></nui-textbox>
+            </nui-form-field>
+        </div>
+        <div>
+            <nui-form-field caption="Hide widget header" [showOptionalText]="false" i18n-caption [control]="form.get('collapsible')">
+                <nui-checkbox formControlName="collapsible">Collapsible</nui-checkbox>
+            </nui-form-field>
+        </div>
+    </div>
+</nui-widget-editor-accordion>

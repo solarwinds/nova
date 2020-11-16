@@ -1,0 +1,15 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../out-tsc/app",
+        "baseUrl": "./",
+        "types": ["node"]
+    },
+    "exclude": [
+        "test.ts",
+        "polyfills.ts",
+        "**/*.spec.ts",
+        "**/*spec-helper*/*",
+        "**/*spec-helper*"
+    ]
+}

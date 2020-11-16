@@ -1,0 +1,313 @@
+//Experimental
+//Warning!  Any variable in this file will set a css variable
+
+@import (reference) "nui-framework-palette.less";
+
+/* backgrounds */
+/* SECTION: backgrounds */
+@nui-color-bg-transparent: fade(@white, 0%);
+@nui-color-bg-content: @base;
+@nui-color-bg-secondary:  tint(@base, 4%);
+@nui-color-bg-content_popover:  tint(@base, 8%);
+@nui-color-bg-workspace:  shade(@base, 50%);
+@nui-color-bg-transparent-hover: fade(@white, 8%); // unofficial
+@nui-color-bg-content-hover: tint(@base, 8%); // unofficial
+@nui-color-bg-table_header:  tint(@base, 15%);
+@nui-color-bg-accordion_header: fade(@white, 15%);
+@nui-color-bg-accordion_header-hover: fade(@white, 20%);
+@nui-color-bg-inverse:  @white;
+@nui-color-bg-platformbar:  @base;
+@nui-color-bg-platformbar_vertical:  @base;
+@nui-color-bg-table_header-hover:  tint(@base, 20%);
+@nui-color-bg-inverse-hover:  shade(@white, 10%);
+@nui-color-bg-platformbar-hover:  tint(@base, 5%);
+@nui-color-bg-platformbar_vertical-hover:  tint(@base, 5%);
+@nui-color-bg-platformbar-secondary:  shade(@black, 10%);
+@nui-color-bg-platformbar-secondary-hover:  @base;
+@nui-color-bg-light: @base; // unofficial
+@nui-color-bg-light-hover: fade(@black, 20%); // unofficial
+@nui-color-bg-dark: fade(@black, 24%); // unofficial
+@nui-color-bg-dark-offset:  fade(@black, 26%); // unofficial
+@nui-color-bg-dark-offset-hover:  fade(@black, 28%); // unofficial
+@nui-color-bg-mid_dark:  fade(@black, 30%); // unofficial
+@nui-color-bg-dark-hover:fade(@black, 34%); // unofficial
+@nui-color-bg-mid_dark-hover:  fade(@black, 36%); // unofficial
+
+/* effects & interactions */
+/* SECTION: effects and interactions */
+@nui-color-active: @primary-blue--dark;
+@nui-color-active-hover:  tint(@primary-blue--dark, 30%);
+@nui-color-selected: fade(@cyan,20%);
+@nui-color-selected-hover: fade(@cyan, 30%);
+@nui-color-selected-contrast: @cyan;
+@nui-color-selected-contrast-hover: tint(@cyan, 30%);
+@nui-color-drag_selection: shade(@cyan, 40%);
+@nui-color-on: @ok_green;
+@nui-color-off: tint(@base, 30%);
+@nui-color-off-offset: darken(@white, 24%); // unofficial
+@nui-color-disabled: tint(@base, 20%);
+@nui-color-disabled-light: darken(@white, 28%); // unofficial
+@nui-color-disabled-secondary: tint(@base, 10%);
+@nui-color-progress: @cyan;
+@nui-color-focus: fade(@cyan, 50%);
+@nui-color-busy-default: fade(@cyan, 20%);
+@nui-color-busy-destructive: fade(@critical_red--dark, 20%);
+@nui-color-search_highlight: fade(@swi_orange, 30%);
+
+/* texts */
+/* SECTION: texts */
+@nui-color-text-default: @white;
+@nui-color-text-default-hover: darken(@nui-color-text-default, 10%); // unofficial
+@nui-color-text-secondary: fade(@white, 50%);
+@nui-color-text-link: @primary-blue--dark;
+@nui-color-text-link-inverse: @nui-color-text-link;
+@nui-color-text-disabled: fade(@white, 20%);
+@nui-color-text-inverse: @base;
+@nui-color-text-inverse-disabled: @nui-color-text-disabled;
+@nui-color-text-inverse-secondary: fade(@base, 50%);
+@nui-color-text-light:@white;
+@nui-color-text-light-secondary: darken(@white, 20%); // unofficial
+@nui-color-text-highlight-platform_bar: @swi_orange;
+@nui-color-text-critical: @critical_red--dark;
+@nui-color-text-ok: @ok_green;
+@nui-color-text-warning: @black;
+
+/*lines */
+/* SECTION: lines */
+@nui-color-line-default: tint(@base, 25%);
+@nui-color-line-default-hover: tint(@base, 35%);
+@nui-color-line-default-transparent: fade(@white, 25%);
+@nui-color-line-secondary: fade(@nui-color-line-default, 70%);
+@nui-color-line-strong: tint(@base, 40%);
+@nui-color-line-highlight: @white;
+@nui-color-line-dark: @pure_black;
+@nui-color-line-inverse: @white;
+@nui-color-line-light: fade(@black, 10%); // unofficial
+@nui-color-line-active: @primary-blue--dark;
+@nui-color-line-critical: @critical_red--dark;
+@nui-color-line-warning: @warning_yellow;
+@nui-color-line-info: @info_blue;
+@nui-color-line-ok: @ok_green;
+@nui-color-line-ok-secondary: fade(@ok_green, 30%);
+@nui-color-line-ok-secondary-hover: fade(@ok_green, 40%);
+@nui-color-line-ok-graph: fade(@ok_green, 30%); // unofficial
+@nui-color-line-ok-graph-hover: fade(@ok_green, 50%); // unofficial
+@nui-color-line-selected-contrast: @cyan;
+@nui-color-line-threshold-critical: fade(@nui-color-line-critical, 40%);
+@nui-color-line-threshold-warning: fade(@nui-color-line-warning, 40%);
+
+/* icons */
+/* SECTION: icons */
+@nui-color-icon-active: @primary-blue--dark;
+@nui-color-icon-default: tint(@base, 50%);
+@nui-color-icon-inverse: @white;
+@nui-color-icon-light: darken(@white, 15%); // unofficial
+@nui-color-icon-disabled: tint(@base, 20%);
+@nui-color-icon-highlight-platform_bar: @swi_orange;
+@nui-color-icon-highlight: @white; // according to the Design system
+@nui-color-icon-highlight-default: @white; // unofficial
+@nui-color-icon-critical: @critical_red--dark;
+@nui-color-icon-warning: @warning_yellow;
+@nui-color-icon-ok: @ok_green;
+@nui-color-icon-info: @info_blue;
+
+/* overlays */
+/* SECTION: overlays */
+@nui-color-overlay-dark: #6b1d61; // unofficial
+@nui-color-overlay-light: #3d9970; // unofficial
+@nui-color-overlay-modal: fade(@black, 80%);
+@nui-color-overlay-busy: fade(@nui-color-bg-content, 90%);
+@nui-color-overlay-busy-secondary: fade(@nui-color-bg-secondary, 90%);
+
+/* SECTION: scrollbars */
+@nui-color-bg-scroll_handle_container: @transparent;
+@nui-color-bg-scroll_handle: fade(@white, 20%);
+@nui-color-bg-scroll_handle-hover: fade(@white, 30%);
+
+/* brand */
+/* SECTION: brand */
+@nui-color-brand: @swi_orange;
+@nui-color-brand-hover: tint(@swi_orange, 20%);
+@nui-color-brand-two: @swi_gray;
+@nui-color-brand-three: @swi_green;
+@nui-color-brand-four: @swi_yellow;
+@nui-color-brand-five: @swi_blue;
+@nui-color-brand-six: @swi_dark_gray;
+@nui-color-brand-seven: @swi_light_gray;
+
+// Status and severity
+// these colors were removed from the official palette in UIF-1173
+// keeping them here pending final decision
+/* SECTION: status and severity */
+@nui-color-semantic-down: @down_red;
+@nui-color-semantic-down-hover: tint(@down_red, 20%);
+@nui-color-semantic-critical: @critical_red--dark;
+@nui-color-semantic-critical-hover: tint(@critical_red--dark, 20%);
+@nui-color-semantic-warning: @warning_yellow;
+@nui-color-semantic-warning-hover: tint(@warning_yellow, 20%);
+@nui-color-semantic-down-bg: shade(@down_red, 80%);
+@nui-color-semantic-down-bg-hover: shade(@down_red, 70%);
+@nui-color-semantic-critical-bg: shade(@critical_red--dark, 80%);
+@nui-color-semantic-critical-bg-hover: shade(@critical_red--dark, 70%);
+@nui-color-semantic-warning-bg: shade(@warning_yellow, 80%);
+@nui-color-semantic-warning-bg-hover: shade(@warning_yellow, 70%);
+@nui-color-semantic-ok: @ok_green;
+@nui-color-semantic-ok-hover: tint(@ok_green, 20%);
+@nui-color-semantic-info: @info_blue;
+@nui-color-semantic-info-hover: tint(@info_blue, 20%);
+@nui-color-semantic-unknown: @unknown_gray;
+@nui-color-semantic-unknown-hover: tint(@unknown_gray, 20%);
+@nui-color-semantic-ok-bg: shade(@ok_green, 80%);
+@nui-color-semantic-ok-bg-hover: shade(@ok_green, 70%);
+@nui-color-semantic-info-bg: shade(@info_blue, 80%);
+@nui-color-semantic-info-bg-hover: shade(@info_blue, 70%);
+@nui-color-semantic-unknown-bg: shade(@unknown_gray, 80%);
+@nui-color-semantic-unknown-bg-hover: shade(@unknown_gray, 70%);
+@nui-color-semantic-bg-critical-threshold: fade(@critical_red--dark, 20%);
+@nui-color-semantic-bg-warning-threshold: fade(@warning_yellow, 20%);
+
+
+/* chart colors */
+/* SECTION: charts */
+@nui-color-chart-one-dark: shade(@chart-blue, 40%);
+@nui-color-chart-two-dark: shade(@chart-pink, 40%);
+@nui-color-chart-three-dark: shade(@chart-seagreen, 40%);
+@nui-color-chart-four-dark: shade(@chart-violet, 40%);
+@nui-color-chart-five-dark: shade(@chart-limegreen, 40%);
+@nui-color-chart-six-dark: shade(@chart-orange, 40%);
+@nui-color-chart-seven-dark: shade(@chart-ultramarine, 40%);
+@nui-color-chart-eight-dark: shade(@chart-bordeaux, 40%);
+@nui-color-chart-nine-dark: shade(@chart-ochroid, 40%);
+@nui-color-chart-ten-dark: shade(@chart-anthracite, 40%);
+
+@nui-color-chart-one: @chart-blue;
+@nui-color-chart-two: @chart-pink;
+@nui-color-chart-three: @chart-seagreen;
+@nui-color-chart-four: @chart-violet;
+@nui-color-chart-five: @chart-limegreen;
+@nui-color-chart-six: @chart-orange;
+@nui-color-chart-seven: @chart-ultramarine;
+@nui-color-chart-eight: @chart-bordeaux;
+@nui-color-chart-nine: @chart-ochroid;
+@nui-color-chart-ten: @chart-anthracite;
+
+@nui-color-chart-one-light: tint(@chart-blue, 50%);
+@nui-color-chart-two-light: tint(@chart-pink, 50%);
+@nui-color-chart-three-light: tint(@chart-seagreen, 50%);
+@nui-color-chart-four-light: tint(@chart-violet, 50%);
+@nui-color-chart-five-light: tint(@chart-limegreen, 50%);
+@nui-color-chart-six-light: tint(@chart-orange, 50%);
+@nui-color-chart-seven-light: tint(@chart-ultramarine, 50%);
+@nui-color-chart-eight-light: tint(@chart-bordeaux, 50%);
+@nui-color-chart-nine-light: tint(@chart-ochroid, 50%);
+@nui-color-chart-ten-light: tint(@chart-anthracite, 50%);
+
+@nui-color-chart-sum: @white;
+@nui-color-chart-percentile: fade(@white, 80%);
+
+/*  Legacy Chart colors
+    Chart color names changed with v8 release. These are now unofficial.
+    It is strongly recommended to switch to a new naming before v9.
+*/
+@nui-chart-one-dark: shade(@chart-blue, 40%); // unofficial
+@nui-chart-two-dark: shade(@chart-pink, 40%); // unofficial
+@nui-chart-three-dark: shade(@chart-seagreen, 40%); // unofficial
+@nui-chart-four-dark: shade(@chart-violet, 40%); // unofficial
+@nui-chart-five-dark: shade(@chart-limegreen, 40%); // unofficial
+@nui-chart-six-dark: shade(@chart-orange, 40%); // unofficial
+@nui-chart-seven-dark: shade(@chart-ultramarine, 40%); // unofficial
+@nui-chart-eight-dark: shade(@chart-bordeaux, 40%); // unofficial
+@nui-chart-nine-dark: shade(@chart-ochroid, 40%); // unofficial
+@nui-chart-ten-dark: shade(@chart-anthracite, 40%); // unofficial
+
+@nui-chart-one: @chart-blue; // unofficial
+@nui-chart-two: @chart-pink; // unofficial
+@nui-chart-three: @chart-seagreen; // unofficial
+@nui-chart-four: @chart-violet; // unofficial
+@nui-chart-five: @chart-limegreen; // unofficial
+@nui-chart-six: @chart-orange; // unofficial
+@nui-chart-seven: @chart-ultramarine; // unofficial
+@nui-chart-eight: @chart-bordeaux; // unofficial
+@nui-chart-nine: @chart-ochroid; // unofficial
+@nui-chart-ten: @chart-anthracite; // unofficial
+
+@nui-chart-one-light: tint(@chart-blue, 50%); // unofficial
+@nui-chart-two-light: tint(@chart-pink, 50%); // unofficial
+@nui-chart-three-light: tint(@chart-seagreen, 50%); // unofficial
+@nui-chart-four-light: tint(@chart-violet, 50%); // unofficial
+@nui-chart-five-light: tint(@chart-limegreen, 50%); // unofficial
+@nui-chart-six-light: tint(@chart-orange, 50%); // unofficial
+@nui-chart-seven-light: tint(@chart-ultramarine, 50%); // unofficial
+@nui-chart-eight-light: tint(@chart-bordeaux, 50%); // unofficial
+@nui-chart-nine-light: tint(@chart-ochroid, 50%); // unofficial
+@nui-chart-ten-light: tint(@chart-anthracite, 50%); // unofficial
+// end of legacy chart colors
+
+@nui-progress-ripple-color: #54bd68; // unofficial
+@nui-border-fade: #004bca; // unofficial
+@nui-color-tab-link: #173f7e; // unofficial
+@nui-color-line-offset: #4d3f62; // unofficial
+
+@nui-color-btn1-focusBrd: darken(@nui-color-line-default, 5.5%); // unofficial
+@nui-color-btn1-activeOpenBrd: darken(@nui-color-line-default, 12%); // unofficial
+@nui-color-btn1-activeHoverBrd: darken(@nui-color-line-default, 25%); // unofficial
+@nui-color-btn2-focusBk: darken(@nui-color-text-link, 5.5%); // unofficial
+@nui-color-btn2-activeOpenBk: darken(@nui-color-text-link, 12%); // unofficial
+@nui-color-btn2-activeHoverBk: darken(@nui-color-text-link, 25%); // unofficial
+@nui-color-btn4-focus: darken(@nui-color-active, 5.5%); // unofficial
+@nui-color-btn4-activeOpen: darken(@nui-color-active, 12%); // unofficial
+@nui-color-btn4-activeHover: darken(@nui-color-active, 25%); // unofficial
+
+@nui-color-input-box-shadow: fade(@nui-color-line-default,50%); // unofficial
+@nui-color-input-box-shadow-hover: fade(@nui-color-line-default, 60%); // unofficial
+
+//** Shadow color
+@nui-shadow-color-stronger: @pure_black;
+@nui-shadow-color: fade(@pure_black, 90%);
+
+//** Background color for `<body>`.
+@body-bg:               #8f9acc; // unofficial
+//** Global text color on `<body>`.
+@text-color:            #e0f807; // unofficial
+
+//** Global textual link color.
+@link-color:            #cef97f; // unofficial
+//** Link hover color set via `darken()` function.
+@link-hover-color:      #a1591e; // unofficial
+
+//** Border color for inputs on focus
+@input-border-focus:             #8b6764; // unofficial
+
+//** Placeholder text color
+@input-color-placeholder:        @nui-color-text-secondary; // unofficial
+
+@kbd-color:                   #50eb9d; // unofficial
+@kbd-bg:                      #60d53b; // unofficial
+
+@pre-color:                   #2ba19a; // unofficial
+@pre-border-color:            #d44e59; // unofficial
+
+//** Text muted color
+@text-muted:                  #bdba13; // unofficial
+//** Abbreviations and acronyms border color
+@abbr-border-color:           #284202; // unofficial
+//** Headings small color
+@headings-small-color:        #41dce8; // unofficial
+//** Blockquote small color
+@blockquote-small-color:      #38d422; // unofficial
+
+//** Page header border color
+@page-header-border-color:    @nui-color-bg-workspace; // unofficial
+
+//** Horizontal line color.
+@hr-border:                   #d08f2a; // unofficial
+
+//** Thumbnail background color
+@thumbnail-bg:                #38d422; // unofficial
+
+//** Background color, that .nui-scroll-shadow class will try to simulate
+@nui-color-bg-scroll:         @nui-color-bg-content; // unofficial
+
+//** Code component colors
+@nui-code-bg-color:           @nui-color-bg-mid_dark; // unofficial
+@nui-code-color:              @nui-color-bg-content; // unofficial

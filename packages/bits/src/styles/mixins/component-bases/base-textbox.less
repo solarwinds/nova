@@ -1,0 +1,52 @@
+
+@import (reference) "../../nui-framework-variables.less";
+@import (reference) "../../nui-framework-base.less";
+
+.textbox-base() {
+    .generic-control();
+    .setCssVariable(background, nui-color-bg-content);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+
+    &:hover {
+        .setCssVariable(border-color, nui-color-line-default-hover);
+    }
+
+    &:focus-within,
+    &:focus {
+        .setCssVariable(border-color, nui-color-line-active);
+        outline: none;
+    }
+
+    &.error, &.has-error {
+        .setCssVariable(border-color, nui-color-line-critical);
+        &:hover,
+        &:focus,
+        &:active {
+            .setCssVariable(border-color, nui-color-line-critical);
+        }
+    }
+
+    &.disabled, &[disabled] {
+        .setCssVariable(background, nui-color-disabled-secondary);
+        border-color: transparent;
+        cursor: @cursor-disabled;
+        &:hover {
+            .setCssVariable(background, nui-color-disabled-secondary);
+            border-color: transparent;
+        }
+    }
+
+    &[readonly] {
+        .setCssVariable(color, nui-color-text-secondary);
+        .setCssVariable(background, nui-color-disabled-secondary);
+        border-color: transparent;
+        cursor: default;
+        &:hover,
+        &:focus,
+        &:active {
+            .setCssVariable(color, nui-color-text-secondary);
+            .setCssVariable(background, nui-color-disabled-secondary);
+            border-color: transparent;
+        }
+    }
+}

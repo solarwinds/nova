@@ -1,0 +1,38 @@
+<nui-widget-editor-accordion [formGroup]="form">
+    <div accordionHeader
+         class="d-flex align-items-center px-4 py-2">
+        <nui-icon class="align-self-start pt-2" icon="widget_pie-chart"></nui-icon>
+        <div class="d-flex flex-column ml-4 pt-1">
+            <span class="nui-text-label" i18n>Sorting</span>
+            <div class="nui-text-secondary" [title]="selectedSortByValue + selectedSortOrderValue">
+                {{ selectedSortByValue }}{{ selectedSortOrderValue }}
+            </div>
+        </div>
+    </div>
+    <div class="table-filters-configuration__accordion-content">
+        <div formGroupName="sorterConfiguration" class="d-flex align-items-end">
+            <nui-form-field caption="Sort by" i18n-caption
+                            [control]="form.controls['sortBy']"
+                            class="w-50">
+                 <nui-select-v2 placeholder="Select column" i18n-placeholder
+                                formControlName="sortBy">
+                    <nui-select-v2-option *ngFor="let column of sortableColumns" [value]="column.id">
+                        {{column.label}}
+                    </nui-select-v2-option>
+                </nui-select-v2>
+            </nui-form-field>
+            <div class="ml-2">
+                <nui-form-field [control]="form.controls['descendantSorting']">
+                    <nui-checkbox  formControlName="descendantSorting" i18n>
+                        Descending
+                    </nui-checkbox>
+                </nui-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="p-5">
+        <nui-message *ngIf="!sortableColumns.length" type="info" [allowDismiss]="false" i18n>
+            <b>No columns are sortable.</b>
+        </nui-message>
+    </div>
+</nui-widget-editor-accordion>

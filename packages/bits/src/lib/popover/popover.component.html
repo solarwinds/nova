@@ -1,0 +1,7 @@
+<ng-content></ng-content>
+<nui-overlay [customContainer]="containerElementRef"
+              [toggleReference]="host.nativeElement"
+              [overlayConfig]="overlayConfig"
+              (clickOutside)="onBackdropClick()">
+    <ng-template #modalContainer></ng-template>
+</nui-overlay>

@@ -1,0 +1,15 @@
+// Text overflow
+// Requires inline-block or block for proper styling
+
+// TODO: REMOVE LEGACY BOOTSTRAP MIXIN
+.text-overflow() {
+  .text-overflow('ellipsis');
+}
+
+.text-overflow(@overflow) {
+    white-space:nowrap;
+    overflow:hidden;
+    -ms-text-overflow: @overflow;
+    -o-text-overflow: @overflow;
+    text-overflow: @overflow;
+}

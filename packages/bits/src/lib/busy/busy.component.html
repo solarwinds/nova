@@ -1,0 +1,12 @@
+<div class="nui-nova-busy">
+    <div class="nui-nova-busy__overlay--align"
+         [class.nui-nova-busy__overlay--hidden]="!busy"
+         [class.nui-nova-busy__overlay]="busy">
+        <div class="nui-nova-busy__container">
+            <ng-content *ngIf="isProgressTemplate" select="nui-progress"></ng-content>
+            <ng-content *ngIf="isSpinnerTemplate" select="nui-spinner"></ng-content>
+            <nui-spinner *ngIf="isDefaultTemplate" [show]="busy"></nui-spinner>
+        </div>
+    </div>
+    <ng-content></ng-content>
+</div>

@@ -1,0 +1,13 @@
+node_modules/
+typings/
+atoms/
+js/
+dist/
+css/
+fonts/
+less/
+npm-debug.log
+package-lock.json
+/npm-shrinkwrap.json
+/solarwinds-*.tgz
+.idea

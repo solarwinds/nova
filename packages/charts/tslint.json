@@ -1,0 +1,5 @@
+{
+  "extends": [
+    "@solarwinds/nova-bits/sdk/tslint.json"
+  ]
+}

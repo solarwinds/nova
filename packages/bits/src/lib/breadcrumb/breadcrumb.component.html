@@ -1,0 +1,12 @@
+<div class="nui-breadcrumb" *ngIf="items?.length > 1">
+    <span class="nui-breadcrumb__wrapper" *ngFor="let item of items; let isLast = last">
+        <ng-container *ngIf="!isLast">
+            <a [attr.href]="item?.url" class="nui-breadcrumb__crumb nui-breadcrumb__crumb__link" (click)="handleClick($event, item)">{{item.title}}</a>
+            <nui-icon class="nui-breadcrumb__caret-icon"
+                      icon="caret-right"
+                      iconColor="disabled-gray"
+                      iconSize="small"></nui-icon>
+        </ng-container>
+        <span *ngIf="isLast" class="nui-breadcrumb__crumb nui-breadcrumb__crumb-current-level">{{item.title}}</span>
+    </span>
+</div>

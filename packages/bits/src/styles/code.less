@@ -1,0 +1,79 @@
+@import (reference) "nui-framework-variables";
+@import (reference) "mixins.less";
+
+@font-family-monospace: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+//
+// Code (inline and block)
+// --------------------------------------------------
+
+
+// Inline and block code styles
+code,
+kbd,
+pre,
+samp {
+  font-family: @font-family-monospace;
+}
+
+// Inline code
+code {
+  padding: 2px 4px;
+  font-size: 90%;
+  .setCssVariable(color, nui-color-text-default);
+  .setCssVariable(background-color, nui-color-bg-secondary);
+  border-radius: 0;
+}
+
+a code {
+    .setCssVariable(color, nui-color-text-link);
+}
+
+// User input typically entered via keyboard
+kbd {
+  padding: 2px 4px;
+  font-size: 90%;
+  .setCssVariable(color, kbd-color);
+  .setCssVariable(background-color, kbd-bg);
+  border-radius: 0;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.25);
+
+  kbd {
+    padding: 0;
+    font-size: 100%;
+    font-weight: @nui-font-weight-semibold;
+    box-shadow: none;
+  }
+}
+
+// Blocks of code
+pre {
+  display: block;
+  padding: ((@line-height-computed - 1) / 2);
+  margin: 0 0 (@line-height-computed / 2);
+  font-size: @nui-font-size-default;
+  line-height: @line-height-base;
+  word-break: break-all;
+  word-wrap: break-word;
+  .setCssVariable(color, nui-color-text-default);
+  .setCssVariable(background-color, nui-color-bg-secondary);
+  border: 1px solid;
+  .setCssVariable(border-color, nui-color-line-default);
+  border-radius: 0;
+
+  // Account for some code outputs that place code tags in pre tags
+  code {
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+  }
+}
+
+// Enable scrollable blocks of code
+.pre-scrollable {
+  max-height: @pre-scrollable-max-height;
+  overflow-y: scroll;
+}

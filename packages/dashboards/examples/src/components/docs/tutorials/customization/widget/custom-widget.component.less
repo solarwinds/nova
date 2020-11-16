@@ -1,0 +1,13 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) '@solarwinds/nova-bits/sdk/less/mixins';
+
+.dashboard {
+    height:800px;
+}
+
+// Styling for the custom configurator section
+.custom-configurator-section {
+    &__accordion-content {
+        padding: @nui-space-md @nui-space-md @nui-space-md (@nui-space-md * 2 + @icon-size-default);
+    }
+}

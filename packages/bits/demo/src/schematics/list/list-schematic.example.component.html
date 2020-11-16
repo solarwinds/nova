@@ -1,0 +1,95 @@
+<nui-schematic-docs-page schematicFolderName="list">
+    <div schematicSummary>
+        <p>
+            The List schematic provides the ability to create a generic list that can cover a majority of use cases for a list.
+            Its main responsibility is to integrate the functionality of the <code>nui-repeat</code> component with other components
+            commonly used with a list such as <code>nui-selector</code>, <code>nui-search</code>, <code>nui-paginator</code>, and
+            <code>nui-sorter</code>.
+        </p>
+        <h2>Notable Command Line Options</h2>
+        <nui-schematic-cli-option name="selectionMode"></nui-schematic-cli-option>
+        <nui-schematic-cli-option name="pagingMode"></nui-schematic-cli-option>
+        <nui-schematic-cli-option name="dataSource"></nui-schematic-cli-option>
+        <nui-schematic-cli-option name="enableSearch"></nui-schematic-cli-option>
+        <nui-schematic-cli-option name="enableSort"></nui-schematic-cli-option>
+    </div>
+    <nui-tab-group schematicExamples>
+        <nui-tab heading="Basic">
+            <h2>Basic Usage</h2>
+            <p>
+                This example illustrates the output of the CLI command without any modifications. Consumers are able to build upon the generated boilerplate to
+                provide additional functionality depending on their use case. Data manipulations (filtering/pagination/sorting/search) are handled by the
+                <a target="_blank" href="../injectables/ClientSideDataSource.html"><code>ClientSideDataSource</code></a>
+                service, which can be extended with custom filtering behavior.
+            </p>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:list --name=basic-list --p=app</nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="basic-list">
+                <app-basic-list></app-basic-list>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Selection">
+            <h2>List with Selection</h2>
+            <p>
+                Selection is facilitated by the
+                <a target="_blank" href="../injectables/ListService.html"><code>ListService</code></a>
+                and can be enabled by running the CLI command with the <code>selectionMode</code> option
+                set to one of the selection-enabling values listed under <strong>Notable Command Line Options</strong> section above.
+                The initial selection can be set using the <code>selection</code> input of
+                the <code>nui-repeat</code>. Selection changes can be intercepted using the
+                <code>selectionChange</code> output of the <code>nui-repeat</code>.
+            </p>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:list --name=selection-list --p=app
+                <strong>--selectionMode=multi</strong></nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="selection-list">
+                <app-selection-list></app-selection-list>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Search">
+            <h2>Search Properties</h2>
+            <p>
+                To specify fields for search, pass a properties array to the <code>setSearchProperties</code> method
+                exposed by the <a target="_blank" href="../injectables/ClientSideDataSource.html">
+                    <code>ClientSideDataSource</code></a> service.
+                If no properties are specified, the search will be performed on all fields.
+            </p>
+            <nui-schematic-docs-command>
+                ng g @solarwinds/nova-bits:list --name=search-list --p=app --selectionMode=none --dataSource=serverSide --pagingMode=pagination --enable-sort=false
+                <strong>--enable-search=true</strong>
+            </nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="search-list">
+                <app-search-list></app-search-list>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Pagination">
+            <h2>Pagination</h2>
+            <p>
+                This example shows how to add pagination to <code>nui-repeat</code> with a remote data source.
+            </p>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:list --name=paginated-list --p=app --pagingMode=pagination --dataSource=serverSide</nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="paginated-list">
+                <app-paginated-list></app-paginated-list>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Virtual Scroll">
+            <h2>Virtual Scroll</h2>
+            <p>
+                This example shows how to add virtual scroll to <code>nui-repeat</code> with a remote data source.
+            </p>
+            <nui-message [allowDismiss]="false" type="warning">
+                Since the example makes use of search and sorting filters, it's important to note that
+                the viewport manager's paging progress must be reset each time the data is refreshed with
+                new filtered results. The reset invocation can be seen in the
+                <code>virtual-scroll-list.component.ts:doSearch</code> method.
+            </nui-message>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:list --name=scrollable-list --p=app --pagingMode=virtualScroll --dataSource=serverSide</nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="virtual-scroll-list">
+                <app-virtual-scroll-list></app-virtual-scroll-list>
+            </nui-schematic-docs-example>
+        </nui-tab>
+    </nui-tab-group>
+</nui-schematic-docs-page>
+

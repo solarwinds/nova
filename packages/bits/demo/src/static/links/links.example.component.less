@@ -1,0 +1,18 @@
+@import "../../../../src/styles/nui-framework-variables";
+
+.link-example {
+    width: 300px;
+    .nui-text-link {
+        nui-icon {
+            padding-left: @nui-space-xs;
+            padding-right: @nui-space-xs;
+        }
+        &.disabled {
+            color: @nui-color-text-disabled;
+            pointer-events: none;
+        }
+    }
+    .link-info-text {
+        color: red;
+    }
+}

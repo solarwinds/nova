@@ -1,0 +1,22 @@
+<svg [attr.height]="height">
+    <g #control>
+        <g *ngIf="mode==='horizontal'" class="measurements-horizontal">
+            <rect class="everything" [attr.height]="thickness"></rect>
+            <rect class="filled" [attr.height]="thickness"></rect>
+        </g>
+        <g *ngIf="mode==='radial'" class="measurements-radial">
+            <path></path>
+            <path></path>
+        </g>
+        <g class="markers">
+            <g class="lines"></g>
+            <g class="error-marker" *ngIf="thresholds?.error">
+                <circle></circle>
+            </g>
+            <g class="warning-marker" *ngIf="thresholds?.warning">
+                <circle></circle>
+            </g>
+        </g>
+
+    </g>
+</svg>

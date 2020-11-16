@@ -1,0 +1,349 @@
+@import (reference) "nui-framework-variables.less";
+@import (reference) "mixins.less";
+
+/* font-size */
+.nui-text-size(@size: default) {
+    line-height: ~"@{nui-line-height-@{size}}";
+    font-size: ~"@{nui-font-size-@{size}}";
+}
+/* font-size ends */
+
+.nui-text-page() {
+    .nui-text-size(hero);
+    font-weight: @nui-font-weight-semibold;
+    .setCssVariable(color, nui-color-text-default);
+}
+
+.nui-text-widget() {
+    .nui-text-size(big);
+    font-weight: @nui-font-weight-semibold;
+    .setCssVariable(color, nui-color-text-default);
+}
+
+.nui-text-panel(@color, @colorName) {
+    .nui-text-size(default);
+    font-weight: @nui-font-weight-semibold;
+    text-transform: uppercase;
+    color: @color;
+    color: ~"var(--@{colorName},@{color})";
+}
+
+.nui-text-label(@color, @colorName) {
+    .nui-text-size(default);
+    font-weight: @nui-font-weight-semibold;
+    color: @color;
+    color: ~"var(--@{colorName},@{color})";
+}
+
+.nui-text-default(@color, @colorName) {
+    .nui-text-size(default);
+    font-weight: @nui-font-weight-regular;
+    color: @color;
+    color: ~"var(--@{colorName},@{color})";
+}
+
+.nui-text-secondary(@color, @colorName) {
+    .nui-text-size(default);
+    font-weight: @nui-font-weight-regular;
+    color: @color;
+    color: ~"var(--@{colorName},@{color})";
+}
+
+.nui-text-title-secondary(@color, @colorName) {
+    .nui-text-size(small);
+    font-weight: @nui-font-weight-regular;
+    text-transform: uppercase;
+    color: @color;
+    color: ~"var(--@{colorName},@{color})";
+}
+
+.nui-text-small(@color, @colorName) {
+    .nui-text-size(small);
+    font-weight: @nui-font-weight-regular;
+    color: @color;
+    color: ~"var(--@{colorName},@{color})";
+}
+
+// This mixin is deprecated. Use nui-text-small() instead
+.nui-text-hint(@color, @colorName)  {
+    .nui-text-size(small);
+    font-weight: @nui-font-weight-regular;
+    color: @color;
+    color: ~"var(--@{colorName},@{color})";
+}
+
+.nui-text-hoverable() {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+}
+
+.nui-text-small-secondary() {
+    .nui-text-small(@nui-color-text-secondary,nui-color-text-secondary);
+}
+
+//semantic styles
+.nui-text {
+    &-disabled {
+        .nui-text-default(@nui-color-text-disabled, nui-color-text-disabled);
+    }
+    &-product {
+        .nui-text-size(hero);
+        font-family: @font-family-roboto;
+        font-weight: @nui-font-weight-bold;
+        .setCssVariable(color, nui-color-text-light);
+    }
+
+    &-page {
+        .nui-text-page();
+
+        &--hoverable {
+            .nui-text-page();
+            .nui-text-hoverable();
+        }
+    }
+
+    &-widget {
+        .nui-text-widget();
+
+        &--hoverable {
+            .nui-text-widget();
+            .nui-text-hoverable();
+        }
+    }
+
+    &-panel {
+        .nui-text-panel(@nui-color-text-default,nui-color-text-default);
+    }
+
+    &-panel--inverse {
+        .nui-text-panel(@nui-color-text-inverse,nui-color-text-inverse);
+    }
+
+    &-panel--hoverable {
+        .nui-text-panel(@nui-color-text-default,nui-color-text-default);
+        .nui-text-hoverable();
+    }
+
+    &-panel--darkbg {
+        .nui-text-panel(@nui-color-text-light,nui-color-text-light);
+    }
+
+    &-panel--darkbg--hoverable {
+        .nui-text-panel(@nui-color-text-light,nui-color-text-light);
+        .nui-text-hoverable();
+    }
+
+    &-label {
+        .nui-text-label(@nui-color-text-default,nui-color-text-default);
+    }
+
+    &-label--inverse {
+        .nui-text-label(@nui-color-text-inverse,nui-color-text-inverse);
+    }
+
+    &-label--hoverable {
+        .nui-text-label(@nui-color-text-default,nui-color-text-default);
+        .nui-text-hoverable();
+    }
+
+    &-label--darkbg {
+        .nui-text-label(@nui-color-text-light,nui-color-text-light);
+    }
+
+    &-label--darkbg--hoverable {
+        .nui-text-label(@nui-color-text-light,nui-color-text-light);
+        .nui-text-hoverable();
+    }
+
+    &-default {
+        .nui-text-default(@nui-color-text-default,nui-color-text-default);
+    }
+
+    &-default--inverse {
+        .nui-text-default(@nui-color-text-inverse,nui-color-text-inverse);
+    }
+
+    &-default--inverse-selected {
+        .nui-text-default(@nui-color-text-highlight-platform_bar,nui-color-text-highlight-platform_bar);
+    }
+
+    &-default--hoverable {
+        .nui-text-default(@nui-color-text-default,nui-color-text-default);
+        .nui-text-hoverable();
+    }
+
+    &-default--darkbg {
+        .nui-text-default(@nui-color-text-light,nui-color-text-light);
+    }
+    &-default--darkbg--hoverable {
+        .nui-text-default(@nui-color-text-light,nui-color-text-light);
+        .nui-text-hoverable();
+    }
+
+    &-default--darkbg-selected {
+        .nui-text-default(@nui-color-text-highlight-platform_bar,nui-color-text-highlight-platform_bar);
+    }
+
+    &-default--darkbg-selected--hoverable {
+        .nui-text-default(@nui-color-text-highlight-platform_bar,nui-color-text-highlight-platform_bar);
+        .nui-text-hoverable();
+    }
+
+    &-secondary {
+        .nui-text-secondary(@nui-color-text-secondary,nui-color-text-secondary);
+    }
+
+    &-secondary--inverse {
+        .nui-text-secondary(@nui-color-text-inverse-secondary,nui-color-text-inverse-secondary);
+    }
+
+    &-secondary--hoverable {
+        .nui-text-secondary(@nui-color-text-secondary,nui-color-text-secondary);
+        .nui-text-hoverable();
+    }
+
+    &-secondary--darkbg {
+        .nui-text-secondary(@nui-color-text-light-secondary,nui-color-text-light-secondary);
+    }
+
+    &-secondary--darkbg--hoverable {
+        .nui-text-secondary(@nui-color-text-light-secondary,nui-color-text-light-secondary);
+        .nui-text-hoverable();
+    }
+
+    &-secondary--disabled {
+        .nui-text-secondary(@nui-color-text-disabled,nui-color-text-disabled);
+    }
+
+    &-secondary--disabled--hoverable {
+        .nui-text-secondary(@nui-color-text-disabled,nui-color-text-disabled);
+        .nui-text-hoverable();
+    }
+
+    &-link {
+        .nui-text-size(default);
+        font-weight: @nui-font-weight-regular;
+        .setCssVariable(color, nui-color-text-link);
+    }
+    &-link:hover {
+        text-decoration: underline;
+    }
+
+    &-link-small {
+        .nui-text-size(small);
+        font-weight: @nui-font-weight-regular;
+        .setCssVariable(color, nui-color-text-link);
+    }
+    &-link-small:hover {
+        text-decoration: underline;
+    }
+
+    &-source-code {
+        .nui-text-size(default);
+        font-family: @font-family-source-code-pro;
+        font-weight: @nui-font-weight-regular;
+
+        &-secondary {
+            .nui-text-size(default);
+            font-family: @font-family-source-code-pro;
+            font-weight: @nui-font-weight-regular;
+            .setCssVariable(color, nui-color-text-secondary);
+        }
+    }
+
+    &-title-secondary {
+        .nui-text-title-secondary(@nui-color-text-secondary,nui-color-text-secondary);
+    }
+
+    &-title-secondary--inverse {
+        .nui-text-title-secondary(@nui-color-text-inverse-secondary,nui-color-text-inverse-secondary);
+    }
+
+    &-title-secondary--darkbg {
+        .nui-text-title-secondary(@nui-color-text-light-secondary,nui-color-text-light-secondary);
+    }
+
+    &-small {
+        .nui-text-small(@nui-color-text-default,nui-color-text-default);
+    }
+
+    &-small-secondary {
+        .nui-text-small(@nui-color-text-secondary,nui-color-text-secondary);
+
+        &--hoverable {
+            .nui-text-small(@nui-color-text-secondary,nui-color-text-secondary);
+            .nui-text-hoverable();
+        }
+    }
+
+    &-small-secondary--inverse {
+        .nui-text-small(@nui-color-text-inverse-secondary,nui-color-text-inverse-secondary);
+
+        &--hoverable {
+            .nui-text-small(@nui-color-text-inverse-secondary,nui-color-text-inverse-secondary);
+            .nui-text-hoverable();
+        }
+    }
+
+    &-small--inverse {
+        .nui-text-small(@nui-color-text-inverse,nui-color-text-inverse);
+
+        &--hoverable {
+            .nui-text-small(@nui-color-text-inverse,nui-color-text-inverse);
+            .nui-text-hoverable();
+        }
+    }
+
+    &-small--hoverable {
+        .nui-text-small(@nui-color-text-default,nui-color-text-default);
+        .nui-text-hoverable();
+    }
+
+    &-small--darkbg {
+        .nui-text-small(@nui-color-text-light, nui-color-text-light);
+    }
+
+    &-small--darkbg--hoverable {
+        .nui-text-small(@nui-color-text-light, nui-color-text-light);
+        .nui-text-hoverable();
+    }
+
+    &-small--disabled {
+        .nui-text-small(@nui-color-text-disabled,nui-color-text-disabled);
+    }
+
+    &-small--disabled--hoverable {
+        .nui-text-small(@nui-color-text-disabled,nui-color-text-disabled);
+        .nui-text-hoverable();
+    }
+
+    // `nui-text-hint` styles are deprecated. Use `nui-text-small-secondary` instead.
+    &-hint {
+        .nui-text-hint(@nui-color-text-secondary,nui-color-text-secondary);
+    }
+
+    &-hint--hoverable {
+        .nui-text-hint(@nui-color-text-secondary,nui-color-text-secondary);
+        .nui-text-hoverable();
+    }
+
+    &-hint--darkbg {
+        .nui-text-hint(@nui-color-text-light-secondary,nui-color-text-light-secondary);
+    }
+
+    &-hint--darkbg--hoverable {
+        .nui-text-hint(@nui-color-text-light-secondary,nui-color-text-light-secondary);
+        .nui-text-hoverable();
+    }
+
+    &-validation {
+        .nui-text-size(small);
+        font-weight: @nui-font-weight-semibold;
+        .setCssVariable(color, nui-color-text-critical);
+    }
+
+    &-ellipsis {
+        .text-overflow(ellipsis);
+    }
+}
+

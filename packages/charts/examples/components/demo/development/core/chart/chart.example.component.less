@@ -1,0 +1,13 @@
+@import "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+
+.tilebox__value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-bottom: @nui-space-xxs;
+    margin-bottom: -@nui-space-xxs;
+    font-size: @nui-font-size-small;
+
+    :not(&--emphasized) {
+        font-weight: @nui-font-weight-regular;
+    }
+}

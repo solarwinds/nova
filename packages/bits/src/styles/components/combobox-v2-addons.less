@@ -1,0 +1,44 @@
+@import (reference) "../nui-framework-variables.less";
+@import (reference) "../mixins.less";
+
+@box-min-width: 250px;
+@box-min-height: 30px;
+
+.nui-combobox-v2 {
+    &__empty-search {
+        .nui-combobox-v2__popup-box();
+        color: rgba(17, 17, 17, 0.6);
+        .setCssVariable(color, nui-color-text-secondary);
+        font-size: @nui-font-size-small;
+    }
+
+    &__create-option {
+        .text-overflow(ellipsis);
+        .nui-combobox-v2__popup-box();
+        display: block;
+        max-width: inherit;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        font-size: @nui-font-size-default;
+        color: @primary_blue;
+        .setCssVariable(background-color, nui-color-bg-transparent-hover);
+        cursor: pointer;
+    }
+}
+
+.nui-combobox-v2__popup-box {
+    display: flex;
+    align-items: center;
+    padding: 0 @nui-space-sm;
+    min-width: @box-min-width;
+    min-height: @box-min-height;
+    text-align: left;
+    line-height: @nui-line-height-small;
+    font-family: @font-family-open-sans;
+    font-weight: @nui-font-weight-regular;
+}
+
+.active-item() {
+    .setCssVariable(background-color, nui-color-selected);
+    .focus-outline-inset();
+}

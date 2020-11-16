@@ -1,0 +1,74 @@
+@import (reference) "../nui-framework-variables";
+
+.nui-badge-core {
+    &:after {
+        position: absolute;
+        padding: @nui-badge-padding;
+        border-radius: @nui-badge-border-radius;
+        color: @nui-color-text-light;
+        z-index: @nui-badge-z-index;
+    }
+}
+
+.nui-badge-counter {
+    .nui-badge-core();
+
+    &:after {
+        top: @nui-badge-counter-top;
+        right: @nui-badge-counter-right;
+        font-size: @nui-badge-counter-font-size;
+        text-align: center;
+        line-height: @nui-badge-counter-line-height;
+        height: @nui-badge-counter-height;
+        min-width: @nui-badge-counter-min-width;
+        padding: @nui-badge-counter-padding;
+        content: attr(data-before);
+        background: @nui-color-semantic-critical;
+    }
+}
+
+.nui-badge-empty {
+    .nui-badge-core();
+
+    &:after {
+        width: @nui-badge-empty-width;
+        height: @nui-badge-empty-height;
+        top: @nui-badge-empty-top;
+        right: @nui-badge-empty-right;
+        content: "\200B";
+        background: @nui-color-semantic-ok;
+    }
+}
+
+
+.nui-badge {
+    &-info {
+        &:after {
+            background: @nui-color-semantic-info;
+        }
+    }
+
+    &-ok {
+        &:after {
+            background: @nui-color-semantic-ok;
+        }
+    }
+
+    &-warning {
+        &:after {
+            background: @nui-color-semantic-warning;
+        }
+    }
+
+    &-critical {
+        &:after {
+            background: @nui-color-semantic-critical;
+        }
+    }
+
+    &-text-black {
+        &:after {
+            color: @nui-color-text-default;
+        }
+    }
+}

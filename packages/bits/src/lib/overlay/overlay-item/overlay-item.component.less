@@ -1,0 +1,16 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+
+:host {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    display: list-item;
+    list-style-type: none;
+
+    &.active:not(.disabled) {
+        .setCssVariable(background-color, nui-color-selected);
+        .focus-outline-inset();
+    }
+}

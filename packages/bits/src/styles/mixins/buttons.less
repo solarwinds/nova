@@ -1,0 +1,29 @@
+@import (reference) url('../nui-framework-variables.less');
+@import (reference) "./component-bases/base-button.less";
+
+//there are 4 variations of button here, almost all the same.  The embarrassing number of variables is needed because
+//we need the variable VALUE (for ie11) and NAME (for grownup browsers).  So, each color (9) needs 2 variables
+
+// TODO: Remove in V10
+.button-variant1() {
+  .button-default();
+}
+.button-variant2() {
+  .button-primary();
+}
+.button-variant3() {
+  .butoon-destructive();
+}
+.button-variant4() {
+    .button-variant(
+        nui-color-text-light;
+        nui-color-active;
+        nui-color-active;
+        nui-color-btn4-focus;
+        nui-color-btn4-focus;
+        nui-color-btn4-activeOpen;
+        nui-color-btn4-activeOpen;
+        nui-color-btn4-activeHover;
+        nui-color-btn4-activeHover
+    );
+}

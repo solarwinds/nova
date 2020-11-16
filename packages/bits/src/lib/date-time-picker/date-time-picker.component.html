@@ -1,0 +1,29 @@
+<div #nuiDatetimePicker class="nui-datetime-picker" [attr.aria-label]="ariaLabel">
+    <div class="nui-datetime-picker__group">
+        <nui-date-picker class="nui-datepicker--justified"
+            [value]="date"
+            (valueChange)="onDateChanged($event)"
+            (inputBlurred)="onInputBlurred()"
+            [maxDate]="maxDate"
+            [minDate]="minDate"
+            [isDisabled]="isDisabled"
+            [isInErrorState]="isInErrorStateDate"
+            [handleTimezone]="handleTimezone"
+            [appendToBody]="appendToBody"
+            [ariaLabel]="ariaLabel + ' date'"
+        ></nui-date-picker>
+    </div>
+    <div class="nui-datetime-picker__group nui-datetime-picker__group--last">
+        <nui-time-picker class="nui-dropdown--justified"
+            [initEmpty]="initEmpty"
+            [model]="time"
+            (timeChanged)="onTimeChanged($event)"
+            (inputBlurred)="onInputBlurred()"
+            [isDisabled]="isDisabled"
+            [isInErrorState]="isInErrorStateTime"
+            [appendToBody]="appendToBody"
+            [ariaLabel]="ariaLabel + ' time'"
+        ></nui-time-picker>
+    </div>
+</div>
+

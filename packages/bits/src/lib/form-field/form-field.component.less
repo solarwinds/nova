@@ -1,0 +1,52 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+.nui .nui-form-field {
+
+    &__control-label-container {
+        clear: left;
+        display: flex;
+        justify-content: space-between;
+        &-description {
+            display: flex;
+            padding-right: @nui-space-xs;
+            overflow: hidden;
+        }
+        &-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+    }
+
+    &__help {
+        display: block;
+        clear: both;
+        padding: 0;
+        line-height: @nui-line-height-default;
+        font-size: @nui-font-size-small;
+        &--error {
+            clear: both;
+            padding: 0;
+            .setCssVariable(color, nui-color-text-critical);
+            margin: 0 0 (@nui-space-xs + @nui-space-xxs) 0;
+            line-height: @nui-line-height-default;
+            font-size: @nui-font-size-small;
+            font-weight: @nui-font-weight-semibold;
+        }
+        &--centered {
+            text-align: center;
+        }
+    }
+
+    &__state-text {
+        .setCssVariable(color, nui-color-text-secondary);
+        cursor: default;
+    }
+
+    &__control-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: @nui-space-xs;
+    }
+}

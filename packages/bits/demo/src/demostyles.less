@@ -1,0 +1,47 @@
+@import "../../src/styles/nui-framework-colors"; //includes nui-framework-colors.less;
+@import "../../src/styles/mixins.less";
+
+@import "components/demo/common/edge-detection-service/edge-detection-service.example.component.less";
+@import "./components/demo/popover/styles.less";
+@import "./components/demo/repeat/repeat-single-selection-mode/repeat-single-selection-mode.example.less";
+@import "./components/demo/select/select-custom-template/select-custom-template.example.component.less";
+@import "components/demo/table/table-search/table-search.example.component.less";
+@import "./components/demo/dragdrop/dragdrop-basic/dragdrop-basic.example.component.less";
+
+.nui.nui-demo {
+    & > body {
+        padding: @nui-space-sm;
+        .setCssVariable(background-color, nui-color-bg-light);
+        .setCssVariable(color, nui-color-text-default);
+    }
+
+    /**
+     * It needs to correct work sticky position on Safari browser
+     */
+    nui-app {
+        display: block;
+    }
+
+    .panel__wrapper {
+        .setCssVariable(background-color, nui-color-bg-secondary);
+    }
+
+    .demoDialogCustomClass .modal-dialog {
+        width: 500px;
+    }
+
+    .demoToastCustomClass {
+        top: 200px;
+        right: 200px;
+    }
+    
+    .overlay-config-demo-custom-class {
+        border: 1px solid red;
+    }
+
+    .select-container,
+    .combobox-container {
+        display: block;
+        margin: 0 20px;
+    }
+}

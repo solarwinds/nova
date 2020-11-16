@@ -1,0 +1,23 @@
+@import (reference) "nui-framework-variables";
+@import (reference) "nui-framework-variables";
+@import (reference) "mixins";
+
+.icon-margin {
+    margin-right: @nui-space-xs;
+}
+
+.app-filtered-view-table-with-custom-virtual-scroll-table__container {
+    height: 400px;
+    border-color: lightgray;
+    overflow: auto;
+}
+
+.app-filtered-view-table-with-custom-virtual-scroll-table-scrolling-container {
+    height: 300px;
+}
+
+.app-filtered-view-table-with-custom-virtual-scroll-table-scrolling-footer {
+    height: 28px;
+    .setCssVariable(background-color, nui-color-bg-transparent);
+    .setCssVariable(color, nui-color-text-secondary);
+}

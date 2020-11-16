@@ -1,0 +1,161 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/nui-framework-animations.less";
+@import (reference) "../../styles/mixins.less";
+
+@popover-margin: @popover-arrow-outer-width + @nui-space-xs;
+@popover-arrow-position: @nui-space-xs - @popover-arrow-outer-width;
+
+@nui-shadow-popover-arrow: -5px 5px 5px -5px @nui-shadow-color;
+@nui-shadow-popover-arrow: -5px 5px 5px -5px var(--nui-shadow-color, @nui-shadow-color);
+
+.nui .nui-popover-container {
+    padding: 0;
+    font-size: @nui-font-size-small;
+    border: none;
+    .setCssVariable(background-color, nui-color-bg-content_popover);
+    background-clip: padding-box;
+    border-radius: 0;
+
+    .reset-text();
+
+    &:not(.unlimited) {
+        min-width: @nui-popover-min-width;
+        max-width: @nui-popover-max-width;
+        max-height: 60vh;
+    }
+
+    &-animation {
+        backface-visiblity: hidden;
+    }
+
+    &__backdrop {
+        .nui-fade(@dialog-backdrop-opacity);
+        .fill();
+        position: fixed;
+        .setCssVariable(background-color, nui-color-overlay-modal);
+        z-index: (@zindex-popover - 1);
+        cursor: default;
+
+        &.modal-backdrop {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: @zindex-modal-background;
+            .setCssVariable(background-color, nui-color-overlay-modal);
+            // Fade for backdrop
+            &.fade { .opacity(0); }
+            &.in { .opacity(@dialog-backdrop-opacity); }
+        }
+    }
+
+    &__frame {
+        .setCssVariable(background-color, nui-color-bg-content_popover);
+        .nui-fade();
+    }
+
+    &__header {
+        &--with-border {
+            border-bottom: 1px solid @nui-color-line-default;
+            border-bottom: 1px solid var(--nui-color-line-default,@nui-color-line-default);
+        }
+    }
+
+    &__title {
+        font-size: @nui-font-size-default;
+        font-weight: @nui-font-weight-semibold;
+        padding: @nui-space-sm;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        .setCssVariable(background-color, nui-color-bg-content_popover);
+        .setCssVariable(color, nui-color-text-default);
+        white-space: nowrap;
+
+        &--with-icon {
+            padding-left: 0;
+        }
+    }
+
+    &__icon {
+        float: left;
+        margin: (@nui-space-sm + @nui-space-xxs) @nui-space-xs @nui-space-sm @nui-space-sm;
+
+        .nui-icon {
+            margin: 0;
+        }
+    }
+
+    &__content {
+        padding: @nui-space-sm;
+        display: block;
+        .setCssVariable(background-color, nui-color-bg-content_popover);
+
+        &.noPadding {
+            padding: 0;
+        }
+    }
+
+    &--shadow {
+        box-shadow: 0 3px 9px @nui-color-overlay-dark;
+        box-shadow: 0 3px 9px var(--nui-color-overlay-dark,@nui-color-overlay-dark);
+    }
+
+    &--hidden {
+        visibility: hidden;
+    }
+}
+
+.nui-popover-container-animation {
+    @arrow-shadow: 3px;
+
+    .nui-overlay-arrow {
+        .overlay-left-bottom &,
+        .overlay-left-top & {
+            right: -@arrow-shadow * 2;
+        }
+
+        .overlay-right-bottom &,
+        .overlay-right-top & {
+            left: -@arrow-shadow * 2;
+        }
+
+        .overlay-left-top &,
+        .overlay-right-top & {
+            bottom: @arrow-shadow * 2;
+        }
+
+        .overlay-top-left &,
+        .overlay-top-right & {
+            bottom: -@arrow-shadow * 2;
+        }
+
+        .overlay-bottom-left &,
+        .overlay-bottom-right & {
+            top: -@arrow-shadow * 2;
+        }
+    }
+}
+
+.nui {
+    nui-popover-modal {
+        display: flex;
+        position: relative;
+    }
+}
+
+.nui .nui-popover {
+    display: inline-flex;
+}
+
+.nui .modal-backdrop {
+    .setCssVariable(background-color, nui-color-overlay-modal);
+}
+
+.nui .nui-popover-overlay {
+    transform: none !important;
+    .nui-overlay {
+        overflow: initial;
+        box-shadow: @nui-shadow-default;
+    }
+}

@@ -1,0 +1,30 @@
+@import (reference) "nui-framework-palette.less";
+@plugin "./plugins/enumerate-variables";
+
+:root,
+.dark-nova-theme .inverse,
+.dark-nova-theme .inverse .inverse .inverse,
+.dark-nova-theme .inverse .inverse .inverse .inverse .inverse {
+    @varList: process("src/styles/nui-framework-colors.less");
+    @import (reference) "nui-framework-colors.less";
+
+    each(@varList, {
+        @evaluated : "@{value}";
+        --@{value} : @@evaluated;
+    });
+}
+
+.dark-nova-theme,
+// this is a temporary solution for color inversion in specified pieces of UI,
+// we'll need to have defined colors for such situations (not just use dark theme colors)
+.inverse,
+.inverse .inverse .inverse,
+.inverse .inverse .inverse .inverse .inverse {
+    @varList: process("src/styles/nui-framework-colors-dark.less");
+    @import (reference) "nui-framework-colors-dark.less";
+
+    each(@varList, {
+        @evaluated: "@{value}";
+        --@{value} : @@evaluated;
+    });
+}

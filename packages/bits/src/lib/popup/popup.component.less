@@ -1,0 +1,131 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../select/base-select.less";
+
+@nui-menu-min-width: 150px;
+@nui-menu-max-height: 300px;
+@nui-menu-max-width: 450px;
+@nui-menu-container-height: 290px;
+
+.nui-menu-popup-host.nui-popup__area {
+    min-width: @nui-menu-min-width;
+    max-width: @nui-menu-max-width;
+    max-height: @nui-menu-max-height;
+
+    .nui-popup__area--container {
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: @nui-menu-container-height;
+        margin: @nui-space-xs 0;
+    }
+}
+
+.nui-select-popup-host {
+    &.nui-popup__area {
+        width: auto;
+
+        .nui-select-base-menu-item();
+    }
+
+    &.nui-select--justified {
+        &.nui-popup__area {
+            max-width: none;
+        }
+        .nui-popup__content {
+            .menu-button {
+                display: flex;
+                flex-grow: 1;
+                max-width: none;
+            }
+        }
+    }
+}
+
+.nui-combobox-popup-host {
+    &.nui-popup__area {
+        .nui-select-base-menu-item();
+    }
+
+    .nui-combobox__menu {
+        .nui-select-base-menu;
+    }
+
+    &.nui-combobox--justified .nui-combobox__menu {
+        max-width: none;
+    }
+}
+
+.nui-selector-append-to-body-host.nui-popup__area {
+    left: -@nui-selector-checkbox-button-width;
+    .nui-selector-popup-area;
+}
+
+.nui-selector-host.nui-popup__area {
+    .nui-selector-popup-area;
+}
+
+.nui-selector-popup-area {
+    min-width: 100px;
+    border: none;
+    .setCssVariable(color, nui-color-text-link);
+
+    .nui-repeat .nui-repeat-item {
+        border: 0;
+    }
+}
+
+.nui-popup {
+    display: inline-flex;
+    position: relative;
+    font-size: @nui-font-size-default;
+    line-height: @line-height-base;
+    border-radius: 0;
+
+    &-container {
+        // cdk-over-container by default disables pointer events for underlying children
+        // and we still want our backdrop to receive them
+        pointer-events: all;
+        flex-direction: column;
+        &.nui-popup--opened {
+            .nui-popup__area {
+                display: block;
+                &.nui-popup__area--visible {
+                    visibility: visible;
+                }
+            }
+        }
+    }
+
+    &__content {
+        display: inline-flex;
+        flex-direction: row;
+    }
+
+    &--detached {
+        position: absolute;
+    }
+
+    &__area {
+        display: none;
+        visibility: hidden;
+        position: absolute;
+        top: 100%;
+        margin: 0;
+        z-index: @zindex-dropdown;
+        .setCssVariable(box-shadow, nui-shadow-default);
+        .setCssVariable(background-color, nui-color-bg-content_popover);
+        &.nui-popup__area--top {
+            top: 0;
+            transform: translateY(-100%);
+        }
+
+        &.nui-popup__area--right {
+            right: 0;
+            left: auto;
+        }
+    }
+
+    &:not(.nui-popup--opened) {
+        background: none;
+    }
+}

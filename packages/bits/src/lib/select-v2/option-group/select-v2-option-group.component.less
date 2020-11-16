@@ -1,0 +1,23 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+
+:host {
+    display: block;
+    width: 100%;
+
+    /deep/ .nui-select-v2-option-group--header {
+        padding: @nui-space-xs @nui-space-sm;
+        text-transform: uppercase;
+        cursor: default;
+        font-size: @nui-font-size-small;
+        .setCssVariable(color, nui-color-text-secondary);
+        line-height: @nui-line-height-small;
+        height: 30px;
+        display: flex;
+        align-items: center;
+    }
+
+    &.hidden {
+        display: none;
+    }
+}

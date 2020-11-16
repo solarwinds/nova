@@ -1,0 +1,45 @@
+﻿@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+:host.nui-divider {
+    .setCssVariable(background-color, nui-color-line-default);
+
+    &--horizontal {
+        display: block;
+        margin: @nui-space-md 0;
+        height: 1px;
+
+        &.xs {
+            margin: @nui-space-xs 0;
+        }
+
+        &.sm {
+            margin: @nui-space-sm 0;
+        }
+
+        &.md {
+            margin: @nui-space-md 0;
+        }
+    }
+
+    &--vertical {
+        width: 1px;
+        margin: 0 @nui-space-xs;
+
+        &.xs {
+            margin: 0 @nui-space-xs;
+        }
+
+        &.sm {
+            margin: 0 @nui-space-sm;
+        }
+
+        &.md {
+            margin: 0 @nui-space-md;
+        }
+    }
+
+    &--no-margin {
+        margin: 0;
+    }
+}

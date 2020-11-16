@@ -1,0 +1,21 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+
+@content-padding-horizontal: 8px;
+
+.nui-content {
+  position: relative;
+  overflow-y: auto;
+  max-height: @content-size-base;
+  padding: @nui-space-md @content-padding-horizontal;
+
+  &.nui-content-large {
+    max-height: @content-size-large;
+  }
+
+  &.nui-content-normal {
+  }
+
+  &.nui-content-small {
+    max-height: @content-size-small;
+  }
+}

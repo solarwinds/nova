@@ -1,0 +1,25 @@
+@import (reference) "nui-framework-variables";
+
+:host {
+    .app-filtered-view-list-with-virtual-scroll-list-repeat {
+        margin: @nui-space-sm @nui-space-md;
+        width: 100%;
+        // it is very important to have a height for virtual scroll
+        height: 300px;
+    }
+
+    .app-filtered-view-list-with-virtual-scroll-list-selector {
+        flex-grow: 0;
+        margin-left: @nui-space-md;
+    }
+
+    .app-filtered-view-list-with-virtual-scroll-list-sorter {
+        flex-grow: 0;
+        margin-left: @nui-space-md;
+    }
+
+    .app-filtered-view-list-with-virtual-scroll-list-search {
+        flex-grow: 1;
+        margin-right: @nui-space-md;
+    }
+}

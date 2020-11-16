@@ -1,0 +1,22 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+
+.nui-overlay {
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.with-popup-styles {
+    .nui-overlay {
+        padding: @nui-space-xs 0;
+        border-radius: @nui-radius-default;
+        box-shadow: @nui-shadow-default;
+        .setCssVariable(background-color, nui-color-bg-content_popover);
+
+        &.empty {
+            padding: 0;
+        }
+    }
+}

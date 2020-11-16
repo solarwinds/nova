@@ -1,0 +1,8 @@
+#!/bin/bash
+
+SCRIPTS=$(dirname $0)
+VERSION=$(node -p "require('./package.json').version")
+
+echo Setting version $VERSION to package dependencies
+
+node $SCRIPTS/set-dependency-versions.js $VERSION

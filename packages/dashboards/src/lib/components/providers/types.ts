@@ -1,0 +1,57 @@
+import { ComparatorTypes, IProperties } from "../../types";
+import { IListWidgetConfiguration } from "../list-widget/types";
+import { ITimeseriesWidgetSeries } from "../timeseries-widget/types";
+
+/** Default refresh interval in seconds */
+export const DEFAULT_REFRESH_INTERVAL = 300;
+
+export interface ITimeseriesDataSourceAdapterConfiguration extends IProperties {
+    series: ITimeseriesWidgetSeries[];
+}
+
+export interface IDataSourceOutput<T> {
+    result: T;
+    error?: IDataSourceError;
+}
+
+export interface IComponentIdPayload {
+    componentId: string;
+}
+
+export interface IDataSourceOutputPayload<T> extends IDataSourceOutput<T>, IComponentIdPayload {
+}
+
+export interface IDataSourceBusyPayload extends IComponentIdPayload {
+    busy: boolean;
+}
+
+export interface IDataSourceError {
+    type: string | number;
+}
+
+
+export type BroadcasterTrackOnType = "component" | "pizzagna";
+
+export interface IBroadcasterConfig {
+    trackOn?: BroadcasterTrackOnType;
+    key: string;
+    paths: string[];
+}
+
+
+export interface IKpiColorRules {
+    comparisonType: ComparatorTypes;
+    value: any;
+    color: any;
+}
+
+interface IDrilldownComponentConfiguration {
+    componentType: string;
+    itemConfigurationMap?: Record<string, any>;
+    itemProperties?: IProperties;
+}
+
+export interface IDrilldownComponentsConfiguration {
+    group: IListWidgetConfiguration;
+    leaf: IListWidgetConfiguration;
+}

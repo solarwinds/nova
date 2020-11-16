@@ -1,0 +1,189 @@
+@import "../../../../src/styles/nui-framework-variables";
+@rectHeight: 25px;
+@rectShadow: rgba(17, 17, 17, 0.3);
+.examples {
+    color: #FF0000;
+    font-family: "Open Sans";
+    font-size: 12px;
+
+    width: 150px;
+
+    .black {
+        color: @black;
+    }
+
+    .examples-font-weight {
+        width: 300px;
+        .font-weight {
+            &-light {
+                width: inherit;
+                font-weight: @nui-font-weight-light;
+            }
+            &-regular {
+                width: inherit;
+                font-weight: @nui-font-weight-regular;
+            }
+            &-semibold {
+                width: inherit;
+                font-weight: @nui-font-weight-semibold;
+            }
+            &-bold {
+                width: inherit;
+                font-weight: @nui-font-weight-bold;
+            }
+        }
+    }
+
+    .examples-font-size {
+        width: 300px;
+        .font-size {
+            &-hero {
+                width: inherit;
+                font-size: @nui-font-size-hero;
+            }
+            &-big {
+                width: inherit;
+                font-size: @nui-font-size-big;
+            }
+            &-default {
+                width: inherit;
+                font-size: @nui-font-size-default;
+            }
+            &-small {
+                width: inherit;
+                font-size: @nui-font-size-small;
+            }
+        }
+    }
+
+    .examples-icon-size {
+        width: 300px;
+        .icon-size {
+            &-medium {
+                width: inherit;
+                height: @icon-size-medium;
+                width: @icon-size-medium;
+                border: 1px solid #FF0000;
+            }
+            &-default {
+                width: inherit;
+                height: @icon-size-default;
+                width: @icon-size-default;
+                border: 1px solid #FF0000;
+            }
+            &-small {
+                width: inherit;
+                height: @icon-size-small;
+                width: @icon-size-small;
+                border: 1px solid #FF0000;
+            }
+        }
+    }
+
+    .space {
+        &-m {
+            background-color: rgba(100%, 0, 0, 0.2);
+            width: @nui-space-md;
+            height: @rectHeight;
+        }
+        &-s {
+            background-color: rgba(97.6%,61.6%,11%, 0.2);
+            width: @nui-space-sm;
+            height: @rectHeight;
+        }
+        &-xs {
+            background-color: rgba(18.8%,69.8%,18.8%, 0.2);
+            width: @nui-space-xs;
+            height: @rectHeight;
+        }
+        &-xxs {
+            background-color: rgba(0%,59.2%,92.2%, 0.2);
+            width: @nui-space-xxs;
+            height: @rectHeight;
+        }
+    }
+
+    .examples-line-thickness {
+        width: 150px;
+        .line {
+            width: 100px;
+            background-color: #FF0000;
+            &-default {
+                height: 1px;
+            }
+            &-medium{
+                height: 2px;
+            }
+            &-thick {
+                height: 3px;
+            }
+            &-fat {
+                height: 4px;
+            }
+        }
+    }
+
+    .rect-with-radius {
+        background-color: #FF0000;
+        border-radius: @nui-radius-default;
+        width: 30px;
+        height: 30px;
+    }
+}
+.spacing-hints {
+    .color-black {
+        color: black;
+    }
+}
+
+.shadow-rectangle {
+    width: 300px;
+    height: 100px;
+    margin: 10px;
+    padding: 20%;
+    &.shadow-default {
+        box-shadow: @nui-shadow-default;
+    }
+    &.shadow-elevated {
+        box-shadow: @nui-shadow-elevated;
+    }
+    &.shadow-stronger {
+        box-shadow: @nui-shadow-stronger;
+    }
+    &.shadow-inner {
+        box-shadow: @nui-shadow-inner;
+    }
+    &.shadow-inner-top {
+        box-shadow: @nui-shadow-inner-top;
+    }
+    &.shadow-inner-top-bottom {
+        box-shadow: @nui-shadow-inner-top-bottom;
+    }
+    &.shadow-inner-bottom {
+        box-shadow: @nui-shadow-inner-bottom;
+    }
+    &.shadow-inner-left {
+        box-shadow: @nui-shadow-inner-left;
+    }
+    &.shadow-inner-right {
+        box-shadow: @nui-shadow-inner-right;
+    }
+    &.shadow-inner-left-right {
+        box-shadow: @nui-shadow-inner-left-right;
+    }
+    &.scroll-shadow {
+        height: 150px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 2%;
+    }
+    &.horizontal {
+        padding: 2%;
+        overflow-y: hidden;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+.example-text {
+    width: 500px;
+}

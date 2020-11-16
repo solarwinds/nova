@@ -1,0 +1,23 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) '@solarwinds/nova-bits/sdk/less/mixins';
+
+.dashboard {
+    height:800px;
+}
+
+// Styling for the custom configurator section
+.kpi-description-configuration {
+    &__accordion-content {
+        padding: @nui-space-md @nui-space-md @nui-space-md (@nui-space-md * 2 + @icon-size-default);
+    }
+
+    &__custom-content-container {
+        .setCssVariable(background-color, nui-color-bg-dark);
+        border-radius: @nui-radius-default;
+    }
+
+    &__custom-content-header,
+    &__custom-content {
+        .setCssVariable(color, nui-color-text-light);
+    }
+}

@@ -1,0 +1,57 @@
+<div class="nui-datepicker">
+    <nui-popup *ngIf="!inline"
+        (opened)="onPopupOpened($event)"
+        [appendToBody]="appendToBody">
+        <div nuiPopupToggle
+             class="nui-datepicker__container"
+             [disabled]="isDisabled"
+             [class.disabled]="isDisabled">
+            <nui-textbox #date
+                         autocomplete="off"
+                         [disabled]="isDisabled"
+                         [isInErrorState]="isInErrorState"
+                         (textChange)="onInputActiveDateChanged($event)"
+                         (blurred)="updateTouchedState()"
+                         [ariaLabel]="ariaLabel">
+            </nui-textbox>
+            <nui-icon class="nui-datepicker__icon"
+                      icon="calendar"
+                      aria-hidden="true"
+                      [iconColor]="getIconColor()"></nui-icon>
+        </div>
+        <ng-container popupAreaContent *ngTemplateOutlet="datePickerInner"></ng-container>
+    </nui-popup>
+    <div *ngIf="inline"><ng-container *ngTemplateOutlet="datePickerInner"></ng-container></div>
+</div>
+
+<ng-template #datePickerInner>
+    <nui-date-picker-inner [value]="value"
+                           [selectedDate]="selectedDate"
+                           [inline]="inline"
+                           (update)="onUpdate($event)"
+                           [locale]="locale"
+                           [datepickerMode]="datepickerMode"
+                           [initDate]="initDate"
+                           [minDate]="minDate"
+                           [maxDate]="maxDate"
+                           [minMode]="minMode"
+                           [maxMode]="maxMode"
+                           [showWeeks]="showWeeks"
+                           [dateFormat]="dateFormat"
+                           [formatDay]="formatDay"
+                           [formatMonth]="formatMonth"
+                           [formatYear]="formatYear"
+                           [formatDayHeader]="formatDayHeader"
+                           [formatDayTitle]="formatDayTitle"
+                           [formatMonthTitle]="formatMonthTitle"
+                           [startingDay]="startingDay"
+                           [yearRange]="yearRange"
+                           [disabledDates]="disabledDates"
+                           [onlyCurrentMonth]="onlyCurrentMonth"
+                           [preserveInsignificant]="preserveInsignificant"
+                           [handleTimezone]="handleTimezone">
+        <nui-day-picker tabindex="0"></nui-day-picker>
+        <nui-month-picker tabindex="0"></nui-month-picker>
+        <nui-year-picker tabindex="0"></nui-year-picker>
+    </nui-date-picker-inner>
+</ng-template>

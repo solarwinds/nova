@@ -1,0 +1,51 @@
+<div class="nui-example-wrapper__container">
+    <div class="nui-example-wrapper__header">
+        <h4 class="nui-example-wrapper__title">{{exampleTitle}}</h4>
+        <div>
+            <button nui-button
+                    type="button"
+                    displayStyle="action"
+                    icon="{{showSource ? 'double-caret-up' : 'double-caret-down'}}"
+                    [nuiTooltip]="getTooltip()"
+                    tooltipPlacement="bottom"
+                    (click)="showSource = !showSource">
+            </button>
+            <button nui-button
+                    type="button"
+                    displayStyle="action"
+                    icon="external-link"
+                    nuiTooltip="Open in Plunker (only self-contained examples are opened properly)"
+                    tooltipPlacement="bottom"
+                    (click)="openPlunker()">
+            </button>
+        </div>
+    </div>
+    <div *ngIf="showSource" class="nui-example-wrapper__source">
+        <nui-tab-group>
+            <nui-tab *ngIf="!!componentSources.html" heading="HTML">
+                <div class="media-body">
+                    <nui-copy-text fileContent={{componentSources.html}}></nui-copy-text>
+                    <nui-example-code language="html">{{componentSources.html}}</nui-example-code>
+                </div>
+            </nui-tab>
+            <nui-tab *ngIf="!!componentSources.ts" heading="Typescript">
+                <nui-copy-text fileContent={{componentSources.ts}}></nui-copy-text>
+                <div class="media-body">
+                    <nui-example-code language="typescript">{{componentSources.ts}}</nui-example-code>
+                </div>
+            </nui-tab>
+            <nui-tab *ngIf="!!componentSources.less" heading="Less">
+                <nui-copy-text fileContent={{componentSources.less}}></nui-copy-text>
+                <div class="media-body">
+                    <nui-example-code *ngIf="!!componentSources.less; else noLess">{{componentSources.less}}</nui-example-code>
+                    <ng-template #noLess>
+                        <nui-image image="no-data-to-show"></nui-image>
+                    </ng-template>
+                </div>
+            </nui-tab>
+        </nui-tab-group>
+    </div>
+    <div class="nui-example-wrapper__content">
+        <ng-content></ng-content>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="mt-2 nui-edge-definer">
+    <nui-panel>
+        <div nuiPanelEmbeddedBody<% if(dataSource === "custom") {%> nui-busy [busy]="isBusy"<%}%>><%
+        if(dataSource === "custom") {%><nui-spinner size="large" i18n-message message="Loading..."></nui-spinner><% } %>
+            <<%= prefix %>-filter-groups-wrapper>
+                <<%= prefix %>-filter-group *ngFor="let filterGroupItem of filterGroupItems"
+                                            [filterGroupItem]="filterGroupItem"
+                                            <% if (chips) { %>(filterChanged)="applyFilters()"<% } else { %>(filterChanged)="child.applyFilters()"<% } %>
+                                            ></<%= prefix %>-filter-group>
+            </<%= prefix %>-filter-groups-wrapper>
+        </div>
+        <div class="ml-2"><%
+            if(chips) {%>
+            <div>
+                <nui-chips [itemsSource]="chipsDataSource"
+                           [overflow]="true"
+                           (chipRemoved)="onClear($event)"
+                           (removeAll)="onClearAll($event)"
+                           (chipsOverflowed)="onChipsOverflow($event)">
+                    <div class="nui-chips-overflowed" #overflowCounterLabel *ngIf="overflowCounter > 0">
+                        <nui-popover trigger="click"
+                                     [popoverOverlayPosition]="overflowPopoverPosition"
+                                     [template]="popoverWithClickTrigger">
+                            <a class="nui-chips-overflowed__counter">+{{ overflowCounter }}</a>
+                        </nui-popover>
+                    </div>
+                </nui-chips>
+
+                <ng-template #popoverWithClickTrigger>
+                    <nui-chips-overflow
+                            [overflowSource]="overflowSource"
+                            [itemsSource]="chipsDataSource"
+                            (chipRemoved)="onClear($event)"
+                            orientation="vertical">
+                    </nui-chips-overflow>
+                </ng-template>
+            </div><% } %>
+            <<%= childSelector %> #child></<%= childSelector %>>
+        </div>
+    </nui-panel>
+</div>

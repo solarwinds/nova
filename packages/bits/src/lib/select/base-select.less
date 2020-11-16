@@ -1,0 +1,48 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/nui-framework-base.less";
+@import (reference) "../../styles/nui-framework-colors.less";
+@import (reference) "../../styles/components/buttons.less";
+
+@nui-select-max-height: 300px;
+@nui-select-narrow-input-width: 100px;
+
+.nui-select-base-popup {
+    .nui-popup__area [popupAreaContent] {
+        padding: 0;
+    }
+
+    .nui-popup__area {
+        width: 100%;
+        min-width: 160px;
+        max-width: 400px;
+        height: 100%;
+        overflow-y: auto;
+    }
+}
+
+.nui-select-base-menu {
+    max-height: @nui-select-max-height;
+    overflow-y: auto;
+    max-width: 400px;
+}
+
+// Is used in SelectComponent and PopupComponentDeprecated for select in append to body mode
+.nui-select-base-menu-item() {
+    .nui-menu-item {
+        .nui-menu-item__action {
+            .setCssVariable(color, nui-color-text-default);
+        }
+
+        &.item-selected {
+            .nui-menu-item__action {
+                .setCssVariable(background-color, nui-color-selected);
+                .setCssVariable(color, nui-color-text-default);
+                font-weight: @nui-font-weight-semibold;
+
+                &:hover {
+                    .setCssVariable(background-color, nui-color-selected-hover);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,112 @@
+@import (reference) "../../../styles/nui-framework-variables";
+@import (reference) "../../../styles/mixins.less";
+
+.nui-example-code {
+    white-space: pre;
+    font-family: 'Source Code Pro', monospace;
+    padding: 0.5em;
+
+    &--no-padding.hljs {
+        padding: 0;
+    }
+
+    &--transparent-background.hljs,
+    &--transparent-background > .hljs {
+        background: none;
+    }
+}
+
+
+/**************************************************************************************
+ *  Custom Highlight.js theme
+ **************************************************************************************/
+.hljs {
+    display: block;
+    overflow-x: auto;
+    color: @nui-code-color;
+    background-color: @nui-code-bg-color;
+
+    &-name,
+    &-strong {
+        font-weight: bold;
+    }
+
+    &-code,
+    &-emphasis {
+        font-style: italic;
+    }
+
+    &-tag {
+        color: #62c8f3;
+    }
+
+    &-variable,
+    &-template-variable,
+    &-selector-id,
+    &-selector-class {
+        color: #ade5fc;
+    }
+
+    &-string,
+    &-bullet {
+        color: #a2fca2;
+    }
+
+    &-type,
+    &-title,
+    &-section,
+    &-attribute,
+    &-quote,
+    &-built_in,
+    &-builtin-name {
+        color: #ffa;
+    }
+
+    &-number,
+    &-symbol,
+    &-bullet {
+        color: #d36363;
+    }
+
+    &-keyword,
+    &-selector-tag,
+    &-literal {
+        color: #fcc28c;
+    }
+
+    &-comment,
+    &-deletion,
+    &-code {
+        color: #888;
+    }
+
+    &-regexp,
+    &-link {
+        color: #c6b4f0;
+    }
+
+    &-meta {
+        color: #fc9b9b;
+    }
+
+    &-deletion {
+        background-color: #fc9b9b;
+        color: @light_black;
+    }
+
+    &-addition {
+        background-color: #a2fca2;
+        color: @light_black;
+    }
+
+    & a {
+        color: inherit;
+    }
+
+    & a:focus,
+    & a:hover {
+        color: inherit;
+        text-decoration: underline;
+    }
+
+}

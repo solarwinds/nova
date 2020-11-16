@@ -1,0 +1,11 @@
+// Typography
+
+.text-emphasis-variant(@color, @colorName, @hoverColor, @hoverColorName) {
+  color: @color;
+  color: ~"var(--@{colorName},@{color})";
+  a&:hover,
+  a&:focus {
+    color: @hoverColor;
+    color: ~"var(--@{hoverColorName},@{hoverColor})";
+  }
+}

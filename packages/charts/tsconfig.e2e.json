@@ -1,0 +1,21 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "declaration": true,
+        "types": [
+            "jasmine",
+            "jasminewd2",
+            "node",
+            "selenium-webdriver"
+        ]
+    },
+    "files": [
+        "index.ts"
+    ],
+    "exclude": [
+        "**/*.e2e.ts",
+        "**/*.visual.ts"
+    ]
+}

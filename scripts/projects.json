@@ -1,0 +1,34 @@
+[
+    {
+        "path": ".",
+        "dependencies": []
+    },
+    {
+        "path": "packages/bits",
+        "dependencies": []
+    },
+    {
+        "path": "packages/bits/schematics",
+        "dependencies": []
+    },
+    {
+        "path": "packages/dashboards",
+        "dependencies": ["@solarwinds/nova-bits", "@solarwinds/nova-charts"]
+    },
+    {
+        "path": "packages/dashboards/schematics",
+        "dependencies": []
+    },
+    {
+        "path": "packages/charts",
+        "dependencies": ["@solarwinds/nova-bits"]
+    },
+    {
+        "path": "consumer/web",
+        "dependencies": []
+    },
+    {
+        "path": "consumer/server",
+        "dependencies": []
+    }
+]

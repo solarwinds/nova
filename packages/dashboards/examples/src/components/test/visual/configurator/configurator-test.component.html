@@ -1,0 +1,7 @@
+<button type="button" nui-button class="mb-3 ml-4 nui-widget-cloner-test-button" (click)="onCloneWidget()" i18n>Create Widget Clone</button>
+<dashboard-test-harness [(editMode)]="editMode" [dsError]="dsError" (dsErrorChange)="onDsErrorChange($event)">
+    <div class="dashboard">
+        <nui-dashboard [nuiWidgetEditor]="submitHandler" [(dashboard)]="dashboard" [(gridsterConfig)]="gridsterConfig"
+                       [editMode]="editMode"></nui-dashboard>
+    </div>
+</dashboard-test-harness>

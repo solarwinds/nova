@@ -1,0 +1,57 @@
+<div class="app-filtered-view-table-with-custom-virtual-scroll-table__container">
+    <cdk-virtual-scroll-viewport class="app-filtered-view-table-with-custom-virtual-scroll-table-scrolling-container" tableStickyHeader #viewportRef [itemSize]="rowHeight">
+    <table nui-table [dataSource]="items | sliceRange: viewportRef.getRenderedRange()">
+        <ng-container nuiColumnDef="name">
+            <th nui-header-cell [style.width.%]="30" *nuiHeaderCellDef i18n> Name</th>
+            <td nui-cell *nuiCellDef="let element"> {{element.name}}</td>
+        </ng-container>
+
+        <ng-container nuiColumnDef="location">
+            <th nui-header-cell [style.width.%]="30" *nuiHeaderCellDef i18n> Location</th>
+            <td nui-cell *nuiCellDef="let element"> {{element.location}}</td>
+        </ng-container>
+
+        <ng-container nuiColumnDef="status">
+            <th nui-header-cell *nuiHeaderCellDef i18n> Status</th>
+            <td nui-cell *nuiCellDef="let element"> {{element.status}}</td>
+        </ng-container>
+
+        <tr nui-header-row *nuiHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <ng-template nuiRowDef cdkVirtualFor
+                         let-context
+                         [nuiRowDefColumns]="displayedColumns"
+                         [cdkVirtualForOf]="items">
+                <tr nui-row ></tr>
+            </ng-template>
+    </table>
+    </cdk-virtual-scroll-viewport>
+
+    <footer class="app-filtered-view-table-with-custom-virtual-scroll-table-scrolling-footer">
+        <div *ngIf="isBusy; else defaultText">
+            <nui-progress [show]="true" [compactMode]="true"></nui-progress>
+            <div class="d-flex justify-content-center align-items-center">Loading next {{pageSize}} items...</div>
+        </div>
+        <ng-template #defaultText>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="p-1 d-flex">
+                    <div class="d-flex pt-3 pb-3" i18n>
+                        Showing {{items.length}}
+                         item(s).
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button btn
+                                nui-button
+                                i18n
+                                type="button"
+                                size="default"
+                                displayStyle="action"
+                                (click)="applyFilters(false)">
+                            Load another {{pageSize}} items
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </footer>
+</div>
+

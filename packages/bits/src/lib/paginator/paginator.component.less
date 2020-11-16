@@ -1,0 +1,148 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+.nui .nui-paginator {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .nui-select {
+        .nui-button.menu-button {
+            // TODO this fix is temporary, a way to manipulate child components should be changed
+            min-width: 60px;
+        }
+    }
+
+    &__info {
+        font-size: @nui-font-size-default;
+        margin-right: @nui-space-sm;
+        .setCssVariable(color, nui-color-text-default);
+    }
+
+    &__icon {
+        position: relative;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+    }
+
+    &__dots {
+        font-size: @nui-font-size-default;
+        &:hover {
+            cursor: pointer;
+            .setCssVariable(background-color, nui-color-bg-light-hover);
+        }
+    }
+
+    &__elipsis-pages[popupAreaContent] {
+        padding: 0;
+        max-height: 130px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    &__list {
+        border-radius: 0;
+        display: flex;
+        border-collapse: collapse;
+        padding-left: 3px;
+        font-size: @nui-font-size-default;
+        margin-right: @nui-space-md;
+        margin-bottom: 0;
+        .clearfix();
+
+        > li > button.move-icon {
+            padding: @nui-space-xs;
+        }
+
+        > li {
+            position: relative;
+            padding: 0;
+            display: inline;
+        }
+
+        > .active {
+            > button,
+            > button:hover,
+            > button:focus {
+                background-color: transparent;
+                border-color: transparent;
+                .setCssVariable(color, nui-color-text-default);
+                font-weight: @nui-font-weight-semibold;
+                cursor: default;
+                z-index: 2;
+            }
+        }
+    }
+
+    &__page-table {
+        .setCssVariable(background-color, nui-color-bg-transparent);
+        &.native-scroll {
+            margin: @nui-space-sm;
+        }
+
+        &:not(.native-scroll) {
+            tr {
+                // This together with width 100% stretches the row to the width of the container.
+                // Otherwise, each row will have width 150px and will be moved to the left side, which does not look good,
+                // and it will look different from native-scroll option.
+                // Last row is allowed not to be stretched, since it is the row, upon which the container's width is calculated,
+                // and it will look the same. Leaving 100% for the last row may even brake the layout in cases when last row
+                // has less than 5 items.
+                display: inline-table;
+
+                &.stretch-row {
+                    width: 100%;
+                }
+            }
+        }
+        tr:not(:last-child) {
+            .nui-paginator__page-cell {
+                padding-bottom: @nui-space-sm;
+            }
+        }
+        .cdk-virtual-scroll-content-wrapper {
+            padding: @nui-space-sm;
+        }
+    }
+
+    &__page-cell {
+        > .btn {
+            min-width: 30px;
+            padding: @nui-space-xs;
+        }
+    }
+
+    &__options {
+        display: flex;
+        align-items: center;
+
+        .nui-select .nui-popup .nui-popup__area {
+            min-width: 0;
+
+            .nui-select__menu {
+                min-width: 0;
+            }
+        }
+    }
+}
+
+.popup-adapter-overlay .nui-overlay.nui-select-popup-host {
+    min-width: 0;
+}
+
+nui-popup-container[parent="PaginatorComponent"] .nui-popup__area {
+    min-width: 0;
+    .nui-select__menu {
+        min-width: 0;
+    }
+}
+
+//Bug with scroll in firefox: https://bugzilla.mozilla.org/show_bug.cgi?id=1424328
+@-moz-document url-prefix() {
+    .nui-paginator__page-table tr:nth-child(4) td:last-child {
+        padding-right: 15px;
+    }
+}

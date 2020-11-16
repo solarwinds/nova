@@ -1,0 +1,5 @@
+<nui-select id="nui-demo-basic-select-required"
+            [itemsSource]="dataset.items"
+            [isInErrorState]="isInErrorState()"
+            [value]="dataset.selectedItem"
+            (changed)="valueChange($event)"></nui-select>

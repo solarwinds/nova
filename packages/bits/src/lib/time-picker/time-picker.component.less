@@ -1,0 +1,47 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/nui-framework-base.less";
+@import (reference) "../../styles/nui-framework-colors.less";
+
+@nui-timepicker-container-width: 135px;
+@nui-timepicker-menu-height: 300px;
+
+.nui .nui-timepicker {
+    &__container {
+        width: @nui-timepicker-container-width;
+        height: @nui-space-sm * 3;
+        position: relative;
+    }
+
+    &__icon {
+        cursor: pointer;
+        position: absolute;
+        top: @nui-space-xs + @nui-space-xxs;
+        right: @nui-space-xs + @nui-space-xxs;
+        z-index: (@zindex-active + 1);
+    }
+
+    &__menu {
+        .setCssVariable(background-color, nui-color-bg-content_popover);
+        max-height: @nui-timepicker-menu-height;
+        overflow-y: auto;
+        min-width: @nui-timepicker-container-width;
+        text-align: left;
+    }
+
+    &__input-disabled {
+        & + .nui-timepicker__icon {
+            pointer-events: auto;
+            cursor: @cursor-disabled;
+        }
+    }
+
+    .nui-popup-container {
+        display: inline-flex;
+    }
+
+    .nui-textbox .has-feedback {
+        .nui-textbox__input {
+            line-height: @nui-line-height-small;
+        }
+    }
+}

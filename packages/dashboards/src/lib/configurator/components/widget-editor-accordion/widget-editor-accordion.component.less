@@ -1,0 +1,59 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) '@solarwinds/nova-bits/sdk/less/mixins';
+
+.nui-widget-editor-accordion {
+    nui-form-field:last-child {
+        .nui-form-field {
+            margin-bottom: 0;
+        }
+    }
+
+    &__edit-icon {
+        padding: @nui-space-sm;
+        margin-left: auto;
+        margin-right: @nui-space-xs;
+    }
+
+    .nui-expander--expanded {
+        padding-bottom: 0;
+    }
+
+    // Until expander supports visual customization these styles are required
+    .nui-expander__header-icon {
+        display: none;
+    }
+
+    .nui-expander__header {
+        .error-state {
+            .setCssVariable(background-color, nui-color-semantic-critical-bg);
+        }
+
+        .warning-state {
+            .setCssVariable(background-color, nui-color-semantic-warning-bg);
+        }
+
+        [nuiexpanderheader] {
+            border-top: 1px solid;
+            .setCssVariable(border-top-color, nui-color-line-default);
+            min-height: 50px;
+
+            [accordionheader] {
+                overflow: hidden;
+
+                & > div {
+                    overflow-x: hidden;
+
+                    .nui-text-secondary {
+                        .text-overflow(ellipsis);
+                    }
+                }
+            }
+        }
+    }
+
+    .nui-expander__body {
+        margin: 0;
+        padding: 0;
+        border-left: none;
+    }
+}

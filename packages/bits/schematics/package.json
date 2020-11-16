@@ -1,0 +1,15 @@
+{
+  "name": "nova-schematics",
+  "version": "9.29.0",
+  "scripts": {
+    "assemble": "npm run build && npm run test && npm run copy",
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && jasmine src/**/*_spec.js",
+    "copy": "npm run copy-collection && npm run copy-schematics",
+    "copy-collection": "cpx \"src/collection.json\" ../dist/sdk/schematics/",
+    "copy-schematics": "cpx \"src/**/{*.json,index.js,schematics-helper.js}\" ../dist/sdk/schematics/ && cpx \"src/**/files/**\" ../dist/sdk/schematics/"
+  },
+  "keywords": [
+    "schematics"
+  ]
+}

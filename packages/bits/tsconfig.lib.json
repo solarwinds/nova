@@ -1,0 +1,27 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./dist/aot",
+        "declaration": false,
+        "target": "es6",
+        "module": "es6",
+        "baseUrl": ".",
+        "paths": {
+            "highlight.js": ["./node_modules/highlight.js/lib/highlight.js"] // to ensure we load highlight without languages
+        }
+    },
+    "typeRoots": [
+        "node_modules/@types"
+    ],
+    "files": [
+        "./src/public_api.ts"
+    ],
+    "exclude": [],
+    "angularCompilerOptions": {
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true,
+        "fullTemplateTypeCheck": true,
+        "strictInjectionParameters": true,
+        "enableResourceInlining": true
+    }
+}

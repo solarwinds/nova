@@ -1,0 +1,48 @@
+version: '3.5'
+
+services:
+  build:
+    image: docker.dev.local/nova:build22
+    working_dir: /nova
+    environment:
+      - TEAMCITY_VERSION
+      - PACKAGE_VERSION
+      - PACKAGE_NAME
+      - CUSTOM_VERSION
+      - RELEASE_VERSION
+      - INCREMENT_TYPE
+      - NPM_AUTH
+      - PROJECT_DIR
+      - SOURCE_BRANCH
+      - RELEASE_BRANCH
+      - BUILD_BRANCH
+      - CREATE_RELEASE_BRANCH
+      - SSH_AUTH_SOCK=/tmp/ssh_auth_sock
+      - EYES_API_KEY
+      - TEAMCITY_PROJECT_NAME
+      - MAJOR_PROJECT_NAME
+      - MACHINE_URL
+      - APPLITOOLS_BATCH_ID
+      - E2E_BASE_URL=http://web/
+      - SELENIUM_ADDRESS=http://selenium:4444/wd/hub
+      - CI='true'
+    ports:
+      - "4200:4200"
+      - "49153:49153"
+    volumes:
+      - "./:/nova:rw"
+      - "$SSH_AUTH_SOCK:/tmp/ssh_auth_sock"
+      - "/root/.ssh:/root/.ssh"
+    shm_size: '2gb'
+  web:
+    image: "nginx"
+    volumes:
+      - "./${PROJECT_DIR}/sdk/api-docs-ng2/examples:/usr/share/nginx/html:ro"
+  selenium:
+    image: "selenium/standalone-chrome-debug"
+    ports:
+      - "4444:4444"
+      - "5900:5900"
+    depends_on:
+      - web
+    shm_size: '2gb'

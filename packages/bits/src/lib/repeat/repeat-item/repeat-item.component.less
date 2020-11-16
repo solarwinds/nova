@@ -1,0 +1,96 @@
+﻿@import (reference) "../../../styles/nui-framework-spaces.less";
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+@import (reference) "../../../styles/components/buttons.less";
+
+/**customization for the DND clone that's appended directly to the body */
+body > nui-repeat-item.cdk-drag-preview .nui-repeat-item {
+    list-style-type: none;
+
+    &__controls-drag-handle {
+        display: none;
+    }
+}
+
+.nui .nui-repeat-item {
+    &:active, &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        .setCssVariable(background-color, nui-color-bg-secondary);
+    }
+
+    &__content {
+        display: flex;
+    }
+
+    &__controls-drag-handle {
+        height: @icon-size-default;
+
+        .nui-dnd-handle:hover {
+            cursor: move;
+        }
+    }
+
+    &__controls-container {
+        // this calculation aligns the checkbox with the selector at the top left of the repeat
+        padding-left: @nui-button-border-width + @nui-space-xxs;
+
+        .nui-repeat-item__checkbox {
+            .nui-checkbox {
+                display: flex;
+                justify-content: center;
+                width: 30px;
+                height: 30px;
+                &__label:hover {
+                     background-color: transparent;
+                }
+
+                &__transclude {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+
+    &__content-container {
+        min-height: 30px;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        margin-left: 5px;
+        margin-right: 10px;
+        min-width: 0;
+    }
+
+    &__actions-container {
+        margin-left: 5px;
+        display: flex;
+        align-items: flex-start;
+
+        .btn-action:focus {
+            background-color: transparent;
+        }
+    }
+
+    &.nui-repeat-item--clickable {
+        &:not(.nui-repeat-item--selected) {
+            &:hover {
+                .setCssVariable(background-color, nui-color-bg-secondary);
+            }
+        }
+    }
+
+    &.nui-repeat-item--selected {
+        .setCssVariable(background-color, nui-color-selected);
+        .setCssVariable(color, nui-color-text-default);
+
+        &.nui-repeat-item--clickable {
+            &:hover {
+                .setCssVariable(background-color, nui-color-selected-hover);
+            }
+        }
+    }
+}
+

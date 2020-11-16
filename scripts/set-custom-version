@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+usage()
+{
+    echo "Typically invoked by a human to make changing the version across all packages easier"
+    echo
+    echo "Usage: set-custom-version <VERSION>"
+    echo
+    echo "Options:"
+    echo "  -h, --help       [Optional] Show this help message"
+}
+
+case "$1" in
+    -h | --help)
+        usage
+        exit
+        ;;
+esac
+
+SCRIPTS=$(realpath $(dirname $0))
+VERSION=$1
+
+echo Directory: $SCRIPTS
+echo Version: $VERSION
+
+paths=$(cat $SCRIPTS/paths.txt)
+echo Package paths: $paths
+
+for p in $paths; do
+    cd $SCRIPTS
+
+    cd ../$p
+    echo Setting version in $p to $VERSION
+    npm version --force --allow-same-version --no-git-tag-version $VERSION
+done

@@ -1,0 +1,97 @@
+<nui-schematic-docs-page schematicFolderName="table">
+    <div schematicSummary>
+        <p>
+            The Table schematic provides the ability to create a generic table that can cover a majority of use cases.
+            Its main responsibility is to integrate the functionality of the <code>nui-table</code> component with other components
+            commonly used with a table such as <code>nui-search</code> and <code>nui-paginator</code>.
+        </p>
+        <h2>Notable Command Line Options</h2>
+        <nui-schematic-cli-option name="selectionMode"></nui-schematic-cli-option>
+        <nui-schematic-cli-option name="pagingMode"></nui-schematic-cli-option>
+        <nui-schematic-cli-option name="dataSource"></nui-schematic-cli-option>
+        <nui-schematic-cli-option name="enableSearch"></nui-schematic-cli-option>
+        <nui-schematic-cli-option name="enableSort"></nui-schematic-cli-option>
+    </div>
+    <nui-tab-group schematicExamples>
+        <nui-tab heading="Basic">
+            <h2>Basic Usage</h2>
+            <p>
+                This example illustrates the output of the CLI command without any modifications. Consumers are able to build upon the generated boilerplate to
+                provide additional functionality depending on their use case. Data manipulations (filtering/pagination/sorting/search) are handled by the
+                <a target="_blank" href="../injectables/ClientSideDataSource.html"><code>ClientSideDataSource</code></a>
+                service, which can be extended with custom filtering behavior.
+            </p>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --p=app --name=basic-table --enable-search=false --enable-sort=false</nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="basic-table">
+                <app-basic-table></app-basic-table>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Sort">
+            <h2>Table Sorting</h2>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --p=app --name=table-with-sort --enable-sort --enable-search=false</nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="table-with-sort">
+                <app-table-with-sort></app-table-with-sort>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Search">
+            <h2>Table with Search</h2>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --p=app --name=table-with-search --enable-search --enable-sort=false</nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="table-with-search">
+                <app-table-with-search></app-table-with-search>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Pagination">
+            <h2>Pagination</h2>
+            <p>
+                This example shows how to add pagination to <code>nui-table</code> with a remote data source.
+            </p>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --name=table-with-pagination --p=app --pagingMode=pagination --dataSource=serverSide</nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="table/table-with-pagination">
+                <app-table-with-pagination></app-table-with-pagination>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Selection">
+            <h2>Selection</h2>
+            <p>
+                This example shows how to add selection to <code>nui-table</code> with a remote data source.
+            </p>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --name=table-with-pagination --p=app --pagingMode=pagination --dataSource=serverSide
+                <strong>--selectionMode=multi</strong></nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="table/table-with-selection">
+                <app-table-with-selection></app-table-with-selection>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Virtual Scroll" #vs>
+            <h2>Virtual Scroll</h2>
+            <p>
+                This example shows how to add virtual scroll to <code>nui-repeat</code> with a remote data source.
+            </p>
+            <nui-message [allowDismiss]="false" type="warning">
+                Since the example makes use of search and sorting filters, it's important to note that
+                the viewport manager's paging progress must be reset each time the data is refreshed with
+                new filtered results whenever the filters are changed.
+            </nui-message>
+            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --name=table-with-virtual-scroll --p=app --pagingMode=virtualScroll --dataSource=serverSide</nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="table/table-with-virtual-scroll">
+                <app-table-with-virtual-scroll *ngIf="vs.active"></app-table-with-virtual-scroll>
+            </nui-schematic-docs-example>
+        </nui-tab>
+
+        <nui-tab heading="Custom Virtual Scroll" #cvs>
+            <h2>Virtual Scroll with Custom Strategy</h2>
+            <nui-schematic-docs-command>
+                ng g @solarwinds/nova-bits:table --name=table-with-virtual-scroll --p=app --pagingMode=virtualScroll --dataSource=serverSide
+                <strong>--virtualScrollStrategy=custom</strong>
+            </nui-schematic-docs-command>
+            <nui-schematic-docs-example exampleFolderName="table/table-with-custom-virtual-scroll">
+                <app-table-with-custom-virtual-scroll *ngIf="cvs.active"></app-table-with-custom-virtual-scroll>
+            </nui-schematic-docs-example>
+        </nui-tab>
+    </nui-tab-group>
+</nui-schematic-docs-page>
+

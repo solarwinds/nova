@@ -1,0 +1,91 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/nui-framework-typography.less";
+@import (reference) "../../../styles/nui-framework-colors.less";
+
+@textbox-feedback-icon-margin: @nui-space-xs + @nui-space-xxs;
+@textbox-updown-offset: ((2 * @input-height-base) - 2);
+@textbox-padding-simple-updown: @textbox-updown-offset + @textbox-feedback-icon-margin;
+@textbox-feedback-icon-with-updown-margin: @textbox-feedback-icon-margin + @textbox-updown-offset;
+@textbox-busy-offset: 1px;
+@textbox-busy-offset-with-updown: @textbox-updown-offset + @textbox-busy-offset;
+
+.nui .nui-textbox {
+    input[type="number"]::-webkit-inner-spin-button {
+        display: none;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    &--disabled .nui-textbox-number {
+        &__buttons,
+        &__updown-divider {
+            .setCssVariable(border-color, nui-color-disabled-light);
+        }
+    }
+}
+
+.nui .nui-textbox-number {
+    display: flex;
+
+    &__buttons {
+        display: inline-flex;
+        height: @nui-space-md * 2;
+        border: solid @nui-line-default;
+        .setCssVariable(border-color, nui-color-line-default);
+        border-top-right-radius: @nui-radius-default;
+        border-bottom-right-radius: @nui-radius-default;
+        border-left: none;
+    }
+
+    &__updown {
+        display: block;
+        line-height: 1;
+        height: @nui-space-md * 2;
+        top: 1px;
+        text-align: center;
+        .nui & button.nui-button {
+            padding-left: @nui-space-xs;
+            width: @nui-space-md * 2;
+            height: 28px;
+            &:focus {
+                outline: none;
+            }
+        }
+        &-divider {
+            z-index: 1;
+            height: 28px;
+            top: 1px;
+            right: @nui-space-md * 2;
+            width: 0;
+            border-right: solid @nui-line-default;
+            .setCssVariable(border-right-color, nui-color-line-default);
+        }
+    }
+
+    &__up-button {
+        right: 1px;
+    }
+
+    &__down-button {
+        right: @nui-space-md * 2;
+    }
+
+    .has-feedback {
+        flex: 1;
+    }
+
+    .input-control {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    input[type="number"] ~ nui-icon > .form-control-feedback {
+        margin: 0 @textbox-feedback-icon-with-updown-margin 0 0;
+        &.nui-textbox__busy {
+            top: 0;
+            margin: 0 @textbox-busy-offset-with-updown 0 0;
+        }
+    }
+}

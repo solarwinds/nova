@@ -1,0 +1,199 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+.nui-icon-wrapper {
+    display: inline-flex;
+    .nui-svg-wrapper {
+        position: relative;
+    }
+    .nui-icon-item {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        &__child {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 1;
+            transform: scale(0.75,0.75) translate(-3px,-3px);
+        }
+        &__grand-child {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            z-index: 2;
+            transform:  scale(0.5,0.5) translate(-11px,-11px);
+        }
+    }
+}
+.nui-icon {
+    width: @icon-size-default;
+    height: @icon-size-default;
+    background-size: @icon-size-default;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    line-height: @line-height-base;
+    position: relative;
+    svg {
+        width: @icon-size-default;
+        height: @icon-size-default;
+        display: inline-block;
+        background-repeat: no-repeat;
+        line-height: @line-height-base;
+    }
+
+    // Supported sizes for icons
+    &.nui-icon-size-sm svg {
+        width: @icon-size-small;
+        height: @icon-size-small;
+    }
+
+    &.nui-icon-size-md svg {
+        width: @icon-size-medium;
+        height: @icon-size-medium;
+    }
+
+    // Supported colors for icon recoloring
+    // white
+    &.white-icon.stroked svg *, &.white-hover-icon.stroked:hover svg * {
+        .setCssVariable(stroke, nui-color-bg-light);
+    }
+    &.white-icon.filled svg *, &.white-hover-icon.filled:hover svg * {
+        .setCssVariable(fill, nui-color-bg-light);
+    }
+    // gray
+    &.gray-icon.stroked svg *, &.gray-hover-icon.stroked:hover svg * {
+        .setCssVariable(stroke, nui-color-icon-default);
+    }
+    &.gray-icon.filled svg *, &.gray-hover-icon.filled:hover svg * {
+        .setCssVariable(fill, nui-color-icon-default);
+    }
+    // black
+    &.primary-black-icon.stroked svg *, &.primary-black-hover-icon.stroked:hover svg * {
+        .setCssVariable(stroke, nui-color-icon-highlight-default);
+    }
+    &.black-icon.filled svg *, &.black-hover-icon.filled:hover svg * {
+        .setCssVariable(fill, nui-color-icon-highlight-default);
+    }
+    // primary-blue
+    &.primary-blue-icon.stroked svg *, &.primary-blue-hover-icon.stroked:hover svg * {
+        .setCssVariable(stroke, nui-color-icon-active);
+    }
+    &.primary-blue-icon.filled svg *, &.primary-blue-hover-icon.filled:hover svg * {
+        .setCssVariable(fill, nui-color-icon-active);
+    }
+    // orange
+    &.orange-icon.filled svg *, &.orange-hover-icon.filled:hover svg * {
+        .setCssVariable(fill, nui-color-icon-highlight-platform_bar);
+    }
+    &.orange-icon.stroked svg *, &.orange-hover-icon.stroked:hover svg * {
+        .setCssVariable(stroke, nui-color-icon-highlight-platform_bar);
+    }
+    // red
+    &.red-icon.filled svg *, &.red-hover-icon.filled:hover svg * {
+        .setCssVariable(fill, nui-color-icon-critical);
+    }
+    &.red-icon.stroked svg *, &.red-hover-icon.stroked:hover svg * {
+        .setCssVariable(stroke, nui-color-icon-critical);
+    }
+    // disabled-gray
+    &.disabled-gray-icon.filled svg *, &.red-hover-icon.filled:hover svg * {
+        .setCssVariable(fill, nui-color-icon-disabled);
+    }
+    &.disabled-gray-icon.stroked svg *, &.red-hover-icon.stroked:hover svg * {
+        .setCssVariable(stroke, nui-color-icon-disabled);
+    }
+
+    &.nui-icon-not-found {
+        background-color: magenta;
+    }
+
+    //Status and counter icons
+    &[status]:not([status=""])::after {
+        content: "";
+    }
+
+    &[counter]:not([counter=""])::after {
+        border-radius: 50%;
+        content: attr(counter);
+        background: @nui-color-active no-repeat;
+        background: var(--nui-color-active,@nui-color-active) no-repeat;
+    }
+
+    &::after {
+        display: inline-block;
+        background-repeat: no-repeat;
+        position: relative;
+        vertical-align: middle;
+        text-align: center;
+        font-style: normal;
+        .setCssVariable(color, nui-color-bg-light);
+
+        width: @icon-size-small;
+        height: @icon-size-small;
+        background-size: @icon-size-small;
+        line-height: @icon-size-small;
+        font-size: @icon-size-default/2;
+    }
+
+    &[status]:not([status=""]), &[counter]:not([counter=""]) {
+        margin-right: @nui-space-sm;
+
+        &::after {
+            position: absolute;
+            top: @icon-size-default/2;
+            left: @icon-size-default/2;
+        }
+    }
+
+    &.nui-icon-size-sm {
+        width: @icon-size-small;
+        height: @icon-size-small;
+        background-size: @icon-size-small;
+        line-height: 1;
+
+        &::after {
+            width: @icon-size-small;
+            height: @icon-size-small;
+            background-size: @icon-size-small;
+            line-height: @icon-size-small;
+            font-size: @icon-size-default/2;
+        }
+
+        &[status]:not([status=""])::after, &[counter]:not([counter=""])::after {
+            position: absolute;
+            top: @icon-size-small/2;
+            left: @icon-size-small/2;
+        }
+    }
+
+    &.nui-icon-size-md {
+        width: @icon-size-medium;
+        height: @icon-size-medium;
+        background-size: @icon-size-medium;
+        line-height: 1;
+
+        &::after {
+            width: @icon-size-medium;
+            height: @icon-size-medium;
+            background-size: @icon-size-medium;
+            line-height: @icon-size-medium;
+            font-size: @icon-size-default/2;
+        }
+
+        &[status]:not([status=""])::after, &[counter]:not([counter=""])::after {
+            position: absolute;
+            top: @icon-size-medium/2;
+            left: @icon-size-medium/2;
+        }
+    }
+
+    &.nui-icon--fill-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        margin-top: 0;
+    }
+}

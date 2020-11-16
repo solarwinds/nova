@@ -1,0 +1,30 @@
+<div class="rd-post-form"
+     [formGroup]="postForm">
+
+    <nui-form-field caption="Text"
+                    [control]="postForm.controls['text']"
+                    class="rd-postform__text-field">
+        <nui-textbox [rows]="5"
+                     formControlName="text">
+        </nui-textbox>
+        <nui-validation-message for="required" i18n>
+            Problem description is required
+        </nui-validation-message>
+    </nui-form-field>
+
+    <div *ngIf="postForm.controls['text'].value">
+        <label i18n>Preview:</label>
+        <div class="rd-post-form__preview p-3 mb-3" [innerHTML]="preview"></div>
+    </div>
+
+    <nui-form-field caption="Signature"
+                    [control]="postForm.controls['author']"
+                    *ngIf="!post._id"
+                    class="rd-postform__author-field">
+        <nui-textbox formControlName="author">
+        </nui-textbox>
+        <nui-validation-message for="required" i18n>
+            Please specify author name
+        </nui-validation-message>
+    </nui-form-field>
+</div>

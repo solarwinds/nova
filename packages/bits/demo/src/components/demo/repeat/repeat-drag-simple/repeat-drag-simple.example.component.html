@@ -1,0 +1,13 @@
+<div class="d-flex">
+    <nui-switch class="p-2" [(value)]="draggable" i18n>Draggable</nui-switch>
+</div>
+<nui-repeat (itemsReordered)="onItemsReordered($event)"
+            [itemsSource]="companies"
+            [repeatItemTemplateRef]="repeatItemTemplate"
+            [draggable]="draggable">
+</nui-repeat>
+
+<!-- Content template for each item -->
+<ng-template #repeatItemTemplate let-item="item">
+    {{item}}
+</ng-template>

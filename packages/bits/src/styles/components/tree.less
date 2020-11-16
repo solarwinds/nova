@@ -1,0 +1,60 @@
+@import (reference) "../nui-framework-variables";
+
+cdk-tree {
+    .tree-node {
+        display: block;
+        align-items: center;
+        cursor: default;
+
+        span {
+            .text-overflow(ellipsis);
+            line-height: @nui-line-height-default;
+            vertical-align: middle;
+        }
+    }
+
+    .container-invisible {
+        display: none;
+    }
+
+    .parent-container {
+        cursor: pointer;
+
+        &__icon {
+            vertical-align: middle;
+            padding: 7px;
+        }
+
+        &:hover {
+            .setCssVariable(background-color, nui-color-bg-transparent-hover);
+        }
+    }
+
+    .children-container {
+        padding-left: @nui-space-md;
+
+        &-dotted {
+            border: none;
+            border-left: dotted @nui-line-medium;
+            .setCssVariable(border-color, nui-color-line-default);
+            .setCssVariable(color, nui-color-bg-dark);
+            margin-left: @nui-space-md - 1;
+
+            .tree-node {
+                padding-left: @nui-space-md - 1;
+            }
+        }
+    }
+
+    .child, .custom-header {
+        span {
+            padding: 6px @nui-space-xs;
+        }
+
+        &__icon {
+            vertical-align: middle;
+            padding: 7px;
+            margin-right: -@nui-space-xs;
+        }
+    }
+}

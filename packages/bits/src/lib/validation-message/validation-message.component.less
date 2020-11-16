@@ -1,0 +1,13 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+.nui .nui-validation-message {
+    display: flex;
+    align-items: center;
+    font-size: @nui-font-size-small;
+    font-weight: @nui-font-weight-semibold;
+    .setCssVariable(color, nui-color-text-critical);
+   
+    &__icon {
+        margin-right: @nui-space-xs;
+    }
+}

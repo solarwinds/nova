@@ -1,0 +1,32 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+
+:host {
+    .<%= selector %>-repeat {
+        margin: @nui-space-sm @nui-space-md;
+        width: 100%;<% if (pagingMode==="virtualScroll") { %>
+        // it is very important to have a height for virtual scroll
+        height: 300px;<% } %>
+    }
+
+    .<%= selector %>-selector {
+        flex-grow: 0;
+        margin-left: @nui-space-md;
+    }<% if (enableSort) { %>
+
+    .<%= selector %>-sorter {
+        flex-grow: 0;
+        margin-left: @nui-space-md;
+    }<% }
+    if (enableSearch) { %>
+
+    .<%= selector %>-search {
+        flex-grow: 1;
+        margin-right: @nui-space-md;
+    }<% }
+    if (pagingMode === 'pagination') { %>
+
+    .<%= selector %>-paginator {
+        flex-grow: 1;
+        margin: 0 @nui-space-md;
+    }<% } %>
+}

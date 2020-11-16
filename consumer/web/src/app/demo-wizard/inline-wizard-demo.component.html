@@ -1,0 +1,109 @@
+<ng-template #step1>
+    <form [formGroup]="myForm">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="name"
+               class="form-control"
+               formControlName="name"
+               required>
+        <nui-message [allowDismiss]="true" type="error" *ngIf="!myForm.controls['name'].valid && myForm.controls['name'].touched" >
+          <b>Name is required!</b>
+        </nui-message>
+        <span class="nui-help-hint">Required</span>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email"
+               class="form-control"
+               formControlName="email"
+               required>
+        <nui-message [allowDismiss]="true" type="error" *ngIf="!myForm.controls['email'].valid && myForm.controls['email'].touched" >
+          <b>Email is required!</b>
+        </nui-message>
+        <span class="nui-help-hint">Required</span>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password"
+               class="form-control"
+               formControlName="password"
+               required>
+        <nui-message [allowDismiss]="true" type="error" *ngIf="!myForm.controls['password'].valid && myForm.controls['password'].touched" >
+          <b>Password is required! (min 8 chars)</b>
+        </nui-message>
+        <span class="nui-help-hint">Required</span>
+      </div>
+    </form>
+</ng-template>
+
+<ng-template #step2>
+  <nui-checkbox name="nui-demo-checkbox"
+                [title]="'Receive notifications'"
+                required="true"
+                [value]="shouldReceiveNotifications"
+                (valueChange)="receiveNotificationFlagChanged($event)">Receive notifications
+  </nui-checkbox>
+</ng-template>
+
+
+<nui-wizard-step #step3 [title]="'Subscription'" [stepTemplate]="step3Temp"></nui-wizard-step>
+<ng-template #step3Temp>
+  I would like to subscribe on:
+    <nui-checkbox *ngFor="let item of subscribe"
+                  [value]="item">
+      {{item}}
+    </nui-checkbox>
+</ng-template>
+
+<nui-wizard-step #step4 [title]="'Subscription Notification'" [stepTemplate]="step4Temp"></nui-wizard-step>
+<ng-template #step4Temp>
+  <nui-select caption="Select how you want receive notification"
+              [itemsSource]="dataset.items"
+              [value]="dataset.selectedItem"
+              (changed)="valueChange($event)"></nui-select>
+</ng-template>
+
+<ng-template #surveyStep>
+  <ng-template #repeatItemTemplate let-item="item">
+    <div>{{item.component}}</div>
+  </ng-template>
+
+  <div class="example">
+    <nui-repeat id="nui-demo-multi-repeat"
+                [itemsSource]="components"
+                [selectionMode]="'multi'"
+                [repeatItemTemplateRef]="repeatItemTemplate">
+      <div repeatHeaderTemplate>
+        <div class="template-header">Choose components which you use</div>
+      </div>
+    </nui-repeat>
+  </div>
+</ng-template>
+
+<ng-template #summaryStep>
+<h2>Review the entire configuration before performing the action.</h2>
+  <div style="display: flex">
+    <p>Registration</p>
+    <button nui-button type="button"
+            [displayStyle]="'action'"
+            (click)="goToStep()">Edit</button>
+  </div>
+</ng-template>
+<nui-dialog-header [title]="'Wizard Dialog'" (closed)="dialogService.close()"></nui-dialog-header>
+<div class="dialog-body">
+<nui-wizard #wizardComponent
+            (selectionChange)="select($event)"
+            (next)="onNextClick()"
+            (cancel)="onCancelClick()"
+            (finish)="onFinishClick()">
+  <nui-wizard-step [title]="'Registration'"
+                   [stepTemplate]="step1"
+                   [stepControl]="myForm.valid"></nui-wizard-step>
+  <nui-wizard-step [title]="'Receive notifications'" [stepTemplate]="step2"></nui-wizard-step>
+  <nui-wizard-step [title]="'Survey'" [stepTemplate]="surveyStep"></nui-wizard-step>
+  <nui-wizard-step [title]="'Summary'" [stepTemplate]="summaryStep"></nui-wizard-step>
+  <button *ngIf="selectedIndex==0" nui-button type="button" (click)="handleClick()">
+    <span>Submit</span>
+  </button>
+</nui-wizard>
+</div>

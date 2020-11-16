@@ -1,0 +1,104 @@
+<div [(style.width.px)]="width">
+    <nui-toolbar id="nui-toolbar-test">
+        <nui-toolbar-group i18n-title title="g1">
+            <nui-toolbar-item id="nui-toolbar-test-button-primary" displayStyle="primary" type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        <nui-toolbar-group>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        <nui-toolbar-group i18n-title title="g2">
+            <nui-toolbar-item type="primary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="secondary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="secondary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        <nui-toolbar-group>
+            <nui-toolbar-item type="primary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="secondary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+            <nui-toolbar-item displayStyle="destructive" type="secondary" icon="delete" i18n-title title="delete">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+    </nui-toolbar>
+</div>
+<nui-textbox
+    id="nui-toolbar-test-input"
+    type="number"
+    [value]="width"
+    customBoxWidth="150px"
+    (textChange)="onOptionChange($event)">
+</nui-textbox>
+<div class="nui">
+    <nui-toolbar id="nui-toolbar-test-embedded">
+        <nui-toolbar-group i18n-title title="g1">
+            <nui-toolbar-item displayStyle="primary" type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        <nui-toolbar-group>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="edit" i18n-title title="edit">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        <nui-toolbar-group i18n-title title="g2">
+            <nui-toolbar-item type="primary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="secondary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="secondary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        <nui-toolbar-group>
+            <nui-toolbar-item type="primary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="secondary" icon="add" i18n-title title="add">
+            </nui-toolbar-item>
+            <nui-toolbar-item displayStyle="destructive" type="secondary" icon="delete" i18n-title title="delete">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        <nui-search class="nui-demo-search-additional"></nui-search>
+        <nui-menu displayStyle="action" [itemsSource]="itemsSource" icon="menu"></nui-menu>
+    </nui-toolbar>
+</div>
+<div class="nui">
+    <nui-toolbar id="nui-toolbar-test-selection" [selectionEnabled]="true" [selectedItems]="select">
+        <nui-toolbar-group>
+            <nui-toolbar-item type="primary" icon="add" i18n-title title="Add">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="add" i18n-title title="Add First" *ngIf="showFirst">
+            </nui-toolbar-item>
+            <nui-toolbar-item type="primary" icon="add" i18n-title title="Add Second" *ngIf="!showFirst">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+        <nui-toolbar-group>
+            <nui-toolbar-item displayStyle="destructive" type="primary" icon="delete" i18n-title title="Delete">
+            </nui-toolbar-item>
+        </nui-toolbar-group>
+    </nui-toolbar>
+</div>
+
+<button nui-button type="button"
+        class="mt-3"
+        (click)="onToggle()"
+        id="nui-toolbar-test-toggle-selected-item">
+    <span>Toggle Item</span>
+</button>

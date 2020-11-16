@@ -1,0 +1,21 @@
+@import (reference) "nui-framework-variables";
+@import (reference) "mixins.less";
+@hidden-filters-block-height: 30px;
+
+.nui-filter-groups-wrapper {
+    &__hidden-filters {
+        line-height: @nui-line-height-small;
+        font-size: @nui-font-size-small;
+        .setCssVariable(background-color, nui-color-bg-accordion_header);
+        height: @hidden-filters-block-height;
+        padding-left: @nui-space-sm;
+        .setCssVariable(color, nui-color-text-secondary);
+        margin-top: @nui-space-sm;
+    }
+    &__popover-hidden-filters {
+        .setCssVariable(color, nui-color-text-secondary);
+        line-height: @nui-line-height-small;
+        font-size: @nui-font-size-small;
+    }
+}
+

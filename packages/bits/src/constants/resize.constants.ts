@@ -1,0 +1,1 @@
+export const RESIZE_DEBOUNCE_TIME = 300;

@@ -1,0 +1,28 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+
+.nui-list-leaf-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: @nui-space-xs 0;
+
+    &__info-container {
+        display: flex;
+        height: 40px;
+    }
+
+    &__icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 30px;
+    }
+
+    &__description {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+}

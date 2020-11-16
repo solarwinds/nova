@@ -1,0 +1,27 @@
+<nui-popup [appendToBody]="appendToBody" [isHostToggleRef]="true" contextClass="{{ appendToBody ? 'nui-selector-append-to-body-host' : 'nui-selector-host' }}">
+    <div class="btn-group">
+        <button nui-button
+                type="button"
+                class="nui-selector__checkbox-button"
+                [displayStyle]="'default'"
+                (click)="handleSelectorClick($event)">
+            <div class="nui-selector__checkbox-container">
+                <nui-checkbox #checkbox
+                              [checked]="checkboxChecked"
+                              [indeterminate]="indeterminate">
+                </nui-checkbox>
+            </div>
+        </button>
+        <button nui-button *ngIf="items?.length"
+                type="button"
+                nuiPopupToggle
+                class="nui-selector__toggle"
+                [displayStyle]="'default'"
+                [icon]="'caret-down'">
+        </button>
+    </div>
+
+    <div popupAreaContent>
+        <nui-menu-popup [itemsSource]="items" (menuItemClicked)="handleItemClick($event)"></nui-menu-popup>
+    </div>
+</nui-popup>

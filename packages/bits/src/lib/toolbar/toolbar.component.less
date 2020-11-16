@@ -1,0 +1,72 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/nui-framework-animations.less";
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/nui-framework-spaces.less";
+
+.nui .nui-toolbar {
+    position: relative;
+    transition: background-color ease @fast-animation-duration;
+    &--shadowed {
+        box-shadow: inset 0 -1px 0 0 var(--nui-color-line-default, @nui-color-line-default);
+    }
+    padding: 0 @nui-space-md;
+
+    &--active {
+        .setCssVariable(background-color, nui-color-selected);
+    }
+
+    &-content {
+        width: 100%;
+        transition: visibility .25s;
+        padding: @nui-space-xs 0;
+        &__embedded {
+            & > div {
+                // The flex container is being sized using fit-content / shrink-to-fit algorithm.
+                // Since it overflows, what matters is the min-content contribution of the flex items.
+                // However, the flex items are being sized using their max-content as their hypothetical main size.
+                // Usage of nowrap will make the min-content contributions the same as the max-content.
+                white-space: nowrap
+            }
+        }
+        &__dynamic {
+            .nui-button.btn-destructive {
+                border-color: transparent;
+                &:hover, &:active, &:focus {
+                    border-color: transparent;
+                    .setCssVariable(background-color, nui-color-bg-transparent-hover);
+                }
+            }
+        }
+
+        &__select {
+            font-size: @nui-font-size-small;
+            font-weight: @nui-font-weight-semibold;
+            padding-left: @nui-space-sm;
+        }
+    }
+
+    &-group-primary {
+        display: flex;
+    }
+
+    &-primary-item {
+        margin-right: @nui-space-xs;
+    }
+
+    &-embedded {
+        margin-left: @nui-space-md;
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    &-divider {
+        display: table-cell;
+        padding: 0 @nui-space-xs;
+
+        &-line {
+            width: @nui-line-default;
+            .setCssVariable(background, nui-color-line-default);
+            height: (@line-height-computed + (@nui-space-xs * 2));
+        }
+    }
+}

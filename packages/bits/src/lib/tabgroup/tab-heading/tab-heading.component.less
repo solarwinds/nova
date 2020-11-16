@@ -1,0 +1,78 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+
+@max-width: 250px;
+
+:host {
+    max-width: @max-width;
+    min-height: @nui-space-sm * 4 - @nui-line-thick;
+    .setCssVariable(background-color, nui-color-bg-transparent);
+    .nui-tab-heading {
+        white-space: nowrap;
+        &.active {
+            > .tab-link {
+                .setCssVariable(color, nui-color-text-default);
+                .setCssVariable(background-color, nui-color-bg-content);
+            }
+            border-left: none;
+            border-bottom: @nui-line-thick solid;
+            .setCssVariable( border-bottom-color, nui-color-selected-contrast);
+        }
+
+        .tab-link {
+            .setCssVariable(background, nui-color-bg-transparent);
+            .setCssVariable(color, nui-color-text-secondary);
+            .setCssVariable(line-height, nui-line-height-default);
+            .setCssVariable(font-weight, nui-font-weight-semibold);
+            .setCssVariable(font-size, nui-font-size-default);
+            display: block;
+            padding: @nui-space-sm @nui-space-md;
+            text-transform: uppercase;
+            min-height: @nui-space-sm * 4 - @nui-line-thick;
+            cursor: pointer;
+            &:hover {
+                .setCssVariable(background, transparent);
+            }
+        }
+    }
+
+    &.disabled {
+        >.nui-tab-heading .tab-link {
+            cursor: not-allowed;
+            .setCssVariable(color, nui-color-text-disabled);
+            &:hover {
+                background: transparent;
+            }
+        }
+        &:hover {
+            background: transparent;
+        }
+    }
+
+    &:hover {
+        .setCssVariable(background, nui-color-bg-transparent-hover);
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+:host-context(nui-tab-heading-group.vertical) {
+    .nui-tab-heading {
+        // Setting max-width and min-height here as well so that the active marker
+        // would have the required @nui-space-sm * 4 height if the content is less that that
+        max-width: @max-width;
+        min-height: @nui-space-sm * 4;
+        border-left: @nui-line-thick solid transparent;
+        &.active {
+            border-bottom: none;
+            border-left: @nui-line-thick solid;
+            .setCssVariable(border-left-color, nui-color-selected-contrast);
+        }
+        .tab-link {
+            min-height: @nui-space-sm * 4;
+        }
+    }
+}
+

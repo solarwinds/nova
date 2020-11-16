@@ -1,0 +1,7 @@
+<div *ngIf="type === 'primary'; else secondary">
+    <button nui-button type="button"  [icon]="icon"><span>{{title}}</span></button>
+</div>
+
+<ng-template #secondary>
+    <nui-menu-action [icon]="icon">{{title}}</nui-menu-action>
+</ng-template>

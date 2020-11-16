@@ -1,0 +1,42 @@
+{
+  "name": "nova-consumer",
+  "version": "9.29.0",
+  "scripts": {
+    "start": "ts-node --type-check ./src/app",
+    "watch": "ts-node-dev --respawn --type-check --no-cache ./src/app",
+    "test": "cd .",
+    "e2e": "cd .",
+    "lint": "tslint -p .",
+    "build": "npm run lint"
+  },
+  "devDependencies": {
+    "@solarwinds/ts-lint-rules": "^5.0.0",
+    "ts-node-dev": "^1.0.0-pre.18"
+  },
+  "dependencies": {
+    "@types/chalk": "^0.4.31",
+    "@types/graphql": "^0.13.0",
+    "@types/lodash": "^4.14.112",
+    "@types/mongodb": "^3.1.2",
+    "@types/mongoose": "5.5.6",
+    "@types/node": "^7.0.18",
+    "body-parser": "^1.18.3",
+    "class-transformer": "^0.1.9",
+    "cookie-parser": "^1.4.3",
+    "express-jwt": "^5.3.1",
+    "express-session": "^1.15.6",
+    "graphql-yoga": "1.16.2",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.6",
+    "reflect-metadata": "^0.1.12",
+    "ts-node": "^5.0.1",
+    "tslint": "^5.11.0",
+    "type-graphql": "^0.12.1",
+    "typescript": "^2.8.4",
+    "typescript-register": "^1.1.0"
+  },
+  "resolutions": {
+    "graphql": "0.13.2",
+    "type-graphql/graphql": "0.13.2"
+  }
+}

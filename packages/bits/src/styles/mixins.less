@@ -1,0 +1,69 @@
+// Mixins
+// --------------------------------------------------
+
+// Utilities
+@import "mixins/hide-text.less";
+@import "mixins/opacity.less";
+@import "mixins/image.less";
+@import "mixins/labels.less";
+@import "mixins/reset-filter.less";
+@import "mixins/resize.less";
+@import "mixins/responsive-visibility.less";
+@import "mixins/size.less";
+@import "mixins/tab-focus.less";
+@import "mixins/reset-text.less";
+@import "mixins/text-emphasis.less";
+@import "mixins/text-overflow.less";
+@import "mixins/vendor-prefixes.less";
+@import "mixins/touch-action.less";
+@import "mixins/fill.less";
+@import "mixins/vertical-align.less";
+@import "mixins/no-select.less";
+@import "mixins/no-shadow.less";
+@import "mixins/list-item";
+@import "mixins/focus.less";
+@import (reference) "mixins/css-variables.less";
+
+// Component bases
+@import "mixins/component-bases/base-button.less";
+@import "mixins/component-bases/base-textbox.less";
+
+// Components
+@import "mixins/buttons.less";
+@import "mixins/checkbox.less";
+@import "mixins/forms.less";
+@import "mixins/table-row.less";
+@import "mixins/scroll-shadows.less";
+@import "mixins/dnd.less";
+
+
+// Skins
+@import "mixins/background-variant.less";
+@import "mixins/border-radius.less";
+@import "mixins/gradients.less";
+
+// Layout
+@import "mixins/clearfix.less";
+@import "mixins/center-block.less";
+
+.overlay(@background: var(--nui-color-bg-light, @nui-color-bg-light), @opacity: 0.8) {
+    .fill();
+    background-color: @background;
+    opacity: @opacity;
+    text-align: center;
+    overflow: hidden;
+}
+
+.busy-overlay() {
+    .fill();
+    .setCssVariable(background-color, nui-color-overlay-busy);
+    text-align: center;
+}
+
+.generate-emphasizes(@colors, @i: 1) when (@i =< length(@colors)) {
+    @name: extract(@colors, @i);
+    .@{name}::after {
+        background-color: @@name;
+    }
+    .generate-emphasizes(@colors, (@i + 1));
+}

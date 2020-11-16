@@ -1,0 +1,102 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../select/base-select.less";
+
+.nui-popup {
+    display: inline-flex;
+    position: relative;
+    &__content {
+        display: inline-flex;
+        flex-direction: row;
+    }
+}
+
+.nui-select-popup-host {
+    &.nui-popup__area {
+        width: auto;
+
+        .nui-select-base-menu-item();
+    }
+
+    &.nui-select--justified {
+        &.nui-popup__area {
+            max-width: none;
+        }
+        .nui-popup__content {
+            .menu-button {
+                display: flex;
+                flex-grow: 1;
+                max-width: none;
+            }
+        }
+    }
+}
+
+.nui-combobox-popup-host {
+    max-width: 300px;
+    max-height: 300px;
+
+    &.nui-overlay {
+        .nui-select-base-menu-item();
+    }
+
+    .nui-combobox__menu {
+        .nui-select-base-menu;
+        overflow-y: initial;
+    }
+
+    &.nui-combobox--justified {
+        max-width: none;
+    }
+}
+
+.nui-selector-append-to-body-host.nui-popup__area {
+    left: -@nui-selector-checkbox-button-width;
+    .nui-selector-popup-area;
+}
+
+.nui-selector-host.nui-popup__area {
+    .nui-selector-popup-area;
+}
+
+.nui-selector-popup-area {
+    min-width: 100px;
+    border: none;
+    .setCssVariable(color, nui-color-text-link);
+
+    .nui-repeat .nui-repeat-item {
+        border: 0;
+    }
+}
+
+.popup-adapter-overlay {
+    .nui-menu-popup-host {
+        min-width: 150px;
+        max-width: 450px;
+        max-height: 300px;
+
+        // check for menu isJustified
+        &.nui-select--justified {
+            max-width: unset;
+        }
+
+        .nui-popup__area--container {
+            overflow-x: hidden;
+            overflow-y: auto;
+            margin: @nui-space-xs 0;
+        }
+    }
+
+    &.nui-overlay-panel {
+        .nui-overlay {
+            visibility: hidden;
+            padding: 0;
+        }
+    }
+
+    &.visible {
+        .nui-overlay {
+            visibility: visible;
+        }
+    }
+}

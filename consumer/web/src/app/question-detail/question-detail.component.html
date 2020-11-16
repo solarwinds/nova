@@ -1,0 +1,102 @@
+<nui-progress message="Loading question..." helpText="Keep calm, it is coming" [show]="!question">
+</nui-progress>
+
+<div *ngIf="question">
+    <div class="row justify-content-start">
+        <div class="col-1 d-flex flex-column text-center justify-content-center">
+            <button nui-button
+                    class="rd-question-detail__question-up-vote-button"
+                    i18n-title
+                    title="This question is useful and clear"
+                    type="button"
+                    displayStyle="action"
+                    (click)="onQuestionVoteChange(getUserVote(question.questionPost._id) === 1 ? 0 : 1)"
+                    icon="triangle-up"
+                    [iconColor]="getUserVote(question.questionPost._id) === 1 ? 'orange' : 'gray'"
+                    [disabled]="getVotingDisabled()"></button>
+            <div class="rd-question-detail__question-vote-count">{{ question.questionPost.votes }}</div>
+            <button nui-button
+                    class="rd-question-detail__question-down-vote-button"
+                    i18n-title
+                    title="This question is unclear or not useful"
+                    type="button"
+                    displayStyle="action"
+                    (click)="onQuestionVoteChange(getUserVote(question.questionPost._id) === -1 ? 0 : -1)"
+                    icon="triangle-down"
+                    [iconColor]="getUserVote(question.questionPost._id) === -1 ? 'orange' : 'gray'"
+                    [disabled]="getVotingDisabled()"></button>
+        </div>
+        <div class="col-11">
+            <div *ngIf="!editing">
+        	<h1 class="rd-question-detail__question-title">{{question.title}}</h1>
+                <rd-post class="rd-question-detail__question-post" [post]="question.questionPost" [isQuestion]="true"></rd-post>
+                <div class="pt-2">
+                    <a (click)="onQuestionEdit()" href="javascript:0" class="rd-question-detail__edit" i18n>
+                        edit
+                    </a>
+                    <a (click)="onQuestionDelete()" href="javascript:0" class="rd-question-detail__delete" i18n>
+                        delete
+                    </a>
+                </div>
+            </div>
+            <div *ngIf="editing">
+        	<form [formGroup]="questionForm" novalidate class="rd-question-form">
+
+                    <nui-form-field caption="Title"
+                                    [control]="questionForm.controls['title']"
+                                    class="rd-question-form__title-field"
+                                    i18n-caption>
+                        <nui-textbox formControlName="title"></nui-textbox>
+                        <nui-validation-message for="required" i18n>
+                            Title is required
+                        </nui-validation-message>
+                        <nui-validation-message for="minlength" i18n>
+                            Please specify at least 10 characters
+                        </nui-validation-message>
+                    </nui-form-field>
+
+
+                    <rd-post-form class="rd-question-form__post"
+                                (formReady)="onQuestionPostFormReady('questionPost', $event)"
+                                [post]="question.questionPost">
+                    </rd-post-form>
+                    <button nui-button class="rd-question-form__submit" type="submit" (click)="onQuestionUpdate()" displayStyle="primary" i18n>
+                        Update Question
+                    </button>
+            	    <button nui-button class="rd-question-form__cancel ml-2" type="button" (click)="onCancelEditing()" displayStyle="action" i18n>
+                        Cancel
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <h2 *ngIf="question.answerPosts.length" i18n>{{question.answerPosts.length}} Answer(s)</h2>
+
+    <div class="rd-question-detail__answer" *ngFor="let post of question.answerPosts">
+        <hr>
+        <div>
+            <rd-answer [post]="post"
+                (deleteAnswer)="onDeleteAnswer($event)"
+                (updateAnswer)="onUpdateAnswer($event)"
+                (voteChange)="onAnswerVoteChange(post, $event)"
+                (acceptedAnswerChange)="onAcceptedAnswerChange(post._id)"
+                [(editing)]="answerMetadata[post._id].editing"
+                [busy]="answerMetadata[post._id].busy"
+                [acceptedAnswerIcon]="getAcceptedAnswerIcon(post._id)"
+                [acceptAnswerDisabled]="question.acceptedAnswerPostId && question.acceptedAnswerPostId !== post._id"
+                [votes]="post.votes || 0"
+                [userVote]="getUserVote(post._id)"
+                [votingDisabled]="getVotingDisabled()"></rd-answer>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2 i18n>Your Answer</h2>
+    <rd-post-form (formReady)="onAnswerFormReady('postForm', $event)"
+                   class="rd-question-detail__answer-form"></rd-post-form>
+
+    <button nui-button class="rd-question-detail__answer-submit" type="submit" (click)="submitAnswer()" type="button" displayStyle="primary" i18n>
+        Answer the question
+    </button>
+</div>

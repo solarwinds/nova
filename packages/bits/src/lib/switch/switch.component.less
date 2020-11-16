@@ -1,0 +1,102 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+@nui-switch-offset: 3px;
+
+:host {
+    & .nui-switch {
+        .no-select();
+
+        &[disabled=true] {
+            cursor: default;
+            pointer-events: none; // Future-proof disabling of clicks
+            .opacity(@disabled-opacity);
+        }
+
+        &:focus {
+            outline:none;
+        }
+
+        &.nui-switched {
+            .nui-switch__bar {
+                .setCssVariable(background-color, nui-color-on);
+            }
+            .nui-switch__thumb {
+                transform: translateX(@switch-toggle-width);
+            }
+        }
+
+        &__container {
+            display: inline-block;
+        }
+
+        &__label {
+            margin: 0 0 0 @nui-space-sm;
+        }
+
+        &__bar {
+            cursor: pointer;
+            height: @switch-height;
+            width: @switch-width;
+            border-radius: @nui-space-sm;
+            .setCssVariable(background-color, nui-color-off);
+            position: relative;
+            float: left;
+            transition: background-color ease 0.3s;
+
+            &:focus {
+                .focus-outline();
+            }
+        }
+
+        &__on, &__off, &__thumb {
+            width: @nui-line-height-small;
+            height: @nui-line-height-small;
+            text-align: center;
+            position: relative;
+            top: @nui-switch-offset;
+        }
+
+        &__thumb {
+            width: @nui-line-height-small;
+            height: @nui-line-height-small;
+            border-radius: @nui-space-sm;
+            .setCssVariable(background-color, nui-color-bg-light);
+            position: absolute;
+            left: @nui-switch-offset;
+            top: @nui-switch-offset;
+            transition: transform ease 0.3s;
+        }
+
+        &__svg {
+            width: @nui-space-sm;
+            height: @nui-space-sm;
+            display: block;
+            margin: 1px 6px;
+        }
+
+        &__icon-on {
+            fill: none;
+            .setCssVariable(stroke, nui-color-line-inverse);
+            stroke-width: 1;
+            stroke-miterlimit: 10;
+        }
+
+        &__icon-off {
+            fill: none;
+            .setCssVariable(stroke, nui-color-line-inverse);
+            stroke-width: 1;
+            stroke-miterlimit: 10;
+        }
+
+        &__icon-thumb {
+            fill: none;
+            .setCssVariable(stroke, nui-color-line-default);
+            stroke-miterlimit: 10;
+        }
+
+        &__label:focus{
+            outline:none;
+        }
+    }
+}

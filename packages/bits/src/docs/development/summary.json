@@ -1,0 +1,96 @@
+[
+    {
+        "title": "Nova Styles",
+        "file": "../pages/nova-styles/nova-styles.md",
+        "children": [
+            {
+                "title": "Typography",
+                "file": "../pages/nova-styles/typography.md"
+            },
+            {
+                "title": "Framework Colors",
+                "file": "../pages/nova-styles/framework-colors.md"
+            },
+            {
+                "title": "Framework Colors Dark",
+                "file": "../pages/nova-styles/framework-colors-dark.md"
+            },
+            {
+                "title": "Theming",
+                "file": "../pages/nova-styles/theming.md"
+            },
+            {
+                "title": "Design Tokens",
+                "file": "../pages/nova-styles/design-tokens.md"
+            },
+            {
+                "title": "Links",
+                "file": "../pages/nova-styles/links.md"
+            },
+            {
+                "title": "Badge",
+                "file": "../pages/nova-styles/badge.md"
+            },
+            {
+                "title": "Tag",
+                "file": "../pages/nova-styles/tag.md"
+            }
+        ]
+    },
+    {
+        "title": "Convenience Components",
+        "file": "../pages/convenience/summary.md",
+        "children": [
+            {
+                "title": "TimeFrameBar",
+                "file": "../pages/convenience/time-frame-bar.md"
+            }
+        ]
+    },
+    {
+        "title": "External Libraries",
+        "file": "../pages/external-libraries/summary.md",
+        "children": [
+            {
+                "title": "Drag and Drop",
+                "file": "../pages/external-libraries/drag-and-drop.md"
+            },
+            {
+                "title": "Tree",
+                "file": "../pages/external-libraries/tree.md"
+            }
+        ]
+    },
+    {
+        "title": "Schematics",
+        "file": "../pages/schematics/api.md",
+        "children": [
+            {
+                "title": "Filtered View",
+                "file": "../pages/schematics/filtered-view.md"
+            },
+            {
+                "title": "Filter Group",
+                "file": "../pages/schematics/filter-group.md"
+            },
+            {
+                "title": "List",
+                "file": "../pages/schematics/list.md"
+            },
+            {
+                "title": "Table",
+                "file": "../pages/schematics/table.md"
+            }
+        ]
+    },
+    {
+        "title": "Internationalization (i18n)",
+        "file": "../pages/i18n/overview.md",
+        "children": [
+            {
+                "title": "Runtime i18n Example",
+                "file": "../pages/i18n/runtime-i18n.md"
+            }
+        ]
+    }
+]

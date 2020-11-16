@@ -1,0 +1,158 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+@severity-border: 3px;
+@dialog-max-height: 71vh;
+
+.nui {
+    .dialog-open {
+        overflow: hidden;
+
+        .nui-dialog {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+    }
+
+    .nui-dialog {
+        display: none;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: @zindex-modal;
+        // cdk-over-container by default disables pointer events for underlying children
+        // and we still want our backdrop to receive them
+        pointer-events: auto;
+        -webkit-overflow-scrolling: touch;
+
+        // Prevent Chrome on Windows from adding a focus outline. For details, see
+        // https://github.com/twbs/bootstrap/pull/10951.
+        outline: 0;
+
+        .modal-dialog {
+            position: relative;
+            width: auto;
+            max-width: 80%;
+            margin: 10px;
+
+            .dialog-content {
+                position: relative;
+                .setCssVariable(background-color, nui-color-bg-content_popover);
+                box-shadow: @nui-shadow-default;
+                background-clip: padding-box;
+                // Remove focus outline from opened dialog
+                outline: 0;
+                min-width: @content-size-large;
+                word-wrap: break-word;
+                // Dialog header
+                // Top section of the dialog w/ title and dismiss
+                .dialog-header {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: @nui-space-md;
+                    border-bottom: @nui-line-default solid;
+                    .setCssVariable(border-bottom-color, nui-color-line-default);
+                    min-height: (@nui-space-md + @nui-line-height-hero);
+                    background: none;
+                    .severity-text {
+                        display: inline-flex;
+                        align-items: center;
+                        overflow: hidden;
+
+                        // Title text within header
+                        .dialog-title {
+                            .text-overflow(ellipsis);
+                            display: inline-block;
+                            margin: 0;
+                            padding: 0;
+                            line-height: @nui-line-height-hero;
+                            text-transform: none;
+                        }
+
+                        .nui-icon {
+                            margin-right: 5px;
+                        }
+                    }
+
+                    .btn-group {
+                        margin-left: 15px;
+                    }
+
+                    &.dialog-header-info {
+                        border-bottom: @severity-border solid;
+                        .setCssVariable(border-bottom-color, nui-color-line-info);
+                    }
+
+                    &.dialog-header-warning {
+                        border-bottom: @severity-border solid;
+                        .setCssVariable(border-bottom-color, nui-color-line-warning);
+                    }
+
+                    &.dialog-header-critical {
+                        border-bottom: @severity-border solid;
+                        .setCssVariable(border-bottom-color, nui-color-line-critical);
+                    }
+                }
+
+                // Dialog body
+                // Where all dialog content resides (sibling of .dialog-header and .dialog-footer)
+                .dialog-body {
+                    position: relative;
+                    padding: @nui-space-md;
+                    &.compact-mode {
+                        padding: 0;
+                    }
+                    &.responsive-mode {
+                        overflow: auto;
+                        max-height: @dialog-max-height;
+                    }
+                }
+
+            }
+        }
+    }
+
+    // Dialog background
+    .dialog-backdrop {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: @zindex-modal-background;
+        .setCssVariable(background-color, nui-color-overlay-modal);
+    }
+
+    // This z-index override makes nui-dialog work properly woth overlay-based components,
+    // in case user has set 'useOverlay' option  to 'true'
+    .nui-overlay-container {
+        &.cdk-overlay-container {
+            .dialog-backdrop, .nui-dialog {
+                z-index: 1000;
+            }
+        }
+    }
+}
+
+@media (min-width: @screen-sm-min) {
+    // Automatically set dialog's width for larger viewports
+    .nui .nui-dialog .modal-dialog {
+        width: @dialog-md;
+        margin: @dialog-content-margin auto;
+
+        .dialog-content {
+            box-shadow: @nui-shadow-default;
+        }
+    }
+
+    // Dialog sizes
+    .nui-dialog .modal-dialog.dialog-sm { width: @dialog-sm; }
+}
+
+@media (min-width: @screen-md-min) {
+    .nui-dialog .modal-dialog.dialog-lg { width: @dialog-lg; }
+}

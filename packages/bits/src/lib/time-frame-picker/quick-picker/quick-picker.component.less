@@ -1,0 +1,55 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+@import (reference) "../../menu/menu-item/menu-item/menu-item-mixin";
+
+@nui-quick-picker-preset-min-width: 125px;
+@nui-quick-picker-date-time-section-min-width: 155px;
+@nui-quick-picker-section-header-padding: 8px;
+
+.nui-quick-picker {
+
+    display: flex;
+    flex-wrap: nowrap;
+    padding: @nui-space-xs;
+
+    &-header {
+        margin: 0;
+        &:hover {
+            cursor: default;
+        }
+    }
+    &__presets-header {
+        padding: @nui-quick-picker-section-header-padding @nui-space-sm;
+    }
+
+    &__preset {
+        .nui-menu-item-mixin();
+        .setCssVariable(color, nui-color-text-default);
+    }
+    // Overwriting nui-menu-item-mixin styles because of UX requirements
+    &__preset:not(&__preset--selected) {
+        .setCssVariable(color, nui-color-text-link);
+    }
+    &__preset:hover {
+        .setCssVariable(color, nui-color-text-default-hover);
+    }
+
+    &__presets {
+        min-width: @nui-quick-picker-preset-min-width;
+        .setCssVariable(background-color, nui-color-bg-secondary);
+        padding: @nui-space-xs 0;
+    }
+
+    &__divider {
+        .setCssVariable(background-color, nui-color-line-default);
+        width: 1px;
+    }
+    &__picker {
+        min-width: @nui-quick-picker-date-time-section-min-width;
+        padding: @nui-space-xs @nui-space-sm;
+        flex-grow: 1;
+    }
+    &__picker-header {
+        padding: @nui-quick-picker-section-header-padding 0;
+    }
+}

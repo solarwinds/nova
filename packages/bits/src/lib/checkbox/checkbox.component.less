@@ -1,0 +1,168 @@
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/nui-framework-variables.less";
+
+@nui-checkbox-max-size: 450px;
+
+.nui-checkbox-group-inline { //additional class for inline checkbox-group
+    > .nui-checkbox-group {
+        display: inline-flex;
+
+        nui-checkbox {
+            margin-left: @nui-space-md;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            .nui-checkbox_label {
+                max-width: @nui-checkbox-max-size;
+            }
+        }
+    }
+}
+
+.nui .nui-checkbox {
+    &__content {
+        align-items: center;
+        display: inline-flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+    }
+
+    &.nui-checkbox--has-action .nui-checkbox__mark:after {
+        display: none;
+    }
+
+    &__label {
+        cursor: pointer;
+        margin: 0;
+        position: relative;
+        line-height: 0;
+        font-weight: @nui-font-weight-regular;
+        border-radius: @nui-radius-default;
+        width: fit-content;
+        min-width: @checkbox-min-size;
+        min-height: @checkbox-min-size;
+        padding: @nui-space-xs + @nui-space-xxs;
+
+        &:hover {
+            .setCssVariable(background-color, nui-color-bg-transparent-hover);
+        }
+
+        &:focus {
+            outline: none;
+            .nui-checkbox__mark {
+                .focus-outline();
+            }
+        }
+    }
+
+    &__translucent {
+        .no-select();
+        .setCssVariable(color, nui-color-text-disabled);
+        cursor: default;
+
+        &:hover {
+            background-color: transparent;
+        }
+    }
+
+    &__mark {
+        .nui-checkbox__mark();
+    }
+
+    &__glyph {
+        .nui-checkbox__glyph();
+        display: none;
+    }
+
+    &__input {
+        display: none;
+        width: 1px;
+        height: 1px;
+        position: absolute;
+
+        &:indeterminate + .nui-checkbox__mark {
+            > .nui-checkbox__glyph {
+                display: block;
+                border: solid @nui-line-medium;
+                .setCssVariable(border-color, nui-color-bg-content);
+                .setCssVariable(background, nui-color-active);
+            }
+        }
+
+        &:indeterminate:disabled + .nui-checkbox__mark {
+            > .nui-checkbox__glyph {
+                .setCssVariable(background-color, nui-color-disabled);
+                opacity: 1;
+            }
+        }
+
+        &:disabled + .nui-checkbox__mark {
+            .no-select();
+            .setCssVariable(color, nui-color-disabled);
+            .setCssVariable(background-color, nui-color-bg-content);
+            .setCssVariable(border-color, nui-color-disabled);
+            cursor: default;
+
+            > .nui-checkbox__glyph {
+                opacity: 0.7;
+            }
+        }
+
+        &:checked:disabled + .nui-checkbox__mark {
+            .setCssVariable(background-color, nui-color-disabled);
+            .setCssVariable(border-color, nui-color-disabled);
+
+            > .nui-checkbox__glyph {
+                .setCssVariable(background-color, nui-color-disabled);
+            }
+        }
+    }
+
+    &__transclude {
+        line-height: @nui-line-height-default;
+        min-width: 0; //  for properly working with "text-overflow: ellipsis"
+        margin: -1px 0 -1px @nui-space-xs + @nui-space-xxs; //  -1px is for making text (18px height) to match the icon (16px height)
+
+        &:empty {
+            margin: 0;
+        }
+    }
+
+    .nui-help-hint {
+        line-height: @nui-line-height-default;
+        margin-left: @icon-size-default + @nui-space-xs + @nui-space-xxs;
+        padding: 0;
+    }
+
+    &--checked {
+        .nui-checkbox__mark {
+            .setCssVariable(background-color, nui-color-active);
+            .setCssVariable(border-color, nui-color-active);
+
+            > .nui-checkbox__glyph {
+                display: block;
+            }
+        }
+    }
+
+    &--justified {
+        .nui-checkbox {
+            width: 100%;
+
+            &__label,
+            &__content,
+            &__transclude {
+                width: 100%;
+            }
+        }
+    }
+}
+
+// TODO: change to host-context after viewEncapsulation is switched from None
+.nui-menu-item__default .nui-checkbox__label {
+    padding: 0;
+    min-height: unset;
+}
+

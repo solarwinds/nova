@@ -1,0 +1,60 @@
+.nui-proportional-widget {
+    &__chart-donut-content {
+        position: absolute;
+    }
+
+    &__legend {
+        &--interactive {
+            cursor: pointer !important;
+        }
+    }
+}
+
+.has-overlay {
+    overflow: auto;
+}
+
+.nui-chart-layout {
+    grid-template:
+        "axis-label-left    axis-label-right    ."          0fr
+        "chart              chart               legend"     minmax(60%, auto)
+        "axis-label-bottom  axis-label-bottom   ."          0fr
+        "legend-bottom      legend-bottom       ."          minmax(auto, min-content)
+        ~"/"1fr                1fr                 auto;
+
+    .legend-bottom {
+        overflow: auto;
+        align-self: auto;
+        padding-left: 0;
+    }
+}
+
+.prioritize-rows {
+    &__right, &__bottom {
+        .nui-legend-series {
+            max-width: unset;
+            width: 100%;
+        }
+    }
+
+    .legend {
+        justify-self: start;
+    }
+
+    &__right {
+        grid-template:
+            "chart       chart        ."     60%
+            "legend      legend       ."     40%;
+    }
+
+    &__bottom {
+        grid-template:
+            "chart       chart        ."     60%
+            "legend-bottom      legend-bottom      ."     40%;
+    }
+}
+
+.empty-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}

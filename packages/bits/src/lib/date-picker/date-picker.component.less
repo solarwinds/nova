@@ -1,0 +1,227 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/nui-framework-base.less";
+@import (reference) "../../styles/nui-framework-typography.less";
+
+@nui-datepicker-calendar-min-cell-size: 30px;
+@nui-datepicker-width: 135px;
+// 9 * 30 + 2 * 10 (9 cells + paddings)
+@nui-datepicker-popup-min-height: (9 * @nui-datepicker-calendar-min-cell-size + 2 * @nui-space-sm);
+// 7 * 30 + 2 * 10 (7 cells + paddings)
+@nui-datepicker-popup-min-width: (7 * @nui-datepicker-calendar-min-cell-size + 2 * @nui-space-sm);
+
+.nui .nui-datepicker {
+    display: inline-block;
+
+    &--inline {
+        display: inline-flex;
+    }
+
+    .nui-textbox .has-feedback {
+        width: @nui-datepicker-width;
+
+        .nui-textbox__input {
+            line-height: @nui-line-height-small;
+        }
+    }
+
+    &__textbox {
+        .setCssVariable(color, nui-color-active-hover);
+
+        &:disabled {
+            pointer-events: none;
+        }
+
+        &:not(:focus) {
+            cursor: pointer;
+        }
+
+        &.ng-invalid-date {
+            &:extend(.has-error .form-control all);
+        }
+    }
+
+    &__container {
+        position: relative;
+
+        &.disabled {
+            .nui-icon {
+                cursor: @cursor-disabled;
+                pointer-events: auto;
+            }
+        }
+    }
+
+    &.has-error {
+        & .nui-datepicker__messages div[ng-message] {
+            clear: both;
+            font-size: @nui-font-size-small;
+            font-weight: @nui-font-weight-semibold;
+            line-height: @nui-line-height-default;
+            margin: 0 0 7px 0;
+        }
+    }
+
+    &__icon {
+        cursor: pointer;
+        pointer-events: auto;
+        position: absolute;
+        right: @nui-space-xs + @nui-space-xxs;
+        top: @nui-space-xs + @nui-space-xxs;
+        z-index: (@zindex-active + 1);
+
+        &.disabled {
+            pointer-events: none;
+        }
+    }
+
+    &-inner {
+        min-height: @nui-datepicker-popup-min-height;
+        min-width: @nui-datepicker-popup-min-width;
+        padding: (@nui-space-sm - @nui-space-xxs) @nui-space-sm;
+        .setCssVariable(background-color, nui-color-bg-light);
+
+        table {
+            outline: none;
+
+            button.btn.btn-action {
+                font-size: @nui-font-size-default;
+                outline: none;
+
+                span {
+                    display: block;
+
+                    &.text-info {
+                        color: @nui-color-text-link;
+                        width: 100%;
+                        .setCssVariable(color, nui-color-text-link);
+                    }
+
+                    &.text-muted {
+                        .setCssVariable(color, nui-color-text-secondary);
+                    }
+
+                    &.today {
+                        border-bottom: @nui-line-medium solid;
+                        .setCssVariable(border-bottom-color, nui-color-line-active);
+                        font-weight: bold;
+
+                        &:not(.text-info).text-muted {
+                            border-bottom-color: @nui-color-disabled;
+                        }
+                    }
+                }
+
+                &:disabled {
+                    .setCssVariable(color, nui-color-text-disabled);
+
+                    span {
+                        &.text-muted {
+                            .setCssVariable(color, nui-color-text-disabled);
+                        }
+                    }
+                }
+
+                &.selected {
+                    .no-shadow();
+                    .setCssVariable(background-color, nui-color-selected-contrast);
+                    color: @white;
+
+                    &:hover {
+                        .setCssVariable(background-color, nui-color-selected-contrast-hover);
+                        border-color: transparent;
+                    }
+
+                    span {
+                        color: @nui-color-text-light;
+
+                        &.today,
+                        &.today.text-muted {
+                            border-bottom-color: @nui-color-line-light;
+                        }
+                    }
+                }
+            }
+
+            // sets font-weight for days in the calendar
+            button span {
+                font-weight: normal;
+            }
+
+            th {
+                button.btn.btn-action {
+                    height: @nui-datepicker-calendar-min-cell-size;
+                    width: 100%;
+
+                    &.is-empty {
+                        width: @nui-datepicker-calendar-min-cell-size;
+                    }
+                }
+
+                > button.title {
+                    width: 100%;
+
+                    // sets the color for disabled year title button (default is opacity 0.4)
+                    &:disabled {
+                        opacity: 1;
+                        .setCssVariable(color, nui-color-off);
+                    }
+                }
+
+                &:last-of-type {
+                    text-align: right;
+                }
+            }
+
+            td {
+                // forces buttons height and width to cover whole table cell (TD)
+                &.day > .btn.btn-action {
+                    height: @nui-datepicker-calendar-min-cell-size;
+                    min-width: @nui-datepicker-calendar-min-cell-size;
+                    padding: 0 (@nui-space-xs + @nui-space-xxs);
+
+                    .nui-button__content {
+                        width: 100%;
+                    }
+                }
+
+                &.month > .btn.btn-action {
+                    height: (7 * @nui-datepicker-calendar-min-cell-size / 4);
+                    min-width: (7 * @nui-datepicker-calendar-min-cell-size / 3);
+                    padding: 0;
+                }
+
+                &.year > .btn.btn-action {
+                    height: (7 * @nui-datepicker-calendar-min-cell-size / 4);
+                    min-width: (7 * @nui-datepicker-calendar-min-cell-size / 5);
+                    padding: 0;
+                }
+
+                > button:disabled {
+
+                    span.today:not(.text-info) {
+                        border-bottom-color: @nui-color-disabled;
+                    }
+                }
+            }
+
+            .today-button {
+                height: @nui-datepicker-calendar-min-cell-size;
+                max-width: none;
+                width: 100%;
+
+                &:focus {
+                    background-color: transparent;
+                }
+            }
+
+            .day-label {
+                .setCssVariable(color, nui-color-text-default);
+                align-items: center;
+                display: flex;
+                height: @nui-datepicker-calendar-min-cell-size;
+                justify-content: center;
+                min-width: @nui-datepicker-calendar-min-cell-size;
+            }
+        }
+    }
+}

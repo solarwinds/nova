@@ -1,0 +1,17 @@
+import { Component } from "@angular/core";
+import { ISelectChangedEvent } from "@solarwinds/nova-bits";
+
+@Component({
+    selector: "nui-combobox-icon-example",
+    templateUrl: "./combobox-icon.example.component.html",
+})
+export class ComboboxIconExampleComponent {
+    public dataset = {
+        items: ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"],
+        selectedItem: "Item 1",
+    };
+
+    public valueChange(changedEvent: ISelectChangedEvent<string>) {
+        this.dataset.selectedItem = changedEvent.newValue;
+    }
+}

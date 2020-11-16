@@ -1,0 +1,27 @@
+{
+    "extends": "../../tsconfig.main",
+    "compilerOptions": {
+        "baseUrl": "./",
+        "declaration": false,
+        "importHelpers": true,
+        "module": "esnext",
+        "outDir": "./dist/out-tsc",
+        "preserveSymlinks": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2018",
+            "dom"
+        ]
+        // ,
+        // "paths": {
+        //     "@solarwinds/nova-charts": [
+        //         "./src/public-api.ts"
+        //     ]
+        // }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

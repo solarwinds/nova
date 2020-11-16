@@ -1,0 +1,38 @@
+<div class="nui-toolbar-content d-flex flex-row align-items-center justify-content-between"
+     nuiResizeObserver
+     (containerResize)="moveToolbarItems()"
+     #toolbarContainer>
+    <div class="nui-toolbar-content__dynamic d-flex flex-row flex-shrink-0">
+        <ng-template ngFor let-commandGroup let-last="last" [ngForOf]="commandGroups">
+            <ng-template ngFor let-commandItem [ngForOf]="commandGroup.items">
+                <button nui-button type="button"
+                        (click)="commandItem.actionDone.emit()"
+                        [displayStyle]="commandItem.displayStyle === 'main' ? 'primary' : commandItem.displayStyle"
+                        [ngClass]="{'nui-toolbar-primary-item': commandItem.displayStyle === 'main'}"
+                        [icon]="commandItem.icon">
+                    <span>{{commandItem.title}}</span>
+                </button>
+            </ng-template>
+            <nui-divider *ngIf="!last || showMenu" class="flex-shrink-0" isVertical="true" size="extra-small"></nui-divider>
+        </ng-template>
+        <nui-menu displayStyle="action" [title]="menuTitle" *ngIf="showMenu">
+            <ng-template ngFor let-menuGroup [ngForOf]="menuGroups">
+                <nui-menu-group [header]="menuGroup.title">
+                    <ng-template ngFor let-menuItem [ngForOf]="menuGroup.items">
+                        <nui-menu-action [type]="menuItem.isDestructive ? 'destructive' : 'default'"
+                                         [icon]="menuItem.icon"
+                                         (click)="menuItem.actionDone.emit()">{{menuItem.title}}
+                        </nui-menu-action>
+                    </ng-template>
+                </nui-menu-group>
+            </ng-template>
+        </nui-menu>
+    </div>
+    <div class="nui-toolbar-content__embedded d-flex">
+        <ng-container *ngIf="selectionEnabled">
+            <div class="nui-toolbar-content__select d-flex align-items-center flex-shrink-0">{{handleSelectionState()}}</div>
+        </ng-container>
+        <ng-content></ng-content>
+        <ng-content select=".nui-toolbar-embedded" ></ng-content>
+    </div>
+</div>

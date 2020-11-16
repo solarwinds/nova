@@ -1,0 +1,39 @@
+<div class="mt-2 nui-edge-definer">
+    <nui-panel>
+        <div nuiPanelEmbeddedBody>
+            <app-filter-groups-wrapper>
+                <app-filter-group *ngFor="let filterGroupItem of filterGroupItems"
+                                            [filterGroupItem]="filterGroupItem"
+                                            (filterChanged)="applyFilters()"
+                                            ></app-filter-group>
+            </app-filter-groups-wrapper>
+        </div>
+        <div class="ml-2">
+            <div>
+                <nui-chips [itemsSource]="chipsDataSource"
+                           [overflow]="true"
+                           (chipRemoved)="onClear($event)"
+                           (removeAll)="onClearAll($event)"
+                           (chipsOverflowed)="onChipsOverflow($event)">
+                    <div class="nui-chips-overflowed" #overflowCounterLabel *ngIf="overflowCounter > 0">
+                        <nui-popover trigger="click"
+                                     [popoverOverlayPosition]="overflowPopoverPosition"
+                                     [template]="popoverWithClickTrigger">
+                            <a class="nui-chips-overflowed__counter">+{{ overflowCounter }}</a>
+                        </nui-popover>
+                    </div>
+                </nui-chips>
+
+                <ng-template #popoverWithClickTrigger>
+                    <nui-chips-overflow
+                            [overflowSource]="overflowSource"
+                            [itemsSource]="chipsDataSource"
+                            (chipRemoved)="onClear($event)"
+                            orientation="vertical">
+                    </nui-chips-overflow>
+                </ng-template>
+            </div>
+            <app-filtered-view-table-with-virtual-scroll-table #child></app-filtered-view-table-with-virtual-scroll-table>
+        </div>
+    </nui-panel>
+</div>

@@ -1,0 +1,53 @@
+@import (reference) url('../../../styles/nui-framework-variables.less');
+@import (reference) url('../../../styles/mixins.less');
+
+//== Example-wrapper
+//
+//##
+
+//** border width applied to the example-wrapper container
+@example-wrapper-container-border-width: 1px;
+
+//** box-shadow params applied to the example-wrapper container
+@example-wrapper-container-box-shadow-inset: 0;
+
+//** title param applied to the example-wrapper title
+@example-wrapper-title-flex-grow: 1;
+
+.nui-example-wrapper {
+    &__theme{
+        display: inline-block;
+    }
+
+    &__content {
+        .setCssVariable(background-color, nui-color-bg-light);
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        border: @example-wrapper-container-border-width solid;
+        .setCssVariable(border-color, nui-color-line-default);
+        box-shadow: @example-wrapper-container-box-shadow-inset @nui-space-xxs @nui-space-xxs @nui-shadow-color;
+        margin-bottom: @nui-space-sm * 2;
+    }
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        .setCssVariable(background-color, page-header-border-color);
+        .setCssVariable(color, nui-color-line-default);
+        padding: @nui-space-xs @nui-space-sm;
+        button {
+            outline: none;
+        }
+    }
+
+    &__title {
+        flex-grow: @example-wrapper-title-flex-grow;
+    }
+
+    &__content {
+        padding: @nui-space-sm * 2;
+    }
+}

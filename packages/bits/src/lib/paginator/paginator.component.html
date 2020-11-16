@@ -1,0 +1,85 @@
+<div class="nui-paginator" *ngIf="showPaginator()">
+    <div class="nui-paginator__items">
+        <ul class="nui-paginator__list">
+            <li title="{{item.title}}" [ngClass]="item.style" *ngFor="let item of itemsList" value="{{item.value}}">
+                <button nui-button
+                        type="button"
+                        displayStyle="action"
+                        [disabled]="item.style"
+                        *ngIf="item.iconName"
+                        class="move-icon"
+                        [icon]="item.iconName"
+                        (click)="item.action($event)">
+                </button>
+                <button nui-button
+                        type="button"
+                        *ngIf="item.value!==dots && !item.iconName"
+                        displayStyle="action"
+                        (click)="item.action($event)"
+                        [isEmpty]="false">
+                    {{item.value}}
+                </button>
+                <nui-popup *ngIf="item.value===dots"
+                           [appendToBody]="appendToBody"
+                           [baseElementSelector]="popupBaseElementSelector">
+                    <button nui-button
+                            type="button"
+                            nuiPopupToggle
+                            displayStyle="action"
+                            [ngClass]="item.imageClass"
+                            [isEmpty]="false"
+                            (click)="handleDotsClick()"
+                            class="nui-paginator__dots">
+                        {{item.value}}
+                    </button>
+
+                    <ul popupAreaContent class="nui-paginator__elipsis-pages">
+                        <li>
+                            <table class="nui-paginator__page-table" [ngClass]="{'native-scroll': !item.useVirtualScroll}">
+                                <cdk-virtual-scroll-viewport *ngIf="item.useVirtualScroll"
+                                                             [style.width.px]="item.popupWidth"
+                                                             [style.height.px]="130"
+                                                             [itemSize]="40" [maxBufferPx]="130" [minBufferPx]="130">
+                                    <ng-container *cdkVirtualFor="let pages of item.pageRows">
+                                        <div [ngTemplateOutlet]="tableRow"
+                                                  [ngTemplateOutletContext]="{pages:pages}">
+                                        </div>
+                                    </ng-container>
+                                </cdk-virtual-scroll-viewport>
+                                <tbody *ngIf="!item.useVirtualScroll">
+                                    <ng-container  *ngFor="let pages of item.pageRows"
+                                                   [ngTemplateOutlet]="tableRow"
+                                                   [ngTemplateOutletContext]="{pages:pages}">
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </li>
+                    </ul>
+                </nui-popup>
+            </li>
+        </ul>
+    </div>
+    <div class="nui-paginator__options">
+        <div class="nui-paginator__info" i18n>{{getRange(total)}} of <span class="nui-paginator__total">{{total}}</span></div>
+        <nui-select #select
+                    ariaLabel="Items per page"
+                    [value]="pageSize"
+                    [itemsSource]="pageSizeSet"
+                    [appendToBody]="appendToBody"
+                    (changed)="setItemsPerPage($event)"></nui-select>
+    </div>
+</div>
+<ng-template #tableRow let-pages="pages">
+    <tr [ngClass]="{'stretch-row': pages.length === dotsPagesPerRow}">
+        <td *ngFor="let value of pages"
+            class="nui-paginator__page-cell" role="gridcell">
+            <button nui-button
+                    type="button"
+                    displayStyle="action"
+                    (click)="goToPage(value)">
+                    <!-- This tag span was added to display value properly on Safari brouser inside a button in ngFor directive -->
+                    <span>{{value}}</span>
+            </button>
+        </td>
+    </tr>
+</ng-template>

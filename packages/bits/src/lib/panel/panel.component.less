@@ -1,0 +1,343 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/nui-framework-colors.less";
+
+@nui-panel-header-height: (@icon-size-default + @nui-space-sm + (@nui-space-xs * 2));
+@nui-panel-side-pane-stack-order: 100;
+@nui-panel-animation-duration: 0.3s;
+
+.nui {
+    .nui-panel {
+        height: 100%;
+        width: 100%;
+        overflow: visible;
+        position: relative;
+        display: flex;
+        margin-top: 15px;
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &--top,
+        &--bottom {
+            flex-direction: column;
+        }
+
+        &__header {
+            display: flex;
+            position: relative;
+            align-items: center;
+            flex-shrink: 0;
+            min-height: @nui-space-sm * 4;
+            .setCssVariable(padding, nui-space-xs);
+
+            &--no-padding {
+                padding: 0;
+            }
+
+            &-container {
+                margin-left: auto;
+            }
+
+            &-content {
+                white-space: nowrap;
+                text-transform: uppercase;
+                .no-select();
+                display: flex;
+                align-items: center;
+            }
+
+            &-default-title {
+                line-height: (@icon-size-default + (@nui-space-xs * 2));
+                margin: 0;
+            }
+
+            &-btn {
+                border: none;
+                background-color: transparent;
+                &__right {
+                    float: left;
+                    border: none;
+                    background-color: transparent;
+                }
+            }
+        }
+
+        &__container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            .nui-panel__body {
+                width: 100%;
+            }
+        }
+
+        &__side-pane {
+            --nui-color-bg-panel-side-pane: var(--nui-color-bg-content); // local css variable to be modified
+            --nui-color-bg-scroll: var(--nui-color-bg-content); // Setting the matching value in case it was already changed somewhere
+            background-color: var(--nui-color-bg-panel-side-pane);
+
+            display: flex;
+            height: 100%;
+            flex-shrink: 0;
+            .setCssVariable(z-index, nui-panel-side-pane-stack-order);
+            &.color-bg-secondary {
+                --nui-color-bg-panel-side-pane: var(--nui-color-bg-secondary);
+                --nui-color-bg-scroll: var(--nui-color-bg-secondary);
+            }
+            &.color-bg-transparent {
+                --nui-color-bg-panel-side-pane: var(--nui-color-bg-transparent);
+                // in case of transparent panel background user will need to reassign --nui-color-bg-scroll css variable himself
+                // --nui-color-bg-scroll: USERS_COLOR;
+            }
+            position: absolute;
+            top: 0;
+            &.nui-panel-pane__hidden {
+                display: none;
+            }
+            &.nui-panel-pane__vertical {
+                flex-direction: column;
+            }
+            &.nui-panel--shrink {
+                position: static;
+            }
+            .nui-panel__side-pane-body {
+                position: relative;
+                height: 100%;
+                padding: 0 @nui-space-xs;
+                &--no-padding {
+                    padding: 0;
+                }
+                &-wrapper {
+                    height: 100%;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                }
+            }
+        }
+
+        &__center-pane {
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        [nuiPanelEmbeddedFooter] {
+            border-top: 1px solid @nui-color-line-default;
+            border-top: solid 1px var(--nui-color-line-default, @nui-color-line-default);
+            padding: @nui-space-sm @nui-space-md;
+        }
+
+        &.nui-panel--animating {
+            .nui-panel__side-pane {
+                overflow: hidden;
+            }
+            &.nui-panel--left,
+            &.nui-panel--right {
+                [nuiPanelEmbeddedIcon] {
+                    // used instead of 'display: none' property
+                    transform: scale(0);
+                }
+            }
+        }
+
+        &.nui-panel--is-collapsed {
+            & > .nui-panel__side-pane {
+                .nui-panel__side-pane-body-wrapper {
+                    opacity: 0;
+                    pointer-events: none;
+                }
+            }
+
+            .nui-panel__header {
+                .setCssVariable(padding, nui-space-xs);
+
+                &-btn--close {
+                    display: none;
+                }
+            }
+            &.nui-panel--right,
+            &.nui-panel--left {
+                & > .nui-panel__side-pane {
+                    .nui-panel__header {
+                        flex-direction: column;
+                        &-content-default {
+                            display: none;
+                        }
+
+                        [nuiPanelEmbeddedHeading] {
+                            transform: scale(0);
+                        }
+
+                        &-container--default {
+                            order: -1;
+                        }
+                    }
+
+                    .nui-panel__footer {
+                        display: none;
+                    }
+                }
+            }
+            &.nui-panel--right {
+                .nui-panel__header-container--default {
+                    margin-right: auto;
+                }
+            }
+            &.nui-panel--top,
+            &.nui-panel--bottom {
+                .nui-panel__side-pane-body {
+                    position: static;
+                }
+            }
+        }
+
+        &.nui-panel--left,
+        &.nui-panel--right {
+            .nui-panel__side-pane {
+                &.nui-panel--shrink {
+                    height: auto;
+                    .nui-panel__side-pane-body {
+                        height: auto;
+                    }
+                }
+            }
+        }
+        &.nui-panel--left {
+            .nui-panel__side-pane {
+                padding-right: 0;
+                left: 0;
+                border-right: 1px solid;
+                .setCssVariable(border-right-color, nui-color-line-default);
+
+                &.nui-panel-pane--border-dark {
+                    border-right: 1px solid;
+                    .setCssVariable(border-right-color, nui-color-line-dark);
+                }
+            }
+        }
+        &.nui-panel--right {
+            .nui-panel__side-pane {
+                order: 2;
+                right: 0;
+                padding-left: 0;
+                border-left: 1px solid;
+                .setCssVariable(border-left-color, nui-color-line-default);
+
+                &.nui-panel-pane--border-dark {
+                    border-left: 1px solid;
+                    .setCssVariable(border-left-color, nui-color-line-dark);
+                }
+            }
+
+            .nui-panel__header {
+                &-container--default {
+                    order: -1;
+                    margin-left: 0;
+                }
+            }
+            .nui-panel-pane__closable {
+                .nui-panel__header {
+                    flex-direction: row-reverse;
+
+                    &-container--default {
+                        margin-left: auto;
+                    }
+                }
+            }
+        }
+
+        &.nui-panel--top,
+        &.nui-panel--bottom {
+            .nui-panel__side-pane {
+                width: 100%;
+                left: 0;
+                .nui-panel__side-pane-body {
+                    overflow-y: auto;
+                }
+            }
+            .nui-panel__header {
+                &-container--default {
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    order: 1;
+                    margin-right: auto;
+                }
+            }
+            .nui-panel-pane__closable {
+                .nui-panel__header {
+                    &-container--default {
+                        position: static;
+                        transform: none;
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+        &.nui-panel--top {
+            .nui-panel__side-pane {
+                border-bottom: 1px solid;
+                .setCssVariable(border-bottom-color, nui-color-line-default);
+
+                &.nui-panel-pane--border-dark {
+                    border-bottom: 1px solid;
+                    .setCssVariable(border-bottom-color, nui-color-line-dark);
+                }
+            }
+        }
+        &.nui-panel--bottom {
+            .nui-panel__side-pane {
+                order: 2;
+                bottom: 0;
+                top: auto;
+                border-top: 1px solid;
+                .setCssVariable(border-top-color, nui-color-line-default);
+
+                &.nui-panel-pane--border-dark {
+                    border-top: 1px solid;
+                    .setCssVariable(border-top-color, nui-color-line-dark);
+                }
+            }
+        }
+    }
+
+    .nui-panel.nui-panel--hoverable {
+        .nui-panel__side-pane {
+            // make panel shadow disappear only after main animation is over
+            transition: box-shadow 0s @nui-panel-animation-duration;
+
+            &:hover {
+                transition: box-shadow 0s;
+            }
+        }
+        &.nui-panel--left {
+            .nui-panel__side-pane {
+                &:hover {
+                    box-shadow: @nui-shadow-right;
+                }
+            }
+        }
+        &.nui-panel--right {
+            .nui-panel__side-pane {
+                &:hover {
+                    box-shadow: @nui-shadow-left;
+                }
+            }
+        }
+        &.nui-panel--top {
+            .nui-panel__side-pane {
+                &:hover {
+                    box-shadow: @nui-shadow-bottom;
+                }
+            }
+        }
+        &.nui-panel--bottom {
+            .nui-panel__side-pane {
+                &:hover {
+                    box-shadow: @nui-shadow-top;
+                }
+            }
+        }
+    }
+}

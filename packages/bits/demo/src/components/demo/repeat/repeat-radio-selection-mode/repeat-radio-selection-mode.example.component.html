@@ -1,0 +1,21 @@
+<ng-template #repeatItemTemplate let-item="item">
+    <div>{{item.color}}</div>
+</ng-template>
+
+<div class="example">
+    <div class="flex-row-container">
+        <div class="flex-independent-row-item simple-label" i18n>Selection:</div>
+        <span class="flex-independent-row-item" id="nui-demo-radioselect-value">
+            {{selectedColors | json}}</span>
+    </div>
+
+    <br>
+
+    <nui-repeat id="nui-demo-radio-repeat"
+              [itemsSource]="colors"
+              [selection]="selectedColors"
+              selectionMode="radio"
+              [repeatItemTemplateRef]="repeatItemTemplate"
+              (selectionChange)="onColorSelectionChange($event)">
+    </nui-repeat>
+</div>

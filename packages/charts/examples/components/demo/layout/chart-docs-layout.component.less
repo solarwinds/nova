@@ -1,0 +1,20 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins.less";
+
+.highlight-areas {
+    border: 1px grey solid;
+
+    & > div {
+        border: 1px lightgrey solid;
+        padding: @nui-space-sm;
+        background-color: ghostwhite;
+    }
+}
+
+.turned-off {
+    opacity: .2;
+}
+
+.code-line {
+    .setCssVariable(background, nui-color-bg-mid_dark);
+}

@@ -1,0 +1,48 @@
+@import (reference) "../../styles/components/buttons.less";
+@import (reference) "../../styles/nui-framework-spaces.less";
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+.nui .nui-selector {
+    max-height: @checkbox-min-size;
+    min-width: @checkbox-min-size * 2 + (@nui-space-xs + @nui-line-medium);
+
+    &__checkbox-button {
+        border: @nui-button-border-width solid @nui-color-line-default;
+        border: @nui-button-border-width solid var(--nui-color-line-default,@nui-color-line-default);
+        border-top-left-radius: @nui-radius-default;
+        border-bottom-left-radius: @nui-radius-default;
+
+        &.btn {
+            min-width: @nui-selector-checkbox-button-width;
+            width: @nui-selector-checkbox-button-width;
+            padding: 0 @nui-space-xxs 0 @nui-space-xxs;
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    &__checkbox-container {
+        margin: -(@nui-button-border-width) 0;
+    }
+
+    &__toggle {
+        margin-right: 0;
+        border: @nui-button-border-width solid @nui-color-line-active;
+        border: @nui-button-border-width solid var(--nui-color-line-active,@nui-color-line-active);
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        padding: 0 19px;
+        height: auto;
+
+        &.btn:focus {
+            outline: none;
+        }
+
+        // is needed to rewrite nui-butoon rule for icon
+        &.nui-button.icon-left .nui-icon {
+            float: none;
+        }
+    }
+}

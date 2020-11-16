@@ -1,0 +1,55 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+@import (reference) "../layout.less";
+
+:host {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-height: @nui-space-sm * 5;
+    background-color: transparent;
+    flex-grow: 1;
+    &.nui-sheet-group {
+        &--joined-sheets {
+            box-shadow: @nui-shadow-default;
+            &.sheet-group-direction-row {
+                flex-direction: row;
+            }
+            &.sheet-group-direction-column {
+                flex-direction: column;
+            }
+        }
+        &--separate-sheets {
+            &.sheet-group-direction-row {
+                flex-direction: row;
+            }
+            &.sheet-group-direction-column {
+                flex-direction: column;
+            }
+        }
+    }
+}
+:host-context(.nui-sheet-group--joined-sheets)
+:host {
+    &.nui-sheet-group--joined-sheets {
+        box-shadow: none;
+    }
+}
+
+:host-context(.nui-sheet-group--resizable) nui-sheet-group {
+    width: auto;
+    height: auto;
+}
+:host-context(.nui-sheet-group--separate-sheets.sheet-group-direction-column>) {
+    .nui-sheet-group-margin--column();
+}
+:host-context(.nui-sheet-group--separate-sheets.sheet-group-direction-row>) {
+    .nui-sheet-group-margin--row();
+}
+:host-context(.nui-sheet-group--joined-sheets.sheet-group-direction-column>) {
+    .nui-sheet-group-border--column();
+}
+:host-context(.nui-sheet-group--joined-sheets.sheet-group-direction-row>) {
+    .nui-sheet-group-border--row();
+}

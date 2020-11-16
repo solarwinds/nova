@@ -1,0 +1,411 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en-us" datatype="plaintext" original="ng2.template" target-language="de-de">
+    <body>
+      <trans-unit id="3943f433e819aa6c1b0d8c778cfcbb2f0c9f7d1e" datatype="html">
+        <source>
+            Browse
+        </source>
+        <target state="translated">Durchsuchen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/file-upload/file-upload.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="28410743e7d46df54a23bdee1a3f0101981c694a" datatype="html">
+        <source>Change the file</source>
+        <target state="final">Datei ändern</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/file-upload/file-upload.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="019d4bd6a5690f0cfa0ecf346a4e6bf7f0d8debb" datatype="html">
+        <source>Remove</source>
+        <target state="final">Entfernen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/file-upload/file-upload.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="513babe1ee6071f4bc520e3b15371329e7fa5980" datatype="html">
+        <source>
+        No file selected yet.
+    </source>
+        <target state="translated">Es wurde noch keine Datei ausgewählt.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/file-upload/file-upload.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d723d84d18fdbd783eae9256b2fb78ab3efe57c2" datatype="html">
+        <source>
+        Selecting a file is required
+    </source>
+        <target state="translated">Eine Datei muss ausgewählt werden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/file-upload/file-upload.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2e73b2661c3d6ae412b570bce223fb58b42246e1" datatype="html">
+        <source>(optional)</source>
+        <target state="final">(optional)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/form-field/form-field.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/form-field/form-field.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d662abcb49ed274a9ec81f5df13b35acbf4cba87" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{getRange(total)}}"/> of <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="INTERPOLATION_1" equiv-text="{{total}}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{getRange(total)}}"/> von <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span>"/><x id="INTERPOLATION_1" equiv-text="{{total}}"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span>"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/paginator/paginator.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8434d4a28744d7df82cd39ef8da4266fcbc40064" datatype="html">
+        <source>Start</source>
+        <target state="final">Beginn</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/time-frame-picker/time-frame-picker.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b68ce78c3f2c548391d812c248217f8a212491e1" datatype="html">
+        <source>End</source>
+        <target state="final">Ende</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/time-frame-picker/time-frame-picker.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d7b35c384aecd25a516200d6921836374613dfe7" datatype="html">
+        <source>Cancel</source>
+        <target state="final">Abbrechen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/wizard/wizard.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cda31dbd724cf5f4fa7a4274d9120651490c8a8c" datatype="html">
+        <source>Back</source>
+        <target state="final">Zurück</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/wizard/wizard.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0295e37c88ba1f28e569a35e3c6871b90529f8fa" datatype="html">
+        <source>Confirmation</source>
+        <target state="final">Bestätigung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/dialog/confirmation-dialog.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4f20f2d5a6882190892e58b85f6ccbedfa737952" datatype="html">
+        <source>Yes</source>
+        <target state="final">Ja</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/dialog/confirmation-dialog.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3d3ae7deebc5949b0c1c78b9847886a94321d9fd" datatype="html">
+        <source>No</source>
+        <target state="final">Nein</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/dialog/confirmation-dialog.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="77b9f070a7df6fa824ade1d2d5ec669302b47292" datatype="html">
+        <source>No data to show</source>
+        <target state="final">Keine Daten zum Anzeigen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/empty/empty.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="61165893bf26f973677bc4162120728740c72a5d" datatype="html">
+        <source>Select all items on this page</source>
+        <target state="final">Alle Elemente auf dieser Seite auswählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/selector/selector.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bc2cd63b12f5c66cdf49d4c8697ce44ce971b17d" datatype="html">
+        <source>Select all items on all pages</source>
+        <target state="final">Alle Elemente auf allen Seiten auswählen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/selector/selector.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e2a8d1c0c95c89c99f0c7bcaeedfe6f5b38986a6" datatype="html">
+        <source>Unselect all items</source>
+        <target state="final">Auswahl aller Elemente aufheben</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/selector/selector.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3a7b8b9c33cfe04efc5fba7035a83fbb39f33d2a" datatype="html">
+        <source>Unselect all items on this page</source>
+        <target state="final">Auswahl aller Elemente auf dieser Seite aufheben</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/selector/selector.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3b074cb5beeb7657d0b859727b136e79347e9cf9" datatype="html">
+        <source>Quick picks</source>
+        <target state="final">Schnelle Auswahl</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/time-frame-picker/quick-picker/quick-picker.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9c152780247b402c410b861e521967dca7d9fd10" datatype="html">
+        <source>Last hour</source>
+        <target state="final">Letzte Stunde</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/time-frame-picker/services/timeframe.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1a389cdf64187d34cf99eec30a290e3fa7d4744f" datatype="html">
+        <source>Last 12 hours</source>
+        <target state="final">Letzte 12 Stunden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/time-frame-picker/services/timeframe.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9e0ba5f591380a94d594a76288f0c41aa97eb9c2" datatype="html">
+        <source>Last 24 hours</source>
+        <target state="final">Letzte 24 Stunden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/time-frame-picker/services/timeframe.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="34c2027f956df2297a31bea00eae49779bea4b43" datatype="html">
+        <source>Last 5 days</source>
+        <target state="final">Letzte 5 Tage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/time-frame-picker/services/timeframe.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="02e0243b60007368f87dc01e083f232dd025096d" datatype="html">
+        <source>Last 7 days</source>
+        <target state="final">Letzte 7 Tage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/time-frame-picker/services/timeframe.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7668986b9f753fcd72ad4a00b1a0c4861d1f7fb8" datatype="html">
+        <source>Last 30 days</source>
+        <target state="final">Letzte 30 Tage</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/time-frame-picker/services/timeframe.service.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e5f16b542e3154cb107f4adedef050543594ffd6" datatype="html">
+        <source>Commands</source>
+        <target state="final">Befehle</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/toolbar/toolbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ac0f81713a84217c9bd1d9bb460245d8190b073f" datatype="html">
+        <source>More</source>
+        <target state="final">Mehr</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/toolbar/toolbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e26ff0c1c7de64d06b9037d8b74de0149ae58f18" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{selectedItems}}"/> of <x id="INTERPOLATION_1" equiv-text="{{totalItems}}"/> selected</source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{selectedItems}}"/> von <x id="INTERPOLATION_1" equiv-text="{{totalItems}}"/> ausgewählt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/toolbar/toolbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8ae569d8217735da2a6a25f7449c7ec5bf42f527" datatype="html">
+        <source>All <x id="INTERPOLATION" equiv-text="{{totalItems}}"/> selected</source>
+        <target state="final">Alle <x id="INTERPOLATION" equiv-text="{{totalItems}}"/> ausgewählt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/toolbar/toolbar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cca0dd32d2dc152d912523b3d1d6aef5d9ca4b74" datatype="html">
+        <source>
+                    Today
+                </source>
+        <target state="translated">Heute</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/date-picker/date-picker-day-picker.component.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="01e097f8565eff8f1c4a6d55d903b121de22f582" datatype="html">
+        <source>Clear All</source>
+        <target state="final">Alle löschen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/chips/chips.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
+        <source>Search</source>
+        <target state="final">Suchen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/search/search.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1a05e2a7905976804ad9a10c19503eab4c5c30ef" datatype="html">
+        <source>Previous Page</source>
+        <target state="final">Vorherige Seite</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/paginator/paginator.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6c7b879d88546e0d204c704e3d314bcca28e2724" datatype="html">
+        <source>Next Page</source>
+        <target state="final">Nächste Seite</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/paginator/paginator.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="feba3c9ef561c56539b64f020e07db15c6057698" datatype="html">
+        <source>Page <x id="INTERPOLATION" equiv-text="{{page}}"/></source>
+        <target state="final">Seite <x id="INTERPOLATION" equiv-text="{{page}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/paginator/paginator.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9331134a850b50deda242da8745f9768510f65fd" datatype="html">
+        <source>Pages <x id="INTERPOLATION" equiv-text="{{from}}"/> - <x id="INTERPOLATION_1" equiv-text="{{to}}"/></source>
+        <target state="final">Seiten <x id="INTERPOLATION" equiv-text="{{from}}"/> – <x id="INTERPOLATION_1" equiv-text="{{to}}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/paginator/paginator.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f732c304c7433e5a83ffcd862c3dce709a0f4982" datatype="html">
+        <source>Next</source>
+        <target state="final">Weiter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/wizard/wizard-step.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ec04060f4dd52920b4d2847c8faff3345547ed10" datatype="html">
+        <source>copy snippet to clipboard</source>
+        <target state="final">Ausschnitt in Zwischenablage kopieren</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/docs/copy-text/copy-text.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="36ebaa57290ff14620af745207e9b428a64fd333" datatype="html">
+        <source>Code snippet copied to clipboard</source>
+        <target state="final">Codeausschnitt in Zwischenablage kopiert</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/docs/copy-text/copy-text.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b9152dc6a26412970e407ca745823ff46d3ee245" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{humanizedTimeframe}}"/> before</source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{humanizedTimeframe}}"/> vorher</target>
+        <note from="description" priority="1">e.g. '7 days before' or 'an hour before'</note>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/convenience/time-frame-bar/time-frame-bar.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="95f5f7f508ab9fe0b2ff5f9f1794d29a7c7f55a1" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{humanizedTimeframe}}"/> later</source>
+        <target state="final"><x id="INTERPOLATION" equiv-text="{{humanizedTimeframe}}"/> später eingehen werden</target>
+        <note from="description" priority="1">e.g. '7 days later' or 'an hour later'</note>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/convenience/time-frame-bar/time-frame-bar.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e1991c2a3e9fb8fbe05a85b99e4a0151414a5c5c" datatype="html">
+        <source>Reset to default</source>
+        <target state="final">Auf Standard zurücksetzen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/convenience/time-frame-bar/time-frame-bar.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3c8adc665cde2a280fd027f86fca78239d8a890c" datatype="html">
+        <source>
+            Use
+        </source>
+        <target state="translated">Verwenden</target>
+        <note from="description" priority="1">Imperative indicating that the user would like to apply, or use, the current value</note>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/convenience/time-frame-bar/time-frame-bar.component.html</context>
+          <context context-type="linenumber">69</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8946b0053f321c7db24853d1b213b1ea9794c789" datatype="html">
+        <source>Custom Range</source>
+        <target state="final">Benutzerdefinierter Bereich</target>
+        <note from="description" priority="1">Label indicating that the user can select a custom start date and/or end date</note>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/lib/convenience/time-frame-bar/time-frame-bar.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bf844a41a29961b6dacc48a20eaf97bef0cf5013" datatype="html">
+        <source>
+            Cancel
+        </source>
+        <target state="translated">Abbrechen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/convenience/time-frame-bar/time-frame-bar.component.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4f26c54d5c3edadf92756d7d3ce466dde1f01e2a" datatype="html">
+        <source>Undo</source>
+        <target state="new"/>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/convenience/time-frame-bar/time-frame-bar.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7bfa30b6cd6b020c84efa4c554890bf49932de18" datatype="html">
+        <source>Dark theme</source>
+        <target state="new"/>
+        <context-group purpose="location">
+          <context context-type="sourcefile">lib/docs/theme-switcher/theme-switcher.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

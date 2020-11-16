@@ -1,0 +1,79 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/components/buttons.less";
+
+.nui .nui-message {
+    align-items: flex-start;
+    border-radius: 0;
+    border: solid @nui-line-default;
+    font-size: @nui-font-size-default;
+    justify-content: flex-start;
+    margin-bottom: @nui-space-sm;
+    padding: @nui-space-sm;
+    position: relative;
+
+    &-critical {
+        .setCssVariable(background-color, nui-color-semantic-critical-bg);
+        .setCssVariable(border-color, nui-color-line-critical);
+        .setCssVariable(color, nui-color-text-default);
+    }
+
+    &-warning {
+        .setCssVariable(background-color, nui-color-semantic-warning-bg);
+        .setCssVariable(border-color, nui-color-line-warning);
+        .setCssVariable(color, nui-color-text-default);
+    }
+
+    &-ok {
+        .setCssVariable(background-color, nui-color-semantic-ok-bg);
+        .setCssVariable(border-color, nui-color-line-ok);
+        .setCssVariable(color, nui-color-text-default);
+    }
+
+    &-info {
+        .setCssVariable(background-color, nui-color-semantic-info-bg);
+        .setCssVariable(border-color, nui-color-line-info);
+        .setCssVariable(color, nui-color-text-default);
+    }
+
+    &-content {
+        margin-left: @nui-space-sm;
+
+        &-text {
+            vertical-align: middle;
+        }
+    }
+
+    &-icon {
+        align-items: center;
+        display: flex;
+        height: calc(1em * @line-height-base);
+        min-width: @icon-size-default;
+    }
+
+    &-allow-dismiss {
+        .nui-message-content {
+            margin-right: (@icon-size-default + @nui-space-md);
+        }
+    }
+
+    &-dismiss-button {
+        border: none;
+        display: block;
+        padding: 0;
+        position: absolute;
+        right: calc(@icon-size-default / 2 + @nui-button-border-width + @btn-padding-is-empty - @nui-space-sm);
+        top: calc((1em * @line-height-base + @nui-space-sm * 2 - @icon-size-default - @nui-button-border-width * 2 - @btn-padding-is-empty * 2) / 2);
+
+        &:hover,
+        &:active,
+        &:focus {
+            .setCssVariable(background-color, nui-color-bg-transparent);
+        }
+    }
+
+    .nui-icon {
+        display: block;
+        float: left;
+        margin: 0;
+    }
+}

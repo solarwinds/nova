@@ -1,0 +1,14 @@
+.focus-outline-base() {
+    outline: none;
+    z-index: @zindex-active;
+}
+
+.focus-outline() {
+    .focus-outline-base();
+    box-shadow: 0 0 0 @nui-line-medium fade(@nui-color-selected-contrast, 50%);
+}
+
+.focus-outline-inset() {
+    .focus-outline-base();
+    box-shadow: inset 0 0 0 @nui-line-medium fade(@nui-color-selected-contrast, 50%);
+}

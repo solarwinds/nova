@@ -1,0 +1,62 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+
+@nui-size-drag-halo: 50px;
+@nui-size-drag-content-offset: 10px;
+@zindex-drag-source: 2;
+
+.nui-drag {
+    &__draggable{
+        cursor: move;
+        &:hover{
+            .setCssVariable(background-color, nui-color-bg-light-hover);
+            box-shadow: @nui-shadow-default;
+        }
+    }
+
+    &__drag-source {
+        //this is needed so that the position absolute on the overlay goes over the correct element
+        position:relative;
+    }
+
+    &__drag-source--overlay{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        .setCssVariable(background, nui-color-overlay-light);
+        z-index: @zindex-drag-source;
+        transition: background-color ease .3s;
+        outline: 0;
+    }
+
+    &__drag-container {
+        position: fixed;
+        z-index: @zindex-drag;
+        pointer-events:none;
+    }
+
+    &__drag-halo {
+        width: @nui-size-drag-halo;
+        height: @nui-size-drag-halo;
+        border-radius: @nui-size-drag-halo/2;
+        .setCssVariable(background-color, nui-color-selected-hover);
+        position: relative;
+        top: -1 * (@nui-size-drag-halo/2);
+        left: -1 * (@nui-size-drag-halo/2);
+        //this makes sure the drop action gets passed through the adorner
+        pointer-events:none;
+    }
+
+    //styles are !important here to ensure overriding of arbitrary existing styles
+    &--dragging {
+        background-color: @nui-color-selected !important;
+        background-color: var(--nui-color-selected,@nui-color-selected) !important;
+        z-index: @zindex-drag+1 !important;
+        position: relative;
+        top: -1 * (@nui-size-drag-halo) + @nui-size-drag-content-offset;
+        pointer-events:none;
+        box-shadow: @nui-shadow-default;
+    }
+}

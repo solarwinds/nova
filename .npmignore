@@ -1,0 +1,7 @@
+consumer/
+packages/
+*.tgz
+docker-compose*.yml
+*.log
+*.build.cmd
+npm.outputs

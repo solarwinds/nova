@@ -1,0 +1,133 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/nui-framework-base.less";
+@import (reference) "../../styles/nui-framework-typography.less";
+@import (reference) "../../styles/nui-framework-colors.less";
+
+@textbox-feedback-icon-margin: @nui-space-xs + @nui-space-xxs;
+@textbox-feedback-icon-offset: ((2 * @textbox-feedback-icon-margin) + @icon-size-small);
+@textbox-updown-offset: ((2 * @input-height-base) - 2);
+@textbox-padding-simple-updown: @textbox-updown-offset + @textbox-feedback-icon-margin;
+@textbox-feedback-icon-with-updown-margin: @textbox-feedback-icon-margin + @textbox-updown-offset;
+@textbox-feedback-icon-offset-with-updown: @textbox-feedback-icon-offset + @textbox-updown-offset;
+@textbox-busy-offset: 1px;
+@textbox-busy-offset-with-updown: @textbox-updown-offset + @textbox-busy-offset;
+
+.nui .nui-textbox {
+
+    &--disabled {
+        .has-feedback {
+            .input-control {
+                .setCssVariable(color, nui-color-text-disabled);
+                &:hover {
+                    .setCssVariable(color, nui-color-text-disabled);
+                }
+            }
+        }
+    }
+    &--bold {
+        .nui-textbox__input {
+            .nui-text-label(@nui-color-text-default, nui-color-text-default);
+        }
+    }
+
+    &__input {
+        min-height: 30px;
+    }
+
+    .has-feedback {
+        position: relative;
+    }
+
+    //need to always have the has-feedback class to avoid a binding jump/flicker when show/hide
+    & .has-feedback .input-control {
+        padding: @nui-space-xs @nui-space-sm;
+        overflow-y: hidden;
+
+        &.nui-textbox__input--multiline {
+            padding-top: @nui-space-xs;
+        }
+    }
+
+    &--centered {
+        .nui & .has-feedback .input-control {
+            padding: 0;
+            text-align: center;
+        }
+    }
+
+    .input-control {
+        resize: vertical;
+
+        &[hidden] {
+            display: none !important;
+        }
+    }
+
+    &.has-error {
+        .form-control-validation();
+    }
+
+    .form-control-feedback {
+        top: 12px;
+        margin: 0 @textbox-feedback-icon-margin 0 0;
+        position: absolute;
+        right: 0;
+        z-index: 2;
+        display: block;
+        width: @input-height-base;
+        height: @input-height-base;
+        line-height: @input-height-base;
+        text-align: center;
+        pointer-events: none;
+
+        &.nui-textbox__busy {
+            top: 0;
+            margin: 0 @textbox-busy-offset 0 0;
+        }
+    }
+
+    .form-control-feedback svg {
+        position: relative;
+        bottom: 3px;
+    }
+}
+
+.form-control-validation() {
+    // Color the label and help text
+    .help-block,
+    .control-label,
+    .radio,
+    .checkbox,
+    .radio-inline,
+    .checkbox-inline,
+    &.nui-radio label,
+    &.checkbox label,
+    &.radio-inline label,
+    &.checkbox-inline label  {
+        .setCssVariable(color, nui-color-text-default);
+    }
+    .nui-validation {
+        > div {
+            padding: 5px 0;
+            .setCssVariable(color, nui-color-text-default);
+        }
+    }
+    // Set validation states also for addons
+    .input-group-addon {
+        .setCssVariable(color, nui-color-text-default);
+        .setCssVariable(border-color, nui-color-line-critical);
+        .setCssVariable(background-color, nui-color-bg-content);
+    }
+    // Optional feedback icon
+    .form-control-feedback {
+        .setCssVariable(color, nui-color-text-default);
+    }
+}
+// TODO: handle it in scope of NUI-3824
+.nui .textarea-scrollable {
+    & .has-feedback .input-control {
+        overflow-y: auto;
+    }
+}
+
+

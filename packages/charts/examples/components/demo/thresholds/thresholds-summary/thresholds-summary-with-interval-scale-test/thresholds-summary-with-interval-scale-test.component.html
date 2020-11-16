@@ -1,0 +1,27 @@
+<div class="d-flex align-items-start">
+    <div class="d-flex flex-column">
+        <nui-chart class="thresholds-main-chart" [chart]="chart" [nuiChartCollectionId]="uid"></nui-chart>
+        <nui-chart class="thresholds-summary-chart" [chart]="summaryChart" [nuiChartCollectionId]="uid"></nui-chart>
+    </div>
+    <nui-legend class="ml-2 thresholds-legend"
+                seriesUnitLabel="sec"
+                [active]="chartAssist.isLegendActive"
+                [interactive]="true"
+                (mouseleave)="chartAssist.resetVisibleSeries()">
+        <nui-legend-series *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn"
+                           [descriptionPrimary]="legendSeries['name']"
+                           (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
+                           [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
+                           [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
+                           (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)">
+            <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(legendSeries, 'y')"
+                                  [backgroundColor]="chartAssist.palette.standardColors.get(legendSeries.id)"
+                                  [color]="chartAssist.palette.textColors.get(legendSeries.id)">
+                <nui-chart-marker rightEdge
+                                  [marker]="chartAssist.markers.get(legendSeries.id)"
+                                  [color]="chartAssist.palette.standardColors.get(legendSeries.id)">
+                </nui-chart-marker>
+            </nui-rich-legend-tile>
+        </nui-legend-series>
+    </nui-legend>
+</div>

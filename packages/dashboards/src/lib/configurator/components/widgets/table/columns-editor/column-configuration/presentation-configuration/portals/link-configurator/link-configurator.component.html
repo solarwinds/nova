@@ -1,0 +1,34 @@
+<div [formGroup]="form">
+    <div formGroupName="dataFieldIds">
+        <div class="mb-4">
+            <nui-form-field caption="Label"
+                            i18n-caption
+                            class="mb-3"
+                            [control]="dataFieldIds.controls['value']">
+                 <nui-select-v2 formControlName="value">
+                    <nui-select-v2-option *ngFor="let itemValue of dropdownItems.value" [value]="itemValue.id">
+                        {{itemValue.label}}
+                    </nui-select-v2-option>
+                </nui-select-v2>
+                <nui-validation-message for="required" i18n>
+                    This field is required
+                </nui-validation-message>
+            </nui-form-field>
+        </div>
+        <div>
+            <nui-form-field caption="URL"
+                            i18n-caption
+                            class="mb-3"
+                            [control]="dataFieldIds.controls['link']">
+                <nui-select-v2 formControlName="link">
+                    <nui-select-v2-option *ngFor="let itemLink of dropdownItems.link" [value]="itemLink.id">
+                        {{itemLink.label}}
+                    </nui-select-v2-option>
+                </nui-select-v2>
+                <nui-validation-message for="required" i18n>
+                    This field is required
+                </nui-validation-message>
+            </nui-form-field>
+        </div>
+    </div>
+</div>

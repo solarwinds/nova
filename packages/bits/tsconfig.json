@@ -1,0 +1,23 @@
+{
+    "extends": "../../tsconfig.main",
+    "compileOnSave": true,
+    "compilerOptions": {
+        "baseUrl": ".",
+        "module": "esnext",
+        "noEmit": false,
+        "resolveJsonModule": true,
+        // this was added to make demo project work in WebStorm,
+        // currently it's the only available workaround
+        "paths": {
+            "@solarwinds/nova-bits": ["./src/public_api.ts"],
+            "highlight.js": ["./node_modules/highlight.js/lib/highlight.js"], // to ensure we load highlight without languages
+            "protractor": ["../stub/protractor.d.ts"]
+        },
+        "lib": ["es2015", "dom"],
+        "importHelpers": true
+    },
+    "exclude": [
+        "node_modules",
+        "atoms.d.ts"
+    ]
+}

@@ -1,0 +1,22 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+
+@legend-tile-width: 60px;
+@legend-tile-background-opacity: .4;
+
+.status-bar-chart {
+    &__legend {
+        &__tile {
+            width: @legend-tile-width;
+            position: relative;
+
+            &__background {
+                position: absolute;
+                opacity: @legend-tile-background-opacity;
+            }
+
+            &__icon {
+                position: absolute;
+            }
+        }
+    }
+}

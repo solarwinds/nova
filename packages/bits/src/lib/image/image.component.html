@@ -1,0 +1,11 @@
+<div class="nui-image nui-image__hidden"
+     [innerHTML]="getImageTemplate()"
+     [style.height]="height"
+     [style.width]="width"
+     [class.nui-image__left]="float === 'left'"
+     [class.nui-image__right]="float === 'right'"
+     [class.nui-image__margin-centered]="margin === 'centered'"
+     [class.nui-image__margin-small]="margin === 'small'"
+     [class.nui-image__margin-large]="margin === 'large'"
+     [class.nui-image__watermarked]="isWatermark">
+</div>

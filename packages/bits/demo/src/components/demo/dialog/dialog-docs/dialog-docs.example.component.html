@@ -1,0 +1,132 @@
+<h2>Required Modules</h2>
+<ul>
+    <li>
+        <code> NuiDialogModule </code>
+    </li>
+</ul>
+
+<h2>Basic Usage</h2>
+
+<p>
+    Dialog can be added by passing <code>template</code> to the <code>DialogService's open</code> method.
+    You can pass the result of the dialog or the reason why dialog is dismissed by using <code>close</code> or <code>dismiss</code> methods in your ng-template.
+    All passed data can be handled by <code>result</code> property of dialog's <code>open</code> method.
+</p>
+<nui-example-wrapper filenamePrefix="simple-dialog" exampleTitle="Simple dialog">
+    <nui-simple-dialog-example></nui-simple-dialog-example>
+</nui-example-wrapper>
+
+<h2>Usage as a Component</h2>
+
+<p>You can pass an existing component as content of the dialog window. </p>
+<p>In this case remember to add content component as an entryComponents section of your NgModule.</p>
+<p>For this case you need to pass <code>Component</code> into <code>open</code> method of <code>DialogService</code></p>
+<p>Check both examples below.</p>
+<nui-example-wrapper filenamePrefix="component-as-content" exampleTitle="Component as content for dialog">
+    <nui-component-as-content-example></nui-component-as-content-example>
+</nui-example-wrapper>
+<nui-example-wrapper filenamePrefix="dialog-content" exampleTitle="Dialog Content Example Component">
+    <p>Code of this example is related to the example above. It only shows code.</p>
+</nui-example-wrapper>
+
+<h2>Severity</h2>
+
+<p>You can pass <code>severity</code> property to the <code>dialog-header</code>
+component and it will show different severity styles. Possible values are: <code>critical, warning, info.</code></p>
+<p>You can also add custom action buttons to the Dialog header. </p>
+<p>In order to do so, you need to define them inside <code>dialog-header</code> component, as shown in the example below.</p>
+<nui-example-wrapper filenamePrefix="dialog-severity" exampleTitle="Dialog Severity">
+    <nui-dialog-severity-example></nui-dialog-severity-example>
+</nui-example-wrapper>
+
+<h2>Custom Dialog header</h2>
+
+<p>You can add custom action buttons to the Dialog header. </p>
+<p>In order to do so, you need to define them inside <code>dialog-header</code> component, as shown in the example below.</p>
+<nui-example-wrapper filenamePrefix="header-buttons" exampleTitle="Custom Dialog Header">
+    <nui-header-buttons-example></nui-header-buttons-example>
+</nui-example-wrapper>
+
+<h2>Dialog Sizes</h2>
+
+<p>You can define size of the dialog by passing it as second argument to <code>DialogService's</code>
+    <code>open</code> method. Possible sizes are: <code>sm,</code><code>md,</code> and <code>lg</code>.
+    Default size is <code>md</code>.
+</p>
+<nui-example-wrapper filenamePrefix="dialog-sizes" exampleTitle="Dialog Sizes">
+    <nui-dialog-sizes-example></nui-dialog-sizes-example>
+</nui-example-wrapper>
+
+<h2>Position on screen</h2>
+
+<p>When content is longer than available screen, dialog grows vertically by default.</p>
+<p>By adding <code>responsive-mode</code> class to the <code>dialog-body</code>, dialog will fit the available screen
+    and content will be scrollable inside the dialog. Also it's possible to remove padding from content in
+    <code>dialog-body</code>by adding <code>compact-mode</code> class</p>
+<nui-example-wrapper filenamePrefix="dialog-position" exampleTitle="Dialog Positions">
+    <nui-dialog-position-example></nui-dialog-position-example>
+</nui-example-wrapper>
+
+<h2>Custom class</h2>
+
+<p>It is possible to add custom class to the dialog window. In order to do it, you need to pass <code>windowClass</code>
+option into <code>DialogService open</code> method as second argument. </p>
+<p> Here's an example: <code>DialogService.open(content, {{ '{' }} windowClass: "myCustomClass" {{ '}' }}) </code> </p>
+<p> It will allow you to apply custom styles to the dialog if needed. </p>
+<p> Example below shows dialog with custom width (500px). </p>
+<p> NOTE: custom class is applied to the dialog component which appended into the <code>body</code> element.
+<p> That's why this class must be specified as <code>body</code> descendant class.</p>
+<nui-message type="info">
+    Custom class styles can be overriden by default styles of <code>nui-dialog</code> component. In this case please make custom class selector more specific in your styles.
+</nui-message>
+<nui-example-wrapper filenamePrefix="dialog-custom-class" exampleTitle="Custom Class">
+    <nui-dialog-custom-class-example></nui-dialog-custom-class-example>
+</nui-example-wrapper>
+
+<h2>Confirmation Dialog</h2>
+
+<p>
+    You can use Confirmation Dialog by calling the <code>confirm</code> method of DialogService. Set the <code>message</code> input
+    to a string value that will serve as the confirmation message. Optionally, you can customize the title and button labels using
+    the <code>title</code>, <code>confirmText</code>, <code>dismissText</code> and <code>severity</code> properties defined in
+    <a target="_parent" href="../interfaces/IConfirmationDialogOptions.html">IConfirmationDialogOptions</a>.
+
+    <nui-message type="info">
+        By default, when the confirmation dialog opens, the <code>Confirm</code> button is focused. Use <code>setFocus</code> input to 
+        set the <code>Dismiss</code> button focused on dialog open.
+    </nui-message>
+</p>
+<nui-example-wrapper filenamePrefix="confirmation-dialog" exampleTitle="Confirmation Dialog">
+    <nui-confirmation-dialog-example></nui-confirmation-dialog-example>
+</nui-example-wrapper>
+
+<h2>Keyboard Options</h2>
+
+<p>
+    There is a field in <code>options</code> that allows dialog to be interacted with via keyboard. Usage: <code>{{ '{' }} keyboard: false {{ '}' }}</code>
+</p>
+
+<nui-example-wrapper filenamePrefix="dialog-with-keyboard" exampleTitle="Dialog With Keyboard">
+    <nui-dialog-with-keyboard-example></nui-dialog-with-keyboard-example>
+</nui-example-wrapper>
+
+<h2>Static Backdrop</h2>
+<p>
+    By default, nui-dialog closes if user clicks outside the dialog. It is handy though to keep the dialog on no matter where user clicks. To achieve this behavior,
+    it is recommended to use the <code>backdrop</code> input of the component and set <code>static</code> string to it.
+</p>
+
+<nui-example-wrapper filenamePrefix="dialog-with-static-backdrop" exampleTitle="Dialog With Static Backdrop">
+    <nui-dialog-with-static-backdrop-example></nui-dialog-with-static-backdrop-example>
+</nui-example-wrapper>
+
+<h2>Dialog Inside Overlay</h2>
+<p>
+    The implementation of the <code>nui-dialog</code> is not currently based on <code>nui-overlay</code>, which means there might be a need to display the dialog properly 
+    with overlay-based components, including nested ones. To make the dialog open inside the overlay container it is enough to passe in the <code>useOverlay</code> option 
+    when opening the dialog.
+</p>
+
+<nui-example-wrapper filenamePrefix="nui-dialog-inside-overlay" exampleTitle="Dialog With Static Backdrop">
+    <nui-dialog-inside-overlay-example></nui-dialog-inside-overlay-example>
+</nui-example-wrapper>

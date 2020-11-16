@@ -1,0 +1,52 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+@import (reference) "../../../styles/nui-framework-colors.less";
+
+@nui-resizer-size: 16px;
+
+:host {
+    position: absolute;
+    display: flex;
+    top: 0;
+    z-index: 1;
+    width: @nui-resizer-size;
+    height:  100%;
+    &.nui-layout-resizer {
+        &-disabled {
+            pointer-events: none;
+        }
+        &--hovering {
+            .nui-layout-resizer__split {
+                .setCssVariable(background-color, nui-color-selected-contrast);
+            }
+            .setCssVariable(background-color, nui-color-selected);
+        }
+        &--active {
+            .setCssVariable(background-color, nui-color-selected-active);
+            .nui-layout-resizer__split {
+                .setCssVariable(background-color, nui-color-selected-contrast);
+            }
+        }
+        &__split {
+            height: 100%;
+            width: @nui-space-xxs;
+        }
+        &--horizontal {
+            cursor: ew-resize;
+            .nui-layout-resizer__split {
+                width: @padding-xs-vertical;
+                height: 100%;
+                margin: 0 auto;
+            }
+        }
+        &--vertical {
+            cursor: ns-resize;
+            .nui-layout-resizer__split {
+                height: @padding-xs-vertical;
+                width: 100%;
+                margin: auto 0;
+            }
+        }
+    }
+}
+

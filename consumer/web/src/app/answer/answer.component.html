@@ -1,0 +1,60 @@
+<div class="rd-answer row justify-content-start">
+    <div class="col-1 text-center">
+        <button nui-button
+                class="rd-answer__up-vote-button"
+                i18n-title
+                title="This answer is helpful"
+                type="button"
+                displayStyle="action"
+                (click)="onVote(userVote === 1 ? 0 : 1)"
+                icon="triangle-up"
+                [iconColor]="userVote === 1 ? 'orange' : 'gray'"
+                [disabled]="votingDisabled"></button>
+        <div class="rd-answer__vote-count">{{ votes }}</div>
+        <button nui-button
+                class="rd-answer__down-vote-button"
+                i18n-title
+                title="This answer is not helpful"
+                type="button"
+                displayStyle="action"
+                (click)="onVote(userVote === -1 ? 0 : -1)"
+                icon="triangle-down"
+                [iconColor]="userVote === -1 ? 'orange' : 'gray'"
+                [disabled]="votingDisabled"></button>
+        <div>
+            <button nui-button
+                    class="rd-answer__accepted-answer-button"
+                    i18n-title
+                    title="This answers my question"
+                    type="button"
+                    size="large"
+                    displayStyle="action"
+                    (click)="onAcceptedAnswerClick()"
+                    [icon]="acceptedAnswerIcon"
+                    [disabled]="acceptAnswerDisabled"></button>
+        </div>
+    </div>
+    <div class="col-11">
+        <div *ngIf="editing || busy">
+            <rd-post-form [post]="post" (formReady)="onFormReady('postForm', $event)" class="rd-answer__post-form"></rd-post-form>
+            <button nui-button class="rd-answer__save-answer" type="button" (click)="onUpdateAnswer()" [isBusy]="busy" displayStyle="primary"
+                    i18n>
+                Update Answer
+            </button>
+            <button nui-button class="rd-answer__cancel-editing" type="button" (click)="onCancelEditing()" displayStyle="action" i18n>
+                Cancel
+            </button>
+        </div>
+        <div *ngIf="!editing && !busy">
+            <rd-post class="rd-answer__post" [post]="post"></rd-post>
+            <div class="pt-2">
+                <a (click)="onEditAnswer()" href="javascript:0" class="rd-answer__edit" i18n>
+                    edit
+                </a>
+                <a (click)="onDeleteAnswer()" href="javascript:0" class="rd-answer__delete" i18n>
+                    delete
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

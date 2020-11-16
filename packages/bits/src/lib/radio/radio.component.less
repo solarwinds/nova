@@ -1,0 +1,164 @@
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/nui-framework-variables.less";
+
+.nui-radio-group-inline { // additional class for inline alignment of radio-group
+    > .nui-radio-group {
+        display: inline-flex;
+        .nui-radio {
+            margin-left: @nui-space-xs;
+        }
+    }
+}
+
+.nui .nui-radio {
+    border-radius: @nui-radius-default;
+    cursor: pointer;
+    line-height: @nui-line-height-small;
+
+    &:hover {
+        .setCssVariable(background-color, nui-color-bg-transparent-hover);
+    }
+
+    &__label {
+        cursor: pointer;
+        font-weight: @nui-font-weight-regular;
+        margin: 0;
+        min-height: 2 * (@nui-space-xs + @nui-space-xxs) + @icon-size-default;
+        min-width: 2 * (@nui-space-xs + @nui-space-xxs) + @icon-size-default;
+        padding: @nui-space-xs + @nui-space-xxs;
+        position: relative;
+        width: 100%;
+    }
+
+    &__label--translucent {
+        .no-select();
+        .setCssVariable(color, nui-color-text-disabled);
+        cursor: default;
+    }
+
+    &__content {
+        align-items: center;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        min-height: @icon-size-default;
+    }
+
+    &__mark {
+        .setCssVariable(background, nui-color-bg-content);
+        background-size: @icon-size-default;
+        border: solid @nui-space-xxs;
+        .setCssVariable(border-color, nui-color-active);
+        border-radius: 100%;
+        height: @icon-size-default;
+        margin: 0 (@nui-space-xs + @nui-space-xxs) 0 0;
+        padding: 3px;
+        width: @icon-size-default;
+
+        // don't grow, don't shrink, stay fit :)
+        flex-shrink: 0;
+        flex-grow: 0;
+
+        &.nui-radio__mark--disabled {
+            .setCssVariable(background-color, nui-color-bg-content);
+            .setCssVariable(border-color, nui-color-disabled);
+            cursor: @cursor-disabled;
+        }
+    }
+
+    &__glyph {
+        .setCssVariable(background, nui-color-bg-content);
+        border-radius: 100%;
+        display: none;
+        height: 100%;
+        width: 100%;
+    }
+
+    &__input {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 0;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        outline: 0;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+
+        &[disabled],
+        &.disabled {
+            cursor: @cursor-disabled;
+        }
+
+        &:focus {
+            .tab-focus();
+        }
+
+        &:disabled + .nui-radio__mark {
+            .setCssVariable(background-color, nui-color-bg-content);
+            .setCssVariable(border-color, nui-color-disabled);
+        }
+    }
+
+    &.nui-radio--empty {
+        display: inline-block;
+
+        .nui-radio__label {
+            justify-content: center;
+            margin: auto;
+            width: auto;
+        }
+
+        .nui-radio__mark {
+            margin: auto;
+        }
+    }
+
+    .nui-help-hint {
+        line-height: @nui-line-height-small;
+        margin-left: (@icon-size-default + @nui-space-xs + @nui-space-xxs);
+        padding: 0;
+    }
+    &--checked {
+        .nui-radio__mark {
+            .setCssVariable(background-color, nui-color-active);
+            .setCssVariable(border-color, nui-color-active);
+            > .nui-radio__glyph {
+                display: block;
+            }
+            &--disabled {
+                .setCssVariable(background-color, nui-color-off);
+                .setCssVariable(border-color, nui-color-off);
+            }
+        }
+        .nui-radio__input + .nui-radio__mark {
+            .setCssVariable(background-color, nui-color-active);
+            .setCssVariable(border-color, nui-color-active);
+
+            > .nui-radio__glyph {
+                display: block;
+            }
+        }
+
+        .nui-radio__input:disabled + .nui-radio__mark {
+            .setCssVariable(background-color, nui-color-disabled);
+            .setCssVariable(border-color, nui-color-disabled);
+        }
+    }
+}
+
+.nui-repeat-item__radio {
+    .nui-radio {
+        &:hover {
+            background: none;
+        }
+
+        .nui-radio__hint {
+            display: none;
+        }
+    }
+}
+

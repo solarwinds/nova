@@ -1,0 +1,222 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+@header-step-title-max-width: 140px; //needed to fix extra space between steps in wizard-header when wizard-title is too long
+
+.nui {
+    .nui-dialog {
+        .nui-wizard {
+            padding-top: 0;
+
+            &__header {
+                border-top: none;
+            }
+        }
+    }
+    .nui-wizard {
+        padding-top: @nui-space-md;
+
+        &__container {
+            margin: @nui-space-md;
+            &.show-scroll {
+                overflow: auto;
+            }
+        }
+
+        &__header {
+            padding: @nui-space-sm @nui-space-md;
+            .setCssVariable(background-color, nui-color-bg-secondary);
+            border: @nui-line-default solid;
+            border-left: none;
+            border-right: none;
+            .setCssVariable(border-color, nui-color-line-default);
+            overflow: hidden;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            .no-select();
+
+            &-steps {
+                margin-bottom: 0;
+                white-space: nowrap;
+                display: inline-flex;
+            }
+
+            &-step {
+                line-height: normal;
+                display: inline-flex;
+                cursor: pointer;
+                &--disabled {
+                    pointer-events: none;
+                    cursor: default;
+                }
+                &--visited {
+                    .nui-wizard__header-step-link {
+                        .setCssVariable(color, nui-color-text-link);
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                    .nui-wizard__header-step-col {
+                        &-right {
+                            > .nui-wizard__header-step-line {
+                                .setCssVariable(border-color, nui-color-line-active);
+                            }
+                        }
+                    }
+                }
+                &--first {
+                    .nui-wizard__header-step-col {
+                        &-right {
+                            border-color: transparent;
+                            opacity: 0;
+                        }
+                    }
+                }
+                &--last {
+                    .nui-wizard__header-step-col {
+                        &-left {
+                            border-color: transparent;
+                            opacity: 0;
+                        }
+                    }
+                }
+
+                &--active {
+                    cursor: default;
+                    .nui-wizard__header-step-link {
+                        .setCssVariable(color, nui-color-bg-dark);
+                        &:hover {
+                            .nui-wizard__header-step-title {
+                                text-decoration: none;
+                            }
+                        }
+                        .nui-wizard__header-step-col {
+                            &-right {
+                                > .nui-wizard__header-step-line {
+                                    .setCssVariable(border-color, nui-color-line-active);
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                &--complete {
+                    .nui-wizard__header-step-link {
+                        .nui-wizard__header-step-col {
+                            &-left {
+                                > .nui-wizard__header-step-line {
+                                    .setCssVariable(border-color, nui-color-line-active);
+                                }
+                            }
+                            &-right {
+                                > .nui-wizard__header-step-line {
+                                    .setCssVariable(border-color, nui-color-line-active);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &-container {
+                    display: inline-table;
+                    width: 100%;
+
+                    &-bottom {
+                        display: none;
+                        .nui-wizard__header-step-title {
+                            width: 100%;
+                            max-width: 100%;
+                            margin: 0;
+                        }
+                    }
+                }
+                &-row {
+                    display: table-row;
+                }
+                &-col {
+                    display: table-cell;
+                    vertical-align: middle;
+
+                    .nui-wizard__header-step-line {
+                        .setCssVariable(border-color, nui-color-line-default);
+                    }
+                    &-right {
+                        .nui-wizard__header-step-line {
+                            margin-right: -1px;
+                        }
+                    }
+                }
+
+                &-line {
+                    border-bottom: solid 2px;
+                    height: 2px;
+                }
+
+                &-link {
+                    .setCssVariable(color, nui-color-text-secondary);
+                    transition: color .3s;
+                    &-container {
+                        display: flex;
+                        align-content: baseline;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+
+                &-title {
+                    .text-overflow(ellipsis);
+                    vertical-align: middle;
+                    display: inline-block;
+                    max-width: @header-step-title-max-width;
+                    margin: 0 0 @nui-space-xs 0;
+                    text-decoration: inherit;
+                }
+            }
+        }
+
+        &__header.nui-wizard__header--lines-stretched {
+            .nui-wizard__header-step-title {
+                max-width: unset;
+            }
+        }
+
+        &__title {
+            margin: 0;
+        }
+
+        &__description {
+            margin-top: @nui-space-xs;
+        }
+
+        &__steps {
+            padding: @nui-space-md;
+        }
+
+        &__step {
+            margin-top: @nui-space-md;
+            display: none;
+
+            &--active {
+                display: block;
+            }
+
+            &-title {
+                margin: @nui-space-md 0 @nui-space-sm 0;
+            }
+        }
+
+        &__footer {
+            border-top: @nui-line-default solid;
+            .setCssVariable(border-top-color, nui-color-line-default);
+            padding: @nui-space-md;
+            display: flex;
+            justify-content: flex-end;
+
+            > .nui-button {
+                margin-left: @nui-space-md;
+            }
+        }
+    }
+}

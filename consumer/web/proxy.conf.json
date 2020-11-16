@@ -1,0 +1,11 @@
+{
+    "/api/*": {
+        "target": "http://localhost:4000/graphql/",
+        "secure": false,
+        "logLevel": "warn",
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        }
+    }
+}

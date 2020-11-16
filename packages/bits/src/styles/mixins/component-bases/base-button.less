@@ -1,0 +1,254 @@
+
+@import (reference) "../../nui-framework-variables.less";
+@import (reference) "../../nui-framework-base.less";
+
+.button-base() {
+    .generic-control();
+
+    &.default {
+        .button-default();
+    }
+
+    &.primary {
+        .button-primary();
+    }
+
+    &.action {
+        .button-action();
+    }
+
+    &.destructive {
+        .button-destructive();
+    }
+
+    &.selected {
+        .button-selected();
+    }
+
+    &.selected-contrast {
+        .button-selected-contrast();
+    }
+}
+
+.button-default() {
+    .button-variant(
+        nui-color-text-link;
+        transparent;
+        nui-color-line-default;
+        nui-color-text-link;
+        nui-color-bg-transparent-hover;
+        nui-color-btn1-focusBrd;
+        transparent;
+        nui-color-btn1-activeOpenBrd;
+        transparent;
+        nui-color-btn1-activeHoverBrd;
+        transparent;
+        nui-color-line-default;
+        nui-color-disabled;
+        nui-color-busy-default
+    );
+}
+
+.button-primary() {
+    .button-variant(
+        nui-color-text-light;
+        nui-color-active;
+        transparent;
+        nui-color-icon-light;
+        nui-color-active-hover;
+        transparent;
+        nui-color-btn2-activeOpenBk;
+        transparent;
+        nui-color-btn2-activeHoverBk;
+        transparent;
+        nui-color-disabled;
+        transparent;
+        white;
+        nui-color-busy-default
+    );
+}
+
+.button-action() {
+    .button-variant(
+        nui-color-text-link;
+        transparent;
+        transparent;
+        nui-color-text-link;
+        nui-color-bg-transparent-hover;
+        transparent;
+        nui-color-bg-transparent-hover;
+        transparent;
+        nui-color-bg-transparent-hover;
+        transparent;
+        transparent;
+        transparent;
+        nui-color-disabled;
+        nui-color-busy-default
+    );
+}
+
+.button-destructive() {
+    .button-variant(
+        nui-color-text-critical;
+        transparent;
+        nui-color-line-default;
+        nui-color-text-critical;
+        nui-color-bg-transparent-hover;
+        nui-color-btn1-focusBrd;
+        nui-color-bg-transparent-hover;
+        nui-color-btn1-activeOpenBrd;
+        nui-color-bg-transparent-hover;
+        nui-color-btn1-activeHoverBrd;
+        transparent;
+        nui-color-line-default;
+        nui-color-disabled;
+        nui-color-busy-destructive
+    );
+}
+
+.button-selected() {
+    .button-variant(
+        nui-color-text-link;
+        nui-color-selected;
+        transparent;
+        nui-color-text-link;
+        nui-color-selected-hover;
+        transparent;
+        nui-color-selected-active;
+        transparent;
+        nui-color-selected-active;
+        transparent;
+        nui-color-disabled;
+        transparent;
+        white;
+        nui-color-busy-default
+    );
+}
+
+.button-selected-contrast() {
+    .button-variant(
+        white;
+        nui-color-selected-contrast;
+        transparent;
+        nui-color-icon-light;
+        nui-color-selected-contrast-hover;
+        transparent;
+        nui-color-selected-contrast-hover;
+        transparent;
+        nui-color-selected-contrast-hover;
+        transparent;
+        nui-color-disabled;
+        transparent;
+        white;
+        nui-color-busy-default
+    );
+}
+
+.button-variant(@colorVariableName;
+                @backgroundVariableName;
+                @borderVariableName;
+                @iconVariableName;
+                @focusBkVariableName;
+                @focusBrdVariableName;
+                @activeOpenBkVariableName;
+                @activeOpenBrdVariableName;
+                @activeHoverBkVariableName;
+                @activeHoverBrdVariableName;
+                @disabledBkVariableName;
+                @disabledBrdVariableName;
+                @disabledContentVariableName;
+                @busyVariantColor
+) {
+    .setCssVariable(color, @colorVariableName);
+    .setCssVariable(background-color, @backgroundVariableName);
+    .setCssVariable(border-color, @borderVariableName);
+    .fill-icon(@iconVariableName);
+
+    &:focus,
+    &.focus {
+        .setCssVariable(color, @colorVariableName);
+        .setCssVariable(background-color, @focusBkVariableName);
+        .setCssVariable(border-color, @focusBrdVariableName);
+        .focus-outline();
+    }
+    &:hover {
+        .setCssVariable(color, @colorVariableName);
+        .setCssVariable(background-color, @focusBkVariableName);
+        .setCssVariable(border-color, @focusBrdVariableName);
+    }
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        .setCssVariable(color, @colorVariableName);
+        .setCssVariable(background-color, @activeOpenBkVariableName);
+        .setCssVariable(border-color, @activeOpenBrdVariableName);
+
+        &:hover,
+        &:focus,
+        &.focus {
+        .setCssVariable(color, @colorVariableName);
+        .setCssVariable(background-color, @activeHoverBkVariableName);
+        .setCssVariable(border-color, @activeHoverBrdVariableName);
+        }
+    }
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        background-image: none;
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active {
+            .setCssVariable(background-color, @disabledBkVariableName);
+            .setCssVariable(border-color, @disabledBrdVariableName);
+            .fill-icon(@disabledContentVariableName);
+            .setCssVariable(color, @disabledContentVariableName);
+        }
+    }
+
+    &.is-busy {
+        .busy-variant(@busyVariantColor);
+    }
+
+    &.has-error {
+        .setCssVariable(border-color, nui-color-line-critical);
+        &:hover,
+        &:focus,
+        &:active {
+            .setCssVariable(border-color, nui-color-line-critical);
+        }
+    }
+
+    .badge {
+        .setCssVariable(color, @backgroundVariableName);
+        .setCssVariable(background-color, @colorVariableName);
+    }
+}
+
+.busy-variant(@variableName) {
+    .ripple-1, .ripple-2 {
+        .setCssVariable(background, @variableName);
+    }
+}
+
+.fill-icon(@variableName) {
+    .nui-icon:not(.custom-icon-color) {
+        path, polygon {
+            .setCssVariable(fill, @variableName);
+        }
+    }
+}
+
+// Button sizes
+.button-size(@padding-vertical; @padding-horizontal; @font-size; @line-height; @border-radius) {
+    padding: @padding-vertical @padding-horizontal;
+    font-size: @font-size;
+    line-height: @line-height;
+    border-radius: @border-radius;
+}

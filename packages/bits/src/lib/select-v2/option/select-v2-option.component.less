@@ -1,0 +1,66 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+
+:host {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    display: list-item;
+    list-style-type: none;
+    margin-bottom: @nui-space-xxs/2;
+    font-size: @nui-font-size-default;
+    min-height: @nui-space-lg;
+    padding: @nui-space-xs @nui-space-sm;
+    cursor: pointer;
+    .setCssVariable(background-color, nui-color-bg-transparent);
+    .setCssVariable(color, nui-color-text-default);
+
+    &:hover {
+        .setCssVariable(color, nui-color-text-default-hover);
+        .setCssVariable(background-color, nui-color-bg-transparent-hover);
+    }
+
+    &.active:not(.disabled) {
+        .setCssVariable(background-color, nui-color-selected);
+        .focus-outline-inset();
+    }
+
+    &.selected {
+        .setCssVariable(background-color, nui-color-selected);
+        font-weight: @nui-font-weight-semibold;
+
+        &:hover {
+            .setCssVariable(background-color, nui-color-selected-hover);
+        }
+    }
+
+    &.disabled {
+        .setCssVariable(color, nui-color-text-disabled);
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    &.reset-box-sizes {
+        height: unset;
+        width: unset;
+        min-width: unset;
+        max-width: unset;
+        min-height: unset;
+        max-height: unset;
+        padding: unset;
+        margin: unset;
+        border: unset;
+    }
+
+    // for ellipsis on labels
+    /deep/ .select-v2-option__label {
+        max-width: 100%;
+        .text-overflow(ellipsis);
+    }
+}

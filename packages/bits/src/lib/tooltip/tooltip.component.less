@@ -1,0 +1,21 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+@nui-tooltip-max-width: 250px;
+
+.nui-tooltip-body {
+    .setCssVariable(background-color, nui-color-bg-inverse);
+    .setCssVariable(color, nui-color-text-inverse);
+    font-size: @nui-font-size-small;
+    line-height: @nui-line-height-small;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: @nui-space-sm;
+    max-width: @nui-tooltip-max-width;
+    padding: @nui-space-xs @nui-space-sm;
+    box-shadow: @nui-shadow-default;
+
+    &.with-nui-overlay {
+        margin: unset;
+    }
+}

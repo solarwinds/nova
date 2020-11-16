@@ -1,0 +1,60 @@
+<nui-widget-editor-accordion [formGroup]="formLocal"
+                             [state]="formLocal | nuiWidgetEditorAccordionFormState | async">
+    <div accordionHeader class="d-flex align-items-center px-4 py-2">
+        <nui-icon class="align-self-start pt-2" [icon]="formLocal | nuiFormHeaderIconPipe:'rule' | async"></nui-icon>
+        <div class="d-flex flex-column ml-4 pt-1">
+            <span class="nui-text-label" i18n>Background color rules</span>
+            <div class="nui-text-secondary"
+                 [title]="getColorRulesSubtitle()">
+
+                 {{ getColorRulesSubtitle() }}
+            </div>
+        </div>
+    </div>
+    <div class="kpi-color-rules-configuration__accordion-content">
+        <div class="mb-4">
+            <p class="mb-3">We can automatically change the background color when the value meets certain conditions.</p>
+            <ng-container *ngFor="let rule of formLocal.get('rules')?.value.controls; index as i">
+                    <div class="mb-3 d-flex flex-row flex-wrap" [formGroup]="rule">
+                        <div class="mr-3 mb-3 d-flex flex-column justify-content-center flex-grow-1">
+                            <nui-form-field [control]="rule.get('comparisonType')">
+                                <nui-select-v2 placeholder="Select Item"
+                                               i18n-placeholder
+                                               style="min-width: 220px;"
+                                               [formControl]="rule.get('comparisonType')">
+                                    <nui-select-v2-option *ngFor="let item of availableComparators | keyvalue" [value]="item.key">
+                                        {{ getLabel(item.key) }}
+                                    </nui-select-v2-option>
+                                </nui-select-v2>
+                            </nui-form-field>
+                        </div>
+                        <div class="mr-3 mb-3 d-flex flex-column justify-content-center flex-grow-1" style="width: 100px;">
+                            <nui-form-field [control]="rule.get('value')">
+                                <nui-textbox formControlName="value"></nui-textbox>
+                            </nui-form-field>
+                        </div>
+                        <div class="mr-3 mb-3 d-flex flex-column justify-content-center">
+                            <nui-form-field [control]="rule.get('color')">
+                                <nui-color-picker formControlName="color" [colors]="colors"></nui-color-picker>
+                            </nui-form-field>
+                        </div>
+                        <div class="mb-3 d-flex flex-column justify-content-center">
+                            <button nui-button
+                                    icon="delete"
+                                    displayStyle="action"
+                                    type="button"
+                                    (click)="removeRule(i)">
+                            </button>
+                        </div>
+                    </div>
+            </ng-container>
+            <button nui-button
+                    icon="add"
+                    displayStyle="action"
+                    type="button"
+                    (click)="addRule()"
+                    i18n>Add new rule
+            </button>
+        </div>
+    </div>
+</nui-widget-editor-accordion>

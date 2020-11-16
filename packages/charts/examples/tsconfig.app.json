@@ -1,0 +1,27 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "./",
+    "skipLibCheck": true,
+    "declaration": false,
+    "types": [
+      "node"
+    ],
+    "paths": {
+        "@solarwinds/nova-charts": [
+            "../src/public-api.ts"
+        ]
+    }
+  },
+  "include": [
+    "./"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/environment.e2e.ts"
+  ],
+  "typeRoots": [
+    "../node_modules/@types"
+  ]
+}

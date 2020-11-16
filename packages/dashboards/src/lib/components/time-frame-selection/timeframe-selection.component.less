@@ -1,0 +1,9 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins.less";
+
+:host {
+    border-top: @nui-line-default solid;
+    .setCssVariable(border-top-color, nui-color-line-default);
+    border-bottom: @nui-line-default solid;
+    .setCssVariable(border-bottom-color, nui-color-line-default);
+}

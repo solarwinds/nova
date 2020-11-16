@@ -1,0 +1,23 @@
+@import (reference) "../../../../styles/nui-framework-variables.less";
+@import (reference) "../../../../styles/mixins.less";
+
+.nui-menu .nui-menu-item, .nui-menu-popup-host .nui-menu-item, .nui-menu-popup .nui-menu-item {
+    .nui-menu-item__action {
+        .setCssVariable(color, nui-color-text-link);
+        &:hover {
+            text-decoration: none;
+        }
+
+        &-destructive {
+            .setCssVariable(color, nui-color-text-critical);
+        }
+    }
+    &.nui-menu-item--disabled {
+        > .nui-menu-item__action {
+            .setCssVariable(color, nui-color-off);
+            &:hover {
+                cursor: not-allowed;
+            }
+        }
+    }
+}

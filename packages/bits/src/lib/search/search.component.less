@@ -1,0 +1,153 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+@nui-search-button-size: @input-height-base;
+@nui-search-icon-size: @icon-size-small;
+@nui-search-max-height: 300px;
+@nui-search-max-width: 400px;
+@nui-search-min-width: 180px;
+@nui-search-animation-duration: 0.3s;
+
+.nui .nui-search {
+
+    &__group {
+        position: relative;
+        max-width: @nui-search-max-width;
+        min-width: @nui-search-min-width;
+        width: 100%;
+        &[class*="col-"] {
+            float: none;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .form-control {
+            // Ensure that the input is always above the *appended* addon button for
+            // proper border colors.
+            position: relative;
+
+            margin-bottom: 0;
+            width: 100%;
+            z-index: 2;
+        }
+    }
+
+    &__input {
+        display: flex;
+        position: relative;
+        .clearfix();
+
+        &-spinner {
+            left: (1px + @nui-space-xs);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+
+        &-control.form-control {
+            border-radius: @nui-radius-default;
+            font-weight: @nui-font-weight-regular;
+            padding-right: (2 * @nui-search-button-size);
+            transition: padding-left @nui-search-animation-duration ease;
+            z-index: 0;
+            .placeholder();
+
+            &:hover,
+            &:active,
+            &:focus {
+                z-index: 1;
+            }
+        }
+
+        .dropdown-menu {
+            .setCssVariable(border-color, nui-color-line-active);
+            box-shadow: @nui-shadow-default;
+            margin-top: -1px;
+            max-height: @nui-search-max-height;
+            overflow-y: auto;
+
+            > li {
+                &.active {
+                    > a {
+                        .setCssVariable(background-color, nui-color-bg-light-hover);
+                        cursor: pointer;
+                    }
+                }
+
+                > a {
+                    padding: @nui-space-xs @nui-space-sm;
+                }
+            }
+        }
+    }
+
+    &__button {
+        align-items: center;
+        display: flex;
+        font-size: 0;
+        justify-content: flex-end;
+        position: absolute;
+        right: 0;
+        z-index: 2;
+
+        &:hover {
+            & ~ .nui-search__input-control {
+                .setCssVariable(border-color, nui-color-line-default-hover);
+            }
+
+            & ~ .nui-search__input-control:focus {
+                .setCssVariable(border-color, nui-color-line-active);
+            }
+        }
+
+        > .nui-button:focus,
+        > .nui-button:focus:active {
+            //.btn:focus { .tab-focus } overrides outline when button is focused
+            //so need to specify :focus explicitly
+            outline: none;
+        }
+
+        > .btn {
+            position: relative;
+        }
+
+        .btn-action {
+            &[disabled] {
+                .nui-icon {
+                    path, polygon {
+                        .setCssVariable(fill, nui-color-icon-default);
+                    }
+                }
+            }
+        }
+
+        &-cancel {
+            border: none;
+            border-bottom-right-radius: 0;
+            border-right: 1px solid;
+            .setCssVariable(border-right-color, nui-color-line-default);
+            border-top-right-radius: 0;
+            position: absolute;
+            z-index: 1;
+
+            &.nui-button.btn-action {
+                min-height: (@input-height-base - 2px);
+                padding: @nui-space-xs;
+            }
+        }
+
+        &-search {
+            border: none;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            z-index: 2;
+        }
+    }
+
+    &.unlimited-width {
+        .nui-search__group {
+            max-width: unset;
+        }
+    }
+}

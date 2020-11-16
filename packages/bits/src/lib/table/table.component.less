@@ -1,0 +1,314 @@
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/nui-framework-colors";
+
+@nui-table-row-height-default: (@nui-table-row-container-height-default + 2 * @nui-space-xs);
+
+.nui .nui-table {
+    &__table {
+        display: table;
+        width: 100%;
+        font-size: @nui-font-size-default;
+        border-collapse: collapse;
+
+        .align {
+            &-right {
+                text-align: right;
+            }
+
+            &-center {
+                text-align: center;
+            }
+        }
+
+        &-fixed {
+            table-layout: fixed;
+            width: 1px;
+
+            .nui-table__table-header-cell,
+            .nui-table__table-cell {
+                max-width: none;
+            }
+        }
+
+        @media print{
+            break-inside: avoid;
+        }
+    }
+
+    &__container {
+        overflow: auto;
+    }
+
+    &__table-header-cell {
+        position: relative;
+        display: table-cell;
+        .setCssVariable(color, nui-color-text-secondary);
+        font-weight: @nui-font-weight-semibold;
+        padding: @nui-table-cell-padding;
+        background: inherit;
+        border: @nui-line-default solid @nui-color-line-default;
+        border: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+        min-width: @nui-table-cell-min-width;
+        max-width: @nui-table-cell-max-width;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        user-select: none;
+        // necessary for FF and Edge to show borders
+        background-clip: padding-box;
+
+        &--sortable {
+            cursor: pointer;
+
+            &:hover {
+                .setCssVariable(background-color, nui-color-bg-table_header-hover);
+            }
+
+            &--text-black {
+                .setCssVariable(color, nui-color-text-default);
+            }
+
+            &--dark {
+                .setCssVariable(background-color, nui-color-bg-table_header-hover);
+            }
+        }
+
+        &--reorderable {
+            cursor: move;
+
+            &:hover {
+                .setCssVariable(background-color, nui-color-bg-table_header-hover);
+            }
+
+            &--dark {
+                .setCssVariable(background-color, nui-color-bg-table_header-hover);
+            }
+        }
+
+        &.cdk-table-sticky { // Border hack because position sticky collapses borders and they are not visible
+            border: 0;
+            box-shadow: 5px 0 5px 0 @nui-shadow-color;
+            box-shadow: 5px 0 5px 0 var(--nui-shadow-color,@nui-shadow-color);
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                border-top: @nui-line-default solid @nui-color-line-default;
+                border-top: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+                border-bottom: @nui-line-default solid @nui-color-line-default;
+                border-bottom: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+                border-left: @nui-line-default solid @nui-color-line-default;
+                border-left: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+            }
+
+            &:last-of-type::before {
+                border-right: @nui-line-default solid @nui-color-line-default;
+                border-right: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+            }
+
+            &.nui-table__table-cell--left-edge-action {
+                &::before {
+                    border-left: @nui-line-medium solid;
+                    .setCssVariable(border-left-color, nui-color-line-selected-contrast);
+                }
+            }
+
+            &.nui-table__table-cell--right-edge-action {
+                &::before {
+                    border-right: @nui-line-medium solid;
+                    .setCssVariable(border-right-color, nui-color-line-selected-contrast);
+                }
+            }
+        }
+
+        &.virtual-sticky {
+            transition-property: width;
+            transition-duration: 0.2s;
+        }
+
+        &--selectable {
+            min-width: @nui-table-selector-cell-width;
+            width: @nui-table-selector-cell-width;
+            overflow: visible;
+            padding: 0 @nui-space-xs;
+            &.no-options {
+                min-width: auto;
+                // Note: Overriding column width in case of selectable
+                width: @nui-selector-checkbox-button-width !important;
+            }
+        }
+
+        &__selector {
+            display: flex;
+            &.no-options {
+                min-width: auto;
+            }
+        }
+    }
+
+    &__table-header-row {
+        .setCssVariable(background-color, nui-color-bg-table_header);
+        display: table-row;
+        height: @nui-table-row-height-default;
+
+        &_height_default {
+            height: @nui-table-row-height-default;
+        }
+
+        &_height_compact {
+            height: (@nui-table-row-container-height-small + 2 * @nui-space-xs);
+            .compact-selector();
+        }
+
+        &_height_tiny {
+            height: (@nui-table-row-container-height-small + 2 * @nui-space-xxs);
+            .compact-selector();
+        }
+    }
+
+    &__table-row {
+        border-bottom: @nui-line-default solid @nui-color-line-default;
+        border-bottom: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+        display: table-row;
+
+        &:hover {
+            .setCssVariable(background-color, nui-color-bg-transparent-hover);
+        }
+
+        &_height_default {
+            height: @nui-table-row-height-default;
+        }
+
+        &_height_compact {
+            height: (@nui-table-row-container-height-small + 2 * @nui-space-xs);
+        }
+
+        &_height_tiny {
+            height: (@nui-table-row-container-height-small + 2 * @nui-space-xxs);
+        }
+
+        // Workaround for Firefox table bug, where first row's <td> cells left borders are 1px narrower than specified
+        & td:first-of-type {
+            &.nui-table__table-cell--drop-left {
+                overflow-x: visible;
+            }
+        }
+
+        &--selected {
+            .setCssVariable(background-color, nui-color-selected);
+            .setCssVariable(color, nui-color-text-default);
+
+            &:hover {
+                .setCssVariable(background-color, nui-color-selected-hover);
+            }
+        }
+
+        &--clickable {
+            cursor: pointer;
+        }
+    }
+
+    &__table-cell {
+        display: table-cell;
+        .setCssVariable(color, nui-color-text-default);
+        padding: @nui-table-cell-padding;
+        max-width: @nui-table-cell-max-width;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &--selectable {
+            padding: 0 0 0 @nui-space-sm;
+        }
+
+        &--left-edge-action{
+            border-left: @nui-line-medium solid;
+            .setCssVariable(border-left-color, nui-color-line-selected-contrast);
+        }
+
+        &--right-edge-action {
+            border-right: @nui-line-medium solid;
+            .setCssVariable(border-right-color, nui-color-line-selected-contrast);
+        }
+
+        &__checkbox {
+            .nui-checkbox {
+                &__label:hover {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+
+    &__icon-cell {
+        min-width: @nui-table-icon-cell-width;
+        width: @nui-table-icon-cell-width;
+    }
+
+    &__sorting-icon {
+        vertical-align: middle;
+    }
+
+    &__resizer {
+        width: @nui-space-xs;
+        height: @nui-table-row-height-default;
+        right: 0;
+        top: 0;
+        position: absolute;
+
+        &:hover {
+            cursor: col-resize;
+        }
+    }
+}
+
+.compact-selector() {
+    .nui-table__table-header-cell--selectable {
+        padding: 0 3px 0 7px;
+    }
+
+    .nui-selector {
+        &__checkbox-button {
+            border: none;
+            border-right: 1px solid @nui-color-line-default;
+            padding: 0 4px;
+        }
+
+        &__toggle {
+            border: none;
+            border-left: 1px solid @nui-color-line-default;
+        }
+
+        &__checkbox-container {
+            margin: 0;
+
+            .nui-checkbox__label:hover {
+                background: transparent;
+            }
+        }
+    }
+}
+
+// max-width property is treated different in firefox
+// to be able to resize table head columns based on data columns
+// in virtual scroll mode we should remove this restriction
+@-moz-document url-prefix() {
+    .sticky-table-header-container {
+        .nui-table__table-header-cell {
+            max-width: none!important;
+        }
+    }
+}
+// Hide bottom border for sticky-header-placeholder
+// used to get the correct column sizes when used with VS
+cdk-virtual-scroll-viewport {
+    .sticky-header-placeholder {
+        th {
+            border-bottom: none!important;
+        }
+    }
+}

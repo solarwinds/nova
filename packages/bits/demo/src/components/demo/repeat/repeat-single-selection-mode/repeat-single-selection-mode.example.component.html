@@ -1,0 +1,32 @@
+<ng-template #repeatPeopleItemTemplate let-item="item">
+    <nui-icon style="align-self: start" css-class="flex-row-item" icon="user"></nui-icon>
+    <div class="flex-row-item flex-column-container">
+        <div class="name-item">{{item.name}}</div>
+        <div [ngClass]="item.level">{{item.level}}</div>
+        <div class="status-item">{{item.status}}</div>
+    </div>
+</ng-template>
+
+<ng-template #actionsContent>
+    <button nui-button type="button" displayStyle="action" icon="menu"></button>
+    <button nui-button type="button" displayStyle="action" icon="caret-right"></button>
+</ng-template>
+
+<div class="example single-selection-example">
+    <div class="flex-row-container">
+        <div class="flex-independent-row-item simple-label" i18n>Selection:</div>
+        <span class="flex-independent-row-item" id="nui-demo-singleselect-value">
+            {{selectedPeople | json}}</span>
+    </div>
+
+    <br>
+
+    <nui-repeat id="nui-demo-single-repeat"
+              [itemsSource]="people"
+              [selection]="selectedPeople"
+              selectionMode="single"
+              (selectionChange)="onPeopleSelectionChange($event)"
+              [repeatItemTemplateRef]="repeatPeopleItemTemplate"
+              [actionsTemplateRef]="actionsContent">
+    </nui-repeat>
+</div>

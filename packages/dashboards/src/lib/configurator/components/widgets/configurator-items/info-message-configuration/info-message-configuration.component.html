@@ -1,0 +1,4 @@
+<nui-message type="info" [allowDismiss]="allowDismiss" i18n>
+    <b> {{ emphasizeText }} </b> {{ generalText }}
+    <a *ngIf="link" [href]="link.href" [target]="link.target">{{ link.text }}</a>
+</nui-message>

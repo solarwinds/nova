@@ -1,0 +1,35 @@
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { SelectV2Component } from "@solarwinds/nova-bits";
+
+@Component({
+    selector: "nui-select-v2-options-changed-example",
+    templateUrl: "select-v2-options-changed.example.component.html",
+    host: { class: "select-container" },
+})
+export class SelectV2OptionsChangedExampleComponent implements OnInit {
+    public items: string[] = [];
+    private itemSet = [
+        [
+            $localize `Item 1`,
+            $localize `Item 2`,
+            $localize `Item 3`,
+            $localize `Item 4`,
+        ],
+        [
+            $localize `Item 3`,
+            $localize `Item 4`,
+            $localize `Item 5`,
+            $localize `Item 6`,
+        ],
+    ];
+    public selectControl = new FormControl();
+
+    public ngOnInit() {
+        this.items = this.itemSet[0];
+    }
+
+    public setItems(i: number) {
+        this.items = this.itemSet[i];
+    }
+}

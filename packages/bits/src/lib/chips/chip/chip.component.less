@@ -1,0 +1,68 @@
+@import (reference) "../../../styles/nui-framework-variables";
+
+.nui .nui-chip {
+    @import "../../../styles/components/tag";
+
+    &__value {
+        .tag();
+
+        border: none;
+        .setCssVariable(background-color, nui-color-bg-accordion_header);
+
+        &:hover:not([class*="nui-tag-"]) {
+            .setCssVariable(background-color, nui-color-bg-accordion_header-hover);
+        }
+
+        &-name {
+            font-size: @nui-font-size-small;
+            max-width: 200px;
+            .text-overflow(ellipsis);
+
+            &.projected {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        &.unlimited-width .nui-chip__value-name {
+            max-width: unset;
+        }
+
+        &-remove {
+            cursor: pointer;
+            margin: 0 0 0 @nui-space-xs;
+
+            svg * {
+                .setCssVariable(fill, nui-color-icon-highlight);
+            }
+        }
+
+        // change remove icon color in case correspondent tag class is used
+        &.nui-tag-text-light .nui-chip__value-remove svg *{
+            .setCssVariable(fill, nui-color-text-light);
+        }
+
+        &-drag {
+            display: none;
+        }
+    }
+}
+.nui .nui-chips {
+    &__vertical {
+        .nui-chip {
+            &__value {
+                display: flex;
+                margin-top: 1px;
+                margin-right: 0;
+
+                &-name {
+                    flex: auto;
+                }
+
+                &-remove {
+                    float: right;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,54 @@
+<div
+    class="nui-select__layout-block"
+    [class.placeholder-displayed]="displayPlaceholder()"
+    [class.custom-template]="customTemplate"
+    [class.disabled]="isDisabled"
+>
+    <ng-container *ngIf="itemsSource; else transclusionContent">
+        <nui-menu #menu
+            [class.has-error]="isInErrorState"
+            [title]="displayedValue()"
+            [isDisabled]="isDisabled"
+            [appendToBody]="appendToBody"
+            [widthOfPopup]="getWidth()"
+            [contextClass]="(justified ? 'nui-select--justified ' : '') + 'nui-select-popup-host'"
+            [attr.aria-label]="ariaLabel"
+        >
+            <nui-menu-action
+                *ngIf="isRemoveValueEnabled"
+                (actionDone)="select(null)"
+            >
+                {{ removeValueText }}
+            </nui-menu-action>
+            <ng-container *ngFor="let item of itemsSource">
+                <nui-menu-action
+                    *ngIf="!item.items"
+                    [class.item-selected]="isItemSelected(item)"
+                    (actionDone)="select(item)"
+                >
+                    <ng-container *ngIf="!customTemplate">{{getItemDisplay(item)}}</ng-container>
+                    <ng-container
+                        [ngTemplateOutlet]="customTemplate"
+                        [ngTemplateOutletContext]="{context: item}"
+                    >
+                    </ng-container>
+                </nui-menu-action>
+                <nui-menu-group
+                    *ngIf="item.items"
+                    [header]="item.header"
+                >
+                    <nui-menu-action
+                        *ngFor="let groupedItem of item.items"
+                        [class.item-selected]="isItemSelected(groupedItem)"
+                        (actionDone)="select(groupedItem)"
+                    >
+                        {{getItemDisplay(groupedItem)}}
+                    </nui-menu-action>
+                </nui-menu-group>
+            </ng-container>
+        </nui-menu>
+    </ng-container>
+    <ng-template #transclusionContent>
+        <ng-content></ng-content>
+    </ng-template>
+</div>

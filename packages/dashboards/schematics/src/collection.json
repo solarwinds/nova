@@ -1,0 +1,35 @@
+{
+    "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "schematics": {
+        "ng-add": {
+            "description": "Installs and configures the nova-dashboards library.",
+            "factory": "./ng-add/index",
+            "schema": "./ng-add/schema.json"
+        },
+        "kpi-widget": {
+            "description": "Adds a KPI widget.",
+            "factory": "./kpi-widget/index",
+            "schema": "./kpi-widget/schema.json"
+        },
+        "proportional-widget": {
+            "description": "Adds a Proportional widget.",
+            "factory": "./proportional-widget/index",
+            "schema": "./proportional-widget/schema.json"
+        },
+        "table-widget": {
+            "description": "Adds a Table widget.",
+            "factory": "./table-widget/index",
+            "schema": "./table-widget/schema.json"
+        },
+        "timeseries-widget": {
+            "description": "Adds a Timeseries widget.",
+            "factory": "./timeseries-widget/index",
+            "schema": "./timeseries-widget/schema.json"
+        },
+        "widget-cloner": {
+            "description": "Adds Widget Cloner.",
+            "factory": "./widget-cloner/index",
+            "schema": "./widget-cloner/schema.json"
+        }
+    }
+}

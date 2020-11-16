@@ -1,0 +1,13 @@
+@import "@solarwinds/nova-bits/sdk/less/nui-framework-colors.less";
+@import "@solarwinds/nova-bits/sdk/less/mixins/css-variables.less";
+
+:host {
+    display: block;
+    pointer-events: none;
+}
+
+.nui-chart-tooltip {
+    .setCssVariable(background-color, nui-color-bg-inverse);
+    .setCssVariable(color, nui-color-text-inverse);
+    line-height: normal;
+}

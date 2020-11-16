@@ -1,0 +1,26 @@
+<charts-test-harness>
+    <nui-gauge-chart-prototype [value]="value" [annularWidth]="annularWidth" [thresholds]="thresholds" [max]="maxValue"></nui-gauge-chart-prototype>
+
+    <div class="mb-2">
+        <label for="valueInput">
+            Value
+        </label>
+        <br />
+        <input type="number"
+               [(ngModel)]="value"
+               [min]="0"
+               [max]="maxValue"
+               attr.name="valueInput" />
+    </div>
+    <div class="mb-2">
+        <label for="thicknessInput">
+            Thickness
+        </label>
+        <br />
+        <input type="number"
+               [(ngModel)]="annularWidth"
+               [min]="10"
+               [max]="30"
+               attr.name="thicknessInput" />
+    </div>
+</charts-test-harness>

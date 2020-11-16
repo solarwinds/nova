@@ -1,0 +1,56 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins";
+
+.nui-configurator {
+    &__backdrop {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: @zindex-modal-background;
+        .setCssVariable(background-color, nui-color-overlay-modal);
+        .opacity(0.5);
+    }
+
+    &__content {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: @zindex-modal - 10; // This change is here to make possible opening of dialog in editor.
+    }
+
+    &__heading {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: @nui-space-md;
+        border-bottom: @nui-line-default solid @nui-color-line-default;
+    }
+
+    &__body {
+        // remove scroll anchoring https://developers.google.com/web/updates/2016/04/scroll-anchoring
+        overflow-anchor: none;
+        height: 100vh;
+    }
+
+    &__preview {
+        height: 100vh;
+
+        &-area {
+            display: flex;
+            width: 80%;
+            position: relative;
+            .setCssVariable(background-color, nui-color-bg-content_popover);
+            border: @nui-line-default solid;
+            .setCssVariable(border-color, nui-color-line-default);
+            margin: auto;
+            min-height: 40vh;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+    }
+}

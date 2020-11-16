@@ -1,0 +1,14 @@
+<div class="nui-list-leaf-item" (click)="onButtonClick()">
+    <div class="nui-list-leaf-item__info-container">
+        <div class="nui-list-leaf-item__icon-container">
+            <nui-icon *ngIf="icon; else statusTpl" [icon]="icon" [status]="iconStatus" class="mr-1"></nui-icon>
+        </div>
+        <div class="nui-list-leaf-item__description">
+            <div class="nui-text-link nui-text-ellipsis">{{ label }}</div>
+            <div class="nui-text-secondary nui-text-ellipsis">{{ detailedUrl }}</div>
+        </div>
+
+        <ng-template #statusTpl>{{ status }}</ng-template>
+    </div>
+    <nui-icon *ngIf="canNavigate" icon="caret-right"></nui-icon>
+</div>

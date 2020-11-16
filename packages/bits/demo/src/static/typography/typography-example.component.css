@@ -1,0 +1,12 @@
+/*
+    It was turned to be just a `.css`, because less fails to build `.map` file for it
+    https://github.com/less/less.js/pull/3360
+*/
+.dark-bg-rectangle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #111;
+    height: 40px;
+    width: 300px;
+}

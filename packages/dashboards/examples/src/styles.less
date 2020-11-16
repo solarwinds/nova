@@ -1,0 +1,35 @@
+@import "@solarwinds/nova-bits/bundles/css/styles.css";
+@import "@solarwinds/nova-charts/bundles/css/styles.css";
+@import "@solarwinds/nova-bits/sdk/less/nui-framework-colors"; //includes nui-framework-colors.less;
+@import "@solarwinds/nova-bits/sdk/less/mixins.less";
+
+.nui-dashboards-demo {
+
+    ::-webkit-scrollbar-thumb {
+        .setCssVariable(background-color, nui-color-bg-scroll_handle);
+        &:hover {
+            .setCssVariable(background-color, nui-color-bg-scroll_handle-hover);
+        }
+    }
+
+    & > body {
+        padding: @nui-space-sm;
+        .setCssVariable(background-color, nui-color-bg-light);
+        .setCssVariable(color, nui-color-text-default);
+    }
+
+    .panel__wrapper {
+        .setCssVariable(background-color, nui-color-bg-secondary);
+    }
+
+    .demoDialogCustomClass .modal-dialog {
+        width: 500px;
+    }
+    ul {
+        padding-inline-start: 40px;
+    }
+    
+    ul > li {
+        list-style: disc;
+    }
+}

@@ -1,0 +1,22 @@
+<div class="d-flex">
+    <nui-chart class="w-100" [chart]="chartAssist.sparks[0].chart"></nui-chart>
+    <div class="d-flex flex-column pl-2">
+        <nui-legend-series [interactive]="false"
+                           [active]="chartAssist.isLegendActive"
+                           descriptionPrimary="CPU"
+                           i18n-descriptionPrimary
+                           descriptionSecondary="Tex-lab-aus-2621"
+                           i18n-descriptionSecondary>
+            <nui-rich-legend-tile unitLabel="sec"
+                                  i18n-unitLabel
+                                  [value]="chartAssist.getHighlightedValue(chartAssist.sparks[0].chartSeriesSet[0], 'y', 'value')"
+                                  [backgroundColor]="chartAssist.palette.standardColors.get(chartAssist.sparks[0].chartSeriesSet[0].id)"
+                                  [color]="chartAssist.palette.textColors.get(chartAssist.sparks[0].chartSeriesSet[0].id)">
+                <nui-chart-marker [marker]="chartAssist.markers.get(chartAssist.sparks[0].chartSeriesSet[0].id)"
+                                  [color]="chartAssist.palette.standardColors.get(chartAssist.sparks[0].chartSeriesSet[0].id)"
+                                  rightEdge>
+                </nui-chart-marker>
+            </nui-rich-legend-tile>
+        </nui-legend-series>
+    </div>
+</div>

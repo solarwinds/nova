@@ -1,0 +1,8 @@
+<div *ngIf="plugin && contentPosition"
+     class="nui-chart-donut-content d-flex justify-content-center align-items-center text-center"
+     [style.top.px]="contentPosition.top"
+     [style.left.px]="contentPosition.left"
+     [style.height.px]="contentPosition.height"
+     [style.width.px]="contentPosition.width">
+    <ng-content></ng-content>
+</div>

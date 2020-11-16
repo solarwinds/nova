@@ -1,0 +1,9 @@
+<nui-preview-overlay *ngIf="editMode"></nui-preview-overlay>
+<ng-container nuiComponentPortal
+              #componentPortal="nuiComponentPortal"
+              [componentId]="nodeConfigs[0].id"
+              [componentType]="nodeConfigs[0].componentType"
+              [providers]="nodeConfigs[0].providers"
+              [properties]="nodeConfigs[0].properties">
+    <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)"></ng-template>
+</ng-container>

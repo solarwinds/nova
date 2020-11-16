@@ -1,0 +1,24 @@
+<nui-dialog-header [title]="title"
+                   [severity]="severity"
+                   (closed)="dismiss()"></nui-dialog-header>
+
+<div class="dialog-body">
+    <p>{{message}}</p>
+</div>
+<nui-dialog-footer>
+    <button nui-button
+            type="button"
+            [nuiSetFocus]="focusButton('dismiss')"
+            preventScroll="true"
+            (click)="close(false)">
+        {{dismissText}}
+    </button>
+    <button nui-button
+            type="button"
+            [nuiSetFocus]="focusButton('confirm')"
+            preventScroll="true"
+            displayStyle="primary"
+            (click)="close(true)">
+        {{confirmText}}
+    </button>
+</nui-dialog-footer>

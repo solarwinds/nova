@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+SCRIPTS=$(dirname $0)
+
+paths=$(node -p "require('./scripts/projects.json').map(p => p.path).join(' ')")
+
+for p in $paths; do
+    echo Setting source version in $p
+    bash $SCRIPTS/set-version --increment-type pre$INCREMENT_TYPE -p $p
+done

@@ -1,0 +1,55 @@
+<div nui-busy [busy]="isBusy">
+    <nui-spinner size="large" i18n-message message="Loading..."></nui-spinner>
+    <div class="d-flex flex-row">
+        <nui-sorter class="app-virtual-scroll-list-sorter"
+                    [itemsSource]="sorterItems"
+                    [selectedItem]="sortBy"
+                    [sortDirection]="initialSortDirection"
+                    (sorterAction)="onSorterAction($event)">
+        </nui-sorter>
+        <nui-search class="d-flex justify-content-end app-virtual-scroll-list-search"
+                    (search)="onSearch()"
+                    (cancel)="onCancelSearch()">
+        </nui-search>
+    </div>
+
+    <div class="d-flex flex-row">
+        <ng-container *ngIf="!isBusy && (listItems$ | async).length === 0">
+            <span i18n>No results</span>
+        </ng-container>
+
+        <nui-repeat class="app-virtual-scroll-list-repeat"
+                    selectionMode="none"
+                    [itemConfig]="itemConfig"
+                    [repeatItemTemplateRef]="listRepeatItemTemplate"
+                    [selection]="filteringState.repeat?.selectedItems"
+                    [itemsSource]="listItems$ | async"
+                    virtualScroll="true"
+                    itemSize="30">
+        </nui-repeat>
+    </div>
+
+    <footer class="app-virtual-scroll-list-scrolling-footer">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="p-1 d-flex">
+                <div class="d-flex pt-3 pb-3" i18n>
+                    Showing {{(listItems$ | async).length}} of {{ totalItems }}.
+                </div>
+                <div class="d-flex pt-3 pb-3">
+                    <ng-container i18n *ngIf="(listItems$ | async).length !== totalItems; else endOfData">, scroll down for more.</ng-container>
+                    <ng-template #endOfData><strong>. All items loaded.</strong></ng-template>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<ng-template #listRepeatItemTemplate let-item="item">
+    <div class="container">
+        <div class="row">
+            <div *ngFor="let field of item | keyvalue" class="col-sm">
+                {{field.value}}
+            </div>
+        </div>
+    </div>
+</ng-template>

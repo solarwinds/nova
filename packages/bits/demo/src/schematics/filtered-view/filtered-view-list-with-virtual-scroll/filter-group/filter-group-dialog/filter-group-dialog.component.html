@@ -1,0 +1,21 @@
+<div class="filter-group-dialog">
+    <nui-dialog-header [title]="title" (closed)="closeDialog()"></nui-dialog-header>
+    <div class="filter-group-dialog__body">
+        <app-item-picker
+            [itemPickerOptions]="itemPickerOptions"
+            [selectedValues]="selectedValues"
+            (selectionChanged)="onSelectionChanged($event)"></app-item-picker>
+    </div>
+    <nui-dialog-footer>
+        <button nui-button type="button"
+                (click)="closeDialog()" i18n>
+            Cancel
+        </button>
+        <button nui-button type="button"
+                displayStyle="primary"
+                (click)="acceptDialogFilters()" i18n>
+            Save
+        </button>
+    </nui-dialog-footer>
+</div>
+

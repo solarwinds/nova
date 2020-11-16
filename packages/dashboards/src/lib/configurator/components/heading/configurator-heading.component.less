@@ -1,0 +1,12 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins.less";
+
+:host {
+    z-index: 1080; // to be higher that CDK overlay
+    .setCssVariable(background-color, nui-color-bg-content);
+
+    .configurator-heading {
+        border-bottom: @nui-line-default solid;
+        .setCssVariable(border-bottom-color, nui-color-line-default);
+    }
+}

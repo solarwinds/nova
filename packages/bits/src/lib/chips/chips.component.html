@@ -1,0 +1,39 @@
+<div [style.display]="(getItemsCount() !== 0 || !autoHide) ? 'flex' : 'none'"
+     class="nui-chips media"
+     [ngClass]="customClass"
+     role="presentation"
+     [class.nui-chips__vertical]="orientation === 'vertical'">
+    <h4 *ngIf="!!title && orientation === 'vertical'" class="nui-chips__title-cell">
+        <span class="nui-chips__title">{{ title }}:</span>
+        <span class="nui-chips__count">({{ getItemsCount() }})</span>
+    </h4>
+    <div class="nui-chips__main-cell" #chipsMainCell [style.flex-grow]="isOverflowed ? 1 : 0">
+        <ng-container *ngIf="itemsSource.flatItems?.length">
+            <nui-chip class="chip-flat" #chipItem *ngFor="let flatItem of itemsSource.flatItems; let last = last;"
+                [customClass]="flatItem.customClass"
+                [class.group-last]="last"
+                [item]="flatItem"
+                (remove)="onRemove({item: flatItem, group: undefined})"></nui-chip>
+        </ng-container>
+
+        <ng-container *ngFor="let group of itemsSource.groupedItems; let lastGroup = last">
+            <ng-container *ngIf="group.items?.length > 0">
+                <div class="nui-chips__group-name" [ngClass]="group.customClass" #chipItem>
+                    <div class="nui-chips__group-label">
+                        {{ group.label }}
+                    </div>
+                </div>
+                <nui-chip #chipItem *ngFor="let groupItem of group.items; let last = last;"
+                    [customClass]="groupItem.customClass"
+                    [class.group-last]="last && !lastGroup"
+                    [item]="groupItem"
+                    (remove)="onRemove({item: groupItem, group: group})"></nui-chip>
+            </ng-container>
+        </ng-container>
+        <ng-content select=".nui-chips-overflowed"></ng-content>
+    </div>
+
+    <div class="nui-chips__clear-cell" *ngIf="allowRemoveAll && getItemsCount() > 0">
+        <a href class="nui-chips__clear" (click)="onRemoveAll($event)">{{ removeAllLinkText }}</a>
+    </div>
+</div>

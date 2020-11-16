@@ -1,0 +1,13 @@
+<div class="nui-tab-headings__holder" (click)="$event.preventDefault()">
+    <div class="btn-caret-left" [class.disabled]="!rightTraverseEnabled" *ngIf="hasTraverse" (click)="traverseRight()">
+        <nui-icon iconSize="default" icon="caret-left" [iconColor]="!rightTraverseEnabled ? 'disabled-gray' : 'gray'"></nui-icon>
+    </div>
+    <div class="nui-tab-headings">
+        <div class="nui-tab-headings__container" #resizableArea [class.flex-column]="vertical">
+            <ng-content></ng-content>
+        </div>
+    </div>
+    <div class="btn-caret-right" [class.disabled]="!leftTraverseEnabled" *ngIf="hasTraverse" (click)="traverseLeft()">
+        <nui-icon iconSize="default" icon="caret-right" [iconColor]="!leftTraverseEnabled ? 'disabled-gray' : 'gray'"></nui-icon>
+    </div>
+</div>

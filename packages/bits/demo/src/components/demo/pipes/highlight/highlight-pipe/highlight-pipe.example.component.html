@@ -1,0 +1,6 @@
+Highlight some part of the text:
+<p [innerHTML]='"hello world" | nuiHighlight:"world"' >
+</p>
+Dynamic highlight(for example, using with search):
+<nui-search (inputChange)="changeSearchValue($event)" [value]="term"></nui-search>
+<p [innerHTML]='searchString | nuiHighlight: term '></p>

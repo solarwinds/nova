@@ -1,0 +1,27 @@
+<div class="nui-configurator__backdrop"></div>
+<div class="nui-configurator__content">
+    <nui-panel orientation="right"
+               paneSize="30vw"
+               paneMinSize="20vw"
+               paneMaxSize="80vw"
+               isResizable="true"
+               class="h-100"
+               [headerPadding]="false"
+               [sidePaneBodyPadding]="false">
+        <div class="nui-configurator__preview d-flex align-items-center justify-content-center">
+            <div class="nui-configurator__preview-area">
+                <nui-preview-overlay></nui-preview-overlay>
+                <nui-pizzagna *ngIf="previewWidget?.pizzagna"
+                              #previewPizzagnaComponent
+                              class="flex-grow-1 w-100"
+                              [rootNode]="previewWidget | nuiPizzagnaRoot:'widget'"
+                              [pizzagna]="previewWidget?.pizzagna"
+                              (pizzagnaChange)="onPizzagnaChange($event)">
+                </nui-pizzagna>
+            </div>
+        </div>
+        <div nuiPanelEmbeddedBody class="nui-configurator__body">
+            <ng-container [cdkPortalOutlet]="formPortal" (attached)="onFormPortalAttached($event)"></ng-container>
+        </div>
+    </nui-panel>
+</div>

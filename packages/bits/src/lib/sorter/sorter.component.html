@@ -1,0 +1,26 @@
+<div>
+    <label *ngIf="caption"
+           class="nui-sorter__label">{{caption}}</label>
+    <nui-popup [appendToBody]="appendToBody" [width]="popupWidth" [overlayConfig]="overlayConfig" [isHostToggleRef]="true">
+        <div class="btn-group nui-sorter__popup">
+            <button nui-button
+                    type="button"
+                    class="nui-sorter__toggle-button"
+                    [icon]="getSortIcon()"
+                    (click)="toggleSortDirection()">
+                <span class="nui-sorter__display-value">{{ getSelectedItemTitle() }}</span>
+            </button>
+            <button nui-button
+                    type="button"
+                    nuiPopupToggle
+                    class="nui-selector__toggle"
+                    (click)="toggleSorter()"
+                    icon="caret-down">
+            </button>
+        </div>
+
+        <div popupAreaContent>
+            <nui-menu-popup [itemsSource]="items" (menuItemClicked)="select($event)"></nui-menu-popup>
+        </div>
+    </nui-popup>
+</div>

@@ -1,0 +1,217 @@
+import { chain, noop, Rule, SchematicContext, SchematicsException, Tree } from "@angular-devkit/schematics";
+import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
+import { addProviderToModule, insertImport } from "@schematics/angular/utility/ast-utils";
+import { InsertChange } from "@schematics/angular/utility/change";
+import { getWorkspace } from "@schematics/angular/utility/config";
+import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from "@schematics/angular/utility/dependencies";
+import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
+import { getProject } from "@schematics/angular/utility/project";
+import { getProjectTargets } from "@schematics/angular/utility/project-targets";
+import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
+
+import { readIntoSourceFile, updateJsonFile } from "../schematics-helper";
+
+export default function (options: any): Rule {
+    if (!options.project) {
+        throw new SchematicsException("Option (project) is required.");
+    }
+
+    return chain([
+        options && options.skipPackageJson ? noop() : addPackageJsonDependencies(),
+        options && options.skipPackageJson ? noop() : installPackageJsonDependencies(),
+        options && options.skipProviders ? noop() : addProviders(options),
+        options && options.skipCss ? noop() : addRootCssClass(options),
+        options && options.skipCss ? noop() : addCssToAngularJson(options),
+        addPreprocessorOptionsToAngularJson(options),
+        options && options.skipTsConfig ? noop() : addSyntheticImportsToTsConfig(options),
+    ]);
+}
+function addPackageJsonDependencies(): Rule {
+    return (host: Tree, context: SchematicContext) => {
+        const { peerDependencies } = require("../../../package.json");
+
+        const dependencies: NodeDependency[] = assembleDependencies(peerDependencies);
+        dependencies.forEach(dependency => {
+            addPackageJsonDependency(host, dependency);
+            context.logger.info(`✅️ Added "${dependency.name}" into ${dependency.type}`);
+        });
+
+        return host;
+    };
+}
+
+function assembleDependencies(dependencies: Record<string, string>): NodeDependency[] {
+    return Object.keys(dependencies).map((key) => (
+        {
+            type: NodeDependencyType.Default,
+            version: dependencies[key],
+            name: key,
+            overwrite: true,
+        }
+    ));
+}
+
+function installPackageJsonDependencies(): Rule {
+    return (host: Tree, context: SchematicContext) => {
+        context.addTask(new NodePackageInstallTask());
+        context.logger.info(` Installing packages...`);
+        return host;
+    };
+}
+
+function addProviders(options: any): Rule {
+    return (host: Tree, context: SchematicContext) => {
+        try {
+            const projectTargets = getBrowserProjectTargets(host, options);
+
+            const mainPath = projectTargets.options.main;
+            const modulePath = getAppModulePath(host, mainPath);
+            const moduleSource = readIntoSourceFile(host, modulePath);
+
+            const providers: string[] = [
+                `{provide: TRANSLATIONS_FORMAT, useValue: "xlf"},`,
+                `{provide: TRANSLATIONS, useValue: ""},`,
+            ];
+
+            const declarationRecorder = host.beginUpdate(modulePath);
+            const spaceRegex = /\r?\n|\r| /g;
+            providers.forEach(provider => {
+                const moduleSourceMinified = moduleSource.text.replace(spaceRegex, "");
+                const providerIndex = provider.indexOf("provide:");
+                const commaIndex = provider.indexOf(",");
+                const providerString = provider.replace(spaceRegex, "").substring(providerIndex, commaIndex);
+                // since we are doing a "usevalue" provide, we can't use the nice isImported
+                if (!moduleSourceMinified.includes(providerString)) {
+
+                    // @ts-ignore: Avoiding strict mode errors, preserving old behaviour
+                    const providerChanges = addProviderToModule(moduleSource, modulePath, provider, undefined);
+
+                    providerChanges.forEach(change => {
+                        if (change instanceof InsertChange) {
+                            declarationRecorder.insertLeft(change.pos, change.toAdd);
+                        }
+                    });
+                    context.logger.info(`   recorded provider add`);
+                } else {
+                    context.logger.info(`   translation providers already present`);
+                }
+            });
+
+            const imports = [
+                { item: `TRANSLATIONS`, path: `@angular/core` },
+                { item: `MissingTranslationStrategy`, path: `@angular/core` },
+                { item: `TRANSLATIONS_FORMAT`, path: `@angular/core` },
+            ];
+
+            imports.forEach(importable => {
+                if (!moduleSource.text.includes(importable.item)) {
+                    // since we are doing a "useValue" provide, we can't use the nice isImported
+                    const importChange = insertImport(moduleSource, modulePath, importable.item, importable.path);
+                    if (importChange instanceof InsertChange) {
+                        declarationRecorder.insertLeft(importChange.pos, importChange.toAdd);
+                    }
+                    context.logger.info(`   recorded translation imports`);
+                } else {
+                    context.logger.info(`   translation imports already present`);
+                }
+            });
+
+            host.commitUpdate(declarationRecorder);
+
+            context.logger.info(`✅️ Updated module file`);
+
+        } catch (ex) {
+            context.logger.error(`🚫 Failed updating module: ${ex.toString()}`);
+        }
+        return host;
+    };
+}
+
+function addRootCssClass(options: any) {
+    return (host: Tree, context: SchematicContext) => {
+        try {
+            const projectTargets = getBrowserProjectTargets(host, options);
+
+            const filePath = projectTargets.options.index;
+            const rootHtmlFile = host.read(filePath ?? "");
+
+            if (rootHtmlFile) {
+                let rootHtml = rootHtmlFile.toString("utf-8");
+
+                if (!rootHtml.match(/<html.*(class=".*nui.*").*>/)) {
+                    // TODO need a proper html parser here
+                    rootHtml = rootHtml.replace("<html", "<html class=\"nui\"");
+
+                    host.overwrite((filePath ?? ""), rootHtml);
+                } else {
+                    context.logger.info(`️ root html already contains class`);
+                }
+            }
+        } catch (ex) {
+            context.logger.error(`🚫 Failed to add root Css class to body: ${ex.toString()}`);
+        }
+        context.logger.info(`✅️ Added root Css class to body`);
+        return host;
+    };
+}
+
+function addSyntheticImportsToTsConfig(options: any) {
+    return (host: Tree, context: SchematicContext) => {
+        const projectTargets = getBrowserProjectTargets(host, options);
+        const tsConfigPath = projectTargets.options.tsConfig;
+
+        updateJsonFile(host,
+            context,
+            tsConfigPath,
+            [
+                "compilerOptions",
+                "allowSyntheticDefaultImports",
+            ],
+            true
+        );
+    };
+}
+
+function addCssToAngularJson(options: any) {
+    return (host: Tree, context: SchematicContext) => {
+        updateJsonFile(host,
+            context,
+            "angular.json",
+            [
+                "projects",
+                options.project,
+                "architect",
+                "build",
+                "options",
+                "styles",
+            ],
+            ["./node_modules/@solarwinds/nova-bits/bundles/css/styles.css"]
+        );
+    };
+}
+function addPreprocessorOptionsToAngularJson(options: any) {
+    return (host: Tree, context: SchematicContext) => {
+        updateJsonFile(host,
+            context,
+            "angular.json",
+            [
+                "projects",
+                options.project,
+                "architect",
+                "build",
+                "options",
+                "stylePreprocessorOptions",
+            ],
+            {
+                "includePaths": ["node_modules"],
+            }
+        );
+    };
+}
+
+function getBrowserProjectTargets(host: Tree, options: any): BrowserBuilderTarget {
+    const workspace = getWorkspace(host);
+    const clientProject = getProject(workspace, options.project);
+    // @ts-ignore: Avoiding strict mode errors, preserving old behaviour
+    return getProjectTargets(clientProject)["build"];
+}

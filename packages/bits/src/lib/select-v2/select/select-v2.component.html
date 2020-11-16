@@ -1,0 +1,25 @@
+<div tabindex="0"
+    #input
+    class="nui-select-v2__container"
+    [attr.aria-label]="ariaLabel"
+    (keydown)="onKeyDown($event)">
+
+    <div *ngIf="!displayValueTemplate"
+        class="nui-select-v2__value">
+        <div *ngIf="!isEmpty" class="nui-select-v2__value-content"><span>{{displayText || '\u00A0'}}</span></div>
+        <span class="nui-select-v2__placeholder" *ngIf="isEmpty">{{placeholder || '\u00A0'}}</span>
+
+        <nui-icon [style.transform]="isDropdownOpen ? 'rotate(180deg)' : ''"
+                  [icon]="caretIcon"></nui-icon>
+    </div>
+
+    <ng-container *ngIf="displayValueTemplate"
+        [ngTemplateOutlet]="displayValueTemplate"
+        [ngTemplateOutletContext]="{$implicit: getLastSelectedOption()?.displayValueContext || value, open: isDropdownOpen}"
+    ></ng-container>
+</div>
+<nui-overlay [toggleReference]="elRef.nativeElement"
+              [viewportMargin]="popupViewportMargin"
+              [overlayConfig]="overlayConfig">
+    <ng-content></ng-content>
+</nui-overlay>

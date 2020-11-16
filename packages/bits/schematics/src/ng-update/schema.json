@@ -1,0 +1,34 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsNovaUpdate",
+    "title": "ng-update schematic for nova-bits",
+    "type": "object",
+    "description": "updates a nova-bits project",
+    "properties": {
+        "project": {
+            "type": "string",
+            "description": "The name of the project.",
+            "$default": {
+                "$source": "projectName"
+            }
+        },
+        "skipProviders": {
+            "type": "boolean",
+            "description": "Skip provider imports",
+            "default": false
+        },
+        "skipCss": {
+            "type": "boolean",
+            "description": "Skip importing css & setting styles",
+            "default": false
+        },
+        "skipTsConfig": {
+            "type": "boolean",
+            "description": "Skip updating the tsconfig",
+            "default": false
+        }
+    },
+    "required": [
+
+    ]
+}

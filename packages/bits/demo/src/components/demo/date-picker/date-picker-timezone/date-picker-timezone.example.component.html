@@ -1,0 +1,13 @@
+<section class="demo-options-section">
+    <nui-form-field caption="Date Picker" [control]="control">
+        <nui-date-picker [formControl]="control" [handleTimezone]="true"></nui-date-picker>
+    </nui-form-field>
+    <p class="mt-2">Value: {{selectedDate}}</p>
+
+    <nui-combobox [itemsSource]="displayedZones"
+        [value]="initialZone"
+        (changed)="textboxChanged($event)"
+        placeholder="Select item" i18n-placeholder
+    ></nui-combobox>
+
+</section>

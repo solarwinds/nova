@@ -1,0 +1,13 @@
+<div class="rd-post">
+    <div class="rd-post__text" [innerHTML]="textMarkdown"></div>
+    <div class="row justify-content-start nui-text-secondary">
+        <div class="col-5" i18n>
+            {{isQuestion ? "Asked": "Answered"}} by
+            <strong class="rd-post__author">{{post.author}} </strong>
+            <span class="rd-post__creation-date" [title]="post.creationDate | date:'long'">{{ post.creationDate | fromNow }}</span>
+        </div>
+        <div class="col-4 rd-post__updated-date" *ngIf="post.lastUpdatedDate > post.creationDate">
+            Edited <span [title]="post.lastUpdatedDate | date:'long'">{{ post.lastUpdatedDate | fromNow }}</span>
+        </div>
+    </div>
+</div>

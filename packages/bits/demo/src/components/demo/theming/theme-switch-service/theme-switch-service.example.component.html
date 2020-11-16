@@ -1,0 +1,5 @@
+<nui-switch (valueChange)="themeSwitchService.setDarkTheme($event)"
+            [value]="themeSwitchService.isDarkModeEnabledSubject | async"
+            i18n>
+    Dark Theme
+</nui-switch>

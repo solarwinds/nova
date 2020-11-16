@@ -1,0 +1,115 @@
+@import (reference) "../../../styles/mixins/vendor-prefixes";
+@import (reference) "../../../styles/mixins.less";
+
+@arrow-size: 12.72px;
+@arrow-padding: @arrow-size/2;
+@arrow-top-bottom: top, bottom;
+@arrow-shadow: 3px;
+@arrow-center: left, right, top, bottom;
+@arrow-rotation-angle: 45deg;
+
+.nui-overlay-arrow {
+    // by default arrow will be hidden for cases when we have custom positions
+    // Later on, for all available positions (eg: overlay-center-bottom, etc.)
+    // will be displayed
+    display: none;
+
+    width: @arrow-size;
+    height: @arrow-size;
+    background-color: transparent;
+    border: 6px solid;
+    position: absolute;
+    .setCssVariable(border-color, nui-color-bg-content_popover);
+    .rotate(@arrow-rotation-angle);
+
+    // define rule for both arrow-top & arrow-bottom
+    each(@arrow-top-bottom, {
+        .overlay-center-@{value} & {
+            display: block;
+            left: 49%;
+            & when (@value = top) {
+                bottom: @arrow-shadow * 2;
+
+                border-left-color: transparent;
+                border-top-color: transparent;
+
+                box-shadow: @arrow-shadow @arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
+            }
+
+            & when (@value = bottom) {
+                top: @arrow-shadow * 2;
+
+                border-right-color: transparent;
+                border-bottom-color: transparent;
+
+                box-shadow: -@arrow-shadow -@arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
+            }
+        }
+
+        .overlay-@{value}-left &, .overlay-@{value}-right & {
+            display: block;
+            & when (@value = top) {
+                bottom: @arrow-shadow * 2;
+                .setCssVariable(border-bottom-color, nui-color-bg-content_popover);
+                border-top-color: transparent;
+                box-shadow: @arrow-shadow @arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
+            }
+            & when (@value = bottom) {
+                top: @arrow-shadow * 2;
+                border-bottom-color: transparent;
+                .setCssVariable(border-top-color, nui-color-bg-content_popover);
+                box-shadow: -@arrow-shadow -@arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
+            }
+        }
+
+        .overlay-@{value}-left & {
+            right: @arrow-size + @arrow-padding;
+
+            & when (@value = bottom) { border-right-color: transparent }
+            & when (@value = top)    { border-left-color: transparent }
+        }
+
+        .overlay-@{value}-right & {
+            left: @arrow-size + @arrow-padding;
+
+            & when (@value = bottom) { border-right-color: transparent }
+            & when (@value = top)    { border-left-color: transparent }
+        }
+    });
+
+    .overlay-left-bottom &,
+    .overlay-left-top &,
+    .overlay-center-left & {
+        display: block;
+        right: @arrow-shadow * 2;
+        top: 50%;
+
+        transform: translate(0, -50%) rotate(@arrow-rotation-angle);
+
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+
+        box-shadow: @arrow-shadow -@arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .overlay-left-top & { top: unset; bottom: @arrow-size; }
+    .overlay-left-bottom & { top: @arrow-size + @arrow-padding; }
+
+    .overlay-right-bottom &,
+    .overlay-right-top &,
+    .overlay-center-right & {
+        display: block;
+        left: @arrow-shadow * 2;
+        top: 50%;
+
+        transform: translate(0, -50%) rotate(@arrow-rotation-angle);
+
+        border-right-color: transparent;
+        border-top-color: transparent;
+
+        box-shadow: -@arrow-shadow @arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .overlay-right-top & { top: unset; bottom: @arrow-size; }
+    .overlay-right-bottom & { top: @arrow-size + @arrow-padding; }
+}

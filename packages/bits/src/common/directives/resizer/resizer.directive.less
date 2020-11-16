@@ -1,0 +1,35 @@
+.nui-resize-gutter {
+    position: absolute;
+    display: flex;
+    top: 0;
+    z-index: 1;
+
+    &-disabled {
+        pointer-events: none;
+    }
+    &--hovering:not(&--active) {
+        .nui-resize-gutter__split {
+            .setCssVariable(background-color, nui-color-selected-contrast);
+        }
+        .setCssVariable(background-color, nui-color-selected);
+    }
+    &--active {
+        .setCssVariable(background-color, nui-color-selected-active);
+        .nui-resize-gutter__split {
+            .setCssVariable(background-color, nui-color-selected-contrast);
+        }
+    }
+    &__split {
+        &-horizontal {
+            width: @padding-xs-vertical;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+        &-vertical {
+            height: @padding-xs-vertical;
+            width: 100%;
+            margin: auto 0;
+        }
+    }
+}

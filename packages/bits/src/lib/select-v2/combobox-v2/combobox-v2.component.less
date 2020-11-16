@@ -1,0 +1,86 @@
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+@import (reference) "../../../styles/nui-framework-base.less";
+@import (reference) "../../../styles/nui-framework-typography.less";
+@import (reference) "../../../styles/nui-framework-colors.less";
+
+@combobox-height: 30px;
+@min-width: 100px;
+@content-height: calc(@combobox-height - 2 * @nui-line-default); // @nui-line-default - for borders
+@input-height: calc(@content-height - @nui-space-xs); // @nui-space-xs for padding
+
+.nui-combobox-v2 {
+    .textbox-base();
+    display: flex;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    .setCssVariable(color, nui-color-text-default);
+    min-height: @content-height;
+    line-height: @input-height;
+    min-width: @min-width;
+
+    &.disabled {
+        .setCssVariable(color, nui-color-text-disabled);
+        .no-select();
+    }
+
+    &__input {
+        flex: 1;
+        outline: none;
+        box-sizing: border-box;
+        border: none;
+        background-color: transparent;
+        background-image: none;
+        min-height: @input-height;
+        height: @input-height;
+        resize: vertical;
+        padding: 0 @nui-space-sm;
+        overflow-y: hidden;
+        cursor: text;
+        width: inherit;
+        .text-overflow(ellipsis);
+
+        &[disabled] {
+            cursor: @cursor-disabled;
+            &::placeholder {
+                .setCssVariable(color, nui-color-text-disabled);
+            }
+        }
+
+        &::placeholder {
+            .setCssVariable(color, nui-color-text-secondary);
+            font-size: @nui-font-size-default;
+            font-weight: @nui-font-weight-regular;
+            margin-right: @nui-space-xs;
+            .text-overflow(ellipsis);
+        }
+    }
+
+    &__remove-value.nui-button.action {
+        border: none;
+        border-radius: 0px;
+        border-right: 1px solid;
+        .setCssVariable(border-right-color, nui-color-line-default);
+        min-height: @content-height;
+        max-height: @content-height;
+        align-self: center;
+
+        &:hover,
+        &:focus,
+        &:active {
+            border-right: 1px solid;
+            .setCssVariable(border-right-color, nui-color-line-default);
+        }
+    }
+
+    &__toggle.nui-button.action {
+        min-height: @content-height;
+        max-height: @content-height;
+        align-self: center;
+
+        &.rotate nui-icon {
+            /*If we change the icon element, the target also will change (the old one is removed from the DOM).
+            On click on the caret icon an event stops propagation. That's why we rotate the same icon.*/
+            transform: rotate(180deg);
+        }
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "schematics": {
+        "ng-add": {
+            "description": "Installs and configures the nova-bits library.",
+            "factory": "./ng-add/index",
+            "schema": "./ng-add/schema.json"
+        },
+        "table": {
+            "description": "Create a table",
+            "factory": "./table/index",
+            "schema": "./table/schema.json"
+        },
+        "layout": {
+            "description": "Create a layout",
+            "factory": "./layout/index",
+            "schema": "./layout/schema.json"
+        },
+        "filtered-view": {
+            "description": "Create a Filtered View",
+            "factory": "./filtered-view/index",
+            "schema": "./filtered-view/schema.json"
+        },
+        "list": {
+            "description": "Create a list",
+            "factory": "./list/index",
+            "schema": "./list/schema.json"
+        },
+        "filter-group": {
+            "description": "Create a Filter Group",
+            "factory": "./filter-group/index",
+            "schema": "./filter-group/schema.json"
+        }
+    }
+}

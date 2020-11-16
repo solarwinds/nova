@@ -1,0 +1,23 @@
+{
+    "extends": "../../tsconfig.main",
+    "compilerOptions": {
+        "baseUrl": "./",
+        "declaration": false,
+        "importHelpers": true,
+        "module": "commonjs",
+        "outDir": "./dist/out-tsc",
+        "preserveSymlinks": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2018",
+            "dom"
+        ],
+        "paths": {
+            "@solarwinds/nova-dashboards": [
+                "./src/public-api.ts"
+            ]
+        }
+    }
+}

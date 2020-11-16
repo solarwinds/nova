@@ -1,0 +1,37 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins";
+@import (reference) "../../drop-target";
+
+.nui-dashboard {
+    &__gridster {
+        .setCssVariable(background-color, nui-color-bg-workspace);
+
+        .gridster-preview {
+            .drop-target;
+        }
+
+        &-item {
+            box-shadow: 0 0 @nui-space-xs @nui-color-line-dark;
+            box-shadow: 0 0 var(--nui-space-xs, @nui-space-xs) var(--nui-color-line-dark, @nui-color-line-dark);
+            .setCssVariable(background-color, nui-color-bg-light);
+
+            &:hover {
+                .gridster-item-resizable-handler {
+                    border-bottom-color: @nui-color-selected-contrast;
+                    .setCssVariable(border-bottom-color, nui-color-selected-contrast);
+                    margin: 0;
+                    z-index: @zindex-drag;
+                    &.handle-se {
+                        .setCssVariable(border-bottom-color, nui-color-selected-contrast);
+                        right: @nui-space-xxs;
+                        bottom: @nui-space-xxs;
+                    }
+                }
+            }
+
+            .mobile && {
+                height: auto !important; // restrict gridster setting height on mobile so that it'd be of content height
+            }
+        }
+    }
+}

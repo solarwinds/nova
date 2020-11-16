@@ -1,0 +1,262 @@
+@import (reference) url('../base-select.less');
+@import "../../../lib/menu/menu-item/menu-item/menu-item.less";
+
+@textbox-right-border: 1px solid var(--nui-color-line-default, @nui-color-line-default);
+@input-default-width: 200px;
+
+.nui .nui-combobox {
+    .nui-combobox__container {
+        outline: none;
+        border-radius: @nui-radius-default;
+        border: 1px solid @nui-color-line-default;
+        border: 1px solid var(--nui-color-line-default, @nui-color-line-default);
+        &.nui-combobox__editable-container--disabled {
+            .setCssVariable(background-color, nui-color-disabled-secondary);
+        }
+
+        &:not(.nui-combobox__editable-container--disabled):not(.has-error) {
+            &:hover {
+                .setCssVariable(border-color, nui-color-line-default-hover);
+            }
+
+            &:focus-within {
+                .setCssVariable(border-color, nui-color-line-active);
+            }
+
+            &:focus {
+                .setCssVariable(background-color, nui-color-bg-transparent-hover);
+                .focus-outline();
+            }
+        }
+
+        &.has-error {
+            .setCssVariable(border-color, nui-color-line-critical);
+
+            &:focus {
+                .setCssVariable(background-color, nui-color-bg-transparent-hover);
+                .focus-outline();
+            }
+        }
+    }
+
+    &--inline {
+        .nui-combobox__layout-block {
+            display: inline-flex;
+        }
+    }
+
+    .btn {
+        border-radius: 0 @nui-radius-default @nui-radius-default 0;
+
+        &:hover,
+        &:active {
+            outline: none;
+        }
+
+        &:focus {
+            .setCssVariable(background-color, nui-color-bg-transparent-hover);
+            .focus-outline();
+        }
+
+        &.disabled {
+            .setCssVariable(color, nui-color-disabled);
+            pointer-events: auto;
+            cursor: @cursor-disabled;
+
+            &:hover,
+            &:active {
+                .setCssVariable(color, nui-color-disabled);
+                .setCssVariable(background-color, transparent);
+                box-shadow: none;
+            }
+
+            .nui-icon {
+                path,
+                polygon {
+                    .setCssVariable(fill, nui-color-icon-disabled);
+                }
+            }
+        }
+    }
+
+    .nui-menu-item {
+        .nui-menu-item__action {
+            .setCssVariable(color, nui-color-text-default);
+        }
+
+        &.item-selected {
+            .nui-menu-item__action {
+                .setCssVariable(background-color, nui-color-selected);
+                .setCssVariable(color, nui-color-text-default);
+                font-weight: @nui-font-weight-semibold;
+
+                &:hover {
+                    .setCssVariable(background-color, nui-color-selected-hover);
+                }
+            }
+        }
+    }
+
+    .nui-popup {
+        .nui-select-base-popup;
+    }
+
+    .nui-combobox__menu {
+        .nui-select-base-menu;
+        overflow-y: initial;
+    }
+
+    &__input {
+        float: left;
+        width: @input-default-width;
+        height: @nui-space-md * 2;
+        border-radius: @nui-radius-default 0 0 @nui-radius-default;
+        border: 0;
+        box-shadow: none;
+
+        &--with-remove-value {
+            width: @input-default-width - @nui-space-md * 2;
+        }
+
+        &:not(:disabled) {
+            &:hover,
+            &:focus {
+                .setCssVariable(border-color, nui-color-line-default);
+                position: relative;
+            }
+        }
+
+        .nui-textbox__input {
+            border: none;
+            box-shadow: none;
+            .placeholder();
+
+            &.input-control {
+                border-radius: @nui-radius-default 0 0 @nui-radius-default;
+                padding-right: 0;
+                margin-bottom: 0;
+
+                &:active {
+                    border: @nui-color-line-active;
+                }
+
+                &:focus {
+                    .setCssVariable(background-color, nui-color-bg-transparent-hover);
+                    .focus-outline();
+                }
+            }
+        }
+    }
+
+    &__remove-value {
+        border-right: @textbox-right-border;
+        border-left: none;
+    }
+
+    &__icon {
+        align-items: center;
+        display: flex;
+        height: @nui-line-height-big;
+        left: @nui-space-xs + @nui-space-xxs;
+        pointer-events: none;
+        position: absolute;
+        top: @nui-space-xs;
+        z-index: (@zindex-active + 1);
+    }
+
+    &__input-icon {
+        .nui-textbox {
+            .has-feedback {
+                .nui-textbox__input {
+                    padding-left: 32px;
+                }
+            }
+        }
+    }
+
+    &__right-border {
+        border-right: @textbox-right-border;
+    }
+
+    &.disabled {
+        > .nui-combobox__container {
+            .setCssVariable(background-color, nui-color-disabled-secondary);
+        }
+
+        > .nui-combobox__btn-group {
+            > .btn {
+                .setCssVariable(color, nui-color-off);
+                .setCssVariable(background-color, nui-color-line-default);
+                .setCssVariable(border-color, nui-color-line-default);
+            }
+        }
+    }
+
+    /******* Modifiers ********/
+
+    /* Public */
+    &--justified {
+        .nui-popup {
+            flex-grow: 1;
+
+            .nui-popup-container {
+                flex-grow: 1;
+            }
+
+            .nui-popup__content {
+                width: 100%;
+            }
+        }
+
+        .nui-combobox {
+            &__layout-block {
+                display: flex;
+            }
+
+            &__container {
+                display: flex;
+                flex-grow: 1;
+            }
+
+            &__input {
+                width: auto;
+                display: flex;
+                flex-grow: 1;
+
+                .nui-textbox {
+                    display: flex;
+                    flex-grow: 1;
+
+                    .has-feedback {
+                        display: flex;
+                        flex-grow: 1;
+                    }
+                }
+            }
+        }
+
+        .nui-popup .nui-popup__area {
+            max-width: none;
+
+            .nui-combobox__menu {
+                max-width: none;
+            }
+        }
+    }
+
+    .custom-template {
+        .nui-combobox__menu {
+            width: auto;
+        }
+
+        .nui-popup__area {
+            width: auto;
+        }
+    }
+
+    @-moz-document url-prefix() {
+        .nui-menu-item {
+            padding-right: 0;
+        }
+    }
+}

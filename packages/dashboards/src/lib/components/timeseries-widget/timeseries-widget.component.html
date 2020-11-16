@@ -1,0 +1,13 @@
+<div class="h-100" *ngIf="shouldShowChart()">
+    <ng-container nuiComponentPortal
+                  componentId="timeseriesWidgetChart"
+                  [componentType]="chartPreset.componentType"
+                  [properties]="{ widgetData: widgetData, configuration: configuration }"
+                  #componentPortal="nuiComponentPortal">
+        <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)">
+        </ng-template>
+    </ng-container>
+</div>
+<div *ngIf="!shouldShowChart()">
+    <nui-image image="no-data-to-show"></nui-image>
+</div>

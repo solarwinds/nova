@@ -1,0 +1,36 @@
+<span class="nui-icon-busy-circular nui-spinner nui-spinner__container--{{size}}"
+      *ngIf="showSpinner"
+      [ngClass]="{'nui-spinner--determinate': isDeterminate}"
+      [@spinnerAppear]>
+
+    <div class="nui-spinner__container">
+        <svg class="nui-spinner__circular" viewBox="25 25 50 50" *ngIf="!isDeterminate">
+            <circle class="nui-spinner__path-under" cx="50" cy="50" r="22" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+            <circle class="nui-spinner__path" cx="50" cy="50" r="22" fill="none" stroke-width="5" stroke-miterlimit="10"/>
+
+        </svg>
+        <svg class="nui-spinner__circular" viewBox="0 0 36 36" *ngIf="isDeterminate">
+            <circle class="nui-spinner__path-under" cx="18" cy="18" r="15.9155" fill="none" stroke-width="4" stroke-miterlimit="10"/>
+            <circle class="nui-spinner__path" cx="18" cy="18" r="15.9155" fill="none" stroke-width="4" stroke-miterlimit="10" [ngStyle]="{'stroke-dasharray': percent + ', 100'}"/>
+        </svg>
+
+        <button nui-button
+                type="button"
+                class="nui-spinner__cancel"
+                icon="close"
+                *ngIf="allowCancel"
+                (click)="cancelProgress()"
+                displayStyle="action"
+                [nuiTooltip]="tooltipText">
+        </button>
+    </div>
+
+    <div class="nui-spinner__text-content" *ngIf="showText">
+        <div class="nui-spinner__label" *ngIf="message !== undefined">
+            <span class="nui-text-label nui-spinner__label-item">{{message}}</span>
+        </div>
+        <span class="nui-spinner__hint nui-help-hint" *ngIf="helpText !== undefined">
+            {{helpText}}
+        </span>
+    </div>
+</span>

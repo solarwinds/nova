@@ -1,0 +1,10 @@
+@import "../../node_modules/@angular/cdk/overlay-prebuilt.css";
+@import (reference) "./nui-framework-variables.less";
+.nui .cdk-overlay-container {
+    z-index: @zindex-tooltip;
+
+    .translate-right {
+        transform: translate(-50%, 0);
+        transition: none;
+    }
+}

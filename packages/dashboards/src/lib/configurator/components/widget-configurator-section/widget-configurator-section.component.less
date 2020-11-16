@@ -1,0 +1,24 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) '@solarwinds/nova-bits/sdk/less/mixins';
+
+@header-height: 40px;
+
+.widget-configurator-section {
+    margin: @nui-space-md;
+    border-radius: @nui-radius-default;
+    border: @nui-line-default solid;
+    .setCssVariable(border-color, nui-color-line-default);
+
+    &__header {
+        padding: @nui-space-md @nui-space-xs @nui-space-md @nui-space-md;
+        height: @header-height;
+        font-size: @nui-font-size-big;
+        font-weight: @nui-font-weight-semibold;
+        .setCssVariable(background-color, nui-color-bg-table_header);
+        .setCssVariable(color, nui-color-text-secondary);
+    }
+
+    &__header-text {
+        .text-overflow(ellipsis);
+    }
+}

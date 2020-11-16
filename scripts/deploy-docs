@@ -1,0 +1,43 @@
+#!/bin/bash
+set -e
+
+usage()
+{
+    echo "Usage: docker run -v \"\$SSH_AUTH_SOCK:/tmp/ssh_auth_sock/\" -e SSH_AUTH_SOCK=/tmp/ssh_auth_sock -e BUILD_BRANCH=<BUILD_BRANCH> -e PACKAGE_NAME=<PACKAGE_NAME> <IMAGE> deploy-docs"
+    echo
+    echo "Deploy docs/demo application to apollo-docs.swdev.local with the \"teamcity.rsa\" SSH key"
+    echo
+    echo "Options:"
+    echo "  -h, --help       [Optional] Show this help message"
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+    -h|--help)
+        usage
+        exit
+        ;;
+    -*)
+        echo "Unexpected argument '$1'."
+        exit 1
+        ;;
+    esac
+done
+
+branch_name=$(echo "$BUILD_BRANCH" | sed -r "s/[\/ ]+/_/g")
+deploy_subdir="~/projects/${PACKAGE_NAME}/${branch_name}"
+extract_subdir="dist"
+
+echo "Deploy directory: $deploy_subdir"
+cat solarwinds-$PACKAGE_NAME-*.tgz | ssh -oStrictHostKeyChecking=no teamcity@apollo-docs.swdev.local "mkdir -p $deploy_subdir && rm -r $deploy_subdir/* ; cd $deploy_subdir && mkdir -p $extract_subdir && cd $extract_subdir && tar --strip-components=1 -xzvf -"
+
+echo "Copy directory: unzipped to apollo-docs.swdev.local"
+scp -r ./unzipped/** teamcity@apollo-docs.swdev.local:$deploy_subdir
+
+echo "Update directory: unzipped"
+if test -f solarwinds-${PACKAGE_NAME}-*.tgz; then
+    echo "Extracting file solarwinds-${PACKAGE_NAME}-*.tgz to ./unzipped"
+    tar -xzvf solarwinds-${PACKAGE_NAME}-*.tgz --directory ./unzipped
+else
+	echo "File solarwinds-${PACKAGE_NAME}-*.tgz does not exist"
+fi

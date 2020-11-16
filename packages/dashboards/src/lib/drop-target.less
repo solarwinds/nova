@@ -1,0 +1,40 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) '@solarwinds/nova-bits/sdk/less/mixins';
+
+@circle-size: 40px;
+
+.drop-target {
+    border-width: @nui-line-fat;
+    border-style: solid;
+    .setCssVariable(border-color, nui-color-selected-contrast);
+    .setCssVariable(background-color, nui-color-selected);
+
+    &:before {
+        .setCssVariable(background-color, nui-color-selected-contrast);
+        border-radius: 50%;
+        content: "";
+        display: block;
+        height: @circle-size;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        z-index: 1;
+    }
+
+    &:after {
+        .setCssVariable(color, nui-color-icon-light);
+        content: "+";
+        display: block;
+        // For now, we are using font rules to match the mockups as closely as possible
+        // since gridster doesn't currently accommodate custom HTML drop targets.
+        font-size: @icon-size-medium - 1;
+        font-weight: bold;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+    }
+}

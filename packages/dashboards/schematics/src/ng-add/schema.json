@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsNovaAdd",
+    "title": "ng-add schematic for nova-dashboards",
+    "type": "object",
+    "description": "bootstraps a project for nova-dashboards consumption",
+    "properties": {
+        "project": {
+            "type": "string",
+            "description": "The name of the project.",
+            "$default": {
+                "$source": "projectName"
+            }
+        },
+        "skipModuleUpdate": {
+            "type": "boolean",
+            "description": "Skip updating the module configuration",
+            "default": false
+        },
+        "skipCss": {
+            "type": "boolean",
+            "description": "Skip setting styles",
+            "default": false
+        }
+    },
+    "required": []
+}

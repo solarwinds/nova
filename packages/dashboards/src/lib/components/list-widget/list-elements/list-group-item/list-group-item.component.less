@@ -1,0 +1,38 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins";
+
+.list-group-item {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__label {
+        width: 25%;
+        margin-right: @nui-space-lg;
+        max-width: 100%;
+        .text-overflow(ellipsis);
+    }
+
+    &__statuses {
+        width: 75%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .status-column {
+            display: flex;
+            width: 100px;
+            min-width: 100px;
+            max-width: 100%;
+            justify-content: start;
+            align-items: center;
+            padding-right: @nui-space-sm;
+
+            &__label {
+                margin-left: @nui-space-xs;
+                .text-overflow(ellipsis);
+            }
+        }
+    }
+}

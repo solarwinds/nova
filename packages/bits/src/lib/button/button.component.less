@@ -1,0 +1,200 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/components/buttons.less";
+
+@nui-button-min-width: 100px;
+@nui-button-max-width: 250px;
+
+.busy-variant(@variableName) {
+    .ripple-1, .ripple-2 {
+        .setCssVariable(background, @variableName);
+    }
+}
+
+.fill-icon(@variableName) {
+    .nui-icon:not(.custom-icon-color) {
+        path, polygon {
+            .setCssVariable(fill, @variableName);
+        }
+    }
+}
+
+.nui .nui-button {
+    .button-base();
+    min-width: @nui-button-min-width;
+    max-width: @nui-button-max-width;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    transition: transform 0.1s ease-in-out;
+    //it fixes button's text-color changes inside iframe at chrome.
+    .backface-visibility(~'hidden');
+
+    &.unlimited-width {
+        max-width: unset;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &__icon {
+        display: flex;
+    }
+
+    &:not(.btn-lg) .nui-icon {
+        margin-top: 0;
+    }
+
+    .nui-button__content {
+        .text-overflow(ellipsis);
+        position: relative;
+    }
+
+    &.icon-right {
+        nui-icon {
+            order: 1;
+
+            + .nui-button__content {
+                margin-right: @nui-space-xs;
+            }
+        }
+    }
+
+    &.icon-left {
+        nui-icon {
+            + .nui-button__content {
+                margin-left: @nui-space-xs;
+            }
+        }
+    }
+
+    &.is-busy {
+        pointer-events: none;
+        outline: none;
+    }
+
+    .nui-button-ripple-container {
+        position: absolute;
+        z-index: 1;
+
+        .ripple {
+            .fill();
+            border-radius: 50%;
+            transform: scale(0.01);
+
+            &.ripple-1 {
+                animation: ripple 1.2s ease-in-out .1s infinite;
+            }
+
+            &.ripple-2 {
+                animation: ripple 1.2s ease-in-out .32s infinite;
+            }
+        }
+
+        @media print {
+            display:none;
+        }
+
+    }
+
+    @keyframes ripple {
+        50%, 100% {
+            opacity: 0;
+            transform: scale(2);
+        }
+
+        0% {
+            opacity: 0;
+        }
+
+        1% {
+            opacity: 1;
+        }
+    }
+
+    &.btn-default {
+        .button-default();
+    }
+
+    &.btn-primary {
+        .button-primary();
+        font-weight: @nui-font-weight-semibold;
+    }
+
+    &.btn-action {
+        min-width: 0;
+        .button-action();
+    }
+
+    &.btn-destructive {
+        .button-destructive();
+    }
+
+    &.is-empty {
+        min-width: 30px;
+        min-height: 30px;
+        padding: @btn-padding-is-empty;
+
+        > .nui-button__content {
+            display: none;
+        }
+
+        &.btn-xs {
+            min-height: 0;
+            min-width: 20px;
+        }
+    }
+
+    svg {
+        overflow: auto;
+    }
+
+    &.btn-lg {
+        .button-size(@btn-padding-large-vertical; @btn-padding-large-horizontal; @nui-font-size-default;
+            @btn-line-height-large; @nui-radius-default);
+    }
+
+    &.btn-xs {
+        .button-size(0; 0; @nui-font-size-small; @btn-line-height-small; @nui-radius-default);
+        height: 20px;
+    }
+
+    // These are for button-base mixin support
+    // if not doing it here, 'btn-default' will override mixin + class combination
+    // e.g. if we apply '.button-base()' mixin to the component and add type as a class.
+    &.default {
+        .button-default();
+    }
+
+    &.primary {
+        .button-primary();
+    }
+
+    &.action {
+        .button-action();
+    }
+
+    &.destructive {
+        .button-destructive();
+    }
+
+    &.selected {
+        .button-selected();
+    }
+
+    &.selected-contrast {
+        .button-selected-contrast();
+    }
+
+    &.no-shadow {
+        box-shadow: none;
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}

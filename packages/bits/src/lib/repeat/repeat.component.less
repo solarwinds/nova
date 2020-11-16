@@ -1,0 +1,84 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+.nui .nui-repeat {
+    height: inherit;
+    &__normal .nui-repeat-item {
+        padding-top: @nui-space-xs;
+        padding-bottom: @nui-space-xs;
+    }
+
+    &__compact .nui-repeat-item {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    &-header {
+        .setCssVariable(color, nui-color-text-default);
+        .setCssVariable(background-color, nui-color-bg-light);
+    }
+
+    .repeat-group .nui-repeatitem {
+        &.nui-repeat-item--clickable {
+            &:hover:not(.nui-repeat-item--selected) {
+                .setCssVariable(border-color, nui-color-line-default);
+            }
+        }
+    }
+
+    .repeat-group-item:first-child .nui-repeat-item {
+        border-top: solid @nui-line-default;
+        .setCssVariable(border-top-color, nui-color-line-default);
+    }
+
+    .repeat-group {
+        margin-bottom: 0;
+        padding-left: 0;
+        margin-left: 0;
+        height: inherit;
+    }
+
+    .repeat-group-item {
+        position: relative;
+        display: block;
+        .setCssVariable(color, nui-color-text-default);
+        .setCssVariable(background-color, nui-color-bg-light);
+
+        .transition(box-shadow 0.4s);
+
+        // Round the first and last items
+        &:first-child {
+            .border-top-radius(@repeat-group-border-radius);
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+            .border-bottom-radius(@repeat-group-border-radius);
+        }
+
+        &:hover {
+            cursor: pointer;
+            &.nui-dnd-without-drag-handle:not(.cdk-drag-disabled) {
+                cursor: move;
+                .nui-dnd-raised-state();
+            }
+        }
+
+        &__disabled {
+            .setCssVariable(color, nui-color-text-disabled);
+            &:hover  {
+                cursor: @cursor-disabled;
+            }
+        }
+    }
+
+    .nui-repeat-item {
+        border-bottom: solid @nui-line-default;
+        .setCssVariable(border-bottom-color, nui-color-line-default);
+    }
+    @supports (-ms-ime-align: auto) {
+        .nui-repeat-item {
+            margin-bottom: 0.5px; // TODO: minimal working margin that fixes NUI-1214. To be removed after issue fixed in edge itself
+        }
+    }
+}

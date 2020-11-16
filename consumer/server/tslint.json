@@ -1,0 +1,3 @@
+{
+    "extends": "@solarwinds/ts-lint-rules/tslint.json"
+}

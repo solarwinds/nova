@@ -1,0 +1,37 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) '@solarwinds/nova-bits/sdk/less/mixins';
+
+.kpi-color-rules-configuration {
+    @arrow-container-width: 30px;
+
+    &__accordion-content {
+        padding: @nui-space-md @nui-space-md @nui-space-md (@nui-space-md * 2 + @icon-size-default);
+    }
+
+    &__color-select {
+        display: flex;
+        align-items: center;
+    }
+
+    &__color-preview {
+        width: 100%;
+        height: @icon-size-medium;
+        border-radius: @nui-radius-default;
+
+        &.with-arrow {
+            width: calc(100% - @arrow-container-width - @nui-space-sm);
+            margin-left: @nui-space-sm;
+        }
+    }
+
+    &__selector-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: @arrow-container-width;
+        height: 30px;
+        border-left: 1px solid;
+        .setCssVariable(border-left-color, nui-color-line-default);
+        margin-left: @nui-space-sm;
+    }
+}

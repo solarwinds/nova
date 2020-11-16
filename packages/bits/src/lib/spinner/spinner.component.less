@@ -1,0 +1,118 @@
+@import (reference) "../../styles/nui-framework-colors.less";
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+@spinner-size-small: 20;
+@spinner-size-large: 50;
+
+.nui-spinner {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+    box-sizing: border-box;
+    vertical-align: middle;
+
+    &__container {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-sizing: border-box;
+
+        &--small {
+            .nui-spinner__container {
+                .nui-spinner-pixel-settings(@spinner-size-small);
+            }
+            .nui-spinner__cancel.nui-button {
+                border-radius: 50%;
+                min-height: 10px;
+                min-width: 10px;
+                padding: 0;
+            }
+        }
+
+        &--large {
+            .nui-spinner__container {
+                .nui-spinner-pixel-settings(@spinner-size-large);
+            }
+            .nui-spinner__cancel.nui-button {
+                border-radius: 50%;
+                min-height: 10px;
+                min-width: 10px;
+                padding: 3px;
+            }
+        }
+
+        .nui-spinner-pixel-settings(@size) {
+            @sizeWithSuffix: e(%("%spx", @size));
+
+            width: @sizeWithSuffix;
+            height: @sizeWithSuffix;
+        }
+    }
+
+    &__label {
+        margin-left: @nui-space-sm;
+    }
+
+    &__hint {
+        display: block;
+        margin-left: @nui-space-sm;
+    }
+
+    &__circular {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        animation: rotate 2s linear infinite;
+        transform-origin: center center;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    &__path-under {
+        .setCssVariable(stroke, nui-color-line-default);
+    }
+
+    &__path {
+        stroke-dashoffset: 0px;
+        animation: dash 1.5s ease-in-out infinite;
+        stroke-linecap: square;
+        .setCssVariable(stroke, nui-color-progress);
+    }
+
+    @keyframes rotate {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes dash {
+        0% {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+        }
+        50% {
+            stroke-dasharray: 67, 200;
+            stroke-dashoffset: -35px;
+        }
+        100% {
+            stroke-dasharray: 134, 200;
+            stroke-dashoffset: -134px;
+        }
+    }
+    &--determinate {
+
+        .nui-spinner__circular {
+            animation: none;
+        }
+        .nui-spinner__path {
+            transition: .5s linear;
+            animation: none;
+        }
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../out-tsc/spec",
+        "types": [
+            "jasmine",
+            "node"
+        ],
+        "paths": {
+            "@solarwinds/nova-dashboards": ["./src/public-api.ts"]
+        }
+    },
+    "files": [
+        "./src/test.ts",
+        "./src/polyfills.ts"
+    ],
+    "include": [
+        "**/*.spec.ts",
+        "**/*.d.ts"
+    ],
+    "exclude": [
+        "**/schematics/**/files/**"
+    ]
+}

@@ -1,0 +1,29 @@
+<div class="nui-tabgroup" [class.flex-column]="!vertical">
+    <div class="nui-tabs__holder" [class.vertical]="vertical" (click)="$event.preventDefault()">
+        <div class="btn-caret-left" [class.disabled]="!rightTraverseEnabled" *ngIf="hasTraverse" (click)="traverseRight()">
+            <nui-icon [icon]="'caret-left'" [iconColor]="!rightTraverseEnabled?'gray':'default'"></nui-icon>
+        </div>
+        <div class="nui-tabs">
+            <div class="nui-tabs__container" [class.flex-column]="vertical">
+                <ng-container *ngFor="let tab of tabs">
+                    <div class="nui-tab"
+                        [class.active]="tab.active && !vertical"
+                        [class.horizontal]="tab.active && !vertical"
+                        [class.disabled]="tab.disabled"
+                        [class.active__vertical]="tab.active && vertical">
+                        <span class="tab-link"
+                            (click)="selectTab(tab)">
+                            <span [nuiTabHeadingCustomTemplateRef]="tab.headingRef">{{ tab.heading }}</span>
+                        </span>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="btn-caret-right" [class.disabled]="!leftTraverseEnabled" *ngIf="hasTraverse" (click)="traverseLeft()">
+            <nui-icon [icon]="'caret-right'" [iconColor]="!leftTraverseEnabled?'gray':'default'"></nui-icon>
+        </div>
+    </div>
+    <div class="nui-tabgroup__content">
+        <ng-content></ng-content>
+    </div>
+</div>

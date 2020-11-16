@@ -1,0 +1,17 @@
+@import (reference) url('../../../styles/nui-framework-variables.less');
+//== Copy-text
+//
+//##
+
+@copy-text-overlay-right: @icon-size-small + 1px;
+@copy-text-z-index: 200;
+
+.nui-copy-text {
+    &__overlay {
+        position: absolute;
+        display: block;
+        right: @copy-text-overlay-right;
+        margin-top: @nui-space-xxs;
+        z-index: @copy-text-z-index;
+      }
+}

@@ -1,0 +1,16 @@
+{
+    "xliffmergeOptions": {
+        "srcDir": ".tmp",
+        "genDir": "demo/src/locale",
+        "i18nFile": "messages.xlf",
+        "i18nFormat": "xlf",
+        "encoding": "UTF-8",
+        "defaultLanguage": "en-us",
+        "languages": ["en-us"],
+        "removeUnusedIds": true,
+        "useSourceAsTarget": false,
+        "beautifyOutput": true,
+        "verbose": false,
+        "quiet": false
+    }
+}

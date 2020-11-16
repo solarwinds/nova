@@ -1,0 +1,24 @@
+<h1>
+    Nova Dashboards Schematics
+</h1>
+<div>
+    <h2>Ng-Add Schematic</h2>
+    <h3>Usage:</h3>
+    <p><code>ng add @solarwinds/nova-dashboards</code></p>
+    <h3>Description:</h3>
+    <p>
+        This schematic bootstraps nova-dashboards for consumption in your project by adding it to
+        your package.json and performing an <code>npm install</code>.
+    </p>
+
+    <h3>Options:</h3>
+    <div *ngFor="let key of objectKeys(addJsonScheme)">
+        <nui-expander [header]="key">
+            <div><i>Description: </i><span>{{addJsonScheme[key].description}}</span></div>
+            <div><i>Type: </i><span>{{addJsonScheme[key].type}}</span></div>
+            <div *ngIf="addJsonScheme[key].enum"><i>Enum: </i><span>{{addJsonScheme[key].enum}}</span></div>
+            <div *ngIf="addJsonScheme[key].alias"><i>Alias: </i><span>{{addJsonScheme[key].alias}}</span></div>
+            <div *ngIf="addJsonScheme[key].default"><i>Default: </i><span>{{addJsonScheme[key].default}}</span></div>
+        </nui-expander>
+    </div>
+</div>

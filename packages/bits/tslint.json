@@ -1,0 +1,33 @@
+{
+    "extends": [
+        "@solarwinds/ts-lint-rules/tslint.angular.json"
+    ],
+    "rules": {
+        "directive-selector": [
+            true,
+            "attribute",
+            false,
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            false,
+            "kebab-case"
+        ],
+        "no-host-metadata-property": false,
+        "import-blacklist": [
+            true,
+            "lodash",
+            true,
+            "moment"
+        ],
+        "await-promise": [
+            true,
+            "Thenable",
+            "WebElementPromise",
+            "AlertPromise"
+        ],
+        "promise-function-async": true
+    }
+}

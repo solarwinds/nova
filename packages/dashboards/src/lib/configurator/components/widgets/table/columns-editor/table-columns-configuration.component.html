@@ -1,0 +1,24 @@
+<nui-items-dynamic
+    [items]="columns"
+    [nodes]="nodes"
+    headerPrefix="Column"
+    i18n-headerPrefix
+    (itemsChange)="onItemsChange($event)"
+    (formReady)="onFormReady($event)"
+></nui-items-dynamic>
+
+<div class="pl-4 pr-4" *ngIf="(emptyColumns$ | async) && form.touched">
+    <nui-message type="critical" [allowDismiss]="false" i18n>
+        <b>At least one column must be added.</b>
+    </nui-message>
+</div>
+
+<button nui-button
+        icon="add"
+        displayStyle="action"
+        id="table-widget-add-indicator-btn"
+        type="button"
+        class="ml-4 mb-4"
+        (click)="addColumn()"
+        i18n>Add new column
+</button>

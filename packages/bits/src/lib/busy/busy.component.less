@@ -1,0 +1,42 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+.nui .nui-nova-busy {
+    position: relative;
+    height: 100%;
+    min-height: inherit;
+
+    &__overlay {
+        .busy-overlay();
+        .no-select();
+        z-index: @zindex-busy;
+
+        .nui-nova-busy__container{
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            opacity: 1;
+            .no-select();
+        }
+        &--align {
+            text-align: center;
+        }
+        &--hidden {
+            visibility: hidden
+        }
+    }
+
+    &__container {
+        transition: .5s ease-in all;
+        position: absolute;
+        top: 40%;
+        transform: translateY(-50%);
+        width: 100%;
+        opacity: 0;
+    }
+}
+
+.nui .nui-modal .nui-nova-busy__overlay {
+    z-index: @zindex-busy-in-modal;
+}

@@ -1,0 +1,310 @@
+<style>
+    .markers ul li {
+        list-style-type: circle;
+        text-indent: 30px;
+    }
+</style>
+
+<p>
+    A Data Table is used for presenting data in a logical table-layout structure, and <code>&lt;nui-table&gt;</code> is the Nova
+    component that provides this functionality.
+</p>
+
+<h2>Required Modules</h2>
+<ul>
+    <li>
+        <code>NuiTableModule</code>
+    </li>
+</ul>
+
+<h2>Basic Usage</h2>
+
+<ul>
+    <li>1. Define columns to display
+        <p>
+            A column definition is specified via an <code>ng-container</code> with the <code>nuiColumnDef</code> attribute,
+            giving each column a name. Each column definition can contain a header-cell template with an <code>*nuiHeaderCellDef</code>
+            attribute, a data-cell template with an <code>*nuiCellDef</code> attribute, and a footer-cell template with an
+            <code>*nuiFooterCellDef</code> attribute.
+        </p>
+    </li>
+    <li>2. Define the table's header-row and data-row
+        <p>
+            This can be done via the <code>*nuiHeaderRowDef</code> and <code>*nuiRowDef</code> attributes respectively.
+        </p>
+    </li>
+    <li>3. Initialize the <code>*nuiHeaderRowRef</code> attribute with the list of column names
+        <p>
+            This one should be in sync with the column templates (i.e. four <code>nuiColumnDef</code> directives
+            for four items in the columns array.
+        </p>
+    </li>
+    <li>4. Assign some data to the <code>dataSource</code> input
+        <p>
+            When this one changes, the table will re-render. Note: Table re-rendering will only occur when the actual reference
+            of <code>dataSource</code> changes.
+        </p>
+    </li>
+</ul>
+<p>
+    To make a table scroll horizontally, wrap it in a container with the class <code>nui-table__container</code> or
+    add this class to your existing wrapper. Without this class, a table that exceeds the width of its container
+    will overlap the right edge of the container.
+</p>
+<nui-example-wrapper filenamePrefix="table-basic" exampleTitle="Basic Usage">
+    <nui-table-basic-example></nui-table-basic-example>
+</nui-example-wrapper>
+
+<h2>Pinned Header</h2>
+<p>
+    To make the header sticky, set the <code>sticky</code> input to true on the <code>*nuiHeaderRowDef</code> directive.
+</p>
+<nui-example-wrapper filenamePrefix="table-pinned-header" exampleTitle="Pinned header">
+    <nui-table-pinned-header-example></nui-table-pinned-header-example>
+</nui-example-wrapper>
+
+<h2>Cell Content Alignment</h2>
+<p>
+    By default, cell content in the form of text is aligned to the left, and numbers are aligned to the right
+    (alignment for a cell is determined by its corresponding datasource item). All alignments can be set via the
+    <code>alignment</code> input of an <code>nui-cell</code> or <code>nui-header-cell</code> directive.
+    Valid options are: <b>left</b>, <b>right</b>, or <b>center</b>.
+</p>
+<p>
+    If you want custom positioning and alignment inside table cells, just
+    wrap everything inside your cell in the container and apply styles just as you need them:
+</p>
+<nui-example-code language="html">
+    {{alignmentCode}}
+</nui-example-code>
+<p>
+    Or, you can apply some styling to the whole <code>td</code> by putting your class there:
+    <code>&lt;td nui-cell *nuiCellDef="let element" class="custom-class"&gt;&lt;/td&gt;</code>
+</p>
+<p> For example, column "Location" is vertically aligned to the top, and column "Outages" is vertically aligned to the bottom.</p>
+<p>
+    <b>Note:</b> Input <code>type="icon"</code> on the <code>nuiColumnDef</code> directive will set width of that column's
+    cells to 40px and center the cell content both vertically and horizontally.
+</p>
+<nui-example-wrapper filenamePrefix="table-cell-content-align" exampleTitle="Column Alignment">
+    <nui-table-cell-content-align-example></nui-table-cell-content-align-example>
+</nui-example-wrapper>
+
+<h2>Column Width and Tooltips</h2>
+<p>
+    To change width of a column, use Angular binding syntax to set the pixel value of <code>[style.width.px]</code> on the
+    <code>&lt;th&gt;</code> element of the column.
+</p>
+<p>
+    To add a tooltip to a cell, set the <code>[tooltipText]</code> input on the <code>nuiHeaderCellDef</code> or
+    <code>nuiCellDef</code> directive.
+</p>
+<h3>Default widths:</h3>
+<ul>
+    <li><b>Table</b> <code>width</code> is <b>100%</b>.</li>
+    <li><b>Column</b> <code>min-width</code> is <b>46px</b>.</li>
+</ul>
+<nui-example-wrapper filenamePrefix="table-cell-width-set" exampleTitle="Column Width and Tooltips">
+    <nui-table-cell-width-set></nui-table-cell-width-set>
+</nui-example-wrapper>
+
+<h2>Row Density</h2>
+<p>
+    Row height can be specified via the <code>density</code> input of <code>nui-row</code>. Valid options are: <b>default</b> - 40px,
+    <b>compact</b> - 30px, or <b>tiny</b> - 24px. <code>density = "tiny"</code> is used in the example below. The same for header height.
+</p>
+<nui-example-wrapper filenamePrefix="table-row-height-set" exampleTitle="Row Density">
+    <nui-table-row-height-set></nui-table-row-height-set>
+</nui-example-wrapper>
+
+<h2>Column Reordering</h2>
+<p>
+    To make a table reorderable, <code>[reorderable]="true"</code> should be specified on the <code>&lt;nui-table&gt;</code> element. Bind to the
+    reordering event using the <code>(columnsOrderChange)</code> output.
+</p>
+<nui-example-wrapper filenamePrefix="table-reorder" exampleTitle="Column reordering">
+    <nui-table-reorder-example></nui-table-reorder-example>
+</nui-example-wrapper>
+
+<h2>Custom Actions</h2>
+<p>
+    Table supports custom user actions. To add or remove table columns, update the list of column names you are passing to the <code>nuiHeaderRowDef</code>
+    and <code>nuiRowDef</code> directives. The template for added columns should be provided, and, if a column is removed,
+    the corresponding column template should also be removed.
+</p>
+<p>
+    To add or remove table rows you need to:
+</p>
+<ol>
+    <li>
+        Add <code>@ViewChild</code> in your component.
+    </li>
+    <li>
+        Modify your <code>dataSource.</code>
+    </li>
+    <li>
+        After modifying your data (adding or removing rows) you will need to call <code>renderRows</code> method on your
+        table using <code>@ViewChild</code> variable.
+    </li>
+</ol>
+<p>
+    <b>Note 1:</b> If you want to use <code>nui-menu</code> or other components with dropdowns you will need to add class
+    to <code>td</code> in your template where you will need to set <code>overflow:visible</code>.
+</p>
+<p>
+    <b>Note 2:</b> Class <code>nui-edge-definer</code> is added to table container in this example not to make menu open
+    down in the last row and cause scroll because of <code>overflow:auto</code>.
+</p>
+<nui-example-wrapper filenamePrefix="table-columns-add-remove" exampleTitle="Custom actions">
+    <nui-table-columns-add-remove-example></nui-table-columns-add-remove-example>
+</nui-example-wrapper>
+
+<h2>Column Resize</h2>
+<p>
+    To enable the resizing of a table you need to set <code>[resizable]="true"</code>. When a table is resizable, it's layout
+    is set to <code>table-layout: fixed</code>; therefore, column widths will not be recalculated automatically as they are with
+    the default table-layout. You can provide the desired width of a column in <code>px</code> on the <code>columnDef</code> directive.
+    The rest of the table width will be distributed among the other columns equally.
+</p>
+<nui-example-wrapper filenamePrefix="table-resize" exampleTitle="Column resize">
+    <nui-table-resize-example></nui-table-resize-example>
+</nui-example-wrapper>
+
+<h2>Using trackBy</h2>
+<p>
+    To improve performance, you can let Angular know which row elements in the table can be reused during
+    a change detection cycle by binding a trackBy handler to <code>nui-table</code>'s
+    <code><a href="https://material.angular.io/cdk/table/overview#connecting-the-table-to-a-data-source" target="_blank">trackBy</a></code>
+    property inherited from
+    <code><a href="https://material.angular.io/cdk/table/overview" target="_blank">CdkTable</a></code>.
+    The trackBy handler should return a value that uniquely identifies each item in the table.
+</p>
+<p>
+    Besides performance, another benefit of using trackBy is that the table can keep track of selections
+    based on the identifier returned by the trackBy handler. This is necessary if table items are
+    transmitted across the wire during user interaction. See <strong>Enabling Row Selection</strong>
+    below for usage.
+</p>
+
+<h2>Enabling Row Selection</h2>
+<p>
+    To be able to select rows, do the following:
+</p>
+<nui-table-row-selection-instructions></nui-table-row-selection-instructions>
+<p>
+    <b>Note 1:</b>To preselect rows in table and programmatically change selection you can use
+    <code>[selection]</code> input which has
+    <code><a href="../interfaces/ISelection.html" target="_blank">ISelection</a></code> type.
+</p>
+<p>
+    <b>Note 2:</b> If you need to use <code>paginator</code> with row selection, you need to pass count
+    of all items on all pages into <code>totalItems</code> input.
+</p>
+<nui-message [allowDismiss]=false type="warning">
+    <p>
+        <strong>Important:</strong> When working with data that's coming across the wire, it's necessary
+        to bind a trackBy handler as mentioned above. This will allow selection tracking to be based on
+        the identifier returned by the trackBy handler. If a trackBy is not provided, comparisons to
+        determine whether items are selected will be based on object reference which of course
+        won't work with items coming from a backend.
+    </p>
+    Take a look at the source of the following example to see how.
+</nui-message>
+<nui-example-wrapper filenamePrefix="table-select" exampleTitle="Enabling Row Selection">
+    <nui-table-select></nui-table-select>
+</nui-example-wrapper>
+<h3>Clickable Table Row</h3>
+<p>
+    This option allows for making the whole row clickable for selecting or deselecting it instead of
+	having the checkbox as the only selectable area. It should be combined with the
+	<code>selectable = true</code> input of the corresponding <code>TableComponent</code>. When a table
+	has no selectable rows configured, it's obviously not possible to enable row selection/deselection
+	by clicking on any area of the row.
+</p>
+<p>
+    In a very basic configuration, when the table has <code>selectable = true</code> configured, adding
+	<code>clickableRow = true</code> input to the <code>TR</code> element introduces a behavior in which
+	any click inside the row selects or deselects it.
+</p>
+<p>
+    Sometimes it isn't desirable to select/deselect a row when certain elements within the row are
+	clicked as they serve other purposes - e.g. when a button is located inside a row, a user would
+	expect some action to be triggered on the button click, rather than selection of the row. So it's
+	possible to configure the row click behavior to ignore clicks on some predefined elements. Such
+	elements can be configured by providing their CSS selectors in the <code>ignoredSelectors</code>
+	property of the <code>clickableRowConfig</code> input. The default value for this property is
+	<code>["button", "input[type='button']", "a[href]"]</code>. It's also possible to explicitly
+	configure elements to trigger row selection/deselection on click. This can be done by providing
+	their CSS selectors in the <code>clickableSelectors</code> property of the
+	<code>clickableRowConfig</code> input. It's default value is <code>["nui-row", "tr[nui-row]"]</code>.
+</p>
+<nui-example-wrapper filenamePrefix="table-row-clickable" exampleTitle="Clickable Table Row">
+    <nui-table-row-clickable></nui-table-row-clickable>
+</nui-example-wrapper>
+
+<h2>Infinite Scrolling Without Custom Strategy</h2>
+<nui-message [allowDismiss]=false type="warning">
+    Please consult your UX team before using the example below.
+</nui-message>
+<p>
+    In case one doesn't want to create a custom virtual scroll strategy to implement scrolling for the <code>nui-table</code> there is a solution
+    that does not use viewport indexes, and involves background data fetching. User is required to set a <code>step</code> and <code>itemsToLoad</code>
+    fields to configure how many items they want to load per user action, and the step size. <br><br>
+
+    For example, if user wants 500 items loaded per user action, it may be heavy to load so many items at once. Setting the <code>step</code> field
+    sets the amount of data loaded on the background to smoothen user experience, and let user scroll through the loaded chunks instead of waiting for
+    the entire dataset to get loaded. This means if we want 500 items loaded and set the step to 100, there will be total 5 API calls to fetch 100 items each.
+    This allows user to get chunks of data on the background and get them loaded in the table while he's able to scroll throught the results.
+</p>
+
+Consider the following in the example:
+<ol>
+    <li>
+        <code>step</code> - sets the step (how many items are loaded per fetch on the background). Pay attention, there is logic that handles the leftover, which
+        means if there are 500 items to load and we set the <code>step</code> to 200, there will be total 3 API calls fetching 200, 200, and the leftover of 100 items.
+    </li>
+    <li>
+        <code>itemsToLoad</code> - total amount of data to load per user action.
+    </li>
+    <li>
+        Optional <code>sticky footer</code>. When inside the sdk virtual scrolll viewport, the footer will scroll with the rest of the items. When sticky, it stays
+        visible all the time.
+    </li>
+    <li>
+        <code>Load next X items</code> button in footer. This allows to fetch an additional chunk of data on demand, which may be more desirable in some cases.
+    </li>
+</ol>
+
+<nui-example-wrapper filenamePrefix="table-virtual-scroll-steps-and-button" exampleTitle="Scrolling with Step Fetching and Optional Data Load">
+    <nui-table-virtual-scroll-steps-and-button-example></nui-table-virtual-scroll-steps-and-button-example>
+</nui-example-wrapper>
+
+<h3>Virtual Scroll with Sticky Header</h3>
+<p>
+    To be able to use Nova Table with CDK Virtual Scroll we provide a special directive
+    <code>tableStickyHeader</code> which will detach table head from scrollable viewport and will simulate the sticky/fixed position.
+</p>
+<nui-message [allowDismiss]=false type="warning">
+    Bind <strong>only visible rows</strong> to the table's <strong>dataSource</strong> and use <strong>cdkVirtualFor</strong> to render the rows.
+</nui-message>
+<nui-message [allowDismiss]="false" type="info">
+    <code>tableStickyHeader</code> directive supports runtime state switch by just binding a boolean value to it <code>[tableStickyHeader]="false"</code>
+    or taking the <code>TableStickyHeaderDirective</code> reference via <code>ViewChild</code> decorator and updating the <code>tableStickyHeader</code> property.
+</nui-message>
+<nui-example-wrapper filenamePrefix="table-virtual-scroll-sticky-header" exampleTitle="Virtual Scroll with Sticky Header">
+    <nui-table-virtual-scroll-sticky-header-example></nui-table-virtual-scroll-sticky-header-example>
+</nui-example-wrapper>
+
+<h3>Virtual Scroll with Sticky Header and Row Selection</h3>
+<p>
+    To implement selection on a table with virtual scroll you can start with the <strong>Virtual Scroll with Sticky Header</strong> example and then follow the <strong>Enabling Row Selection</strong> steps:
+</p>
+<nui-table-row-selection-instructions></nui-table-row-selection-instructions>
+<nui-example-wrapper filenamePrefix="table-virtual-scroll-select-sticky-header" exampleTitle="Virtual Scroll with Sticky Header and Select">
+    <nui-table-virtual-scroll-select-sticky-header-example></nui-table-virtual-scroll-select-sticky-header-example>
+</nui-example-wrapper>
+
+<nui-message [allowDismiss]="false" type="info">
+    Pagination, Virtual Scroll aren't natively part of the <code>nui-table</code> component but the <a href="../additional-documentation/schematics/table.html" target="_parent">Table Schematic documentation</a> provides examples on how to use them;
+    For sorting and search the same schematic can be used to generate automatically the code.
+</nui-message>

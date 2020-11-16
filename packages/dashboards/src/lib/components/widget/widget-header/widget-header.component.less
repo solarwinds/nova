@@ -1,0 +1,85 @@
+@import (reference) '@solarwinds/nova-bits/sdk/less/nui-framework-variables';
+@import (reference) '@solarwinds/nova-bits/sdk/less/mixins';
+
+.nui-widget__header {
+    display: flex;
+    position: relative;
+
+    .collapse-spacer {
+        margin-bottom: @nui-space-md;
+    }
+
+    &__container {
+        z-index: @zindex-active;
+        width: 100%;
+
+        &--collapsible {
+            width: 100%;
+        }
+
+        &--collapsed {
+            .nui-widget__header__content {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .collapse-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            cursor: pointer;
+
+            &__line {
+                width: 16px;
+                height: @nui-line-default;
+                .setCssVariable(background, nui-color-line-active);
+                margin: @nui-space-xs 0;
+                cursor: pointer;
+            }
+        }
+
+        .nui-widget__header__content {
+            align-items: flex-start;
+            display: flex;
+            opacity: 1;
+
+            &-drag-icon {
+                align-items: center;
+                cursor: move;
+                display: flex;
+                height: 30px;
+                justify-content: center;
+                margin: @nui-space-xs;
+                width: 30px;
+            }
+
+            &-title {
+                display: block;
+                max-width: 100%;
+                .text-overflow(ellipsis);
+
+                &-container {
+                    flex: 1;
+                    min-width: 0;
+                    padding: @nui-space-sm 0 @nui-space-xs @nui-space-sm;
+                }
+
+                &-with-additional-content {
+                    padding-left: 0;
+                }
+            }
+
+            &-help-hint {
+                max-width: 100%;
+                .text-overflow(ellipsis);
+            }
+
+            &-actions {
+                display: flex;
+                padding: @nui-space-xs @nui-space-sm 0 @nui-space-xs;
+            }
+        }
+    }
+
+}

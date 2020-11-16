@@ -1,0 +1,76 @@
+<div class="nui-combobox__layout-block"
+     [class.disabled]="isDisabled">
+    <nui-popup  [class.custom-template]="customTemplate"
+                (opened)="openChange($event)"
+                [manualOpenControl]="openControl"
+                [width]="getWidth()"
+                [contextClass]="getPopupContextClass()"
+                [appendToBody]="appendToBody">
+        <div class="nui-combobox__icon" *ngIf="icon != null">
+            <nui-icon [icon]="icon"
+                      aria-hidden="true"
+                      [iconColor]="getIconColor()"></nui-icon>
+        </div>
+        <div class="nui-combobox__container"
+             [class.has-error]="isInErrorState"
+             [class.nui-combobox__editable-container--disabled]="isDisabled"
+             nuiPopupToggle
+             [disabled]="isDisabled">
+            <nui-textbox class="nui-combobox__input"
+                         [class.nui-combobox__input-icon]="showIcon()"
+                         [class.nui-combobox__right-border]="showRightBorder()"
+                         [class.nui-combobox__input--with-remove-value]="isRemoveValueDisplayed()"
+                         type="text"
+                         autocomplete="off"
+                         [value]="unescapeItem(inputValue)"
+                         [placeholder]="displayPlaceholderValue()"
+                         (textChange)="onInputChange($event)"
+                         [disabled]="isDisabled"
+                         [isInErrorState]="isInErrorState"
+                         [ariaLabel]="ariaLabel"
+                         #comboboxToggle>
+            </nui-textbox>
+            <button tabindex="-1"
+                    *ngIf="isRemoveValueDisplayed()"
+                    nui-button
+                    class="nui-combobox__remove-value"
+                    (click)="clearValue($event);"
+                    [isEmpty]="true"
+                    icon="remove"
+                    displayStyle="action"
+                    type="button">
+            </button>
+            <button tabindex="-1"
+                    class="nui-combobox__toggle"
+                    nui-button
+                    [isEmpty]="true"
+                    icon="caret-down"
+                    displayStyle="action"
+                    type="button"
+                    [class.disabled]="isDisabled"
+                    [disabled]="isDisabled">
+            </button>
+        </div>
+        <div popupAreaContent>
+            <div #scrollContainer class="nui-menu nui-combobox__menu">
+                <ng-container *ngFor="let item of itemsSource">
+                    <nui-menu-action tabindex="-1" *ngIf="!item.items"
+                                     [class.item-selected]="isItemSelected(item)"
+                                     (actionDone)="select(item)">
+                        <span tabindex="-1" *ngIf="!customTemplate" [innerHTML]="getItemDisplay(item) | nuiHighlight: isItemSelected(item) ? '' : inputValue"></span>
+                        <ng-container [ngTemplateOutlet]="customTemplate"
+                                      [ngTemplateOutletContext]="{context: item}">
+                        </ng-container>
+                    </nui-menu-action>
+                    <nui-menu-group tabindex="-1" *ngIf="item.items" [header]="item.header">
+                        <nui-menu-action *ngFor="let groupedItem of item.items"
+                                         [class.item-selected]="isItemSelected(groupedItem)"
+                                         (actionDone)="select(groupedItem)">
+                            <span tabindex="-1" [innerHTML]="getItemDisplay(groupedItem) | nuiHighlight: isItemSelected(groupedItem) ? '' : inputValue"></span>
+                        </nui-menu-action>
+                    </nui-menu-group>
+                </ng-container>
+            </div>
+        </div>
+    </nui-popup>
+</div>

@@ -1,0 +1,124 @@
+[
+    {
+        "title": "Overview",
+        "file": "../pages/overview/overview.md"
+    },
+    {
+        "title": "Getting Started",
+        "file": "../../../README.md"
+    },
+    {
+        "title": "Anatomy",
+        "file": "../pages/anatomy/overview.md",
+        "children": [
+            {
+                "title": "Pizzagna",
+                "file": "../pages/anatomy/pizzagna.md"
+            },
+            {
+                "title": "Configurator",
+                "file": "../pages/anatomy/configurator.md"
+            },
+            {
+                "title": "Data Sources",
+                "file": "../pages/anatomy/data-sources.md"
+            }
+        ]
+    },
+    {
+        "title": "Tips and Tricks",
+        "file": "../pages/tips-and-tricks/overview.md"
+    },
+    {
+        "title": "Tutorials",
+        "file": "../pages/tutorials/overview.md",
+        "children": [
+            {
+                "title": "Hello Dashboards",
+                "file": "../pages/tutorials/hello-dashboards.md"
+            },
+            {
+                "title": "Adding a Data Source",
+                "file": "../pages/tutorials/data-source.md"
+            },
+            {
+                "title": "Widget and Dashboard Editing",
+                "file": "../pages/tutorials/widget-editor.md"
+            },
+            {
+                "title": "Persistence",
+                "file": "../pages/tutorials/persistence-handler.md"
+            },
+            {
+                "title": "Widget Creation",
+                "file": "../pages/tutorials/widget-creation.md"
+            },
+            {
+                "title": "Customization",
+                "file": "../pages/tutorials/customization/overview.md",
+                "children": [
+                    {
+                        "title": "Configurator Section",
+                        "file": "../pages/tutorials/customization/configurator-section.md"
+                    },
+                    {
+                        "title": "Data Source Configurator",
+                        "file": "../pages/tutorials/customization/data-source-configurator.md"
+                    },
+                    {
+                        "title": "Formatter",
+                        "file": "../pages/tutorials/customization/formatter/overview.md",
+                        "children": [
+                            {
+                                "title": "Custom Table Formatter",
+                                "file": "../pages/tutorials/customization/formatter/formatter-table.md"
+                            },
+                            {
+                                "title": "Custom Donut Chart Content Formatter",
+                                "file": "../pages/tutorials/customization/formatter/formatter-donut-content.md"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Widget",
+                        "file": "../pages/tutorials/customization/widget.md"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Widget Types",
+        "file": "../pages/widget-types/overview.md",
+        "children": [
+            {
+                "title": "KPI",
+                "file": "../pages/widget-types/kpi/kpi.md",
+                "children": [
+                    {
+                        "title": "Setting a Background Color",
+                        "file": "../pages/widget-types/kpi/background-color.md"
+                    }
+                ]
+            },
+            {
+                "title": "Proportional",
+                "file": "../pages/widget-types/proportional.md"
+            },
+            {
+                "title": "Table",
+                "file": "../pages/widget-types/table.md",
+                "children": [
+                    {
+                        "title": "Table with Search",
+                        "file": "../pages/widget-types/table-search.md"
+                    }
+                ]
+            },
+            {
+                "title": "Timeseries",
+                "file": "../pages/widget-types/timeseries.md"
+            }
+        ]
+    }
+]

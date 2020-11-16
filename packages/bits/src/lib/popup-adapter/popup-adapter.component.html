@@ -1,0 +1,18 @@
+<div nuiClickInterceptor class="nui-popup-container" [class.nui-popup--opened]="isOpen">
+    <div class="nui-popup__content">
+        <ng-content></ng-content>
+    </div>
+    <div #popupArea></div>
+
+    <nui-overlay
+        [toggleReference]="toggleReference"
+        [overlayConfig]="overlayConfig"
+        [customContainer]="customContainer"
+    >
+        <div class="nui-popup__area">
+            <div class="nui-popup__area--container">
+                <ng-content select="[popupAreaContent]"></ng-content>
+            </div>
+        </div>
+    </nui-overlay>
+</div>

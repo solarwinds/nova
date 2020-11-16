@@ -1,0 +1,26 @@
+::-webkit-scrollbar {
+    width: @nui-space-md;
+    height: @nui-space-md;
+}
+::-webkit-scrollbar-thumb {
+    border: @nui-space-xs solid;
+    border-radius: @nui-space-md / 2;
+    background-clip: content-box;
+    .setCssVariable(border-color, nui-color-bg-scroll_handle_container);
+    background-color: @nui-color-bg-scroll_handle;
+    &:hover {
+        background-color: @nui-color-bg-scroll_handle-hover;
+    }
+}
+::-webkit-scrollbar-corner {
+    .setCssVariable(background-color, nui-color-bg-scroll_handle_container);
+}
+
+:not(body) {
+    ::-webkit-scrollbar-thumb {
+        .setCssVariable(background-color, nui-color-bg-scroll_handle);
+        &:hover {
+            .setCssVariable(background-color, nui-color-bg-scroll_handle-hover);
+        }
+    }
+}

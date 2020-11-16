@@ -1,0 +1,17 @@
+<div *ngIf="plugin && plugin.dataPoints">
+    <nui-popover class="chart-popover__popover"
+                 trigger="openPopoverSubject"
+                 placement="top"
+                 [unlimited]="true"
+                 [template]="popoverTemplate"
+                 [openPopover]="plugin.openPopoverSubject"
+                 [closePopover]="plugin.closePopoverSubject"
+                 [hasPadding]="false"
+                 [container]="element.nativeElement"
+                 [style.height.px]="plugin.popoverTargetPosition.height">
+    </nui-popover>
+
+    <ng-template #popoverTemplate>
+        <ng-container *ngTemplateOutlet="template; context: {dataPoints:plugin.dataPoints}"></ng-container>
+    </ng-template>
+</div>

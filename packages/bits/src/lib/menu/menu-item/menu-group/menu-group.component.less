@@ -1,0 +1,16 @@
+@import (reference) "../../../../styles/nui-framework-variables.less";
+@import (reference) "../../../../styles/mixins.less";
+
+.nui-menu,
+.nui-menu-popup,
+.nui-menu-popup-host {
+    .nui-menu-group-divider--container {
+        overflow: auto;
+    }
+
+    nui-menu-group:last-child {
+        .nui-menu-group-divider--container {
+            display: none;
+        }
+    }
+}

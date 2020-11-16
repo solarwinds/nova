@@ -1,0 +1,24 @@
+.scroll-shadow(@background: var(--nui-color-bg-scroll, @nui-color-bg-scroll)) {
+    background:
+        linear-gradient(@background 90%, transparent),
+        linear-gradient(transparent, @background 0%) 0 100%,
+        linear-gradient(var(--nui-shadow-color, @nui-shadow-color) 10%, transparent),
+        linear-gradient(transparent 8%, var(--nui-shadow-color, @nui-shadow-color)) 0 100%;
+    background-repeat: no-repeat;
+    background-position: top, bottom, top, bottom;
+    .setCssVariable(background-color, nui-color-bg-transparent);
+    background-size: 100% @nui-space-xs, 100% @nui-space-xs, 100% @nui-space-xs, 100% @nui-space-xs;
+    background-attachment: local, local, scroll, scroll;
+}
+.scroll-shadow-horizontal(@background: var(--nui-color-bg-scroll, @nui-color-bg-scroll)) {
+    background-image:
+        linear-gradient(to right, @background, @background),
+        linear-gradient(to right, @background, @background),
+        linear-gradient(to right, var(--nui-shadow-color, @nui-shadow-color), transparent),
+        linear-gradient(to left, var(--nui-shadow-color, @nui-shadow-color), transparent);
+    background-repeat: no-repeat;
+    background-position: left center, right center, left center, right center;
+    .setCssVariable(background-color, nui-color-bg-transparent);
+    background-size: @nui-space-xs 100%, @nui-space-xs 100% , @nui-space-xs 100%, @nui-space-xs  100% ;
+    background-attachment: local, local, scroll, scroll;
+}

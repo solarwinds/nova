@@ -1,0 +1,54 @@
+#!/bin/bash
+set -e
+
+usage() {
+    echo "Usage: set-version -p <PACKAGE_PATH>"
+    echo "Apply new version"
+    echo
+    echo "Options:"
+    echo "  -t, --increment-type            Increment type - major, minor, patch"
+    echo "  -i, --prerelease-id  [Optional] Prerelease id to append to the version. e.g. 'alpha', 'rc'"
+    echo "  -h, --help           [Optional] Show this help message"
+    echo "  -p, --path           [Optional] Path to package.json directory"
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+    -h | --help)
+        usage
+        exit
+        ;;
+    -p | --path)
+        if [ -n "$2" ]; then
+            package_path="$2"
+            shift 2
+        else
+            echo "Expected value following '$1'."
+            exit 1
+        fi
+        ;;
+    -i | --prerelease-id)
+        prerelease_id="$2"
+        shift 2
+        ;;
+    -t | --increment-type)
+        if [ -n "$2" ]; then
+            increment_type="$2"
+            shift 2
+        else
+            echo "Expected value following '$1'."
+            exit 1
+        fi
+        ;;
+    -*)
+        echo "Unexpected argument '$1'."
+        exit 1
+        ;;
+    esac
+done
+
+if [ -n "$package_path" ]; then
+    cd $package_path
+fi
+
+npm --no-git-tag-version version $increment_type --preid=$prerelease_id

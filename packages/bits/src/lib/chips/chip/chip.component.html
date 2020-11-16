@@ -1,0 +1,18 @@
+<div class="nui-chip__value" [ngClass]="customClass">
+    <span class="nui-chip__value-name"
+        [title]="!isContentProjected ? item?.label : ''"
+        [ngClass]="{ 'projected': isContentProjected }"
+        >
+        <ng-container *ngIf="isContentProjected; else itemLabel">
+            <ng-container *ngTemplateOutlet="projection"></ng-container>
+        </ng-container>
+    </span>
+    <nui-icon (click)="onRemove()"
+              [nuiTooltip]="closeButtonTooltip"
+              icon="remove"
+              iconSize="small"
+              cssClass="nui-chip__value-remove"></nui-icon>
+</div>
+
+<ng-template #projection><ng-content></ng-content></ng-template>
+<ng-template #itemLabel>{{ item?.label }}</ng-template>

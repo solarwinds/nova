@@ -1,0 +1,43 @@
+<div nui-busy [busy]="isBusy">
+    <nui-spinner size="large" i18n-message message="Loading..."></nui-spinner>
+    <div class="d-flex flex-row">
+        <nui-search class="d-flex justify-content-end app-search-list-search"
+                    (search)="onSearch()"
+                    (cancel)="onCancelSearch()">
+        </nui-search>
+    </div>
+
+    <div class="d-flex flex-row">
+        <ng-container *ngIf="!isBusy && (listItems$ | async).length === 0">
+            <span i18n>No results</span>
+        </ng-container>
+
+        <nui-repeat class="app-search-list-repeat"
+                    selectionMode="none"
+                    [itemConfig]="itemConfig"
+                    [repeatItemTemplateRef]="listRepeatItemTemplate"
+                    [selection]="filteringState.repeat?.selectedItems"
+                    [itemsSource]="filteringState.repeat?.itemsSource">
+        </nui-repeat>
+    </div>
+
+    <div class="d-flex flex-row">
+        <nui-paginator class="app-search-list-paginator"
+                       [(page)]="page"
+                       [pageSize]="pageSize"
+                       [pageSizeSet]="[10,20,30,40]"
+                       [total]="filteringState.paginator?.total"
+                       (pagerAction)="applyFilters()">
+        </nui-paginator>
+    </div>
+</div>
+
+<ng-template #listRepeatItemTemplate let-item="item">
+    <div class="container">
+        <div class="row">
+            <div *ngFor="let field of item | keyvalue" class="col-sm">
+                {{field.value}}
+            </div>
+        </div>
+    </div>
+</ng-template>

@@ -1,0 +1,55 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins";
+
+// We use this buffer to get rid of the vertical scrollbar that appears during the nui-spinner animation
+@buffer: 2px;
+
+.nui-table-widget {
+    overflow: auto;
+    width: 100%;
+
+    // This is a fix for the Safari browser, which makes a table widget content properly rendered
+    // Added in scope of NUI-4955
+    .display-contents {
+        display: contents;
+    }
+
+    &__main {
+        flex: 1 1 auto;
+    }
+
+    &__paginator {
+        margin-top: @nui-space-sm;
+    }
+
+    &__overflow {
+        overflow-y: auto;
+    }
+
+    .nui-table-widget-container {
+        .virtual-scroll-disabled.cdk-virtual-scroll-viewport {
+            overflow: hidden !important;
+        }
+    }
+}
+
+:host-context(.mobile) {
+    .calc-height {
+        min-height: 200px;
+    }
+}
+
+:host.table-widget-fullwidth {
+    width: calc(100% - @nui-space-sm);
+}
+
+.invisible {
+    height: 0;
+}
+
+// This is being set to firefox only because when firefox makes a scroll bar it doesn't put it over the content but creates room for it
+@-moz-document url-prefix() {
+    .nui-table-widget-container {
+        margin-right: @nui-space-sm;
+    }
+}

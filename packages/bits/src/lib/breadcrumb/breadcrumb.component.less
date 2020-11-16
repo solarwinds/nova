@@ -1,0 +1,34 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+.nui .nui-breadcrumb {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-size: @nui-font-size-small;
+    line-height: @nui-line-height-small;
+    overflow: hidden;
+    padding: @nui-space-xs 0;
+
+    &__crumb {
+        white-space: nowrap;
+
+        &__link {
+            cursor: pointer;
+        }
+
+        &-current-level {
+            .setCssVariable(color, nui-color-text-secondary);
+            cursor: default;
+        }
+    }
+
+    &__caret-icon {
+        padding: 0 @nui-space-xs;
+    }
+
+    &__wrapper {
+        align-items: center;
+        display: inline-flex;
+    }
+}

@@ -1,0 +1,19 @@
+<ng-content></ng-content>
+<div class="ml-3 mt-3">
+    <div class="d-flex align-items-center" *ngIf="editMode !== undefined">
+        <input class="mb-2" type="checkbox" id="edit-mode" [ngModel]="editMode" (ngModelChange)="editModeChange.emit($event)"/>
+        <label class="px-3" for="edit-mode">Edit Mode</label>
+    </div>
+    <div class="d-flex align-items-center" *ngIf="dsError !== undefined">
+        <input class="mb-2" type="checkbox" id="ds-error" [ngModel]="dsError" (ngModelChange)="dsErrorChange.emit($event)"/>
+        <label class="px-3" for="ds-error">Force Data Source Errors</label>
+    </div>
+    <div class="d-flex align-items-center">
+        <input class="mb-2"
+               type="checkbox"
+               id="dark-theme"
+               [ngModel]="themeSwitcher.isDarkModeEnabledSubject | async"
+               (ngModelChange)="themeSwitcher.setDarkTheme($event)"/>
+        <label class="px-3" for="dark-theme">Dark Theme</label>
+    </div>
+</div>

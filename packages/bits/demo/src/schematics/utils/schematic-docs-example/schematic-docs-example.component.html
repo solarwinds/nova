@@ -1,0 +1,53 @@
+<div class="d-flex">
+    <div class="p-0 col-4 schematic-docs-example__files">
+        <h2 class="mt-4">Source files</h2>
+        <div *ngFor="let item of componentSources | keyvalue">
+            <nui-expander [header]="item.key"
+                          icon="group">
+                <nui-recursive-object-view [object]="item.value"
+                                           [objectTemplate]="objectTemplate"
+                                           [notObjectTemplate]="notObjectTemplate">
+                    {{item.key}}
+                </nui-recursive-object-view>
+            </nui-expander>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <h2 class="mt-4">Source code</h2>
+        <nui-expander [disabled]="!selectedFile"
+                      [open]="isSelectedFileOpen()"
+                      (openChange)="onSelectedFileOpenChange($event)">
+            <div nuiExpanderHeader>
+                <h5 class="m-0">
+                    Selected file:
+                    <span class="schematic-docs-example__selected-file">{{ selectedFile ? selectedFile : "None" }}</span>
+                </h5>
+            </div>
+            <div class="nui-source-inspector-code">
+                <nui-example-code *ngIf="shouldCodeRender">{{ getSource(selectedFile) }}</nui-example-code>
+            </div>
+        </nui-expander>
+    </div>
+</div>
+
+<h2 class="mt-4">Example</h2>
+<ng-content></ng-content>
+
+<ng-template #objectTemplate
+             let-item="item">
+    <nui-icon icon="xml-file"></nui-icon>
+    {{ item.key }}
+</ng-template>
+
+<ng-template #notObjectTemplate
+             let-key="item">
+    <button nui-button
+            class="mw-100"
+            type="button"
+            displayStyle="action"
+            icon="xml-file"
+            (click)="selectFile(key)">
+        {{ key }}
+    </button>
+</ng-template>

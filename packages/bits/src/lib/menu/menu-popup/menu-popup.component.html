@@ -1,0 +1,61 @@
+<ng-template ngFor let-group [ngForOf]="itemsSource" let-last="last">
+    <div class="nui-menu-item nui-menu-item--header"
+         *ngIf="group.header"
+         (click)="stopClickPropagation($event)">{{group.header}}</div>
+    <ng-template ngFor let-item [ngForOf]="group.itemsSource" >
+        <ng-container [ngSwitch]="item.itemType">
+            <ng-container *ngSwitchCase="'action'">
+                <nui-menu-action [disabled]="item.disabled"
+                                 [icon]="item.icon"
+                                 *ngIf="!item.removed"
+                                 [hidden]="item.hidden"
+                                 [type]="item.itemClass"
+                                 (click)="handleClick(item)">
+                    <ng-container>
+                        {{getDisplayValue(item)}}
+                    </ng-container>
+                </nui-menu-action>
+            </ng-container>
+            <ng-container *ngSwitchCase="'link'">
+                <nui-menu-link [disabled]="item.disabled"
+                               [url]="item.url"
+                               [target]="item.target"
+                               [icon]="item.icon"
+                               *ngIf="!item.removed"
+                               [hidden]="item.hidden"
+                               (click)="handleClick(item)">
+                    <ng-container>
+                        {{getDisplayValue(item)}}
+                    </ng-container>
+                </nui-menu-link>
+            </ng-container>
+            <ng-container *ngSwitchCase="'option'">
+                <nui-menu-option [disabled]="item.disabled"
+                                 [checked]="item.checked"
+                                 (click)="handleClick(item)">
+                    <ng-container>
+                        {{getDisplayValue(item)}}
+                    </ng-container>
+                </nui-menu-option>
+            </ng-container>
+            <ng-container *ngSwitchCase="'switch'">
+                <nui-menu-switch [disabled]="item.disabled"
+                                 [checked]="item.checked"
+                                 (click)="handleClick(item)">
+                    <ng-container>
+                        {{getDisplayValue(item)}}
+                    </ng-container>
+                </nui-menu-switch>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                <nui-menu-item [ngClass]="{ 'nui-menu-item--selected': item.isSelected }"
+                                       (actionDone)="handleClick(item)">
+                    {{getDisplayValue(item)}}
+                </nui-menu-item>
+            </ng-container>
+        </ng-container>
+    </ng-template>
+    <div *ngIf="!last" class="nui-menu-popup-divider--container" (click)="stopClickPropagation($event)">
+        <nui-divider size="extra-small"></nui-divider>
+    </div>
+</ng-template>

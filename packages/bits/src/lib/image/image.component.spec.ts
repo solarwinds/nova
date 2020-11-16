@@ -1,0 +1,72 @@
+import { ChangeDetectorRef, ElementRef } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
+import _sample from "lodash/sample";
+
+import { LoggerService } from "../../services/log-service";
+import { UtilService } from "../../services/util.service";
+
+import { ImageComponent } from "./image.component";
+import { IImagesPresetItem } from "./public-api";
+
+describe("components >", () => {
+    describe("image >", () => {
+        let subject: ImageComponent;
+        const imagesPreset = [
+            {
+                svgFile: "sw-logo.svg",
+                name: "sw-logo",
+                brushType: "filled",
+                code: "<svg>test svg</svg>",
+            },
+            {
+                svgFile: "ok-robot.svg",
+                name: "ok-robot",
+                brushType: "filled",
+                code: "<svg>ok robot</svg>",
+            },
+        ] as Array<IImagesPresetItem>;
+        const domSanitizer = {
+            bypassSecurityTrustHtml: (code: string) => code as SafeHtml,
+        } as DomSanitizer;
+        const elRef: ElementRef = new ElementRef(`
+                <nui-image float="right" id="image-float" image="no-alerts" ng-reflect-image="no-alerts" ng-reflect-float="right">
+                    <div class="nui-image nui-image__hidden nui-image__right" ng-reflect-ng-style="[object Object]">
+                        <svg width="137" height="92" viewBox="0 0 137 92"></svg>
+                    </div>
+                </nui-image>
+        `);
+
+        beforeEach(() => {
+            TestBed.configureTestingModule({
+                providers: [UtilService, ChangeDetectorRef],
+            });
+
+            const utilService = TestBed.inject(UtilService);
+            const changeDetector = TestBed.inject(ChangeDetectorRef);
+
+            subject = new ImageComponent(new LoggerService(), utilService, changeDetector, imagesPreset, domSanitizer, elRef);
+        });
+
+        describe("getImageTemplate", () => {
+            it("returns image code by given image name", () => {
+                const image = _sample(imagesPreset);
+                const imageName = image?.name;
+                const expectedImageCode = image?.code as SafeHtml;
+
+                subject.image = imageName;
+
+                expect(subject.getImageTemplate()).toBe(expectedImageCode);
+            });
+
+            it("returns default image template if there is no image in the preset", () => {
+                const imageName = "unavailableImage";
+                const expectedImageTemplate = `<img src="${imageName}">`;
+
+                subject.image = imageName;
+
+                expect(subject.getImageTemplate()).toBe(expectedImageTemplate);
+            });
+        });
+    });
+});

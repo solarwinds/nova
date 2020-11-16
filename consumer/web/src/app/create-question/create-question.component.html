@@ -1,0 +1,27 @@
+<div>
+    <h1 id="rd-create-question__page-header" i18n>Your question</h1>
+
+    <form [formGroup]="questionForm" novalidate>
+        <nui-form-field caption="Title"
+                        [control]="questionForm.controls['title']"
+                        class="rd-createquestion-page__title-field"
+                        i18n-caption>
+            <nui-textbox formControlName="title">
+            </nui-textbox>
+            <nui-validation-message for="required" i18n>
+                Title is required
+            </nui-validation-message>
+            <nui-validation-message for="minlength" i18n>
+                Please specify at least 10 characters
+            </nui-validation-message>
+        </nui-form-field>
+
+        <rd-post-form (formReady)="onFormReady('postForm', $event)"></rd-post-form>
+
+        <button nui-button type="submit" (click)="submit()" displayStyle="primary" i18n>
+            Post your question
+        </button>
+        <a nui-button routerLink="/questions" displayStyle="action" i18n>
+            Cancel</a>
+    </form>
+</div>

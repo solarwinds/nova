@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+SCRIPTS=$(dirname $0)
+
+paths=$(node -p "require('./scripts/projects.json').map(p => p.path).join(' ')")
+echo Package paths: $paths
+
+for p in $paths; do
+    echo Setting release version in $p
+    bash $SCRIPTS/set-version --prerelease-id "$PRERELEASE_ID" --increment-type $INCREMENT_TYPE -p $p
+done
+
+RELEASE_VERSION=$(node -p "require('./package.json').version")
+echo "##teamcity[setParameter name='env.RELEASE_VERSION' value='$RELEASE_VERSION']"
+
+git tag $RELEASE_VERSION

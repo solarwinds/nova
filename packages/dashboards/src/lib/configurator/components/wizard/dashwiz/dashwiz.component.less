@@ -1,0 +1,169 @@
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables";
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins.less";
+
+@header-step-title-max-width: 140px; //needed to fix extra space between steps in dashwiz-header when dashwiz-title is too long
+
+.nui-dashwiz {
+    &__header {
+        padding: @nui-space-sm @nui-space-md;
+        .setCssVariable(background-color, nui-color-bg-secondary);
+        border-bottom: @nui-line-default solid @nui-color-line-default;
+        border-bottom: @nui-line-default solid var(--nui-color-line-default,@nui-color-line-default);
+        overflow: hidden;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        .no-select();
+
+        &-steps {
+            margin-bottom: 0;
+            white-space: nowrap;
+            display: inline-flex;
+        }
+
+        &-step {
+            line-height: normal;
+            display: inline-flex;
+            cursor: pointer;
+            &--disabled {
+                pointer-events: none;
+                cursor: default;
+            }
+            &--visited {
+                .nui-dashwiz__header-step-link {
+                    .setCssVariable(color, nui-color-text-link);
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+                .nui-dashwiz__header-step-col {
+                    &-right {
+                        > .nui-dashwiz__header-step-line {
+                            .setCssVariable(border-color, nui-color-line-active);
+                        }
+                    }
+                }
+            }
+            &--first {
+                .nui-dashwiz__header-step-col {
+                    &-right {
+                        border-color: transparent;
+                        opacity: 0;
+                    }
+                }
+            }
+            &--last {
+                .nui-dashwiz__header-step-col {
+                    &-left {
+                        border-color: transparent;
+                        opacity: 0;
+                    }
+                }
+            }
+
+            &--active {
+                cursor: default;
+                .nui-dashwiz__header-step-link {
+                    .setCssVariable(color, nui-color-bg-dark);
+                    &:hover {
+                        .nui-dashwiz__header-step-title {
+                            text-decoration: none;
+                        }
+                    }
+                    .nui-dashwiz__header-step-col {
+                        &-right {
+                            > .nui-dashwiz__header-step-line {
+                                .setCssVariable(border-color, nui-color-line-active);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            &--complete {
+                .nui-dashwiz__header-step-link {
+                    .nui-dashwiz__header-step-col {
+                        &-left {
+                            > .nui-dashwiz__header-step-line {
+                                .setCssVariable(border-color, nui-color-line-active);
+                            }
+                        }
+                        &-right {
+                            > .nui-dashwiz__header-step-line {
+                                .setCssVariable(border-color, nui-color-line-active);
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-container {
+                display: inline-table;
+                width: 100%;
+
+                &-bottom {
+                    display: none;
+                    .nui-dashwiz__header-step-title {
+                        width: 100%;
+                        max-width: 100%;
+                        margin: 0;
+                    }
+                }
+            }
+            &-row {
+                display: table-row;
+            }
+            &-col {
+                display: table-cell;
+                vertical-align: middle;
+
+                .nui-dashwiz__header-step-line {
+                    .setCssVariable(border-color, nui-color-line-default);
+                }
+                &-right {
+                    .nui-dashwiz__header-step-line {
+                        margin-right: -1px;
+                    }
+                }
+            }
+
+            &-line {
+                border-bottom: solid 2px;
+                height: 2px;
+            }
+
+            &-link {
+                .setCssVariable(color, nui-color-text-secondary);
+                transition: color .3s;
+                &-container {
+                    display: flex;
+                    align-content: baseline;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            &-title {
+                .text-overflow(ellipsis);
+                vertical-align: middle;
+                display: inline-block;
+                max-width: @header-step-title-max-width;
+                margin: 0 0 @nui-space-xs 0;
+                text-decoration: inherit;
+            }
+        }
+    }
+
+    &__header.nui-dashwiz__header--lines-stretched {
+        .nui-dashwiz__header-step-title {
+            max-width: unset;
+        }
+    }
+
+    &__footer {
+        z-index: 1080; // to be higher that CDK overlay
+        .setCssVariable(background-color, nui-color-bg-content);
+        border-top: solid 1px var(--nui-color-line-default, @nui-color-line-default);
+    }
+}

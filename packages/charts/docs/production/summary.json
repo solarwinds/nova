@@ -1,0 +1,122 @@
+[
+    {
+        "title": "Layout",
+        "file": "../layout.md"
+    },
+    {
+        "title": "Chart Types",
+        "file": "../chart-types/chart-types.md",
+        "children": [
+            {
+                "title": "Line",
+                "file": "../chart-types/line.md"
+            },
+            {
+                "title": "Bar",
+                "file": "../chart-types/bar.md",
+                "children": [
+                    {
+                        "title": "Bucketed Bar",
+                        "file": "../chart-types/bucketed-bar.md"
+                    },
+                    {
+                        "title": "Status",
+                        "file": "../chart-types/status.md"
+                    },
+                    {
+                        "title": "Waterfall",
+                        "file": "../chart-types/waterfall.md"
+                    }
+                ]
+            },
+            {
+                "title": "Area",
+                "file": "../chart-types/area.md"
+            },
+            {
+                "title": "Pie and Donut",
+                "file": "../chart-types/pie-and-donut.md"
+            },
+            {
+                "title": "Spark",
+                "file": "../chart-types/spark.md"
+            }
+        ]
+    },
+    {
+        "title": "Plugins",
+        "file": "../plugins/overview.md",
+        "children": [
+            {
+                "title": "Tooltips",
+                "file": "../plugins/tooltips.md"
+            },
+            {
+                "title": "Popovers",
+                "file": "../plugins/popovers.md"
+            }
+        ]
+    },
+    {
+        "title": "Thresholds",
+        "file": "../thresholds.md"
+    },
+    {
+        "title": "Timeframe Selection",
+        "file": "../timeframe-selection.md"
+    },
+    {
+        "title": "Advanced Usage",
+        "file": "../advanced-usage/overview.md",
+        "children": [
+            {
+                "title": "Chart",
+                "file": "../advanced-usage/chart.md"
+            },
+            {
+                "title": "Legend",
+                "file": "../advanced-usage/legend.md"
+            },
+            {
+                "title": "Input Structure",
+                "file": "../advanced-usage/accessors/overview.md",
+                "children": [
+                    {
+                        "title": "Data",
+                        "file": "../advanced-usage/accessors/data.md"
+                    },
+                    {
+                        "title": "Colors",
+                        "file": "../advanced-usage/accessors/colors.md"
+                    },
+                    {
+                        "title": "Markers",
+                        "file": "../advanced-usage/accessors/markers.md"
+                    }
+                ]
+            },
+            {
+                "title": "Events",
+                "file": "../advanced-usage/events.md"
+            },
+            {
+                "title": "Grid",
+                "file": "../advanced-usage/grid-config/base-grid.md"
+            },
+            {
+                "title": "Scales",
+                "file": "../advanced-usage/scales/overview.md",
+                "children": [
+                    {
+                        "title": "Domains",
+                        "file": "../advanced-usage/scales/domains.md"
+                    },
+                    {
+                        "title": "Formatters",
+                        "file": "../advanced-usage/scales/formatters.md"
+                    }
+                ]
+            }
+        ]
+    }
+]

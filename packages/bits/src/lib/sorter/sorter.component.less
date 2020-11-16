@@ -1,0 +1,41 @@
+@import (reference) url('../../styles/nui-framework-variables.less');
+@import (reference) url('../../styles/nui-framework-base.less');
+@import (reference) url('../../styles/mixins.less');
+
+@nui-sorter-border-width: 1px;
+
+.nui .nui-sorter {
+    max-height: 30px;
+
+    .list-group {
+        margin: 5px 0;
+    }
+
+    &__label {
+        display: block;
+    }
+
+    &__popup {
+        display: flex;
+    }
+
+    &__toggle-button.nui-button {
+        min-width: auto;
+    }
+
+    .nui-popup {
+        .nui-popup__area {
+            min-width: 100%;
+            border: none;
+
+            [popupAreaContent] {
+                padding: 0;
+            }
+
+            .nui-list .nui-list-item {
+                border: 0;
+            }
+        }
+    }
+}
+

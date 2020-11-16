@@ -1,0 +1,339 @@
+@import (reference) "chart-colors.less";
+@import (reference) "@solarwinds/nova-bits/sdk/less/mixins";
+@import (reference) "@solarwinds/nova-bits/sdk/less/nui-framework-variables.less";
+
+.nui-chart {
+    display: block;
+    height: 100%;
+    width: 100%;
+
+    .hidden {
+        display: none;
+    }
+
+    svg {
+        display: block;
+    }
+
+    .sw-hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .tick-hidden-text {
+        text {
+            opacity: 0;
+        }
+    }
+
+    .sw-line {
+        fill: none;
+        stroke-width: 2px;
+        shape-rendering: auto;
+    }
+
+    .sw-interaction-layer {
+        .tooltip-group {
+            text {
+                font-size: 12px;
+            }
+
+            .nui-chart-highlight-tooltip-marker {
+                stroke: white;
+            }
+
+            .nui-chart-highlight-tooltip-bg {
+                .setCssVariable(fill, nui-color-bg-mid_dark);
+            }
+        }
+    }
+
+    .nui-chart-hidden {
+        visibility: hidden;
+    }
+
+    .brush .selection {
+        .setCssVariable(fill, nui-color-active);
+        fill-opacity: 0.2;
+    }
+
+    // Ex color.less
+    .chart-color-generator(@colorVariableName) {
+        fill: @colorVariableName;
+        stroke: @colorVariableName;
+        &.nui-checkbox input.ng-not-empty + label div.nui-checkbox-mark {
+            border-color: @colorVariableName !important;
+            background-color: @colorVariableName !important;
+
+            &:hover .nui-checkbox-glyph {
+                display: block !important;
+            }
+        }
+        &.nui-checkbox input.ng-empty + label div.nui-checkbox-mark {
+            border-color: @colorVariableName !important;
+            background-color: transparent !important;
+        }
+        &.tilebox {
+            background-color: @colorVariableName;
+        }
+    }
+    // browsers smooth colors, so outline that supposed to be white looks pink/light-blue/light-brown-ish
+    nui-chart-point-marker {
+        &[color-index="2"],
+        &[color-index="8"],
+        &[color-index="14"] {
+            .nui-chart-point-marker {
+                shape-rendering: crispEdges;
+            }
+        }
+    }
+
+    .nui-chart-column-separator {
+        stroke: white;
+        stroke-width: 1;
+    }
+
+    .nui-chart-trend-line {
+        .setCssVariable(stroke, black);
+        stroke-width: 1;
+    }
+
+    .trend-line-arrow {
+        .setCssVariable(fill, black);
+    }
+
+    .nui-chart-threshold-lines {
+        .nui-chart-threshold {
+            &-error {
+                fill-opacity: 1;
+            }
+
+            &-warning {
+                fill-opacity: 1;
+            }
+        }
+    }
+
+    .nui-chart {
+        &-highlight-tooltip-text {
+            // fill: @nui-color-inverse-text;
+            font-weight: 800;
+        }
+
+        &-point-marker-hidden {
+            visibility: hidden;
+        }
+
+        &-percentile-line {
+            // stroke: @nui-color-neutral-text;
+            stroke-width: 2px;
+            stroke-dasharray: 5, 5, 2, 5;
+        }
+
+        &-percentile-text {
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        &-annotation-line {
+            // stroke: @nui-color-shutdown-border;
+            stroke-width: 1px;
+            shape-rendering: crispEdges;
+            pointer-events: none;
+
+            &--hover {
+                .setCssVariable(stroke, nui-color-text-link);
+            }
+        }
+
+        &-annotation-note {
+            .setCssVariable(fill, nui-color-text-link);
+            font-weight: 600;
+            mix-blend-mode: hue; // made for firefox for fixing the NUI-945
+        }
+
+        &-annotation-hover-rect {
+            fill: transparent;
+            cursor: pointer;
+
+            &--hidden {
+                fill: transparent;
+            }
+        }
+
+        &-annotation-background-rect {
+            .setCssVariable(fill, white);
+        }
+
+        &-annotation-hover-highlight {
+            // fill: @nui-color-selected-outline;
+            fill-opacity: 0.2;
+
+            &--hidden {
+                fill: transparent;
+            }
+        }
+
+        &-annotation-hover-marker {
+            // fill: @nui-color-light-bg;
+            .setCssVariable(stroke, nui-color-text-link);
+            pointer-events: none;
+        }
+
+        &-other-series,
+        &-baseline-series {
+            // fill: @nui-color-unknown-border;
+            // stroke: @nui-color-unknown-border;
+            &.tilebox {
+                //   background-color: @nui-color-unknown-border;
+                .tilebox-value {
+                    .setCssVariable(color, nui-color-text-default);
+                }
+
+                .tilebox-unit {
+                    .setCssVariable(color, nui-color-text-default);
+                }
+            }
+        }
+
+        .sw-mark-layer &-baseline-series {
+            mix-blend-mode: multiply; // this is to have baseline series look behind the other series
+        }
+
+        &-no-data-line {
+            // to override possible style with fill set
+            shape-rendering: auto;
+            stroke-dasharray: 1, 3;
+            stroke-width: unset;
+            fill: none;
+        }
+    }
+
+    .bar-outline {
+        stroke-width: 1px;
+        .setCssVariable(stroke, nui-color-bg-light);
+    }
+}
+
+.nui-chart-grid {
+    .sw-axis {
+        .domain {
+            display: none;
+        }
+
+        path,
+        line {
+            .setCssVariable(stroke, nui-color-line-strong);
+            fill: none;
+            shape-rendering: crispEdges;
+        }
+
+        line {
+            &.nui-regular-line {
+                stroke-dasharray: 1 1; // "stroke-dasharray: 1" doesn't work properly on Safari
+            }
+        }
+
+        text {
+            .setCssVariable(fill, nui-color-text-secondary);
+            font-size: 11px;
+
+            &.chart-label {
+                font-weight: bold;
+            }
+        }
+
+        &-grid {
+            & line {
+                .setCssVariable(stroke, nui-color-line-default-transparent);
+                &.nui-zero-line {
+                    opacity: 0.5;
+                    stroke-dasharray: none;
+                    .setCssVariable(stroke, nui-color-line-dark);
+                }
+            }
+
+            stroke-dasharray: 1 1; // "stroke-dasharray: 1" doesn't work properly on Safari
+        }
+    }
+}
+
+.nui-chart-border {
+    .setCssVariable(stroke, nui-color-line-strong);
+    stroke-width: 1px;
+    shape-rendering: crispEdges;
+
+    &--thick {
+        stroke-width: 3px;
+    }
+}
+
+.nui-chart-highlight-tooltip-text {
+    .setCssVariable(fill, nui-color-text-light);
+    font-weight: 800;
+}
+
+.data-series-container {
+    transition-property: opacity;
+    transition-duration: 200ms;
+}
+
+.nui-chart {
+
+    .pointer-events {
+        pointer-events: auto;
+
+        &-click {
+            cursor: pointer;
+        }
+    }
+
+    .mouse-interactive-area {
+        cursor: crosshair;
+    }
+
+    .interaction-line {
+        .setCssVariable(stroke, nui-color-bg-inverse);
+        stroke-width: 1px;
+        shape-rendering: crispEdges;
+    }
+
+    .interaction-label {
+        .setCssVariable(fill, nui-color-bg-inverse);
+        &__text {
+            .setCssVariable(fill, nui-color-text-inverse);
+        }
+    }
+
+    &--path__outline {
+        vector-effect: non-scaling-stroke;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1px;
+        .setCssVariable(stroke, nui-color-bg-light);
+    }
+
+    &--path__outline-fill {
+        .setCssVariable(fill, nui-color-bg-light);
+    }
+
+    &-tooltip-pane {
+        /* this overrides an inline style (it's dynamic) set by .cdk-overlay-pane, so !important is necessary here */
+        pointer-events: none !important;
+    }
+
+}
+
+_:-ms-lang(x), .nui-chart--path__outline {
+    stroke-width: 1px;
+}
+
+.nui-chart-area {
+    .setCssVariable(stroke, nui-color-bg-light);
+    stroke-width: 1px;
+}
+
+.nui-chart-line-cap {
+    .setCssVariable(stroke, nui-color-bg-light);
+    stroke-width: 1px;
+}

@@ -1,0 +1,32 @@
+@import (reference) "nui-framework-variables";
+@import (reference) "nui-framework-spaces";
+@import (reference) "mixins.less";
+
+.nui-filter-group-composite {
+    &__header {
+        .setCssVariable(color, nui-color-text-default);
+        font-weight: bold;
+        line-height: @nui-line-height-default;
+        text-overflow: ellipsis;
+    }
+
+    &__show-more-link {
+        cursor: pointer;
+        padding: @nui-space-xs + @nui-space-xxs;
+    }
+
+    &__checkbox {
+        &-value {
+            flex: 0 1 auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        &-count {
+            flex: 0 0 auto;
+            margin-left: @nui-space-xs;
+            text-align: right;
+        }
+    }
+}
