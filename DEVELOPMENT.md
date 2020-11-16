@@ -19,7 +19,7 @@ to accommodate a wide breadth of use cases.
 * **nova-charts** - visualization library built on top of [d3](https://d3js.org/).
 * **nova-dashboards** - you got it.
 
-## Linking Projects for Developement
+## Linking Projects for Development
 
 To get your locally built library to be used as a dependancy of another library or app you will need to do
 two things:
