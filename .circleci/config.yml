@@ -1,18 +1,19 @@
 version: 2
 jobs:
     build:
-        working_directory: ~/packages/bits
+        working_directory: ~/nova/packages/bits
         docker:
-            - image: circleci/node:12-browsers
+            -   image: circleci/node:12-browsers
         steps:
-            - checkout
-            - run:
-                  name: install-dependencies
-                  command: yarn install
-            - run:
-                  name: assemble
-                  command: yarn run assemble
-            - run:
-                  name: angular-test
-                  command: yarn run test
+            -   checkout:
+                    path: ~/nova
+            -   run:
+                    name: install-dependencies
+                    command: yarn install
+            -   run:
+                    name: assemble
+                    command: yarn run assemble
+            -   run:
+                    name: angular-test
+                    command: yarn run test
 
