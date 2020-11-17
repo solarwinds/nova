@@ -23,7 +23,6 @@
               "project": "ng-package-dev.json"
             },
             "locl": {
-              "aot": true,
               "tsConfig": "./tsconfig.lib.locl.json"
             }
           }
