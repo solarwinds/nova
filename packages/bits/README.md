@@ -11,7 +11,7 @@ In Bits, the philosophy is all about flexibility – it provides the Legos, plum
 
 ## Prerequisites
 
-Before you begin, make sure your development environment includes Node.js®, an npm package manager and the npm registries set.
+Before you begin, make sure your development environment includes Node.js®, an npm package manager and the npm registries set. 
 <br>
 
 #### Installing NodeJS
