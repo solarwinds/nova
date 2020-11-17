@@ -1,0 +1,17 @@
+version: 2
+jobs:
+    bits-build:
+        working_directory: ~/packages/bits
+        docker:
+            - image: circleci/node:12-browsers
+        steps:
+            - checkout
+            - run:
+                  name: install-dependencies
+                  command: yarn install
+            - run:
+                  name: assemble
+                  command: yarn run assemble
+            - run:
+                  name: angular-test
+                  command: yarn run test
