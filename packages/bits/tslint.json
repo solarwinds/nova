@@ -1,6 +1,6 @@
 {
     "extends": [
-        "@solarwinds/ts-lint-rules/tslint.angular.json"
+        "./ts-lint-rules/tslint.angular.json"
     ],
     "rules": {
         "directive-selector": [

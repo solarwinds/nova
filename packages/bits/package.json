@@ -144,7 +144,6 @@
     "@compodoc/compodoc": "1.1.7",
     "@locl/cli": "0.0.1-beta.9",
     "@schematics/angular": "^9.0.0",
-    "@solarwinds/ts-lint-rules": "^6.0.0",
     "@types/axe-webdriverjs": "^2.1.0",
     "@types/highlight.js": "~9.1.9",
     "@types/jasmine": "2.8.9",
