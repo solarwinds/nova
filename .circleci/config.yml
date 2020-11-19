@@ -1,19 +1,6 @@
 version: 2
 jobs:
-    bits-checkout:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   checkout
-            -   run:
-                    command: pwd; ls
-            -   persist_to_workspace:
-                    root: .
-                    paths:
-                        - .
     bits-build:
-        working_directory: ~/nova/packages/bits
         docker:
             -   image: circleci/node:12-browsers
         steps:
@@ -22,9 +9,14 @@ jobs:
             -   run:
                     command: pwd; ls
             -   run:
+                    working_directory: ~/nova/packages/bits
+                    command: pwd; ls
+            -   run:
+                    working_directory: ~/nova/packages/bits
                     name: Install dependencies
                     command: yarn install
             -   run:
+                    working_directory: ~/nova/packages/bits
                     name: Assemble
                     command: yarn run assemble
             -   persist_to_workspace:
@@ -77,10 +69,7 @@ workflows:
     version: 2
     bits:
         jobs:
-            - bits-checkout
-            -   bits-build:
-                    requires:
-                        - bits-checkout
+            -   bits-build
             -   bits-unit-test:
                     requires:
                         - bits-build
