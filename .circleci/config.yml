@@ -27,6 +27,10 @@ jobs:
             -   run:
                     name: Assemble
                     command: yarn run assemble
+            -   persist_to_workspace:
+                    root: .
+                    paths:
+                        - .
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
