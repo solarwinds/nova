@@ -4,8 +4,7 @@ jobs:
         docker:
             -   image: circleci/node:12-browsers
         steps:
-            -   attach_workspace:
-                    at: ~/nova
+            - checkout
             -   run:
                     command: pwd; ls
             -   run:
@@ -69,7 +68,7 @@ workflows:
     version: 2
     bits:
         jobs:
-            -   bits-build
+            - bits-build
             -   bits-unit-test:
                     requires:
                         - bits-build
