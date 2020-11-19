@@ -1,6 +1,6 @@
 version: 2
 jobs:
-    bits-build:
+    bits-checkout:
         working_directory: ~/nova
         docker:
             -   image: circleci/node:12-browsers
@@ -15,9 +15,13 @@ jobs:
                     root: .
                     paths:
                         - .
+    bits-build:
+        working_directory: ~/nova/packages/bits
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
             -   run:
-                    name: Change directory
-                    command: cd packages/bits
+                    command: pwd; ls
             -   run:
                     name: Install dependencies
                     command: yarn install
@@ -30,10 +34,10 @@ jobs:
             -   image: circleci/node:12-browsers
         steps:
             -   run:
+                    command: pwd; ls
+            -   run:
                     name: Unit tests
-                    command: >
-                        ls;
-                        yarn run test
+                    command: yarn run test
     bits-e2e-test:
         working_directory: ~/nova
         docker:
@@ -64,7 +68,10 @@ workflows:
     version: 2
     bits:
         jobs:
-            - bits-build
+            - bits-checkout
+            -   bits-build:
+                    requires:
+                        - bits-checkout
             -   bits-unit-test:
                     requires:
                         - bits-build
