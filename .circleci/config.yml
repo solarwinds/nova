@@ -1,10 +1,12 @@
 version: 2
 jobs:
     bits-build:
+        working_directory: ~/nova
         docker:
             -   image: circleci/node:12-browsers
         steps:
-            - checkout
+            -   checkout:
+                    path: ~/nova
             -   run:
                     command: pwd; ls
             -   run:
