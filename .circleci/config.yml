@@ -18,7 +18,7 @@ jobs:
             -   image: circleci/node:12-browsers
         steps:
             -   attach_workspace:
-                    at: .
+                    at: ~/nova
             -   run:
                     command: pwd; ls
             -   run:
@@ -33,7 +33,7 @@ jobs:
             -   image: circleci/node:12-browsers
         steps:
             -   attach_workspace:
-                    at: .
+                    at: ~/nova
             -   run:
                     command: pwd; ls
             -   run:
@@ -45,7 +45,7 @@ jobs:
             -   image: docker
         steps:
             -   attach_workspace:
-                    at: .
+                    at: ~/nova
             -   run:
                     command: pwd; ls
             -   run:
