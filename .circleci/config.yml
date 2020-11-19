@@ -16,10 +16,10 @@ jobs:
                     working_directory: ~/nova/packages/bits
                     name: Install dependencies
                     command: yarn install
-#            -   run:
-#                    working_directory: ~/nova/packages/bits
-#                    name: Assemble
-#                    command: yarn run assemble
+            #            -   run:
+            #                    working_directory: ~/nova/packages/bits
+            #                    name: Assemble
+            #                    command: yarn run assemble
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -41,16 +41,17 @@ jobs:
         docker:
             -   image: docker
         steps:
+            - setup_remote_docker
             -   attach_workspace:
                     at: ~/nova
             -   run:
                     command: pwd; ls
             -   run:
-                    name: Install Docker Compose
+                    name: Install docker-compose
                     command: |
-                        curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-                        chmod +x ~/docker-compose
-                        sudo mv ~/docker-compose /usr/local/bin/docker-compose
+                        apk --update add py2-pip
+                        /usr/bin/pip2 install docker-compose
+                        docker-compose --version
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
@@ -78,9 +79,9 @@ workflows:
     bits:
         jobs:
             - bits-build
-#            -   bits-unit-test:
-#                    requires:
-#                        - bits-build
+            #            -   bits-unit-test:
+            #                    requires:
+            #                        - bits-build
             -   bits-e2e-test:
                     requires:
                         - bits-build
