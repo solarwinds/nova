@@ -47,7 +47,7 @@ jobs:
             -   run:
                     command: pwd; ls
             -   run:
-                    command: apk add curl curl-dev
+                    command: apk add curl curl-dev sudo
             -   run:
                     name: Install Docker Compose
                     command: |
