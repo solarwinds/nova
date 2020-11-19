@@ -38,3 +38,9 @@ jobs:
             -   run:
                     name: Create bits package
                     command: npm pack ./dist
+
+workflows:
+    version: 2
+    bits:
+        jobs:
+            - bits
