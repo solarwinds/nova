@@ -1,7 +1,7 @@
 version: 2
 jobs:
     bits-build:
-        working_directory: ~/nova/packages/bits
+        working_directory: ~/nova
         docker:
             -   image: circleci/node:12-browsers
         steps:
@@ -12,9 +12,12 @@ jobs:
                         pwd;
                         ls
             -   persist_to_workspace:
-                    root: ~/nova
+                    root: .
                     paths:
                         - .
+            -   run:
+                    name: Change directory
+                    command: cd packages/bits
             -   run:
                     name: Install dependencies
                     command: yarn install
