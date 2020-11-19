@@ -5,12 +5,9 @@ jobs:
         docker:
             -   image: circleci/node:12-browsers
         steps:
-            -   checkout:
-                    path: ~/nova
+            -   checkout
             -   run:
-                    command: >
-                        pwd;
-                        ls
+                    command: pwd; ls
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -20,6 +17,8 @@ jobs:
         docker:
             -   image: circleci/node:12-browsers
         steps:
+            -   attach_workspace:
+                    at: .
             -   run:
                     command: pwd; ls
             -   run:
@@ -33,6 +32,8 @@ jobs:
         docker:
             -   image: circleci/node:12-browsers
         steps:
+            -   attach_workspace:
+                    at: .
             -   run:
                     command: pwd; ls
             -   run:
@@ -43,6 +44,10 @@ jobs:
         docker:
             -   image: docker
         steps:
+            -   attach_workspace:
+                    at: .
+            -   run:
+                    command: pwd; ls
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
