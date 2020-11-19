@@ -1,6 +1,6 @@
 version: 2
 jobs:
-    build:
+    bits-build:
         working_directory: ~/nova/packages/bits
         docker:
             -   image: circleci/node:12-browsers
@@ -8,12 +8,49 @@ jobs:
             -   checkout:
                     path: ~/nova
             -   run:
-                    name: install-dependencies
+                    name: Install dependencies
                     command: yarn install
             -   run:
-                    name: assemble
+                    name: Assemble
                     command: yarn run assemble
+    bits-unit-test:
+        working_directory: ~/nova/packages/bits
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
             -   run:
-                    name: angular-test
+                    name: Unit tests
                     command: yarn run test
+    bits-e2e-test:
+        working_directory: ~/nova
+        docker:
+            -   image: docker
+        steps:
+            - run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            - run:
+                    name: E2E tests
+                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
+            - run:
+                    name: Extract Selenium logs
+                    command: docker-compose logs -t --no-color web selenium > logs/docker-compose-e2e.log
+            - run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
+    bits-publish:
+        working_directory: ~/nova/packages/bits
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            - run:
+                    name: Create bits package
+                    command: npm pack ./dist
 
+workflows:
+    version: 2
+    bits:
+        jobs:
+            - bits-build
+            - bits-unit-test
+            - bits-e2e-test
