@@ -7,6 +7,10 @@ jobs:
         steps:
             -   checkout:
                     path: ~/nova
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - .
             -   run:
                     name: Install dependencies
                     command: yarn install
@@ -26,16 +30,16 @@ jobs:
         docker:
             -   image: docker
         steps:
-            - run:
+            -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
-            - run:
+            -   run:
                     name: E2E tests
                     command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
-            - run:
+            -   run:
                     name: Extract Selenium logs
                     command: docker-compose logs -t --no-color web selenium > logs/docker-compose-e2e.log
-            - run:
+            -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
     bits-publish:
@@ -43,7 +47,7 @@ jobs:
         docker:
             -   image: circleci/node:12-browsers
         steps:
-            - run:
+            -   run:
                     name: Create bits package
                     command: npm pack ./dist
 
