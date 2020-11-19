@@ -57,8 +57,12 @@ workflows:
         jobs:
             - bits-build
             -   bits-unit-test:
-                    -   requires:
-                            - bits-build
+                    requires:
+                        - bits-build
             -   bits-e2e-test:
-                    -   requires:
-                            - bits-build
+                    requires:
+                        - bits-build
+            -   bits-publish:
+                    requires:
+                        - bits-unit-test
+                        - bits-e2e-test
