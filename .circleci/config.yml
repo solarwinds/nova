@@ -1,6 +1,6 @@
 version: 2
 jobs:
-    bits:
+    bits-build:
         working_directory: ~/nova/packages/bits
         docker:
             -   image: circleci/node:12-browsers
@@ -8,20 +8,34 @@ jobs:
             -   checkout:
                     path: ~/nova
             -   run:
+                    command: >
+                        pwd;
+                        ls
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - .
+            -   run:
                     name: Install dependencies
                     command: yarn install
             -   run:
                     name: Assemble
                     command: yarn run assemble
+    bits-unit-test:
+        working_directory: ~/nova/packages/bits
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
             -   run:
                     name: Unit tests
-                    command: yarn run test
-            -   run:
-                    name: Install Docker Compose
-                    command: |
-                        curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
-                        chmod +x ~/docker-compose
-                        sudo mv ~/docker-compose /usr/local/bin/docker-compose
+                    command: >
+                        ls;
+                        yarn run test
+    bits-e2e-test:
+        working_directory: ~/nova
+        docker:
+            -   image: docker
+        steps:
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
@@ -34,7 +48,11 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
-
+    bits-publish:
+        working_directory: ~/nova/packages/bits
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
             -   run:
                     name: Create bits package
                     command: npm pack ./dist
@@ -43,4 +61,14 @@ workflows:
     version: 2
     bits:
         jobs:
-            - bits
+            - bits-build
+            -   bits-unit-test:
+                    requires:
+                        - bits-build
+            -   bits-e2e-test:
+                    requires:
+                        - bits-build
+            -   bits-publish:
+                    requires:
+                        - bits-unit-test
+                        - bits-e2e-test
