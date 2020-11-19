@@ -16,10 +16,10 @@ jobs:
                     working_directory: ~/nova/packages/bits
                     name: Install dependencies
                     command: yarn install
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Assemble
-                    command: yarn run assemble
+#            -   run:
+#                    working_directory: ~/nova/packages/bits
+#                    name: Assemble
+#                    command: yarn run assemble
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -46,6 +46,12 @@ jobs:
             -   run:
                     command: pwd; ls
             -   run:
+                    name: Install Docker Compose
+                    command: |
+                        curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+                        chmod +x ~/docker-compose
+                        sudo mv ~/docker-compose /usr/local/bin/docker-compose
+            -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
             -   run:
@@ -57,6 +63,7 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
+
     bits-publish:
         working_directory: ~/nova/packages/bits
         docker:
@@ -71,13 +78,13 @@ workflows:
     bits:
         jobs:
             - bits-build
-            -   bits-unit-test:
-                    requires:
-                        - bits-build
+#            -   bits-unit-test:
+#                    requires:
+#                        - bits-build
             -   bits-e2e-test:
                     requires:
                         - bits-build
-            -   bits-publish:
-                    requires:
-                        - bits-unit-test
-                        - bits-e2e-test
+#            -   bits-publish:
+#                    requires:
+#                        - bits-unit-test
+#                        - bits-e2e-test
