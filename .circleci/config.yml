@@ -16,10 +16,10 @@ jobs:
                     working_directory: ~/nova/packages/bits
                     name: Install dependencies
                     command: yarn install
-            #            -   run:
-            #                    working_directory: ~/nova/packages/bits
-            #                    name: Assemble
-            #                    command: yarn run assemble
+            -   run:
+                    working_directory: ~/nova/packages/bits
+                    name: Assemble
+                    command: yarn run assemble
             -   persist_to_workspace:
                     root: .
                     paths:

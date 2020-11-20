@@ -4,7 +4,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom } from "../public_api";
 
-describe("USERCONTROL Button", () => {
+fdescribe("USERCONTROL Button", () => {
     let primaryCompactBtn: ButtonAtom;
     let primaryLargePlusIconBtn: ButtonAtom;
     let primaryLargePlusIconDisabledBtn: ButtonAtom;
