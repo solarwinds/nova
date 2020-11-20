@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   build:
-    image: docker.dev.local/nova:build22
+    image: circleci/node:12-browsers
     working_dir: /nova
     environment:
       - TEAMCITY_VERSION

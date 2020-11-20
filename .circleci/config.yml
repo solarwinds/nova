@@ -40,6 +40,8 @@ jobs:
         working_directory: ~/nova
         machine:
             image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: packages/bits
         steps:
             -   attach_workspace:
                     at: ~/nova
