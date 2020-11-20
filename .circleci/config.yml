@@ -8,11 +8,6 @@ jobs:
             -   checkout:
                     path: ~/nova
             -   run:
-                    command: pwd; ls
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    command: pwd; ls
-            -   run:
                     working_directory: ~/nova/packages/bits
                     name: Install dependencies
                     command: yarn install
@@ -31,8 +26,6 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    command: pwd; ls
             -   run:
                     name: Unit tests
                     command: yarn run test
@@ -61,6 +54,8 @@ jobs:
         docker:
             -   image: circleci/node:12-browsers
         steps:
+            -   attach_workspace:
+                    at: ~/nova
             -   run:
                     name: Create bits package
                     command: npm pack ./dist
