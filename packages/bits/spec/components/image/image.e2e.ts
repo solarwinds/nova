@@ -4,7 +4,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ImageAtom } from "../public_api";
 
-describe("USERCONTROL image", () => {
+xdescribe("USERCONTROL image", () => {
     let floatImage: ImageAtom;
     let marginImage: ImageAtom;
     let customSizeImage: ImageAtom;
