@@ -54,12 +54,8 @@ jobs:
                     name: E2E tests
                     command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
             -   run:
-                    name: Extract Selenium logs
-                    command: docker-compose logs -t --no-color web selenium > logs/docker-compose-e2e.log
-            -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
-
     bits-publish:
         working_directory: ~/nova/packages/bits
         docker:
@@ -74,13 +70,13 @@ workflows:
     bits:
         jobs:
             - bits-build
-            #            -   bits-unit-test:
-            #                    requires:
-            #                        - bits-build
+            -   bits-unit-test:
+                    requires:
+                        - bits-build
             -   bits-e2e-test:
                     requires:
                         - bits-build
-#            -   bits-publish:
-#                    requires:
-#                        - bits-unit-test
-#                        - bits-e2e-test
+            -   bits-publish:
+                    requires:
+                        - bits-unit-test
+                        - bits-e2e-test
