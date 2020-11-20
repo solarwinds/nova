@@ -38,16 +38,14 @@ jobs:
                     command: yarn run test
     bits-e2e-test:
         working_directory: ~/nova
-        docker:
-            -   image: docker
+        machine:
+            -   image: ubuntu-2004:202010-01
         steps:
 #            - setup_remote_docker
             -   attach_workspace:
                     at: ~/nova
             -   run:
                     command: pwd; ls
-            -   run:
-                    command: apk add docker-compose
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
