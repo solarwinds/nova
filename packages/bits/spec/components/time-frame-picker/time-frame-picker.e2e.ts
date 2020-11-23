@@ -28,7 +28,8 @@ describe("USERCONTROL time-frame-picker", () => {
             expect(await basicTimeFramePickerUseButton.isPresent()).toBeFalsy();
         });
 
-        it("should have an ability to change all control values", async () => {
+        // TODO: Re-enable in scope of NUI-5576
+        xit("should have an ability to change all control values", async () => {
             const startTFP = basicTimeFramePicker.getStartDatetimePicker();
             const datePicker1 = startTFP.getDatePicker();
             await datePicker1.clearText();
@@ -45,9 +46,10 @@ describe("USERCONTROL time-frame-picker", () => {
             await timePicker2.textbox.acceptText(TimepickerAtom.createTimeString(6, 0));
             await basicTimeFramePickerUseButton.click();
             expect(await basicTimeFramePickerPopover.getElement().getText()).toEqual("April 8, 2018 6:00 AM - April 9, 2018 6:00 AM");
-        }, 20000 );
+        }, 20000);
 
-        it("should not change all control values after Cancel is clicked", async () => {
+        // TODO: Re-enable in scope of NUI-5576
+        xit("should not change all control values after Cancel is clicked", async () => {
             const startTFP = basicTimeFramePicker.getStartDatetimePicker();
             const datePicker1 = startTFP.getDatePicker();
             await datePicker1.clearText();
