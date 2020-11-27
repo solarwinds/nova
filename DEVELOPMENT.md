@@ -7,14 +7,14 @@ The main specification can be found in [Marvel](https://marvelapp.com/project/32
 ## Style Guide
 
 <details>
-  <summary>Click to expand!</summary>
+  <summary>Click to view the guide</summary>
   
   ### Component development
-  1. Library components have to work in OnPush change detection mode
+  * Library components have to work in OnPush change detection mode
 Why? We have no control over user environment and change detection strategy is subject to consumer's freedom of choice. Therefore we need to make sure that components we provide work under both, where ChangeDetectionStrategy.OnPush is stricter than Default, so we need to support OnPush.
-  2. Document every setTimeout() (and other situations when code is not self-explanatory)
+  * Document every setTimeout() (and other situations when code is not self-explanatory)
 Why? setTimeout is tied to a wider context of executed code, which might not be apparent from reading the code. Documenting the setTimeout usage helps to understand that context.
-  3. ResizeObserver polyfill usage
+  * ResizeObserver polyfill usage
 
 ```
 this.resizeObserver.observe(this.el.nativeElement);
@@ -28,7 +28,7 @@ this.ngZone.runOutsideAngular(() => {​​​
 }​​​​​​​​​​);
 ```
  always works. The reason is that since in Firefox ResizeObserver is not native (as of July 2019), it is not hacked by ZoneJS, which means it should be explicitly stated that it needs to be executed outside of Angular.
-   4. ngOnDestroy and Component Inheritance
+   * ngOnDestroy and Component Inheritance
 A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes.
  
 This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.
@@ -92,7 +92,7 @@ ngZone.runOutsideAngular(() => {​​​​
 ```
 It allows protractor to run asserts and continue testing while timeout is in progress.
 
-  #### Atoms
+  #### `Atoms`
   Atom is a user friendly interface to test a component.
   The idea behind atom is that tester should not know about
   * internal structure of the component
@@ -102,7 +102,7 @@ It allows protractor to run asserts and continue testing while timeout is in pro
 Also it provides the information about available features, states, attributes and nested components with intellisense right in the IDE.
 It makes tests more readable.
 
-  #### 10 Commandments of E2E
+  #### `10 Commandments of E2E`
   1. Do not operate with ElementFinder or ElementFinderArray in you test.
   2. Do not return ElementFinder or ElementFinderArray from the atom.
   3. Build test pages that give a tester full control over the input data (configuration) and full access to the output verification.
