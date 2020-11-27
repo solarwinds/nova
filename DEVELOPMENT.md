@@ -28,7 +28,91 @@ this.ngZone.runOutsideAngular(() => {​​​
 }​​​​​​​​​​);
 ```
  always works. The reason is that since in Firefox ResizeObserver is not native (as of July 2019), it is not hacked by ZoneJS, which means it should be explicitly stated that it needs to be executed outside of Angular.
-   4. 
+   4. ngOnDestroy and Component Inheritance
+A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes.
+ 
+This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.
+ 
+As a safe guard, if you find yourself extending a component from a base class, it's best to go ahead and implement an ngOnDestroy in both the base class and the derived class. Then, in the derived class call super.ngOnDestroy(). This will ensure that any observables added to the base class at a later date will be unsubscribed.
+
+Base:
+
+```
+public ngOnDestroy() {​​​​​​​​​​
+    // Added as a safeguard. Inherited classes will invoke this
+    // so that any observables added to this base class will
+    // be unsubscribed.
+}​​​​​​​​​​
+```
+Derived:
+```
+public ngOnDestroy() {​​​​​​​​​​
+    // Added as a safeguard. Invoking the base class ngOnDestroy
+    // ensures that any base class observables are unsubscribed.
+    super.ngOnDestroy();
+}​​​​​​​​​​
+```
+  ### Documentation
+  1. Put example data at the bottom of examples
+     Why? To avoid scrolling after opening the example source code, put all the mocked data at the bottom of the example.
+  2. Define a route for every example
+     Why? This is useful not only for running tests, but especially for debugging and discovering problems in examples throwing errors to the console. Limiting the amount of code executed on the page to a single example tremendously helps with setting breakpoints.
+  3. Make documentation examples not random
+     Why? Because of our plan to visually test all the examples in the documentation, we need them to be predictable. For that reason please usage of randomized data (or any unpredictable elements) in documentation examples.
+  ### Internationalization
+  [Current documentation](https://cp.solarwinds.com/display/LocalizationRD/Source+text+creation)
+
+  Basic summary:
+  1. Make sure to make any text with variables/placeholders readable for less technical person (calling "humanize" is not understandable).
+  2. If function call is needed to be in the text because of template, ensure the name is simple and descriptive (for person not familiar with our code) or add comment for translator
+  3. Because many languages have complicated rules its important to provide context around the variables so translator can use correct form/gender and order or words
+  4. Translators have tools which (as long as we are using standard form) ensure they don't accidentally change variables
+  5. Its good to replace numbers with placeholders in messages containing validations and similar things as these numbers change with time and would need unnecessary change in translated texts.
+
+  ### Testing
+  #### `setTimeout`, `setInterval` and `requestAnimationFrame`'s  testability
+  
+  When you are using timeouts or intervals for animation or countdown (like for self destroy), protractor test can fail with a timeout.
+  Protractor has build in feature of waiting for angular event to finish. Methods above will hold the process and protractor will not continue the test flow until it will be finished.
+ 
+  To avoid this situation replace code like:
+  `setTimeout(() => callback(), timeOut);`
+  with the following solution:
+
+```
+ngZone.runOutsideAngular(() => {​​​​
+  // running timeout outside of angular zone
+  setTimeout(() => {​​​​
+    ngZone.run(() => {​​​​
+      // callback function should be executed in zone to preserve the angular change detection
+      callback();
+    }​​​​);
+  }​​​​, timeOut);
+}​​​​);
+```
+It allows protractor to run asserts and continue testing while timeout is in progress.
+
+  #### Atoms
+  Atom is a user friendly interface to test a component.
+  The idea behind atom is that tester should not know about
+  * internal structure of the component
+  * class names that are applied in different states
+  * details of its implementation
+  * etc.
+Also it provides the information about available features, states, attributes and nested components with intellisense right in the IDE.
+It makes tests more readable.
+
+  #### 10 Commandments of E2E
+  1. Do not operate with ElementFinder or ElementFinderArray in you test.
+  2. Do not return ElementFinder or ElementFinderArray from the atom.
+  3. Build test pages that give a tester full control over the input data (configuration) and full access to the output verification.
+  4. Build page objects for test pages. Think of them as a page level atom classes.
+  5. Use properties, not functions to retrieve child elements in your atom. As atom encapsulates one single component instance it should return the same sub-component in it's structure. No need to   search for it every time. Use public properties for child atoms and private properties for internal ElementFinders.
+  6. Remember your root element. No need to call getElement() function every time.
+  7. Return promises from atom methods. Avoid return await doSomething(); . Tester should await it himself.
+  8. Do not return childElements as array of Atoms. To build it you will need to iterate through entire set of elements. Tester will need to do it too.
+  9. Return childElementsCount():Promise<number> and getChildElement(id or index):Atom. If tester will need to iterate through all of them he will retrieve every DOM element just once. Also consider methods like getChildTexts():Promise<string[]> , getChildValues():Promise<number[]> etc.
+  10. Test your atoms. Don't hesitate to write a test that will check that atom works when it should and doesn't work when it shouldn't.
 
 </details>
 
