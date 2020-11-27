@@ -6,8 +6,31 @@ The main specification can be found in [Marvel](https://marvelapp.com/project/32
 
 ## Style Guide
 
-We came up with our own set of rules and recommendations also known as 
-[Not John Papa's Nova Style Guide](https://teams.microsoft.com/l/entity/com.microsoft.teamspace.tab.wiki/tab::0c41ace5-86e8-4a99-9579-1f0dca2b1fd7?context=%7B%22subEntityId%22%3A%22%7B%5C%22pageId%5C%22%3A8%2C%5C%22origin%5C%22%3A2%7D%22%2C%22channelId%22%3A%2219%3A75508ad79399445ca4d58ad1df96eed5%40thread.skype%22%7D&tenantId=83f3a6e1-0470-4e13-984f-16a25372914c)
+<details>
+  <summary>Click to expand!</summary>
+  
+  ### Component development
+  1. Library components have to work in OnPush change detection mode
+Why? We have no control over user environment and change detection strategy is subject to consumer's freedom of choice. Therefore we need to make sure that components we provide work under both, where ChangeDetectionStrategy.OnPush is stricter than Default, so we need to support OnPush.
+  2. Document every setTimeout() (and other situations when code is not self-explanatory)
+Why? setTimeout is tied to a wider context of executed code, which might not be apparent from reading the code. Documenting the setTimeout usage helps to understand that context.
+  3. ResizeObserver polyfill usage
+
+```
+this.resizeObserver.observe(this.el.nativeElement);
+```
+
+ does not work in Firefox, but this:
+
+```
+this.ngZone.runOutsideAngular(() => {​​​
+    this.resizeObserver.observe(this.el.nativeElement);
+}​​​​​​​​​​);
+```
+ always works. The reason is that since in Firefox ResizeObserver is not native (as of July 2019), it is not hacked by ZoneJS, which means it should be explicitly stated that it needs to be executed outside of Angular.
+   4. 
+
+</details>
 
 ## Structure
 
