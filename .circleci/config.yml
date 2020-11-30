@@ -62,13 +62,13 @@ jobs:
                     command: pwd; ls
             -   run:
                     name: Setting the required environment variables for the visual tests
-                    command: export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1` echo Current batch ID is $APPLITOOLS_BATCH_ID; echo CIRCLE_SHA1 is $CIRCLE_SHA1
+                    command: export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`; echo Current batch ID is $APPLITOOLS_BATCH_ID; echo CIRCLE_SHA1 is $CIRCLE_SHA1
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: echo Current batch ID is $APPLITOOLS_BATCH_ID; echo CIRCLE_SHA1 is $CIRCLE_SHA1
+                    command: export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`; echo Current batch ID is $APPLITOOLS_BATCH_ID; echo CIRCLE_SHA1 is $CIRCLE_SHA1
                     #  && docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
