@@ -65,7 +65,13 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+                    command: 
+                      export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`
+                      echo CIRCLE_SHA1 = $CIRCLE_SHA1
+                      echo CIRCLE_USERNAME = $CIRCLE_USERNAME
+                      echo CIRCLE_PROJECT_REPONAME = $CIRCLE_PROJECT_REPONAME
+                      echo BASH_ENV = $BASH_ENV
+                      docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"

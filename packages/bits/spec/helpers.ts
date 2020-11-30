@@ -97,7 +97,10 @@ export class Helpers {
             const userName: string = process.env.CIRCLE_USERNAME ? ` - [${process.env.CIRCLE_USERNAME}]` : "";
             const circleApiToken = process.env.CIRCLE_API_TOKEN;
             const circleWorkflowID = process.env.CIRCLE_WORKFLOW_ID;
+            // This API link returns the currect workflow details
             const circleCurrentWorkflowUrl = `https://circleci.com/api/v2/workflow/${circleWorkflowID}?circle-token=${circleApiToken}`;
+            // CircleCI does not expose the current workflow name as an environment variable, so
+            // we are fetching this url to get the name of the current workflow to later re-use it in the batch name below
             const currentWorkflowName =
                     (await
                         (await fetch(circleCurrentWorkflowUrl,
@@ -107,7 +110,7 @@ export class Helpers {
                                     },
                                 }
                             )
-                        ).json()).name;
+                        ).json())?.name;
 
             let branchName = <string>process.env.CIRCLE_BRANCH || getCurrentBranchName() || "Unknown";
             const batchName = (<string>process.env.CIRCLE_PROJECT_REPONAME)?.charAt(0)?.toUpperCase()
@@ -116,7 +119,7 @@ export class Helpers {
                                 + " - "
                                 + branchName
                                 + userName;
-            const batchID = <string>process.env.CIRCLE_SHA1;
+            const batchID = <string>process.env.APPLITOOLS_BATCH_ID;
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
             if (batchID) {
