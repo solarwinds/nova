@@ -93,6 +93,8 @@ export class Helpers {
         if (!eyes) {
             eyes = new Eyes();
             eyes.setApiKey(<string>process.env.EYES_API_KEY);
+
+            console.log(">>> process.env.EYES_API_KEY", process.env.EYES_API_KEY);
             
             const userName: string = process.env.USERNAME ? ` - [${process.env.USERNAME}]` : "";
 
