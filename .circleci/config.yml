@@ -68,7 +68,7 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: echo `Current batch ID is $APPLITOOLS_BATCH_ID`
+                    command: echo Current batch ID is `$APPLITOOLS_BATCH_ID`; echo CIRCLE_SHA1 is `$CIRCLE_SHA1`
                     #  && docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
