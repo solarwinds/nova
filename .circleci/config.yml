@@ -62,8 +62,7 @@ jobs:
                     command: pwd; ls
             -   run:
                     name: Setiing the required environment variables for the visual tests
-                    command: | 
-                                "export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`"
+                    command: export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
