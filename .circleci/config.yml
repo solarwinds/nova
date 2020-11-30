@@ -65,7 +65,7 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: 
+                    command: |
                       export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`
                       echo CIRCLE_SHA1 = $CIRCLE_SHA1
                       echo CIRCLE_USERNAME = $CIRCLE_USERNAME
