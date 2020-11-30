@@ -92,8 +92,7 @@ export class Helpers {
 
         if (!eyes) {
             eyes = new Eyes();
-            // eyes.setApiKey(<string>process.env.EYES_API_KEY);
-            eyes.setApiKey("r0ExPizn646LJRaFxOEBU2oZ1Fzfj2KGIg6y6ysrSi8110");
+            eyes.setApiKey(<string>process.env.EYES_API_KEY);
             
             const userName: string = process.env.USERNAME ? ` - [${process.env.USERNAME}]` : "";
 
