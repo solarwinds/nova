@@ -49,6 +49,29 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
+    bits-visual-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/bits
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    command: pwd; ls
+            -   run:
+                    name: Setiing the required environment variables for the visual tests
+                    command: export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: Visual tests
+                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
     bits-publish:
         working_directory: ~/nova/packages/bits
         docker:
@@ -69,6 +92,9 @@ workflows:
                     requires:
                         - bits-build
             -   bits-e2e-test:
+                    requires:
+                        - bits-build
+            -   bits-visual-test:
                     requires:
                         - bits-build
             -   bits-publish:
