@@ -99,12 +99,12 @@ export class Helpers {
             const circleWorkflowID = process.env.CIRCLE_WORKFLOW_ID;
             const circleCurrentWorkflowUrl = `https://circleci.com/api/v2/workflow/${circleWorkflowID}?circle-token=${circleApiToken}`;
             const currentWorkflowName =
-                    (await 
+                    (await
                         (await fetch(circleCurrentWorkflowUrl,
                                 { headers:
                                     {
-                                        "Content-Type": "application/json"
-                                    }
+                                        "Content-Type": "application/json",
+                                    },
                                 }
                             )
                         ).json()).name;
