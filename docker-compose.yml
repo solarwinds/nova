@@ -12,6 +12,7 @@ services:
       - CIRCLE_USERNAME
       - CIRCLE_WORKFLOW_ID
       - CIRCLE_SHA1
+      - CIRCLE_JOB
       - CIRCLE_PR_REPONAME
       - CIRCLE_PR_USERNAME
       - TEAMCITY_VERSION
