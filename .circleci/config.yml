@@ -55,6 +55,8 @@ jobs:
             image: ubuntu-2004:202010-01
         environment:
             PROJECT_DIR: ~/nova/packages/bits
+            TEST_VAR: test
+            NEW_VAR: `echo $CIRCLE_SHA1`
         steps:
             -   attach_workspace:
                     at: ~/nova
@@ -65,17 +67,12 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: |
-                      export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`
-                      export USERNAME=`echo $CIRCLE_USERNAME`
-                      export PROJECT_NAME=`echo $CIRCLE_PROJECT_REPONAME`
-                      export WORKFLOW_ID=`echo $CIRCLE_WORKFLOW_ID`
-                      export BRANCH_NAME=`echo $CIRCLE_BRANCH`
-
-                      docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
-                    environment:
-                      TEST_VAR: "test"
-                      NEW_VAR: echo cho $CIRCLE_SHA1
+                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+                      # export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`
+                      # export USERNAME=`echo $CIRCLE_USERNAME`
+                      # export PROJECT_NAME=`echo $CIRCLE_PROJECT_REPONAME`
+                      # export WORKFLOW_ID=`echo $CIRCLE_WORKFLOW_ID`
+                      # export BRANCH_NAME=`echo $CIRCLE_BRANCH`
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
