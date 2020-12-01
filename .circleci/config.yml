@@ -56,7 +56,7 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/bits
             TEST_VAR: test
-            NEW_VAR: `echo $CIRCLE_SHA1`
+            NEW_VAR: echo $CIRCLE_SHA1
         steps:
             -   attach_workspace:
                     at: ~/nova
