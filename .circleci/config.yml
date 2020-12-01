@@ -84,7 +84,7 @@ jobs:
             - run:
                 working_directory: ~/nova/packages/charts
                 name: Install Bits
-                command: yarn install ~/nova/bits-package.tgz
+                command: yarn add ~/nova/bits-package.tgz
             -   run:
                     working_directory: ~/nova/packages/charts
                     name: Install dependencies
