@@ -20,7 +20,7 @@ Why? setTimeout is tied to a wider context of executed code, which might not be 
 this.resizeObserver.observe(this.el.nativeElement);
 ```
 
- does not work in Firefox, but this:
+But the following works in all major browsers:
 
 ```
 this.ngZone.runOutsideAngular(() => {​​​
