@@ -113,6 +113,10 @@ export class Helpers {
             console.log(">>> process.env.CIRCLE_WORKFLOW_ID", process.env.CIRCLE_WORKFLOW_ID);
             console.log(">>> process.env.CI", process.env.CI);
 
+            console.log(">>> process.env.TEST_VAR", process.env.TEST_VAR);
+            console.log(">>> process.env.NEW_VAR", process.env.NEW_VAR);
+            console.log(">>> process.env", process.env);
+
             const userName: string = <string>process.env.USERNAME ? ` - [${process.env.USERNAME}]` : "";
             const circleApiToken = <string>process.env.CIRCLE_API_TOKEN;
             const circleWorkflowID = <string>process.env.WORKFLOW_ID;

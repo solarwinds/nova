@@ -73,6 +73,9 @@ jobs:
                       export BRANCH_NAME=`echo $CIRCLE_BRANCH`
 
                       docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+                    environment:
+                      TEST_VAR: "test"
+                      NEW_VAR: echo cho $CIRCLE_SHA1
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
