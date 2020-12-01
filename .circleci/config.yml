@@ -60,8 +60,8 @@ jobs:
                     name: Create bits package
                     command: npm pack ./dist
             - store_artifacts:
-                path: ~/nova/packages/bits/dist/solarwinds-nova-bits-/\d+.\d+.\d+-\d+/.tgz
-                destination: bits-pkg
+                path: ~/nova/packages/bits/solarwinds-nova-bits-9.29.0.tgz
+                destination: bits-package
 
     charts-build:
         working_directory: ~/nova
@@ -88,16 +88,17 @@ workflows:
     bits:
         jobs:
             - bits-build
-            -   bits-unit-test:
-                    requires:
-                        - bits-build
-            -   bits-e2e-test:
-                    requires:
-                        - bits-build
-            -   bits-publish:
-                    requires:
-                        - bits-unit-test
-                        - bits-e2e-test
+            # - bits-unit-test:
+            #     requires:
+            #         - bits-build
+            # - bits-e2e-test:
+            #     requires:
+            #         - bits-build
+            - bits-publish:
+                requires:
+                    - bits-build # TODO: remove
+                    # - bits-unit-test
+                    # - bits-e2e-test
     charts:
         jobs:
             - charts-build
