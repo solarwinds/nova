@@ -73,7 +73,7 @@ jobs:
                     path: ~/nova
             - run:
                 # IMPORTANT TODO: move to env variable
-                command: export CIRCLE_TOKEN='ee4ae564148bcc391e09a9fe60b0d7909f1f88ef'
+                command: export CIRCLE_TOKEN='d65b4f8df9184094164dad02a6bbbaecb814f140'
             - run:
                 name: Download Bits Artifact
                 # TODO: replace "latest" with build number
