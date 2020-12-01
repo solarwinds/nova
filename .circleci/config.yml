@@ -59,6 +59,29 @@ jobs:
             -   run:
                     name: Create bits package
                     command: npm pack ./dist
+            - store_artifacts:
+                path: ~/nova/packages/bits/dist/solarwinds-nova-bits-/\d+.\d+.\d+-\d+/.tgz
+                destination: bits-pkg
+
+    charts-build:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   checkout:
+                    path: ~/nova
+            -   run:
+                    working_directory: ~/nova/packages/charts
+                    name: Install dependencies
+                    command: yarn install
+            -   run:
+                    working_directory: ~/nova/packages/charts
+                    name: Assemble
+                    command: yarn run assemble
+            -   persist_to_workspace:
+                    root: .
+                    paths:
+                        - .
 
 workflows:
     version: 2
@@ -75,3 +98,6 @@ workflows:
                     requires:
                         - bits-unit-test
                         - bits-e2e-test
+    charts:
+        jobs:
+            - charts-build
