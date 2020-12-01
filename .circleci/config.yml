@@ -78,9 +78,9 @@ jobs:
                 name: Download Bits Artifact
                 # TODO: replace "207" with correct build number
                 command: |
-                    curl -H "Circle-Token: $CIRCLE_TOKEN" https://circleci.com/api/v1.1/project/github/solarwinds/nova/207/artifacts \
+                    curl -H "Circle-Token: d65b4f8df9184094164dad02a6bbbaecb814f140" https://circleci.com/api/v1.1/project/github/solarwinds/nova/207/artifacts \
                     | grep -o 'https://[^"]*' \
-                    | wget --verbose --header "Circle-Token: $CIRCLE_TOKEN" --input-file -
+                    | wget --verbose --header "Circle-Token: d65b4f8df9184094164dad02a6bbbaecb814f140" --input-file -
             - run:
                 working_directory: ~/nova/packages/charts
                 name: Install Bits
