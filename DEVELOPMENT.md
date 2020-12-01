@@ -12,7 +12,7 @@ The main specification can be found in [Marvel](https://marvelapp.com/project/32
   ### Component development
   * Library components have to work in OnPush change detection mode
 Why? We have no control over user environment and change detection strategy is subject to consumer's freedom of choice. Therefore we need to make sure that components we provide work under both, where ChangeDetectionStrategy.OnPush is stricter than Default, so we need to support OnPush.
-  * Document every setTimeout() (and other situations when code is not self-explanatory)
+  * Add an explanatory inline comment to every usage of setTimeout() (and other situations when code is not self-explanatory)
 Why? setTimeout is tied to a wider context of executed code, which might not be apparent from reading the code. Documenting the setTimeout usage helps to understand that context.
   * Be aware that the following ResizeObserver polyfill usage does not work in Firefox:
 
