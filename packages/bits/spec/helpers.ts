@@ -101,7 +101,7 @@ export class Helpers {
             console.log(">>> process.env.BRANCH_NAME", process.env.BRANCH_NAME);
             console.log(">>> process.env.PROJECT_NAME", process.env.PROJECT_NAME);
             console.log(">>> process.env.APPLITOOLS_BATCH_ID", process.env.APPLITOOLS_BATCH_ID);
-
+            console.log(">>> -------------");
             console.log(">>> process.env.CIRCLE_BRANCH", process.env.CIRCLE_BRANCH);
             console.log(">>> process.env.CIRCLE_JOB", process.env.CIRCLE_JOB);
             console.log(">>> process.env.CIRCLE_PR_REPONAME", process.env.CIRCLE_PR_REPONAME);
@@ -112,9 +112,11 @@ export class Helpers {
             console.log(">>> process.env.CIRCLE_USERNAME", process.env.CIRCLE_USERNAME);
             console.log(">>> process.env.CIRCLE_WORKFLOW_ID", process.env.CIRCLE_WORKFLOW_ID);
             console.log(">>> process.env.CI", process.env.CI);
-
+            console.log(">>> -------------");
             console.log(">>> process.env.TEST_VAR", process.env.TEST_VAR);
             console.log(">>> process.env.NEW_VAR", process.env.NEW_VAR);
+            console.log(">>> -------------");
+            console.log(">>> process.env.BASH_ENV", process.env.BASH_ENV);
             console.log(">>> process.env", process.env);
 
             const userName: string = <string>process.env.USERNAME ? ` - [${process.env.USERNAME}]` : "";
