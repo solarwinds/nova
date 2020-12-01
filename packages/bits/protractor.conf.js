@@ -12,7 +12,7 @@ exports.config = {
     },
     capabilities: {
         shardTestFiles: process.env.CI ? true : false,
-        maxInstances: process.env.CI ? 10 : 1,
+        maxInstances: process.env.CI ? 5 : 1,
         'browserName': 'chrome',
         'chromeOptions': {
             'w3c': false, // enable legacy API to prevent this error: https://github.com/angular/protractor/issues/5285

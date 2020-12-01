@@ -67,14 +67,10 @@ jobs:
                     name: Visual tests
                     command: |
                       export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`
-                      export CIRCLE_USERNAME=`echo $CIRCLE_USERNAME`
-                      export CIRCLE_PROJECT_REPONAME=`echo $CIRCLE_PROJECT_REPONAME`
-                      export CIRCLE_WORKFLOW_ID=`echo $CIRCLE_WORKFLOW_ID`
-
-                      echo APPLITOOLS_BATCH_ID = $CIRCLE_SHA1
-                      echo CIRCLE_USERNAME = $CIRCLE_USERNAME
-                      echo CIRCLE_PROJECT_REPONAME = $CIRCLE_PROJECT_REPONAME
-                      echo CIRCLE_WORKFLOW_ID = $CIRCLE_WORKFLOW_ID
+                      export USERNAME=`echo $CIRCLE_USERNAME`
+                      export PROJECT_NAME=`echo $CIRCLE_PROJECT_REPONAME`
+                      export WORKFLOW_ID=`echo $CIRCLE_WORKFLOW_ID`
+                      export BRANCH_NAME=`echo $CIRCLE_BRANCH`
 
                       docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
             -   run:

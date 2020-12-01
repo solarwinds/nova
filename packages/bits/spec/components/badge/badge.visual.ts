@@ -17,7 +17,7 @@ fdescribe("Visual tests: Badge", () => {
         await eyes.abortIfNotClosed();
     });
 
-    it("Default look", async () => {
+    fit("Default look", async () => {
         await eyes.open(browser, "NUI", "Badge");
         await eyes.checkWindow("Default");
 
