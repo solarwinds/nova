@@ -67,11 +67,6 @@ jobs:
                     name: Visual tests
                     command: |
                       export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`
-                      export USERNAME=`echo $CIRCLE_USERNAME`
-                      export PROJECT_NAME=`echo $CIRCLE_PROJECT_REPONAME`
-                      export WORKFLOW_ID=`echo $CIRCLE_WORKFLOW_ID`
-                      export BRANCH_NAME=`echo $CIRCLE_BRANCH`
-
                       docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup

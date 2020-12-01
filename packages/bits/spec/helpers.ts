@@ -95,11 +95,9 @@ export class Helpers {
             eyes.setApiKey(<string>process.env.EYES_API_KEY);
 
             console.log(">>> process.env.EYES_API_KEY", process.env.EYES_API_KEY);
-            console.log(">>> process.env.USERNAME", process.env.USERNAME);
             console.log(">>> process.env.CIRCLE_API_TOKEN", process.env.CIRCLE_API_TOKEN);
             console.log(">>> process.env.WORKFLOW_ID", process.env.WORKFLOW_ID);
-            console.log(">>> process.env.BRANCH_NAME", process.env.BRANCH_NAME);
-            console.log(">>> process.env.PROJECT_NAME", process.env.PROJECT_NAME);
+            console.log(">>> process.env.CIRCLE_BRANCH", process.env.CIRCLE_BRANCH);
             console.log(">>> process.env.APPLITOOLS_BATCH_ID", process.env.APPLITOOLS_BATCH_ID);
             console.log(">>> -------------");
             console.log(">>> process.env.CIRCLE_BRANCH", process.env.CIRCLE_BRANCH);
@@ -113,15 +111,11 @@ export class Helpers {
             console.log(">>> process.env.CIRCLE_WORKFLOW_ID", process.env.CIRCLE_WORKFLOW_ID);
             console.log(">>> process.env.CI", process.env.CI);
             console.log(">>> -------------");
-            console.log(">>> process.env.TEST_VAR", process.env.TEST_VAR);
-            console.log(">>> process.env.NEW_VAR", process.env.NEW_VAR);
-            console.log(">>> -------------");
-            console.log(">>> process.env.BASH_ENV", process.env.BASH_ENV);
             console.log(">>> process.env", process.env);
 
-            const userName: string = <string>process.env.USERNAME ? ` - [${process.env.USERNAME}]` : "";
+            const userName: string = <string>process.env.CIRCLE_USERNAME ? ` - [${process.env.CIRCLE_USERNAME}]` : "";
             const circleApiToken = <string>process.env.CIRCLE_API_TOKEN;
-            const circleWorkflowID = <string>process.env.WORKFLOW_ID;
+            const circleWorkflowID = <string>process.env.CIRCLE_WORKFLOW_ID;
             // This API link returns the currect workflow details
             const circleCurrentWorkflowUrl = `https://circleci.com/api/v2/workflow/${circleWorkflowID}?circle-token=${circleApiToken}`;
             // CircleCI does not expose the current workflow name as an environment variable, so
@@ -140,8 +134,8 @@ export class Helpers {
 
             console.log(">>>> currentWorkflowName", currentWorkflowName);
 
-            let branchName = <string>process.env.BRANCH_NAME || getCurrentBranchName() || "Unknown";
-            const batchName = (<string>process.env.PROJECT_NAME)?.charAt(0)?.toUpperCase()
+            let branchName = <string>process.env.CIRCLE_BRANCH || getCurrentBranchName() || "Unknown";
+            const batchName = (<string>process.env.CIRCLE_PROJECT_REPONAME)?.charAt(0)?.toUpperCase()
                                 + " - "
                                 + currentWorkflowName
                                 + " - "
