@@ -27,7 +27,7 @@ this.ngZone.runOutsideAngular(() => {​​​
     this.resizeObserver.observe(this.el.nativeElement);
 }​​​​​​​​​​);
 ```
- always works. The reason is that since in Firefox ResizeObserver is not native (as of July 2019), it is not hacked by ZoneJS, which means it should be explicitly stated that it needs to be executed outside of Angular.
+The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
    * ngOnDestroy and Component Inheritance
 A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes.
  
