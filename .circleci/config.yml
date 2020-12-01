@@ -60,8 +60,9 @@ jobs:
                     name: Create bits package
                     command: npm pack ./dist
             - store_artifacts:
+                # TODO: use env variable for version
                 path: ~/nova/packages/bits/solarwinds-nova-bits-9.29.0.tgz
-                destination: bits-package
+                destination: bits-package.tgz
 
     charts-build:
         working_directory: ~/nova
@@ -70,6 +71,20 @@ jobs:
         steps:
             -   checkout:
                     path: ~/nova
+            - run:
+                # IMPORTANT TODO: move to env variable
+                command: export CIRCLE_TOKEN='ee4ae564148bcc391e09a9fe60b0d7909f1f88ef'
+            - run:
+                name: Download Bits Artifact
+                # TODO: replace "latest" with build number
+                command: |
+                    curl -H "Circle-Token: $CIRCLE_TOKEN" https://circleci.com/api/v1.1/project/github/solarwinds/nova/latest/artifacts \
+                    | grep -o 'https://[^"]*' \
+                    | wget --verbose --header "Circle-Token: $CIRCLE_TOKEN" --input-file -
+            - run:
+                working_directory: ~/nova/packages/charts
+                name: Install Bits
+                command: yarn install ~/nova/bits-package.tgz
             -   run:
                     working_directory: ~/nova/packages/charts
                     name: Install dependencies
