@@ -93,10 +93,29 @@ export class Helpers {
         if (!eyes) {
             eyes = new Eyes();
             eyes.setApiKey(<string>process.env.EYES_API_KEY);
-            
-            const userName: string = process.env.USERNAME ? ` - [${process.env.USERNAME}]` : "";
-            const circleApiToken = process.env.CIRCLE_API_TOKEN;
-            const circleWorkflowID = process.env.WORKFLOW_ID;
+
+            console.log(">>> process.env.EYES_API_KEY", process.env.EYES_API_KEY);
+            console.log(">>> process.env.USERNAME", process.env.USERNAME);
+            console.log(">>> process.env.CIRCLE_API_TOKEN", process.env.CIRCLE_API_TOKEN);
+            console.log(">>> process.env.WORKFLOW_ID", process.env.WORKFLOW_ID);
+            console.log(">>> process.env.BRANCH_NAME", process.env.BRANCH_NAME);
+            console.log(">>> process.env.PROJECT_NAME", process.env.PROJECT_NAME);
+            console.log(">>> process.env.APPLITOOLS_BATCH_ID", process.env.APPLITOOLS_BATCH_ID);
+
+            console.log(">>> process.env.CIRCLE_BRANCH", process.env.CIRCLE_BRANCH);
+            console.log(">>> process.env.CIRCLE_JOB", process.env.CIRCLE_JOB);
+            console.log(">>> process.env.CIRCLE_PR_REPONAME", process.env.CIRCLE_PR_REPONAME);
+            console.log(">>> process.env.CIRCLE_PR_USERNAME", process.env.CIRCLE_PR_USERNAME);
+            console.log(">>> process.env.CIRCLE_PROJECT_REPONAME", process.env.CIRCLE_PROJECT_REPONAME);
+            console.log(">>> process.env.CIRCLE_PROJECT_USERNAME", process.env.CIRCLE_PROJECT_USERNAME);
+            console.log(">>> process.env.CIRCLE_SHA1", process.env.CIRCLE_SHA1);
+            console.log(">>> process.env.CIRCLE_USERNAME", process.env.CIRCLE_USERNAME);
+            console.log(">>> process.env.CIRCLE_WORKFLOW_ID", process.env.CIRCLE_WORKFLOW_ID);
+            console.log(">>> process.env.CI", process.env.CI);
+
+            const userName: string = <string>process.env.USERNAME ? ` - [${process.env.USERNAME}]` : "";
+            const circleApiToken = <string>process.env.CIRCLE_API_TOKEN;
+            const circleWorkflowID = <string>process.env.WORKFLOW_ID;
             // This API link returns the currect workflow details
             const circleCurrentWorkflowUrl = `https://circleci.com/api/v2/workflow/${circleWorkflowID}?circle-token=${circleApiToken}`;
             // CircleCI does not expose the current workflow name as an environment variable, so

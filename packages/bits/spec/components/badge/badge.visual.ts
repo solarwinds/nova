@@ -3,7 +3,7 @@ import { browser } from "protractor";
 import { Animations, Helpers } from "../../helpers";
 
 
-fdescribe("Visual tests: Badge", () => {
+describe("Visual tests: Badge", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any;
 
@@ -17,7 +17,7 @@ fdescribe("Visual tests: Badge", () => {
         await eyes.abortIfNotClosed();
     });
 
-    fit("Default look", async () => {
+    it("Default look", async () => {
         await eyes.open(browser, "NUI", "Badge");
         await eyes.checkWindow("Default");
 

@@ -2,7 +2,7 @@ import { browser, by, element, ElementFinder } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
 
-fdescribe("Visual tests: Breadcrumb", () => {
+describe("Visual tests: Breadcrumb", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any;
     let showSecondViewButton: ElementFinder;
@@ -23,7 +23,7 @@ fdescribe("Visual tests: Breadcrumb", () => {
         await eyes.abortIfNotClosed();
     });
 
-    fit("Default look", async () => {
+    it("Default look", async () => {
         await eyes.open(browser, "NUI", "Breadcrumb");
         await eyes.checkWindow("Default");
 
