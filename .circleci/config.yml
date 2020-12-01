@@ -65,9 +65,7 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: |
-                      export APPLITOOLS_BATCH_ID=`echo $CIRCLE_SHA1`
-                      docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -87,16 +85,16 @@ workflows:
     bits:
         jobs:
             - bits-build
-            # -   bits-unit-test:
-            #         requires:
-            #             - bits-build
-            # -   bits-e2e-test:
-            #         requires:
-            #             - bits-build
+            -   bits-unit-test:
+                    requires:
+                        - bits-build
+            -   bits-e2e-test:
+                    requires:
+                        - bits-build
             -   bits-visual-test:
                     requires:
                         - bits-build
-            # -   bits-publish:
-            #         requires:
-            #             - bits-unit-test
-            #             - bits-e2e-test
+            -   bits-publish:
+                    requires:
+                        - bits-unit-test
+                        - bits-e2e-test

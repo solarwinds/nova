@@ -94,42 +94,19 @@ export class Helpers {
             eyes = new Eyes();
             eyes.setApiKey(<string>process.env.EYES_API_KEY);
 
-            console.log(">>> process.env.EYES_API_KEY", process.env.EYES_API_KEY);
-            console.log(">>> process.env.CIRCLE_API_TOKEN", process.env.CIRCLE_API_TOKEN);
-            console.log(">>> process.env.WORKFLOW_ID", process.env.WORKFLOW_ID);
-            console.log(">>> process.env.CIRCLE_BRANCH", process.env.CIRCLE_BRANCH);
-            console.log(">>> process.env.APPLITOOLS_BATCH_ID", process.env.APPLITOOLS_BATCH_ID);
-            console.log(">>> -------------");
-            console.log(">>> process.env.CIRCLE_BRANCH", process.env.CIRCLE_BRANCH);
-            console.log(">>> process.env.CIRCLE_JOB", process.env.CIRCLE_JOB);
-            console.log(">>> process.env.CIRCLE_PR_REPONAME", process.env.CIRCLE_PR_REPONAME);
-            console.log(">>> process.env.CIRCLE_PR_USERNAME", process.env.CIRCLE_PR_USERNAME);
-            console.log(">>> process.env.CIRCLE_PROJECT_REPONAME", process.env.CIRCLE_PROJECT_REPONAME);
-            console.log(">>> process.env.CIRCLE_PROJECT_USERNAME", process.env.CIRCLE_PROJECT_USERNAME);
-            console.log(">>> process.env.CIRCLE_SHA1", process.env.CIRCLE_SHA1);
-            console.log(">>> process.env.CIRCLE_USERNAME", process.env.CIRCLE_USERNAME);
-            console.log(">>> process.env.CIRCLE_WORKFLOW_ID", process.env.CIRCLE_WORKFLOW_ID);
-            console.log(">>> process.env.CI", process.env.CI);
-            console.log(">>> -------------");
-            console.log(">>> process.env", process.env);
-
-            const userName: string = <string>process.env.CIRCLE_USERNAME ? ` - [${process.env.CIRCLE_USERNAME}]` : "";
-
             let branchName = <string>process.env.CIRCLE_BRANCH || getCurrentBranchName() || "Unknown";
+            const userName: string = <string>process.env.CIRCLE_USERNAME ? ` - [${process.env.CIRCLE_USERNAME}]` : "";
             const batchName = (<string>process.env.CIRCLE_PROJECT_REPONAME)?.toUpperCase()
                                 + " - "
                                 + <string>process.env.CIRCLE_JOB
                                 + " - "
                                 + branchName
                                 + userName;
-            const batchID = <string>process.env.APPLITOOLS_BATCH_ID;
+            const batchID = <string>process.env.CIRCLE_SHA1;
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
-            if (batchID) {
-                eyes.setBatch(batchName, batchID);
-            } else {
-                eyes.setBatch(batchName);
-            }
+            batchID ? eyes.setBatch(batchName, batchID)
+                    : eyes.setBatch(batchName);
 
             eyes.setBranchName(branchName);
             if (branchName !== "develop") {
