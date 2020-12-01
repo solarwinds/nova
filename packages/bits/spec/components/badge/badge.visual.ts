@@ -3,7 +3,7 @@ import { browser } from "protractor";
 import { Animations, Helpers } from "../../helpers";
 
 
-describe("Visual tests: Badge", () => {
+fdescribe("Visual tests: Badge", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any;
 
