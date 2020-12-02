@@ -29,13 +29,14 @@ this.ngZone.runOutsideAngular(() => {​​​
 ```
 The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
    * ngOnDestroy and Component Inheritance
-A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes.
- 
-This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.
- 
-As a safe guard, if you find yourself extending a component from a base class, it's best to go ahead and implement an ngOnDestroy in both the base class and the derived class. Then, in the derived class call super.ngOnDestroy(). This will ensure that any observables added to the base class at a later date will be unsubscribed.
 
-Base:
+[tab]A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes.
+ 
+[tab]This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.
+ 
+[tab]As a safe guard, if you find yourself extending a component from a base class, it's best to go ahead and implement an ngOnDestroy in both the base class and the derived class. Then, in the derived class call super.ngOnDestroy(). This will ensure that any observables added to the base class at a later date will be unsubscribed.
+
+[tab]Base:
 
 ```
 public ngOnDestroy() {​​​​​​​​​​
@@ -44,7 +45,7 @@ public ngOnDestroy() {​​​​​​​​​​
     // be unsubscribed.
 }​​​​​​​​​​
 ```
-Derived:
+[tab]Derived:
 ```
 public ngOnDestroy() {​​​​​​​​​​
     // Added as a safeguard. Invoking the base class ngOnDestroy
@@ -54,13 +55,13 @@ public ngOnDestroy() {​​​​​​​​​​
 ```
   ### Documentation
   1. Put example data at the bottom of examples
-     Why? To avoid scrolling after opening the example source code, put all the mocked data at the bottom of the example.
+     Why? To avoid scrolling after opening the example source code, put all the mocked data at the bottom of the example. [This example](https://github.com/solarwinds/nova/blob/main/packages/charts/examples/components/demo/chart-types/line/line-chart-basic/line-chart-basic.example.component.ts#L41-L68) shows how we do this.
   2. Define a route for every example
-     Why? This is useful not only for running tests, but especially for debugging and discovering problems in examples throwing errors to the console. Limiting the amount of code executed on the page to a single example tremendously helps with setting breakpoints.
+     Why? This is useful not only for running tests, but especially for debugging and discovering problems in examples throwing errors to the console. Limiting the amount of code executed on the page to a single example tremendously helps with setting breakpoints. Check [this example](https://github.com/solarwinds/nova/blob/main/packages/charts/examples/components/demo/chart-types/line/chart-docs-line.module.ts#L22-L100) to see how we do this.
   3. Use fixed data for the examples.
      Why? Because we have a goal to visually test all the examples in the documentation, we need them to be predictable. For that reason please avoid using randomized data (or any unpredictable elements) in your documentation examples.
   ### Internationalization
-  [Current documentation](https://cp.solarwinds.com/display/LocalizationRD/Source+text+creation)
+  [Current documentation](#)
 
   Basic summary:
   1. Make sure to make any text with variables/placeholders readable for less technical person (calling "humanize" is not understandable).
