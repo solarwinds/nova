@@ -57,25 +57,25 @@ public ngOnDestroy() {​​​​​​​​​​
      Why? To avoid scrolling after opening the example source code, put all the mocked data at the bottom of the example.
   2. Define a route for every example
      Why? This is useful not only for running tests, but especially for debugging and discovering problems in examples throwing errors to the console. Limiting the amount of code executed on the page to a single example tremendously helps with setting breakpoints.
-  3. Make documentation examples not random
-     Why? Because of our plan to visually test all the examples in the documentation, we need them to be predictable. For that reason please usage of randomized data (or any unpredictable elements) in documentation examples.
+  3. Use fixed data for the examples.
+     Why? Because we have a goal to visually test all the examples in the documentation, we need them to be predictable. For that reason please avoid using randomized data (or any unpredictable elements) in your documentation examples.
   ### Internationalization
   [Current documentation](https://cp.solarwinds.com/display/LocalizationRD/Source+text+creation)
 
   Basic summary:
   1. Make sure to make any text with variables/placeholders readable for less technical person (calling "humanize" is not understandable).
-  2. If function call is needed to be in the text because of template, ensure the name is simple and descriptive (for person not familiar with our code) or add comment for translator
-  3. Because many languages have complicated rules its important to provide context around the variables so translator can use correct form/gender and order or words
+  2. If a function call is needed within the text inside a template, ensure that the name is simple and self-documenting (for a person not familiar with the code) or add a comment for the translator
+  3. Because many languages have complicated rules, it's important to provide context around variables to ensure that the translator is able to use the correct form, gender, ordering of words, etc.
   4. Translators have tools which (as long as we are using standard form) ensure they don't accidentally change variables
   5. Its good to replace numbers with placeholders in messages containing validations and similar things as these numbers change with time and would need unnecessary change in translated texts.
 
   ### Testing
   #### `setTimeout`, `setInterval` and `requestAnimationFrame`'s  testability
   
-  When you are using timeouts or intervals for animation or countdown (like for self destroy), protractor test can fail with a timeout.
-  Protractor has build in feature of waiting for angular event to finish. Methods above will hold the process and protractor will not continue the test flow until it will be finished.
+  When you are using timeouts or intervals for animations or countdowns, protractor tests can fail with a timeout.
+  Protractor has a built-in feature in which it waits for Angular events to finish before proceeding. The methods listed above will hold the process, and protractor will not continue the test flow until they finish.
  
-  To avoid this situation replace code like:
+  To avoid this situation, replace code like:
   `setTimeout(() => callback(), timeOut);`
   with the following solution:
 
@@ -90,7 +90,7 @@ ngZone.runOutsideAngular(() => {​​​​
   }​​​​, timeOut);
 }​​​​);
 ```
-It allows protractor to run asserts and continue testing while timeout is in progress.
+This code snippet allows protractor to run asserts and continue testing while a timeout is in progress.
 
   #### `Atoms`
   Atom is a user friendly interface to test a component.
@@ -102,7 +102,7 @@ It allows protractor to run asserts and continue testing while timeout is in pro
 Also it provides the information about available features, states, attributes and nested components with intellisense right in the IDE.
 It makes tests more readable.
 
-  #### `10 Commandments of E2E`
+  #### `Top 10 E2E Guidelines`
   1. Do not operate with ElementFinder or ElementFinderArray in you test.
   2. Do not return ElementFinder or ElementFinderArray from the atom.
   3. Build test pages that give a tester full control over the input data (configuration) and full access to the output verification.
