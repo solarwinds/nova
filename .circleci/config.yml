@@ -136,6 +136,6 @@ workflows:
                         - bits-build # TODO: remove
                         # - bits-unit-test
                         # - bits-e2e-test
-            -   charts-build
-                requires:
-                    - bits-publish
+            -   charts-build:
+                    requires:
+                        - bits-publish
