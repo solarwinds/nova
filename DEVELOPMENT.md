@@ -15,44 +15,39 @@ Why? We have no control over user environment and change detection strategy is s
   * Add an explanatory inline comment to every usage of setTimeout() (and other situations when code is not self-explanatory)
 Why? setTimeout is tied to a wider context of executed code, which might not be apparent from reading the code. Documenting the setTimeout usage helps to understand that context.
   * Be aware that the following ResizeObserver polyfill usage does not work in Firefox:
-
-```
-this.resizeObserver.observe(this.el.nativeElement);
-```
-
-But the following works in all major browsers:
-
-```
-this.ngZone.runOutsideAngular(() => {​​​
+    ```
     this.resizeObserver.observe(this.el.nativeElement);
-}​​​​​​​​​​);
-```
+    ```
+	But the following works in all major browsers:
+    ```
+    this.ngZone.runOutsideAngular(() => {​​​
+        this.resizeObserver.observe(this.el.nativeElement);
+    }​​​​​​​​​​);
+    ```
 The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
-   * ngOnDestroy and Component Inheritance
 
-[tab]A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes.
- 
-[tab]This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.
- 
-[tab]As a safe guard, if you find yourself extending a component from a base class, it's best to go ahead and implement an ngOnDestroy in both the base class and the derived class. Then, in the derived class call super.ngOnDestroy(). This will ensure that any observables added to the base class at a later date will be unsubscribed.
+* ngOnDestroy and Component Inheritance
 
-[tab]Base:
-
-```
-public ngOnDestroy() {​​​​​​​​​​
+	A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes. This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.
+    
+	As a safe guard, if you find yourself extending a component from a base class, it's best to go ahead and implement an ngOnDestroy in both the base class and the derived class. Then, in the derived class call super.ngOnDestroy(). This will ensure that any observables added to the base class at a later date will be unsubscribed.
+    Base:
+    ```
+    public ngOnDestroy() {​​​​​​​​​​
     // Added as a safeguard. Inherited classes will invoke this
     // so that any observables added to this base class will
     // be unsubscribed.
-}​​​​​​​​​​
-```
-[tab]Derived:
-```
-public ngOnDestroy() {​​​​​​​​​​
+    }​​​​​​​​​​
+    ```
+    Derived:
+    ```
+    public ngOnDestroy() {​​​​​​​​​​
     // Added as a safeguard. Invoking the base class ngOnDestroy
     // ensures that any base class observables are unsubscribed.
     super.ngOnDestroy();
-}​​​​​​​​​​
-```
+    }​​​​​​​​​​
+    ```
+
   ### Documentation
   1. Put example data at the bottom of examples
      Why? To avoid scrolling after opening the example source code, put all the mocked data at the bottom of the example. [This example](https://github.com/solarwinds/nova/blob/main/packages/charts/examples/components/demo/chart-types/line/line-chart-basic/line-chart-basic.example.component.ts#L41-L68) shows how we do this.
