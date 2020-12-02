@@ -88,7 +88,7 @@ jobs:
                     name: Create bits package
                     command: npm pack ./dist
             -   bits-artifact-number:
-                value: $CIRCLE_BUILD_NUM
+                    value: "${CIRCLE_BUILD_NUM}"
     charts-build:
         working_directory: ~/nova
         docker:
@@ -100,21 +100,22 @@ jobs:
                     name: Download Bits Artifact
                     # TODO: replace "207" with correct build number
                     command: |
-                        curl -H "Circle-Token: $CIRCLE_API_TOKEN" https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRLCE_PROJECT_REPONAME/207/artifacts \
+                        curl -H "Circle-Token: ${CIRCLE_API_TOKEN}" https://circleci.com/api/v1
+                        .1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRLCE_PROJECT_REPONAME}/207/artifacts \
                         | grep -o 'https://[^"]*' \
-                        | wget --verbose --header "Circle-Token: $CIRCLE_API_TOKEN" --input-file -
-            -   run:
-                    working_directory: ~/nova/packages/charts
-                    name: Install Bits
-                    command: yarn add ~/nova/bits-package.tgz
-            -   run:
-                    working_directory: ~/nova/packages/charts
-                    name: Install dependencies
-                    command: yarn install
-            -   run:
-                    working_directory: ~/nova/packages/charts
-                    name: Assemble
-                    command: yarn run assemble
+                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
+#            -   run:
+#                    working_directory: ~/nova/packages/charts
+#                    name: Install Bits
+#                    command: yarn add ~/nova/bits-package.tgz
+#            -   run:
+#                    working_directory: ~/nova/packages/charts
+#                    name: Install dependencies
+#                    command: yarn install
+#            -   run:
+#                    working_directory: ~/nova/packages/charts
+#                    name: Assemble
+#                    command: yarn run assemble
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -124,18 +125,18 @@ workflows:
     version: 2
     nova:
         jobs:
-            -   bits-build
+#            -   bits-build
             # - bits-unit-test:
             #     requires:
             #         - bits-build
             # - bits-e2e-test:
             #     requires:
             #         - bits-build
-            -   bits-publish:
-                    requires:
-                        - bits-build # TODO: remove
+#            -   bits-publish:
+#                    requires:
+#                        - bits-build # TODO: remove
                         # - bits-unit-test
                         # - bits-e2e-test
-            -   charts-build:
-                    requires:
-                        - bits-publish
+            -   charts-build
+#                    requires:
+#                        - bits-publish
