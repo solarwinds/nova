@@ -99,10 +99,14 @@ jobs:
             -   run:
                     name: Download Bits Artifact
                     # TODO: replace "207" with correct build number
-                    command: |
-                        curl -H "Circle-Token: ${CIRCLE_API_TOKEN}" https://circleci.com/api/v1.1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRLCE_PROJECT_REPONAME}/207/artifacts \
-                        | grep -o 'https://[^"]*' \
-                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
+#                    command: |
+#                        curl -H "Circle-Token: ${CIRCLE_API_TOKEN}" https://circleci.com/api/v1.1/project/github/${CIRCLE_PROJECT_USERNAME}/${CIRLCE_PROJECT_REPONAME}/207/artifacts \
+#                        | grep -o 'https://[^"]*' \
+#                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
+                    command: echo ${CIRCLE_API_TOKEN}
+            -   run:
+                    name: without {}
+                    command: echo $CIRCLE_API_TOKEN
 #            -   run:
 #                    working_directory: ~/nova/packages/charts
 #                    name: Install Bits
