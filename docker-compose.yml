@@ -5,6 +5,13 @@ services:
     image: circleci/node:12-browsers
     working_dir: /nova
     environment:
+      - CIRCLE_API_TOKEN
+      - CIRCLE_BRANCH
+      - CIRCLE_PROJECT_REPONAME
+      - CIRCLE_PROJECT_USERNAME
+      - CIRCLE_USERNAME
+      - CIRCLE_SHA1
+      - CIRCLE_JOB
       - TEAMCITY_VERSION
       - PACKAGE_VERSION
       - PACKAGE_NAME

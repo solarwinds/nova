@@ -1,4 +1,12 @@
-version: 2
+version: 2.1
+commands:
+    bits-artifact-number:
+        parameters:
+            value:
+                default: "latest"
+                type: string
+        steps:
+            - run: echo "Hello <<parameters.value>>"
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -49,6 +57,26 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
+    bits-visual-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/bits
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    command: pwd; ls
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: Visual tests
+                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
     bits-publish:
         working_directory: ~/nova/packages/bits
         docker:
@@ -59,11 +87,8 @@ jobs:
             -   run:
                     name: Create bits package
                     command: npm pack ./dist
-            - store_artifacts:
-                # TODO: use env variable for version
-                path: ~/nova/packages/bits/solarwinds-nova-bits-9.29.0.tgz
-                destination: bits-package.tgz
-
+            -   bits-artifact-number:
+                value: $CIRCLE_BUILD_NUM
     charts-build:
         working_directory: ~/nova
         docker:
@@ -71,20 +96,17 @@ jobs:
         steps:
             -   checkout:
                     path: ~/nova
-            - run:
-                # IMPORTANT TODO: replace with project token and move to env variable
-                command: export CIRCLE_TOKEN='d65b4f8df9184094164dad02a6bbbaecb814f140'
-            - run:
-                name: Download Bits Artifact
-                # TODO: replace "207" with correct build number
-                command: |
-                    curl -H "Circle-Token: d65b4f8df9184094164dad02a6bbbaecb814f140" https://circleci.com/api/v1.1/project/github/solarwinds/nova/207/artifacts \
-                    | grep -o 'https://[^"]*' \
-                    | wget --verbose --header "Circle-Token: d65b4f8df9184094164dad02a6bbbaecb814f140" --input-file -
-            - run:
-                working_directory: ~/nova/packages/charts
-                name: Install Bits
-                command: yarn add ~/nova/bits-package.tgz
+            -   run:
+                    name: Download Bits Artifact
+                    # TODO: replace "207" with correct build number
+                    command: |
+                        curl -H "Circle-Token: $CIRCLE_API_TOKEN" https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRLCE_PROJECT_REPONAME/207/artifacts \
+                        | grep -o 'https://[^"]*' \
+                        | wget --verbose --header "Circle-Token: $CIRCLE_API_TOKEN" --input-file -
+            -   run:
+                    working_directory: ~/nova/packages/charts
+                    name: Install Bits
+                    command: yarn add ~/nova/bits-package.tgz
             -   run:
                     working_directory: ~/nova/packages/charts
                     name: Install dependencies
@@ -100,20 +122,20 @@ jobs:
 
 workflows:
     version: 2
-    bits:
+    nova:
         jobs:
-            - bits-build
+            -   bits-build
             # - bits-unit-test:
             #     requires:
             #         - bits-build
             # - bits-e2e-test:
             #     requires:
             #         - bits-build
-            - bits-publish:
+            -   bits-publish:
+                    requires:
+                        - bits-build # TODO: remove
+                        # - bits-unit-test
+                        # - bits-e2e-test
+            -   charts-build
                 requires:
-                    - bits-build # TODO: remove
-                    # - bits-unit-test
-                    # - bits-e2e-test
-    charts:
-        jobs:
-            - charts-build
+                    - bits-publish
