@@ -107,7 +107,7 @@ jobs:
 #                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
             -   run:
                     name: Artifact test
-                    command: echo $BASH_ENV
+                    command: echo $BIT_NUM
 #            -   run:
 #                    working_directory: ~/nova/packages/charts
 #                    name: Install Bits
@@ -129,18 +129,7 @@ workflows:
     version: 2
     nova:
         jobs:
-#            -   bits-build
-            # - bits-unit-test:
-            #     requires:
-            #         - bits-build
-            # - bits-e2e-test:
-            #     requires:
-            #         - bits-build
             -   bits-publish
-#                    requires:
-#                        - bits-build # TODO: remove
-                        # - bits-unit-test
-                        # - bits-e2e-test
             -   charts-build:
                     requires:
                         - bits-publish
