@@ -120,18 +120,18 @@ jobs:
 #            -   run:
 #                    name: Artifact test
 #                    command: echo $BIT_NUM
-#            -   run:
-#                    working_directory: ~/nova/packages/charts
-#                    name: Install Bits
-#                    command: yarn add ~/nova/bits-package.tgz
-#            -   run:
-#                    working_directory: ~/nova/packages/charts
-#                    name: Install dependencies
-#                    command: yarn install
-#            -   run:
-#                    working_directory: ~/nova/packages/charts
-#                    name: Assemble
-#                    command: yarn run assemble
+           -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Install dependencies
+                   command: yarn install
+           -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Install Bits
+                   command: yarn add ~/nova/solarwinds-nova-bits-*.tgz
+           -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Assemble
+                   command: yarn run assemble
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -176,9 +176,9 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-#            -   run:
-#                    name: Create charts package
-#                    command: npm pack ./dist
+           -   run:
+                   name: Create charts package
+                   command: npm pack ./dist
             -   run:
                     name: Setting Env
                     command: |
@@ -187,10 +187,10 @@ jobs:
 #                    # TODO: use env variable for version
 #                    path: ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
 #                    destination: bits-package.tgz
-#            -   persist_to_workspace:
-#                    root: .
-#                    paths:
-#                        - ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
+           -   persist_to_workspace:
+                   root: .
+                   paths:
+                       - ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
     charts-publish:
         working_directory: ~/nova/packages/charts
         docker:
@@ -203,12 +203,12 @@ jobs:
                     command: echo "It worked"
 
 workflows:
-    version: 2
+    version: 2.1
     nova:
         jobs:
             -   bits-build
             -   bits-pack:
-                    context: nova-env
+                    # context: nova-env
                     requires:
                         -   bits-build
             -   bits-unit-test:
@@ -222,7 +222,7 @@ workflows:
                         -   bits-e2e-test
                         -   bits-unit-test
             -   charts-build:
-                    context: nova-env
+                    # context: nova-env
                     requires:
                         - bits-pack
             -   charts-pack:
