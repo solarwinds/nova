@@ -120,15 +120,15 @@ jobs:
 #            -   run:
 #                    name: Artifact test
 #                    command: echo $BIT_NUM
-           -   run:
+            -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install dependencies
                    command: yarn install
-           -   run:
+            -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
                    command: yarn add ~/nova/solarwinds-nova-bits-*.tgz
-           -   run:
+            -   run:
                    working_directory: ~/nova/packages/charts
                    name: Assemble
                    command: yarn run assemble
@@ -176,7 +176,7 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-           -   run:
+            -   run:
                    name: Create charts package
                    command: npm pack ./dist
             -   run:
@@ -187,7 +187,7 @@ jobs:
 #                    # TODO: use env variable for version
 #                    path: ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
 #                    destination: bits-package.tgz
-           -   persist_to_workspace:
+            -   persist_to_workspace:
                    root: .
                    paths:
                        - ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
