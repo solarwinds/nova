@@ -76,17 +76,21 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-#            -   run:
-#                    name: Create bits package
-#                    command: npm pack ./dist
             -   run:
-                    name: Setting Env
-                    command: |
-                        echo "export BIT_NUM='123'" >> $BASH_ENV
-#            - store_artifacts:
-#                  # TODO: use env variable for version
-#                  path: ~/nova/packages/bits/solarwinds-nova-bits-9.29.0.tgz
-#                  destination: bits-package.tgz
+                    name: Create bits package
+                    command: npm pack ./dist
+#            -   run:
+#                    name: Setting Env
+#                    command: |
+#                        echo "export BIT_NUM='123'" >> $BASH_ENV
+            - store_artifacts:
+                  # TODO: use env variable for version
+                  path: ~/nova/packages/bits/solarwinds-nova-bits-*.tgz
+                  destination: bits-package.tgz
+            -   persist_to_workspace:
+                    root: .
+                    paths:
+                        - ~/nova/packages/bits/solarwinds-nova-bits-*.tgz
     charts-build:
         working_directory: ~/nova
         docker:
@@ -101,9 +105,9 @@ jobs:
 #                        curl -H "Circle-Token: ${CIRCLE_API_TOKEN}" https://circleci.com/api/v1.1/project/github/solarwinds/nova/207/artifacts \
 #                        | grep -o 'https://[^"]*' \
 #                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
-            -   run:
-                    name: Artifact test
-                    command: echo $BIT_NUM
+#            -   run:
+#                    name: Artifact test
+#                    command: echo $BIT_NUM
 #            -   run:
 #                    working_directory: ~/nova/packages/charts
 #                    name: Install Bits
@@ -125,17 +129,17 @@ workflows:
     version: 2
     nova:
         jobs:
-#            -   bits-build:
+            -   bits-build
             -   bits-pack:
                     context: nova-env
-#                    requires:
-#                        -   bits-build
-#            -   bits-unit-test:
-#                    requires:
-#                        -   bits-build
-#            -   bits-e2e-test:
-#                    requires:
-#                        -   bits-build
+                    requires:
+                        -   bits-build
+            -   bits-unit-test:
+                    requires:
+                        -   bits-build
+            -   bits-e2e-test:
+                    requires:
+                        -   bits-build
             -   charts-build:
                     context: nova-env
                     requires:
