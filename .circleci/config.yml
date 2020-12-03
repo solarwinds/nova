@@ -1,12 +1,12 @@
 version: 2.1
-commands:
-    bits-artifact-number:
-        parameters:
-            value:
-                default: "latest"
-                type: string
-        steps:
-            - run: echo "Hello <<parameters.value>>"
+#commands:
+#    bits-artifact-number:
+#        parameters:
+#            value:
+#                default: "latest"
+#                type: string
+#        steps:
+#            - run: echo "Hello <<parameters.value>>"
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -84,11 +84,13 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+#            -   run:
+#                    name: Create bits package
+#                    command: npm pack ./dist
             -   run:
-                    name: Create bits package
-                    command: npm pack ./dist
-            -   bits-artifact-number:
-                    value: "${CIRCLE_BUILD_NUM}"
+                    name: Setup env variables
+                    command: |
+                        - echo "export GIT_SHA1=$CIRCLE_BUILD_NUM" >> $BASH_ENV
     charts-build:
         working_directory: ~/nova
         docker:
@@ -96,13 +98,16 @@ jobs:
         steps:
             -   checkout:
                     path: ~/nova
+#            -   run:
+#                    name: Download Bits Artifact
+#                    # TODO: replace "207" with correct build number
+#                    command: |
+#                        curl -H "Circle-Token: ${CIRCLE_API_TOKEN}" https://circleci.com/api/v1.1/project/github/solarwinds/nova/207/artifacts \
+#                        | grep -o 'https://[^"]*' \
+#                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
             -   run:
-                    name: Download Bits Artifact
-                    # TODO: replace "207" with correct build number
-                    command: |
-                        curl -H "Circle-Token: ${CIRCLE_API_TOKEN}" https://circleci.com/api/v1.1/project/github/solarwinds/nova/207/artifacts \
-                        | grep -o 'https://[^"]*' \
-                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
+                    name: Artifact test
+                    command: echo $BASH_ENV
 #            -   run:
 #                    working_directory: ~/nova/packages/charts
 #                    name: Install Bits
@@ -131,7 +136,7 @@ workflows:
             # - bits-e2e-test:
             #     requires:
             #         - bits-build
-#            -   bits-publish:
+            -   bits-publish
 #                    requires:
 #                        - bits-build # TODO: remove
                         # - bits-unit-test
