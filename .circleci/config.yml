@@ -90,7 +90,7 @@ jobs:
             -   run:
                     name: Setup env variables
                     command: |
-                        echo "export BIT_NUM=$CIRCLE_BUILD_NUM" >> $BASH_ENV
+                        echo "export BIT_NUM='123'" >> $BASH_ENV
     charts-build:
         working_directory: ~/nova
         docker:
@@ -129,7 +129,9 @@ workflows:
     version: 2
     nova:
         jobs:
-            -   bits-publish
+            -   bits-publish:
+                    context: nova-env
             -   charts-build:
+                    context: nova-env
                     requires:
                         - bits-publish
