@@ -77,20 +77,32 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
+                    command: pwd; ls
+            -   run:
                     name: Create bits package
                     command: npm pack ./dist
 #            -   run:
 #                    name: Setting Env
 #                    command: |
 #                        echo "export BIT_NUM='123'" >> $BASH_ENV
-            - store_artifacts:
-                  # TODO: use env variable for version
-                  path: ~/nova/packages/bits/solarwinds-nova-bits-*.tgz
-                  destination: bits-package.tgz
+#            - store_artifacts:
+#                  # TODO: use env variable for version
+#                  path: ~/nova/packages/bits/solarwinds-nova-bits-*.tgz
+#                  destination: bits-package.tgz
             -   persist_to_workspace:
                     root: .
                     paths:
-                        - ~/nova/packages/bits/solarwinds-nova-bits-*.tgz
+                        - ./solarwinds-nova-bits-*.tgz
+    bits-publish:
+        working_directory: ~/nova/packages/bits
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Publish bits
+                    command: echo "It worked"
     charts-build:
         working_directory: ~/nova
         docker:
@@ -124,6 +136,71 @@ jobs:
                     root: .
                     paths:
                         - .
+    charts-unit-test:
+        working_directory: ~/nova/packages/charts
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Tests
+                    command: echo "Charts unit tests"
+#            -   run:
+#                    name: Unit tests
+#                    command: yarn run test
+    charts-e2e-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/charts
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    command: pwd; ls
+#            -   run:
+#                    name: Start Selenium docker image
+#                    command: docker-compose up -d --build selenium
+#            -   run:
+#                    name: E2E tests
+#                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/charts
+#            -   run:
+#                    name: Cleanup
+#                    command: docker-compose down -v --rmi="all"
+    charts-pack:
+        working_directory: ~/nova/packages/charts
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+#            -   run:
+#                    name: Create charts package
+#                    command: npm pack ./dist
+            -   run:
+                    name: Setting Env
+                    command: |
+                        echo "test"
+#            -   store_artifacts:
+#                    # TODO: use env variable for version
+#                    path: ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
+#                    destination: bits-package.tgz
+#            -   persist_to_workspace:
+#                    root: .
+#                    paths:
+#                        - ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
+    charts-publish:
+        working_directory: ~/nova/packages/charts
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Publish charts
+                    command: echo "It worked"
 
 workflows:
     version: 2
@@ -140,7 +217,24 @@ workflows:
             -   bits-e2e-test:
                     requires:
                         -   bits-build
+            -   bits-publish:
+                    requires:
+                        -   bits-e2e-test
+                        -   bits-unit-test
             -   charts-build:
                     context: nova-env
                     requires:
                         - bits-pack
+            -   charts-pack:
+                    requires:
+                        -   charts-build
+            -   charts-unit-test:
+                    requires:
+                        -   charts-build
+            -   charts-e2e-test:
+                    requires:
+                        -   charts-build
+            -   charts-publish:
+                    requires:
+                        - charts-e2e-test
+                        - charts-unit-test
