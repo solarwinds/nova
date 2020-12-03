@@ -89,8 +89,7 @@ jobs:
 #                    command: npm pack ./dist
             -   run:
                     name: Setup env variables
-                    command: |
-                        echo "export BIT_NUM='123'" >> $BASH_ENV
+                    command: BIT_NUM='123'
     charts-build:
         working_directory: ~/nova
         docker:
