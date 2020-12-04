@@ -116,8 +116,8 @@ jobs:
         docker:
             -   image: circleci/node:12-browsers
         steps:
-            -   checkout:
-                    path: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
 #            -   run:
 #                    name: Download Bits Artifact
 #                    # TODO: replace "207" with correct build number
