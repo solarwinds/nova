@@ -21,11 +21,9 @@ jobs:
             -   persist_to_workspace:
                     root: .
                     paths:
-                        # - packages
-                        # - docker-compose.yml
-                        # - tsconfig.main.json
-                        - .
-                        - ./!(.git)
+                        - packages
+                        - docker-compose.yml
+                        - tsconfig.main.json
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
