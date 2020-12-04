@@ -21,7 +21,7 @@ jobs:
             -   persist_to_workspace:
                     root: .
                     paths:
-                        - .
+                        - packages
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
@@ -128,10 +128,10 @@ jobs:
 #            -   run:
 #                    name: Artifact test
 #                    command: echo $BIT_NUM
-#            -   run:
-#                   working_directory: ~/nova/packages/charts
-#                   name: Install dependencies
-#                   command: yarn install
+            -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Install dependencies
+                   command: yarn install
             -   run:
                         command: ls ~/nova/packages/bits/; ls ~/nova/packages/bits/*.tgz; pwd; ls
             -   run:
