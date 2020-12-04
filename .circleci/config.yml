@@ -126,13 +126,14 @@ jobs:
                    working_directory: ~/nova/packages/charts
                    name: Install dependencies
                    command: yarn install
+            - run:
+                   command: ls ~/nova/packages/bits/; ls ~/nova/packages/bits/*.tgz; pwd; ls
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
-                   command: |
-                        BIT_TGZ=`find ./ -type f -iname "solarwinds-nova-bits-*.tgz" -not -path "node_modules"`
-                        BIT_TGZ=${BIT_TGZ:2}
-                        yarn add ~/nova/packages/bits/${BIT_TGZ}
+                   command: yarn add ~/nova/packages/bits/*.tgz
+            #                        BIT_TGZ=`find ./ -type f -iname "solarwinds-nova-bits-*.tgz" -not -path "node_modules"`
+#                        BIT_TGZ=${BIT_TGZ:2}
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Assemble
