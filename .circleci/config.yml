@@ -82,12 +82,14 @@ jobs:
                     name: Create bits package
                     command: npm pack ./dist
 #            -   run:
-#                    name: Setting Env
+#                    name: Grabbing version number
 #                    command: |
-#                        echo "export BIT_NUM='123'" >> $BASH_ENV
+#                        BIT_TGZ=`find ./ -type f -iname "solarwinds-nova-bits-*.tgz" -not -path "node_modules"`
+#                        BIT_TGZ=${BIT_TGZ:2}
+#                        echo "export BIT_NUM=$BIT_TGZ" >> $BASH_ENV
 #            - store_artifacts:
 #                  # TODO: use env variable for version
-#                  path: ~/nova/packages/bits/solarwinds-nova-bits-*.tgz
+#                  path: ~/nova/packages/bits/<<$BIT_TGZ>>
 #                  destination: bits-package.tgz
             -   persist_to_workspace:
                     root: .
@@ -127,7 +129,10 @@ jobs:
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
-                   command: yarn add ~/nova/packages/bits/solarwinds-nova-bits-*.tgz
+                   command: |
+                        BIT_TGZ=`find ./ -type f -iname "solarwinds-nova-bits-*.tgz" -not -path "node_modules"`
+                        BIT_TGZ=${BIT_TGZ:2}
+                        yarn add ~/nova/packages/bits/${BIT_TGZ}
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Assemble
