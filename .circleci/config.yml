@@ -7,17 +7,18 @@ jobs:
         steps:
             -   checkout:
                     path: ~/nova
-#            -   run:
-#                    working_directory: ~/nova/packages/bits
-#                    name: Install dependencies
-#                    command: yarn install
-#            -   run:
-#                    working_directory: ~/nova/packages/bits
-#                    name: Assemble
-#                    command: yarn run assemble
             -   run:
-                    name: Test
-                    command: echo "Test"
+                    working_directory: ~/nova/packages/bits
+                    name: Install dependencies
+                    command: yarn install
+            -   run:
+                    working_directory: ~/nova/packages/bits
+                    name: Assemble
+                    command: yarn run assemble
+#            TODO: remove
+#            -   run:
+#                    name: Test
+#                    command: echo "Test"
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -82,12 +83,13 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+#            TODO: remove
 #            -   run:
 #                    name: Dummy data
 #                    command: touch solarwinds-nova-bits-9.30.0-0.tgz
-#            -   run:
-#                    name: Create bits package
-#                    command: npm pack ./dist
+            -   run:
+                    name: Create bits package
+                    command: npm pack ./dist
             -   run:
                     command: pwd; ls
 #            - store_artifacts:
@@ -124,6 +126,7 @@ jobs:
 #                        curl -H "Circle-Token: ${CIRCLE_API_TOKEN}" https://circleci.com/api/v1.1/project/github/solarwinds/nova/207/artifacts \
 #                        | grep -o 'https://[^"]*' \
 #                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
+#            TODO: remove
 #            -   run:
 #                    name: Artifact test
 #                    command: echo $BIT_NUM
@@ -135,8 +138,6 @@ jobs:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
                    command: yarn add ../bits/*.tgz
-            #                        BIT_TGZ=`find ./ -type f -iname "solarwinds-nova-bits-*.tgz" -not -path "node_modules"`
-#                        BIT_TGZ=${BIT_TGZ:2}
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Assemble
@@ -152,6 +153,7 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+#            TODO: remove
 #            -   run:
 #                    name: Tests
 #                    command: echo "Charts unit tests"
@@ -197,9 +199,9 @@ jobs:
 #                    path: ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
 #                    destination: bits-package.tgz
             -   persist_to_workspace:
-                   root: .
-                   paths:
-                       - ~/nova/packages/charts/solarwinds-nova-charts-*.tgz
+                    root: ~/nova
+                    paths:
+                        - ./packages/charts/*.tgz
     charts-publish:
         working_directory: ~/nova/packages/charts
         docker:
@@ -219,20 +221,20 @@ workflows:
             -   bits-pack:
                     requires:
                         -   bits-build
-#            -   bits-unit-test:
-#                    requires:
-#                        -   bits-build
-#            -   bits-e2e-test:
-#                    requires:
-#                        -   bits-build
-#            -   bits-publish:
-#                    requires:
-#                        -   bits-e2e-test
-#                        -   bits-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
+            -   bits-unit-test:
+                    requires:
+                        -   bits-build
+            -   bits-e2e-test:
+                    requires:
+                        -   bits-build
+            -   bits-publish:
+                    requires:
+                        -   bits-e2e-test
+                        -   bits-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
             -   charts-build:
                     requires:
                         - bits-pack
