@@ -7,14 +7,17 @@ jobs:
         steps:
             -   checkout:
                     path: ~/nova
+#            -   run:
+#                    working_directory: ~/nova/packages/bits
+#                    name: Install dependencies
+#                    command: yarn install
+#            -   run:
+#                    working_directory: ~/nova/packages/bits
+#                    name: Assemble
+#                    command: yarn run assemble
             -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Install dependencies
-                    command: yarn install
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Assemble
-                    command: yarn run assemble
+                    name: Test
+                    command: echo "Test"
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -77,8 +80,11 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    name: Create bits package
-                    command: npm pack ./dist
+                    name: Dummy data
+                    command: touch solarwinds-nova-bits-9.30.0-0.tgz
+#            -   run:
+#                    name: Create bits package
+#                    command: npm pack ./dist
             -   run:
                     command: pwd; ls
 #            -   run:
@@ -92,9 +98,9 @@ jobs:
 #                  path: ~/nova/packages/bits/<<$BIT_TGZ>>
 #                  destination: bits-package.tgz
             -   persist_to_workspace:
-                    root: ~/nova/packages/bits
+                    root: ~/nova
                     paths:
-                        - ./*.tgz
+                        - ./packages/bits/*.tgz
     bits-publish:
         working_directory: ~/nova/packages/bits
         docker:
@@ -122,10 +128,10 @@ jobs:
 #            -   run:
 #                    name: Artifact test
 #                    command: echo $BIT_NUM
-            -   run:
-                   working_directory: ~/nova/packages/charts
-                   name: Install dependencies
-                   command: yarn install
+#            -   run:
+#                   working_directory: ~/nova/packages/charts
+#                   name: Install dependencies
+#                   command: yarn install
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
@@ -217,20 +223,20 @@ workflows:
                     # context: nova-env
                     requires:
                         -   bits-build
-            -   bits-unit-test:
-                    requires:
-                        -   bits-build
-            -   bits-e2e-test:
-                    requires:
-                        -   bits-build
-            -   bits-publish:
-                    requires:
-                        -   bits-e2e-test
-                        -   bits-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
+#            -   bits-unit-test:
+#                    requires:
+#                        -   bits-build
+#            -   bits-e2e-test:
+#                    requires:
+#                        -   bits-build
+#            -   bits-publish:
+#                    requires:
+#                        -   bits-e2e-test
+#                        -   bits-unit-test
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
             -   charts-build:
                     # context: nova-env
                     requires:
