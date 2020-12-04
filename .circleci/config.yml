@@ -22,6 +22,7 @@ jobs:
                     root: .
                     paths:
                         - packages
+                        - ts-lint-rules
                         - docker-compose.yml
                         - tsconfig.main.json
     bits-unit-test:
@@ -143,7 +144,12 @@ jobs:
             -   persist_to_workspace:
                     root: .
                     paths:
-                        - packages/charts
+#                        - packages/charts
+#                        TODO: Remove this and uncomment above
+                        - packages
+                        - ts-lint-rules
+                        - docker-compose.yml
+                        - tsconfig.main.json
     charts-unit-test:
         working_directory: ~/nova/packages/charts
         docker:
@@ -214,29 +220,29 @@ workflows:
     version: 2.1
     nova:
         jobs:
-            -   bits-build
-            -   bits-pack:
+#            -   bits-build
+#            -   bits-pack:
+#                    # context: nova-env
+#                    requires:
+#                        -   bits-build
+#            -   bits-unit-test:
+#                    requires:
+#                        -   bits-build
+#            -   bits-e2e-test:
+#                    requires:
+#                        -   bits-build
+#            -   bits-publish:
+#                    requires:
+#                        -   bits-e2e-test
+#                        -   bits-unit-test
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+            -   charts-build
                     # context: nova-env
-                    requires:
-                        -   bits-build
-            -   bits-unit-test:
-                    requires:
-                        -   bits-build
-            -   bits-e2e-test:
-                    requires:
-                        -   bits-build
-            -   bits-publish:
-                    requires:
-                        -   bits-e2e-test
-                        -   bits-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   charts-build:
-                    # context: nova-env
-                    requires:
-                        - bits-pack
+#                    requires:
+#                        - bits-pack
             -   charts-pack:
                     requires:
                         -   charts-build
