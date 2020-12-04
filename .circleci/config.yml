@@ -233,7 +233,7 @@ workflows:
 #                        branches:
 #                            only:
 #                                - main
-            -   charts-build
+            -   charts-build:
                     requires:
                         - bits-pack
             -   charts-pack:
