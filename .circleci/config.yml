@@ -77,10 +77,10 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    command: pwd; ls
-            -   run:
                     name: Create bits package
                     command: npm pack ./dist
+            -   run:
+                    command: pwd; ls
 #            -   run:
 #                    name: Grabbing version number
 #                    command: |
@@ -92,9 +92,9 @@ jobs:
 #                  path: ~/nova/packages/bits/<<$BIT_TGZ>>
 #                  destination: bits-package.tgz
             -   persist_to_workspace:
-                    root: .
+                    root: ~/nova/packages/bits
                     paths:
-                        - ./solarwinds-nova-bits-*.tgz
+                        - ./*.tgz
     bits-publish:
         working_directory: ~/nova/packages/bits
         docker:
@@ -126,14 +126,14 @@ jobs:
                    working_directory: ~/nova/packages/charts
                    name: Install dependencies
                    command: yarn install
-            - run:
-                   command: ls ~/nova/packages/bits/; ls ~/nova/packages/bits/*.tgz; pwd; ls
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
                    command: yarn add ~/nova/packages/bits/*.tgz
             #                        BIT_TGZ=`find ./ -type f -iname "solarwinds-nova-bits-*.tgz" -not -path "node_modules"`
 #                        BIT_TGZ=${BIT_TGZ:2}
+            -   run:
+                    command: ls ~/nova/packages/bits/; ls ~/nova/packages/bits/*.tgz; pwd; ls
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Assemble
@@ -196,7 +196,7 @@ jobs:
             -   persist_to_workspace:
                    root: .
                    paths:
-                       - ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
+                       - ~/nova/packages/charts/solarwinds-nova-charts-*.tgz
     charts-publish:
         working_directory: ~/nova/packages/charts
         docker:
@@ -227,6 +227,10 @@ workflows:
                     requires:
                         -   bits-e2e-test
                         -   bits-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
             -   charts-build:
                     # context: nova-env
                     requires:
@@ -244,3 +248,8 @@ workflows:
                     requires:
                         - charts-e2e-test
                         - charts-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+
