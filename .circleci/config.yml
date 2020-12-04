@@ -134,7 +134,7 @@ jobs:
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
-                   command: yarn add ~/nova/packages/bits/*.tgz
+                   command: yarn add ../bits/*.tgz
             #                        BIT_TGZ=`find ./ -type f -iname "solarwinds-nova-bits-*.tgz" -not -path "node_modules"`
 #                        BIT_TGZ=${BIT_TGZ:2}
             -   run:
