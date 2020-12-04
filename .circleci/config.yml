@@ -24,6 +24,7 @@ jobs:
                         # - packages
                         # - docker-compose.yml
                         # - tsconfig.main.json
+                        - .
                         - ./!(.git)
     bits-unit-test:
         working_directory: ~/nova/packages/bits
