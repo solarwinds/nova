@@ -98,9 +98,9 @@ jobs:
 #                  path: ~/nova/packages/bits/<<$BIT_TGZ>>
 #                  destination: bits-package.tgz
             -   persist_to_workspace:
-                    root: ~/nova/packages
+                    root: ~/nova
                     paths:
-                        - bits/*.tgz
+                        - ./packages/bits/*.tgz
     bits-publish:
         working_directory: ~/nova/packages/bits
         docker:
