@@ -7,17 +7,17 @@ jobs:
         steps:
             -   checkout:
                     path: ~/nova
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Install dependencies
-                    command: yarn install
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Assemble
-                    command: yarn run assemble
 #            -   run:
-#                    name: Test
-#                    command: echo "Test"
+#                    working_directory: ~/nova/packages/bits
+#                    name: Install dependencies
+#                    command: yarn install
+#            -   run:
+#                    working_directory: ~/nova/packages/bits
+#                    name: Assemble
+#                    command: yarn run assemble
+            -   run:
+                    name: Test
+                    command: echo "Test"
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -85,9 +85,9 @@ jobs:
 #            -   run:
 #                    name: Dummy data
 #                    command: touch solarwinds-nova-bits-9.30.0-0.tgz
-            -   run:
-                    name: Create bits package
-                    command: npm pack ./dist
+#            -   run:
+#                    name: Create bits package
+#                    command: npm pack ./dist
             -   run:
                     command: pwd; ls
 #            - store_artifacts:
@@ -144,12 +144,7 @@ jobs:
             -   persist_to_workspace:
                     root: .
                     paths:
-#                        - packages/charts
-#                        TODO: Remove this and uncomment above
-                        - packages
-                        - ts-lint-rules
-                        - docker-compose.yml
-                        - tsconfig.main.json
+                        - packages/charts
     charts-unit-test:
         working_directory: ~/nova/packages/charts
         docker:
@@ -220,11 +215,10 @@ workflows:
     version: 2.1
     nova:
         jobs:
-#            -   bits-build
-#            -   bits-pack:
-#                    # context: nova-env
-#                    requires:
-#                        -   bits-build
+            -   bits-build
+            -   bits-pack:
+                    requires:
+                        -   bits-build
 #            -   bits-unit-test:
 #                    requires:
 #                        -   bits-build
@@ -240,9 +234,8 @@ workflows:
 #                            only:
 #                                - main
             -   charts-build
-                    # context: nova-env
-#                    requires:
-#                        - bits-pack
+                    requires:
+                        - bits-pack
             -   charts-pack:
                     requires:
                         -   charts-build
