@@ -21,9 +21,10 @@ jobs:
             -   persist_to_workspace:
                     root: .
                     paths:
-                        - packages
-                        - docker-compose.yml
-                        - tsconfig.main.json
+                        # - packages
+                        # - docker-compose.yml
+                        # - tsconfig.main.json
+                        - !(.git)
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
@@ -114,6 +115,8 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    command: ls -a
 #            -   run:
 #                    name: Download Bits Artifact
 #                    # TODO: replace "207" with correct build number
