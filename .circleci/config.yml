@@ -271,68 +271,121 @@ jobs:
             -   run:
                     name: Publish dashboards
                     command: echo "It worked"
+
+    merge:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12
+        environment:
+            # TODO: replace
+            # SOURCE_BRANCH: main
+            SOURCE_BRANCH: NUI-5561-Create-Circle-CI-release-build-step
+
+            # TODO: change to false
+            CREATE_RELEASE_BRANCH: true
+            RELEASE_BRANCH: release/nova/v9.x
+        steps:
+            - checkout:
+                    path: ~/nova
+            - run:
+                name: Merge Nova
+                command: yarn run merge-ci
+
+    set-release-version:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12
+        environment:
+            INCREMENT_TYPE: minor
+            RELEASE_BRANCH: release/nova/v9.x
+        steps:
+            - checkout:
+                    path: ~/nova
+            - run:
+                name: Check out release branch
+                command: git checkout $RELEASE_BRANCH
+            - run:
+                name: Set Release Version
+                command: yarn run set-release-versions-ci
+
 workflows:
     version: 2.1
-    nova:
-        jobs:
-            -   bits-build
-            -   bits-pack:
-                    requires:
-                        -   bits-build
-            -   bits-unit-test:
-                    requires:
-                        -   bits-build
-            -   bits-e2e-test:
-                    requires:
-                        -   bits-build
-#             -   bits-visual-test:
+#     nova:
+#         jobs:
+#             -   bits-build
+#             -   bits-pack:
 #                     requires:
-#                         - bits-build
-            -   bits-publish:
-                    requires:
-                        -   bits-e2e-test
-                        -   bits-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   charts-build:
-                    requires:
-                        - bits-pack
-            -   charts-pack:
-                    requires:
-                        -   charts-build
-            -   charts-unit-test:
-                    requires:
-                        -   charts-build
-            -   charts-e2e-test:
-                    requires:
-                        -   charts-build
-            -   charts-publish:
-                    requires:
-                        - charts-e2e-test
-                        - charts-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   dashboards-build:
-                    requires:
-                        -   charts-pack
-            -   dashboards-pack:
-                    requires:
-                        -   dashboards-build
-            -   dashboards-unit-test:
-                    requires:
-                        -   dashboards-build
-            -   dashboards-e2e-test:
-                    requires:
-                        -   dashboards-build
-            -   dashboards-publish:
-                    requires:
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
+#                         -   bits-build
+#             -   bits-unit-test:
+#                     requires:
+#                         -   bits-build
+#             -   bits-e2e-test:
+#                     requires:
+#                         -   bits-build
+# #             -   bits-visual-test:
+# #                     requires:
+# #                         - bits-build
+#             -   bits-publish:
+#                     requires:
+#                         -   bits-e2e-test
+#                         -   bits-unit-test
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#             -   charts-build:
+#                     requires:
+#                         - bits-pack
+#             -   charts-pack:
+#                     requires:
+#                         -   charts-build
+#             -   charts-unit-test:
+#                     requires:
+#                         -   charts-build
+#             -   charts-e2e-test:
+#                     requires:
+#                         -   charts-build
+#             -   charts-publish:
+#                     requires:
+#                         - charts-e2e-test
+#                         - charts-unit-test
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#             -   dashboards-build:
+#                     requires:
+#                         -   charts-pack
+#             -   dashboards-pack:
+#                     requires:
+#                         -   dashboards-build
+#             -   dashboards-unit-test:
+#                     requires:
+#                         -   dashboards-build
+#             -   dashboards-e2e-test:
+#                     requires:
+#                         -   dashboards-build
+#             -   dashboards-publish:
+#                     requires:
+#                         - dashboards-e2e-test
+#                         - dashboards-unit-test
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+
+    nova-release:
+        jobs:
+            - release-approval:
+                type: approval
+                # TODO: reintroduce before merge to main
+                # filters:
+                #     branches:
+                #         only:
+                #             - main
+            - merge:
+                requires:
+                    - release-approval
+            - set-release-version:
+                requires:
+                    - merge
