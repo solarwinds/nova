@@ -193,6 +193,17 @@ jobs:
                     name: Publish charts
                     command: echo "It worked"
 
+    merge:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Merge Nova
+                    command: echo "Merge Nova worked"
+
 workflows:
     version: 2.1
     nova:
@@ -238,4 +249,7 @@ workflows:
                         branches:
                             only:
                                 - main
-
+    nova-release:
+        triggers
+        jobs:
+            - merge
