@@ -202,6 +202,7 @@ jobs:
             # SOURCE_BRANCH: main
             SOURCE_BRANCH: NUI-5561-Create-Circle-CI-release-build-step
 
+            # TODO: change to false
             CREATE_RELEASE_BRANCH: true
             RELEASE_BRANCH: release/nova/v9.x
         steps:
@@ -210,6 +211,23 @@ jobs:
             - run:
                 name: Merge Nova
                 command: yarn run merge-ci
+
+    set-release-version:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12
+        environment:
+            INCREMENT_TYPE: minor
+            RELEASE_BRANCH: release/nova/v9.x
+        steps:
+            - checkout:
+                    path: ~/nova
+            - run:
+                name: Check out release branch
+                command: git checkout $RELEASE_BRANCH
+            - run:
+                name: Set Release Version
+                command: yarn run set-release-versions-ci
 
 workflows:
     version: 2.1
@@ -268,3 +286,6 @@ workflows:
             - merge:
                 requires:
                     - release-approval
+            - set-release-version:
+                requires:
+                    - merge
