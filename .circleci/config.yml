@@ -272,7 +272,7 @@ jobs:
                     name: Publish dashboards
                     command: echo "It worked"
 
-    prep-for-release:
+    release-prep:
         working_directory: ~/nova
         docker:
             -   image: circleci/node:12
@@ -387,6 +387,6 @@ workflows:
                 #     branches:
                 #         only:
                 #             - main
-            - prep-for-release:
+            - release-prep:
                 requires:
                     - release-approval
