@@ -307,6 +307,25 @@ jobs:
             - run:
                 name: Set Release Version
                 command: yarn run set-release-versions-ci
+            -   persist_to_workspace:
+                    root: .
+                    paths:
+                        - .
+
+    set-dependency-versions:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12
+        steps:
+            - attach_workspace:
+                    at: ~/nova
+            - run:
+                name: Set Release Dependency Versions
+                command: yarn run set-dependency-versions-ci
+            -   persist_to_workspace:
+                    root: .
+                    paths:
+                        - .
 
 workflows:
     version: 2.1
@@ -389,3 +408,6 @@ workflows:
             - set-release-version:
                 requires:
                     - merge
+            - set-dependency-versions:
+                requires:
+                    - set-release-version
