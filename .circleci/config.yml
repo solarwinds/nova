@@ -281,8 +281,7 @@ jobs:
             # SOURCE_BRANCH: main
             SOURCE_BRANCH: NUI-5561-Create-Circle-CI-release-build-step
 
-            # TODO: change to false
-            CREATE_RELEASE_BRANCH: true
+            CREATE_RELEASE_BRANCH: false
             RELEASE_BRANCH: release/nova/v9.x
         steps:
             - checkout:
