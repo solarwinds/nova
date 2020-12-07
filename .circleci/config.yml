@@ -272,7 +272,7 @@ jobs:
                     name: Publish dashboards
                     command: echo "It worked"
 
-    merge:
+    prep-for-release:
         working_directory: ~/nova
         docker:
             -   image: circleci/node:12
@@ -283,48 +283,28 @@ jobs:
 
             CREATE_RELEASE_BRANCH: false
             RELEASE_BRANCH: release/nova/v9.x
+            INCREMENT_TYPE: minor
         steps:
             - checkout:
                     path: ~/nova
             - run:
                 name: Merge Nova
                 command: yarn run merge-ci
-
-    set-release-version:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12
-        environment:
-            INCREMENT_TYPE: minor
-            RELEASE_BRANCH: release/nova/v9.x
-        steps:
-            - checkout:
-                    path: ~/nova
             - run:
                 name: Check out release branch
                 command: git checkout $RELEASE_BRANCH
             - run:
                 name: Set Release Version
                 command: yarn run set-release-versions-ci
-            -   persist_to_workspace:
-                    root: .
-                    paths:
-                        - .
-
-    set-dependency-versions:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12
-        steps:
-            - attach_workspace:
-                    at: ~/nova
             - run:
                 name: Set Release Dependency Versions
                 command: yarn run set-dependency-versions-ci
-            -   persist_to_workspace:
-                    root: .
-                    paths:
-                        - .
+            - run:
+                name: Commit Release Branch Changes
+                command: git commit -am "update files for version $RELEASE_VERSION"
+            - run:
+                name: Push Release Branch Changes
+                command: git push --verbose
 
 workflows:
     version: 2.1
@@ -401,12 +381,6 @@ workflows:
                 #     branches:
                 #         only:
                 #             - main
-            - merge:
+            - prep-for-release:
                 requires:
                     - release-approval
-            - set-release-version:
-                requires:
-                    - merge
-            - set-dependency-versions:
-                requires:
-                    - set-release-version
