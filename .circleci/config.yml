@@ -227,6 +227,9 @@ workflows:
             -   bits-e2e-test:
                     requires:
                         -   bits-build
+#             -   bits-visual-test:
+#                     requires:
+#                         - bits-build
             -   bits-publish:
                     requires:
                         -   bits-e2e-test
