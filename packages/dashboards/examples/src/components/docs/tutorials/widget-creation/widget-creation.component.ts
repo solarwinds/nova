@@ -25,7 +25,8 @@ import {
     WidgetClonerService,
     WidgetTypesService,
 } from "@solarwinds/nova-dashboards";
-import { chartPie, discovery } from "@solarwinds/nova-images";
+// TODO: Comment back in after NUI-5606 is finished
+// import { chartPie, discovery } from "@solarwinds/nova-images";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { finalize, take, takeUntil } from "rxjs/operators";
@@ -44,7 +45,13 @@ interface IWidgetItem {
     name: string;
     widget: IWidget;
 }
-
+// TODO: Delete after NUI-5606 is finished
+const placeholderImages = {
+    svgFile: "",
+    name: "not-found",
+    brushType: "",
+    code: "not-found",
+};
 // This component acts as the first step, or page, in the wizard where the user selects a wizard type to create.
 // It's recommended to have this component in a different file. For this tutorial, it's included in the same
 // file for simplicity.
@@ -77,9 +84,14 @@ export class WidgetTemplateSelectionComponent implements IWidgetTemplateSelector
 
     public widgetItems: IWidgetItem[] = [];
     public widgetSelection: IWidgetItem[];
+    // TODO: Comment back in after NUI-5606 is finished and replace with code below
+    // private cloneSelectionImages: Record<string, IImageDef> = {
+    //     "proportional": chartPie,
+    //     "kpi": discovery,
+    // };
     private cloneSelectionImages: Record<string, IImageDef> = {
-        "proportional": chartPie,
-        "kpi": discovery,
+        "proportional": placeholderImages,
+        "kpi": placeholderImages,
     };
 
     constructor(private widgetTypesService: WidgetTypesService) { }

@@ -45,9 +45,6 @@
     "i18n-locl-extract": "npx locl extract -s=./dist/bundles/solarwinds-nova-dashboards.umd.js -f=xlf -o=./sdk/locale/messages.en.xlf"
   },
   "schematics": "./sdk/schematics/collection.json",
-  "dependencies": {
-    "@solarwinds/nova-images": "^1.0.6"
-  },
   "peerDependencies": {
     "@angular-devkit/schematics": "^9.0.0",
     "@schematics/angular": "^9.0.0",
