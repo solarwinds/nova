@@ -197,12 +197,16 @@ jobs:
         working_directory: ~/nova
         docker:
             -   image: circleci/node:12
+        environment:
+            SOURCE_BRANCH: main
+            CREATE_RELEASE_BRANCH: true
+            RELEASE_BRANCH: release/nova/v9.x
         steps:
             - checkout:
                     path: ~/nova
             - run:
-                    name: Merge Nova
-                    command: echo "Merge Nova worked"
+                name: Merge Nova
+                command: yarn run merge-ci
 
 workflows:
     version: 2.1
