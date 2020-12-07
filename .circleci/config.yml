@@ -192,100 +192,147 @@ jobs:
             -   run:
                     name: Publish charts
                     command: echo "It worked"
-
-    merge:
+    dashboards-build:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12
-        environment:
-            # TODO: replace
-            # SOURCE_BRANCH: main
-            SOURCE_BRANCH: NUI-5561-Create-Circle-CI-release-build-step
-
-            # TODO: change to false
-            CREATE_RELEASE_BRANCH: true
-            RELEASE_BRANCH: release/nova/v9.x
+            -   image: circleci/node:12-browsers
         steps:
-            - checkout:
-                    path: ~/nova
-            - run:
-                name: Merge Nova
-                command: yarn run merge-ci
-
-    set-release-version:
-        working_directory: ~/nova
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Install dependencies
+                    command: yarn install
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Install bits
+                    command: yarn add ../bits/*.tgz
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Install charts
+                    command: yarn add ../charts/*.tgz
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Assemble
+                    command: yarn run assemble
+            -   persist_to_workspace:
+                    root: .
+                    paths:
+                        - packages/dashboards
+    dashboards-unit-test:
+        working_directory: ~/nova/packages/dashboards
         docker:
-            -   image: circleci/node:12
-        environment:
-            INCREMENT_TYPE: minor
-            RELEASE_BRANCH: release/nova/v9.x
+            -   image: circleci/node:12-browsers
         steps:
-            - checkout:
-                    path: ~/nova
-            - run:
-                name: Check out release branch
-                command: git checkout $RELEASE_BRANCH
-            - run:
-                name: Set Release Version
-                command: yarn run set-release-versions-ci
-
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Unit tests
+                    command: yarn run test
+    dashboards-e2e-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/dashboards
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: E2E tests
+                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/dashboards
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
+    dashboards-pack:
+        working_directory: ~/nova/packages/dashboards
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Create dashboards package
+                    command: npm pack ./dist
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - ./packages/dashboards/*.tgz
+    dashboards-publish:
+        working_directory: ~/nova/packages/dashboards
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Publish dashboards
+                    command: echo "It worked"
 workflows:
     version: 2.1
-#     nova:
-#         jobs:
-#             -   bits-build
-#             -   bits-pack:
-#                     requires:
-#                         -   bits-build
-#             -   bits-unit-test:
-#                     requires:
-#                         -   bits-build
-#             -   bits-e2e-test:
-#                     requires:
-#                         -   bits-build
-# #             -   bits-visual-test:
-# #                     requires:
-# #                         - bits-build
-#             -   bits-publish:
-#                     requires:
-#                         -   bits-e2e-test
-#                         -   bits-unit-test
-                    # filters:
-                    #     branches:
-                    #         only:
-                    #             - main
-#             -   charts-build:
-#                     requires:
-#                         - bits-pack
-#             -   charts-pack:
-#                     requires:
-#                         -   charts-build
-#             -   charts-unit-test:
-#                     requires:
-#                         -   charts-build
-#             -   charts-e2e-test:
-#                     requires:
-#                         -   charts-build
-#             -   charts-publish:
-#                     requires:
-#                         - charts-e2e-test
-#                         - charts-unit-test
-#                     filters:
-#                         branches:
-#                             only:
-#                                 - main
-    nova-release:
+    nova:
         jobs:
-            - release-approval:
-                type: approval
-                # TODO: reintroduce before merge to main
-                # filters:
-                #     branches:
-                #         only:
-                #             - main
-            - merge:
-                requires:
-                    - release-approval
-            - set-release-version:
-                requires:
-                    - merge
+            -   bits-build
+            -   bits-pack:
+                    requires:
+                        -   bits-build
+            -   bits-unit-test:
+                    requires:
+                        -   bits-build
+            -   bits-e2e-test:
+                    requires:
+                        -   bits-build
+#             -   bits-visual-test:
+#                     requires:
+#                         - bits-build
+            -   bits-publish:
+                    requires:
+                        -   bits-e2e-test
+                        -   bits-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   charts-build:
+                    requires:
+                        - bits-pack
+            -   charts-pack:
+                    requires:
+                        -   charts-build
+            -   charts-unit-test:
+                    requires:
+                        -   charts-build
+            -   charts-e2e-test:
+                    requires:
+                        -   charts-build
+            -   charts-publish:
+                    requires:
+                        - charts-e2e-test
+                        - charts-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   dashboards-build:
+                    requires:
+                        -   charts-pack
+            -   dashboards-pack:
+                    requires:
+                        -   dashboards-build
+            -   dashboards-unit-test:
+                    requires:
+                        -   dashboards-build
+            -   dashboards-e2e-test:
+                    requires:
+                        -   dashboards-build
+            -   dashboards-publish:
+                    requires:
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
