@@ -251,10 +251,13 @@ workflows:
 #                                 - main
     nova-release:
         jobs:
-            - merge:
+            - release-approval:
                 type: approval
                 # TODO: reintroduce before merge to main
                 # filters:
                 #     branches:
                 #         only:
                 #             - main
+            - merge:
+                requires:
+                    - release-approval
