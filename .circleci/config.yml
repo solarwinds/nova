@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -18,7 +18,10 @@ jobs:
             -   persist_to_workspace:
                     root: .
                     paths:
-                        - .
+                        - packages
+                        - ts-lint-rules
+                        - docker-compose.yml
+                        - tsconfig.main.json
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
@@ -69,7 +72,7 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
-    bits-publish:
+    bits-pack:
         working_directory: ~/nova/packages/bits
         docker:
             -   image: circleci/node:12-browsers
@@ -79,22 +82,160 @@ jobs:
             -   run:
                     name: Create bits package
                     command: npm pack ./dist
+            -   run:
+                    command: pwd; ls
+#            - store_artifacts:
+#                  # TODO: use env variable for version
+#                  path: ~/nova/packages/bits/*.tgz
+#                  destination: bits-package.tgz
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - ./packages/bits/*.tgz
+    bits-publish:
+        working_directory: ~/nova/packages/bits
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Publish bits
+                    command: echo "It worked"
+    charts-build:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    command: ls -a
+#            -   run:
+#                    name: Download Bits Artifact
+#                    # TODO: replace "207" with correct build number
+#                    command: |
+#                        curl -H "Circle-Token: ${CIRCLE_API_TOKEN}" https://circleci.com/api/v1.1/project/github/solarwinds/nova/207/artifacts \
+#                        | grep -o 'https://[^"]*' \
+#                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
+            -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Install dependencies
+                   command: yarn install
+            -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Install Bits
+                   command: yarn add ../bits/*.tgz
+            -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Assemble
+                   command: yarn run assemble
+            -   persist_to_workspace:
+                    root: .
+                    paths:
+                        - packages/charts
+    charts-unit-test:
+        working_directory: ~/nova/packages/charts
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Unit tests
+                    command: yarn run test
+    charts-e2e-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/charts
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    command: pwd; ls
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: E2E tests
+                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/charts
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
+    charts-pack:
+        working_directory: ~/nova/packages/charts
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                   name: Create charts package
+                   command: npm pack ./dist
+#            -   store_artifacts:
+#                    # TODO: use env variable for version
+#                    path: ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
+#                    destination: bits-package.tgz
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
+                        - ./packages/charts/*.tgz
+    charts-publish:
+        working_directory: ~/nova/packages/charts
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Publish charts
+                    command: echo "It worked"
 
 workflows:
-    version: 2
-    bits:
+    version: 2.1
+    nova:
         jobs:
-            - bits-build
+            -   bits-build
+            -   bits-pack:
+                    requires:
+                        -   bits-build
             -   bits-unit-test:
                     requires:
-                        - bits-build
+                        -   bits-build
             -   bits-e2e-test:
                     requires:
-                        - bits-build
-            # -   bits-visual-test:
-            #         requires:
-            #             - bits-build
+                        -   bits-build
+#             -   bits-visual-test:
+#                     requires:
+#                         - bits-build
             -   bits-publish:
                     requires:
-                        - bits-unit-test
-                        - bits-e2e-test
+                        -   bits-e2e-test
+                        -   bits-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   charts-build:
+                    requires:
+                        - bits-pack
+            -   charts-pack:
+                    requires:
+                        -   charts-build
+            -   charts-unit-test:
+                    requires:
+                        -   charts-build
+            -   charts-e2e-test:
+                    requires:
+                        -   charts-build
+            -   charts-publish:
+                    requires:
+                        - charts-e2e-test
+                        - charts-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+

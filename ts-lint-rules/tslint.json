@@ -72,6 +72,32 @@
     }],
     "unified-signatures": true,
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
-    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"]
+    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
+    "directive-selector": [
+        true,
+        "attribute",
+        false,
+        "camelCase"
+    ],
+    "component-selector": [
+        true,
+        "element",
+        false,
+        "kebab-case"
+    ],
+    "no-host-metadata-property": false,
+    "import-blacklist": [
+        true,
+        "lodash",
+        true,
+        "moment"
+    ],
+    "await-promise": [
+        true,
+        "Thenable",
+        "WebElementPromise",
+        "AlertPromise"
+    ],
+    "promise-function-async": true
   }
 }
