@@ -198,7 +198,10 @@ jobs:
         docker:
             -   image: circleci/node:12
         environment:
-            SOURCE_BRANCH: main
+            # TODO: replace
+            # SOURCE_BRANCH: main
+            SOURCE_BRANCH: NUI-5561-Create-Circle-CI-release-build-step
+
             CREATE_RELEASE_BRANCH: true
             RELEASE_BRANCH: release/nova/v9.x
         steps:
