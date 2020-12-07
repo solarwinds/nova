@@ -250,6 +250,12 @@ workflows:
                             only:
                                 - main
     nova-release:
-        triggers
+        triggers:
+            - schedule:
+                cron: "0 0 * * *"
+                filters:
+                    branches:
+                        only:
+                            - main
         jobs:
             - merge
