@@ -206,56 +206,50 @@ jobs:
 
 workflows:
     version: 2.1
-    nova:
-        jobs:
-            -   bits-build
-            -   bits-pack:
-                    requires:
-                        -   bits-build
-            -   bits-unit-test:
-                    requires:
-                        -   bits-build
-            -   bits-e2e-test:
-                    requires:
-                        -   bits-build
-#             -   bits-visual-test:
+#     nova:
+#         jobs:
+#             -   bits-build
+#             -   bits-pack:
 #                     requires:
-#                         - bits-build
-            -   bits-publish:
-                    requires:
-                        -   bits-e2e-test
-                        -   bits-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   charts-build:
-                    requires:
-                        - bits-pack
-            -   charts-pack:
-                    requires:
-                        -   charts-build
-            -   charts-unit-test:
-                    requires:
-                        -   charts-build
-            -   charts-e2e-test:
-                    requires:
-                        -   charts-build
-            -   charts-publish:
-                    requires:
-                        - charts-e2e-test
-                        - charts-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
+#                         -   bits-build
+#             -   bits-unit-test:
+#                     requires:
+#                         -   bits-build
+#             -   bits-e2e-test:
+#                     requires:
+#                         -   bits-build
+# #             -   bits-visual-test:
+# #                     requires:
+# #                         - bits-build
+#             -   bits-publish:
+#                     requires:
+#                         -   bits-e2e-test
+#                         -   bits-unit-test
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#             -   charts-build:
+#                     requires:
+#                         - bits-pack
+#             -   charts-pack:
+#                     requires:
+#                         -   charts-build
+#             -   charts-unit-test:
+#                     requires:
+#                         -   charts-build
+#             -   charts-e2e-test:
+#                     requires:
+#                         -   charts-build
+#             -   charts-publish:
+#                     requires:
+#                         - charts-e2e-test
+#                         - charts-unit-test
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
     nova-release:
-        triggers:
-            - schedule:
-                cron: "0 0 * * *"
-                filters:
-                    branches:
-                        only:
-                            - main
         jobs:
-            - merge
+            - merge:
+                type: approval
