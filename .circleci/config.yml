@@ -198,9 +198,9 @@ jobs:
         docker:
             -   image: circleci/node:12
         steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
+            - checkout:
+                    path: ~/nova
+            - run:
                     name: Merge Nova
                     command: echo "Merge Nova worked"
 
@@ -225,10 +225,10 @@ workflows:
 #                     requires:
 #                         -   bits-e2e-test
 #                         -   bits-unit-test
-#                     filters:
-#                         branches:
-#                             only:
-#                                 - main
+                    # filters:
+                    #     branches:
+                    #         only:
+                    #             - main
 #             -   charts-build:
 #                     requires:
 #                         - bits-pack
@@ -253,3 +253,7 @@ workflows:
         jobs:
             - merge:
                 type: approval
+                filters:
+                    branches:
+                        only:
+                            - main
