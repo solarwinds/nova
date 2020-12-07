@@ -174,10 +174,6 @@ jobs:
             -   run:
                    name: Create charts package
                    command: npm pack ./dist
-            -   run:
-                    name: Setting Env
-                    command: |
-                        echo "test"
 #            -   store_artifacts:
 #                    # TODO: use env variable for version
 #                    path: ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
