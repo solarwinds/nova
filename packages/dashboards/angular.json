@@ -23,7 +23,6 @@
               "project": "ng-package-dev.json"
             },
             "locl": {
-              "aot": true,
               "tsConfig": "./tsconfig.lib.locl.json"
             }
           }
@@ -116,13 +115,11 @@
             "production": {
               "optimization": true,
               "sourceMap": false,
-              "aot": true,
               "vendorChunk": false
             },
             "e2e": {
               "optimization": true,
               "sourceMap": false,
-              "aot": true,
               "vendorChunk": false,
               "browserTarget": "examples:build:e2e"
             }
