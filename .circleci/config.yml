@@ -253,7 +253,8 @@ workflows:
         jobs:
             - merge:
                 type: approval
-                filters:
-                    branches:
-                        only:
-                            - main
+                # TODO: reintroduce before merge to main
+                # filters:
+                #     branches:
+                #         only:
+                #             - main
