@@ -278,19 +278,20 @@ jobs:
             -   image: circleci/node:12
         environment:
             SOURCE_BRANCH: main
+            # TODO: Change to false
             CREATE_RELEASE_BRANCH: true
-            RELEASE_BRANCH: release/nova/v9.x
+            RELEASE_BRANCH: release/v9.x
             INCREMENT_TYPE: minor
         steps:
             - checkout:
                     path: ~/nova
             - run:
-                name: Configure Git Configuration
+                name: Configure Git
                 command: |
                     git config --global user.email circleci@circleci
                     git config --global user.name $CIRCLE_PROJECT_USERNAME
             - run:
-                name: Merge Nova
+                name: Merge Changes
                 command: yarn run merge-ci
             - run:
                 name: Check out release branch
@@ -302,7 +303,7 @@ jobs:
                 name: Set Release Dependency Versions
                 command: yarn run set-dependency-versions-ci
             - run:
-                name: Commit Release Branch Changes and Push Release Branch Changes
+                name: Commit and Push Release Branch Changes
                 command: |
                     git commit -am "update files for version $RELEASE_VERSION"
                     git push --verbose
