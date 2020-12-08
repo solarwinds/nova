@@ -321,7 +321,7 @@ jobs:
                 name: Push source branch changes
                 command: |
                     git commit -am 'increment develop versions' && \
-                    git push
+                    git push origin $SOURCE_BRANCH
 
 workflows:
     version: 2.1
