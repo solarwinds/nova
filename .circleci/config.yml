@@ -322,7 +322,7 @@ jobs:
 
 workflows:
     version: 2.1
-     nova:
+    nova:
          jobs:
              -   bits-build
              -   bits-pack:
@@ -389,10 +389,10 @@ workflows:
         jobs:
             - release-approval:
                 type: approval
-                 filters:
-                     branches:
-                         only:
-                             - main
+                filters:
+                    branches:
+                        only:
+                            - main
             - release-prep:
                 requires:
                     - release-approval
