@@ -271,68 +271,129 @@ jobs:
             -   run:
                     name: Publish dashboards
                     command: echo "It worked"
+
+    release-prep:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12
+        environment:
+            SOURCE_BRANCH: main
+            # TODO: Change to false
+            CREATE_RELEASE_BRANCH: true
+            RELEASE_BRANCH: release/v9.x
+            INCREMENT_TYPE: minor
+        steps:
+            - checkout:
+                    path: ~/nova
+            - run:
+                name: Configure Git
+                command: |
+                    git config --global user.email circleci@circleci
+                    git config --global user.name $CIRCLE_PROJECT_USERNAME
+            - run:
+                name: Merge Changes
+                command: yarn run merge-ci
+            - run:
+                name: Check out release branch
+                command: git checkout $RELEASE_BRANCH
+            - run:
+                name: Set Release Version
+                command: yarn run set-release-versions-ci
+            - run:
+                name: Set Release Dependency Versions
+                command: yarn run set-dependency-versions-ci
+            - run:
+                name: Commit and Push Release Branch Changes
+                command: |
+                    git commit -am "update files for version $RELEASE_VERSION"
+                    git push --verbose
+            - run:
+                name: Increment source branch version
+                command: |
+                    git checkout $SOURCE_BRANCH
+                    yarn run set-source-versions-ci
+            - run:
+                name: Set source dependency versions
+                command: yarn run set-dependency-versions-ci
+            - run:
+                name: Push source branch changes
+                command: |
+                    git commit -am 'increment develop versions' && \
+                    git push origin $SOURCE_BRANCH
+
 workflows:
     version: 2.1
     nova:
+         jobs:
+             -   bits-build
+             -   bits-pack:
+                     requires:
+                         -   bits-build
+             -   bits-unit-test:
+                     requires:
+                         -   bits-build
+             -   bits-e2e-test:
+                     requires:
+                         -   bits-build
+ #             -   bits-visual-test:
+ #                     requires:
+ #                         - bits-build
+             -   bits-publish:
+                     requires:
+                         -   bits-e2e-test
+                         -   bits-unit-test
+                     filters:
+                         branches:
+                             only:
+                                 - main
+             -   charts-build:
+                     requires:
+                         - bits-pack
+             -   charts-pack:
+                     requires:
+                         -   charts-build
+             -   charts-unit-test:
+                     requires:
+                         -   charts-build
+             -   charts-e2e-test:
+                     requires:
+                         -   charts-build
+             -   charts-publish:
+                     requires:
+                         - charts-e2e-test
+                         - charts-unit-test
+                     filters:
+                         branches:
+                             only:
+                                 - main
+             -   dashboards-build:
+                     requires:
+                         -   charts-pack
+             -   dashboards-pack:
+                     requires:
+                         -   dashboards-build
+             -   dashboards-unit-test:
+                     requires:
+                         -   dashboards-build
+             -   dashboards-e2e-test:
+                     requires:
+                         -   dashboards-build
+             -   dashboards-publish:
+                     requires:
+                         - dashboards-e2e-test
+                         - dashboards-unit-test
+                     filters:
+                         branches:
+                             only:
+                                 - main
+    nova-release:
         jobs:
-            -   bits-build
-            -   bits-pack:
-                    requires:
-                        -   bits-build
-            -   bits-unit-test:
-                    requires:
-                        -   bits-build
-            -   bits-e2e-test:
-                    requires:
-                        -   bits-build
-#             -   bits-visual-test:
-#                     requires:
-#                         - bits-build
-            -   bits-publish:
-                    requires:
-                        -   bits-e2e-test
-                        -   bits-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   charts-build:
-                    requires:
-                        - bits-pack
-            -   charts-pack:
-                    requires:
-                        -   charts-build
-            -   charts-unit-test:
-                    requires:
-                        -   charts-build
-            -   charts-e2e-test:
-                    requires:
-                        -   charts-build
-            -   charts-publish:
-                    requires:
-                        - charts-e2e-test
-                        - charts-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   dashboards-build:
-                    requires:
-                        -   charts-pack
-            -   dashboards-pack:
-                    requires:
-                        -   dashboards-build
-            -   dashboards-unit-test:
-                    requires:
-                        -   dashboards-build
-            -   dashboards-e2e-test:
-                    requires:
-                        -   dashboards-build
-            -   dashboards-publish:
-                    requires:
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
+            - release-approval:
+                type: approval
+                filters:
+                    branches:
+                        only:
+                            - main
+            - release-prep:
+                requires:
+                    - release-approval
