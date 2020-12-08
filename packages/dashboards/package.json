@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "http://dev-brn-art-02.swdev.local:8081/artifactory/api/npm/npm-SolarWinds"
   },
-  "version": "9.29.0",
+  "version": "9.30.0-0",
   "scripts": {
     "ng": "ng",
     "start": "run-p -lr compodoc:serve build-examples:watch",
