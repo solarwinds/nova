@@ -22,13 +22,5 @@
     {
         "path": "packages/charts",
         "dependencies": ["@solarwinds/nova-bits"]
-    },
-    {
-        "path": "consumer/web",
-        "dependencies": []
-    },
-    {
-        "path": "consumer/server",
-        "dependencies": []
     }
 ]
