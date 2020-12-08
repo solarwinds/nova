@@ -309,6 +309,19 @@ jobs:
                 command: |
                     git commit -am "update files for version $RELEASE_VERSION"
                     git push --verbose
+            - run:
+                name: Increment source branch version
+                command: |
+                    git checkout $SOURCE_BRANCH
+                    yarn run set-source-versions-ci
+            - run:
+                name: Set source dependency versions
+                command: yarn run set-dependency-versions-ci
+            - run:
+                name: Push source branch changes
+                command: |
+                    git commit -am 'increment develop versions' && \
+                    git push
 
 workflows:
     version: 2.1
