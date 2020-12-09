@@ -1,6 +1,6 @@
 {
   "name": "nova-schematics",
-  "version": "9.29.0-0",
+  "version": "9.30.0-0",
   "scripts": {
     "assemble": "npm run build && npm run test && npm run copy",
     "build": "tsc -p tsconfig.json",
