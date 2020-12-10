@@ -120,7 +120,7 @@ jobs:
         docker:
             -   image: circleci/node:12-browsers
         environment:
-            PROJECT_DIR: ./packages/charts
+            PROJECT_DIR: ~/nova/packages/charts
             BUILD_COUNTER: << pipeline.number >>
         steps:
             -   attach_workspace:
@@ -221,7 +221,7 @@ jobs:
         docker:
             -   image: circleci/node:12-browsers
         environment:
-            PROJECT_DIR: ./packages/dasboards
+            PROJECT_DIR: ~/nova/packages/dasboards
             BUILD_COUNTER: << pipeline.number >>
         steps:
             -   attach_workspace:
