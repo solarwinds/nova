@@ -380,10 +380,10 @@ workflows:
                          -   charts-unit-test
                          -   dashboards-e2e-test
                          -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
              -   charts-build:
                      requires:
                          - bits-pack
@@ -404,10 +404,10 @@ workflows:
                          -   charts-unit-test
                          -   dashboards-e2e-test
                          -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
              -   dashboards-build:
                      requires:
                          -   charts-pack
@@ -428,10 +428,10 @@ workflows:
                          -   charts-unit-test
                          -   dashboards-e2e-test
                          -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
     nova-release:
         jobs:
             - release-approval:
