@@ -1,4 +1,4 @@
-import { ITableWidgetColumnConfig, ITableWidgetSorterConfig, IWidget, PizzagnaLayer, RawFormatterComponent, WellKnownProviders } from "@solarwinds/nova-dashboards";
+import { ITableWidgetColumnConfig, ITableWidgetSorterConfig, IWidget, PizzagnaLayer, RawFormatterComponent, WellKnownProviders } from "@nova-ui/dashboards";
 
 import { BeerDataSource } from "../data/table/beer-data-source";
 

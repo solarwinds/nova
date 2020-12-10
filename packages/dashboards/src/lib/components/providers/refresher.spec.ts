@@ -1,7 +1,7 @@
 import { NgZone } from "@angular/core";
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
-import { RefresherSettingsService } from "@solarwinds/nova-dashboards";
+import { EventBus, IEvent } from "@nova-ui/bits";
+import { RefresherSettingsService } from "@nova-ui/dashboards";
 
 import { REFRESH } from "../../services/types";
 

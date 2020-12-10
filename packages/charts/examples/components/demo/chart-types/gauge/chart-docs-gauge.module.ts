@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule, NuiIconModule, NuiMessageModule } from "@solarwinds/nova-bits";
-import { NuiChartsModule } from "@solarwinds/nova-charts";
+import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule, NuiIconModule, NuiMessageModule } from "@nova-ui/bits";
+import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
 

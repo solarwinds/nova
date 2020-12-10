@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, Output } from "@angular/core";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { DRILLDOWN } from "../../../../services/types";
 import { PIZZAGNA_EVENT_BUS } from "../../../../types";

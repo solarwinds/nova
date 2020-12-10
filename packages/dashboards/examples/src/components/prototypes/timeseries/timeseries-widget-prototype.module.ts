@@ -10,7 +10,7 @@ import {
     NuiRepeatModule,
     NuiSelectV2Module,
     NuiSwitchModule
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     DEFAULT_PIZZAGNA_ROOT,
@@ -18,7 +18,7 @@ import {
     ProviderRegistryService,
     WellKnownPathKey,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 
 import { AcmeProportionalDSConfigComponent } from "../components/data-source-configuration/proportional-ds-config.component";
 import { AcmeKpiDataSource, AcmeKpiDataSource2 } from "../data/kpi-datasources";

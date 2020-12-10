@@ -8,7 +8,7 @@ import {
     OnInit,
     ViewChild
 } from "@angular/core";
-import { IFilteringOutputs, SelectorService, VirtualViewportManager } from "@solarwinds/nova-bits";
+import { IFilteringOutputs, SelectorService, VirtualViewportManager } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
 

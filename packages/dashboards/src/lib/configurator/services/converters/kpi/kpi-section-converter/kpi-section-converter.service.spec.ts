@@ -1,4 +1,4 @@
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";

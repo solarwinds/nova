@@ -62,7 +62,7 @@ export class SourcesService {
             if (extension === "less") {
                 fileContent = fileContent.replace(
                     /@import \(reference\) "([\w-]+\/){0,}([\w-]+)(\.less)?"/g,
-                    `@import (reference) "@solarwinds/nova-bits/sdk/less/$1$2"`
+                    `@import (reference) "@nova-ui/bits/sdk/less/$1$2"`
                 );
             }
 

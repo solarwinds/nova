@@ -1,4 +1,4 @@
-import { TableAlignmentOptions } from "@solarwinds/nova-bits";
+import { TableAlignmentOptions } from "@nova-ui/bits";
 
 import { IFormatterData } from "../configurator/components/formatters/types";
 import { IProperties } from "../types";

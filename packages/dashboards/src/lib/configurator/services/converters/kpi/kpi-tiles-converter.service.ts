@@ -1,7 +1,7 @@
 import { AfterViewInit, Inject } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
-import { immutableSet } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
+import { immutableSet } from "@nova-ui/bits";
 import difference from "lodash/difference";
 import keyBy from "lodash/keyBy";
 import omit from "lodash/omit";

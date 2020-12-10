@@ -17,7 +17,7 @@ import {
     LocalFilteringDataSource,
     RepeatSelectionMode,
     SorterDirection
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 import { IFilterGroupOption } from "../public-api";

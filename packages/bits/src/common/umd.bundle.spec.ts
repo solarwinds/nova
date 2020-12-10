@@ -1,6 +1,6 @@
 describe("UMD bundle tests", () => {
     it("has all dependencies properly specified in ng-package.json", async (done) => {
-        const umdFilePath = "base/dist/bundles/solarwinds-nova-bits.umd.js";
+        const umdFilePath = "base/dist/bundles/nova-ui-bits.umd.js";
         await fetch(umdFilePath).then(async response => {
             if (response.status !== 200) {
                 // don't waste time, mark the test as failed

@@ -3,8 +3,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { NuiButtonModule,  NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSwitchModule, NuiTextboxModule } from "@solarwinds/nova-bits";
-import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@solarwinds/nova-dashboards";
+import { NuiButtonModule,  NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSwitchModule, NuiTextboxModule } from "@nova-ui/bits";
+import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { CustomConfiguratorSectionDocsComponent } from "./custom-configurator-section-docs.component";
 import { CustomConfiguratorSectionComponent, CustomKpiDescriptionConfigurationComponent } from "./custom-configurator-section.component";

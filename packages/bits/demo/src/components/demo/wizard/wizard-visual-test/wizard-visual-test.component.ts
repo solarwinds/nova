@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, TemplateRef, ViewChild } from "@angular/core
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
     DialogService, IBusyConfig, IWizardSelectionEvent, NuiDialogRef, WizardComponent, WizardStepComponent
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-visual",

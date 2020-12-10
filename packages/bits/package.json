@@ -1,8 +1,5 @@
 {
-  "name": "@solarwinds/nova-bits",
-  "publishConfig": {
-    "registry": "http://dev-brn-art-02.swdev.local:8081/artifactory/api/npm/npm-SolarWinds"
-  },
+  "name": "@nova-ui/bits",
   "preferGlobal": true,
   "version": "9.31.0-0",
   "author": "SolarWinds <nui@solarwinds.com>",
@@ -16,7 +13,7 @@
   "typings": "public_api.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.solarwinds.com/scm/nova/nova.git"
+    "url": "https://github.com/solarwinds/nova.git"
   },
   "keywords": [
     "solarwinds",
@@ -83,7 +80,7 @@
     "compile-colors": "node ./scripts/colors-conf.js",
     "lint": "ng l",
     "lint:fix": "ng l --fix",
-    "i18n-locl-extract": "npx locl extract -s=dist/bundles/solarwinds-nova-bits.umd.js -f=xlf -o=./sdk/locale/messages.en.xlf"
+    "i18n-locl-extract": "npx locl extract -s=dist/bundles/nova-ui-bits.umd.js -f=xlf -o=./sdk/locale/messages.en.xlf"
   },
   "analyze": false,
   "peerDependencies": {

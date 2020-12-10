@@ -1,6 +1,6 @@
 import { TitleCasePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { IWidgetTemplateSelector, WidgetTypesService } from "@solarwinds/nova-dashboards";
+import { IWidgetTemplateSelector, WidgetTypesService } from "@nova-ui/dashboards";
 
 import { cloneSelectionImages } from "../../timeseries/widget-configs";
 import { widgets } from "../widgets";

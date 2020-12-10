@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { DataSourceService, INovaFilters, ITimeframe } from "@solarwinds/nova-bits";
+import { DataSourceService, INovaFilters, ITimeframe } from "@nova-ui/bits";
 import {
     applyStatusEndpoints,
     HttpStatusCode,
@@ -9,7 +9,7 @@ import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetSeriesData,
     ITimeseriesWidgetStatusData
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import moment, { Moment } from "moment/moment";
 import { BehaviorSubject } from "rxjs";
 

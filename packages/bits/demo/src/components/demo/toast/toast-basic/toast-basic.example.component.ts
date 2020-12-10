@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { IToastConfig, IToastService, ToastService } from "@solarwinds/nova-bits";
+import { IToastConfig, IToastService, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-toast-basic-example",

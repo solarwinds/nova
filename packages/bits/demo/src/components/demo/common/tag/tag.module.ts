@@ -6,7 +6,7 @@ import {
     NuiDocsModule,
     NuiIconModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { TagBasicExampleComponent } from "./tag-basic/tag-basic.example.component";
 import { TagBorderColorExampleComponent } from "./tag-border-color/tag-border-color.example.component";

@@ -8,7 +8,7 @@ import {
     Output,
     SimpleChanges
 } from "@angular/core";
-import { IBusyConfig, SpinnerSize } from "@solarwinds/nova-bits";
+import { IBusyConfig, SpinnerSize } from "@nova-ui/bits";
 
 import { IDashwizStepComponent, IDashwizStepNavigatedEvent } from "../types";
 

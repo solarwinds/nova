@@ -1,4 +1,4 @@
-import { ITimeseriesWidgetData } from "@solarwinds/nova-dashboards";
+import { ITimeseriesWidgetData } from "@nova-ui/dashboards";
 import moment from "moment/moment";
 
 import { BasicTableModel } from "./table/types";

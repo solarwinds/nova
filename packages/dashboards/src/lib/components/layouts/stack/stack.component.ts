@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { BaseLayout } from "../base-layout";

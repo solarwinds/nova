@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, SrlcStage } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, SrlcStage } from "@nova-ui/bits";
 
 import { SchematicsDocsComponent } from "./schematics-docs.component";
 

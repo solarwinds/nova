@@ -9,13 +9,13 @@ import {
     NuiRepeatModule,
     NuiSelectV2Module,
     NuiSwitchModule,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import {
     NuiDashboardsModule,
     ProviderRegistryService,
     WellKnownPathKey,
     WidgetTypesService,
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 
 import { TestCommonModule } from "../../common/common.module";
 import { TestTimeseriesDataSource, TestTimeseriesDataSource2 } from "../../data/timeseries-data-sources";

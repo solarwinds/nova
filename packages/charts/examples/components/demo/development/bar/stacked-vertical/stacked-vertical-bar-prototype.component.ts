@@ -12,7 +12,7 @@ import {
     Scales,
     stack,
     XYGridConfig,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "stacked-vertical-bar-prototype",

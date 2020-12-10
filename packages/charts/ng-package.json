@@ -103,7 +103,7 @@
       "moment-timezone": "moment-timezone",
       "resize-observer-polyfill": "ResizeObserver",
 
-      "@solarwinds/nova-bits": "nui.bits"
+      "@nova-ui/bits": "nui.bits"
     }
   },
   "whitelistedNonPeerDependencies": ["."]

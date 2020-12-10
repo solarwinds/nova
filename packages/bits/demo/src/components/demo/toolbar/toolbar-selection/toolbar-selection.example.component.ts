@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-toolbar-selection-example",

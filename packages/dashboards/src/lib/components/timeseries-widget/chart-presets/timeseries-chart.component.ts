@@ -1,6 +1,6 @@
 import { Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
-import { IDataSource } from "@solarwinds/nova-bits";
-import { IXYScales } from "@solarwinds/nova-charts";
+import { IDataSource } from "@nova-ui/bits";
+import { IXYScales } from "@nova-ui/charts";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/c
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
-import { EventBus, IEvent, LoggerService, NuiBusyModule, NuiButtonModule, NuiIconModule, NuiSpinnerModule } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService, NuiBusyModule, NuiButtonModule, NuiIconModule, NuiSpinnerModule } from "@nova-ui/bits";
 import set from "lodash/set";
 import { Subject } from "rxjs";
 

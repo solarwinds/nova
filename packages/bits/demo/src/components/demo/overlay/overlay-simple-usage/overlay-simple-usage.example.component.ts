@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
-import { OverlayComponent } from "@solarwinds/nova-bits";
+import { OverlayComponent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

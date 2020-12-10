@@ -1,7 +1,7 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { AfterViewInit, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { DialogService, ISelectGroup, NuiDialogRef, OVERLAY_WITH_POPUP_STYLES_CLASS, SelectV2Component } from "@solarwinds/nova-bits";
+import { DialogService, ISelectGroup, NuiDialogRef, OVERLAY_WITH_POPUP_STYLES_CLASS, SelectV2Component } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

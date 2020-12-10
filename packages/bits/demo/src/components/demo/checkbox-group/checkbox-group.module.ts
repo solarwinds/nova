@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiButtonModule, NuiCheckboxModule, NuiDocsModule, SrlcStage } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, NuiButtonModule, NuiCheckboxModule, NuiDocsModule, SrlcStage } from "@nova-ui/bits";
 
 import { CheckboxGroupTestComponent } from "./checkbox-group-test/checkbox-group-test.component";
 import {

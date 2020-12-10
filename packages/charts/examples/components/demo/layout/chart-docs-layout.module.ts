@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { NuiDocsModule, NuiSwitchModule, SrlcStage } from "@solarwinds/nova-bits";
+import { NuiDocsModule, NuiSwitchModule, SrlcStage } from "@nova-ui/bits";
 
 import { DemoCommonModule } from "../common/demo-common.module";
 

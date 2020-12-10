@@ -12,7 +12,7 @@ import {
     NuiSelectModule,
     NuiValidationMessageModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     DateTimePickerBasicExampleComponent,

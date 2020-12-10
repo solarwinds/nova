@@ -17,10 +17,10 @@ absorb into your product's code base.
 * Your package manager registries are set
 * Nova Bits has been installed using the following command:
 ```sh
-$ ng add @solarwinds/nova-bits
+$ ng add @nova-ui/bits
 ```
 If needed, further instructions for Bits installation can be found 
-<a href="http://apollo-docs.swdev.local/nova-bits/release_nova_v9.x/sdk/api-docs-ng2/" target="_blank">here</a>.
+<a href="http://apollo-docs.swdev.local/bits/release_nova_v9.x/sdk/api-docs-ng2/" target="_blank">here</a>.
 
 [//]: # (TODO: Update bits link above with v10)
 
@@ -43,21 +43,21 @@ npm install -g @angular/cli
 
 #### Configuring the NPM Registry
 
-To configure your npm registry for access to all @solarwinds packages in our internal artifact 
+To configure your npm registry for access to all @nova-ui packages in our internal artifact 
 repository, run the following command: 
 ```
-npm config set @solarwinds:registry http://dev-brn-art-02.swdev.local:8081/artifactory/api/npm/npm
+npm config set @nova-ui:registry http://dev-brn-art-02.swdev.local:8081/artifactory/api/npm/npm
 ``` 
 
 ## Setup Options
 #### Automated Installation and Setup Using the Angular CLI
-The following schematics command will get nova-dashboards ready for consumption in your project:
+The following schematics command will get dashboards ready for consumption in your project:
 ```sh
-$ ng add @solarwinds/nova-dashboards
+$ ng add @nova-ui/dashboards
 ```
 
 Tasks performed by this command:
-* Adds the `@solarwinds/nova-dashboards` package and its associated dependencies to your package.json
+* Adds the `@nova-ui/dashboards` package and its associated dependencies to your package.json
 * Performs an `npm install`
 * Adds the necessary imports to your app's main module
 * Adds the necessary style definitions to your app's angular.json file.
@@ -68,15 +68,15 @@ Install with npm:
 $ npm install angular-gridster2
 $ npm install d3
 $ npm install d3-selection-multi
-$ npm install @solarwinds/nova-charts
-$ npm install @solarwinds/nova-dashboards
+$ npm install @nova-ui/charts
+$ npm install @nova-ui/dashboards
 ```
 
 Once all dependencies and project files are downloaded, add NuiDashboardsModule and 
 BrowserAnimationsModule to your main Angular module's imports:
 ```js
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NuiDashboardsModule } from "@solarwinds/nova-dashboards";
+import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 @NgModule({
     imports: [
@@ -94,7 +94,7 @@ addition to the styles source paths:
    "build": {
       "options": {
           "styles": [
-             "./node_modules/@solarwinds/nova-charts/bundles/css/styles.css"
+             "./node_modules/@nova-ui/charts/bundles/css/styles.css"
              ...
           ],
           ...
@@ -106,9 +106,9 @@ addition to the styles source paths:
 [//]: # (TODO: Update links with v10)
 ## Start Implementing Your Dashboards
 An **overview** of Nova Dashboards is available 
-<a href="http://apollo-docs.swdev.local/nova-dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/overview.html">here</a>,
+<a href="http://apollo-docs.swdev.local/dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/overview.html">here</a>,
 but if you'd prefer to dive right in, you can start with our **Hello, Dashboards!** tutorial 
-<a href="http://apollo-docs.swdev.local/nova-dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/tutorials/hello-dashboards.html">here</a>.
+<a href="http://apollo-docs.swdev.local/dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/tutorials/hello-dashboards.html">here</a>.
 
 [//]: # (Line breaks leave breathing room when the user scrolls to the bottom)
 <br>

@@ -11,7 +11,7 @@ import {
     NuiSearchModule,
     NuiSwitchModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     RepeatDisabledMultiSelectionExampleComponent,

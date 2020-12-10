@@ -1,4 +1,4 @@
-import { ITimeframe } from "@solarwinds/nova-bits";
+import { ITimeframe } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
 
 import { ITimeseriesWidgetData, ITimeseriesWidgetSeriesData } from "../../types";

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 import { Numeric } from "d3-array";
 import cloneDeep from "lodash/cloneDeep";
 import sortBy from "lodash/sortBy";

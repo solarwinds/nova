@@ -1,4 +1,4 @@
-import { IAccessors, IDataSeries } from "@solarwinds/nova-charts";
+import { IAccessors, IDataSeries } from "@nova-ui/charts";
 import moment, { Moment } from "moment/moment";
 
 export interface IDateValue {

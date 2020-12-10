@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { IEventDefinition } from "@solarwinds/nova-bits";
+import { IEventDefinition } from "@nova-ui/bits";
 
 
 

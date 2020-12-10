@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Inject, OnChanges, OnDestroy, Optional } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import {
     ChartAssist,
     ChartPalette,
@@ -19,7 +19,7 @@ import {
     SequentialColorProvider,
     SET_DOMAIN_EVENT,
     ZoomPlugin
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import { merge } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

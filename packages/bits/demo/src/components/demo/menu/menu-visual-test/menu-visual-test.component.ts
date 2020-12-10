@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IMenuGroup, MenuActionType } from "@solarwinds/nova-bits";
+import { IMenuGroup, MenuActionType } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-menu-visual-test",

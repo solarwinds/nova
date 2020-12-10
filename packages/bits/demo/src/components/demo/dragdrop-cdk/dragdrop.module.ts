@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDndModule, NuiDocsModule, SrlcStage } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDndModule, NuiDocsModule, SrlcStage } from "@nova-ui/bits";
 
 import { NuiDragDropModule } from "../../../../../src/lib/dragdrop/dragdrop.module";
 

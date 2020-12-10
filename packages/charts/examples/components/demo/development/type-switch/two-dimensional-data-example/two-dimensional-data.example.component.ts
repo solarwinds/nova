@@ -27,7 +27,7 @@ import {
     Scales,
     stack,
     XYGrid,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import zipObject from "lodash/zipObject";
 
 enum ChartType {

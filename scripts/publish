@@ -48,8 +48,7 @@ cd $PROJECT_DIR
 PACKAGE_NAME=$(node -p "require('./package.json').name")
 PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
-npm config delete @solarwinds:registry
-npm config set registry $SERVER:8081/artifactory/api/npm/npm-SolarWinds
+
 npm config set email itdevopsteam-apps@solarwinds.com
 npm config set always-auth true
 npm config set _auth $NPM_AUTH

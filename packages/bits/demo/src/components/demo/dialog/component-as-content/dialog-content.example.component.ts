@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from "@angular/core";
-import { IToastService, NuiActiveDialog, ToastService } from "@solarwinds/nova-bits";
+import { IToastService, NuiActiveDialog, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-dialog-content-example",

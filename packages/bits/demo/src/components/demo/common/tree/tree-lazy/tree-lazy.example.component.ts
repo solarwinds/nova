@@ -1,7 +1,7 @@
 import { ArrayDataSource } from "@angular/cdk/collections";
 import { CdkNestedTreeNode, CdkTree, NestedTreeControl } from "@angular/cdk/tree";
 import { Component, Injectable, IterableDiffer, IterableDiffers, ViewChild } from "@angular/core";
-import { expand } from "@solarwinds/nova-bits";
+import { expand } from "@nova-ui/bits";
 import { Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
 

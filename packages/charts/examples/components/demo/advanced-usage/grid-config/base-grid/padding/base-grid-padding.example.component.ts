@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, XYGrid, XYGridConfig } from "@solarwinds/nova-charts";
+import { Chart, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, XYGrid, XYGridConfig } from "@nova-ui/charts";
 
 @Component({
     selector: "nui-base-grid-padding-example",

@@ -9,7 +9,7 @@ import {
     NuiSwitchModule,
     NuiTooltipModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     TooltipBasicExampleComponent,

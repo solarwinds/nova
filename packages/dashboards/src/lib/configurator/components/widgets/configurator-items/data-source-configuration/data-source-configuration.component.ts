@@ -12,7 +12,7 @@ import {
     SimpleChanges
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
 

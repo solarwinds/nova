@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 import isArray from "lodash/isArray";
 import omit from "lodash/omit";
 import { ReplaySubject } from "rxjs";

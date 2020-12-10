@@ -4,9 +4,15 @@ jobs:
         working_directory: ~/nova
         docker:
             -   image: circleci/node:12-browsers
+        environment:
+            PROJECT_DIR: ~/nova/packages/bits
+            BUILD_COUNTER: << pipeline.number >>
         steps:
             -   checkout:
                     path: ~/nova
+            -   run:
+                    name: Compute build version
+                    command: yarn run compute-version-ci
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Install dependencies
@@ -101,16 +107,27 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Publish bits
-                    command: echo "It worked"
+                    command: |
+                        PACKAGE_VERSION=$(cat package.json \
+                          | grep version \
+                          | head -1 \
+                          | awk -F: '{ print $2 }' \
+                          | sed 's/[",]//g' \
+                          | tr -d '[[:space:]]')
+                          echo $PACKAGE_VERSION
     charts-build:
         working_directory: ~/nova
         docker:
             -   image: circleci/node:12-browsers
+        environment:
+            PROJECT_DIR: ~/nova/packages/charts
+            BUILD_COUNTER: << pipeline.number >>
         steps:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    command: ls -a
+                    name: Compute build version
+                    command: yarn run compute-version-ci
 #            -   run:
 #                    name: Download Bits Artifact
 #                    # TODO: replace "207" with correct build number
@@ -176,7 +193,7 @@ jobs:
                    command: npm pack ./dist
 #            -   store_artifacts:
 #                    # TODO: use env variable for version
-#                    path: ~/nova/packages/bits/solarwinds-nova-charts-*.tgz
+#                    path: ~/nova/packages/bits/*.tgz
 #                    destination: bits-package.tgz
             -   persist_to_workspace:
                     root: ~/nova
@@ -191,14 +208,27 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Publish charts
-                    command: echo "It worked"
+                    command: |
+                        PACKAGE_VERSION=$(cat package.json \
+                          | grep version \
+                          | head -1 \
+                          | awk -F: '{ print $2 }' \
+                          | sed 's/[",]//g' \
+                          | tr -d '[[:space:]]')
+                          echo $PACKAGE_VERSION
     dashboards-build:
         working_directory: ~/nova
         docker:
             -   image: circleci/node:12-browsers
+        environment:
+            PROJECT_DIR: ~/nova/packages/dasboards
+            BUILD_COUNTER: << pipeline.number >>
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Compute build version
+                    command: yarn run compute-version-ci
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Install dependencies
@@ -268,10 +298,14 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    name: Publish dashboards
-                    command: echo "It worked"
-
+                    command: |
+                        PACKAGE_VERSION=$(cat package.json \
+                          | grep version \
+                          | head -1 \
+                          | awk -F: '{ print $2 }' \
+                          | sed 's/[",]//g' \
+                          | tr -d '[[:space:]]')
+                          echo $PACKAGE_VERSION
     release-prep:
         working_directory: ~/nova
         docker:
@@ -342,6 +376,10 @@ workflows:
                      requires:
                          -   bits-e2e-test
                          -   bits-unit-test
+                         -   charts-e2e-test
+                         -   charts-unit-test
+                         -   dashboards-e2e-test
+                         -   dashboards-unit-test
                      filters:
                          branches:
                              only:
@@ -360,8 +398,12 @@ workflows:
                          -   charts-build
              -   charts-publish:
                      requires:
-                         - charts-e2e-test
-                         - charts-unit-test
+                         -   bits-e2e-test
+                         -   bits-unit-test
+                         -   charts-e2e-test
+                         -   charts-unit-test
+                         -   dashboards-e2e-test
+                         -   dashboards-unit-test
                      filters:
                          branches:
                              only:
@@ -380,8 +422,12 @@ workflows:
                          -   dashboards-build
              -   dashboards-publish:
                      requires:
-                         - dashboards-e2e-test
-                         - dashboards-unit-test
+                         -   bits-e2e-test
+                         -   bits-unit-test
+                         -   charts-e2e-test
+                         -   charts-unit-test
+                         -   dashboards-e2e-test
+                         -   dashboards-unit-test
                      filters:
                          branches:
                              only:

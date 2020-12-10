@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     Chart, CHART_MARKERS, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, SequentialChartMarkerProvider, XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-markers-custom-provider-example",

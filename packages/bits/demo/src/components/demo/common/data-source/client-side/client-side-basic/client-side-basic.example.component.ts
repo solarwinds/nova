@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } fro
 import {
     ClientSideDataSource,
     INovaFilteringOutputs, PaginatorComponent, SearchComponent
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 const RANDOM_ARRAY = [

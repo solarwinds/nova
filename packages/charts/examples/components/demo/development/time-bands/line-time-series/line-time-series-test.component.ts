@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     barAccessors, BarRenderer, Chart, CHART_PALETTE_CS1, ChartPalette, LineAccessors, LinearScale, LineRenderer, Scales, TimeIntervalScale, XYGrid, ZoomPlugin
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import moment, { duration } from "moment/moment";
 
 const format = "YYYY-MM-DDTHH:mm:ssZ";

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { INTERACTION } from "../../../services/types";
 import { IConfigurable, IProperties, PIZZAGNA_EVENT_BUS } from "../../../types";

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { IEvent } from "@solarwinds/nova-bits";
+import { IEvent } from "@nova-ui/bits";
 import get from "lodash/get";
 import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";

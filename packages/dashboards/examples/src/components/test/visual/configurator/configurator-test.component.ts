@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { SearchService, ThemeSwitchService } from "@solarwinds/nova-bits";
+import { SearchService, ThemeSwitchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -10,7 +10,7 @@ import {
     ProviderRegistryService,
     WidgetClonerService,
     WidgetTypesService,
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";

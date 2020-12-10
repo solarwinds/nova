@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { WizardComponent } from "@solarwinds/nova-bits";
+import { WizardComponent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-validation-example",

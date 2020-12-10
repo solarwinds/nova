@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Inject, Input, Optional, ViewEncapsulation } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 
 import { INTERACTION } from "../../services/types";
 import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../types";

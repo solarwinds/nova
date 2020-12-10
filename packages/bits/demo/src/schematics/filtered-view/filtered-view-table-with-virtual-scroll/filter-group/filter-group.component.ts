@@ -10,7 +10,7 @@ import {
     TemplateRef,
     ViewChildren,
 } from "@angular/core";
-import { CheckboxComponent, DialogService, IFilter, IFilterPub } from "@solarwinds/nova-bits";
+import { CheckboxComponent, DialogService, IFilter, IFilterPub } from "@nova-ui/bits";
 import _orderBy from "lodash/orderBy";
 import { Subject } from "rxjs";
 

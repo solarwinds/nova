@@ -22,7 +22,7 @@
                 <a target="_blank" href="../injectables/ClientSideDataSource.html"><code>ClientSideDataSource</code></a>
                 service, which can be extended with custom filtering behavior.
             </p>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:list --name=basic-list --p=app</nui-schematic-docs-command>
+            <nui-schematic-docs-command>ng g @nova-ui/bits:list --name=basic-list --p=app</nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="basic-list">
                 <app-basic-list></app-basic-list>
             </nui-schematic-docs-example>
@@ -39,7 +39,7 @@
                 the <code>nui-repeat</code>. Selection changes can be intercepted using the
                 <code>selectionChange</code> output of the <code>nui-repeat</code>.
             </p>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:list --name=selection-list --p=app
+            <nui-schematic-docs-command>ng g @nova-ui/bits:list --name=selection-list --p=app
                 <strong>--selectionMode=multi</strong></nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="selection-list">
                 <app-selection-list></app-selection-list>
@@ -55,7 +55,7 @@
                 If no properties are specified, the search will be performed on all fields.
             </p>
             <nui-schematic-docs-command>
-                ng g @solarwinds/nova-bits:list --name=search-list --p=app --selectionMode=none --dataSource=serverSide --pagingMode=pagination --enable-sort=false
+                ng g @nova-ui/bits:list --name=search-list --p=app --selectionMode=none --dataSource=serverSide --pagingMode=pagination --enable-sort=false
                 <strong>--enable-search=true</strong>
             </nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="search-list">
@@ -68,7 +68,7 @@
             <p>
                 This example shows how to add pagination to <code>nui-repeat</code> with a remote data source.
             </p>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:list --name=paginated-list --p=app --pagingMode=pagination --dataSource=serverSide</nui-schematic-docs-command>
+            <nui-schematic-docs-command>ng g @nova-ui/bits:list --name=paginated-list --p=app --pagingMode=pagination --dataSource=serverSide</nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="paginated-list">
                 <app-paginated-list></app-paginated-list>
             </nui-schematic-docs-example>
@@ -85,7 +85,7 @@
                 new filtered results. The reset invocation can be seen in the
                 <code>virtual-scroll-list.component.ts:doSearch</code> method.
             </nui-message>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:list --name=scrollable-list --p=app --pagingMode=virtualScroll --dataSource=serverSide</nui-schematic-docs-command>
+            <nui-schematic-docs-command>ng g @nova-ui/bits:list --name=scrollable-list --p=app --pagingMode=virtualScroll --dataSource=serverSide</nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="virtual-scroll-list">
                 <app-virtual-scroll-list></app-virtual-scroll-list>
             </nui-schematic-docs-example>

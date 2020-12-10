@@ -3,8 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 import {
     DEMO_PATH_TOKEN, NuiBusyModule, NuiButtonModule, NuiCommonModule, NuiDialogModule, NuiDocsModule, NuiIconModule, NuiLayoutModule, NuiPopoverModule,
     NuiTimeFrameBarModule, NuiTimeFramePickerModule, NuiTooltipModule, SrlcStage
-} from "@solarwinds/nova-bits";
-import { NuiChartsModule } from "@solarwinds/nova-charts";
+} from "@nova-ui/bits";
+import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../common/demo-common.module";
 

@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, NgZone, OnDestroy, TemplateRef, ViewChild } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 import ResizeObserver from "resize-observer-polyfill";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";

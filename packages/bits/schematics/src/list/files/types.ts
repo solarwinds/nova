@@ -1,4 +1,4 @@
-<% if (enableSearch || pagingMode === "virtualScroll" || (pagingMode === "pagination" && dataSource === "serverSide")) {%>import { IFilter, INovaFilters } from "@solarwinds/nova-bits";
+<% if (enableSearch || pagingMode === "virtualScroll" || (pagingMode === "pagination" && dataSource === "serverSide")) {%>import { IFilter, INovaFilters } from "@nova-ui/bits";
 
 <% } %>export enum ServerStatus {
     active = "Active",

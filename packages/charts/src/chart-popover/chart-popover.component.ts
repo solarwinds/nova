@@ -12,7 +12,7 @@ import {
     TemplateRef,
     ViewChild
 } from "@angular/core";
-import { PopoverComponent } from "@solarwinds/nova-bits";
+import { PopoverComponent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

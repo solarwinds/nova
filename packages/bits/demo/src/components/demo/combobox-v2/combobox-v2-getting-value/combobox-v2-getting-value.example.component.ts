@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
-import { ComboboxV2Component } from "@solarwinds/nova-bits";
+import { ComboboxV2Component } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 

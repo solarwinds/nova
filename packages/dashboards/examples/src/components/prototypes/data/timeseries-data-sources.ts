@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DataSourceService, INovaFilters, ITimeframe } from "@solarwinds/nova-bits";
+import { DataSourceService, INovaFilters, ITimeframe } from "@nova-ui/bits";
 import {
     applyStatusEndpoints,
     IDataSource,
@@ -9,7 +9,7 @@ import {
     ITimeseriesWidgetData,
     ITimeseriesWidgetSeriesData,
     ITimeseriesWidgetStatusData
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import moment from "moment/moment";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";

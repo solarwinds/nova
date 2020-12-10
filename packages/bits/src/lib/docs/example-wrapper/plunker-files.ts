@@ -19,8 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import '@angular/localize';
 
-import { NuiModule } from '@solarwinds/nova-bits';
-${ this.includeCharts ? "import { NuiChartsModule } from '@solarwinds/nova-charts';" : ""}
+import { NuiModule } from '@nova-ui/bits';
+${ this.includeCharts ? "import { NuiChartsModule } from '@nova-ui/charts';" : ""}
 
 import { ${className} } from './${filePrefix}.example.component';
 
@@ -208,9 +208,9 @@ System.config({
         "d3-shape": "npm:d3@5.9.2",
         "d3-selection-multi": "npm:d3-selection-multi",
 
-        '@solarwinds/nova-bits': 'http://apollo-docs.swdev.local/nova-bits/${branchName}/dist/bundles/solarwinds-nova-bits.umd.js',
-        '@solarwinds/nova-charts': 'http://apollo-docs.swdev.local/nova-charts/${branchName}/dist/bundles/solarwinds-nova-charts.umd.js',
-        '@solarwinds/nova-dashboards': 'http://apollo-docs.swdev.local/nova-dashboards/${branchName}/dist/bundles/solarwinds-nova-dashboards.umd.js',
+        '@nova-ui/bits': 'http://apollo-docs.swdev.local/nova-bits/${branchName}/dist/bundles/nova-ui-bits.umd.js',
+        '@nova-ui/charts': 'http://apollo-docs.swdev.local/charts/${branchName}/dist/bundles/nova-ui-charts.umd.js',
+        '@nova-ui/dashboards': 'http://apollo-docs.swdev.local/dashboards/${branchName}/dist/bundles/nova-ui-dashboards.umd.js',
     },
     packages: {
         app: {
@@ -262,8 +262,8 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 <head>
     <base href="." />
     <title>Nova bits demo</title>
-    <link rel="stylesheet" href="http://apollo-docs.swdev.local/nova-bits/${branchName}/dist/bundles/css/styles.css" />
-    ${this.includeCharts ? `<link rel="stylesheet" href="http://apollo-docs.swdev.local/nova-charts/${branchName}/dist/bundles/css/styles.css" />` : ""}
+    <link rel="stylesheet" href="http://apollo-docs.swdev.local/bits/${branchName}/dist/bundles/css/styles.css" />
+    ${this.includeCharts ? `<link rel="stylesheet" href="http://apollo-docs.swdev.local/charts/${branchName}/dist/bundles/css/styles.css" />` : ""}
     <script src="https://unpkg.com/core-js@^2.4.1/client/shim.js"></script>
     <script src="https://unpkg.com/zone.js@^0.8.25/dist/zone.js"></script>
     <script src="https://unpkg.com/zone.js@^0.8.25/dist/long-stack-trace-zone.js"></script>

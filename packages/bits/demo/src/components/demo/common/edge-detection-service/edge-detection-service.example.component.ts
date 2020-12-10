@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
-import { EdgeDetectionService, IEdgeDetectionResult } from "@solarwinds/nova-bits";
+import { EdgeDetectionService, IEdgeDetectionResult } from "@nova-ui/bits";
 import _set from "lodash/set";
 
 @Component({

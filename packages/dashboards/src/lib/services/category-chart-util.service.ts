@@ -21,7 +21,7 @@ import {
     radialScales,
     Renderer,
     Scales
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 import { ProportionalWidgetChartTypes } from "../components/proportional-widget/types";
 

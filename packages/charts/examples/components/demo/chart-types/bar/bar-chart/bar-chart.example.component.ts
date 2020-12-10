@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { barAccessors, barGrid, BarRenderer, barScales, Chart, IBarChartConfig } from "@solarwinds/nova-charts";
+import { barAccessors, barGrid, BarRenderer, barScales, Chart, IBarChartConfig } from "@nova-ui/charts";
 
 @Component({
     selector: "nui-bar-chart-example",

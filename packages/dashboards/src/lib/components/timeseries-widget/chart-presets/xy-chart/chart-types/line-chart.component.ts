@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, Optional } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@solarwinds/nova-bits";
-import { Chart, ChartAssist, ChartPalette, IAccessors, IValueProvider, LineAccessors, LineRenderer, XYGrid, XYGridConfig } from "@solarwinds/nova-charts";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
+import { Chart, ChartAssist, ChartPalette, IAccessors, IValueProvider, LineAccessors, LineRenderer, XYGrid, XYGridConfig } from "@nova-ui/charts";
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { TimeseriesScalesService } from "../../../timeseries-scales.service";

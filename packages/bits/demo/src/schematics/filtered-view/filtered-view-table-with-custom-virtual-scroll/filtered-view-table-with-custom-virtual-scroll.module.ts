@@ -14,7 +14,7 @@ import {
     NuiSorterModule,
     NuiSpinnerModule,
     NuiTableModule,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { FilterGroupModule } from "./filter-group/filter-group.module";
 import { FilteredViewTableWithCustomVirtualScrollComponent } from "./filtered-view-table-with-custom-virtual-scroll.component";

@@ -1,5 +1,5 @@
-import { CHART_PALETTE_CS_S } from "@solarwinds/nova-charts";
-import { ITimeseriesWidgetData, ITimeseriesWidgetStatusData } from "@solarwinds/nova-dashboards";
+import { CHART_PALETTE_CS_S } from "@nova-ui/charts";
+import { ITimeseriesWidgetData, ITimeseriesWidgetStatusData } from "@nova-ui/dashboards";
 import moment from "moment/moment";
 
 export interface BasicTableModel {

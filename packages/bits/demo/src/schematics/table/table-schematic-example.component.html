@@ -21,7 +21,7 @@
                 <a target="_blank" href="../injectables/ClientSideDataSource.html"><code>ClientSideDataSource</code></a>
                 service, which can be extended with custom filtering behavior.
             </p>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --p=app --name=basic-table --enable-search=false --enable-sort=false</nui-schematic-docs-command>
+            <nui-schematic-docs-command>ng g @nova-ui/bits:table --p=app --name=basic-table --enable-search=false --enable-sort=false</nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="basic-table">
                 <app-basic-table></app-basic-table>
             </nui-schematic-docs-example>
@@ -29,7 +29,7 @@
 
         <nui-tab heading="Sort">
             <h2>Table Sorting</h2>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --p=app --name=table-with-sort --enable-sort --enable-search=false</nui-schematic-docs-command>
+            <nui-schematic-docs-command>ng g @nova-ui/bits:table --p=app --name=table-with-sort --enable-sort --enable-search=false</nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="table-with-sort">
                 <app-table-with-sort></app-table-with-sort>
             </nui-schematic-docs-example>
@@ -37,7 +37,7 @@
 
         <nui-tab heading="Search">
             <h2>Table with Search</h2>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --p=app --name=table-with-search --enable-search --enable-sort=false</nui-schematic-docs-command>
+            <nui-schematic-docs-command>ng g @nova-ui/bits:table --p=app --name=table-with-search --enable-search --enable-sort=false</nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="table-with-search">
                 <app-table-with-search></app-table-with-search>
             </nui-schematic-docs-example>
@@ -48,7 +48,7 @@
             <p>
                 This example shows how to add pagination to <code>nui-table</code> with a remote data source.
             </p>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --name=table-with-pagination --p=app --pagingMode=pagination --dataSource=serverSide</nui-schematic-docs-command>
+            <nui-schematic-docs-command>ng g @nova-ui/bits:table --name=table-with-pagination --p=app --pagingMode=pagination --dataSource=serverSide</nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="table/table-with-pagination">
                 <app-table-with-pagination></app-table-with-pagination>
             </nui-schematic-docs-example>
@@ -59,7 +59,7 @@
             <p>
                 This example shows how to add selection to <code>nui-table</code> with a remote data source.
             </p>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --name=table-with-pagination --p=app --pagingMode=pagination --dataSource=serverSide
+            <nui-schematic-docs-command>ng g @nova-ui/bits:table --name=table-with-pagination --p=app --pagingMode=pagination --dataSource=serverSide
                 <strong>--selectionMode=multi</strong></nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="table/table-with-selection">
                 <app-table-with-selection></app-table-with-selection>
@@ -76,7 +76,7 @@
                 the viewport manager's paging progress must be reset each time the data is refreshed with
                 new filtered results whenever the filters are changed.
             </nui-message>
-            <nui-schematic-docs-command>ng g @solarwinds/nova-bits:table --name=table-with-virtual-scroll --p=app --pagingMode=virtualScroll --dataSource=serverSide</nui-schematic-docs-command>
+            <nui-schematic-docs-command>ng g @nova-ui/bits:table --name=table-with-virtual-scroll --p=app --pagingMode=virtualScroll --dataSource=serverSide</nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="table/table-with-virtual-scroll">
                 <app-table-with-virtual-scroll *ngIf="vs.active"></app-table-with-virtual-scroll>
             </nui-schematic-docs-example>
@@ -85,7 +85,7 @@
         <nui-tab heading="Custom Virtual Scroll" #cvs>
             <h2>Virtual Scroll with Custom Strategy</h2>
             <nui-schematic-docs-command>
-                ng g @solarwinds/nova-bits:table --name=table-with-virtual-scroll --p=app --pagingMode=virtualScroll --dataSource=serverSide
+                ng g @nova-ui/bits:table --name=table-with-virtual-scroll --p=app --pagingMode=virtualScroll --dataSource=serverSide
                 <strong>--virtualScrollStrategy=custom</strong>
             </nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="table/table-with-custom-virtual-scroll">

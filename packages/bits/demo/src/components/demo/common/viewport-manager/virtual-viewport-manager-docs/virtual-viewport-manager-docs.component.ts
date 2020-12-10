@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { RepeatComponent } from "@solarwinds/nova-bits";
+import { RepeatComponent } from "@nova-ui/bits";
 
 @Component({
   selector: "nui-virtual-viewport-manager-docs",

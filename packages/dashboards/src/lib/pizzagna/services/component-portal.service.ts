@@ -1,6 +1,6 @@
 import { ComponentPortal } from "@angular/cdk/portal";
 import { Injectable, Injector } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 
 import { TemplateLoadErrorComponent } from "../../components/template-load-error/template-load-error.component";
 import { IPortalEnvironment } from "../../types";

@@ -13,7 +13,7 @@ import {
     SimpleChanges
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent, IFilteringOutputs, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, IFilteringOutputs, LoggerService } from "@nova-ui/bits";
 import {
     DATA_SOURCE_CHANGE,
     DATA_SOURCE_OUTPUT,
@@ -22,7 +22,7 @@ import {
     IProperties,
     PIZZAGNA_EVENT_BUS,
     ProviderRegistryService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { ReplaySubject, Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
 
@@ -128,7 +128,7 @@ export class AcmeProportionalDSConfigComponent implements IHasChangeDetector, On
                 });
                 await dataSource.applyFilters();
         });
-        
+
         } else {
             this.logger.warn("No provider found for id:", providerId);
         }

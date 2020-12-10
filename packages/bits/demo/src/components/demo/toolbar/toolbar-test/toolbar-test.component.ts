@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IMenuGroup } from "@solarwinds/nova-bits";
+import { IMenuGroup } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-toolbar-test",

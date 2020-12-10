@@ -1,5 +1,5 @@
 import { FormBuilder } from "@angular/forms";
-import { TimeframeService } from "@solarwinds/nova-bits";
+import { TimeframeService } from "@nova-ui/bits";
 
 import { IPizzagnaLayer, WellKnownProviders } from "../../../../types";
 import { IConfiguratorForm } from "../types";

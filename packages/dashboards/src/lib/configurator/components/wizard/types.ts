@@ -1,5 +1,5 @@
 import {ElementRef, EventEmitter} from "@angular/core";
-import { IBusyConfig } from "@solarwinds/nova-bits";
+import { IBusyConfig } from "@nova-ui/bits";
 
 export interface IDashwizStepNavigatedEvent {
     /** Index of the current step. */

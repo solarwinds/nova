@@ -12,7 +12,7 @@ with no data source at all.
 While the mechanism by which the framework interacts with a data source is [well-defined](../../Interfaces/IDataSource.html), the way in which
 a data source retrieves and manipulates its data is left entirely to author of the data source (i.e. the product/feature developer).
 
-It is highly recommended to implement the data source on top of the [DataSourceService](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/injectables/DataSourceService.html#source) so that you extend the service,
+It is highly recommended to implement the data source on top of the [DataSourceService](https://ux.solarwinds.io/nova/docs/bits/latest/sdk/api-docs-ng2/injectables/DataSourceService.html#source) so that you extend the service,
 that will allow Nova to introduce new functionality to the data source so that you won't need to add that.
 
 ## Data Source Features
@@ -20,7 +20,7 @@ Data Source Features is way to describe the capabilities of a data source. For e
 so that it can sort the data and reflect this set up in the configuration. That will allow some parts of the application working
 with the Features.
 
-Data Source Features are implemented using [IDataSourceFeaturesConfiguration](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSourceFeaturesConfiguration.html) which is used in [IDataSource](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html).
+Data Source Features are implemented using [IDataSourceFeaturesConfiguration](https://ux.solarwinds.io/nova/docs/bits/latest/sdk/api-docs-ng2/interfaces/IDataSourceFeaturesConfiguration.html) which is used in [IDataSource](https://ux.solarwinds.io/nova/docs/bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html).
 
 The example of the features configuration:
 ```
@@ -30,7 +30,7 @@ const supportedFeatures: IDataSourceFeatures = {
 };
 ```
 
-It is highly recommended to use [DataSourceFeatures](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/classes/DataSourceFeatures.html) for the actual implementation of the Features.
+It is highly recommended to use [DataSourceFeatures](https://ux.solarwinds.io/nova/docs/bits/latest/sdk/api-docs-ng2/classes/DataSourceFeatures.html) for the actual implementation of the Features.
 
 You can check the example of GoogleBooks API [DataSource](../widget-types/table/table-with-search.html) in the example.
 

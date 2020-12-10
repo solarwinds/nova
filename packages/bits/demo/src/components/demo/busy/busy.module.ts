@@ -11,7 +11,7 @@ import {
     NuiSelectModule,
     NuiSpinnerModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { BusyDocsExampleComponent } from "./busy-docs/busy-docs.example.component";
 import {

@@ -5,7 +5,7 @@ import {
     PaginatorComponent,
     SearchComponent,
     SearchService,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 const RANDOM_ARRAY = [

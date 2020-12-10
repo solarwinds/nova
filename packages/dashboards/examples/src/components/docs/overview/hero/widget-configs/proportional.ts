@@ -7,7 +7,7 @@ import {
     PizzagnaLayer,
     ProportionalWidgetChartTypes,
     WellKnownProviders
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 
 import { BeerReviewCountsByCityMockDataSource } from "../data/proportional-datasources";
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, ChartAssist, ChartDonutContentPlugin, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales } from "@solarwinds/nova-charts";
+import { Chart, ChartAssist, ChartDonutContentPlugin, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales } from "@nova-ui/charts";
 
 @Component({
     selector: "nui-donut-chart-test",
