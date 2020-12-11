@@ -26,6 +26,7 @@ jobs:
                     paths:
                         - packages
                         - ts-lint-rules
+                        - scripts
                         - docker-compose.yml
                         - tsconfig.main.json
                         - package.json
