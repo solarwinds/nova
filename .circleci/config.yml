@@ -128,12 +128,6 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    name: test
-                    command: |
-                        echo $PROJECT_DIR
-                        ls
-                        pwd
-            -   run:
                     name: Compute build version
                     command: yarn run compute-version-ci
 #            -   run:
@@ -235,7 +229,6 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    working_directory: ~/nova
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
