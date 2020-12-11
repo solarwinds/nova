@@ -28,6 +28,7 @@ jobs:
                         - ts-lint-rules
                         - docker-compose.yml
                         - tsconfig.main.json
+                        - package.json
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
