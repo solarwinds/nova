@@ -38,7 +38,7 @@ case $CIRCLE_BRANCH in
             npm publish ./dist
             ;;
 
-      "develop" | "next" | "hotfix/"*)
+      "main" | "next" | "hotfix/"*)
           echo Publishing $CIRCLE_BRANCH package
             npm publish ./dist --tag $CIRCLE_BRANCH
             ;;

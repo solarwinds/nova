@@ -51,8 +51,6 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    command: pwd; ls
-            -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
             -   run:
@@ -70,8 +68,6 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    command: pwd; ls
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
@@ -91,12 +87,6 @@ jobs:
             -   run:
                     name: Create bits package
                     command: npm pack ./dist
-            -   run:
-                    command: pwd; ls
-#            - store_artifacts:
-#                  # TODO: use env variable for version
-#                  path: ~/nova/packages/bits/*.tgz
-#                  destination: bits-package.tgz
             -   persist_to_workspace:
                     root: ~/nova
                     paths:
@@ -168,8 +158,6 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    command: pwd; ls
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
@@ -293,6 +281,8 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Publish charts
                     command: yarn run publish-ci
     release-prep:
         working_directory: ~/nova
@@ -368,10 +358,10 @@ workflows:
                          -   charts-unit-test
                          -   dashboards-e2e-test
                          -   dashboards-unit-test
-#                     filters:
-#                         branches:
-#                             only:
-#                                 - main
+                     filters:
+                         branches:
+                             only:
+                                 - main
              -   charts-build:
                      requires:
                          - bits-pack
@@ -392,10 +382,10 @@ workflows:
                          -   charts-unit-test
                          -   dashboards-e2e-test
                          -   dashboards-unit-test
-#                     filters:
-#                         branches:
-#                             only:
-#                                 - main
+                     filters:
+                         branches:
+                             only:
+                                 - main
              -   dashboards-build:
                      requires:
                          -   charts-pack
@@ -416,10 +406,10 @@ workflows:
                          -   charts-unit-test
                          -   dashboards-e2e-test
                          -   dashboards-unit-test
-#                     filters:
-#                         branches:
-#                             only:
-#                                 - main
+                     filters:
+                         branches:
+                             only:
+                                 - main
     nova-release:
         jobs:
             - release-approval:

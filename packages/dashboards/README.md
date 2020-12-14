@@ -20,7 +20,7 @@ absorb into your product's code base.
 $ ng add @nova-ui/bits
 ```
 If needed, further instructions for Bits installation can be found 
-<a href="http://apollo-docs.swdev.local/bits/release_nova_v9.x/sdk/api-docs-ng2/" target="_blank">here</a>.
+<a href="http://apollo-docs.swdev.local/nova-bits/release_nova_v9.x/sdk/api-docs-ng2/" target="_blank">here</a>.
 
 [//]: # (TODO: Update bits link above with v10)
 
@@ -40,14 +40,6 @@ If you want to install it globally, run the following command:
 ```
 npm install -g @angular/cli
 ```
-
-#### Configuring the NPM Registry
-
-To configure your npm registry for access to all @nova-ui packages in our internal artifact 
-repository, run the following command: 
-```
-npm config set @nova-ui:registry http://dev-brn-art-02.swdev.local:8081/artifactory/api/npm/npm
-``` 
 
 ## Setup Options
 #### Automated Installation and Setup Using the Angular CLI
@@ -106,9 +98,9 @@ addition to the styles source paths:
 [//]: # (TODO: Update links with v10)
 ## Start Implementing Your Dashboards
 An **overview** of Nova Dashboards is available 
-<a href="http://apollo-docs.swdev.local/dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/overview.html">here</a>,
+<a href="http://apollo-docs.swdev.local/nova-dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/overview.html">here</a>,
 but if you'd prefer to dive right in, you can start with our **Hello, Dashboards!** tutorial 
-<a href="http://apollo-docs.swdev.local/dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/tutorials/hello-dashboards.html">here</a>.
+<a href="http://apollo-docs.swdev.local/nova-dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/tutorials/hello-dashboards.html">here</a>.
 
 [//]: # (Line breaks leave breathing room when the user scrolls to the bottom)
 <br>

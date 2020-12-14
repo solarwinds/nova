@@ -209,8 +209,8 @@ System.config({
         "d3-selection-multi": "npm:d3-selection-multi",
 
         '@nova-ui/bits': 'http://apollo-docs.swdev.local/nova-bits/${branchName}/dist/bundles/nova-ui-bits.umd.js',
-        '@nova-ui/charts': 'http://apollo-docs.swdev.local/charts/${branchName}/dist/bundles/nova-ui-charts.umd.js',
-        '@nova-ui/dashboards': 'http://apollo-docs.swdev.local/dashboards/${branchName}/dist/bundles/nova-ui-dashboards.umd.js',
+        '@nova-ui/charts': 'http://apollo-docs.swdev.local/nova-charts/${branchName}/dist/bundles/nova-ui-charts.umd.js',
+        '@nova-ui/dashboards': 'http://apollo-docs.swdev.local/nova-dashboards/${branchName}/dist/bundles/nova-ui-dashboards.umd.js',
     },
     packages: {
         app: {
@@ -262,8 +262,8 @@ platformBrowserDynamic().bootstrapModule(AppModule);
 <head>
     <base href="." />
     <title>Nova bits demo</title>
-    <link rel="stylesheet" href="http://apollo-docs.swdev.local/bits/${branchName}/dist/bundles/css/styles.css" />
-    ${this.includeCharts ? `<link rel="stylesheet" href="http://apollo-docs.swdev.local/charts/${branchName}/dist/bundles/css/styles.css" />` : ""}
+    <link rel="stylesheet" href="http://apollo-docs.swdev.local/nova-bits/${branchName}/dist/bundles/css/styles.css" />
+    ${this.includeCharts ? `<link rel="stylesheet" href="http://apollo-docs.swdev.local/nova-charts/${branchName}/dist/bundles/css/styles.css" />` : ""}
     <script src="https://unpkg.com/core-js@^2.4.1/client/shim.js"></script>
     <script src="https://unpkg.com/zone.js@^0.8.25/dist/zone.js"></script>
     <script src="https://unpkg.com/zone.js@^0.8.25/dist/long-stack-trace-zone.js"></script>
