@@ -14,16 +14,16 @@ describe("components >", () => {
         let subject: ImageComponent;
         const imagesPreset = [
             {
-                svgFile: "sw-logo.svg",
-                name: "sw-logo",
+                svgFile: "test-image-one.svg",
+                name: "test-image-one",
                 brushType: "filled",
                 code: "<svg>test svg</svg>",
             },
             {
-                svgFile: "ok-robot.svg",
-                name: "ok-robot",
+                svgFile: "test-image-two.svg",
+                name: "test-image-two",
                 brushType: "filled",
-                code: "<svg>ok robot</svg>",
+                code: "<svg>test svg</svg>",
             },
         ] as Array<IImagesPresetItem>;
         const domSanitizer = {
