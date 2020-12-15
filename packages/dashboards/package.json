@@ -110,5 +110,8 @@
     "tslint": "^5.0.0",
     "typescript": "~3.8.3",
     "zone.js": "0.10.2"
+  },
+  "dependencies": {
+    "resize-observer-polyfill": "^1.5.0"
   }
 }

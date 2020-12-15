@@ -25,33 +25,16 @@ import {
     WidgetClonerService,
     WidgetTypesService,
 } from "@solarwinds/nova-dashboards";
-// TODO: Comment back in after NUI-5606 is finished
-// import { chartPie, discovery } from "@solarwinds/nova-images";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { finalize, take, takeUntil } from "rxjs/operators";
 
-// Interface for the image of a widget item
-interface IImageDef {
-    svgFile: string;
-    name: string;
-    brushType: string;
-    code: string;
-}
-
 // Interface of a widget item
 interface IWidgetItem {
-    image: IImageDef;
     name: string;
     widget: IWidget;
 }
-// TODO: Delete after NUI-5606 is finished
-const placeholderImages = {
-    svgFile: "",
-    name: "not-found",
-    brushType: "",
-    code: "not-found",
-};
+
 // This component acts as the first step, or page, in the wizard where the user selects a wizard type to create.
 // It's recommended to have this component in a different file. For this tutorial, it's included in the same
 // file for simplicity.
@@ -70,9 +53,6 @@ const placeholderImages = {
 
 <ng-template #widgetClonerItem let-item="item">
     <div class="nui-widget-cloner__item d-flex pt-2 pb-2 align-items-center">
-        <div class="nui-widget-cloner__image">
-            <nui-image [autoFill]="true" height="30px" margin="centered" [image]="item.image"></nui-image>
-        </div>
         <div class="text-info ml-3">{{ item.name }}</div>
     </div>
 </ng-template>
@@ -84,15 +64,6 @@ export class WidgetTemplateSelectionComponent implements IWidgetTemplateSelector
 
     public widgetItems: IWidgetItem[] = [];
     public widgetSelection: IWidgetItem[];
-    // TODO: Comment back in after NUI-5606 is finished and replace with code below
-    // private cloneSelectionImages: Record<string, IImageDef> = {
-    //     "proportional": chartPie,
-    //     "kpi": discovery,
-    // };
-    private cloneSelectionImages: Record<string, IImageDef> = {
-        "proportional": placeholderImages,
-        "kpi": placeholderImages,
-    };
 
     constructor(private widgetTypesService: WidgetTypesService) { }
 
@@ -101,12 +72,10 @@ export class WidgetTemplateSelectionComponent implements IWidgetTemplateSelector
         // configuration to create an array of widget objects for the itemSource on the repeat component.
         this.widgetItems = [
             {
-                image: this.cloneSelectionImages["kpi"],
                 name: "Fully Configured KPI Widget",
                 widget: this.widgetTypesService.mergeWithWidgetType(fullKpiWidgetConfig),
             },
             {
-                image: this.cloneSelectionImages["proportional"],
                 name: "Unconfigured Proportional Widget",
                 // Note that 'partialPropWidgetConfig' sets 'metadata.needsConfiguration' to true.
                 // When this widget is selected in the wizard, the 'Create Widget' button will be hidden
