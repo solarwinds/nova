@@ -65,11 +65,14 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
     }
 
     public onFormReady(item: IItemConfiguration, form: FormGroup, index: number) {
-        this.form.push(this.formBuilder.group({
+        const childForm = this.formBuilder.group({
             id: [item.id],
             componentType: [item.componentType],
             properties: form,
-        }));
+        });
+
+        this.form.setControl(index, childForm);
+
         setTimeout(() => {
             const label = form.get(`${item.id}/description`)?.get("label");
             label?.valueChanges
@@ -82,16 +85,16 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
     }
 
     public onFormDestroy(form: FormGroup) {
-        // remove form
-        let i = 0;
-        for (; i < this.form.length; i++) {
-            if (this.form.at(i).get("properties") === form) {
-                break;
-            }
-        }
-
         // using setTimeout to allow the change detection cycle to finish before updating the form
         setTimeout(() => {
+            // remove form
+            let i = 0;
+            for (; i < this.form.length; i++) {
+                if (this.form.at(i).get("properties") === form) {
+                    break;
+                }
+            }
+
             this.form.removeAt(i);
             // triggers form change
             this.form.patchValue(this.form.value, {emitEvent: true});
@@ -103,7 +106,6 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
     }
 
     public removeItem(item: IItemConfiguration | undefined, index: number): void {
-
         if (!item) {
            throw new Error("Unable to remove undefined item from pizzagna");
         }

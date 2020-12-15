@@ -1,10 +1,8 @@
 import { IProperties } from "../../types";
+import { IFormatter } from "../types";
 
-export interface IListWidgetConfiguration {
-    componentType: string;
-    itemConfigurationMap?: {
-        [key: string]: any,
-    };
+export interface IListWidgetConfiguration extends IFormatter {
+    properties: Record<string, any>;
     itemProperties?: IProperties;
 }
 
@@ -20,5 +18,6 @@ export interface INavigationBarButtons {
 export interface INavigationBarConfig {
     buttons?: INavigationBarButtons;
     label?: string;
+    isRoot?: boolean;
 }
 

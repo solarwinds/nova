@@ -117,7 +117,7 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
     }
 
     private _scrollBuffer: number = 0;
-    private sorterValue: ISortedItem;
+    private sortFilter: ISortedItem;
     private totalPages: number = 0;
     private lastPageFetched: number = 0;
     private sortableSet: Record<string, boolean> = {};
@@ -130,6 +130,7 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
 
     private readonly defaultColumnAlignment: TableAlignmentOptions = "left";
 
+    private idle: boolean = false;
     public isBusy: boolean = this.lastPageFetched !== this.totalPages;
 
     @ViewChild("widgetTable") table: TableComponent<any>;
@@ -171,13 +172,15 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         }
 
         if (changes.configuration) {
-            if (this.isSortByUpdated(changes.configuration)) {
-                this.sortedColumn = {
+            // Note: We don't have to trigger sorting in case sortable flag is false.
+            // Note: Using true as a default sortable value to maintain backward compatibility
+            if (this.isSortByUpdated(changes.configuration) && (changes.configuration.currentValue.sortable ?? true)) {
+                const sortedColumn = {
                     direction: changes.configuration.currentValue.sorterConfiguration.descendantSorting ?
                         SorterDirection.descending : SorterDirection.ascending,
                     sortBy: changes.configuration.currentValue.sorterConfiguration.sortBy,
                 };
-                this.onSortOrderChanged(this.sortedColumn);
+                this.onSortOrderChanged(sortedColumn);
             }
 
             const newHasVirtualScroll = get(changes, "configuration.currentValue.hasVirtualScroll", true) as boolean;
@@ -195,8 +198,8 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
 
     public ngOnInit(): void {
         if (this.dataSource) {
-            // Since the sorterValue is not initialized, we have to retrieve and set the correct sorter value from the configuration before registering it
-            this.setSorterValue();
+            // Since the sortFilter is not initialized, we have to retrieve and set the correct filter value from the configuration before registering it
+            this.setSortFilter();
             this.registerSorter();
             this.virtualScrollAddon.initWidget(this);
         }
@@ -256,7 +259,7 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         const columnsCondition = this.columns.length > 0;
         const dataCondition = this.tableData?.length > 0;
 
-        return this.isSearchEnabled
+        return this.isSearchEnabled || (this.hasVirtualScroll && (this.isBusy || this.idle))
             ? columnsCondition
             : columnsCondition && dataCondition;
     }
@@ -352,31 +355,31 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
      * @param event
      */
     public onSortOrderChanged(event: ISortedItem) {
+        this.sortedColumn = event;
         const columnToSort = this.columns.find(column => column.id === event.sortBy);
         if (!columnToSort) {
             return;
         }
 
-        const dataFieldIds = columnToSort.formatter.properties.dataFieldIds;
+        const dataFieldIds = columnToSort.formatter?.properties?.dataFieldIds;
         const sortField = dataFieldIds?.value;
         if (!sortField) {
             return;
-            // throw new Error("Cannot find 'value' column for sorting. Available columns: " + JSON.stringify(Object.keys(dataFieldIds)));
         }
-        const newSorterValue = {
+        const newSortFilter = {
             sortBy: sortField,
             direction: event.direction,
         };
-        if (isEqual(newSorterValue, this.sorterValue)) {
+        if (isEqual(newSortFilter, this.sortFilter)) {
             return;
         }
-        this.sorterValue = newSorterValue;
+        this.sortFilter = newSortFilter;
 
-        this.pizzagnaService.setProperty({
-            pizzagnaKey: PizzagnaLayer.Configuration,
-            componentId: this.componentId,
-            propertyPath: ["sorterConfiguration"],
-        }, event);
+        // Note: Since we're relying on the CDK Viewport internal logic to perform data load
+        // we have to move to the start of the range for dataSource to take correct range,
+        // if we will keep old data user can think (NUI-5333) that data is already reloaded.
+        // So we're flushing the old data and waiting for new one to avoid confusion.
+        this.flushTableData();
 
         this.eventBus.getStream(REFRESH).next();
     }
@@ -422,12 +425,12 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         return this.formatters.items[column.formatter.componentType]?.alignment || this.defaultColumnAlignment;
     }
 
-    private setSorterValue() {
+    private setSortFilter() {
         if (this.configuration) {
             const sortBy = this.configuration.sorterConfiguration?.sortBy;
             const columnValue = this.configuration.columns?.find(column => column.id === sortBy)?.formatter?.properties?.dataFieldIds?.value;
 
-            this.sorterValue = {
+            this.sortFilter = {
                 direction: this.configuration.sorterConfiguration?.descendantSorting ? SorterDirection.descending : SorterDirection.ascending,
                 sortBy: columnValue,
             };
@@ -459,6 +462,7 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
     private updateTable() {
         if (this.widgetData && this.dataFields && this.configuration.columns) {
             this.updateColumns(this.configuration);
+            this.idle = false;
             this.tableData = this.mapTableData(this.widgetData, this.configuration.columns, this.dataFields);
             this.tableUpdate$.next();
             this.changeDetector.detectChanges();
@@ -474,7 +478,7 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
                 componentInstance: {
                     getFilters: () => <IFilter<ISortedItem>>({
                         type: "sorter",
-                        value: this.sorterValue,
+                        value: this.sortFilter,
                     }),
                 },
             },
@@ -486,6 +490,11 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         this.dataFields.forEach((dataField) => {
             this.sortableSet[dataField.id] = dataField.sortable ?? true;
         });
+    }
+
+    private flushTableData(): void {
+        this.idle = true;
+        this.tableData = [];
     }
 
     private getTableScrollRange(): number {

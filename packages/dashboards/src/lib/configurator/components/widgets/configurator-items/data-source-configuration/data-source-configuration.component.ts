@@ -48,6 +48,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
 
     // used by the Broadcaster
     public dsOutput = new Subject<any>();
+    public dataFieldIds = new Subject<any>();
 
     constructor(public changeDetector: ChangeDetectorRef,
                 private formBuilder: FormBuilder,
@@ -101,6 +102,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
                 .subscribe((result: any | IDataSourceOutput<any>) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
                     this.dsOutput.next(result);
+                    this.dataFieldIds.next(Object.keys(result.result || result));
                 });
 
             dataSource.applyFilters();

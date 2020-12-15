@@ -15,6 +15,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
 import isEqual from "lodash/isEqual";
+import { Subject } from "rxjs/internal/Subject";
 import { take } from "rxjs/operators";
 
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
@@ -45,6 +46,8 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
     @Output() formReady = new EventEmitter<FormGroup>();
 
     public form: FormGroup;
+    // used by the Broadcaster
+    public dataFieldIds = new Subject<any>();
 
     constructor(public changeDetector: ChangeDetectorRef,
                 protected formBuilder: FormBuilder,
@@ -135,6 +138,7 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
                 .pipe(take(1))
                 .subscribe((result: any) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
+                    this.dataFieldIds.next(Object.keys(result.result || result));
                 });
             if (dataSource.updateConfiguration) {
                 dataSource.updateConfiguration(data.properties);

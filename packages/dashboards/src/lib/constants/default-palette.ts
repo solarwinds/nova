@@ -1,4 +1,4 @@
-import { CHART_PALETTE_CS3 } from "@solarwinds/nova-charts";
+import { CHART_PALETTE_CS3, CHART_PALETTE_CS_S_EXTENDED } from "@solarwinds/nova-charts";
 import zipObject from "lodash/zipObject";
 
 export const CHART_PALETTE_CS3_ALTERNATIVE_NAMES = [
@@ -34,10 +34,26 @@ export const CHART_PALETTE_CS3_ALTERNATIVE_NAMES = [
     $localize `Anthracite Dark`,
 ];
 
-export const chartPaletteColorMap: Record<string, string> = zipObject(CHART_PALETTE_CS3, CHART_PALETTE_CS3_ALTERNATIVE_NAMES);
+export const CHART_PALETTE_CS_S_EXTENDED_ALTERNATIVE_NAMES = [
+    $localize `Down`,
+    $localize `Down Light`,
+    $localize `Critical`,
+    $localize `Critical Light`,
+    $localize `Warning`,
+    $localize `Warning Light`,
+    $localize `Unknown`,
+    $localize `Unknown Light`,
+    $localize `Ok`,
+    $localize `Ok Light`,
+    $localize `Info`,
+    $localize `Info Light`,
+];
+
+export const chartPaletteColorMap: Record<string, string> = zipObject([...CHART_PALETTE_CS3, ...CHART_PALETTE_CS_S_EXTENDED],
+                                                    [...CHART_PALETTE_CS3_ALTERNATIVE_NAMES, ...CHART_PALETTE_CS_S_EXTENDED_ALTERNATIVE_NAMES]);
 
 export const DEFAULT_KPI_TILE_COLOR = "var(--nui-color-bg-secondary)";
-export const DEFAULT_KPI_BACKGROUND_COLORS = [...CHART_PALETTE_CS3].map(color =>
+export const DEFAULT_KPI_BACKGROUND_COLORS = [...CHART_PALETTE_CS3, ...CHART_PALETTE_CS_S_EXTENDED].map(color =>
     ({
         color,
         label: chartPaletteColorMap[color],

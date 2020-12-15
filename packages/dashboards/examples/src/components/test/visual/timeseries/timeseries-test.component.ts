@@ -13,7 +13,8 @@ import keyBy from "lodash/keyBy";
 import {
     TestTimeseriesDataSource,
     TestTimeseriesDataSource2,
-    TestTimeseriesStatusDataSource
+    TestTimeseriesStatusDataSource,
+    TestTimeseriesStatusIntervalDataSource
 } from "../../data/timeseries-data-sources";
 
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
@@ -65,6 +66,11 @@ export class AcmeDashboardComponent implements OnInit {
             [TestTimeseriesStatusDataSource.providerId]: {
                 provide: DATA_SOURCE,
                 useClass: TestTimeseriesStatusDataSource,
+                deps: [],
+            },
+            [TestTimeseriesStatusIntervalDataSource.providerId]: {
+                provide: DATA_SOURCE,
+                useClass: TestTimeseriesStatusIntervalDataSource,
                 deps: [],
             },
         });

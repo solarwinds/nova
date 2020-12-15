@@ -45,9 +45,11 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
         // update navBar label
         if (this.navigationBarId) {
             const navBarPath = `${PizzagnaLayer.Data}.${this.navigationBarId}.properties.navBarConfig.label`;
+            const navBarIsRootPath = `${PizzagnaLayer.Data}.${this.navigationBarId}.properties.navBarConfig.isRoot`;
             const navBarBackPath = `${PizzagnaLayer.Data}.${this.navigationBarId}.properties.navBarConfig.buttons.back.disabled`;
             this.pizzagnaService.setProperty(navBarPath, this.drillstate[this.drillstate.length - 1]);
             this.pizzagnaService.setProperty(navBarBackPath, !!this.drillstate.length);
+            this.pizzagnaService.setProperty(navBarIsRootPath, !this.drillstate.length);
         }
     }
 
@@ -84,7 +86,7 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
             group: {
                 componentInstance: {
                     getFilters: () => ({
-                        type: "group",
+                        // type: "group",
                         value: this.groupBy,
                     }),
                 },
@@ -92,7 +94,7 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
             drillstate: {
                 componentInstance: {
                     getFilters: () => ({
-                        type: "drillstate",
+                        // type: "drillstate",
                         value: this.drillstate,
                     }),
                 },

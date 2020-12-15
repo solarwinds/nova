@@ -45,6 +45,7 @@ export { NuiToastModule } from "./lib/toast/toast.module";
 export { NuiToolbarModule } from "./lib/toolbar/toolbar.module";
 export { NuiValidationMessageModule } from "./lib/validation-message/validation-message.module";
 export { NuiWizardModule } from "./lib/wizard/wizard.module";
+export { NuiWizardV2Module } from "./lib/wizard-v2/wizard.module";
 
 export { NuiDocsModule } from "./lib/docs/docs.module";
 

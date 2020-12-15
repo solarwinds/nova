@@ -7,7 +7,7 @@ import { takeUntil } from "rxjs/operators";
 
 interface IExampleItem {
     id: string;
-    name: string;
+    name?: string;
     icon?: string;
     disabled?: boolean;
 }
@@ -25,6 +25,17 @@ export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDe
                                        private formBuilder: FormBuilder) {}
     public selectedItem: IExampleItem;
     public handleClicksOutside: boolean = false;
+    public iconItems = [
+        "status_warning",
+        "status_up",
+        "status_critical",
+        "status_reserved",
+        "status_unplugged",
+        "status_unknown",
+        "status_down",
+        "status_missing",
+        "status_sleep",
+    ];
 
     // Datasources
     public items = Array.from({ length : 50 }).map((_, i) => $localize `Item ${i}`);
@@ -32,8 +43,14 @@ export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDe
             ({
                 id: `value-${i}`,
                 name: $localize `Item ${i}`,
-                icon: "check",
+                icon: "status_warning",
                 disabled: !!(i % 2),
+            }));
+
+    public itemsWithIconsOnly: IExampleItem[] = this.iconItems.map((icon, i) =>
+            ({
+                id: `value-${i}`,
+                icon: icon,
             }));
 
     public groupedItems: ISelectGroup[] = Array.from({ length: 10 }).map((_, i) => ({

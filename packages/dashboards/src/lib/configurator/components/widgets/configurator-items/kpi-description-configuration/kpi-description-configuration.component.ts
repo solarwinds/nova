@@ -26,7 +26,6 @@ export class KpiDescriptionConfigurationComponent implements OnInit, OnChanges, 
 
     @Output() formReady = new EventEmitter<FormGroup>();
 
-    public colors: string[] = [];
     public form: FormGroup;
     public subtitle$: Observable<string>;
 
@@ -40,8 +39,6 @@ export class KpiDescriptionConfigurationComponent implements OnInit, OnChanges, 
             label: [this.label, [Validators.required]],
             backgroundColor: [this.backgroundColor, [Validators.required]],
         });
-
-        this.colors = this.backgroundColors.map(item => item.color);
 
         if (this.configurableUnits) {
             this.form.addControl("units", this.formBuilder.control(this.units));

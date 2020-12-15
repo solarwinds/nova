@@ -15,15 +15,9 @@ export const drilldown: IWidgetTypeDefinition = {
         "widget": {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
         },
-        // "configurator": {
-        //     [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
-        //     // this points at the component type you need to change if you want to change the component for data source configuration
-        //     [WellKnownPathKey.DataSourceConfigComponentType]: `${dataSourceConfiguratorTemplatePath}.componentType`,
-        //     // this points at the component type you need to change if you want to change the component for tile description configuration
-        //     [WellKnownPathKey.TileDescriptionConfigComponentType]: `${tileDescriptionConfiguratorTemplatePath}.componentType`,
-        //     // for the default data source configuration component, this changes the list of data sources to pick from
-        //     [WellKnownPathKey.DataSourceProviders]: `${dataSourceConfiguratorTemplatePath}.properties.dataSourceProviders`,
-        // },
+        "configurator": {
+            [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
+        },
     },
     /***************************************************************************************************
      *  Widget section describes the structural part of the KPI widget

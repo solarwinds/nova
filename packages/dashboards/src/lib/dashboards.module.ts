@@ -16,6 +16,7 @@ import {
     NuiProgressModule,
     NuiRepeatModule,
     NuiSearchModule,
+    NuiSelectModule,
     NuiSpinnerModule,
     NuiTableModule,
     NuiTimeFrameBarModule,
@@ -49,6 +50,7 @@ import { StackedAreaChartComponent } from "./components/timeseries-widget/chart-
 import { StackedBarChartComponent } from "./components/timeseries-widget/chart-presets/xy-chart/chart-types/stacked-bar-chart.component";
 import { StackedPercentageAreaChartComponent } from "./components/timeseries-widget/chart-presets/xy-chart/chart-types/stacked-percentage-area-chart.component";
 import { TimeseriesWidgetComponent } from "./components/timeseries-widget/timeseries-widget.component";
+import { WidgetSearchComponent } from "./components/widget-search/widget-search.component";
 import { WidgetBodyContentComponent } from "./components/widget/widget-body-content/widget-body-content.component";
 import { WidgetBodyComponent } from "./components/widget/widget-body/widget-body.component";
 import { WidgetHeaderComponent } from "./components/widget/widget-header/widget-header.component";
@@ -61,6 +63,7 @@ import { NuiPizzagnaModule } from "./pizzagna/pizzagna.module";
 import { ComponentPortalService } from "./pizzagna/services/component-portal.service";
 import { ComponentRegistryService, IComponentWithLateLoadKey } from "./pizzagna/services/component-registry.service";
 import { EventRegistryService } from "./services/event-registry.service";
+import { KpiFormattersRegistryService } from "./services/table-formatter-registry.service";
 import {
     DASHBOARD_EDIT_MODE,
     DATA_SOURCE_BUSY,
@@ -79,6 +82,7 @@ import { WidgetTypesService } from "./services/widget-types.service";
 import { drilldown } from "./widget-types/drilldown/drilldown";
 import { embeddedContent } from "./widget-types/embedded-content/embedded-content";
 import { kpi } from "./widget-types/kpi/kpi";
+import { DEFAULT_KPI_FORMATTERS } from "./widget-types/kpi/kpi-configurator";
 import { previewPlaceholder } from "./widget-types/preview-placeholder";
 import { proportional } from "./widget-types/proportional/proportional";
 import { table } from "./widget-types/table/table";
@@ -112,6 +116,7 @@ const dashboardComponents = [
     ListLeafItemComponent,
     ListGroupItemComponent,
     ListNavigationBarComponent,
+    WidgetSearchComponent,
 ];
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -138,6 +143,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     ListLeafItemComponent,
     ListGroupItemComponent,
     ListNavigationBarComponent,
+    WidgetSearchComponent,
 ];
 
 @NgModule({
@@ -164,6 +170,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
         NuiSearchModule,
         NuiCommonModule,
         NuiRepeatModule,
+        NuiSelectModule,
     ],
     declarations: dashboardComponents,
     providers: [
@@ -176,7 +183,12 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     entryComponents: entryComponents,
 })
 export class NuiDashboardsModule {
-    constructor(widgetTypesService: WidgetTypesService, componentRegistry: ComponentRegistryService, eventRegistry: EventRegistryService) {
+    constructor(
+        widgetTypesService: WidgetTypesService,
+        componentRegistry: ComponentRegistryService,
+        eventRegistry: EventRegistryService,
+        kpiFormattersRegistry: KpiFormattersRegistryService
+    ) {
         widgetTypesService.registerWidgetType("kpi", 1, kpi);
         widgetTypesService.registerWidgetType("table", 1, table);
         widgetTypesService.registerWidgetType("proportional", 1, proportional);
@@ -202,5 +214,7 @@ export class NuiDashboardsModule {
         eventRegistry.registerEvent(DASHBOARD_EDIT_MODE);
         eventRegistry.registerEvent(DATA_SOURCE_OUTPUT);
         eventRegistry.registerEvent(DATA_SOURCE_BUSY);
+
+        kpiFormattersRegistry.addFormatters(DEFAULT_KPI_FORMATTERS);
     }
 }

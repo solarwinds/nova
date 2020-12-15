@@ -12,6 +12,7 @@ export * from "./formatters/donut-content-sum-formatter/donut-content-sum-format
 export * from "./formatters/donut-content-raw-formatter/donut-content-raw-formatter.component";
 export * from "./formatters/widget-formatter-configurators/donut-formatter-configurator.component";
 export * from "./formatters/icon-formatter/icon-formatter.component";
+export * from "./formatters/si-units-formatter/si-units-formatter.component";
 export * from "./heading/configurator-heading.component";
 export * from "./items-dynamic/items-dynamic.component";
 export * from "./preview-placeholder/preview-placeholder.component";

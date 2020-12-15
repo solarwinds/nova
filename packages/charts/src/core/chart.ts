@@ -3,7 +3,7 @@ import each from "lodash/each";
 import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { DESTROY_EVENT } from "../constants";
+import { DESTROY_EVENT, SERIES_STATE_CHANGE_EVENT } from "../constants";
 
 import { ChartPlugin } from "./common/chart-plugin";
 import { DataManager } from "./common/data-manager";
@@ -171,6 +171,7 @@ export class Chart implements IChart {
 
     public setSeriesStates(renderStateData: IRenderStateData[]) {
         this.seriesStatesSubject.next(renderStateData);
+        this.eventBus.getStream(SERIES_STATE_CHANGE_EVENT).next({ data: renderStateData });
     }
 
     private onUpdate(seriesSet: IChartSeries<IAccessors>[]) {

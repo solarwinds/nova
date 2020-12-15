@@ -78,23 +78,23 @@ const oneDataFieldColumns: ITableWidgetColumnConfig[] = [
 const multipleDataFieldsColumns: ITableWidgetColumnConfig[] = [
     {
         id: "column1",
-        label: $localize`No`,
-        isActive: true,
-        formatter: {
-            componentType: "LinkFormatterComponent",
-            properties: {
-                dataFieldIds: { link: "firstUrl", value: "firstUrlLabel" },
-            },
-        },
-    },
-    {
-        id: "column2",
         label: $localize`Name`,
         isActive: true,
         formatter: {
             componentType: "RawFormatterComponent",
             properties: {
                 dataFieldIds: { value: "name" },
+            },
+        },
+    },
+    {
+        id: "column2",
+        label: $localize`Link`,
+        isActive: true,
+        formatter: {
+            componentType: "LinkFormatterComponent",
+            properties: {
+                dataFieldIds: { link: "firstUrl", value: "firstUrlLabel" },
             },
         },
     },
@@ -166,23 +166,23 @@ const expectedColumnsMappingResults = {
     multipleDataFields: [
         {
             column1: {
-                data: { link: "https://en.wikipedia.org/wiki/Brno", value: "Brno" },
+                data: { value: "FOCUS-SVR-02258" },
             },
-            column2: { data: { value: "FOCUS-SVR-02258" } },
+            column2: { data: { link: "https://en.wikipedia.org/wiki/Brno", value: "Brno" } },
             __record: tableData[0],
         },
         {
             column1: {
-                data: { link: "https://en.wikipedia.org/wiki/Brno", value: "Brno" },
+                data: { value: "FOCUS-SVR-03312" },
             },
-            column2: { data: { value: "FOCUS-SVR-03312" } },
+            column2: { data: { link: "https://en.wikipedia.org/wiki/Brno", value: "Brno" } },
             __record: tableData[1],
         },
         {
             column1: {
-                data: { link: "https://en.wikipedia.org/wiki/Kyiv", value: "Kyiv" },
+                data: { value: "FOCUS-SVR-02258" },
             },
-            column2: { data: { value: "FOCUS-SVR-02258" } },
+            column2: { data: { link: "https://en.wikipedia.org/wiki/Kyiv", value: "Kyiv" } },
             __record: tableData[2],
         },
     ],
@@ -290,10 +290,11 @@ describe("TableWidgetComponent", () => {
             configuration.columns = oneDataFieldColumns;
             component.ngOnChanges(createSimpleChanges(configuration, tableData, dataFields));
             component.onSortOrderChanged({
-                sortBy: "column1",
+                sortBy: "column2",
                 direction: SorterDirection.ascending,
             });
-            expect((<any>component).sorterValue).toEqual({ sortBy: "position", direction: "asc" });
+            expect((<any>component).sortedColumn).toEqual({ sortBy: "column2", direction: SorterDirection.ascending });
+            expect((<any>component).sortFilter).toEqual({ sortBy: "name", direction: SorterDirection.ascending });
             expect((<any>component).eventBus.getStream(REFRESH).next).toHaveBeenCalled();
         });
 
@@ -302,10 +303,11 @@ describe("TableWidgetComponent", () => {
             configuration.columns = multipleDataFieldsColumns;
             component.ngOnChanges(createSimpleChanges(configuration, tableData, dataFields));
             component.onSortOrderChanged({
-                sortBy: "column1",
+                sortBy: "column2",
                 direction: SorterDirection.ascending,
             });
-            expect((<any>component).sorterValue).toEqual({ sortBy: "firstUrlLabel", direction: "asc" });
+            expect((<any>component).sortedColumn).toEqual({ sortBy: "column2", direction: SorterDirection.ascending });
+            expect((<any>component).sortFilter).toEqual({ sortBy: "firstUrlLabel", direction: SorterDirection.ascending });
             expect((<any>component).eventBus.getStream(REFRESH).next).toHaveBeenCalled();
         });
 
@@ -433,7 +435,8 @@ describe("TableWidgetComponent", () => {
 
         it("should correctly map data with multiple data fields", () => {
             configuration.columns = multipleDataFieldsColumns;
-            component.ngOnChanges(createSimpleChanges(configuration, tableData, dataFields));
+            // Note: Disabling sorting to avoid adding an async mechanism which will rebind and check data. Not in the scope of this test.
+            component.ngOnChanges(createSimpleChanges({ ...configuration, sortable: false }, tableData, dataFields));
             fixture.detectChanges();
             expect(component.tableData).toEqual(expectedColumnsMappingResults.multipleDataFields);
         });

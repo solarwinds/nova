@@ -1,7 +1,8 @@
 import { KpiComponent } from "../../components/kpi-widget/kpi.component";
 import { StackComponent } from "../../components/layouts/stack/stack.component";
 import { TilesComponent } from "../../components/layouts/tiles/tiles.component";
-import { DEFAULT_PIZZAGNA_ROOT, NOVA_KPI_COLOR_PRIORITIZER, NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER } from "../../services/types";
+import { IKpiColorRules } from "../../components/providers/types";
+import { DEFAULT_PIZZAGNA_ROOT, NOVA_KPI_COLOR_PRIORITIZER, NOVA_KPI_DATASOURCE_ADAPTER, NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER } from "../../services/types";
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING, widgetBodyContentNodes } from "../common/widget/components";
 import { EVENT_PROXY, refresher } from "../common/widget/providers";
@@ -55,7 +56,19 @@ export const kpiWidget = {
                 elementClass: "flex-grow-1 pt-2 px-3 pb-3 w-100",
                 template: {
                     componentType: KpiComponent.lateLoadKey,
-                    "providers": {},
+                    "providers": {
+                        [WellKnownProviders.KpiColorPrioritizer]: {
+                            "providerId": NOVA_KPI_COLOR_PRIORITIZER,
+                            "properties": {
+                            },
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.Adapter]: {
+                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
+                            "properties": {
+                                "propertyPath": "widgetData",
+                            },
+                        } as IProviderConfiguration,
+                    },
                     "properties": {
                         "elementClass": "flex-grow-1",
                     },

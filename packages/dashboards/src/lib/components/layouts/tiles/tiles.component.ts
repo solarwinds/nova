@@ -24,7 +24,8 @@ export class TilesComponent extends BaseLayout implements OnDestroy, AfterViewIn
 
     private tilesResizeObserver: ResizeObserver;
 
-    constructor(changeDetector: ChangeDetectorRef,
+    constructor(
+        changeDetector: ChangeDetectorRef,
         pizzagnaService: PizzagnaService,
         logger: LoggerService,
         private ngZone: NgZone
@@ -34,7 +35,6 @@ export class TilesComponent extends BaseLayout implements OnDestroy, AfterViewIn
 
     public ngAfterViewInit() {
         this.handleGridFlowOnResize();
-
     }
 
     public ngOnDestroy() {
@@ -52,7 +52,6 @@ export class TilesComponent extends BaseLayout implements OnDestroy, AfterViewIn
         this.ngZone.runOutsideAngular(() => {
             this.tilesResizeObserver.observe(this.gridItemsContainer.nativeElement);
         });
-
     }
 
     private onResize() {
@@ -77,7 +76,6 @@ export class TilesComponent extends BaseLayout implements OnDestroy, AfterViewIn
             this.changeDetector.detectChanges();
             return;
         }
-
     }
 }
 

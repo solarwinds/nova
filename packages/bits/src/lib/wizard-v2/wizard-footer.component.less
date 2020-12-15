@@ -1,0 +1,15 @@
+@import (reference) "../../styles/nui-framework-variables.less";
+@import (reference) "../../styles/mixins.less";
+
+.nui-wizard-footer {
+    border-top: @nui-line-default solid;
+    .setCssVariable(border-top-color, nui-color-line-default);
+    padding: @nui-space-md;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+    > .nui-button {
+        margin-left: @nui-space-md;
+    }
+}

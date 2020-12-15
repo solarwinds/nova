@@ -1,10 +1,13 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 // tslint:disable-next-line:max-line-length
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule,  NuiSwitchModule } from "@solarwinds/nova-bits";
+import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@solarwinds/nova-bits";
 import { NuiDashboardsModule } from "@solarwinds/nova-dashboards";
+import { ApolloModule } from "apollo-angular";
+import { HttpLinkModule } from "apollo-angular-link-http";
 
 import { DrilldownDocsComponent } from "./drilldown-docs.component";
+import { DrilldownMultiRequestWidgetExampleComponent } from "./drilldown-multi-request-widget-example/drilldown-multi-request-widget-example.component";
 import { DrilldownWidgetExampleComponent } from "./drilldown-widget-example/drilldown-widget-example.component";
 
 const routes: Routes = [
@@ -26,6 +29,15 @@ const routes: Routes = [
             },
         },
     },
+    {
+        path: "multiple-requests",
+        component: DrilldownMultiRequestWidgetExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -35,11 +47,16 @@ const routes: Routes = [
         NuiDocsModule,
         NuiMessageModule,
         NuiDashboardsModule,
+        ApolloModule,
+        HttpLinkModule,
         NuiSwitchModule,
+        ApolloModule,
+        HttpLinkModule,
     ],
     declarations: [
         DrilldownDocsComponent,
         DrilldownWidgetExampleComponent,
+        DrilldownMultiRequestWidgetExampleComponent,
     ],
 })
 export class DrilldownDocsModule {

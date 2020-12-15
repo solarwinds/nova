@@ -36,7 +36,8 @@ export class KpiDataSourceAdapter extends DataSourceAdapter<IKpiData> {
         return this.processNumberFormat(processedValue);
     }
 
-    protected setComponent(component: any, componentId: string) {
+
+    public setComponent(component: any, componentId: string) {
         if (componentId) {
             this.componentId = componentId;
         }

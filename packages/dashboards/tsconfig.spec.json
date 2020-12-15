@@ -15,6 +15,7 @@
         "./src/polyfills.ts"
     ],
     "include": [
+        "../spec/virtual-dashboards/**/*.spec.ts",
         "**/*.spec.ts",
         "**/*.d.ts"
     ],

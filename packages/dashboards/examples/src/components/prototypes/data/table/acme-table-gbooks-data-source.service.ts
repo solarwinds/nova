@@ -139,7 +139,7 @@ export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> 
 
     private getComposedUrl(filters: INovaFilters) {
         const initialUrl = `${GBOOKS_API_URL}?q=`;
-        const maxResults = "maxResults=20";
+        const maxResults = `maxResults=${(filters.virtualScroll?.value.end ?? 0) - (filters.virtualScroll?.value.start  ?? 0)}`;
 
         const virtualScrollPart = filters.virtualScroll
             ? `startIndex=${filters.virtualScroll.value.start}`

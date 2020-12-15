@@ -63,9 +63,7 @@ export class ChipsOverflowService {
 
     private initChipsMutationObserver(): void {
         const config = { childList: true };
-        this.chipsMutationObserver = new MutationObserver(() => {
-            this.handleOverflow();
-        });
+        this.chipsMutationObserver = new MutationObserver(() => this.handleOverflow());
         this.chipsMutationObserver.observe(this.mainCell.nativeElement, config);
     }
 
@@ -83,12 +81,12 @@ export class ChipsOverflowService {
             const chipElementWidth = chipElement.getBoundingClientRect().width;
             const isLastLine = () => linesDiff.length >= this.overflowLinesNumber - 1;
 
-            if (!isLastLine() && acc + chipElementWidth > mainCellWidth) {
+            if (!isLastLine() && Math.ceil(acc + chipElementWidth) > Math.ceil(mainCellWidth)) {
                 linesDiff.push(mainCellWidth - acc);
                 acc = 0;
             }
 
-            if (isLastLine() && acc + chipElementWidth + counterWidth > mainCellWidth) {
+            if (isLastLine() && Math.ceil(acc + chipElementWidth + counterWidth) > Math.ceil(mainCellWidth)) {
                 linesDiff.push(mainCellWidth - acc - counterWidth);
                 acc = 0;
                 chipsOverflow = true;

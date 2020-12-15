@@ -204,7 +204,7 @@ describe("TimeframeSelectionComponent", () => {
                 "startDatetime": moment(testStartDatetime).format(),
                 "endDatetime": moment(testEndDatetetime).format(),
                 // @ts-ignore: Suppressed for test purposes
-                "selectedPresetId": null,
+                "selectedPresetId": "",
                 "title": undefined,
             };
             component.currentTimeframe = {
@@ -278,7 +278,7 @@ describe("TimeframeSelectionComponent", () => {
                 startDatetime: moment("2019-11-11T18:09:03-06:00", moment.defaultFormat),
                 endDatetime: moment("2019-11-18T18:09:03-06:00", moment.defaultFormat),
                 // @ts-ignore: Suppressed for test purposes
-                selectedPresetId: null,
+                selectedPresetId: "",
             };
             const spy = spyOn(pizzagnaService, "setProperty");
             component.onTimeframeChange(timeframe);

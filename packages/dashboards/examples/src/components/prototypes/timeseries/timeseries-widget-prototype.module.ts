@@ -27,7 +27,7 @@ import { AcmeTableDataSource } from "../data/table/acme-table-data-source.servic
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
 import { AcmeTableDataSource3 } from "../data/table/acme-table-data-source3.service";
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
-import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2, AcmeTimeseriesStatusDataSource } from "../data/timeseries-data-sources";
+import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2, AcmeTimeseriesStatusDataSource, AcmeTimeseriesStatusIntervalDataSource } from "../data/timeseries-data-sources";
 
 import { AcmeDashboardComponent } from "./timeseries-widget-prototype.component";
 
@@ -91,7 +91,11 @@ export class TimeseriesWidgetPrototypeModule {
         this.setDataSourceProviders("kpi", [AcmeKpiDataSource.providerId, AcmeKpiDataSource2.providerId]);
         this.setDataSourceProviders("proportional", [AcmeProportionalDataSource.providerId, AcmeProportionalDataSource2.providerId]);
         this.setDataSourceProviders("timeseries", [
-            AcmeTimeseriesDataSource.providerId, AcmeTimeseriesDataSource2.providerId, AcmeTimeseriesStatusDataSource.providerId]);
+            AcmeTimeseriesDataSource.providerId,
+            AcmeTimeseriesDataSource2.providerId,
+            AcmeTimeseriesStatusDataSource.providerId,
+            AcmeTimeseriesStatusIntervalDataSource.providerId,
+        ]);
     }
 
     private setDataSourceProviders(type: string, providers: string[]) {

@@ -14,7 +14,7 @@ export class DescriptionConfigurationComponent implements OnInit, OnDestroy, OnC
 
     @Input() label: string;
     @Input() isActive: string;
-    @Input() width: string;
+    @Input() width: number;
     @Input() isWidthMessageDisplayed: boolean;
 
     @Output() formReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
@@ -28,8 +28,8 @@ export class DescriptionConfigurationComponent implements OnInit, OnDestroy, OnC
     ngOnInit(): void {
         this.form = this.formBuilder.group({
             label: [this.label || null, [Validators.required]],
-            isActive: this.isActive || true,
-            width: this.width || "",
+            isActive: this.isActive ?? true,
+            width: this.width || undefined,
         });
 
         this.formReady.emit(this.form);

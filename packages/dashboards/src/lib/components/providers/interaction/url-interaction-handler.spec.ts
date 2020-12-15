@@ -1,10 +1,11 @@
 import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import Spy = jasmine.Spy;
+import noop from "lodash/noop";
 
 import { INTERACTION } from "../../../services/types";
 
 import { IInteractionPayload } from "./interaction-handler";
 import { UrlInteractionHandler } from "./url-interaction-handler";
-import Spy = jasmine.Spy;
 
 describe("UrlInteractionHandler", () => {
 
@@ -24,7 +25,9 @@ describe("UrlInteractionHandler", () => {
                 },
             };
             eventBus = new EventBus<IEvent>();
-            handler = new UrlInteractionHandler(eventBus, window, new LoggerService());
+            const logger = new LoggerService();
+            spyOnProperty(logger, "warn").and.returnValue(noop); // suppress warnings
+            handler = new UrlInteractionHandler(eventBus, window, logger);
             handleInteractionSpy = spyOn(handler as any, "handleInteraction").and.callThrough();
 
             payload = { interactionType: "click", data: "data" };

@@ -8,6 +8,7 @@ import { EventBusDebugger } from "../components/providers/event-bus-debugger";
 import { UrlInteractionHandler } from "../components/providers/interaction/url-interaction-handler";
 import { KpiColorPrioritizer } from "../components/providers/kpi-color-prioritizer";
 import { KpiDataSourceAdapter } from "../components/providers/kpi-data-source-adapter";
+import { KpiScaleSyncBroker } from "../components/providers/kpi-scale-sync-broker";
 import { KpiStatusContentFallbackAdapter } from "../components/providers/kpi-status-content-fallback-adapter";
 import { LoadingAdapter } from "../components/providers/loading-adapter";
 import { PizzagnaBroadcasterService } from "../components/providers/pizzagna-broadcaster.service";
@@ -32,10 +33,11 @@ import { TimeseriesTileIndicatorDataConverterService } from "../configurator/ser
 import { CONFIGURATOR_CONVERTER } from "../configurator/services/converters/types";
 import { PreviewService } from "../configurator/services/preview.service";
 import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
-import { DASHBOARD_EVENT_BUS, DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../types";
+import { DASHBOARD_EVENT_BUS, DATA_SOURCE, FORMATTERS_REGISTRY, PIZZAGNA_EVENT_BUS } from "../types";
 
 import { EventRegistryService } from "./event-registry.service";
 import { KpiColorComparatorsRegistryService } from "./kpi-color-comparators-registry.service";
+import { KpiFormattersRegistryService, TableFormatterRegistryService } from "./table-formatter-registry.service";
 import {
     IStaticProviders,
     NOVA_DASHBOARD_EVENT_PROXY,
@@ -47,6 +49,8 @@ import {
     NOVA_GENERIC_CONVERTER,
     NOVA_KPI_COLOR_PRIORITIZER,
     NOVA_KPI_DATASOURCE_ADAPTER,
+    NOVA_KPI_FORMATTERS_REGISTRY,
+    NOVA_KPI_SCALE_SYNC_BROKER,
     NOVA_KPI_SECTION_CONVERTER,
     NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER,
     NOVA_KPI_TILES_CONVERTER,
@@ -57,6 +61,7 @@ import {
     NOVA_TABLE_COLUMNS_CONVERTER,
     NOVA_TABLE_DATASOURCE_ADAPTER,
     NOVA_TABLE_FILTERS_CONVERTER,
+    NOVA_TABLE_FORMATTERS_REGISTRY,
     NOVA_TIMESERIES_DATASOURCE_ADAPTER,
     NOVA_TIMESERIES_METADATA_CONVERTER,
     NOVA_TIMESERIES_SERIES_CONVERTER,
@@ -181,6 +186,10 @@ export class ProviderRegistryService {
                 provide: KpiStatusContentFallbackAdapter,
                 deps: [PIZZAGNA_EVENT_BUS, PizzagnaService],
             },
+            [NOVA_KPI_SCALE_SYNC_BROKER]: {
+                provide: KpiScaleSyncBroker,
+                deps: [PIZZAGNA_EVENT_BUS, PizzagnaService],
+            },
             [NOVA_URL_INTERACTION_HANDLER]: {
                 provide: UrlInteractionHandler,
                 deps: [PIZZAGNA_EVENT_BUS, "windowObject", LoggerService],
@@ -195,6 +204,16 @@ export class ProviderRegistryService {
             },
             [NOVA_PIZZAGNA_BROADCASTER]: {
                 provide: PizzagnaBroadcasterService,
+                deps: [PizzagnaService],
+            },
+            [NOVA_TABLE_FORMATTERS_REGISTRY]: {
+                provide: FORMATTERS_REGISTRY,
+                useExisting: TableFormatterRegistryService,
+                deps: [PizzagnaService],
+            },
+            [NOVA_KPI_FORMATTERS_REGISTRY]: {
+                provide: FORMATTERS_REGISTRY,
+                useExisting: KpiFormattersRegistryService,
                 deps: [PizzagnaService],
             },
         });

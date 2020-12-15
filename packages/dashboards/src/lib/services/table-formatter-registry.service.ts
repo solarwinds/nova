@@ -10,7 +10,7 @@ import { IAddFormattersOptions } from "./types";
 type IFormattersRegistryMap<T extends IFormatterDefinition> = Record<string, T>;
 
 
-export abstract class FormatterRegistryService<TFormatter extends IFormatterDefinition> implements OnDestroy {
+export abstract class FormatterRegistryService<TFormatter extends IFormatterDefinition = IFormatterDefinition> implements OnDestroy {
     protected formattersState$: BehaviorSubject<IFormattersRegistryMap<TFormatter>> =
         new BehaviorSubject<IFormattersRegistryMap<TFormatter>>({});
 
@@ -78,6 +78,13 @@ export abstract class FormatterRegistryService<TFormatter extends IFormatterDefi
 
 @Injectable({ providedIn: "root" })
 export class TableFormatterRegistryService extends FormatterRegistryService<ITableFormatterDefinition> {
+    constructor(logger: LoggerService) {
+        super(logger);
+    }
+}
+
+@Injectable({ providedIn: "root" })
+export class KpiFormattersRegistryService extends FormatterRegistryService<ITableFormatterDefinition> {
     constructor(logger: LoggerService) {
         super(logger);
     }

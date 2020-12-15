@@ -23,7 +23,7 @@ export class NuiDialogRef {
     result: Promise<any>;
 
     constructor(
-        private windowCmptRef?: ComponentRef<any>, private contentRef?: ContentRef,
+        public windowCmptRef?: ComponentRef<any>, private contentRef?: ContentRef,
         private backdropCmptRef?: ComponentRef<DialogBackdropComponent>, private beforeDismiss?: Function) {
 
         windowCmptRef?.instance.dismissEvent.subscribe((reason: any) => {

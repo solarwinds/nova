@@ -22,7 +22,8 @@ export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements ID
                 this.busy.next(false);
                 return resolve({
                     result: {
-                        value: 100000,
+                        value: 0.000000000564564654654,
+                        anotherFieldFromDataSource: "whatever",
                     },
                 });
             }, 2000));
@@ -73,6 +74,7 @@ export class AcmeKpiDataSource2 extends DataSourceService<IKpiData> implements O
                         value: 2.543,
                         numberFormat: this.properties?.numberFormat,
                         link: "http://www.solarwinds.com",
+                        icon: "state_ok",
                     },
                 });
             }, 4000));
