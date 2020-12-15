@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IImagesPresetItem } from "@solarwinds/nova-bits";
+import { IImagesPresetItem } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-image-external-example",

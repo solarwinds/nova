@@ -34,7 +34,7 @@ npm install -g @angular/cli
 <br>
 
 
-# Install Nova Bits or [Try the Playground](https://bitbucket.solarwinds.com/projects/NOVA/repos/nova-playground/browse)
+# Install Nova Bits
 
 #### Using Angular CLI
 In order to install bits in your project root using the CLI, run the following command: 

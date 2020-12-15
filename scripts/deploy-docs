@@ -29,15 +29,15 @@ deploy_subdir="~/projects/${PACKAGE_NAME}/${branch_name}"
 extract_subdir="dist"
 
 echo "Deploy directory: $deploy_subdir"
-cat solarwinds-$PACKAGE_NAME-*.tgz | ssh -oStrictHostKeyChecking=no teamcity@apollo-docs.swdev.local "mkdir -p $deploy_subdir && rm -r $deploy_subdir/* ; cd $deploy_subdir && mkdir -p $extract_subdir && cd $extract_subdir && tar --strip-components=1 -xzvf -"
+cat nova-ui-$PACKAGE_NAME-*.tgz | ssh -oStrictHostKeyChecking=no teamcity@apollo-docs.swdev.local "mkdir -p $deploy_subdir && rm -r $deploy_subdir/* ; cd $deploy_subdir && mkdir -p $extract_subdir && cd $extract_subdir && tar --strip-components=1 -xzvf -"
 
 echo "Copy directory: unzipped to apollo-docs.swdev.local"
 scp -r ./unzipped/** teamcity@apollo-docs.swdev.local:$deploy_subdir
 
 echo "Update directory: unzipped"
-if test -f solarwinds-${PACKAGE_NAME}-*.tgz; then
-    echo "Extracting file solarwinds-${PACKAGE_NAME}-*.tgz to ./unzipped"
-    tar -xzvf solarwinds-${PACKAGE_NAME}-*.tgz --directory ./unzipped
+if test -f nova-ui-${PACKAGE_NAME}-*.tgz; then
+    echo "Extracting file nova-ui-${PACKAGE_NAME}-*.tgz to ./unzipped"
+    tar -xzvf nova-ui-${PACKAGE_NAME}-*.tgz --directory ./unzipped
 else
-	echo "File solarwinds-${PACKAGE_NAME}-*.tgz does not exist"
+	echo "File nova-ui-${PACKAGE_NAME}-*.tgz does not exist"
 fi

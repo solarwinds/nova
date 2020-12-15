@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { IImagesPresetItem, imagesPresetToken } from "@solarwinds/nova-bits";
+import { IImagesPresetItem, imagesPresetToken } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-image-visual-test",
