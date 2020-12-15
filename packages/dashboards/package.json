@@ -68,6 +68,8 @@
     "@applitools/eyes-protractor": "^1.9.1",
     "@compodoc/compodoc": "1.1.7",
     "@locl/cli": "0.0.1-beta.9",
+    "@nova-ui/bits": "~9.31.0-0",
+    "@nova-ui/charts": "~9.31.0-0",
     "@schematics/angular": "^9.0.0",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",

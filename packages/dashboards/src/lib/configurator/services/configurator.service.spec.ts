@@ -82,8 +82,7 @@ class MockRendererFactory {
     }
 
     public async whenRenderingDone?(): Promise<any> {
-        // @ts-ignore: Suppressed for test purposes
-        return new Promise(null);
+        return Promise.resolve(null);
     }
 }
 

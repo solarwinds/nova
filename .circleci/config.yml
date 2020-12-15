@@ -30,7 +30,6 @@ jobs:
                         - docker-compose.yml
                         - tsconfig.main.json
                         - package.json
-                        - .npmrc
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
@@ -101,6 +100,9 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
+                    name: Configure NPM
+                    command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
+            -   run:
                     name: Publish bits
                     command: yarn run publish-ci
     charts-build:
@@ -116,13 +118,6 @@ jobs:
             -   run:
                     name: Compute build version
                     command: yarn run compute-version-ci
-#            -   run:
-#                    name: Download Bits Artifact
-#                    # TODO: replace "207" with correct build number
-#                    command: |
-#                        curl -H "Circle-Token: ${CIRCLE_API_TOKEN}" https://circleci.com/api/v1.1/project/github/solarwinds/nova/207/artifacts \
-#                        | grep -o 'https://[^"]*' \
-#                        | wget --verbose --header "Circle-Token: ${CIRCLE_API_TOKEN}" --input-file -
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install dependencies
@@ -177,10 +172,6 @@ jobs:
             -   run:
                    name: Create charts package
                    command: npm pack ./dist
-#            -   store_artifacts:
-#                    # TODO: use env variable for version
-#                    path: ~/nova/packages/bits/*.tgz
-#                    destination: bits-package.tgz
             -   persist_to_workspace:
                     root: ~/nova
                     paths:
@@ -194,6 +185,9 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Configure NPM
+                    command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
             -   run:
                     name: Publish charts
                     command: yarn run publish-ci
@@ -282,7 +276,10 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    name: Publish charts
+                    name: Configure NPM
+                    command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
+            -   run:
+                    name: Publish dashboards
                     command: yarn run publish-ci
     release-prep:
         working_directory: ~/nova

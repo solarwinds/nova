@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-SERVER=http://dev-brn-art-02.swdev.local
-
 usage()
 {
     echo "Usage: docker-compose run -e BUILD_BRANCH=%teamcity.build.branch% build npm run publish-ci"
@@ -35,16 +33,13 @@ PACKAGE_VERSION=$(node -p "require('./package.json').version")
 case $CIRCLE_BRANCH in
       "release/"*)
           echo Publishing release package
-            npm publish ./dist
+            npm publish ./dist --access public
             ;;
 
       "main" | "next" | "hotfix/"*)
           echo Publishing $CIRCLE_BRANCH package
-            npm publish ./dist --tag $CIRCLE_BRANCH
+            npm publish ./dist --tag $CIRCLE_BRANCH --access public
             ;;
       *)
           echo "Feature branch build - publish skipped"
 esac
-
-npm pack ./dist --unsafe-perm
-
