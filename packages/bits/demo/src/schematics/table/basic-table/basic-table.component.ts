@@ -12,7 +12,7 @@ import {
     INovaFilteringOutputs,
     PaginatorComponent,
     TableComponent,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import {
     takeUntil,

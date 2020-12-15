@@ -15,7 +15,7 @@ import {
     SimpleChanges,
     StaticProvider
 } from "@angular/core";
-import { IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { IEvent, LoggerService } from "@nova-ui/bits";
 import isArray from "lodash/isArray";
 import values from "lodash/values";
 import xor from "lodash/xor";

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IChipsGroup, IChipsItem, IChipsItemsSource } from "@solarwinds/nova-bits";
+import { IChipsGroup, IChipsItem, IChipsItemsSource } from "@nova-ui/bits";
 import _cloneDeep from "lodash/cloneDeep";
 import _pull from "lodash/pull";
 

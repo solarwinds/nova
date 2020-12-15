@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import {IItemsReorderedEvent} from "@solarwinds/nova-bits";
+import {IItemsReorderedEvent} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-repeat-drag-simple-example",

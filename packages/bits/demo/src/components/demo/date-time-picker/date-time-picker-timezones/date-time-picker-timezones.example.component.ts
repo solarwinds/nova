@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
-import { ISelectChangedEvent } from "@solarwinds/nova-bits";
+import { ISelectChangedEvent } from "@nova-ui/bits";
 import moment from "moment-timezone";
 
 const zonesData = require("moment-timezone/data/packed/latest.json");

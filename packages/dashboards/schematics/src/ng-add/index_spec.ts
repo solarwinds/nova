@@ -43,7 +43,7 @@ describe("ng-add", () => {
         );
         const afterTree = await runner.runSchematicAsync("ng-add", { project: "bar", skipModuleUpdate: true }, appTree).toPromise();
         const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
-        expect(file.projects.bar.architect.build.options.styles[0]).toEqual("./node_modules/@solarwinds/nova-charts/bundles/css/styles.css");
+        expect(file.projects.bar.architect.build.options.styles[0]).toEqual("./node_modules/@nova-ui/charts/bundles/css/styles.css");
     });
 
     it("does not re-add style to angular.json", async () => {
@@ -56,8 +56,8 @@ describe("ng-add", () => {
                             build: {
                                 options: {
                                     styles: [
-                                        "./node_modules/@solarwinds/nova-bits/bundles/css/styles.css",
-                                        "./node_modules/@solarwinds/nova-charts/bundles/css/styles.css",
+                                        "./node_modules/@nova-ui/bits/bundles/css/styles.css",
+                                        "./node_modules/@nova-ui/charts/bundles/css/styles.css",
                                     ],
                                 },
                             },
@@ -75,7 +75,7 @@ describe("ng-add", () => {
     it("updates style array in angular.json", async () => {
         const afterTree = await runner.runSchematicAsync("ng-add", { project: "bar", skipModuleUpdate: true }, appTree).toPromise();
         const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
-        expect(file.projects.bar.architect.build.options.styles[1]).toContain("@solarwinds/nova-charts");
+        expect(file.projects.bar.architect.build.options.styles[1]).toContain("@nova-ui/charts");
     });
 
     it("adds imports to module", async () => {
@@ -85,7 +85,7 @@ describe("ng-add", () => {
         expect(moduleFile).toContain("NuiDashboardsModule");
     });
 
-    it("updates the dependencies in package.json with the nova-dashboards peerDependencies", async () => {
+    it("updates the dependencies in package.json with the dashboards peerDependencies", async () => {
         const afterTree = await runner.runSchematicAsync("ng-add",
             {
                 project: "bar",

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TooltipPosition } from "@solarwinds/nova-bits";
+import { TooltipPosition } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-tooltip-position-example",

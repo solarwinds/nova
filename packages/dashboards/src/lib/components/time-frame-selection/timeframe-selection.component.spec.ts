@@ -1,7 +1,7 @@
 import { SimpleChange } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants, ITimeframe, TimeFrameBarComponent } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants, ITimeframe, TimeFrameBarComponent } from "@nova-ui/bits";
 import moment from "moment/moment";
 import { Subject } from "rxjs";
 

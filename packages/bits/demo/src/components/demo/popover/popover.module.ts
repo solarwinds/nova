@@ -8,7 +8,7 @@ import {
     NuiPopoverModule,
     NuiSelectModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     PopoverBasicUsageExampleComponent,

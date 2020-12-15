@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { OnDestroy } from "@angular/core";
-import { DataSourceFeatures, DataSourceService, IDataSource, IFilteringOutputs } from "@solarwinds/nova-bits";
-import { IKpiData, WellKnownDataSourceFeatures } from "@solarwinds/nova-dashboards";
+import { DataSourceFeatures, DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
+import { IKpiData, WellKnownDataSourceFeatures } from "@nova-ui/dashboards";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 

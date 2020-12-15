@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, OnInit, Optional } from "@angular/core";
-import { EventBus, IconService, IDataSource, IEvent, uuid } from "@solarwinds/nova-bits";
+import { EventBus, IconService, IDataSource, IEvent, uuid } from "@nova-ui/bits";
 import {
     BandScale,
     BarHighlightStrategy,
@@ -18,7 +18,7 @@ import {
     statusAccessors,
     TimeIntervalScale,
     ZoomPlugin
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import { merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

@@ -3,7 +3,7 @@ import {
 } from "@angular/core";
 import {
     DataFilterService, IFilter, IFilterPub, INovaFilteringOutputs, IRange, ITimeframe, SearchComponent
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 

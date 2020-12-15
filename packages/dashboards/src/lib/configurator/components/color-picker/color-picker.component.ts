@@ -1,8 +1,8 @@
 import { Overlay, OverlayConfig } from "@angular/cdk/overlay";
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { getOverlayPositions, IOptionValueObject, IResizeConfig, NuiFormFieldControl, OverlayUtilitiesService, SelectV2Component } from "@solarwinds/nova-bits";
-import { getColorValueByName } from "@solarwinds/nova-charts";
+import { getOverlayPositions, IOptionValueObject, IResizeConfig, NuiFormFieldControl, OverlayUtilitiesService, SelectV2Component } from "@nova-ui/bits";
+import { getColorValueByName } from "@nova-ui/charts";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 

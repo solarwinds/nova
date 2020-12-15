@@ -9,7 +9,7 @@ import {
     DialogService,
     INovaFilteringOutputs,
     LocalFilteringDataSource,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
 import { Subscription } from "rxjs";

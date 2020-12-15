@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { NuiImageModule } from "@solarwinds/nova-bits";
+import { NuiImageModule } from "@nova-ui/bits";
 
 import { WidgetErrorComponent } from "./widget-error.component";
 

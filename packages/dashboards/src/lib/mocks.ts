@@ -1,5 +1,5 @@
 import { ChangeDetectorRef } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 
 export const mockLoggerService = {
     info: () => { },

@@ -13,7 +13,7 @@ import {
     SimpleChanges
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import { Subject } from "rxjs/internal/Subject";
 import { take } from "rxjs/operators";

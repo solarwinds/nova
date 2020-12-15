@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { SequentialColorProvider, TextColorProvider } from "@solarwinds/nova-charts";
+import { SequentialColorProvider, TextColorProvider } from "@nova-ui/charts";
 
 
 @Injectable()

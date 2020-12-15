@@ -14,8 +14,8 @@ import {
     SearchService,
     SorterDirection,
     VirtualViewportManager
-} from "@solarwinds/nova-bits";
-import { INovaFilteringOutputs, INovaFilters } from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
+import { INovaFilteringOutputs, INovaFilters } from "@nova-ui/bits";
 import { BehaviorSubject } from "rxjs";
 import { skip, take, tap } from "rxjs/operators";
 

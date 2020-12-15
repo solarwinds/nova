@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ComboboxV2Component } from "@solarwinds/nova-bits";
+import { ComboboxV2Component } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 interface IExampleItem {

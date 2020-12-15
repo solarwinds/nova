@@ -10,7 +10,7 @@ import {
     NuiRadioModule,
     NuiToastModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     ToastBasicExampleComponent,

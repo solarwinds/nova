@@ -18,7 +18,7 @@ import {
     NuiSearchModule,
     NuiSelectV2Module,
     SrlcStage
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     CustomConfirmationInsideDialogComponent,

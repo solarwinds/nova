@@ -13,7 +13,7 @@ import {
     NuiPopupModule,
     NuiSpinnerModule,
     NuiTableModule
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { KpiComponent } from "../../../components/kpi-widget/kpi.component";
 import { StackComponent } from "../../../components/layouts/stack/stack.component";

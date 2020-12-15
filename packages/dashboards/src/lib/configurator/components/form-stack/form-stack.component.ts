@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, HostBinding, Inject, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { ControlContainer, FormGroup, FormGroupDirective } from "@angular/forms";
-import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
 import { BaseLayout } from "../../../components/layouts/base-layout";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";

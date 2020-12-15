@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, HostBinding, Inject, Input, OnChanges, OnInit, Optional, SimpleChanges } from "@angular/core";
-import { EventBus, HistoryStorage, IDataSource, IEvent, IFilter, ITimeframe, TimeframeService } from "@solarwinds/nova-bits";
+import { EventBus, HistoryStorage, IDataSource, IEvent, IFilter, ITimeframe, TimeframeService } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
 
 import { TimeframeSerializationService } from "../../configurator/services/timeframe-serialization.service";

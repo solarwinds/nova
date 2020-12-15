@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { IBusyConfig, WizardComponent } from "@solarwinds/nova-bits";
+import { IBusyConfig, WizardComponent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-busy-example",

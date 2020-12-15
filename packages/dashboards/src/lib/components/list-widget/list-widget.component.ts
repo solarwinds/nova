@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, HostBinding, Inject, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
-import { EventBus, IEvent, ResizeObserverDirective } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, ResizeObserverDirective } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

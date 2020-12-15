@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ISelectChangedEvent } from "@solarwinds/nova-bits";
+import { ISelectChangedEvent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-combobox-icon-example",

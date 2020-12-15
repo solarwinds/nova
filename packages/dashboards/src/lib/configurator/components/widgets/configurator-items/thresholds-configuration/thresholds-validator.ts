@@ -1,5 +1,5 @@
 import { AbstractControl, ValidatorFn } from "@angular/forms";
-import { removeErrors } from "@solarwinds/nova-bits";
+import { removeErrors } from "@nova-ui/bits";
 import _isNil from "lodash/isNil";
 
 

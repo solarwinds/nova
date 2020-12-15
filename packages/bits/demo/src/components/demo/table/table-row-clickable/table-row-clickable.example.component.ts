@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy } from "@angular/core";
-import { ClientSideDataSource, INovaFilteringOutputs, ISelection, SelectorService } from "@solarwinds/nova-bits";
+import { ClientSideDataSource, INovaFilteringOutputs, ISelection, SelectorService } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 interface IExampleTableModel {

@@ -1,4 +1,4 @@
-import { Atom } from "@solarwinds/nova-bits/sdk/atoms";
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { browser, by, element, ElementFinder } from "protractor";
 
 import { DashboardAtom } from "./dashboard.atom";

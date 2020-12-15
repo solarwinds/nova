@@ -1,5 +1,5 @@
 import { OnDestroy } from "@angular/core";
-import { HttpStatusCode, IDataSourceOutput, IKpiData } from "@solarwinds/nova-dashboards";
+import { HttpStatusCode, IDataSourceOutput, IKpiData } from "@nova-ui/dashboards";
 import { Subject } from "rxjs";
 
 export class TestKpiDataSource implements OnDestroy {

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { WizardComponent, WizardStepComponent } from "@solarwinds/nova-bits";
+import { WizardComponent, WizardStepComponent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-disabled-example",

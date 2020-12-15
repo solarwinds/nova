@@ -1,8 +1,8 @@
 import { ListRange } from "@angular/cdk/collections";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DataSourceService, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@solarwinds/nova-bits";
-import { IDataField, IDataSource, IDataSourceOutput } from "@solarwinds/nova-dashboards";
+import { DataSourceService, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
+import { IDataField, IDataSource, IDataSourceOutput } from "@nova-ui/dashboards";
 import isEqual from "lodash/isEqual";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject } from "rxjs";
@@ -12,7 +12,7 @@ import { IRandomUserResponse, IRandomUserResults, IRandomUserTableModel, UsersQu
 import { apiRoute, corsProxy, RANDOMUSER_API_URL, responseError } from "./constants";
 
 // This datasource extends LocalFilteringDataSource. Link to api docs below:
-// http://apollo-docs.swdev.local/nova-bits/release_nova_v8.x/sdk/api-docs-ng2/injectables/LocalFilteringDataSource.html
+// http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/injectables/LocalFilteringDataSource.html
 @Injectable()
 export class AcmeTableDataSource extends DataSourceService<IRandomUserTableModel> implements IDataSource {
     public static providerId = "AcmeTableDataSource";

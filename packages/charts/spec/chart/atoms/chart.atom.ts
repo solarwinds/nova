@@ -1,5 +1,5 @@
-import { Atom } from "@solarwinds/nova-bits/sdk/atoms";
-import { IAtomClass } from "@solarwinds/nova-bits/sdk/atoms/atom";
+import { Atom } from "@nova-ui/bits/sdk/atoms";
+import { IAtomClass } from "@nova-ui/bits/sdk/atoms/atom";
 import { browser, by, ElementFinder } from "protractor";
 import { ILocation } from "selenium-webdriver";
 

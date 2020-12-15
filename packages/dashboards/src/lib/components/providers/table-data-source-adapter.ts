@@ -1,5 +1,5 @@
 import { Inject, Optional } from "@angular/core";
-import { EventBus, IDataSource, IEvent, IFilteringOutputs, VirtualViewportManager } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent, IFilteringOutputs, VirtualViewportManager } from "@nova-ui/bits";
 import { merge, Observable, zip } from "rxjs";
 import { debounceTime, startWith, switchMap, takeUntil, tap } from "rxjs/operators";
 

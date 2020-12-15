@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, Inject, OnDestroy, QueryList, ViewChildren } from "@angular/core";
-import { DataSourceService, IFilteringParticipants, INovaFilteringOutputs } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilteringParticipants, INovaFilteringOutputs } from "@nova-ui/bits";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
 import { Subscription } from "rxjs";

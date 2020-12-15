@@ -1,6 +1,6 @@
 import { AfterViewInit, Inject, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";

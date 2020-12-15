@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {IconStatus} from "@solarwinds/nova-bits";
+import {IconStatus} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-icon-with-text-example",

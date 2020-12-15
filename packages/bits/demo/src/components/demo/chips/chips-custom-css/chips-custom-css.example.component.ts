@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { IChipRemoved, IChipsGroup, IChipsItem, IChipsItemsSource } from "@solarwinds/nova-bits";
+import { IChipRemoved, IChipsGroup, IChipsItem, IChipsItemsSource } from "@nova-ui/bits";
 import _pull from "lodash/pull";
 
 @Component({

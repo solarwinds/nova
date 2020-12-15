@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { ThemeSwitchService } from "@solarwinds/nova-bits";
+import { ThemeSwitchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -7,7 +7,7 @@ import {
     IWidget,
     ProviderRegistryService,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 
 import {

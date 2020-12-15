@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     AreaAccessors, areaGrid, AreaRenderer, Chart, ChartAssist, IAreaAccessors, IChartSeries, IXYScales, LinearScale, TimeScale
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import moment from "moment/moment";
 
 @Component({

@@ -5,7 +5,7 @@ import {
     INovaFilteringOutputs,
     LoggerService,
     ServerSideDataSource,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import _forEach from "lodash/forEach";
 import {
     forkJoin,

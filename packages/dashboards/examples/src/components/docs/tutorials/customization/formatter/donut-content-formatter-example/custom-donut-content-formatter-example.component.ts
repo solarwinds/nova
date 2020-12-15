@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DataSourceService, IconService, IDataSource, IFilteringOutputs, LoggerService } from "@solarwinds/nova-bits";
-import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@solarwinds/nova-charts";
+import { DataSourceService, IconService, IDataSource, IFilteringOutputs, LoggerService } from "@nova-ui/bits";
+import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@nova-ui/charts";
 import {
     ComponentRegistryService,
     DATA_SOURCE,
@@ -26,7 +26,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     BandScale, barAccessors, barGrid, BarHighlightStrategy, BarRenderer, Chart, ChartAssist, InteractionLabelPlugin, LinearScale, Scales, stack,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-proportional-vertical-bar-chart-test",

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { DataSourceService, INovaFilteringOutputs, INovaFilters } from "@solarwinds/nova-bits";
+import { DataSourceService, INovaFilteringOutputs, INovaFilters } from "@nova-ui/bits";
 import { BehaviorSubject } from "rxjs";
 
 import {

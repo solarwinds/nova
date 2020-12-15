@@ -21,7 +21,7 @@ import {
     SorterComponent,
     SorterDirection,
     VirtualViewportManager,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import {
     BehaviorSubject,
     Subject,

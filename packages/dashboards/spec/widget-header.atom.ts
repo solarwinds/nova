@@ -1,4 +1,4 @@
-import { Atom, MenuAtom } from "@solarwinds/nova-bits/sdk/atoms";
+import { Atom, MenuAtom } from "@nova-ui/bits/sdk/atoms";
 
 export class WidgetHeaderAtom extends Atom {
     public static CSS_CLASS = "nui-widget-header";

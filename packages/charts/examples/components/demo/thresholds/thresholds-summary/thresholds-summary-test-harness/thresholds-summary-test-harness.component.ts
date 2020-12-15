@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ISimpleThresholdZone } from "@solarwinds/nova-charts";
+import { ISimpleThresholdZone } from "@nova-ui/charts";
 import moment from "moment/moment";
 
 @Component({

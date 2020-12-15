@@ -17,7 +17,7 @@ import {
     SelectorService,
     TableComponent,
     TableVirtualScrollDirective,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

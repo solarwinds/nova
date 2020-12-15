@@ -1,4 +1,4 @@
-import { IFilteringOutputs, IMultiFilterMetadata } from "@solarwinds/nova-bits";
+import { IFilteringOutputs, IMultiFilterMetadata } from "@nova-ui/bits";
 
 export interface IFilterGroupItem {
     id: string;

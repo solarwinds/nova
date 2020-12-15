@@ -34,7 +34,5 @@ if [[ $package_version =~ alpha|beta|rc ]]; then
   computed_version=$(echo "$package_version" | sed -E "s/-([a-zA-Z.]*)([0-9]*)/-\1${BUILD_COUNTER}/");
 fi
 
-echo "##teamcity[buildNumber '$computed_version']"
-
 # Save new version to package.json to be able create proper npm package
 npm --no-git-tag-version version --allow-same-version "$computed_version"

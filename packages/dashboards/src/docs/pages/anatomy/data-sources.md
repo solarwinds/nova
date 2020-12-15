@@ -20,7 +20,7 @@ Data Source Features is way to describe the capabilities of a data source. For e
 so that it can sort the data and reflect this set up in the configuration. That will allow some parts of the application working
 with the Features.
 
-Data Source Features are implemented using [IDataSourceFeaturesConfiguration](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSourceFeaturesConfiguration.html) which is used in [IDataSource](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html).
+Data Source Features are implemented using [IDataSourceFeaturesConfiguration](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSourceFeaturesConfiguration.html) which is used in [IDataSource](https://ux.solarwinds.io/nova/docs/bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html).
 
 The example of the features configuration:
 ```

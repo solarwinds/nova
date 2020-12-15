@@ -1,6 +1,6 @@
 import { DecimalPipe } from "@angular/common";
 import { Inject, Optional } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import _isNil from "lodash/isNil";
 
 import { IKpiThresholdsConfig, KpiWidgetThresholdColors } from "../../configurator/components/widgets/kpi/types";

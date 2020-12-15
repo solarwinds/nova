@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { IMenuGroup, PanelBackgroundColor } from "@solarwinds/nova-bits";
+import { IMenuGroup, PanelBackgroundColor } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-panel-visual-test",

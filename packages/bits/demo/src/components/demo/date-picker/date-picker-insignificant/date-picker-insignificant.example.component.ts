@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { IToastService, ToastService } from "@solarwinds/nova-bits";
+import { IToastService, ToastService } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
 
 @Component({

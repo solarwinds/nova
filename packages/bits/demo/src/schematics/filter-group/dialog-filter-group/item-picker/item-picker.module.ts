@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { NuiRepeatModule } from "@solarwinds/nova-bits";
+import { NuiRepeatModule } from "@nova-ui/bits";
 
 import { ItemPickerCompositeComponent } from "./item-picker.component";
 

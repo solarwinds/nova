@@ -19,7 +19,7 @@ import {
     NuiTimeFramePickerModule,
     NuiTooltipModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     ComponentAsContentExampleComponent,

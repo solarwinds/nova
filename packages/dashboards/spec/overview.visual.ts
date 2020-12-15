@@ -1,4 +1,4 @@
-import { Helpers } from "@solarwinds/nova-bits/sdk/atoms/helpers";
+import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser } from "protractor";
 
 import { TestPage } from "./test.po";

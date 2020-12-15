@@ -1,4 +1,4 @@
-import { IFilter, INovaFilters } from "@solarwinds/nova-bits";
+import { IFilter, INovaFilters } from "@nova-ui/bits";
 
 // main model being processed & rendered in the frontend
 export interface IServer {

@@ -1,5 +1,5 @@
 {
   "extends": [
-    "@solarwinds/nova-bits/sdk/tslint.json"
+    "../../ts-lint-rules/tslint.angular.json"
   ]
 }

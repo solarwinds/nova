@@ -19,7 +19,7 @@ import {
     PopoverComponent,
     PopoverOverlayPosition,
     VirtualViewportManager,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import _pull from "lodash/pull";
 import { Subscription } from "rxjs";
 
@@ -92,7 +92,7 @@ export class FilteredViewTableWithVirtualScrollComponent implements AfterViewIni
             selectedFilterValues: [],
         },
     ];
-    
+
     public chipsDataSource: IChipsItemsSource = {groupedItems: [], flatItems: []};
     public overflowCounter: number;
     public overflowSource: IChipsItemsSource;

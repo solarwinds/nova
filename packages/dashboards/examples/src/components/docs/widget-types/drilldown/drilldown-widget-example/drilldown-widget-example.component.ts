@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { IconStatus, INovaFilters, LoggerService, ServerSideDataSource, TabHeadingCustomTemplateRefDirective } from "@solarwinds/nova-bits";
+import { IconStatus, LoggerService, ServerSideDataSource, TabHeadingCustomTemplateRefDirective } from "@nova-ui/bits";
+import { DataSourceService, IFilters, INovaFilters } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -17,14 +18,14 @@ import {
     ProviderRegistryService,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { Apollo } from "apollo-angular";
 import { HttpLink } from "apollo-angular-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import gql from "graphql-tag";
 import groupBy from "lodash/groupBy";
-import { BehaviorSubject, Observable, of } from "rxjs";
+import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { catchError, delay, map } from "rxjs/operators";
 
 import { DrilldownDataSource } from "./mock-data-source";
@@ -44,12 +45,10 @@ export class DrilldownDataSourceRealApi<T = any> extends ServerSideDataSource<T>
 
     private drillState: string[];
     private groupBy: string[];
+    private cache: any;
+    private applyFilters$ = new Subject<IFilters>();
 
-    constructor(
-        private logger: LoggerService,
-        private http: HttpClient,
-        private apollo: Apollo
-    ) {
+    constructor(private http: HttpClient) {
         super();
     }
 

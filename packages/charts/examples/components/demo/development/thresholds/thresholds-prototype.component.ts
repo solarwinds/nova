@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     BandScale, Chart, CHART_PALETTE_CS_S, ChartAssist, ChartPalette, IAccessors, IChartAssistSeries, IChartSeries, ILineAccessors, ISimpleThresholdZone,
     IXYScales, LineAccessors, LinearScale, LineRenderer, MappedValueProvider, StatusAccessors, ThresholdsService, TimeIntervalScale, TimeScale, XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import moment, { duration } from "moment/moment";
 
 enum Status {

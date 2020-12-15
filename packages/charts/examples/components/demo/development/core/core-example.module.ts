@@ -2,8 +2,8 @@ import { NgModule, Provider } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import {
     LoggerService, LogLevel, NuiButtonModule, NuiCheckboxModule, NuiDocsModule, NuiEnvironment, NuiIconModule, NuiSwitchModule
-} from "@solarwinds/nova-bits";
-import { NuiChartsModule } from "@solarwinds/nova-charts";
+} from "@nova-ui/bits";
+import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
 

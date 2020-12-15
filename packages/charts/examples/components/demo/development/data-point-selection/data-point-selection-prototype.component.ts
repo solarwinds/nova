@@ -36,7 +36,7 @@ import {
     TimeIntervalScale,
     UtilityService,
     XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
 import moment, { duration } from "moment/moment";

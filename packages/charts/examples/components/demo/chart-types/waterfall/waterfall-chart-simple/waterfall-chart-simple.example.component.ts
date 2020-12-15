@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     BandScale, barAccessors, barGrid, BarHighlightStrategy, BarRenderer, barScales, Chart, CHART_PALETTE_CS1, IBarChartConfig, InteractionLinePlugin,
     MappedValueProvider,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import zipObject from "lodash/zipObject";
 
 @Component({

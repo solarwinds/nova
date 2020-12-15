@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
     ClientSideDataSource,
     INovaFilteringOutputs, SearchComponent, TableComponent
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 

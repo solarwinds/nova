@@ -12,7 +12,7 @@ import {
     if (chips) { %>
     ViewChildren,<% } %>
 } from "@angular/core";
-import { <% if (chips) { %>CheckboxComponent,<% } %> DialogService, IFilter, IFilterPub } from "@solarwinds/nova-bits";
+import { <% if (chips) { %>CheckboxComponent,<% } %> DialogService, IFilter, IFilterPub } from "@nova-ui/bits";
 import _orderBy from "lodash/orderBy";
 import { Subject } from "rxjs";
 

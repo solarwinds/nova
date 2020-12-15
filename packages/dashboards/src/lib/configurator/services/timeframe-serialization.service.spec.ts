@@ -1,4 +1,4 @@
-import { ITimeframe } from "@solarwinds/nova-bits";
+import { ITimeframe } from "@nova-ui/bits";
 import moment from "moment/moment";
 
 import { TimeframeSerializationService } from "./timeframe-serialization.service";

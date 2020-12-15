@@ -12,7 +12,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { DialogService, EventBus, IEvent, immutableSet, uuid } from "@solarwinds/nova-bits";
+import { DialogService, EventBus, IEvent, immutableSet, uuid } from "@nova-ui/bits";
 import get from "lodash/get";
 import isUndefined from "lodash/isUndefined";
 import values from "lodash/values";

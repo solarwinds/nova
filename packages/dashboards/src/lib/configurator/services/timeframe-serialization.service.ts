@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ITimeframe } from "@solarwinds/nova-bits";
+import { ITimeframe } from "@nova-ui/bits";
 import moment from "moment/moment";
 
 import { ISerializableTimeframe } from "./types";

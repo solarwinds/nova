@@ -9,7 +9,7 @@
       "node"
     ],
     "paths": {
-        "@solarwinds/nova-charts": [
+        "@nova-ui/charts": [
             "../src/public-api.ts"
         ]
     }

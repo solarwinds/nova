@@ -1,4 +1,4 @@
-import {IconStatus} from "@solarwinds/nova-bits";
+import {IconStatus} from "@nova-ui/bits";
 
 export const GRAPH_DATA_MOCK = {
   "data": {

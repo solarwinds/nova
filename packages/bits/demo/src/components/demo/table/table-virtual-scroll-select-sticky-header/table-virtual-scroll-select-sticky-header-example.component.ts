@@ -1,6 +1,6 @@
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import { AfterViewInit, ChangeDetectionStrategy, Component, TrackByFunction, ViewChild } from "@angular/core";
-import { ClientSideDataSource, IFilteringOutputs, ISelection, SelectionModel } from "@solarwinds/nova-bits";
+import { ClientSideDataSource, IFilteringOutputs, ISelection, SelectionModel } from "@nova-ui/bits";
 import sample from "lodash/sample";
 import { Observable } from "rxjs";
 import { map, startWith, switchMap, tap } from "rxjs/operators";

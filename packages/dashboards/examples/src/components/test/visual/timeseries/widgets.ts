@@ -10,8 +10,9 @@ import {
     TimeseriesChartPreset,
     TimeseriesScaleType,
     WellKnownProviders
-} from "@solarwinds/nova-dashboards";
-import { chartLine, chartPie, discovery, table } from "@solarwinds/nova-images";
+} from "@nova-ui/dashboards";
+// TODO: Comment back in after NUI-5606 is finished
+// import { chartLine, chartPie, discovery, table } from "@nova-ui/nova-images";
 import { GridsterItem } from "angular-gridster2";
 
 import {
@@ -29,11 +30,24 @@ export interface IImageDef {
     code: string;
 }
 
+// TODO: Comment back in after NUI-5606 is finished and replace it with code below
+// export const cloneSelectionImages: Record<string, IImageDef> = {
+//     "timeseries": chartLine,
+//     "table": table,
+//     "proportional": chartPie,
+//     "kpi": discovery,
+// };
+const placeholderImages = {
+    svgFile: "",
+    name: "not-found",
+    brushType: "",
+    code: "not-found",
+};
 export const cloneSelectionImages: Record<string, IImageDef> = {
-    "timeseries": chartLine,
-    "table": table,
-    "proportional": chartPie,
-    "kpi": discovery,
+    "timeseries": placeholderImages,
+    "table": placeholderImages,
+    "proportional": placeholderImages,
+    "kpi": placeholderImages,
 };
 
 export const positions: Record<string, GridsterItem> = {

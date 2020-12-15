@@ -1,5 +1,5 @@
-import { Atom } from "@solarwinds/nova-bits/sdk/atoms";
-import { Animations, Helpers } from "@solarwinds/nova-bits/sdk/atoms/helpers";
+import { Atom } from "@nova-ui/bits/sdk/atoms";
+import { Animations, Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser, by, element } from "protractor";
 
 import { LegendAtom } from "./legend.atom";

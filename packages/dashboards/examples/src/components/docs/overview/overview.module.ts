@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiBusyModule, NuiButtonModule, NuiDocsModule, NuiIconModule, NuiMessageModule, NuiSwitchModule } from "@solarwinds/nova-bits";
-import { IFormatterDefinition, LinkFormatterComponent, NuiDashboardsModule, WellKnownPathKey, WidgetTypesService } from "@solarwinds/nova-dashboards";
+import { NuiBusyModule, NuiButtonModule, NuiDocsModule, NuiIconModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
+import { IFormatterDefinition, LinkFormatterComponent, NuiDashboardsModule, WellKnownPathKey, WidgetTypesService } from "@nova-ui/dashboards";
 
 import { HeroDashboardComponent } from "./hero/dashboard/hero-dashboard.component";
 import { HarryPotterAverageRatingDataSource, HarryPotterRatingsCountDataSource } from "./hero/data/kpi-datasources";

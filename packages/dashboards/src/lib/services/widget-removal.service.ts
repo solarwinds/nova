@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 import isFunction from "lodash/isFunction";
 import { EMPTY, Observable, of } from "rxjs";
 import { catchError } from "rxjs/operators";

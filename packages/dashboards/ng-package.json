@@ -84,7 +84,7 @@
       "angular2-logger/core":"angular2-logger/core",
       "highlight.js":"highlight.js",
       "webpack-rxjs-externals": "webpack-rxjs-externals",
-      "@solarwinds/nova-bits": "nui.bits"
+      "@nova-ui/bits": "nui.bits"
     }
   },
   "whitelistedNonPeerDependencies": ["."]

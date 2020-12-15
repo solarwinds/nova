@@ -12,7 +12,7 @@ import {
     NuiRepeatModule,
     NuiSwitchModule,
     NuiTextboxModule
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     DataSourceConfigurationV2Component,
@@ -22,7 +22,7 @@ import {
     ProviderRegistryService,
     WellKnownPathKey,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 
 import { AcmeProportionalDSConfigComponent } from "../components/data-source-configuration/proportional-ds-config.component";
 import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";

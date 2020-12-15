@@ -1,5 +1,5 @@
 import { Inject, OnDestroy, OnInit, Optional } from "@angular/core";
-import { IDataSource } from "@solarwinds/nova-bits";
+import { IDataSource } from "@nova-ui/bits";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { HistoryStorage, IFilter, IFilteringOutputs, ITimeframe, NoopDataSourceService } from "@solarwinds/nova-bits";
+import { HistoryStorage, IFilter, IFilteringOutputs, ITimeframe, NoopDataSourceService } from "@nova-ui/bits";
 import {
     Chart, ChartAssist, getAutomaticDomainWithIncludedInterval, IAccessors, IChartAssistSeries, ISetDomainEventPayload, LineAccessors, LinearScale,
     LineRenderer, SET_DOMAIN_EVENT, TimeScale, XYGrid, ZoomPlugin
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import moment, { Moment } from "moment/moment";
 import { Subscription } from "rxjs";
 

@@ -9,9 +9,9 @@ import { DataSourceService,
     INovaFilteringOutputs,
     INovaFilters,
     LoggerService
-} from "@solarwinds/nova-bits";
-import { DataSourceFeatures } from "@solarwinds/nova-bits";
-import { IDataField, IDataSourceOutput } from "@solarwinds/nova-dashboards";
+} from "@nova-ui/bits";
+import { DataSourceFeatures } from "@nova-ui/bits";
+import { IDataField, IDataSourceOutput } from "@nova-ui/dashboards";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";

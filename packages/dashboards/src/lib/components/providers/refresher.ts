@@ -1,5 +1,5 @@
 import { Inject, NgZone, OnDestroy } from "@angular/core";
-import { EventBus, EventDefinition } from "@solarwinds/nova-bits";
+import { EventBus, EventDefinition } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

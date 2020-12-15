@@ -11,7 +11,7 @@ import {
     ViewEncapsulation
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { IEvent, LoggerService } from "@nova-ui/bits";
 
 import { BaseLayout } from "../../../components/layouts/base-layout";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";

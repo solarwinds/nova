@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { IToastService, ToastService } from "@solarwinds/nova-bits";
+import { IToastService, ToastService } from "@nova-ui/bits";
 import {
     Chart, ChartAssist, ChartDonutContentPlugin, GridConfig, IAccessors, IChartAssistSeries, IChartEvent, IChartSeries, IRadialAccessors, LinearScale,
     PieRenderer, RadialGrid, radialPreprocessor, RadialRenderer, Scales
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
 

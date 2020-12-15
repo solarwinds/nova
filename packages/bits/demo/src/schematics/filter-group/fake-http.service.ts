@@ -5,7 +5,7 @@ import {
     IFilters,
     LocalFilteringDataSource,
     RepeatComponent
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";
