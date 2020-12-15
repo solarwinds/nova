@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IconStatus, IFilters, INovaFilters } from "@solarwinds/nova-bits";
+import { DataSourceService, IconStatus, IFilters, INovaFilters } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,
@@ -16,7 +16,7 @@ import {
     ProviderRegistryService,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { Apollo } from "apollo-angular";
 import { HttpLink } from "apollo-angular-link-http";

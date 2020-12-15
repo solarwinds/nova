@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@solarwinds/nova-bits";
-import { NuiDashboardsModule } from "@solarwinds/nova-dashboards";
+import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
+import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { DrilldownWidgetTestComponent } from "./drilldown-widget-test.component";
 

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { DataSourceService, IFilters, INovaFilters } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilters, INovaFilters } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -17,7 +17,7 @@ import {
     ProviderRegistryService,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";

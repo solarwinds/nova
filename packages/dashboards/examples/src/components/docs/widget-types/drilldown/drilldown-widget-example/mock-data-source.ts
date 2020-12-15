@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnDestroy } from "@angular/core";
-import { DataSourceService, IFilters, INovaFilters } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilters, INovaFilters } from "@nova-ui/bits";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { catchError, delay, finalize, map, switchMap, tap } from "rxjs/operators";

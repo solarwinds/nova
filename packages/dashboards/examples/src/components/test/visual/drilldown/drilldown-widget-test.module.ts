@@ -1,8 +1,8 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@solarwinds/nova-bits";
-import { NuiDashboardsModule, ProviderRegistryService } from "@solarwinds/nova-dashboards";
+import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
+import { NuiDashboardsModule, ProviderRegistryService } from "@nova-ui/dashboards";
 
 import { DrilldownWidgetTestComponent } from "./drilldown-widget-test.component";
 

@@ -9,7 +9,7 @@ import {
     NOVA_KPI_SCALE_SYNC_BROKER,
     SiUnitsFormatterComponent,
     WellKnownProviders,
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 
 import { TestKpiDataSource } from "../../data/kpi-data-sources";
 

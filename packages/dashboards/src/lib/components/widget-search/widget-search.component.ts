@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnDestroy, OnInit, Optional, SimpleChanges } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import { Subject, Subscription } from "rxjs";
 import { debounceTime, takeUntil } from "rxjs/operators";
 
