@@ -1,5 +1,6 @@
 export * from "./image-basic/image-basic.example.component";
 export * from "./image-docs/image-docs.example.component";
+export * from "./image-external/image-external.example.component";
 export * from "./image-float/image-float.example.component";
 export * from "./image-list/image-list.example.component";
 export * from "./image-margin/image-margin.example.component";

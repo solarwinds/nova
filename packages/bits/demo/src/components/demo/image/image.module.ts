@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiImageModule, SrlcStage } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN, NuiDocsModule, NuiImageModule, SrlcStage } from "@solarwinds/nova-bits";
 
 import {
     ImageBasicExampleComponent,
@@ -12,6 +12,7 @@ import {
     ImageVisualTestComponent,
     ImageWatermarkedExampleComponent,
     ImageWidthHeightAndAutoFillExampleComponent,
+    ImageExternalExampleComponent,
 } from "./index";
 
 const routes = [
@@ -54,6 +55,7 @@ const routes = [
     declarations: [
         ImageBasicExampleComponent,
         ImageDocsExampleComponent,
+        ImageExternalExampleComponent,
         ImageFloatExampleComponent,
         ImageListExampleComponent,
         ImageMarginExampleComponent,

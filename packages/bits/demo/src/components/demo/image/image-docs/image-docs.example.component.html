@@ -32,7 +32,7 @@
     three inputs allow you to properly resize the <code>nui-image</code> component using either <code>px</code> or <code>%</code> units.
 </p>
 <p>
-    If not set, default value for <code>width</code> is <code>auto</code>. The <code>height</code>, if not set, does not have a default 
+    If not set, default value for <code>width</code> is <code>auto</code>. The <code>height</code>, if not set, does not have a default
     value, therefore, it's not applied by default. The user has to set its value explicitly, if needed.
 </p>
 <nui-example-wrapper filenamePrefix="image-width-height-and-autoFill" exampleTitle="Custom Image Size">
@@ -60,13 +60,23 @@
 <nui-example-wrapper filenamePrefix="image-watermarked" exampleTitle="Watermarked Image">
     <nui-image-watermarked-example></nui-image-watermarked-example>
 </nui-example-wrapper>
-<h2>Image from external repository</h2>
-<p>There is a repo <a href="https://bitbucket.solarwinds.com/projects/NOVA/repos/nova-images/browse">nova-images</a> which has external images.
-To load images you need to import image from this repo like it is shown in this example</p>
+<h2>External Source</h2>
+<p>
+    To load an image from an external source, set the <code>image</code> input either to the image's
+    url or to an object of type
+    <code><a href="../interfaces/IImagesPresetItem.html" target="_blank">IImagesPresetItem</a></code>
+    in which the code property is an svg element. The example below demonstrates a hard-coded object for
+    its <code>IImagesPresetItem</code>, but in a real-world situation the entire object or the svg
+    contained within it would likely originate from an external source.
+</p>
 <nui-example-wrapper filenamePrefix="image-external" exampleTitle="Image from external repo">
     <nui-image-external-example></nui-image-external-example>
 </nui-example-wrapper>
 <h2>Available Images</h2>
+<p>
+    Nova provides a limited set of images out of the box. To use them, set the <code>image</code> input
+    on the <code>nui-image</code> element using the name shown underneath each of images below.
+</p>
 <nui-example-wrapper filenamePrefix="image-list" exampleTitle="Available Images">
     <nui-image-list-example></nui-image-list-example>
 </nui-example-wrapper>
