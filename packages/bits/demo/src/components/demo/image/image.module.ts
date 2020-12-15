@@ -5,6 +5,7 @@ import { DEMO_PATH_TOKEN, NuiDocsModule, NuiImageModule, SrlcStage } from "@nova
 import {
     ImageBasicExampleComponent,
     ImageDocsExampleComponent,
+    ImageExternalExampleComponent,
     ImageFloatExampleComponent,
     ImageListExampleComponent,
     ImageMarginExampleComponent,
@@ -12,7 +13,6 @@ import {
     ImageVisualTestComponent,
     ImageWatermarkedExampleComponent,
     ImageWidthHeightAndAutoFillExampleComponent,
-    ImageExternalExampleComponent,
 } from "./index";
 
 const routes = [
