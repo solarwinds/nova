@@ -153,7 +153,7 @@ symbolic linked folders (junction for Windows file system).
 
 To link things with each other we have some scripts in the `package.json` file.
 
-* **`charts-link:bits`** - removes the *`@solarwinds/nova-bits`* folder from charts' *`node_modules`* and
+* **`charts-link:bits`** - removes the *`@nova-ui/bits`* folder from charts' *`node_modules`* and
 replaces it with a symlink to the *`dist`* folder from bits.
 * **`dashboards-link:bits`** - does the same replacement for dashboards
 * **`dashboards-link:charts`** - links charts' *`dist`* folder into dashboards' *`node_modules`* in

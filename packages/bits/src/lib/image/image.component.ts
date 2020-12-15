@@ -36,7 +36,7 @@ import { IImagesPresetItem } from "./public-api";
 })
 export class ImageComponent implements OnInit, AfterViewInit {
     /**
-     * Image name from nui image preset or image from external repo nova-images
+     * Image name from nui image preset or external source
      */
     @Input() public image: any;
 

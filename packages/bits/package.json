@@ -16,9 +16,10 @@
     "url": "https://github.com/solarwinds/nova.git"
   },
   "keywords": [
-    "solarwinds",
     "bits",
-    "nova"
+    "nova",
+    "nova-ui",
+    "solarwinds"
   ],
   "schematics": "./sdk/schematics/collection.json",
   "ng-update": {

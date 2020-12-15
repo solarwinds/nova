@@ -14,23 +14,23 @@ describe("components >", () => {
         let subject: ImageComponent;
         const imagesPreset = [
             {
-                svgFile: "sw-logo.svg",
-                name: "sw-logo",
+                svgFile: "test-image-one.svg",
+                name: "test-image-one",
                 brushType: "filled",
                 code: "<svg>test svg</svg>",
             },
             {
-                svgFile: "ok-robot.svg",
-                name: "ok-robot",
+                svgFile: "test-image-two.svg",
+                name: "test-image-two",
                 brushType: "filled",
-                code: "<svg>ok robot</svg>",
+                code: "<svg>test svg</svg>",
             },
         ] as Array<IImagesPresetItem>;
         const domSanitizer = {
             bypassSecurityTrustHtml: (code: string) => code as SafeHtml,
         } as DomSanitizer;
         const elRef: ElementRef = new ElementRef(`
-                <nui-image float="right" id="image-float" image="no-alerts" ng-reflect-image="no-alerts" ng-reflect-float="right">
+                <nui-image float="right" id="image-float" image="no-data-to-show" ng-reflect-image="no-data-to-show" ng-reflect-float="right">
                     <div class="nui-image nui-image__hidden nui-image__right" ng-reflect-ng-style="[object Object]">
                         <svg width="137" height="92" viewBox="0 0 137 92"></svg>
                     </div>
