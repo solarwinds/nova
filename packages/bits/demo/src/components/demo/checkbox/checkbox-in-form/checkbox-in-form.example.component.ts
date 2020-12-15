@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ToastService } from "@solarwinds/nova-bits";
+import { ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-checkbox-in-form-example",

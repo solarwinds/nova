@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { IDatePickerDisabledDate } from "@solarwinds/nova-bits";
+import { IDatePickerDisabledDate } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
 
 @Component({

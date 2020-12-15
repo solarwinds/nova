@@ -1,17 +1,17 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule } from "@solarwinds/nova-bits";
-import { NuiDividerModule } from "@solarwinds/nova-bits";
-import { SrlcStage } from "@solarwinds/nova-bits";
-import { NuiIconModule } from "@solarwinds/nova-bits";
-import { NuiMessageModule } from "@solarwinds/nova-bits";
-import { NuiToastModule } from "@solarwinds/nova-bits";
-import { NuiExpanderModule } from "@solarwinds/nova-bits";
-import { NuiFormFieldModule } from "@solarwinds/nova-bits";
-import { NuiTextboxModule } from "@solarwinds/nova-bits";
-import { NuiValidationMessageModule } from "@solarwinds/nova-bits";
-import { NuiButtonModule } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule } from "@nova-ui/bits";
+import { NuiDividerModule } from "@nova-ui/bits";
+import { SrlcStage } from "@nova-ui/bits";
+import { NuiIconModule } from "@nova-ui/bits";
+import { NuiMessageModule } from "@nova-ui/bits";
+import { NuiToastModule } from "@nova-ui/bits";
+import { NuiExpanderModule } from "@nova-ui/bits";
+import { NuiFormFieldModule } from "@nova-ui/bits";
+import { NuiTextboxModule } from "@nova-ui/bits";
+import { NuiValidationMessageModule } from "@nova-ui/bits";
+import { NuiButtonModule } from "@nova-ui/bits";
 
 import { FrameworkColorsDarkExampleComponent } from "./framework-colors-dark/framework-colors-dark.example.component";
 import { FrameworkColorsExampleComponent } from "./framework-colors/framework-colors-example.component";

@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { OnDestroy } from "@angular/core";
-import { DataSourceService } from "@solarwinds/nova-bits";
-import { IFilteringOutputs } from "@solarwinds/nova-bits/services/data-source/public-api";
-import { IConfigurable, IDataSource, IProperties } from "@solarwinds/nova-dashboards";
+import { DataSourceService } from "@nova-ui/bits";
+import { IFilteringOutputs } from "@nova-ui/bits/services/data-source/public-api";
+import { IConfigurable, IDataSource, IProperties } from "@nova-ui/dashboards";
 import { BehaviorSubject, Subject } from "rxjs";
 import { finalize } from "rxjs/operators";
 

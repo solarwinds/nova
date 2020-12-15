@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject, Optional } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import {
     barAccessors,
     barGrid,
@@ -15,7 +15,7 @@ import {
     IXYScales,
     stack,
     TimeIntervalScale
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { TimeseriesScalesService } from "../../../timeseries-scales.service";

@@ -1,5 +1,5 @@
 import { Injectable, Type } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 
 // Extending with Type<any> to be compatible with EntryComponents type
 export interface IComponentWithLateLoadKey extends Type<any> {

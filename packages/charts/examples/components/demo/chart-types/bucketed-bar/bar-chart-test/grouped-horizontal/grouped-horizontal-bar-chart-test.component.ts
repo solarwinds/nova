@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     BandScale, barAccessors, barGrid, BarHighlightStrategy, BarRenderer, Chart, ChartAssist, IBarChartConfig, INTERACTION_DATA_POINTS_EVENT, LinearScale,
     Scales, SELECT_DATA_POINT_EVENT
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-grouped-horizontal-bar-chart-test",

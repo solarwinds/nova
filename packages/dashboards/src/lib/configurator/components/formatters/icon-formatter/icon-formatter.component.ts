@@ -4,7 +4,7 @@ import {
     Input,
     OnChanges,
 } from "@angular/core";
-import { IconService } from "@solarwinds/nova-bits";
+import { IconService } from "@nova-ui/bits";
 
 import { IHasChangeDetector } from "../../../../types";
 import { IFormatterData } from "../types";

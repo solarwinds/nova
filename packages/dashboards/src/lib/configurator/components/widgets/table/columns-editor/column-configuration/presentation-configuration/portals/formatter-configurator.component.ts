@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 
 import { IDataField } from "../../../../../../../../components/table-widget/types";
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../../components/types";

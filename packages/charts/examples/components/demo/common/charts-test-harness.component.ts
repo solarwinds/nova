@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from "@angular/core";
-import { ThemeSwitchService } from "@solarwinds/nova-bits";
+import { ThemeSwitchService } from "@nova-ui/bits";
 
 @Component({
     selector: "charts-test-harness",

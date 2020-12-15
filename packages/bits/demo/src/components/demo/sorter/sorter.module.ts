@@ -7,7 +7,7 @@ import {
     NuiRepeatModule,
     NuiSorterModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { SorterBasicExampleComponent } from "./sorter-basic/sorter-basic.example.component";
 import { SorterExampleComponent } from "./sorter-docs/sorter-docs.example.component";

@@ -1,5 +1,5 @@
-import { IFilteringParticipants, INovaFilteringOutputs } from "@solarwinds/nova-bits";
-import { IDataField } from "@solarwinds/nova-dashboards";
+import { IFilteringParticipants, INovaFilteringOutputs } from "@nova-ui/bits";
+import { IDataField } from "@nova-ui/dashboards";
 import { BehaviorSubject } from "rxjs";
 
 export interface BasicTableModel {

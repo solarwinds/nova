@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IDashboard, IWidget, IWidgets, KpiComponent, PizzagnaLayer, WidgetTypesService } from "@solarwinds/nova-dashboards";
+import { IDashboard, IWidget, IWidgets, KpiComponent, PizzagnaLayer, WidgetTypesService } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 
 /**

@@ -1,8 +1,5 @@
 {
-  "name": "@solarwinds/nova-charts",
-  "publishConfig": {
-    "registry": "http://dev-brn-art-02.swdev.local:8081/artifactory/api/npm/npm-SolarWinds"
-  },
+  "name": "@nova-ui/charts",
   "version": "9.31.0-0",
   "scripts": {
     "ng": "ng",
@@ -44,13 +41,14 @@
     "dist-copy:css": "ng build --project=generate-css && cpx \"./.tmp/css/*.{css,svg,woff,woff2}\" dist/bundles/css/",
     "lint": "ng l",
     "lint:fix": "ng l --fix",
-    "i18n-locl-extract": "npx locl extract -s=dist/bundles/solarwinds-nova-charts.umd.js -f=xlf -o=./sdk/locale/messages.en.xlf"
+    "i18n-locl-extract": "npx locl extract -s=dist/bundles/nova-ui-charts.umd.js -f=xlf -o=./sdk/locale/messages.en.xlf"
   },
   "peerDependencies": {
     "d3": "^5.0.0",
     "d3-color": "1.3.0",
     "d3-selection-multi": "^1.0.0",
     "d3-time-format": "2.1.3",
+    "@nova-ui/bits": "~9.31.0-0",
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0"
   },
@@ -76,6 +74,7 @@
     "@applitools/eyes-protractor": "^1.9.1",
     "@compodoc/compodoc": "1.1.9",
     "@locl/cli": "0.0.1-beta.9",
+    "@nova-ui/bits": "~9.31.0-0",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
     "@types/jasmine": "~3.3.13",

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IFilters, INovaFilters } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilters, INovaFilters } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,
@@ -16,7 +16,7 @@ import {
     ProviderRegistryService,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
@@ -39,7 +39,7 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     private groupBy: string[];
     private cache: any;
     private applyFilters$ = new Subject<IFilters>();
-    
+
     constructor(private http: HttpClient) {
         super();
         this.applyFilters$.pipe(

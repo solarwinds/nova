@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from "@angular/core";
-import { IMenuGroup, ToastService } from "@solarwinds/nova-bits";
+import { IMenuGroup, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-panel-collapse-top-oriented-example",

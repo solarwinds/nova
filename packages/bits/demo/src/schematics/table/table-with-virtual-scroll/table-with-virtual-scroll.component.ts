@@ -18,7 +18,7 @@ import {
     SorterDirection,
     TableComponent,
     VirtualViewportManager,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import {
     debounceTime,

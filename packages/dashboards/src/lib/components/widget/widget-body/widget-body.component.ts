@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, HostBinding, Inject, Input, OnDestroy, OnInit } from "@angular/core";
-import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";

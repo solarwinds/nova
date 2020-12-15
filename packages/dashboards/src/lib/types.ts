@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, EventEmitter, InjectionToken, Injector, StaticProvider } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
-import { EventBus } from "@solarwinds/nova-bits";
-import { NuiEvent } from "@solarwinds/nova-bits/services/event-bus.service";
+import { EventBus } from "@nova-ui/bits";
+import { NuiEvent } from "@nova-ui/bits/services/event-bus.service";
 import { GridsterItem } from "angular-gridster2";
 import { Observable } from "rxjs";
 

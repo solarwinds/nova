@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ISelectChangedEvent, ISelectGroup, ToastService } from "@solarwinds/nova-bits";
+import { ISelectChangedEvent, ISelectGroup, ToastService } from "@nova-ui/bits";
 import _cloneDeep from "lodash/cloneDeep";
 
 @Component({

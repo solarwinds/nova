@@ -1,6 +1,6 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
-import { OVERLAY_WITH_POPUP_STYLES_CLASS, OverlayComponent } from "@solarwinds/nova-bits";
+import { OVERLAY_WITH_POPUP_STYLES_CLASS, OverlayComponent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

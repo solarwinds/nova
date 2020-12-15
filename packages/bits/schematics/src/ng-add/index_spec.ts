@@ -43,7 +43,7 @@ describe("ng-add", () => {
         );
         const afterTree = await runner.runSchematicAsync("ng-add", { skipTsConfig: true, project: "bar", skipCss: false }, appTree).toPromise();
         const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
-        expect(file.projects.bar.architect.build.options.styles[0]).toEqual("./node_modules/@solarwinds/nova-bits/bundles/css/styles.css");
+        expect(file.projects.bar.architect.build.options.styles[0]).toEqual("./node_modules/@nova-ui/bits/bundles/css/styles.css");
     });
     it("adds style to angular.json without property", async () => {
         appTree.overwrite(
@@ -76,7 +76,7 @@ describe("ng-add", () => {
                             build: {
                                 options: {
                                     styles: [
-                                        "./node_modules/@solarwinds/nova-bits/bundles/css/styles.css",
+                                        "./node_modules/@nova-ui/bits/bundles/css/styles.css",
                                     ],
                                 },
                             },
@@ -94,7 +94,7 @@ describe("ng-add", () => {
     it("updates style array in angular.json", async () => {
         const afterTree = await runner.runSchematicAsync("ng-add", { skipTsConfig: true, project: "bar" }, appTree).toPromise();
         const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
-        expect(file.projects.bar.architect.build.options.styles[1]).toContain("@solarwinds/nova-bits");
+        expect(file.projects.bar.architect.build.options.styles[1]).toContain("@nova-ui/bits");
     });
 
     it("add class to html", async () => {

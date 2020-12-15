@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 
 import { PizzagnaService } from "../../../../pizzagna/public-api";
 import { DonutChartFormatterConfiguratorComponent } from "../widget-formatter-configurators/donut-formatter-configurator.component";

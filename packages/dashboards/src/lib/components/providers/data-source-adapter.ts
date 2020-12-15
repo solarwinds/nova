@@ -1,5 +1,5 @@
 import { Inject, OnDestroy, Optional } from "@angular/core";
-import { EventBus, IDataSource, IEvent, IFilteringOutputs } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent, IFilteringOutputs } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";

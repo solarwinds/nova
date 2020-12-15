@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IDatePickerDisabledDate } from "@solarwinds/nova-bits";
+import { IDatePickerDisabledDate } from "@nova-ui/bits";
 import moment from "moment/moment";
 
 @Component({

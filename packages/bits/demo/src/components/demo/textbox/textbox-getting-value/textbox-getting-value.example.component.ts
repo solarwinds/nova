@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild } from "@angular/core";
-import { TextboxComponent } from "@solarwinds/nova-bits";
+import { TextboxComponent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 

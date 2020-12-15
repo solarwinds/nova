@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@solarwinds/nova-bits";
-import { NuiDashboardsModule, TableFormatterRegistryService } from "@solarwinds/nova-dashboards";
+import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
+import { NuiDashboardsModule, TableFormatterRegistryService } from "@nova-ui/dashboards";
 
 import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../src/lib/widget-types/table/table-configurator";
 

@@ -3,7 +3,7 @@ import { async, ComponentFixture, fakeAsync, flush, TestBed } from "@angular/cor
 import { ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
-import { LoggerService, NuiBusyModule, NuiButtonModule, NuiIconModule, NuiSpinnerModule } from "@solarwinds/nova-bits";
+import { LoggerService, NuiBusyModule, NuiButtonModule, NuiIconModule, NuiSpinnerModule } from "@nova-ui/bits";
 
 import { TemplateLoadErrorComponent } from "../../../components/template-load-error/template-load-error.component";
 import { mockChangeDetector, mockLoggerService } from "../../../mocks";

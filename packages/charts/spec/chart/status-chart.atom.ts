@@ -1,4 +1,4 @@
-import { Atom } from "@solarwinds/nova-bits/sdk/atoms";
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 
 import { ChartAtom } from "./atoms/chart.atom";
 import { SeriesAtom } from "./atoms/series.atom";

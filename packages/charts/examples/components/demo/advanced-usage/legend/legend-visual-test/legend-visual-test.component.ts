@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CHART_MARKERS, IChartMarker, IValueProvider, RenderState, SequentialChartMarkerProvider } from "@solarwinds/nova-charts";
+import { CHART_MARKERS, IChartMarker, IValueProvider, RenderState, SequentialChartMarkerProvider } from "@nova-ui/charts";
 
 @Component({
     selector: "nui-legend-visual-test",

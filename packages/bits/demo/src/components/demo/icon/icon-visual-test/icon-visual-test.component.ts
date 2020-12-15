@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {IconStatus} from "@solarwinds/nova-bits";
+import {IconStatus} from "@nova-ui/bits";
 import uniq from "lodash/uniq";
 
 import {icons as iconsData} from "../../../../../../src/lib/icon/icons";

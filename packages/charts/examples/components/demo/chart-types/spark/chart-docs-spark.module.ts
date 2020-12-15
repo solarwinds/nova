@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiMessageModule, NuiTableModule, SrlcStage } from "@solarwinds/nova-bits";
-import { NuiChartsModule } from "@solarwinds/nova-charts";
+import { DEMO_PATH_TOKEN, NuiDocsModule, NuiMessageModule, NuiTableModule, SrlcStage } from "@nova-ui/bits";
+import { NuiChartsModule } from "@nova-ui/charts";
 
 import { ChartDocsSparkComponent } from "./chart-docs-spark.component";
 import { SparkChartBasicExampleComponent } from "./spark-chart-basic/spark-chart-basic.example.component";

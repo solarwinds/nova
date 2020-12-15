@@ -2,7 +2,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
-import { NuiDocsModule, NuiExpanderModule } from "@solarwinds/nova-bits";
+import { NuiDocsModule, NuiExpanderModule } from "@nova-ui/bits";
 
 import { ChartExampleIndexComponent } from "./chart-example-index.component";
 import { AppRoutingModule } from "./components/app/app-routing.module";

@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiCheckboxModule, NuiDocsModule, NuiMessageModule, SrlcStage } from "@solarwinds/nova-bits";
-import { NuiChartsModule } from "@solarwinds/nova-charts";
+import { DEMO_PATH_TOKEN, NuiCheckboxModule, NuiDocsModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
+import { NuiChartsModule } from "@nova-ui/charts";
 
 import { ChartDocsBaseGridComponent } from "./chart-docs-base-grid.component";
 import { BaseGridDisablingInteractionExampleComponent } from "./disabling-interaction/base-grid-disabling-interaction.example.component";

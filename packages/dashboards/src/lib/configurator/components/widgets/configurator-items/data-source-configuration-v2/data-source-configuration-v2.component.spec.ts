@@ -1,6 +1,6 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { EventBus, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, LoggerService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 import { IKpiData } from "../../../../../components/public-api";

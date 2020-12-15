@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ISelectChangedEvent } from "@solarwinds/nova-bits";
+import { ISelectChangedEvent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-select-visual",

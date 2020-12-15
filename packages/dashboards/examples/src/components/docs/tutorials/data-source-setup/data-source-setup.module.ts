@@ -2,8 +2,8 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiDocsModule, NuiMenuModule, NuiMessageModule } from "@solarwinds/nova-bits";
-import { NuiDashboardsModule } from "@solarwinds/nova-dashboards";
+import { NuiDocsModule, NuiMenuModule, NuiMessageModule } from "@nova-ui/bits";
+import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { DataSourceDocsComponent } from "./data-source-setup-docs.component";
 import { DataSourceSetupComponent } from "./data-source-setup.component";

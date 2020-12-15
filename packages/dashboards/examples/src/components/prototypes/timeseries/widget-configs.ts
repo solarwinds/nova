@@ -10,7 +10,7 @@ import {
     TimeseriesChartPreset,
     TimeseriesScaleType,
     WellKnownProviders
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";
 

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ISelectGroup } from "@solarwinds/nova-bits";
+import { ISelectGroup } from "@nova-ui/bits";
 
 const getRandomNumberTo = (max: number) => Math.floor(Math.random() * Math.floor(max) + 1);
 

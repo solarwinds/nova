@@ -1,4 +1,4 @@
-import { Animations, Helpers } from "@solarwinds/nova-bits/sdk/atoms/helpers";
+import { Animations, Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 
 import { ThresholdSeriesAtom } from "./atoms/threshold-series.atom";
 import { ThresholdsSummaryTestPage } from "./thresholds-summary-test.po";

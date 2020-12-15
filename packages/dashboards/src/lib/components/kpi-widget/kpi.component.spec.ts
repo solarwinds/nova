@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { DataSourceFeatures, EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@solarwinds/nova-bits";
+import { DataSourceFeatures, EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 import { NuiDashboardsModule } from "../../dashboards.module";

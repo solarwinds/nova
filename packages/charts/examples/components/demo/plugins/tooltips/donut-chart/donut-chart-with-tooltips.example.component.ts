@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     Chart, CHART_PALETTE_CS_S, ChartAssist, ChartPalette, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales,
     RadialTooltipsPlugin
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-donut-chart-with-tooltips-example",

@@ -1,7 +1,7 @@
 import { ArrayDataSource, SelectionModel } from "@angular/cdk/collections";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
-import { expand } from "@solarwinds/nova-bits";
+import { expand } from "@nova-ui/bits";
 
 import {FoodNode, TREE_DATA_CHECKBOX} from "../data";
 

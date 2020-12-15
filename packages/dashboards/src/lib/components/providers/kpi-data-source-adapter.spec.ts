@@ -1,5 +1,5 @@
 import { DecimalPipe } from "@angular/common";
-import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 import { KpiWidgetThresholdColors } from "../../configurator/components/widgets/kpi/types";

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Inject } from "@angular/core";
-import { ToastService } from "@solarwinds/nova-bits";
+import { ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-panel-hide-outside-control-example",

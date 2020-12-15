@@ -1,4 +1,4 @@
-import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
 import { INTERACTION } from "../../../services/types";
 

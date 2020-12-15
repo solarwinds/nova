@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, SimpleChange } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../dashboards.module";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";

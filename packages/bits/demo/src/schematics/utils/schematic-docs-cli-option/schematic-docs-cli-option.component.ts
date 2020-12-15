@@ -1,5 +1,5 @@
 import { Component, Inject, Input, Optional } from "@angular/core";
-import { RepeatComponent } from "@solarwinds/nova-bits";
+import { RepeatComponent } from "@nova-ui/bits";
 
 export enum SchematicsDocsComponentType {
     "list" = "list",
@@ -103,7 +103,7 @@ public displayedColumns = ["name", "location", "status"];
 // datasource that you inject, or instantiate in constructor
 private dataSource: TableWithVirtualScrollDataSource;
 `,
-        viewportManagerImport: `import { VirtualViewportManager } from "@solarwinds/nova-bits";`,
+        viewportManagerImport: `import { VirtualViewportManager } from "@nova-ui/bits";`,
         viewChildren:
             `
 @ViewChild(CdkVirtualScrollViewport, { static: false }) viewport: CdkVirtualScrollViewport;

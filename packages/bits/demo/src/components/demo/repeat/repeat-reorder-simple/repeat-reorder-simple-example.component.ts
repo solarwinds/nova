@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import {IItemsReorderedEvent} from "@solarwinds/nova-bits";
+import {IItemsReorderedEvent} from "@nova-ui/bits";
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 interface ISortingOrderTrimmedData extends Omit<IItemsReorderedEvent, "item"|"dropListRef"> {}

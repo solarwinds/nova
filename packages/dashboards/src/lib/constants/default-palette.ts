@@ -1,4 +1,4 @@
-import { CHART_PALETTE_CS3 } from "@solarwinds/nova-charts";
+import { CHART_PALETTE_CS3 } from "@nova-ui/charts";
 import zipObject from "lodash/zipObject";
 
 export const CHART_PALETTE_CS3_ALTERNATIVE_NAMES = [

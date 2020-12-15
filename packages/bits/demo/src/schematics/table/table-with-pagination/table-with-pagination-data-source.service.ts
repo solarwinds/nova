@@ -5,7 +5,7 @@ import {
     INovaFilteringOutputs,
     LoggerService,
     ServerSideDataSource,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Observable, of } from "rxjs";
 import {
     catchError,

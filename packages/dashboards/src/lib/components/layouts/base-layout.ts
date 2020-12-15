@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, DoCheck, Input, OnChanges, OnDestroy, SimpleChange, SimpleChanges } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 import { IValueChange, mergeChanges } from "../../functions/merge-changes";

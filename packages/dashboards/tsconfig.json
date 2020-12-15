@@ -15,7 +15,7 @@
             "dom"
         ],
         "paths": {
-            "@solarwinds/nova-dashboards": [
+            "@nova-ui/dashboards": [
                 "./src/public-api.ts"
             ]
         }

@@ -3,7 +3,7 @@ import {
     BandScale, CHART_MARKERS, CHART_PALETTE_CS1, CHART_PALETTE_CS_S, getColorValueByName, IChartSeries, ILineAccessors,
     LineAccessors, LinearScale, LineRenderer, MappedValueProvider, SequentialChartMarkerProvider, SequentialColorProvider,
     SparkChartAssist, StatusAccessors, ThresholdsService, TimeScale
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import { rgb } from "d3-color";
 import get from "lodash/get";
 import moment, { Duration, Moment } from "moment/moment";

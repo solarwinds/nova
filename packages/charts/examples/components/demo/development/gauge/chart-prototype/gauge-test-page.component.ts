@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IGaugeThreshold } from "@solarwinds/nova-charts";
+import { IGaugeThreshold } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-test-page",

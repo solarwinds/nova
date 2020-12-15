@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } fro
 import {
     ClientSideDataSource,
     INovaFilteringOutputs, PaginatorComponent, SearchComponent, SorterComponent
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";

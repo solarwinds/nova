@@ -1,9 +1,9 @@
 <h1>
-    Nova-bits schematics
+    bits schematics
 </h1>
 <div>
-    All schematics work in similar way. To use them, you can call it by first doing <code>ng add @solarwinds/nova-bits</code>
-    then <code>ng g @solarwinds/nova-bits:SCHEMATICNAME</code> and add option, available for each schematic.
+    All schematics work in similar way. To use them, you can call it by first doing <code>ng add @nova-ui/bits</code>
+    then <code>ng g @nova-ui/bits:SCHEMATICNAME</code> and add option, available for each schematic.
     <b>Note:</b> for most of the schematics, name can be set without specifying option, just type it as the first argument in command line.
 </div>
 
@@ -22,7 +22,7 @@
 </div>
 <div>
     <h2>Layout schematic guide</h2>
-    <p>Use <code>ng g @solarwinds/nova-bits:layout</code> to generate basic layout example that can be used in you project out of the box.</p>
+    <p>Use <code>ng g @nova-ui/bits:layout</code> to generate basic layout example that can be used in you project out of the box.</p>
     <p>Use the following options in the command line to modify schematic's execution:</p>
     <div *ngFor="let key of objectKeys(layoutJsonScheme)">
         <nui-expander [header]="key">
@@ -36,7 +36,7 @@
 </div>
 <div>
     <h2>Table schematic guide</h2>
-    <p>In your command line, type <code>ng g @solarwinds/nova-bits:table</code>to generate table.</p>
+    <p>In your command line, type <code>ng g @nova-ui/bits:table</code>to generate table.</p>
     <div *ngFor="let key of objectKeys(tableJsonScheme)">
         <nui-expander [header]="key">
             <div><i>Description: </i><span>{{tableJsonScheme[key].description}}</span></div>

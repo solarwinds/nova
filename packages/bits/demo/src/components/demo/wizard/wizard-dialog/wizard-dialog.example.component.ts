@@ -1,5 +1,5 @@
 import { Component, Inject, TemplateRef, ViewChild } from "@angular/core";
-import { DialogService, NuiDialogRef, ToastService, WizardComponent } from "@solarwinds/nova-bits";
+import { DialogService, NuiDialogRef, ToastService, WizardComponent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-dialog-example",

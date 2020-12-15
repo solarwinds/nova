@@ -1,4 +1,4 @@
-import { Atom, ExpanderAtom, SelectV2Atom } from "@solarwinds/nova-bits/sdk/atoms";
+import { Atom, ExpanderAtom, SelectV2Atom } from "@nova-ui/bits/sdk/atoms";
 
 export class AccordionAtom extends Atom {
     public static CSS_CLASS = "nui-widget-editor-accordion";

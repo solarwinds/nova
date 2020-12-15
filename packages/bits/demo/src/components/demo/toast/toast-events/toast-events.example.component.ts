@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { IActiveToast, IToastConfig, IToastService, ToastPositionClass, ToastService } from "@solarwinds/nova-bits";
+import { IActiveToast, IToastConfig, IToastService, ToastPositionClass, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-toast-events-example",

@@ -6,7 +6,7 @@ import {
     NuiDividerModule,
     NuiExpanderModule,
     NuiPopoverModule,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { FilterGroupComponent } from "./filter-group.component";
 import { FilterGroupService } from "./filter-group.service";

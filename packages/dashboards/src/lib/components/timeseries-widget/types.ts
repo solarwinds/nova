@@ -1,4 +1,4 @@
-import { ITimeFramePresetDictionary } from "@solarwinds/nova-bits";
+import { ITimeFramePresetDictionary } from "@nova-ui/bits";
 
 import { IProperties } from "../../types";
 import { LegendPlacement } from "../types";

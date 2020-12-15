@@ -25,7 +25,7 @@ import {
     TimeIntervalScale,
     UtilityService,
     XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep";
 import moment, { duration } from "moment/moment";
 

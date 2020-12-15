@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDividerModule, NuiDocsModule, NuiSelectModule } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, NuiDividerModule, NuiDocsModule, NuiSelectModule } from "@nova-ui/bits";
 
 import { HighlightExampleComponent } from "./highlight.example.component";
 

@@ -1,7 +1,7 @@
 import { ArrayDataSource } from "@angular/cdk/collections";
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
-import { EventBusService, expand } from "@solarwinds/nova-bits";
+import { EventBusService, expand } from "@nova-ui/bits";
 
 
 interface FoodNode {

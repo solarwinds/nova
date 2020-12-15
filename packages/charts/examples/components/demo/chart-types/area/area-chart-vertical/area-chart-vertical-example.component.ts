@@ -9,7 +9,7 @@ import {
     LinearScale,
     XYGrid,
     XYGridConfig
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "area-chart-vertical-example",

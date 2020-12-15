@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { IChipsItem, IChipsItemsSource, IToastService, ToastService } from "@solarwinds/nova-bits";
+import { IChipsItem, IChipsItemsSource, IToastService, ToastService } from "@nova-ui/bits";
 import _pull from "lodash/pull";
 
 const verticalFlatItems: IChipsItem[] = [

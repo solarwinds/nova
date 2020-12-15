@@ -9,7 +9,7 @@ import {
     IWidgets,
     PizzagnaLayer,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 
 @Component({

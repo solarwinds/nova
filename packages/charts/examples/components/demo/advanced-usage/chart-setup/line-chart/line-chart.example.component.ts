@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, XYGrid } from "@solarwinds/nova-charts";
+import { Chart, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, XYGrid } from "@nova-ui/charts";
 
 @Component({
     selector: "nui-line-chart-example",

@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { LoggerService, SearchService, ThemeSwitchService } from "@solarwinds/nova-bits";
-import { DATA_SOURCE, IDashboard, IWidget, ProviderRegistryService, WidgetTypesService } from "@solarwinds/nova-dashboards";
+import { LoggerService, SearchService, ThemeSwitchService } from "@nova-ui/bits";
+import { DATA_SOURCE, IDashboard, IWidget, ProviderRegistryService, WidgetTypesService } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 
 import { HarryPotterAverageRatingDataSource, HarryPotterRatingsCountDataSource } from "../data/kpi-datasources";

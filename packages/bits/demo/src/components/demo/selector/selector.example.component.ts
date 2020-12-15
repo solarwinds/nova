@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CheckboxStatus, IMenuGroup, SelectionType } from "@solarwinds/nova-bits";
+import { CheckboxStatus, IMenuGroup, SelectionType } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-selector-example",

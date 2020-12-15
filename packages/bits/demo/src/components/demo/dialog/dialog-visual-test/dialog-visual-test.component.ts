@@ -1,5 +1,5 @@
 import { Component, Inject, TemplateRef } from "@angular/core";
-import { DialogService, NuiDialogRef } from "@solarwinds/nova-bits";
+import { DialogService, NuiDialogRef } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-dialog-visual-test",

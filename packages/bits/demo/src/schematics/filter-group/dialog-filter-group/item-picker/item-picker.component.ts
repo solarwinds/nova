@@ -11,7 +11,7 @@ import {
     DataSourceService,
     LocalFilteringDataSource,
     RepeatSelectionMode,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { IFilterGroupOption } from "../public-api";
 

@@ -1,7 +1,7 @@
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiButtonModule, NuiCommonModule, NuiDocsModule, SrlcStage } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, NuiButtonModule, NuiCommonModule, NuiDocsModule, SrlcStage } from "@nova-ui/bits";
 
 import { NuiFileDropExampleModule } from "./file-drop/file-drop.module";
 import {

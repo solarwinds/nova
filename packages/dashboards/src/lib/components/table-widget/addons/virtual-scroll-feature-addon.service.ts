@@ -1,6 +1,6 @@
 import { ListRange } from "@angular/cdk/collections";
 import { Injectable } from "@angular/core";
-import { INovaFilters, nameof } from "@solarwinds/nova-bits";
+import { INovaFilters, nameof } from "@nova-ui/bits";
 import { merge } from "rxjs";
 import { filter, map, takeUntil, tap } from "rxjs/operators";
 

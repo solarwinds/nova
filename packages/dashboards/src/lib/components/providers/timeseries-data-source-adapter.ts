@@ -1,5 +1,5 @@
 import { Inject } from "@angular/core";
-import { EventBus, IDataSource, IEvent, IFilteringOutputs } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent, IFilteringOutputs } from "@nova-ui/bits";
 import clone from "lodash/clone";
 
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";

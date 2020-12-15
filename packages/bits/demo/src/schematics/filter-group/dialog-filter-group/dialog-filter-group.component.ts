@@ -7,7 +7,7 @@ import {
     Output,
     TemplateRef,
 } from "@angular/core";
-import { DialogService, IFilter, IFilterPub } from "@solarwinds/nova-bits";
+import { DialogService, IFilter, IFilterPub } from "@nova-ui/bits";
 import _orderBy from "lodash/orderBy";
 
 import { IFilterGroupItem, IFilterGroupMultiFilterMetadata, IFilterGroupOption } from "./public-api";

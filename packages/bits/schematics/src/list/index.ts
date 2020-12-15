@@ -43,18 +43,18 @@ function addDeclarationToNgModule(options: ComponentOptions): Rule {
 
         // default modules to be imported
         const modules = [
-            {item: "NuiSorterModule", path: "@solarwinds/nova-bits"},
-            {item: "NuiRepeatModule", path: "@solarwinds/nova-bits"},
+            {item: "NuiSorterModule", path: "@nova-ui/bits"},
+            {item: "NuiRepeatModule", path: "@nova-ui/bits"},
         ];
 
         // additional module(s) used only for search functionality
         if (options.enableSearch) {
-            modules.push({item: "NuiSearchModule", path: "@solarwinds/nova-bits"});
+            modules.push({item: "NuiSearchModule", path: "@nova-ui/bits"});
         }
 
         // additional module(s) used only for pagination
         if (options.pagingMode === "pagination") {
-            modules.push({item: "NuiPaginatorModule", path: "@solarwinds/nova-bits"});
+            modules.push({item: "NuiPaginatorModule", path: "@nova-ui/bits"});
         }
 
         // additional module(s) used only for virtual scroll
@@ -63,8 +63,8 @@ function addDeclarationToNgModule(options: ComponentOptions): Rule {
                 modules.push({item: "HttpClientModule", path: "@angular/common/http"});
             }
             modules.push(
-                {item: "NuiBusyModule", path: "@solarwinds/nova-bits"},
-                {item: "NuiSpinnerModule", path: "@solarwinds/nova-bits"}
+                {item: "NuiBusyModule", path: "@nova-ui/bits"},
+                {item: "NuiSpinnerModule", path: "@nova-ui/bits"}
             );
         }
 

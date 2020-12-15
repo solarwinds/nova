@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { PanelBackgroundColor } from "@solarwinds/nova-bits";
+import { PanelBackgroundColor } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-panel-custom-styles-example",

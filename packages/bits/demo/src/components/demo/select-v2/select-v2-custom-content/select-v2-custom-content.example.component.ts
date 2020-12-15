@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from "@angular/core";
-import { ToastService } from "@solarwinds/nova-bits";
+import { ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-select-v2-custom-content-example",

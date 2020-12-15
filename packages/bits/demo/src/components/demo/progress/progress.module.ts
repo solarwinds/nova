@@ -7,7 +7,7 @@ import {
     NuiMessageModule,
     NuiProgressModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     BasicProgressExampleComponent,

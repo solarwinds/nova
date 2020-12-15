@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import {
     Chart, CHART_MARKERS, CHART_PALETTE_CS1, ChartAssist, ChartPalette, IChartMarker, IChartPalette, IValueProvider, LineAccessors, LineRenderer,
     SequentialChartMarkerProvider, XYGrid,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-legend-test",

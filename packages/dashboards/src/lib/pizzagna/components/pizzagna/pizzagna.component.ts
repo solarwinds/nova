@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
-import { EventBus, IEvent, immutableSet, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, immutableSet, LoggerService } from "@nova-ui/bits";
 
 import { mergeChanges } from "../../../functions/merge-changes";
 import { DEFAULT_PIZZAGNA_ROOT, ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../../services/types";

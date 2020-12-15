@@ -13,7 +13,7 @@ import {
     RepeatComponent,
     SearchComponent,
     VirtualViewportManager
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";

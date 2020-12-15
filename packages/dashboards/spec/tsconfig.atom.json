@@ -13,7 +13,7 @@
             "selenium-webdriver"
         ],
         "paths": {
-            "@solarwinds/nova-dashboards": ["../src/public-api.ts"]
+            "@nova-ui/dashboards": ["../src/public-api.ts"]
         }
     },
     "exclude": [

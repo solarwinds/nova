@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TooltipDirective } from "@solarwinds/nova-bits";
+import { TooltipDirective } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-tooltip-trigger-example",

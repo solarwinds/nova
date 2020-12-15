@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
-import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@solarwinds/nova-charts";
+import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@nova-ui/charts";
 import sumBy from "lodash/sumBy";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";

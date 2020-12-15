@@ -1,4 +1,4 @@
-import { IScale, LinearScale, TimeIntervalScale, TimeScale } from "@solarwinds/nova-charts";
+import { IScale, LinearScale, TimeIntervalScale, TimeScale } from "@nova-ui/charts";
 import { duration } from "moment/moment";
 
 import { ITimeseriesScaleConfig, TimeseriesScaleType } from "./types";

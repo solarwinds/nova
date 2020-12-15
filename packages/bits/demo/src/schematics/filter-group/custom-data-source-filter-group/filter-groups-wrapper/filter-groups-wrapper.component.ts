@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ContentChildren, Inject, QueryList } from "@angular/core";
-import { DataSourceService, IFilteringParticipants } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilteringParticipants } from "@nova-ui/bits";
 import _isEmpty from "lodash/isEmpty";
 
 import { CustomDataSourceFilterGroupCompositeComponent } from "../custom-data-source-filter-group.component";

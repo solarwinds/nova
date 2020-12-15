@@ -12,7 +12,7 @@ import {
     DataSourceService, expand,
     IMenuItem,
     INovaFilteringOutputs,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import {
     Subject,
 } from "rxjs";

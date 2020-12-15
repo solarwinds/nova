@@ -39,7 +39,7 @@ if (pagingMode !== "virtualScroll" || (pagingMode === "virtualScroll" && virtual
     TableComponent,<%
     if (pagingMode === "virtualScroll") { %>
     VirtualViewportManager,<% } %>
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import {<%
     if (enableSearch) {%>

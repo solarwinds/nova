@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     barAccessors, barGrid, BarHighlightStrategy, BarRenderer, barScales, BarTooltipsPlugin, Chart, ChartAssist, InteractionLabelPlugin, stack
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-bar-chart-stacked-example",

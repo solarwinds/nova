@@ -1,7 +1,7 @@
 import { Overlay, OverlayConfig } from "@angular/cdk/overlay";
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { getOverlayPositions, IOptionValueObject, IResizeConfig, NuiFormFieldControl, OverlayUtilitiesService, SelectV2Component } from "@solarwinds/nova-bits";
+import { getOverlayPositions, IOptionValueObject, IResizeConfig, NuiFormFieldControl, OverlayUtilitiesService, SelectV2Component } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 

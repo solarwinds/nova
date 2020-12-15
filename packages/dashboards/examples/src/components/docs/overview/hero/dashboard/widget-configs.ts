@@ -1,4 +1,4 @@
-import { IWidget } from "@solarwinds/nova-dashboards";
+import { IWidget } from "@nova-ui/dashboards";
 import {GridsterItem} from "angular-gridster2";
 
 import { kpiConfig } from "../widget-configs/kpi";

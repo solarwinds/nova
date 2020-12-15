@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
-import { ClientSideDataSource, INovaFilteringOutputs, PaginatorComponent } from "@solarwinds/nova-bits";
+import { ClientSideDataSource, INovaFilteringOutputs, PaginatorComponent } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 interface IExampleTableModel {

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, EventEmitter, Injectable, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
-import { DataSourceService, IFilteringOutputs, ToastService, uuid } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilteringOutputs, ToastService, uuid } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -24,7 +24,7 @@ import {
     WellKnownProviders,
     WidgetClonerService,
     WidgetTypesService,
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { finalize, take, takeUntil } from "rxjs/operators";

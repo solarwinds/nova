@@ -1,4 +1,4 @@
-import { Animations, Helpers } from "@solarwinds/nova-bits/sdk/atoms/helpers";
+import { Animations, Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser, by, ElementFinder } from "protractor";
 
 import { RadialSeriesAtom } from "./atoms/radial-series.atom";
