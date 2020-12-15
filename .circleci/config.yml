@@ -279,7 +279,7 @@ jobs:
                     name: Creating .npmrc
                     command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
             -   run:
-                    name: Publish charts
+                    name: Publish dashboards
                     command: yarn run publish-ci
     release-prep:
         working_directory: ~/nova
