@@ -1,7 +1,7 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { Component } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@solarwinds/nova-bits";
+import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-combobox-v2-overlay-config-example",

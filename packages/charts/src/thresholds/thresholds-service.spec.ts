@@ -1,4 +1,4 @@
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 import uniq from "lodash/uniq";
 import moment from "moment/moment";
 

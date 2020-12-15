@@ -1,7 +1,7 @@
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import { AfterViewInit, Component, HostListener, OnDestroy, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ComboboxV2Component } from "@solarwinds/nova-bits";
+import { ComboboxV2Component } from "@nova-ui/bits";
 import { Observable, of, Subject } from "rxjs";
 import { delay, takeUntil, tap } from "rxjs/operators";
 

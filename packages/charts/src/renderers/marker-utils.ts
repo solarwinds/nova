@@ -1,4 +1,4 @@
-import { UtilService } from "@solarwinds/nova-bits";
+import { UtilService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 import { DATA_POINT_INTERACTION_RESET, INTERACTION_DATA_POINT_EVENT } from "../constants";
@@ -39,7 +39,7 @@ export class MarkerUtils {
             MarkerUtils.removeMarker(container);
             return;
         }
-        
+
         const accessors = dataSeries.accessors;
 
         if (dataPointIndex < 0) {

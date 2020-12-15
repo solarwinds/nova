@@ -1,7 +1,7 @@
 import { FlexibleConnectedPositionStrategy, OverlayConfig } from "@angular/cdk/overlay";
 import { AfterViewInit, Component, OnDestroy, ViewChild, ViewEncapsulation } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { IOverlayPositionServiceConfig, OverlayComponent, OverlayPlacement } from "@solarwinds/nova-bits";
+import { IOverlayPositionServiceConfig, OverlayComponent, OverlayPlacement } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

@@ -1,4 +1,4 @@
-import { EventDefinition } from "@solarwinds/nova-bits";
+import { EventDefinition } from "@nova-ui/bits";
 
 export const DATA_SOURCE_OUTPUT = new EventDefinition("DATA_SOURCE_OUTPUT");
 export const DATA_SOURCE_DESTROYED = new EventDefinition("DATA_SOURCE_DESTROYED");

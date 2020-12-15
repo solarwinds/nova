@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { AbstractControl, FormGroup, FormGroupDirective } from "@angular/forms";
-import { EventBus } from "@solarwinds/nova-bits";
+import { EventBus } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 import { NuiDashboardsModule } from "../../../dashboards.module";

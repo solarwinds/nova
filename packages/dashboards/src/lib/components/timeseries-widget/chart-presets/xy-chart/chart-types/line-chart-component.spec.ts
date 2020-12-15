@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { EventBus } from "@solarwinds/nova-bits";
-import { XYGridConfig } from "@solarwinds/nova-charts";
+import { EventBus } from "@nova-ui/bits";
+import { XYGridConfig } from "@nova-ui/charts";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";

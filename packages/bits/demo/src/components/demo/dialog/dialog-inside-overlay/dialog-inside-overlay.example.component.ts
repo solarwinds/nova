@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild } from "@angular/core";
-import { DialogService, NuiDialogRef, SelectV2Component } from "@solarwinds/nova-bits";
+import { DialogService, NuiDialogRef, SelectV2Component } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-dialog-inside-overlay-example",

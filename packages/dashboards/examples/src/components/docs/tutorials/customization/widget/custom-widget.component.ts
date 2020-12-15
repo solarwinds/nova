@@ -11,7 +11,7 @@ import {
     SimpleChanges
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { IMenuItem } from "@solarwinds/nova-bits";
+import { IMenuItem } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     DEFAULT_PIZZAGNA_ROOT,
@@ -39,7 +39,7 @@ import {
     widgetBodyContentNodes,
     WidgetConfiguratorSectionComponent,
     WidgetTypesService,
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 
 // The custom widget type name we'll use

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, SparkChartAssist, TimeScale } from "@solarwinds/nova-charts";
+import { IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, SparkChartAssist, TimeScale } from "@nova-ui/charts";
 import moment from "moment/moment";
 
 @Component({

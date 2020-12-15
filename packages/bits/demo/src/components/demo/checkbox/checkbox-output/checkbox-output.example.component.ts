@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { CheckboxChangeEvent, ToastService } from "@solarwinds/nova-bits";
+import { CheckboxChangeEvent, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-checkbox-output-example",

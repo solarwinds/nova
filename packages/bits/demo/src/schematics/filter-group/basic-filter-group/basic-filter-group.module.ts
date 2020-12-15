@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { NuiButtonModule, NuiCheckboxModule, NuiDialogModule, NuiExpanderModule } from "@solarwinds/nova-bits";
+import { NuiButtonModule, NuiCheckboxModule, NuiDialogModule, NuiExpanderModule } from "@nova-ui/bits";
 
 import { BasicFilterGroupCompositeComponent } from "./basic-filter-group.component";
 import { FilterGroupCompositeDialogComponent } from "./filter-group-dialog/filter-group-dialog.component";

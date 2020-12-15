@@ -4,7 +4,7 @@ import {
 import {
     DataFilterService, IFilter, IFilterPub, IMenuItem, INovaFilteringOutputs, IRange, ISorterChanges,
     ITimeframe, LocalFilteringDataSource, SearchComponent, SearchService, SorterComponent, SorterDirection, TimeframeService
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";

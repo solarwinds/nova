@@ -4,18 +4,18 @@ Nova Charts is a library created to provide Solarwinds feature developers with s
 
 # Getting Started
 
-Getting started with nova-charts is quite simple:
+Getting started with charts is quite simple:
 
-1. Include nova-charts in your package.json file
+1. Include charts in your package.json file
 
         "devDependencies": {
             ...
-            "@solarwinds/nova-charts": >>last release version<<,
+            "@nova-ui/charts": >>last release version<<,
             ...
         }
 
 
-2. Add a reference to nova-charts styles in your angular.json file. Without this step, the charts will render, but will look and act in unpredictable ways.
+2. Add a reference to charts styles in your angular.json file. Without this step, the charts will render, but will look and act in unpredictable ways.
 
         "projects": {
             "your-project": {
@@ -24,15 +24,15 @@ Getting started with nova-charts is quite simple:
                     ...
                     "styles": [
                         "src/styles.less",
-                        "./node_modules/@solarwinds/nova-bits/bundles/css/styles.css",
-                        "./node_modules/@solarwinds/nova-charts/bundles/css/styles.css"
+                        "./node_modules/@nova-ui/bits/bundles/css/styles.css",
+                        "./node_modules/@nova-ui/charts/bundles/css/styles.css"
                      ],
 
 
 
 3. Import NuiChartsModule
 
-        import { NuiChartsModule } from "@solarwinds/nova-charts";
+        import { NuiChartsModule } from "@nova-ui/charts";
 
         @NgModule({
             declarations: [ ... ],

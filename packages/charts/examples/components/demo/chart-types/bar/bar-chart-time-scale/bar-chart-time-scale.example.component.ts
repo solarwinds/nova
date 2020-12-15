@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     BandScale, barAccessors, barGrid, BarRenderer, Chart, getAutomaticDomainWithIncludedInterval, IAccessors, IChartSeries, LinearScale, NoopAccessors,
     NoopRenderer, NoopScale, TimeScale, XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import moment, { Moment } from "moment/moment";
 
 @Component({

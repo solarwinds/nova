@@ -1,6 +1,6 @@
 import { Component, Injectable, OnInit } from "@angular/core";
-import { DataSourceService, IDataSourceOutput, INovaFilters, ITimeframe } from "@solarwinds/nova-bits";
-import { CHART_PALETTE_CS_S } from "@solarwinds/nova-charts";
+import { DataSourceService, IDataSourceOutput, INovaFilters, ITimeframe } from "@nova-ui/bits";
+import { CHART_PALETTE_CS_S } from "@nova-ui/charts";
 import {
     applyStatusEndpoints,
     DATA_SOURCE,
@@ -23,7 +23,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import keyBy from "lodash/keyBy";
 import moment, { Moment } from "moment/moment";

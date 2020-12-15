@@ -1,7 +1,7 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormBuilder } from "@angular/forms";
-import { EventBus } from "@solarwinds/nova-bits";
+import { EventBus } from "@nova-ui/bits";
 
 import { IFormatter } from "../../../../../components/types";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";

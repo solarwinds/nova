@@ -1,8 +1,8 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
-import { NuiCheckboxModule, NuiFormFieldModule, NuiIconModule, NuiSelectV2Module, NuiValidationMessageModule } from "@solarwinds/nova-bits";
-import { NuiDashboardConfiguratorModule } from "@solarwinds/nova-dashboards";
+import { NuiCheckboxModule, NuiFormFieldModule, NuiIconModule, NuiSelectV2Module, NuiValidationMessageModule } from "@nova-ui/bits";
+import { NuiDashboardConfiguratorModule } from "@nova-ui/dashboards";
 
 import { AcmeProportionalDSConfigComponent } from "./data-source-configuration/proportional-ds-config.component";
 

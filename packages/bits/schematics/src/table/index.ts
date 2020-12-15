@@ -40,8 +40,8 @@ function addDeclarationToNgModule(options: ComponentOptions): Rule {
 
         // default modules to be imported
         const modules = [
-            {item: "NuiTableModule", path: "@solarwinds/nova-bits"},
-            {item: "NuiIconModule", path: "@solarwinds/nova-bits"},
+            {item: "NuiTableModule", path: "@nova-ui/bits"},
+            {item: "NuiIconModule", path: "@nova-ui/bits"},
         ];
 
         if (options.dataSource === "serverSide") {
@@ -53,15 +53,15 @@ function addDeclarationToNgModule(options: ComponentOptions): Rule {
 
         // additional module(s) used only for search functionality
         if (options.enableSearch) {
-            modules.push({item: "NuiSearchModule", path: "@solarwinds/nova-bits"});
+            modules.push({item: "NuiSearchModule", path: "@nova-ui/bits"});
         }
 
         // additional module(s) used only for pagination functionality
         if (options.pagingMode === "pagination") {
-            modules.push({item: "NuiPaginatorModule", path: "@solarwinds/nova-bits"});
+            modules.push({item: "NuiPaginatorModule", path: "@nova-ui/bits"});
         } else if (options.pagingMode === "virtualScroll") {
             modules.push({item: "ScrollingModule", path: "@angular/cdk/scrolling"});
-            modules.push({item: "NuiProgressModule", path: "@solarwinds/nova-bits"});
+            modules.push({item: "NuiProgressModule", path: "@nova-ui/bits"});
         }
 
         updateModuleChanges(host, options, moduleSource, modules, [],

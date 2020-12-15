@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, O
 import {
     ClientSideDataSource,
     INovaFilteringOutputs, ListService, PaginatorComponent, RepeatComponent, RepeatSelectionMode, SearchComponent, SelectionType
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 interface IExampleItem {

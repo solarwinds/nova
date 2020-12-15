@@ -1,6 +1,6 @@
 import { ChangeDetectorRef } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
-import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";

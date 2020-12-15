@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 import {
     Chart, ChartAssist, HIGHLIGHT_DATA_POINT_EVENT, IAccessors, IChart, IChartAssistSeries, IChartEvent, INTERACTION_DATA_POINTS_EVENT,
     INTERACTION_SERIES_EVENT, INTERACTION_VALUES_EVENT, InteractionType, LineAccessors, LinearScale, LineRenderer, LineSelectSeriesInteractionStrategy,
     MOUSE_ACTIVE_EVENT, Scales, TimeScale, XYGrid, XYGridConfig
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep";
 import each from "lodash/each";
 import includes from "lodash/includes";

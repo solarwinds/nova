@@ -1,5 +1,5 @@
 import { OnDestroy } from "@angular/core";
-import { HttpStatusCode, IDataSourceOutput } from "@solarwinds/nova-dashboards";
+import { HttpStatusCode, IDataSourceOutput } from "@nova-ui/dashboards";
 import { Subject } from "rxjs";
 
 import { IProportionalWidgetData, PROPORTIONAL_WIDGET_DATA_LARGE, PROPORTIONAL_WIDGET_DATA_MEDIUM, PROPORTIONAL_WIDGET_DATA_SMALL } from "./widget-data";

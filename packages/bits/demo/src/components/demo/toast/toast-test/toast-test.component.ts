@@ -6,7 +6,7 @@ import {
     IToastService,
     ToastPositionClass,
     ToastService
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-toast-test",

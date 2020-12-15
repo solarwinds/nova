@@ -1,7 +1,7 @@
 import { ListRange } from "@angular/cdk/collections";
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DataSourceService, IconService, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@solarwinds/nova-bits";
+import { DataSourceService, IconService, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     DATA_SOURCE,
@@ -22,7 +22,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import isEqual from "lodash/isEqual";
 import orderBy from "lodash/orderBy";

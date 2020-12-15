@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { DataSourceService, INovaFilters } from "@solarwinds/nova-bits";
-import { IDataSource, ITimeseriesOutput, ITimeseriesWidgetData, ITimeseriesWidgetSeriesData } from "@solarwinds/nova-dashboards";
+import { DataSourceService, INovaFilters } from "@nova-ui/bits";
+import { IDataSource, ITimeseriesOutput, ITimeseriesWidgetData, ITimeseriesWidgetSeriesData } from "@nova-ui/dashboards";
 import { Moment } from "moment/moment";
 import { BehaviorSubject } from "rxjs";
 

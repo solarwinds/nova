@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { ThemeSwitchService } from "@solarwinds/nova-bits";
+import { ThemeSwitchService } from "@nova-ui/bits";
 
 @Component({
     selector: "dashboard-test-harness",

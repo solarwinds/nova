@@ -4,7 +4,7 @@ import {
     INovaFilteringOutputs,
     LoggerService,
     ServerSideDataSource,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Apollo } from "apollo-angular";
 import { DocumentNode } from "graphql";
 import gql from "graphql-tag";

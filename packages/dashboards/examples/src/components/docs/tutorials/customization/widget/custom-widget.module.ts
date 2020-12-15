@@ -12,8 +12,8 @@ import {
     NuiMessageModule,
     NuiSelectV2Module,
     NuiSwitchModule
-} from "@solarwinds/nova-bits";
-import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@solarwinds/nova-dashboards";
+} from "@nova-ui/bits";
+import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { CustomWidgetDocsComponent } from "./custom-widget-docs.component";
 import { CustomConfiguratorSectionComponent, CustomWidgetBodyContentComponent, CustomWidgetComponent } from "./custom-widget.component";

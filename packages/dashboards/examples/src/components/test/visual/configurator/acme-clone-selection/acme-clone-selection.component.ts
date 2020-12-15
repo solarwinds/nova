@@ -1,6 +1,6 @@
 import { TitleCasePipe } from "@angular/common";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { IWidget, IWidgetTemplateSelector, PizzagnaLayer, WidgetTypesService } from "@solarwinds/nova-dashboards";
+import { IWidget, IWidgetTemplateSelector, PizzagnaLayer, WidgetTypesService } from "@nova-ui/dashboards";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 

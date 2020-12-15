@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     BandScale, BarHighlightStrategy, BarHorizontalGridConfig, BarRenderer, BarTooltipsPlugin, Chart, ChartAssist, HorizontalBarAccessors, LinearScale, Scales,
     stack, XYGrid,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-bar-chart-stacked-horizontal-example",

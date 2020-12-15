@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import template from "lodash/template";
 
 import { PIZZAGNA_EVENT_BUS } from "../../../types";

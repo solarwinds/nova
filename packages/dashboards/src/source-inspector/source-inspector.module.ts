@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { NuiDocsModule } from "@solarwinds/nova-bits";
+import { NuiDocsModule } from "@nova-ui/bits";
 
 import { SourceInspectorComponent } from "./source-inspector.component";
 

@@ -6,7 +6,7 @@ import {
     NuiMessageModule,
     NuiSwitchModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { CustomThemeExampleComponent } from "./custom-theme/custom-theme.example.component";
 import { ThemeSwitchServiceExampleComponent } from "./theme-switch-service/theme-switch-service.example.component";

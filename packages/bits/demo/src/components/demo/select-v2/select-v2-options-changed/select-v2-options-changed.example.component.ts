@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { SelectV2Component } from "@solarwinds/nova-bits";
+import { SelectV2Component } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-select-v2-options-changed-example",

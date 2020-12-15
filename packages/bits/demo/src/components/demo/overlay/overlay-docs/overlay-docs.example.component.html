@@ -46,7 +46,7 @@
 </p>
 <p>
     To do that, you have to pass <code>"with-popup-styles"</code> class as a <code>panelClass</code> for the <code>overlayConfig</code>.
-    You can import <code>OVERLAY_WITH_POPUP_STYLES_CLASS</code> from <code>@solarwinds/nova-bits</code> or just pass <code>"with-popup-styles"</code> as a string.
+    You can import <code>OVERLAY_WITH_POPUP_STYLES_CLASS</code> from <code>@nova-ui/bits</code> or just pass <code>"with-popup-styles"</code> as a string.
 </p>
 <nui-example-wrapper filenamePrefix="overlay-popup-styles.example" exampleTitle="Using with popup styles">
     <nui-overlay-popup-styles-example></nui-overlay-popup-styles-example>
@@ -158,12 +158,12 @@
 <h2>Custom Dialog Overlay</h2>
 <p>
     There are numerous cases when a user would want a lightweight dialog-looking overlay placed over the parent container
-    to quickly confirm things, or make sure a users are immediately informed about any sort of state, progress etc. This can be 
-    done fast and easily with <code>nui-overlay</code> component with a few lines of code involved. By default, the <code>nui-overlay</code> 
-    position strategy is configured to attach the created cdk overlay to the bottom-left corner of the toggle reference, so it could be easily used 
+    to quickly confirm things, or make sure a users are immediately informed about any sort of state, progress etc. This can be
+    done fast and easily with <code>nui-overlay</code> component with a few lines of code involved. By default, the <code>nui-overlay</code>
+    position strategy is configured to attach the created cdk overlay to the bottom-left corner of the toggle reference, so it could be easily used
     for the most common use cases - selects, menus, comboboxes etc. To fill the parent container with the overlay we need to set new positions,
     so that the overlay would be attached to the top-left corner of the toggle reference container. Afterwards, all we need is toggle the overlay
-    and using its overlay reference adjust the size of the overlay to the dimensions of the toggle reference container. And that's it! Please check 
+    and using its overlay reference adjust the size of the overlay to the dimensions of the toggle reference container. And that's it! Please check
     the comments in the code snippets below.
 </p>
 

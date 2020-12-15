@@ -10,7 +10,7 @@ import {
     IBarChartConfig,
     IChartSeries,
     XYGridConfig
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-basic-horizontal-bar-chart-test",

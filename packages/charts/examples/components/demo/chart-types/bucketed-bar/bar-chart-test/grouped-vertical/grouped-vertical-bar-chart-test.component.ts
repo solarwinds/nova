@@ -3,7 +3,7 @@ import {
     BandScale, barAccessors, barGrid, BarHighlightStrategy, BarRenderer, Chart, ChartAssist, INTERACTION_DATA_POINTS_EVENT, InteractionLabelPlugin, LinearScale,
     Scales,
     SELECT_DATA_POINT_EVENT
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-grouped-vertical-bar-chart-test",

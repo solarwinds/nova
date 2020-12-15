@@ -11,7 +11,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { uuid } from "@solarwinds/nova-bits";
+import { uuid } from "@nova-ui/bits";
 import values from "lodash/values";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";

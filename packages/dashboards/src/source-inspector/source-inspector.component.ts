@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit, Optional, SkipSelf, ViewEncapsulation } from "@angular/core";
-import { DEMO_PATH_TOKEN } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN } from "@nova-ui/bits";
 import _filter from "lodash/filter";
 import _keys from "lodash/keys";
 

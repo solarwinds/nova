@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { IconService } from "@solarwinds/nova-bits";
+import { IconService } from "@nova-ui/bits";
 import {
     BandScale, BarHighlightStrategy, BarRenderer, BarStatusGridConfig, BarTooltipsPlugin, Chart, CHART_PALETTE_CS_S, HIGHLIGHT_DATA_POINT_EVENT,
     InteractionLabelPlugin, InteractionLinePlugin, IValueProvider, IXYScales, MappedValueProvider, SELECT_DATA_POINT_EVENT, statusAccessors, StatusAccessors,
     SvgMarker, TimeScale, XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import moment from "moment/moment";
 
 enum Status {

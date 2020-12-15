@@ -9,7 +9,7 @@ import {
     CHART_PALETTE_CS_S,
     ChartAssist,
     MappedValueProvider
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 enum Status {
     Up = "up",

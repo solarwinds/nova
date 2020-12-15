@@ -1,6 +1,6 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { Component, ViewEncapsulation } from "@angular/core";
-import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@solarwinds/nova-bits";
+import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-combobox-v2-styling-example",

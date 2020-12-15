@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiSearchModule, NuiSelectModule } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, NuiDocsModule, NuiSearchModule, NuiSelectModule } from "@nova-ui/bits";
 
 import { HighlightPipeDocsExampleComponent, HighlightPipeExampleComponent } from "./index";
 

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { EventBus, IconService, IEvent } from "@solarwinds/nova-bits";
-import { Chart, SET_DOMAIN_EVENT, ZoomPlugin } from "@solarwinds/nova-charts";
+import { EventBus, IconService, IEvent } from "@nova-ui/bits";
+import { Chart, SET_DOMAIN_EVENT, ZoomPlugin } from "@nova-ui/charts";
 import moment from "moment/moment";
 
 import { SET_TIMEFRAME } from "../../../../services/types";

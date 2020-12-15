@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { IDropEvent, IDropValidator, IToastService, ToastService } from "@solarwinds/nova-bits";
+import { IDropEvent, IDropValidator, IToastService, ToastService } from "@nova-ui/bits";
 
 class IsStringValidator implements IDropValidator {
     isValidDropTarget(payload: any, isExternal: boolean): boolean {

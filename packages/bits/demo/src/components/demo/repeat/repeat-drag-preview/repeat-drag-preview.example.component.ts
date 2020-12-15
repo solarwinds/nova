@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import {IItemsReorderedEvent, IRepeatItem} from "@solarwinds/nova-bits";
+import {IItemsReorderedEvent, IRepeatItem} from "@nova-ui/bits";
 
 interface IRepeatCompanyItem extends IRepeatItem {
     name: string;

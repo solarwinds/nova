@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { SrlcStage } from "@solarwinds/nova-bits";
+import { SrlcStage } from "@nova-ui/bits";
 
 import { SummaryComponent } from "./index";
 

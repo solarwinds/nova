@@ -15,7 +15,7 @@ import {
     INovaFilteringOutputs,
     INovaFilters,
     VirtualViewportManager,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { BehaviorSubject, Subject } from "rxjs";
 import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
 

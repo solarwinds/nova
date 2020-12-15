@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import {
     IQuickPickPresetDictionary, ITimeframe, ITimeFramePresetDictionary, TimeframeService
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import _find from "lodash/find";
 import _isUndefined from "lodash/isUndefined";
 import moment, { Moment } from "moment/moment";

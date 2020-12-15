@@ -21,8 +21,8 @@ import {
     NuiTimeFrameBarModule,
     NuiTimeFramePickerModule,
     NuiTooltipModule,
-} from "@solarwinds/nova-bits";
-import { NuiChartsModule } from "@solarwinds/nova-charts";
+} from "@nova-ui/bits";
+import { NuiChartsModule } from "@nova-ui/charts";
 import { GridsterModule } from "angular-gridster2";
 
 import { NuiDashboardsCommonModule } from "./common/common.module";

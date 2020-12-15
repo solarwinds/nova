@@ -2,7 +2,7 @@
     "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
         "ng-add": {
-            "description": "Installs and configures the nova-dashboards library.",
+            "description": "Installs and configures the dashboards library.",
             "factory": "./ng-add/index",
             "schema": "./ng-add/schema.json"
         },

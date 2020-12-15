@@ -11,4 +11,4 @@ export * from "./lib/widget-types/public-api";
 export * from "./lib/constants/public-api";
 
 // Backwards compatible, remove in v10
-export { IDataSource } from "@solarwinds/nova-bits";
+export { IDataSource } from "@nova-ui/bits";

@@ -1,6 +1,6 @@
 import { AfterViewInit, Inject } from "@angular/core";
 import { AbstractControl, FormArray, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent, immutableSet } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";

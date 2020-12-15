@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiSpinnerModule, SrlcStage } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiSpinnerModule, SrlcStage } from "@nova-ui/bits";
 
 import {
     SpinnerBasicExampleComponent,

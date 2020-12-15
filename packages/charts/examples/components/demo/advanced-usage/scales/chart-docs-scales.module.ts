@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, SrlcStage } from "@solarwinds/nova-bits";
-import { NuiChartsModule } from "@solarwinds/nova-charts";
+import { DEMO_PATH_TOKEN, NuiDocsModule, SrlcStage } from "@nova-ui/bits";
+import { NuiChartsModule } from "@nova-ui/charts";
 
 import { ChartDocsScalesComponent } from "./chart-docs-scales.component";
 

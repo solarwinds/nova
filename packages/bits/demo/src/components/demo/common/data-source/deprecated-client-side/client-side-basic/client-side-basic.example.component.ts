@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
     INovaFilteringOutputs, LocalFilteringDataSource, PaginatorComponent, SearchComponent
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 const RANDOM_ARRAY = [

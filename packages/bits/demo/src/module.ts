@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
-import { NuiDocsModule } from "@solarwinds/nova-bits";
+import { NuiDocsModule } from "@nova-ui/bits";
 
 import { AppRoutingModule } from "./components/app/app-routing.module";
 import { AppComponent } from "./components/app/app.component";

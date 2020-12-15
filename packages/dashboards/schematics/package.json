@@ -1,5 +1,5 @@
 {
-  "name": "nova-dashboards-schematics",
+  "name": "dashboards-schematics",
   "version": "9.31.0-0",
   "scripts": {
     "assemble": "npm run build && npm run test && npm run copy",

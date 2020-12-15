@@ -10,9 +10,9 @@ import {
     TimeseriesChartPreset,
     TimeseriesScaleType,
     WellKnownProviders
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 // TODO: Comment back in after NUI-5606 is finished
-// import { chartLine, chartPie, discovery, table } from "@solarwinds/nova-images";
+// import { chartLine, chartPie, discovery, table } from "@nova-ui/nova-images";
 import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";
 

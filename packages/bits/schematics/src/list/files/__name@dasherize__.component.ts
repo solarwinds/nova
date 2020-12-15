@@ -40,7 +40,7 @@ import {
     SorterDirection,<% }
     if (pagingMode === "virtualScroll") { %>
     VirtualViewportManager,<% } %>
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import {<%
     if (dataSource === "serverSide") {%>
     BehaviorSubject,<% } %>

@@ -6,7 +6,7 @@ import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 
 import { addStylesToAngularJson, assembleDependencies, getBrowserProjectTargets, installPackageJsonDependencies, readIntoSourceFile } from "../schematics-helpers";
 
-const stylePaths = ["./node_modules/@solarwinds/nova-charts/bundles/css/styles.css"];
+const stylePaths = ["./node_modules/@nova-ui/charts/bundles/css/styles.css"];
 
 export default function (options: any): Rule {
     if (!options.project) {
@@ -48,7 +48,7 @@ function updateModuleFile(options: any): Rule {
 
             const modules = [
                 { item: `BrowserAnimationsModule`, path: `@angular/platform-browser/animations` },
-                { item: `NuiDashboardsModule`, path: `@solarwinds/nova-dashboards` },
+                { item: `NuiDashboardsModule`, path: `@nova-ui/dashboards` },
             ];
 
             modules.forEach(module => {

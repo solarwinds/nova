@@ -185,7 +185,7 @@ function addCssToAngularJson(options: any) {
                 "options",
                 "styles",
             ],
-            ["./node_modules/@solarwinds/nova-bits/bundles/css/styles.css"]
+            ["./node_modules/@nova-ui/bits/bundles/css/styles.css"]
         );
     };
 }

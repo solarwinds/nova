@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     Chart, CHART_PALETTE_CS_S, ChartAssist, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialPopoverPlugin, RadialRenderer, radialScales
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-donut-chart-with-popover-example",

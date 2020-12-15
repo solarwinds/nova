@@ -8,7 +8,7 @@ import {
     NuiFormFieldModule,
     NuiMessageModule,
     NuiTextboxModule
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { BadgeColorBlackComponent } from "./badge-color-black/badge-color-black.component";
 import { BadgeCounterBasicComponent } from "./badge-counter-basic/badge-counter-basic.component";

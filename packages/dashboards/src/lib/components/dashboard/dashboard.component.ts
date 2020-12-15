@@ -1,6 +1,6 @@
 import { KeyValue } from "@angular/common";
 import { Component, EventEmitter, HostBinding, Inject, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from "@angular/core";
-import { EventBus, immutableSet } from "@solarwinds/nova-bits";
+import { EventBus, immutableSet } from "@nova-ui/bits";
 import { GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
 import _defaultsDeep from "lodash/defaultsDeep";
 

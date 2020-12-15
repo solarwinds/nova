@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiLayoutModule, NuiMessageModule, SrlcStage } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, NuiDocsModule, NuiLayoutModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
 
 import {
     LayoutBasicExampleComponent,

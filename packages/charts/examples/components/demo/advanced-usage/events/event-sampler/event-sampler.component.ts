@@ -38,7 +38,7 @@ import {
     SELECT_DATA_POINT_EVENT,
     stackedPreprocessor,
     XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import each from "lodash/each";
 import zipObject from "lodash/zipObject";
 

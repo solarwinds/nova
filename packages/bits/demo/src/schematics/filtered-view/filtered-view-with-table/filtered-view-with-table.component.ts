@@ -19,7 +19,7 @@ import {
     LocalFilteringDataSource,
     PopoverComponent,
     PopoverOverlayPosition,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import _pull from "lodash/pull";
 import { Subscription } from "rxjs";
 
@@ -89,7 +89,7 @@ export class FilteredViewWithTableComponent implements AfterViewInit, OnDestroy 
             selectedFilterValues: [],
         },
     ];
-    
+
     public chipsDataSource: IChipsItemsSource = {groupedItems: [], flatItems: []};
     public overflowCounter: number;
     public overflowSource: IChipsItemsSource;

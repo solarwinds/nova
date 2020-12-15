@@ -25,7 +25,7 @@ import {
     PopoverOverlayPosition,<% } %><%
     if (pagingMode === "virtualScroll") { %>
     VirtualViewportManager,<% } %>
-} from "@solarwinds/nova-bits";<%
+} from "@nova-ui/bits";<%
 if(chips) {%>
 import _pull from "lodash/pull";<% } %>
 import { Subscription } from "rxjs";

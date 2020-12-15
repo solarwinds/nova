@@ -2,7 +2,7 @@
     "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
     "schematics": {
         "ng-add": {
-            "description": "Installs and configures the nova-bits library.",
+            "description": "Installs and configures the bits library.",
             "factory": "./ng-add/index",
             "schema": "./ng-add/schema.json"
         },

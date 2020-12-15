@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { DialogService } from "@solarwinds/nova-bits";
+import { DialogService } from "@nova-ui/bits";
 
 import { DialogContentExampleComponent } from "./dialog-content.example.component";
 

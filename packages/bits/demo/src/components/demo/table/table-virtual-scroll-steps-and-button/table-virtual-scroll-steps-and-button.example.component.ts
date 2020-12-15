@@ -9,7 +9,7 @@ import {
     IFilteringOutputs,
     SearchService,
     SelectorService,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { BehaviorSubject } from "rxjs";
 
 import { IRandomUserTableModel } from "../index";

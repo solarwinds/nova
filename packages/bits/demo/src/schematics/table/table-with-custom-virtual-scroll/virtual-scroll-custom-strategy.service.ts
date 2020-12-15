@@ -6,7 +6,7 @@ import {
 import {
     IFilter,
     IFilterPub,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { CUSTOM_SCROLL_ITEMS_PER_PAGE } from "./table-with-custom-virtual-scroll-data";
 

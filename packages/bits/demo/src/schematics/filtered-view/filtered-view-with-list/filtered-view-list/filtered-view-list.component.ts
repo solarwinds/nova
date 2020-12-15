@@ -20,7 +20,7 @@ import {
     SearchComponent,
     SorterComponent,
     SorterDirection,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import {
     Subject,
 } from "rxjs";

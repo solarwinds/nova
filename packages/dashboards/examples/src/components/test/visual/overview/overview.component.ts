@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { SearchService, ThemeSwitchService } from "@solarwinds/nova-bits";
-import { DATA_SOURCE, IDashboard, IWidget, PIZZAGNA_EVENT_BUS, ProviderRegistryService, WidgetTypesService } from "@solarwinds/nova-dashboards";
+import { SearchService, ThemeSwitchService } from "@nova-ui/bits";
+import { DATA_SOURCE, IDashboard, IWidget, PIZZAGNA_EVENT_BUS, ProviderRegistryService, WidgetTypesService } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 
 import { TestKpiDataSource, TestKpiDataSource2 } from "../../data/kpi-data-sources";

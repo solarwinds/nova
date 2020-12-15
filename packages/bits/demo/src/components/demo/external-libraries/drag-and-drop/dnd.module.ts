@@ -2,7 +2,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CdkTreeModule } from "@angular/cdk/tree";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDndModule, NuiDocsModule, NuiMessageModule } from "@solarwinds/nova-bits";
+import { DEMO_PATH_TOKEN, NuiDndModule, NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
 
 import { DndAxisConstraintsExampleComponent } from "./dnd-axis-constraints/dnd-axis-constraints.example.component";
 import { DndBasicExampleComponent } from "./dnd-basic/dnd-basic.example.component";

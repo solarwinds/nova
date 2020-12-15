@@ -1,7 +1,7 @@
 import { ArrayDataSource } from "@angular/cdk/collections";
 import { CdkNestedTreeNode, CdkTree, NestedTreeControl } from "@angular/cdk/tree";
 import { Component, IterableDiffer, IterableDiffers, ViewChild } from "@angular/core";
-import { EventBusService, expand } from "@solarwinds/nova-bits";
+import { EventBusService, expand } from "@nova-ui/bits";
 
 import {FoodNode, HttpMock, IApiResponse, TREE_DATA_PAGINATOR} from "../data";
 

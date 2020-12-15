@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IQuickPickPresetDictionary } from "@solarwinds/nova-bits";
+import { IQuickPickPresetDictionary } from "@nova-ui/bits";
 import _find from "lodash/find";
 import _isUndefined from "lodash/isUndefined";
 import moment, { Moment } from "moment/moment";

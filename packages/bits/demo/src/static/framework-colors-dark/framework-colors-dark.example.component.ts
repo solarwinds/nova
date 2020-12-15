@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ToastService } from "@solarwinds/nova-bits";
+import { ToastService } from "@nova-ui/bits";
 
 /* tslint:disable-next-line */
 import * as colors from "../../../../src/styles/data/framework-colors-dark.json";

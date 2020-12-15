@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { ComponentChanges } from "@solarwinds/nova-bits";
+import { ComponentChanges } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -11,7 +11,7 @@ import {
     radial,
     RadialAccessors,
     radialGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-gauge-chart-prototype",

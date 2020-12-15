@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { immutableSet } from "@solarwinds/nova-bits";
+import { immutableSet } from "@nova-ui/bits";
 
 import { IComponentConfiguration, IPizzagna, PizzagnaLayer } from "../../types";
 
