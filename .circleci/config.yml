@@ -100,6 +100,7 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
+                    working_directory: ~/nova/packages/bits
                     name: Configure NPM
                     command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
             -   run:
@@ -186,6 +187,7 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
+                    working_directory: ~/nova/packages/charts
                     name: Configure NPM
                     command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
             -   run:
@@ -276,6 +278,7 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
+                    working_directory: ~/nova/packages/dashboards
                     name: Configure NPM
                     command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
             -   run:
