@@ -2,7 +2,6 @@ import { TitleCasePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { IWidgetTemplateSelector, WidgetTypesService } from "@nova-ui/dashboards";
 
-import { cloneSelectionImages } from "../../timeseries/widget-configs";
 import { widgets } from "../widgets";
 
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection.component";
@@ -26,7 +25,6 @@ export class AcmeEditWithClonerComponent extends AcmeCloneSelectionComponent imp
             const typeDisplay = titleCasePipe.transform(w.type);
             return ({
                 title: typeDisplay,
-                image: cloneSelectionImages[w.type],
                 widget: this.widgetTypesService.mergeWithWidgetType(w),
             });
         });

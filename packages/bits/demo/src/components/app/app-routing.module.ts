@@ -104,6 +104,10 @@ const appRoutes: Routes = [
         loadChildren: () => import("../demo/icon/icon.module").then(m => m.IconModule),
     },
     {
+        path: "image",
+        loadChildren: () => import("../demo/image/image.module").then(m => m.ImageModule),
+    },
+    {
         path: "layout",
         loadChildren: () => import("../demo/layout/layout.module").then(m => m.LayoutModule),
     },

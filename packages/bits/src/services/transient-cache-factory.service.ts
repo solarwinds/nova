@@ -24,7 +24,7 @@ export class TransientCacheFactory {
      *  @param {string} cacheId unique identifier of the cache
      *  @returns {ITransientCache} newly created ITransientCache object.
      *
-     * {@link https://github.com/solarwinds/Nui/blob/develop/typings/solarwinds-nui/nui.d.ts ITransientCache} interface
+     * {@link https://github.com/solarwinds/nova/blob/main/packages/bits/src/services/public-api.ts ITransientCache} interface
      *
      *      put(key:string, value:any, lifetime:number) => IPromise<void> -
      *          Puts a new key-value pair into the cache with the lifetime specified and returns it.
@@ -49,7 +49,7 @@ export class TransientCacheFactory {
      *  @description Get access to an ITransientCache object by the cacheId used when it was created.
      *  @param {string} cacheId Unique identifier of the cache.
      *  @returns {ITransientCache} cache Identified by cacheId. See
-     *  {@link https://github.com/solarwinds/Nui/blob/develop/typings/solarwinds-nui/nui.d.ts ITransientCache}.
+     *  {@link https://github.com/solarwinds/nova/blob/main/packages/bits/src/services/public-api.ts ITransientCache}.
      **/
     public get = (cacheId: string): ITransientCache => this.cacheMap[cacheId];
 
