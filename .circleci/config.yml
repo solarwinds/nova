@@ -100,9 +100,8 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    working_directory: ~/nova/packages/bits
                     name: Publish bits
-                   command: yarn run publish-ci
+                    command: yarn run publish-ci
     charts-build:
         working_directory: ~/nova
         docker:
