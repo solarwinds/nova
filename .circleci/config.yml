@@ -192,7 +192,8 @@ jobs:
                     command: npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
             -   run:
                     name: Publish charts
-                    command: yarn run publish-ci
+#                    command: yarn run publish-
+                    command: npm publish ./dist --access public
     dashboards-build:
         working_directory: ~/nova
         docker:
@@ -358,10 +359,10 @@ workflows:
                          -   charts-unit-test
                          -   dashboards-e2e-test
                          -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
              -   charts-build:
                      requires:
                          - bits-pack
