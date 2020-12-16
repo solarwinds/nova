@@ -104,8 +104,8 @@ jobs:
                     name: Publish bits
 #                   command: yarn run publish-ci
                     command: |
-                    npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-                    npm publish ./dist --access public
+                        npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+                        npm publish ./dist --access public
     charts-build:
         working_directory: ~/nova
         docker:
