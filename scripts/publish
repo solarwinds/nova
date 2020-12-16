@@ -29,18 +29,17 @@ cd $PROJECT_DIR
 # retrieve data from package.json
 PACKAGE_NAME=$(node -p "require('./package.json').name")
 PACKAGE_VERSION=$(node -p "require('./package.json').version")
-# TODO comment back in
-#case $CIRCLE_BRANCH in
-#      "release/"*)
-#          echo Publishing release package
-#            npm publish ./dist --access public
-#            ;;
-#
-#      "main" | "next" | "hotfix/"*)
-#          echo Publishing $CIRCLE_BRANCH package
-#            npm publish ./dist --tag $CIRCLE_BRANCH --access public
-#            ;;
-#      *)
-#          echo "Feature branch build - publish skipped"
-#esac
-npm publish ./dist --access public
+
+case $CIRCLE_BRANCH in
+      "release/"*)
+          echo Publishing release package
+            npm publish ./dist --access public
+            ;;
+
+      "main" | "next" | "hotfix/"*)
+          echo Publishing $CIRCLE_BRANCH package
+            npm publish ./dist --tag $CIRCLE_BRANCH --access public
+            ;;
+      *)
+          echo "Feature branch build - publish skipped"
+esac
