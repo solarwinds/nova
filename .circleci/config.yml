@@ -342,14 +342,14 @@ workflows:
                      requires:
                          -   bits-e2e-test
                          -   bits-unit-test
-#                         -   charts-e2e-test
-#                         -   charts-unit-test
-#                         -   dashboards-e2e-test
-#                         -   dashboards-unit-test
-#                     filters:
-#                         branches:
-#                             only:
-#                                 - main
+                         -   charts-e2e-test
+                         -   charts-unit-test
+                         -   dashboards-e2e-test
+                         -   dashboards-unit-test
+                     filters:
+                         branches:
+                             only:
+                                 - main
              -   charts-build:
                      requires:
                          - bits-pack

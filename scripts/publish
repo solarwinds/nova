@@ -32,17 +32,16 @@ PACKAGE_VERSION=$(node -p "require('./package.json').version")
 yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
 
 
-#case $CIRCLE_BRANCH in
-#      "release/"*)
-#          echo Publishing release package
-#            yarn publish ./dist --access public
-#            ;;
-#
-#      "main" | "next" | "hotfix/"*)
-#          echo Publishing $CIRCLE_BRANCH package
-#            yarn publish ./dist --tag $CIRCLE_BRANCH --access public
-#            ;;
-#      *)
-#          echo "Feature branch build - publish skipped"
-#esac
-yarn publish ./dist --tag "main" --access public
+case $CIRCLE_BRANCH in
+      "release/"*)
+          echo Publishing release package
+            yarn publish ./dist --access public
+            ;;
+
+      "main" | "next" | "hotfix/"*)
+          echo Publishing $CIRCLE_BRANCH package
+            yarn publish ./dist --tag $CIRCLE_BRANCH --access public
+            ;;
+      *)
+          echo "Feature branch build - publish skipped"
+esac
