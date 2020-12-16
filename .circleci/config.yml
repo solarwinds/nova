@@ -102,10 +102,7 @@ jobs:
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Publish bits
-#                   command: yarn run publish-ci
-                    command: |
-                        npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-                        npm publish ./dist --access public
+                   command: yarn run publish-ci
     charts-build:
         working_directory: ~/nova
         docker:
@@ -186,10 +183,6 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    working_directory: ~/nova/packages/charts
-                    name: Configure NPM
-                    command: npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
             -   run:
                     name: Publish charts
                     command: yarn run publish-ci
@@ -278,10 +271,6 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    working_directory: ~/nova/packages/dashboards
-                    name: Configure NPM
-                    command: npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-            -   run:
                     name: Publish dashboards
                     command: yarn run publish-ci
     release-prep:
@@ -358,10 +347,10 @@ workflows:
                          -   charts-unit-test
                          -   dashboards-e2e-test
                          -   dashboards-unit-test
-#                     filters:
-#                         branches:
-#                             only:
-#                                 - main
+                     filters:
+                         branches:
+                             only:
+                                 - main
              -   charts-build:
                      requires:
                          - bits-pack

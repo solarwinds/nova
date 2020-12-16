@@ -30,6 +30,9 @@ cd $PROJECT_DIR
 PACKAGE_NAME=$(node -p "require('./package.json').name")
 PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
+npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+
+
 case $CIRCLE_BRANCH in
       "release/"*)
           echo Publishing release package
