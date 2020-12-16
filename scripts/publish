@@ -3,8 +3,7 @@ set -e
 
 usage()
 {
-    echo "Usage: docker-compose run -e BUILD_BRANCH=%teamcity.build.branch% build npm run publish-ci"
-    echo "Create a tarball and publish package to Artifactory"
+    echo "Publish package to npmjs"
     echo
     echo "Options:"
     echo "  -h, --help       [Optional] Show this help message"
@@ -30,18 +29,18 @@ cd $PROJECT_DIR
 PACKAGE_NAME=$(node -p "require('./package.json').name")
 PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
-npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
+yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
 
 
 case $CIRCLE_BRANCH in
       "release/"*)
           echo Publishing release package
-            npm publish ./dist --access public
+            yarn publish ./dist --access public
             ;;
 
       "main" | "next" | "hotfix/"*)
           echo Publishing $CIRCLE_BRANCH package
-            npm publish ./dist --tag $CIRCLE_BRANCH --access public
+            yarn publish ./dist --tag $CIRCLE_BRANCH --access public
             ;;
       *)
           echo "Feature branch build - publish skipped"
