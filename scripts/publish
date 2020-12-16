@@ -45,4 +45,4 @@ yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
 #      *)
 #          echo "Feature branch build - publish skipped"
 #esac
-yarn publish ./dist --tag $CIRCLE_BRANCH --access public
+yarn publish ./dist --tag "main" --access public
