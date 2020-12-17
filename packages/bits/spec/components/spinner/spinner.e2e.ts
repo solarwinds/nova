@@ -49,7 +49,7 @@ describe("USERCONTROL Spinner", () => {
     });
 
     // TODO: Re-enable in scope of NUI-5576
-    xit("will respect size", async () => {
+    fit("will respect size", async () => {
         await button2.click();
         await spinner2.waitForDisplayed(SpinnerAtom.defaultDelay * 1.5);
 
