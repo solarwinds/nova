@@ -100,9 +100,6 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    name: Configure NPM
-                    command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
-            -   run:
                     name: Publish bits
                     command: yarn run publish-ci
     charts-build:
@@ -185,9 +182,6 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    name: Configure NPM
-                    command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
             -   run:
                     name: Publish charts
                     command: yarn run publish-ci
@@ -275,9 +269,6 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    name: Configure NPM
-                    command: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > .npmrc
             -   run:
                     name: Publish dashboards
                     command: yarn run publish-ci

@@ -44,6 +44,8 @@
   "schematics": "./sdk/schematics/collection.json",
   "peerDependencies": {
     "@angular-devkit/schematics": "^9.0.0",
+    "@nova-ui/bits": "~9.31.0-0",
+    "@nova-ui/charts": "~9.31.0-0",
     "@schematics/angular": "^9.0.0",
     "@nova-ui/bits": "~9.32.0-0",
     "@nova-ui/charts": "~9.32.0-0",
@@ -118,5 +120,8 @@
     "tslint": "^5.0.0",
     "typescript": "~3.8.3",
     "zone.js": "0.10.2"
+  },
+  "dependencies": {
+    "resize-observer-polyfill": "^1.5.0"
   }
 }

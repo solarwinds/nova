@@ -119,7 +119,7 @@ export class Helpers {
     }
 
     /**
-     * TODO: make this methos configurable, so that we would be able to partly disable
+     * TODO: make this method configurable, so that we would be able to partly disable
      * or enable the animations:
      *
      * https://jira.solarwinds.com/browse/NUI-2034

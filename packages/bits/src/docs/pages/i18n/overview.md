@@ -91,7 +91,7 @@ Note that TRANSLATIONS_FORMAT and TRANSLATIONS providers must be declared. Howev
 
 __Why don't you just use [gettext](https://bitbucket.solarwinds.com/projects/APOLLO/repos/i18n-gettext/browse)?__
 
-Gettext is a custom solution written for NovaJS. It has similar features to the built in Angular i18n. However, it has drawbacks - it breaks standard $translate interpolation, it is a custom solution, and SolarWinds has to support it. However, the biggest factor is that Angular i18n hooks easily into Angular CLI, which allows easy, seamless testing with AoT.
+Gettext is a custom solution written for NovaJS. It has similar features to the built in Angular i18n. However, it has drawbacks - it breaks standard $translate interpolation, it is a custom solution, etc. However, the biggest factor is that Angular i18n hooks easily into Angular CLI, which allows easy, seamless testing with AoT.
 
 __With AoT, do I really have to recompile once for each language? Seriously?__
 
