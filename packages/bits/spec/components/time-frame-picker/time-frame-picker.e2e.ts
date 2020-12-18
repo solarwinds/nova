@@ -7,7 +7,7 @@ import { Animations, Helpers } from "../../helpers";
 import { QuickPickerAtom } from "./quick-picker.atom";
 import { TimeFramePickerAtom } from "./time-frame-picker.atom";
 
-fdescribe("USERCONTROL time-frame-picker", () => {
+describe("USERCONTROL time-frame-picker", () => {
     const basicTimeFramePickerPopover: PopoverAtom = Atom.find(PopoverAtom, "nui-demo-basic-time-frame-picker");
     const basicQuickPicker: QuickPickerAtom = Atom.findIn(QuickPickerAtom, basicTimeFramePickerPopover.getPopoverBody());
     const basicTimeFramePicker: TimeFramePickerAtom = Atom.findIn(TimeFramePickerAtom, basicTimeFramePickerPopover.getPopoverBody());

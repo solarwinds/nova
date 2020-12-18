@@ -5,7 +5,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom, SpinnerAtom } from "../public_api";
 
-fdescribe("USERCONTROL Spinner", () => {
+describe("USERCONTROL Spinner", () => {
     const spinnerDelay = 500;
 
     const delayedSpinner: SpinnerAtom = Atom.find(SpinnerAtom, "spinner1");
