@@ -5,7 +5,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom, SpinnerAtom } from "../public_api";
 
-describe("USERCONTROL Spinner", () => {
+fdescribe("USERCONTROL Spinner", () => {
     const spinnerDelay = 500;
 
     const delayedSpinner: SpinnerAtom = Atom.find(SpinnerAtom, "spinner1");
@@ -49,7 +49,7 @@ describe("USERCONTROL Spinner", () => {
     });
 
     // TODO: Re-enable in scope of NUI-5576
-    fit("will respect size", async () => {
+    it("will respect size", async () => {
         await button2.click();
         await spinner2.waitForDisplayed(SpinnerAtom.defaultDelay * 1.5);
 

@@ -7,7 +7,7 @@ import { Animations, Helpers } from "../../helpers";
 import { QuickPickerAtom } from "./quick-picker.atom";
 import { TimeFramePickerAtom } from "./time-frame-picker.atom";
 
-describe("USERCONTROL time-frame-picker", () => {
+fdescribe("USERCONTROL time-frame-picker", () => {
     const basicTimeFramePickerPopover: PopoverAtom = Atom.find(PopoverAtom, "nui-demo-basic-time-frame-picker");
     const basicQuickPicker: QuickPickerAtom = Atom.findIn(QuickPickerAtom, basicTimeFramePickerPopover.getPopoverBody());
     const basicTimeFramePicker: TimeFramePickerAtom = Atom.findIn(TimeFramePickerAtom, basicTimeFramePickerPopover.getPopoverBody());
@@ -29,7 +29,7 @@ describe("USERCONTROL time-frame-picker", () => {
         });
 
         // TODO: Re-enable in scope of NUI-5576
-        xit("should have an ability to change all control values", async () => {
+        it("should have an ability to change all control values", async () => {
             const startTFP = basicTimeFramePicker.getStartDatetimePicker();
             const datePicker1 = startTFP.getDatePicker();
             await datePicker1.clearText();
