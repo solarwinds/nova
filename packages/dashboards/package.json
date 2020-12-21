@@ -45,8 +45,6 @@
   "peerDependencies": {
     "@angular-devkit/schematics": "^9.0.0",
     "@schematics/angular": "^9.0.0",
-    "@nova-ui/bits": "~9.32.0-0",
-    "@nova-ui/charts": "~9.32.0-0",
     "angular-gridster2": "^9.0.0",
     "d3": "^5.9.2",
     "d3-selection-multi": "^1.0.1"
