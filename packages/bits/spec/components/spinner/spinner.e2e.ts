@@ -48,8 +48,7 @@ describe("USERCONTROL Spinner", () => {
         expect(await spinner2.hasClass("nui-spinner__container--small")).toBe(true);
     });
 
-    // TODO: Re-enable in scope of NUI-5576
-    xit("will respect size", async () => {
+    it("will respect size", async () => {
         await button2.click();
         await spinner2.waitForDisplayed(SpinnerAtom.defaultDelay * 1.5);
 
