@@ -43,10 +43,11 @@ export class DrilldownDataSourceRealApi<T = any> extends ServerSideDataSource<T>
     // Use this subject to communicate the data source's busy state
     public busy = new BehaviorSubject<boolean>(false);
 
+    protected applyFilters$ = new Subject<IFilters>();
+
     private drillState: string[];
     private groupBy: string[];
     private cache: any;
-    private applyFilters$ = new Subject<IFilters>();
 
     constructor(private http: HttpClient) {
         super();
