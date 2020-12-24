@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Inject, Input, Optional, ViewEncapsulation, OnChanges, SimpleChanges } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Inject, Input, OnChanges, Optional, SimpleChanges, ViewEncapsulation } from "@angular/core";
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 
 import { mapDataToFormatterProperties } from "../../functions/map-data-to-formatter-properties";
