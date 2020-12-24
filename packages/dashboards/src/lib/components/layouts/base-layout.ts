@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, DoCheck, Input, OnChanges, OnDestroy, SimpleChange, SimpleChanges } from "@angular/core";
 import { LoggerService } from "@nova-ui/bits";
-import { Subject } from "rxjs";
 import defaultsDeep from "lodash/defaultsDeep";
+import { Subject } from "rxjs";
 
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IComponentConfiguration, IHasChangeDetector } from "../../types";
