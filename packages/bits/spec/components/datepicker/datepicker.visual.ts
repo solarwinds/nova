@@ -32,6 +32,9 @@ describe("Visual tests: DatePicker", () => {
         await datepickerBasic.hover(datepickerBasic.getActiveDay());
         await eyes.checkWindow("Opened state");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 100000);
 });

@@ -53,6 +53,10 @@ describe("Visual tests: Table", () => {
         await eyes.open(browser, "NUI", "Table");
         await eyes.checkWindow("Default");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
+
         for (const key of Object.keys(expanders)) { await expanders[key].click(); }
 
         await expanders.sorting.click();

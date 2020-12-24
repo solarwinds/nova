@@ -1,6 +1,8 @@
-import { browser } from "protractor";
+import { browser, by, element } from "protractor";
 
+import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { SwitchAtom } from "../switch/switch.atom";
 
 import { SorterAtom } from "./sorter.atom";
 
@@ -30,9 +32,11 @@ describe("Visual tests: Sorter", () => {
         await sorter.getSorterButton().click();
         await eyes.checkWindow("Sorting direction changed");
 
+        await Helpers.switchDarkTheme("on");
         await sorter.click();
-        await eyes.checkWindow("Sorter opened");
+        await eyes.checkWindow("Sorter opened with dark theme");
 
+        await Helpers.switchDarkTheme("off");
         await sorter.getItemByIndex(0).click();
         await sorter.click();
         await sorter.hover(sorter.getItemByIndex(2));

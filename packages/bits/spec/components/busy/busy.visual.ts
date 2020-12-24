@@ -25,6 +25,9 @@ describe("Visual tests: Busy", () => {
         await switchBusyState.click();
         await eyes.checkWindow("States of Busy component");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 100000);
 });

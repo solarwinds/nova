@@ -18,6 +18,10 @@ describe("Visual tests: Switch", () => {
     it("Default look", async () => {
         await eyes.open(browser, "NUI", "Switch");
         await eyes.checkWindow("Default");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     });
 });

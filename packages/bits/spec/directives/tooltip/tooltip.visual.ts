@@ -25,7 +25,6 @@ xdescribe("Visual tests: Tooltip", () => {
         bottomTooltipButton = Atom.find(ButtonAtom, "bottom-tooltip");
         rightTooltipButton = Atom.find(ButtonAtom, "right-tooltip");
         manualTooltipButton = Atom.find(ButtonAtom, "manual-tooltip");
-
     });
 
     afterAll(async () => {
@@ -52,6 +51,9 @@ xdescribe("Visual tests: Tooltip", () => {
         await eyes.checkWindow("After tooltip triggered manually");
         await manualTooltipButton.click();
         await eyes.checkWindow("After tooltip manually dismissed");
+
+        Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
 
         await eyes.close();
     }, 100000);

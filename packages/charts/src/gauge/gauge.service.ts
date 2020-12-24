@@ -24,18 +24,20 @@ export class GaugeService {
                                    max: number,
                                    thresholds: IGaugeThreshold[],
                                    valueColorAccessor?: DataAccessor): IChartAssistSeries<RadialAccessors>[] {
+        const initialValue = value ?? 0;
+        const initialMax = max ?? 0;
         const accessors = new RadialAccessors();
         accessors.data.color = valueColorAccessor || this.createDefaultValueColorAccessor(thresholds);
         const scales = radialScales();
         const renderer = new RadialRenderer(gaugeRendererConfig());
         return [
-            ...this.getGaugeData(value, max).map(s => ({
+            ...this.getGaugeData(initialValue, initialMax).map(s => ({
                 ...s,
                 accessors,
                 scales,
                 renderer,
             })),
-            this.generateThresholdSeries(value, max, thresholds, accessors, scales),
+            this.generateThresholdSeries(initialValue, initialMax, thresholds, accessors, scales),
         ];
     }
 
@@ -59,17 +61,19 @@ export class GaugeService {
                                  max: number,
                                  thresholds: IGaugeThreshold[],
                                  seriesSet: IChartAssistSeries<RadialAccessors>[]): IChartAssistSeries<RadialAccessors>[] {
+        const newValue = value ?? 0;
+        const newMax = max ?? 0;
         const updatedSeriesSet = seriesSet.map(series => {
             if (series.id === GaugeService.QUANTITY_SERIES_ID) {
-                return { ...series, data: [value] };
+                return { ...series, data: [newValue] };
             }
 
             if (series.id === GaugeService.REMAINDER_SERIES_ID) {
-                return { ...series, data: [max - value] };
+                return { ...series, data: [newMax - newValue] };
             }
 
             // threshold level markers
-            return { ...series, data: this.getThresholdMarkerPoints(thresholds, value, max) };
+            return { ...series, data: this.getThresholdMarkerPoints(thresholds, newValue, newMax) };
         });
 
         return updatedSeriesSet;

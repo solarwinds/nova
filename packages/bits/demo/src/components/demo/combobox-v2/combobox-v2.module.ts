@@ -266,7 +266,6 @@ const routes = [
             "srlc": {
                 hideIndicator: true,
             },
-            showThemeSwitcher: false,
         },
     },
 ];

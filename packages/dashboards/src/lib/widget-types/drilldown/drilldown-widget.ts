@@ -1,9 +1,11 @@
 import { StackComponent } from "../../components/layouts/stack/stack.component";
 import { ListNavigationBarComponent } from "../../components/list-widget/list-elements/list-navigation-bar/list-navigation-bar.component";
 import { ListWidgetComponent } from "../../components/list-widget/list-widget.component";
+import { WidgetSearchComponent } from "../../components/widget-search/widget-search.component";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
-import { IPizzagna, PizzagnaLayer } from "../../types";
+import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING, widgetBodyContentNodes } from "../common/widget/components";
+import { EVENT_PROXY } from "../common/widget/providers";
 
 export const drilldownWidget: IPizzagna = {
     [PizzagnaLayer.Structure]: {
@@ -16,15 +18,13 @@ export const drilldownWidget: IPizzagna = {
                 nodes: [
                     "header",
                     "loading",
-                    "navigationBar",
+                    "search",
                     "body",
                 ],
             },
             providers: {
-                // // When enabled, this provider emits the REFRESH event on the pizzagna event bus every X seconds
-                // [WellKnownProviders.Refresher]: refresher(),
-                // // event proxy manages the transmission of events between widget and dashboard
-                // [WellKnownProviders.EventProxy]: EVENT_PROXY,
+                // event proxy manages the transmission of events between widget and dashboard
+                [WellKnownProviders.EventProxy]: EVENT_PROXY,
             },
         },
         // widget header
@@ -41,6 +41,22 @@ export const drilldownWidget: IPizzagna = {
         },
         // retrieving the definitions for the body content nodes. the argument corresponds to the main content node key
         ...widgetBodyContentNodes("listWidget"),
+        search: {
+            id: "search",
+            componentType: WidgetSearchComponent.lateLoadKey,
+        },
+        ...widgetBodyContentNodes("mainContent"),
+        mainContent: {
+            id: "mainContent",
+            componentType: StackComponent.lateLoadKey,
+            properties: {
+                // these values reference other components in this configuration
+                nodes: [
+                    "navigationBar",
+                    "listWidget",
+                ],
+            },
+        },
         navigationBar: {
             id: "navigationBar",
             componentType: ListNavigationBarComponent.lateLoadKey,
@@ -53,7 +69,16 @@ export const drilldownWidget: IPizzagna = {
                 elementClass: "w-100 p-3",
             },
         },
-
     },
-
+    [PizzagnaLayer.Configuration]: {
+        [DEFAULT_PIZZAGNA_ROOT]: {
+            id: DEFAULT_PIZZAGNA_ROOT,
+        },
+        // default header configuration
+        header: {
+            properties: {
+                title: $localize`Empty Custom Widget`,
+            },
+        },
+    },
 };

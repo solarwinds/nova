@@ -33,7 +33,7 @@ const routes = [
         data: {
             "srlc": {
                 "stage": SrlcStage.support,
-                "eolDate": new Date("2021-01-01"),
+                "eolDate": new Date("2021-12-31"),
             },
             showThemeSwitcher: true,
         },

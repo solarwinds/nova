@@ -1,0 +1,8 @@
+<ng-container nuiComponentPortal
+    [componentType]="contentFormatter?.componentType"
+    [properties]="contentFormatterProperties"
+    #componentPortal="nuiComponentPortal">
+<ng-template [cdkPortalOutlet]="componentPortal.portal"
+            (attached)="componentPortal.attached($event)"></ng-template>
+</ng-container>
+

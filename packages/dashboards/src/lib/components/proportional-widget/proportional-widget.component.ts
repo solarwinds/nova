@@ -149,7 +149,6 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         this.proportionalWidgetResizeObserver?.disconnect();
     }
 
-    /** */
     public getContentFormatterProperties() {
         this.contentFormatterProperties = {
             data: this.widgetData,

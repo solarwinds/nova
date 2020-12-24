@@ -116,7 +116,7 @@ export class ThresholdsConfigurationComponent implements OnInit, OnDestroy, OnCh
     private handleWarningThreshold(value: number | undefined) {
         const warningThresholdFormControl = this.form?.get("warningThresholdValue");
         if (_isNil(value)) {
-            warningThresholdFormControl?.setValue(undefined);
+            warningThresholdFormControl?.setValue(null);
         }
     }
 }

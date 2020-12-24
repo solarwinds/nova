@@ -5,7 +5,8 @@ import { Animations, Helpers } from "../../helpers";
 
 import { SelectAtom } from "./select.atom";
 
-describe("Visual tests: Select", () => {
+// Disabling tests for the deprecated component
+xdescribe("Visual tests: Select", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any;
     let selectBasic: SelectAtom;

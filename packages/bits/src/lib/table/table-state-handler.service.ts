@@ -11,20 +11,17 @@ import { ISortedItem, SorterDirection } from "../sorter/public-api";
 
 import { TableResizePhase } from "./table-resizer/table-resizer.directive";
 
-/**@ignore*/
 export const enum AlignmentClasses {
     RIGHT = "align-right",
     LEFT = "align-left",
     CENTER = "align-center",
 }
 
-/**@ignore*/
 export const enum DropAlignment {
     left = "left",
     right = "right",
 }
 
-/**@ignore*/
 export interface ITableState {
     columnAlignments: { [key: string]: string };
     columnsWidths: { [key: string]: { width: number, autoCalculated?: boolean } };
@@ -34,26 +31,22 @@ export interface ITableState {
     columnsTypes: string[];
 }
 
-/**@ignore*/
 export interface DraggedOverCell {
     cellIndex: number;
     dropAlignment: DropAlignment;
 }
 
-/**@ignore*/
 export interface TableCellEdgeHighlight {
     columnIndex: number;
     side: DropAlignment;
     eventPhase: TableResizePhase;
 }
 
-/**@ignore*/
 export interface ColumnType {
     columnName: string;
     columnType: string;
 }
 
-/**@ignore*/
 export interface ITableSortingState {
     sortingIcon?: string;
     isColumnSorted: boolean;
@@ -63,15 +56,12 @@ export interface ITableSortingState {
 const MIN_COLUMN_WIDTH_PX = 46;
 /**@ignore*/
 const ICON_CELL_WIDTH_PX = 40;
-
+/**@ignore*/
 const SELECTABLE_CELL_WIDTH_PX = 75;
 
 /**@ignore*/
 const DEFAULT_TRACK_BY: TrackByFunction<any> = ((i, d) => d);
 
-/**
- * @ignore
- */
 @Injectable()
 export class TableStateHandlerService {
     public tableParentWidth: number;
@@ -105,7 +95,7 @@ export class TableStateHandlerService {
     };
     public _trackBy: TrackByFunction<any>;
 
-    private state: ITableState = {
+    protected state: ITableState = {
         columnAlignments: {},
         columns: [],
         columnsWidths: {},
@@ -113,15 +103,17 @@ export class TableStateHandlerService {
         columnsTypes: [],
     };
 
-    private sortIcons: { [key: string]: string } = {
+    protected sortIcons: { [key: string]: string } = {
         "asc": "triangle-up",
         "desc": "triangle-down",
     };
 
-    constructor(private zone: NgZone, @Inject(forwardRef(() => SelectorService)) private selectorService: SelectorService) {
+    constructor(protected zone: NgZone, @Inject(forwardRef(() => SelectorService)) protected selectorService: SelectorService) {
     }
 
-    // Used to sync directives and components in table to apply additional styles and logic
+    /**
+     * Used to sync directives and components in table to apply additional styles and logic
+     */
     set sortable(isSortable: boolean) {
         this._sortable = isSortable;
     }
@@ -263,32 +255,73 @@ export class TableStateHandlerService {
         this._trackBy = value;
     }
 
+    /**
+     * Gets the width of the specified column
+     *
+     * @param column The id for the column being queried
+     *
+     * @returns The state's column width
+     */
     public getColumnWidth(column: string): number {
         if (!this.state.widthCalculationPerformed) {
             this.calculateWidthsOfColumns();
         }
         return this.state.columnsWidths[column].width;
     }
-
+    
+    /**
+     * Updates the width of the specified column,
+     * then broadcasts that a width change has occurred to all listeners of columnWidthSubject
+     *
+     * @param column The id for the column
+     * @param width The new width of the column
+     *
+     */
     public setColumnWidth(column: string, width: number): void {
         this.state.columnsWidths[column] = { width };
         this.columnWidthSubject.next();
     }
 
+    /**
+     * Returns the current alignment direction for the queried column
+     *
+     * @param column The id of the column
+     *
+     * @returns The current alignment direction
+     */
     public getAlignment(column: string): string {
         return this.state.columnAlignments[column];
     }
 
+    /**
+     * Updates the specified column's alignment with the given alignment direction
+     *
+     * @param column the id for the column that is being updated
+     * @param alignment the new alignment direction
+     *
+     */
     public setAlignment(column: string, alignment: string = AlignmentClasses.LEFT): void {
         this.state.columnAlignments[column] = alignment || this.state.columnAlignments[column];
     }
 
+    /**
+     * Determines the alignment for a column based on the type of the provided value.
+     * Returns AlignmentClasses.RIGHT if the value given is a number; otherwise, returns 'undefined'.
+     *
+     * @param value The data for a given column
+     *
+     * @returns The alignment direction for that column
+     */
     public defineAlignment(value: any): string | undefined {
         if (_isNumber(value)) {
             return AlignmentClasses.RIGHT;
         }
     }
 
+    /**
+     * Updates the state's columnWidths for each column and sets the state's widthCalculationPerformed property
+     * to true once the calculation is complete
+     */
     public calculateWidthsOfColumns() {
         // Apply width of 40px for non-resizable columns of type "icon"
         this.state.columns
@@ -323,7 +356,13 @@ export class TableStateHandlerService {
 
         this.state.widthCalculationPerformed = true;
     }
-
+    
+    /**
+     * Updates the state's sortedColumn and sortedColumn.direction properties and then broadcasts the
+     *  state object to all listeners of sortingState
+     *
+    * @param sortCellIndex the index of the column to sort by
+     */
     public sortColumn(sortCellIndex: number) {
         const newSortedColumn = this.state.columns[sortCellIndex];
         const prevSortedColumn = this.state.sortedColumn && this.state.sortedColumn.sortBy;
@@ -346,6 +385,12 @@ export class TableStateHandlerService {
         this.sortingState.next(this.state.sortedColumn);
     }
 
+    /**
+     * Updates the state's column order and broadcasts the state's columns to all listeners of columnsState
+     *
+     * @param dragCellIndex
+     * @param newCellIndex
+     */
     public reorderColumns(dragCellIndex: number, newCellIndex: number): void {
         const dragCellValue = this.state.columns[dragCellIndex];
         this.state.columns.splice(dragCellIndex, 1);
@@ -353,6 +398,10 @@ export class TableStateHandlerService {
         this.columnsState.next(this.state.columns);
     }
 
+    /**
+     * Checks to see if there has been any change in the column's order
+     * If there was it calls reorderColumns to update the state's column order
+     */
     public reorderColumnsOnDrop(): void {
         this.getNewCellIndex();
 
@@ -361,6 +410,9 @@ export class TableStateHandlerService {
         }
     }
 
+    /**
+     * Updates the newCellIndex property if the current value is different from draggedOverCellIndex
+     */
     public getNewCellIndex(): void {
         if (this.dragCellIndex !== this.draggedOverCellIndex) {
             this.newCellIndex = (this.dragCellIndex < this.draggedOverCellIndex)
@@ -369,6 +421,13 @@ export class TableStateHandlerService {
         }
     }
 
+    /**
+     * Finds the index for the column that the event happened to
+     *
+     * @param event
+     *
+     * @returns The column index
+     */
     public getTargetElementCellIndex(event: DragEvent): number {
         // When we have selectable table we need to decrease index of event.target.id by one because we added new column to html but not adding column to
         // this.state.columns. Because of that cellIndex in event will be greater than index in this.state.columns by one.
@@ -376,12 +435,21 @@ export class TableStateHandlerService {
         return this.selectable ? cellIndex - 1 : cellIndex;
     }
 
+    /**
+     * Returns the DropAlignment direction for the recently dragged column
+     *
+     * @returns The drop alignment direction
+     */
     public getDropCellAlignment(): DropAlignment {
         return ((this.dragCellIndex < this.draggedOverCellIndex)
             ? ((this.newCellIndex < this.draggedOverCellIndex) ? DropAlignment.left : DropAlignment.right)
             : ((this.newCellIndex > this.draggedOverCellIndex) ? DropAlignment.right : DropAlignment.left));
     }
 
+    /**
+     * Checks to see if the recent drag event changed the order of the columns
+     * then broadcasts the results to all listeners of draggedOverCell
+     */
     public emitDraggedOverCell(): void {
         this.zone.run(() => {
             if ((this.dragCellIndex !== this.draggedOverCellIndex) && (this.dragCellIndex !== this.newCellIndex)) {
@@ -395,10 +463,21 @@ export class TableStateHandlerService {
         });
     }
 
+    /**
+     * Broadcasts the given resize information to all listeners of shouldHighlightEdge
+     *
+     * @param columnIndex
+     * @param eventPhase
+     */
     public emitResizeEvent(columnIndex: number, eventPhase: TableResizePhase): void {
         this.shouldHighlightEdge.next({ columnIndex, side: DropAlignment.right, eventPhase });
     }
 
+    /**
+     * Updates the draggedOverCellIndex
+     *
+     * @param event
+     */
     public setDraggedOverCell(event: DragEvent): void {
         const dropCellOffsetX: number = event.offsetX;
         const dropCellWidth: number = (event.target as HTMLElement).clientWidth;
@@ -421,16 +500,31 @@ export class TableStateHandlerService {
         }
     }
 
+    /**
+     * Updates the dataSource property and broadcasts the change to all listeners of dataSourceChanged
+     *
+     * @param dataSource
+     */
     public changeDataSource(dataSource: any[]) {
         this.dataSource = dataSource;
         this.dataSourceChanged.next(dataSource);
     }
 
+    /**
+     * Returns an array of the selected items
+     *
+     * @returns An array of all currently selected items
+     */
     public getSelectedItems() {
         const trackedItems = this.dataSource.map(d => this.trackBy(d?.id, d));
         return this.selectorService.getSelectedItems(this.selection, trackedItems);
     }
 
+    /**
+     * Returns the current state of the selector
+     *
+     * @returns
+     */
     public getSelectorState(): ISelectorState {
         return this.selectorService.getSelectorState(
             this.selection,
@@ -442,6 +536,13 @@ export class TableStateHandlerService {
         );
     }
 
+    /**
+     * Updates the selection type and returns a new selection object based on that new selection type
+     *
+     * @param selectorValue
+     *
+     * @returns The newly applied selection
+     */
     public applySelector(selectorValue: SelectionType): ISelection {
         return this.selectorService.applySelector(
             this.selection,
@@ -453,6 +554,13 @@ export class TableStateHandlerService {
         );
     }
 
+    /**
+     * Updates the selection object to either include or exclude the row based on the current selection
+     *  type and the row's current selection state
+     * Then the selection object is broadcasted to all listeners of selectionChanged
+     *
+     * @param rowObject
+     */
     public handleRowCheckbox(rowObject: Object) {
         const excludedRows = this.selection.exclude;
         const includedRows = this.selection.include;
@@ -476,6 +584,13 @@ export class TableStateHandlerService {
         this.selectionChanged.next(this.selection);
     }
 
+    /**
+     * Returns the current sorting state of the specified cell index
+     *
+     * @param cellIndex
+     *
+     * @returns The current sorting state
+     */
     public getSortingState(cellIndex: number): ITableSortingState {
         if (this.state.sortedColumn) {
             return {
@@ -490,6 +605,9 @@ export class TableStateHandlerService {
         };
     }
 
+    /**
+     * Broadcasts to all listeners of stickyHeaderChangedSubject that a change has occurred
+     */
     public applyStickyStyles(): void {
         this.stickyHeaderChangedSubject.next();
     }

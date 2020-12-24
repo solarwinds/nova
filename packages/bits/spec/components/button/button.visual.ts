@@ -49,6 +49,9 @@ describe("Visual tests: Button", () => {
         await actionButton.mouseDown();
         await eyes.checkWindow("After action button mouse down");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 100000);
 });

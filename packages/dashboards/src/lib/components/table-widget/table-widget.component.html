@@ -4,7 +4,7 @@
 <!-- h-100 gets added only when there's data to show to prevent an extra scrollbar when the table is empty -->
 <!-- Using invisible class instead of *ngIf as an non-virtual-scroll breakable way to hide the content. -->
 <div class="nui-table-widget d-flex flex-column" [ngClass]="shouldDisplayTable() ? 'h-100': 'invisible'">
-    <div class="mr-2 mb-2 flex-row"  *ngIf="isSearchEnabled">
+    <div class="mr-2 mb-2 flex-row" *ngIf="isSearchEnabled">
         <nui-search class="unlimited-width d-flex justify-content-end flex-grow-1"
                     [value]="searchValue"
                     (inputChange)="onSearchInputChanged($event)"
@@ -15,7 +15,7 @@
          [nuiDelayedMousePresenceDetection]="delayedMousePresenceDetectionEnabled"
          [delay]="configuration.scrollActivationDelayMs"
          [mousePresentSubject]="mousePresent$">
-        <!--        Note: Using inline style to let tableStickyHeader pick the actual height and update it with header height when it is detached -->
+        <!-- Note: Using inline style to let tableStickyHeader pick the actual height and update it with header height when it is detached -->
         <cdk-virtual-scroll-viewport class="calc-height"
                                      style="height: calc(100% - 2px)"
                                      tableStickyHeader
@@ -45,8 +45,9 @@
                     <ng-container>
                         <td nui-cell
                             *nuiCellDef="let element"
-                            [style.max-width.px]="columnsWidthMap.get(column.id)"
                             [style.width.px]="columnsWidthMap.get(column.id)"
+                            [style.max-width.px]="columnsWidthMap.get(column.id)"
+                            [style.min-width.px]="columnsWidthMap.get(column.id)"
                             [alignment]="getColumnAlignment(column)">
                             <ng-container nuiComponentPortal
                                           componentId="formatter"

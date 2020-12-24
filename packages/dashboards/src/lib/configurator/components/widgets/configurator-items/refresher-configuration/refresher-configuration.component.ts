@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { LoggerService } from "@solarwinds/nova-bits";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { combineLatest, Subject } from "rxjs";
+import { filter, takeUntil, tap } from "rxjs/operators";
 
 import { RefresherSettingsService } from "../../../../../components/providers/refresher-settings.service";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
@@ -49,6 +49,18 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
             this.form.markAllAsTouched();
             this.cd.detectChanges();
         });
+
+        combineLatest([this.form.get("enabled")?.valueChanges, this.form.get("overrideDefaultSettings")?.valueChanges])
+            .pipe(
+                filter(values => values.some(v => !v)),
+                tap(() => {
+                    if (this.form.get("interval")?.invalid) {
+                        this.form.get("interval")?.setValue(this.interval || this.minSeconds);
+                    }
+                }),
+                takeUntil(this.destroyed$)
+            )
+            .subscribe();
 
         this.formReady.emit(this.form);
     }

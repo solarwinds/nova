@@ -46,7 +46,9 @@ import { DonutContentRawFormatterComponent } from "./components/formatters/donut
 import { DonutContentSumFormatterComponent } from "./components/formatters/donut-content-sum-formatter/donut-content-sum-formatter.component";
 import { IconFormatterComponent } from "./components/formatters/icon-formatter/icon-formatter.component";
 import { LinkFormatterComponent } from "./components/formatters/link-formatter/link-formatter.component";
+import { PercentageFormatterComponent } from "./components/formatters/percentage-formatter/percentage-formatter.component";
 import { RawFormatterComponent } from "./components/formatters/raw-formatter/raw-formatter.component";
+import { SiUnitsFormatterComponent } from "./components/formatters/si-units-formatter/si-units-formatter.component";
 import { StatusWithIconFormatterComponent } from "./components/formatters/status-with-icon-formatter/status-with-icon-formatter.component";
 import { ConfiguratorHeadingComponent } from "./components/heading/configurator-heading.component";
 import { ItemsDynamicComponent } from "./components/items-dynamic/items-dynamic.component";
@@ -67,6 +69,8 @@ import { RefresherConfigurationComponent } from "./components/widgets/configurat
 import { ThresholdsConfigurationComponent } from "./components/widgets/configurator-items/thresholds-configuration/thresholds-configuration.component";
 import { TimeseriesMetadataConfigurationComponent } from "./components/widgets/configurator-items/timeseries-metadata-configuration/timeseries-metadata-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "./components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
+import { EntityFormattingConfigurationComponent } from "./components/widgets/drilldown/entity-formatting-configuration/entity-formatting-configuration.component";
+import { GroupingConfigurationComponent } from "./components/widgets/drilldown/grouping-configuration/grouping-configuration.component";
 import { KpiTilesConfigurationComponent } from "./components/widgets/kpi/kpi-tiles-configuration/kpi-tiles-configuration.component";
 import { ProportionalChartOptionsEditorComponent } from "./components/widgets/proportional/chart-options-editor/proportional-chart-options-editor.component";
 import { DescriptionConfigurationComponent } from "./components/widgets/table/columns-editor/column-configuration/description-configuration/description-configuration.component";
@@ -111,12 +115,14 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     DonutContentSumFormatterComponent,
     DonutContentRawFormatterComponent,
     IconFormatterComponent,
+    SiUnitsFormatterComponent,
     LinkConfiguratorComponent,
     ValueSelectorComponent,
     LinkFormatterComponent,
     PreviewPlaceholderComponent,
     StatusWithIconFormatterComponent,
     RawFormatterComponent,
+    PercentageFormatterComponent,
     KpiDescriptionConfigurationComponent,
     ThresholdsConfigurationComponent,
     TitleAndDescriptionConfigurationComponent,
@@ -129,6 +135,8 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     TimeseriesTileIndicatorDataConfigurationComponent,
     RefresherConfigurationComponent,
     BackgroundColorRulesConfigurationComponent,
+    GroupingConfigurationComponent,
+    EntityFormattingConfigurationComponent,
 ];
 
 const exportedDeclarations = [
@@ -153,6 +161,9 @@ const exportedDeclarations = [
     WidgetEditorAccordionFormStatePipe,
     WidgetConfiguratorSectionHeaderPipe,
     FormHeaderIconPipePipe,
+    GroupingConfigurationComponent,
+    EntityFormattingConfigurationComponent,
+    PercentageFormatterComponent,
 ];
 
 @NgModule({

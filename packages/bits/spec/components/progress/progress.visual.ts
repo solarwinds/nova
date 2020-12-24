@@ -26,6 +26,9 @@ describe("Visual tests: Progress", async () => {
         await startProgressBasic.click();
         await eyes.checkWindow("Default");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     });
 });

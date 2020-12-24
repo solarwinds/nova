@@ -6,6 +6,9 @@ import { KpiColorComparatorsRegistryService, NuiDashboardsModule } from "@solarw
 import { KpiBackgroundColorDocsComponent } from "./kpi-background-color/docs/kpi-background-color-docs.component";
 import { KpiWidgetBackgroundColorExampleComponent } from "./kpi-background-color/example/kpi-widget-background-color-example.component";
 import { KpiDocsComponent } from "./kpi-docs.component";
+import { KpiSyncBrokerDocsComponent } from "./kpi-sync-broker-example/docs/kpi-sync-broker-docs.component";
+import { KpiSyncBrokerExampleComponent } from "./kpi-sync-broker-example/example/kpi-sync-broker-example.component";
+import { KpiSyncBrokerForAllTilesExampleComponent } from "./kpi-sync-broker-example/example/kpi-sync-broker-for-all-tiles-example.component";
 import { KpiWidgetExampleComponent } from "./kpi-widget-example/kpi-widget-example.component";
 
 const routes: Routes = [
@@ -37,6 +40,15 @@ const routes: Routes = [
             },
         },
     },
+    {
+        path: "sync-broker",
+        component: KpiSyncBrokerDocsComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -53,6 +65,9 @@ const routes: Routes = [
         KpiWidgetExampleComponent,
         KpiBackgroundColorDocsComponent,
         KpiWidgetBackgroundColorExampleComponent,
+        KpiSyncBrokerDocsComponent,
+        KpiSyncBrokerExampleComponent,
+        KpiSyncBrokerForAllTilesExampleComponent,
     ],
     providers: [KpiColorComparatorsRegistryService],
 })

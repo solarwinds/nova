@@ -48,6 +48,10 @@ export class TestPage {
         return browser.actions().mouseMove({ x: 0, y: 0 }).perform();
     }
 
+    public async editWidget(title: string): Promise<void> {
+        return (await this.dashboard.getWidgetByHeaderTitleText(title))?.header.clickEdit();
+    }
+
     private async updateSelectable(input: ElementFinder, value: boolean): Promise<void> {
         const currentValue = await input.isSelected();
         if (currentValue === value) {

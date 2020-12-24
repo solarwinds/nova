@@ -1,7 +1,8 @@
-import { browser } from "protractor";
+import { browser, by, element } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { SwitchAtom } from "../switch/switch.atom";
 
 import { LayoutSheetGroupAtom } from "./layout-sheet-group.atom";
 
@@ -40,6 +41,9 @@ describe("Visual tests: Layout", () => {
 
         await joinedSheets.mouseDownHorizontalResizerByIndex(1);
         await eyes.checkWindow("VerticalResizer on MouseDown");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
 
         await eyes.close();
     }, 100000);

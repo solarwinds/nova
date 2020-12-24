@@ -13,12 +13,12 @@ import {
 } from "@solarwinds/nova-dashboards";
 import { chartLine, chartPie, discovery, table } from "@solarwinds/nova-images";
 import { GridsterItem } from "angular-gridster2";
-import moment from "moment/moment";
 
 import {
     TestTimeseriesDataSource,
     TestTimeseriesDataSource2,
-    TestTimeseriesStatusDataSource
+    TestTimeseriesStatusDataSource,
+    TestTimeseriesStatusIntervalDataSource
 } from "../../data/timeseries-data-sources";
 import { frozenTime } from "../../data/widget-data";
 
@@ -722,7 +722,7 @@ export const widgetConfigs: IWidget[] = [
                 [DEFAULT_PIZZAGNA_ROOT]: {
                     "providers": {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestTimeseriesStatusDataSource.providerId,
+                            "providerId": TestTimeseriesStatusIntervalDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },

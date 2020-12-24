@@ -46,6 +46,7 @@ import { NuiToastModule } from "./lib/toast/toast.module";
 import { NuiToolbarModule } from "./lib/toolbar/toolbar.module";
 import { NuiTooltipModule } from "./lib/tooltip/tooltip.module";
 import { NuiValidationMessageModule } from "./lib/validation-message/validation-message.module";
+import { NuiWizardV2Module } from "./lib/wizard-v2/wizard.module";
 import { NuiWizardModule } from "./lib/wizard/wizard.module";
 
 // for when you ask: https://github.com/dherges/ng-packagr/issues/734
@@ -99,6 +100,7 @@ export const nuiModulesList = [
     NuiToolbarModule,
     NuiValidationMessageModule,
     NuiWizardModule,
+    NuiWizardV2Module,
     NuiDndModule,
 ];
 

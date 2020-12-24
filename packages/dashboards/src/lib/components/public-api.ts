@@ -12,3 +12,5 @@ export * from "./time-frame-selection/public-api";
 export * from "./loading/public-api";
 export * from "./embedded-content/embedded-content.component";
 export * from "./list-widget/public-api";
+export * from "./widget-search/widget-search.component";
+export * from "./widget-search/types";

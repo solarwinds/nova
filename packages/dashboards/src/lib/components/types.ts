@@ -26,6 +26,11 @@ export interface IFormatterConfigurator {
     dataFields: IDataField[];
 }
 
+export interface IFormatterDefinitionProperties {
+    /** CSS class to be applied to the formatter host element */
+    elementClass?: string;
+}
+
 export interface IFormatterDefinition {
     componentType: string;
     label: string;
@@ -37,6 +42,7 @@ export interface IFormatterDefinition {
      * Component used to configure values for formatter.
      */
     configurationComponent?: string;
+    properties?: IFormatterDefinitionProperties;
 }
 
 export interface ITableFormatterDefinition extends IFormatterDefinition {

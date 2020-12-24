@@ -1,5 +1,7 @@
 import {
     DEFAULT_PIZZAGNA_ROOT,
+    IBrokerUserConfig,
+    IconFormatterComponent,
     IKpiColorRules,
     IKpiConfiguration,
     IProportionalWidgetChartOptions,
@@ -10,13 +12,16 @@ import {
     ITimeseriesItemConfiguration,
     ITimeseriesWidgetConfig,
     IWidget,
+    KpiFormatterTypes,
     LegendPlacement,
     NOVA_KPI_COLOR_PRIORITIZER,
     NOVA_KPI_DATASOURCE_ADAPTER,
+    NOVA_KPI_SCALE_SYNC_BROKER,
     NOVA_URL_INTERACTION_HANDLER,
     PizzagnaLayer,
     ProportionalWidgetChartTypes,
     RawFormatterComponent,
+    SiUnitsFormatterComponent,
     WellKnownProviders
 } from "@solarwinds/nova-dashboards";
 import { GridsterItem } from "angular-gridster2";
@@ -75,6 +80,17 @@ export const widgets: IWidget[] = [
                                 url: "${data.link}",
                             },
                         },
+                        // Uncomment the code below to make use of the Kpi Scale Sync Broker
+                        // kpiScaleSyncBroker: {
+                        //     providerId: NOVA_KPI_SCALE_SYNC_BROKER,
+                        //     properties: {
+                        //         scaleSyncConfig: [
+                        //             { id: "value", type: "min" } as IBrokerUserConfig,
+                        //             { id: "label", type: "min" } as IBrokerUserConfig,
+                        //             { id: "units", type: "min" } as IBrokerUserConfig,
+                        //         ],
+                        //     },
+                        // },
                     },
                     "properties": {
                         "nodes": [
@@ -122,14 +138,27 @@ export const widgets: IWidget[] = [
                     },
                     "properties": {
                         configuration: {
-                            interactive: true,
+                            formatters: {
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: SiUnitsFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "value",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
                         } as IKpiConfiguration,
+
                         "widgetData": {
                             "id":  "totalStorage",
                             "value": 0,
                             "label": "Total storage",
-                            "units": "TB",
-                            "backgroundColor": "blue",
+                            "units": "Bytes",
+                            // "backgroundColor": "blue",
+                            "icon": "state_ok",
                             "link": "http://www.google.com",
                         },
                     },
@@ -143,31 +172,28 @@ export const widgets: IWidget[] = [
                                 "numberFormat": "1.1-1",
                             },
                         } as IProviderConfiguration,
-                        [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi2",
-                                "propertyPath": "widgetData",
-                            },
-                        } as IProviderConfiguration,
-                        [WellKnownProviders.KpiColorPrioritizer]: {
-                            "providerId": NOVA_KPI_COLOR_PRIORITIZER,
-                            "properties": {
-                                "rules": [
-                                    {
-                                        "comparisonType": ">",
-                                        "value": 2,
-                                        "color": "var(--nui-color-chart-seven)",
-                                    },
-                                ] as IKpiColorRules[],
-                            },
-                        } as IProviderConfiguration,
                     },
                     "properties": {
+                        configuration: {
+                            formatters: {
+                                // can be used for testing in the future
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: IconFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "icon",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
                         "widgetData": {
                             "id": "downloadSpeed",
                             "value": 0,
                             "label": "Download SUPER DUPER VERY LONG STRING Speed",
+                            "icon": "state_ok",
                             "units": "MB/S",
                         },
                     },
@@ -178,28 +204,28 @@ export const widgets: IWidget[] = [
                         [WellKnownProviders.DataSource]: {
                             "providerId": AcmeKpiDataSource3.providerId,
                         } as IProviderConfiguration,
-                        [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi3",
-                                "propertyPath": "widgetData",
-                                "thresholds": {
-                                    "warningThresholdValue": 120,
-                                    "criticalThresholdValue": 150,
-                                },
-                            },
-                        } as IProviderConfiguration,
-                        [WellKnownProviders.KpiColorPrioritizer]: {
-                            "providerId": NOVA_KPI_COLOR_PRIORITIZER,
-                        } as IProviderConfiguration,
                     },
                     "properties": {
+                        configuration: {
+                            formatters: {
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "value",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
                         "widgetData": {
                             "id": "uploadSpeed",
                             "value": 0,
                             "label": "Upload Speed",
                             "units": "MB/S",
-                            "backgroundColor": "salmon",
+                            // "backgroundColor": "salmon",
                         },
                     },
                 },

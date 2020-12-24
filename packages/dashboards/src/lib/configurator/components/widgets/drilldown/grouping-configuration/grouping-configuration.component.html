@@ -1,0 +1,47 @@
+<nui-widget-editor-accordion [formGroup]="form"
+                             [state]="form | nuiWidgetEditorAccordionFormState | async">
+    <div accordionHeader class="d-flex align-items-center px-4 py-2">
+        <nui-icon class="align-self-start pt-2" [icon]="'tag'" iconColor="gray"></nui-icon>
+        <div class="d-flex flex-column ml-4 pt-1">
+            <span class="nui-text-label" i18n>Grouping</span>
+            <div class="nui-text-secondary"
+                 [title]="getSubtitle()">
+                {{ getSubtitle() }}
+            </div>
+        </div>
+    </div>
+    <div class="grouping-configuration__accordion-content" formArrayName="groupBy">
+        <ng-container *ngFor="let group of getGroupByControl.controls; index as i;">
+            <label *ngIf="i !== 0" class="d-flex nui-text-secondary mb-1" i18n>Then</label>
+            <label *ngIf="i === 0" class="d-flex nui-text-panel mb-2" i18n>Group by</label>
+            <div class="d-flex flex-row flex-grow-1 mb-4">
+                <nui-form-field [control]="group" class="d-flex flex-grow-1">
+                    <nui-select-v2 placeholder="Select Item"
+                                   i18n-placeholder
+                                   [formControlName]="i">
+                        <nui-select-v2-option *ngFor="let item of selectData[i]" [value]="item">
+                            {{ item }}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                </nui-form-field>
+                <div class="justify-content-center">
+                    <button nui-button
+                            icon="delete"
+                            displayStyle="action"
+                            type="button"
+                            (click)="removeRule(i)">
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+        <button nui-button
+                icon="add"
+                displayStyle="action"
+                type="button"
+                i18n
+                *ngIf="!this.isAddRestricted()"
+                (click)="addGrouping()">
+            Add another level
+        </button>
+    </div>
+</nui-widget-editor-accordion>

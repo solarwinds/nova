@@ -56,6 +56,10 @@ describe("Visual tests: Filtered View", () => {
         await filterByFirstOption();
         await eyes.checkWindow("Filtered View Table with Virtual Scroll with Custom Strategy");
 
+        Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        Helpers.switchDarkTheme("off");
+
         await eyes.close();
     }, 200000);
 

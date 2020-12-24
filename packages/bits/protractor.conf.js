@@ -4,7 +4,8 @@ const { TeamCityReporter } = require("jasmine-reporters");
 exports.config = {
     SELENIUM_PROMISE_MANAGER: false,
     seleniumAddress: process.env.SELENIUM_ADDRESS,
-    allScriptsTimeout: 11000,
+    // Increasing the all scripts timeout to be much above the default jasmine timeout to make visual tests more robust
+    allScriptsTimeout: 100000,
     suites: {
         e2e: './spec/**/*.e2e.ts',
         visual: './spec/**/*.visual.ts',
@@ -31,7 +32,7 @@ exports.config = {
     framework: 'jasmine',
     jasmineNodeOpts: {
         showColors: true,
-        defaultTimeoutInterval: 30000,
+        defaultTimeoutInterval: 100000,
         print: function () { }
     },
     onPrepare() {

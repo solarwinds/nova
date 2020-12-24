@@ -115,7 +115,10 @@ describe("USERCONTROL Toast > ", () => {
 
         it(" should not be rendered", async () => {
             await page.showToasts({...toastConfig, message, options: {enableHtml: false}});
-            expect(await page.getToast().getBody()).toContain(`<a href="#">`);
+
+            const toast = page.getToast();
+            expect(await toast.isPresent() && await toast.isDisplayed()).toEqual(true);
+            expect(await toast.getBody()).toContain(`<a href="#">`);
         });
 
         it(" should not contain forbidden tags", async () => {

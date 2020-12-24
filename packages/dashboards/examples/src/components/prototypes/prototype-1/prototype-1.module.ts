@@ -77,7 +77,10 @@ const routes = [
     ],
 })
 export class Prototype1Module {
-    constructor(private widgetTypesService: WidgetTypesService, private componentRegistry: ComponentRegistryService) {
+    constructor(
+        private widgetTypesService: WidgetTypesService,
+        private componentRegistry: ComponentRegistryService
+    ) {
         this.setupDataSourceProviders();
         this.setupCustomProportionalWidgetDSConfig();
     }

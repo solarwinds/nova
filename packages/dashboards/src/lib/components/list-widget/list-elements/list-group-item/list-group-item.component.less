@@ -6,10 +6,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 
     &__label {
         width: 25%;
-        margin-right: @nui-space-lg;
         max-width: 100%;
         .text-overflow(ellipsis);
     }
@@ -17,22 +17,51 @@
     &__statuses {
         width: 75%;
         display: flex;
-        justify-content: space-between;
         align-items: center;
+    }
 
-        .status-column {
-            display: flex;
-            width: 100px;
-            min-width: 100px;
-            max-width: 100%;
-            justify-content: start;
-            align-items: center;
-            padding-right: @nui-space-sm;
+    .status-column {
+        display: flex;
+        width: 75px;
+        min-width: 75px;
+        max-width: 100%;
+        justify-content: flex-start;
+        align-items: center;
+        padding-right: @nui-space-sm;
 
-            &__label {
-                margin-left: @nui-space-xs;
-                .text-overflow(ellipsis);
-            }
+        &__label {
+            margin-left: @nui-space-xs;
+            .text-overflow(ellipsis);
+        }
+    }
+
+    .statuses {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-end;
+    }
+}
+
+.widget-medium {
+    .item-config();
+}
+
+.widget-small {
+    .item-config();
+
+    .statuses {
+        justify-content: space-between;
+    }
+}
+
+.item-config() {
+    justify-content: flex-end;
+    .list-group-item {
+        &__label {
+            width: 100% !important;
+        }
+        &__statuses {
+            width: 100% !important;
         }
     }
 }

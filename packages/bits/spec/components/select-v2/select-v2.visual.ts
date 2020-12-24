@@ -60,7 +60,9 @@ describe("Visual tests: Select V2", () => {
          * 7. Hover effect on disabled item is verified
          * 8. Boundary values are successfully chosen for the regular display value example and grouped items one
          * 9. Disabled select styles checked
+         * 10. Dark theme tested
          */
+        await Helpers.switchDarkTheme("on");
         await selectErrorState.toggle();
         await (await selectErrorState.getFirstOption()).click();
         await (await selectInForm.getLastOption()).click();
@@ -69,11 +71,12 @@ describe("Visual tests: Select V2", () => {
         await (await selectDisplayValueSmall.getOption(6)).click();
         await (await selectDisplayValueSmall.getOption(3)).hover();
         await eyes.checkWindow("State 2");
-
+        
         /**
          * 1. Hovered selected value styles checked
          * 2. Inline selects positioning checked
          */
+        await Helpers.switchDarkTheme("off");
         await selectGrouped.toggle();
         await (await selectGrouped.getLastOption()).hover();
         await eyes.checkWindow("State 3");

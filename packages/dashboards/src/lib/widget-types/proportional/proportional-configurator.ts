@@ -7,21 +7,79 @@ import { DonutContentPercentageFormatterComponent } from "../../configurator/com
 import { DonutContentRawFormatterComponent } from "../../configurator/components/formatters/donut-content-raw-formatter/donut-content-raw-formatter.component";
 import { DonutContentSumFormatterComponent } from "../../configurator/components/formatters/donut-content-sum-formatter/donut-content-sum-formatter.component";
 import { LinkFormatterComponent } from "../../configurator/components/formatters/link-formatter/link-formatter.component";
+import { PercentageFormatterComponent } from "../../configurator/components/formatters/percentage-formatter/percentage-formatter.component";
+import { RawFormatterComponent } from "../../configurator/components/formatters/raw-formatter/raw-formatter.component";
+import { SiUnitsFormatterComponent } from "../../configurator/components/formatters/si-units-formatter/si-units-formatter.component";
 import { StatusWithIconFormatterComponent } from "../../configurator/components/formatters/status-with-icon-formatter/status-with-icon-formatter.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import { ProportionalChartOptionsEditorComponent } from "../../configurator/components/widgets/proportional/chart-options-editor/proportional-chart-options-editor.component";
+import { IPercentageAggregatorConfig, percentageAggregator } from "../../functions/proportional-aggregators/percentage-aggregator";
+import { sumAggregator } from "../../functions/proportional-aggregators/sum-aggregator";
+import { IProportionalDonutContentAggregatorDefinition } from "../../functions/proportional-aggregators/types";
 import {
     DEFAULT_PIZZAGNA_ROOT,
     NOVA_GENERIC_CONVERTER,
     NOVA_PIZZAGNA_BROADCASTER,
+    NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY,
     NOVA_PROPORTIONAL_WIDGET_CHART_OPTIONS_CONVERTER,
     NOVA_TITLE_AND_DESCRIPTION_CONVERTER
 } from "../../services/types";
 import { PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
 // tslint:enable:max-line-length
+
+export const DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS: IFormatterDefinition[] = [
+    {
+        componentType: RawFormatterComponent.lateLoadKey,
+        label: $localize`Raw Formatter`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+        properties: {
+            elementClass: "nui-text-page",
+        },
+    },
+    {
+        componentType: SiUnitsFormatterComponent.lateLoadKey,
+        label: $localize`Si Units Formatter`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+    },
+    {
+        componentType: PercentageFormatterComponent.lateLoadKey,
+        label: $localize`Percentage Formatter`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+        properties: {
+            elementClass: "nui-text-page",
+        },
+    },
+];
+
+export const DEFAULT_PROPORTIONAL_CONTENT_AGGREGATORS: IProportionalDonutContentAggregatorDefinition[] = [
+    {
+        aggregatorType: sumAggregator.aggregatorType,
+        label: "Sum Aggregator",
+        fn: sumAggregator,
+    },
+    {
+        aggregatorType: percentageAggregator.aggregatorType,
+        label: "Percentage Aggregator",
+        fn: percentageAggregator,
+        properties: {
+            aggregatorConfig: {
+                base100: true,
+            } as IPercentageAggregatorConfig,
+        },
+    },
+];
 
 export const proportionalConfigurator = {
     [PizzagnaLayer.Structure]: {
@@ -33,6 +91,11 @@ export const proportionalConfigurator = {
                 elementClass: "flex-grow-1 overflow-auto nui-scroll-shadows",
                 // references to other components laid out in this form
                 nodes: ["presentation", "dataAndCalculations"],
+            },
+            providers: {
+                [WellKnownProviders.FormattersRegistry]: {
+                    providerId: NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY,
+                },
             },
         },
         // /presentation

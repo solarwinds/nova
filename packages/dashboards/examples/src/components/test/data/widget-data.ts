@@ -528,4 +528,72 @@ export function getTimeseriesStatusData(): ITimeseriesWidgetData<ITimeseriesWidg
     return series;
 }
 
+export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData<ITimeseriesWidgetStatusData>[] {
+    const series: ITimeseriesWidgetData<any>[] = [
+        {
+            id: "series-1",
+            name: "Average CPU Load",
+            description: "lastchance.demo.lab",
+            data: [
+                { x: frozenTime().subtract(19, "day").toDate(), y: Status.Critical },
+                { x: frozenTime().subtract(18, "day").toDate(), y: Status.Warning },
+                { x: frozenTime().subtract(17, "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(16, "day").toDate(), y: Status.Critical },
+                { x: frozenTime().subtract(15, "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(14, "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(13, "day").toDate(), y: Status.Warning },
+                { x: frozenTime().subtract(12, "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(11, "day").toDate(), y: Status.Critical },
+                { x: frozenTime().subtract(10, "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(9 , "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(8 , "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(7 , "day").toDate(), y: Status.Warning },
+                { x: frozenTime().subtract(6 , "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(5 , "day").toDate(), y: Status.Critical },
+                { x: frozenTime().subtract(4 , "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(3 , "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(2 , "day").toDate(), y: Status.Warning },
+                { x: frozenTime().subtract(1 , "day").toDate(), y: Status.Up },
+                { x: frozenTime().toDate(), y: Status.Up },
+            ],
+        },
+        {
+            id: "series-2",
+            name: "Average CPU Load",
+            description: "newhope.demo.lab",
+            data: [
+                { x: frozenTime().subtract(19, "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(18, "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(17, "day").toDate(), y: Status.Critical },
+                { x: frozenTime().subtract(16, "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(15, "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(14, "day").toDate(), y: Status.Critical },
+                { x: frozenTime().subtract(13, "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(12, "day").toDate(), y: Status.Critical },
+                { x: frozenTime().subtract(11, "day").toDate(), y: Status.Warning },
+                { x: frozenTime().subtract(10, "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(9 , "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(8 , "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(7 , "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(6 , "day").toDate(), y: Status.Critical },
+                { x: frozenTime().subtract(5 , "day").toDate(), y: Status.Down },
+                { x: frozenTime().subtract(4 , "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(3 , "day").toDate(), y: Status.Critical },
+                { x: frozenTime().subtract(2 , "day").toDate(), y: Status.Up },
+                { x: frozenTime().subtract(1 , "day").toDate(), y: Status.Warning },
+                { x: frozenTime().toDate(), y: Status.Warning },
+            ],
+        },
+    ];
 
+    for (const s of series) {
+        s.data = s.data.map((d: any, i: number) => ({
+            ...d,
+            color: statusColors[d.y as Status],
+            thick: d.y !== Status.Up,
+            icon: "status_" + d.y,
+        }));
+    }
+
+    return series;
+}

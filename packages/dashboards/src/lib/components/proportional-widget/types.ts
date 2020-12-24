@@ -1,3 +1,4 @@
+import { IProportionalDonutContentAggregator } from "../../functions/proportional-aggregators/types";
 import { ILegendPlacementOption } from "../../types";
 import { IFormatter, IFormatterDefinition, LegendPlacement } from "../types";
 
@@ -14,6 +15,7 @@ export interface IProportionalWidgetChartOptions {
     legendPlacement?: LegendPlacement;
     legendFormatter?: IFormatter;
     chartFormatterComponentType?: string;
+    donutContentConfig?: IDonutContentConfig;
 }
 
 export interface IProportionalWidgetConfig {
@@ -36,4 +38,9 @@ export interface IProportionalWidgetChartEditorOptions {
     legendFormats: Array<ILegendFormat>;
     legendFormatters: IFormatterDefinition[];
     contentFormatters?: IFormatterDefinition[];
+}
+
+export interface IDonutContentConfig {
+    formatter: IFormatter;
+    aggregator: IProportionalDonutContentAggregator;
 }

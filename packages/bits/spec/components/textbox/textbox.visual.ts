@@ -33,6 +33,10 @@ describe("Visual tests: Textbox", () => {
         await eyes.open(browser, "NUI", "Textbox");
         await eyes.checkWindow("Default");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
+
         await basicTextbox.input.click();
         await placeholderTextbox.hover();
         await eyes.checkWindow("Basic Textbox is focused and Textbox with placeholder is hovered");

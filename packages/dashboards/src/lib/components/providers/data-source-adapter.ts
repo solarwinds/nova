@@ -25,7 +25,6 @@ export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs> 
         if (!this.dataSource) {
             return;
         }
-
         this.setupRefreshListener();
 
         this.dataSource.outputsSubject

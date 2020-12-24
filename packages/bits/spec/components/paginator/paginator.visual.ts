@@ -55,6 +55,9 @@ describe("Visual tests: Paginator", () => {
         await eyes.checkWindow("Paginator's ellipsis-pages are shown");
         await selectBasicPaginator.toggleMenu();
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 100000);
 });

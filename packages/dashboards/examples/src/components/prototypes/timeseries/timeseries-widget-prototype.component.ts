@@ -12,7 +12,8 @@ import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-sour
 import {
     AcmeTimeseriesDataSource,
     AcmeTimeseriesDataSource2,
-    AcmeTimeseriesStatusDataSource
+    AcmeTimeseriesStatusDataSource,
+    AcmeTimeseriesStatusIntervalDataSource
 } from "../data/timeseries-data-sources";
 
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
@@ -93,6 +94,11 @@ export class AcmeDashboardComponent implements OnInit {
             [AcmeTimeseriesStatusDataSource.providerId]: {
                 provide: DATA_SOURCE,
                 useClass: AcmeTimeseriesStatusDataSource,
+                deps: [],
+            },
+            [AcmeTimeseriesStatusIntervalDataSource.providerId]: {
+                provide: DATA_SOURCE,
+                useClass: AcmeTimeseriesStatusIntervalDataSource,
                 deps: [],
             },
         });

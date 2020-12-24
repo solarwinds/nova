@@ -71,9 +71,6 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     /** Whether to populate the remainder of the text being typed */
     @Input() public isTypeaheadEnabled: boolean = true;
 
-    /** Emits event when value of Combobox has been changed */
-    @Output() public valueChanged = new EventEmitter<InputValueTypes>();
-
     /** Emits event whether options are presented after filtering */
     @Output() public searchEmpty = new EventEmitter<boolean>(false);
 

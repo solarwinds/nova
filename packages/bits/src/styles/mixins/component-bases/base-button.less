@@ -30,7 +30,7 @@
     }
 }
 
-.button-default() {
+.button-default-base() {
     .button-variant(
         nui-color-text-link;
         transparent;
@@ -49,7 +49,12 @@
     );
 }
 
-.button-primary() {
+.button-default() {
+    .button-default-base();
+    .with-icon-fill(nui-color-text-link, nui-color-disabled)
+}
+
+.button-primary-base() {
     .button-variant(
         nui-color-text-light;
         nui-color-active;
@@ -68,7 +73,12 @@
     );
 }
 
-.button-action() {
+.button-primary() {
+    .button-primary-base();
+    .with-icon-fill(nui-color-icon-light, white)
+}
+
+.button-action-base() {
     .button-variant(
         nui-color-text-link;
         transparent;
@@ -87,7 +97,12 @@
     );
 }
 
-.button-destructive() {
+.button-action() {
+    .button-action-base();
+    .with-icon-fill(nui-color-text-link, nui-color-disabled)
+}
+
+.button-destructive-base() {
     .button-variant(
         nui-color-text-critical;
         transparent;
@@ -106,7 +121,12 @@
     );
 }
 
-.button-selected() {
+.button-destructive() {
+    .button-destructive-base();
+    .with-icon-fill(nui-color-text-critical, nui-color-disabled)
+}
+
+.button-selected-base() {
     .button-variant(
         nui-color-text-link;
         nui-color-selected;
@@ -125,7 +145,12 @@
     );
 }
 
-.button-selected-contrast() {
+.button-selected() {
+    .button-selected-base();
+    .with-icon-fill(nui-color-text-link, white)
+}
+
+.button-selected-contrast-base() {
     .button-variant(
         white;
         nui-color-selected-contrast;
@@ -142,6 +167,11 @@
         white;
         nui-color-busy-default
     );
+}
+
+.button-selected-contrast() {
+    .button-selected-contrast-base();
+    .with-icon-fill(nui-color-icon-light, white)
 }
 
 .button-variant(@colorVariableName;
@@ -162,7 +192,6 @@
     .setCssVariable(color, @colorVariableName);
     .setCssVariable(background-color, @backgroundVariableName);
     .setCssVariable(border-color, @borderVariableName);
-    .fill-icon(@iconVariableName);
 
     &:focus,
     &.focus {
@@ -207,7 +236,6 @@
         &.active {
             .setCssVariable(background-color, @disabledBkVariableName);
             .setCssVariable(border-color, @disabledBrdVariableName);
-            .fill-icon(@disabledContentVariableName);
             .setCssVariable(color, @disabledContentVariableName);
         }
     }
@@ -230,6 +258,24 @@
         .setCssVariable(background-color, @colorVariableName);
     }
 }
+
+.with-icon-fill(@iconVariableName, @disabledContentVariableName) {
+    .fill-icon(@iconVariableName);
+
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &,
+        &:hover,
+        &:focus,
+        &.focus,
+        &:active,
+        &.active {
+            .fill-icon(@disabledContentVariableName);
+        }
+    }
+}
+
 
 .busy-variant(@variableName) {
     .ripple-1, .ripple-2 {
