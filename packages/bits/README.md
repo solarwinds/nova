@@ -222,9 +222,6 @@ ng g @nova-ui/bits:list --name=basic-list --p=app
 [Atoms](https://cp.solarwinds.com/display/NU/How+to+Use+NOVA+Atoms) are the custom implementation of a well-known PageObject pattern. They are useful when it comes to e2e and visual testing an app containing Nova components and directives.
 They can be found in @nova-ui/bits/sdk/atoms. Note that, while they are useful for e2e and visual tests, they are not suitable for unit testing.
 
-## Contribution
-
-We encourage [contributions to Nui](https://cp.solarwinds.com/display/NU/Contribute+to+Nova) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions. We're capable of releasing very quickly if you need to consume your changes as soon as possible - just let us know via Slack, email or Jira. We want to make sure you and your teams are empowered to get your features built without being blocked by us.
 
 ## AoT Support
 
