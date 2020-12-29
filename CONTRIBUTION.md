@@ -1,5 +1,7 @@
 # Contributing to Nova
-We encourage developers to contribute to Nova. Here's what you need to know to get started:
+We are open to, and grateful for, any contributions made by the community. By contributing to Nova, you agree to abide by the [code of conduct](./CODE_OF_CONDUCT.md)
+
+Here's what you need to know to get started:
 
   ## Instructions
   1. Make sure to create a NUI JIRA ticket for the contribution - we need a NUI ticket to properly track your changes in order to announce what's changed between releases.
@@ -31,5 +33,5 @@ We encourage developers to contribute to Nova. Here's what you need to know to g
   ### When Can I Consume My Changes?
   At the moment, we release both Nova and NovaJS packages every 2 weeks to Artifactory - and your changes will be available in the very next release. Note that we're working toward more frequent releases. The first step is to get to once a week. The second step is to provide an automated mechanism for on-demand releases. Once we have that (we hope by the end of Q1 2019), you'll be able to consume your changes immediately.
 
-  Hotfixes are an exception to our normal release cadence. If you need to apply a hotfix quickly, contact Tillery, Shannon or one of the Nova team leads and we'll work with you to make it available as soon as possible.
+  Hotfixes are an exception to our normal release cadence. If you need to apply a hotfix quickly, contact one of the Nova team leads and we'll work with you to make it available as soon as possible.
   
