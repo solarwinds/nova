@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import { DataSourceService } from "@solarwinds/nova-bits";
-import { IFilteringOutputs } from "@solarwinds/nova-bits/services/data-source/public-api";
-import { IDataSource } from "@solarwinds/nova-dashboards";
+import { DataSourceService } from "@nova-ui/bits";
+import { IFilteringOutputs } from "@nova-ui/bits/services/data-source/public-api";
+import { IDataSource } from "@nova-ui/dashboards";
 import { BehaviorSubject } from "rxjs";
 
 import { getMockBeerReviewCountsByCity, getMockBeerReviewCountsByCity2, IProportionalWidgetData } from "./widget-data";

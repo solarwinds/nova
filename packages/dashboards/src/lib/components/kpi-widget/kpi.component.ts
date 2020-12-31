@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Inject, Input, OnChanges, Optional, SimpleChanges, ViewEncapsulation } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 
 import { mapDataToFormatterProperties } from "../../functions/map-data-to-formatter-properties";
 import { INTERACTION } from "../../services/types";

@@ -18,7 +18,7 @@ import {
     NuiTimePickerModule,
     NuiValidationMessageModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { FormFieldBasicHintExampleComponent } from "./basic-hint/form-field-hint.example.component";
 import { FormFieldBasicReactiveCustomValidationExampleComponent } from "./basic-reactive/basic-reactive-form-field-custom-validation.example.component";

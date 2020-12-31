@@ -7,7 +7,7 @@ import {
     PizzagnaLayer,
     RawFormatterComponent,
     WellKnownProviders
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 
 import { TestTableDataSource, TestTableDataSource2 } from "../../data/table-datasources";

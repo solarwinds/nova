@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DialogService, TableComponent } from "@solarwinds/nova-bits";
+import { DialogService, TableComponent } from "@nova-ui/bits";
 
 interface IExampleTableModel {
     issue: string;

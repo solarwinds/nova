@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, QueryList, ViewChildren } from "@angular/core";
-import { ITimeframe, ITimeFramePresetDictionary, TimeframeService } from "@solarwinds/nova-bits";
+import { ITimeframe, ITimeFramePresetDictionary, TimeframeService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 interface IPicker {

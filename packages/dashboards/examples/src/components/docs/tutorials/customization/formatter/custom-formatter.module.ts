@@ -2,8 +2,8 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 // tslint:disable-next-line: max-line-length
-import { NuiButtonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSelectV2Module, NuiSwitchModule, NuiTextboxModule, NuiValidationMessageModule } from "@solarwinds/nova-bits";
-import { NuiDashboardsModule } from "@solarwinds/nova-dashboards";
+import { NuiButtonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSelectV2Module, NuiSwitchModule, NuiTextboxModule, NuiValidationMessageModule } from "@nova-ui/bits";
+import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { CustomDonutContentFormatterDocComponent } from "./donut-content-formatter-example/custom-donut-content-formatter-docs.component";
 import { CustomDonutContentFormatterComponent, CustomDonutContentFormatterConfiguratorComponent, CustomDonutContentFormatterExampleComponent } from "./donut-content-formatter-example/custom-donut-content-formatter-example.component";

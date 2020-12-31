@@ -12,7 +12,7 @@ import {
     INovaFilteringOutputs,
     INovaFilters,
     LoggerService
- } from "@solarwinds/nova-bits";
+ } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,
@@ -24,7 +24,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { GBOOKS_API_URL } from "components/prototypes/data/table/constants";
 import isEqual from "lodash/isEqual";

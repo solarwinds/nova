@@ -1,7 +1,7 @@
 import { Component, SimpleChange, SimpleChanges } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
-import { Chart, ChartAssist, ChartPalette, defaultPalette, IAccessors, IValueProvider, LineAccessors, SET_DOMAIN_EVENT, XYGrid, ZoomPlugin } from "@solarwinds/nova-charts";
+import { EventBus, IEvent } from "@nova-ui/bits";
+import { Chart, ChartAssist, ChartPalette, defaultPalette, IAccessors, IValueProvider, LineAccessors, SET_DOMAIN_EVENT, XYGrid, ZoomPlugin } from "@nova-ui/charts";
 
 import { ISerializableTimeframe } from "../../../../configurator/services/types";
 import { NuiDashboardsModule } from "../../../../dashboards.module";

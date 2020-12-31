@@ -1,9 +1,9 @@
 {
     "$schema": "http://json-schema.org/schema",
     "id": "SchematicsNovaUpdate",
-    "title": "ng-update schematic for nova-bits",
+    "title": "ng-update schematic for bits",
     "type": "object",
-    "description": "updates a nova-bits project",
+    "description": "updates a bits project",
     "properties": {
         "project": {
             "type": "string",

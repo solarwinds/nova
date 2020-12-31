@@ -1,5 +1,5 @@
 import { AfterViewInit, Component } from "@angular/core";
-import { ISorterChanges, SorterDirection } from "@solarwinds/nova-bits";
+import { ISorterChanges, SorterDirection } from "@nova-ui/bits";
 import _orderBy from "lodash/orderBy";
 
 interface IFilm {

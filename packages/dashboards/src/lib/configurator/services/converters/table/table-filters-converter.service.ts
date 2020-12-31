@@ -1,6 +1,6 @@
 import { AfterViewInit, Inject } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { EventBus, IEvent, immutableSet } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";

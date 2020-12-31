@@ -1,9 +1,9 @@
 import { AfterViewInit, Component } from "@angular/core";
-import { IconService } from "@solarwinds/nova-bits";
+import { IconService } from "@nova-ui/bits";
 import {
     BandScale, BarRenderer, BarStatusGridConfig, Chart, CHART_PALETTE_CS_S, IChartSeries, IStatusAccessors, IValueProvider, MappedValueProvider, RenderState,
     statusAccessors, StatusAccessors, SvgMarker, TimeIntervalScale, TimeScale, XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import range from "lodash/range";
 import moment from "moment/moment";
 

@@ -1,4 +1,4 @@
-import { EventDefinition, IEvent } from "@solarwinds/nova-bits";
+import { EventDefinition, IEvent } from "@nova-ui/bits";
 import { BehaviorSubject } from "rxjs";
 
 export const DATA_SOURCE_OUTPUT = new EventDefinition("DATA_SOURCE_OUTPUT");

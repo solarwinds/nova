@@ -13,7 +13,7 @@
     },
     {
         "path": "packages/dashboards",
-        "dependencies": ["@solarwinds/nova-bits", "@solarwinds/nova-charts"]
+        "dependencies": ["@nova-ui/bits", "@nova-ui/charts"]
     },
     {
         "path": "packages/dashboards/schematics",
@@ -21,14 +21,6 @@
     },
     {
         "path": "packages/charts",
-        "dependencies": ["@solarwinds/nova-bits"]
-    },
-    {
-        "path": "consumer/web",
-        "dependencies": []
-    },
-    {
-        "path": "consumer/server",
-        "dependencies": []
+        "dependencies": ["@nova-ui/bits"]
     }
 ]

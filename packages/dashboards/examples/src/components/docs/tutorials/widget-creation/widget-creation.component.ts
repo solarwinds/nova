@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, EventEmitter, Injectable, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
-import { DataSourceService, IFilteringOutputs, ToastService, uuid } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilteringOutputs, ToastService, uuid } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -24,23 +24,13 @@ import {
     WellKnownProviders,
     WidgetClonerService,
     WidgetTypesService,
-} from "@solarwinds/nova-dashboards";
-import { chartPie, discovery } from "@solarwinds/nova-images";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { finalize, take, takeUntil } from "rxjs/operators";
 
-// Interface for the image of a widget item
-interface IImageDef {
-    svgFile: string;
-    name: string;
-    brushType: string;
-    code: string;
-}
-
 // Interface of a widget item
 interface IWidgetItem {
-    image: IImageDef;
     name: string;
     widget: IWidget;
 }
@@ -63,9 +53,6 @@ interface IWidgetItem {
 
 <ng-template #widgetClonerItem let-item="item">
     <div class="nui-widget-cloner__item d-flex pt-2 pb-2 align-items-center">
-        <div class="nui-widget-cloner__image">
-            <nui-image [autoFill]="true" height="30px" margin="centered" [image]="item.image"></nui-image>
-        </div>
         <div class="text-info ml-3">{{ item.name }}</div>
     </div>
 </ng-template>
@@ -77,10 +64,6 @@ export class WidgetTemplateSelectionComponent implements IWidgetTemplateSelector
 
     public widgetItems: IWidgetItem[] = [];
     public widgetSelection: IWidgetItem[];
-    private cloneSelectionImages: Record<string, IImageDef> = {
-        "proportional": chartPie,
-        "kpi": discovery,
-    };
 
     constructor(private widgetTypesService: WidgetTypesService) { }
 
@@ -89,12 +72,10 @@ export class WidgetTemplateSelectionComponent implements IWidgetTemplateSelector
         // configuration to create an array of widget objects for the itemSource on the repeat component.
         this.widgetItems = [
             {
-                image: this.cloneSelectionImages["kpi"],
                 name: "Fully Configured KPI Widget",
                 widget: this.widgetTypesService.mergeWithWidgetType(fullKpiWidgetConfig),
             },
             {
-                image: this.cloneSelectionImages["proportional"],
                 name: "Unconfigured Proportional Widget",
                 // Note that 'partialPropWidgetConfig' sets 'metadata.needsConfiguration' to true.
                 // When this widget is selected in the wizard, the 'Create Widget' button will be hidden

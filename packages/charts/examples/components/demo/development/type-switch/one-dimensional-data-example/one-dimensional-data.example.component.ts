@@ -3,7 +3,7 @@ import {
     BandScale, barGrid, BarRenderer, Chart, CHART_PALETTE_CS_S, ChartAssist, ChartDonutContentPlugin, getAutomaticDomainWithIncludedInterval,
     HorizontalBarAccessors, IAccessors, IScale, LinearScale, MappedValueProvider, PieRenderer, radial, RadialAccessors, radialGrid, RadialRenderer,
     radialScales, Renderer, Scales, VerticalBarAccessors,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import zipObject from "lodash/zipObject";
 
 @Component({

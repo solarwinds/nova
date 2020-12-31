@@ -1,7 +1,7 @@
 import { CdkDragDrop } from "@angular/cdk/drag-drop";
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { IEvent, LoggerService } from "@nova-ui/bits";
 import { startWith, takeUntil } from "rxjs/operators";
 
 import { BaseLayout } from "../../../components/layouts/base-layout";

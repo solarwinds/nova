@@ -1,4 +1,4 @@
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../services/types";
 import { IPizzagna, PizzagnaLayer } from "../../types";

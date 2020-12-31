@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ISelectChangedEvent, ISelectGroup } from "@solarwinds/nova-bits";
+import { ISelectChangedEvent, ISelectGroup } from "@nova-ui/bits";
 import _cloneDeep from "lodash/cloneDeep";
 
 @Component({

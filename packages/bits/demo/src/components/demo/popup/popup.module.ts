@@ -12,7 +12,7 @@ import {
     NuiSearchModule,
     NuiTextboxModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     PopupAppendToBodyExampleComponent,

@@ -21,7 +21,7 @@ import {
     NuiSwitchModule,
     NuiValidationMessageModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     ComboboxV2BasicExampleComponent,

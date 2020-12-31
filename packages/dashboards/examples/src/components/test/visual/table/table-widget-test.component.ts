@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ThemeSwitchService } from "@solarwinds/nova-bits";
+import { ThemeSwitchService } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,
     IWidget,
     ProviderRegistryService,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 
 import { TestTableDataSource, TestTableDataSource2 } from "../../data/table-datasources";

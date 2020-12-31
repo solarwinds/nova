@@ -1,6 +1,6 @@
 import { DecimalPipe } from "@angular/common";
 import { Injectable, Injector, NgZone, Optional, StaticProvider } from "@angular/core";
-import { LoggerService, TimeframeService, VirtualViewportManager } from "@solarwinds/nova-bits";
+import { LoggerService, TimeframeService, VirtualViewportManager } from "@nova-ui/bits";
 
 import { DataSourceAdapter } from "../components/providers/data-source-adapter";
 import { DrilldownDataSourceAdapter } from "../components/providers/drilldown-data-source-adapter";

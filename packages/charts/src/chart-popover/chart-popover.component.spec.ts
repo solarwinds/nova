@@ -1,6 +1,6 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { NuiPopoverModule, PopoverComponent } from "@solarwinds/nova-bits";
+import { NuiPopoverModule, PopoverComponent } from "@nova-ui/bits";
 
 import { ChartPopoverPlugin } from "../core/plugins/chart-popover-plugin";
 

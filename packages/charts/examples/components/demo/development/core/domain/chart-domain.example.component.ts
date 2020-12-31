@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChi
 import {
     Chart, ChartAssist, ChartComponent, getAutomaticDomainWithIncludedInterval, IAccessors, IChart, IChartAssistSeries, IDataSeries, IScale, LineAccessors,
     LinearScale, LineRenderer, Scales, TimeScale, XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
 

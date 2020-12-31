@@ -11,7 +11,7 @@ import {
     SiUnitsFormatterComponent,
     sumAggregator,
     WellKnownProviders,
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 
 import { TestProportionalDataSource, TestProportionalDataSource3, TestProportionalDataSource4 } from "../../data/proportional-data-sources";

@@ -8,7 +8,7 @@ import {
     if (dataSource==="serverSide") {%>
     LoggerService,
     ServerSideDataSource,<% } %>
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import _forEach from "lodash/forEach";
 import {<%
     if (dataSource === "serverSide") {%>

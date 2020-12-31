@@ -6,7 +6,7 @@ import {
     IWidget,
     LegendPlacement,
     WellKnownProviders
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import moment from "moment/moment";
 
 import { BeerVsReadingMockDataSource } from "../data/timeseries-data-sources";

@@ -45,7 +45,7 @@ describe("USERCONTROL time-frame-picker", () => {
             await timePicker2.textbox.acceptText(TimepickerAtom.createTimeString(6, 0));
             await basicTimeFramePickerUseButton.click();
             expect(await basicTimeFramePickerPopover.getElement().getText()).toEqual("April 8, 2018 6:00 AM - April 9, 2018 6:00 AM");
-        }, 20000 );
+        }, 20000);
 
         it("should not change all control values after Cancel is clicked", async () => {
             const startTFP = basicTimeFramePicker.getStartDatetimePicker();

@@ -11,7 +11,7 @@ import {
     NuiSearchModule,
     NuiSelectorModule,
     NuiSorterModule, SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {DataSourceClientSideBasicExampleComponent} from "./client-side/client-side-basic/client-side-basic.example.component";
 import {DataSourceClientSideCustomSearchExampleComponent} from "./client-side/client-side-custom-search/client-side-custom-search.example.component";

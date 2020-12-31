@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { XYGridConfig } from "@solarwinds/nova-charts";
+import { XYGridConfig } from "@nova-ui/charts";
 
 @Component({
     selector: "nui-chart-docs-base-grid",

@@ -1,6 +1,6 @@
 import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 import {Component} from "@angular/core";
-import {IRepeatItem} from "@solarwinds/nova-bits";
+import {IRepeatItem} from "@nova-ui/bits";
 
 @Component({
   selector: "dnd-drag-placeholder",

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IMenuItem, ISorterChanges, SorterDirection } from "@solarwinds/nova-bits";
+import { IMenuItem, ISorterChanges, SorterDirection } from "@nova-ui/bits";
 import _orderBy from "lodash/orderBy";
 
 interface IFilm {

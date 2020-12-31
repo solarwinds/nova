@@ -1,7 +1,7 @@
 import { NgZone, SimpleChange, SimpleChanges } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@solarwinds/nova-bits";
-import { defaultPalette } from "@solarwinds/nova-charts";
+import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
+import { defaultPalette } from "@nova-ui/charts";
 import { Subject } from "rxjs";
 
 import { NuiDashboardsModule } from "../../dashboards.module";

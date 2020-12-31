@@ -7,7 +7,7 @@ import {
     NuiExpanderModule,
     NuiPopoverModule,
     NuiSpinnerModule,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { DialogFilterGroupCompositeComponent } from "./dialog-filter-group.component";
 import { FilterGroupCompositeDialogComponent } from "./filter-group-dialog/filter-group-dialog.component";

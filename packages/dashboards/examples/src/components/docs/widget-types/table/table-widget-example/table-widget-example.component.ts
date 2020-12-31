@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { DataSourceService, INovaFilteringOutputs, INovaFilters, nameof } from "@solarwinds/nova-bits";
+import { DataSourceService, INovaFilteringOutputs, INovaFilters, nameof } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,
@@ -11,7 +11,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject, from } from "rxjs";

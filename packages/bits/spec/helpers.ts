@@ -87,33 +87,26 @@ export class Helpers {
         return eyes;
     }
 
-    static prepareEyes() {
+    static async prepareEyes() {
         const { Eyes } = require("@applitools/eyes-protractor");
 
         if (!eyes) {
             eyes = new Eyes();
             eyes.setApiKey(<string>process.env.EYES_API_KEY);
-            
-            const userName: string = process.env.USERNAME ? ` - [${process.env.USERNAME}]` : "";
 
-            // branchName - the name of the branch where tests are run (e.g. bugfix/NUI-1302-filteredlistv2-looses-selected-items-on-filtering-searching)
-            // projectName - the name of the project within which the visual tests are run (e.g. nui, chartsD3, filtered-list etc.)
-            // majorProjectName - the name of the major project (either Nova or NovaJS)
-
-            let branchName = <string>process.env.BUILD_BRANCH || getCurrentBranchName() || "Unknown";
-            const projectName = <string>process.env.TEAMCITY_PROJECT_NAME;
-            const majorProjectName = <string>process.env.MAJOR_PROJECT_NAME;
-            const batchName = majorProjectName + " - " + projectName + " - " + branchName + userName;
-            // batchID is exposed by TC Applitools plugin. It is used to view the test manager in the iframe inside the Overview tab
-            // For more information refer to: https://github.com/applitools/eyes.teamcity
-            const batchID = <string>process.env.APPLITOOLS_BATCH_ID;
+            let branchName = <string>process.env.CIRCLE_BRANCH || getCurrentBranchName() || "Unknown";
+            const userName: string = <string>process.env.CIRCLE_USERNAME ? ` - [${process.env.CIRCLE_USERNAME}]` : "";
+            const batchName = (<string>process.env.CIRCLE_PROJECT_REPONAME)?.toUpperCase()
+                                + " - "
+                                + <string>process.env.CIRCLE_JOB
+                                + " - "
+                                + branchName
+                                + userName;
+            const batchID = <string>process.env.CIRCLE_SHA1;
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
-            if (batchID) {
-                eyes.setBatch(batchName, batchID);
-            } else {
-                eyes.setBatch(batchName);
-            }
+            batchID ? eyes.setBatch(batchName, batchID)
+                    : eyes.setBatch(batchName);
 
             eyes.setBranchName(branchName);
             if (branchName !== "develop") {
@@ -134,7 +127,7 @@ export class Helpers {
     }
 
     /**
-     * TODO: make this methos configurable, so that we would be able to partly disable
+     * TODO: make this method configurable, so that we would be able to partly disable
      * or enable the animations:
      *
      * https://jira.solarwinds.com/browse/NUI-2034

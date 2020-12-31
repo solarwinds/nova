@@ -13,7 +13,7 @@ import {
     MissingDataLineRendererConfig,
     TimeIntervalScale,
     XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import { duration } from "moment/moment";
 
 @Component({

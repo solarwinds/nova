@@ -1,5 +1,5 @@
 import { Inject, Injectable, OnDestroy } from "@angular/core";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

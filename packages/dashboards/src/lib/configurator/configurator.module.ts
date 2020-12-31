@@ -29,7 +29,7 @@ import {
     NuiTextboxModule,
     NuiValidationMessageModule,
     NuiWizardModule,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { GridsterModule } from "angular-gridster2";
 
 import { NuiDashboardsCommonModule } from "../common/common.module";

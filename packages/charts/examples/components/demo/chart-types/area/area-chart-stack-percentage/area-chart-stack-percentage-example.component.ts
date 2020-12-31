@@ -12,7 +12,7 @@ import {
     stackedAreaAccessors,
     stackedPercentageArea,
     TimeScale,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import moment from "moment/moment";
 
 @Component({

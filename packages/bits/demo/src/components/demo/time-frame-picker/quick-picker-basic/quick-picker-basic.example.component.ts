@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IQuickPickPresetDictionary } from "@solarwinds/nova-bits";
+import { IQuickPickPresetDictionary } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-quick-picker-basic",

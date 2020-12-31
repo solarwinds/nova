@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import { IRepeatItemConfig, RepeatComponent } from "@solarwinds/nova-bits";
+import { IRepeatItemConfig, RepeatComponent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-repeat-example",

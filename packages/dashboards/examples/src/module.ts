@@ -3,8 +3,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, LocalFilteringDataSource, NuiDocsModule, NuiSwitchModule } from "@solarwinds/nova-bits";
-import { NuiChartsModule } from "@solarwinds/nova-charts";
+import { DEMO_PATH_TOKEN, LocalFilteringDataSource, NuiDocsModule, NuiSwitchModule } from "@nova-ui/bits";
+import { NuiChartsModule } from "@nova-ui/charts";
 
 import { SourceInspectorModule } from "../../src/source-inspector/source-inspector.module";
 

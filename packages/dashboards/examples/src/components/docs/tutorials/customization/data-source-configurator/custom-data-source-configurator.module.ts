@@ -2,8 +2,8 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 // tslint:disable-next-line: max-line-length
-import { NuiButtonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSelectV2Module, NuiSwitchModule, NuiTextboxModule, NuiValidationMessageModule } from "@solarwinds/nova-bits";
-import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@solarwinds/nova-dashboards";
+import { NuiButtonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSelectV2Module, NuiSwitchModule, NuiTextboxModule, NuiValidationMessageModule } from "@nova-ui/bits";
+import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { CustomDataSourceConfiguratorDocComponent } from "./custom-data-source-configurator-docs.component";
 import { CustomDataSourceConfiguratorComponent, HarryPotterDataSourceConfiguratorComponent } from "./example/custom-data-source-configurator-example.component";

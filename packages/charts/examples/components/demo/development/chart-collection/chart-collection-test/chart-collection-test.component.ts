@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import {
     Chart, ChartAssist, ChartComponent, IAccessors, IChart, IChartAssistSeries, LineAccessors, LinearScale, LineRenderer, Scales, TimeScale, XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
 

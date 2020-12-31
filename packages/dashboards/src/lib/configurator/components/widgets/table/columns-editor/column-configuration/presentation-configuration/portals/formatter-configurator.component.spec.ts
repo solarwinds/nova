@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, SimpleChange } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { LoggerService, NuiFormFieldModule, NuiSelectV2Module, NuiValidationMessageModule } from "@solarwinds/nova-bits";
+import { LoggerService, NuiFormFieldModule, NuiSelectV2Module, NuiValidationMessageModule } from "@nova-ui/bits";
 
 import { IFormatterDefinition } from "../../../../../../../../components/types";
 

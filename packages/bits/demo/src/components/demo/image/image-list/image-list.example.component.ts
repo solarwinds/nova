@@ -1,6 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { IImagesPresetItem, imagesPresetToken } from "@solarwinds/nova-bits";
-import * as customImages from "@solarwinds/nova-images";
+import { IImagesPresetItem, imagesPresetToken } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-image-list-example",
@@ -8,10 +7,6 @@ import * as customImages from "@solarwinds/nova-images";
 })
 
 export class ImageListExampleComponent {
-    public customImages: Array<IImagesPresetItem> = [];
     constructor(@Inject(imagesPresetToken) public images: Array<IImagesPresetItem>) {
-        for (const singleImage of Object.keys(customImages)) {
-            this.customImages.push((customImages as any)[singleImage]);
-        }
     }
 }

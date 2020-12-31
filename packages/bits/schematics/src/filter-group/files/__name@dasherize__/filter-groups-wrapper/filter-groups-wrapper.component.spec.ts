@@ -1,7 +1,7 @@
 import { Xliff } from "@angular/compiler";
 import { Component, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { DataSourceService, NuiModule } from "@solarwinds/nova-bits";
+import { DataSourceService, NuiModule } from "@nova-ui/bits";
 
 import { FilterGroupComponent } from "../filter-group.component";
 import { IFilterGroupItem } from "../public-api";

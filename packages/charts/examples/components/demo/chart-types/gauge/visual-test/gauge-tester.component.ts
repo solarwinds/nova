@@ -9,7 +9,7 @@ import {
     radial,
     RadialAccessors,
     radialGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-tester",

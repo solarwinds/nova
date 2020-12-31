@@ -15,7 +15,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -29,7 +29,7 @@ import {
     Scales,
     SELECT_DATA_POINT_EVENT,
     SequentialColorProvider,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import isEqual from "lodash/isEqual";
 import ResizeObserver from "resize-observer-polyfill";
 

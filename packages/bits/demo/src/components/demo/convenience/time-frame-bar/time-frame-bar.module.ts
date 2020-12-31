@@ -3,7 +3,7 @@ import { RouterModule } from "@angular/router";
 import {
     DEMO_PATH_TOKEN, NuiButtonModule, NuiCommonModule, NuiDatePickerModule, NuiDialogModule, NuiDocsModule, NuiIconModule, NuiMessageModule,
     NuiPopoverModule, NuiTimeFrameBarModule, NuiTimeFramePickerModule, NuiTimePickerModule, NuiTooltipModule, SrlcStage
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { TimeFrameBarBasicExampleComponent } from "./time-frame-bar-basic/time-frame-bar-basic.example.component";
 import { TimeFrameBarDocsExampleComponent } from "./time-frame-bar-docs/time-frame-bar-docs.example.component";

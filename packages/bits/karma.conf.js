@@ -38,7 +38,7 @@ module.exports = function (config) {
         }
       },
       files: [
-           { 'pattern': 'dist/bundles/solarwinds-nova-bits.umd.js', 'watched': false, 'included': false, 'served': true }
+           { 'pattern': 'dist/bundles/nova-ui-bits.umd.js', 'watched': false, 'included': false, 'served': true }
       ],
       singleRun: false
     });

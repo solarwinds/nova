@@ -1,4 +1,4 @@
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { DATA_SOURCE_DESTROYED, DATA_SOURCE_OUTPUT } from "../../configurator/types";
 import { IPizzagnaProperty } from "../../pizzagna/functions/get-pizzagna-property-path";

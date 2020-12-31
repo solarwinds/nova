@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     Chart, CHART_PALETTE_CS_S, ChartAssist, ChartPalette, IChartAssistSeries, ILineAccessors, INTERACTION_SERIES_EVENT, LineAccessors, LinearScale,
     LineRenderer, LineSelectSeriesInteractionStrategy, MappedValueProvider, PointScale, Scales, XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import zipObject from "lodash/zipObject";
 
 import { DataGenerator } from "../../../../../data-generator";

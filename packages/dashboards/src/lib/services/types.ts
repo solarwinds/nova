@@ -1,5 +1,5 @@
 import { StaticProvider } from "@angular/core";
-import { EventDefinition, IEvent, IEventDefinition } from "@solarwinds/nova-bits";
+import { EventDefinition, IEvent, IEventDefinition } from "@nova-ui/bits";
 import { BehaviorSubject, ReplaySubject } from "rxjs";
 
 import { IDataSourceBusyPayload } from "../components/providers/types";

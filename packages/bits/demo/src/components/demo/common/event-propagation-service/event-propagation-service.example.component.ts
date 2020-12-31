@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { EventPropagationService, IEventPropagationService, IToastService, ToastService } from "@solarwinds/nova-bits";
+import { EventPropagationService, IEventPropagationService, IToastService, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-event-propagation-service-example",

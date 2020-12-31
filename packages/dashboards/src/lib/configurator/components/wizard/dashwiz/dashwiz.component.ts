@@ -17,7 +17,7 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from "@angular/core";
-import { IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { IEvent, LoggerService } from "@nova-ui/bits";
 import find from "lodash/find";
 import findIndex from "lodash/findIndex";
 import isUndefined from "lodash/isUndefined";

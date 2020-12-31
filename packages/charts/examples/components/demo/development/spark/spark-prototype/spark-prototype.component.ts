@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     CHART_MARKERS, CHART_PALETTE_CS1, ChartPalette, IChartPalette, ILineAccessors, ISpark, LineAccessors, LinearScale, LineRenderer,
     SequentialChartMarkerProvider, SparkChartAssist
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
 

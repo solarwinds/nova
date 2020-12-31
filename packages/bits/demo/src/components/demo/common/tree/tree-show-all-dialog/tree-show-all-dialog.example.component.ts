@@ -30,7 +30,7 @@ import {
     NuiDialogRef,
     RepeatComponent,
     VirtualViewportManager
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { Observable, of, Subject } from "rxjs";

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { CheckboxChangeEvent } from "@solarwinds/nova-bits";
+import { CheckboxChangeEvent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-radio-group-test",

@@ -1,5 +1,5 @@
 import { Inject, Injectable, OnDestroy } from "@angular/core";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 import isEmpty from "lodash/isEmpty";
 import uniq from "lodash/uniq";
 import { takeUntil } from "rxjs/operators";

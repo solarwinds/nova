@@ -12,8 +12,4 @@ RUN curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - 
     ln -s /usr/bin/google-chrome /usr/bin/chrome && \
     rm /etc/apt/sources.list.d/google.list
 
-RUN npm config set @solarwinds:registry=http://dev-artifactory.dev.local/artifactory/api/npm/npm
-RUN git config --global user.email "teamcity@solarwinds.com"
-RUN git config --global user.name "TeamCity"
-
 EXPOSE 4200 49153

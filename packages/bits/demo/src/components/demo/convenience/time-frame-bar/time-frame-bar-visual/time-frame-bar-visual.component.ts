@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { HistoryStorage, ITimeframe } from "@solarwinds/nova-bits";
+import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
 import moment from "moment/moment";
 
 class TestBar {

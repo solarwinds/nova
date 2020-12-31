@@ -1,5 +1,5 @@
 import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
-import { EventBus, IEvent, IEventDefinition } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, IEventDefinition } from "@nova-ui/bits";
 import keyBy from "lodash/keyBy";
 import uniq from "lodash/uniq";
 import { Subject, Subscription } from "rxjs";

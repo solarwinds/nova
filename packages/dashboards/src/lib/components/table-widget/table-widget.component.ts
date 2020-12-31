@@ -30,8 +30,8 @@ import {
     TableComponent,
     TableRowComponent,
     VirtualViewportManager
-} from "@solarwinds/nova-bits";
-import { TableAlignmentOptions } from "@solarwinds/nova-bits/lib/table/public-api";
+} from "@nova-ui/bits";
+import { TableAlignmentOptions } from "@nova-ui/bits/lib/table/public-api";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";

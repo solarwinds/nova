@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, ChartAssist, PieRenderer, radial, RadialAccessors, radialGrid, radialScales } from "@solarwinds/nova-charts";
+import { Chart, ChartAssist, PieRenderer, radial, RadialAccessors, radialGrid, radialScales } from "@nova-ui/charts";
 
 @Component({
     selector: "nui-pie-chart-example",

@@ -10,7 +10,7 @@
     ],
     "paths": {
       "@angular/*": ["../../node_modules/@angular/*"],
-      "@solarwinds/nova-dashboards": ["../../src/public-api.ts"],
+      "@nova-ui/dashboards": ["../../src/public-api.ts"],
     }
   },
   "exclude": [

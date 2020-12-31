@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { DataSourceService, IFilters } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilters } from "@nova-ui/bits";
 
 import { FakeHTTPService } from "../fake-http.service";
 

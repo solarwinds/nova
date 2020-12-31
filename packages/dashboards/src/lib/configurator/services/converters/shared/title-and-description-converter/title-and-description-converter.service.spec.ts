@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { EventBus, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IEvent } from "@nova-ui/bits";
 import get from "lodash/get";
 
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";

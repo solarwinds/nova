@@ -8,7 +8,7 @@ import {
     NuiSwitchModule,
     NuiTextboxModule,
     NuiValidationMessageModule,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { WidgetEditorAccordionFormStatePipe } from "../../../../pipe/widget-editor-accordion-form-state.pipe";
 import { FormHeaderIconPipePipe } from "../../../../pipe/widget-editor-accordion-header-icon.pipe";

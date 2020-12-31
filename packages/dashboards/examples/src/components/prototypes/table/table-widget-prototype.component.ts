@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { LoggerService, SearchService } from "@solarwinds/nova-bits";
+import { LoggerService, SearchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -13,7 +13,7 @@ import {
     WIDGET_CREATE,
     WidgetClonerService,
     WidgetTypesService,
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";

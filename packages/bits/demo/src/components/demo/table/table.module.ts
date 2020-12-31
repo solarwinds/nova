@@ -20,7 +20,7 @@ import {
     NuiTableModule,
     NuiTextboxModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     TableBasicExampleComponent,

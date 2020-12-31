@@ -15,7 +15,7 @@ import {
     PaginatorComponent,
     SearchComponent,
     TableComponent,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import {
     debounceTime,

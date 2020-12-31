@@ -1,4 +1,4 @@
-<% if (dataSource !== "custom") {%>import { IFilter, INovaFilters } from "@solarwinds/nova-bits";
+<% if (dataSource !== "custom") {%>import { IFilter, INovaFilters } from "@nova-ui/bits";
 <% } %>
 export enum ServerStatus {
     active = "Active",

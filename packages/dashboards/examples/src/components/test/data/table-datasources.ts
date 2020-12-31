@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
-import { INovaFilteringOutputs, INovaFilters, LocalFilteringDataSource, SearchService } from "@solarwinds/nova-bits";
-import { HttpStatusCode, IDataField, IDataSource, IDataSourceOutput } from "@solarwinds/nova-dashboards";
+import { INovaFilteringOutputs, INovaFilters, LocalFilteringDataSource, SearchService } from "@nova-ui/bits";
+import { HttpStatusCode, IDataField, IDataSource, IDataSourceOutput } from "@nova-ui/dashboards";
 import { BehaviorSubject, Subject } from "rxjs";
 
 export interface BasicTableModel {
@@ -21,7 +21,7 @@ interface ITableDataSourceOutput extends INovaFilteringOutputs {
 }
 
 // This datasource extends LocalFilteringDataSource. Link to api docs below:
-// http://apollo-docs.swdev.local/nova-bits/release_nova_v8.x/sdk/api-docs-ng2/injectables/LocalFilteringDataSource.html
+// http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/injectables/LocalFilteringDataSource.html
 // If you need to work with back-end filtering, you need to extend DataSourceService instead of LocalFilteringDataSource
 @Injectable()
 export class TestTableDataSource extends LocalFilteringDataSource<BasicTableModel> implements IDataSource {

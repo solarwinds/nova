@@ -2,7 +2,7 @@ import { PortalModule } from "@angular/cdk/portal";
 import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
-import { ButtonComponent, IconComponent, IconService, LoggerService } from "@solarwinds/nova-bits";
+import { ButtonComponent, IconComponent, IconService, LoggerService } from "@nova-ui/bits";
 
 import { TemplateLoadErrorComponent } from "../../../../components/template-load-error/template-load-error.component";
 import { mockLoggerService } from "../../../../mocks";

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { EventBus, IEvent, uuid } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, uuid } from "@nova-ui/bits";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 

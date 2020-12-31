@@ -8,7 +8,7 @@ import {
     NuiProgressModule,
     NuiSelectModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     SelectBasicExampleComponent,

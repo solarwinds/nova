@@ -1,5 +1,5 @@
 import { Inject } from "@angular/core";
-import { EventBus, IDataSourceDrilldown, IEvent, IFilteringOutputs } from "@solarwinds/nova-bits";
+import { EventBus, IDataSourceDrilldown, IEvent, IFilteringOutputs } from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";

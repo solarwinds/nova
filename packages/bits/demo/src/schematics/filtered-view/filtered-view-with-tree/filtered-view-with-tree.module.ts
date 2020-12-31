@@ -14,7 +14,7 @@ import {
     NuiSearchModule,
     NuiSorterModule,
     NuiSpinnerModule,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { FilterGroupModule } from "./filter-group/filter-group.module";
 import { FilteredViewTreeComponent } from "./filtered-view-tree/filtered-view-tree.component";

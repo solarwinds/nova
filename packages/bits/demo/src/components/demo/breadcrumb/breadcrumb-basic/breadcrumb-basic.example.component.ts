@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { BreadcrumbItem, BreadcrumbStateService } from "@solarwinds/nova-bits";
+import { BreadcrumbItem, BreadcrumbStateService } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 @Component({

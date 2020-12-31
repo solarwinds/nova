@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { ISearchService, SearchService } from "@solarwinds/nova-bits";
+import { ISearchService, SearchService } from "@nova-ui/bits";
 import _includes from "lodash/includes";
 
 @Component({

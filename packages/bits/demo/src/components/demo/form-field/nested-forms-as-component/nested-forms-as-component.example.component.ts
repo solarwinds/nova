@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ToastService } from "@solarwinds/nova-bits";
+import { ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-nested-forms-as-component-example",

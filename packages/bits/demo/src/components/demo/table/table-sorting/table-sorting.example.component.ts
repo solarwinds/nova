@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
     ClientSideDataSource,
     INovaFilteringOutputs, ISortedItem, SorterDirection, TableComponent
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 interface IExampleTableModel {

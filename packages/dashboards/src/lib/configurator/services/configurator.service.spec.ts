@@ -14,7 +14,7 @@ import {
 import { ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
-import { NuiPanelModule } from "@solarwinds/nova-bits";
+import { NuiPanelModule } from "@nova-ui/bits";
 import { GridsterModule } from "angular-gridster2";
 import { of } from "rxjs";
 
@@ -82,8 +82,7 @@ class MockRendererFactory {
     }
 
     public async whenRenderingDone?(): Promise<any> {
-        // @ts-ignore: Suppressed for test purposes
-        return new Promise(null);
+        return Promise.resolve(null);
     }
 }
 

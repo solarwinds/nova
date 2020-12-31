@@ -2,7 +2,7 @@ import { DatePipe } from "@angular/common";
 import { Xliff } from "@angular/compiler";
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ISelection, NuiModule } from "@solarwinds/nova-bits";
+import { ISelection, NuiModule } from "@nova-ui/bits";
 
 import { IFilterGroupOption } from "../public-api";
 

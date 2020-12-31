@@ -15,7 +15,7 @@ import {
     ISelection,
     RepeatSelectionMode,
     SorterDirection
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { IFilterGroupOption } from "../public-api";
 

@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation} from "@angular/core";
-import {IItemsReorderedEvent, IRepeatItem, IRepeatItemConfig} from "@solarwinds/nova-bits";
+import {IItemsReorderedEvent, IRepeatItem, IRepeatItemConfig} from "@nova-ui/bits";
 
 interface IRepeatColorItem extends IRepeatItem {
     color: string;

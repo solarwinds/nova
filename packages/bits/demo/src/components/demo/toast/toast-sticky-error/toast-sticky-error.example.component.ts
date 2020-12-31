@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { IToastConfig, IToastService, ToastPositionClass, ToastService } from "@solarwinds/nova-bits";
+import { IToastConfig, IToastService, ToastPositionClass, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-toast-sticky-error-example",

@@ -7,7 +7,7 @@ import {
     LinearScale,
     Scales,
     TimeIntervalScale,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import moment, { duration } from "moment/moment";
 
 @Component({

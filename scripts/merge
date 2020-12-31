@@ -24,8 +24,8 @@ while [ -n "$1" ]; do
     esac
 done
 
-if [ "$SOURCE_BRANCH" != "$BUILD_BRANCH" ]; then
-    echo "ERROR: configuration should be run on the branch that contains the changes (usually develop)"
+if [ "$SOURCE_BRANCH" != "$CIRCLE_BRANCH" ]; then
+    echo "ERROR: configuration should be run on the branch that contains the changes (usually main)"
     exit 1
 fi
 

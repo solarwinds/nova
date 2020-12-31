@@ -1,4 +1,4 @@
-import { Atom, ExpanderAtom, SelectV2Atom, TextboxNumberAtom } from "@solarwinds/nova-bits/sdk/atoms";
+import { Atom, ExpanderAtom, SelectV2Atom, TextboxNumberAtom } from "@nova-ui/bits/sdk/atoms";
 import { by } from "protractor";
 
 export class AccordionAtom extends Atom {

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Inject, Injectable, Injector, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { DataSourceService, EventBus, IEvent, IFilteringOutputs, LoggerService } from "@solarwinds/nova-bits";
+import { DataSourceService, EventBus, IEvent, IFilteringOutputs, LoggerService } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     DATA_SOURCE,
@@ -23,7 +23,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";

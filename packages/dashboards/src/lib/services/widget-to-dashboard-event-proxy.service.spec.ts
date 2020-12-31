@@ -1,4 +1,4 @@
-import { EventBus, EventDefinition, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, EventDefinition, IEvent } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 import { PizzagnaService } from "../pizzagna/services/pizzagna.service";

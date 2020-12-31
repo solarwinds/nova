@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ResizeUnit } from "@solarwinds/nova-bits";
+import { ResizeUnit } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-resize-percents-example",

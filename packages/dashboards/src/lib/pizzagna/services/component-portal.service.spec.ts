@@ -1,5 +1,5 @@
 import { InjectFlags, InjectionToken, Injector, Type } from "@angular/core";
-import { EventBus, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
 import { mockLoggerService } from "../../mocks";
 

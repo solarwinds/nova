@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiBusyModule, NuiButtonModule, NuiDocsModule, NuiIconModule, NuiImageModule, NuiRepeatModule, NuiSwitchModule } from "@solarwinds/nova-bits";
+import { NuiBusyModule, NuiButtonModule, NuiDocsModule, NuiIconModule, NuiImageModule, NuiRepeatModule, NuiSwitchModule } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     DataSourceConfigurationV2Component,
@@ -12,7 +12,7 @@ import {
     ProviderRegistryService,
     WellKnownPathKey,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 
 import { AcmeProportionalDSConfigComponent } from "../components/data-source-configuration/proportional-ds-config.component";
 import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";

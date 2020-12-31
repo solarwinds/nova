@@ -2,7 +2,7 @@ import { OverlayModule } from "@angular/cdk/overlay";
 import { NgModule } from "@angular/core";
 // This is not technically used here, but it does pull in the type for $localize
 import { LocalizeFn } from "@angular/localize/init";
-import { NuiCommonModule, NuiIconModule, NuiPopoverModule } from "@solarwinds/nova-bits";
+import { NuiCommonModule, NuiIconModule, NuiPopoverModule } from "@nova-ui/bits";
 import "d3-selection-multi";
 
 import { ChartCollectionIdDirective } from "./chart-collection/chart-collection-id.directive";

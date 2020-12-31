@@ -1,5 +1,5 @@
-import { Atom } from "@solarwinds/nova-bits/sdk/atoms";
-import { Helpers } from "@solarwinds/nova-bits/sdk/atoms/helpers";
+import { Atom } from "@nova-ui/bits/sdk/atoms";
+import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 
 import { LegendSeriesAtom } from "./legend-series.atom";
 import { LegendAtom } from "./legend.atom";

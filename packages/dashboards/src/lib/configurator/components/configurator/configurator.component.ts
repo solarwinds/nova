@@ -1,6 +1,6 @@
 import { Portal } from "@angular/cdk/portal";
 import { ChangeDetectorRef, Component, ComponentRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
-import { OVERLAY_CONTAINER } from "@solarwinds/nova-bits";
+import { OVERLAY_CONTAINER } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 import { PizzagnaComponent } from "../../../pizzagna/components/pizzagna/pizzagna.component";

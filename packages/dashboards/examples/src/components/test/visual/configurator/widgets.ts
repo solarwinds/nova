@@ -16,7 +16,7 @@ import {
     ProportionalWidgetChartTypes,
     RawFormatterComponent,
     WellKnownProviders
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 
 import { TestKpiDataSource, TestKpiDataSource2 } from "../../data/kpi-data-sources";

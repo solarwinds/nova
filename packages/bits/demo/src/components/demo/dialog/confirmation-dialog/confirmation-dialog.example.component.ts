@@ -1,5 +1,5 @@
 import { Component, Inject } from "@angular/core";
-import { DialogService, ToastService } from "@solarwinds/nova-bits";
+import { DialogService, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-confirmation-dialog-example",

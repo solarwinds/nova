@@ -8,7 +8,7 @@ import {
     NuiMenuModule,
     NuiMessageModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     ExpanderBasicExampleComponent,

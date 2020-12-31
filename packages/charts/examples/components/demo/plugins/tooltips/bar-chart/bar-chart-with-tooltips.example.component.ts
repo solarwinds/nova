@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     barAccessors, barGrid, BarRenderer, barScales, BarSeriesHighlightStrategy, BarTooltipsPlugin, Chart, ChartAssist, InteractionLabelPlugin
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-bar-chart-with-tooltips-example",

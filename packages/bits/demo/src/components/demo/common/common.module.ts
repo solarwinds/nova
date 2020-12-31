@@ -28,7 +28,7 @@ import {
     NuiTextboxModule,
     NuiTimeFramePickerModule,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {DataSourceClientSideFilteringExampleComponent} from "./data-source/client-side/client-side-filtering/client-side-filtering.example.component";
 import {DataSourceWithSelectionExampleComponent} from "./data-source/client-side/client-side-with-selection/client-side-with-selection.example.component";

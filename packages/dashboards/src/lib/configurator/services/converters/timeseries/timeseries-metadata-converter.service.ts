@@ -1,6 +1,6 @@
 import { AfterViewInit, Inject, Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { EventBus, IEvent, immutableSet, TimeframeService } from "@solarwinds/nova-bits";
+import { EventBus, IEvent, immutableSet, TimeframeService } from "@nova-ui/bits";
 import get from "lodash/get";
 import { takeUntil } from "rxjs/operators";
 

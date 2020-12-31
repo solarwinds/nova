@@ -1,7 +1,7 @@
 import { ConnectionPositionPair, Overlay, OverlayPositionBuilder, PositionStrategy, ScrollStrategyOptions } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";
 import { AfterViewInit, Component, TemplateRef, ViewChild, ViewContainerRef } from "@angular/core";
-import { GaugeComponent } from "@solarwinds/nova-charts";
+import { GaugeComponent } from "@nova-ui/charts";
 
 /** @ignore */
 @Component({

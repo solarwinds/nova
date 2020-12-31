@@ -3,7 +3,7 @@ import {
     BandScale, BarRenderer, Chart, CHART_PALETTE_CS_S, ChartAssist, ChartPalette, getAutomaticDomainWithIncludedInterval, IAccessors, IChartAssistSeries,
     IChartSeries, ILineAccessors, IScale, ISimpleThresholdZone, IXYScales, LineAccessors, LinearScale, LineRenderer, MappedValueProvider, StatusAccessors,
     THRESHOLDS_SUMMARY_RENDERER_CONFIG, ThresholdsService, thresholdsSummaryGridConfig, thresholdsTopGridConfig, TimeScale, XYGrid
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep";
 import moment from "moment/moment";
 

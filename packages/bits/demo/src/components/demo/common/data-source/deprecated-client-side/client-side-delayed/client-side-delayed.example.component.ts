@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
     INovaFilteringOutputs, LocalFilteringDataSource, PaginatorComponent, SearchComponent, SorterComponent
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";

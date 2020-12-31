@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, SecurityContext, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
-import { ComboboxV2Component } from "@solarwinds/nova-bits";
+import { ComboboxV2Component } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-combobox-v2-create-option-example",

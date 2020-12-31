@@ -1,4 +1,4 @@
-import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@solarwinds/nova-bits";
+import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
 import { DATA_SOURCE_OUTPUT } from "../../configurator/types";

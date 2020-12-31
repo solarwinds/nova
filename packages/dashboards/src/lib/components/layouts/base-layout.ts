@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, DoCheck, Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 import defaultsDeep from "lodash/defaultsDeep";
 import { Subject } from "rxjs";
 

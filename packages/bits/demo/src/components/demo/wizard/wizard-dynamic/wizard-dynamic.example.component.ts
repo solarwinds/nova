@@ -1,5 +1,5 @@
 import { Component, OnDestroy, ViewChild } from "@angular/core";
-import { IWizardSelectionEvent, WizardComponent, WizardStepComponent } from "@solarwinds/nova-bits";
+import { IWizardSelectionEvent, WizardComponent, WizardStepComponent } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 @Component({

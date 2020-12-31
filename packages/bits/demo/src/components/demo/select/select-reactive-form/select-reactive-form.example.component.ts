@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ISelectChangedEvent, ToastService } from "@solarwinds/nova-bits";
+import { ISelectChangedEvent, ToastService } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-select-reactive-form",

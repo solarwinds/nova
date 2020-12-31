@@ -19,7 +19,7 @@ import {
     NuiSpinnerModule,<%
     if (presentationType === "table") { %>
     NuiTableModule,<% } %>
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import { FilterGroupModule } from "./filter-group/filter-group.module";
 import { <%= classify(name) %>Component } from "./<%= dasherize(name) %>.component";<% if (presentationType === "list") { %>

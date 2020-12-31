@@ -2,7 +2,7 @@ import { browser } from "protractor";
 
 import { Helpers } from "../../helpers";
 
-describe("Visual tests: Image", () => {
+xdescribe("Visual tests: Image", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any;
 

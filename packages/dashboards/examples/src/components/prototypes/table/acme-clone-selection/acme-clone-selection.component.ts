@@ -1,15 +1,13 @@
 import { TitleCasePipe } from "@angular/common";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { IWidget, IWidgetTemplateSelector, PizzagnaLayer, WidgetTypesService } from "@solarwinds/nova-dashboards";
+import { IWidget, IWidgetTemplateSelector, PizzagnaLayer, WidgetTypesService } from "@nova-ui/dashboards";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 
-import { cloneSelectionImages, IImageDef } from "../../timeseries/widget-configs";
 import { widgets } from "../widgets";
 
 interface IWidgetItem {
     title: string;
-    image: IImageDef;
     widget: IWidget;
 }
 
@@ -36,7 +34,6 @@ export class AcmeCloneSelectionComponent implements IWidgetTemplateSelector, OnI
             const typeDisplay = titleCasePipe.transform(w.type);
             return ({
                 title: typeDisplay,
-                image: cloneSelectionImages[w.type],
                 widget: this.widgetTypesService.mergeWithWidgetType(w),
             });
         });
@@ -58,7 +55,6 @@ export class AcmeCloneSelectionComponent implements IWidgetTemplateSelector, OnI
         const typeDisplay = new TitleCasePipe().transform(type);
         this.widgetItems.push({
             title: `Unconfigured ${typeDisplay}`,
-            image: cloneSelectionImages[type],
             widget: {
                 id: `unconfigured${typeDisplay}`,
                 type: type,
@@ -75,7 +71,6 @@ export class AcmeCloneSelectionComponent implements IWidgetTemplateSelector, OnI
         const typeDisplay = new TitleCasePipe().transform(widget.type);
         this.widgetItems.push({
             title: `Unconfigured ${typeDisplay} With Config Layer`,
-            image: cloneSelectionImages[widget.type],
             widget: {
                 id: `unconfiguredWithConfigLayer${typeDisplay}`,
                 metadata: {

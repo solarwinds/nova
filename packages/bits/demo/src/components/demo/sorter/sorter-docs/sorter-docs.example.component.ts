@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IMenuItem, ISortedItem, ISorterChanges, SorterComponent } from "@solarwinds/nova-bits";
+import { IMenuItem, ISortedItem, ISorterChanges, SorterComponent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-sorter-docs-example",

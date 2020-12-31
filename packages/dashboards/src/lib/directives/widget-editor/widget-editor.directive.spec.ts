@@ -2,7 +2,7 @@ import { PortalModule } from "@angular/cdk/portal";
 import { Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 import { GridsterModule } from "angular-gridster2";
 import { Observable } from "rxjs";
 

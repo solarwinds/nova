@@ -4,7 +4,7 @@ import {
     IChartAssistSeries, IChartSeries, IDataSeries, ILineAccessors, ISimpleThresholdZone, IXYScales, LineAccessors, LinearScale, LineRenderer,
     MappedValueProvider, StatusAccessors, THRESHOLDS_SUMMARY_RENDERER_CONFIG, ThresholdsService, thresholdsSummaryGridConfig, thresholdsTopGridConfig,
     TimeScale, UtilityService, XYGrid,
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep";
 import { Moment } from "moment/moment";
 

@@ -1,33 +1,14 @@
 #!/bin/bash
 set -e
 
-SERVER=http://dev-brn-art-02.swdev.local
-
 usage()
 {
-    echo "Usage: docker-compose run -e BUILD_BRANCH=%teamcity.build.branch% build npm run publish-ci"
-    echo "Create a tarball and publish package to Artifactory"
+    echo "Publish package to npmjs"
     echo
     echo "Options:"
     echo "  -h, --help       [Optional] Show this help message"
 }
 
-check_artifactory() {
-    local server=${1}
-	local package=${2}
-    local version=${3}
-
-	urlPath=$server/artifactory/npm/$package/-/$package-$version.tgz
-
-	# fetch only head
-	statusCode=$(curl --head $urlPath 2>/dev/null | head -n 1 | cut -d$' ' -f2)
-	if [[ $statusCode -eq 200 ]] ; then
-	    echo "Successfully published $package-$version"
-	else
-        echo "Failed publishing on $urlpath"
-		exit 1
-	fi
-}
 
 while [ -n "$1" ]; do
     case "$1" in
@@ -48,28 +29,19 @@ cd $PROJECT_DIR
 PACKAGE_NAME=$(node -p "require('./package.json').name")
 PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
-npm config delete @solarwinds:registry
-npm config set registry $SERVER:8081/artifactory/api/npm/npm-SolarWinds
-npm config set email itdevopsteam-apps@solarwinds.com
-npm config set always-auth true
-npm config set _auth $NPM_AUTH
+yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
 
-case $BUILD_BRANCH in
+
+case $CIRCLE_BRANCH in
       "release/"*)
           echo Publishing release package
-            npm publish ./dist
-
-			check_artifactory $SERVER $PACKAGE_NAME $PACKAGE_VERSION
+            yarn publish ./dist --access public
             ;;
 
-      "develop" | "next" | "hotfix/"*)
-          echo Publishing $BUILD_BRANCH package
-            npm publish ./dist --tag $BUILD_BRANCH
-			check_artifactory $SERVER $PACKAGE_NAME $PACKAGE_VERSION
+      "main" | "next" | "hotfix/"*)
+          echo Publishing $CIRCLE_BRANCH package
+            yarn publish ./dist --tag $CIRCLE_BRANCH --access public
             ;;
       *)
           echo "Feature branch build - publish skipped"
 esac
-
-npm pack ./dist --unsafe-perm
-

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { barAccessors, barGrid, BarHighlightStrategy, BarRenderer, barScales, Chart, ChartAssist, IBarChartConfig, stack } from "@solarwinds/nova-charts";
+import { barAccessors, barGrid, BarHighlightStrategy, BarRenderer, barScales, Chart, ChartAssist, IBarChartConfig, stack } from "@nova-ui/charts";
 
 @Component({
     selector: "nui-basic-stacked-horizontal-bar-chart-test",

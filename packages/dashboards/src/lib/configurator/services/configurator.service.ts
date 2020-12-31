@@ -1,6 +1,6 @@
 import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, Optional, Renderer2, RendererFactory2 } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
-import { LoggerService, uuid } from "@solarwinds/nova-bits";
+import { LoggerService, uuid } from "@nova-ui/bits";
 import cloneDeep from "lodash/cloneDeep";
 import isFunction from "lodash/isFunction";
 import { EMPTY, Observable, of, Subject } from "rxjs";

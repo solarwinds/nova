@@ -1,7 +1,7 @@
 import {Overlay, OverlayRef} from "@angular/cdk/overlay";
 import {TemplatePortal} from "@angular/cdk/portal";
 import {Component, OnInit, TemplateRef, ViewContainerRef, ViewEncapsulation} from "@angular/core";
-import {DialogService, ITimeframe, NuiDialogRef, ToastService} from "@solarwinds/nova-bits";
+import {DialogService, ITimeframe, NuiDialogRef, ToastService} from "@nova-ui/bits";
 import moment from "moment/moment";
 
 @Component({

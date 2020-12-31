@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { ThemeSwitchService } from "@solarwinds/nova-bits";
+import { ThemeSwitchService } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PROPORTIONAL_CONTENT_AGGREGATORS,
@@ -10,7 +10,7 @@ import {
     ProportionalDonutContentFormattersRegistryService,
     ProviderRegistryService,
     WidgetTypesService,
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 
 import { TestProportionalDataSource, TestProportionalDataSource2, TestProportionalDataSource3, TestProportionalDataSource4 } from "../../data/proportional-data-sources";

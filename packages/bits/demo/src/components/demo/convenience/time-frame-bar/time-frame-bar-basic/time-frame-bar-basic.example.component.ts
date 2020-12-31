@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ITimeframe } from "@solarwinds/nova-bits";
+import { ITimeframe } from "@nova-ui/bits";
 import moment, { Moment } from "moment/moment";
 
 @Component({

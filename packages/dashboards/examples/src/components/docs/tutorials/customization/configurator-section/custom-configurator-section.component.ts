@@ -13,7 +13,7 @@ import {
     SimpleChanges
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DataSourceService, IFilteringOutputs } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     DATA_SOURCE,
@@ -33,7 +33,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
 import { finalize, map, startWith } from "rxjs/operators";

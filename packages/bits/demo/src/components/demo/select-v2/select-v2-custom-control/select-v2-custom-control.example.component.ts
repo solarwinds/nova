@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
-import { SelectV2Component } from "@solarwinds/nova-bits";
+import { SelectV2Component } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-select-v2-custom-control-example",

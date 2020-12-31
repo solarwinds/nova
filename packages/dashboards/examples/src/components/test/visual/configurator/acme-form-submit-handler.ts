@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { ToastService } from "@solarwinds/nova-bits";
-import { IDashboardPersistenceHandler, IWidget } from "@solarwinds/nova-dashboards";
+import { ToastService } from "@nova-ui/bits";
+import { IDashboardPersistenceHandler, IWidget } from "@nova-ui/dashboards";
 import { Observable, Subject } from "rxjs";
 
 @Injectable()

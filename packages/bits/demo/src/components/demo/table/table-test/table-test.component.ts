@@ -7,7 +7,7 @@ import {
     ClientSideDataSource,
     DialogService, INovaFilteringOutputs, IToastService, PaginatorComponent, RowHeightOptions,
     SearchComponent, TableAlignmentOptions, TableComponent, ToastService
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 

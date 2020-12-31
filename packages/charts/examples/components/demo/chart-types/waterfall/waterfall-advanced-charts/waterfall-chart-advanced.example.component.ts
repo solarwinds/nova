@@ -37,7 +37,7 @@ import {
     XYGrid,
     XYGridConfig,
     ZoomPlugin
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 
 /**
  * This is here just to test a prototype of angular component, that will use new chart core
