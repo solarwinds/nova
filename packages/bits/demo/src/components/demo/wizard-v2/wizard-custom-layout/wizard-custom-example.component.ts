@@ -8,7 +8,7 @@ import {
     ViewEncapsulation
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { wizardAnimations, WizardDirective, WizardStepV2Component } from "@solarwinds/nova-bits";
+import { wizardAnimations, WizardDirective, WizardStepV2Component } from "@nova-ui/bits";
 import { tap } from "rxjs/operators";
 
 @Component({

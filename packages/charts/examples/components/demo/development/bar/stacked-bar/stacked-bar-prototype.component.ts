@@ -14,7 +14,7 @@ import {
     stack,
     TimeIntervalScale,
     XYGridConfig
-} from "@solarwinds/nova-charts";
+} from "@nova-ui/charts";
 // tslint:disable-next-line: import-blacklist
 import moment, { duration } from "moment";
 

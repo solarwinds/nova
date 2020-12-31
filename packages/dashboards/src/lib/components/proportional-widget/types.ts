@@ -1,4 +1,4 @@
-import { IDataField, IDataFieldsConfig } from "@solarwinds/nova-bits";
+import { IDataField, IDataFieldsConfig } from "@nova-ui/bits";
 import { BehaviorSubject } from "rxjs";
 
 import { IProportionalDonutContentAggregator } from "../../functions/proportional-aggregators/types";

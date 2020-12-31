@@ -18,7 +18,7 @@ import {
     NuiValidationMessageModule,
     NuiWizardV2Module,
     SrlcStage,
-} from "@solarwinds/nova-bits";
+} from "@nova-ui/bits";
 
 import {
     WizardBusyExampleComponent,

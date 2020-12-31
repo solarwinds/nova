@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
-import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@solarwinds/nova-charts";
+import { LoggerService } from "@nova-ui/bits";
+import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@nova-ui/charts";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 

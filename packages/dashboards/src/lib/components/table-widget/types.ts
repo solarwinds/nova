@@ -50,7 +50,7 @@ export interface ITableWidgetSorterConfig {
 }
 
 // TODO: remove re-export in vNext
-export { IDataField } from "@solarwinds/nova-bits";
+export { IDataField } from "@nova-ui/bits";
 
 // TODO: import from bits
 export const DEFAULT_INTERACTIVE_ELEMENTS = ["button", "input[type='button']", "a[href]"];

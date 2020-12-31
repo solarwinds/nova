@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { LoggerService } from "@solarwinds/nova-bits";
+import { LoggerService } from "@nova-ui/bits";
 
 import { IProportionalDonutContentAggregatorDefinition } from "../functions/proportional-aggregators/types";
 

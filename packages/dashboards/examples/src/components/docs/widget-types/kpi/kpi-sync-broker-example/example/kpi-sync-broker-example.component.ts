@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IFilteringOutputs } from "@solarwinds/nova-bits";
+import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IBrokerUserConfig,
@@ -16,7 +16,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import keyBy from "lodash/keyBy";
 import { BehaviorSubject, of } from "rxjs";

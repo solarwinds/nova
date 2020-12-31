@@ -1,5 +1,5 @@
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService } from "@solarwinds/nova-bits";
+import { DataSourceService } from "@nova-ui/bits";
 import { IFilteringOutputs } from "@solarwinds/nova-bits/services/data-source/public-api";
 import {
     DATA_SOURCE,
@@ -26,7 +26,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService,
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject } from "rxjs";
 
