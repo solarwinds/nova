@@ -4,7 +4,8 @@ import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } fro
 import { NuiDashboardsModule } from "@solarwinds/nova-dashboards";
 
 import { ProportionalDocsComponent } from "./proportional-docs.component";
-import { ProportionalWidgetDonutContentFormattersExampleComponent } from "./proportional-donut-content-formatters/proportional-donut-content-formatters-example.component";
+import { ProportionalDonutContentDocsComponent } from "./proportional-donut-content-formatters/docs/proportional-donut-content-docs.component";
+import { ProportionalWidgetDonutContentFormattersExampleComponent } from "./proportional-donut-content-formatters/example/proportional-donut-content-formatters-example.component";
 import { ProportionalWidgetExampleComponent } from "./proportional-widget-example/proportional-widget-example.component";
 
 const routes: Routes = [
@@ -29,6 +30,15 @@ const routes: Routes = [
     },
     {
         path: "donut-content-formatters",
+        component: ProportionalDonutContentDocsComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "donut-content-formatters-example",
         component: ProportionalWidgetDonutContentFormattersExampleComponent,
         data: {
             "srlc": {
@@ -51,6 +61,7 @@ const routes: Routes = [
         ProportionalDocsComponent,
         ProportionalWidgetExampleComponent,
         ProportionalWidgetDonutContentFormattersExampleComponent,
+        ProportionalDonutContentDocsComponent,
     ],
 })
 export class ProportionalDocsModule {

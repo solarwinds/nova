@@ -16,6 +16,7 @@ import {
     NuiImageModule,
     NuiMenuModule,
     NuiMessageModule,
+    NuiOverlayAdditionsModule,
     NuiPanelModule,
     NuiPopupModule,
     NuiRadioModule,
@@ -72,7 +73,11 @@ import { TitleAndDescriptionConfigurationComponent } from "./components/widgets/
 import { EntityFormattingConfigurationComponent } from "./components/widgets/drilldown/entity-formatting-configuration/entity-formatting-configuration.component";
 import { GroupingConfigurationComponent } from "./components/widgets/drilldown/grouping-configuration/grouping-configuration.component";
 import { KpiTilesConfigurationComponent } from "./components/widgets/kpi/kpi-tiles-configuration/kpi-tiles-configuration.component";
+import { AggregatorMetricSelectorConfigurationComponent } from "./components/widgets/proportional/aggregators-configurators/aggregator-configurator/aggregator-configurator.component";
+import { FieldMapperAggregatorConfiguratorComponent } from "./components/widgets/proportional/aggregators-configurators/field-mapper-aggregator-configurator/field-mapper-aggregator-configurator.component";
+import { ProportionalChartOptionsEditorV2Component } from "./components/widgets/proportional/chart-options-editor-v2/proportional-chart-options-editor-v2.component";
 import { ProportionalChartOptionsEditorComponent } from "./components/widgets/proportional/chart-options-editor/proportional-chart-options-editor.component";
+import { DonutContentConfigurationComponent } from "./components/widgets/proportional/donut-content-configuration/donut-content-configuration.component";
 import { DescriptionConfigurationComponent } from "./components/widgets/table/columns-editor/column-configuration/description-configuration/description-configuration.component";
 import { LinkConfiguratorComponent } from "./components/widgets/table/columns-editor/column-configuration/presentation-configuration/portals/link-configurator/link-configurator.component";
 import { ValueSelectorComponent } from "./components/widgets/table/columns-editor/column-configuration/presentation-configuration/portals/value-selector/value-selector.component";
@@ -106,6 +111,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     EmbeddedContentConfigurationComponent,
     InfoMessageConfigurationComponent,
     ProportionalChartOptionsEditorComponent,
+    ProportionalChartOptionsEditorV2Component,
     TableFiltersEditorComponent,
     TimeseriesMetadataConfigurationComponent,
     TimeseriesSeriesCollectionConfigurationComponent,
@@ -137,6 +143,9 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     BackgroundColorRulesConfigurationComponent,
     GroupingConfigurationComponent,
     EntityFormattingConfigurationComponent,
+    DonutContentConfigurationComponent,
+    AggregatorMetricSelectorConfigurationComponent,
+    FieldMapperAggregatorConfiguratorComponent,
 ];
 
 const exportedDeclarations = [
@@ -164,6 +173,10 @@ const exportedDeclarations = [
     GroupingConfigurationComponent,
     EntityFormattingConfigurationComponent,
     PercentageFormatterComponent,
+    ProportionalChartOptionsEditorV2Component,
+    DonutContentConfigurationComponent,
+    AggregatorMetricSelectorConfigurationComponent,
+    FieldMapperAggregatorConfiguratorComponent,
 ];
 
 @NgModule({
@@ -184,6 +197,7 @@ const exportedDeclarations = [
         NuiTextboxModule,
         NuiFormFieldModule,
         NuiButtonModule,
+        NuiOverlayAdditionsModule,
         NuiSelectV2Module,
         NuiRadioModule,
         NuiCheckboxModule,

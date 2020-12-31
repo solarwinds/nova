@@ -1,2 +1,56 @@
 <h1>Drilldown Widget</h1>
 
+<p>A Drilldown widget is used for filtering entities by input parameters.
+    For example, the entity is Country, and you need to find Countries where Region is Asia and Subregion is South Asia.
+    That's the case where it's handy to use a Drilldown widget. As mentioned above, widget configuration requires a user
+    to select a single entity type(Country) and supply group-by properties(Region and Subregion).</p>
+
+<p>When the user clicks on a row, the widget refreshes to show a new state. We call this operation "drilling down."</p>
+
+<p>When the user drills down, we check the group-by property list. If there are more properties below the last-selected property,
+    we move to the next property in the list. The list of values inherits any previously-applied filters.</p>
+
+<p>If there are no more properties in the group-by list, we show entities.</p>
+
+<nui-message type="info">
+    DataSource is responsible for data preparation. Entities can be mocked, or obtained once, or obtained on each drilldown.
+    Therefore filtering can be implemented locally or on the server-side.
+</nui-message>
+
+<nui-message type="info">
+    DataSource must have dataFieldsConfig field for the correct work of the Drilldown widget. See <a target="_blank" href="../additional-documentation/anatomy/data-sources.html">DataSource</a>.
+</nui-message>
+
+<h2>Basic Drilldown</h2>
+
+<p>The current example makes a request only once, and then apply grouping rules for received data.
+    You can easily predefine grouping rules and drilling state in the widget config or set these properties using the Configurator. </p>
+
+<nui-message type="info">
+    Be aware, <code>groupBy</code> and <code>groups</code> contain keys of the Entity. Value of the property must be a string.
+</nui-message>
+
+<nui-message type="info">
+    <code>groups</code> field contains possible <code>groupBy</code> options
+</nui-message>
+
+<nui-example-code language="typescript">{{predefinedGroping}}</nui-example-code>
+
+<br>
+
+<nui-example-wrapper filenamePrefix="drilldown-widget-example.component" exampleTitle="Basic Drilldown Widget Example">
+    <drilldown-widget-example></drilldown-widget-example>
+</nui-example-wrapper>
+
+<p>
+    This part shows the actual widget definition. It includes, among other things, the components and
+    providers that compose the widget itself.
+</p>
+
+<nui-example-code language="typescript">{{widgetFileText}}</nui-example-code>
+
+<h2>Configurator</h2>
+
+<p>This part shows the form that's used for configuring (creating/editing) the widget.</p>
+
+<nui-example-code language="typescript">{{configuratorFileText}}</nui-example-code>

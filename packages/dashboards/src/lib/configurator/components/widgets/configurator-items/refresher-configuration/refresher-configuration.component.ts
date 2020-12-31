@@ -67,13 +67,13 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
 
     public ngOnChanges(changes: SimpleChanges) {
         if (changes.enabled) {
-            this.form.get("enabled")?.patchValue(this.enabled);
+            this.form?.get("enabled")?.patchValue(this.enabled);
         }
         if (changes.interval) {
-            this.form.get("interval")?.patchValue(this.interval);
+            this.form?.get("interval")?.patchValue(this.interval);
         }
         if (changes.overrideDefaultSettings) {
-            this.form.get("overrideDefaultSettings")?.patchValue(this.overrideDefaultSettings);
+            this.form?.get("overrideDefaultSettings")?.patchValue(this.overrideDefaultSettings);
         }
     }
 

@@ -32,7 +32,7 @@ export abstract class RegistryService<T = Object> implements OnDestroy {
     public addItems(
         items: T[],
         options: IRegistryAddOptions = { overrideExisting: true }): void {
-        const storageValue: IRegistryMap<T> = this.state$.getValue();
+        const storageValue: IRegistryMap<T> = this.state$.value;
 
         items.forEach((item: T) => {
             if (storageValue[this.getItemKey(item)] && !options.overrideExisting) {
@@ -53,11 +53,11 @@ export abstract class RegistryService<T = Object> implements OnDestroy {
     }
 
     public getItem(id: string): T | undefined {
-        return this.state$.getValue()[id];
+        return this.state$.value[id];
     }
 
     public getItems(): T[] {
-        return Object.values(this.state$.getValue());
+        return Object.values(this.state$.value);
     }
 
     public reset(): void {

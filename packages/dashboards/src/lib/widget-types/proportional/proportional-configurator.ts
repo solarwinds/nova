@@ -14,8 +14,14 @@ import { StatusWithIconFormatterComponent } from "../../configurator/components/
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
+import { AggregatorMetricSelectorConfigurationComponent } from "../../configurator/components/widgets/proportional/aggregators-configurators/aggregator-configurator/aggregator-configurator.component";
+import { FieldMapperAggregatorConfiguratorComponent } from "../../configurator/components/widgets/proportional/aggregators-configurators/field-mapper-aggregator-configurator/field-mapper-aggregator-configurator.component";
+import { ProportionalChartOptionsEditorV2Component } from "../../configurator/components/widgets/proportional/chart-options-editor-v2/proportional-chart-options-editor-v2.component";
 import { ProportionalChartOptionsEditorComponent } from "../../configurator/components/widgets/proportional/chart-options-editor/proportional-chart-options-editor.component";
-import { IPercentageAggregatorConfig, percentageAggregator } from "../../functions/proportional-aggregators/percentage-aggregator";
+import { DonutContentConfigurationComponent } from "../../configurator/components/widgets/proportional/donut-content-configuration/donut-content-configuration.component";
+import { ValueSelectorComponent } from "../../configurator/public-api";
+import { fieldMapper } from "../../functions/proportional-aggregators/field-mapper";
+import { IPercentageAggregatorProperties, percentageAggregator } from "../../functions/proportional-aggregators/percentage-aggregator";
 import { sumAggregator } from "../../functions/proportional-aggregators/sum-aggregator";
 import { IProportionalDonutContentAggregatorDefinition } from "../../functions/proportional-aggregators/types";
 import {
@@ -30,6 +36,33 @@ import { PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
 // tslint:enable:max-line-length
 
+export const DEFAULT_LEGEND_FORMATTERS: IFormatterDefinition[] = [
+    {
+        componentType: "",
+        label: $localize`Raw Formatter`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+    },
+    {
+        componentType: StatusWithIconFormatterComponent.lateLoadKey,
+        "label": $localize`Status With Icon`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+    },
+    {
+        componentType: LinkFormatterComponent.lateLoadKey,
+        "label": $localize`Link`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+    },
+
+];
 export const DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS: IFormatterDefinition[] = [
     {
         componentType: RawFormatterComponent.lateLoadKey,
@@ -48,6 +81,9 @@ export const DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS: IFormatterDefinition[] = [
         dataTypes: {
             // @ts-ignore
             value: null,
+        },
+        properties: {
+            elementClass: "nui-text-page",
         },
     },
     {
@@ -68,16 +104,22 @@ export const DEFAULT_PROPORTIONAL_CONTENT_AGGREGATORS: IProportionalDonutContent
         aggregatorType: sumAggregator.aggregatorType,
         label: "Sum Aggregator",
         fn: sumAggregator,
+        configurationComponent: AggregatorMetricSelectorConfigurationComponent.lateLoadKey,
     },
     {
         aggregatorType: percentageAggregator.aggregatorType,
         label: "Percentage Aggregator",
         fn: percentageAggregator,
         properties: {
-            aggregatorConfig: {
-                base100: true,
-            } as IPercentageAggregatorConfig,
-        },
+            base100: true,
+        } as IPercentageAggregatorProperties,
+        configurationComponent: AggregatorMetricSelectorConfigurationComponent.lateLoadKey,
+    },
+    {
+        aggregatorType: fieldMapper.aggregatorType,
+        label: "Field Mapper Aggregator",
+        fn: fieldMapper,
+        configurationComponent: FieldMapperAggregatorConfiguratorComponent.lateLoadKey,
     },
 ];
 

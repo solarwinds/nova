@@ -3,7 +3,7 @@ import { IChartSeries } from "@solarwinds/nova-charts";
 export interface IProportionalDonutContentAggregatorProperties {
     /** Metric Id, case sensitive. */
     activeMetricId?: string;
-    aggregatorConfig?: Record<string, any>;
+    [key: string]: any;
 }
 
 export interface IProportionalDonutContentAggregator {
@@ -11,9 +11,13 @@ export interface IProportionalDonutContentAggregator {
     properties?: IProportionalDonutContentAggregatorProperties;
 }
 
-export interface IProportionalAggregatorOrigin extends Array<Pick<IChartSeries<any>, "id" | "data">> {}
+interface IAggregatorChartData extends Pick<IChartSeries<any>, "id" | "data"> {
+    // there's a possibility to pass any value from the dataSource to the aggregator
+    [key: string]: any;
+}
+export interface IProportionalAggregatorOrigin extends Array<IAggregatorChartData> {}
 
-export type IProportionalAggregatorFn = ((origin: IProportionalAggregatorOrigin, metricId?: string, aggregatorConfig?: Record<string, any>) => number) & {
+export type IProportionalAggregatorFn = ((origin: IProportionalAggregatorOrigin, properties?: IProportionalDonutContentAggregatorProperties) => string) & {
     aggregatorType: string;
 };
 
@@ -22,4 +26,5 @@ export interface IProportionalDonutContentAggregatorDefinition {
     label: string;
     fn: IProportionalAggregatorFn;
     properties?: IProportionalDonutContentAggregatorProperties;
+    configurationComponent?: string;
 }

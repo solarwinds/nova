@@ -1,4 +1,6 @@
-<ng-container nuiComponentPortal
+<ng-container
+    *ngIf="contentFormatter?.componentType"
+    nuiComponentPortal
     [componentType]="contentFormatter?.componentType"
     [properties]="contentFormatterProperties"
     #componentPortal="nuiComponentPortal">

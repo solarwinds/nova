@@ -52,3 +52,10 @@ export class ProportionalDonutContentFormattersRegistryService extends Formatter
         super(logger, "ProportionalDonutContentFormattersRegistryService");
     }
 }
+
+@Injectable({ providedIn: "root" })
+export class ProportionalLegendFormattersRegistryService extends FormatterRegistryService<IFormatterDefinition> {
+    constructor(logger: LoggerService) {
+        super(logger, "ProportionalLegendFormattersRegistryService");
+    }
+}

@@ -81,6 +81,9 @@ export class GroupingConfigurationComponent implements OnInit, OnChanges, IHasCh
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.groups) {
+            this.getGroupsControl.setValue(changes.groups.currentValue);
+        }
         if (changes.groupBy && !changes.groupBy.firstChange) {
             this.getGroupByControl.clear();
             this.groupBy.forEach(group => this.getGroupByControl.push(this.createControl(group)));
@@ -124,18 +127,21 @@ export class GroupingConfigurationComponent implements OnInit, OnChanges, IHasCh
     }
 
     private onDataSourceCreated(provider: IEvent<IDataSource>) {
-        const dataFields = provider?.payload?.dataFieldsConfig?.dataFields$?.value;
-        if (dataFields) {
-            const dataFieldIds = dataFields.map((field: IDataField) => field.id);
-            const dataDiff = _difference(this.groups, dataFieldIds);
-            if (dataDiff.length || (!this.groups || !this.groups.length)) {
-                this.groups = dataFieldIds;
-                this.getGroupsControl.setValue(dataFieldIds);
-                this.getGroupByControl.clear();
-                this.getDrillStateControl.setValue([]);
-                this.fillGroupsOptions();
+        provider?.payload?.dataFieldsConfig?.dataFields$?.pipe(
+            takeUntil(this.destroy$)
+        ).subscribe((dataFields: IDataField[]) => {
+            if (dataFields) {
+                const dataFieldIds = dataFields.map((field: IDataField) => field.id);
+                const dataDiff = _difference(this.groups, dataFieldIds);
+                if (dataDiff.length || (!this.groups?.length)) {
+                    this.groups = dataFieldIds;
+                    this.getGroupsControl.setValue(dataFieldIds);
+                    this.getGroupByControl.clear();
+                    this.getDrillStateControl.setValue([]);
+                    this.fillGroupsOptions();
+                }
             }
-        }
+        });
     }
 
     private fillGroupsOptions() {

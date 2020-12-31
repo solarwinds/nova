@@ -1,6 +1,5 @@
 import {
     DEFAULT_PIZZAGNA_ROOT,
-    IBrokerUserConfig,
     IconFormatterComponent,
     IKpiColorRules,
     IKpiConfiguration,
@@ -16,7 +15,6 @@ import {
     LegendPlacement,
     NOVA_KPI_COLOR_PRIORITIZER,
     NOVA_KPI_DATASOURCE_ADAPTER,
-    NOVA_KPI_SCALE_SYNC_BROKER,
     NOVA_URL_INTERACTION_HANDLER,
     PizzagnaLayer,
     ProportionalWidgetChartTypes,

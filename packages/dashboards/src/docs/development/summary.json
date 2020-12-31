@@ -110,7 +110,7 @@
                 "file": "../pages/widget-types/proportional/proportional.md",
                 "children": [
                     {
-                        "title": "Proportional Donut Content Formatters",
+                        "title": "Proportional Donut Content Configuration",
                         "file": "../pages/widget-types/proportional/proportional-donut-content-formatters.md"
                     }
                 ]
@@ -132,6 +132,10 @@
             {
                 "title": "Embedded Content",
                 "file": "../pages/widget-types/embedded.md"
+            },
+            {
+                "title": "Drilldown",
+                "file": "../pages/widget-types/drilldown.md"
             }
         ]
     }

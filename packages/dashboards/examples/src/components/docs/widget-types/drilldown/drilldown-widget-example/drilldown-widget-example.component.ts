@@ -21,16 +21,14 @@ import {
 } from "@solarwinds/nova-dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { Apollo } from "apollo-angular";
-import { HttpLink } from "apollo-angular-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
 import gql from "graphql-tag";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { catchError, delay, filter, map } from "rxjs/operators";
 
-import { DrilldownDataSource } from "./mock-data-source";
+import { APOLLO_API_NAMESPACE } from "../../../types";
 
-const COUNTRIES_API = "https://countries-274616.ew.r.appspot.com/";
+import { DrilldownDataSource } from "./mock-data-source";
 
 /**
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
@@ -118,7 +116,7 @@ export class DrilldownDataSourceRealApi<T = any> extends ServerSideDataSource<T>
     // This method is expected to return all data needed for repeat/paginator/filterGroups in order to work.
     // In case of custom filtering participants feel free to extend INovaFilteringOutputs.
     protected getBackendData(filters: INovaFilters): Observable<any> {
-        const mainRequest = this.apollo.query<any>({query: this.generateQuery(filters)});
+        const mainRequest = this.apollo.use(APOLLO_API_NAMESPACE.COUNTRIES).query<any>({query: this.generateQuery(filters)});
 
         return mainRequest.pipe(
             // mock delay
@@ -245,14 +243,8 @@ export class DrilldownWidgetExampleComponent implements OnInit {
     constructor(
         // WidgetTypesService provides the widget's necessary structure information
         private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService,
-        httpLink: HttpLink,
-        apollo: Apollo
+        private providerRegistry: ProviderRegistryService
     ) {
-        apollo.create({
-            link: httpLink.create({ uri: COUNTRIES_API }),
-            cache: new InMemoryCache(),
-        });
     }
 
     public ngOnInit(): void {
@@ -344,7 +336,8 @@ const widgetConfig: IWidget = {
 
                             // adapter props
                             drillstate: [],
-                            groupBy: [],
+                            groupBy: ["regionName", "subregionName"],
+                            groups: ["regionName", "subregionName"],
 
                             // components
                             componentsConfig: {

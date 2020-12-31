@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, HostBinding, Input, OnChanges, SimpleChanges } from "@angular/core";
 import toNumber from "lodash/toNumber";
 import toString from "lodash/toString";
 
@@ -21,6 +21,10 @@ export class SiUnitsFormatterComponent implements OnChanges {
     static SHIFT_POINT_DEFAULT = 0;
 
     @Input() public data: IFormatterData;
+
+    @Input()
+    @HostBinding("class")
+    public elementClass: string;
 
     public value: string = "0";
     public modifier: string | undefined;

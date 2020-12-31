@@ -1,6 +1,6 @@
 {
   "name": "nova-consumer",
-  "version": "9.32.0-0",
+  "version": "9.33.0-0",
   "scripts": {
     "start": "ts-node --type-check ./src/app",
     "watch": "ts-node-dev --respawn --type-check --no-cache ./src/app",

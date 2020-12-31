@@ -1,4 +1,5 @@
 import { Component, Inject } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { IToastService, ToastService } from "@solarwinds/nova-bits";
 import moment, { Moment } from "moment/moment";
 
@@ -7,9 +8,11 @@ import moment, { Moment } from "moment/moment";
     templateUrl: "./date-picker-insignificant.example.component.html",
 })
 export class DatePickerInsignificantExampleComponent {
-    public selectedDate: Date = new Date(moment().valueOf());
+    public dt: Moment = moment().endOf("day");
+    public selectedDate: Date;
+    public control = new FormControl(this.dt);
 
-    constructor(@Inject(ToastService) private toastService: IToastService) {}
+    constructor(@Inject(ToastService) private toastService: IToastService) { }
 
     public dateChanged(event: Moment) {
         this.selectedDate = new Date(event.valueOf());

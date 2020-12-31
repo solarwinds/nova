@@ -241,6 +241,57 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     },
 ];
 
+export const PROPORTIONAL_WIDGET_DATA_BIG_NUMBERS: IProportionalWidgetData[] = [
+    {
+        id: "Down",
+        name: "Down",
+        data: [159],
+        icon: "status_down",
+        link: "https://en.wikipedia.org/wiki/Brno",
+        value: "Brno",
+    },
+    {
+        id: "Critical",
+        name: "Critical",
+        data: [1290],
+        icon: "status_critical",
+        link: "https://en.wikipedia.org/wiki/Kyiv",
+        value: "Kyiv",
+    },
+    {
+        id: "Warning",
+        name: "Warning",
+        data: [1569],
+        icon: "status_warning",
+        link: "https://en.wikipedia.org/wiki/Austin",
+        value: "Austin",
+    },
+    {
+        id: "Unknown",
+        name: "Unknown",
+        data: [14567],
+        icon: "status_unknown",
+        link: "https://en.wikipedia.org/wiki/Lisbon",
+        value: "Lisbon",
+    },
+    {
+        id: "Up",
+        name: "Up",
+        data: [123456],
+        icon: "status_up",
+        link: "https://en.wikipedia.org/wiki/Sydney",
+        value: "Sydney",
+    },
+    {
+        id: "Unmanaged",
+        name: "Unmanaged",
+        data: [1548585],
+        icon: "status_unmanaged",
+        link: "https://en.wikipedia.org/wiki/Nur-Sultan",
+        value: "Nur-Sultan",
+    },
+];
+
 export const frozenTime = () => moment([2020, 1, 6, 15, 0, 0]).startOf("day");
 
 export const getTimeseriesWidgetData = () => (

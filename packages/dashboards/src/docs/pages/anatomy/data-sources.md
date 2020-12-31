@@ -41,6 +41,35 @@ Currently supported Features by Nova:
 Planned support:
 - TBD
 
+## DataFields Config
+
+DataFields Config is used for declaring the structure of the data that DataSource operates with.
+For some widgets like Table and Drilldown Data Fields Config is required for correct work of the widget,
+so it's important to define it. In the case of reusing DataSource for other widgets, we recommend configuring
+Data Fields Config.
+
+DataFieldsConfig is a part of [IDataSource](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html)
+interface that data sources usually implement. You can add it this way:
+
+<!--- TODO: Remove Partial in the vNext -->
+
+```
+@Injectable()
+export class MyDataSource<T = any> extends ServerSideDataSource<T> implements IDataSource {
+    ...
+    public dataFields: Partial<IDataField>[] = [
+        { id: "regionName", label: "Region name" },
+        { id: "subregionName", label: "Subregion name" },
+    ];
+
+    constructor() {
+        super();
+        (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
+    }
+    ...
+}
+```
+
 ## Adapters
 
 An adapter is another specialized type of a provider, whose purpose is to invoke a data source, wait for

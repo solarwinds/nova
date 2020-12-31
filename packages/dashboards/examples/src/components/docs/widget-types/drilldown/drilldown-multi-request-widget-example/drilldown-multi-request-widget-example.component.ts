@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IconStatus, IFilters, INovaFilters } from "@solarwinds/nova-bits";
+import { DataSourceService, IconStatus, IDataField, IFilters, INovaFilters } from "@solarwinds/nova-bits";
 import {
     DATA_SOURCE,
+    DEFAULT_PIZZAGNA_ROOT,
     IDashboard,
     IDrilldownComponentsConfiguration,
     IListWidgetConfiguration,
@@ -14,18 +15,17 @@ import {
     NOVA_DRILLDOWN_DATASOURCE_ADAPTER,
     PizzagnaLayer,
     ProviderRegistryService,
+    WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
 } from "@solarwinds/nova-dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { Apollo } from "apollo-angular";
-import { HttpLink } from "apollo-angular-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
 import gql from "graphql-tag";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { finalize, map, switchMap, tap } from "rxjs/operators";
 
-export const API_URL: string = "https://countries-274616.ew.r.appspot.com/";
+import { APOLLO_API_NAMESPACE } from "../../../types";
 
 /**
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
@@ -38,15 +38,24 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     // Use this subject to communicate the data source's busy state
     public busy = new BehaviorSubject<boolean>(false);
 
-    private drillState: string[];
+    public dataFields: Partial<IDataField>[] = [
+        { id: "Region", label: "Region name" },
+        { id: "Subregion", label: "Subregion name" },
+    ];
+
+    private drillState: string[] = [];
     private groupBy: string[];
     private cache: any;
     private lastDrillState: string[] = [];
     private leafGroup: string = "Country";
     private applyFilters$ = new Subject<IFilters>();
-    
+
     constructor(private http: HttpClient, private apollo: Apollo) {
         super();
+
+        // TODO: remove Partial in vNext after marking dataType field as optional
+        (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
+
         this.applyFilters$.pipe(switchMap(filters => this.getData(filters)))
                           .subscribe(async res => { this.outputsSubject.next(await this.getFilteredData(res)); });
     }
@@ -67,7 +76,7 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
                     const lastGroupedValue = this.getTransformedDataForGroup(entries, group, getLast(this.drillState));
 
                     this.groupedDataHistory.push(lastGroupedValue);
-                    
+
                     return lastGroupedValue;
                 }
 
@@ -116,7 +125,7 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
         if (this.cache && (isDrillUp || this.isHome())) {
             return of(this.cache).pipe(map(data => data.data[group]), finalize(() => this.busy.next(false)));
         } else {
-            return this.apollo.query<any>({query: this.getQuery(group || this.leafGroup, getLast(this.drillState))})
+            return this.apollo.use(APOLLO_API_NAMESPACE.COUNTRIES).query<any>({query: this.getQuery(group || this.leafGroup, getLast(this.drillState))})
                     .pipe(
                         tap(data => this.cache = { data: {...this.cache?.data, ...data?.data} }),
                         map(data => data.data[group || this.leafGroup]),
@@ -184,19 +193,17 @@ export class DrilldownMultiRequestWidgetExampleComponent implements OnInit {
     constructor(
         // WidgetTypesService provides the widget's necessary structure information
         private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService,
-        httpLink: HttpLink,
-        apollo: Apollo
+        private providerRegistry: ProviderRegistryService
     ) {
-        apollo.create({
-            link: httpLink.create({ uri: API_URL }),
-            cache: new InMemoryCache(),
-        });
     }
 
     public ngOnInit(): void {
         // this.prepareNovaDashboards();
         this.initializeDashboard();
+        const widgetTemplate = this.widgetTypesService.getWidgetType("drilldown", 1);
+        this.widgetTypesService.setNode(widgetTemplate, "configurator", WellKnownPathKey.DataSourceProviders, [
+            DrilldownDataSource.providerId,
+        ]);
     }
 
     public initializeDashboard(): void {
@@ -210,7 +217,6 @@ export class DrilldownMultiRequestWidgetExampleComponent implements OnInit {
                 deps: [HttpClient, Apollo],
             },
         });
-
 
         // We're using a static configuration object for this example, but this is where
         // the widget's configuration could potentially be populated from a database
@@ -247,6 +253,16 @@ const widgetConfig: IWidget = {
                     "subtitle": "Countries BY continent THEN currency",
                 },
             },
+            [DEFAULT_PIZZAGNA_ROOT]: {
+                providers: {
+                    [WellKnownProviders.DataSource]: {
+                        // Setting the data source providerId for the tile with id "kpi1"
+                        providerId: DrilldownDataSource.providerId,
+                        properties: {
+                        },
+                    } as IProviderConfiguration,
+                },
+            },
             listWidget: {
                 providers: {
                     [WellKnownProviders.Adapter]: {
@@ -258,11 +274,9 @@ const widgetConfig: IWidget = {
                             dataPath: "data",
 
                             // adapter props
-                            // drillstate: [""],
-                            groupBy: [
-                                "Region",
-                                "Subregion",
-                            ],
+                            drillstate: [],
+                            groups: ["Region", "Subregion"],
+                            groupBy: ["Region", "Subregion"],
 
                             // components
                             componentsConfig: {
@@ -296,14 +310,6 @@ const widgetConfig: IWidget = {
                             } as IDrilldownComponentsConfiguration,
                         },
                     },
-
-                    [WellKnownProviders.DataSource]: {
-                        // Setting the data source providerId for the tile with id "kpi1"
-                        providerId: DrilldownDataSource.providerId,
-                        properties: {
-
-                        },
-                    } as IProviderConfiguration,
                 },
                 properties: {
                     configuration: {
