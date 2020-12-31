@@ -1,5 +1,5 @@
 import { OnDestroy } from "@angular/core";
-import { LoggerService, uuid } from "@solarwinds/nova-bits";
+import { LoggerService, uuid } from "@nova-ui/bits";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 

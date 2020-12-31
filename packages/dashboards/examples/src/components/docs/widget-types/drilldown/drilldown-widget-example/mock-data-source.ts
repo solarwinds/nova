@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import { DataSourceService, IDataField, IDataSource, IFilters, INovaFilters } from "@solarwinds/nova-bits";
+import { DataSourceService, IDataField, IDataSource, IFilters, INovaFilters } from "@nova-ui/bits";
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { catchError, delay, finalize, map, switchMap, tap } from "rxjs/operators";

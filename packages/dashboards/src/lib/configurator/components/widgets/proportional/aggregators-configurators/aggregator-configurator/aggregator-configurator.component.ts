@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { IDataField, LoggerService, SelectV2Component } from "@solarwinds/nova-bits";
+import { IDataField, LoggerService, SelectV2Component } from "@nova-ui/bits";
 
 import { IHasChangeDetector } from "../../../../../../types";
 

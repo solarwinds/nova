@@ -1,4 +1,4 @@
-import { IChartSeries } from "@solarwinds/nova-charts";
+import { IChartSeries } from "@nova-ui/charts";
 
 export interface IProportionalDonutContentAggregatorProperties {
     /** Metric Id, case sensitive. */

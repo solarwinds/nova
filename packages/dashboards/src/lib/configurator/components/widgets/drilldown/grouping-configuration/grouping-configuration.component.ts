@@ -12,7 +12,7 @@ import {
     SimpleChanges
 } from "@angular/core";
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IDataField, IDataSource, IEvent } from "@solarwinds/nova-bits";
+import { EventBus, IDataField, IDataSource, IEvent } from "@nova-ui/bits";
 import _difference from "lodash/difference";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";

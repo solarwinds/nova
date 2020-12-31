@@ -1,6 +1,6 @@
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IDataField, IFilteringOutputs } from "@solarwinds/nova-bits";
-import { IAccessors, IChartAssistSeries } from "@solarwinds/nova-charts";
+import { DataSourceService, IDataField, IFilteringOutputs } from "@nova-ui/bits";
+import { IAccessors, IChartAssistSeries } from "@nova-ui/charts";
 import {
     DATA_SOURCE,
     DEFAULT_LEGEND_FORMATTERS,
@@ -29,7 +29,7 @@ import {
     WellKnownPathKey,
     WellKnownProviders,
     WidgetTypesService
-} from "@solarwinds/nova-dashboards";
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject } from "rxjs";
 

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { EventBus, IDataField, IDataSource, IEvent, LoggerService } from "@solarwinds/nova-bits";
+import { EventBus, IDataField, IDataSource, IEvent, LoggerService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
