@@ -14,7 +14,7 @@ import moment from "moment/moment";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
-import { getTimeseriesStatusData, getTimeseriesWidgetData, getTimeseriesWidgetData2 } from "./widget-data";
+import { getTimeseriesStatusData, getTimeseriesStatusIntervalData, getTimeseriesWidgetData, getTimeseriesWidgetData2 } from "./widget-data";
 
 @Injectable()
 export class AcmeTimeseriesDataSource extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
@@ -90,7 +90,23 @@ export class AcmeTimeseriesStatusDataSource extends DataSourceService<ITimeserie
 
     public async getFilteredData(filters: INovaFilters): Promise<ITimeseriesOutput<ITimeseriesWidgetStatusData>> {
         this.busy.next(true);
-        const data = { series: getFilteredStatusData(filters, getTimeseriesStatusData()) };
+        const data = { series: getFilteredStatusDataWithEndpoints(filters, getTimeseriesStatusData()) };
+        this.busy.next(false);
+        return data;
+    }
+}
+
+export class AcmeTimeseriesStatusIntervalDataSource extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
+    public static providerId = "AcmeTimeseriesStatusIntervalDataSource";
+
+    constructor() {
+        super();
+    }
+    public busy = new BehaviorSubject(false);
+
+    public async getFilteredData(filters: INovaFilters): Promise<ITimeseriesOutput<ITimeseriesWidgetStatusData>> {
+        this.busy.next(true);
+        const data = { series: filterData(filters, getTimeseriesStatusIntervalData()) };
         this.busy.next(false);
         return data;
     }
@@ -119,7 +135,7 @@ function filterDates(dateToCheck: Date, startDate: Date, endDate: Date) {
     return mom.isBetween(startDate, endDate) || mom.isSame(startDate) || mom.isSame(endDate);
 }
 
-function getFilteredStatusData(filters: INovaFilters, data: ITimeseriesWidgetData[]): ITimeseriesWidgetData[] {
+function getFilteredStatusDataWithEndpoints(filters: INovaFilters, data: ITimeseriesWidgetData[]): ITimeseriesWidgetData[] {
     let filteredData = filterData(filters, data);
     if (filters.timeframe) {
         filteredData = applyStatusEndpoints(filters.timeframe.value as ITimeframe, filteredData, data);

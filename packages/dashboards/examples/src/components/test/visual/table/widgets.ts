@@ -58,6 +58,7 @@ export const widgets: IWidget[] = [
                                     id: "column1",
                                     label: "No",
                                     isActive: true,
+                                    width: 100,
                                     formatter: {
                                         componentType: RawFormatterComponent.lateLoadKey,
                                         properties: {
@@ -84,6 +85,7 @@ export const widgets: IWidget[] = [
                                     id: "column3",
                                     label: "Location",
                                     isActive: true,
+                                    width: 100,
                                     formatter: {
                                         componentType: LinkFormatterComponent.lateLoadKey,
                                         properties: {
@@ -144,7 +146,7 @@ export const widgets: IWidget[] = [
             [PizzagnaLayer.Configuration]: {
                 "header": {
                     properties: {
-                        title: "Table Widget!",
+                        title: "Another Table Widget!",
                         subtitle: "Basic table widget",
                     },
                 },

@@ -49,17 +49,8 @@ export interface ITableWidgetSorterConfig {
     sortBy: string;
 }
 
-/** Interface for defining a table data field */
-export interface IDataField {
-    /** Column id. */
-    id: string;
-    /**  Column label. */
-    label: string;
-    /**  Data type for column in table. */
-    dataType: string;
-    /** Indicates whether the column is sortable */
-    sortable?: boolean;
-}
+// TODO: remove re-export in vNext
+export { IDataField } from "@solarwinds/nova-bits";
 
 // TODO: import from bits
 export const DEFAULT_INTERACTIVE_ELEMENTS = ["button", "input[type='button']", "a[href]"];

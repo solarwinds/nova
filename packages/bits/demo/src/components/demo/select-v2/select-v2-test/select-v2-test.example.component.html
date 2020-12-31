@@ -52,16 +52,13 @@
     <div class="col">
         <h4>Display value (max-width = 200px)</h4>
         <nui-select-v2 placeholder="Select Item"
-                       [displayValueTemplate]="temp"
+                       [displayValueTemplate]="iconsOnly"
                        [style.max-width.px]="200"
                        id="display-value-mw200"
                         >
-            <nui-select-v2-option *ngFor="let item of itemsDisplayValue"
-                                  [value]="item"
-                                  i18n
-                                  [isDisabled]="item.disabled">
-                                  Name is {{item.name}} and icon is <nui-icon [icon]="item.icon"></nui-icon></nui-select-v2-option>
-        </nui-select-v2>
+            <nui-select-v2-option *ngFor="let item of itemsWithIconsOnly" [value]="item">
+                    String can't get long, can it?:) <nui-icon [icon]="item.icon"></nui-icon></nui-select-v2-option>
+            </nui-select-v2>
     </div>
     <div class="col">
         <h4>Display value (no width rescrictions)</h4>
@@ -182,8 +179,20 @@ At erat pellentesque adipiscing commodo. Justo donec enim diam vulputate. Libero
 </div>
 
 
-
 <ng-template #temp let-item let-open="open">
+
+    <div class="nui-select-v2__value">
+        <div *ngIf="item else empty" class="d-flex align-items-center nui-select-v2__value-content">
+            <nui-icon class="mr-2" [icon]="item.icon"></nui-icon> {{item.name}}
+        </div>
+
+        <nui-icon  [style.transform]="open ? 'rotate(180deg)' : ''"
+            icon="caret-down"></nui-icon>
+    </div>
+
+</ng-template>
+
+<ng-template #iconsOnly let-item let-open="open">
 
     <div class="nui-select-v2__value">
         <div *ngIf="item else empty" class="d-flex align-items-center nui-select-v2__value-content">

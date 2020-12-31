@@ -8,6 +8,7 @@ import { NuiOverlayModule } from "../../overlay/overlay.module";
 import { IOptionValueObject, OptionValueType } from "../../overlay/types";
 import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
+import { InputValueTypes } from "../types";
 
 import { SelectV2Component } from "./select-v2.component";
 
@@ -18,9 +19,23 @@ import { SelectV2Component } from "./select-v2.component";
         </nui-select-v2>
     `,
 })
-class SelectV2WrapperComponent {
+class SelectV2WrapperWithFormControlComponent {
     public items = Array.from({ length : 10 }).map((_, i) => `Item ${i}`);
     public selectControl = new FormControl();
+    @ViewChild(SelectV2Component) select: SelectV2Component;
+    constructor(public elRef: ElementRef<HTMLElement>) { }
+}
+
+@Component({
+    template: `
+        <nui-select-v2 [value]="value" placeholder="Select Item">
+            <nui-select-v2-option *ngFor="let item of items" [value]="item">{{item}}</nui-select-v2-option>
+        </nui-select-v2>
+    `,
+})
+class SelectV2WrapperWithValueComponent {
+    public items = Array.from({ length : 10 }).map((_, i) => `Item ${i}`);
+    public value: InputValueTypes = this.items[0];
     @ViewChild(SelectV2Component) select: SelectV2Component;
     constructor(public elRef: ElementRef<HTMLElement>) { }
 }
@@ -58,8 +73,10 @@ describe("components >", () => {
         let fixture: ComponentFixture<SelectV2Component>;
         let element: any;
         let selectedOptionsMock: SelectV2OptionComponent[];
-        let wrapperFixture: ComponentFixture<SelectV2WrapperComponent>;
-        let wrapperComponent: SelectV2WrapperComponent;
+        let wrapperWithFormControlFixture: ComponentFixture<SelectV2WrapperWithFormControlComponent>;
+        let wrapperWithFormControlComponent: SelectV2WrapperWithFormControlComponent;
+        let wrapperWithValueFixture: ComponentFixture<SelectV2WrapperWithValueComponent>;
+        let wrapperWithValueComponent: SelectV2WrapperWithValueComponent;
 
         let wrapperFixtureAsync: ComponentFixture<SelectV2WrapperAsyncComponent>;
         let wrapperComponentAsync: SelectV2WrapperAsyncComponent;
@@ -69,8 +86,9 @@ describe("components >", () => {
                 declarations: [
                     SelectV2Component,
                     SelectV2OptionComponent,
-                    SelectV2WrapperComponent,
+                    SelectV2WrapperWithFormControlComponent,
                     SelectV2WrapperAsyncComponent,
+                    SelectV2WrapperWithValueComponent,
                 ],
                 providers: [
                     ChangeDetectorRef,
@@ -98,15 +116,20 @@ describe("components >", () => {
                     (<HTMLElement>c.elementRef.nativeElement).textContent = (<IOptionValueObject>selectedValuesMock[i]).name;
                 });
 
-                // wrapper component
-                wrapperFixture = TestBed.createComponent(SelectV2WrapperComponent);
-                wrapperComponent = wrapperFixture.componentInstance;
-                wrapperFixture.detectChanges();
+                // wrapper with FormControl component
+                wrapperWithFormControlFixture = TestBed.createComponent(SelectV2WrapperWithFormControlComponent);
+                wrapperWithFormControlComponent = wrapperWithFormControlFixture.componentInstance;
+                wrapperWithFormControlFixture.detectChanges();
+
+                // wrapper with value component
+                wrapperWithValueFixture = TestBed.createComponent(SelectV2WrapperWithValueComponent);
+                wrapperWithValueComponent = wrapperWithValueFixture.componentInstance;
+                wrapperWithValueFixture.detectChanges();
 
                 // wrapper async component
                 wrapperFixtureAsync = TestBed.createComponent(SelectV2WrapperAsyncComponent);
                 wrapperComponentAsync = wrapperFixtureAsync.componentInstance;
-                wrapperFixture.detectChanges();
+                wrapperFixtureAsync.detectChanges();
         }));
 
         it("should create an instance", () => {
@@ -567,38 +590,38 @@ describe("components >", () => {
 
         describe("reactive forms >", () => {
             it("should set value through formControl", () => {
-                const itemToSet = wrapperComponent.items[3];
-                wrapperComponent.selectControl.setValue(itemToSet);
+                const itemToSet = wrapperWithFormControlComponent.items[3];
+                wrapperWithFormControlComponent.selectControl.setValue(itemToSet);
 
-                expect(wrapperComponent.select.getLastSelectedOption()?.value).toEqual(itemToSet);
+                expect(wrapperWithFormControlComponent.select.getLastSelectedOption()?.value).toEqual(itemToSet);
             });
 
             it("should make form control touched on focusout", () => {
-                expect(wrapperComponent.selectControl.touched).toBeFalsy();
+                expect(wrapperWithFormControlComponent.selectControl.touched).toBeFalsy();
 
-                wrapperComponent.select.elRef.nativeElement.dispatchEvent(new Event("focusin"));
+                wrapperWithFormControlComponent.select.elRef.nativeElement.dispatchEvent(new Event("focusin"));
                 document.body.click();
 
-                expect(wrapperComponent.selectControl.touched).toBeTruthy();
+                expect(wrapperWithFormControlComponent.selectControl.touched).toBeTruthy();
             });
 
             it("should not set form control touched if value changed programmatically", () => {
-                expect(wrapperComponent.selectControl.touched).toBeFalsy();
+                expect(wrapperWithFormControlComponent.selectControl.touched).toBeFalsy();
 
-                const itemToSet = wrapperComponent.items[3];
-                wrapperComponent.selectControl.setValue(itemToSet);
+                const itemToSet = wrapperWithFormControlComponent.items[3];
+                wrapperWithFormControlComponent.selectControl.setValue(itemToSet);
 
-                expect(wrapperComponent.selectControl.touched).toBeFalsy();
+                expect(wrapperWithFormControlComponent.selectControl.touched).toBeFalsy();
             });
 
             it("should set the control to dirty when the value changes in DOM", () => {
-                expect(wrapperComponent.selectControl.dirty).toBeFalsy();
+                expect(wrapperWithFormControlComponent.selectControl.dirty).toBeFalsy();
 
-                wrapperComponent.select.elRef.nativeElement.dispatchEvent(new Event("focusin"));
-                const option = wrapperFixture.debugElement.query(By.css("nui-select-v2-option"));
+                wrapperWithFormControlComponent.select.elRef.nativeElement.dispatchEvent(new Event("focusin"));
+                const option = wrapperWithFormControlFixture.debugElement.query(By.css("nui-select-v2-option"));
                 option.nativeElement.click();
 
-                expect(wrapperComponent.selectControl.dirty).toBeTruthy();
+                expect(wrapperWithFormControlComponent.selectControl.dirty).toBeTruthy();
             });
 
             it("should set 'displayText' in case value is set before options", fakeAsync(() => {
@@ -622,24 +645,33 @@ describe("components >", () => {
 
         describe("options change >", () => {
             it("should keep the same value in case options changed and value is present", fakeAsync(() => {
-                const itemToSet = wrapperComponent.items[9];
-                wrapperComponent.selectControl.setValue(itemToSet);
-                expect(wrapperComponent.selectControl.value).toEqual(itemToSet);
-                wrapperComponent.items = Array.from({ length : 10 }).map((_, i) => `Item ${i + 5}`);
-                wrapperFixture.detectChanges();
+                const itemToSet = wrapperWithFormControlComponent.items[9];
+                wrapperWithFormControlComponent.selectControl.setValue(itemToSet);
+                expect(wrapperWithFormControlComponent.selectControl.value).toEqual(itemToSet);
+                wrapperWithFormControlComponent.items = Array.from({ length : 10 }).map((_, i) => `Item ${i + 5}`);
+                wrapperWithFormControlFixture.detectChanges();
                 tick(0);
-                expect(wrapperComponent.selectControl.value).toEqual(itemToSet);
+                expect(wrapperWithFormControlComponent.selectControl.value).toEqual(itemToSet);
             }));
 
             it("should NOT keep the same value in case options changed and value is NOT present", fakeAsync(() => {
-                const itemToSet = wrapperComponent.items[3];
-                wrapperComponent.selectControl.setValue(itemToSet);
-                expect(wrapperComponent.selectControl.value).toEqual(itemToSet);
-                wrapperComponent.items = Array.from({ length : 10 }).map((_, i) => `Item ${i + 5}`);
-                wrapperFixture.detectChanges();
+                const itemToSet = wrapperWithFormControlComponent.items[3];
+                wrapperWithFormControlComponent.selectControl.setValue(itemToSet);
+                expect(wrapperWithFormControlComponent.selectControl.value).toEqual(itemToSet);
+                wrapperWithFormControlComponent.items = Array.from({ length : 10 }).map((_, i) => `Item ${i + 5}`);
+                wrapperWithFormControlFixture.detectChanges();
                 tick(0);
-                expect(wrapperComponent.selectControl.value).toEqual(undefined);
+                expect(wrapperWithFormControlComponent.selectControl.value).toEqual(undefined);
             }));
         });
+
+        it("update selected value, if value change in code", fakeAsync(() => {
+            const itemToSet = wrapperWithValueComponent.items[9];
+            wrapperWithValueComponent.value = itemToSet;
+            expect(wrapperWithValueComponent.value).toEqual(itemToSet);
+            wrapperWithValueFixture.detectChanges();
+            tick(0);
+            expect(wrapperWithValueComponent.select.displayText).toEqual(itemToSet);
+        }));
     });
 });

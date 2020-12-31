@@ -17,7 +17,7 @@ import { IHasChangeDetector } from "../../../../types";
             </div>
         </ng-container>
     `,
-    styles: [`.status-icon-formatter {display: grid; grid-template-columns: 50px auto 1fr;}`],
+    styles: [`.status-icon-formatter {display: grid; grid-template-columns: 50px auto  minmax(114px, 1fr);} `],
 })
 export class StatusWithIconFormatterComponent implements OnChanges, IHasChangeDetector {
     static lateLoadKey = "StatusWithIconFormatterComponent";

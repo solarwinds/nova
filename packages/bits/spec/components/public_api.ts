@@ -36,6 +36,8 @@ export * from "./wizard/wizard.atom";
 export * from "./wizard/wizard-step.atom";
 export * from "./menu-popup/menu-popup.atom";
 export * from "./table/table.atom";
+export * from "./tab-heading-group/tab-heading.atom";
+export * from "./tab-heading-group/tab-heading-group.atom";
 export * from "./form-field/form-field.atom";
 export * from "./toolbar/toolbar.atom";
 export * from "./timepicker/timepicker.atom";

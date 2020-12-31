@@ -30,12 +30,11 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        padding: @nui-space-md;
         top: 0;
         pointer-events: none;
 
         * > span {
-            .text-overflow(ellipsis);
+            filter: invert(1) grayscale(1) contrast(100);
         }
     }
 
@@ -43,8 +42,14 @@
         font-size: @nui-font-size-hero * 3; // 54
         font-weight: @nui-font-weight-semibold;
         margin: auto 0;
+        min-width: 100%;
+        white-space: nowrap;
         .flex-center();
         .restrict-content-height(100%, 200px, 5px);
+
+        & > span.without-filter {
+            filter: unset;
+        }
     }
 
     &__units {
@@ -53,7 +58,11 @@
         min-width: 0; // we need this to make ellipsis work with the flex child (when we quit using zoom)
         margin-bottom: auto;
         .flex-center();
-        .restrict-content-height();
+        .restrict-content-height(100%);
+
+        & > span {
+            .text-overflow(ellipsis);
+        }
     }
 
     &__description {
@@ -62,7 +71,11 @@
         min-width: 0; // we need this to make ellipsis work with the flex child (when we quit using zoom)
         margin-top: auto;
         .flex-center();
-        .restrict-content-height();
+        .restrict-content-height(100%);
+
+        & > span {
+            .text-overflow(ellipsis);
+        }
     }
 
     &__zoom-container {

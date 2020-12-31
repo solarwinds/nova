@@ -1,8 +1,9 @@
-import { browser } from "protractor";
+import { browser, by, element } from "protractor";
 import { ISize } from "selenium-webdriver";
 
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
+import { SwitchAtom } from "../switch/switch.atom";
 
 import { ToolbarAtom } from "./toolbar.atom";
 
@@ -13,6 +14,7 @@ describe("Visual tests: Toolbar", () => {
     let toolbarBasic: ToolbarAtom;
     let toolbarSelected: ToolbarAtom;
     let toolbarNoMenuSelected: ToolbarAtom;
+    let themeSwitch: SwitchAtom;
 
     const id = {
         toolbarBasic: "nui-toolbar-test",
@@ -34,6 +36,7 @@ describe("Visual tests: Toolbar", () => {
         toolbarBasic = Atom.find(ToolbarAtom, id.toolbarBasic);
         toolbarSelected = Atom.find(ToolbarAtom, id.toolbarSelected);
         toolbarNoMenuSelected = Atom.find(ToolbarAtom, id.toolbarNoMenuSelected);
+        themeSwitch = Atom.findIn(SwitchAtom, element(by.tagName("nui-theme-switcher")));
     });
 
     afterAll(async () => {
@@ -45,6 +48,10 @@ describe("Visual tests: Toolbar", () => {
     it("Default look", async () => {
         await eyes.open(browser, "NUI", "Toolbar");
         await eyes.checkWindow("Default");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
 
         await browser.manage().window().setSize(1024, originalSize.height);
         await eyes.checkWindow("With screen width 1024");
@@ -73,6 +80,10 @@ describe("Visual tests: Toolbar", () => {
 
         await toolbarNoMenuSelected.getToolbarMenu().toggleMenu();
         await eyes.checkWindow("Menu toggled on selected Super-condenced toolbar");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await toolbarNoMenuSelected.getToolbarMenu().toggleMenu();
 
         await eyes.close();

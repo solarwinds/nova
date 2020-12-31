@@ -140,8 +140,12 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         // TODO: Find a better way to pair placeholderHeader columns with header columns
         firstDataRowCells.forEach((cell: HTMLTableDataCellElement, index: number) => {
             // Note: Assigning data cell width to the corresponding header column
-            headColumns[index].setAttribute("style", `width: ${ cell.offsetWidth }px`);
+            // (using the style width if specified; otherwise, falling back to the offsetWidth)
+            headColumns[index].style.width = cell.style.width || `${ cell.offsetWidth }px`;
         });
+
+        // update the header placeholder to match the updated column widths
+        this.updateNativeHeaderPlaceholder();
 
         // Note: Returning empty observable to be able to create an execution queue
         return EMPTY;

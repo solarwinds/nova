@@ -46,6 +46,10 @@ describe("Visual tests: Timepicker", () => {
         await basicTimepicker.menuPopup.hover(basicTimepicker.menuPopup.getSelectedItem());
         await eyes.checkWindow("Selected menuitem in Basic Timepicker is focused");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
+
         await basicTimepicker.menuPopup.hover(basicTimepicker.menuPopup.getItemByIndex(2));
         await eyes.checkWindow("Unelected menuitem in Basic Timepicker is focused");
 

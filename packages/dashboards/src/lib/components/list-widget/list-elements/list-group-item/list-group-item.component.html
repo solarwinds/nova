@@ -1,16 +1,13 @@
-<div class="list-group-item" (click)="onButtonClick()">
-    <div class="list-group-item__label">{{ label }}</div>
+<div class="list-group-item" [ngClass]="{'widget-medium': isMedium, 'widget-small': isSmall}" (click)="onButtonClick()">
+    <div class="list-group-item__label" [title]="label">{{ label }}</div>
     <div class="list-group-item__statuses">
-        <div class="row flex-grow-1 justify-content-end">
+        <div class="statuses">
             <div class="status-column"
-                 [style.flex-basis]="currentColumnWidth"
-                 *ngFor="let status of statuses | keyvalue">
+                 *ngFor="let status of statuses">
                 <nui-icon [icon]="status.key" class="mr-2"></nui-icon>
                 <span class="status-column__label" [title]="status.value">{{status.value}}</span>
             </div>
         </div>
-        <div class="row">
-            <nui-icon class="pr-5 d-flex col flex-nowrap" *ngIf="canNavigate" icon="caret-right"></nui-icon>
-        </div>
+        <nui-icon *ngIf="canNavigate" icon="caret-right"></nui-icon>
     </div>
 </div>

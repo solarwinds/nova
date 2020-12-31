@@ -6,13 +6,14 @@ import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 
-import {IFilter, IFilteringOutputs, IFilteringParticipant, IFilteringParticipants, IFilters} from "./public-api";
+import { IDataField, IDataFieldsConfig, IFilter, IFilteringOutputs, IFilteringParticipant, IFilteringParticipants, IFilters } from "./public-api";
 
 @Injectable()
 export abstract class DataSourceService<T, F extends IFilters = IFilters, D = any> extends DataSource<T> {
 
     public dataSubject: BehaviorSubject<T[]>;
     public outputsSubject: Subject<IFilteringOutputs>;
+    public dataFieldsConfig: IDataFieldsConfig;
 
     protected _previousFilters: F;
 
@@ -22,6 +23,9 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
         super(); // in future dataSource in cdk may have some constructor.
         this.dataSubject = new BehaviorSubject<T[]>([]); // in general we do not have data at this point - that's why empty array
         this.outputsSubject = new Subject<any>(); // some empty state
+        this.dataFieldsConfig = {
+            dataFields$: new BehaviorSubject<IDataField[]>([]),
+        };
     }
 
     public set componentTree(components: IFilteringParticipants) {

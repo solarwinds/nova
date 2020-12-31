@@ -17,6 +17,7 @@ import {
     NOVA_GENERIC_CONVERTER,
     NOVA_TABLE_COLUMNS_CONVERTER,
     NOVA_TABLE_FILTERS_CONVERTER,
+    NOVA_TABLE_FORMATTERS_REGISTRY,
     NOVA_TITLE_AND_DESCRIPTION_CONVERTER
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
@@ -62,6 +63,11 @@ export const tableConfigurator: IPizzagna = {
                 elementClass: "flex-grow-1 overflow-auto nui-scroll-shadows",
                 // references to other components laid out in this form
                 nodes: ["presentation", "dataAndCalculations", "columns"],
+            },
+            providers: {
+                [WellKnownProviders.FormattersRegistry]: {
+                    providerId: NOVA_TABLE_FORMATTERS_REGISTRY,
+                },
             },
         },
         // /presentation
@@ -141,36 +147,10 @@ export const tableConfigurator: IPizzagna = {
                     {
                         id: "description",
                         componentType: DescriptionConfigurationComponent.lateLoadKey,
-                        providers: {
-                            [WellKnownProviders.Converter]: {
-                                providerId: NOVA_GENERIC_ARRAY_CONVERTER,
-                                properties: {
-                                    formParts: [
-                                        {
-                                            previewPath: "table.properties.configuration.columns",
-                                            keys: ["label", "isActive", "width"],
-                                        },
-                                    ],
-                                },
-                            },
-                        },
                     },
                     {
                         id: "presentation",
                         componentType: PresentationConfigurationComponent.lateLoadKey,
-                        providers: {
-                            [WellKnownProviders.Converter]: {
-                                providerId: NOVA_GENERIC_ARRAY_CONVERTER,
-                                properties: {
-                                    formParts: [
-                                        {
-                                            previewPath: "table.properties.configuration.columns",
-                                            keys: ["formatter"],
-                                        },
-                                    ],
-                                },
-                            },
-                        },
                         properties: {
                             // Note: Now you can define your formatters in the TableFormatterRegistry which can contain more formatter options
                             formatters: DEFAULT_TABLE_FORMATTERS,

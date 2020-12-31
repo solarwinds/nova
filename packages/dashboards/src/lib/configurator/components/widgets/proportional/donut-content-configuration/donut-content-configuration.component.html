@@ -1,0 +1,77 @@
+<ng-container
+    *ngIf="shown"
+    [formGroup]="form">
+    <nui-widget-editor-accordion [state]="form | nuiWidgetEditorAccordionFormState | async">
+        <div accordionHeader
+             class="d-flex align-items-center px-4 py-2">
+            <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'customize' | async"></nui-icon>
+            <div class="d-flex flex-column ml-4 pt-1">
+                <span class="nui-text-label" i18n>Donut Content Configuration</span>
+                <div class="nui-text-secondary" [title]="subtitleText">
+                    {{subtitleText}}
+                </div>
+            </div>
+        </div>
+
+        <div class="donut-content-configuration__accordion-content">
+
+            <!-- aggregator -->
+             <div class="mb-4" formGroupName="aggregator">
+                <nui-form-field caption="Aggregate" i18n-caption
+                                [control]="form.get('aggregator.aggregatorType')">
+                    <nui-select-v2 placeholder="Select Format" i18n-placeholder
+                                formControlName="aggregatorType">
+                        <nui-select-v2-option *ngFor="let aggregator of aggregators"
+                                            [displayValueContext]="aggregator.label"
+                                            [value]="aggregator.aggregatorType">
+                            {{aggregator.label}}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                </nui-form-field>
+            </div>
+
+            <!-- formatter -->
+            <div class="mb-4" formGroupName="formatter">
+                <nui-form-field caption="Format" i18n-caption
+                                [control]="form.get('formatter.componentType')">
+                    <nui-select-v2 placeholder="Select Format" i18n-placeholder
+                                formControlName="componentType">
+                        <nui-select-v2-option *ngFor="let formatter of formatters"
+                                            [displayValueContext]="formatter.label"
+                                            [value]="formatter.componentType">
+                            {{formatter.label}}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                </nui-form-field>
+            </div>
+
+            <!-- aggregator configuration component -->
+            <ng-container *ngIf="currentAggregatorDefinition?.configurationComponent"
+                          nuiComponentPortal
+                          componentId="formatterConfigurator"
+                          [componentType]="currentAggregatorDefinition?.configurationComponent"
+                          [properties]="aggregatorConfiguratorProps"
+                          [outputs]="['formReady']"
+                          (output)="onFormReady('aggregator', $event.payload)"
+                          #componentPortal="nuiComponentPortal">
+                <ng-template [cdkPortalOutlet]="componentPortal.portal"
+                             (attached)="componentPortal.attached($event)"></ng-template>
+            </ng-container>
+
+            <!-- formatter configuration component -->
+            <ng-container *ngIf="currentFormatterDefinition?.configurationComponent"
+                          nuiComponentPortal
+                          componentId="formatterConfigurator"
+                          [componentType]="currentFormatterDefinition?.configurationComponent"
+                          [properties]="formatterConfiguratorProps"
+                          [outputs]="['formReady']"
+                          (output)="onFormReady('formatter', $event.payload)"
+                          #componentPortal="nuiComponentPortal">
+                <ng-template [cdkPortalOutlet]="componentPortal.portal"
+                             (attached)="componentPortal.attached($event)"></ng-template>
+            </ng-container>
+
+
+        </div>
+    </nui-widget-editor-accordion>
+</ng-container>

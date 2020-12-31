@@ -1,6 +1,6 @@
 import { StaticProvider } from "@angular/core";
 import { EventDefinition, IEvent, IEventDefinition } from "@nova-ui/bits";
-import { ReplaySubject } from "rxjs";
+import { BehaviorSubject, ReplaySubject } from "rxjs";
 
 import { IDataSourceBusyPayload } from "../components/providers/types";
 
@@ -20,9 +20,10 @@ export interface IPreviewEventPayload {
     payload: any;
 }
 
-export interface IAddFormattersOptions {
+export interface IRegistryAddOptions {
     overrideExisting: boolean;
 }
+export interface IAddFormattersOptions extends Pick<IRegistryAddOptions, "overrideExisting"> {}
 
 export const REFRESH = new EventDefinition("REFRESH");
 export const SCROLL_NEXT_PAGE = new EventDefinition("SCROLL_NEXT_PAGE");
@@ -32,6 +33,7 @@ export const WIDGET_CREATE = new EventDefinition("WIDGET_CREATE");
 export const WIDGET_READY = new EventDefinition("WIDGET_READY");
 export const WIDGET_RESIZE = new EventDefinition("WIDGET_RESIZE");
 export const WIDGET_POSITION_CHANGE = new EventDefinition("WIDGET_POSITION_CHANGE");
+export const WIDGET_SEARCH = new EventDefinition("WIDGET_SEARCH", () => new BehaviorSubject<IEvent>({ payload: "" }));
 export const SET_PROPERTY_VALUE = new EventDefinition("SET_PROPERTY_VALUE");
 export const SET_TIMEFRAME = new EventDefinition("SET_TIMEFRAME");
 export const PREVIEW_EVENT = new EventDefinition("PREVIEW_EVENT");
@@ -63,7 +65,12 @@ export const NOVA_TIMESERIES_TILE_INDICATOR_DATA_CONVERTER = "NOVA_TIMESERIES_TI
 export const NOVA_LOADING_ADAPTER = "NOVA_LOADING_ADAPTER";
 export const NOVA_STATUS_CONTENT_FALLBACK_ADAPTER = "NOVA_STATUS_CONTENT_FALLBACK_ADAPTER";
 export const NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER = "NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER";
+export const NOVA_KPI_SCALE_SYNC_BROKER = "NOVA_KPI_SCALE_SYNC_BROKER";
 export const NOVA_URL_INTERACTION_HANDLER = "NOVA_URL_INTERACTION_HANDLER";
 export const NOVA_EVENT_BUS_DEBUGGER = "NOVA_EVENT_BUS_DEBUGGER";
 export const NOVA_PIZZAGNA_BROADCASTER = "NOVA_PIZZAGNA_BROADCASTER";
 export const NOVA_VIRTUAL_VIEWPORT_MANAGER = "NOVA_VIRTUAL_VIEWPORT_MANAGER";
+export const NOVA_TABLE_FORMATTERS_REGISTRY = "NOVA_TABLE_FORMATTERS_REGISTRY";
+export const NOVA_KPI_FORMATTERS_REGISTRY = "NOVA_KPI_FORMATTERS_REGISTRY";
+export const NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY = "NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY";
+export const NOVA_TEST_REGISTRY = "NOVA_TEST_REGISTRY";

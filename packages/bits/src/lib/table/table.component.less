@@ -293,16 +293,6 @@
     }
 }
 
-// max-width property is treated different in firefox
-// to be able to resize table head columns based on data columns
-// in virtual scroll mode we should remove this restriction
-@-moz-document url-prefix() {
-    .sticky-table-header-container {
-        .nui-table__table-header-cell {
-            max-width: none!important;
-        }
-    }
-}
 // Hide bottom border for sticky-header-placeholder
 // used to get the correct column sizes when used with VS
 cdk-virtual-scroll-viewport {

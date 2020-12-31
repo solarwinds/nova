@@ -1,3 +1,7 @@
+import { IDataField, IDataFieldsConfig } from "@solarwinds/nova-bits";
+import { BehaviorSubject } from "rxjs";
+
+import { IProportionalDonutContentAggregator } from "../../functions/proportional-aggregators/types";
 import { ILegendPlacementOption } from "../../types";
 import { IFormatter, IFormatterDefinition, LegendPlacement } from "../types";
 
@@ -8,12 +12,18 @@ export enum ProportionalWidgetChartTypes {
     HorizontalBarChart = "HorizontalBarChart",
 }
 
+export interface IProportionalWidgetChartTypeConfiguration {
+    id: ProportionalWidgetChartTypes;
+    label: string;
+}
+
 export interface IProportionalWidgetChartOptions {
     type: ProportionalWidgetChartTypes;
     contentFormatter?: IFormatter;
     legendPlacement?: LegendPlacement;
     legendFormatter?: IFormatter;
     chartFormatterComponentType?: string;
+    donutContentConfig?: IDonutContentConfig;
 }
 
 export interface IProportionalWidgetConfig {
@@ -36,4 +46,13 @@ export interface IProportionalWidgetChartEditorOptions {
     legendFormats: Array<ILegendFormat>;
     legendFormatters: IFormatterDefinition[];
     contentFormatters?: IFormatterDefinition[];
+}
+
+export interface IDonutContentConfig {
+    formatter: IFormatter;
+    aggregator: IProportionalDonutContentAggregator;
+}
+
+export interface IProportionalDataFieldsConfig extends IDataFieldsConfig {
+    chartSeriesDataFields$: BehaviorSubject<IDataField[]>;
 }

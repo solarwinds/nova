@@ -1,3 +1,4 @@
+import { CdkDragDrop } from "@angular/cdk/drag-drop";
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import isArray from "lodash/isArray";
@@ -27,7 +28,7 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
     public form: FormGroup;
     public formLocal: FormGroup;
     public availableComparators: IComparatorsDict;
-    public colors: string[];
+    public palette: Partial<IPaletteColor[]>;
 
     private destroy$ = new Subject();
 
@@ -39,8 +40,7 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
     }
 
     public ngOnInit(): void {
-        this.colors = this.backgroundColors.map(item => item.color);
-        this.colors.unshift(DEFAULT_KPI_TILE_COLOR);
+        this.palette = [{ color: DEFAULT_KPI_TILE_COLOR, label: $localize`Default color` }].concat(this.backgroundColors);
 
         this.formLocal = this.initDefaultRulesGroup();
         this.form = this.formBuilder.group({
@@ -95,6 +95,10 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
         }));
     }
 
+    public drop(event: CdkDragDrop<string[]>) {
+        this.move(event.currentIndex, event.previousIndex);
+    }
+
     public ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
@@ -104,5 +108,19 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
         return this.formBuilder.group({
             rules: [this.formBuilder.array([], Validators.required)],
         });
+    }
+
+    private move(currentIndex: number, previousIndex: number): void {
+        const rules = this.formLocal?.get("rules")?.value as FormArray;
+        const dir = currentIndex > previousIndex ? 1 : -1;
+        if (!rules) { return; }
+
+        const temp = rules.at(previousIndex);
+
+        for (let i = previousIndex; i * dir < currentIndex * dir; i = i + dir) {
+            const current = rules.at(i + dir);
+            rules.setControl(i, current);
+        }
+        rules.setControl(currentIndex, temp);
     }
 }

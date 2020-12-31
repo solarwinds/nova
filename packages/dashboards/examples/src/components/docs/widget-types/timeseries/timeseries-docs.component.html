@@ -64,15 +64,34 @@
 
 <h4>Usage Notes</h4>
 <ul>
-    <li>
-        To display the last data point correctly your data must include a last data point which indicates
-        the endpoint for the most recent status.
+
+    <li><strong>Continuous (Non-Interval) Scale (<code><a href="../miscellaneous/enumerations.html#TimeseriesScaleType" target="_blank">TimeseriesScaleType.Time</a></code>)</strong>
+        <ul>
+            <li>
+                To display the last data point correctly, your data must include a final data point that
+                indicates the endpoint for the most recent status value in the data set.
+            </li>
+            <li>
+                To accommodate proper zooming of the chart, use the
+                <code><a href="../miscellaneous/functions.html#applyStatusEndpoints" target="_blank">applyStatusEndpoints</a></code>
+                function to prepend and append the filtered status data with endpoints that match the start
+                and end datetimes of the zoomed time period. This will ensure that each status visualization has
+                valid start and end values after the chart is zoomed.
+            </li>
+        </ul>
     </li>
-    <li>
-        To accommodate proper zooming of the chart, use the
-        <code><a href="../miscellaneous/functions.html#applyStatusEndpoints" target="_blank">applyStatusEndpoints</a></code>
-        function to prepend and append the filtered status data with endpoints. This will ensure that
-        each status visualization has valid start and end values.
+    <li><strong>Interval Scale (<code><a href="../miscellaneous/enumerations.html#TimeseriesScaleType" target="_blank">TimeseriesScaleType.TimeInterval</a></code>)</strong>
+        <ul>
+            <li>
+                Unlike a continuous scale <strong>no</strong> additional data point is needed at
+                the end of the data set since the status values are visualized at regular intervals.
+            </li>
+            <li>
+                Unlike a continuous scale, endpoints do not need to be applied to the data since the values are
+                simply visualized at regular intervals. In other words, the <code>applyStatusEndpoints</code> function
+                mentioned for continuous scales above does not need to be used.
+            </li>
+        </ul>
     </li>
 </ul>
 

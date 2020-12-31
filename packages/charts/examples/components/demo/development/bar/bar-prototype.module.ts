@@ -5,18 +5,18 @@ import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
 
-import { StackedVerticalBarPrototypeComponent } from "./stacked-vertical/stacked-vertical-bar-prototype.component";
+import { StackedBarPrototypeComponent } from "./stacked-bar/stacked-bar-prototype.component";
 
 const routes: Routes = [
     {
-        path: "stacked-vertical",
-        component: StackedVerticalBarPrototypeComponent,
+        path: "stacked-bar",
+        component: StackedBarPrototypeComponent,
     },
 ];
 
 @NgModule({
     declarations: [
-        StackedVerticalBarPrototypeComponent,
+        StackedBarPrototypeComponent,
     ],
     imports: [
         DemoCommonModule,

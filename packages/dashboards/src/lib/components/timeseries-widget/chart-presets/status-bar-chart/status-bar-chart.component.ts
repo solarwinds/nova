@@ -72,13 +72,6 @@ export class StatusBarChartComponent extends TimeseriesChartComponent<ITimeserie
         this.accessors.data.thickness = (data: any) => typeof data.thick === "undefined" || data.thick ?
             BarRenderer.THICK : BarRenderer.THIN;
 
-        // with interval scale, every bar has to be shortened by one "interval" to prevent data from overlapping
-        if (this.scales.x instanceof TimeIntervalScale) {
-            const xScale = this.scales.x;
-            this.accessors.data.end = (d) =>
-                new Date(d.end - xScale.interval().asMilliseconds());
-        }
-
         const iconSize: number = 8;
         this.accessors.data.marker = (data: any) =>
             data.icon ?
@@ -99,7 +92,7 @@ export class StatusBarChartComponent extends TimeseriesChartComponent<ITimeserie
         const seriesSet: IChartAssistSeries<IStatusAccessors>[] =
             this.widgetData.series.map((d: ITimeseriesWidgetData<ITimeseriesWidgetStatusData>) => ({
                 ...d,
-                data: this.transformData(d.data),
+                data: this.transformData(d.data, this.scales.x instanceof TimeIntervalScale),
                 accessors: this.accessors,
                 renderer: this.renderer,
                 scales: this.scales,
@@ -132,13 +125,21 @@ export class StatusBarChartComponent extends TimeseriesChartComponent<ITimeserie
         }
     }
 
-    protected transformData(data: ITimeseriesWidgetStatusData[]): IStatusData[] {
+    /**
+     * Transforms standard timeseries x/y data so that it can be understood by a status chart
+     *
+     * @param data The data to transform
+     * @param isIntervalProgression Whether the data should be treated as continuous or occurring at a regular interval
+     *
+     * @returns The transformed data
+     */
+    protected transformData(data: ITimeseriesWidgetStatusData[], isIntervalProgression: boolean): IStatusData[] {
         const statusDataArray: any[] = [];
         data.forEach((d, i) => {
-            if (data.length - 1 !== i) {
+            if (isIntervalProgression || data.length - 1 !== i) {
                 statusDataArray.push({
                     start: d.x,
-                    end: (i < data.length - 1) ? data[i + 1].x : d.x,
+                    end: isIntervalProgression ? d.x : data[i + 1].x,
                     status: d.y,
                     color: d.color,
                     thick: d.thick,

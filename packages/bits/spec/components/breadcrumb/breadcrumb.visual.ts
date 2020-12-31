@@ -25,11 +25,13 @@ describe("Visual tests: Breadcrumb", () => {
 
     it("Default look", async () => {
         await eyes.open(browser, "NUI", "Breadcrumb");
-        await eyes.checkWindow("Default");
-
         await showSecondViewButton.click();
         await showThirdViewButton.click();
-        await eyes.checkWindow("Breadcrumb in the third level");
+        await eyes.checkWindow("Default breadcrumb styles");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
 
         await eyes.close();
     }, 100000);

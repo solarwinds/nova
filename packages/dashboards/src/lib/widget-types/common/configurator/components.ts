@@ -22,6 +22,6 @@ export const REFRESHER_CONFIGURATOR: IComponentConfiguration = {
         },
     },
     properties: {
-        overrideDefaultSettings: true,
+        overrideDefaultSettings: false,
     },
 };

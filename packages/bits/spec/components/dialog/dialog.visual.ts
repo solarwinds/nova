@@ -56,9 +56,11 @@ describe("Visual tests: Dialog", () => {
         await eyes.checkWindow("Info dialog");
         await DialogAtom.dismissDialog();
 
+        await Helpers.switchDarkTheme("on");
         await buttonMediumDialog.click();
         await eyes.checkWindow("Medium dialog");
         await DialogAtom.dismissDialog();
+        await Helpers.switchDarkTheme("off");
 
         await buttonLargeDialog.click();
         await eyes.checkWindow("Large dialog");
@@ -71,9 +73,11 @@ describe("Visual tests: Dialog", () => {
         await select.toggleMenu();
         await DialogAtom.dismissDialog();
 
+        await Helpers.switchDarkTheme("on");
         await buttonConfirmationDialogOverrides.click();
         await eyes.checkWindow("Confirmation dialog with overrides");
         await DialogAtom.dismissDialog();
+        await Helpers.switchDarkTheme("off");
 
         await buttonConfirmationDialogDefaults.click();
         await eyes.checkWindow("Confirmation dialog default");

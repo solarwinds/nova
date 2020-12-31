@@ -26,6 +26,10 @@ describe("Visual tests: Checkbox Group", () => {
 
         await checkboxJustified.getFirst().hover();
         await eyes.checkWindow("First Checkbox in Justified Checkbox-Group is hovered");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 100000);
 });

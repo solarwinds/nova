@@ -83,30 +83,4 @@ describe("TableColumnsConverterService >", () => {
         expect(service.updatePreview).toHaveBeenCalledWith(expectedPreviewPizzagna);
     }));
 
-    describe("column changes", () => {
-        it("should result in invoking updateFilterProperties", () => {
-            const spy = spyOn((<any>service), "updateFilterProperties");
-            component.form.get("columns")?.setValue([]);
-            expect(spy).toHaveBeenCalled();
-        });
-    });
-
-    describe("updateFilterProperties", () => {
-        it("should update the filters properties on the pizzagna", fakeAsync(() => {
-            const spy = spyOn(pizzagnaService, "setProperty");
-            (<any>service).updateFilterProperties();
-            flush();
-            expect(spy).toHaveBeenCalledTimes(2);
-            const args = spy.calls.allArgs();
-            expect(args[0]).toEqual([
-                "data.filters.properties.columns",
-                [
-                    { id: "column1", label: "No", isActive: true, dataFieldIds: ["position"], formatterId: "RawFormatterComponent" },
-                    { id: "column2", label: "Name", isActive: true, dataFieldIds: ["name"], formatterId: "RawFormatterComponent" },
-                ],
-            ]);
-            expect(args[1]).toEqual(["structure.presentation.properties.nodes", ["titleAndDescription", "dataSource", "filters"]]);
-        }));
-    });
-
 });

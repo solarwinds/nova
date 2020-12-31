@@ -70,6 +70,7 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
     public ngOnChanges(changes: SimpleChanges): void {
         let recreated = false;
         const providersChange = changes.providers;
+
         if (providersChange && !providersChange.isFirstChange()) {
             if (this.checkForProviderChanges(providersChange)) {
                 this.logger.debug("Portal recreated (provider change):", this.componentId);
@@ -126,6 +127,9 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
                 // because 'changesSubscription' has not received any changes. it leads to the issue
                 // when providers do not know the ID until component property changed
                 provider.setComponent(this.component, this.componentId);
+            }
+            if (provider.setProviders) {
+                provider.setProviders(this.providerInstances, this.componentId);
             }
         }
 

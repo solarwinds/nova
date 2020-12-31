@@ -10,7 +10,7 @@ import { IKpiData } from "../kpi-widget/types";
 
 import { IDataSourceOutput, IKpiColorRules } from "./types";
 
-export class KpiColorPrioritizer implements IConfigurable, OnInit, OnDestroy {
+export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
 
     protected destroy$ = new Subject();
     protected componentId: string;
@@ -29,10 +29,6 @@ export class KpiColorPrioritizer implements IConfigurable, OnInit, OnDestroy {
         this.comparators = comparatorsRegistry.getComparators();
     }
 
-    ngOnInit() {
-        this.subscribeToDataChanges();
-    }
-
     ngOnDestroy() {
         this.destroy$.next();
         this.destroy$.complete();
@@ -47,6 +43,8 @@ export class KpiColorPrioritizer implements IConfigurable, OnInit, OnDestroy {
     }
 
     public setComponent(component: any, componentId: string) {
+        this.subscribeToDataChanges();
+
         this.componentId = componentId;
     }
 

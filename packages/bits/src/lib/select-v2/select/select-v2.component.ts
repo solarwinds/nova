@@ -13,6 +13,8 @@ import {
     ViewEncapsulation
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
+import { merge } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 import { NuiFormFieldControl, OptionValueType } from "../../public-api";
 import { BaseSelectV2 } from "../base-select-v2";
@@ -79,11 +81,14 @@ export class SelectV2Component extends BaseSelectV2 implements AfterContentInit,
         });
 
         // options may be received after value changes, that's why
-        // we check "selectedOptions" to be set per "value" again in "handleValueChange"
-        this.optionsChanged().subscribe(() => {
-            this.defineDisplayText();
-            this.cdRef.markForCheck();
-        });
+        // we check "selectedOptions" and "valueChanged" to be set per "value" again in "handleValueChange"
+        merge (this.optionsChanged(), this.valueChanged.pipe(takeUntil(this.destroy$)))
+            .subscribe(() => {
+                if (!this.multiselect) {
+                    this.defineDisplayText();
+                }
+                this.cdRef.markForCheck();
+            });
     }
 
     /** Selects specific Option and set its value to the model */

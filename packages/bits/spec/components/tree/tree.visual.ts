@@ -56,6 +56,9 @@ describe("Visual tests: Tree", () => {
         await checkboxTree.getLeafCheckboxNodes().first().click();
         await eyes.checkWindow("Checkbox Tree is in all possible states");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 100000);
 });

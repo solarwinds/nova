@@ -1,8 +1,9 @@
 import { fakeAsync, tick } from "@angular/core/testing";
 
-import { INTERACTION_DATA_POINTS_EVENT } from "../../../constants";
+import { INTERACTION_DATA_POINTS_EVENT, SERIES_STATE_CHANGE_EVENT } from "../../../constants";
+import { RenderState } from "../../../renderers/types";
 import { Chart } from "../../chart";
-import { IDataPointsPayload, InteractionType } from "../../common/types";
+import { IDataPointsPayload, InteractionType, IRenderStateData } from "../../common/types";
 import { XYGridConfig } from "../../grid/config/xy-grid-config";
 import { IGrid, IGridConfig } from "../../grid/types";
 import { XYGrid } from "../../grid/xy-grid";
@@ -218,6 +219,57 @@ describe("ChartTooltipsPlugin >", () => {
             expect(showSpy).toHaveBeenCalledTimes(1);
         }));
 
+        it("sets the property 'dataPoints' with only the visible series's data points", () => {
+            const visibleId: string = "visibleId";
+            const hiddenId: string = "hiddenId";
+            const dataPoints = {
+                [visibleId]: {
+                    index: 1,
+                    seriesId: visibleId,
+                    // @ts-ignore: Disabled for testing purposes
+                    dataSeries: null,
+                    data: {},
+                    position: {
+                        x: 100,
+                        y: 100,
+                        height: 0,
+                        width: 0,
+                    },
+                },
+                [hiddenId]: {
+                    index: 2,
+                    seriesId: hiddenId,
+                    // @ts-ignore: Disabled for testing purposes
+                    dataSeries: null,
+                    data: {},
+                    position: {
+                        x: 100,
+                        y: 100,
+                        height: 0,
+                        width: 0,
+                    },
+                },
+            };
+            const seriesStates = <IRenderStateData[]>[
+                {
+                    seriesId: visibleId,
+                    state: RenderState.default,
+                },
+                {
+                    seriesId: hiddenId,
+                    state: RenderState.hidden,
+                },
+            ];
+
+            (<any>plugin).isChartInView = true;
+
+            chart.getEventBus().getStream(SERIES_STATE_CHANGE_EVENT).next({ data: seriesStates });
+
+            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { interactionType: InteractionType.MouseMove, dataPoints } });
+
+            expect(plugin.dataPoints[visibleId]).toBeTruthy();
+            expect(plugin.dataPoints[hiddenId]).toBeUndefined();
+        });
     });
 
 });

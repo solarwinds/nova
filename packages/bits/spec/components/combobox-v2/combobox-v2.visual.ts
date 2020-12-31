@@ -79,7 +79,9 @@ describe("Visual tests: Combobox V2", () => {
          * 4. multiselect content projection works
          * 5. multiselect expanded styles are fine
          * 6. Create Option menu appears and it's styles are fine
+         * 7. Dark theme tested
          */
+        Helpers.switchDarkTheme("on");
         await (await comboboxBasic.getOption(33)).click();
         await (await comboboxError.getFirstOption()).click();
         await (await comboboxForm.getLastOption()).click();
@@ -97,6 +99,8 @@ describe("Visual tests: Combobox V2", () => {
          * 5. disabled item styles are fine
          * 6. selected item hover styles are fine
          */
+        Helpers.switchDarkTheme("off");
+        await comboboxSingle.type("qwerty");
         await comboboxSingle.createOption.click();
         await comboboxMulti.type("qwerty");
         await comboboxMulti.createOption.click();
@@ -125,6 +129,9 @@ describe("Visual tests: Combobox V2", () => {
         await comboboxCustomControl.removeChips(1);
         await eyes.checkWindow("State 5");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
-    }, 100000);
+    }, 200000);
 });

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { EventBus, IEvent } from "@nova-ui/bits";
+import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import isArray from "lodash/isArray";
 import omit from "lodash/omit";
 import { ReplaySubject } from "rxjs";
@@ -17,7 +17,8 @@ import { DynamicComponentCreator } from "./dynamic-component-creator.service";
 export class PizzagnaService {
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-                private dynamicComponentCreator: DynamicComponentCreator) {}
+                private dynamicComponentCreator: DynamicComponentCreator) {
+    }
 
     public pizzagna: IPizzagna;
     public pizzaChanged = new ReplaySubject<IPizza>(1);
@@ -45,6 +46,25 @@ export class PizzagnaService {
             property : getPizzagnaPropertyPath(property);
         this.eventBus.getStream(SET_PROPERTY_VALUE)
             .next({ payload: { path, value } as ISetPropertyPayload });
+    }
+
+    public createComponentsFromTemplateWithProperties(parentPath: string, components: any) {
+        const componentIds = components.map((c: any) => c.id);
+        let updatedPizzagna: IPizzagna = this.dynamicComponentCreator.getPizzagnaUpdatedWithComponents(
+            this.pizzagna, parentPath, componentIds);
+
+        for (const component of components) {
+            for (const childId of Object.keys(component.children)) {
+                updatedPizzagna = immutableSet(updatedPizzagna,
+                    `${PizzagnaLayer.Data}.${childId}.properties`, component.children[childId]);
+            }
+        }
+
+        // this is here to update the pizzagna for other converters that need to access the value immediately
+        this.updatePizzagna(updatedPizzagna);
+
+        this.eventBus.getStream(SET_PROPERTY_VALUE)
+            .next({ payload: { path: "", value: updatedPizzagna } as ISetPropertyPayload });
     }
 
     public createComponentsFromTemplate(parentPath: string, componentIds: string[]) {

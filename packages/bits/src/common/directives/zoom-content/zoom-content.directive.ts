@@ -1,6 +1,16 @@
-import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostBinding, Input, NgZone, OnDestroy } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostBinding, Input, NgZone, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
+import isFinite from "lodash/isFinite";
 import ResizeObserver from "resize-observer-polyfill";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+
+import { uuid } from "../../../functions/uuid";
+
+export interface IBrokerValue {
+    id: string;
+    targetID: string;
+    targetValue: number;
+}
 
 /**
  * @ignore
@@ -11,29 +21,35 @@ import { Subject } from "rxjs";
 @Directive({
     selector: "[nuiZoomContent]",
 })
-export class ZoomContentDirective implements OnDestroy, AfterViewInit {
+export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges {
     private destroy$ = new Subject();
 
     @HostBinding("style.zoom")
     public zoom = 1;
 
-    @HostBinding("style.transform")
-    public scale: string = `scale(1)`;
-
     @HostBinding("style.padding")
     public scalePadding: string = "0";
     
+    // Zoom inputs
     @Input() public zoomRatio = 0.9;
     @Input() public minZoomDifference = 0.1;
     @Input() public maxZoom: number;
     @Input() public minZoom: number;
     @Input() public useZoom: boolean = true;
 
+    // Scale inputs
+    @Input() public margin: number = 10;
+    @Input() public minScale: number = 0.1;
+    @Input() public maxScale: number;
+    @Input() public scaleIN$: BehaviorSubject<IBrokerValue>;
+    @Input() public scaleOUT$: BehaviorSubject<IBrokerValue>;
+
+    private readonly uuid = uuid();
     private element: HTMLElement;
     private parentElement: HTMLElement;
-    private defaultScaleWidth: number;
     private elementRect: DOMRect;
     private parentRect: DOMRect;
+    private latestDataFromBroker: IBrokerValue;
 
     private resizeObserver: ResizeObserver;
 
@@ -50,6 +66,19 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit {
         }
 
         this.parentElement = this.element.parentElement;
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.scaleOUT$ && this.scaleOUT$) {
+
+            this.scaleIN$
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(data => {
+                    this.latestDataFromBroker = {...data};
+                    this.element.style.transform = `scale(${data.targetValue})`;
+                    this.checkScaleBoundaries(data.targetValue);
+                });
+        }
     }
 
     public ngAfterViewInit(): void {
@@ -80,11 +109,7 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit {
             return;
         }
 
-        if (this.useZoom) {
-            this.applyZoom();
-        } else {
-            this.applyScale();
-        }
+        this.useZoom ? this.applyZoom() : this.applyScale();
     }
 
     private applyZoom() {
@@ -102,30 +127,31 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit {
     }
 
     private applyScale() {
-        // Saving the default target element width when scale is 1 to base calculations on
-        if (!this.defaultScaleWidth) {
-            this.defaultScaleWidth = this.elementRect.width;
+        const parentSize = {
+            width: this.parentElement.offsetWidth - (2 * this.margin),
+            height: this.parentElement.offsetHeight  - (2 * this.margin),
+        };
+
+        const scale = Math.min(parentSize.width / this.element.offsetWidth, parentSize.height / this.element.offsetHeight);
+
+        this.scaleOUT$
+            ? this.scaleOUT$.next({
+                ...this.latestDataFromBroker,
+                targetID: this.uuid,
+                targetValue: isFinite(scale) ? scale : 0,
+            })
+            : this.element.style.transform =  `scale(${scale})`;
+
+        this.checkScaleBoundaries(scale);
+    }
+
+    private checkScaleBoundaries(scale: number) {
+        if (scale < this.minScale) {
+            this.element.style.transform = `scale(${this.minScale})`;
         }
-        // Getting the minimum of parent container's width and height to properly resize the contents in any of 2d dimensions
-        const minDimension = Math.min(this.parentRect.width, this.parentRect.height);
 
-        // We can control the resulting scale range with the 'zoomRatio' param
-        const scale = (minDimension / this.defaultScaleWidth) * this.zoomRatio;
-
-        this.scale = `scale(${scale})`;
-
-        if (this.parentRect.width < this.elementRect.width) {
-            // When we apply 'scale()' to a container it will grow in size if scale > 1. In this case, if a target container width
-            // gets larger than the parent container's width the overflow may happen, especially in case of long strings.
-            // To prevent this from happening we use left and right paddings here to adjust the position of the target container and
-            // prevernt the overflow.
-            this.scalePadding = `0 ${(this.parentRect.width - (this.parentRect.width / scale)) / 2}px`;
+        if (this.maxScale && (scale > this.maxScale)) {
+            this.element.style.transform = `scale(${this.maxScale})`;
         }
-
-        if (scale < 1) {
-            // If scale < 1 there is no overflow happening, no need to adjust container size with paddings
-            this.scalePadding = "0";
-        }
-        this.cdRef.detectChanges();
     }
 }

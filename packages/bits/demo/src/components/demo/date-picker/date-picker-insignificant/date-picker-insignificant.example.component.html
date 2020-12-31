@@ -1,9 +1,11 @@
 <nui-date-picker
+    [formControl]="control"
     [inline]="true"
     [preserveInsignificant]="true"
     (valueChange)="dateChanged($event)">
 </nui-date-picker>
 
 <div>
-    {{selectedDate}}
+    <p class="mt-2">Value: {{selectedDate}}</p>
+    <p class="mt-2">Control Value: {{control.value.toISOString()}}</p>
 </div>
