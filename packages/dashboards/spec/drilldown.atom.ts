@@ -1,4 +1,4 @@
-import { Atom } from "@solarwinds/nova-bits/sdk/atoms";
+import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { By, ElementArrayFinder } from "protractor";
 
 export class DrilldownAtom extends Atom {

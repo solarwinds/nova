@@ -1,4 +1,4 @@
-import { Atom, ButtonAtom } from "@solarwinds/nova-bits/sdk/atoms";
+import { Atom, ButtonAtom } from "@nova-ui/bits/sdk/atoms";
 import { by, ElementFinder } from "protractor";
 
 export class DashboardWizardAtom extends Atom {
