@@ -4,21 +4,24 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
+    Inject,
     Input,
     OnChanges,
     OnDestroy,
     OnInit,
+    Optional,
     Output,
     SimpleChanges
 } from "@angular/core";
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
+import capitalize from "lodash/capitalize";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
 import { IDataField } from "../../../../../../../components/table-widget/types";
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
-import { TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
-import { IHasChangeDetector } from "../../../../../../../types";
+import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
+import { FORMATTERS_REGISTRY, IHasChangeDetector } from "../../../../../../../types";
 
 @Component({
     selector: "nui-table-column-presentation-configuration",
@@ -48,6 +51,8 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
         return this._formatters;
     }
 
+    @Input() public dataFieldIds: string[];
+
     private _dataFields: Array<IDataField> = [];
     @Input()
     public set dataFields(dataFields: Array<IDataField>) {
@@ -55,7 +60,7 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
         this.updateAvailableFormatters();
     }
 
-    public get dataFields() {
+    public get dataFields(): IDataField[] {
         return this._dataFields;
     }
 
@@ -73,6 +78,8 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     constructor(
         private formBuilder: FormBuilder,
         public changeDetector: ChangeDetectorRef,
+        @Optional() @Inject(FORMATTERS_REGISTRY) private formattersRegistryCommon: FormatterRegistryService,
+        // used as a fallback, remove in vNext
         private tableFormattersRegistryService: TableFormatterRegistryService
     ) {
         this.subscribeToFormattersRegistry();
@@ -88,18 +95,13 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
             [this.formatterFormGroupName]: this.formatterForm,
         });
 
-        this.formatterForm.get("componentType")?.valueChanges.pipe(
-            takeUntil(this.onDestroy$)
-        ).subscribe(() => {
-            this.createFormatterConfigurator();
-        });
+        this.formatterForm.get("componentType")?.valueChanges.pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => this.createFormatterConfigurator());
 
         this.createFormatterConfigurator();
         this.formReady.emit(this.form);
         this.formatterForm.valueChanges
-            .pipe(
-                takeUntil(this.onDestroy$)
-            )
+            .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => {
                 this.updateSubtitle();
                 this.changeDetector.detectChanges();
@@ -110,8 +112,22 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (changes.dataFieldIds) {
+            const { currentValue, previousValue } = changes.dataFieldIds;
+
+            if (currentValue && currentValue !== previousValue) {
+                const dataFields = currentValue.map((df: string) => ({
+                    id: df,
+                    label: capitalize(df),
+                } as IDataField));
+
+                this.dataFields = dataFields;
+                this.updateSubtitle();
+            }
+        }
+
         if (changes.formatter) {
-            this.form?.patchValue({ [this.formatterFormGroupName]: changes.formatter.currentValue });
+            this.form?.patchValue({ [this.formatterFormGroupName]: changes.formatter.currentValue }, { emitEvent: false });
         }
 
         if (changes.dataFields && changes.dataFields.previousValue.length === 0 && this.formatterForm) {
@@ -141,9 +157,9 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     }
 
     private updateSubtitle() {
-        this.subtitleText = `${ this.getSelectedFormatterDefinition()?.label }`;
+        this.subtitleText = `${this.getSelectedFormatterDefinition()?.label}`;
         if (this.getSelectedDataField()) {
-            this.subtitleText = this.subtitleText.concat(`, ${ this.getSelectedDataField()?.label }`);
+            this.subtitleText = this.subtitleText.concat(`, ${this.getSelectedDataField()?.label}`);
         }
     }
 
@@ -201,15 +217,28 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     }
 
     private subscribeToFormattersRegistry(): void {
-        this.tableFormattersRegistryService.formattersStateChanged$.pipe(
+        this.handleFormattersUpdate(this.formattersRegistry.getFormatters());
+
+        this.formattersRegistry.formattersStateChanged$.pipe(
             tap(this.handleFormattersUpdate.bind(this)),
             takeUntil(this.onDestroy$)
         ).subscribe();
     }
 
     private handleFormattersUpdate(formatters: IFormatterDefinition[]): void {
-        this._providedFormatters = formatters;
-        this.updateAvailableFormatters();
+        if (formatters !== this._providedFormatters) {
+            this._providedFormatters = formatters;
+            this.updateAvailableFormatters();
+        }
+    }
+
+    /**
+     * Fallback for table,
+     *
+     * nothing should go wrong, but in case "FORMATTERS_REGISTRY" is lost, get table registry
+     */
+    private get formattersRegistry() {
+        return this.formattersRegistryCommon || this.tableFormattersRegistryService;
     }
 
     ngOnDestroy(): void {

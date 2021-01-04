@@ -40,6 +40,12 @@ describe("Visual tests: Toast", () => {
         await eyes.checkWindow("Check all positions except of full width");
         await buttonClearAllToasts.click();
 
+        Helpers.switchDarkTheme("on");
+        await buttonAllPositions.click();
+        await eyes.checkWindow("Dark theme");
+        await buttonClearAllToasts.click();
+        Helpers.switchDarkTheme("off");
+
         await buttonFW.click();
         await eyes.checkWindow("Check full width positions");
         await buttonClearAllToasts.click();

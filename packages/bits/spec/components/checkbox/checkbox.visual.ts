@@ -32,6 +32,9 @@ describe("Visual tests: Checkbox", () => {
         await checkboxSpecial.hoverLink();
         await eyes.checkWindow("Special template of checkbox");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 100000);
 });

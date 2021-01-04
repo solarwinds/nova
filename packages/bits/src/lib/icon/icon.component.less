@@ -1,6 +1,15 @@
 @import (reference) "../../styles/nui-framework-variables.less";
 @import (reference) "../../styles/mixins.less";
 
+/** Add "display: flex" for .nui-icon-item in v.11
+ * https://jira.solarwinds.com/browse/NUI-5630
+ */
+nui-icon.nui-icon-flex {
+    .nui-icon-item {
+        display: flex;
+    }
+}
+
 .nui-icon-wrapper {
     display: inline-flex;
     .nui-svg-wrapper {
@@ -32,6 +41,9 @@
     background-size: @icon-size-default;
     vertical-align: middle;
     background-repeat: no-repeat;
+    /** Add "line-height: 1" in v.11
+    * https://jira.solarwinds.com/browse/NUI-5662
+    */
     line-height: @line-height-base;
     position: relative;
     svg {

@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 
 import { icons } from "./icons";
-import { IconData } from "./public-api";
+import { IconCategoryNamespace, IconData } from "./public-api";
+
 /**@ignore*/
 interface IStatus {
     [key: string]: string;
@@ -21,22 +22,7 @@ export class IconService {
     private names: IName;
 
     constructor() {
-        this.statuses = this.icons
-            .filter(iconData => {
-                if (iconData.cat_namespace === "status_") {
-                    return iconData;
-                }
-            })
-            .reduce((acc: any, curr) => {
-                acc[curr.name.split("status_")[1]] = curr.code;
-                return acc;
-            }, {});
-
-        this.names = this.icons
-            .reduce((acc: any, curr) => {
-                acc[curr.name] = curr;
-                return acc;
-            }, {});
+        this.updateIconStatusesAndNames();
     }
 
     getIconData(iconName: string): IconData {
@@ -53,5 +39,36 @@ export class IconService {
                         ${iconCode}
                     </svg>
                 </g>`;
+    }
+
+    /**
+     * Allows registering additional icons from other sources
+     *
+     * @param iconsList
+     */
+    public registerIcons(iconsList: IconData[]) {
+        this.icons.push(...iconsList);
+
+        this.updateIconStatusesAndNames();
+    }
+
+    private updateIconStatusesAndNames() {
+        this.statuses = this.icons
+            .filter(iconData => {
+                if (iconData.cat_namespace === IconCategoryNamespace.Status) {
+                    return iconData;
+                }
+            })
+            .reduce((acc: any, curr) => {
+                acc[curr.name.split(IconCategoryNamespace.Status)[1]] = curr.code;
+                return acc;
+            }, {});
+
+        // ensure unique icons by name, so only the last one is available
+        this.names = this.icons
+            .reduce((acc: any, curr) => {
+                acc[curr.name] = curr;
+                return acc;
+            }, {});
     }
 }

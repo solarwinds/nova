@@ -30,4 +30,5 @@ export * from "./toolbar/public-api";
 export * from "./tooltip/public-api";
 export * from "./validation-message/public-api";
 export * from "./wizard/public-api";
+export * from "./wizard-v2/public-api";
 export * from "./overlay/public-api";

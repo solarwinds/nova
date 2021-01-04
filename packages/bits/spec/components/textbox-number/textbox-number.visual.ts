@@ -28,6 +28,10 @@ describe("Visual tests: Textbox Number", () => {
         await disabledTextboxNumber.hover();
         await eyes.checkWindow("Default");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
+
         await customTextboxNumber.acceptText("");
         await basicTextboxNumber.hover();
         await eyes.checkWindow("Basic TextboxNumber is hover and Custom TextboxNumber is focused");

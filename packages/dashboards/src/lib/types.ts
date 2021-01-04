@@ -16,6 +16,8 @@ export type DeepPartial<T> = T extends object ? { [K in keyof T]?: DeepPartial<T
 export const PIZZAGNA_EVENT_BUS = new InjectionToken<EventBus<NuiEvent>>("PIZZAGNA_EVENT_BUS");
 export const DASHBOARD_EVENT_BUS = new InjectionToken<EventBus<NuiEvent>>("DASHBOARD_EVENT_BUS");
 export const DATA_SOURCE = new InjectionToken<EventBus<NuiEvent>>("DATA_SOURCE");
+export const FORMATTERS_REGISTRY = new InjectionToken<EventBus<NuiEvent>>("FORMATTERS_REGISTRY");
+export const TEST_REGISTRY = new InjectionToken<EventBus<NuiEvent>>("TEST_REGISTRY");
 
 export type WidgetUpdateOperation = (widget: IWidget, source: IConfiguratorSource) => Observable<IWidget>;
 export type WidgetRemovalOperation = (widgetId: string, source: IConfiguratorSource) => Observable<string>;
@@ -37,6 +39,7 @@ export enum WellKnownProviders {
     InteractionHandler = "interactionHandler",
     EventBusDebugger = "eventBusDebugger",
     KpiColorPrioritizer = "kpiColorPrioritizer",
+    FormattersRegistry = "formattersRegistry",
 }
 
 export enum WellKnownPathKey {

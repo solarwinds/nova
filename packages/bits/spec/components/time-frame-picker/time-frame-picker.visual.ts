@@ -57,6 +57,11 @@ describe("Visual tests: Timeframe Picker", () => {
         await eyes.checkWindow("Default quickpicker with datepicker");
 
         await popoverWithDatePicker.togglePopover();
+        await Helpers.switchDarkTheme("on");
+        await popoverWithDatePicker.open();
+        await eyes.checkWindow("Dark theme");
+        await popoverWithDatePicker.togglePopover();
+        await Helpers.switchDarkTheme("off");
 
         await popoverComplex.open();
         await eyes.checkWindow("Complex popover with timeframepicker and datepicker");

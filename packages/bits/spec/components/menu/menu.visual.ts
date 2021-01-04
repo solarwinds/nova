@@ -62,6 +62,10 @@ describe("Visual tests: Menu", () => {
         await menuIconOnlyDestructive.getMenuItemByIndex(3).clickItem();
         await menuIconOnlyDestructive.getMenuItemByIndex(5).hover();
         await eyes.checkWindow("Menu with different types of menu items is toggled (destructive menu)");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme test 1");
+        await Helpers.switchDarkTheme("off");
         await menuIconOnlyDestructive.toggleMenu();
 
         await menuMultiSelection.toggleMenu();
@@ -70,6 +74,9 @@ describe("Visual tests: Menu", () => {
         await menuMultiSelection.getMenuItemByIndex(4).clickItem();
         await menuMultiSelection.getMenuItemByIndex(5).hover();
         await eyes.checkWindow("Menu with multiseletion is toggled (two items are selected and one is hovered)");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
 
         await eyes.close();
     }, 200000);

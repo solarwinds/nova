@@ -4,7 +4,8 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ComboboxAtom } from "../combobox/combobox.atom";
 
-describe("Visual tests: Combobox", () => {
+// Quit testing the deprecated component
+xdescribe("Visual tests: Combobox", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any;
     let basicCombobox: ComboboxAtom;

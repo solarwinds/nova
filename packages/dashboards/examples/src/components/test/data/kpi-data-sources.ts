@@ -46,5 +46,38 @@ export class TestKpiDataSource2 implements OnDestroy {
     public ngOnDestroy(): void {
         this.outputsSubject.complete();
     }
+}
 
+export class TestKpiDataSourceSmallNumber implements OnDestroy {
+    public static providerId = "TestKpiDataSourceSmallNumber";
+
+    public outputsSubject = new Subject<Partial<IKpiData>>();
+
+    public applyFilters() {
+        this.outputsSubject.next({
+            value: 0.000000000000432453453,
+            units: "Lack_of_white_spaces_often_break_the_markup",
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this.outputsSubject.complete();
+    }
+}
+
+export class TestKpiDataSourceBigNumber implements OnDestroy {
+    public static providerId = "TestKpiDataSourceBigNumber";
+
+    public outputsSubject = new Subject<Partial<IKpiData>>();
+
+    public applyFilters() {
+        this.outputsSubject.next({
+            value: 32472894785734,
+            units: "Extremely Long Units Value Which Does Represent The Amount Of Bytes",
+        });
+    }
+
+    public ngOnDestroy(): void {
+        this.outputsSubject.complete();
+    }
 }

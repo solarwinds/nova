@@ -71,7 +71,7 @@ export abstract class FormatterConfiguratorComponent implements IFormatterConfig
         const dataFieldsDefinition = this.formatterDefinition.dataTypes || {};
         const dataFieldForm = Object.keys(dataFieldsDefinition).reduce((result, next) => {
             result[next] = [
-                null,
+                this.formatter?.properties?.dataFieldIds?.[next] ?? null,
                 Validators.required,
             ];
             return result;

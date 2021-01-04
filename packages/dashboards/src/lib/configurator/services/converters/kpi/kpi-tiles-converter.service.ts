@@ -8,7 +8,6 @@ import omit from "lodash/omit";
 import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
-import { NOVA_KPI_COLOR_PRIORITIZER, NOVA_KPI_DATASOURCE_ADAPTER } from "../../../../services/types";
 import { IComponentConfiguration, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../../types";
 import { IItemConfiguration } from "../../../components/types";
 import { IKpiItemConfiguration } from "../../../components/widgets/kpi/types";
@@ -86,17 +85,6 @@ export class KpiTilesConverterService extends BaseConverter implements AfterView
                     // @ts-ignore: The expected type comes from property 'providerId'
                     // which is declared here on type 'IProviderConfiguration'
                     providerId: undefined,
-                },
-                adapter: {
-                    providerId: NOVA_KPI_DATASOURCE_ADAPTER,
-                    properties: {
-                        componentId: id,
-                        propertyPath: "widgetData",
-                    },
-                },
-                kpiColorPrioritizer: {
-                    providerId: NOVA_KPI_COLOR_PRIORITIZER,
-                    properties: {},
                 },
             },
         };

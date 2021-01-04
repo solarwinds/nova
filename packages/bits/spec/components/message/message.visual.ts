@@ -14,6 +14,10 @@ describe("Visual tests: Message", () => {
     it("Default look", async () => {
         await eyes.open(browser, "NUI", "Message");
         await eyes.checkWindow("Default");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
-    });
+    }, 100000);
 });

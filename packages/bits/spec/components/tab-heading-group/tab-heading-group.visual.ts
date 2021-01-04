@@ -46,6 +46,9 @@ describe("Visual tests: Tab Heading Group", () => {
         await (await tabGroupResponsive.getLastTab()).hover();
         await eyes.checkWindow("Moving through tabs using caret right");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 150000);
 });

@@ -1,4 +1,4 @@
-<div class="list-nav-bar">
+<div class="list-nav-bar" *ngIf="navBarConfig && !navBarConfig?.isRoot">
     <button nui-button
             type="button"
             [isRepeat]="true"

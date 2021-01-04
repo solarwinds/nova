@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from "@angular/core";
+import { EventBus, IEvent } from "@nova-ui/bits";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+
+import { WIDGET_SEARCH } from "../../../../services/types";
+import { IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
 
 @Component({
     selector: "nui-list-leaf-item",
@@ -7,22 +13,35 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
     host: { class: "w-100" },
     styleUrls: ["list-leaf-item.component.less"],
 })
-export class ListLeafItemComponent {
+export class ListLeafItemComponent implements IHasChangeDetector, OnInit {
     static lateLoadKey = "ListLeafItemComponent";
 
     @Input() public icon: string;
-    @Input() public iconStatus: string;
     @Input() public status: string;
     @Input() public detailedUrl: string;
     @Input() public label: string;
-
     @Input() public canNavigate: boolean;
 
     @Output() public navigated = new EventEmitter<ListLeafItemComponent>();
+
+    public searchTerm: string = "";
+    protected destroy$ = new Subject();
 
     onButtonClick() {
         if (this.canNavigate) {
             this.navigated.emit(this);
         }
+    }
+
+    constructor(public changeDetector: ChangeDetectorRef,
+        @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>) {
+    }
+
+    public ngOnInit() {
+        this.eventBus.getStream(WIDGET_SEARCH).pipe(takeUntil(this.destroy$))
+            .subscribe((event) => {
+                this.searchTerm = event.payload;
+                this.changeDetector.markForCheck();
+            });
     }
 }

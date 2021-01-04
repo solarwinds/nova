@@ -119,7 +119,7 @@ export class AcmeTableDataSource extends DataSourceService<IRandomUserTableModel
 
         try {
             response = await
-            (await fetch(`${corsProxy}${RANDOMUSER_API_URL}${apiRoute}/?page=${end / (end - start) || 0}&results=${end - start}&seed=${this.seed}`)).json();
+            (await fetch(`${RANDOMUSER_API_URL}${apiRoute}/?page=${end / (end - start) || 0}&results=${end - start}&seed=${this.seed}`)).json();
             return {
                 users: response?.results.map((result: IRandomUserResults, i: number) => ({
                     no: this.cache.length + i + 1,

@@ -2,7 +2,13 @@ import { OnDestroy } from "@angular/core";
 import { HttpStatusCode, IDataSourceOutput } from "@nova-ui/dashboards";
 import { Subject } from "rxjs";
 
-import { IProportionalWidgetData, PROPORTIONAL_WIDGET_DATA_LARGE, PROPORTIONAL_WIDGET_DATA_MEDIUM, PROPORTIONAL_WIDGET_DATA_SMALL } from "./widget-data";
+import {
+    IProportionalWidgetData,
+    PROPORTIONAL_WIDGET_DATA_BIG_NUMBERS,
+    PROPORTIONAL_WIDGET_DATA_LARGE,
+    PROPORTIONAL_WIDGET_DATA_MEDIUM,
+    PROPORTIONAL_WIDGET_DATA_SMALL,
+} from "./widget-data";
 
 export class TestProportionalDataSource implements OnDestroy {
     public static providerId = "TestProportionalDataSource";
@@ -48,6 +54,20 @@ export class TestProportionalDataSource3 implements OnDestroy {
 
     public applyFilters() {
         this.outputsSubject.next(PROPORTIONAL_WIDGET_DATA_LARGE);
+    }
+
+    public ngOnDestroy(): void {
+        this.outputsSubject.complete();
+    }
+}
+
+export class TestProportionalDataSource4 implements OnDestroy {
+    public static providerId = "TestProportionalDataSource4";
+
+    public outputsSubject = new Subject<IProportionalWidgetData[]>();
+
+    public applyFilters() {
+        this.outputsSubject.next(PROPORTIONAL_WIDGET_DATA_BIG_NUMBERS);
     }
 
     public ngOnDestroy(): void {

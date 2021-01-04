@@ -158,6 +158,7 @@ export { ToastService } from "./lib/toast/toast.service";
 export { ToastDirective } from "./lib/toast/toast.directive";
 export { ThemeSwitchService } from "./services/theme-switch.service";
 export { TransientCacheService } from "./services/transient-cache.service";
+export { TableStateHandlerService } from "./lib/table/table-state-handler.service";
 export { UnitConversionService } from "./services/unit-conversion.service";
 export { LocalFilteringDataSource } from "./services/data-source/local-filtering-data-source.service";
 export { ClientSideDataSource } from "./services/data-source/client-side-data-source.service";

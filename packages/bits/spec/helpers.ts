@@ -80,7 +80,7 @@ export class Helpers {
             eyes.close = async () => true;
             eyes.abortIfNotClosed = async () => true;
             eyes.setStitchMode = () => true;
-            eyes.checkWindow = async (s: string) => {  console.log(s); await browser.sleep(2000); },
+            eyes.checkWindow = async (s: string) => {  console.log(s); await browser.sleep(3000); },
             eyes.checkRegion = console.log;
         }
 
@@ -116,6 +116,14 @@ export class Helpers {
             eyes.setIgnoreCaret(true);
         }
         return eyes;
+    }
+
+    static async switchDarkTheme(mode: "on" | "off"): Promise<void> {
+        const htmlClassList: string = `document.getElementsByTagName("html")[0].classList`;
+
+        mode === "on"
+            ? await browser.executeScript(`${htmlClassList}.add("dark-nova-theme")`)
+            : await browser.executeScript(`${htmlClassList}.remove("dark-nova-theme")`);
     }
 
     /**

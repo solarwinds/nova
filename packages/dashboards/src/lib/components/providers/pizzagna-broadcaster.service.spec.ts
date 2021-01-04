@@ -51,7 +51,7 @@ describe("PizzagnaBroadcasterService > ", () => {
             key: "form.controls.title.valueChanges",
             paths: [testPath],
         }];
-        broadcaster.setComponent(mockComponent);
+        broadcaster.setComponent(mockComponent, "mockComponentId");
 
         mockComponent.form.controls.title.setValue(testValue);
     });
@@ -70,7 +70,7 @@ describe("PizzagnaBroadcasterService > ", () => {
             key: "someComponent.properties.title",
             paths: [testPath],
         }];
-        broadcaster.setComponent(mockComponent);
+        broadcaster.setComponent(mockComponent, "mockComponentId");
 
         pizzagnaService.pizzaChanged.next({
             "someComponent": {
