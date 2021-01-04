@@ -45,15 +45,17 @@
   "schematics": "./sdk/schematics/collection.json",
   "peerDependencies": {
     "@angular-devkit/schematics": "^9.0.0",
+    "@nova-ui/bits": "main",
+    "@nova-ui/charts": "main",
     "@schematics/angular": "^9.0.0",
     "angular-gridster2": "^9.0.0",
     "d3": "^5.9.2",
     "d3-selection-multi": "^1.0.1"
   },
   "devDependencies": {
-    "@angular-devkit/schematics": "^9.0.0",
     "@angular-devkit/build-angular": "^0.900.0",
     "@angular-devkit/build-ng-packagr": "^0.900.0",
+    "@angular-devkit/schematics": "^9.0.0",
     "@angular/animations": "^9.0.0",
     "@angular/cdk": "^9.0.0",
     "@angular/cli": "^9.0.0",
@@ -69,6 +71,8 @@
     "@applitools/eyes-protractor": "~1.9.1",
     "@compodoc/compodoc": "1.1.7",
     "@locl/cli": "0.0.1-beta.9",
+    "@nova-ui/bits": "main",
+    "@nova-ui/charts": "main",
     "@schematics/angular": "^9.0.0",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
