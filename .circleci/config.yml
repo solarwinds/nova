@@ -30,6 +30,7 @@ jobs:
                         - docker-compose.yml
                         - tsconfig.main.json
                         - package.json
+                        - LICENSE
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
