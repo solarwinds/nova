@@ -16,7 +16,7 @@ describe("Visual tests: Panel", () => {
     let resizablePanel: PanelAtom;
     let expanders: {[key: string]: ElementFinder};
 
-    beforeEach(async () => {
+    beforeEach(async (done) => {
         eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("panel/panel-visual-test");
 
@@ -39,18 +39,25 @@ describe("Visual tests: Panel", () => {
             detailsTopOriented : element(by.id("nui-visual-top-oriented-panel-details")),
             detailsNested : element(by.id("nui-visual-nested-panel-details")),
         };
+
+        done();
     });
 
-    afterAll(async () => {
+    afterAll(async (done) => {
         await eyes.abortIfNotClosed();
-    });
+        done();
+    }, 1000);
 
-    it("Default look", async () => {
+    it("Default look", async (done) => {
         await eyes.open(browser, "NUI", "Panel");
 
         // First we expand all expanders to check the default state of all panel cases
         for (const key of Object.keys(expanders)) { await expanders[key].click(); }
         await eyes.checkWindow("Basic view with hover on top orienter arrow button");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
 
         // Then we close fist four expanders to hide examples we don't need for the test
         // This is done to reduce the amount of information on the screenshot and therefore
@@ -77,5 +84,6 @@ describe("Visual tests: Panel", () => {
         await eyes.checkWindow("Closable paned can be closed. Hoverable panel can be hovered");
 
         await eyes.close();
-    }, 200000);
+        done();
+    }, 300000);
 });

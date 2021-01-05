@@ -3,6 +3,8 @@ import get from "lodash/get";
 import { Observable, Subscription } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
 
+import { getParentComponentId } from "../../functions/get-parent-component-id";
+import { parseStringWithData } from "../../functions/parse-string-with-data";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IConfigurable, IProperties } from "../../types";
 
@@ -14,12 +16,17 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
     private readonly defaultTrackOn: BroadcasterTrackOnType = "pizzagna";
 
     private subscriptions: Subscription[] = [];
+    private componentId: string;
+    private parentComponentId: string;
 
     constructor(private pizzagnaService: PizzagnaService) {
     }
 
-    public setComponent(component: any) {
+    public setComponent(component: any, componentId: string) {
         this.component = component;
+        this.componentId = componentId;
+        this.parentComponentId = getParentComponentId(componentId);
+
         this.initChangeSubscriptions();
     }
 
@@ -38,7 +45,8 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
 
             const subscription = observable.subscribe((v) => {
                 for (const path of config.paths) {
-                    this.pizzagnaService.setProperty(path, v);
+                    const validatedPath = parseStringWithData(path, this);
+                    this.pizzagnaService.setProperty(validatedPath, v);
                 }
             });
             this.subscriptions.push(subscription);

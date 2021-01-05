@@ -1,6 +1,9 @@
+import { BehaviorSubject } from "rxjs";
+
 import { ComparatorTypes, IProperties } from "../../types";
 import { IListWidgetConfiguration } from "../list-widget/types";
 import { ITimeseriesWidgetSeries } from "../timeseries-widget/types";
+import { IFormatter } from "../types";
 
 /** Default refresh interval in seconds */
 export const DEFAULT_REFRESH_INTERVAL = 300;
@@ -45,13 +48,28 @@ export interface IKpiColorRules {
     color: any;
 }
 
-interface IDrilldownComponentConfiguration {
-    componentType: string;
-    itemConfigurationMap?: Record<string, any>;
+export interface IDrilldownComponentConfiguration extends IFormatter {
+    properties: Record<string, any>;
     itemProperties?: IProperties;
 }
 
 export interface IDrilldownComponentsConfiguration {
-    group: IListWidgetConfiguration;
-    leaf: IListWidgetConfiguration;
+    group: IDrilldownComponentConfiguration;
+    leaf: IDrilldownComponentConfiguration;
+}
+
+export interface IBrokerValue {
+    id: string;
+    targetID: string;
+    targetValue: number;
+}
+
+export interface IBrokerUserConfig {
+    id: string;
+    type?: "min" | "max";
+}
+
+export interface IBroker extends IBrokerUserConfig {
+    in$: BehaviorSubject<IBrokerValue>;
+    out$: BehaviorSubject<IBrokerValue>;
 }

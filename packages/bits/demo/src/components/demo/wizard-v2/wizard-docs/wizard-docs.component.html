@@ -1,0 +1,50 @@
+<h2>Layout</h2>
+<h3>Horizontal Layout Wizard</h3>
+<p>
+    To use the horizontal wizard component, place a <code>nui-wizard-horizontal</code> element in your template and include one or more
+    <code><a href="../components/WizardStepComponent.html" target="_blank">nui-wizard-step-v2</a></code> elements as children of the
+    <code>nui-wizard-horizontal</code> element.
+</p>
+<nui-example-wrapper filenamePrefix="wizard-horizontal-layout" exampleTitle="Horizontal Layout Wizard">
+    <nui-wizard-horizontal-example></nui-wizard-horizontal-example>
+</nui-example-wrapper>
+
+<h3>Vertical Layout Wizard</h3>
+<nui-example-wrapper filenamePrefix="wizard-vertical-layout" exampleTitle="Vertical Layout Wizard">
+    <nui-wizard-vertical-example></nui-wizard-vertical-example>
+</nui-example-wrapper>
+
+<h3>Usage with a dialog</h3>
+<p>You can pass an existing wizard component as content of the dialog window. </p>
+<p>You should insert wizard component in dialog body. </p>
+<nui-example-wrapper filenamePrefix="wizard-dialog" exampleTitle="wizard in dialog">
+    <nui-wizard-v2-dialog-example></nui-wizard-v2-dialog-example>
+</nui-example-wrapper>
+
+<h3>Busy step</h3>
+<p>You can make your step busy to forbid actions.</p>
+<nui-example-wrapper filenamePrefix="wizard-busy" exampleTitle="wizard step busy">
+    <nui-wizard-v2-busy-example></nui-wizard-v2-busy-example>
+</nui-example-wrapper>
+
+<h3>Custom footer</h3>
+<p>Customizing the footer layout content and style for each step is quite easy, as you can see in the example below:</p>
+<nui-example-wrapper filenamePrefix="wizard-custom-footer" exampleTitle="Wizard with Custom Footer">
+    <nui-wizard-custom-footer-example></nui-wizard-custom-footer-example>
+</nui-example-wrapper>
+
+<h3>Adding step dynamically</h3>
+<p>You are able to add wizard steps dynamically.</p>
+<p>To make it you should use wizard method 'addStepDynamic' and pass 2 arguments wizardStepComponent and index to insert it in correct place.</p>
+<p><strong>Note:</strong> Angular doesn't allow binding to outputs of dynamically created component from template. You can access outputs of
+    <code><a href="../components/WizardStepComponent.html" target="_blank">nui-wizard-step</a></code> directly.<code>addStepDynamic</code> method of Wizard
+    returns you instance of dynamically added step and you can manually subscribe to outputs like <code>enter</code>,<code>exit</code> etc.
+</p>
+<nui-example-wrapper filenamePrefix="wizard-dynamic" exampleTitle="wizard add dynamic step">
+    <nui-wizard-dynamic-example></nui-wizard-dynamic-example>
+</nui-example-wrapper>
+
+<h3>Custom Layout Wizard</h3>
+<nui-example-wrapper filenamePrefix="wizard-custom-layout" exampleTitle="Custom Layout Wizard">
+    <nui-wizard-custom-example></nui-wizard-custom-example>
+</nui-example-wrapper>

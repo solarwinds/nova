@@ -18,7 +18,7 @@ import {
 } from "@nova-ui/dashboards";
 
 import { TestCommonModule } from "../../common/common.module";
-import { TestTimeseriesDataSource, TestTimeseriesDataSource2 } from "../../data/timeseries-data-sources";
+import { TestTimeseriesDataSource, TestTimeseriesDataSource2, TestTimeseriesStatusDataSource, TestTimeseriesStatusIntervalDataSource } from "../../data/timeseries-data-sources";
 
 import { AcmeDashboardComponent } from "./timeseries-test.component";
 
@@ -61,7 +61,11 @@ export class TimeseriesTestModule {
     }
 
     private setupDataSourceProviders() {
-        this.setDataSourceProviders("timeseries", [TestTimeseriesDataSource.providerId, TestTimeseriesDataSource2.providerId]);
+        this.setDataSourceProviders("timeseries", [
+            TestTimeseriesDataSource.providerId,
+            TestTimeseriesDataSource2.providerId,
+            TestTimeseriesStatusDataSource.providerId,
+            TestTimeseriesStatusIntervalDataSource.providerId]);
     }
 
     private setDataSourceProviders(type: string, providers: string[]) {

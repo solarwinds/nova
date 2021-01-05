@@ -5,6 +5,7 @@ import { NuiButtonModule, NuiDocsModule, NuiMessageModule,  NuiSwitchModule } fr
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { DrilldownDocsComponent } from "./drilldown-docs.component";
+import { DrilldownMultiRequestWidgetExampleComponent } from "./drilldown-multi-request-widget-example/drilldown-multi-request-widget-example.component";
 import { DrilldownWidgetExampleComponent } from "./drilldown-widget-example/drilldown-widget-example.component";
 
 const routes: Routes = [
@@ -26,6 +27,15 @@ const routes: Routes = [
             },
         },
     },
+    {
+        path: "multiple-requests",
+        component: DrilldownMultiRequestWidgetExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -40,6 +50,7 @@ const routes: Routes = [
     declarations: [
         DrilldownDocsComponent,
         DrilldownWidgetExampleComponent,
+        DrilldownMultiRequestWidgetExampleComponent,
     ],
 })
 export class DrilldownDocsModule {

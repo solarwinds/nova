@@ -35,7 +35,7 @@ import { IOption, OptionValueType } from "../overlay/types";
 
 import { OptionKeyControlService } from "./option-key-control.service";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
-import { IOptionedComponent } from "./types";
+import { InputValueTypes, IOptionedComponent } from "./types";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
@@ -125,6 +125,9 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     /** Emits value which has been selected */
     @Output() public valueSelected = new EventEmitter<OptionValueType | OptionValueType[] | null>();
+
+    /** Emits value which has been changed */
+    @Output() public valueChanged = new EventEmitter<InputValueTypes>();
 
     /** Emits MouseEvent when click occurs outside Select/Combobox */
     @Output() public clickOutsideDropdown = new EventEmitter<MouseEvent>();
@@ -324,6 +327,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
             const selectedValue = this.options?.find(option => isEqual(option.value, modelValue));
             this._selectedOptions = selectedValue ? [selectedValue] : [];
         }
+        this.valueChanged.emit();
         this.setActiveItemOnDropdown();
     }
 

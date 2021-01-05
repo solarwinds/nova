@@ -13,8 +13,10 @@ import {
     WidgetTypesService
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import orderBy from "lodash/orderBy";
 import { BehaviorSubject, from } from "rxjs";
 import { map, tap } from "rxjs/operators";
+
 
 export const BREW_API_URL = "https://api.punkapi.com/v2/beers";
 
@@ -40,11 +42,11 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
     public busy = new BehaviorSubject(false);
 
     public dataFields: Array<IDataField> = [
-        { id: nameof<IBrewInfo>("id"), label: "No", dataType: "number", sortable: false },
+        { id: nameof<IBrewInfo>("id"), label: "No", dataType: "number", sortable: true },
         // To indicate that a column should not be sortable, set the optional IDataField 'sortable' property to false
-        { id: nameof<IBrewInfo>("name"), label: "Name", dataType: "string", sortable: false },
-        { id: nameof<IBrewInfo>("tagline"), label: "Tagline", dataType: "string", sortable: false },
-        { id: nameof<IBrewInfo>("first_brewed"), label: "First Brewed", dataType: "string", sortable: false },
+        { id: nameof<IBrewInfo>("name"), label: "Name", dataType: "string", sortable: true },
+        { id: nameof<IBrewInfo>("tagline"), label: "Tagline", dataType: "string", sortable: true },
+        { id: nameof<IBrewInfo>("first_brewed"), label: "First Brewed", dataType: "string", sortable: true },
         { id: nameof<IBrewInfo>("description"), label: "Description", dataType: "string", sortable: false },
         { id: nameof<IBrewInfo>("brewers_tips"), label: "Brewer's Tips", dataType: "string", sortable: false },
     ];
@@ -65,7 +67,7 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
                 if (!response) {
                     return;
                 }
-                this.cache = this.cache.concat(response.brewInfo);
+                this.cache = this.sortData(this.cache.concat(response.brewInfo), filters);
                 this.dataSubject.next(this.cache);
             }),
             map(() => ({
@@ -95,6 +97,10 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
             })),
             total: response.length,
         };
+    }
+
+    private sortData(data: IBrewInfo[], filters: INovaFilters): IBrewInfo[] {
+        return orderBy(data, filters.sorter?.value?.sortBy, filters.sorter?.value?.direction as "desc" | "asc");
     }
 }
 
@@ -220,6 +226,7 @@ const TABLE_COLUMNS: ITableWidgetColumnConfig[] = [
         id: "column3",
         label: $localize`First Brewed`,
         isActive: true,
+        width: 100,
         formatter: {
             componentType: "RawFormatterComponent",
             properties: {
@@ -233,7 +240,6 @@ const TABLE_COLUMNS: ITableWidgetColumnConfig[] = [
         id: "column4",
         label: $localize`Description`,
         isActive: true,
-        width: 275,
         formatter: {
             componentType: "RawFormatterComponent",
             properties: {
@@ -265,7 +271,7 @@ export const widgetConfig: IWidget = {
                 properties: {
                     configuration: {
                         columns: TABLE_COLUMNS,
-                        sortable: false,
+                        sortable: true,
                         sorterConfiguration: {
                             descendantSorting: false,
                             sortBy: "",

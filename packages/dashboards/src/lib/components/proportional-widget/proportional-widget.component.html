@@ -13,13 +13,26 @@
                                  class="nui-proportional-widget__chart-donut-content"
                                  [plugin]="donutContentPlugin">
             <div class="h-100 w-100 d-flex justify-content-center align-items-center text-center">
-                <div class="d-inline-block" nuiZoomContent [zoomRatio]="0.7">
-                    <ng-container nuiComponentPortal
-                                  [componentType]="contentFormatter?.componentType || 'DonutContentRawFormatterComponent'"
-                                  [properties]="contentFormatterProperties"
-                                  #componentPortal2="nuiComponentPortal">
-                    <ng-template [cdkPortalOutlet]="componentPortal2.portal"
-                                (attached)="componentPortal2.attached($event)"></ng-template>
+                <div class="d-inline-block" nuiZoomContent [useZoom]="false">
+
+                    <!-- OLD CONFIG HERE -->
+                    <ng-container *ngIf="!configuration?.chartOptions?.donutContentConfig">
+                        <ng-container nuiComponentPortal
+                            [componentType]="contentFormatter?.componentType || 'DonutContentRawFormatterComponent'"
+                            [properties]="contentFormatterProperties"
+                            #componentPortal2="nuiComponentPortal">
+                        <ng-template [cdkPortalOutlet]="componentPortal2.portal"
+                                    (attached)="componentPortal2.attached($event)"></ng-template>
+                        </ng-container>
+                    </ng-container>
+
+                    <!-- NEW CONFIG HERE -->
+                    <ng-container *ngIf="configuration?.chartOptions?.donutContentConfig">
+                        <nui-proportional-donut-content
+                            [widgetData]="widgetData"
+                            [donutConfig]="configuration?.chartOptions?.donutContentConfig"
+                            [chartAssist]="chartAssist"
+                        ></nui-proportional-donut-content>
                     </ng-container>
                 </div>
             </div>

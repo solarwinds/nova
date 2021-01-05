@@ -14,7 +14,7 @@ import {
 import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";
 
-import { AcmeTimeseriesDataSource, AcmeTimeseriesStatusDataSource } from "../data/timeseries-data-sources";
+import { AcmeTimeseriesDataSource, AcmeTimeseriesStatusDataSource, AcmeTimeseriesStatusIntervalDataSource } from "../data/timeseries-data-sources";
 
 export const positions: Record<string, GridsterItem> = {
     "widget1": {
@@ -609,7 +609,7 @@ export const widgetConfigs: IWidget[] = [
                 [DEFAULT_PIZZAGNA_ROOT]: {
                     "providers": {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesStatusDataSource.providerId,
+                            "providerId": AcmeTimeseriesStatusIntervalDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },

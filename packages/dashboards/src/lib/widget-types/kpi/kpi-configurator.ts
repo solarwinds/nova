@@ -1,5 +1,11 @@
 // tslint:disable:max-line-length
+import { IBroadcasterConfig } from "../../components/providers/types";
+import { IFormatterDefinition } from "../../components/types";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
+import { IconFormatterComponent } from "../../configurator/components/formatters/icon-formatter/icon-formatter.component";
+import { LinkFormatterComponent } from "../../configurator/components/formatters/link-formatter/link-formatter.component";
+import { RawFormatterComponent } from "../../configurator/components/formatters/raw-formatter/raw-formatter.component";
+import { SiUnitsFormatterComponent } from "../../configurator/components/formatters/si-units-formatter/si-units-formatter.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { BackgroundColorRulesConfigurationComponent } from "../../configurator/components/widgets/configurator-items/background-color-rules-configuration/background-color-rules-configuration.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
@@ -7,11 +13,41 @@ import { KpiDescriptionConfigurationComponent } from "../../configurator/compone
 import { ThresholdsConfigurationComponent } from "../../configurator/components/widgets/configurator-items/thresholds-configuration/thresholds-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import { KpiTilesConfigurationComponent } from "../../configurator/components/widgets/kpi/kpi-tiles-configuration/kpi-tiles-configuration.component";
+import { PresentationConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/column-configuration/presentation-configuration/presentation-configuration.component";
 import { DEFAULT_KPI_BACKGROUND_COLORS } from "../../constants/default-palette";
-import { DEFAULT_PIZZAGNA_ROOT, NOVA_KPI_SECTION_CONVERTER, NOVA_KPI_TILES_CONVERTER, NOVA_TITLE_AND_DESCRIPTION_CONVERTER } from "../../services/types";
+import { DEFAULT_PIZZAGNA_ROOT, NOVA_KPI_FORMATTERS_REGISTRY, NOVA_KPI_SECTION_CONVERTER, NOVA_KPI_TILES_CONVERTER, NOVA_PIZZAGNA_BROADCASTER, NOVA_TITLE_AND_DESCRIPTION_CONVERTER } from "../../services/types";
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
+
 // tslint:enable:max-line-length
+
+
+export const DEFAULT_KPI_FORMATTERS: IFormatterDefinition[] = [
+    {
+        componentType: RawFormatterComponent.lateLoadKey,
+        label: $localize`Raw Formatter`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+    },
+    {
+        componentType: SiUnitsFormatterComponent.lateLoadKey,
+        label: $localize`Si Units Formatter`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+    },
+    {
+        componentType: IconFormatterComponent.lateLoadKey,
+        label: $localize`Icon`,
+        dataTypes: {
+            // @ts-ignore
+            value: null,
+        },
+    },
+];
 
 export const kpiConfigurator = {
     [PizzagnaLayer.Structure]: {
@@ -26,6 +62,11 @@ export const kpiConfigurator = {
                     "presentation",
                     "tiles",
                 ],
+            },
+            providers: {
+                [WellKnownProviders.FormattersRegistry]: {
+                    providerId: NOVA_KPI_FORMATTERS_REGISTRY,
+                },
             },
         },
         // /presentation
@@ -106,6 +147,18 @@ export const kpiConfigurator = {
                                     ],
                                 },
                             } as IProviderConfiguration,
+                            [WellKnownProviders.Broadcaster]: {
+                                providerId: NOVA_PIZZAGNA_BROADCASTER,
+                                properties: {
+                                    configs: [
+                                        {
+                                            trackOn: "component",
+                                            key: "dataFieldIds",
+                                            paths: ["data.{parentComponentId}/formatting.properties.dataFieldIds"],
+                                        },
+                                    ] as IBroadcasterConfig[],
+                                },
+                            },
                         },
                     },
                     {
@@ -146,11 +199,43 @@ export const kpiConfigurator = {
                                     formParts: [
                                         {
                                             previewPath: "providers.kpiColorPrioritizer.properties",
-                                            keys: [ "rules" ],
+                                            keys: ["rules"],
                                         },
                                     ],
                                 },
                             } as IProviderConfiguration,
+                        },
+                    },
+                    {
+                        id: "formatting",
+                        componentType: PresentationConfigurationComponent.lateLoadKey,
+                        providers: {
+                            [WellKnownProviders.Converter]: {
+                                providerId: NOVA_KPI_SECTION_CONVERTER,
+                                properties: {
+                                    formParts: [
+                                        {
+                                            previewPath: "properties.configuration.formatters.Value",
+                                            keys: ["formatter"],
+                                        },
+                                    ],
+                                },
+                            } as IProviderConfiguration,
+                        },
+                        properties: {
+                            // Note: Now you should define your formatters in the KpiFormatterRegistry which can contain more formatter options
+                            // formatters: DEFAULT_KPI_FORMATTERS,
+
+                            // Set default formatter to the configuration section as RawFormatterComponent.
+                            // In case Kpi doesn't use the formatters yet, it will be overridden with default formatter value on first save
+                            formatter: {
+                                componentType: RawFormatterComponent.lateLoadKey,
+                                properties: {
+                                    dataFieldIds: {
+                                        value: "value",
+                                    },
+                                },
+                            },
                         },
                     },
                 ],

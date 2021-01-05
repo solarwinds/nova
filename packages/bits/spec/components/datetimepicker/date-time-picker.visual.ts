@@ -46,6 +46,12 @@ describe("Visual tests: Date-time-picker", () => {
         await dateTimePickerDialog.getTimePicker().popup.getPopupToggle().click();
         await eyes.checkWindow("Date Time Picker Dialog Time");
 
+        await Helpers.switchDarkTheme("on");
+        await dateTimePickerDialog.getDatePicker().clickCalendarIcon();
+        await eyes.checkWindow("Dark theme - Date Time Picker Dialog Date");
+        await dateTimePickerDialog.getTimePicker().popup.getPopupToggle().click();
+        await eyes.checkWindow("Dark theme - Date Time Picker Dialog Time");
+
         await eyes.close();
     }, 100000);
 });

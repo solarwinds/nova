@@ -98,12 +98,22 @@
                     {
                         "title": "Setting a Background Color",
                         "file": "../pages/widget-types/kpi/background-color.md"
+                    },
+                    {
+                        "title": "Syncing the Scale Values of KPI Tiles",
+                        "file": "../pages/widget-types/kpi/sync-broker.md"
                     }
                 ]
             },
             {
                 "title": "Proportional",
-                "file": "../pages/widget-types/proportional.md"
+                "file": "../pages/widget-types/proportional/proportional.md",
+                "children": [
+                    {
+                        "title": "Proportional Donut Content Configuration",
+                        "file": "../pages/widget-types/proportional/proportional-donut-content-formatters.md"
+                    }
+                ]
             },
             {
                 "title": "Table",
@@ -118,6 +128,14 @@
             {
                 "title": "Timeseries",
                 "file": "../pages/widget-types/timeseries.md"
+            },
+            {
+                "title": "Embedded Content",
+                "file": "../pages/widget-types/embedded.md"
+            },
+            {
+                "title": "Drilldown",
+                "file": "../pages/widget-types/drilldown.md"
             }
         ]
     }

@@ -92,29 +92,29 @@ describe("BaseLayout", () => {
         });
 
         it("should update 'nodeConfigs' if the nodes change", () => {
-            component.nodeConfigs = [testComponents["component1"]];
+            component.nodeComponentsConfigs = [testComponents["component1"]];
             component.nodes = ["component2"];
             component.ngOnChanges({ nodes: {} as SimpleChange });
-            expect(component.nodeConfigs).toEqual([testComponents["component2"]]);
+            expect(component.nodeComponentsConfigs).toEqual([testComponents["component2"]]);
         });
     });
 
     describe("ngDoCheck", () => {
-        it("should not update 'nodeConfigs' if the nodes don't change", () => {
+        it("should not update 'nodeComponentsConfigs' if the nodes don't change", () => {
             const testNodeConfigs = [testComponents["component1"]];
-            component.nodeConfigs = testNodeConfigs;
+            component.nodeComponentsConfigs = testNodeConfigs;
             component.nodes = ["component1"];
             component.ngDoCheck();
-            expect(component.nodeConfigs).toBe(testNodeConfigs);
+            expect(component.nodeComponentsConfigs).toBe(testNodeConfigs);
         });
 
-        it("should update 'nodeConfigs' if the nodes change", () => {
+        it("should update 'nodeComponentsConfigs' if the nodes change", () => {
             const testNodeConfigs = [testComponents["component1"]];
-            component.nodeConfigs = testNodeConfigs;
+            component.nodeComponentsConfigs = testNodeConfigs;
             component.nodes = ["component2"];
             component.ngDoCheck();
-            expect(component.nodeConfigs).toEqual([testComponents["component2"]]);
-            expect(component.nodeConfigs).not.toBe(testNodeConfigs);
+            expect(component.nodeComponentsConfigs).toEqual([testComponents["component2"]]);
+            expect(component.nodeComponentsConfigs).not.toBe(testNodeConfigs);
         });
     });
 });

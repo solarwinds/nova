@@ -7,9 +7,9 @@
                     <nui-icon icon="drag"></nui-icon>
                 </div>
             </ng-container>
-            <span [title]="headerMap.get(node.id) | nuiWidgetConfiguratorSectionHeader:i"
+            <span [title]="headerMap.get(node.id) | nuiWidgetConfiguratorSectionHeader : i : headerPrefix"
                   class="nui-items-dynamic__header-text">
-                {{ headerMap.get(node.id) | nuiWidgetConfiguratorSectionHeader: i : headerPrefix }}
+                {{ headerMap.get(node.id) | nuiWidgetConfiguratorSectionHeader : i : headerPrefix }}
             </span>
         </ng-template>
         <ng-template #headerButtons>

@@ -41,6 +41,9 @@ describe("Visual tests: Chips", () => {
         await chipsOverflow.getChipsOverflowElement().click();
         await eyes.checkWindow("Open popup with overflow chips");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 100000);
 });

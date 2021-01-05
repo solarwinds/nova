@@ -25,9 +25,13 @@ describe("Visual tests: Spinner", () => {
         await eyes.open(browser, "NUI", "Spinner");
         await eyes.checkWindow("Default");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
+
         await spinnerLargeWithCancel.waitForDisplayed();
         await spinnerLargeWithCancel.cancel();
-        await eyes.checkWindow("Spinners with cance buttons are cancelled");
+        await eyes.checkWindow("Spinners with cancel buttons are cancelled");
         await eyes.close();
-    });
+    }, 100000);
 });

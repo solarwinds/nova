@@ -6,6 +6,13 @@ import { datetimeFormatter } from "./formatters/datetime-formatter";
 import { TimeScale } from "./time-scale";
 import { EMPTY_CONTINUOUS_DOMAIN, IBandScale } from "./types";
 
+// algorithm found here: https://stackoverflow.com/a/30280636/5108336
+export function isDaylightSavingTime(d: Date) {
+    const jan = new Date(d.getFullYear(), 0, 1).getTimezoneOffset();
+    const jul = new Date(d.getFullYear(), 6, 1).getTimezoneOffset();
+    return Math.max(jan, jul) !== d.getTimezoneOffset();
+}
+
 /**
  * Scale designed to support regular interval based data.
  */
@@ -20,8 +27,14 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
 
         this._bandScale = scaleBand<Date>();
 
-        this.formatters.title = value =>
-            datetimeFormatter(value) + " - " + datetimeFormatter(moment(value).add(this.interval()).toDate());
+        this.formatters.title = (inputDate: Date) => {
+            const intervalDays = this.interval().asDays();
+            // if the date is outside of daylight saving time and interval >= 1 day, add an hour to the time to format the day as "mmm d" instead of "11:00pm"
+            const standardTimeOffsetMs = intervalDays >= 1 && !isDaylightSavingTime(inputDate) && isDaylightSavingTime(this.domain()[0]) ? 3600000 : 0;
+            const adjustedDate = new Date(inputDate.getTime() + standardTimeOffsetMs);
+            const endDate = intervalDays >= 1 ? moment(adjustedDate).add(intervalDays, "days").toDate() : moment(adjustedDate).add(this.interval()).toDate();
+            return datetimeFormatter(adjustedDate) + " - " + datetimeFormatter(endDate);
+        };
     }
 
     public interval(): Duration;
@@ -72,7 +85,7 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
 
     private getBandsForInterval(from: Date, to: Date): Date[] {
         const bands: Date[] = [];
-        let date = this.truncToInterval(from, this.interval());
+        let date = this.truncToInterval(from, this.interval(), true);
         if (!date) {
             throw new Error("Could not get bands for interval");
         }
@@ -111,12 +124,13 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
         return this._bandScale.bandwidth();
     }
 
-    public truncToInterval(datetime: Date | undefined, interval: Duration): Date | undefined {
+    public truncToInterval(datetime: Date | undefined, interval: Duration, isDomainChange = false): Date | undefined {
         if (!datetime) {
             return datetime;
         }
-
-        const timeZoneOffsetMs = datetime.getTimezoneOffset() * 60000;
+        const isDomainStartDst = isDomainChange ? isDaylightSavingTime(datetime) : isDaylightSavingTime(this.domain()[0]);
+        const standardTimeOffsetMinutes = !isDaylightSavingTime(datetime) && isDomainStartDst ? 60 : 0;
+        const timeZoneOffsetMs = (datetime.getTimezoneOffset() - standardTimeOffsetMinutes) * 60000;
         const timestamp = datetime.getTime() - timeZoneOffsetMs;
         const intervalMs = interval.asMilliseconds();
         const remainder = timestamp % intervalMs;

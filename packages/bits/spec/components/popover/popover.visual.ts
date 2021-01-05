@@ -16,21 +16,27 @@ describe("Visual tests: Popover", () => {
     const popoverBasicMultiline: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-limited-and-multiline")));
     const popoverModal: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-modal")));
 
-    beforeEach(async () => {
+    beforeEach(async (done) => {
         eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("popover/popover-visual-test");
+        done();
     });
 
-    afterAll(async () => {
+    afterAll(async (done) => {
         await eyes.abortIfNotClosed();
-    });
+        done();
+    }, 1000);
 
-    it("Default look", async () => {
+    it("Default look", async (done) => {
         await eyes.open(browser, "NUI", "Popover");
 
         await popoverPreventClosing.togglePopover();
         await placementCheckButtons.each(async btn => await btn?.click());
         await eyes.checkWindow("Popover placement and preventClose");
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
         await placementCheckButtons.each(async btn => await btn?.click());
         await popoverPreventClosing.togglePopover();
 
@@ -58,5 +64,6 @@ describe("Visual tests: Popover", () => {
         await eyes.checkWindow("Modal popover");
 
         await eyes.close();
-    }, 100000);
+        done();
+    }, 300000);
 });

@@ -32,6 +32,10 @@ describe("Visual tests: Icon", () => {
          * are declared in different and incorrect order).
          */
         await eyes.checkRegion(regionSize, "Icon is hovered" as any);
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 100000);
 });

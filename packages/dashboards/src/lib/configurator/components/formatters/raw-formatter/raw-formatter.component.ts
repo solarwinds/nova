@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, HostBinding, Input, OnChanges } from "@angular/core";
 
 import { IFormatterData } from "../types";
 
@@ -6,7 +6,7 @@ import { IFormatterData } from "../types";
     template: `
         <ng-container>{{data?.value}}</ng-container>`,
 })
-export class RawFormatterComponent implements OnChanges {
+export class RawFormatterComponent {
     static lateLoadKey = "RawFormatterComponent";
 
     constructor(public changeDetector: ChangeDetectorRef) {
@@ -14,6 +14,7 @@ export class RawFormatterComponent implements OnChanges {
 
     @Input() data: IFormatterData;
 
-    ngOnChanges() {
-    }
+    @Input()
+    @HostBinding("class")
+    public elementClass: string;
 }

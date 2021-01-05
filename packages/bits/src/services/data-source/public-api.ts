@@ -1,4 +1,4 @@
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 
 import { IMenuGroup } from "../../lib/menu/public-api";
 import { RepeatSelectionMode } from "../../lib/repeat/types";
@@ -123,6 +123,7 @@ export interface IDataSource<T extends IFilteringOutputs = IFilteringOutputs> {
     outputsSubject: Subject<any | IDataSourceOutput<T>>;
     busy?: Subject<boolean>;
     features?: IDataSourceFeaturesConfiguration;
+    dataFieldsConfig?: IDataFieldsConfig;
     applyFilters(): Promise<void>;
     registerComponent(components: Partial<IFilteringParticipants>): void;
     deregisterComponent?(componentKey: string): void;
@@ -148,3 +149,21 @@ export interface IDataSourceFeature {
         [key: string]: any;
     };
 }
+
+export interface IDataSourceDrilldown extends IDataSource {
+    busy?: BehaviorSubject<boolean>;
+}
+
+export interface IDataFieldsConfig {
+    dataFields$: BehaviorSubject<IDataField[]>;
+}
+
+// TODO: mark dataType field as optional in vNext, because previously it was used only for TableWidget,
+//  but IDataField is using in DataSource now so that consumers are required to fill these fields
+export interface IDataField {
+    id: string;
+    label: string;
+    dataType: string;
+    sortable?: boolean;
+}
+

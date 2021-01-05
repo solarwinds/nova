@@ -4,12 +4,8 @@ import get from "lodash/get";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import {
-    ITableWidgetColumnConfig,
-    ITableWidgetConfig,
-    ITableWidgetSorterConfig
-} from "../../../../../components/table-widget/types";
-import { IHasForm } from "../../../../../types";
+import { ITableWidgetColumnConfig, ITableWidgetConfig, ITableWidgetSorterConfig } from "../../../../../components/table-widget/types";
+import { IHasChangeDetector, IHasForm } from "../../../../../types";
 
 @Component({
     selector: "nui-table-filters-editor-component",
@@ -18,7 +14,7 @@ import { IHasForm } from "../../../../../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class TableFiltersEditorComponent implements OnInit, OnChanges, OnDestroy, IHasForm {
+export class TableFiltersEditorComponent implements OnInit, OnChanges, OnDestroy, IHasForm, IHasChangeDetector {
     static lateLoadKey = "TableFiltersEditorComponent";
 
     @Input() sorterConfiguration: ITableWidgetSorterConfig;
@@ -34,7 +30,7 @@ export class TableFiltersEditorComponent implements OnInit, OnChanges, OnDestroy
     private onDestroy$ = new Subject<void>();
 
     constructor(private formBuilder: FormBuilder,
-                private changeDetector: ChangeDetectorRef) {
+                public changeDetector: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -64,11 +60,13 @@ export class TableFiltersEditorComponent implements OnInit, OnChanges, OnDestroy
         if (changes.columns) {
             this.sortableColumns = this.columns.filter((column: ITableWidgetColumnConfig) => !!column.formatter && (column.sortable ?? true));
             const sortedColumn = this.sortableColumns.find(column => column.id === this.sorterConfiguration?.sortBy);
+
             sortByFormControl?.setValue(sortedColumn?.id, { emitEvent: false });
             descendantSortingFormControl?.setValue(this.sorterConfiguration?.descendantSorting, { emitEvent: false });
+
             if (this.sortableColumns.length === 0) {
-               sortByFormControl?.disable();
-               descendantSortingFormControl?.disable();
+                sortByFormControl?.disable();
+                descendantSortingFormControl?.disable();
             } else {
                 sortByFormControl?.enable();
                 descendantSortingFormControl?.enable();
@@ -81,12 +79,12 @@ export class TableFiltersEditorComponent implements OnInit, OnChanges, OnDestroy
         if (val.sorterConfiguration) {
             const sortedColumn = this.columns?.find(col => col.id === val.sorterConfiguration.sortBy);
             if (!sortedColumn) {
-                this.selectedSortByValue = $localize `No sorting`;
+                this.selectedSortByValue = $localize`No sorting`;
                 this.selectedSortOrderValue = "";
-                this.form.get("sorterConfiguration")?.patchValue({sortBy: "", descendantSorting: ""}, {emitEvent: false});
+                this.form.get("sorterConfiguration")?.patchValue({ sortBy: "", descendantSorting: "" }, { emitEvent: false });
                 return;
             }
-            const sortOrder = val.sorterConfiguration.descendantSorting ? $localize `Descending` : $localize `Ascending`;
+            const sortOrder = val.sorterConfiguration.descendantSorting ? $localize`Descending` : $localize`Ascending`;
             this.selectedSortByValue = sortedColumn.label;
             this.selectedSortOrderValue = ", " + sortOrder;
 

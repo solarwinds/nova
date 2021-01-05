@@ -19,7 +19,7 @@ import { take } from "rxjs/operators";
 import { IDataSourceOutput } from "../../../../../components/providers/types";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { IHasChangeDetector, IHasForm, IProperties, PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { DATA_SOURCE_CHANGE, DATA_SOURCE_OUTPUT } from "../../../../types";
+import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 
 /**
  * This is a basic implementation of a data source configuration component. In the real world scenario, this component will most likely be replaced by a
@@ -48,6 +48,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
 
     // used by the Broadcaster
     public dsOutput = new Subject<any>();
+    public dataFieldIds = new Subject<any>();
 
     constructor(public changeDetector: ChangeDetectorRef,
                 private formBuilder: FormBuilder,
@@ -96,11 +97,16 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
         const provider = this.providerRegistryService.getProvider(providerId);
         if (provider) {
             const dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
+            this.eventBus.next(DATA_SOURCE_CREATED, {payload: dataSource});
             dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any | IDataSourceOutput<any>) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
                     this.dsOutput.next(result);
+                    const dataFieldIdsResult = result?.result || result;
+                    if (dataFieldIdsResult) {
+                        this.dataFieldIds.next(Object.keys(dataFieldIdsResult));
+                    }
                 });
 
             dataSource.applyFilters();

@@ -53,6 +53,10 @@ describe("Visual tests: Form Field", () => {
         await markAsDirty.click();
         await eyes.checkWindow("The entire form is invalid");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme test 1");
+        
+        await Helpers.switchDarkTheme("off");
         await nickname.acceptText("John Wick");
         await city.acceptText("New York");
         await textbox.acceptText("Default text");
@@ -64,6 +68,10 @@ describe("Visual tests: Form Field", () => {
         await select.select("Cabbage");
         await timepicker.selectTime("17:30");
         await eyes.checkWindow("The entire form is valid");
+
+
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme test 2");
 
         await eyes.close();
     }, 100000);

@@ -34,6 +34,10 @@ describe("Visual tests: Wizard", () => {
         await eyes.open(browser, "NUI", "Wizard");
         await eyes.checkWindow("Default");
 
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Dark theme");
+        await Helpers.switchDarkTheme("off");
+
         await basicWizard.next();
         steps = await basicWizard.getSteps();
         await steps[0].icon.hover();

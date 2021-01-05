@@ -142,6 +142,19 @@ describe("StatusChartComponent", () => {
             });
         });
     });
+
+    describe("transformData", () => {
+        it("should set end to the next value in the progression if the progression is not on an interval", () => {
+            const result = (<any>component).transformData(component.widgetData.series[0].data, false);
+            expect(result[0].end).toEqual(result[1].start);
+        });
+
+        it("should use the same value for start and end if the progression is on an interval", () => {
+            const result = (<any>component).transformData(component.widgetData.series[0].data, true);
+            expect(result[0].start).toEqual(result[0].end);
+        });
+    });
+
 });
 
 enum Status {

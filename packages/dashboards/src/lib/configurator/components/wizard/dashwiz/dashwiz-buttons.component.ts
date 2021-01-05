@@ -14,7 +14,7 @@ import { IDashwizButtonsComponent } from "../types";
                 <span i18n>Cancel</span>
             </button>
             <button *ngIf="!isFirstStepActive"
-                    class="ml-3"
+                    class="ml-3 nui-dashwiz-buttons__back-button"
                     nui-button
                     icon="caret-left"
                     type="button"

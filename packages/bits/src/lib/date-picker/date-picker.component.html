@@ -25,7 +25,7 @@
 </div>
 
 <ng-template #datePickerInner>
-    <nui-date-picker-inner [value]="value"
+    <nui-date-picker-inner [preserveInsignificant]="preserveInsignificant"
                            [selectedDate]="selectedDate"
                            [inline]="inline"
                            (update)="onUpdate($event)"
@@ -48,8 +48,9 @@
                            [yearRange]="yearRange"
                            [disabledDates]="disabledDates"
                            [onlyCurrentMonth]="onlyCurrentMonth"
-                           [preserveInsignificant]="preserveInsignificant"
-                           [handleTimezone]="handleTimezone">
+                           [handleTimezone]="handleTimezone"
+                           [value]="value"
+                           >
         <nui-day-picker tabindex="0"></nui-day-picker>
         <nui-month-picker tabindex="0"></nui-month-picker>
         <nui-year-picker tabindex="0"></nui-year-picker>

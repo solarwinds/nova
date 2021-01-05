@@ -33,6 +33,11 @@ describe("Visual tests: Resizer", () => {
         await browser.actions().mouseDown(resizerNested2.getElement()).perform();
         await eyes.checkWindow("Resizer on MouseDown");
 
+        Helpers.switchDarkTheme("on");
+        await resizerNested1.hover();
+        await browser.actions().mouseDown(resizerNested2.getElement()).perform();
+        await eyes.checkWindow("Dark theme");
+
         await eyes.close();
     }, 200000);
 });

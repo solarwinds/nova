@@ -16,7 +16,7 @@ export const DEFAULT_COMPARATORS: IComparatorsDict = {
         label: "Value is greater, or equal to",
     },
     "<=": {
-        comparatorFn: (a: any, b: any) => a >= b,
+        comparatorFn: (a: any, b: any) => a <= b,
         label: "Value is less than, or equal to",
     },
     "==": {

@@ -1,5 +1,7 @@
 import { select } from "d3-selection";
+import { duration } from "moment/moment";
 import { Subject } from "rxjs";
+import { TimeIntervalScale } from "src/public-api";
 
 import { DATA_POINT_INTERACTION_RESET, DATA_POINT_NOT_FOUND } from "../../../constants";
 import { BandScale } from "../../../core/common/scales/band-scale";
@@ -149,6 +151,7 @@ describe("BarHighlightStrategy >", () => {
             });
         });
     });
+
     describe("finding the index", () => {
         let dataSeries: IDataSeries<IBarAccessors>;
         let renderSeries: IRenderSeries<IBarAccessors>;
@@ -220,6 +223,96 @@ describe("BarHighlightStrategy >", () => {
             highlightStrategy = new BarHighlightStrategy("x", 1, () => 0);
             const index = highlightStrategy.getDataPointIndex(renderer, dataSeries, values, renderSeries.scales);
             expect(index).toEqual(-1);
+        });
+
+        it("should return -1 if there is no closest index or exact index while using a band scale", () => {
+            accessors.data.category = (data: any) => new Date(data.category);
+
+            dataSeries = {
+                id: "1",
+                name: "Series 1",
+                data: [
+                    {
+                        category: "2020-08-29T00:00:00.000-05:00",
+                        value: 1,
+                        "__bar": {
+                            category: "2020-08-29T00:00:00.000-05:00",
+                            start: 0,
+                            end: 5,
+                        },
+                    },
+                    {
+                        category: "2020-08-31T00:00:00.000-05:00",
+                        value: 1,
+                        "__bar": {
+                            category: "2020-08-31T00:00:00.000-05:00",
+                            start: 0,
+                            end: 10,
+                        },
+                    },
+                ],
+                accessors,
+            };
+
+            renderSeries = {
+                dataSeries: {
+                    ...dataSeries,
+                },
+                containers,
+                scales: { x: new TimeIntervalScale(duration(1, "day")), y: linearScale },
+            };
+
+            const values = {
+                x: new Date("2020-08-30T00:00:00.000-05:00"),
+            };
+            highlightStrategy = new BarHighlightStrategy("x", 1, () => 0);
+            const index = highlightStrategy.getDataPointIndex(renderer, dataSeries, values, renderSeries.scales);
+            expect(index).toEqual(-1);
+        });
+
+        it("should return correct index if there is an exact index while using a band scale", () => {
+            accessors.data.category = (data: any) => new Date(data.category);
+
+            dataSeries = {
+                id: "1",
+                name: "Series 1",
+                data: [
+                    {
+                        category: "2020-08-29T00:00:00.000-05:00",
+                        value: 1,
+                        "__bar": {
+                            category: "2020-08-29T00:00:00.000-05:00",
+                            start: 0,
+                            end: 5,
+                        },
+                    },
+                    {
+                        category: "2020-08-31T00:00:00.000-05:00",
+                        value: 1,
+                        "__bar": {
+                            category: "2020-08-31T00:00:00.000-05:00",
+                            start: 0,
+                            end: 10,
+                        },
+                    },
+                ],
+                accessors,
+            };
+
+            renderSeries = {
+                dataSeries: {
+                    ...dataSeries,
+                },
+                containers,
+                scales: { x: new TimeIntervalScale(duration(1, "day")), y: linearScale },
+            };
+
+            const values = {
+                x: new Date("2020-08-31T00:00:00.000-05:00"),
+            };
+            highlightStrategy = new BarHighlightStrategy("x", 1, () => 0);
+            const index = highlightStrategy.getDataPointIndex(renderer, dataSeries, values, renderSeries.scales);
+            expect(index).toEqual(1);
         });
     });
 

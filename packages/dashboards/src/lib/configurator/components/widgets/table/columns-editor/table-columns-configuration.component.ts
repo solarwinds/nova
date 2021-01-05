@@ -3,6 +3,7 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
+    Inject,
     Input,
     OnChanges,
     OnDestroy,
@@ -11,16 +12,21 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { uuid } from "@nova-ui/bits";
+import { DialogService, EventBus, IEvent, immutableSet, uuid } from "@nova-ui/bits";
+import get from "lodash/get";
+import isUndefined from "lodash/isUndefined";
 import values from "lodash/values";
 import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 
+import { IDataSourceOutput } from "../../../../../components/providers/types";
 import { IDataField, ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
 import { IFormatterDefinition } from "../../../../../components/types";
 import { IPizzagnaProperty } from "../../../../../pizzagna/functions/get-pizzagna-property-path";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
-import { IHasForm, PizzagnaLayer } from "../../../../../types";
+import { ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../../../../services/types";
+import { IHasForm, IPizzagna, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../../../types";
+import { DATA_SOURCE_OUTPUT } from "../../../../types";
 
 @Component({
     selector: "nui-table-columns-configuration",
@@ -45,7 +51,37 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
 
     constructor(private formBuilder: FormBuilder,
                 private changeDetector: ChangeDetectorRef,
-                private pizzagnaService: PizzagnaService) {
+                private dialogService: DialogService,
+                private pizzagnaService: PizzagnaService,
+                @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
+        this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent<any | IDataSourceOutput<any>>) => {
+            // Because typing is lenient for the data source output, the event may or may not contain an IDataSourceOutput
+            // with a result property; the payload may actually be the result itself, so both possibilities are accommodated.
+            const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
+
+            if (dataFields) {
+                let formPizzagna: IPizzagna = this.pizzagnaService.pizzagna;
+                formPizzagna = immutableSet(formPizzagna, `${PizzagnaLayer.Data}.columns.properties.dataFields`, dataFields);
+
+                const columnsTemplate = this.pizzagnaService.pizzagna[PizzagnaLayer.Structure].columns.properties?.template;
+                const presentationIndex = columnsTemplate.findIndex((val: { id: string; }) => val.id === "presentation");
+                const presentationPizzagnaPath: string = `${PizzagnaLayer.Structure}.columns.properties.template[${presentationIndex}].properties.dataFields`;
+                formPizzagna = immutableSet(formPizzagna, presentationPizzagnaPath, dataFields);
+
+                const columns = get(this.pizzagnaService.pizzagna, `${PizzagnaLayer.Data}.columns.properties.columns`) as any;
+                const columnIds = columns.map((c: ITableWidgetColumnConfig) => c.id);
+                formPizzagna = columnIds.reduce((res: IPizzagna, id: string) => immutableSet(
+                    res,
+                    `${PizzagnaLayer.Data}.${id}/presentation.properties.dataFields`,
+                    dataFields
+                ), formPizzagna);
+
+                this.pizzagnaService.updatePizzagna(formPizzagna);
+
+                this.eventBus.getStream(SET_PROPERTY_VALUE)
+                    .next({ payload: { path: "", value: formPizzagna } as ISetPropertyPayload });
+            }
+        });
     }
 
     public ngOnInit() {
@@ -53,17 +89,70 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataFields && changes.dataFields.currentValue) {
-            this.updateColumns(changes.dataFields.currentValue);
+            const columns = this.mergeColumns(changes.dataFields.currentValue, this.columns);
+            if (columns?.length) {
+                this.onItemsChange(columns);
+            } else {
+                this.resetColumns(false);
+            }
+            // column components are not updated properly without this one
             setTimeout(() => this.changeDetector.markForCheck());
+        }
+
+        if (changes.columns) {
+            const components = this.columns.map(c => ({
+                id: c.id,
+                children: {
+                    [`${c.id}/description`]: {
+                        ...c,
+                    },
+                    [`${c.id}/presentation`]: {
+                        ...c,
+                    },
+                },
+            }));
+
+            this.pizzagnaService.createComponentsFromTemplateWithProperties("columns", components);
+
+            // wait for column components to be created from template
+            setTimeout(() => {
+                // triggering the form update to update the preview - without this it was not updating the last added column as form field changes through
+                // pizzagna don't generate valueChange events
+                this.form.get("columns")?.setValue([...this.form.get("columns")?.value]);
+            });
         }
     }
 
     public onFormReady(form: AbstractControl) {
         this.form = this.formBuilder.group({
             columns: form as FormArray,
+            // this form field serves as a source of truth for anybody interesting in reading/modifying the columns value
+            // originally the values were mapped from the form directly to the preview without having a place where all the data would be consolidated
+            // together in the form. Converters subscribe to this form field to listen for column changes. The value is transformed in this method down below.
+            columnsOutput: {},
         });
         this.emptyColumns$ = this.form.valueChanges.pipe(map(result => result.columns.length === 0));
         this.formReady.emit(this.form);
+
+        // we listen for changes of the `columns` and transform it into ITableWidgetColumnConfig[]
+        this.form.get("columns")?.valueChanges.subscribe((value) => {
+            const newColumns = value.map((c: any /* form representing one column */) => {
+                let result: ITableWidgetColumnConfig = {
+                    id: c.id,
+                } as any;
+                for (const key of Object.keys(c.properties)) {
+                    result = {
+                        ...result,
+                        ...c.properties[key], /* merge properties from each child form */
+                    };
+                }
+                result.sortable = this.dataFields?.find(
+                    df => df.id === result.formatter?.properties?.dataFieldIds?.value)?.sortable;
+                return result;
+            });
+
+            this.form.get("columnsOutput")?.setValue(newColumns);
+        });
     }
 
     public onItemsChange(columns: ITableWidgetColumnConfig[]) {
@@ -84,21 +173,69 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
         this.onItemsChange([...this.columns, {
             id: uuid("column"),
             label: "",
-            // TODO: Provide proper formatter null is not assignable to IFormatter
-            formatter: null,
+            formatter: undefined,
         }]);
     }
 
-    private updateColumns(currentDatafields: IDataField[]) {
+    public onResetColumns() {
+        this.resetColumns(!!this.columns?.length);
+    }
+
+    public resetColumns(confirmation: boolean) {
+        const reset = () => {
+            const columns: ITableWidgetColumnConfig[] = this.dataFields.map(df => ({
+                id: uuid("column"),
+                formatter: {
+                    componentType: "RawFormatterComponent",
+                    properties: {
+                        dataFieldIds: {
+                            value: df.id,
+                        },
+                    },
+                },
+                isActive: true,
+                label: df.label,
+                width: undefined,
+                sortable: df.sortable,
+            }));
+
+            this.onItemsChange(columns);
+        };
+
+        if (confirmation) {
+            const dialog = this.dialogService.confirm({
+                title: $localize`Are you sure?`,
+                message: $localize`Resetting the columns will revert them to their default configurations. Do you wish to proceed?`,
+                confirmText: $localize`Reset Columns`,
+            });
+
+            dialog.result
+                .then((result) => {
+                    if (result) {
+                        reset();
+                    }
+                }, () => {
+                    // this being here prevents a "unhandled rejection" console error from showing up
+                });
+        } else {
+            reset();
+        }
+    }
+
+    /**
+     * Merges current column definitions with new incoming data fields
+     *
+     * @param currentDatafields
+     * @param columns
+     */
+    private mergeColumns(currentDatafields: IDataField[], columns: ITableWidgetColumnConfig[]): ITableWidgetColumnConfig[] {
         const currentDatafieldIds = currentDatafields.map(datafield => datafield.id);
-        const newColumns = this.columns.filter(column => {
+        return columns.filter(column => {
             if (!column.formatter?.properties?.dataFieldIds) {
                 return false;
             }
             return values(column.formatter?.properties?.dataFieldIds).some((datafield: string) => currentDatafieldIds.includes(datafield));
         });
-
-        this.onItemsChange(newColumns);
     }
 
     ngOnDestroy(): void {

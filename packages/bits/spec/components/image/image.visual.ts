@@ -18,6 +18,11 @@ xdescribe("Visual tests: Image", () => {
     it("Default look", async () => {
         await eyes.open(browser, "NUI", "Image");
         await eyes.checkWindow("Default");
+
+        // Uncomment the code below after NUI-5674 is fixed
+        // await Helpers.switchDarkTheme("on");
+        // await eyes.checkWindow("Dark theme");
+
         await eyes.close();
-    }, 100000);
+    }, 200000);
 });

@@ -38,13 +38,13 @@ describe("Visual tests: Expander", () => {
 
         await basicExpander.toggle();
         await lineLessExpander.toggle();
-        await customHeaderExpander.hover();
-        await eyes.checkWindow("Expander without expand line is toggled and Expander with custom header is hovered");
-
         await lineLessExpander.toggle();
         await stakedExpander.toggle();
-        await menuEmbedded.hover();
-        await eyes.checkWindow("Staked Expander is toggled and menu in Expander with custom header is hovered");
+        await customHeaderExpander.hover();
+        await eyes.checkWindow("Some expanders are in expanded state");
+        
+        await Helpers.switchDarkTheme("on");
+        await eyes.checkWindow("Expanders with dark theme");
 
         await eyes.close();
     }, 100000);
