@@ -29,7 +29,7 @@ describe("Visual tests: Dashboards - Table Widget", () => {
         // Amount of columns able to be sorted
         expect(count).toEqual(7);
 
-        const sections = element.all(by.css("nui-widget-configurator-section"));
+        const sections = await configurator?.getConfigSections();
         // Amount of total columns in the data source
         expect(sections.length).toEqual(9);
 
@@ -65,7 +65,7 @@ describe("Visual tests: Dashboards - Table Widget", () => {
         // Amount of columns able to be sorted after datasource changed and after columns are reset
         expect(count).toEqual(7);
 
-        const sections = element.all(by.css("nui-widget-configurator-section"));
+        const sections = await configurator?.getConfigSections();
         // Amount of total columns in the data source
         expect(sections.length).toEqual(9);
 

@@ -39,4 +39,7 @@ export class ConfiguratorAtom extends Atom {
         }
     }
 
+    public async getConfigSections(): Promise<any[]> {
+        return this.root.all(by.css("nui-widget-configurator-section"));
+    }
 }
