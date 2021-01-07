@@ -21,6 +21,9 @@ export class ConfiguratorAtom extends Atom {
         return section?.getAccordionByLabel(accordionLabel);
     }
 
+    public async getResetColumnsButton() {
+        return this.root.element(by.id("table-widget-reset-indicator-btn"));
+    }
     public async getSectionByHeaderText(text: string, isSubstring = false): Promise<ConfiguratorSectionAtom | undefined> {
         const configSections = this.root.all(by.css("nui-widget-configurator-section"));
         let section: ElementFinder | undefined;
@@ -36,4 +39,7 @@ export class ConfiguratorAtom extends Atom {
         }
     }
 
+    public async getConfigSections(): Promise<any[]> {
+        return this.root.all(by.css("nui-widget-configurator-section"));
+    }
 }

@@ -15,7 +15,8 @@
             <nui-select-v2 placeholder="Select data source" i18n-placeholder
                            [title]="form.get('dataSource')?.value?.label"
                            formControlName="dataSource"
-                           (valueSelected)="onDataSourceSelected($event)">
+                           (valueSelected)="onDataSourceSelected($event)"
+                           class="datasource-configuration__accordion-content__datasource-input">
                 <nui-select-v2-option *ngFor="let dataSourceProvider of dataSourceProviders" [title]="dataSourceProvider?.label" [value]="dataSourceProvider">
                     {{dataSourceProvider.label}}
                 </nui-select-v2-option>
