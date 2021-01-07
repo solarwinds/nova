@@ -2,16 +2,12 @@ import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { by, element } from "protractor";
 
-import { DialogAtom } from "../../bits/spec";
-
 import { ConfiguratorAtom } from "./configurator/configurator.atom";
 import { TestPage } from "./test.po";
 
 describe("Visual tests: Dashboards - Table Widget", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let configurator: ConfiguratorAtom;
     const page = new TestPage();
-    const dialogPrompt: DialogAtom = new DialogAtom(element(by.className("nui-dialog")));
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("test/table");
@@ -59,8 +55,7 @@ describe("Visual tests: Dashboards - Table Widget", () => {
 
         const resetButton = await configurator.getResetColumnsButton();
         await resetButton.click();
-        const actionButton = dialogPrompt.getActionButton();
-        await actionButton.click();
+        await element(by.className("nui-dialog")).$(".btn-primary").click();
         count = await sortBy?.countOptions();
         // Amount of columns able to be sorted after datasource changed and after columns are reset
         expect(count).toEqual(7);
