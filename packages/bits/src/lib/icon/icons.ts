@@ -851,13 +851,13 @@ export const icons: ITypedIconData[] = [
         "name": "widget_list",
         "category": IconCategory.Widget,
         "cat_namespace": IconCategoryNamespace.Widget,
-        "code": "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\n\t<path fill=\"#767676\" style=\"fill: var(--color2, #767676)\" d=\"M16 7h-9v-2h9zM16 9h-9v2h9zM16 13h-9v2h9zM6 5h-2v2h2zM6 9h-2v2h2zM6 13h-2v2h2zM19 1h-18v18h18zM2 2h16v16h-16z\"></path>\n</svg>"
+        "code": "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\n\t<path fill=\"#767676\" style=\"fill:#767676\" d=\"M16 7h-9v-2h9zM16 9h-9v2h9zM16 13h-9v2h9zM6 5h-2v2h2zM6 9h-2v2h2zM6 13h-2v2h2zM19 1h-18v18h18zM2 2h16v16h-16z\"></path>\n</svg>",
     },
     {
         "svgFile": "widget_pie-chart.svg",
         "name": "widget_pie-chart",
         "category": IconCategory.Widget,
         "cat_namespace": IconCategoryNamespace.Widget,
-        "code": "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\n\t<path fill=\"#767676\" style=\"fill: var(--color2, #767676)\" d=\"M9 20c-4.971 0-9-4.029-9-9s4.029-9 9-9v0 1c-4.418 0-8 3.582-8 8s3.582 8 8 8c4.418 0 8-3.582 8-8v0h1c0 4.971-4.029 9-9 9v0z\"></path>\n<path fill=\"#767676\" style=\"fill: var(--color2, #767676)\" d=\"M10 0c5.476 0.115 9.885 4.524 10 9.989l0 0.011h-10z\"></path>\n</svg>"
+        "code": "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\n\t<path fill=\"#767676\" style=\"fill:#767676\" d=\"M9 20c-4.971 0-9-4.029-9-9s4.029-9 9-9v0 1c-4.418 0-8 3.582-8 8s3.582 8 8 8c4.418 0 8-3.582 8-8v0h1c0 4.971-4.029 9-9 9v0z\"></path>\n<path fill=\"#767676\" style=\"fill: #767676\" d=\"M10 0c5.476 0.115 9.885 4.524 10 9.989l0 0.011h-10z\"></path>\n</svg>",
     },
 ];
