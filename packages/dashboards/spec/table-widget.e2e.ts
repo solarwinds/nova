@@ -1,6 +1,5 @@
 import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { browser } from "protractor";
 import { by, element } from "protractor";
 
 import { DialogAtom } from "../../bits/spec";
@@ -30,7 +29,7 @@ describe("Visual tests: Dashboards - Table Widget", () => {
         // Amount of columns able to be sorted
         expect(count).toEqual(7);
 
-        const sections = await element.all(by.css("nui-widget-configurator-section"));
+        const sections = element.all(by.css("nui-widget-configurator-section"));
         // Amount of total columns in the data source
         expect(sections.length).toEqual(9);
 
@@ -60,13 +59,13 @@ describe("Visual tests: Dashboards - Table Widget", () => {
 
         const resetButton = await configurator.getResetColumnsButton();
         await resetButton.click();
-        const actionButton = await dialogPrompt.getActionButton();
+        const actionButton = dialogPrompt.getActionButton();
         await actionButton.click();
         count = await sortBy?.countOptions();
         // Amount of columns able to be sorted after datasource changed and after columns are reset
         expect(count).toEqual(7);
 
-        const sections = await element.all(by.css("nui-widget-configurator-section"));
+        const sections = element.all(by.css("nui-widget-configurator-section"));
         // Amount of total columns in the data source
         expect(sections.length).toEqual(9);
 
