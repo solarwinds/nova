@@ -5,7 +5,7 @@ import { by, element } from "protractor";
 import { ConfiguratorAtom } from "./configurator/configurator.atom";
 import { TestPage } from "./test.po";
 
-describe("Visual tests: Dashboards - Table Widget", () => {
+describe("Dashboards - Table Widget", () => {
     let configurator: ConfiguratorAtom;
     const page = new TestPage();
 
