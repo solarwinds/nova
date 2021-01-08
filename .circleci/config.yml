@@ -11,16 +11,8 @@ jobs:
             -   checkout:
                     path: ~/nova
             -   run:
-                    name: Compute build version
-                    command: yarn run compute-version-ci
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Install dependencies
-                    command: yarn install
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Assemble
-                    command: yarn run assemble
+                    name: Testing
+                    command: echo "Hello World!"
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -327,78 +319,6 @@ workflows:
     nova:
          jobs:
              -   bits-build
-             -   bits-pack:
-                     requires:
-                         -   bits-build
-             -   bits-unit-test:
-                     requires:
-                         -   bits-build
-             -   bits-e2e-test:
-                     requires:
-                         -   bits-build
- #             -   bits-visual-test:
- #                     requires:
- #                         - bits-build
-             -   bits-publish:
-                     requires:
-                         -   bits-e2e-test
-                         -   bits-unit-test
-                         -   charts-e2e-test
-                         -   charts-unit-test
-                         -   dashboards-e2e-test
-                         -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
-             -   charts-build:
-                     requires:
-                         - bits-pack
-             -   charts-pack:
-                     requires:
-                         -   charts-build
-             -   charts-unit-test:
-                     requires:
-                         -   charts-build
-             -   charts-e2e-test:
-                     requires:
-                         -   charts-build
-             -   charts-publish:
-                     requires:
-                         -   bits-e2e-test
-                         -   bits-unit-test
-                         -   charts-e2e-test
-                         -   charts-unit-test
-                         -   dashboards-e2e-test
-                         -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
-             -   dashboards-build:
-                     requires:
-                         -   charts-pack
-             -   dashboards-pack:
-                     requires:
-                         -   dashboards-build
-             -   dashboards-unit-test:
-                     requires:
-                         -   dashboards-build
-             -   dashboards-e2e-test:
-                     requires:
-                         -   dashboards-build
-             -   dashboards-publish:
-                     requires:
-                         -   bits-e2e-test
-                         -   bits-unit-test
-                         -   charts-e2e-test
-                         -   charts-unit-test
-                         -   dashboards-e2e-test
-                         -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
     nova-release:
         jobs:
             - release-approval:
