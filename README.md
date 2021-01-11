@@ -1,4 +1,6 @@
-# Nova Library Development
+# Nova Nui Framework
+
+The Nova Nui Framework provides a set of common UI-based components and services to assist with rapid web application development. Nui is built on the latest Angular and follows modern UX design principles and front-end software development practices.
 
 ## Nova Design Spec 
 
@@ -234,6 +236,16 @@ configuration to a `tasks.json` file:
   ]
 }
 ```
+
 ## Contribution
 
 We encourage [contributions to Nova](./CONTRIBUTION.md) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
+
+## Need help?
+
+Need help using Nova?
+
+First, please go over our [FAQ](./FAQ.md). If you don't find the answer
+to your question there, feel free to send us an email at <nova-ui@solarwinds.com>. We kindly ask that you 
+refrain from opening GitHub issues for general support questions as we want to reserve that 
+communications channel for bug reports and feature requests.
