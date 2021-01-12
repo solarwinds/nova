@@ -2,6 +2,22 @@
   "name": "@nova-ui/charts",
   "license": "Apache-2.0",
   "version": "9.33.0-0",
+  "author": "SolarWinds <nova-ui@solarwinds.com>",
+  "contributors": [
+    {
+      "name": "SolarWinds Nova Team"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solarwinds/nova.git"
+  },
+  "keywords": [
+    "chart",
+    "nova",
+    "nova-ui",
+    "solarwinds"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "run-p -lr compodoc:serve build-examples:watch",
