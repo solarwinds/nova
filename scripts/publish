@@ -28,9 +28,10 @@ cd $PROJECT_DIR
 # retrieve data from package.json
 PACKAGE_NAME=$(node -p "require('./package.json').name")
 PACKAGE_VERSION=$(node -p "require('./package.json').version")
+PACKAGE_LICENSE=$(node -p "require('./package.json').license")
 
 yarn config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-
+yarn config set init-license $PACKAGE_LICENSE
 
 case $CIRCLE_BRANCH in
       "release/"*)
