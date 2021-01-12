@@ -1,28 +1,34 @@
 import { ChangeDetectorRef, DoCheck, Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
 import { LoggerService } from "@nova-ui/bits";
-import defaultsDeep from "lodash/defaultsDeep";
 import { Subject } from "rxjs";
 
+import { IValueChange, mergeChanges } from "../../functions/merge-changes";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IComponentConfiguration, IHasChangeDetector } from "../../types";
 
 export abstract class BaseLayout implements IHasChangeDetector, OnChanges, DoCheck, OnDestroy {
+    // components config from 'pizza'
     public nodeComponentsConfigs: IComponentConfiguration[];
+    // result config from merging 'nodeComponentsConfig' and parent 'template'
     public nodeConfigs: IComponentConfiguration[];
+
     protected destroyed$: Subject<void> = new Subject<void>();
 
-    @Input() public template: IComponentConfiguration;
+    @Input() public template: Partial<IComponentConfiguration>;
 
     constructor(public changeDetector: ChangeDetectorRef,
-        protected pizzagnaService: PizzagnaService,
-        protected logger: LoggerService) {
+                protected pizzagnaService: PizzagnaService,
+                protected logger: LoggerService) {
     }
 
     public abstract getNodes(): string[];
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.nodes) {
-            this.updateNodeConfigs();
+        if (changes.nodes || changes.template) {
+            this.updateNodeConfigs({
+                changesNodes: changes.nodes,
+                changesTemplate: changes.template,
+            });
         }
     }
 
@@ -57,18 +63,47 @@ export abstract class BaseLayout implements IHasChangeDetector, OnChanges, DoChe
         return false;
     }
 
-    private updateNodeConfigs() {
+    private updateNodeComponentConfigs() {
         const nodes = this.getNodes();
 
-        const nodesConfig = nodes && nodes.map(n => {
+        this.nodeComponentsConfigs = nodes && nodes.map(n => {
             const c = this.pizzagnaService.getComponent(n);
             if (typeof c === "undefined") {
                 throw new Error("No component with id '" + n + "' was defined in the configuration.");
             }
             return c;
         });
+    }
 
-        this.nodeComponentsConfigs = nodesConfig;
-        this.nodeConfigs = nodesConfig?.map(v => defaultsDeep(v, this.template));
+    private updateNodeConfigs(changes?: SimpleChanges) {
+        this.nodeConfigs = mergeChanges(this.nodeConfigs,
+            this.getTemplateChangeForNodes(changes),
+            this.getNodeComponentsConfigs()
+        );
+    }
+
+    private getNodeComponentsConfigs() {
+        const nodeComponentsConfigsChanges: IValueChange = {
+            currentValue: undefined,
+            previousValue: this.nodeComponentsConfigs ? [...this.nodeComponentsConfigs] : undefined,
+        };
+        this.updateNodeComponentConfigs();
+        nodeComponentsConfigsChanges.currentValue = this.nodeComponentsConfigs;
+
+        return nodeComponentsConfigsChanges;
+    }
+
+    private getTemplateChangeForNodes(changes?: SimpleChanges): IValueChange {
+        const { changesNodes, changesTemplate } = changes || {};
+
+        const getTemplatePerNode = (template: IComponentConfiguration) =>
+            template && this.getNodes()?.map(() => template);
+
+        return {
+            currentValue: getTemplatePerNode(changesTemplate ? changesTemplate.currentValue : this.template),
+            previousValue: changesNodes
+                ? this.template
+                : getTemplatePerNode(changesTemplate ? changesTemplate.previousValue : this.template),
+        };
     }
 }

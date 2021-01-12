@@ -194,20 +194,17 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
                 if (!providerInstance) {
                     throw new Error("Provider '" + next + "' does not exist.");
                 }
-                if (providerInstance.updateConfiguration) {
-                    if (!providerInstance.properties || providerConfig.properties) {
-                        providerInstance.updateConfiguration({
-                            providerKey: next,
-                            ...(providerConfig.properties || {}),
-                        });
-                    }
+                if (providerInstance.updateConfiguration && providerConfig.properties) {
+                    providerInstance.updateConfiguration({
+                        providerKey: next,
+                        ...(providerConfig.properties || {}),
+                    });
                 }
+                providerInstance.providerKey = next;
+
                 acc[next] = providerInstance;
-            } else {
-                // for cases when providerId is just empty string, null or undefined (for example adding a tile doesn't provide a DS to it)
-                if (providerConfig.providerId) {
-                    this.logger.error("There's no registered provider for id", next);
-                }
+            } else if (providerConfig.providerId) {
+                this.logger.error("There's no registered provider for id", next);
             }
             return acc;
         }, this.providerInstances);

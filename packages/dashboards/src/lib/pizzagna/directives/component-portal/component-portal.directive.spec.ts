@@ -725,7 +725,7 @@ describe("ComponentPortalDirective >", () => {
     });
 
     describe("updateProviders > ", () => {
-        it("should invoke the provider's updateConfiguration on the provider instance if its properties are undefined", () => {
+        it("should not invoke the provider's updateConfiguration on the provider instance if its properties are undefined", () => {
             const providerId = "provider1";
             componentPortalDirective.providers = {
                 provider1: {
@@ -742,7 +742,7 @@ describe("ComponentPortalDirective >", () => {
 
             const spy = spyOn(MockProvider.prototype, "updateConfiguration");
             (<any>componentPortalDirective).updateProviders((<any>componentPortalDirective).injector);
-            expect(spy).toHaveBeenCalled();
+            expect(spy).not.toHaveBeenCalled();
         });
 
         it("should invoke the provider's updateConfiguration if properties are defined on the provider instance and on the provider config", () => {
