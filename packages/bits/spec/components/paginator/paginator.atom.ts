@@ -2,7 +2,7 @@ import { by, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { PopupAtom } from "../popup/popup.atom";
-import { SelectAtom } from "../select/select.atom";
+import { SelectV2Atom } from "../select-v2/select-v2.atom";
 
 export class PaginatorAtom extends Atom {
     public static CSS_CLASS = "nui-paginator";
@@ -21,8 +21,8 @@ export class PaginatorAtom extends Atom {
     public async getStatusText(): Promise<string> { return super.getElement().all(by.className("nui-paginator__info")).get(0).getText(); }
 
     public async setItemsPerPage(itemsPerPage: number): Promise<void> {
-        const selectAtom: SelectAtom = Atom.findIn(SelectAtom, super.getElement());
-        return selectAtom.select(itemsPerPage.toString());
+        const selectV2Atom: SelectV2Atom = Atom.findIn(SelectV2Atom, super.getElement());
+        return selectV2Atom.select(itemsPerPage.toString());
     }
 
     public getItemsRange = async (): Promise<string> =>

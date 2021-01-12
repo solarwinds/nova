@@ -61,12 +61,10 @@
     </div>
     <div class="nui-paginator__options">
         <div class="nui-paginator__info" i18n>{{getRange(total)}} of <span class="nui-paginator__total">{{total}}</span></div>
-        <nui-select #select
-                    ariaLabel="Items per page"
-                    [value]="pageSize"
-                    [itemsSource]="pageSizeSet"
-                    [appendToBody]="appendToBody"
-                    (changed)="setItemsPerPage($event)"></nui-select>
+
+        <nui-select-v2 ariaLabel="Items per page" [value]="pageSize" (valueSelected)="onPageSizeChange($event)">
+            <nui-select-v2-option *ngFor="let item of pageSizeSet" [value]="item">{{item}}</nui-select-v2-option>
+        </nui-select-v2>
     </div>
 </div>
 <ng-template #tableRow let-pages="pages">

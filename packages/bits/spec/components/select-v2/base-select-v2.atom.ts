@@ -65,6 +65,20 @@ export class BaseSelectV2Atom extends Atom {
         return classAttr.includes("disabled");
     }
 
+    public async select (title: string): Promise<void> {
+        if (! await this.popup.isPresent()) {
+            await this.toggle();
+        }
+
+        const options = this.popup.getElement().all(by.css("nui-select-v2-option"));
+        const optionsText: string[] = await options.map(async option => await option?.getText());
+        const titleIndex = optionsText.indexOf(title);
+
+        if (titleIndex !== -1) {
+            await (await this.getOption(titleIndex)).click();
+        }
+    }
+
     private async waitForPopup() {
         return await browser.wait(ExpectedConditions.visibilityOf(this.popup.getElement()));
     }

@@ -6,5 +6,4 @@ export class SelectV2Atom extends BaseSelectV2Atom {
     public async getInputText(): Promise<string> {
         return this.getElement().getText();
     }
-
 }

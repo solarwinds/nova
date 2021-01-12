@@ -1,6 +1,5 @@
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
-    AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
@@ -21,13 +20,13 @@ import _includes from "lodash/includes";
 import _min from "lodash/min";
 import _range from "lodash/range";
 import {Subject} from "rxjs";
-import { takeUntil } from "rxjs/operators";
 
 import {IFilter, IFilterPub, IRange} from "../../services/data-source/public-api";
 import {LoggerService} from "../../services/log-service";
 import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
 import { PopupContainerService } from "../popup/popup-container.service";
 import { SelectComponent } from "../select";
+import { InputValueTypes } from "../select-v2/types";
 import { ISelectChangedEvent } from "../select/public-api";
 
 import { IPaginatorItem } from "./public-api";
@@ -50,7 +49,7 @@ const containerPaddingsWithScroll = 37;
     providers: [PopupContainerService],
 })
 
-export class PaginatorComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy, IFilterPub {
+export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilterPub {
     @Input() public itemsList: Array<IPaginatorItem> = [];
     /**
      * Current page number
@@ -133,7 +132,6 @@ export class PaginatorComponent implements OnInit, AfterViewInit, OnChanges, OnD
     }
     private mainRangeStart: number;
     private mainRangeEnd: number;
-    private selectResizeObserver: ResizeObserver;
 
     protected popupUtilities: OverlayUtilitiesService = new OverlayUtilitiesService();
 
@@ -159,11 +157,6 @@ export class PaginatorComponent implements OnInit, AfterViewInit, OnChanges, OnD
             this.page = 1;
             this.pageChange.emit(this.page);
         }
-    }
-
-
-    ngAfterViewInit() {
-        this.initPopupUtilities();
     }
 
     /**
@@ -231,21 +224,34 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         this.assemble();
     }
 
+    // TODO: remove in vNext. Needs only for backward compatibility
+    public onPageSizeChange(value: InputValueTypes): void {
+        this.setItemsPerPage({
+            oldValue: 0,
+            newValue: value as number,
+        });
+    }
+
+    // TODO: refactor in vNext. Replace ISelectChangedEvent to InputValueTypes
     /**
      * Set items per page that should displayed
      * @param changedEvent select change event
      */
     public setItemsPerPage(changedEvent: ISelectChangedEvent<number>) {
-        if (changedEvent.newValue === changedEvent.oldValue) {
-            return;
-        }
-        const newValue = changedEvent.newValue;
-        if (newValue < 1) {
-            this.logger.warn("paginator-controller.setItemsPerPage - invalid newValue: " + newValue);
+        if (changedEvent?.newValue === changedEvent?.oldValue) {
             return;
         }
 
-        this.pageSize = newValue;
+        const newValue = changedEvent?.newValue;
+
+        if (newValue) {
+            if (newValue < 1) {
+                this.logger.warn("paginator-controller.setItemsPerPage - invalid newValue: " + newValue);
+                return;
+            }
+            this.pageSize = newValue;
+        }
+
         this.goToPage(1);
     }
 
@@ -457,24 +463,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         }
     }
 
-    private initPopupUtilities() {
-        const popup = this.selectComponent.menu.popup.popup;
-        this.selectResizeObserver = this.popupUtilities
-            .setPopupComponent(this.selectComponent.menu.popup.popup)
-            .getResizeObserver();
-
-        popup.show$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            this.popupUtilities.syncWidth();
-            this.selectResizeObserver.observe(this.selectComponent.elRef.nativeElement);
-        });
-
-        popup.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            this.selectResizeObserver.unobserve(this.selectComponent.elRef.nativeElement);
-        });
-    }
-
     ngOnDestroy(): void {
-        this.selectResizeObserver?.disconnect();
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
