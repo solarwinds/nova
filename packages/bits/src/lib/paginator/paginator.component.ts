@@ -23,7 +23,6 @@ import {Subject} from "rxjs";
 
 import {IFilter, IFilterPub, IRange} from "../../services/data-source/public-api";
 import {LoggerService} from "../../services/log-service";
-import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
 import { PopupContainerService } from "../popup/popup-container.service";
 import { SelectComponent } from "../select";
 import { InputValueTypes } from "../select-v2/types";
@@ -132,8 +131,6 @@ export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilter
     }
     private mainRangeStart: number;
     private mainRangeEnd: number;
-
-    protected popupUtilities: OverlayUtilitiesService = new OverlayUtilitiesService();
 
     public constructor(
         private logger: LoggerService,
