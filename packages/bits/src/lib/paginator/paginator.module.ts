@@ -4,7 +4,7 @@ import { NgModule } from "@angular/core";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiPopupModule } from "../popup/popup.module";
-import { NuiSelectModule } from "../select/select.module";
+import { NuiSelectV2Module } from "../select-v2/select-v2.module";
 
 import { PaginatorComponent } from "./paginator.component";
 
@@ -14,10 +14,10 @@ import { PaginatorComponent } from "./paginator.component";
 @NgModule({
     imports: [
         NuiCommonModule,
-        NuiSelectModule,
         NuiPopupModule,
         NuiButtonModule,
         ScrollingModule,
+        NuiSelectV2Module,
     ],
     declarations: [
         PaginatorComponent,
