@@ -9,13 +9,6 @@ describe("USERCONTROL paginator", () => {
     const adjacent = 1;
     const itemCount = 1012;
     const expectedItemsPerPage = "25";
-
-    const pages = [
-        {number: 1, items: "1-10"},
-        {number: 5, items: "41-50"},
-        {number: 15, items: "141-150"},
-        {number: 41, items: "401-410"},
-    ];
     const pageTwenty = 20;
 
     beforeEach(async () => {

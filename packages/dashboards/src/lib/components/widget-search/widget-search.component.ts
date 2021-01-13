@@ -13,7 +13,7 @@ import { ISearchOnKeyUp, IWidgetSearchConfiguration } from "./types";
     templateUrl: "./widget-search.component.html",
     styleUrls: ["./widget-search.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { class: "pr-3 pl-3 pt-2 pb-2" },
+    host: { "[class.default]": "enabled", "[class.invisible]": "!enabled" },
 })
 export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
     static lateLoadKey = "WidgetSearchComponent";
@@ -21,6 +21,7 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() public configuration: IWidgetSearchConfiguration;
     @Input() public searchValue: string;
+    public enabled: boolean = false;
 
     public searchTerm$ = new Subject<string>();
     public onDestroy$ = new Subject();
@@ -32,6 +33,9 @@ export class WidgetSearchComponent implements OnInit, OnDestroy, OnChanges {
     ) { }
 
     public ngOnInit(): void {
+        if (this.dataSource.features?.getSupportedFeatures()?.search?.enabled) {
+            this.enabled = true;
+        }
         this.registerFilters();
         this.handleSearchTermSubscription(this.configuration?.searchOnKeyUp);
     }

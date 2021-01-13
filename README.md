@@ -4,7 +4,7 @@ The Nova Nui Framework provides a set of common UI-based components and services
 
 ## Nova Design Spec 
 
-The main specification can be found in [Marvel](https://marvelapp.com/project/3222505/)
+The main specification can be found in [Nova Design System](https://ux.solarwinds.io/design/)
 
 ## Style Guide
 
@@ -118,15 +118,15 @@ It makes tests more readable.
 
 We are developing 3 component libraries:
 
-* **nova-bits** - atomic components to be used as building blocks for applications and more complex 
+* [Nova-Bits](./packages/bits/README.md) - atomic components to be used as building blocks for applications and more complex 
 components. Exception - **convenience components** - prototypes of composite components, that are meant 
 to accommodate a wide breadth of use cases.
-* **nova-charts** - visualization library built on top of [d3](https://d3js.org/).
-* **nova-dashboards** - you got it.
+* [Nova-Charts](./packages/charts/README.md) - visualization library built on top of [d3](https://d3js.org/).
+* [Nova-Dashboards](./packages/dashboards/README.md) - you got it.
 
 ## Linking Projects for Development
 
-To get your locally built library to be used as a dependancy of another library or app you will need to do
+To get your locally built library to be used as a dependency of another library or app you will need to do
 two things:
 
 * Build the child library
@@ -150,7 +150,7 @@ task. These types of changes will not be picked up automatically.
 
 ### Linking
 
-As `npm link` or `yarn link` proved to not work reliably with angular libraies, we are using regular
+As `npm link` or `yarn link` proved to not work reliably with angular libraries, we are using regular
 symbolic linked folders (junction for Windows file system).
 
 To link things with each other we have some scripts in the `package.json` file.
@@ -249,3 +249,7 @@ First, please go over our [FAQ](./FAQ.md). If you don't find the answer
 to your question there, feel free to send us an email at <nova-ui@solarwinds.com>. We kindly ask that you 
 refrain from opening GitHub issues for general support questions as we want to reserve that 
 communications channel for bug reports and feature requests.
+
+In order to reproduce bugs we ask that you to provide a _minimal_ repro scenario and a link to the live repro environment.
+
+Before submitting a feature requests and/or defects for Nova, make sure it hasn't already been requested on our [issues page](https://github.com/solarwinds/nova/issues).
