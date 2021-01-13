@@ -15,10 +15,10 @@
 <ng-template #kpiContent>
     <div class="nui-kpi-indicator__background"
          [class.nui-kpi-indicator--interactive]="interactive"
-         [ngStyle]="{'background-color': widgetData?.backgroundColor}">
+         [ngStyle]="{'background-color': backgroundColor || widgetData?.backgroundColor}">
     </div>
     <div class="nui-kpi-indicator__text"
-         [ngStyle]="{'color': widgetData?.textColor || widgetData?.backgroundColor || defaultColor}">
+         [ngStyle]="{'color': widgetData?.textColor || backgroundColor ||  widgetData?.backgroundColor || defaultColor}">
         <div class="nui-kpi-indicator__zoom-container">
             <div class="nui-kpi-indicator__description"
                  [title]="widgetData?.label">

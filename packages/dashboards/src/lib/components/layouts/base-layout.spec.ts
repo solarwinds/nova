@@ -17,8 +17,8 @@ class TestLayoutComponent extends BaseLayout {
     @Input() nodes: string[] = ["myId"];
 
     constructor(changeDetector: ChangeDetectorRef,
-        pizzagnaService: PizzagnaService,
-        logger: LoggerService) {
+                pizzagnaService: PizzagnaService,
+                logger: LoggerService) {
         super(changeDetector, pizzagnaService, logger);
     }
 
@@ -115,6 +115,28 @@ describe("BaseLayout", () => {
             component.ngDoCheck();
             expect(component.nodeComponentsConfigs).toEqual([testComponents["component2"]]);
             expect(component.nodeComponentsConfigs).not.toBe(testNodeConfigs);
+        });
+
+        it("should not modify the state in place when merging the template", () => {
+            const testNodeConfigs = [testComponents["component1"]];
+            component.nodeComponentsConfigs = testNodeConfigs;
+            component.template = {
+                properties: {
+                    templateProperty: "value",
+                },
+            };
+            component.nodes = ["component2"];
+
+            const previousComponent2 = testComponents["component2"];
+            const previousComponent2JSON = JSON.stringify(testComponents["component2"]);
+
+            component.ngDoCheck();
+
+            expect(component.nodeComponentsConfigs).toEqual([testComponents["component2"]]);
+            expect(component.nodeComponentsConfigs).not.toBe(testNodeConfigs);
+
+            expect(testComponents["component2"]).toBe(previousComponent2);
+            expect(JSON.stringify(testComponents["component2"])).toBe(previousComponent2JSON);
         });
     });
 });
