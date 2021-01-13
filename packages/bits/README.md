@@ -245,28 +245,3 @@ Nova formally supports the following browsers. Support for IE11 has been dropped
 
 Using date pipe, string should be provided according to ISO format. Otherwise, put Moment object instead to avoid error in Safari browser. Follow [this link](https://github.com/angular/angular/issues/17575) for more details.
 
-
-### Need help?
-
-Need help using Nui?
-
-Firstly, please go over our [FAQ](https://cp.solarwinds.com/display/NU/FAQ). We kindly ask that you not open Jira tickets for general support questions as we want to reserve Jira for bug reports and feature requests.
-
-The [SWI - Nova](https://bit.ly/2P2fsMM) channel on Teams is a much better place to ask questions.
-
-
-### Found a bug?
-
-In order to reproduce bugs we ask that you to provide a _minimal_ repro scenario and a link to the live repro environment.
-
-To submit feature requests and/or defects for Nui, [head over to this page for instructions](https://cp.solarwinds.com/display/NU/Feature+requests+and+report+defects+for+Nova+UI).
-
-<br><br>
-
-# Development, roadmap and more...
-
-Our program roadmap [is here](https://jira.solarwinds.com/secure/RapidBoard.jspa?rapidView=1805) and shows the priorities of very large features that are expected to take longer than 6 months. Our [technical roadmap](https://jira.solarwinds.com/secure/RapidBoard.jspa?rapidView=1798) is a much more granular view of the program roadmap and is basically the view for the current quarter.
-
-### Need to add a new icon?
-
-It's pretty simple to [add a new icon](https://cp.solarwinds.com/pages/viewpage.action?pageId=92545319) to the repository for your product. If you need a new icon(s) as part of a patch/hotfix, just let us know via Teams or Jira and we'll make sure your changes are applied to the appropriate branch(es).
