@@ -39,11 +39,11 @@ export class WidgetToDashboardEventProxyService implements IConfigurable, OnDest
     private upstreamSubscriptions: Record<string, Subscription> = {};
     private downstreamSubscriptions: Record<string, Subscription> = {};
     private destroy$ = new Subject();
-    private providerKey: string;
     private component: { componentId: string };
 
     private upstreams?: string[];
     private downstreams?: string[];
+    public providerKey: string;
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) private pizzagnaBus: EventBus<IEvent>,
                 @Optional() @Inject(DASHBOARD_EVENT_BUS) private dashboardBus: EventBus<IEvent>,
