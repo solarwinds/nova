@@ -24,4 +24,11 @@ listWidget: {
     },
 },
 `;
+    public featuredDeclaredText = `
+        private supportedFeatures: IDataSourceFeatures = {
+        search: { enabled: true },
+    };`;
+    public featuresUsedText = `
+        this.features = new DataSourceFeatures(this.supportedFeatures);
+    `;
 }
