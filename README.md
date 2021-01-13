@@ -4,7 +4,7 @@ The Nova Nui Framework provides a set of common UI-based components and services
 
 ## Nova Design Spec 
 
-The main specification can be found in [Nova Design System](https://ux.solarwinds.io/design/)
+The main specification can be found in the [Nova Design System](https://ux.solarwinds.io/design/)
 
 ## Style Guide
 
@@ -245,11 +245,12 @@ We encourage [contributions to Nova](./CONTRIBUTION.md) whenever your team needs
 
 Need help using Nova?
 
-First, please go over our [FAQ](./FAQ.md). If you don't find the answer
+First, please go over our [FAQ](https://github.com/solarwinds/nova/wiki/FAQ). If you don't find the answer
 to your question there, feel free to send us an email at <nova-ui@solarwinds.com>. We kindly ask that you 
 refrain from opening GitHub issues for general support questions as we want to reserve that 
 communications channel for bug reports and feature requests.
 
-In order to reproduce bugs we ask that you to provide a _minimal_ repro scenario and a link to the live repro environment.
+## Found a bug? Have an idea for a feature?
 
-Before submitting a feature requests and/or defects for Nova, make sure it hasn't already been requested on our [issues page](https://github.com/solarwinds/nova/issues).
+Please let us know! But...before submitting a feature request or issue for Nova UI, make sure it hasn't already been requested on our [issues page](https://github.com/solarwinds/nova/issues). If you can't find an existing issue
+corresponding to your feedback, please create one using the GitHub [issue portal](https://github.com/solarwinds/nova/issues/new/choose).
