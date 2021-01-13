@@ -21,6 +21,7 @@ export class ListLeafItemComponent implements IHasChangeDetector, OnInit {
     @Input() public detailedUrl: string;
     @Input() public label: string;
     @Input() public canNavigate: boolean;
+    @Input() public url: string;
 
     @Output() public navigated = new EventEmitter<ListLeafItemComponent>();
 
