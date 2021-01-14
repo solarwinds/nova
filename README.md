@@ -239,13 +239,13 @@ configuration to a `tasks.json` file:
 
 ## Contribution
 
-We encourage [contributions to Nova](./CONTRIBUTION.md) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
+We encourage [contributions to Nova](./docs/CONTRIBUTION.md) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
 
 ## Need help?
 
 Need help using Nova?
 
-First, please go over our [FAQ](https://github.com/solarwinds/nova/wiki/FAQ). If you don't find the answer
+First, please go over our [FAQ](./docs/FAQ.md). If you don't find the answer
 to your question there, feel free to send us an email at <nova-ui@solarwinds.com>. We kindly ask that you 
 refrain from opening GitHub issues for general support questions as we want to reserve that 
 communications channel for bug reports and feature requests.
