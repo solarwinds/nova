@@ -121,7 +121,7 @@ jobs:
                     name: Temporarily remove dependencies
                     command: |
                         cp package.json package.json~
-                        yarn run remove-dependencies --prefix ../.. -- packages/charts
+                        yarn run --cwd=../.. remove-dependencies packages/charts
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install dependencies
@@ -214,7 +214,7 @@ jobs:
                     name: Temporarily remove dependencies
                     command: |
                         cp package.json package.json~
-                        yarn run remove-dependencies --prefix ../.. -- packages/dashboards
+                        yarn run --cwd=../.. remove-dependencies packages/dashboards
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Install dependencies
