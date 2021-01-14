@@ -117,9 +117,19 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
+                    working_directory: ~/nova/packages/charts
+                    name: Temporarily remove dependencies
+                    command: |
+                        cp package.json package.json~
+                        yarn run remove-dependencies --prefix ../.. -- packages/charts
+            -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install dependencies
                    command: yarn install
+            -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Restore package.json
+                   command: mv -f package.json~ package.json
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
@@ -201,8 +211,18 @@ jobs:
                     command: yarn run compute-version-ci
             -   run:
                     working_directory: ~/nova/packages/dashboards
+                    name: Temporarily remove dependencies
+                    command: |
+                        cp package.json package.json~
+                        yarn run remove-dependencies --prefix ../.. -- packages/dashboards
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
                     name: Install dependencies
                     command: yarn install
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Restore package.json
+                    command: mv -f package.json~ package.json
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Install bits
