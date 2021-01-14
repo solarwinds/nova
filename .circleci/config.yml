@@ -351,6 +351,7 @@ workflows:
                          branches:
                              only:
                                  - main
+                                 - release/*
              -   charts-build:
                      requires:
                          - bits-pack
@@ -375,6 +376,7 @@ workflows:
                          branches:
                              only:
                                  - main
+                                 - release/*
              -   dashboards-build:
                      requires:
                          -   charts-pack
@@ -399,6 +401,7 @@ workflows:
                          branches:
                              only:
                                  - main
+                                 - release/*
     nova-release:
         jobs:
             - release-approval:
