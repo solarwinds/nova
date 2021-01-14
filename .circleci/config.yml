@@ -128,12 +128,12 @@ jobs:
                    command: yarn install
             -   run:
                    working_directory: ~/nova/packages/charts
-                   name: Restore package.json
-                   command: mv -f package.json~ package.json
-            -   run:
-                   working_directory: ~/nova/packages/charts
                    name: Install Bits
                    command: yarn add ../bits/*.tgz
+            -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Restore package.json
+                   command: mv -f package.json~ package.json
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Assemble
@@ -221,16 +221,16 @@ jobs:
                     command: yarn install
             -   run:
                     working_directory: ~/nova/packages/dashboards
-                    name: Restore package.json
-                    command: mv -f package.json~ package.json
-            -   run:
-                    working_directory: ~/nova/packages/dashboards
                     name: Install bits
                     command: yarn add ../bits/*.tgz
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Install charts
                     command: yarn add ../charts/*.tgz
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Restore package.json
+                    command: mv -f package.json~ package.json
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Assemble
