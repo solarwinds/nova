@@ -109,7 +109,7 @@ providers: [
     ...
 ]    
 ```
-The `TRANSLATIONS` provider can be used to internationalize bits.  Details here: https://cp.solarwinds.com/display/NU/i18n+for+Nova
+The `TRANSLATIONS` provider can be used to internationalize bits.  Details can be found [here](https://ux.solarwinds.io/nova/docs/nova-bits/develop/sdk/api-docs-ng2/additional-documentation/internationalization-(i18n).html).
 <br>
 
 #### Set root CSS class
@@ -164,10 +164,8 @@ We recommend the [BEM](http://getbem.com/) naming convention for your css/less v
 <br>
 
 
-#### Set Typescript Compiler Options
-To avoid compilation errors caused by tree-shaking of lodash, tsconfig.json of your project needs to have `allowSyntheticDefaultImports: true` property in compilerOptions.
-If you have compilation error like `TypeError: find_1.default is not a function` when running tests you might need to add `esModuleInterop: true` to your compilerOptions. Or you can try Solution #2 from this [article](https://medium.com/martin_hotell/tree-shake-lodash-with-webpack-jest-and-typescript-2734fa13b5cd).
-More details can be found [here](https://cp.solarwinds.com/pages/viewpage.action?spaceKey=NU&title=Tree+Shake+Lodash).
+#### Typescript Compiler Options
+Information about this can be found [here](../../README.md#Typescript-Compiler-Options).
 <br>
 
 #### Exclude highlight.js languages
@@ -215,8 +213,8 @@ ng g @nova-ui/bits:list --name=basic-list --p=app
 
 
 ## What are Atoms?
-[Atoms](https://cp.solarwinds.com/display/NU/How+to+Use+NOVA+Atoms) are the custom implementation of a well-known PageObject pattern. They are useful when it comes to e2e and visual testing an app containing Nova components and directives.
-They can be found in @nova-ui/bits/sdk/atoms. Note that, while they are useful for e2e and visual tests, they are not suitable for unit testing.
+Information about Atoms can be found [here](../../README.md#Atoms)
+Bits atoms can be imported from here: `@nova-ui/bits/sdk/atoms`.
 
 
 ## AoT Support
