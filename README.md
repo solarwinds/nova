@@ -6,7 +6,7 @@ The main specification can be found in [Marvel](https://marvelapp.com/project/32
 
 ## Style Guide
 
-<details>
+<details open>
   <summary>Click to view the guide</summary>
   
   ### Component development
@@ -15,11 +15,11 @@ Why? We have no control over user environment and change detection strategy is s
   * Add an explanatory inline comment to every usage of setTimeout() (and other situations when code is not self-explanatory)
 Why? setTimeout is tied to a wider context of executed code, which might not be apparent from reading the code. Documenting the setTimeout usage helps to understand that context.
   * Be aware that the following ResizeObserver polyfill usage does not work in Firefox:
-    ```
+    ```js
     this.resizeObserver.observe(this.el.nativeElement);
     ```
 	But the following works in all major browsers:
-    ```
+    ```js
     this.ngZone.runOutsideAngular(() => {​​​
         this.resizeObserver.observe(this.el.nativeElement);
     }​​​​​​​​​​);
@@ -32,7 +32,7 @@ The reason for this is that, since in Firefox ResizeObserver is not native (as o
     
 	As a safe guard, if you find yourself extending a component from a base class, it's best to go ahead and implement an ngOnDestroy in both the base class and the derived class. Then, in the derived class call super.ngOnDestroy(). This will ensure that any observables added to the base class at a later date will be unsubscribed.
     Base:
-    ```
+    ```js
     public ngOnDestroy() {​​​​​​​​​​
     // Added as a safeguard. Inherited classes will invoke this
     // so that any observables added to this base class will
@@ -40,13 +40,24 @@ The reason for this is that, since in Firefox ResizeObserver is not native (as o
     }​​​​​​​​​​
     ```
     Derived:
-    ```
+    ```js
     public ngOnDestroy() {​​​​​​​​​​
     // Added as a safeguard. Invoking the base class ngOnDestroy
     // ensures that any base class observables are unsubscribed.
     super.ngOnDestroy();
     }​​​​​​​​​​
     ```
+#### Typescript Compiler Options
+To avoid compilation errors caused by tree-shaking of lodash, fo the follow these steps:
+  1. Update your tsconfig.json to have `allowSyntheticDefaultImports: true` property in **compilerOptions**. This property allows users to import CommonJS modules as default imports.
+     * If you have compilation error like `TypeError: find_1.default is not a function` when running tests you might need to add `esModuleInterop: true` to your compilerOptions. Or you can try Solution #2 from this [article](https://medium.com/martin_hotell/tree-shake-lodash-with-webpack-jest-and-typescript-2734fa13b5cd).
+  2. After updates in tsconfig.json change imports of lodash to such way in **all files**: 
+     ```js
+     import forEach from “lodash/forEach”;
+     ```
+##### Additional articles about tsconfig compilerOptions:
+  - https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/
+  - https://www.typescriptlang.org/docs/handbook/compiler-options.html
 
   ### Documentation
   1. Put example data at the bottom of examples
@@ -75,7 +86,7 @@ The reason for this is that, since in Firefox ResizeObserver is not native (as o
   `setTimeout(() => callback(), timeOut);`
   with the following solution:
 
-```
+```js
 ngZone.runOutsideAngular(() => {​​​​
   // running timeout outside of angular zone
   setTimeout(() => {​​​​
@@ -89,7 +100,7 @@ ngZone.runOutsideAngular(() => {​​​​
 This code snippet allows protractor to run asserts and continue testing while a timeout is in progress.
 
   #### `Atoms`
-  Atom is a user friendly interface to test a component.
+  Atoms are user friendly interfaces used to test components and directives.
   The idea behind atom is that tester should not know about
   * internal structure of the component
   * class names that are applied in different states
@@ -97,6 +108,91 @@ This code snippet allows protractor to run asserts and continue testing while a 
   * etc.
 Also it provides the information about available features, states, attributes and nested components with intellisense right in the IDE.
 It makes tests more readable.
+
+<details open>
+<summary>Click to view instructions on using Nova Atoms</summary>
+
+  Atoms can be instantiated in two ways:
+  1. Using its constructor
+
+     * 
+        ```js 
+        dialog = new DialogAtom(element(by.className("nui-dialog")));
+        ```
+          [Code Example](./packages/bits/spec/components/dialog/dialog.e2e.ts#46)
+
+  1. Finding an Atom in some context in the DOM
+
+     * 
+       ```js
+       defaultDialogBtn = Atom.find(ButtonAtom, "nui-demo-default-dialog-btn");
+       ```
+         [Code Example](./packages/bits/spec/components/icon/icon.e2e.ts#12)
+
+      Or
+
+     * 
+       ```js
+       busy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-basic")));
+       ```
+         [Code Example](./packages/bits/spec/components/convenience/time-frame-bar/time-frame-bar.atom.ts#28)
+
+  ---
+  When in test, the following is the most typical way of using atoms:
+  1. Declare a variable with proper type
+
+      * 
+        ```js
+        let defaultDialogBtn: ButtonAtom;
+        ```
+  2. *browser.get()* the test page
+
+     * make sure the page is loaded before using atoms! If the page is not rendered protractor obviously will throw "element not found" sort of exceptions
+  3. Find atoms of the components before the test suite (use `beforeEach()` or `beforeAll()`)
+
+      * 
+        ```js
+        beforeAll(async () => {
+          await Helper.prepareBrowser("dialog");
+          defaultDialogBtn = Atom.find(ButtonAtom, "nui-demo-default-dialog-btn");
+        });
+        ```
+  4. Refer to a variable containing an atom to call it's methods, or viewing\asserting it in the context of your tests
+
+      * 
+        ```js
+        it("should add custom class to dialog", async () => {
+          await customClassButton.click();
+          expect(await dialog.hasClass("demoDialogCustomClass")).toBe(true);
+        });
+        ```
+  If needed, atoms can be instantiated during test as well, for instance, if a component appears on the page conditionally.
+
+  ---
+  Atoms for different components or directives will expectedly have different API. The only thing they have in common, however, is the base class they're inherited from - the **Atom class**. Each atom has access to the methods of the base Atom class.
+
+  **Atom** base class public API explained
+
+| # |  Field/Method  |  How it works  |
+| -- | :-----------------  |  :-----------------  |
+| |    **STATIC**    |
+| 1 | *static* `CSS_CLASS` | This is how atoms are found in the DOM - thanks to this static css class. Different atoms must have different values here. [Example](./packages/bits/spec/components/dialog/dialog.atom.ts#11) |
+| 2 | *static* `find(atomClass: IAtomClass<T>, id: string)` | Find a needed Atom within the parent element, found using it's unique id. This class uses findIn() method, described below. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#23) |
+| 3 | *static* `findIn(atomClass: IAtomClass<T>, parentElement: ElementFinder, index?: number)` | This is a basic method typically used to look for atoms in the DOM. It requires providing a desired atom name, the context where to look for it, and also an optional index parameter. The optional index param is used if there were more than one atom of a component found on the page, so the user can choose which one to take. [Example](./packages/bits/spec/components/checkbox-group/checkbox-group.e2e.ts#17) |
+| 4 | *static async* `findCount(atomClass: IAtomClass<T>, parentElement: ElementFinder): Promise<number>` | Is used to get the number of atoms found within the given context. Returns a promise. |
+| 5 | *static async* `hasClass(el: ElementFinder, className: string): Promise<string>` | Is used to check that a certain css class has been applied to a selected element. |
+| 6 | *static async* `hasAnyClass(el: ElementFinder, classNamesToSearch: string[]): Promise<string>` | The same as `hasClass()`, with the only difference if can search for a number of classes in a given element. |
+| | **NON-STATIC** |
+| 7 | async `isDisplayed()`, async `isPresent()` | A simple wrapper around the same protractor methods. |
+| 8 | async `hasClass(className: string)` | Does the same as the static one, but looks for the classes within the atom on which it was called. [Example](./packages/bits/spec/components/button/button.e2e.ts#36) |
+| 9 | `getElement(): ElementFinder` | Used to get the ElementFinder of the Atom. |
+| 10 | *async* `isChildElementPresent(locator: any): Promise<boolean>` | Pretty self-explanatory, it looks for a child element within the atom using a given Locator and verifies if it's present. |
+| 11 | *async* `hover(el?: ElementFinder, location?: ILocation)` | If no params are provided then it hovers over itself. It will hover over the given element if ElementFinder is provided and over the given coordinates if ILocation is given. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#38) |
+| 12 | *async* `scrollTo()` | Scrolls to the current atom so it appears in the viewport. Useful in cases when a desired element on the page, but not within the viewport, and is therefore not clickable. [Example](./packages/bits/spec/components/menu/menu.visual.ts#45) |
+
+</details>
+
+<br>
 
   #### `Top 10 E2E Guidelines`
   1. Do not operate with ElementFinder or ElementFinderArray in you test.
@@ -124,7 +220,7 @@ to accommodate a wide breadth of use cases.
 
 ## Linking Projects for Development
 
-To get your locally built library to be used as a dependancy of another library or app you will need to do
+To get your locally built library to be used as a dependency of another library or app you will need to do
 two things:
 
 * Build the child library
@@ -148,7 +244,7 @@ task. These types of changes will not be picked up automatically.
 
 ### Linking
 
-As `npm link` or `yarn link` proved to not work reliably with angular libraies, we are using regular
+As `npm link` or `yarn link` proved to not work reliably with angular libraries, we are using regular
 symbolic linked folders (junction for Windows file system).
 
 To link things with each other we have some scripts in the `package.json` file.
@@ -197,7 +293,7 @@ category. The interpreter will now stop on `debugger` statements.
 You can create a debugger configuration for debugging e2e tests in VS Code. Here are two configurations
 for the debugger that can be added to the `launch.json` file under the `.vscode` directory in the project:
 
-```
+```js
 {
   "type": "node",
   "request": "attach",
@@ -221,7 +317,7 @@ task and debugger simultaneously)
 To use the `preLaunchTask` mentioned in the `e2e debug and attach` configuration, add the following task
 configuration to a `tasks.json` file:
 
-```
+```js
 {
   "version": "2.0.0",
   "tasks": [
