@@ -189,9 +189,7 @@ It makes tests more readable.
 |10| *async* `isChildElementPresent(locator: any): Promise<boolean>` | Pretty self-explanatory, it looks for a child element within the atom using a given Locator and verifies if it's present. |
 |11| *async* `hover(el?: ElementFinder, location?: ILocation)` | If no params are provided then it hovers over itself. It will hover over the given element if ElementFinder is provided and over the given coordinates if ILocation is given. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#38) |
 |12| *async* `scrollTo()` | Scrolls to the current atom so it appears in the viewport. Useful in cases when a desired element on the page, but not within the viewport, and is therefore not clickable. [Example](./packages/bits/spec/components/menu/menu.visual.ts#45) |
-
 </details>
-
 <br>
 
   #### `Top 10 E2E Guidelines`
