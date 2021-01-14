@@ -214,7 +214,7 @@ ng g @nova-ui/bits:list --name=basic-list --p=app
 
 ## What are Atoms?
 Information about Atoms can be found [here](../../README.md#Atoms)
-Bits atoms can be found in `@nova-ui/bits/sdk/atoms`.
+Bits atoms can be imported from here: `@nova-ui/bits/sdk/atoms`.
 
 
 ## AoT Support
