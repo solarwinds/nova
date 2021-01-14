@@ -5,7 +5,6 @@ import { mapDataToFormatterProperties } from "../../functions/map-data-to-format
 import { INTERACTION } from "../../services/types";
 import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../types";
 import { IBroker } from "../providers/types";
-import { IFormatter } from "../types";
 
 import { IKpiConfiguration, IKpiData, IKpiFormatterProperties, IKpiFormattersConfiguration } from "./types";
 
@@ -21,6 +20,9 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
 
     @Input()
     public widgetData: IKpiData;
+
+    @Input()
+    public backgroundColor: string;
 
     @Input()
     public syncValuesBroker: IBroker[];

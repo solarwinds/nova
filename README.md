@@ -2,7 +2,7 @@
 
 ## Nova Design Spec 
 
-The main specification can be found in [Marvel](https://marvelapp.com/project/3222505/)
+The main specification can be found in [Nova Design System](https://ux.solarwinds.io/design/)
 
 ## Style Guide
 
@@ -212,11 +212,11 @@ It makes tests more readable.
 
 We are developing 3 component libraries:
 
-* **nova-bits** - atomic components to be used as building blocks for applications and more complex 
+* [Nova-Bits](./packages/bits/README.md) - atomic components to be used as building blocks for applications and more complex 
 components. Exception - **convenience components** - prototypes of composite components, that are meant 
 to accommodate a wide breadth of use cases.
-* **nova-charts** - visualization library built on top of [d3](https://d3js.org/).
-* **nova-dashboards** - you got it.
+* [Nova-Charts](./packages/charts/README.md) - visualization library built on top of [d3](https://d3js.org/).
+* [Nova-Dashboards](./packages/dashboards/README.md) - you got it.
 
 ## Linking Projects for Development
 
@@ -333,3 +333,16 @@ configuration to a `tasks.json` file:
 ## Contribution
 
 We encourage [contributions to Nova](./CONTRIBUTION.md) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
+
+### Need help?
+
+Need help using Nui?
+
+Please use our [documention and examples](https://ux.solarwinds.io/nova/docs/) to insure you are correctly using Nova in your project. If you are still unable to find a solution to your issue you can email the Nova Team at <nova-ui@solarwinds.com> for further assistance.
+
+
+### Found a bug?
+
+In order to reproduce bugs we ask that you to provide a _minimal_ repro scenario and a link to the live repro environment.
+
+Before submitting a feature requests and/or defects for Nova, make sure it hasn't already been requested on our [issues page](https://github.com/solarwinds/nova/issues).

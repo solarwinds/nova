@@ -216,7 +216,7 @@ export class DrilldownDataSourceRealApi<T = any> extends ServerSideDataSource<T>
             label: property,
             // statuses that will be displayed on group item
             statuses: [
-                { key: "website", value: groupByObj[property].length },
+                { key: "virtual-host", value: groupByObj[property].length },
                 { key: "acknowledge", value: this.getPopulation(groupByObj[property]) },
             ],
         }));

@@ -1,4 +1,4 @@
-import {IconStatus} from "@nova-ui/bits";
+import { IconStatus } from "@nova-ui/bits";
 
 export const GRAPH_DATA_MOCK = {
   "data": {
@@ -18,6 +18,7 @@ export const GRAPH_DATA_MOCK = {
             "name": "Catalan",
           },
         ],
+        "url": "https://en.wikipedia.org/wiki/Andorra",
       },
       {
         "name": "United Arab Emirates",
@@ -34,6 +35,7 @@ export const GRAPH_DATA_MOCK = {
             "name": "Arabic",
           },
         ],
+        "url": "https://en.wikipedia.org/wiki/United_Arab_Emirates",
       },
       {
         "name": "Afghanistan",
@@ -56,6 +58,7 @@ export const GRAPH_DATA_MOCK = {
             "name": "Turkmen",
           },
         ],
+        "url": "https://en.wikipedia.org/wiki/Afghanistan",
       },
       {
         "name": "Antigua and Barbuda",
@@ -72,6 +75,7 @@ export const GRAPH_DATA_MOCK = {
             "name": "English",
           },
         ],
+        "url": "https://en.wikipedia.org/wiki/Antigua_and_Barbuda",
       },
       {
         "name": "Anguilla",
@@ -88,6 +92,7 @@ export const GRAPH_DATA_MOCK = {
             "name": "English",
           },
         ],
+        "url": "https://en.wikipedia.org/wiki/Anguilla",
       },
       {
         "name": "Albania",
@@ -104,6 +109,7 @@ export const GRAPH_DATA_MOCK = {
             "name": "Albanian",
           },
         ],
+        "url": "https://en.wikipedia.org/wiki/Albania",
       },
       {
         "name": "Armenia",
@@ -123,6 +129,7 @@ export const GRAPH_DATA_MOCK = {
             "name": "Russian",
           },
         ],
+        "url": "https://en.wikipedia.org/wiki/Armenia",
       },
       {
         "name": "Angola",

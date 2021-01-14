@@ -4,7 +4,11 @@
             <nui-icon *ngIf="icon; else statusTpl" [icon]="icon" [status]="status" class="mr-1"></nui-icon>
         </div>
         <div class="nui-list-leaf-item__description">
-            <div class="nui-text-link nui-text-ellipsis" [innerHTML]="label | nuiHighlight: searchTerm "></div>
+            <a class="nui-text-ellipsis" 
+                [ngClass]="url ? '' : 'not-active'"
+                [attr.target]="url ? '_blank' : null" 
+                [attr.href]="url || null" 
+                [innerHTML]="label | nuiHighlight: searchTerm"></a>
             <div class="nui-text-secondary nui-text-ellipsis"[innerHTML]="detailedUrl | nuiHighlight: searchTerm "></div>
         </div>
 

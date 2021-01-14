@@ -67,5 +67,19 @@
                 </nui-form-field>
             </div>
         </div>
+        <div class="mb-3">
+            <label class="nui-text-label" i18n>Label URL</label>
+            <div class="d-flex flex-grow-1">
+                <nui-form-field class="d-flex flex-grow-1" [control]="getFieldMappingsControl.get('url')">
+                    <nui-select-v2 placeholder="Select Item"
+                                   i18n-placeholder
+                                   formControlName="url">
+                        <nui-select-v2-option *ngFor="let item of mappingKeys" [value]="item">
+                            {{ item }}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                </nui-form-field>
+            </div>
+        </div>
     </div>
 </nui-widget-editor-accordion>
