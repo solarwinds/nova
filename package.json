@@ -38,6 +38,7 @@
     "set-release-versions-ci": "bash scripts/set-release-versions",
     "set-dependency-versions-ci": "bash scripts/set-dependency-versions",
     "set-source-versions-ci": "bash scripts/set-source-versions",
+    "remove-dependencies": "node scripts/remove-dependencies.js",
     "publish-ci": "bash scripts/publish",
     "merge-ci": "bash scripts/merge",
     "bash": "bash scripts/runner"
