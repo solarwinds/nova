@@ -1,8 +1,10 @@
-# Nova Library Development
+# Nova Nui Framework
+
+The Nova Nui Framework provides a set of common UI-based components and services to assist with rapid web application development. Nui is built on the latest Angular and follows modern UX design principles and front-end software development practices.
 
 ## Nova Design Spec 
 
-The main specification can be found in [Nova Design System](https://ux.solarwinds.io/design/)
+The main specification can be found in the [Nova Design System](https://ux.solarwinds.io/design/)
 
 ## Style Guide
 
@@ -234,19 +236,21 @@ configuration to a `tasks.json` file:
   ]
 }
 ```
+
 ## Contribution
 
-We encourage [contributions to Nova](./CONTRIBUTION.md) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
+We encourage [contributions to Nova](./docs/CONTRIBUTION.md#contributing-to-nova) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
 
-### Need help?
+## Need help?
 
-Need help using Nui?
+Need help using Nova?
 
-Please use our [documention and examples](https://ux.solarwinds.io/nova/docs/) to insure you are correctly using Nova in your project. If you are still unable to find a solution to your issue you can email the Nova Team at <nova-ui@solarwinds.com> for further assistance.
+First, please go over our [FAQ](./docs/FAQ.md). If you don't find the answer
+to your question there, feel free to send us an email at <nova-ui@solarwinds.com>. We kindly ask that you 
+refrain from opening GitHub issues for general support questions as we want to reserve that 
+communications channel for bug reports and feature requests.
 
+## Found a bug? Have an idea for a feature?
 
-### Found a bug?
-
-In order to reproduce bugs we ask that you to provide a _minimal_ repro scenario and a link to the live repro environment.
-
-Before submitting a feature requests and/or defects for Nova, make sure it hasn't already been requested on our [issues page](https://github.com/solarwinds/nova/issues).
+Please let us know! But...before submitting a feature request or issue for Nova UI, make sure it hasn't already been requested on our [issues page](https://github.com/solarwinds/nova/issues). If you can't find an existing issue
+corresponding to your feedback, please create one using the GitHub [issue portal](https://github.com/solarwinds/nova/issues/new/choose).
