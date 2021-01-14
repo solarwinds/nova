@@ -25,6 +25,7 @@ export class EntityFormattingConfigurationComponent implements OnInit, OnChanges
             status: "",
             detailedUrl: "",
             label: "",
+            url: "",
         }),
     });
 

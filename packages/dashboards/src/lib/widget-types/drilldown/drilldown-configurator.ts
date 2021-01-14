@@ -106,12 +106,13 @@ export const drilldownConfigurator = {
             componentType: EntityFormattingConfigurationComponent.lateLoadKey,
             properties: {
                 // TODO: Should be taken dynamically from DataSource. See NUI-5583
-                mappingKeys: ["icon_status", "capital", "name", "icon"],
+                mappingKeys: ["icon_status", "capital", "name", "icon", "url"],
                 dataFieldIds: {
                     icon: "icon",
                     status: "icon_status",
                     detailedUrl: "capital",
                     label: "name",
+                    url: "url",
                 },
             },
             providers: {
