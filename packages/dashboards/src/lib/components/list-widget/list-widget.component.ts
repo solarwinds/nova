@@ -21,6 +21,7 @@ import { Subject } from "rxjs";
 import { filter, takeUntil, tap } from "rxjs/operators";
 
 import { mapDataToFormatterProperties } from "../../functions/map-data-to-formatter-properties";
+import { DRILLDOWN } from "../../services/types";
 import { IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../types";
 
 import { IListWidgetConfiguration } from "./types";
@@ -62,22 +63,24 @@ export class ListWidgetComponent implements OnDestroy, OnInit, IHasChangeDetecto
     }
 
     ngAfterViewInit() {
-        this.repeat?.draggableElements?.changes.pipe(
-            takeUntil(this.destroy$),
-            tap((data: QueryList<CdkDrag>) => console.log(">>> data", data)),
-            tap((data: QueryList<CdkDrag>) => console.log(">>> BEFORE data height", data.first.element.nativeElement.getBoundingClientRect().height)),
-            tap((data: QueryList<CdkDrag>) => console.log(">>> el", data.first.element.nativeElement)),
-            filter((data: any) => {
-                const height = data.first.element.nativeElement.getBoundingClientRect().height;
-                return height && height !== this.itemSize;
-            }),
-            tap((data: QueryList<CdkDrag>) => {
-                this.itemSize = data.first.element.nativeElement.getBoundingClientRect().height;
-                this.changeDetector.detectChanges();
-            }),
-            tap((data: QueryList<CdkDrag>) => this.repeat?.viewportRef.checkViewportSize())
-        )
-        .subscribe();
+        if (this.virtualScroll) {
+            this.repeat?.draggableElements?.changes.pipe(
+                takeUntil(this.destroy$),
+                tap((data: QueryList<CdkDrag>) => console.log(">>> data", data)),
+                tap((data: QueryList<CdkDrag>) => console.log(">>> BEFORE data height", data.first.element.nativeElement.getBoundingClientRect().height)),
+                tap((data: QueryList<CdkDrag>) => console.log(">>> el", data.first.element.nativeElement)),
+                filter((data: any) => {
+                    const height = data.first.element.nativeElement.getBoundingClientRect().height;
+                    return height && height !== this.itemSize;
+                }),
+                tap((data: QueryList<CdkDrag>) => {
+                    this.itemSize = data.first.element.nativeElement.getBoundingClientRect().height;
+                    this.changeDetector.detectChanges();
+                }),
+                tap((data: QueryList<CdkDrag>) => this.repeat?.viewportRef.checkViewportSize())
+            )
+            .subscribe();
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
