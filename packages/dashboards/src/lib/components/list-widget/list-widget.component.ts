@@ -1,10 +1,26 @@
-import { ChangeDetectorRef, Component, ElementRef, HostBinding, Inject, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
-import { EventBus, IEvent, ResizeObserverDirective } from "@nova-ui/bits";
+import { CdkDrag } from "@angular/cdk/drag-drop";
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ContentChildren,
+    ElementRef,
+    HostBinding,
+    Inject,
+    Input,
+    NgZone,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    QueryList,
+    SimpleChanges,
+    ViewChild,
+} from "@angular/core";
+import { EventBus, IEvent, RepeatComponent, RepeatItemComponent, ResizeObserverDirective } from "@nova-ui/bits";
 import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { filter, takeUntil, tap } from "rxjs/operators";
 
 import { mapDataToFormatterProperties } from "../../functions/map-data-to-formatter-properties";
-import { DRILLDOWN } from "../../services/types";
 import { IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../types";
 
 import { IListWidgetConfiguration } from "./types";
@@ -15,14 +31,21 @@ const RESIZE_DEBOUNCE_TIME = 10;
     selector: "nui-list-widget",
     templateUrl: "./list-widget.component.html",
     styleUrls: ["./list-widget.component.less"],
-    host: {style: "overflow: scroll"},
+    host: {style: "overflow: scroll; height: 100%"},
 })
-export class ListWidgetComponent implements OnDestroy, OnInit, IHasChangeDetector, OnChanges {
+export class ListWidgetComponent implements OnDestroy, OnInit, IHasChangeDetector, OnChanges, AfterViewInit {
     static lateLoadKey = "ListWidgetComponent";
 
     @Input() public data: any[];
     @Input() public configuration: IListWidgetConfiguration;
     @Input() @HostBinding("class") public elementClass: string;
+    // 70 px stands for widget header and margins
+    @Input() public indentFromTop: number = 70;
+    @Input() public virtualScroll: boolean = true;
+    @Input() itemSize: number = 32;
+
+    @ViewChild(RepeatComponent) public repeat: RepeatComponent;
+    @ContentChildren(RepeatItemComponent) public repeatItems: QueryList<RepeatItemComponent>;
 
     private itemFormatterProps = new Map();
     private destroy$: Subject<void> = new Subject();
@@ -36,6 +59,25 @@ export class ListWidgetComponent implements OnDestroy, OnInit, IHasChangeDetecto
 
     ngOnInit() {
         this.initResizeObserver();
+    }
+
+    ngAfterViewInit() {
+        this.repeat?.draggableElements?.changes.pipe(
+            takeUntil(this.destroy$),
+            tap((data: QueryList<CdkDrag>) => console.log(">>> data", data)),
+            tap((data: QueryList<CdkDrag>) => console.log(">>> BEFORE data height", data.first.element.nativeElement.getBoundingClientRect().height)),
+            tap((data: QueryList<CdkDrag>) => console.log(">>> el", data.first.element.nativeElement)),
+            filter((data: any) => {
+                const height = data.first.element.nativeElement.getBoundingClientRect().height;
+                return height && height !== this.itemSize;
+            }),
+            tap((data: QueryList<CdkDrag>) => {
+                this.itemSize = data.first.element.nativeElement.getBoundingClientRect().height;
+                this.changeDetector.detectChanges();
+            }),
+            tap((data: QueryList<CdkDrag>) => this.repeat?.viewportRef.checkViewportSize())
+        )
+        .subscribe();
     }
 
     ngOnChanges(changes: SimpleChanges) {

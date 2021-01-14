@@ -1,5 +1,9 @@
 <nui-repeat [itemsSource]="data"
-            [repeatItemTemplateRef]="repeatItemTemplate">
+            [repeatItemTemplateRef]="repeatItemTemplate"
+            [virtualScroll]="virtualScroll"
+            [itemSize]="itemSize"
+            class="h-100"
+            >
 </nui-repeat>
 
 <ng-template #repeatItemTemplate let-item="item">
