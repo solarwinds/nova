@@ -1,8 +1,4 @@
-# Nova Nui Framework
-
-The Nova Nui Framework provides a set of common UI-based components and services to assist with rapid web application development. Nui is built on the latest Angular and follows modern UX design principles and front-end software development practices.
-
-# Nova Bits
+# Overview
 
 In Bits, the philosophy is all about flexibility – it provides the Legos, plumbing and styles, while you control the layouts. Bits aims to provide high-quality, atomic building blocks, services and tools while allowing feature developers the ability to create whatever layouts they need.
 <br>
@@ -242,4 +238,3 @@ Nova formally supports the following browsers. Support for IE11 has been dropped
 ### Date pipe Safari issue
 
 Using date pipe, string should be provided according to ISO format. Otherwise, put Moment object instead to avoid error in Safari browser. Follow [this link](https://github.com/angular/angular/issues/17575) for more details.
-
