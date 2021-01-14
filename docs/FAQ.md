@@ -76,4 +76,4 @@ The Nova UI npm packages reside [here](https://www.npmjs.com/settings/nova-ui/pa
 
 ## How can I contribute a bug fix or new feature to Nova?
 
-Please see [Contributing to Nova](https://github.com/solarwinds/nova/blob/main/CONTRIBUTION.md#contributing-to-nova)
+Please see [Contributing to Nova](./docs/CONTRIBUTION.md#contributing-to-nova)

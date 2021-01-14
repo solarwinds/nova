@@ -239,7 +239,7 @@ configuration to a `tasks.json` file:
 
 ## Contribution
 
-We encourage [contributions to Nova](./docs/CONTRIBUTION.md) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
+We encourage [contributions to Nova](./docs/CONTRIBUTION.md#contributing-to-nova) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
 
 ## Need help?
 
