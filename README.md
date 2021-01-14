@@ -4,7 +4,7 @@ The Nova Nui Framework provides a set of common UI-based components and services
 
 ## Nova Design Spec 
 
-The main specification can be found in [Nova Design System](https://ux.solarwinds.io/design/).
+The main specification can be found in the [Nova Design System](https://ux.solarwinds.io/design/).
 
 ## Style Guide
 
@@ -28,29 +28,30 @@ Why? setTimeout is tied to a wider context of executed code, which might not be 
     ```
 The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
 
-* ngOnDestroy and Component Inheritance
+  ### ngOnDestroy and Component Inheritance
 
-	A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes. This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.
+A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes. This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.
     
-	As a safe guard, if you find yourself extending a component from a base class, it's best to go ahead and implement an ngOnDestroy in both the base class and the derived class. Then, in the derived class call super.ngOnDestroy(). This will ensure that any observables added to the base class at a later date will be unsubscribed.
-    Base:
-    ```js
-    public ngOnDestroy() {​​​​​​​​​​
-    // Added as a safeguard. Inherited classes will invoke this
-    // so that any observables added to this base class will
-    // be unsubscribed.
-    }​​​​​​​​​​
-    ```
-    Derived:
-    ```js
-    public ngOnDestroy() {​​​​​​​​​​
-    // Added as a safeguard. Invoking the base class ngOnDestroy
-    // ensures that any base class observables are unsubscribed.
-    super.ngOnDestroy();
-    }​​​​​​​​​​
-    ```
-  #### Typescript Compiler Options
-  To avoid compilation errors caused by tree-shaking of lodash, fo the follow these steps:
+As a safe guard, if you find yourself extending a component from a base class, it's best to go ahead and implement an ngOnDestroy in both the base class and the derived class. Then, in the derived class call super.ngOnDestroy(). This will ensure that any observables added to the base class at a later date will be unsubscribed.
+
+Base:
+```js
+public ngOnDestroy() {​​​​​​​​​​
+// Added as a safeguard. Inherited classes will invoke this
+// so that any observables added to this base class will
+// be unsubscribed.
+}​​​​​​​​​​
+```
+Derived:
+```js
+public ngOnDestroy() {​​​​​​​​​​
+// Added as a safeguard. Invoking the base class ngOnDestroy
+// ensures that any base class observables are unsubscribed.
+super.ngOnDestroy();
+}​​​​​​​​​​
+```
+  ### Typescript Compiler Options
+  To avoid compilation errors caused by tree-shaking of lodash, follow these steps:
   1. Update your tsconfig.json to have `allowSyntheticDefaultImports: true` property in **compilerOptions**. This property allows users to import CommonJS modules as default imports.
      * If you have compilation error like `TypeError: find_1.default is not a function` when running tests you might need to add `esModuleInterop: true` to your compilerOptions. Or you can try Solution #2 from this [article](https://medium.com/martin_hotell/tree-shake-lodash-with-webpack-jest-and-typescript-2734fa13b5cd).
   2. After updates in tsconfig.json change imports of lodash to such way in **all files**: 
@@ -121,7 +122,7 @@ It makes tests more readable.
         ```js 
         dialog = new DialogAtom(element(by.className("nui-dialog")));
         ```
-          [Code Example](./packages/bits/spec/components/dialog/dialog.e2e.ts#46)
+          [Code Example](./packages/bits/spec/components/dialog/dialog.e2e.ts#L46)
 
   1. Finding an Atom in some context in the DOM
 
@@ -129,7 +130,7 @@ It makes tests more readable.
        ```js
        defaultDialogBtn = Atom.find(ButtonAtom, "nui-demo-default-dialog-btn");
        ```
-         [Code Example](./packages/bits/spec/components/icon/icon.e2e.ts#12)
+         [Code Example](./packages/bits/spec/components/icon/icon.e2e.ts#L12)
 
       Or
 
@@ -137,7 +138,7 @@ It makes tests more readable.
        ```js
        busy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-basic")));
        ```
-         [Code Example](./packages/bits/spec/components/convenience/time-frame-bar/time-frame-bar.atom.ts#28)
+         [Code Example](./packages/bits/spec/components/convenience/time-frame-bar/time-frame-bar.atom.ts#L28)
 
   ---
   When in test, the following is the most typical way of using atoms:
@@ -191,6 +192,7 @@ It makes tests more readable.
 |10| *async* `isChildElementPresent(locator: any): Promise<boolean>` | Pretty self-explanatory, it looks for a child element within the atom using a given Locator and verifies if it's present. |
 |11| *async* `hover(el?: ElementFinder, location?: ILocation)` | If no params are provided then it hovers over itself. It will hover over the given element if ElementFinder is provided and over the given coordinates if ILocation is given. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#38) |
 |12| *async* `scrollTo()` | Scrolls to the current atom so it appears in the viewport. Useful in cases when a desired element on the page, but not within the viewport, and is therefore not clickable. [Example](./packages/bits/spec/components/menu/menu.visual.ts#45) |
+
 </details>
 <br>
 
