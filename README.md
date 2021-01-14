@@ -2,11 +2,11 @@
 
 ## Nova Design Spec 
 
-The main specification can be found in [Nova Design System](https://ux.solarwinds.io/design/)
+The main specification can be found in [Nova Design System](https://ux.solarwinds.io/design/).
 
 ## Style Guide
 
-<details open>
+<details>
   <summary>Click to view the guide</summary>
   
   ### Component development
@@ -47,15 +47,15 @@ The reason for this is that, since in Firefox ResizeObserver is not native (as o
     super.ngOnDestroy();
     }​​​​​​​​​​
     ```
-#### Typescript Compiler Options
-To avoid compilation errors caused by tree-shaking of lodash, fo the follow these steps:
+  #### Typescript Compiler Options
+  To avoid compilation errors caused by tree-shaking of lodash, fo the follow these steps:
   1. Update your tsconfig.json to have `allowSyntheticDefaultImports: true` property in **compilerOptions**. This property allows users to import CommonJS modules as default imports.
      * If you have compilation error like `TypeError: find_1.default is not a function` when running tests you might need to add `esModuleInterop: true` to your compilerOptions. Or you can try Solution #2 from this [article](https://medium.com/martin_hotell/tree-shake-lodash-with-webpack-jest-and-typescript-2734fa13b5cd).
   2. After updates in tsconfig.json change imports of lodash to such way in **all files**: 
      ```js
      import forEach from “lodash/forEach”;
      ```
-##### Additional articles about tsconfig compilerOptions:
+  ##### Additional articles about tsconfig compilerOptions:
   - https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/
   - https://www.typescriptlang.org/docs/handbook/compiler-options.html
 
@@ -109,8 +109,8 @@ This code snippet allows protractor to run asserts and continue testing while a 
 Also it provides the information about available features, states, attributes and nested components with intellisense right in the IDE.
 It makes tests more readable.
 
-<details open>
-<summary>Click to view instructions on using Nova Atoms</summary>
+<details>
+  <summary>Click to view instructions on using Nova Atoms</summary>
 
   Atoms can be instantiated in two ways:
   1. Using its constructor
@@ -173,22 +173,22 @@ It makes tests more readable.
 
   **Atom** base class public API explained
 
-| # |  Field/Method  |  How it works  |
-| -- | :-----------------  |  :-----------------  |
-| |    **STATIC**    |
-| 1 | *static* `CSS_CLASS` | This is how atoms are found in the DOM - thanks to this static css class. Different atoms must have different values here. [Example](./packages/bits/spec/components/dialog/dialog.atom.ts#11) |
-| 2 | *static* `find(atomClass: IAtomClass<T>, id: string)` | Find a needed Atom within the parent element, found using it's unique id. This class uses findIn() method, described below. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#23) |
-| 3 | *static* `findIn(atomClass: IAtomClass<T>, parentElement: ElementFinder, index?: number)` | This is a basic method typically used to look for atoms in the DOM. It requires providing a desired atom name, the context where to look for it, and also an optional index parameter. The optional index param is used if there were more than one atom of a component found on the page, so the user can choose which one to take. [Example](./packages/bits/spec/components/checkbox-group/checkbox-group.e2e.ts#17) |
-| 4 | *static async* `findCount(atomClass: IAtomClass<T>, parentElement: ElementFinder): Promise<number>` | Is used to get the number of atoms found within the given context. Returns a promise. |
-| 5 | *static async* `hasClass(el: ElementFinder, className: string): Promise<string>` | Is used to check that a certain css class has been applied to a selected element. |
-| 6 | *static async* `hasAnyClass(el: ElementFinder, classNamesToSearch: string[]): Promise<string>` | The same as `hasClass()`, with the only difference if can search for a number of classes in a given element. |
+| # | Field/Method | How it works |
+| :---: | :--- | :--- |
+| |**STATIC** |
+|1| *static* `CSS_CLASS` | This is how atoms are found in the DOM - thanks to this static css class. Different atoms must have different values here. [Example](./packages/bits/spec/components/dialog/dialog.atom.ts#11) |
+|2| *static* `find(atomClass: IAtomClass<T>, id: string)` | Find a needed Atom within the parent element, found using it's unique id. This class uses findIn() method, described below. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#23) |
+|3| *static* `findIn(atomClass: IAtomClass<T>, parentElement: ElementFinder, index?: number)` | This is a basic method typically used to look for atoms in the DOM. It requires providing a desired atom name, the context where to look for it, and also an optional index parameter. The optional index param is used if there were more than one atom of a component found on the page, so the user can choose which one to take. [Example](./packages/bits/spec/components/checkbox-group/checkbox-group.e2e.ts#17) |
+|4| *static async* `findCount(atomClass: IAtomClass<T>, parentElement: ElementFinder): Promise<number>` | Is used to get the number of atoms found within the given context. Returns a promise. |
+|5| *static async* `hasClass(el: ElementFinder, className: string): Promise<string>` | Is used to check that a certain css class has been applied to a selected element. |
+|6| *static async* `hasAnyClass(el: ElementFinder, classNamesToSearch: string[]): Promise<string>` | The same as `hasClass()`, with the only difference if can search for a number of classes in a given element. |
 | | **NON-STATIC** |
-| 7 | async `isDisplayed()`, async `isPresent()` | A simple wrapper around the same protractor methods. |
-| 8 | async `hasClass(className: string)` | Does the same as the static one, but looks for the classes within the atom on which it was called. [Example](./packages/bits/spec/components/button/button.e2e.ts#36) |
-| 9 | `getElement(): ElementFinder` | Used to get the ElementFinder of the Atom. |
-| 10 | *async* `isChildElementPresent(locator: any): Promise<boolean>` | Pretty self-explanatory, it looks for a child element within the atom using a given Locator and verifies if it's present. |
-| 11 | *async* `hover(el?: ElementFinder, location?: ILocation)` | If no params are provided then it hovers over itself. It will hover over the given element if ElementFinder is provided and over the given coordinates if ILocation is given. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#38) |
-| 12 | *async* `scrollTo()` | Scrolls to the current atom so it appears in the viewport. Useful in cases when a desired element on the page, but not within the viewport, and is therefore not clickable. [Example](./packages/bits/spec/components/menu/menu.visual.ts#45) |
+|7| async `isDisplayed()`, async `isPresent()` | A simple wrapper around the same protractor methods. |
+|8| async `hasClass(className: string)` | Does the same as the static one, but looks for the classes within the atom on which it was called. [Example](./packages/bits/spec/components/button/button.e2e.ts#36) |
+|9| `getElement(): ElementFinder` | Used to get the ElementFinder of the Atom. |
+|10| *async* `isChildElementPresent(locator: any): Promise<boolean>` | Pretty self-explanatory, it looks for a child element within the atom using a given Locator and verifies if it's present. |
+|11| *async* `hover(el?: ElementFinder, location?: ILocation)` | If no params are provided then it hovers over itself. It will hover over the given element if ElementFinder is provided and over the given coordinates if ILocation is given. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#38) |
+|12| *async* `scrollTo()` | Scrolls to the current atom so it appears in the viewport. Useful in cases when a desired element on the page, but not within the viewport, and is therefore not clickable. [Example](./packages/bits/spec/components/menu/menu.visual.ts#45) |
 
 </details>
 
