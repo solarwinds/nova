@@ -22,9 +22,9 @@ Each package serves up the docs on a different port. To see the app running in a
 
 ## Automation
 
-### E2E Testing
+### e2e Testing
 
-#### Running and Debugging e2e Tests
+#### Running e2e
 
 All Nova projects (`bits`, `charts` and `dashboards`) have the following npm commands to run and/or debug
 e2e tests:
@@ -36,7 +36,7 @@ e2e tests:
 -   `npm run e2e-debug` - similar to `e2e-dev`, but used for e2e debugging purposes. It allows `debugger`
     statements to be run.
 
-**Debugging e2e**
+#### Debugging e2e
 <details>
   <summary>Click to view instructions on debugging e2e tests</summary>
     
@@ -48,7 +48,7 @@ showing a message in the console.
 After that go to `chrome://inspect/#devices` and open the corresponding inspector under the **`target`**
 category. The interpreter will now stop on `debugger` statements.
 
-**Using the VS Code Debugger**
+#### Using the VS Code Debugger
 
 You can create a debugger configuration for debugging e2e tests in VS Code. Here are two configurations
 for the debugger that can be added to the `launch.json` file under the `.vscode` directory in the project:
@@ -103,11 +103,11 @@ Atoms are user friendly interfaces used to test components and directives. The m
 
 Atoms also provide information about their available features, states, attributes and nested components with intellisense right in the IDE. And, perhaps above all, they make tests more readable!
 
-**Using Nova Atoms**
+#### Using Nova Atoms
 <details>
   <summary>Click to view instructions on using Nova Atoms</summary>
 
-#### Ways to instantiate an Atom:
+#### Two ways to instantiate an Atom:
 1. Using its constructor. [Code Example](./packages/bits/spec/components/dialog/dialog.e2e.ts#L46)
 
     ```js 
