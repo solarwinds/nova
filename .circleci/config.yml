@@ -170,6 +170,24 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
+    charts-visual-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/charts
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: Visual tests
+                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/charts
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
     charts-pack:
         working_directory: ~/nova/packages/charts
         docker:
@@ -267,6 +285,24 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
+    dashboards-visual-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/dashboards
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: Visual tests
+                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/dashboards
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
     dashboards-pack:
         working_directory: ~/nova/packages/dashboards
         docker:
@@ -356,9 +392,9 @@ workflows:
              -   bits-e2e-test:
                      requires:
                          -   bits-build
- #             -   bits-visual-test:
- #                     requires:
- #                         - bits-build
+             -   bits-visual-test:
+                     requires:
+                         - bits-build
              -   bits-publish:
                      requires:
                          -   bits-e2e-test
@@ -383,6 +419,9 @@ workflows:
              -   charts-e2e-test:
                      requires:
                          -   charts-build
+            #  -   charts-visual-test:
+            #          requires:
+            #              -   charts-build
              -   charts-publish:
                      requires:
                          -   bits-e2e-test
@@ -407,6 +446,9 @@ workflows:
              -   dashboards-e2e-test:
                      requires:
                          -   dashboards-build
+            #  -   dashboards-visual-test:
+            #          requires:
+            #              - dashboards-build
              -   dashboards-publish:
                      requires:
                          -   bits-e2e-test
