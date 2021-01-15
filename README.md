@@ -8,7 +8,7 @@ The main specification can be found in the [Nova Design System](https://ux.solar
 
 ## Style Guide
 
-The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md).
+The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md#style-guide).
 
 ## Structure
 
