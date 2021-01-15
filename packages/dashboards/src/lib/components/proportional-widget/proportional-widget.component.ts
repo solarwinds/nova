@@ -107,7 +107,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.widgetData || changes.configuration) {
-            // this.updateChartColors();
+            this.updateChartColors();
         }
 
         if (changes.configuration) {
