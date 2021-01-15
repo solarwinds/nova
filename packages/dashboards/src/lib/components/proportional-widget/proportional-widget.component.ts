@@ -25,11 +25,14 @@ import {
     IAccessors,
     IChartAssistSeries,
     IChartPalette,
+    IValueProvider,
+    MappedValueProvider,
     Renderer,
     Scales,
     SELECT_DATA_POINT_EVENT,
     SequentialColorProvider,
 } from "@nova-ui/charts";
+import { some } from "lodash";
 import isEqual from "lodash/isEqual";
 import ResizeObserver from "resize-observer-polyfill";
 
@@ -103,19 +106,24 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.widgetData || changes.configuration) {
+            // this.updateChartColors();
+        }
+
         if (changes.configuration) {
-            const newChartColors = changes.configuration.currentValue.chartColors;
-            const prevChartColors = changes.configuration.previousValue?.chartColors;
+            // const newChartColors = changes.configuration.currentValue.chartColors;
+            // const prevChartColors = changes.configuration.previousValue?.chartColors;
             const newChartType = changes.configuration.currentValue.chartOptions.type;
             const prevChartType = changes.configuration.previousValue && changes.configuration.previousValue.chartOptions.type;
 
-            if (newChartColors !== prevChartColors) {
-                const colorProvider = newChartColors?.length > 0 ? new SequentialColorProvider(newChartColors) : defaultColorProvider();
-                this.chartPalette = new ChartPalette(colorProvider);
-            }
+            // if (newChartColors !== prevChartColors) {
+            //     const colorProvider = newChartColors?.length > 0 ? new SequentialColorProvider(newChartColors) : defaultColorProvider();
+            //     this.chartPalette = new ChartPalette(colorProvider);
+            // }
 
             // configure the chart
-            if ((newChartType && newChartType !== prevChartType) || !isEqual(newChartColors, prevChartColors)) {
+            // || !isEqual(newChartColors, prevChartColors)
+            if ((newChartType && newChartType !== prevChartType) ) {
                 this.buildChart(newChartType);
 
                 if (this.widgetData) {
@@ -133,12 +141,15 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         }
 
         if (changes.widgetData) {
+
+
             if (this.chartAssist) {
                 this.updateChart();
                 this.getContentFormatterProperties();
                 this.changeDetector.markForCheck();
             }
         }
+
     }
 
     public ngAfterViewInit() {
@@ -248,5 +259,31 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     /** Builds the chart */
     private updateChart(): void {
         this.chartAssist.update(CategoryChartUtilService.buildChartSeries(this.widgetData, this.accessors, this.renderer, this.scales));
+    }
+
+    private updateChartColors(): void {
+        let colorProvider: IValueProvider<string>;
+
+        const dataColors = this.widgetData?.map(v => v.color);
+        const configurationColors = this.configuration.chartColors;
+
+        if (!this.configuration.prioritizeWidgetColors && some(dataColors)) {
+            const colorMap = this.widgetData.reduce((acc: { [key: string]: string }, next) => {
+                acc[next.id] = next.color;
+                return acc;
+            }, {});
+            colorProvider = new MappedValueProvider<string>(colorMap);
+        } else if (configurationColors) {
+            colorProvider = Array.isArray(configurationColors)
+                ? new SequentialColorProvider(configurationColors)
+                : new MappedValueProvider(configurationColors);
+        } else {
+            colorProvider = defaultColorProvider();
+        }
+
+        this.chartPalette = new ChartPalette(colorProvider);
+        if (this.chartAssist) {
+            this.chartAssist.palette = this.chartPalette;
+        }
     }
 }

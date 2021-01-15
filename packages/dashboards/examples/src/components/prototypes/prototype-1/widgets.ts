@@ -26,7 +26,7 @@ import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";
 
 import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
-import { AcmeProportionalDataSource } from "../data/proportional-datasources";
+import { AcmeProportionalDataSource2 } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
 
@@ -257,7 +257,7 @@ export const widgets: IWidget[] = [
                 "chart": {
                     "providers": {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeProportionalDataSource.providerId,
+                            "providerId": AcmeProportionalDataSource2.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
                             "properties": {
@@ -278,11 +278,16 @@ export const widgets: IWidget[] = [
                                 "type": ProportionalWidgetChartTypes.VerticalBarChart,
                                 "legendPlacement": LegendPlacement.Right,
                             } as IProportionalWidgetChartOptions,
-                            "chartColors": [
-                                "var(--nui-color-chart-eight)",
-                                "var(--nui-color-chart-nine)",
-                                "var(--nui-color-chart-ten)",
-                            ],
+                            "chartColors": {
+                                "Down": "red",
+                                "Critical": "green",
+                                "Warning": "blue",
+                            },
+                            // "chartColors": [
+                            //     "gray",
+                            //     "orange",
+                            //     "black",
+                            // ],
                         } as IProportionalWidgetConfig,
                     },
                 },
