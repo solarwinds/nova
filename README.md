@@ -50,4 +50,4 @@ corresponding to your feedback, please create one using the GitHub [issue portal
 
 ## Troubleshooting
 
-Find tips for solving some common development environment problems [here](./docs/TROUBLE_SHOOTING.md).
+Find tips for solving some common development environment problems [here](./docs/TROUBLESHOOTING.md#troubleshooting).
