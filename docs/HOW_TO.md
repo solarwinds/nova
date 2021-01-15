@@ -38,7 +38,9 @@ e2e tests:
     statements to be run.
 
 **Debugging e2e**
-
+<details>
+  <summary>Click to view instructions on debugging e2e tests</summary>
+    
 `npm run e2e-debug` runs e2e tests using Protractor directly without the Angular e2e test wrapper (for
 some reason the Angular version doesn't respond to `debugger` statements). After you run 
 `npm run e2e-debug`, the node process will indicate that it's waiting until the debugger is attached by
@@ -89,8 +91,10 @@ configuration to a `tasks.json` file:
   ]
 }
 ```
+</details>
 
 #### Atoms
+
 Atoms are user friendly interfaces used to test components and directives. The main idea behind atoms is that the test environment should not need to know about:
 
   * The internal structure of a component under test
