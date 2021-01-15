@@ -1,3 +1,4 @@
+# Troubleshooting
 ## Problem: 
 I'm getting compilation errors caused by the tree-shaking of lodash.
 ## Possible Fix: 
