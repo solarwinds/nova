@@ -1,4 +1,5 @@
-# Component development
+# Style Guide
+## Component development
   * Library components have to work in OnPush change detection mode
 Why? We have no control over user environment and change detection strategy is subject to consumer's freedom of choice. Therefore we need to make sure that components we provide work under both, where ChangeDetectionStrategy.OnPush is stricter than Default, so we need to support OnPush.
   * Add an explanatory inline comment to every usage of setTimeout() (and other situations when code is not self-explanatory)
@@ -15,7 +16,7 @@ Why? setTimeout is tied to a wider context of executed code, which might not be 
     ```
 The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
 
-  # ngOnDestroy and Component Inheritance
+## ngOnDestroy and Component Inheritance
 
 A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes. This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.
     
@@ -38,7 +39,7 @@ super.ngOnDestroy();
 }​​​​​​​​​​
 ```
 
-# Documentation
+## Documentation
 1. Put example data at the bottom of examples
     Why? To avoid scrolling after opening the example source code, put all the mocked data at the bottom of the example. [This example](https://github.com/solarwinds/nova/blob/main/packages/charts/examples/components/demo/chart-types/line/line-chart-basic/line-chart-basic.example.component.ts#L41-L68) shows how we do this.
 2. Define a route for every example
@@ -46,7 +47,7 @@ super.ngOnDestroy();
 3. Use fixed data for the examples.
     Why? Because we have a goal to visually test all the examples in the documentation, we need them to be predictable. For that reason please avoid using randomized data (or any unpredictable elements) in your documentation examples.
 
-# Internationalization
+## Internationalization
 Basic summary:
 1. Make sure to make any text with variables/placeholders readable for less technical person (calling "humanize" is not understandable).
 2. If a function call is needed within the text inside a template, ensure that the name is simple and self-documenting (for a person not familiar with the code) or add a comment for the translator
@@ -54,8 +55,8 @@ Basic summary:
 4. Translators have tools which (as long as we are using standard form) ensure they don't accidentally change variables
 5. Its good to replace numbers with placeholders in messages containing validations and similar things as these numbers change with time and would need unnecessary change in translated texts.
 
-# Testing
-## `setTimeout`, `setInterval` and `requestAnimationFrame`'s  testability
+## Testing
+### `setTimeout`, `setInterval` and `requestAnimationFrame`'s  testability
 
 When you are using timeouts or intervals for animations or countdowns, protractor tests can fail with a timeout.
 Protractor has a built-in feature in which it waits for Angular events to finish before proceeding. The methods listed above will hold the process, and protractor will not continue the test flow until they finish.
@@ -76,7 +77,7 @@ ngZone.runOutsideAngular(() => {​​​​
 }​​​​);
 ```
 
-## Top 10 E2E Guidelines
+### Top 10 E2E Guidelines
   1. Do not operate with ElementFinder or ElementFinderArray in you test.
   2. Do not return ElementFinder or ElementFinderArray from the atom.
   3. Build test pages that give a tester full control over the input data (configuration) and full access to the output verification.
