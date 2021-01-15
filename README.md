@@ -2,7 +2,7 @@
 
 The Nova Nui Framework provides a set of common UI-based components and services to assist with rapid web application development. Nui is built on the latest Angular and follows modern UX design principles and front-end software development practices.
 
-## Nova Design Spec 
+## Design Spec 
 
 The main specification can be found in the [Nova Design System](https://ux.solarwinds.io/design/).
 
@@ -10,9 +10,9 @@ The main specification can be found in the [Nova Design System](https://ux.solar
 
 The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md#style-guide).
 
-## Structure
+## Project Structure
 
-Nova UI consists of three packages:
+Nova UI consists of three packages within a single monorepo:
 
 * [Bits](./packages/bits/README.md#bits-overview) - A set of atomic components to be used as building blocks for applications and more complex 
 components. Exception - **convenience components** - prototypes of composite components, that are meant 
