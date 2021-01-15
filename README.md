@@ -21,7 +21,7 @@ to accommodate a wide breadth of use cases.
 * [Dashboards](./packages/dashboards/README.md#dashboards-overview) - A framework designed to provide developers a solution 
 for presenting data coming from various sources within a single view.
 
-## Contribution
+## Contributions
 
 We encourage [contributions to Nova](./docs/CONTRIBUTION.md#contributing-to-nova) whenever your team needs a new component, new functionality in an existing component, new icons, bug fixes or atom extensions.
 
