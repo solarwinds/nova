@@ -1,4 +1,6 @@
-# Running the Documentation Apps
+# How To...
+
+## Run the Documentation Apps
 
 Nova uses [CompoDoc](https://compodoc.app/) for documenting the APIs and usage instructions for its components. To run the documentation app in your development environment for any of the packages, open up a terminal with the root of the desired package (bits, charts, or dashboards) set as the current working directory, and run the `npm start` command.
 
@@ -10,7 +12,7 @@ The `start` task has two main procedures that it runs:
 
 Each package serves up the docs on a different port. To see the app running in a browser, navigate to the following URL, replacing the placeholder with the correct port: `http:\\localhost:<port>`
 
-### Package-Port Mapping
+#### Package-Port Mapping
 
 | Package    | Port |
 | ------     | ---- |
@@ -19,86 +21,11 @@ Each package serves up the docs on a different port. To see the app running in a
 | Dashboards | 8090 |
 <br>
 
-# Automation
+## Automation
 
-## E2E Testing
+### E2E Testing
 
-### Atoms
-Atoms are user friendly interfaces used to test components and directives. The main idea behind atoms is that the test environment should not need to know about:
-
-  * The internal structure of a component under test
-  * Class names that are applied in different component states
-  * The details of a component's implementation
-  * etc.
-
-Atoms also provide information about their available features, states, attributes and nested components with intellisense right in the IDE. And, perhaps above all, they make tests more readable!
-
-<details>
-  <summary>Click to view instructions on using Nova Atoms</summary>
-
-### Ways to instantiate an Atom:
-1. Using its constructor. [Code Example](./packages/bits/spec/components/dialog/dialog.e2e.ts#L46)
-
-    ```js 
-    dialog = new DialogAtom(element(by.className("nui-dialog")));
-    ```
-
-2. Finding an Atom in some context in the DOM. [Code Example](./packages/bits/spec/components/convenience/time-frame-bar/time-frame-bar.atom.ts#L28)
-
-    ```js
-    busy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-basic")));
-    ```
-
-### Usage
-  1. Declare a variable with the proper type.
-        ```js
-        let defaultDialogBtn: ButtonAtom;
-        ```
-  2. *browser.get()* the test page make sure the page is loaded before trying to use an atom. If the page is not rendered, protractor obviously will throw the familiar "element not found" sorts of exceptions.
-        ```js
-        await browser.get(url);
-        ```
-  3. Find atoms of the components before the tests run (use `beforeEach()` or `beforeAll()`).
-        ```js
-        beforeAll(async () => {
-          await Helper.prepareBrowser("dialog");
-          defaultDialogBtn = Atom.find(ButtonAtom, "nui-demo-default-dialog-btn");
-        });
-        ```
-  4. Use the variable containing an atom to call it's methods or for viewing\asserting it in the context of your tests.
-        ```js
-        it("should add custom class to dialog", async () => {
-          await customClassButton.click();
-          expect(await dialog.hasClass("demoDialogCustomClass")).toBe(true);
-        });
-        ```
-  Note: If needed, atoms can be instantiated during test as well, for instance, if a component appears on the page conditionally.
-
-  ### API
-  Atoms for different components or directives will expectedly have different API. The only thing they have in common, however, is the base class they're inherited from - the **Atom class**. Each atom has access to the methods of the base Atom class.
-
-  **Atom** base class public API explained
-
-| # | Field/Method | How it works |
-| :---: | :--- | :--- |
-| |**STATIC** |
-|1| *static* `CSS_CLASS` | This is how atoms are found in the DOM - thanks to this static css class. Different atoms must have different values here. [Example](./packages/bits/spec/components/dialog/dialog.atom.ts#11) |
-|2| *static* `find(atomClass: IAtomClass<T>, id: string)` | Find a needed Atom within the parent element, found using it's unique id. This class uses findIn() method, described below. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#23) |
-|3| *static* `findIn(atomClass: IAtomClass<T>, parentElement: ElementFinder, index?: number)` | This is a basic method typically used to look for atoms in the DOM. It requires providing a desired atom name, the context where to look for it, and also an optional index parameter. The optional index param is used if there were more than one atom of a component found on the page, so the user can choose which one to take. [Example](./packages/bits/spec/components/checkbox-group/checkbox-group.e2e.ts#17) |
-|4| *static async* `findCount(atomClass: IAtomClass<T>, parentElement: ElementFinder): Promise<number>` | Is used to get the number of atoms found within the given context. Returns a promise. |
-|5| *static async* `hasClass(el: ElementFinder, className: string): Promise<string>` | Is used to check that a certain css class has been applied to a selected element. |
-|6| *static async* `hasAnyClass(el: ElementFinder, classNamesToSearch: string[]): Promise<string>` | The same as `hasClass()`, with the only difference if can search for a number of classes in a given element. |
-| | **NON-STATIC** |
-|7| async `isDisplayed()`, async `isPresent()` | A simple wrapper around the same protractor methods. |
-|8| async `hasClass(className: string)` | Does the same as the static one, but looks for the classes within the atom on which it was called. [Example](./packages/bits/spec/components/button/button.e2e.ts#36) |
-|9| `getElement(): ElementFinder` | Used to get the ElementFinder of the Atom. |
-|10| *async* `isChildElementPresent(locator: any): Promise<boolean>` | Pretty self-explanatory, it looks for a child element within the atom using a given Locator and verifies if it's present. |
-|11| *async* `hover(el?: ElementFinder, location?: ILocation)` | If no params are provided then it hovers over itself. It will hover over the given element if ElementFinder is provided and over the given coordinates if ILocation is given. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#38) |
-|12| *async* `scrollTo()` | Scrolls to the current atom so it appears in the viewport. Useful in cases when a desired element on the page, but not within the viewport, and is therefore not clickable. [Example](./packages/bits/spec/components/menu/menu.visual.ts#45) |
-
-</details>
-
-### Running and Debugging e2e Tests
+#### Running and Debugging e2e Tests
 
 All Nova projects (`bits`, `charts` and `dashboards`) have the following npm commands to run and/or debug
 e2e tests:
@@ -163,7 +90,82 @@ configuration to a `tasks.json` file:
 }
 ```
 
-# Linking Projects for Development
+#### Atoms
+Atoms are user friendly interfaces used to test components and directives. The main idea behind atoms is that the test environment should not need to know about:
+
+  * The internal structure of a component under test
+  * Class names that are applied in different component states
+  * The details of a component's implementation
+  * etc.
+
+Atoms also provide information about their available features, states, attributes and nested components with intellisense right in the IDE. And, perhaps above all, they make tests more readable!
+
+<details>
+  <summary>Click to view instructions on using Nova Atoms</summary>
+
+#### Ways to instantiate an Atom:
+1. Using its constructor. [Code Example](./packages/bits/spec/components/dialog/dialog.e2e.ts#L46)
+
+    ```js 
+    dialog = new DialogAtom(element(by.className("nui-dialog")));
+    ```
+
+2. Finding an Atom in some context in the DOM. [Code Example](./packages/bits/spec/components/convenience/time-frame-bar/time-frame-bar.atom.ts#L28)
+
+    ```js
+    busy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-basic")));
+    ```
+
+#### Usage
+  1. Declare a variable with the proper type.
+        ```js
+        let defaultDialogBtn: ButtonAtom;
+        ```
+  2. *browser.get()* the test page make sure the page is loaded before trying to use an atom. If the page is not rendered, protractor obviously will throw the familiar "element not found" sorts of exceptions.
+        ```js
+        await browser.get(url);
+        ```
+  3. Find atoms of the components before the tests run (use `beforeEach()` or `beforeAll()`).
+        ```js
+        beforeAll(async () => {
+          await Helper.prepareBrowser("dialog");
+          defaultDialogBtn = Atom.find(ButtonAtom, "nui-demo-default-dialog-btn");
+        });
+        ```
+  4. Use the variable containing an atom to call it's methods or for viewing\asserting it in the context of your tests.
+        ```js
+        it("should add custom class to dialog", async () => {
+          await customClassButton.click();
+          expect(await dialog.hasClass("demoDialogCustomClass")).toBe(true);
+        });
+        ```
+  Note: If needed, atoms can be instantiated during test as well, for instance, if a component appears on the page conditionally.
+
+  #### API
+  Atoms for different components or directives will expectedly have different API. The only thing they have in common, however, is the base class they're inherited from - the **Atom class**. Each atom has access to the methods of the base Atom class.
+
+  **Atom** base class public API explained
+
+| # | Field/Method | How it works |
+| :---: | :--- | :--- |
+| |**STATIC** |
+|1| *static* `CSS_CLASS` | This is how atoms are found in the DOM - thanks to this static css class. Different atoms must have different values here. [Example](./packages/bits/spec/components/dialog/dialog.atom.ts#11) |
+|2| *static* `find(atomClass: IAtomClass<T>, id: string)` | Find a needed Atom within the parent element, found using it's unique id. This class uses findIn() method, described below. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#23) |
+|3| *static* `findIn(atomClass: IAtomClass<T>, parentElement: ElementFinder, index?: number)` | This is a basic method typically used to look for atoms in the DOM. It requires providing a desired atom name, the context where to look for it, and also an optional index parameter. The optional index param is used if there were more than one atom of a component found on the page, so the user can choose which one to take. [Example](./packages/bits/spec/components/checkbox-group/checkbox-group.e2e.ts#17) |
+|4| *static async* `findCount(atomClass: IAtomClass<T>, parentElement: ElementFinder): Promise<number>` | Is used to get the number of atoms found within the given context. Returns a promise. |
+|5| *static async* `hasClass(el: ElementFinder, className: string): Promise<string>` | Is used to check that a certain css class has been applied to a selected element. |
+|6| *static async* `hasAnyClass(el: ElementFinder, classNamesToSearch: string[]): Promise<string>` | The same as `hasClass()`, with the only difference if can search for a number of classes in a given element. |
+| | **NON-STATIC** |
+|7| async `isDisplayed()`, async `isPresent()` | A simple wrapper around the same protractor methods. |
+|8| async `hasClass(className: string)` | Does the same as the static one, but looks for the classes within the atom on which it was called. [Example](./packages/bits/spec/components/button/button.e2e.ts#36) |
+|9| `getElement(): ElementFinder` | Used to get the ElementFinder of the Atom. |
+|10| *async* `isChildElementPresent(locator: any): Promise<boolean>` | Pretty self-explanatory, it looks for a child element within the atom using a given Locator and verifies if it's present. |
+|11| *async* `hover(el?: ElementFinder, location?: ILocation)` | If no params are provided then it hovers over itself. It will hover over the given element if ElementFinder is provided and over the given coordinates if ILocation is given. [Example](./packages/bits/spec/directives/tooltip/tooltip.visual.ts#38) |
+|12| *async* `scrollTo()` | Scrolls to the current atom so it appears in the viewport. Useful in cases when a desired element on the page, but not within the viewport, and is therefore not clickable. [Example](./packages/bits/spec/components/menu/menu.visual.ts#45) |
+
+</details>
+
+## Link Projects for Development
 
 To get your locally built library to be used as a dependency of another library or app you will need to do
 two things:
@@ -171,7 +173,7 @@ two things:
 * Build the child library
 * Link build output so it will be consumed instead of the package installed from artifactory
 
-## Building
+### Building
 
 In each library's `package.json` file there are couple of scripts for this. Check what are they doing.
 Usually they are called `assemble`, `assemble:lib`, `assemble:dev`, or something like that.
@@ -187,7 +189,7 @@ it's running in watch mode too. Make sure to have separate terminal windows for 
 * For updating global less and atoms or for regenerating css/fonts, you will need to restart the build
 task. These types of changes will not be picked up automatically.
 
-## Linking
+### Linking
 
 As `npm link` or `yarn link` proved to not work reliably with angular libraries, we are using regular
 symbolic linked folders (junction for Windows file system).
@@ -201,7 +203,7 @@ replaces it with a symlink to the *`dist`* folder from bits.
 the same way as above
 * **`link:all`** - runs all the previous scripts that will link the internal dependencies
 
-## Unlinking
+### Unlinking
 
 For reverting what was done by the "link" scripts, there is also a set of opposites:
 **`charts-unlink:bits`**, **`dashboards-unlink:bits`**, **`dashboards-unlink:charts`** and
