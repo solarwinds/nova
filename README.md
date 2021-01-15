@@ -14,11 +14,11 @@ The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md).
 
 Nova UI consists of three packages:
 
-* [Bits](./packages/bits/README.md) - A set of atomic components to be used as building blocks for applications and more complex 
+* [Bits](./packages/bits/README.md#bits-overview) - A set of atomic components to be used as building blocks for applications and more complex 
 components. Exception - **convenience components** - prototypes of composite components, that are meant 
 to accommodate a wide breadth of use cases.
-* [Charts](./packages/charts/README.md) - A visualization library built on top of [d3](https://d3js.org/).
-* [Dashboards](./packages/dashboards/README.md) - A framework designed to provide developers a solution 
+* [Charts](./packages/charts/README.md#charts-overview) - A visualization library built on top of [d3](https://d3js.org/).
+* [Dashboards](./packages/dashboards/README.md#dashboards-overview) - A framework designed to provide developers a solution 
 for presenting data coming from various sources within a single view.
 
 ## Contribution
@@ -32,7 +32,7 @@ We encourage [contributions to Nova](./docs/CONTRIBUTION.md#contributing-to-nova
 For package-specific
 information about getting started with development, please visit the corresponding README for each of the
 Nova UI packages:
-[Bits](./packages/bits/README.md), [Charts](./packages/charts/README.md), and [Dashboards](./packages/dashboards/README.md).
+[Bits](./packages/bits/README.md#bits-overview), [Charts](./packages/charts/README.md#charts-overview), and [Dashboards](./packages/dashboards/README.md#dashboards-overview).
 
 For additional instructions about Nova development in general, take a look at our [How To](./docs/HOW_TO.md) page. 
 
