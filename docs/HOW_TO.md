@@ -19,7 +19,6 @@ Each package serves up the docs on a different port. To see the app running in a
 | Bits       | 8080 |
 | Charts     | 8070 |
 | Dashboards | 8090 |
-<br>
 
 ## Automation
 
@@ -104,6 +103,7 @@ Atoms are user friendly interfaces used to test components and directives. The m
 
 Atoms also provide information about their available features, states, attributes and nested components with intellisense right in the IDE. And, perhaps above all, they make tests more readable!
 
+**Using Nova Atoms**
 <details>
   <summary>Click to view instructions on using Nova Atoms</summary>
 
