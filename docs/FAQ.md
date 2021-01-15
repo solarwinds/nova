@@ -55,7 +55,7 @@ Our ideas, understanding, and solutions to this problem are always evolving. To 
 If a component is marked as Beta on our API docs it essentially means the following:
 
 * We've built the component to UX specs
-* It meets our [Definition of Done](./DEFINITION_OF_DONE.md), including comprehensive automation that's integrated into the build pipeline (unit, e2e and visual tests)
+* It meets our [Definition of Done](./DEFINITION_OF_DONE.md#definition-of-done), including comprehensive automation that's integrated into the build pipeline (unit, e2e and visual tests)
 * There are no major outstanding defects (though there could be some minor defects)
 * We've had little to no external feedback on the API
 
