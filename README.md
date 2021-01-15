@@ -38,7 +38,7 @@ For additional instructions about Nova development in general, take a look at ou
 
 ### Have a Question?
 
-Please check out our [FAQ](./docs/FAQ.md). If you don't find the answer to your question there, feel free 
+Please check out our [FAQ](./docs/FAQ.md#faq). If you don't find the answer to your question there, feel free 
 to send us an email at <nova-ui@solarwinds.com>. We kindly ask that you try to avoid opening GitHub 
 issues for general support questions as we'd like to reserve that communications channel for bug reports 
 and feature requests.
