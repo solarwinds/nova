@@ -448,7 +448,7 @@ workflows:
                          -   dashboards-build
              -   dashboards-visual-test:
                      requires:
-                         - dashboards-build
+                         -   dashboards-build
              -   dashboards-publish:
                      requires:
                          -   bits-e2e-test
