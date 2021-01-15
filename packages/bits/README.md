@@ -1,4 +1,4 @@
-# Overview
+# Bits Overview
 
 In Bits, the philosophy is all about flexibility – it provides the Legos, plumbing and styles, while you control the layouts. Bits aims to provide high-quality, atomic building blocks, services and tools while allowing feature developers the ability to create whatever layouts they need.
 <br>
