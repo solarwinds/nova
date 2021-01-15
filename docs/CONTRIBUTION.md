@@ -7,7 +7,7 @@ Here's what you need to know to get started:
 ## Instructions
 1. Make sure to [create an Issue](https://github.com/solarwinds/nova/issues/new) for the contribution - we need a ticket to properly track your changes in order to announce what's changed between releases.
 2. [Fork the repository](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/fork-a-repo)
-3. Following the [Style Guide](./README.md/#StyleGuide), make the desired changes in the fork.
+3. Following the [Style Guide](./STYLE_GUIDE.md#style-guide), make the desired changes in the fork.
 4. Make sure to test your code.
     a. Any changes/additions to business logic (i.e. code that does not involve DOM manipulations) should be thoroughly unit tested. We require 80% coverage at minimum.
     - components
