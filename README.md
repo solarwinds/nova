@@ -36,7 +36,7 @@ Nova UI packages:
 
 For additional instructions about Nova development in general, take a look at our [How To](./docs/HOW_TO.md#how-to) page. 
 
-### Have a Question?
+### If You Have a Question...
 
 Please check out our [FAQ](./docs/FAQ.md#faq). If you don't find the answer to your question there, feel free 
 to send us an email at <nova-ui@solarwinds.com>. We kindly ask that you try to avoid opening GitHub 
