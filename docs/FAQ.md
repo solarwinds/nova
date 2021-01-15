@@ -1,3 +1,4 @@
+# FAQ
 ## What is Nova UI?
 
 Nova UI is the collection of design specs and developer tools that define an application's user experience. Nova UI is comprised of:
