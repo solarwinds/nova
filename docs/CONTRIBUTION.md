@@ -1,6 +1,6 @@
 # Contributing to Nova
 
-We are open to, and grateful for, any contributions made by the community. By contributing to Nova, you agree to abide by the [code of conduct](./CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct)
+We are open to, and grateful for, any contributions made by the community. By contributing to Nova, you agree to abide by the [Code of Conduct](./CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct).
 
 Here's what you need to know to get started:
 
