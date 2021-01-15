@@ -34,7 +34,7 @@ information about getting started with development, please visit the correspondi
 Nova UI packages:
 [Bits](./packages/bits/README.md#bits-overview), [Charts](./packages/charts/README.md#charts-overview), and [Dashboards](./packages/dashboards/README.md#dashboards-overview).
 
-For additional instructions about Nova development in general, take a look at our [How To](./docs/HOW_TO.md) page. 
+For additional instructions about Nova development in general, take a look at our [How To](./docs/HOW_TO.md#how-to) page. 
 
 ### Have a Question?
 
