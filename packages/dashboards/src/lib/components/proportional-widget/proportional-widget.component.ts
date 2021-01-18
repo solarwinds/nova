@@ -32,9 +32,10 @@ import {
     SELECT_DATA_POINT_EVENT,
     SequentialColorProvider,
 } from "@nova-ui/charts";
-import { some } from "lodash";
 import isEqual from "lodash/isEqual";
+import some from "lodash/some";
 import ResizeObserver from "resize-observer-polyfill";
+import { Subscription } from "rxjs";
 
 import { CategoryChartUtilService } from "../../services/category-chart-util.service";
 import { INTERACTION } from "../../services/types";
@@ -85,6 +86,8 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     @ViewChild("gridContainer", { static: true })
     private gridContainer: ElementRef;
 
+    private chartTypeSubscription$: Subscription;
+
     public get interactive() {
         return this.configuration?.interactive ||
             this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled;
@@ -106,24 +109,19 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes.widgetData || changes.configuration) {
+        const newChartColors = changes.configuration?.currentValue?.chartColors;
+        const prevChartColors = changes.configuration?.previousValue?.chartColors;
+
+        if (changes.widgetData || !isEqual(newChartColors, prevChartColors)) {
             this.updateChartColors();
         }
 
         if (changes.configuration) {
-            // const newChartColors = changes.configuration.currentValue.chartColors;
-            // const prevChartColors = changes.configuration.previousValue?.chartColors;
             const newChartType = changes.configuration.currentValue.chartOptions.type;
             const prevChartType = changes.configuration.previousValue && changes.configuration.previousValue.chartOptions.type;
 
-            // if (newChartColors !== prevChartColors) {
-            //     const colorProvider = newChartColors?.length > 0 ? new SequentialColorProvider(newChartColors) : defaultColorProvider();
-            //     this.chartPalette = new ChartPalette(colorProvider);
-            // }
-
             // configure the chart
-            // || !isEqual(newChartColors, prevChartColors)
-            if ((newChartType && newChartType !== prevChartType) ) {
+            if ((newChartType && newChartType !== prevChartType)) {
                 this.buildChart(newChartType);
 
                 if (this.widgetData) {
@@ -141,15 +139,12 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         }
 
         if (changes.widgetData) {
-
-
             if (this.chartAssist) {
                 this.updateChart();
                 this.getContentFormatterProperties();
                 this.changeDetector.markForCheck();
             }
         }
-
     }
 
     public ngAfterViewInit() {
@@ -158,6 +153,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
 
     public ngOnDestroy() {
         this.proportionalWidgetResizeObserver?.disconnect();
+        this.chartTypeSubscription$?.unsubscribe();
     }
 
     public getContentFormatterProperties() {
@@ -211,7 +207,8 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
 
-        this.chartAssist.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe((event) => {
+        this.chartTypeSubscription$?.unsubscribe();
+        this.chartTypeSubscription$ = this.chartAssist.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe((event) => {
             // event payload is a data point from the chart - since we display one data point for every series,
             // we convert the data point to the original series
             const series = this.widgetData.find(s => s.id === event.data.seriesId);
@@ -284,6 +281,8 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         this.chartPalette = new ChartPalette(colorProvider);
         if (this.chartAssist) {
             this.chartAssist.palette = this.chartPalette;
+            this.buildChart(this.configuration?.chartOptions.type);
+            this.updateChart();
         }
     }
 }
