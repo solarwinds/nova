@@ -13,10 +13,18 @@ jobs:
             -   run:
                     name: Compute build version
                     command: yarn run compute-version-ci
+            - restore_cache:
+                  working_directory: ~/nova/packages/bits
+                  key: dependency-cache-{{ checksum "package-lock.json" }}
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Install dependencies
-                    command: yarn install
+                    command: npm install
+            - save_cache:
+                  working_directory: ~/nova/packages/bits
+                  key: dependency-cache-{{ checksum "package-lock.json" }}
+                  paths:
+                      - ./node_modules
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Assemble
@@ -125,7 +133,7 @@ jobs:
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install dependencies
-                   command: yarn install
+                   command: npm install
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
@@ -236,7 +244,7 @@ jobs:
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Install dependencies
-                    command: yarn install
+                    command: npm install
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Install bits
