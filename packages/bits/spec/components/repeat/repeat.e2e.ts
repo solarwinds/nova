@@ -1,4 +1,4 @@
-import { by, element, ElementFinder } from "protractor";
+import {browser, by, element, ElementFinder, Key} from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
@@ -60,6 +60,35 @@ describe("USERCONTROL Repeat", () => {
         const multiSelectListDisabledItems = Atom.find(RepeatAtom, "nui-demo-multi-repeat-disabled-items");
         expect(await multiSelectListDisabledItems.getCheckbox(0).isDisabled()).toBe(true);
         expect(await multiSelectListDisabledItems.getCheckbox(4).isDisabled()).toBe(true);
+    });
+
+    describe("keyboard navigation", () => {
+        beforeEach(async () => {
+            await browser.refresh();
+            await Helpers.pressKey(Key.TAB);
+        });
+
+        it("should allow check/uncheck items using ENTER", async () => {
+            await Helpers.pressKey(Key.ENTER);
+            await multiSelectList.getCheckbox(0);
+            expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
+                " \"yellow\" }, { \"color\": \"black\" }, { \"color\": \"blue\" } ]");
+
+            await Helpers.pressKey(Key.ENTER);
+            expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
+                " \"yellow\" }, { \"color\": \"black\" } ]");
+        });
+
+        it("should allow check/uncheck items using SPACE", async () => {
+            await Helpers.pressKey(Key.SPACE);
+            await multiSelectList.getCheckbox(0);
+            expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
+                " \"yellow\" }, { \"color\": \"black\" }, { \"color\": \"blue\" } ]");
+
+            await Helpers.pressKey(Key.SPACE);
+            expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
+                " \"yellow\" }, { \"color\": \"black\" } ]");
+        });
     });
 
     it("should allow single selection of items", async () => {
