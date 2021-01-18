@@ -19,8 +19,7 @@ src/styles/data
 *.config
 .idea/
 .npmrc
-/yarn.lock
-
+package-lock.json
 
 # Build results
 
