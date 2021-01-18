@@ -20,11 +20,11 @@ The extract-i18n command line tool will pull controller based translations out o
 
 At this point, your app should have one file with a bunch of translations, and the Nova library. The Nova package includes .xlf files that it has extracted. This is shown below:
 
-![Initial translation state](https://github.com/solarwinds/nova/blob/main/packages/bits/src/assets/initial-translation-state.svg)
+![Initial translation state](https://github.com/solarwinds/nova/blob/main/packages/bits/src/docs/assets/initial-translation-state.svg)
 
 ### Runtime i18n example
 
-The example can be found [here] (https://github.com/solarwinds/nova/blob/main/packages/bits/demo/components/demo/runtime-i18n/runtime-i18n-example.component.ts) 
+The example can be found [here](https://github.com/solarwinds/nova/blob/main/packages/bits/demo/components/demo/runtime-i18n/runtime-i18n-example.component.ts) 
 
 This example shows how to achieve the runtime localization in Angular 9 using $localize and localStorage.
 
