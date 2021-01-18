@@ -70,7 +70,7 @@ describe("USERCONTROL Repeat", () => {
 
         it("should allow check/uncheck items using ENTER", async () => {
             await Helpers.pressKey(Key.ENTER);
-            await multiSelectList.getCheckbox(0);
+            multiSelectList.getCheckbox(0);
             expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
                 " \"yellow\" }, { \"color\": \"black\" }, { \"color\": \"blue\" } ]");
 
@@ -81,7 +81,7 @@ describe("USERCONTROL Repeat", () => {
 
         it("should allow check/uncheck items using SPACE", async () => {
             await Helpers.pressKey(Key.SPACE);
-            await multiSelectList.getCheckbox(0);
+            multiSelectList.getCheckbox(0);
             expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
                 " \"yellow\" }, { \"color\": \"black\" }, { \"color\": \"blue\" } ]");
 
