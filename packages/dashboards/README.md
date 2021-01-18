@@ -1,4 +1,4 @@
-# Nova Dashboards
+# Dashboards Overview
 
 Nova Dashboards is a framework designed to provide feature developers with a common solution for 
 presenting data coming from various sources within a single view, as well as a set of predefined widget 

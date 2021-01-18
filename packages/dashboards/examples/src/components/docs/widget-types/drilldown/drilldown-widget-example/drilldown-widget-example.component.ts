@@ -1,6 +1,16 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { IconStatus, IDataField, IDataSource, INovaFilters, LoggerService, ServerSideDataSource } from "@nova-ui/bits";
+import {
+    DataSourceFeatures,
+    IconStatus,
+    IDataField,
+    IDataSource,
+    IDataSourceFeatures,
+    IDataSourceFeaturesConfiguration,
+    INovaFilters,
+    LoggerService,
+    ServerSideDataSource,
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -45,6 +55,11 @@ export class DrilldownDataSourceRealApi<T = any> extends ServerSideDataSource<T>
         { id: "subregionName", label: "Subregion name" },
     ];
 
+    public features: IDataSourceFeaturesConfiguration;
+    private supportedFeatures: IDataSourceFeatures = {
+        search: { enabled: true },
+    };
+
     private drillState: string[] = [];
     private groupBy: string[];
 
@@ -54,6 +69,7 @@ export class DrilldownDataSourceRealApi<T = any> extends ServerSideDataSource<T>
         private apollo: Apollo
     ) {
         super();
+        this.features = new DataSourceFeatures(this.supportedFeatures);
         // TODO: remove Partial in vNext after marking dataType field as optional
         (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
     }
@@ -200,7 +216,7 @@ export class DrilldownDataSourceRealApi<T = any> extends ServerSideDataSource<T>
             label: property,
             // statuses that will be displayed on group item
             statuses: [
-                { key: "website", value: groupByObj[property].length },
+                { key: "virtual-host", value: groupByObj[property].length },
                 { key: "acknowledge", value: this.getPopulation(groupByObj[property]) },
             ],
         }));

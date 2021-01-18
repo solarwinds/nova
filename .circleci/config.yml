@@ -117,6 +117,12 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
+                    working_directory: ~/nova/packages/charts
+                    name: Temporarily remove dependencies
+                    command: |
+                        cp package.json package.json~
+                        yarn run --cwd=../.. remove-dependencies packages/charts
+            -   run:
                    working_directory: ~/nova/packages/charts
                    name: Install dependencies
                    command: yarn install
@@ -124,6 +130,10 @@ jobs:
                    working_directory: ~/nova/packages/charts
                    name: Install Bits
                    command: yarn add ../bits/*.tgz
+            -   run:
+                   working_directory: ~/nova/packages/charts
+                   name: Restore package.json
+                   command: mv -f package.json~ package.json
             -   run:
                    working_directory: ~/nova/packages/charts
                    name: Assemble
@@ -201,6 +211,12 @@ jobs:
                     command: yarn run compute-version-ci
             -   run:
                     working_directory: ~/nova/packages/dashboards
+                    name: Temporarily remove dependencies
+                    command: |
+                        cp package.json package.json~
+                        yarn run --cwd=../.. remove-dependencies packages/dashboards
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
                     name: Install dependencies
                     command: yarn install
             -   run:
@@ -211,6 +227,10 @@ jobs:
                     working_directory: ~/nova/packages/dashboards
                     name: Install charts
                     command: yarn add ../charts/*.tgz
+            -   run:
+                    working_directory: ~/nova/packages/dashboards
+                    name: Restore package.json
+                    command: mv -f package.json~ package.json
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Assemble

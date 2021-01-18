@@ -1,4 +1,4 @@
-import { Inject, OnDestroy, OnInit, Optional } from "@angular/core";
+import { Inject, OnDestroy, Optional } from "@angular/core";
 import { IDataSource } from "@nova-ui/bits";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -64,7 +64,9 @@ export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
     }
 
     private checkColorConditions() {
-        if (!this.rules) { return; }
+        if (!this.rules) {
+            return;
+        }
 
         if (this.rules.length === 0) {
             this.setColor(undefined);
@@ -93,7 +95,7 @@ export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
     private setColor(color: string | undefined) {
         this.pizzagnaService.setProperty({
             componentId: this.componentId,
-            propertyPath: [`widgetData.${this.propertyPath}`],
+            propertyPath: [this.propertyPath],
         }, color);
     }
 }

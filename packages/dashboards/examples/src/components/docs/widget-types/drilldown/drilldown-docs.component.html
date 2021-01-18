@@ -42,6 +42,26 @@
     <drilldown-widget-example></drilldown-widget-example>
 </nui-example-wrapper>
 
+<h2>Configuring the Data Source with search</h2>
+<p>
+    To use search within the Data Source you need to use data source Features.
+    Data Source should <em>implement</em> <a href="https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html" target="_blank"><code>IDataSource</code></a> interface
+    and have <em>features</em> property set.
+</p>
+<p>
+    Default way to do that is to declare the features:
+</p>
+<nui-example-code language="typescript">
+    {{featuredDeclaredText}}
+</nui-example-code>
+
+<p>
+    And then pass it to the <a href="https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/classes/DataSourceFeatures.html#source" target="_blank"><code>DataSourceFeatures</code></a>
+</p>
+<nui-example-code language="typescript">
+    {{featuresUsedText}}
+</nui-example-code>
+
 <p>
     This part shows the actual widget definition. It includes, among other things, the components and
     providers that compose the widget itself.

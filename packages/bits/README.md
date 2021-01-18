@@ -1,8 +1,4 @@
-# Nova Nui Framework
-
-The Nova Nui Framework provides a set of common UI-based components and services to assist with rapid web application development. Nui is built on the latest Angular and follows modern UX design principles and front-end software development practices.
-
-# Nova Bits
+# Bits Overview
 
 In Bits, the philosophy is all about flexibility – it provides the Legos, plumbing and styles, while you control the layouts. Bits aims to provide high-quality, atomic building blocks, services and tools while allowing feature developers the ability to create whatever layouts they need.
 <br>
@@ -113,7 +109,7 @@ providers: [
     ...
 ]    
 ```
-The `TRANSLATIONS` provider can be used to internationalize bits.  Details here: https://cp.solarwinds.com/display/NU/i18n+for+Nova
+The `TRANSLATIONS` provider can be used to internationalize bits.  Details can be found [here](https://ux.solarwinds.io/nova/docs/nova-bits/develop/sdk/api-docs-ng2/additional-documentation/internationalization-(i18n).html).
 <br>
 
 #### Set root CSS class
@@ -168,10 +164,8 @@ We recommend the [BEM](http://getbem.com/) naming convention for your css/less v
 <br>
 
 
-#### Set Typescript Compiler Options
-To avoid compilation errors caused by tree-shaking of lodash, tsconfig.json of your project needs to have `allowSyntheticDefaultImports: true` property in compilerOptions.
-If you have compilation error like `TypeError: find_1.default is not a function` when running tests you might need to add `esModuleInterop: true` to your compilerOptions. Or you can try Solution #2 from this [article](https://medium.com/martin_hotell/tree-shake-lodash-with-webpack-jest-and-typescript-2734fa13b5cd).
-More details can be found [here](https://cp.solarwinds.com/pages/viewpage.action?spaceKey=NU&title=Tree+Shake+Lodash).
+#### Typescript Compiler Options
+Information about this can be found [here](../../README.md#Typescript-Compiler-Options).
 <br>
 
 #### Exclude highlight.js languages
@@ -219,8 +213,8 @@ ng g @nova-ui/bits:list --name=basic-list --p=app
 
 
 ## What are Atoms?
-[Atoms](https://cp.solarwinds.com/display/NU/How+to+Use+NOVA+Atoms) are the custom implementation of a well-known PageObject pattern. They are useful when it comes to e2e and visual testing an app containing Nova components and directives.
-They can be found in @nova-ui/bits/sdk/atoms. Note that, while they are useful for e2e and visual tests, they are not suitable for unit testing.
+Information about Atoms can be found [here](../../README.md#Atoms)
+Bits atoms can be imported from here: `@nova-ui/bits/sdk/atoms`.
 
 
 ## AoT Support
@@ -244,29 +238,3 @@ Nova formally supports the following browsers. Support for IE11 has been dropped
 ### Date pipe Safari issue
 
 Using date pipe, string should be provided according to ISO format. Otherwise, put Moment object instead to avoid error in Safari browser. Follow [this link](https://github.com/angular/angular/issues/17575) for more details.
-
-
-### Need help?
-
-Need help using Nui?
-
-Firstly, please go over our [FAQ](https://cp.solarwinds.com/display/NU/FAQ). We kindly ask that you not open Jira tickets for general support questions as we want to reserve Jira for bug reports and feature requests.
-
-The [SWI - Nova](https://bit.ly/2P2fsMM) channel on Teams is a much better place to ask questions.
-
-
-### Found a bug?
-
-In order to reproduce bugs we ask that you to provide a _minimal_ repro scenario and a link to the live repro environment.
-
-To submit feature requests and/or defects for Nui, [head over to this page for instructions](https://cp.solarwinds.com/display/NU/Feature+requests+and+report+defects+for+Nova+UI).
-
-<br><br>
-
-# Development, roadmap and more...
-
-Our program roadmap [is here](https://jira.solarwinds.com/secure/RapidBoard.jspa?rapidView=1805) and shows the priorities of very large features that are expected to take longer than 6 months. Our [technical roadmap](https://jira.solarwinds.com/secure/RapidBoard.jspa?rapidView=1798) is a much more granular view of the program roadmap and is basically the view for the current quarter.
-
-### Need to add a new icon?
-
-It's pretty simple to [add a new icon](https://cp.solarwinds.com/pages/viewpage.action?pageId=92545319) to the repository for your product. If you need a new icon(s) as part of a patch/hotfix, just let us know via Teams or Jira and we'll make sure your changes are applied to the appropriate branch(es).

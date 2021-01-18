@@ -157,6 +157,7 @@ export interface IHasComponent<T = any> {
  * Interface for configurable providers
  */
 export interface IConfigurable {
+    providerKey?: string;
     setComponent?: (component: any, componentId: string) => void;
     // TODO: BREAKING rename to 'updateProperties' in v10
     updateConfiguration(properties: IProperties): void;

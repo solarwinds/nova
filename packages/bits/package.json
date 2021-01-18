@@ -1,7 +1,7 @@
 {
   "name": "@nova-ui/bits",
-  "preferGlobal": true,
-  "version": "9.33.0-0",
+  "license": "Apache-2.0",
+  "version": "9.34.0-0",
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "description": "SolarWinds Nova Framework",
   "contributors": [
@@ -182,7 +182,6 @@
     "typescript": "~3.8.3",
     "zone.js": "~0.10.2"
   },
-  "license": "Apache-2.0",
   "engines": {
     "node": ">=8.0"
   }
