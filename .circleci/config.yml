@@ -14,15 +14,13 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             - restore_cache:
-                  working_directory: ~/nova/packages/bits
-                  key: dependency-cache-{{ checksum "package-lock.json" }}
+                  key: dependency-cache-{{ checksum "packages/bits/package-lock.json" }}
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Install dependencies
                     command: npm install
             - save_cache:
-                  working_directory: ~/nova/packages/bits
-                  key: dependency-cache-{{ checksum "package-lock.json" }}
+                  key: dependency-cache-{{ checksum "packages/bits/package-lock.json" }}
                   paths:
                       - ./node_modules
             -   run:
