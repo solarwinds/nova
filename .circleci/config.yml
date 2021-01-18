@@ -22,7 +22,7 @@ jobs:
             - save_cache:
                   key: yarn-deps-{{ checksum "packages/bits/yarn.lock" }}
                   paths:
-                      - ./node_modules
+                      - ./packages/bits/node_modules
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Assemble
