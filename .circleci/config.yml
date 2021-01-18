@@ -259,10 +259,23 @@ jobs:
                     command: |
                         cp package.json package.json~
                         yarn run --cwd=../.. remove-dependencies packages/dashboards
+            -   restore_cache:
+                    key: yarn-deps-test-{{ checksum "packages/dashboards/yarn.lock" }}
             -   run:
                     working_directory: ~/nova/packages/dashboards
-                    name: Install dependencies
-                    command: yarn install
+                    name: Installing node dependencies (if necessary)
+                    command: |
+                        if [ -d "node_modules" ];
+                        then
+                            echo "skipping npm install as it was restored from cache. Running only postinstall"
+                            yarn run postinstall
+                        else
+                            yarn install --frozen-lockfile
+                        fi
+            -   save_cache:
+                    key: yarn-deps-test-{{ checksum "packages/dashboards/yarn.lock" }}
+                    paths:
+                        - ./packages/dashboards/node_modules
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Install bits

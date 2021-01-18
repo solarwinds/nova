@@ -56,7 +56,8 @@
     "dist-copy:atoms": "tsc -p spec/tsconfig.atom.json",
     "lint": "ng l",
     "lint:fix": "ng l --fix",
-    "i18n-locl-extract": "npx locl extract -s=./dist/bundles/nova-ui-dashboards.umd.js -f=xlf -o=./sdk/locale/messages.en.xlf"
+    "i18n-locl-extract": "npx locl extract -s=./dist/bundles/nova-ui-dashboards.umd.js -f=xlf -o=./sdk/locale/messages.en.xlf",
+    "postinstall": "node scripts/remove-deps-constraints.js"
   },
   "schematics": "./sdk/schematics/collection.json",
   "peerDependencies": {
@@ -97,6 +98,7 @@
     "@types/jasminewd2": "2.0.6",
     "@types/lodash": "^4.14.135",
     "@types/node": "~12.0.8",
+    "@yarnpkg/lockfile": "^1.1.0",
     "angular-gridster2": "^9.0.0",
     "apollo-angular": "^1.10.0",
     "apollo-angular-link-http": "^1.11.0",
