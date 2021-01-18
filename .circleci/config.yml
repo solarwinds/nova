@@ -14,13 +14,13 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             - restore_cache:
-                  key: yarn-deps-{{ checksum "packages/bits/yarn.lock" }}
+                  key: yarn-deps-test-{{ checksum "packages/bits/yarn.lock" }}
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Install dependencies
                     command: yarn install
             - save_cache:
-                  key: yarn-deps-{{ checksum "packages/bits/yarn.lock" }}
+                  key: yarn-deps-test-{{ checksum "packages/bits/yarn.lock" }}
                   paths:
                       - ./packages/bits/node_modules
             -   run:
