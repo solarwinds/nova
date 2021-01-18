@@ -22,7 +22,7 @@ jobs:
                        if [ -d "node_modules" ];
                        then
                            echo "skipping npm install as it was restored from cache. Running only postinstall"
-                           yarn run postinstall --if-present
+                           yarn run postinstall
                        else
                            yarn install --frozen-lockfile
                        fi
