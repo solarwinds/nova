@@ -5,7 +5,7 @@ let yarnFile = fs.readFileSync("yarn.lock", "utf8");
 let json = lockfile.parse(yarnFile);
 
 for (const dependency in json.object) {
-    if(dependency.startsWith("@nova-ui/")) {
+    if (dependency.startsWith("@nova-ui/")) {
         delete json.object[dependency];
     }
 }
