@@ -278,17 +278,17 @@ export const widgets: IWidget[] = [
                                 "type": ProportionalWidgetChartTypes.VerticalBarChart,
                                 "legendPlacement": LegendPlacement.Right,
                             } as IProportionalWidgetChartOptions,
-                            // "chartColors": [
-                            //     "gray",
-                            //     "orange",
-                            //     "black",
-                            // ],
-                            "chartColors": {
-                                "Down": "var(--nui-color-chart-three)",
-                                "Critical": "var(--nui-color-chart-two)",
-                                "Warning": "var(--nui-color-chart-one)",
-                            },
-
+                            "chartColors": [
+                                "gray",
+                                "orange",
+                                "black",
+                            ],
+                            // "chartColors": {
+                            //     "Down": "var(--nui-color-chart-three)",
+                            //     "Critical": "var(--nui-color-chart-two)",
+                            //     "Warning": "var(--nui-color-chart-one)",
+                            // },
+                            // prioritizeWidgetColors: true,
                         } as IProportionalWidgetConfig,
                     },
                 },
