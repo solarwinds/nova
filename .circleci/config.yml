@@ -318,17 +318,17 @@ jobs:
                     paths:
                         - ./packages/dashboards
     dashboards-docs:
-        working_directory: ~/nova
+        working_directory: ~/nova/packages/dashboards
         docker:
             -   image: circleci/node:12
-        environment:
-            PROJECT_DIR: ./packages/dashboards
+#        environment:
+#            PROJECT_DIR: ./packages/dashboards
         steps:
             -   attach_workspace:
                     at: ~/nova
             -   run:
                     name: ZIP Docs
-                    command: cd $PROJECT_DIR; mkdir tmp; cd ./sdk/api-docs-ng2; zip -r ../../tmp/$CIRCLE_BRANCH.zip *; cd ../../;
+                    command: mkdir tmp; cd ./sdk/api-docs-ng2; zip -r ../../tmp/$CIRCLE_BRANCH.zip *; cd ../../;
             -   store_artifacts:
                     path: /tmp/$CIRCLE_BRANCH.zip
 #            -   run:
