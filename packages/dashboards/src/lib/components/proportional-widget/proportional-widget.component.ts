@@ -32,7 +32,6 @@ import {
     SELECT_DATA_POINT_EVENT,
     SequentialColorProvider,
 } from "@nova-ui/charts";
-import { cloneDeep, debounce } from "lodash";
 import isEqual from "lodash/isEqual";
 import some from "lodash/some";
 import ResizeObserver from "resize-observer-polyfill";
@@ -210,8 +209,6 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
 
-        console.log("buildChart", cloneDeep(this.chartAssist));
-
         this.chartTypeSubscription$?.unsubscribe();
         this.chartTypeSubscription$ = this.chartAssist.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe((event) => {
             // event payload is a data point from the chart - since we display one data point for every series,
@@ -288,16 +285,16 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     private getDataDriverColorProvider(widgetData: IChartAssistSeries<IAccessors<any>>[]): IValueProvider<string> {
         let colorProvider: IValueProvider<string>;
 
-        const dataColors = this.widgetData?.map(v => v.color).filter(v => !!v);
+        const dataColors = widgetData?.map(v => v.color).filter(v => !!v);
 
-        if (dataColors.length === this.widgetData.length) {
-            const colorMap = this.widgetData.reduce((acc: { [key: string]: string }, next) => {
+        if (dataColors.length === widgetData.length) {
+            const colorMap = widgetData.reduce((acc: { [key: string]: string }, next) => {
                 acc[next.id] = next.color;
                 return acc;
             }, {});
             colorProvider = new MappedValueProvider<string>(colorMap);
         } else {
-            const widgetDataWithColor = this.widgetData.filter(series => series.color);
+            const widgetDataWithColor = widgetData.filter(series => series.color);
 
             this.logger.warn(`Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(widgetDataWithColor)}`);
             colorProvider = defaultColorProvider();
@@ -310,6 +307,17 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         [key: string]: string;
     }): IValueProvider<string> {
         let colorProvider: IValueProvider<string>;
+
+        // remove data colors since nui-chart takes them into consideration no matter what
+        if (this.configuration.prioritizeWidgetColors && this.widgetData) {
+            this.widgetData = this.widgetData.map(origin => {
+                const series = {...origin};
+                if (series.color) {
+                    delete series.color;
+                }
+                return series;
+            });
+        }
 
         if (Array.isArray(configurationColors)) {
             colorProvider = new SequentialColorProvider(configurationColors);
