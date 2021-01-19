@@ -279,9 +279,9 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         }
 
         this.chartPalette = new ChartPalette(colorProvider);
+        this.buildChart(this.configuration?.chartOptions.type);
         if (this.chartAssist) {
             this.chartAssist.palette = this.chartPalette;
-            this.buildChart(this.configuration?.chartOptions.type);
             this.updateChart();
         }
     }
