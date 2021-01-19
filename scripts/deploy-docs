@@ -24,6 +24,8 @@ while [ -n "$1" ]; do
     esac
 done
 
+cd $PROJECT_DIR
+
 echo "$PROJECT_DIR"
 echo "$CIRCLE_BRANCH"
 PACKAGE_NAME=$(node -p "require('./package.json').name")
