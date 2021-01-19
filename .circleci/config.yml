@@ -14,7 +14,7 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   restore_cache:
-                    key: yarn-deps-test-{{ checksum "packages/bits/yarn.lock" }}
+                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Installing node dependencies (if necessary)
@@ -27,7 +27,7 @@ jobs:
                             yarn install --frozen-lockfile
                         fi
             -   save_cache:
-                    key: yarn-deps-test-{{ checksum "packages/bits/yarn.lock" }}
+                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
                     paths:
                         - ./packages/bits/node_modules
             -   run:
@@ -136,7 +136,7 @@ jobs:
                         cp package.json package.json~
                         yarn run --cwd=../.. remove-dependencies packages/charts
             -   restore_cache:
-                    key: yarn-deps-test-{{ checksum "packages/charts/yarn.lock" }}
+                    key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
             -   run:
                     working_directory: ~/nova/packages/charts
                     name: Installing node dependencies (if necessary)
@@ -149,7 +149,7 @@ jobs:
                             yarn install --frozen-lockfile
                         fi
             -   save_cache:
-                    key: yarn-deps-test-{{ checksum "packages/charts/yarn.lock" }}
+                    key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
                     paths:
                         - ./packages/charts/node_modules
             -   run:
@@ -260,7 +260,7 @@ jobs:
                         cp package.json package.json~
                         yarn run --cwd=../.. remove-dependencies packages/dashboards
             -   restore_cache:
-                    key: yarn-deps-test-{{ checksum "packages/dashboards/yarn.lock" }}
+                    key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Installing node dependencies (if necessary)
@@ -273,7 +273,7 @@ jobs:
                             yarn install --frozen-lockfile
                         fi
             -   save_cache:
-                    key: yarn-deps-test-{{ checksum "packages/dashboards/yarn.lock" }}
+                    key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
                     paths:
                         - ./packages/dashboards/node_modules
             -   run:
