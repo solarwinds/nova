@@ -15,7 +15,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
+import { EventBus, IDataSource, IEvent, LoggerService } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -32,6 +32,7 @@ import {
     SELECT_DATA_POINT_EVENT,
     SequentialColorProvider,
 } from "@nova-ui/charts";
+import { cloneDeep, debounce } from "lodash";
 import isEqual from "lodash/isEqual";
 import some from "lodash/some";
 import ResizeObserver from "resize-observer-polyfill";
@@ -97,7 +98,9 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
                 private ngZone: NgZone,
                 private kvDiffers: KeyValueDiffers,
                 @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-                @Inject(DATA_SOURCE) private dataSource: IDataSource) {
+                @Inject(DATA_SOURCE) private dataSource: IDataSource,
+                private logger: LoggerService
+                ) {
         this.differ = this.kvDiffers.find(this.prioritizedGridRows).create();
     }
 
@@ -207,6 +210,8 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
 
+        console.log("buildChart", cloneDeep(this.chartAssist));
+
         this.chartTypeSubscription$?.unsubscribe();
         this.chartTypeSubscription$ = this.chartAssist.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe((event) => {
             // event payload is a data point from the chart - since we display one data point for every series,
@@ -265,15 +270,9 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         const configurationColors = this.configuration.chartColors;
 
         if (!this.configuration.prioritizeWidgetColors && some(dataColors)) {
-            const colorMap = this.widgetData.reduce((acc: { [key: string]: string }, next) => {
-                acc[next.id] = next.color;
-                return acc;
-            }, {});
-            colorProvider = new MappedValueProvider<string>(colorMap);
+            colorProvider = this.getDataDriverColorProvider(this.widgetData);
         } else if (configurationColors) {
-            colorProvider = Array.isArray(configurationColors)
-                ? new SequentialColorProvider(configurationColors)
-                : new MappedValueProvider(configurationColors);
+            colorProvider = this.getConfigurationColorProvider(configurationColors);
         } else {
             colorProvider = defaultColorProvider();
         }
@@ -284,5 +283,47 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.chartAssist.palette = this.chartPalette;
             this.updateChart();
         }
+    }
+
+    private getDataDriverColorProvider(widgetData: IChartAssistSeries<IAccessors<any>>[]): IValueProvider<string> {
+        let colorProvider: IValueProvider<string>;
+
+        const dataColors = this.widgetData?.map(v => v.color).filter(v => !!v);
+
+        if (dataColors.length === this.widgetData.length) {
+            const colorMap = this.widgetData.reduce((acc: { [key: string]: string }, next) => {
+                acc[next.id] = next.color;
+                return acc;
+            }, {});
+            colorProvider = new MappedValueProvider<string>(colorMap);
+        } else {
+            const widgetDataWithColor = this.widgetData.filter(series => series.color);
+
+            this.logger.warn(`Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(widgetDataWithColor)}`);
+            colorProvider = defaultColorProvider();
+        }
+
+        return colorProvider;
+    }
+
+    private getConfigurationColorProvider(configurationColors: string[] | {
+        [key: string]: string;
+    }): IValueProvider<string> {
+        let colorProvider: IValueProvider<string>;
+
+        if (Array.isArray(configurationColors)) {
+            colorProvider = new SequentialColorProvider(configurationColors);
+        } else {
+            const setupColorsLength = Object.keys(configurationColors).length;
+            if (setupColorsLength === this.widgetData?.length) {
+                colorProvider = new MappedValueProvider(configurationColors);
+            } else {
+                // tslint:disable-next-line: max-line-length
+                this.logger.warn(`Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(configurationColors)}`);
+                colorProvider = defaultColorProvider();
+            }
+        }
+
+        return colorProvider;
     }
 }

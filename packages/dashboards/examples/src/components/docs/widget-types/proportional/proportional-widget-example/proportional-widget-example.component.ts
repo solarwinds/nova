@@ -179,14 +179,14 @@ const widgetConfig: IWidget = {
                         //     "var(--nui-color-chart-ten)",
                         // ],
                         // or use-mapped structure
-                        // chartColors: {
-                        //     "Brno": "var(--nui-color-chart-five)",
-                        //     "kyiv": "var(--nui-color-chart-six)",
-                        //     "austin": "var(--nui-color-chart-seven)",
-                        //     "lisbon": "var(--nui-color-chart-eight)",
-                        //     "sydney": "var(--nui-color-chart-nine)",
-                        //     "nur-sultan": "var(--nui-color-chart-ten)",
-                        // },
+                        chartColors: {
+                            "Brno": "var(--nui-color-chart-five)",
+                            "kyiv": "var(--nui-color-chart-six)",
+                            "austin": "var(--nui-color-chart-seven)",
+                            // "lisbon": "var(--nui-color-chart-eight)",
+                            // "sydney": "var(--nui-color-chart-nine)",
+                            // "nur-sultan": "var(--nui-color-chart-ten)",
+                        },
                     } as IProportionalWidgetConfig,
                 },
             },
@@ -211,7 +211,8 @@ export function getMockBeerReviewCountsByCity() {
             icon: "status_down",
             link: "https://en.wikipedia.org/wiki/Brno",
             value: "Brno",
-            color: "var(--nui-color-chart-one)",
+            // color: "var(--nui-color-chart-one)",
+            // color: "blue",
         },
         {
             id: "kyiv",
@@ -220,7 +221,7 @@ export function getMockBeerReviewCountsByCity() {
             icon: "status_critical",
             link: "https://en.wikipedia.org/wiki/Kyiv",
             value: "Kyiv",
-            color: "var(--nui-color-chart-two)",
+            // color: "var(--nui-color-chart-two)",
         },
         {
             id: "austin",
@@ -229,7 +230,7 @@ export function getMockBeerReviewCountsByCity() {
             icon: "status_warning",
             link: "https://en.wikipedia.org/wiki/Austin",
             value: "Austin",
-            color: "var(--nui-color-chart-three)",
+            // color: "var(--nui-color-chart-three)",
         },
         {
             id: "lisbon",
@@ -238,7 +239,7 @@ export function getMockBeerReviewCountsByCity() {
             icon: "status_unknown",
             link: "https://en.wikipedia.org/wiki/Lisbon",
             value: "Lisbon",
-            color: "var(--nui-color-chart-four)",
+            // color: "var(--nui-color-chart-four)",
         },
         {
             id: "sydney",
@@ -247,7 +248,7 @@ export function getMockBeerReviewCountsByCity() {
             icon: "status_up",
             link: "https://en.wikipedia.org/wiki/Sydney",
             value: "Sydney",
-            color: "var(--nui-color-chart-five)",
+            // color: "var(--nui-color-chart-five)",
         },
         {
             id: "nur-sultan",
@@ -256,7 +257,7 @@ export function getMockBeerReviewCountsByCity() {
             icon: "status_unmanaged",
             link: "https://en.wikipedia.org/wiki/Nur-Sultan",
             value: "Nur-Sultan",
-            color: "var(--nui-color-chart-six)",
+            // color: "var(--nui-color-chart-six)",
         },
     ].sort((a, b) => a.data[0] - b.data[0]);
 }
