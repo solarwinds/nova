@@ -14,11 +14,11 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "nui-gauge-chart-prototype",
-    templateUrl: "./gauge-chart-prototype.component.html",
-    styleUrls: ["./gauge-chart-prototype.component.less"],
+    selector: "radial-gauge-chart-prototype",
+    templateUrl: "./radial-gauge-chart-prototype.component.html",
+    styleUrls: ["./radial-gauge-chart-prototype.component.less"],
 })
-export class GaugeChartPrototypeComponent implements OnChanges, OnInit {
+export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
     @Input() public value = 42;
     @Input() public max: number = 200;
     @Input() public annularWidth = 20;
@@ -30,7 +30,7 @@ export class GaugeChartPrototypeComponent implements OnChanges, OnInit {
 
     constructor(private gaugeService: GaugeService) { }
 
-    public ngOnChanges(changes: ComponentChanges<GaugeChartPrototypeComponent>) {
+    public ngOnChanges(changes: ComponentChanges<RadialGaugeChartPrototypeComponent>) {
         if ((changes.annularWidth && !changes.annularWidth.firstChange) || (changes.value && !changes.value.firstChange)) {
             if (changes.annularWidth) {
                 this.updateAnnularWidth();

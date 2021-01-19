@@ -3,7 +3,7 @@ import defaultsDeep from "lodash/defaultsDeep";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
-import { IGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
+import { IGaugeThresholdsRendererConfig as IRadialGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
 import { IGaugeThreshold } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
@@ -11,22 +11,22 @@ import { IRadialAccessors } from "./accessors/radial-accessors";
 import { RadialRenderer } from "./radial-renderer";
 
 /**
- * @ignore Default configuration for Gauge Thresholds Renderer
+ * @ignore Default configuration for Radial Gauge Thresholds Renderer
  */
-export const DEFAULT_GAUGE_THRESHOLDS_RENDERER_CONFIG: IGaugeThresholdsRendererConfig = {};
+export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IRadialGaugeThresholdsRendererConfig = {};
 
 /**
  * @ignore Renderer for drawing threshold level indicators for gauges
  */
-export class GaugeThresholdsRenderer extends RadialRenderer {
+export class RadialGaugeThresholdsRenderer extends RadialRenderer {
     /**
-     * Creates an instance of GaugeThresholdsRenderer.
-     * @param {IGaugeThresholdsRendererConfig} [config]
-     * Renderer configuration object. Defaults to `DEFAULT_GAUGE_THRESHOLDS_RENDERER_CONFIG` constant value.
+     * Creates an instance of RadialGaugeThresholdsRenderer.
+     * @param {IRadialGaugeThresholdsRendererConfig} [config]
+     * Renderer configuration object. Defaults to `DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG` constant value.
      */
-    constructor(config: IGaugeThresholdsRendererConfig = {}) {
+    constructor(config: IRadialGaugeThresholdsRendererConfig = {}) {
         super(config);
-        this.config = defaultsDeep(this.config, DEFAULT_GAUGE_THRESHOLDS_RENDERER_CONFIG);
+        this.config = defaultsDeep(this.config, DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG);
     }
 
     /** See {@link Renderer#draw} */

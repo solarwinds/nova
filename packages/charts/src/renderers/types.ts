@@ -77,6 +77,8 @@ export interface IBarRendererConfig extends IRendererConfig {
     cursor?: string;
     /** Enables pointer events on the bars */
     pointerEvents?: boolean;
+    /** Set the stroke width in pixels */
+    strokeWidth?: number;
 }
 
 /** The configuration interface for the area renderer */

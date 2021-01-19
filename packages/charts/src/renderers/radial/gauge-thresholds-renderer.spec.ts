@@ -6,11 +6,11 @@ import { GaugeService, IGaugeThreshold } from "../../gauge/public-api";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { RadialAccessors } from "./accessors/radial-accessors";
-import { GaugeThresholdsRenderer } from "./gauge-thresholds-renderer";
+import { RadialGaugeThresholdsRenderer } from "./radial-gauge-thresholds-renderer";
 import { radialScales } from "./radial-scales";
 
 describe("GaugeThresholdsRenderer >", () => {
-    let renderer: GaugeThresholdsRenderer;
+    let renderer: RadialGaugeThresholdsRenderer;
     let testThresholds: IGaugeThreshold[];
     let svg: D3Selection<SVGSVGElement> | any;
     let renderSeries: IRenderSeries<RadialAccessors>;
@@ -21,12 +21,12 @@ describe("GaugeThresholdsRenderer >", () => {
     const gaugeService = new GaugeService();
 
     beforeEach(() => {
-        renderer = new GaugeThresholdsRenderer();
+        renderer = new RadialGaugeThresholdsRenderer();
         svg = select(document.createElement("div")).append("svg");
         containers[RenderLayerName.data] = svg.append("g");
         testThresholds = [{ value: 3 }, { value: 7 }, { value: 9 }];
 
-        dataSeries = gaugeService.generateThresholdSeries(5, 10, testThresholds, accessors, scales);
+        dataSeries = gaugeService.generateRadialThresholdSeries(5, 10, testThresholds, accessors, scales);
 
         renderSeries = {
             dataSeries,

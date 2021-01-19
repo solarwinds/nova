@@ -8,7 +8,7 @@ import { IGaugeThreshold } from "@nova-ui/charts";
 export class GaugeTestPageComponent {
     public value = 42;
     public maxValue = 200;
-    public annularWidth = 20;
+    public thickness = 20;
     public thresholds: IGaugeThreshold[] = [
         { value: 100 },
         { value: 158 },
