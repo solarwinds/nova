@@ -24,12 +24,15 @@ while [ -n "$1" ]; do
     esac
 done
 
+echo $(ls)
 cd $PROJECT_DIR
+echo $(ls)
 
 echo "$PROJECT_DIR"
 echo "$CIRCLE_BRANCH"
 PACKAGE_NAME=$(node -p "require('./package.json').name")
 echo "${PACKAGE_NAME}"
+
 
 #branch_name=$(echo "$BUILD_BRANCH" | sed -r "s/[\/ ]+/_/g")
 #deploy_subdir="~/projects/${PACKAGE_NAME}/${branch_name}"
