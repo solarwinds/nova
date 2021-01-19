@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: "nui-runtime-i18n-docs",
-    templateUrl: "runtime-i18n-docs.component.html",
+    templateUrl: "./runtime-i18n-docs.component.html",
 })
 
 export class RuntimeI18NDocsExampleComponent {
