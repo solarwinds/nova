@@ -280,6 +280,20 @@ jobs:
             -   persist_to_workspace:
                     root: ~/nova
                     paths:
+                        - ./packages/dashboards
+    dashboards-docs:
+        working_directory: ~/nova/packages/dashboards
+        docker:
+            -   image: circleci/node:12
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Publish dashbords docs
+                    command: yarn deploy-docs-ci
+            -   persist_to_workspace:
+                    root: ~/nova
+                    paths:
                         - ./packages/dashboards/*.tgz
     dashboards-publish:
         working_directory: ~/nova
@@ -407,6 +421,15 @@ workflows:
              -   dashboards-e2e-test:
                      requires:
                          -   dashboards-build
+#             -   bits-docs:
+#                     requires:
+#                         -   dashboards-pack
+#             -   charts-docs:
+#                     requires:
+#                         -   dashboards-pack
+             -   dashboards-docs:
+                     requires:
+                         -   dashboards-pack
              -   dashboards-publish:
                      requires:
                          -   bits-e2e-test
