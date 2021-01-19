@@ -328,7 +328,7 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Publish dashbords docs
-                    command: yarn deploy-docs-ci
+                    command: yarn run deploy-docs-ci
     dashboards-publish:
         working_directory: ~/nova
         docker:
