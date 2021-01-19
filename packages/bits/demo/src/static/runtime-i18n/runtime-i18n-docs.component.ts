@@ -1,33 +1,15 @@
 import { Component } from "@angular/core";
 
 @Component({
-    selector: "runtime-i18n-example",
-    templateUrl: "./runtime-i18n-example.component.html",
+    selector: "nui-runtime-i18n-docs",
+    templateUrl: "runtime-i18n-docs.component.html",
 })
-export class RuntimeI18NExampleComponent {
+
+export class RuntimeI18NDocsExampleComponent {
     public code: any;
     constructor() {
         this.code = getSnippets();
     }
-
-    public fistNamePlaceholder: string = `John`;
-    public lastNamePlaceholder: string = `Doe`;
-    public email: string = `john.doe@whatever.com`;
-
-    private pageReload() {
-        window.location.reload();
-    }
-
-    public setLocale(locale: string) {
-        localStorage.setItem("locale", locale);
-        this.pageReload();
-    }
-
-    public setDefaultLocale() {
-        localStorage.removeItem("locale");
-        this.pageReload();
-    }
-
 }
 
 function getSnippets () {
@@ -70,3 +52,4 @@ import "@angular/localize/init";`,
 }`,
     };
 }
+

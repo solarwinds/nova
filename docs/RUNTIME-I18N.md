@@ -26,13 +26,13 @@ At this point, your app should have one file with a bunch of translations, and t
 
 The example can be found [here](https://github.com/solarwinds/nova/blob/main/packages/bits/demo/components/demo/runtime-i18n/runtime-i18n-example.component.ts) 
 
-This example shows how to achieve the runtime localization in Angular 9 using $localize and localStorage.
+This example shows how to achieve the runtime localization in Angular 9 using **$localize** and **localStorage**.
 
-Angular 9 comes with the new @angular/localize package which delivers a number of i18n features. The $localize global variable is one of them, and comes as a subsitution for the widely used ngx-translate/i18n-polyfill. It's main purpose is to be used for the runtime translations. According to the article, the $localize feature is still undocumented officially, but already does a great job.
+Angular 9 comes with the new **@angular/localize** package which delivers a number of i18n features. The **$localize** global variable is one of them, and comes as a subsitution for the widely used [ngx-translate/i18n-polyfill](https://github.com/ngx-translate/i18n-polyfill). It's main purpose is to be used for the runtime translations. According to the [article](https://blog.ninja-squad.com/2019/12/10/angular-localize/), the $localize feature is still undocumented officially, but already does a great job.
 
 The example below was achieved by following the next steps:
 
-Run the ng add @angular/localize schematic. Verify that the polyfill.ts file was properly updated
+Run the **ng add @angular/localize** schematic. Verify that the polyfill.ts file was properly updated
 
 ```js
 /**
@@ -41,7 +41,7 @@ Run the ng add @angular/localize schematic. Verify that the polyfill.ts file was
 import "@angular/localize/init";
 ```
 
-Modify your polyfills.ts file with necessary imports
+Modify your **polyfills.ts** file with necessary imports
 
 ```js
 /**
@@ -50,9 +50,9 @@ Modify your polyfills.ts file with necessary imports
 import "@angular/localize/init";
 ```
 
-Prepare your translations. If you have .xlf files, you may want to convert them to .json format, which would consist of the translation IDs as keys, and corresponding trnaslations as values. This exactly what the localTranslations method accepts as a parameter. Load converted .json files into appropriate variables in the same place - polyfills.ts file.
+Prepare your translations. If you have .xlf files, you may want to convert them to .json format, which would consist of the translation IDs as keys, and corresponding trnaslations as values. This exactly what the **localTranslations** method accepts as a parameter. Load converted .json files into appropriate variables in the same place - **polyfills.ts** file.
 
-For now you can use @locl/cli for converting .xlf files to .json. The .json format is the most optimized in term of size and supported by existing loaders for lazy loading translations.
+For now you can use [**@locl/cli**](https://www.npmjs.com/package/@locl/cli) for converting .xlf files to .json. The .json format is the most optimized in term of size and supported by existing loaders for lazy loading translations.
 
 ***NOTE: for the sake of example we have the translations already set to variables explicitly***
 
@@ -79,7 +79,7 @@ const locales: Record<string, Record<string, string>> = {
 };
 ```
 
-In the same file add logic to handle runtime translations load. There is no official way how to do it, so feel free to implement it your way. In current example the localStorage was used. The algorithm is following:
+In the same file add logic to handle runtime translations load. There is no official way how to do it, so feel free to implement it your way. In current example the **localStorage** was used. The algorithm is following:
 
 1. On the view let user select the desired language
 2. On selection, save the chosen locale to local storage

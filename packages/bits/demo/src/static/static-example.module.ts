@@ -16,7 +16,7 @@ import { NuiButtonModule } from "@nova-ui/bits";
 import { FrameworkColorsDarkExampleComponent } from "./framework-colors-dark/framework-colors-dark.example.component";
 import { FrameworkColorsExampleComponent } from "./framework-colors/framework-colors-example.component";
 import { LinksExampleComponent } from "./links/links.example.component";
-import { RuntimeI18NExampleComponent } from "./runtime-i18n/runtime-i18n-example.component";
+import { RuntimeI18NDocsExampleComponent } from "./runtime-i18n/runtime-i18n-docs.component";
 import { SemanticVariablesExampleComponent } from "./semantic-variables/semantic-variables.example.component";
 import { TypographyExampleComponent } from "./typography/typography-example.component";
 
@@ -69,10 +69,10 @@ const staticRoutes: Routes = [
     },
     {
         path: "runtime-i18n",
-        component: RuntimeI18NExampleComponent,
+        component: RuntimeI18NDocsExampleComponent,
         data: {
             "srlc": {
-                "stage": SrlcStage.alpha,
+                "stage": SrlcStage.beta,
             },
         },
     },
@@ -85,7 +85,7 @@ const staticRoutes: Routes = [
         FrameworkColorsExampleComponent,
         FrameworkColorsDarkExampleComponent,
         LinksExampleComponent,
-        RuntimeI18NExampleComponent,
+        RuntimeI18NDocsExampleComponent,
     ],
     imports: [
         NuiIconModule,
