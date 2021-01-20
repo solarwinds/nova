@@ -326,11 +326,11 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    name: ZIP Docs
-                    command: mkdir tmp; cd ./sdk/api-docs-ng2; zip -r ../../tmp/$CIRCLE_BRANCH.zip *; cd ../../;
-            -   store_artifacts:
-                    path: /tmp/$CIRCLE_BRANCH.zip
+#            -   run:
+#                    name: ZIP Docs
+#                    command: mkdir tmp; cd ./sdk/api-docs-ng2; zip -r ../../tmp/$CIRCLE_BRANCH.zip *; cd ../../;
+#            -   store_artifacts:
+#                    path: /tmp/$CIRCLE_BRANCH.zip
             -   run:
                     name: Publish dashbords docs
                     command: yarn run deploy-docs-ci
