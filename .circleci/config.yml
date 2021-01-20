@@ -517,6 +517,9 @@ workflows:
                         branches:
                             only:
                                 - main
+            -   dashboards-docs:
+                    requires:
+                        - dashboards-pack
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
