@@ -123,7 +123,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             const prevChartType = changes.configuration.previousValue && changes.configuration.previousValue.chartOptions.type;
 
             // configure the chart
-            if ((newChartType && newChartType !== prevChartType)) {
+            if (newChartType && newChartType !== prevChartType) {
                 this.buildChart(newChartType);
 
                 if (this.widgetData) {
