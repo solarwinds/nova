@@ -357,11 +357,11 @@ jobs:
                     paths:
                         - ./packages/dashboards
     dashboards-docs:
-        working_directory: ~/nova/packages/dashboards
+        working_directory: ~/nova
         docker:
             -   image: circleci/node:12
-#        environment:
-#            PROJECT_DIR: ./packages/dashboards
+        environment:
+            PROJECT_DIR: ./packages/dashboards
         steps:
             -   attach_workspace:
                     at: ~/nova
