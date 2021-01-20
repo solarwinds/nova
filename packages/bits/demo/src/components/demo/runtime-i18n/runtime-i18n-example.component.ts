@@ -5,7 +5,7 @@ import { Component } from "@angular/core";
     templateUrl: "./runtime-i18n-example.component.html",
 })
 export class RuntimeI18NExampleComponent {
-    public fistNamePlaceholder: string = `John`;
+    public firstNamePlaceholder: string = `John`;
     public lastNamePlaceholder: string = `Doe`;
     public email: string = `john.doe@whatever.com`;
 
