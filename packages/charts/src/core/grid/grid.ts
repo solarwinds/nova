@@ -160,12 +160,12 @@ export abstract class Grid implements IGrid {
     }
 
     /**
-    * Derived classes override this method to build the grid's plugins
-    *
-    * @param {IChart} chart The chart instance to pass to each plugin
-    *
-    * @returns {IChartPlugin[]} Default implementation returns an empty array
-    */
+     * Derived classes override this method to build the grid's plugins
+     *
+     * @param {IChart} chart The chart instance to pass to each plugin
+     *
+     * @returns {IChartPlugin[]} Default implementation returns an empty array
+     */
     public buildPlugins(chart: IChart): IChartPlugin[] {
         return [];
     }
@@ -186,7 +186,8 @@ export abstract class Grid implements IGrid {
         const dimensionConfig = this.config().dimension;
 
         if (dimensions.width) {
-            dimensionConfig.outerWidth(dimensions.width - Grid.TICK_DIMENSION_CORRECTION); // subtract correction value to accommodate far right tick
+            // subtract correction value to accommodate far right tick
+            dimensionConfig.outerWidth(dimensions.width - this.getOuterWidthTickDimensionCorrection());
         }
         if (dimensions.height) {
             dimensionConfig.outerHeight(dimensions.height);
@@ -197,11 +198,14 @@ export abstract class Grid implements IGrid {
 
         return this;
     }
-
     /** See {@link IGrid#updateRanges} */
     public updateRanges(): IGrid {
         this.update();
         return this;
+    }
+
+    protected getOuterWidthTickDimensionCorrection() {
+        return Grid.TICK_DIMENSION_CORRECTION;
     }
 
     /**

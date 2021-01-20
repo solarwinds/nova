@@ -52,7 +52,8 @@ export class AreaRenderer extends XYRenderer<IAreaAccessors> {
                 .classed(this.config.areaClass, true)
                 .attrs({
                     "fill": accessors.series.color?.(renderSeries.dataSeries.id, renderSeries.dataSeries),
-                });
+                })
+                .style("stroke-width", this.config.strokeWidth);
         }
         this.drawArea(renderSeries, path);
     }

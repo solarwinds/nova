@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IChartAssistSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, SparkChartAssist, TimeScale } from "@nova-ui/charts";
+import { AreaRenderer, IChartAssistSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, SparkChartAssist, stackedAreaAccessors, TimeScale } from "@nova-ui/charts";
 import moment from "moment/moment";
 
 @Component({
@@ -14,8 +14,8 @@ export class SparkChartMultipleExampleComponent implements OnInit {
         this.chartAssist = new SparkChartAssist();
 
         // providing chartAssist colors and markers to LineAccessors will share them with the line chart
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
-        const renderer = new LineRenderer();
+        const accessors = stackedAreaAccessors();
+        const renderer = new AreaRenderer({ strokeWidth: 0 });
 
         const seriesSet: IChartAssistSeries<ILineAccessors>[] = getData().map(d => ({
             ...d,

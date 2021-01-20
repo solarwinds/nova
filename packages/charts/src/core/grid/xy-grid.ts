@@ -18,7 +18,7 @@ import { MouseInteractiveAreaPlugin } from "../plugins/mouse-interactive-area-pl
 
 import { XYGridConfig } from "./config/xy-grid-config";
 import { defaultTextOverflowHandler } from "./default-text-overflow-handler";
-import { Grid } from "./grid";
+import { borderMidpoint, Grid } from "./grid";
 import { IAllAround, IAxis, IAxisConfig, IDimensionConfig, IGrid, IXYGridConfig, TextOverflowHandler } from "./types";
 
 export class XYGrid extends Grid implements IGrid {
@@ -447,6 +447,10 @@ export class XYGrid extends Grid implements IGrid {
         return actualTextElements;
     }
 
+    protected getOuterWidthTickDimensionCorrection() {
+        return this.config().axis.bottom.visible ? Grid.TICK_DIMENSION_CORRECTION : 0;
+    }
+
     private hasRightYAxis(): boolean {
         return this.config().axis.right.visible && this.rightScaleId?.length > 0;
     }
@@ -511,8 +515,8 @@ export class XYGrid extends Grid implements IGrid {
     }
 
     private elementsFiltering(elementsToFilter: HTMLElement[],
-        parameter: number,
-        measureType: string) {
+                              parameter: number,
+                              measureType: string) {
         let elementsToDisplay: HTMLElement[];
         let counter = 2;
         const condition = (array: HTMLElement[]) => measureType === "width"
