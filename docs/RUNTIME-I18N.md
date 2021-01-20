@@ -50,7 +50,7 @@ Modify your **polyfills.ts** file with necessary imports
 import "@angular/localize/init";
 ```
 
-Prepare your translations. If you have .xlf files, you may want to convert them to .json format, which would consist of the translation IDs as keys, and corresponding trnaslations as values. This exactly what the **localTranslations** method accepts as a parameter. Load converted .json files into appropriate variables in the same place - **polyfills.ts** file.
+Prepare your translations. If you have .xlf files, you may want to convert them to .json format, which would consist of the translation IDs as keys and the corresponding translations as values. This is exactly what the **localTranslations** method accepts as a parameter. Load the converted .json files into appropriate variables in the same place - **polyfills.ts** file.
 
 For now you can use [**@locl/cli**](https://www.npmjs.com/package/@locl/cli) for converting .xlf files to .json. The .json format is the most optimized in term of size and supported by existing loaders for lazy loading translations.
 
