@@ -135,6 +135,7 @@ export interface ITickLabelConfig {
     horizontalPadding: number;
     /** Handler for text overflow. Set to 'undefined' to disable overflow handling */
     overflowHandler?: TextOverflowHandler;
+    maxWidth?: number;
 }
 
 /** Configuration of a grid axis */

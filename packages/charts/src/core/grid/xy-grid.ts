@@ -385,17 +385,26 @@ export class XYGrid extends Grid implements IGrid {
         let overflowHandler: TextOverflowHandler | undefined;
 
         if (scale.id === this.bottomScaleId) {
-            widthLimit = (scale as any).bandwidth ? (scale as IBandScale<any>).bandwidth() : this.getTickDistance(axisLabels);
+            const calculatedBottomWidth = (scale as any).bandwidth ? (scale as IBandScale<any>).bandwidth() : this.getTickDistance(axisLabels);
+            const maxBottomWidth = (axisConfig.bottom.tickLabel.maxWidth) ? axisConfig.bottom.tickLabel.maxWidth : 0;
+            widthLimit = calculatedBottomWidth > maxBottomWidth ? maxBottomWidth : calculatedBottomWidth;
             horizontalPadding = axisConfig.bottom.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.bottom.tickLabel.overflowHandler;
+
         } else if (scale.id === this.rightScaleId && !axisConfig.right.fit) {
-            widthLimit = margin.right - axisConfig.right.padding - axisConfig.right.tickSize;
+            const calculatedRightWidth = margin.right - axisConfig.right.padding - axisConfig.right.tickSize;
+            const maxRightWidth = (axisConfig.right.tickLabel.maxWidth) ? axisConfig.right.tickLabel.maxWidth : 0;
+            widthLimit = calculatedRightWidth > maxRightWidth ? maxRightWidth : calculatedRightWidth;
             horizontalPadding = axisConfig.right.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.right.tickLabel.overflowHandler;
+
         } else if (scale.id === this.leftScaleId && !axisConfig.left.fit) {
-            widthLimit = margin.left - axisConfig.left.padding - axisConfig.left.tickSize;
+            const calculatedLeftWidth = margin.left - axisConfig.left.padding - axisConfig.left.tickSize;
+            const maxLeftWidth = (axisConfig.left.tickLabel.maxWidth) ? axisConfig.left.tickLabel.maxWidth : 0;
+            widthLimit = calculatedLeftWidth > maxLeftWidth ? maxLeftWidth : calculatedLeftWidth;
             horizontalPadding = axisConfig.left.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.left.tickLabel.overflowHandler;
+
         } else {
             return;
         }
