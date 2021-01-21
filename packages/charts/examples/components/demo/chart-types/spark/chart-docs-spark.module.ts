@@ -10,6 +10,7 @@ import { SparkChartLegendExampleComponent } from "./spark-chart-legend/spark-cha
 import { SparkChartMultipleExampleComponent } from "./spark-chart-multiple/spark-chart-multiple.example.component";
 import { SparkChartTableExampleComponent } from "./spark-chart-table/spark-chart-table.example.component";
 import { SparkChartTestComponent } from "./spark-chart-test/spark-chart-test.component";
+import { SparkChartStrokeTestComponent } from "./spark-chart-stroke-test/spark-chart-stroke-test.component";
 
 const exampleRoutes: Routes = [
     {
@@ -67,6 +68,15 @@ const exampleRoutes: Routes = [
             },
         },
     },
+    {
+        path: "stroke-test",
+        component: SparkChartStrokeTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -77,6 +87,7 @@ const exampleRoutes: Routes = [
         SparkChartMultipleExampleComponent,
         SparkChartTableExampleComponent,
         SparkChartTestComponent,
+        SparkChartStrokeTestComponent,
     ],
     imports: [
         FormsModule,

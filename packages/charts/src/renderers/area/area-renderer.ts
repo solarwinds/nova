@@ -53,7 +53,7 @@ export class AreaRenderer extends XYRenderer<IAreaAccessors> {
                 .attrs({
                     "fill": accessors.series.color?.(renderSeries.dataSeries.id, renderSeries.dataSeries),
                 })
-                .style("stroke-width", this.config.strokeWidth);
+                .style("stroke-width", this.config.strokeWidth ?? 1);
         }
         this.drawArea(renderSeries, path);
     }

@@ -1,30 +1,44 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart, IChart, IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, sparkChartGridConfig, TimeScale, XYGrid, XYGridConfig
+    AreaRenderer,
+    Chart, IChart,
+    IChartSeries, ILineAccessors,
+    IXYScales, LineAccessors, LinearScale, LineRenderer, sparkChartGridConfig, stackedAreaAccessors, TimeScale, XYGrid, XYGridConfig
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 
 @Component({
-    selector: "nui-spark-chart-basic-example",
-    templateUrl: "./spark-chart-basic.example.component.html",
+    selector: "nui-spark-chart-stroke-test",
+    templateUrl: "./spark-chart-stroke-test.component.html",
+    styleUrls: ["./spark-chart-stroke-test.component.less"],
 })
-export class SparkChartBasicExampleComponent implements OnInit {
+export class SparkChartStrokeTestComponent implements OnInit {
     public chart: IChart;
 
     public ngOnInit() {
-        // This grid configuration is what turns a regular chart into a spark chart
-        const gridConfig = sparkChartGridConfig(new XYGridConfig(), false, false);
+        const gridConfig = new XYGridConfig();
+        gridConfig.axis.left.visible = false;
+        gridConfig.axis.bottom.visible = false;
+        gridConfig.axis.top.visible = false;
+        gridConfig.axis.right.visible = false;
+        gridConfig.borders.bottom.visible = false;
+        gridConfig.dimension.padding.bottom = 0;
         gridConfig.interactive = false;
+        gridConfig.dimension.margin.right = 0;
+        gridConfig.dimension.margin.bottom = 0;
+        gridConfig.dimension.margin.top = 0;
+        gridConfig.dimension.margin.left = 0;
+        gridConfig.axis.left.gridTicks = false;
 
         // Create an x-y grid by passing the spark chart grid config as an argument to the constructor
         const grid = new XYGrid(gridConfig);
 
-        // Instantiate the chart using the configured sprk chart grid as an argument to the chart's constructor
+        // Instantiate the chart using the configured spark chart grid as an argument to the chart's constructor
         this.chart = new Chart(grid);
 
         // Generate line accessors, x-y scales, and a line renderer to be included in the IChartSeries collection
-        const accessors = new LineAccessors();
-        const renderer = new LineRenderer();
+        const accessors = stackedAreaAccessors();
+        const renderer = new AreaRenderer({ strokeWidth: 0 });
         const scales: IXYScales = {
             x: new TimeScale(),
             y: new LinearScale(),
