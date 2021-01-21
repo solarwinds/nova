@@ -17,8 +17,7 @@ import { InteractionLinePlugin } from "../plugins/interaction/interaction-line-p
 import { MouseInteractiveAreaPlugin } from "../plugins/mouse-interactive-area-plugin";
 
 import { XYGridConfig } from "./config/xy-grid-config";
-import { defaultTextOverflowHandler } from "./default-text-overflow-handler";
-import { borderMidpoint, Grid } from "./grid";
+import { Grid } from "./grid";
 import { IAllAround, IAxis, IAxisConfig, IDimensionConfig, IGrid, IXYGridConfig, TextOverflowHandler } from "./types";
 
 export class XYGrid extends Grid implements IGrid {
@@ -447,7 +446,7 @@ export class XYGrid extends Grid implements IGrid {
         return actualTextElements;
     }
 
-    protected getOuterWidthTickDimensionCorrection() {
+    protected getOuterWidthDimensionCorrection() {
         return this.config().axis.bottom.visible ? Grid.TICK_DIMENSION_CORRECTION : 0;
     }
 

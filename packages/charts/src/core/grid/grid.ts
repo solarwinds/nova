@@ -186,8 +186,7 @@ export abstract class Grid implements IGrid {
         const dimensionConfig = this.config().dimension;
 
         if (dimensions.width) {
-            // subtract correction value to accommodate far right tick
-            dimensionConfig.outerWidth(dimensions.width - this.getOuterWidthTickDimensionCorrection());
+            dimensionConfig.outerWidth(dimensions.width - this.getOuterWidthDimensionCorrection());
         }
         if (dimensions.height) {
             dimensionConfig.outerHeight(dimensions.height);
@@ -204,7 +203,10 @@ export abstract class Grid implements IGrid {
         return this;
     }
 
-    protected getOuterWidthTickDimensionCorrection() {
+    /**
+     * Calculate the width correction needed for accommodating grid elements that may extend beyond the chart's configured width
+     */
+    protected getOuterWidthDimensionCorrection() {
         return Grid.TICK_DIMENSION_CORRECTION;
     }
 

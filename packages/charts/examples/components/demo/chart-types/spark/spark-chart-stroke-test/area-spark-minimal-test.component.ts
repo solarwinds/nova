@@ -1,18 +1,25 @@
 import { Component, OnInit } from "@angular/core";
 import {
     AreaRenderer,
-    Chart, IChart,
-    IChartSeries, ILineAccessors,
-    IXYScales, LineAccessors, LinearScale, LineRenderer, sparkChartGridConfig, stackedAreaAccessors, TimeScale, XYGrid, XYGridConfig
+    Chart,
+    IChart,
+    IChartSeries,
+    ILineAccessors,
+    IXYScales,
+    LinearScale,
+    stackedAreaAccessors,
+    TimeScale,
+    XYGrid,
+    XYGridConfig
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 
 @Component({
-    selector: "nui-spark-chart-stroke-test",
-    templateUrl: "./spark-chart-stroke-test.component.html",
-    styleUrls: ["./spark-chart-stroke-test.component.less"],
+    selector: "nui-area-spark-minimal-test",
+    templateUrl: "./area-spark-minimal-test.component.html",
+    styleUrls: ["./area-spark-minimal-test.component.less"],
 })
-export class SparkChartStrokeTestComponent implements OnInit {
+export class AreaSparkMinimalTestComponent implements OnInit {
     public chart: IChart;
 
     public ngOnInit() {
@@ -41,7 +48,7 @@ export class SparkChartStrokeTestComponent implements OnInit {
         const renderer = new AreaRenderer({ strokeWidth: 0 });
         const scales: IXYScales = {
             x: new TimeScale(),
-            y: new LinearScale(),
+            y: new LinearScale()
         };
 
         // Assemble the series set
@@ -49,7 +56,7 @@ export class SparkChartStrokeTestComponent implements OnInit {
             ...d,
             accessors,
             renderer,
-            scales,
+            scales
         }));
 
         // Invoke the chart's update method with the IChartSeries collection as the argument
@@ -79,7 +86,7 @@ function getData() {
             { x: moment("2018-12-05T06:49:39.310Z", format), y: 82 },
             { x: moment("2018-12-18T22:33:06.206Z", format), y: 81 },
             { x: moment("2019-01-01T14:16:33.103Z", format), y: 78 },
-            { x: moment("2019-01-15T06:00:00.000Z", format), y: 90 },
-        ],
+            { x: moment("2019-01-15T06:00:00.000Z", format), y: 90 }
+        ]
     }];
 }
