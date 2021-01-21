@@ -4,8 +4,10 @@ import {
     BarHorizontalGridConfig,
     Chart,
     ChartAssist,
+    GaugeMode,
     GaugeService,
     HorizontalBarAccessors,
+    IAccessors,
     IChartAssistSeries,
     IGaugeThreshold,
     stack,
@@ -24,7 +26,7 @@ export class LinearGaugeChartPrototypeComponent implements OnChanges, OnInit {
     @Input() public thresholds: IGaugeThreshold[];
 
     public chartAssist: ChartAssist;
-    public seriesSet: IChartAssistSeries<HorizontalBarAccessors>[];
+    public seriesSet: IChartAssistSeries<IAccessors>[];
 
     constructor(private gaugeService: GaugeService) { }
 
@@ -34,7 +36,7 @@ export class LinearGaugeChartPrototypeComponent implements OnChanges, OnInit {
                 this.chartAssist.chart.getGrid().config().dimension.height(this.thickness);
                 this.chartAssist.chart.updateDimensions();
             }
-            this.chartAssist.update(this.gaugeService.updateLinearSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
+            this.chartAssist.update(this.gaugeService.updateSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
         }
     }
 
@@ -60,14 +62,7 @@ export class LinearGaugeChartPrototypeComponent implements OnChanges, OnInit {
 
         this.chartAssist = new ChartAssist(chart, stack);
 
-        this.seriesSet = this.gaugeService.assembleLinearSeriesSet(this.value, this.max, this.thresholds);
-        this.updateThickness();
+        this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Horizontal);
         this.chartAssist.update(this.seriesSet);
-    }
-
-    private updateThickness() {
-        // this.seriesSet.forEach(series => {
-        //     (series.renderer.config as IBarRendererConfig).thickness = this.thickness;
-        // });
     }
 }

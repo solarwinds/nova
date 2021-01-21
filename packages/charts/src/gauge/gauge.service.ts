@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
-import { BandScale } from "../core/common/scales/band-scale";
 
 import { CHART_PALETTE_CS1 } from "../core/common/palette/palettes";
-import { IRadialScales } from "../core/common/scales/types";
+import { Renderer } from "../core/common/renderer";
+import { IRadialScales, Scales } from "../core/common/scales/types";
 import { DataAccessor, IAccessors, IChartAssistSeries, IDataSeries } from "../core/common/types";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
 import { BarRenderer } from "../renderers/bar/bar-renderer";
@@ -16,6 +16,24 @@ import { radialScales } from "../renderers/radial/radial-scales";
 
 import { IGaugeThreshold, IGaugeThresholdMarker } from "./types";
 
+export enum GaugeMode {
+    Radial = "radial",
+    Horizontal = "horizontal",
+    Vertical = "vertical",
+}
+
+export interface IGaugeAttributes {
+    accessors: IAccessors;
+    scales: Scales;
+    renderer: Renderer<IAccessors>;
+}
+
+interface IGaugeTools {
+    accessorFunction: () => IAccessors;
+    scaleFunction: () => Scales | IRadialScales;
+    rendererFunction: () => Renderer<IAccessors>;
+}
+
 @Injectable({
     providedIn: "root",
 })
@@ -24,70 +42,39 @@ export class GaugeService {
     public static REMAINDER_SERIES_ID = "remainder";
     public static THRESHOLD_MARKERS_SERIES_ID = "threshold-markers";
 
-    public assembleLinearSeriesSet(value: number,
-                                   max: number,
-                                   thresholds: IGaugeThreshold[],
-                                   valueColorAccessor?: DataAccessor): IChartAssistSeries<HorizontalBarAccessors>[] {
+    public assembleSeriesSet(value: number,
+                             max: number,
+                             thresholds: IGaugeThreshold[],
+                             mode: GaugeMode,
+        valueColorAccessor?: DataAccessor): IChartAssistSeries<IAccessors>[] {
         const initialValue = value ?? 0;
         const initialMax = max ?? 0;
-        const accessors = new HorizontalBarAccessors();
-        accessors.data.color = valueColorAccessor || this.createDefaultValueColorAccessor(thresholds);
-        const scales = barScales({ horizontal: true });
-        const renderer = new BarRenderer();
-        renderer.config.padding = 0;
-        renderer.config.strokeWidth = 0;
-        return [
-            ...this.getLinearGaugeData(initialValue, initialMax).map(s => ({
+        const { accessors, scales, renderer } = this.getGaugeAttributes(mode);
+        if (accessors.data) {
+            accessors.data.color = valueColorAccessor || this.createDefaultValueColorAccessor(thresholds);
+        }
+
+        const chartAssistSeries: IChartAssistSeries<IAccessors>[] = [
+            ...this.getGaugeData(initialValue, initialMax).map(s => ({
                 ...s,
                 accessors,
                 scales,
                 renderer,
             })),
-            // this.generateRadialThresholdSeries(initialValue, initialMax, thresholds, accessors, scales),
         ];
+
+        // TODO: generate threshold series for linear modes
+        if (mode === GaugeMode.Radial) {
+            chartAssistSeries.push(this.generateRadialThresholdSeries(initialValue, initialMax, thresholds, accessors, scales));
+        }
+
+        return chartAssistSeries;
     }
 
-    public assembleRadialSeriesSet(value: number,
-                                   max: number,
-                                   thresholds: IGaugeThreshold[],
-                                   valueColorAccessor?: DataAccessor): IChartAssistSeries<RadialAccessors>[] {
-        const initialValue = value ?? 0;
-        const initialMax = max ?? 0;
-        const accessors = new RadialAccessors();
-        accessors.data.color = valueColorAccessor || this.createDefaultValueColorAccessor(thresholds);
-        const scales = radialScales();
-        const renderer = new RadialRenderer(radialGaugeRendererConfig());
-        return [
-            ...this.getRadialGaugeData(initialValue, initialMax).map(s => ({
-                ...s,
-                accessors,
-                scales,
-                renderer,
-            })),
-            this.generateRadialThresholdSeries(initialValue, initialMax, thresholds, accessors, scales),
-        ];
-    }
-
-    public generateRadialThresholdSeries(value: number,
-                                         max: number,
-                                         thresholds: IGaugeThreshold[],
-                                         accessors: RadialAccessors,
-                                         scales: IRadialScales): IChartAssistSeries<RadialAccessors> {
-        return {
-            id: GaugeService.THRESHOLD_MARKERS_SERIES_ID,
-            data: this.getThresholdMarkerPoints(thresholds, value, max),
-            accessors,
-            scales,
-            renderer: new RadialGaugeThresholdsRenderer(),
-            excludeFromArcCalculation: true,
-            preprocess: false,
-        };
-    }
-
-    public updateLinearSeriesSet(value: number,
-                                 max: number,
-                                 thresholds: IGaugeThreshold[],
-                                 seriesSet: IChartAssistSeries<IAccessors>[]): IChartAssistSeries<IAccessors>[] {
+    public updateSeriesSet(value: number,
+                           max: number,
+                           thresholds: IGaugeThreshold[],
+                           seriesSet: IChartAssistSeries<IAccessors>[]): IChartAssistSeries<IAccessors>[] {
         const newValue = value ?? 0;
         const newMax = max ?? 0;
         const updatedSeriesSet = seriesSet.map(series => {
@@ -106,37 +93,70 @@ export class GaugeService {
         return updatedSeriesSet;
     }
 
-    public updateRadialSeriesSet(value: number,
-                                 max: number,
-                                 thresholds: IGaugeThreshold[],
-                                 seriesSet: IChartAssistSeries<IAccessors>[]): IChartAssistSeries<IAccessors>[] {
-        const newValue = value ?? 0;
-        const newMax = max ?? 0;
-        const updatedSeriesSet = seriesSet.map(series => {
-            if (series.id === GaugeService.QUANTITY_SERIES_ID) {
-                return { ...series, data: [newValue] };
-            }
+    public generateRadialThresholdSeries(value: number,
+                                         max: number,
+                                         thresholds: IGaugeThreshold[],
+                                         accessors: IAccessors,
+                                         scales: IRadialScales | Scales): IChartAssistSeries<IAccessors> {
+        return {
+            id: GaugeService.THRESHOLD_MARKERS_SERIES_ID,
+            data: this.getThresholdMarkerPoints(thresholds, value, max),
+            accessors,
+            scales,
+            renderer: new RadialGaugeThresholdsRenderer(),
+            excludeFromArcCalculation: true,
+            preprocess: false,
+        };
+    }
 
-            if (series.id === GaugeService.REMAINDER_SERIES_ID) {
-                return { ...series, data: [newMax - newValue] };
-            }
+    private getGaugeAttributes(mode: GaugeMode): IGaugeAttributes {
+        const t: IGaugeTools = this.getGaugeTools(mode);
+        const result: IGaugeAttributes = {
+            accessors: t.accessorFunction(),
+            renderer: t.rendererFunction(),
+            scales: t.scaleFunction(),
+        };
 
-            // threshold level markers
-            return { ...series, data: this.getThresholdMarkerPoints(thresholds, newValue, newMax) };
-        });
+        return result;
+    }
 
-        return updatedSeriesSet;
+    private getGaugeTools(mode: GaugeMode): IGaugeTools {
+        const chartTools: Record<GaugeMode, IGaugeTools> = {
+            [GaugeMode.Radial]: {
+                rendererFunction: () => new RadialRenderer(radialGaugeRendererConfig()),
+                accessorFunction: () => new RadialAccessors(),
+                scaleFunction: () => radialScales(),
+            },
+            [GaugeMode.Horizontal]: {
+                rendererFunction: () => {
+                    const renderer = new BarRenderer();
+                    renderer.config.padding = 0;
+                    renderer.config.strokeWidth = 0;
+                    return renderer;
+                },
+                accessorFunction: () => new HorizontalBarAccessors(),
+                scaleFunction: () => barScales({ horizontal: true }),
+            },
+            [GaugeMode.Vertical]: {
+                // TODO
+                rendererFunction: () => new RadialRenderer(radialGaugeRendererConfig()),
+                accessorFunction: () => new RadialAccessors(),
+                scaleFunction: () => radialScales(),
+            },
+        };
+
+        return chartTools[mode];
     }
 
     private createDefaultValueColorAccessor(thresholds: IGaugeThreshold[]) {
-        return (quantity: number, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
+        return (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (dataSeries.id === GaugeService.REMAINDER_SERIES_ID) {
                 return "var(--nui-color-semantic-unknown-bg-hover)";
             } else {
-                if (!isUndefined(thresholds[1].value) && thresholds[1].value <= quantity) {
+                if (!isUndefined(thresholds[1].value) && thresholds[1].value <= data.value) {
                     return "var(--nui-color-semantic-critical)";
                 }
-                if (!isUndefined(thresholds[0].value) && thresholds[0].value <= quantity) {
+                if (!isUndefined(thresholds[0].value) && thresholds[0].value <= data.value) {
                     return "var(--nui-color-semantic-warning)";
                 }
                 return CHART_PALETTE_CS1[0];
@@ -144,17 +164,11 @@ export class GaugeService {
         };
     }
 
-    private getLinearGaugeData(value: number, max: number) {
+    private getGaugeData(value: number, max: number) {
         return [
+            // category property is used for unifying the linear-style gauge visualization into a single bar stack
             { id: GaugeService.QUANTITY_SERIES_ID, data: [{ category: "gauge", value }] },
-            { id: GaugeService.REMAINDER_SERIES_ID, data: [{ category: "gauge", value: max - value}] },
-        ];
-    }
-
-    private getRadialGaugeData(value: number, max: number) {
-        return [
-            { id: GaugeService.QUANTITY_SERIES_ID, data: [value] },
-            { id: GaugeService.REMAINDER_SERIES_ID, data: [max - value] },
+            { id: GaugeService.REMAINDER_SERIES_ID, data: [{ category: "gauge", value: max - value }] },
         ];
     }
 

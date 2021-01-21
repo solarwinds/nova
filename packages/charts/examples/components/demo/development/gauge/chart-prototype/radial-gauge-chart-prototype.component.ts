@@ -4,7 +4,9 @@ import {
     Chart,
     ChartAssist,
     ChartDonutContentPlugin,
+    GaugeMode,
     GaugeService,
+    IAccessors,
     IChartAssistSeries,
     IGaugeThreshold,
     IRadialRendererConfig,
@@ -26,7 +28,7 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
 
     public chartAssist: ChartAssist;
     public contentPlugin: ChartDonutContentPlugin;
-    public seriesSet: IChartAssistSeries<RadialAccessors>[];
+    public seriesSet: IChartAssistSeries<IAccessors>[];
 
     constructor(private gaugeService: GaugeService) { }
 
@@ -35,7 +37,7 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
             if (changes.annularWidth) {
                 this.updateAnnularWidth();
             }
-            this.chartAssist.update(this.gaugeService.updateRadialSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
+            this.chartAssist.update(this.gaugeService.updateSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
         }
     }
 
@@ -44,7 +46,8 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 
-        this.seriesSet = this.gaugeService.assembleRadialSeriesSet(this.value, this.max, this.thresholds);
+
+        this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
         this.updateAnnularWidth();
         this.chartAssist.update(this.seriesSet);
     }
