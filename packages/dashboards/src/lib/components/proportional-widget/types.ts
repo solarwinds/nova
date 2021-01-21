@@ -32,7 +32,9 @@ export interface IProportionalWidgetConfig {
     chartOptions: IProportionalWidgetChartOptions;
     /** Chart and legend will emit an INTERACTION event on click if this property is enabled */
     interactive?: boolean;
-    chartColors?: string[];
+    chartColors?: string[] | { [key: string]: string };
+    /** set "true" if you want for widget configuration to override colors that come built-in data */
+    prioritizeWidgetColors?: boolean;
 }
 
 export interface ILegendFormat {
