@@ -23,7 +23,7 @@ export function getFixedProportionalWidgetData(citiesToInclude?: string[]) {
             icon: "status_down",
             link: "https://en.wikipedia.org/wiki/London",
             value: "London",
-            color: "black",
+            color: "var(--nui-color-chart-eight)",
         },
         {
             id: "Critical",
@@ -32,7 +32,7 @@ export function getFixedProportionalWidgetData(citiesToInclude?: string[]) {
             icon: "status_critical",
             link: "https://en.wikipedia.org/wiki/Paris",
             value: "Paris",
-            color: "grey",
+            color: "var(--nui-color-chart-nine)",
         },
         {
             id: "Warning",
@@ -41,6 +41,7 @@ export function getFixedProportionalWidgetData(citiesToInclude?: string[]) {
             icon: "status_warning",
             link: "https://en.wikipedia.org/wiki/Rio_de_Janeiro",
             value: "Rio",
+            color: "var(--nui-color-chart-ten)",
         },
     ];
 
