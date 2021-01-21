@@ -48,7 +48,7 @@ export class AreaSparkMinimalTestComponent implements OnInit {
         const renderer = new AreaRenderer({ strokeWidth: 0 });
         const scales: IXYScales = {
             x: new TimeScale(),
-            y: new LinearScale()
+            y: new LinearScale(),
         };
 
         // Assemble the series set
@@ -56,7 +56,7 @@ export class AreaSparkMinimalTestComponent implements OnInit {
             ...d,
             accessors,
             renderer,
-            scales
+            scales,
         }));
 
         // Invoke the chart's update method with the IChartSeries collection as the argument
@@ -86,7 +86,7 @@ function getData() {
             { x: moment("2018-12-05T06:49:39.310Z", format), y: 82 },
             { x: moment("2018-12-18T22:33:06.206Z", format), y: 81 },
             { x: moment("2019-01-01T14:16:33.103Z", format), y: 78 },
-            { x: moment("2019-01-15T06:00:00.000Z", format), y: 90 }
-        ]
+            { x: moment("2019-01-15T06:00:00.000Z", format), y: 90 },
+        ],
     }];
 }
