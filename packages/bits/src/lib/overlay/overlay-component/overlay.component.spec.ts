@@ -1,7 +1,8 @@
 import { Overlay } from "@angular/cdk/overlay";
-import {AfterViewInit, Component, ElementRef, Input, NO_ERRORS_SCHEMA, ViewChild} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, Input, NO_ERRORS_SCHEMA, ViewChild } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import set from "lodash/set";
+import { first } from "rxjs/operators";
 
 import { EventBusService } from "../../../services/event-bus.service";
 import { NUI_SELECT_V2_OPTION_PARENT_COMPONENT } from "../../select-v2/constants";
@@ -70,6 +71,13 @@ describe("components >", () => {
             wrapperFixture.detectChanges();
         });
 
+        afterEach(() => {
+            wrapperComponent.dropdown.hide();
+            wrapperFixture.destroy();
+            component.hide();
+            fixture.destroy();
+        });
+
         it("should create", () => {
             expect(component).toBeTruthy();
             expect(wrapperComponent).toBeTruthy();
@@ -91,14 +99,14 @@ describe("components >", () => {
             });
         });
 
-
         describe("show()", () => {
-            it("should show dropdown", () => {
+            it("should show dropdown", async () => {
                 wrapperComponent.dropdown.show();
 
                 expect(wrapperComponent.dropdown.getOverlayRef()).toBeTruthy();
                 expect(wrapperComponent.dropdown.showing).toBe(true);
-                wrapperComponent.dropdown.empty$.subscribe(isEmpty => expect(isEmpty).toBe(false));
+                const isEmpty = await wrapperComponent.dropdown.empty$.pipe(first()).toPromise();
+                expect(isEmpty).toBe(false);
             });
 
             it("should set default config", () => {

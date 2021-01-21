@@ -1,8 +1,8 @@
-import {ComponentFixture, TestBed} from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import {SpinnerComponent} from "../spinner/spinner.component";
+import { SpinnerComponent } from "../spinner/spinner.component";
 
-import {TextboxComponent} from "./textbox.component";
+import { TextboxComponent } from "./textbox.component";
 
 describe("components >", () => {
     describe("textbox >", () => {
@@ -16,18 +16,21 @@ describe("components >", () => {
                     TextboxComponent,
                     SpinnerComponent,
                 ],
-            });
-            fixture = TestBed.createComponent(TextboxComponent);
-            fixture.detectChanges();
+            }).compileComponents();
 
+            fixture = TestBed.createComponent(TextboxComponent);
             testComponent = fixture.componentInstance;
+
+            fixture.detectChanges();
         });
 
-        it("Should set focus on textbox programmatically", () => {
-            expect(testComponent.textboxInput.nativeElement).not.toBe(document.activeElement);
+        describe("general > ", () => {
+            it("should set focus on textbox programmatically", () => {
+                expect(testComponent.textboxInput.nativeElement).not.toBe(document.activeElement);
 
-            testComponent.focus();
-            expect(testComponent.textboxInput.nativeElement).toBe(document.activeElement);
+                testComponent.focus();
+                expect(testComponent.textboxInput.nativeElement).toBe(document.activeElement);
+            });
         });
     });
 });
