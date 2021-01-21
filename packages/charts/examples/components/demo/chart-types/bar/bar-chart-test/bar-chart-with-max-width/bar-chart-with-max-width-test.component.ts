@@ -8,7 +8,7 @@ import {
     selector: "nui-bar-chart-with-max-width-test",
     templateUrl: "./bar-chart-with-max-width-test.component.html",
 })
-export class BarChartWithMaxWidthTestComponent implements OnInit{
+export class BarChartWithMaxWidthTestComponent implements OnInit {
     public chart: IChart;
     public chartAssist: ChartAssist;
     public ngOnInit() {
