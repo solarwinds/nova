@@ -382,25 +382,43 @@ export class XYGrid extends Grid implements IGrid {
         let widthLimit = 0;
         let horizontalPadding = 0;
         let overflowHandler: TextOverflowHandler | undefined;
-        const maxRightWidth = (axisConfig.right.tickLabel.maxWidth) ? axisConfig.right.tickLabel.maxWidth : false;
-        const maxLeftWidth = (axisConfig.left.tickLabel.maxWidth) ? axisConfig.left.tickLabel.maxWidth : false;
+        const maxRightWidth = (axisConfig.right.tickLabel.maxWidth) ? axisConfig.right.tickLabel.maxWidth : undefined;
+        const maxLeftWidth = (axisConfig.left.tickLabel.maxWidth) ? axisConfig.left.tickLabel.maxWidth : undefined;
 
         if (scale.id === this.bottomScaleId) {
-            const maxBottomWidth = (axisConfig.bottom.tickLabel.maxWidth) ? axisConfig.bottom.tickLabel.maxWidth : false;
+            const maxBottomWidth = (axisConfig.bottom.tickLabel.maxWidth) ? axisConfig.bottom.tickLabel.maxWidth : undefined;
             const calculatedBottomWidth = (scale as any).bandwidth ? (scale as IBandScale<any>).bandwidth() : this.getTickDistance(axisLabels);
-            widthLimit = maxBottomWidth ? (calculatedBottomWidth > maxBottomWidth ? maxBottomWidth : calculatedBottomWidth) : calculatedBottomWidth;
+
+            if (maxBottomWidth) {
+                widthLimit = calculatedBottomWidth > maxBottomWidth ? maxBottomWidth : calculatedBottomWidth;
+            } else {
+                widthLimit = calculatedBottomWidth;
+            }
+
             horizontalPadding = axisConfig.bottom.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.bottom.tickLabel.overflowHandler;
 
         } else if (scale.id === this.rightScaleId && !axisConfig.right.fit) {
             const calculatedRightWidth = margin.right - axisConfig.right.padding - axisConfig.right.tickSize;
-            widthLimit = maxRightWidth ? (calculatedRightWidth > maxRightWidth ? maxRightWidth : calculatedRightWidth) : calculatedRightWidth;
+
+            if (maxRightWidth) {
+                widthLimit = calculatedRightWidth > maxRightWidth ? maxRightWidth : calculatedRightWidth;
+            } else {
+                widthLimit = calculatedRightWidth;
+            }
+
             horizontalPadding = axisConfig.right.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.right.tickLabel.overflowHandler;
 
         } else if (scale.id === this.leftScaleId && !axisConfig.left.fit) {
             const calculatedLeftWidth = margin.left - axisConfig.left.padding - axisConfig.left.tickSize;
-            widthLimit = maxLeftWidth ? (calculatedLeftWidth > maxLeftWidth ? maxLeftWidth : calculatedLeftWidth) : calculatedLeftWidth;
+
+            if (maxLeftWidth) {
+                widthLimit = calculatedLeftWidth > maxLeftWidth ? maxLeftWidth : calculatedLeftWidth;
+            } else {
+                widthLimit = calculatedLeftWidth;
+            }
+
             horizontalPadding = axisConfig.left.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.left.tickLabel.overflowHandler;
 
