@@ -4,6 +4,7 @@ import clone from "lodash/clone";
 import each from "lodash/each";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
+import isUndefined from "lodash/isUndefined";
 
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
 import { MouseInteractiveArea } from "../common/mouse-interactive-area";
@@ -382,14 +383,14 @@ export class XYGrid extends Grid implements IGrid {
         let widthLimit = 0;
         let horizontalPadding = 0;
         let overflowHandler: TextOverflowHandler | undefined;
-        const maxRightWidth =  axisConfig.right.tickLabel.maxWidth;
+        const maxRightWidth = axisConfig.right.tickLabel.maxWidth;
         const maxLeftWidth = axisConfig.left.tickLabel.maxWidth;
 
         if (scale.id === this.bottomScaleId) {
             const maxBottomWidth = axisConfig.bottom.tickLabel.maxWidth;
             const calculatedBottomWidth = (scale as any).bandwidth ? (scale as IBandScale<any>).bandwidth() : this.getTickDistance(axisLabels);
 
-            if (maxBottomWidth) {
+            if (!isUndefined(maxBottomWidth)) {
                 widthLimit = calculatedBottomWidth > maxBottomWidth ? maxBottomWidth : calculatedBottomWidth;
             } else {
                 widthLimit = calculatedBottomWidth;
@@ -401,7 +402,7 @@ export class XYGrid extends Grid implements IGrid {
         } else if (scale.id === this.rightScaleId && !axisConfig.right.fit) {
             const calculatedRightWidth = margin.right - axisConfig.right.padding - axisConfig.right.tickSize;
 
-            if (maxRightWidth) {
+            if (!isUndefined(maxRightWidth)) {
                 widthLimit = calculatedRightWidth > maxRightWidth ? maxRightWidth : calculatedRightWidth;
             } else {
                 widthLimit = calculatedRightWidth;
@@ -413,7 +414,7 @@ export class XYGrid extends Grid implements IGrid {
         } else if (scale.id === this.leftScaleId && !axisConfig.left.fit) {
             const calculatedLeftWidth = margin.left - axisConfig.left.padding - axisConfig.left.tickSize;
 
-            if (maxLeftWidth) {
+            if (!isUndefined(maxLeftWidth)) {
                 widthLimit = calculatedLeftWidth > maxLeftWidth ? maxLeftWidth : calculatedLeftWidth;
             } else {
                 widthLimit = calculatedLeftWidth;
@@ -422,12 +423,12 @@ export class XYGrid extends Grid implements IGrid {
             horizontalPadding = axisConfig.left.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.left.tickLabel.overflowHandler;
 
-        } else if (scale.id === this.rightScaleId && axisConfig.right.fit && maxRightWidth) {
+        } else if (scale.id === this.rightScaleId && axisConfig.right.fit && !isUndefined(maxRightWidth)) {
             widthLimit = maxRightWidth;
             horizontalPadding = axisConfig.right.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.right.tickLabel.overflowHandler;
 
-        } else if (scale.id === this.leftScaleId && axisConfig.left.fit && maxLeftWidth) {
+        } else if (scale.id === this.leftScaleId && axisConfig.left.fit && !isUndefined(maxLeftWidth)) {
             widthLimit = maxLeftWidth;
             horizontalPadding = axisConfig.left.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.left.tickLabel.overflowHandler;
