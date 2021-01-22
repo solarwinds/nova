@@ -8,7 +8,7 @@ import { SparkChartTestPage } from "./spark-chart-test.po";
 
 describe("Spark chart", () => {
     const page = new SparkChartTestPage();
-    const sparkClassName = "nui-spark-chart-multiple-test";
+    const sparkStackClassName = "nui-spark-chart-multiple-test";
     const xTicks = [0, 100, 200, 300, 400]; // for 5 datapoints and grid width of 400px
     const data = [[10, 4, 7, 15, 20], [20, 5, 15, 6, 5], [0, 12, 18, 3, 23]];
     const colors = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white"];
@@ -35,7 +35,7 @@ describe("Spark chart", () => {
 
     describe("by default", () => {
         it("should render line chart for every data series", async () => {
-            await expect(await page.getChartCountBySpark(sparkClassName)).toEqual(data.length);
+            await expect(await page.getSparkCountInStack(sparkStackClassName)).toEqual(data.length);
         });
 
         it("should show legend for every data series", async () => {
@@ -102,7 +102,7 @@ describe("Spark chart", () => {
         });
 
         it("should keep all series visible", async () => {
-            await expect(await page.getChartCountBySpark(sparkClassName)).toEqual(data.length);
+            await expect(await page.getSparkCountInStack(sparkStackClassName)).toEqual(data.length);
             for (let i = 0; i < data.length; i++) {
                 await expect(await page.getChart(i).getNumberOfVisibleDataSeries()).toEqual(1);
             }
