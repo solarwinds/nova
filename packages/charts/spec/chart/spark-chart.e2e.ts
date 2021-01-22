@@ -34,7 +34,7 @@ describe("Spark chart", () => {
 
     describe("by default", () => {
         it("should render line chart for every data series", async () => {
-            await expect(await page.getChartCount()).toEqual(data.length);
+            await expect(await page.getChartCount()).toEqual(data.length + 1);
         });
 
         it("should show legend for every data series", async () => {
@@ -101,7 +101,7 @@ describe("Spark chart", () => {
         });
 
         it("should keep all series visible", async () => {
-            await expect(await page.getChartCount()).toEqual(data.length);
+            await expect(await page.getChartCount()).toEqual(data.length + 1);
             for (let i = 0; i < data.length; i++) {
                 await expect(await page.getChart(i).getNumberOfVisibleDataSeries()).toEqual(1);
             }
