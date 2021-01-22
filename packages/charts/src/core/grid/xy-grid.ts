@@ -382,11 +382,11 @@ export class XYGrid extends Grid implements IGrid {
         let widthLimit = 0;
         let horizontalPadding = 0;
         let overflowHandler: TextOverflowHandler | undefined;
-        const maxRightWidth = (axisConfig.right.tickLabel.maxWidth) ? axisConfig.right.tickLabel.maxWidth : undefined;
-        const maxLeftWidth = (axisConfig.left.tickLabel.maxWidth) ? axisConfig.left.tickLabel.maxWidth : undefined;
+        const maxRightWidth =  axisConfig.right.tickLabel.maxWidth;
+        const maxLeftWidth = axisConfig.left.tickLabel.maxWidth;
 
         if (scale.id === this.bottomScaleId) {
-            const maxBottomWidth = (axisConfig.bottom.tickLabel.maxWidth) ? axisConfig.bottom.tickLabel.maxWidth : undefined;
+            const maxBottomWidth = axisConfig.bottom.tickLabel.maxWidth;
             const calculatedBottomWidth = (scale as any).bandwidth ? (scale as IBandScale<any>).bandwidth() : this.getTickDistance(axisLabels);
 
             if (maxBottomWidth) {
