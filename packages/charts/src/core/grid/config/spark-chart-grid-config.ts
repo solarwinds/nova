@@ -12,11 +12,10 @@ export function sparkChartGridConfig(c: XYGridConfig = new XYGridConfig(), showB
     c.interactionPlugins = false;
 
     c.axis.left.visible = false;
-    c.axis.bottom.visible = showBottomAxis;
     c.axis.left.gridTicks = false;
     c.dimension.margin.left = 5;
     c.dimension.margin.right = 5;
-    c.dimension.margin.bottom = showBottomAxis ? 20 : 0;
+    c.dimension.margin.bottom = showBottomAxis ? c.dimension.margin.bottom : 0;
     c.dimension.padding.top = 5;
     c.dimension.padding.bottom = 5;
     c.dimension.autoHeight = false;

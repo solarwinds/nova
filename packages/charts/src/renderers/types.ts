@@ -87,6 +87,8 @@ export interface IAreaRendererConfig extends IRendererConfig {
     areaClass?: string;
     /** Enables the pointer cursor when data point markers are hovered */
     markerInteraction?: IMarkerInteractionConfig;
+    /** The width of the area path's stroke in pixels. Default is 1. */
+    strokeWidth?: number;
 }
 
 export interface IRenderSeries<TA extends IAccessors> {
