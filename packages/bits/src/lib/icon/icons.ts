@@ -139,6 +139,13 @@ export const icons: ITypedIconData[] = [
         "code": "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'>\n    <path fill='#297994'\n          d='M10,20A10,10,0,1,1,20,10,10,10,0,0,1,10,20ZM10,1a9,9,0,1,0,9,9A9,9,0,0,0,10,1Zm4.71,12.29L11.41,10l3.29-3.29L13.29,5.29,10,8.59,6.71,5.29,5.29,6.71,8.59,10,5.29,13.29l1.41,1.41L10,11.41l3.29,3.29Z'/>\n</svg>\n",
     },
     {
+        "svgFile": "color.svg",
+        "name": "color",
+        "cat_namespace": IconCategoryNamespace.Object,
+        "category": IconCategory.Object,
+        "code": "<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'>\n    <path fill='#767676'\n          d='M58.89 40.56l4.37 12.58A5.91 5.91 0 0157.67 61a5.92 5.92 0 01-5.51-8.08L57 40.52a1 1 0 011.89.04zM25 63.1a13.06 13.06 0 009.27-3.84l25.48-25.52a2.5 2.5 0 000-3.53l-26-26a2.52 2.52 0 00-3.54 0L12.78 21.69A8 8 0 0115 6h5.5a2.5 2.5 0 000-5H15a13 13 0 000 26h20.5a2.5 2.5 0 000-5h-16L32 9.54 54.44 32 30.73 55.72A8 8 0 0125 58.1a8.06 8.06 0 01-5.73-2.37l-11-11a8.09 8.09 0 010-11.46 2.5 2.5 0 10-3.54-3.54 13.13 13.13 0 000 18.54l11 11A13 13 0 0025 63.1z'/>\n</svg>\n",
+    },
+    {
         "svgFile": "copy.svg",
         "name": "copy",
         "cat_namespace": IconCategoryNamespace.Command,
@@ -651,6 +658,13 @@ export const icons: ITypedIconData[] = [
         "cat_namespace": IconCategoryNamespace.Status,
         "category": IconCategory.HealthStatus,
         "code": "<?xml version='1.0' encoding='utf-8'?>\r\n<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN' 'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>\r\n<svg version='1.0' \r\n\t xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:a='http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/'\r\n\t x='0px' y='0px' viewBox='0 0 20 20' width='20' height='20' enable-background='new 0 0 20 20' xml:space='preserve'>\r\n<circle fill='#D3D3D3' cx='10' cy='10' r='10'/>\r\n<polyline fill='none' stroke='#646464' stroke-width='1.5' stroke-miterlimit='10' points='15,7 9,13 5,9 '/>\r\n</svg>\r\n",
+    },
+    {
+        "svgFile": "thresholds.svg",
+        "name": "thresholds",
+        "cat_namespace": IconCategoryNamespace.Object,
+        "category": IconCategory.Object,
+        "code": "<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'>\n<path fill='#767676' d='M39.88 49.79h-.26A3 3 0 0137.13 48L24.5 19.3l-8 12.33A3 3 0 0114 33H3a3 3 0 010-6h9.37l10.11-15.63A3 3 0 0125.24 10a3 3 0 012.51 1.78l12.66 28.77 6.09-9.21A3 3 0 0149 30h11a3 3 0 010 6h-9.39l-8.23 12.44a3 3 0 01-2.5 1.35z'/>\n</svg>\n",
     },
     {
         "svgFile": "transient.svg",
