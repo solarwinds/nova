@@ -6,9 +6,9 @@ import {
 
 @Component({
     selector: "nui-bar-chart-tick-label-max-width-test",
-    templateUrl: "./bar-chart-with-max-width-test.component.html",
+    templateUrl: "./bar-chart-tick-label-max-width-test.component.html",
 })
-export class BarChartWithMaxWidthTestComponent implements OnInit {
+export class BarChartTickLabelMaxWidthTestComponent implements OnInit {
     public chart: IChart;
     public chartAssist: ChartAssist;
     public ngOnInit() {
