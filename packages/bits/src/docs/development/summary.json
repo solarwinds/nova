@@ -82,15 +82,5 @@
                 "file": "../pages/schematics/table.md"
             }
         ]
-    },
-    {
-        "title": "Internationalization (i18n)",
-        "file": "../pages/i18n/overview.md",
-        "children": [
-            {
-                "title": "Runtime i18n Example",
-                "file": "../pages/i18n/runtime-i18n.md"
-            }
-        ]
     }
 ]
