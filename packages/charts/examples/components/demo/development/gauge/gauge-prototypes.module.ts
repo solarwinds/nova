@@ -7,8 +7,9 @@ import { NuiChartsModule } from "@nova-ui/charts";
 import { DemoCommonModule } from "../../common/demo-common.module";
 
 import { GaugeTestPageComponent } from "./chart-prototype/gauge-test-page.component";
-import { LinearGaugeChartPrototypeComponent } from "./chart-prototype/linear-gauge-chart-prototype.component";
-import { RadialGaugeChartPrototypeComponent } from "./chart-prototype/radial-gauge-chart-prototype.component";
+import { LinearGaugeChartHorizontalPrototypeComponent } from "./chart-prototype/horizontal/linear-gauge-horizontal-chart-prototype.component";
+import { RadialGaugeChartPrototypeComponent } from "./chart-prototype/radial/radial-gauge-chart-prototype.component";
+import { LinearGaugeChartVerticalPrototypeComponent } from "./chart-prototype/vertical/linear-gauge-vertical-chart-prototype.component";
 import { GaugeComponentPrototypeComponent } from "./component-prototype/gauge-component-prototype.component";
 
 const routes: Routes = [
@@ -35,7 +36,8 @@ const routes: Routes = [
 @NgModule({
     declarations: [
         GaugeComponentPrototypeComponent,
-        LinearGaugeChartPrototypeComponent,
+        LinearGaugeChartHorizontalPrototypeComponent,
+        LinearGaugeChartVerticalPrototypeComponent,
         RadialGaugeChartPrototypeComponent,
         GaugeTestPageComponent,
     ],

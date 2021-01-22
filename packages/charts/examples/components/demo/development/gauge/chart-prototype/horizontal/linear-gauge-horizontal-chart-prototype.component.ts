@@ -4,25 +4,28 @@ import {
     BarHorizontalGridConfig,
     Chart,
     ChartAssist,
+    GAUGE_THICKNESS_DEFAULT,
     GaugeMode,
     GaugeService,
     HorizontalBarAccessors,
     IAccessors,
     IChartAssistSeries,
     IGaugeThreshold,
+    linearGaugeGridConfig,
     stack,
-    XYGrid
+    XYGrid,
+    XYGridConfig
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "linear-gauge-chart-prototype",
-    templateUrl: "./linear-gauge-chart-prototype.component.html",
-    styleUrls: ["./linear-gauge-chart-prototype.component.less"],
+    selector: "linear-gauge-horizontal-chart-prototype",
+    templateUrl: "./linear-gauge-horizontal-chart-prototype.component.html",
+    styleUrls: ["./linear-gauge-horizontal-chart-prototype.component.less"],
 })
-export class LinearGaugeChartPrototypeComponent implements OnChanges, OnInit {
+export class LinearGaugeChartHorizontalPrototypeComponent implements OnChanges, OnInit {
     @Input() public value = 42;
     @Input() public max: number = 200;
-    @Input() public thickness = 20;
+    @Input() public thickness = GAUGE_THICKNESS_DEFAULT;
     @Input() public thresholds: IGaugeThreshold[];
 
     public chartAssist: ChartAssist;
@@ -30,7 +33,7 @@ export class LinearGaugeChartPrototypeComponent implements OnChanges, OnInit {
 
     constructor(private gaugeService: GaugeService) { }
 
-    public ngOnChanges(changes: ComponentChanges<LinearGaugeChartPrototypeComponent>) {
+    public ngOnChanges(changes: ComponentChanges<LinearGaugeChartHorizontalPrototypeComponent>) {
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.value && !changes.value.firstChange)) {
             if (changes.thickness) {
                 this.chartAssist.chart.getGrid().config().dimension.height(this.thickness);
@@ -41,23 +44,7 @@ export class LinearGaugeChartPrototypeComponent implements OnChanges, OnInit {
     }
 
     public ngOnInit() {
-        const gridConfig = new BarHorizontalGridConfig();
-        gridConfig.axis.left.visible = false;
-        gridConfig.axis.bottom.visible = false;
-        gridConfig.axis.bottom.gridTicks = false;
-        gridConfig.dimension.padding.top = 0;
-        gridConfig.dimension.padding.right = 0;
-        gridConfig.dimension.padding.bottom = 0;
-        gridConfig.dimension.padding.left = 0;
-        gridConfig.dimension.margin.top = 0;
-        gridConfig.dimension.margin.right = 0;
-        gridConfig.dimension.margin.bottom = 0;
-        gridConfig.dimension.margin.left = 0;
-        gridConfig.dimension.autoHeight = false;
-        gridConfig.dimension.height(this.thickness);
-        gridConfig.borders.left.visible = false;
-        gridConfig.borders.bottom.visible = false;
-        const grid = new XYGrid(gridConfig);
+        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal, this.thickness) as XYGridConfig);
         const chart = new Chart(grid);
 
         this.chartAssist = new ChartAssist(chart, stack);

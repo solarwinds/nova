@@ -4,6 +4,7 @@ import {
     Chart,
     ChartAssist,
     ChartDonutContentPlugin,
+    GAUGE_THICKNESS_DEFAULT,
     GaugeMode,
     GaugeService,
     IAccessors,
@@ -23,7 +24,7 @@ import {
 export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
     @Input() public value = 42;
     @Input() public max: number = 200;
-    @Input() public annularWidth = 20;
+    @Input() public annularWidth = GAUGE_THICKNESS_DEFAULT;
     @Input() public thresholds: IGaugeThreshold[];
 
     public chartAssist: ChartAssist;
@@ -45,7 +46,6 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
         this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
-
 
         this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
         this.updateAnnularWidth();

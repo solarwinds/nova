@@ -2,10 +2,10 @@ import { Injectable } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 
 import { CHART_PALETTE_CS1 } from "../core/common/palette/palettes";
-import { Renderer } from "../core/common/renderer";
 import { IRadialScales, Scales } from "../core/common/scales/types";
 import { DataAccessor, IAccessors, IChartAssistSeries, IDataSeries } from "../core/common/types";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
+import { VerticalBarAccessors } from "../renderers/bar/accessors/vertical-bar-accessors";
 import { BarRenderer } from "../renderers/bar/bar-renderer";
 import { barScales } from "../renderers/bar/bar-scales";
 import { RadialAccessors } from "../renderers/radial/accessors/radial-accessors";
@@ -14,26 +14,13 @@ import { RadialGaugeThresholdsRenderer } from "../renderers/radial/radial-gauge-
 import { RadialRenderer } from "../renderers/radial/radial-renderer";
 import { radialScales } from "../renderers/radial/radial-scales";
 
-import { IGaugeThreshold, IGaugeThresholdMarker } from "./types";
+import { GaugeMode } from "./constants";
+import { IGaugeAttributes, IGaugeThreshold, IGaugeThresholdMarker, IGaugeTools } from "./types";
 
-export enum GaugeMode {
-    Radial = "radial",
-    Horizontal = "horizontal",
-    Vertical = "vertical",
-}
-
-export interface IGaugeAttributes {
-    accessors: IAccessors;
-    scales: Scales;
-    renderer: Renderer<IAccessors>;
-}
-
-interface IGaugeTools {
-    accessorFunction: () => IAccessors;
-    scaleFunction: () => Scales | IRadialScales;
-    rendererFunction: () => Renderer<IAccessors>;
-}
-
+/**
+ * @ignore
+ * Convenience service to make gauge creation a simpler task
+ */
 @Injectable({
     providedIn: "root",
 })
@@ -46,7 +33,7 @@ export class GaugeService {
                              max: number,
                              thresholds: IGaugeThreshold[],
                              mode: GaugeMode,
-        valueColorAccessor?: DataAccessor): IChartAssistSeries<IAccessors>[] {
+                             valueColorAccessor?: DataAccessor): IChartAssistSeries<IAccessors>[] {
         const initialValue = value ?? 0;
         const initialMax = max ?? 0;
         const { accessors, scales, renderer } = this.getGaugeAttributes(mode);
@@ -139,9 +126,14 @@ export class GaugeService {
             },
             [GaugeMode.Vertical]: {
                 // TODO
-                rendererFunction: () => new RadialRenderer(radialGaugeRendererConfig()),
-                accessorFunction: () => new RadialAccessors(),
-                scaleFunction: () => radialScales(),
+                rendererFunction: () => {
+                    const renderer = new BarRenderer();
+                    renderer.config.padding = 0;
+                    renderer.config.strokeWidth = 0;
+                    return renderer;
+                },
+                accessorFunction: () => new VerticalBarAccessors(),
+                scaleFunction: () => barScales(),
             },
         };
 
