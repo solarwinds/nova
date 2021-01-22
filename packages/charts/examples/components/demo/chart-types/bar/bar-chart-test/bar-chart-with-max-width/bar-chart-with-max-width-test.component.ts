@@ -5,7 +5,7 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "nui-bar-chart-with-max-width-test",
+    selector: "nui-bar-chart-tick-label-max-width-test",
     templateUrl: "./bar-chart-with-max-width-test.component.html",
 })
 export class BarChartWithMaxWidthTestComponent implements OnInit {
@@ -21,9 +21,7 @@ export class BarChartWithMaxWidthTestComponent implements OnInit {
         this.chartAssist = new ChartAssist(this.chart);
 
         const gridConfig = this.chart.getGrid().config() as XYGridConfig;
-        gridConfig.axis.left.tickLabel.maxWidth = 70;
-        gridConfig.axis.left.fit = false;
-        gridConfig.dimension.margin.left = 100;
+        gridConfig.axis.left.tickLabel.maxWidth = 100;
 
         const seriesSet: IChartSeries<IBarAccessors>[] = getData().map(d => ({
             ...d,
