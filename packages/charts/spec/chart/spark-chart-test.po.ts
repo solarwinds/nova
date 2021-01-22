@@ -18,6 +18,10 @@ export class SparkChartTestPage {
         return Atom.findCount(ChartAtom, this.root);
     }
 
+    public async getChartCountBySpark(className: string): Promise<number> {
+        return Atom.findCount(ChartAtom, element(by.className("nui-spark-chart-multiple-test")));
+    }
+
     public async getLegendSeriesCount(): Promise<number> {
         return Atom.findCount(LegendSeriesAtom, this.root);
     }
