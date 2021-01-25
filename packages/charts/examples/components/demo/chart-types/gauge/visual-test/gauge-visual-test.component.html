@@ -1,10 +1,23 @@
 
 <div class="container">
     <charts-test-harness>
+        <h3>Radial</h3>
         <div class="d-flex justify-content-around">
-            <gauge-tester [value]="42" [thresholds]="thresholds"></gauge-tester>
-            <gauge-tester [value]="130" [thresholds]="thresholds"></gauge-tester>
-            <gauge-tester [value]="178" [thresholds]="thresholds"></gauge-tester>
+            <radial-gauge-tester [value]="42" [thresholds]="thresholds"></radial-gauge-tester>
+            <radial-gauge-tester [value]="130" [thresholds]="thresholds"></radial-gauge-tester>
+            <radial-gauge-tester [value]="178" [thresholds]="thresholds"></radial-gauge-tester>
+        </div>
+        <h3>Horizontal</h3>
+        <div class="d-flex justify-content-around">
+            <horizontal-gauge-tester [value]="42" [thresholds]="thresholds"></horizontal-gauge-tester>
+            <horizontal-gauge-tester [value]="130" [thresholds]="thresholds"></horizontal-gauge-tester>
+            <horizontal-gauge-tester [value]="178" [thresholds]="thresholds"></horizontal-gauge-tester>
+        </div>
+        <h3>Vertical</h3>
+        <div class="d-flex justify-content-around">
+            <vertical-gauge-tester [value]="42" [thresholds]="thresholds"></vertical-gauge-tester>
+            <vertical-gauge-tester [value]="130" [thresholds]="thresholds"></vertical-gauge-tester>
+            <vertical-gauge-tester [value]="178" [thresholds]="thresholds"></vertical-gauge-tester>
         </div>
     </charts-test-harness>
 </div>

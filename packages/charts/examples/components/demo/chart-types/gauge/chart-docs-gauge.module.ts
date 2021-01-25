@@ -7,8 +7,10 @@ import { NuiChartsModule } from "@nova-ui/charts";
 import { DemoCommonModule } from "../../common/demo-common.module";
 
 import { ChartDocsGaugeComponent } from "./chart-docs-gauge.component";
-import { GaugeTesterComponent } from "./visual-test/gauge-tester.component";
 import { GaugeVisualTestComponent } from "./visual-test/gauge-visual-test.component";
+import { HorizontalGaugeTesterComponent } from "./visual-test/horizontal/horizontal-gauge-tester.component";
+import { RadialGaugeTesterComponent } from "./visual-test/radial/radial-gauge-tester.component";
+import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
 
 const exampleRoutes: Routes = [
     {
@@ -33,7 +35,9 @@ const exampleRoutes: Routes = [
     declarations: [
         ChartDocsGaugeComponent,
         GaugeVisualTestComponent,
-        GaugeTesterComponent,
+        HorizontalGaugeTesterComponent,
+        RadialGaugeTesterComponent,
+        VerticalGaugeTesterComponent,
     ],
     imports: [
         DemoCommonModule,

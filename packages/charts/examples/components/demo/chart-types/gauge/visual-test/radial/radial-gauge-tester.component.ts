@@ -14,11 +14,11 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "gauge-tester",
-    templateUrl: "./gauge-tester.component.html",
-    styleUrls: ["./gauge-tester.component.less"],
+    selector: "radial-gauge-tester",
+    templateUrl: "./radial-gauge-tester.component.html",
+    styleUrls: ["./radial-gauge-tester.component.less"],
 })
-export class GaugeTesterComponent implements OnInit {
+export class RadialGaugeTesterComponent implements OnInit {
     @Input() public value: number;
     @Input() public max: number = 200;
     @Input() public thresholds: IGaugeThreshold[];

@@ -19,7 +19,7 @@ import { IGaugeAttributes, IGaugeThreshold, IGaugeThresholdMarker, IGaugeTools }
 
 /**
  * @ignore
- * Convenience service to make gauge creation a simpler task
+ * Convenience service to simplify gauge creation
  */
 @Injectable({
     providedIn: "root",
@@ -52,7 +52,7 @@ export class GaugeService {
 
         // TODO: generate threshold series for linear modes
         if (mode === GaugeMode.Radial) {
-            chartAssistSeries.push(this.generateRadialThresholdSeries(initialValue, initialMax, thresholds, accessors, scales));
+            chartAssistSeries.push(this.generateRadialThresholdSeries(initialValue, initialMax, thresholds, accessors as RadialAccessors, scales));
         }
 
         return chartAssistSeries;
@@ -83,8 +83,8 @@ export class GaugeService {
     public generateRadialThresholdSeries(value: number,
                                          max: number,
                                          thresholds: IGaugeThreshold[],
-                                         accessors: IAccessors,
-                                         scales: IRadialScales | Scales): IChartAssistSeries<IAccessors> {
+                                         accessors: RadialAccessors,
+                                         scales: IRadialScales | Scales): IChartAssistSeries<RadialAccessors> {
         return {
             id: GaugeService.THRESHOLD_MARKERS_SERIES_ID,
             data: this.getThresholdMarkerPoints(thresholds, value, max),
@@ -108,6 +108,13 @@ export class GaugeService {
     }
 
     private getGaugeTools(mode: GaugeMode): IGaugeTools {
+        const barRendererFunction = () => {
+            const renderer = new BarRenderer();
+            renderer.config.padding = 0;
+            renderer.config.strokeWidth = 0;
+            return renderer;
+        };
+
         const chartTools: Record<GaugeMode, IGaugeTools> = {
             [GaugeMode.Radial]: {
                 rendererFunction: () => new RadialRenderer(radialGaugeRendererConfig()),
@@ -115,23 +122,13 @@ export class GaugeService {
                 scaleFunction: () => radialScales(),
             },
             [GaugeMode.Horizontal]: {
-                rendererFunction: () => {
-                    const renderer = new BarRenderer();
-                    renderer.config.padding = 0;
-                    renderer.config.strokeWidth = 0;
-                    return renderer;
-                },
+                rendererFunction: barRendererFunction,
                 accessorFunction: () => new HorizontalBarAccessors(),
                 scaleFunction: () => barScales({ horizontal: true }),
             },
             [GaugeMode.Vertical]: {
                 // TODO
-                rendererFunction: () => {
-                    const renderer = new BarRenderer();
-                    renderer.config.padding = 0;
-                    renderer.config.strokeWidth = 0;
-                    return renderer;
-                },
+                rendererFunction: barRendererFunction,
                 accessorFunction: () => new VerticalBarAccessors(),
                 scaleFunction: () => barScales(),
             },
