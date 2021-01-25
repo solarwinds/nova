@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  snyk: snyk/snyk@0.0.12
+    snyk: snyk/snyk@0.0.12
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -47,7 +47,6 @@ jobs:
                         - tsconfig.main.json
                         - package.json
                         - LICENSE
-            -   snyk/scan
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
@@ -420,6 +419,15 @@ jobs:
                     command: |
                         git commit -am 'increment develop versions' && \
                         git push origin $SOURCE_BRANCH
+    snyk-scan:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   snyk/scan:
+                    additional-arguments: "--dev --all-projects --strict-out-of-sync=false"
 
 workflows:
     version: 2.1
@@ -516,6 +524,9 @@ workflows:
                         branches:
                             only:
                                 - main
+            -   snyk-scan:
+                requires:
+                    - dashboards-build
     nova-release:
         jobs:
             -   release-approval:
