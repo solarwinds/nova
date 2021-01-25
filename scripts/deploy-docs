@@ -24,6 +24,7 @@ while [ -n "$1" ]; do
     esac
 done
 
+
 echo $(pwd)
 #cd $NOVA_DIR
 mkdir nova-docs
