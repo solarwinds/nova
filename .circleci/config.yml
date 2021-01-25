@@ -9,6 +9,7 @@ jobs:
         environment:
             PROJECT_DIR: ./packages/bits
             BUILD_COUNTER: << pipeline.number >>
+            SNYK_TOKEN: 1a3f4fa5-2312-4a5b-bf28-e5eb9964e8db
         steps:
             -   checkout:
                     path: ~/nova
