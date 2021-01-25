@@ -3,7 +3,7 @@ import defaultsDeep from "lodash/defaultsDeep";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
-import { IGaugeThresholdsRendererConfig as IRadialGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
+import { IRadialGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
 import { IGaugeThreshold } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
