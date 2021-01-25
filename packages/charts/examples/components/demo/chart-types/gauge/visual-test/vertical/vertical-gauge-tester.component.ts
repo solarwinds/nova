@@ -1,13 +1,9 @@
-import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { ComponentChanges } from "@nova-ui/bits";
+import { Component, Input, OnInit } from "@angular/core";
 import {
-    BarGridConfig,
     Chart,
     ChartAssist,
-    GAUGE_THICKNESS_DEFAULT,
     GaugeMode,
     GaugeService,
-    HorizontalBarAccessors,
     IAccessors,
     IChartAssistSeries,
     IGaugeThreshold,
@@ -22,10 +18,9 @@ import {
     templateUrl: "./vertical-gauge-tester.component.html",
     styleUrls: ["./vertical-gauge-tester.component.less"],
 })
-export class VerticalGaugeTesterComponent implements OnChanges, OnInit {
+export class VerticalGaugeTesterComponent implements OnInit {
     @Input() public value = 42;
     @Input() public max: number = 200;
-    @Input() public thickness = GAUGE_THICKNESS_DEFAULT;
     @Input() public thresholds: IGaugeThreshold[];
 
     public chartAssist: ChartAssist;
@@ -33,18 +28,8 @@ export class VerticalGaugeTesterComponent implements OnChanges, OnInit {
 
     constructor(private gaugeService: GaugeService) { }
 
-    public ngOnChanges(changes: ComponentChanges<VerticalGaugeTesterComponent>) {
-        if ((changes.thickness && !changes.thickness.firstChange) || (changes.value && !changes.value.firstChange)) {
-            if (changes.thickness) {
-                this.chartAssist.chart.getGrid().config().dimension.width(this.thickness);
-                this.chartAssist.chart.updateDimensions();
-            }
-            this.chartAssist.update(this.gaugeService.updateSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
-        }
-    }
-
     public ngOnInit() {
-        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Vertical, this.thickness) as XYGridConfig);
+        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Vertical) as XYGridConfig);
         const chart = new Chart(grid);
 
         this.chartAssist = new ChartAssist(chart, stack);

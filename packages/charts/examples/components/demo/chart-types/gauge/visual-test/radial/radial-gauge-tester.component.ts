@@ -9,7 +9,6 @@ import {
     IChartAssistSeries,
     IGaugeThreshold,
     radial,
-    RadialAccessors,
     radialGrid
 } from "@nova-ui/charts";
 
