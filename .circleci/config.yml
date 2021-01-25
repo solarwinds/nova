@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  snyk: snyk/snyk@x.y.z
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -34,6 +36,9 @@ jobs:
                     working_directory: ~/nova/packages/bits
                     name: Assemble
                     command: yarn run assemble
+            -   run:
+                    name: Snyk Scan
+                    command: snyk/scan
             -   persist_to_workspace:
                     root: .
                     paths:
