@@ -9,7 +9,6 @@ jobs:
         environment:
             PROJECT_DIR: ./packages/bits
             BUILD_COUNTER: << pipeline.number >>
-            SNYK_TOKEN: 1a3f4fa5-2312-4a5b-bf28-e5eb9964e8db
         steps:
             -   checkout:
                     path: ~/nova
@@ -423,6 +422,8 @@ jobs:
         working_directory: ~/nova
         docker:
             -   image: circleci/node:12-browsers
+        environment:
+            SNYK_TOKEN: 1a3f4fa5-2312-4a5b-bf28-e5eb9964e8db
         steps:
             -   attach_workspace:
                     at: ~/nova
