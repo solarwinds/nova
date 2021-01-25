@@ -440,9 +440,7 @@ workflows:
     version: 2.1
     nova:
         jobs:
-            -   nova-docs:
-                    requires:
-                        - bits-pack
+             - nova-docs
 #            - bits-build
 #            -   bits-pack:
 #                    requires:
