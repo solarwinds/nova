@@ -167,7 +167,7 @@ describe("SparkChartAssist >", () => {
             it("should hide the bottom axis for all except the last grid", () => {
                 chartAssist.updateSparks(testSparks);
                 chartAssist.sparks.forEach((spark, index) => {
-                    const isBottomAxisVisible = (<XYGridConfig>spark.chart?.getGrid().config()).axis.bottom.visible;
+                    const isBottomAxisVisible = !!(<XYGridConfig>spark.chart?.getGrid().config()).dimension.margin.bottom;
                     expect(isBottomAxisVisible).toEqual(index === chartAssist.sparks.length - 1);
                 });
             });

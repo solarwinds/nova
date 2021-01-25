@@ -15,7 +15,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
+import { EventBus, IDataSource, IEvent, LoggerService } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -25,13 +25,17 @@ import {
     IAccessors,
     IChartAssistSeries,
     IChartPalette,
+    IValueProvider,
+    MappedValueProvider,
     Renderer,
     Scales,
     SELECT_DATA_POINT_EVENT,
     SequentialColorProvider,
 } from "@nova-ui/charts";
 import isEqual from "lodash/isEqual";
+import some from "lodash/some";
 import ResizeObserver from "resize-observer-polyfill";
+import { Subscription } from "rxjs";
 
 import { CategoryChartUtilService } from "../../services/category-chart-util.service";
 import { INTERACTION } from "../../services/types";
@@ -82,6 +86,8 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     @ViewChild("gridContainer", { static: true })
     private gridContainer: ElementRef;
 
+    private chartTypeSubscription$: Subscription;
+
     public get interactive() {
         return this.configuration?.interactive ||
             this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled;
@@ -91,7 +97,9 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
                 private ngZone: NgZone,
                 private kvDiffers: KeyValueDiffers,
                 @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-                @Inject(DATA_SOURCE) private dataSource: IDataSource) {
+                @Inject(DATA_SOURCE) private dataSource: IDataSource,
+                private logger: LoggerService
+                ) {
         this.differ = this.kvDiffers.find(this.prioritizedGridRows).create();
     }
 
@@ -103,19 +111,19 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
+        const newChartColors = changes.configuration?.currentValue?.chartColors;
+        const prevChartColors = changes.configuration?.previousValue?.chartColors;
+
+        if (changes.widgetData || !isEqual(newChartColors, prevChartColors)) {
+            this.updateChartColors();
+        }
+
         if (changes.configuration) {
-            const newChartColors = changes.configuration.currentValue.chartColors;
-            const prevChartColors = changes.configuration.previousValue?.chartColors;
             const newChartType = changes.configuration.currentValue.chartOptions.type;
             const prevChartType = changes.configuration.previousValue && changes.configuration.previousValue.chartOptions.type;
 
-            if (newChartColors !== prevChartColors) {
-                const colorProvider = newChartColors?.length > 0 ? new SequentialColorProvider(newChartColors) : defaultColorProvider();
-                this.chartPalette = new ChartPalette(colorProvider);
-            }
-
             // configure the chart
-            if ((newChartType && newChartType !== prevChartType) || !isEqual(newChartColors, prevChartColors)) {
+            if (newChartType && newChartType !== prevChartType) {
                 this.buildChart(newChartType);
 
                 if (this.widgetData) {
@@ -147,6 +155,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
 
     public ngOnDestroy() {
         this.proportionalWidgetResizeObserver?.disconnect();
+        this.chartTypeSubscription$?.unsubscribe();
     }
 
     public getContentFormatterProperties() {
@@ -200,7 +209,8 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
 
-        this.chartAssist.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe((event) => {
+        this.chartTypeSubscription$?.unsubscribe();
+        this.chartTypeSubscription$ = this.chartAssist.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe((event) => {
             // event payload is a data point from the chart - since we display one data point for every series,
             // we convert the data point to the original series
             const series = this.widgetData.find(s => s.id === event.data.seriesId);
@@ -248,5 +258,80 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     /** Builds the chart */
     private updateChart(): void {
         this.chartAssist.update(CategoryChartUtilService.buildChartSeries(this.widgetData, this.accessors, this.renderer, this.scales));
+    }
+
+    private updateChartColors(): void {
+        let colorProvider: IValueProvider<string>;
+
+        const dataColors = this.widgetData?.map(v => v.color);
+        const configurationColors = this.configuration.chartColors;
+
+        if (!this.configuration.prioritizeWidgetColors && some(dataColors)) {
+            colorProvider = this.getDataDriverColorProvider(this.widgetData);
+        } else if (configurationColors) {
+            colorProvider = this.getConfigurationColorProvider(configurationColors);
+        } else {
+            colorProvider = defaultColorProvider();
+        }
+
+        this.chartPalette = new ChartPalette(colorProvider);
+        this.buildChart(this.configuration?.chartOptions.type);
+        if (this.chartAssist) {
+            this.chartAssist.palette = this.chartPalette;
+            this.updateChart();
+        }
+    }
+
+    private getDataDriverColorProvider(widgetData: IChartAssistSeries<IAccessors<any>>[]): IValueProvider<string> {
+        let colorProvider: IValueProvider<string>;
+
+        const dataColors = widgetData?.map(v => v.color).filter(v => !!v);
+
+        if (dataColors.length === widgetData.length) {
+            const colorMap = widgetData.reduce((acc: { [key: string]: string }, next) => {
+                acc[next.id] = next.color;
+                return acc;
+            }, {});
+            colorProvider = new MappedValueProvider<string>(colorMap);
+        } else {
+            const widgetDataWithColor = widgetData.filter(series => series.color);
+
+            this.logger.warn(`Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(widgetDataWithColor)}`);
+            colorProvider = defaultColorProvider();
+        }
+
+        return colorProvider;
+    }
+
+    private getConfigurationColorProvider(configurationColors: string[] | {
+        [key: string]: string;
+    }): IValueProvider<string> {
+        let colorProvider: IValueProvider<string>;
+
+        // remove data colors since nui-chart takes them into consideration no matter what
+        if (this.configuration.prioritizeWidgetColors && this.widgetData) {
+            this.widgetData = this.widgetData.map(origin => {
+                const series = {...origin};
+                if (series.color) {
+                    delete series.color;
+                }
+                return series;
+            });
+        }
+
+        if (Array.isArray(configurationColors)) {
+            colorProvider = new SequentialColorProvider(configurationColors);
+        } else {
+            const setupColorsLength = Object.keys(configurationColors).length;
+            if (setupColorsLength === this.widgetData?.length) {
+                colorProvider = new MappedValueProvider(configurationColors);
+            } else {
+                // tslint:disable-next-line: max-line-length
+                this.logger.warn(`Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(configurationColors)}`);
+                colorProvider = defaultColorProvider();
+            }
+        }
+
+        return colorProvider;
     }
 }
