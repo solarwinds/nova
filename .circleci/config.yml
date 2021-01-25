@@ -38,7 +38,7 @@ jobs:
                     command: yarn run assemble
             -   run:
                     name: Snyk Scan
-                    command: snyk/scan
+                    command: snyk/scan .
             -   persist_to_workspace:
                     root: .
                     paths:
