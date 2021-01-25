@@ -525,8 +525,8 @@ workflows:
                             only:
                                 - main
             -   snyk-scan:
-                requires:
-                    - dashboards-build
+                    requires:
+                        - dashboards-build
     nova-release:
         jobs:
             -   release-approval:
