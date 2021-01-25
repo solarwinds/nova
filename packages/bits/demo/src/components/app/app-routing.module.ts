@@ -160,6 +160,10 @@ const appRoutes: Routes = [
         loadChildren: () => import("../demo/resize/resize.module").then(m => m.ResizeModule),
     },
     {
+        path: "runtime-i18n",
+        loadChildren: () => import("../demo/runtime-i18n/runtime-i18n.module").then(m => m.RuntimeI18NModule),
+    },
+    {
         path: "search",
         loadChildren: () => import("../demo/search/search.module").then(m => m.SearchModule),
     },

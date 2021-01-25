@@ -49,6 +49,11 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
 
     private onDestroy$: Subject<void> = new Subject<void>();
 
+    // hackfix for NUI-5712
+    // Depending on the timing of pizzagna changes, the incoming value for dataFields may be undefined.
+    // This property ensures that we are only acting on valid values for the data fields.
+    private lastValidDataFields: IDataField[] = [];
+
     constructor(private formBuilder: FormBuilder,
                 private changeDetector: ChangeDetectorRef,
                 private dialogService: DialogService,
@@ -89,6 +94,9 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.dataFields && changes.dataFields.currentValue) {
+            // hackfix for NUI-5712
+            this.lastValidDataFields = changes.dataFields.currentValue;
+
             const columns = this.mergeColumns(changes.dataFields.currentValue, this.columns);
             if (columns?.length) {
                 this.onItemsChange(columns);
@@ -146,7 +154,7 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
                         ...c.properties[key], /* merge properties from each child form */
                     };
                 }
-                result.sortable = this.dataFields?.find(
+                result.sortable = this.lastValidDataFields?.find(
                     df => df.id === result.formatter?.properties?.dataFieldIds?.value)?.sortable;
                 return result;
             });
@@ -183,7 +191,7 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
 
     public resetColumns(confirmation: boolean) {
         const reset = () => {
-            const columns: ITableWidgetColumnConfig[] = this.dataFields.map(df => ({
+            const columns: ITableWidgetColumnConfig[] = this.lastValidDataFields.map(df => ({
                 id: uuid("column"),
                 formatter: {
                     componentType: "RawFormatterComponent",

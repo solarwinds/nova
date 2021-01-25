@@ -13,10 +13,23 @@ jobs:
             -   run:
                     name: Compute build version
                     command: yarn run compute-version-ci
+            -   restore_cache:
+                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
             -   run:
                     working_directory: ~/nova/packages/bits
-                    name: Install dependencies
-                    command: yarn install
+                    name: Installing node dependencies (if necessary)
+                    command: |
+                        if [ -d "node_modules" ];
+                        then
+                            echo "skipping npm install as it was restored from cache. Running only postinstall"
+                            yarn run postinstall
+                        else
+                            yarn install --frozen-lockfile
+                        fi
+            -   save_cache:
+                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+                    paths:
+                        - ./packages/bits/node_modules
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Assemble
@@ -122,22 +135,35 @@ jobs:
                     command: |
                         cp package.json package.json~
                         yarn run --cwd=../.. remove-dependencies packages/charts
+            -   restore_cache:
+                    key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
             -   run:
-                   working_directory: ~/nova/packages/charts
-                   name: Install dependencies
-                   command: yarn install
+                    working_directory: ~/nova/packages/charts
+                    name: Installing node dependencies (if necessary)
+                    command: |
+                        if [ -d "node_modules" ];
+                        then
+                            echo "skipping npm install as it was restored from cache. Running only postinstall"
+                            yarn run postinstall
+                        else
+                            yarn install --frozen-lockfile
+                        fi
+            -   save_cache:
+                    key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
+                    paths:
+                        - ./packages/charts/node_modules
             -   run:
-                   working_directory: ~/nova/packages/charts
-                   name: Install Bits
-                   command: yarn add ../bits/*.tgz
+                    working_directory: ~/nova/packages/charts
+                    name: Install Bits
+                    command: yarn add ../bits/*.tgz
             -   run:
-                   working_directory: ~/nova/packages/charts
-                   name: Restore package.json
-                   command: mv -f package.json~ package.json
+                    working_directory: ~/nova/packages/charts
+                    name: Restore package.json
+                    command: mv -f package.json~ package.json
             -   run:
-                   working_directory: ~/nova/packages/charts
-                   name: Assemble
-                   command: yarn run assemble
+                    working_directory: ~/nova/packages/charts
+                    name: Assemble
+                    command: yarn run assemble
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -170,6 +196,24 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
+    charts-visual-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/charts
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: Visual tests
+                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/charts
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
     charts-pack:
         working_directory: ~/nova/packages/charts
         docker:
@@ -178,8 +222,8 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                   name: Create charts package
-                   command: npm pack ./dist
+                    name: Create charts package
+                    command: npm pack ./dist
             -   persist_to_workspace:
                     root: ~/nova
                     paths:
@@ -215,10 +259,23 @@ jobs:
                     command: |
                         cp package.json package.json~
                         yarn run --cwd=../.. remove-dependencies packages/dashboards
+            -   restore_cache:
+                    key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
             -   run:
                     working_directory: ~/nova/packages/dashboards
-                    name: Install dependencies
-                    command: yarn install
+                    name: Installing node dependencies (if necessary)
+                    command: |
+                        if [ -d "node_modules" ];
+                        then
+                            echo "skipping npm install as it was restored from cache. Running only postinstall"
+                            yarn run postinstall
+                        else
+                            yarn install --frozen-lockfile
+                        fi
+            -   save_cache:
+                    key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
+                    paths:
+                        - ./packages/dashboards/node_modules
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Install bits
@@ -267,6 +324,24 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
+    dashboards-visual-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/dashboards
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: Visual tests
+                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/dashboards
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
     dashboards-pack:
         working_directory: ~/nova/packages/dashboards
         docker:
@@ -304,129 +379,147 @@ jobs:
             RELEASE_BRANCH: release/v9.x
             INCREMENT_TYPE: minor
         steps:
-            - checkout:
+            -   checkout:
                     path: ~/nova
-            - run:
-                name: Configure Git
-                command: |
-                    git config --global user.email circleci@circleci
-                    git config --global user.name $CIRCLE_PROJECT_USERNAME
-            - run:
-                name: Merge Changes
-                command: yarn run merge-ci
-            - run:
-                name: Check out release branch
-                command: git checkout $RELEASE_BRANCH
-            - run:
-                name: Set Release Version
-                command: yarn run set-release-versions-ci
-            - run:
-                name: Set Release Dependency Versions
-                command: yarn run set-dependency-versions-ci
-            - run:
-                name: Commit and Push Release Branch Changes
-                command: |
-                    git commit -am "update files for version $RELEASE_VERSION"
-                    git push --verbose
-            - run:
-                name: Increment source branch version
-                command: |
-                    git checkout $SOURCE_BRANCH
-                    yarn run set-source-versions-ci
-            - run:
-                name: Set source dependency versions
-                command: yarn run set-dependency-versions-ci
-            - run:
-                name: Push source branch changes
-                command: |
-                    git commit -am 'increment develop versions' && \
-                    git push origin $SOURCE_BRANCH
+            -   run:
+                    name: Configure Git
+                    command: |
+                        git config --global user.email circleci@circleci
+                        git config --global user.name $CIRCLE_PROJECT_USERNAME
+            -   run:
+                    name: Merge Changes
+                    command: yarn run merge-ci
+            -   run:
+                    name: Check out release branch
+                    command: git checkout $RELEASE_BRANCH
+            -   run:
+                    name: Set Release Version
+                    command: yarn run set-release-versions-ci
+            -   run:
+                    name: Set Release Dependency Versions
+                    command: yarn run set-dependency-versions-ci
+            -   run:
+                    name: Commit and Push Release Branch Changes
+                    command: |
+                        git commit -am "update files for version $RELEASE_VERSION"
+                        git push --verbose
+            -   run:
+                    name: Increment source branch version
+                    command: |
+                        git checkout $SOURCE_BRANCH
+                        yarn run set-source-versions-ci
+            -   run:
+                    name: Set source dependency versions
+                    command: yarn run set-dependency-versions-ci
+            -   run:
+                    name: Push source branch changes
+                    command: |
+                        git commit -am 'increment develop versions' && \
+                        git push origin $SOURCE_BRANCH
 
 workflows:
     version: 2.1
     nova:
-         jobs:
-             -   bits-build
-             -   bits-pack:
-                     requires:
-                         -   bits-build
-             -   bits-unit-test:
-                     requires:
-                         -   bits-build
-             -   bits-e2e-test:
-                     requires:
-                         -   bits-build
- #             -   bits-visual-test:
- #                     requires:
- #                         - bits-build
-             -   bits-publish:
-                     requires:
-                         -   bits-e2e-test
-                         -   bits-unit-test
-                         -   charts-e2e-test
-                         -   charts-unit-test
-                         -   dashboards-e2e-test
-                         -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
-             -   charts-build:
-                     requires:
-                         - bits-pack
-             -   charts-pack:
-                     requires:
-                         -   charts-build
-             -   charts-unit-test:
-                     requires:
-                         -   charts-build
-             -   charts-e2e-test:
-                     requires:
-                         -   charts-build
-             -   charts-publish:
-                     requires:
-                         -   bits-e2e-test
-                         -   bits-unit-test
-                         -   charts-e2e-test
-                         -   charts-unit-test
-                         -   dashboards-e2e-test
-                         -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
-             -   dashboards-build:
-                     requires:
-                         -   charts-pack
-             -   dashboards-pack:
-                     requires:
-                         -   dashboards-build
-             -   dashboards-unit-test:
-                     requires:
-                         -   dashboards-build
-             -   dashboards-e2e-test:
-                     requires:
-                         -   dashboards-build
-             -   dashboards-publish:
-                     requires:
-                         -   bits-e2e-test
-                         -   bits-unit-test
-                         -   charts-e2e-test
-                         -   charts-unit-test
-                         -   dashboards-e2e-test
-                         -   dashboards-unit-test
-                     filters:
-                         branches:
-                             only:
-                                 - main
+        jobs:
+            - bits-build
+            -   bits-pack:
+                    requires:
+                        - bits-build
+            -   bits-unit-test:
+                    requires:
+                        - bits-build
+            -   bits-e2e-test:
+                    requires:
+                        - bits-build
+            -   bits-visual-test:
+                    requires:
+                        - bits-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   bits-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   charts-build:
+                    requires:
+                        - bits-pack
+            -   charts-pack:
+                    requires:
+                        - charts-build
+            -   charts-unit-test:
+                    requires:
+                        - charts-build
+            -   charts-e2e-test:
+                    requires:
+                        - charts-build
+            -   charts-visual-test:
+                    requires:
+                        - charts-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   charts-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   dashboards-build:
+                    requires:
+                        - charts-pack
+            -   dashboards-pack:
+                    requires:
+                        - dashboards-build
+            -   dashboards-unit-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-e2e-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-visual-test:
+                    requires:
+                        - dashboards-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   dashboards-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
     nova-release:
         jobs:
-            - release-approval:
-                type: approval
-                filters:
-                    branches:
-                        only:
-                            - main
-            - release-prep:
-                requires:
-                    - release-approval
+            -   release-approval:
+                    type: approval
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   release-prep:
+                    requires:
+                        - release-approval

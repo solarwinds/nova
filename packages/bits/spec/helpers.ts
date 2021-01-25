@@ -102,7 +102,7 @@ export class Helpers {
                                 + " - "
                                 + branchName
                                 + userName;
-            const batchID = <string>process.env.CIRCLE_SHA1;
+            const batchID = <string>process.env.CIRCLE_JOB + "_" + <string>process.env.CIRCLE_SHA1;
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
             batchID ? eyes.setBatch(batchName, batchID)

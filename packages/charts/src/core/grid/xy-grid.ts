@@ -4,6 +4,7 @@ import clone from "lodash/clone";
 import each from "lodash/each";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
+import isUndefined from "lodash/isUndefined";
 
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
 import { MouseInteractiveArea } from "../common/mouse-interactive-area";
@@ -17,7 +18,6 @@ import { InteractionLinePlugin } from "../plugins/interaction/interaction-line-p
 import { MouseInteractiveAreaPlugin } from "../plugins/mouse-interactive-area-plugin";
 
 import { XYGridConfig } from "./config/xy-grid-config";
-import { defaultTextOverflowHandler } from "./default-text-overflow-handler";
 import { Grid } from "./grid";
 import { IAllAround, IAxis, IAxisConfig, IDimensionConfig, IGrid, IXYGridConfig, TextOverflowHandler } from "./types";
 
@@ -383,19 +383,56 @@ export class XYGrid extends Grid implements IGrid {
         let widthLimit = 0;
         let horizontalPadding = 0;
         let overflowHandler: TextOverflowHandler | undefined;
+        const maxRightWidth = axisConfig.right.tickLabel.maxWidth;
+        const maxLeftWidth = axisConfig.left.tickLabel.maxWidth;
 
         if (scale.id === this.bottomScaleId) {
-            widthLimit = (scale as any).bandwidth ? (scale as IBandScale<any>).bandwidth() : this.getTickDistance(axisLabels);
+            const maxBottomWidth = axisConfig.bottom.tickLabel.maxWidth;
+            const calculatedBottomWidth = (scale as any).bandwidth ? (scale as IBandScale<any>).bandwidth() : this.getTickDistance(axisLabels);
+
+            if (!isUndefined(maxBottomWidth)) {
+                widthLimit = calculatedBottomWidth > maxBottomWidth ? maxBottomWidth : calculatedBottomWidth;
+            } else {
+                widthLimit = calculatedBottomWidth;
+            }
+
             horizontalPadding = axisConfig.bottom.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.bottom.tickLabel.overflowHandler;
+
         } else if (scale.id === this.rightScaleId && !axisConfig.right.fit) {
-            widthLimit = margin.right - axisConfig.right.padding - axisConfig.right.tickSize;
+            const calculatedRightWidth = margin.right - axisConfig.right.padding - axisConfig.right.tickSize;
+
+            if (!isUndefined(maxRightWidth)) {
+                widthLimit = calculatedRightWidth > maxRightWidth ? maxRightWidth : calculatedRightWidth;
+            } else {
+                widthLimit = calculatedRightWidth;
+            }
+
             horizontalPadding = axisConfig.right.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.right.tickLabel.overflowHandler;
+
         } else if (scale.id === this.leftScaleId && !axisConfig.left.fit) {
-            widthLimit = margin.left - axisConfig.left.padding - axisConfig.left.tickSize;
+            const calculatedLeftWidth = margin.left - axisConfig.left.padding - axisConfig.left.tickSize;
+
+            if (!isUndefined(maxLeftWidth)) {
+                widthLimit = calculatedLeftWidth > maxLeftWidth ? maxLeftWidth : calculatedLeftWidth;
+            } else {
+                widthLimit = calculatedLeftWidth;
+            }
+
             horizontalPadding = axisConfig.left.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.left.tickLabel.overflowHandler;
+
+        } else if (scale.id === this.rightScaleId && axisConfig.right.fit && !isUndefined(maxRightWidth)) {
+            widthLimit = maxRightWidth;
+            horizontalPadding = axisConfig.right.tickLabel.horizontalPadding;
+            overflowHandler = axisConfig.right.tickLabel.overflowHandler;
+
+        } else if (scale.id === this.leftScaleId && axisConfig.left.fit && !isUndefined(maxLeftWidth)) {
+            widthLimit = maxLeftWidth;
+            horizontalPadding = axisConfig.left.tickLabel.horizontalPadding;
+            overflowHandler = axisConfig.left.tickLabel.overflowHandler;
+
         } else {
             return;
         }
@@ -445,6 +482,10 @@ export class XYGrid extends Grid implements IGrid {
             actualTextElements.push(<HTMLElement>this);
         });
         return actualTextElements;
+    }
+
+    protected getOuterWidthDimensionCorrection() {
+        return this.config().axis.bottom.visible ? Grid.TICK_DIMENSION_CORRECTION : 0;
     }
 
     private hasRightYAxis(): boolean {
@@ -511,8 +552,8 @@ export class XYGrid extends Grid implements IGrid {
     }
 
     private elementsFiltering(elementsToFilter: HTMLElement[],
-        parameter: number,
-        measureType: string) {
+                              parameter: number,
+                              measureType: string) {
         let elementsToDisplay: HTMLElement[];
         let counter = 2;
         const condition = (array: HTMLElement[]) => measureType === "width"

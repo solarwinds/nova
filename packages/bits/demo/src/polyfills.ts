@@ -59,7 +59,7 @@ import { loadTranslations } from "@angular/localize";
 
 const locales: Record<string, Record<string, string>> = {
     "fr": {
-        "6542015780053525788": "Salutations!",
+        "8885234477142162752": "Salutations!",
         "5181440621801685681": "Il s'agit d'un texte aléatoire écrit pour montrer que les traductions d'exécution fonctionnent réellement. Chaque ligne de cet exemple sera traduite à l'aide de Google Translator.",
         "6028371114637047813": "Prénom",
         "3967269098753656610": "Adresse électronique",
@@ -71,7 +71,7 @@ const locales: Record<string, Record<string, string>> = {
         "5878305334612867800": "(optionnel)",
     },
     "es": {
-        "6542015780053525788": "Saludos!",
+        "8885234477142162752": "Saludos!",
         "5181440621801685681": "Es un texto aleatorio escrito para mostrar que las traducciones en tiempo de ejecución realmente funcionan. Cada línea en este ejemplo será traducida usando Google Translator.",
         "6028371114637047813": "Primer nombre",
         "3967269098753656610": "Dirección de correo electrónico",
@@ -83,7 +83,7 @@ const locales: Record<string, Record<string, string>> = {
         "5878305334612867800": "(opcional)",
     },
     "de": {
-        "6542015780053525788": "Schöne Grüße!",
+        "8885234477142162752": "Schöne Grüße!",
         "5181440621801685681": "Dies ist ein zufälliger Text, der zeigt, dass Laufzeitübersetzungen tatsächlich funktionieren. In diesem Beispiel wird jede einzelne Zeile mit Google Translator übersetzt.",
         "6028371114637047813": "Vorname",
         "3967269098753656610": "E-Mail-Addresse",
