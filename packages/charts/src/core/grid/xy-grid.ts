@@ -467,13 +467,32 @@ export class XYGrid extends Grid implements IGrid {
                 const groupSelection = select(group);
                 // invoke the handler for each text element
                 groupSelection.select("text").call(overflowHandler as TextOverflowHandler, { widthLimit, horizontalPadding, ellipsisWidth });
+                this.recalculateMargins(this.container);
                 // restore pointer events
                 groupSelection.classed("pointer-events", true);
             });
+            this.checkMarginLock();
 
             // display the labels
             labelGroup.classed("tick-hidden-text", false);
         }, XYGrid.TICK_LABEL_OVERFLOW_DEBOUNCE_INTERVAL);
+    }
+    private checkMarginLock() {
+        const d = this._config.dimension;
+        const axis = this.config().axis;
+
+        if (!d.marginLocked.left && axis.left.fit && axis.left.visible) {
+            d.marginLocked.left = true;
+        }
+        if (!d.marginLocked.right && axis.right.fit && axis.right.visible) {
+            d.marginLocked.right = true;
+        }
+        if (!d.marginLocked.bottom && axis.bottom.fit && axis.bottom.visible) {
+            d.marginLocked.bottom = true;
+        }
+        if (!d.marginLocked.top && axis.top.fit && axis.top.visible) {
+            d.marginLocked.top = true;
+        }
     }
 
     protected selectAllAxisLabels(axisGroup: D3Selection<SVGGElement>) {
@@ -618,16 +637,16 @@ export class XYGrid extends Grid implements IGrid {
         const oldOuterWidth = d.outerWidth();
         const oldOuterHeight = d.outerHeight();
 
-        if (axis.left.fit && axis.left.visible) {
+        if (!d.marginLocked.left && axis.left.fit && axis.left.visible) {
             d.margin.left = this.getMaxTextWidth(this.selectAllAxisLabels(this.axisYLeft.labelGroup)) + axis.left.tickSize + axis.left.padding;
         }
 
-        if (axis.right.fit && this.hasRightYAxis()) {
+        if (!d.marginLocked.right && axis.right.fit && this.hasRightYAxis()) {
             d.margin.right = this.getMaxTextWidth(this.selectAllAxisLabels(this.axisYRight.labelGroup)) + axis.right.tickSize + axis.right.padding;
         }
 
         const bottomScale = this.bottomScaleId && this.scales ? this.scales["x"]?.index[this.bottomScaleId] : undefined;
-        if (axis.bottom.fit && axis.bottom.visible && (bottomScale?.isContinuous() || !axis.bottom.tickLabel.overflowHandler)) {
+        if (!d.marginLocked.bottom && axis.bottom.fit && axis.bottom.visible && (bottomScale?.isContinuous() || !axis.bottom.tickLabel.overflowHandler)) {
             this.fitBottomAxis(d);
         }
 
