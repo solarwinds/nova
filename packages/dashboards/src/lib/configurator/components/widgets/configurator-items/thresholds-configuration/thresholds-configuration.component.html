@@ -2,7 +2,7 @@
                              [state]="form | nuiWidgetEditorAccordionFormState | async">
     <div accordionHeader
          class="d-flex align-items-center px-4 py-2">
-        <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'conditional_block' | async"></nui-icon>
+        <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'thresholds' | async"></nui-icon>
         <div class="d-flex flex-column ml-4 pt-1">
             <span class="nui-text-label" i18n>Thresholds</span>
             <div class="nui-text-secondary" [title]="getThresholdsSubtitle(form.get('showThresholds')?.value)">{{getThresholdsSubtitle(form.get('showThresholds')?.value)}}</div>
