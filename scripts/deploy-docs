@@ -25,7 +25,7 @@ while [ -n "$1" ]; do
 done
 
 echo $(pwd)
-cd $NOVA_DIR
+#cd $NOVA_DIR
 mkdir nova-docs
 git clone $DOC_SERVICE_REPO ./nova-docs
 zip -r nova-docs.zip *
