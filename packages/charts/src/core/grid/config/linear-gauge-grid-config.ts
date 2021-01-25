@@ -11,6 +11,7 @@ import { XYGridConfig } from "./xy-grid-config";
  */
 export function linearGaugeGridConfig(mode: GaugeMode.Vertical | GaugeMode.Horizontal, thickness = GAUGE_THICKNESS_DEFAULT): XYGridConfig {
     const gridConfig = new XYGridConfig();
+    gridConfig.interactionPlugins = false;
 
     gridConfig.axis.bottom.visible = false;
     gridConfig.axis.bottom.gridTicks = false;
