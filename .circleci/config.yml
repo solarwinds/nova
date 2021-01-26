@@ -30,10 +30,10 @@ jobs:
                     key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
                     paths:
                         - ./packages/bits/node_modules
-#            -   run:
-#                    working_directory: ~/nova/packages/bits
-#                    name: Assemble
-#                    command: yarn run assemble
+            -   run:
+                    working_directory: ~/nova/packages/bits
+                    name: Assemble
+                    command: yarn run assemble
             -   persist_to_workspace:
                     root: .
                     paths:
