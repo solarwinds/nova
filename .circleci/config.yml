@@ -10,30 +10,30 @@ jobs:
         steps:
             -   checkout:
                     path: ~/nova
-            -   run:
-                    name: Compute build version
-                    command: yarn run compute-version-ci
-            -   restore_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Installing node dependencies (if necessary)
-                    command: |
-                        if [ -d "node_modules" ];
-                        then
-                            echo "skipping npm install as it was restored from cache. Running only postinstall"
-                            yarn run postinstall
-                        else
-                            yarn install --frozen-lockfile
-                        fi
-            -   save_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
-                    paths:
-                        - ./packages/bits/node_modules
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Assemble
-                    command: yarn run assemble
+#            -   run:
+#                    name: Compute build version
+#                    command: yarn run compute-version-ci
+#            -   restore_cache:
+#                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+#            -   run:
+#                    working_directory: ~/nova/packages/bits
+#                    name: Installing node dependencies (if necessary)
+#                    command: |
+#                        if [ -d "node_modules" ];
+#                        then
+#                            echo "skipping npm install as it was restored from cache. Running only postinstall"
+#                            yarn run postinstall
+#                        else
+#                            yarn install --frozen-lockfile
+#                        fi
+#            -   save_cache:
+#                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+#                    paths:
+#                        - ./packages/bits/node_modules
+#            -   run:
+#                    working_directory: ~/nova/packages/bits
+#                    name: Assemble
+#                    command: yarn run assemble
             -   persist_to_workspace:
                     root: .
                     paths:
