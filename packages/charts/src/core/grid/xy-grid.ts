@@ -179,10 +179,7 @@ export class XYGrid extends Grid implements IGrid {
         super.update();
 
         this.updateAxes();
-
-        const oldMargin = clone(this._config.dimension.margin);
-        this.recalculateMargins(this.container);
-        this.reconcileMarginsWithDebounce(oldMargin);
+        this.handleMarginUpdate();
 
         return this;
     }
@@ -475,13 +472,11 @@ export class XYGrid extends Grid implements IGrid {
                 groupSelection.classed("pointer-events", true);
             });
 
-            if (fixRightMargin || fixLeftMargin) {
-                const d = this._config.dimension;
-                const oldMargin = clone(this._config.dimension.margin);
-                this.recalculateMargins(this.container);
-                this.reconcileMarginsWithDebounce(oldMargin);
-                d.marginLocked.right = fixRightMargin;
-                d.marginLocked.left = fixLeftMargin;
+            const marginLocked = this._config.dimension.marginLocked;
+            if (marginLocked && (fixRightMargin || fixLeftMargin)) {
+                this.handleMarginUpdate();
+                marginLocked.right = fixRightMargin;
+                marginLocked.left = fixLeftMargin;
             }
 
             // display the labels
@@ -499,6 +494,12 @@ export class XYGrid extends Grid implements IGrid {
 
     protected getOuterWidthDimensionCorrection() {
         return this.config().axis.bottom.visible ? Grid.TICK_DIMENSION_CORRECTION : 0;
+    }
+
+    private handleMarginUpdate() {
+        const oldMargin = clone(this._config.dimension.margin);
+        this.recalculateMargins(this.container);
+        this.reconcileMarginsWithDebounce(oldMargin);
     }
 
     private hasRightYAxis(): boolean {
@@ -631,11 +632,11 @@ export class XYGrid extends Grid implements IGrid {
         const oldOuterWidth = d.outerWidth();
         const oldOuterHeight = d.outerHeight();
 
-        if (!d.marginLocked.left && axis.left.fit && axis.left.visible) {
+        if (!d.marginLocked?.left && axis.left.fit && axis.left.visible) {
             d.margin.left = this.getMaxTextWidth(this.selectAllAxisLabels(this.axisYLeft.labelGroup)) + axis.left.tickSize + axis.left.padding;
         }
 
-        if (!d.marginLocked.right && axis.right.fit && this.hasRightYAxis()) {
+        if (!d.marginLocked?.right && axis.right.fit && this.hasRightYAxis()) {
             d.margin.right = this.getMaxTextWidth(this.selectAllAxisLabels(this.axisYRight.labelGroup)) + axis.right.tickSize + axis.right.padding;
         }
 
