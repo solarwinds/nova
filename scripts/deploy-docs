@@ -25,6 +25,7 @@ while [ -n "$1" ]; do
 done
 
 echo $(pwd)
+echo "$DOC_SERVICE_REPO"
 #cd $NOVA_DIR
 mkdir nova-docs
 git clone $DOC_SERVICE_REPO ./nova-docs
