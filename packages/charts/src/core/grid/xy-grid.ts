@@ -585,20 +585,15 @@ export class XYGrid extends Grid implements IGrid {
 
     private getTextMeasurement(array: HTMLElement[], measureType: string) {
         const textPadding = measureType === "width" ? 5 : 0;
-        const textMeasurement = array.reduce((prev: number, next: HTMLElement) =>
+        return array.reduce((prev: number, next: HTMLElement) =>
             prev + (next.getBoundingClientRect() as any)[measureType] + textPadding, 0);
-            // console.log("📗 xy-grid: 599# -> textMeasurement:", textMeasurement);
-            return textMeasurement;
     }
 
     private getMaxTextWidth(array: HTMLElement[]) {
         if (array.length === 0) {
             return 0;
         }
-        const textWidth =  Math.max.apply(null, array.map((tick: HTMLElement) => tick.getBoundingClientRect().width));
-        // console.log("📒 xy-grid: 605# -> textWidth:", textWidth);
-        
-        return textWidth;
+        return Math.max.apply(null, array.map((tick: HTMLElement) => tick.getBoundingClientRect().width));
     }
 
     private getTickDistance(array: HTMLElement[]) {
