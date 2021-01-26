@@ -28,6 +28,7 @@ echo $(pwd)
 echo "$DOC_SERVICE_REPO"
 #cd $NOVA_DIR
 mkdir nova-docs
+mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 git clone $DOC_SERVICE_REPO ./nova-docs
 zip -r nova-docs.zip *
 echo $(pwd)
