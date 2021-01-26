@@ -383,6 +383,8 @@ export class XYGrid extends Grid implements IGrid {
         let widthLimit = 0;
         let horizontalPadding = 0;
         let overflowHandler: TextOverflowHandler | undefined;
+        let fixLeftMargin = false;
+        let fixRightMargin = false;
         const maxRightWidth = axisConfig.right.tickLabel.maxWidth;
         const maxLeftWidth = axisConfig.left.tickLabel.maxWidth;
 
@@ -427,11 +429,13 @@ export class XYGrid extends Grid implements IGrid {
             widthLimit = maxRightWidth;
             horizontalPadding = axisConfig.right.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.right.tickLabel.overflowHandler;
+            fixRightMargin = true;
 
         } else if (scale.id === this.leftScaleId && axisConfig.left.fit && !isUndefined(maxLeftWidth)) {
             widthLimit = maxLeftWidth;
             horizontalPadding = axisConfig.left.tickLabel.horizontalPadding;
             overflowHandler = axisConfig.left.tickLabel.overflowHandler;
+            fixLeftMargin = true;
 
         } else {
             return;
@@ -467,32 +471,22 @@ export class XYGrid extends Grid implements IGrid {
                 const groupSelection = select(group);
                 // invoke the handler for each text element
                 groupSelection.select("text").call(overflowHandler as TextOverflowHandler, { widthLimit, horizontalPadding, ellipsisWidth });
-                this.recalculateMargins(this.container);
                 // restore pointer events
                 groupSelection.classed("pointer-events", true);
             });
-            this.checkMarginLock();
+
+            if (fixRightMargin || fixLeftMargin) {
+                const d = this._config.dimension;
+                const oldMargin = clone(this._config.dimension.margin);
+                this.recalculateMargins(this.container);
+                this.reconcileMarginsWithDebounce(oldMargin);
+                d.marginLocked.right = fixRightMargin;
+                d.marginLocked.left = fixLeftMargin;
+            }
 
             // display the labels
             labelGroup.classed("tick-hidden-text", false);
         }, XYGrid.TICK_LABEL_OVERFLOW_DEBOUNCE_INTERVAL);
-    }
-    private checkMarginLock() {
-        const d = this._config.dimension;
-        const axis = this.config().axis;
-
-        if (!d.marginLocked.left && axis.left.fit && axis.left.visible) {
-            d.marginLocked.left = true;
-        }
-        if (!d.marginLocked.right && axis.right.fit && axis.right.visible) {
-            d.marginLocked.right = true;
-        }
-        if (!d.marginLocked.bottom && axis.bottom.fit && axis.bottom.visible) {
-            d.marginLocked.bottom = true;
-        }
-        if (!d.marginLocked.top && axis.top.fit && axis.top.visible) {
-            d.marginLocked.top = true;
-        }
     }
 
     protected selectAllAxisLabels(axisGroup: D3Selection<SVGGElement>) {
@@ -591,15 +585,20 @@ export class XYGrid extends Grid implements IGrid {
 
     private getTextMeasurement(array: HTMLElement[], measureType: string) {
         const textPadding = measureType === "width" ? 5 : 0;
-        return array.reduce((prev: number, next: HTMLElement) =>
+        const textMeasurement = array.reduce((prev: number, next: HTMLElement) =>
             prev + (next.getBoundingClientRect() as any)[measureType] + textPadding, 0);
+            // console.log("📗 xy-grid: 599# -> textMeasurement:", textMeasurement);
+            return textMeasurement;
     }
 
     private getMaxTextWidth(array: HTMLElement[]) {
         if (array.length === 0) {
             return 0;
         }
-        return Math.max.apply(null, array.map((tick: HTMLElement) => tick.getBoundingClientRect().width));
+        const textWidth =  Math.max.apply(null, array.map((tick: HTMLElement) => tick.getBoundingClientRect().width));
+        // console.log("📒 xy-grid: 605# -> textWidth:", textWidth);
+        
+        return textWidth;
     }
 
     private getTickDistance(array: HTMLElement[]) {
@@ -646,7 +645,7 @@ export class XYGrid extends Grid implements IGrid {
         }
 
         const bottomScale = this.bottomScaleId && this.scales ? this.scales["x"]?.index[this.bottomScaleId] : undefined;
-        if (!d.marginLocked.bottom && axis.bottom.fit && axis.bottom.visible && (bottomScale?.isContinuous() || !axis.bottom.tickLabel.overflowHandler)) {
+        if (axis.bottom.fit && axis.bottom.visible && (bottomScale?.isContinuous() || !axis.bottom.tickLabel.overflowHandler)) {
             this.fitBottomAxis(d);
         }
 
