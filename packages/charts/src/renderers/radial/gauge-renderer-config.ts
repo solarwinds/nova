@@ -5,7 +5,7 @@ import { IRadialRendererConfig } from "../../core/common/types";
  *
  * @returns {IRadialRendererConfig} Standard renderer configuration for a gauge
  */
-export function gaugeRendererConfig(): IRadialRendererConfig {
+export function radialGaugeRendererConfig(): IRadialRendererConfig {
     return {
         annularGrowth: 0,
         strokeWidth: 0,

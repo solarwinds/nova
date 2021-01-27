@@ -57,6 +57,12 @@ export class TableColumnsConverterService extends BaseConverter implements After
 
                 // using setTimeout here updates the "filters" component properly - without it it doesn't update the dropdown with sortable columns
                 setTimeout(() => {
+                    // hackfix for NUI-5712
+                    // this assigment resolves a race condition that sometimes occured when data fields received from the data source would be
+                    // overwritten by an "older" formPizzagna value assigned above
+                    formPizzagna = immutableSet(formPizzagna, `${PizzagnaLayer.Structure}.columns.properties.template`,
+                        this.pizzagnaService.pizzagna[PizzagnaLayer.Structure].columns.properties?.template);
+
                     formPizzagna = immutableSet(formPizzagna, `${PizzagnaLayer.Data}.filters.properties.columns`, columns);
                     // this triggers change detection on the "filters" component
                     formPizzagna = immutableSet(formPizzagna, `${PizzagnaLayer.Structure}.presentation.properties.nodes`,

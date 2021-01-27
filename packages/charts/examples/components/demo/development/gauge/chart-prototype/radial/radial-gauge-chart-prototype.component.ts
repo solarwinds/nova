@@ -4,7 +4,10 @@ import {
     Chart,
     ChartAssist,
     ChartDonutContentPlugin,
+    GAUGE_THICKNESS_DEFAULT,
+    GaugeMode,
     GaugeService,
+    IAccessors,
     IChartAssistSeries,
     IGaugeThreshold,
     IRadialRendererConfig,
@@ -14,28 +17,28 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "nui-gauge-chart-prototype",
-    templateUrl: "./gauge-chart-prototype.component.html",
-    styleUrls: ["./gauge-chart-prototype.component.less"],
+    selector: "radial-gauge-chart-prototype",
+    templateUrl: "./radial-gauge-chart-prototype.component.html",
+    styleUrls: ["./radial-gauge-chart-prototype.component.less"],
 })
-export class GaugeChartPrototypeComponent implements OnChanges, OnInit {
+export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
     @Input() public value = 42;
     @Input() public max: number = 200;
-    @Input() public annularWidth = 20;
+    @Input() public annularWidth = GAUGE_THICKNESS_DEFAULT;
     @Input() public thresholds: IGaugeThreshold[];
 
     public chartAssist: ChartAssist;
     public contentPlugin: ChartDonutContentPlugin;
-    public seriesSet: IChartAssistSeries<RadialAccessors>[];
+    public seriesSet: IChartAssistSeries<IAccessors>[];
 
     constructor(private gaugeService: GaugeService) { }
 
-    public ngOnChanges(changes: ComponentChanges<GaugeChartPrototypeComponent>) {
+    public ngOnChanges(changes: ComponentChanges<RadialGaugeChartPrototypeComponent>) {
         if ((changes.annularWidth && !changes.annularWidth.firstChange) || (changes.value && !changes.value.firstChange)) {
             if (changes.annularWidth) {
                 this.updateAnnularWidth();
             }
-            this.chartAssist.update(this.gaugeService.updateRadialSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
+            this.chartAssist.update(this.gaugeService.updateSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
         }
     }
 
@@ -44,7 +47,7 @@ export class GaugeChartPrototypeComponent implements OnChanges, OnInit {
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 
-        this.seriesSet = this.gaugeService.assembleRadialSeriesSet(this.value, this.max, this.thresholds);
+        this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
         this.updateAnnularWidth();
         this.chartAssist.update(this.seriesSet);
     }

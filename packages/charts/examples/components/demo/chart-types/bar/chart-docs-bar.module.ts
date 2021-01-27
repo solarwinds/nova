@@ -7,6 +7,8 @@ import { DemoCommonModule } from "../../common/demo-common.module";
 
 import { BarChartHorizontalExampleComponent } from "./bar-chart-horizontal/bar-chart-horizontal.example.component";
 import { BarChartTestComponent } from "./bar-chart-test/bar-chart-test.component";
+import { BarChartTickLabelMaxWidthWithMarginTestComponent } from "./bar-chart-test/bar-chart-tick-label-max-width-with-margin/bar-chart-tick-label-max-width-with-margin-test.component";
+import { BarChartTickLabelMaxWidthTestComponent } from "./bar-chart-test/bar-chart-tick-label-max-width/bar-chart-tick-label-max-width-test.component";
 import { BasicHorizontalBarChartTestComponent } from "./bar-chart-test/basic-horizontal/basic-horizontal-bar-chart-test.component";
 import { BasicVerticalBarChartTestComponent } from "./bar-chart-test/basic-vertical/basic-vertical-bar-chart-test.component";
 import { HorizontalWithLegendBarChartTestComponent } from "./bar-chart-test/horizontal-with-legend/horizontal-with-legend-bar-chart-test.component";
@@ -88,6 +90,24 @@ const exampleRoutes: Routes = [
             },
         },
     },
+    {
+        path: "bar-chart-max-width-test",
+        component: BarChartTickLabelMaxWidthTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "bar-chart-max-width-with-margin-test",
+        component: BarChartTickLabelMaxWidthWithMarginTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -97,6 +117,8 @@ const exampleRoutes: Routes = [
         BarChartHorizontalExampleComponent,
         BarChartTimeScaleExampleComponent,
         BarChartTimeIntervalExampleComponent,
+        BarChartTickLabelMaxWidthTestComponent,
+        BarChartTickLabelMaxWidthWithMarginTestComponent,
         BarChartWithLegendExampleComponent,
         BarChartTestComponent,
         BasicHorizontalBarChartTestComponent,

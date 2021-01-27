@@ -41,6 +41,8 @@ export interface IDimensionConfig {
     autoWidth: boolean;
     /** Sets whether the grid uses the chart's container to determine its height */
     autoHeight: boolean;
+    /** Set of booleans indicating whether a specific margin will be recalculated on chart dimension updates */
+    marginLocked?: IAllAround<boolean>;
     /**
      * Sets the grid's width. Note: 'autoWidth' must be set to false for this setting to have an effect.
      *
@@ -135,6 +137,10 @@ export interface ITickLabelConfig {
     horizontalPadding: number;
     /** Handler for text overflow. Set to 'undefined' to disable overflow handling */
     overflowHandler?: TextOverflowHandler;
+    /**
+     * Setting this insures the label's width is smaller or equal to the provided number
+     */
+    maxWidth?: number;
 }
 
 /** Configuration of a grid axis */
