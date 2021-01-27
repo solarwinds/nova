@@ -41,6 +41,8 @@ export interface IDimensionConfig {
     autoWidth: boolean;
     /** Sets whether the grid uses the chart's container to determine its height */
     autoHeight: boolean;
+    /** Set of booleans indicating whether a specific margin will be recalculated on chart dimension updates */
+    marginLocked?: IAllAround<boolean>;
     /**
      * Sets the grid's width. Note: 'autoWidth' must be set to false for this setting to have an effect.
      *
