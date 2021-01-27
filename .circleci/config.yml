@@ -442,9 +442,9 @@ workflows:
         jobs:
             - bits-build
             - nova-docs:
-                context:
-                    - github-write-access
-                    - github-read-access
+#                context:
+#                    - github-write-access
+#                    - github-read-access
                 requires:
                     - bits-build
 #            -   bits-pack:
