@@ -34,10 +34,10 @@ zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
 git config user.email "circleci@circleci"
 git config user.name "${GITHUB_USER}"
-git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/solarwinds/apollo-doc-service.git
+# git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/solarwinds/apollo-doc-service.git
 git add .
 git commit -m "add docs"
-git push -u origin main
+git push https://$GITHUB_USER:$GITHUB_TOKEN@github.com/solarwinds/apollo-doc-service.git --all
 
 
 #echo $(ls)
