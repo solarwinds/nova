@@ -8,6 +8,7 @@ import { IEventDefinition } from "./public-api";
 /**
  * @ignore
  */
+// TODO: Add Angular decorator.
 export class EventBus<T> implements OnDestroy {
 
     public streamAdded = new ReplaySubject<string>();

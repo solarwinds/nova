@@ -1,4 +1,4 @@
-import { ComponentRef, EventEmitter, Output } from "@angular/core";
+import { ComponentRef, EventEmitter, Output, Directive } from "@angular/core";
 import noop from "lodash/noop";
 
 import {ContentRef} from "../../services/content-ref";
@@ -8,6 +8,7 @@ import {DialogBackdropComponent} from "./dialog-backdrop.component";
 /**
  * @ignore
  */
+@Directive()
 export class NuiDialogRef {
     private resolve: (result?: any) => void;
     private reject: (reason?: any) => void;

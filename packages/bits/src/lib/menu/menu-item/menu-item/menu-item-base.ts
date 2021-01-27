@@ -1,5 +1,5 @@
 import { Highlightable } from "@angular/cdk/a11y";
-import { ChangeDetectorRef, ElementRef, EventEmitter, HostBinding, Input, OnChanges, Optional, Output, SimpleChanges } from "@angular/core";
+import { ChangeDetectorRef, ElementRef, EventEmitter, HostBinding, Input, OnChanges, Optional, Output, SimpleChanges, Directive } from "@angular/core";
 
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
 
@@ -10,6 +10,7 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
 /**
  * Base class for menu items. Adds styles to host element
  */
+@Directive()
 export abstract class MenuItemBaseComponent implements OnChanges, Highlightable {
     /**
      * Disables action, link and option components

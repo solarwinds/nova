@@ -1,23 +1,6 @@
 import { DOWN_ARROW, ENTER, UP_ARROW } from "@angular/cdk/keycodes";
 import { OverlayConfig } from "@angular/cdk/overlay";
-import {
-    AfterContentInit,
-    AfterViewInit,
-    ChangeDetectorRef,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    forwardRef,
-    HostBinding,
-    HostListener,
-    Input,
-    OnChanges,
-    OnDestroy,
-    Output,
-    QueryList,
-    SimpleChanges,
-    ViewChild
-} from "@angular/core";
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ContentChildren, ElementRef, EventEmitter, forwardRef, HostBinding, HostListener, Input, OnChanges, OnDestroy, Output, QueryList, SimpleChanges, ViewChild, Directive } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import includes from "lodash/includes";
 import isEqual from "lodash/isEqual";
@@ -41,6 +24,7 @@ const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
 };
 
+@Directive()
 export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, ControlValueAccessor, IOptionedComponent, OnDestroy, OnChanges {
 
     /** Value used as a placeholder for the select.*/
