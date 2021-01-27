@@ -11,6 +11,6 @@ export class GaugeTestPageComponent {
     public thickness = GAUGE_THICKNESS_DEFAULT;
     public thresholds: IGaugeThreshold[] = [
         { value: 100 },
-        { value: 158 },
+        { value: 150 },
     ];
 }

@@ -42,7 +42,7 @@ export class ChartDonutContentPlugin extends ChartPlugin {
     }
 
     private getContentPosition(areaSize: number): IElementPosition {
-        const basics = [this.chart.getGrid().config().dimension.width() / 2, this.chart.getGrid().config().dimension.height() / 2];
+        const basics = [this.chart.getGrid().config().dimension.outerWidth() / 2, this.chart.getGrid().config().dimension.outerWidth() / 2];
         return {
             top: basics[1] - (areaSize / Math.sqrt(2)),
             left: basics[0] - (areaSize / Math.sqrt(2)),

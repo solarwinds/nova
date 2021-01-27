@@ -43,7 +43,12 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
     }
 
     public ngOnInit() {
-        this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
+        const grid = radialGrid();
+        // grid.config().dimension.margin.top = 10;
+        // grid.config().dimension.margin.right = 10;
+        // grid.config().dimension.margin.bottom = 10;
+        grid.config().dimension.margin.left = 50;
+        this.chartAssist = new ChartAssist(new Chart(grid), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 

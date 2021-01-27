@@ -34,23 +34,44 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
         const dataContainer = renderSeries.containers[RenderLayerName.data];
         const data = renderSeries.dataSeries.data;
 
-        this.segmentWidth = this.config.annularWidth;
+        this.segmentWidth = this.config.annularWidth || 0;
         const innerRadius = this.getInnerRadius(renderSeries.scales.r.range(), 0);
-        const arcGenerator: Arc<any, DefaultArcObject> = arc()
+        const markerGenerator: Arc<any, DefaultArcObject> = arc()
             .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0))
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
-        const selection = dataContainer.selectAll("circle.threshold").data(this.generateCircleData(data));
-        selection.exit().remove();
-        selection.enter()
+        const markerSelection = dataContainer.selectAll("circle.threshold-marker").data(this.generateCircleData(data));
+        markerSelection.exit().remove();
+        markerSelection.enter()
             .append("circle")
-            .attr("class", "threshold")
-            .merge(selection as any)
-            .attr("cx", d => arcGenerator.centroid(d)[0])
-            .attr("cy", d => arcGenerator.centroid(d)[1])
+            .attr("class", "threshold-marker")
+            .merge(markerSelection as any)
+            .attr("cx", d => markerGenerator.centroid(d)[0])
+            .attr("cy", d => markerGenerator.centroid(d)[1])
             .attr("r", 4)
             .style("fill", (d, i) => data[i].hit ? "var(--nui-color-text-light)" : "var(--nui-color-text-default)")
             .style("stroke-width", 0);
+
+        const labelGenerator: Arc<any, DefaultArcObject> = arc()
+            .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0) + this.segmentWidth / 2 + 40)
+            .innerRadius(innerRadius >= 0 ? innerRadius : 0);
+
+        const labelSelection = dataContainer.selectAll("text.threshold-label").data(this.generateCircleData(data));
+        labelSelection.exit().remove();
+        labelSelection.enter()
+            .append("text")
+            .attr("class", "threshold-label")
+            .merge(labelSelection as any)
+            .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
+            .style("text-anchor", "middle")
+            .style("alignment-baseline", "central")
+            .text((d, i) => data[i].value);
+
+        // let label_group = dataContainer.select(".label_group");
+        // if (label_group.empty()) {
+        //     label_group = dataContainer.append("svg:g")
+        //         .attr("class", "label_group");
+        // }
     }
 
     public generateArcData(data: any[]) {
