@@ -55,6 +55,24 @@ export const positions: Record<string, GridsterItem> = {
         "y": 6,
         "x": 6,
     },
+    "widget7": {
+        "cols": 8,
+        "rows": 6,
+        "y": 12,
+        "x": 0,
+    },
+    "widget8": {
+        "cols": 8,
+        "rows": 6,
+        "y": 18,
+        "x": 0,
+    },
+    "widget9": {
+        "cols": 8,
+        "rows": 6,
+        "y": 24,
+        "x": 0,
+    },
 };
 
 export const widgets: IWidget[] = [
@@ -465,6 +483,522 @@ export const widgets: IWidget[] = [
                                 enabled: true,
                             },
                         } as ITableWidgetConfig,
+                    },
+                },
+            },
+        },
+    },
+    {
+        id: "widget7",
+        type: "kpi",
+        pizzagna: {
+            [PizzagnaLayer.Configuration]: {
+                "header": {
+                    "properties": {
+                        "title": "KPI Widget!",
+                        "subtitle": "A bunch of number boxes",
+                        "collapsible": true,
+                    },
+                },
+                "tiles": {
+                    providers: {
+                        interaction: {
+                            providerId: NOVA_URL_INTERACTION_HANDLER,
+                            properties: {
+                                url: "${data.link}",
+                            },
+                        },
+                        // Uncomment the code below to make use of the Kpi Scale Sync Broker
+                        // kpiScaleSyncBroker: {
+                        //     providerId: NOVA_KPI_SCALE_SYNC_BROKER,
+                        //     properties: {
+                        //         scaleSyncConfig: [
+                        //             { id: "value", type: "min" } as IBrokerUserConfig,
+                        //             { id: "label", type: "min" } as IBrokerUserConfig,
+                        //             { id: "units", type: "min" } as IBrokerUserConfig,
+                        //         ],
+                        //     },
+                        // },
+                    },
+                    "properties": {
+                        "nodes": [
+                            "kpi1",
+                            "kpi2",
+                            "kpi3",
+                        ],
+                    },
+                },
+                "kpi1": {
+                    "id": "kpi1",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource.providerId,
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.Adapter]: {
+                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
+                            "properties": {
+                                "componentId": "kpi1",
+                                "propertyPath": "widgetData",
+                            },
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.KpiColorPrioritizer]: {
+                            "providerId": NOVA_KPI_COLOR_PRIORITIZER,
+                            "properties": {
+                                "rules": [
+                                    {
+                                        "comparisonType": ">",
+                                        "value": 2,
+                                        "color": "var(--nui-color-chart-four)",
+                                    },
+                                    {
+                                        "comparisonType": "==",
+                                        "value": 1.5,
+                                        "color": "var(--nui-color-chart-seven)",
+                                    },
+                                    {
+                                        "comparisonType": "<",
+                                        "value": 1,
+                                        "color": "var(--nui-color-chart-one)",
+                                    },
+                                ] as IKpiColorRules[],
+                            },
+                        } as IProviderConfiguration,
+                    },
+                    "properties": {
+                        configuration: {
+                            formatters: {
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: SiUnitsFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "value",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
+
+                        "widgetData": {
+                            "id":  "totalStorage",
+                            "value": 0,
+                            "label": "Total storage",
+                            "units": "Bytes",
+                            // "backgroundColor": "blue",
+                            "icon": "state_ok",
+                            "link": "http://www.google.com",
+                        },
+                    },
+                },
+                "kpi2": {
+                    "id": "kpi2",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource2.providerId,
+                            "properties": {
+                                "numberFormat": "1.1-1",
+                            },
+                        } as IProviderConfiguration,
+                    },
+                    "properties": {
+                        configuration: {
+                            formatters: {
+                                // can be used for testing in the future
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: IconFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "icon",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
+                        "widgetData": {
+                            "id": "downloadSpeed",
+                            "value": 0,
+                            "label": "Download SUPER DUPER VERY LONG STRING Speed",
+                            "icon": "state_ok",
+                            "units": "MB/S",
+                        },
+                    },
+                },
+                "kpi3": {
+                    "id": "kpi3",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource3.providerId,
+                        } as IProviderConfiguration,
+                    },
+                    "properties": {
+                        configuration: {
+                            formatters: {
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "value",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
+                        "widgetData": {
+                            "id": "uploadSpeed",
+                            "value": 0,
+                            "label": "Upload Speed",
+                            "units": "MB/S",
+                            // "backgroundColor": "salmon",
+                        },
+                    },
+                },
+            },
+        },
+    },
+    {
+        id: "widget8",
+        type: "kpi",
+        pizzagna: {
+            [PizzagnaLayer.Configuration]: {
+                "header": {
+                    "properties": {
+                        "title": "KPI Widget!",
+                        "subtitle": "A bunch of number boxes",
+                        "collapsible": true,
+                    },
+                },
+                "tiles": {
+                    providers: {
+                        interaction: {
+                            providerId: NOVA_URL_INTERACTION_HANDLER,
+                            properties: {
+                                url: "${data.link}",
+                            },
+                        },
+                        // Uncomment the code below to make use of the Kpi Scale Sync Broker
+                        // kpiScaleSyncBroker: {
+                        //     providerId: NOVA_KPI_SCALE_SYNC_BROKER,
+                        //     properties: {
+                        //         scaleSyncConfig: [
+                        //             { id: "value", type: "min" } as IBrokerUserConfig,
+                        //             { id: "label", type: "min" } as IBrokerUserConfig,
+                        //             { id: "units", type: "min" } as IBrokerUserConfig,
+                        //         ],
+                        //     },
+                        // },
+                    },
+                    "properties": {
+                        "nodes": [
+                            "kpi1",
+                            "kpi2",
+                            "kpi3",
+                        ],
+                    },
+                },
+                "kpi1": {
+                    "id": "kpi1",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource.providerId,
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.Adapter]: {
+                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
+                            "properties": {
+                                "componentId": "kpi1",
+                                "propertyPath": "widgetData",
+                            },
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.KpiColorPrioritizer]: {
+                            "providerId": NOVA_KPI_COLOR_PRIORITIZER,
+                            "properties": {
+                                "rules": [
+                                    {
+                                        "comparisonType": ">",
+                                        "value": 2,
+                                        "color": "var(--nui-color-chart-four)",
+                                    },
+                                    {
+                                        "comparisonType": "==",
+                                        "value": 1.5,
+                                        "color": "var(--nui-color-chart-seven)",
+                                    },
+                                    {
+                                        "comparisonType": "<",
+                                        "value": 1,
+                                        "color": "var(--nui-color-chart-one)",
+                                    },
+                                ] as IKpiColorRules[],
+                            },
+                        } as IProviderConfiguration,
+                    },
+                    "properties": {
+                        configuration: {
+                            formatters: {
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: SiUnitsFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "value",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
+
+                        "widgetData": {
+                            "id":  "totalStorage",
+                            "value": 0,
+                            "label": "Total storage",
+                            "units": "Bytes",
+                            // "backgroundColor": "blue",
+                            "icon": "state_ok",
+                            "link": "http://www.google.com",
+                        },
+                    },
+                },
+                "kpi2": {
+                    "id": "kpi2",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource2.providerId,
+                            "properties": {
+                                "numberFormat": "1.1-1",
+                            },
+                        } as IProviderConfiguration,
+                    },
+                    "properties": {
+                        configuration: {
+                            formatters: {
+                                // can be used for testing in the future
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: IconFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "icon",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
+                        "widgetData": {
+                            "id": "downloadSpeed",
+                            "value": 0,
+                            "label": "Download SUPER DUPER VERY LONG STRING Speed",
+                            "icon": "state_ok",
+                            "units": "MB/S",
+                        },
+                    },
+                },
+                "kpi3": {
+                    "id": "kpi3",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource3.providerId,
+                        } as IProviderConfiguration,
+                    },
+                    "properties": {
+                        configuration: {
+                            formatters: {
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "value",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
+                        "widgetData": {
+                            "id": "uploadSpeed",
+                            "value": 0,
+                            "label": "Upload Speed",
+                            "units": "MB/S",
+                            // "backgroundColor": "salmon",
+                        },
+                    },
+                },
+            },
+        },
+    },
+    {
+        id: "widget9",
+        type: "kpi",
+        pizzagna: {
+            [PizzagnaLayer.Configuration]: {
+                "header": {
+                    "properties": {
+                        "title": "KPI Widget!",
+                        "subtitle": "A bunch of number boxes",
+                        "collapsible": true,
+                    },
+                },
+                "tiles": {
+                    providers: {
+                        interaction: {
+                            providerId: NOVA_URL_INTERACTION_HANDLER,
+                            properties: {
+                                url: "${data.link}",
+                            },
+                        },
+                        // Uncomment the code below to make use of the Kpi Scale Sync Broker
+                        // kpiScaleSyncBroker: {
+                        //     providerId: NOVA_KPI_SCALE_SYNC_BROKER,
+                        //     properties: {
+                        //         scaleSyncConfig: [
+                        //             { id: "value", type: "min" } as IBrokerUserConfig,
+                        //             { id: "label", type: "min" } as IBrokerUserConfig,
+                        //             { id: "units", type: "min" } as IBrokerUserConfig,
+                        //         ],
+                        //     },
+                        // },
+                    },
+                    "properties": {
+                        "nodes": [
+                            "kpi1",
+                            "kpi2",
+                            "kpi3",
+                        ],
+                    },
+                },
+                "kpi1": {
+                    "id": "kpi1",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource.providerId,
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.Adapter]: {
+                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
+                            "properties": {
+                                "componentId": "kpi1",
+                                "propertyPath": "widgetData",
+                            },
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.KpiColorPrioritizer]: {
+                            "providerId": NOVA_KPI_COLOR_PRIORITIZER,
+                            "properties": {
+                                "rules": [
+                                    {
+                                        "comparisonType": ">",
+                                        "value": 2,
+                                        "color": "var(--nui-color-chart-four)",
+                                    },
+                                    {
+                                        "comparisonType": "==",
+                                        "value": 1.5,
+                                        "color": "var(--nui-color-chart-seven)",
+                                    },
+                                    {
+                                        "comparisonType": "<",
+                                        "value": 1,
+                                        "color": "var(--nui-color-chart-one)",
+                                    },
+                                ] as IKpiColorRules[],
+                            },
+                        } as IProviderConfiguration,
+                    },
+                    "properties": {
+                        configuration: {
+                            formatters: {
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: SiUnitsFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "value",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
+
+                        "widgetData": {
+                            "id":  "totalStorage",
+                            "value": 0,
+                            "label": "Total storage",
+                            "units": "Bytes",
+                            // "backgroundColor": "blue",
+                            "icon": "state_ok",
+                            "link": "http://www.google.com",
+                        },
+                    },
+                },
+                "kpi2": {
+                    "id": "kpi2",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource2.providerId,
+                            "properties": {
+                                "numberFormat": "1.1-1",
+                            },
+                        } as IProviderConfiguration,
+                    },
+                    "properties": {
+                        configuration: {
+                            formatters: {
+                                // can be used for testing in the future
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: IconFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "icon",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
+                        "widgetData": {
+                            "id": "downloadSpeed",
+                            "value": 0,
+                            "label": "Download SUPER DUPER VERY LONG STRING Speed",
+                            "icon": "state_ok",
+                            "units": "MB/S",
+                        },
+                    },
+                },
+                "kpi3": {
+                    "id": "kpi3",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource3.providerId,
+                        } as IProviderConfiguration,
+                    },
+                    "properties": {
+                        configuration: {
+                            formatters: {
+                                [KpiFormatterTypes.Value]: {
+                                    formatter: {
+                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "value",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        } as IKpiConfiguration,
+                        "widgetData": {
+                            "id": "uploadSpeed",
+                            "value": 0,
+                            "label": "Upload Speed",
+                            "units": "MB/S",
+                            // "backgroundColor": "salmon",
+                        },
                     },
                 },
             },

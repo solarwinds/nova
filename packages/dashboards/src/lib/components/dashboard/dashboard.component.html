@@ -1,12 +1,18 @@
-<gridster class="nui-dashboard__gridster" [options]="gridsterConfig">
+<gridster class="nui-dashboard__gridster" [options]="gridsterConfig" (scroll)="onGridsterScroll($event)">
     <gridster-item *ngFor="let widget of dashboard.widgets | keyvalue: orderWidgets; trackBy: trackByFn"
                    [item]="dashboard.positions[widget.key]"
                    class="nui-dashboard__gridster-item"
                    [nuiGridsterItemWidgetId]="widget.key">
-        <nui-widget [widget]="widget.value" (widgetChange)="onWidgetChange($event)"
-                    [attr.widget-id]="widget.key"
-                    [attr.widget-type]="widget.value.type"
-                    class="w-100 h-100 d-block">
+        <nui-widget *ngIf="gridsterItemsVisibilityMap[widget.key] else emptyWidgetTpl"
+            [widget]="widget.value"
+            (widgetChange)="onWidgetChange($event)"
+            [attr.widget-id]="widget.key"
+            [attr.widget-type]="widget.value.type"
+            class="w-100 h-100 d-block">
         </nui-widget>
     </gridster-item>
 </gridster>
+
+<ng-template #emptyWidgetTpl>
+    <div class="w-100 h-100 d-block">WIDGET LOADING</div>
+</ng-template>
