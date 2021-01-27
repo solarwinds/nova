@@ -38,7 +38,6 @@ git add .
 git commit -m "add docs"
 git push -u origin main
 
-
 #echo $(ls)
 #cd $PROJECT_DIR
 #echo $(ls)
