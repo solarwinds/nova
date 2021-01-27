@@ -2,8 +2,13 @@
 <button type="button" nui-button class="mb-3 ml-4" (click)="onEditWithCloner()" i18n>Simulate edit with cloner</button>
 
 <div style="height: 725px;" class="w-100">
-    <nui-dashboard [nuiWidgetEditor]="submitHandler" [(dashboard)]="dashboard" [(gridsterConfig)]="gridsterConfig"
-                   [editMode]="editMode"></nui-dashboard>
+    <nui-dashboard
+        [nuiWidgetEditor]="submitHandler"
+        [(dashboard)]="dashboard"
+        [(gridsterConfig)]="gridsterConfig"
+        [editMode]="editMode"
+        [belowFoldLazyLoadingConfig]="belowFoldLazyLoadingConfig"
+    ></nui-dashboard>
 </div>
 
 <div class="my-3 d-flex align-items-center">

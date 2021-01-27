@@ -6,6 +6,7 @@ import {
     WellKnownProviders
 } from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
+
 import { AcmeKpiDataSource } from "./datasources";
 
 const getKpiWidgetCfg = (id: string) => ({
@@ -48,8 +49,8 @@ const getKpiWidgetCfg = (id: string) => ({
 });
 
 function generateKpiWidgets(quantity: number): [IWidget[], Record<string, GridsterItem>] {
-    const widgets: IWidget[] = [];
-    const positions: Record<string, GridsterItem> = {};
+    const _widgets: IWidget[] = [];
+    const _positions: Record<string, GridsterItem> = {};
 
     const initPosition = {
         "cols": 8,
@@ -62,7 +63,7 @@ function generateKpiWidgets(quantity: number): [IWidget[], Record<string, Gridst
         const id = `widget${i.toString()}`;
         const widget = getKpiWidgetCfg(id);
 
-        const prevWidgetPosition = positions[`widget${(i - 1).toString()}`];
+        const prevWidgetPosition = _positions[`widget${(i - 1).toString()}`];
         const widgetPosition = prevWidgetPosition
             ? {
                 ...prevWidgetPosition,
@@ -70,11 +71,11 @@ function generateKpiWidgets(quantity: number): [IWidget[], Record<string, Gridst
             }
             : initPosition;
 
-        widgets.push(widget);
-        positions[id] = widgetPosition;
+        _widgets.push(widget);
+        _positions[id] = widgetPosition;
     }
 
-    return [widgets, positions];
+    return [_widgets, _positions];
 }
 
 export const [widgets, positions] = generateKpiWidgets(15);

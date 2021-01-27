@@ -3,7 +3,7 @@
                    [item]="dashboard.positions[widget.key]"
                    class="nui-dashboard__gridster-item"
                    [nuiGridsterItemWidgetId]="widget.key">
-        <nui-widget *ngIf="gridsterItemsVisibilityMap[widget.key] else emptyWidgetTpl"
+        <nui-widget *ngIf="shouldWidgetRender(widget.key) else emptyWidgetTpl"
             [widget]="widget.value"
             (widgetChange)="onWidgetChange($event)"
             [attr.widget-id]="widget.key"

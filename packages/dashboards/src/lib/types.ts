@@ -90,6 +90,14 @@ export interface IDashboard {
     positions: Record<string, GridsterItem>;
 }
 
+export interface IDashboardBelowFoldLazyLoadingConfig {
+    enabled: boolean;
+    meta?: {
+        // reloads widgets if they were already loaded but then disappeared from the view
+        reloadWidgetsOnScroll: boolean;
+    };
+}
+
 export interface IWidgets {
     [key: string]: IWidget;
 }
