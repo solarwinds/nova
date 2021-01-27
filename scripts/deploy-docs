@@ -37,7 +37,7 @@ git config user.name "${GITHUB_USER}"
 # git remote set-url origin https://$GITHUB_USER:$GITHUB_TOKEN@github.com/solarwinds/apollo-doc-service.git
 git add .
 git commit -m "add docs"
-git push https://$GITHUB_USER:$GITHUB_TOKEN@github.com/solarwinds/apollo-doc-service.git --all
+git push https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/apollo-doc-service.git --all
 
 
 #echo $(ls)

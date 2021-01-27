@@ -443,8 +443,9 @@ workflows:
             - bits-build
             - nova-docs:
                 context:
-                    - github-write-access
-                    - github-read-access
+                     - common-build-creds
+#                    - github-write-access
+#                    - github-read-access
                 requires:
                     - bits-build
 #            -   bits-pack:
