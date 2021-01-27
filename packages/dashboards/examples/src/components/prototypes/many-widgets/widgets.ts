@@ -25,10 +25,10 @@ import {
 import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";
 
-import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
 import { AcmeProportionalDataSource2 } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
+import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "./datasources";
 
 export const positions: Record<string, GridsterItem> = {
     "widget1": {
@@ -55,6 +55,24 @@ export const positions: Record<string, GridsterItem> = {
         "y": 6,
         "x": 6,
     },
+    "widget7": {
+        "cols": 8,
+        "rows": 6,
+        "y": 12,
+        "x": 0,
+    },
+    "widget8": {
+        "cols": 8,
+        "rows": 6,
+        "y": 18,
+        "x": 0,
+    },
+    // "widget9": {
+    //     "cols": 8,
+    //     "rows": 6,
+    //     "y": 24,
+    //     "x": 0,
+    // },
 };
 
 export const widgets: IWidget[] = [
@@ -71,25 +89,7 @@ export const widgets: IWidget[] = [
                     },
                 },
                 "tiles": {
-                    providers: {
-                        interaction: {
-                            providerId: NOVA_URL_INTERACTION_HANDLER,
-                            properties: {
-                                url: "${data.link}",
-                            },
-                        },
-                        // Uncomment the code below to make use of the Kpi Scale Sync Broker
-                        // kpiScaleSyncBroker: {
-                        //     providerId: NOVA_KPI_SCALE_SYNC_BROKER,
-                        //     properties: {
-                        //         scaleSyncConfig: [
-                        //             { id: "value", type: "min" } as IBrokerUserConfig,
-                        //             { id: "label", type: "min" } as IBrokerUserConfig,
-                        //             { id: "units", type: "min" } as IBrokerUserConfig,
-                        //         ],
-                        //     },
-                        // },
-                    },
+                    providers: { },
                     "properties": {
                         "nodes": [
                             "kpi1",
@@ -465,6 +465,82 @@ export const widgets: IWidget[] = [
                                 enabled: true,
                             },
                         } as ITableWidgetConfig,
+                    },
+                },
+            },
+        },
+    },
+    {
+        id: "widget7",
+        type: "kpi",
+        pizzagna: {
+            [PizzagnaLayer.Configuration]: {
+                "header": {
+                    "properties": {
+                        "title": "KPI Widget!",
+                        "subtitle": "A bunch of number boxes",
+                        "collapsible": true,
+                    },
+                },
+                "tiles": {
+                    providers: { },
+                    "properties": {
+                        "nodes": [
+                            "kpi1",
+                        ],
+                    },
+                },
+                "kpi1": {
+                    "id": "kpi1",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource3.providerId,
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.Adapter]: {
+                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
+                            "properties": {
+                                "componentId": "kpi1",
+                                "propertyPath": "widgetData",
+                            },
+                        } as IProviderConfiguration,
+                    },
+                },
+            },
+        },
+    },
+    {
+        id: "widget8",
+        type: "kpi",
+        pizzagna: {
+            [PizzagnaLayer.Configuration]: {
+                "header": {
+                    "properties": {
+                        "title": "KPI Widget!",
+                        "subtitle": "A bunch of number boxes",
+                        "collapsible": true,
+                    },
+                },
+                "tiles": {
+                    providers: { },
+                    "properties": {
+                        "nodes": [
+                            "kpi1",
+                        ],
+                    },
+                },
+                "kpi1": {
+                    "id": "kpi1",
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeKpiDataSource3.providerId,
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.Adapter]: {
+                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
+                            "properties": {
+                                "componentId": "kpi1",
+                                "propertyPath": "widgetData",
+                            },
+                        } as IProviderConfiguration,
                     },
                 },
             },

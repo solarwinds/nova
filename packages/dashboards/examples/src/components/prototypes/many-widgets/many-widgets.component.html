@@ -1,0 +1,47 @@
+<button type="button" nui-button class="mb-3 ml-4" (click)="onCloneWidget()" i18n>Create Widget Clone</button>
+<button type="button" nui-button class="mb-3 ml-4" (click)="onEditWithCloner()" i18n>Simulate edit with cloner</button>
+
+<div style="height: 725px;" class="w-100">
+    <nui-dashboard [nuiWidgetEditor]="submitHandler" [(dashboard)]="dashboard" [(gridsterConfig)]="gridsterConfig"
+                   [editMode]="editMode"></nui-dashboard>
+</div>
+
+<div class="my-3 d-flex align-items-center">
+    <nui-switch class="ml-3" [(value)]="editMode" i18n>
+        Edit mode
+    </nui-switch>
+    <nui-switch class="ml-3" [(value)]="submitHandler.allowSubmit" i18n>
+        Allow Submit
+    </nui-switch>
+    <nui-switch class="ml-3" [(value)]="submitHandler.allowRemoval" i18n>
+        Allow Removal
+    </nui-switch>
+    <nui-switch class="ml-3"
+                [value]="true"
+                (valueChange)="onShowButtonSwitch($event,  'editable')"
+                i18n>
+        Show Edit Button
+    </nui-switch>
+    <nui-switch class="ml-3"
+                [value]="true"
+                (valueChange)="onShowButtonSwitch($event, 'removable')"
+                i18n>
+        Show Remove Button
+    </nui-switch>
+    <nui-switch class="ml-3"
+                (valueChange)="onDsErrorSwitch($event)" i18n>
+        Data Source Error
+    </nui-switch>
+</div>
+<div class="d-flex flex-row">
+    <div style="width: 300px">
+        <nui-form-field caption="System refresh interval (seconds)" i18n-caption>
+            <nui-textbox-number [(value)]="systemRefreshInterval"></nui-textbox-number>
+        </nui-form-field>
+    </div>
+
+    <button class="ml-4" type="button" nui-button i18n (click)="onSystemRefreshIntervalClick()">Update system refresh interval
+    </button>
+</div>
+
+<!--<pre><code>{{dashboard | json}}</code></pre>-->

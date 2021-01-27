@@ -17,6 +17,10 @@ const routes = [
         path: "table",
         loadChildren: () => import("../prototypes/table/table-widget-prototype.module").then(m => m.TableWidgetPrototypeModule),
     },
+    {
+        path: "many-widgets",
+        loadChildren: () => import("../prototypes/many-widgets/many-widgets.module").then(m => m.ManyWidgetsModule),
+    },
 ];
 
 @NgModule({
