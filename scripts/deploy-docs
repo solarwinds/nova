@@ -33,12 +33,12 @@ mkdir --parents ./projects/bits
 mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
 zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
-git config user.email "circleci@circleci"
-git config user.name "${CIRCLE_USERNAME}"
-git remote set-url origin https://${GITHUB_TOKEN}:@github.com/solarwinds/apollo-doc-service.git
-git add .
-git commit -m "add docs"
-git push -u origin main
+#git config user.email "circleci@circleci"
+#git config user.name "${CIRCLE_USERNAME}"
+#git remote set-url origin https://${GITHUB_TOKEN}:@github.com/solarwinds/apollo-doc-service.git
+#git add .
+#git commit -m "add docs"
+#git push -u origin main
 
 #echo $(ls)
 #cd $PROJECT_DIR
