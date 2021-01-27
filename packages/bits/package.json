@@ -85,7 +85,6 @@
   },
   "analyze": false,
   "peerDependencies": {
-    "@angular/cdk": "^9.0.0",
     "@schematics/angular": "^9.0.0",
     "@types/highlight.js": "^9.1.9",
     "core-js": "^2.6.9",
@@ -115,7 +114,7 @@
     "@angular-devkit/schematics": "^10.2.1",
     "@angular-devkit/schematics-cli": "^0.900.0",
     "@angular/animations": "^10.2.4",
-    "@angular/cdk": "^9.0.0",
+    "@angular/cdk": "^10.2.7",
     "@angular/cli": "^10.2.1",
     "@angular/common": "^10.2.4",
     "@angular/compiler": "^10.2.4",
