@@ -27,7 +27,8 @@ done
 mkdir nova-docs
 cd ./nova-docs
 mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-git clone $DOC_SERVICE_REPO .
+# git clone $DOC_SERVICE_REPO .
+git clone https://solarwinds:$GITHUB_WRITE_TOKEN@github.com/solarwinds/apollo-doc-service.git .
 mkdir --parents ./projects/bits
 mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
 zip -r nova-docs.zip *
