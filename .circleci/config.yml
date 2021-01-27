@@ -386,7 +386,7 @@ jobs:
                     name: Publish dashbords docs
                     command: yarn run deploy-docs-ci
             -   store_artifacts:
-                    path: ./nova-docs/nova-docs.zip
+                    path: ./nova-docs.zip
     release-prep:
         working_directory: ~/nova
         docker:
