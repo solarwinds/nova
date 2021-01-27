@@ -3,27 +3,28 @@ import {
     Chart,
     ChartAssist,
     ChartDonutContentPlugin,
+    GaugeMode,
     GaugeService,
+    IAccessors,
     IChartAssistSeries,
     IGaugeThreshold,
     radial,
-    RadialAccessors,
     radialGrid
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "gauge-tester",
-    templateUrl: "./gauge-tester.component.html",
-    styleUrls: ["./gauge-tester.component.less"],
+    selector: "radial-gauge-tester",
+    templateUrl: "./radial-gauge-tester.component.html",
+    styleUrls: ["./radial-gauge-tester.component.less"],
 })
-export class GaugeTesterComponent implements OnInit {
+export class RadialGaugeTesterComponent implements OnInit {
     @Input() public value: number;
     @Input() public max: number = 200;
     @Input() public thresholds: IGaugeThreshold[];
 
     public chartAssist: ChartAssist;
     public contentPlugin: ChartDonutContentPlugin;
-    public seriesSet: IChartAssistSeries<RadialAccessors>[];
+    public seriesSet: IChartAssistSeries<IAccessors>[];
 
     constructor(private gaugeService: GaugeService) { }
 
@@ -32,7 +33,7 @@ export class GaugeTesterComponent implements OnInit {
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 
-        this.seriesSet = this.gaugeService.assembleRadialSeriesSet(this.value, this.max, this.thresholds);
+        this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
         this.chartAssist.update(this.seriesSet);
     }
 }

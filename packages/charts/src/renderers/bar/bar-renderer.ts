@@ -83,6 +83,7 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
             // tslint:disable-next-line:max-line-length
             .attr("class", (d, i) => `${BarRenderer.BAR_RECT_CLASS} ${this.config.barClass}${this.config.pointerEvents ? " pointer-events" : ""}` + getCssClass(d, i))
             .style("cursor", this.config.cursor ?? "")
+            .style("stroke-width", this.config?.strokeWidth ?? "")
             .style("fill", (d: any, i: number) => accessors.data.color ? accessors.data.color(d, i, dataSeries.data, dataSeries) :
                 accessors.series.color?.(dataSeries.id, dataSeries))
             .attrs(function() {

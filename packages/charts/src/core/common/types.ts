@@ -111,7 +111,7 @@ export interface IRadialRendererConfig extends IRendererConfig {
  * Configuration for the GaugeThresholdsRenderer
  */
 // tslint:disable-next-line: no-empty-interface
-export interface IGaugeThresholdsRendererConfig extends IRadialRendererConfig {
+export interface IRadialGaugeThresholdsRendererConfig extends IRadialRendererConfig {
 }
 
 export interface ILinearScales {

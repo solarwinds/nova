@@ -1,6 +1,7 @@
 export * from "./axis-config";
 export * from "./border-config";
 export * from "./dimension-config";
+export * from "./linear-gauge-grid-config";
 export * from "./grid-config";
 export * from "./area-grid-config";
 export * from "./bar-grid-config";

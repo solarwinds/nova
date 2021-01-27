@@ -1,6 +1,6 @@
 export * from "./radial-preprocessor";
 export * from "./radial-renderer";
-export * from "./gauge-thresholds-renderer";
+export * from "./radial-gauge-thresholds-renderer";
 export * from "./gauge-renderer-config";
 export * from "./pie-renderer";
 export * from "./radial-grid";

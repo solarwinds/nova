@@ -5,7 +5,7 @@ import { GaugeComponent } from "@nova-ui/charts";
 
 /** @ignore */
 @Component({
-    selector: "nui-gauge-component-prototype",
+    selector: "gauge-component-prototype",
     templateUrl: "./gauge-component-prototype.component.html",
     styleUrls: ["./gauge-component-prototype.component.less"],
 })
