@@ -115,8 +115,7 @@
     "apollo-link": "^1.2.14",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
-    "resize-observer-polyfill": "^1.5.0",
-    "tslib": "^1.10.0"
+    "resize-observer-polyfill": "^1.5.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.900.0",
