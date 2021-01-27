@@ -36,7 +36,7 @@ import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/tim
 
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
-import { AcmeKpiDataSource, AcmeKpiDataSource3 } from "./datasources";
+import { AcmeKpiDataSource } from "./datasources";
 import { ManyWidgetsDashboardComponent } from "./many-widgets.component";
 
 const routes = [
@@ -123,17 +123,6 @@ export class ManyWidgetsModule {
             {
                 providerId: AcmeKpiDataSource.providerId,
                 label: "Acme KPI Data Source 1",
-            },
-            {
-                providerId: AcmeKpiDataSource2.providerId,
-                label: "Acme KPI Data Source 2",
-                properties: {
-                    numberFormat: "1.1-1",
-                },
-            },
-            {
-                providerId: AcmeKpiDataSource3.providerId,
-                label: "Acme KPI Data Source 3",
             },
         ]);
 

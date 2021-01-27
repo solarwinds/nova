@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { LoggerService, SearchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -11,26 +10,20 @@ import {
     PizzagnaLayer,
     ProviderRegistryService,
     RefresherSettingsService,
-    WIDGET_CREATE,
+
     WidgetClonerService,
-    WidgetTypesService,
+    WidgetTypesService, WIDGET_CREATE
 } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
-
-import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
+import { AcmeProportionalDataSource } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
-import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
-import { AcmeTableDataSource3 } from "../data/table/acme-table-data-source3.service";
-import { AcmeTableGBooksDataSource } from "../data/table/acme-table-gbooks-data-source.service";
-import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
-import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/timeseries-data-sources";
-
+import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
-import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "./datasources";
+import { AcmeKpiDataSource } from "./datasources";
 import { positions, widgets } from "./widgets";
 
 /**
@@ -74,61 +67,6 @@ export class ManyWidgetsDashboardComponent implements OnInit, AfterViewInit, OnD
                 useClass: AcmeKpiDataSource,
                 deps: [HttpClient],
             },
-            [AcmeKpiDataSource2.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeKpiDataSource2,
-                deps: [HttpClient],
-            },
-            [AcmeKpiDataSource3.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeKpiDataSource3,
-                deps: [HttpClient],
-            },
-            [AcmeProportionalDataSource.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeProportionalDataSource,
-                deps: [HttpClient],
-            },
-            [AcmeProportionalDataSource2.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeProportionalDataSource2,
-                deps: [],
-            },
-            [AcmeTableDataSource.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeTableDataSource,
-                deps: [LoggerService, HttpClient],
-            },
-            [AcmeTableDataSource2.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeTableDataSource2,
-                deps: [LoggerService],
-            },
-            [AcmeTableDataSource3.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeTableDataSource3,
-                deps: [LoggerService],
-            },
-            [AcmeTableMockDataSource.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeTableMockDataSource,
-                deps: [SearchService],
-            },
-            [AcmeTimeseriesDataSource.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeTimeseriesDataSource,
-                deps: [HttpClient],
-            },
-            [AcmeTimeseriesDataSource2.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeTimeseriesDataSource2,
-                deps: [],
-            },
-            [AcmeTableGBooksDataSource.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AcmeTableGBooksDataSource,
-                deps: [LoggerService, HttpClient],
-            },
         });
     }
 
@@ -149,7 +87,6 @@ export class ManyWidgetsDashboardComponent implements OnInit, AfterViewInit, OnD
     public onDsErrorSwitch(value: boolean) {
         AcmeProportionalDataSource.mockError = value;
         AcmeKpiDataSource.mockError = value;
-        AcmeKpiDataSource2.mockError = value;
         AcmeTableDataSource.mockError = value;
         AcmeTimeseriesDataSource.mockError = value;
     }
