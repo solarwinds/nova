@@ -32,6 +32,13 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
     /** See {@link Renderer#draw} */
     public draw(renderSeries: IRenderSeries<IRadialAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
         const dataContainer = renderSeries.containers[RenderLayerName.data];
+
+        let gaugeThresholdsGroup = dataContainer.select(".gauge-thresholds");
+        if (gaugeThresholdsGroup.empty()) {
+            gaugeThresholdsGroup = dataContainer.append("svg:g")
+                .attr("class", "gauge-thresholds");
+        }
+
         const data = renderSeries.dataSeries.data;
 
         this.segmentWidth = this.config.annularWidth || 0;
@@ -40,7 +47,7 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0))
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
-        const markerSelection = dataContainer.selectAll("circle.threshold-marker").data(this.generateCircleData(data));
+        const markerSelection = gaugeThresholdsGroup.selectAll("circle.threshold-marker").data(this.generateCircleData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")
@@ -52,26 +59,55 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .style("fill", (d, i) => data[i].hit ? "var(--nui-color-text-light)" : "var(--nui-color-text-default)")
             .style("stroke-width", 0);
 
+        const labelRadius = this.getOuterRadius(renderSeries.scales.r.range(), 0) + 5;
         const labelGenerator: Arc<any, DefaultArcObject> = arc()
-            .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0) + this.segmentWidth / 2 + 40)
-            .innerRadius(innerRadius >= 0 ? innerRadius : 0);
+            .outerRadius(labelRadius)
+            .innerRadius(labelRadius);
 
-        const labelSelection = dataContainer.selectAll("text.threshold-label").data(this.generateCircleData(data));
+        const labelSelection = gaugeThresholdsGroup.selectAll("text.threshold-label").data(this.generateCircleData(data));
         labelSelection.exit().remove();
         labelSelection.enter()
             .append("text")
             .attr("class", "threshold-label")
             .merge(labelSelection as any)
             .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
-            .style("text-anchor", "middle")
-            .style("alignment-baseline", "central")
+            .style("text-anchor", (d) => {
+                console.log(this.getTextAnchor(d.startAngle));
+                return this.getTextAnchor(d.startAngle);
+            })
+            .style("alignment-baseline", (d) => {
+                console.log(this.getAlignmentBaseline(d.startAngle));
+                return this.getAlignmentBaseline(d.startAngle);
+            })
             .text((d, i) => data[i].value);
+    }
 
-        // let label_group = dataContainer.select(".label_group");
-        // if (label_group.empty()) {
-        //     label_group = dataContainer.append("svg:g")
-        //         .attr("class", "label_group");
-        // }
+    private getTextAnchor(angle: any): string {
+        // pie charts start on the top, so we need to subtract Math.PI / 2 (90 degrees)
+        const cosine = Math.cos(Number(angle.toFixed(2)) - Math.PI / 2);
+        if (cosine > 0.5) {
+            return "start";
+        }
+
+        if (cosine < -0.5) {
+            return "end";
+        }
+
+        return "middle";
+    }
+
+    private getAlignmentBaseline(angle: any): string {
+        // pie charts start on the top, so we need to add Math.PI / 2 (90 degrees)
+        const sine = Math.sin(Number(angle.toFixed(2)) + Math.PI / 2);
+        if (sine > 0.5) {
+            return "text-after-edge";
+        }
+
+        if (sine < -0.5) {
+            return "text-before-edge";
+        }
+
+        return "central";
     }
 
     public generateArcData(data: any[]) {

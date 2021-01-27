@@ -142,10 +142,10 @@ export class GaugeService {
             if (dataSeries.id === GaugeService.REMAINDER_SERIES_ID) {
                 return "var(--nui-color-semantic-unknown-bg-hover)";
             } else {
-                if (!isUndefined(thresholds[1].value) && thresholds[1].value <= data.value) {
+                if (!isUndefined(thresholds[1]?.value) && thresholds[1].value <= data.value) {
                     return "var(--nui-color-semantic-critical)";
                 }
-                if (!isUndefined(thresholds[0].value) && thresholds[0].value <= data.value) {
+                if (!isUndefined(thresholds[0]?.value) && thresholds[0].value <= data.value) {
                     return "var(--nui-color-semantic-warning)";
                 }
                 return CHART_PALETTE_CS1[0];
