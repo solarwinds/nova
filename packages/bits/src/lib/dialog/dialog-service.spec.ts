@@ -82,7 +82,7 @@ class TestComponent {
     @ViewChild("contentWithDismiss", {static: true}) tplContentWithDismiss: any;
     @ViewChild("contentWithIf", {static: true}) tplContentWithIf: any;
 
-    constructor(private dialogService: DialogService) {}
+    constructor(public dialogService: DialogService) {}
 
     open(content: string, options?: Object) {
         this.openedDialog = this.dialogService.open(content, options);
@@ -92,6 +92,10 @@ class TestComponent {
         if (this.openedDialog) {
             this.openedDialog.close("ok");
         }
+    }
+    confirm() {
+        this.openedDialog = this.dialogService.confirm({ message: "foo" });
+        return this.openedDialog;
     }
     openTpl(options?: Object) { return this.dialogService.open(this.tplContent, options); }
     openCmpt(cmptType: any, options?: Object) { return this.dialogService.open(cmptType, options); }
@@ -649,6 +653,30 @@ describe("nui-dialog", () => {
 
             dialogInstance2.close();
             dialogInstance1.close();
+            fixture.detectChanges();
+        });
+    });
+
+    describe("afterOpened$", () => {
+        it("should emit when dialogService.open is called", () => {
+            const subjectSpy = spyOn(fixture.componentInstance.dialogService.afterOpened$, "next");
+            const dialogInstance = fixture.componentInstance.open("foo", {windowClass: "window-1"});
+            fixture.detectChanges();
+
+            expect(subjectSpy).toHaveBeenCalledTimes(1);
+
+            dialogInstance.close();
+            fixture.detectChanges();
+        });
+
+        it("should emit when dialogService.confirm is called", () => {
+            const subjectSpy = spyOn(fixture.componentInstance.dialogService.afterOpened$, "next");
+            const dialogInstance = fixture.componentInstance.confirm();
+            fixture.detectChanges();
+
+            expect(subjectSpy).toHaveBeenCalledTimes(1);
+
+            dialogInstance.close();
             fixture.detectChanges();
         });
     });

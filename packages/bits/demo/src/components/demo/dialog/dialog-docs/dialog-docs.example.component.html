@@ -130,3 +130,14 @@ option into <code>DialogService open</code> method as second argument. </p>
 <nui-example-wrapper filenamePrefix="nui-dialog-inside-overlay" exampleTitle="Dialog With Static Backdrop">
     <nui-dialog-inside-overlay-example></nui-dialog-inside-overlay-example>
 </nui-example-wrapper>
+
+<h2>React on afterOpened$</h2>
+<p>
+    It's possible to perform some actions in your code when a dialog is opened by subscribing to the <code>DialogService</code>'s <code>afterOpened$</code> Subject.
+    It emits a <code>NuiDialogRef</code> that contains the component's data.
+    This works for both a confirmation dialog and a dialog containing a consumer-defined component.
+</p>
+
+<nui-example-wrapper filenamePrefix="nui-dialog-after-opened" exampleTitle="Do something when dialog appears">
+    <nui-dialog-after-opened-example></nui-dialog-after-opened-example>
+</nui-example-wrapper>
