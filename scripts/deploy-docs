@@ -39,13 +39,13 @@ mkdir --parents ./projects/bits
 mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
 mv ./projects/bits/api-docs-ng2 $BITS_BRANCH
 
-mkdir --parents ./projects/charts
-mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
-mv ../packages/charts/sdk/api-docs-ng2 $CHARTS_BRANCH
-
-mkdir --parents ./projects/charts
-mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
-mv ../packages/dashboards/sdk/api-docs-ng2 $DASHBOARDS_BRANCH
+#mkdir --parents ./projects/charts
+#mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
+#mv ../packages/charts/sdk/api-docs-ng2 $CHARTS_BRANCH
+#
+#mkdir --parents ./projects/charts
+#mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
+#mv ../packages/dashboards/sdk/api-docs-ng2 $DASHBOARDS_BRANCH
 
 zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
