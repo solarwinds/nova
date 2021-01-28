@@ -31,6 +31,7 @@ import {
     Scales,
     SELECT_DATA_POINT_EVENT,
     SequentialColorProvider,
+    XYGridConfig,
 } from "@nova-ui/charts";
 import isEqual from "lodash/isEqual";
 import some from "lodash/some";
@@ -57,6 +58,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     static lateLoadKey = "ProportionalWidgetComponent";
     private static NO_SWITCH_LAYOUT_INTERVAL_SIZE = 20;
     private static MAX_ROW_LAYOUT_SIZE = 360;
+    private static TICK_LABEL_MAX_WIDTH = 75;
 
     @Input() public widgetData: IChartAssistSeries<IAccessors>[];
     @Input() public configuration: IProportionalWidgetConfig;
@@ -208,6 +210,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.donutContentPlugin = new ChartDonutContentPlugin();
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
+        this.handleTickLabelWidth();
 
         this.chartTypeSubscription$?.unsubscribe();
         this.chartTypeSubscription$ = this.chartAssist.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe((event) => {
@@ -223,6 +226,17 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         this.ngZone.runOutsideAngular(() => {
             this.proportionalWidgetResizeObserver.observe(this.gridContainer.nativeElement);
         });
+    }
+
+    private handleTickLabelWidth() {
+        const gridConfigAxis = (this.chartAssist.chart.getGrid().config() as XYGridConfig).axis;
+
+        gridConfigAxis.left.tickLabel.maxWidth = this.configuration.chartOptions.tickLabelConfig?.maxWidth?.left ||
+            ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
+        gridConfigAxis.right.tickLabel.maxWidth = this.configuration.chartOptions.tickLabelConfig?.maxWidth?.right ||
+            ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
+        gridConfigAxis.bottom.tickLabel.maxWidth = this.configuration.chartOptions.tickLabelConfig?.maxWidth?.bottom ||
+            ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
     }
 
     private onResize(): void {

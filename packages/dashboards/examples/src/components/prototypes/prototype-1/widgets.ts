@@ -26,7 +26,7 @@ import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";
 
 import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
-import { AcmeProportionalDataSource2 } from "../data/proportional-datasources";
+import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
 
@@ -54,6 +54,12 @@ export const positions: Record<string, GridsterItem> = {
         "rows": 6,
         "y": 6,
         "x": 6,
+    },
+    "widget5": {
+        "cols": 6,
+        "rows": 6,
+        "y": 12,
+        "x": 0,
     },
 };
 
@@ -465,6 +471,70 @@ export const widgets: IWidget[] = [
                                 enabled: true,
                             },
                         } as ITableWidgetConfig,
+                    },
+                },
+            },
+        },
+    },
+    {
+        id: "widget5",
+        type: "proportional",
+        pizzagna: {
+            [PizzagnaLayer.Configuration]: {
+                [DEFAULT_PIZZAGNA_ROOT]: {
+                    providers: {
+                        // [WellKnownProviders.EventBusDebugger]: {
+                        //     providerId: NOVA_EVENT_BUS_DEBUGGER,
+                        // },
+                        [WellKnownProviders.InteractionHandler]: {
+                            providerId: NOVA_URL_INTERACTION_HANDLER,
+                            properties: {
+                                url: "${data.link}",
+                            },
+                        },
+                    },
+                },
+                "header": {
+                    "properties": {
+                        "title": "Proportional Widget!",
+                        "subtitle": "Proportional widget with legend formatters and tick label max width",
+                    },
+                },
+                "chart": {
+                    "providers": {
+                        [WellKnownProviders.DataSource]: {
+                            "providerId": AcmeProportionalDataSource.providerId,
+                        } as IProviderConfiguration,
+                        [WellKnownProviders.Adapter]: {
+                            "properties": {
+                                [WellKnownProviders.DataSource]: {
+                                    "properties": {
+                                        "isEuropeOnly": false,
+                                    },
+                                },
+                            },
+                        } as Partial<IProviderConfiguration>,
+                    },
+                    "properties": {
+                        "configuration": {
+                            interactive: true,
+                            chartDonutContentLabel: "Some label",
+                            chartDonutContentIcon: "printer",
+                            "chartOptions": {
+                                "type": ProportionalWidgetChartTypes.HorizontalBarChart,
+                                "legendPlacement": LegendPlacement.Right,
+                                "tickLabelConfig": {
+                                    maxWidth: {
+                                        left: 50,
+                                    },
+                                }
+                            } as IProportionalWidgetChartOptions,
+                            "chartColors": [
+                                "grey",
+                                "teal",
+                                "purple",
+                            ],
+                        } as IProportionalWidgetConfig,
                     },
                 },
             },
