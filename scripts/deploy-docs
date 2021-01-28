@@ -24,10 +24,10 @@ while [ -n "$1" ]; do
     esac
 done
 
-BRANCH_PATH = $(echo "$CIRCLE_BRANCH" | tr / _)
-BITS_BRANCH = "./projects/bits/${BRANCH_PATH}"
-CHARTS_BRANCH = "./projects/charts/${BRANCH_PATH}"
-DASHBOARDS_BRANCH = "./projects/dashboards/${BRANCH_PATH}"
+BRANCH_PATH=$(echo "$CIRCLE_BRANCH" | tr / _)
+BITS_BRANCH="./projects/bits/${BRANCH_PATH}"
+CHARTS_BRANCH="./projects/charts/${BRANCH_PATH}"
+DASHBOARDS_BRANCH="./projects/dashboards/${BRANCH_PATH}"
 
 mkdir nova-docs
 cd ./nova-docs
