@@ -24,38 +24,46 @@ while [ -n "$1" ]; do
     esac
 done
 
+# preparing paths to the docs inside apollo-doc-service
 BRANCH_PATH=$(echo "$CIRCLE_BRANCH" | tr / _)
-BITS_BRANCH="./projects/bits/${BRANCH_PATH}"
-CHARTS_BRANCH="./projects/charts/${BRANCH_PATH}"
-DASHBOARDS_BRANCH="./projects/dashboards/${BRANCH_PATH}"
+BITS_DOCS_PATH="./projects/bits/${BRANCH_PATH}"
+CHARTS_DOCS_PATH="./projects/charts/${BRANCH_PATH}"
+DASHBOARDS_DOCS_PATH="./projects/dashboards/${BRANCH_PATH}"
 
 mkdir nova-docs
 cd ./nova-docs
+
+# avoid prompt related to the HostKeyChecking
 mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 
 git clone $DOC_SERVICE_REPO .
 
+# move bits docs
 mkdir --parents ./projects/bits
 mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
-rm -rf $BITS_BRANCH
-mv ./projects/bits/api-docs-ng2 $BITS_BRANCH
+rm -rf $BITS_DOCS_PATH
+mv ./projects/bits/api-docs-ng2 $BITS_DOCS_PATH
 
+# move charts docs
 mkdir --parents ./projects/charts
 mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
-rm -rf $CHARTS_BRANCH
-mv ./projects/charts/api-docs-ng2 $CHARTS_BRANCH
+rm -rf $CHARTS_DOCS_PATH
+mv ./projects/charts/api-docs-ng2 $CHARTS_DOCS_PATH
 
+# move dashboards docs
 mkdir --parents ./projects/dashboards
 mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
-rm -rf DASHBOARDS_BRANCH
-mv ./projects/dashboards/api-docs-ng2 $DASHBOARDS_BRANCH
+rm -rf DASHBOARDS_DOCS_PATH
+mv ./projects/dashboards/api-docs-ng2 $DASHBOARDS_DOCS_PATH
 
+# creating artifact for the VM
 zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
 
+# push changes to the repo
 git config user.email "circleci@circleci"
 git config user.name "${GITHUB_USER_NAME}"
-git remote set-url origin https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/apollo-doc-service.git
+git remote set-url origin https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/nova-docs.git
 git add .
 git commit -m "add docs"
 git push origin main
