@@ -478,6 +478,11 @@ workflows:
             -   charts-pack:
                     requires:
                         - charts-build
+            -   nova-docs:
+                    context:
+                        - common-build-creds
+                    requires:
+                        - charts-pack
             -   charts-unit-test:
                     requires:
                         - charts-build
@@ -503,42 +508,42 @@ workflows:
                         branches:
                             only:
                                 - main
-            -   dashboards-build:
-                    requires:
-                        - charts-pack
-            -   dashboards-pack:
-                    requires:
-                        - dashboards-build
-            -   nova-docs:
-                    context:
-                        - common-build-creds
-                    requires:
-                        - dashboards-pack
-            -   dashboards-unit-test:
-                    requires:
-                        - dashboards-build
-            -   dashboards-e2e-test:
-                    requires:
-                        - dashboards-build
-            -   dashboards-visual-test:
-                    requires:
-                        - dashboards-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   dashboards-publish:
-                    requires:
-                        - bits-e2e-test
-                        - bits-unit-test
-                        - charts-e2e-test
-                        - charts-unit-test
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
+#            -   dashboards-build:
+#                    requires:
+#                        - charts-pack
+#            -   dashboards-pack:
+#                    requires:
+#                        - dashboards-build
+#            -   nova-docs:
+#                    context:
+#                        - common-build-creds
+#                    requires:
+#                        - dashboards-pack
+#            -   dashboards-unit-test:
+#                    requires:
+#                        - dashboards-build
+#            -   dashboards-e2e-test:
+#                    requires:
+#                        - dashboards-build
+#            -   dashboards-visual-test:
+#                    requires:
+#                        - dashboards-build
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#            -   dashboards-publish:
+#                    requires:
+#                        - bits-e2e-test
+#                        - bits-unit-test
+#                        - charts-e2e-test
+#                        - charts-unit-test
+#                        - dashboards-e2e-test
+#                        - dashboards-unit-test
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
     nova-release:
         jobs:
             -   release-approval:
