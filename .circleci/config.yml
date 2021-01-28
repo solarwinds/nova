@@ -474,14 +474,14 @@ workflows:
             -   charts-build:
                     requires:
                         - bits-pack
-            -   charts-pack:
-                    requires:
-                        - charts-build
             -   nova-docs:
                     context:
                         - common-build-creds
                     requires:
-                        - charts-pack
+                        - charts-build
+#            -   charts-pack:
+#                    requires:
+#                        - charts-build
 #            -   charts-unit-test:
 #                    requires:
 #                        - charts-build
