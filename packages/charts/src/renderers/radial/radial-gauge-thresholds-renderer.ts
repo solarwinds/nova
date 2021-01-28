@@ -71,14 +71,8 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .attr("class", "threshold-label")
             .merge(labelSelection as any)
             .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
-            .style("text-anchor", (d) => {
-                console.log(this.getTextAnchor(d.startAngle));
-                return this.getTextAnchor(d.startAngle);
-            })
-            .style("alignment-baseline", (d) => {
-                console.log(this.getAlignmentBaseline(d.startAngle));
-                return this.getAlignmentBaseline(d.startAngle);
-            })
+            .style("text-anchor", (d) => this.getTextAnchor(d.startAngle))
+            .style("alignment-baseline", (d) => this.getAlignmentBaseline(d.startAngle))
             .text((d, i) => data[i].value);
     }
 
