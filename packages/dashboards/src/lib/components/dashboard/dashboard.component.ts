@@ -1,12 +1,25 @@
 import { KeyValue } from "@angular/common";
-import { Component, EventEmitter, HostBinding, Inject, Input, OnChanges, Output, SimpleChanges, ViewEncapsulation } from "@angular/core";
+import { AfterViewInit,
+    Component,
+    EventEmitter,
+    HostBinding,
+    Inject,
+    Input,
+    OnChanges,
+    Output,
+    QueryList,
+    SimpleChanges,
+    ViewChild,
+    ViewChildren,
+    ViewEncapsulation
+} from "@angular/core";
 import { EventBus, immutableSet } from "@nova-ui/bits";
-import { GridsterConfig, GridsterItem, GridsterItemComponentInterface } from "angular-gridster2";
+import { GridsterComponent, GridsterConfig, GridsterItem, GridsterItemComponent, GridsterItemComponentInterface } from "angular-gridster2";
 import _defaultsDeep from "lodash/defaultsDeep";
 
 import { DASHBOARD_EDIT_MODE, WIDGET_POSITION_CHANGE, WIDGET_RESIZE } from "../../services/types";
 import { IWidgetEvent } from "../../services/widget-to-dashboard-event-proxy.service";
-import { DASHBOARD_EVENT_BUS, IDashboard, IWidget } from "../../types";
+import { DASHBOARD_EVENT_BUS, IDashboard, IDashboardBelowFoldLazyLoadingConfig, IWidget } from "../../types";
 
 import { DEFAULT_GRIDSTER_CONFIG } from "./default-gridster-config";
 
@@ -22,7 +35,7 @@ import { DEFAULT_GRIDSTER_CONFIG } from "./default-gridster-config";
         },
     ],
 })
-export class DashboardComponent implements OnChanges {
+export class DashboardComponent implements OnChanges, AfterViewInit {
     @Input() gridsterConfig: GridsterConfig;
 
     @Input()
@@ -40,6 +53,7 @@ export class DashboardComponent implements OnChanges {
     public dashboardBuffer: IDashboard | null;
 
     @Input() editMode = false;
+    @Input() public belowFoldLazyLoadingConfig: IDashboardBelowFoldLazyLoadingConfig;
 
     @Output() gridsterConfigChange = new EventEmitter<GridsterConfig>();
     @Output() dashboardChange = new EventEmitter<IDashboard>();
@@ -49,7 +63,24 @@ export class DashboardComponent implements OnChanges {
         return true;
     }
 
+    @ViewChild(GridsterComponent)
+    public gridster: GridsterComponent;
+
+    @ViewChildren(GridsterItemComponent)
+    public gridsterItems: QueryList<GridsterItemComponent>;
+
+    public gridsterItemsVisibilityMap: Record<string, boolean> = {};
+
     constructor(@Inject(DASHBOARD_EVENT_BUS) public readonly eventBus: EventBus<IWidgetEvent>) {
+    }
+
+    public ngAfterViewInit() {
+        // need to wait till DOM is rendered because of "getBoundingClientRect" under the hood
+        setTimeout(() => this.calculateWidgetsVisibility());
+    }
+
+    public onGridsterScroll() {
+        this.calculateWidgetsVisibility();
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -148,6 +179,12 @@ export class DashboardComponent implements OnChanges {
         this.dashboardChange.emit(dashboard);
     }
 
+    public shouldWidgetRender(key: string) {
+        return this.belowFoldLazyLoadingConfig?.enabled
+            ? this.gridsterItemsVisibilityMap[key]
+            : true;
+    }
+
     private updateWidgetPosition = (item: GridsterItem, itemComponent: GridsterItemComponentInterface): void => {
         const widgetId = (itemComponent as any).widgetId;
         const dashboard = immutableSet(this.dashboard, "positions." + widgetId, item);
@@ -178,5 +215,44 @@ export class DashboardComponent implements OnChanges {
                 prevEvent(item, itemComponent);
             }
         };
+    }
+
+    private calculateWidgetsVisibility(): void {
+        if (!this.belowFoldLazyLoadingConfig?.enabled) {
+            return;
+        }
+
+        const gridsterRect: ClientRect = this.gridster.el.getBoundingClientRect();
+
+        this.gridsterItemsVisibilityMap = this.gridsterItems.reduce((acc: Record<string, boolean>, next) => {
+            const { el } = next;
+            const idx: string = (next as any).widgetId;
+
+            // if widget is already loaded don't hide it
+            if (!this.belowFoldLazyLoadingConfig.configuration?.reloadWidgetsOnScroll) {
+                const prevVisibility = acc[idx];
+                if (prevVisibility) {
+                    return acc;
+                }
+            }
+
+            const rect: ClientRect = el.getBoundingClientRect();
+
+            const getHeightVisibility = () => (
+                (rect.top > gridsterRect.top && rect.top < gridsterRect.bottom) ||
+                (rect.bottom > gridsterRect.top && rect.bottom < gridsterRect.bottom)
+            );
+
+            const getWidthVisibility = () => (
+                (rect.left > gridsterRect.left && rect.left < gridsterRect.right) ||
+                (rect.right > gridsterRect.left && rect.right < gridsterRect.right)
+            );
+
+            const isVisible = getHeightVisibility() && getWidthVisibility();
+
+            acc[idx] = isVisible;
+
+            return acc;
+        }, this.gridsterItemsVisibilityMap);
     }
 }
