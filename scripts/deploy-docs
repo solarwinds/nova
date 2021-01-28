@@ -24,12 +24,24 @@ while [ -n "$1" ]; do
     esac
 done
 
+BRANCH_PATH = $(echo "$CIRCLE_BRANCH" | tr / _)
+BITS_BRANCH = "./projects/bits/${BRANCH_PATH}"
+CHARTS_BRANCH = "./projects/charts/${BRANCH_PATH}"
+DASHBOARDS_BRANCH = "./projects/dashboards/${BRANCH_PATH}"
+
 mkdir nova-docs
 cd ./nova-docs
 mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 git clone $DOC_SERVICE_REPO .
+mkdir --parents ./projects/bits
+mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
+mv ./projects/bits/api-docs-ng2 $BITS_BRANCH
 mkdir --parents ./projects/charts
 mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
+mv ../packages/charts/sdk/api-docs-ng2 $CHARTS_BRANCH
+mkdir --parents ./projects/charts
+mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
+mv ../packages/dashboards/sdk/api-docs-ng2 $DASHBOARDS_BRANCH
 zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
 git config user.email "circleci@circleci"
