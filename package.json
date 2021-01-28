@@ -41,6 +41,7 @@
     "remove-dependencies": "node scripts/remove-dependencies.js",
     "publish-ci": "bash scripts/publish",
     "merge-ci": "bash scripts/merge",
+    "deploy-docs-ci": "bash scripts/deploy-docs",
     "bash": "bash scripts/runner"
   },
   "devDependencies": {

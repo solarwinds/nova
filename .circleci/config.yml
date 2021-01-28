@@ -368,6 +368,20 @@ jobs:
             -   run:
                     name: Publish dashboards
                     command: yarn run publish-ci
+    nova-docs:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12
+        environment:
+            NOVA_DIR: ~/nova
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Publish dashbords docs
+                    command: yarn run deploy-docs-ci
+            -   store_artifacts:
+                    path: ./nova-docs.zip
     release-prep:
         working_directory: ~/nova
         docker:
@@ -487,6 +501,11 @@ workflows:
             -   dashboards-pack:
                     requires:
                         - dashboards-build
+            -   nova-docs:
+                    context:
+                        - common-build-creds
+                    requires:
+                        - dashboards-pack
             -   dashboards-unit-test:
                     requires:
                         - dashboards-build
