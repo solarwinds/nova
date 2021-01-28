@@ -40,13 +40,15 @@ mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
 rm -rf $BITS_BRANCH
 mv ./projects/bits/api-docs-ng2 $BITS_BRANCH
 
-#mkdir --parents ./projects/charts
-#mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
-#mv ../packages/charts/sdk/api-docs-ng2 $CHARTS_BRANCH
-#
-#mkdir --parents ./projects/charts
-#mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
-#mv ../packages/dashboards/sdk/api-docs-ng2 $DASHBOARDS_BRANCH
+mkdir --parents ./projects/charts
+mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
+rm -rf $CHARTS_BRANCH
+mv ../packages/charts/sdk/api-docs-ng2 $CHARTS_BRANCH
+
+mkdir --parents ./projects/charts
+mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
+rm -rf DASHBOARDS_BRANCH
+mv ../packages/dashboards/sdk/api-docs-ng2 $DASHBOARDS_BRANCH
 
 zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
@@ -57,33 +59,3 @@ git remote set-url origin https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/sol
 git add .
 git commit -m "add docs"
 git push origin main
-# git push https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/apollo-doc-service.git --all
-
-
-#echo $(ls)
-#cd $PROJECT_DIR
-#echo $(ls)
-#
-#echo "$PROJECT_DIR"
-#echo "$CIRCLE_BRANCH"
-#PACKAGE_NAME=$(node -p "require('./package.json').name")
-#echo "${PACKAGE_NAME}"
-
-
-#branch_name=$(echo "$BUILD_BRANCH" | sed -r "s/[\/ ]+/_/g")
-#deploy_subdir="~/projects/${PACKAGE_NAME}/${branch_name}"
-#extract_subdir="dist"
-#
-#echo "Deploy directory: $deploy_subdir"
-#cat nova-ui-$PACKAGE_NAME-*.tgz | ssh -oStrictHostKeyChecking=no teamcity@apollo-docs.swdev.local "mkdir -p $deploy_subdir && rm -r $deploy_subdir/* ; cd $deploy_subdir && mkdir -p $extract_subdir && cd $extract_subdir && tar --strip-components=1 -xzvf -"
-#
-#echo "Copy directory: unzipped to apollo-docs.swdev.local"
-#scp -r ./unzipped/** teamcity@apollo-docs.swdev.local:$deploy_subdir
-#
-#echo "Update directory: unzipped"
-#if test -f nova-ui-${PACKAGE_NAME}-*.tgz; then
-#    echo "Extracting file nova-ui-${PACKAGE_NAME}-*.tgz to ./unzipped"
-#    tar -xzvf nova-ui-${PACKAGE_NAME}-*.tgz --directory ./unzipped
-#else
-#	echo "File nova-ui-${PACKAGE_NAME}-*.tgz does not exist"
-#fi
