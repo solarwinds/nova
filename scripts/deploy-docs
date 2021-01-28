@@ -40,6 +40,11 @@ mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
 rm -rf $BITS_BRANCH
 mv ./projects/bits/api-docs-ng2 $BITS_BRANCH
 
+ls
+ls ../packages/charts
+ls ../packages/charts/sdk
+pwd
+
 mkdir --parents ./projects/charts
 mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
 rm -rf $CHARTS_BRANCH

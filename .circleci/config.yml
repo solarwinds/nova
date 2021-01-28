@@ -169,7 +169,6 @@ jobs:
                     root: .
                     paths:
                         - packages/charts
-                        - packages/bits/sdk/api-docs-ng2
     charts-unit-test:
         working_directory: ~/nova/packages/charts
         docker:
