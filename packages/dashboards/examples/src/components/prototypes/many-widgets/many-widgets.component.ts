@@ -19,10 +19,6 @@ import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
 
-import { AcmeProportionalDataSource } from "../data/proportional-datasources";
-import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
-import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
-
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
@@ -92,10 +88,7 @@ export class ManyWidgetsDashboardComponent implements OnInit, AfterViewInit, OnD
     }
 
     public onDsErrorSwitch(value: boolean) {
-        AcmeProportionalDataSource.mockError = value;
         AcmeKpiDataSource.mockError = value;
-        AcmeTableDataSource.mockError = value;
-        AcmeTimeseriesDataSource.mockError = value;
     }
 
     public onShowButtonSwitch(value: boolean, property: string) {
