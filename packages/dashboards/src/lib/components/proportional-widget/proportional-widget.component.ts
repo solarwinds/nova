@@ -210,7 +210,9 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.donutContentPlugin = new ChartDonutContentPlugin();
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
-        this.handleTickLabelWidth();
+        if (!this.isRadialChart()) {
+            this.handleTickLabelWidth();
+        }
 
         this.chartTypeSubscription$?.unsubscribe();
         this.chartTypeSubscription$ = this.chartAssist.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe((event) => {
