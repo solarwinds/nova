@@ -430,7 +430,9 @@ jobs:
                     command: |
                         git commit -am 'increment develop versions' && \
                         git push origin $SOURCE_BRANCH
-
+            -   run:
+                    name: Trigger release branch
+                    command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
 workflows:
     version: 2.1
     nova:
@@ -464,6 +466,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /release\/.*/
             -   charts-build:
                     requires:
                         - bits-pack
@@ -495,6 +498,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /release\/.*/
             -   dashboards-build:
                     requires:
                         - charts-pack
@@ -531,6 +535,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /release\/.*/
     nova-release:
         jobs:
             -   release-approval:

@@ -42,6 +42,7 @@
     "publish-ci": "bash scripts/publish",
     "merge-ci": "bash scripts/merge",
     "deploy-docs-ci": "bash scripts/deploy-docs",
+    "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "bash": "bash scripts/runner"
   },
   "devDependencies": {
