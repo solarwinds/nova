@@ -233,9 +233,9 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     private applyTickLabelMaxWidths() {
         const gridConfigAxis = (this.chartAssist.chart.getGrid().config() as XYGridConfig).axis;
 
-        gridConfigAxis.left.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig ?.maxWidth?.left ||
+        gridConfigAxis.left.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig ?.maxWidth?.left ??
             ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
-        gridConfigAxis.right.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig ?.maxWidth?.right ||
+        gridConfigAxis.right.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig ?.maxWidth?.right ??
             ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
     }
 
