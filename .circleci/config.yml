@@ -447,31 +447,31 @@ workflows:
             -   bits-pack:
                     requires:
                         - bits-build
-            -   bits-unit-test:
-                    requires:
-                        - bits-build
-            -   bits-e2e-test:
-                    requires:
-                        - bits-build
-            -   bits-visual-test:
-                    requires:
-                        - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   bits-publish:
-                    requires:
-                        - bits-e2e-test
-                        - bits-unit-test
-                        - charts-e2e-test
-                        - charts-unit-test
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
+#            -   bits-unit-test:
+#                    requires:
+#                        - bits-build
+#            -   bits-e2e-test:
+#                    requires:
+#                        - bits-build
+#            -   bits-visual-test:
+#                    requires:
+#                        - bits-build
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#            -   bits-publish:
+#                    requires:
+#                        - bits-e2e-test
+#                        - bits-unit-test
+#                        - charts-e2e-test
+#                        - charts-unit-test
+#                        - dashboards-e2e-test
+#                        - dashboards-unit-test
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
             -   charts-build:
                     requires:
                         - bits-pack
@@ -483,31 +483,31 @@ workflows:
                         - common-build-creds
                     requires:
                         - charts-pack
-            -   charts-unit-test:
-                    requires:
-                        - charts-build
-            -   charts-e2e-test:
-                    requires:
-                        - charts-build
-            -   charts-visual-test:
-                    requires:
-                        - charts-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   charts-publish:
-                    requires:
-                        - bits-e2e-test
-                        - bits-unit-test
-                        - charts-e2e-test
-                        - charts-unit-test
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
+#            -   charts-unit-test:
+#                    requires:
+#                        - charts-build
+#            -   charts-e2e-test:
+#                    requires:
+#                        - charts-build
+#            -   charts-visual-test:
+#                    requires:
+#                        - charts-build
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#            -   charts-publish:
+#                    requires:
+#                        - bits-e2e-test
+#                        - bits-unit-test
+#                        - charts-e2e-test
+#                        - charts-unit-test
+#                        - dashboards-e2e-test
+#                        - dashboards-unit-test
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
 #            -   dashboards-build:
 #                    requires:
 #                        - charts-pack
