@@ -37,6 +37,7 @@ import {
     DialogZIndexTestComponent,
     HeaderButtonsExampleComponent,
     SimpleDialogExampleComponent,
+    DialogAfterOpenedExampleComponent
 } from "./index";
 
 const routes = [
@@ -123,6 +124,7 @@ const routes = [
         SimpleDialogExampleComponent,
         DialogWithStaticBackdropExampleComponent,
         DialogZIndexTestComponent,
+        DialogAfterOpenedExampleComponent
     ],
     providers: [
         {

@@ -2,6 +2,7 @@ import { ComponentFactoryResolver, Injectable, Injector } from "@angular/core";
 import assign from "lodash/assign";
 import defaults from "lodash/defaults";
 import pick from "lodash/pick";
+import { Subject } from 'rxjs';
 
 import { ConfirmationDialogComponent } from "./confirmation-dialog.component";
 import { NuiDialogRef } from "./dialog-ref";
@@ -17,8 +18,13 @@ export class DialogService {
                 private dialogStack: DialogStackService) {
     }
 
+    public afterOpened$: Subject<NuiDialogRef> = new Subject<NuiDialogRef>();
+
     public open(content: any, options: IDialogOptions = {}): NuiDialogRef {
-        return this.dialogStack.open(this.moduleCFR, this.injector, content, options);
+        const dialog = this.dialogStack.open(this.moduleCFR, this.injector, content, options);
+        this.afterOpened$.next(dialog);
+
+        return dialog;
     }
 
     public confirm(options: IConfirmationDialogOptions): NuiDialogRef {
@@ -30,6 +36,7 @@ export class DialogService {
         assign(component, optionsWithDefaults);
 
         component.updateInputs();
+        this.afterOpened$.next(dialog);
 
         return dialog;
     }

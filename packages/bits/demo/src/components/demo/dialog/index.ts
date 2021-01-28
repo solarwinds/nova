@@ -13,3 +13,4 @@ export * from "./dialog-keyboard/dialog-with-keyboard.example.component";
 export * from "./dialog-static-backdrop/dialog-with-static-backdrop.example.component";
 export * from "./dialog-inside-overlay/dialog-inside-overlay.example.component";
 export * from "./dialog-test/dialog-zindex-test.component";
+export * from "./dialog-after-opened/dialog-after-opened.example.component";
