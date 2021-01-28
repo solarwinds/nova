@@ -229,9 +229,8 @@ jobs:
             -   persist_to_workspace:
                     root: ~/nova
                     paths:
-                        - ./packages/charts/sdk/api-docs-ng2
+                        - ./packages/charts
                         - ./packages/bits/sdk/api-docs-ng2
-                        - ./packages/charts/*.tgz
     charts-publish:
         working_directory: ~/nova
         docker:
