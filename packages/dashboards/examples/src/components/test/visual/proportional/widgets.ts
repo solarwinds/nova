@@ -142,7 +142,7 @@ export const widgets: IWidget[] = [
                                 "legendFormatter": {
                                     "componentType": LinkFormatterComponent.lateLoadKey,
                                 },
-                                "tickLabelConfig": {
+                                "horizontalBarTickLabelConfig": {
                                     maxWidth: {
                                         left: 55,
                                     },

@@ -210,8 +210,8 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.donutContentPlugin = new ChartDonutContentPlugin();
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
-        if (!this.isRadialChart()) {
-            this.handleTickLabelWidth();
+        if (this.configuration.chartOptions.type === ProportionalWidgetChartTypes.HorizontalBarChart) {
+            this.applyTickLabelMaxWidths();
         }
 
         this.chartTypeSubscription$?.unsubscribe();
@@ -230,14 +230,12 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         });
     }
 
-    private handleTickLabelWidth() {
+    private applyTickLabelMaxWidths() {
         const gridConfigAxis = (this.chartAssist.chart.getGrid().config() as XYGridConfig).axis;
 
-        gridConfigAxis.left.tickLabel.maxWidth = this.configuration.chartOptions.tickLabelConfig?.maxWidth?.left ||
+        gridConfigAxis.left.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig ?.maxWidth?.left ||
             ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
-        gridConfigAxis.right.tickLabel.maxWidth = this.configuration.chartOptions.tickLabelConfig?.maxWidth?.right ||
-            ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
-        gridConfigAxis.bottom.tickLabel.maxWidth = this.configuration.chartOptions.tickLabelConfig?.maxWidth?.bottom ||
+        gridConfigAxis.right.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig ?.maxWidth?.right ||
             ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
     }
 

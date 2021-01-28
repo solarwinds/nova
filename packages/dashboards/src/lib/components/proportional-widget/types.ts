@@ -29,7 +29,7 @@ export interface IProportionalWidgetChartOptions {
     legendFormatter?: IFormatter;
     chartFormatterComponentType?: string;
     donutContentConfig?: IDonutContentConfig;
-    tickLabelConfig?: ITickLabelConfig;
+    horizontalBarTickLabelConfig ?: ITickLabelConfig;
 }
 
 export interface IProportionalWidgetConfig {
