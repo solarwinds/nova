@@ -103,6 +103,7 @@ jobs:
             -   persist_to_workspace:
                     root: ~/nova
                     paths:
+                        - ./packages/bits/sdk/api-docs-ng2
                         - ./packages/bits/*.tgz
     bits-publish:
         working_directory: ~/nova
@@ -168,6 +169,7 @@ jobs:
                     root: .
                     paths:
                         - packages/charts
+                        - packages/bits/sdk/api-docs-ng2
     charts-unit-test:
         working_directory: ~/nova/packages/charts
         docker:
@@ -227,6 +229,8 @@ jobs:
             -   persist_to_workspace:
                     root: ~/nova
                     paths:
+                        - ./packages/charts/sdk/api-docs-ng2
+                        - ./packages/bits/sdk/api-docs-ng2
                         - ./packages/charts/*.tgz
     charts-publish:
         working_directory: ~/nova
@@ -296,6 +300,8 @@ jobs:
                     root: .
                     paths:
                         - packages/dashboards
+                        - packages/charts/sdk/api-docs-ng2
+                        - packages/bits/sdk/api-docs-ng2
     dashboards-unit-test:
         working_directory: ~/nova/packages/dashboards
         docker:
@@ -355,7 +361,9 @@ jobs:
             -   persist_to_workspace:
                     root: ~/nova
                     paths:
-                        - ./packages/dashboards
+                        - ./packages/dashboards/sdk/api-docs-ng2
+                        - ./packages/charts/sdk/api-docs-ng2
+                        - ./packages/bits/sdk/api-docs-ng2
     dashboards-publish:
         working_directory: ~/nova
         docker:
@@ -377,11 +385,6 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            #            -   run:
-            #                    name: ZIP Docs
-            #                    command: mkdir tmp; cd ./sdk/api-docs-ng2; zip -r ../../tmp/$CIRCLE_BRANCH.zip *; cd ../../;
-            #            -   store_artifacts:
-            #                    path: /tmp/$CIRCLE_BRANCH.zip
             -   run:
                     name: Publish dashbords docs
                     command: yarn run deploy-docs-ci
@@ -441,106 +444,101 @@ workflows:
     nova:
         jobs:
             - bits-build
-            - nova-docs:
-                context:
-                     - common-build-creds
-#                    - github-write-access
-#                    - github-read-access
-                requires:
-                    - bits-build
-#            -   bits-pack:
-#                    requires:
-#                        - bits-build
-#            -   bits-unit-test:
-#                    requires:
-#                        - bits-build
-#            -   bits-e2e-test:
-#                    requires:
-#                        - bits-build
-#            -   bits-visual-test:
-#                    requires:
-#                        - bits-build
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#            -   bits-publish:
-#                    requires:
-#                        - bits-e2e-test
-#                        - bits-unit-test
-#                        - charts-e2e-test
-#                        - charts-unit-test
-#                        - dashboards-e2e-test
-#                        - dashboards-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#            -   charts-build:
-#                    requires:
-#                        - bits-pack
-#            -   charts-pack:
-#                    requires:
-#                        - charts-build
-#            -   charts-unit-test:
-#                    requires:
-#                        - charts-build
-#            -   charts-e2e-test:
-#                    requires:
-#                        - charts-build
-#            -   charts-visual-test:
-#                    requires:
-#                        - charts-build
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#            -   charts-publish:
-#                    requires:
-#                        - bits-e2e-test
-#                        - bits-unit-test
-#                        - charts-e2e-test
-#                        - charts-unit-test
-#                        - dashboards-e2e-test
-#                        - dashboards-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#            -   dashboards-build:
-#                    requires:
-#                        - charts-pack
-#            -   dashboards-pack:
-#                    requires:
-#                        - dashboards-build
-#            -   dashboards-unit-test:
-#                    requires:
-#                        - dashboards-build
-#            -   dashboards-e2e-test:
-#                    requires:
-#                        - dashboards-build
-#            -   dashboards-visual-test:
-#                    requires:
-#                        - dashboards-build
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#            -   dashboards-docs:
-#                    requires:
-#                        - dashboards-pack
-#            -   dashboards-publish:
-#                    requires:
-#                        - bits-e2e-test
-#                        - bits-unit-test
-#                        - charts-e2e-test
-#                        - charts-unit-test
-#                        - dashboards-e2e-test
-#                        - dashboards-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
+            -   bits-pack:
+                    requires:
+                        - bits-build
+            -   bits-unit-test:
+                    requires:
+                        - bits-build
+            -   bits-e2e-test:
+                    requires:
+                        - bits-build
+            -   bits-visual-test:
+                    requires:
+                        - bits-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   bits-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   charts-build:
+                    requires:
+                        - bits-pack
+            -   charts-pack:
+                    requires:
+                        - charts-build
+            -   charts-unit-test:
+                    requires:
+                        - charts-build
+            -   charts-e2e-test:
+                    requires:
+                        - charts-build
+            -   charts-visual-test:
+                    requires:
+                        - charts-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   charts-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   dashboards-build:
+                    requires:
+                        - charts-pack
+            -   dashboards-pack:
+                    requires:
+                        - dashboards-build
+            -   nova-docs:
+                    context:
+                        - common-build-creds
+                    requires:
+                        - dashboards-pack
+            -   dashboards-unit-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-e2e-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-visual-test:
+                    requires:
+                        - dashboards-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   dashboards-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
     nova-release:
         jobs:
             -   release-approval:

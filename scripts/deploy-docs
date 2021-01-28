@@ -28,8 +28,8 @@ mkdir nova-docs
 cd ./nova-docs
 mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 git clone $DOC_SERVICE_REPO .
-mkdir --parents ./projects/bits
-mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
+mkdir --parents ./projects/charts
+mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
 zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
 git config user.email "circleci@circleci"
