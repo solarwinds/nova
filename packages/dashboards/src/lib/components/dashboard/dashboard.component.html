@@ -1,4 +1,4 @@
-<gridster class="nui-dashboard__gridster" [options]="gridsterConfig" (scroll)="onGridsterScroll($event)">
+<gridster class="nui-dashboard__gridster" [options]="gridsterConfig" (scroll)="onGridsterScroll()">
     <gridster-item *ngFor="let widget of dashboard.widgets | keyvalue: orderWidgets; trackBy: trackByFn"
                    [item]="dashboard.positions[widget.key]"
                    class="nui-dashboard__gridster-item"

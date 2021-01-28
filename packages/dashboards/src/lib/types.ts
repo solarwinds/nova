@@ -92,7 +92,7 @@ export interface IDashboard {
 
 export interface IDashboardBelowFoldLazyLoadingConfig {
     enabled: boolean;
-    meta?: {
+    configuration?: {
         // reloads widgets if they were already loaded but then disappeared from the view
         reloadWidgetsOnScroll: boolean;
     };

@@ -229,7 +229,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
             const idx: string = (next as any).widgetId;
 
             // if widget is already loaded don't hide it
-            if (!this.belowFoldLazyLoadingConfig.meta?.reloadWidgetsOnScroll) {
+            if (!this.belowFoldLazyLoadingConfig.configuration?.reloadWidgetsOnScroll) {
                 const prevVisibility = acc[idx];
                 if (prevVisibility) {
                     return acc;
