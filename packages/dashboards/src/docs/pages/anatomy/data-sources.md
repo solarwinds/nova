@@ -98,3 +98,28 @@ pizzagna event bus and passes the result to a component property path specified 
 ...
 ```
 
+## Below-fold lazy loading
+If You want for your widgets to load the data only after they are visible you have to configure the dashboard
+via `belowFoldLazyLoadingConfig` input. For example:
+```
+public belowFoldLazyLoadingConfig: IDashboardBelowFoldLazyLoadingConfig = {
+    enabled: true,
+};
+<!-- html -->
+<nui-dashboard
+    [(dashboard)]="dashboard"
+    ...
+    [belowFoldLazyLoadingConfig]="belowFoldLazyLoadingConfig"
+></nui-dashboard>
+```
+
+Also, if you want to load data only widgets that are in the viewport, and remove the widgets from the viewport
+if they were already loaded, put `reloadWidgetsOnScroll` of `configuration` part to `true`.
+```
+public belowFoldLazyLoadingConfig: IDashboardBelowFoldLazyLoadingConfig = {
+    enabled: true,
+    configuration: {
+        reloadWidgetsOnScroll: true,
+    }
+};
+```

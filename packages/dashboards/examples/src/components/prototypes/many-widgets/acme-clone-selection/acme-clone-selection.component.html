@@ -1,0 +1,16 @@
+<div class="nui-widget-cloner">
+    <nui-repeat [itemsSource]="widgetItems"
+                [selection]="widgetSelection"
+                selectionMode="singleWithRequiredSelection"
+                (selectionChange)="onSelect($event)"
+                [repeatItemTemplateRef]="widgetClonerItem">
+    </nui-repeat>
+</div>
+
+<ng-template #widgetClonerItem let-item="item">
+    <div class="nui-widget-cloner__item d-flex pt-2 pb-2 align-items-center">
+        <div class="text-info ml-3">
+            {{ item.title }}
+        </div>
+    </div>
+</ng-template>

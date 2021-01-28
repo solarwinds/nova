@@ -1,14 +1,14 @@
 import { Component } from "@angular/core";
-import { IGaugeThreshold } from "@nova-ui/charts";
+import { GAUGE_THICKNESS_DEFAULT, IGaugeThreshold } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-test-page",
     templateUrl: "./gauge-test-page.component.html",
 })
 export class GaugeTestPageComponent {
-    public value = 42;
+    public value = 95;
     public maxValue = 200;
-    public annularWidth = 20;
+    public thickness = GAUGE_THICKNESS_DEFAULT;
     public thresholds: IGaugeThreshold[] = [
         { value: 100 },
         { value: 158 },

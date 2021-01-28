@@ -8,6 +8,7 @@ enum TutorialsModuleRoute {
     SubmitHandler = "persistence-handler-setup",
     WidgetCreation = "widget-creation",
     Customization = "customization",
+    WidgetErrorHandling = "widget-error-handling",
  }
 
 const routes: Routes = [
@@ -37,6 +38,11 @@ const routes: Routes = [
         path: TutorialsModuleRoute.Customization,
         loadChildren: () => import("components/docs/tutorials/customization/customization.module")
             .then(m => m.CustomizationModule),
+    },
+    {
+        path: TutorialsModuleRoute.WidgetErrorHandling,
+        loadChildren: () => import("components/docs/tutorials/widget-error-handling/widget-error-handling.module")
+            .then(m => m.WidgetErrorHandlingModule),
     },
 ];
 
