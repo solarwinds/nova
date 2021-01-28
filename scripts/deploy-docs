@@ -45,10 +45,10 @@ mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
 rm -rf $CHARTS_BRANCH
 mv ./projects/charts/api-docs-ng2 $CHARTS_BRANCH
 
-#mkdir --parents ./projects/dashboards
-#mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
-#rm -rf DASHBOARDS_BRANCH
-#mv ./projects/dashboards/api-docs-ng2 $DASHBOARDS_BRANCH
+mkdir --parents ./projects/dashboards
+mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
+rm -rf DASHBOARDS_BRANCH
+mv ./projects/dashboards/api-docs-ng2 $DASHBOARDS_BRANCH
 
 zip -r nova-docs.zip *
 mv ./nova-docs.zip ../
