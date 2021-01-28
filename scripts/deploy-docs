@@ -37,6 +37,7 @@ git clone $DOC_SERVICE_REPO .
 
 mkdir --parents ./projects/bits
 mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
+rm -rf $BITS_BRANCH
 mv ./projects/bits/api-docs-ng2 $BITS_BRANCH
 
 #mkdir --parents ./projects/charts
