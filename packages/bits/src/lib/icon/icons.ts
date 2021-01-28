@@ -844,7 +844,7 @@ export const icons: ITypedIconData[] = [
         "name": "xml-file",
         "cat_namespace": IconCategoryNamespace.Object,
         "category": IconCategory.Object,
-        "code": "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><g id='shapes'><polygon points='4.29 8.29 0.59 12 4.29 15.71 5.71 14.29 3.41 12 5.71 9.71 4.29 8.29'/><rect x='3.61' y='11' width='10.77' height='2' transform='translate(-5.48 15.9) rotate(-68.2)'/><polygon points='13.71 15.71 17.41 12 13.71 8.29 12.29 9.71 14.59 12 12.29 14.29 13.71 15.71'/><path d='M14.71,0H3V7H4V1H14V5h4V19H4V17H3v3H19V4.29ZM15,1.71,17.29,4H15Z'/></g></svg>",
+        "code": "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='#767676'><g id='shapes'><polygon points='4.29 8.29 0.59 12 4.29 15.71 5.71 14.29 3.41 12 5.71 9.71 4.29 8.29'/><rect x='3.61' y='11' width='10.77' height='2' transform='translate(-5.48 15.9) rotate(-68.2)'/><polygon points='13.71 15.71 17.41 12 13.71 8.29 12.29 9.71 14.59 12 12.29 14.29 13.71 15.71'/><path d='M14.71,0H3V7H4V1H14V5h4V19H4V17H3v3H19V4.29ZM15,1.71,17.29,4H15Z'/></g></svg>",
     },
     {
         "svgFile": "zoom-in.svg",
