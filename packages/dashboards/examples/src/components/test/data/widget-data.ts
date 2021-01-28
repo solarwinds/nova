@@ -34,8 +34,8 @@ export const PROPORTIONAL_WIDGET_DATA_SMALL: IProportionalWidgetData[] = [
         value: "London",
     },
     {
-        id: "Critical",
-        name: "Critical",
+        id: "Critically long tick name",
+        name: "Critically long tick name",
         data: [2],
         icon: "status_critical",
         link: "https://en.wikipedia.org/wiki/Paris",

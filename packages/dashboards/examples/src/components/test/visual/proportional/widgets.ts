@@ -142,6 +142,11 @@ export const widgets: IWidget[] = [
                                 "legendFormatter": {
                                     "componentType": LinkFormatterComponent.lateLoadKey,
                                 },
+                                "horizontalBarTickLabelConfig": {
+                                    maxWidth: {
+                                        left: 55,
+                                    },
+                                },
                             } as IProportionalWidgetChartOptions,
                         },
                     },
