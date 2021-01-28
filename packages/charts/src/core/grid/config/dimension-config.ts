@@ -17,6 +17,13 @@ export class DimensionConfig implements IDimensionConfig {
         bottom: 0,
         left: 0,
     };
+    /** See {@link IDimensionConfig#marginLocked} */
+    public marginLocked: IAllAround<boolean> = {
+        top: false,
+        right: false,
+        bottom: false,
+        left: false,
+    };
 
     /** See {@link IDimensionConfig#autoWidth} */
     public autoWidth = true;

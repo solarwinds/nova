@@ -1,26 +1,32 @@
 <charts-test-harness>
-    <nui-gauge-chart-prototype [value]="value" [annularWidth]="annularWidth" [thresholds]="thresholds" [max]="maxValue"></nui-gauge-chart-prototype>
+    <div class="d-flex">
+        <radial-gauge-chart-prototype [value]="value" [annularWidth]="thickness" [thresholds]="thresholds" [max]="maxValue"></radial-gauge-chart-prototype>
+        <linear-gauge-vertical-chart-prototype class="ml-5" [value]="value" [thickness]="thickness" [thresholds]="thresholds" [max]="maxValue"></linear-gauge-vertical-chart-prototype>
+        <linear-gauge-horizontal-chart-prototype class="ml-5" [value]="value" [thickness]="thickness" [thresholds]="thresholds" [max]="maxValue"></linear-gauge-horizontal-chart-prototype>
+    </div>
 
     <div class="mb-2">
         <label for="valueInput">
             Value
         </label>
         <br />
-        <input type="number"
+        <nui-textbox-number type="number"
                [(ngModel)]="value"
-               [min]="0"
-               [max]="maxValue"
-               attr.name="valueInput" />
+               [minValue]="0"
+               [maxValue]="maxValue"
+               customBoxWidth="75px"
+               name="valueInput"></nui-textbox-number>
     </div>
     <div class="mb-2">
         <label for="thicknessInput">
             Thickness
         </label>
         <br />
-        <input type="number"
-               [(ngModel)]="annularWidth"
-               [min]="10"
-               [max]="30"
-               attr.name="thicknessInput" />
+        <nui-textbox-number type="number"
+               [(ngModel)]="thickness"
+               [minValue]="10"
+               [maxValue]="30"
+               customBoxWidth="75px"
+               name="thicknessInput"></nui-textbox-number>
     </div>
 </charts-test-harness>
