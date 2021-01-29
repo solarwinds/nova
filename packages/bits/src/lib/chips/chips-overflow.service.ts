@@ -81,12 +81,12 @@ export class ChipsOverflowService {
             const chipElementWidth = chipElement.getBoundingClientRect().width;
             const isLastLine = () => linesDiff.length >= this.overflowLinesNumber - 1;
 
-            if (!isLastLine() && Math.ceil(acc + chipElementWidth) > Math.ceil(mainCellWidth)) {
+            if (!isLastLine() && toFixed(acc + chipElementWidth, 2) > toFixed(mainCellWidth, 2)) {
                 linesDiff.push(mainCellWidth - acc);
                 acc = 0;
             }
 
-            if (isLastLine() && Math.ceil(acc + chipElementWidth + counterWidth) > Math.ceil(mainCellWidth)) {
+            if (isLastLine() && toFixed(acc + chipElementWidth + counterWidth, 2) > toFixed(mainCellWidth, 2)) {
                 linesDiff.push(mainCellWidth - acc - counterWidth);
                 acc = 0;
                 chipsOverflow = true;
@@ -137,4 +137,9 @@ export class ChipsOverflowService {
     private getNativeElement(item: ChipComponent | ElementRef): HTMLElement {
         return item instanceof ChipComponent ? item.host.nativeElement : item.nativeElement;
     }
+}
+
+function toFixed(num: number, fixed: number): number {
+    const re = new RegExp("^-?\\d+(?:\.\\d{0," + (fixed || -1) + "})?");
+    return +(num.toString().match(re) as RegExpMatchArray)[0];
 }
