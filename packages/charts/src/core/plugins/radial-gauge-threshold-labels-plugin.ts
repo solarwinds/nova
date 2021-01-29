@@ -21,8 +21,8 @@ export interface IRadialGaugeThresholdLabelsPluginConfig { }
  * TODO
  */
 export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
-    public static readonly CSS_GROUP_CLASS = "gauge-threshold-labels";
-    public static readonly CSS_LABEL_CLASS = "threshold-label";
+    public static readonly CONTAINER_CLASS = "gauge-threshold-labels";
+    public static readonly LABEL_CLASS = "threshold-label";
 
     /** The default plugin configuration */
     public DEFAULT_CONFIG: IRadialGaugeThresholdLabelsPluginConfig = {};
@@ -37,7 +37,7 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
 
     public initialize(): void {
         this.gaugeThresholdLabelsLayer = this.chart.getGrid().getLasagna().addLayer({
-            name: RadialGaugeThresholdLabelsPlugin.CSS_GROUP_CLASS,
+            name: RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS,
             order: 900,
             clipped: false,
         });
@@ -45,7 +45,7 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
         this.chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT as string).pipe(
             takeUntil(this.destroy$)
         ).subscribe((event: IChartEvent) => {
-            const gaugeThresholdLabelsGroup = this.gaugeThresholdLabelsLayer.select(`.${RadialGaugeThresholdLabelsPlugin.CSS_GROUP_CLASS}`);
+            const gaugeThresholdLabelsGroup = this.gaugeThresholdLabelsLayer.select(`.${RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS}`);
             if (!gaugeThresholdLabelsGroup.empty()) {
                 const dataPoints = event.data.dataPoints;
                 const labelOpacity = Object.keys(dataPoints).find((key, index) => dataPoints[key].index === DATA_POINT_NOT_FOUND) ? 0 : 1;
@@ -67,22 +67,22 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
             throw new Error("Gauge threshold series data is undefined");
         }
 
-        let gaugeThresholdsLabelsGroup = this.gaugeThresholdLabelsLayer.select(`.${RadialGaugeThresholdLabelsPlugin.CSS_GROUP_CLASS}`);
+        let gaugeThresholdsLabelsGroup = this.gaugeThresholdLabelsLayer.select(`.${RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS}`);
         if (gaugeThresholdsLabelsGroup.empty()) {
             gaugeThresholdsLabelsGroup = this.gaugeThresholdLabelsLayer.append("svg:g")
-                .attr("class", RadialGaugeThresholdLabelsPlugin.CSS_GROUP_CLASS);
+                .attr("class", RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS);
         }
 
         const labelGenerator: Arc<any, DefaultArcObject> = arc()
             .outerRadius(labelRadius)
             .innerRadius(labelRadius);
 
-        const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${RadialGaugeThresholdLabelsPlugin.CSS_LABEL_CLASS}`)
-            .data(GaugeRenderingUtils.generateThresholdsData(data));
+        const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${RadialGaugeThresholdLabelsPlugin.LABEL_CLASS}`)
+            .data(GaugeRenderingUtils.generateThresholdData(data));
         labelSelection.exit().remove();
         labelSelection.enter()
             .append("text")
-            .attr("class", RadialGaugeThresholdLabelsPlugin.CSS_LABEL_CLASS)
+            .attr("class", RadialGaugeThresholdLabelsPlugin.LABEL_CLASS)
             .merge(labelSelection as any)
             .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
             .style("text-anchor", (d) => this.getTextAnchor(d.startAngle))

@@ -6,6 +6,7 @@ import { GaugeService, IGaugeThreshold } from "../../gauge/public-api";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { RadialAccessors } from "./accessors/radial-accessors";
+import { GaugeRenderingUtils } from "./gauge-rendering-utils";
 import { RadialGaugeThresholdsRenderer } from "./radial-gauge-thresholds-renderer";
 import { radialScales } from "./radial-scales";
 
@@ -48,7 +49,7 @@ describe("GaugeThresholdsRenderer >", () => {
             arcGenerator = arc()
                 .outerRadius(renderer.getOuterRadius(renderSeries.scales.r.range(), 0))
                 .innerRadius(innerRadius >= 0 ? innerRadius : 0);
-            markerData = renderer.generateCircleData(renderSeries.dataSeries.data);
+            markerData = GaugeRenderingUtils.generateThresholdData(renderSeries.dataSeries.data);
         });
 
         it("should render the correct number of threshold markers", () => {

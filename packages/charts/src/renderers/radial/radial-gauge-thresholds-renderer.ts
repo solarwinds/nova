@@ -47,7 +47,7 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0))
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
-        const markerSelection = gaugeThresholdsGroup.selectAll("circle.threshold-marker").data(GaugeRenderingUtils.generateThresholdsData(data));
+        const markerSelection = gaugeThresholdsGroup.selectAll("circle.threshold-marker").data(GaugeRenderingUtils.generateThresholdData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")
