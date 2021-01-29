@@ -13,6 +13,7 @@ import {
     IRadialRendererConfig,
     radial,
     RadialAccessors,
+    RadialGaugeThresholdLabelsPlugin,
     radialGrid
 } from "@nova-ui/charts";
 
@@ -51,6 +52,7 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
         this.chartAssist = new ChartAssist(new Chart(grid), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
+        this.chartAssist.chart.addPlugin(new RadialGaugeThresholdLabelsPlugin());
 
         this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
         this.updateAnnularWidth();

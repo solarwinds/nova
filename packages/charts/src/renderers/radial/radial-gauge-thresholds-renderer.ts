@@ -4,10 +4,10 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
 import { IRadialGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
-import { IGaugeThreshold } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { IRadialAccessors } from "./accessors/radial-accessors";
+import { GaugeRenderingUtils } from "./gauge-rendering-utils";
 import { RadialRenderer } from "./radial-renderer";
 
 /**
@@ -47,7 +47,7 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0))
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
-        const markerSelection = gaugeThresholdsGroup.selectAll("circle.threshold-marker").data(this.generateCircleData(data));
+        const markerSelection = gaugeThresholdsGroup.selectAll("circle.threshold-marker").data(GaugeRenderingUtils.generateThresholdsData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")
@@ -58,75 +58,6 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .attr("r", 4)
             .style("fill", (d, i) => data[i].hit ? "var(--nui-color-text-light)" : "var(--nui-color-text-default)")
             .style("stroke-width", 0);
-
-        const labelRadius = this.getOuterRadius(renderSeries.scales.r.range(), 0) + 5;
-        const labelGenerator: Arc<any, DefaultArcObject> = arc()
-            .outerRadius(labelRadius)
-            .innerRadius(labelRadius);
-
-        const labelSelection = gaugeThresholdsGroup.selectAll("text.threshold-label").data(this.generateCircleData(data));
-        labelSelection.exit().remove();
-        labelSelection.enter()
-            .append("text")
-            .attr("class", "threshold-label")
-            .merge(labelSelection as any)
-            .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
-            .style("text-anchor", (d) => this.getTextAnchor(d.startAngle))
-            .style("alignment-baseline", (d) => this.getAlignmentBaseline(d.startAngle))
-            .text((d, i) => data[i].value);
-    }
-
-    private getTextAnchor(angle: any): string {
-        // pie charts start on the top, so we need to subtract Math.PI / 2 (90 degrees)
-        const cosine = Math.cos(Number(angle.toFixed(2)) - Math.PI / 2);
-        if (cosine > 0.5) {
-            return "start";
-        }
-
-        if (cosine < -0.5) {
-            return "end";
-        }
-
-        return "middle";
-    }
-
-    private getAlignmentBaseline(angle: any): string {
-        // pie charts start on the top, so we need to add Math.PI / 2 (90 degrees)
-        const sine = Math.sin(Number(angle.toFixed(2)) + Math.PI / 2);
-        if (sine > 0.5) {
-            return "text-after-edge";
-        }
-
-        if (sine < -0.5) {
-            return "text-before-edge";
-        }
-
-        return "central";
-    }
-
-    public generateArcData(data: any[]) {
-        // arcs with a value of zero serve as the threshold points
-        const arcData: number[] = Array(data.length * 2 - 1).fill(0);
-        data.forEach((d: IGaugeThreshold, i: number) => {
-            // arcs with a non-zero value serve as the space between the threshold points
-            arcData[i * 2] = i === 0 ? d.value : d.value - data[i - 1].value;
-        });
-        return arcData;
-    }
-
-    public generateCircleData(data: any[]) {
-        const arcData: number[] = this.generateArcData(data);
-        const circleData: any[] = [];
-        const pieGenerator = pie().sort(null);
-        const arcsForCircles = pieGenerator(arcData);
-
-        arcsForCircles.forEach((arcDatum: any, i: number) => {
-            // Drawing circles at threshold points
-            if (i % 2 === 1) {
-                circleData.push(arcDatum);
-            }
-        });
-        return circleData;
     }
 
     public getInnerRadius(range: number[], index: number): number {

@@ -257,11 +257,14 @@
         }
     }
 
-    .gauge-thresholds {
+    .gauge-threshold-labels {
         text {
             .setCssVariable(fill, nui-color-text-secondary);
             font-size: 11px;
         }
+        transition-property: opacity;
+        transition-duration: 200ms;
+        opacity: 0;
     }
 }
 
