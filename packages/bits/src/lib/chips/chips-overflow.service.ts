@@ -8,6 +8,7 @@ import {
 import ResizeObserver from "resize-observer-polyfill";
 
 import { ChipComponent } from "./chip/chip.component";
+import { toFixed, toFixedSum } from "./chips-overflow.helpers";
 import { IChipsGroup, IChipsItem, IChipsItemsSource } from "./public-api";
 
 @Injectable()
@@ -69,9 +70,9 @@ export class ChipsOverflowService {
 
     private processChipsOverflow(): void {
         let acc = 0;
+        let renderedLines = 1;
         let chipsOverflow = false;
 
-        const linesDiff: number[] = [];
         const mainCellWidth = this.mainCell?.nativeElement.getBoundingClientRect().width;
         const counterWidth = this.overflowCounter?.nativeElement.getBoundingClientRect().width || 0;
 
@@ -79,20 +80,23 @@ export class ChipsOverflowService {
             const chipElement = this.getNativeElement(item);
             chipElement.style.display = "inline";
             const chipElementWidth = chipElement.getBoundingClientRect().width;
-            const isLastLine = () => linesDiff.length >= this.overflowLinesNumber - 1;
+            const isLastLine = () => renderedLines === this.overflowLinesNumber;
 
-            if (!isLastLine() && toFixed(acc + chipElementWidth, 2) > toFixed(mainCellWidth, 2)) {
-                linesDiff.push(mainCellWidth - acc);
+            if (!isLastLine() && toFixedSum([acc, chipElementWidth]) > toFixed(mainCellWidth, 2)) {
+                renderedLines++;
                 acc = 0;
             }
 
-            if (isLastLine() && toFixed(acc + chipElementWidth + counterWidth, 2) > toFixed(mainCellWidth, 2)) {
-                linesDiff.push(mainCellWidth - acc - counterWidth);
+            if (isLastLine() && toFixedSum([acc, chipElementWidth, counterWidth], 2) > toFixed(mainCellWidth, 2)) {
                 acc = 0;
                 chipsOverflow = true;
+
+                if (!chipsOverflow) {
+                    renderedLines++;
+                }
             }
 
-            acc += chipElementWidth;
+            acc = toFixedSum([acc, chipElementWidth]);
 
             if (isLastLine() && chipsOverflow) {
                 chipElement.style.display = "none";
@@ -137,9 +141,4 @@ export class ChipsOverflowService {
     private getNativeElement(item: ChipComponent | ElementRef): HTMLElement {
         return item instanceof ChipComponent ? item.host.nativeElement : item.nativeElement;
     }
-}
-
-function toFixed(num: number, fixed: number): number {
-    const re = new RegExp("^-?\\d+(?:\.\\d{0," + (fixed || -1) + "})?");
-    return +(num.toString().match(re) as RegExpMatchArray)[0];
 }
