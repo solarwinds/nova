@@ -2,6 +2,8 @@
 @import (reference) "@nova-ui/bits/sdk/less/mixins";
 @import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables.less";
 
+@opacity-transition-duration: 200ms;
+
 .nui-chart {
     display: block;
     height: 100%;
@@ -263,7 +265,7 @@
             font-size: 11px;
         }
         transition-property: opacity;
-        transition-duration: 200ms;
+        transition-duration: @opacity-transition-duration;
         opacity: 0;
     }
 }
@@ -285,7 +287,7 @@
 
 .data-series-container {
     transition-property: opacity;
-    transition-duration: 200ms;
+    transition-duration: @opacity-transition-duration;
 }
 
 .nui-chart {

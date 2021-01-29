@@ -2,8 +2,9 @@ import { Injectable } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 
 import { CHART_PALETTE_CS1 } from "../core/common/palette/palettes";
-import { IRadialScales, Scales } from "../core/common/scales/types";
-import { DataAccessor, IAccessors, IChartAssistSeries, IDataSeries } from "../core/common/types";
+import { Formatter, IRadialScales, Scales } from "../core/common/scales/types";
+import { DataAccessor, IAccessors, IChartAssistSeries, IChartSeries, IDataSeries } from "../core/common/types";
+import { RadialGaugeThresholdLabelsPlugin } from "../core/plugins/radial-gauge-threshold-labels-plugin";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
 import { VerticalBarAccessors } from "../renderers/bar/accessors/vertical-bar-accessors";
 import { BarRenderer } from "../renderers/bar/bar-renderer";
@@ -52,7 +53,7 @@ export class GaugeService {
 
         // TODO: generate threshold series for linear modes
         if (mode === GaugeMode.Radial) {
-            chartAssistSeries.push(this.generateRadialThresholdSeries(initialValue, initialMax, thresholds, accessors as RadialAccessors, scales));
+            chartAssistSeries.push(this.generateThresholdSeries(initialValue, initialMax, thresholds, accessors as RadialAccessors, scales));
         }
 
         return chartAssistSeries;
@@ -80,11 +81,11 @@ export class GaugeService {
         return updatedSeriesSet;
     }
 
-    public generateRadialThresholdSeries(value: number,
-                                         max: number,
-                                         thresholds: IGaugeThreshold[],
-                                         accessors: RadialAccessors,
-                                         scales: IRadialScales | Scales): IChartAssistSeries<RadialAccessors> {
+    public generateThresholdSeries(value: number,
+                                   max: number,
+                                   thresholds: IGaugeThreshold[],
+                                   accessors: RadialAccessors,
+                                   scales: IRadialScales | Scales): IChartAssistSeries<RadialAccessors> {
         return {
             id: GaugeService.THRESHOLD_MARKERS_SERIES_ID,
             data: this.getThresholdMarkerPoints(thresholds, value, max),
@@ -94,6 +95,16 @@ export class GaugeService {
             excludeFromArcCalculation: true,
             preprocess: false,
         };
+    }
+
+    public setThresholdLabelFormatter(formatter: Formatter<string>,
+                                      seriesSet: IChartAssistSeries<IAccessors>[],
+                                      formatterName = RadialGaugeThresholdLabelsPlugin.FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
+        const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof RadialGaugeThresholdsRenderer);
+        if (thresholdsSeries) {
+            thresholdsSeries.scales.r.formatters[formatterName] = formatter;
+        }
+        return seriesSet;
     }
 
     private getGaugeAttributes(mode: GaugeMode): IGaugeAttributes {

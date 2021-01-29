@@ -27,7 +27,7 @@ describe("GaugeThresholdsRenderer >", () => {
         containers[RenderLayerName.data] = svg.append("g");
         testThresholds = [{ value: 3 }, { value: 7 }, { value: 9 }];
 
-        dataSeries = gaugeService.generateRadialThresholdSeries(5, 10, testThresholds, accessors, scales);
+        dataSeries = gaugeService.generateThresholdSeries(5, 10, testThresholds, accessors, scales);
 
         renderSeries = {
             dataSeries,
