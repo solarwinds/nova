@@ -368,6 +368,20 @@ jobs:
             -   run:
                     name: Publish dashboards
                     command: yarn run publish-ci
+    nova-docs:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12
+        environment:
+            NOVA_DIR: ~/nova
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Publish dashbords docs
+                    command: yarn run deploy-docs-ci
+            -   store_artifacts:
+                    path: ./nova-docs.zip
     release-prep:
         working_directory: ~/nova
         docker:
@@ -416,7 +430,9 @@ jobs:
                     command: |
                         git commit -am 'increment develop versions' && \
                         git push origin $SOURCE_BRANCH
-
+            -   run:
+                    name: Trigger release branch
+                    command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
 workflows:
     version: 2.1
     nova:
@@ -450,6 +466,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /release\/.*/
             -   charts-build:
                     requires:
                         - bits-pack
@@ -481,12 +498,18 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /release\/.*/
             -   dashboards-build:
                     requires:
                         - charts-pack
             -   dashboards-pack:
                     requires:
                         - dashboards-build
+            -   nova-docs:
+                    context:
+                        - common-build-creds
+                    requires:
+                        - dashboards-pack
             -   dashboards-unit-test:
                     requires:
                         - dashboards-build
@@ -512,6 +535,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /release\/.*/
     nova-release:
         jobs:
             -   release-approval:

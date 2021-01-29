@@ -248,12 +248,7 @@ export class DashboardComponent implements OnChanges, AfterViewInit {
                 (rect.right > gridsterRect.left && rect.right < gridsterRect.right)
             );
 
-            const isVisible = (
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                getHeightVisibility() &&
-                getWidthVisibility()
-            );
+            const isVisible = getHeightVisibility() && getWidthVisibility();
 
             acc[idx] = isVisible;
 

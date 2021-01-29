@@ -1,6 +1,6 @@
 {
   "name": "nova",
-  "version": "9.34.0-0",
+  "version": "9.35.0-0",
   "description": "SolarWinds Nova Framework",
   "main": "index.js",
   "repository": {
@@ -41,6 +41,8 @@
     "remove-dependencies": "node scripts/remove-dependencies.js",
     "publish-ci": "bash scripts/publish",
     "merge-ci": "bash scripts/merge",
+    "deploy-docs-ci": "bash scripts/deploy-docs",
+    "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "bash": "bash scripts/runner"
   },
   "devDependencies": {
