@@ -14,7 +14,7 @@ import { IAllAround } from "../grid/types";
 
 /**
  * @ignore
- * Configuration for the radial value labels plugin
+ * Configuration for the RadialGaugeThresholdLabelsPlugin
  */
 export interface IRadialGaugeThresholdLabelsPluginConfig {
     gridMargin?: IAllAround<number>;
