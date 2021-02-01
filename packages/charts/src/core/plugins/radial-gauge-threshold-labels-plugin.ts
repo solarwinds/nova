@@ -4,11 +4,11 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT } from "../../constants";
+import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT, STANDARD_RENDER_LAYERS } from "../../constants";
 import { GaugeRenderingUtils } from "../../renderers/radial/gauge-rendering-utils";
 import { RadialGaugeThresholdsRenderer } from "../../renderers/radial/radial-gauge-thresholds-renderer";
+import { RenderLayerName } from "../../renderers/types";
 import { ChartPlugin } from "../common/chart-plugin";
-import { Formatter, IFormatters } from "../common/scales/types";
 import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../common/types";
 import { IAllAround } from "../grid/types";
 
@@ -45,7 +45,7 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
     };
 
     private destroy$ = new Subject();
-    private gaugeThresholdLabelsLayer: D3Selection<SVGElement>;
+    private lasagnaLayer: D3Selection<SVGElement>;
 
     constructor(public config: IRadialGaugeThresholdLabelsPluginConfig = {}) {
         super();
@@ -53,9 +53,9 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
     }
 
     public initialize(): void {
-        this.gaugeThresholdLabelsLayer = this.chart.getGrid().getLasagna().addLayer({
+        this.lasagnaLayer = this.chart.getGrid().getLasagna().addLayer({
             name: RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS,
-            order: 900,
+            order: STANDARD_RENDER_LAYERS[RenderLayerName.data].order,
             clipped: false,
         });
 
@@ -65,7 +65,7 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
         this.chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT as string).pipe(
             takeUntil(this.destroy$)
         ).subscribe((event: IChartEvent) => {
-            const gaugeThresholdLabelsGroup = this.gaugeThresholdLabelsLayer.select(`.${RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS}`);
+            const gaugeThresholdLabelsGroup = this.lasagnaLayer.select(`.${RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS}`);
             if (!gaugeThresholdLabelsGroup.empty()) {
                 const dataPoints = event.data.dataPoints;
                 const labelOpacity = Object.keys(dataPoints).find((key, index) => dataPoints[key].index === DATA_POINT_NOT_FOUND) ? 0 : 1;
@@ -88,10 +88,11 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
             throw new Error("Gauge threshold series data is undefined");
         }
 
-        let gaugeThresholdsLabelsGroup = this.gaugeThresholdLabelsLayer.select(`.${RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS}`);
+        let gaugeThresholdsLabelsGroup = this.lasagnaLayer.select(`.${RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS}`);
         if (gaugeThresholdsLabelsGroup.empty()) {
-            gaugeThresholdsLabelsGroup = this.gaugeThresholdLabelsLayer.append("svg:g")
-                .attr("class", RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS);
+            gaugeThresholdsLabelsGroup = this.lasagnaLayer.append("svg:g")
+                .attr("class", RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS)
+                .style("opacity", 0);
         }
 
         const labelGenerator: Arc<any, DefaultArcObject> = arc()
@@ -123,13 +124,16 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
         // pie charts start on the top, so we need to subtract Math.PI / 2 (90 degrees)
         const cosine = Math.cos(Number(angle.toFixed(2)) - Math.PI / 2);
         if (cosine > 0.5) {
+            // used for right 120 degrees of chart
             return "start";
         }
 
         if (cosine < -0.5) {
+            // used for left 120 degrees of chart
             return "end";
         }
 
+        // used for top 60 degrees and bottom 60 degrees of chart
         return "middle";
     }
 
@@ -137,13 +141,16 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
         // pie charts start on the top, so we need to add Math.PI / 2 (90 degrees)
         const sine = Math.sin(Number(angle.toFixed(2)) + Math.PI / 2);
         if (sine > 0.5) {
+            // used for top 120 degrees of chart
             return "text-after-edge";
         }
 
         if (sine < -0.5) {
+            // used for bottom 120 degrees of chart
             return "text-before-edge";
         }
 
+        // used for left 60 degrees and right 60 degrees of chart
         return "central";
     }
 

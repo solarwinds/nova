@@ -2,7 +2,8 @@ import { arc, Arc, DefaultArcObject, select } from "d3";
 import { Subject } from "rxjs";
 
 import { D3Selection, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../core/common/types";
-import { GaugeService, IGaugeThreshold } from "../../gauge/public-api";
+import { GaugeService } from "../../gauge/gauge.service";
+import { IGaugeThreshold } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { RadialAccessors } from "./accessors/radial-accessors";
@@ -10,7 +11,7 @@ import { GaugeRenderingUtils } from "./gauge-rendering-utils";
 import { RadialGaugeThresholdsRenderer } from "./radial-gauge-thresholds-renderer";
 import { radialScales } from "./radial-scales";
 
-describe("GaugeThresholdsRenderer >", () => {
+describe("RadialGaugeThresholdsRenderer >", () => {
     let renderer: RadialGaugeThresholdsRenderer;
     let testThresholds: IGaugeThreshold[];
     let svg: D3Selection<SVGSVGElement> | any;

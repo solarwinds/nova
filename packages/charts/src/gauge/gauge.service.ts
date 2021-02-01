@@ -107,7 +107,7 @@ export class GaugeService {
         return seriesSet;
     }
 
-    private getGaugeAttributes(mode: GaugeMode): IGaugeAttributes {
+    public getGaugeAttributes(mode: GaugeMode): IGaugeAttributes {
         const t: IGaugeTools = this.getGaugeTools(mode);
         const result: IGaugeAttributes = {
             accessors: t.accessorFunction(),
@@ -118,7 +118,7 @@ export class GaugeService {
         return result;
     }
 
-    private getGaugeTools(mode: GaugeMode): IGaugeTools {
+    public getGaugeTools(mode: GaugeMode): IGaugeTools {
         const barRendererFunction = () => {
             const renderer = new BarRenderer();
             renderer.config.padding = 0;
@@ -148,7 +148,7 @@ export class GaugeService {
         return chartTools[mode];
     }
 
-    private createDefaultValueColorAccessor(thresholds: IGaugeThreshold[]) {
+    public createDefaultValueColorAccessor(thresholds: IGaugeThreshold[]) {
         return (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (dataSeries.id === GaugeService.REMAINDER_SERIES_ID) {
                 return "var(--nui-color-semantic-unknown-bg-hover)";
@@ -164,7 +164,7 @@ export class GaugeService {
         };
     }
 
-    private getGaugeData(value: number, max: number) {
+    public getGaugeData(value: number, max: number) {
         return [
             // category property is used for unifying the linear-style gauge visualization into a single bar stack
             { id: GaugeService.QUANTITY_SERIES_ID, data: [{ category: "gauge", value }] },
@@ -172,7 +172,7 @@ export class GaugeService {
         ];
     }
 
-    private getThresholdMarkerPoints(thresholds: IGaugeThreshold[], value: number, max: number): IGaugeThresholdMarker[] {
+    public getThresholdMarkerPoints(thresholds: IGaugeThreshold[], value: number, max: number): IGaugeThresholdMarker[] {
         const markerValues = thresholds.map(threshold => ({
             hit: threshold.value <= value,
             value: threshold.value,
