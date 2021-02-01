@@ -12,4 +12,5 @@ export * from "./dialog-visual-test/dialog-visual-test.component";
 export * from "./dialog-keyboard/dialog-with-keyboard.example.component";
 export * from "./dialog-static-backdrop/dialog-with-static-backdrop.example.component";
 export * from "./dialog-inside-overlay/dialog-inside-overlay.example.component";
+export * from "./dialog-actions-before-closure/dialog-actions-before-closure.example.component";
 export * from "./dialog-test/dialog-zindex-test.component";

@@ -19,12 +19,15 @@ export class NuiDialogRef {
     }
 
     @Output() public closed$ = new EventEmitter();
+    @Output() public beforeDismissed$ = new EventEmitter();
 
     result: Promise<any>;
 
     constructor(
-        public windowCmptRef?: ComponentRef<any>, private contentRef?: ContentRef,
-        private backdropCmptRef?: ComponentRef<DialogBackdropComponent>, private beforeDismiss?: Function) {
+        public windowCmptRef?: ComponentRef<any>,
+        private contentRef?: ContentRef,
+        private backdropCmptRef?: ComponentRef<DialogBackdropComponent>,
+        private beforeDismiss?: Function) {
 
         windowCmptRef?.instance.dismissEvent.subscribe((reason: any) => {
             this.dismiss(reason);
@@ -44,16 +47,17 @@ export class NuiDialogRef {
         if (this.windowCmptRef) {
             this.resolve(result);
             this.removeDialogElements();
-            this.closed$.emit();
+            this.closed$.emit(result);
         }
     }
 
     public dismiss(reason?: any): void {
         if (this.windowCmptRef) {
+            this.beforeDismissed$.emit(reason);
             if (!this.beforeDismiss || this.beforeDismiss(reason) !== false) {
                 this.reject(reason);
                 this.removeDialogElements();
-                this.closed$.emit();
+                this.closed$.emit(reason);
             }
         }
     }

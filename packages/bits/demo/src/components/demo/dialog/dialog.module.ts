@@ -24,6 +24,7 @@ import {
 import {
     ComponentAsContentExampleComponent,
     ConfirmationDialogExampleComponent,
+    DialogActionBeforeClosureExampleComponent,
     DialogContentExampleComponent,
     DialogCustomClassExampleComponent,
     DialogDocsComponent,
@@ -64,6 +65,15 @@ const routes = [
     {
         path: "dialog-overlay",
         component: DialogVisualTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "dialog-actions-before-closure",
+        component: DialogActionBeforeClosureExampleComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -123,6 +133,7 @@ const routes = [
         SimpleDialogExampleComponent,
         DialogWithStaticBackdropExampleComponent,
         DialogZIndexTestComponent,
+        DialogActionBeforeClosureExampleComponent,
     ],
     providers: [
         {
