@@ -1,4 +1,5 @@
 import { IDataField, IDataFieldsConfig } from "@nova-ui/bits";
+import { IAllAround } from "@nova-ui/charts";
 import { BehaviorSubject } from "rxjs";
 
 import { IProportionalDonutContentAggregator } from "../../functions/proportional-aggregators/types";
@@ -17,6 +18,10 @@ export interface IProportionalWidgetChartTypeConfiguration {
     label: string;
 }
 
+export interface ITickLabelConfig {
+    maxWidth: Partial<IAllAround<number>>;
+}
+
 export interface IProportionalWidgetChartOptions {
     type: ProportionalWidgetChartTypes;
     contentFormatter?: IFormatter;
@@ -24,6 +29,7 @@ export interface IProportionalWidgetChartOptions {
     legendFormatter?: IFormatter;
     chartFormatterComponentType?: string;
     donutContentConfig?: IDonutContentConfig;
+    horizontalBarTickLabelConfig ?: ITickLabelConfig;
 }
 
 export interface IProportionalWidgetConfig {
