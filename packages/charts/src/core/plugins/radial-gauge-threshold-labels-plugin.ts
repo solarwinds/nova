@@ -14,8 +14,8 @@ import { IAllAround } from "../grid/types";
 
 /**
  * @ignore
- * Configuration for the radial value labels plugin */
-// tslint:disable-next-line: no-empty-interface
+ * Configuration for the radial value labels plugin
+ */
 export interface IRadialGaugeThresholdLabelsPluginConfig {
     gridMargin?: IAllAround<number>;
     labelPadding?: number;
@@ -24,7 +24,7 @@ export interface IRadialGaugeThresholdLabelsPluginConfig {
 
 /**
  * @ignore
- * TODO
+ * A chart plugin that handles the rendering of labels for radial gauge thresholds
  */
 export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
     public static readonly CONTAINER_CLASS = "gauge-threshold-labels";
