@@ -72,6 +72,24 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
+    bits-a11y-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/bits
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: a11y tests
+                    command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
     bits-visual-test:
         working_directory: ~/nova
         machine:
@@ -454,6 +472,9 @@ workflows:
                         branches:
                             only:
                                 - main
+            -   bits-a11y-test:
+                    requires:
+                        - bits-build
             -   bits-publish:
                     requires:
                         - bits-e2e-test
