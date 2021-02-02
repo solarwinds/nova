@@ -58,6 +58,8 @@ mv ./projects/charts/api-docs-ng2 $CHARTS_DOCS_PATH
 # move dashboards docs
 mkdir --parents ./projects/dashboards
 mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
+echo "before ./projects/dashboards/==========="
+ls ./projects/dashboards/
 rm -rf DASHBOARDS_DOCS_PATH
 echo "./projects/dashboards/==========="
 ls ./projects/dashboards/
