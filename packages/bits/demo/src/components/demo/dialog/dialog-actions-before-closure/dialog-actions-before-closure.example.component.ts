@@ -24,37 +24,37 @@ export class DialogActionBeforeClosureExampleComponent {
                     .subscribe(event => {
                         // Covering the 'ESC' button event origin
                         if (event === "ESC") {
-                            console.log("ESC CLOSED");
+                            console.log($localize`ESC CLOSED`);
                         }
                         // Covering the 'BACKDROP_CLICK' event in case of clearing the dialog by clicking the backdrop
                         if (event === "BACKDROP_CLICK") {
-                            console.log(`BACKDROP CLICK CLOSED`);
+                            console.log($localize`BACKDROP CLICK CLOSED`);
                             return;
                         }
                         // Here we cover the custom 'DONE' event which you can create and then capture within the '.beforeDismiss' subscription
                         // to run your custom logic in response to that event right before the dialog closure
                         if (event === "DONE") {
-                            console.log("DONE");
+                            console.log($localize`DONE`);
                             return;
                         }
                         // Set of actions for all event origins before the dialog closes
-                        console.log("BEFORE CLOSED");
+                        console.log($localize`BEFORE CLOSED`);
                         this.activeDialog.close();
         });
 
         // Here we can perform actions required when the dialog just got closed
         this.activeDialog.closed$.pipe(take(1)).subscribe(() => {
-            console.log("CLOSED");
+            console.log($localize`CLOSED`);
         });
     }
 
     public actionDone(): void {
-        console.log("ACTION DONE");
+        console.log($localize`ACTION DONE`);
         this.activeDialog.dismiss("DONE");
     }
 
     public actionCanceled(): void {
-        console.log("ACTION CANCELED");
+        console.log($localize`ACTION CANCELED`);
         this.activeDialog.dismiss();
     }
 
@@ -63,7 +63,7 @@ export class DialogActionBeforeClosureExampleComponent {
     }
 
     public closeFromHeader() {
-        console.log("X pressed");
+        console.log($localize`X pressed`);
         this.activeDialog.dismiss();
     }
 }
