@@ -108,6 +108,7 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
             .attr("class", RadialGaugeThresholdLabelsPlugin.LABEL_CLASS)
             .merge(labelSelection as any)
             .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
+            .attr("title", (d, i) => formatter(data[i].value))
             .style("text-anchor", (d) => this.getTextAnchor(d.startAngle))
             .style("alignment-baseline", (d) => this.getAlignmentBaseline(d.startAngle))
             .text((d, i) => formatter(data[i].value));
