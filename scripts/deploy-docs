@@ -30,6 +30,11 @@ BITS_DOCS_PATH="./projects/bits/${BRANCH_PATH}"
 CHARTS_DOCS_PATH="./projects/charts/${BRANCH_PATH}"
 DASHBOARDS_DOCS_PATH="./projects/dashboards/${BRANCH_PATH}"
 
+echo BRANCH_PATH;
+echo BITS_DOCS_PATH;
+echo CHARTS_DOCS_PATH;
+echo DASHBOARDS_DOCS_PATH;
+
 mkdir nova-docs
 cd ./nova-docs
 
@@ -54,6 +59,9 @@ mv ./projects/charts/api-docs-ng2 $CHARTS_DOCS_PATH
 mkdir --parents ./projects/dashboards
 mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
 rm -rf DASHBOARDS_DOCS_PATH
+ls ./projects/dashboards/
+echo "==========="
+ls $DASHBOARDS_DOCS_PATH
 mv ./projects/dashboards/api-docs-ng2 $DASHBOARDS_DOCS_PATH
 
 # creating artifact for the VM
