@@ -122,7 +122,7 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
 
     private getTextAnchor(angle: any): string {
         // pie charts start on the top, so we need to subtract Math.PI / 2 (90 degrees)
-        const cosine = Math.cos(Number(angle.toFixed(2)) - Math.PI / 2);
+        const cosine = Math.cos(angle - Math.PI / 2);
         if (cosine > 0.5) {
             // used for right 120 degrees of chart
             return "start";
@@ -139,7 +139,7 @@ export class RadialGaugeThresholdLabelsPlugin extends ChartPlugin {
 
     private getAlignmentBaseline(angle: any): string {
         // pie charts start on the top, so we need to add Math.PI / 2 (90 degrees)
-        const sine = Math.sin(Number(angle.toFixed(2)) + Math.PI / 2);
+        const sine = Math.sin(angle + Math.PI / 2);
         if (sine > 0.5) {
             // used for top 120 degrees of chart
             return "text-after-edge";
