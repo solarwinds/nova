@@ -31,7 +31,14 @@ export class WizardHorizontalComponent extends WizardDirective {
     static ngAcceptInputTypeCompleted: BooleanInput = undefined;
     static ngAcceptInputTypeHasError: BooleanInput = undefined;
 
-    @Input() selectedIndex: number;
+    private _horizontalSelectedIndex: number;
+    public get selectedIndex(): number {
+        return this._horizontalSelectedIndex;
+    }
+    @Input()
+    public set selectedIndex(value: number) {
+        this._horizontalSelectedIndex = value;
+    }
 
     /** Whether the label should display in bottom or end position. */
     @Input() labelPosition: "bottom" | "end" = "end";

@@ -42,8 +42,8 @@ interface TableRowData {
 /** @dynamic */
 @Component({
     selector: "nui-table, table[nui-table]",
-    // We used to have our own template for the table but it broke with Angular release 10 so we are now using this even though it is private so we can be
-    // up to date with the CDK table template.
+    // We used to have our own template for the table but it broke with Angular release 10 so we are now using this even though it is intended to be private
+    // so we can be up to date with the CDK table template.
     template: CDK_TABLE_TEMPLATE,
     exportAs: "nuiTable",
     host: {
@@ -61,6 +61,7 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
     @Input() resizable = false;
     @Input() selectable = false;
     @Input() totalItems: number;
+    // @ts-ignore
     @Input() dataSource: T[];
     @Input() selection: ISelection;
     @Input() sortedColumn: ISortedItem;

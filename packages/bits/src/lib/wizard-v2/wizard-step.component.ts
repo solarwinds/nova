@@ -1,6 +1,6 @@
 import {AnimationEvent} from "@angular/animations";
 import {BooleanInput} from "@angular/cdk/coercion";
-import {CdkStep, CdkStepper, StepContentPositionState, STEPPER_GLOBAL_OPTIONS, StepperOptions} from "@angular/cdk/stepper";
+import {CdkStep, CdkStepper, StepContentPositionState, StepperOptions, STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -100,6 +100,7 @@ export class WizardDirective extends CdkStepper implements AfterContentInit {
     @ContentChildren(WizardStepV2Component, {descendants: true}) _steps: QueryList<WizardStepV2Component>;
 
     /** The list of step components that the stepper is holding. */
+    // @ts-ignore
     get steps(): QueryList<WizardStepV2Component> {
         return this._steps;
     }

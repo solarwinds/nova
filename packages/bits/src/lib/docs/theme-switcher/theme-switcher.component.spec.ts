@@ -37,6 +37,7 @@ describe("ThemeSwitcherComponent", () => {
 
   it("should be default mode like in operation system", () => {
     const isDarkModeEnabled = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    console.log(isDarkModeEnabled, (<Array<string>>[].slice.apply(document.children[0].classList)));
     expect((<Array<string>>[].slice.apply(document.children[0].classList)).includes("dark-nova-theme")).toBe(isDarkModeEnabled);
   });
 
