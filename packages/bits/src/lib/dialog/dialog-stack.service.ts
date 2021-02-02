@@ -32,7 +32,7 @@ export class DialogStackService {
                 @Inject(DOCUMENT) private document: Document) {
     }
 
-    open(moduleCFR: ComponentFactoryResolver, contentInjector: Injector, content: any, options: any): any {
+    open(moduleCFR: ComponentFactoryResolver, contentInjector: Injector, content: any, options: any): NuiDialogRef {
         let containerEl: HTMLElement = options.container
                                             ? this.document.querySelector(options.container)
                                             : this.document.body;
