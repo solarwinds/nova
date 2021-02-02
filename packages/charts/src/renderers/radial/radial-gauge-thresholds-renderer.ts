@@ -19,6 +19,8 @@ export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IRadialGaugeThresh
  * @ignore Renderer for drawing threshold level indicators for gauges
  */
 export class RadialGaugeThresholdsRenderer extends RadialRenderer {
+    public static readonly MARKER_CLASS = "threshold-marker";
+
     /**
      * Creates an instance of RadialGaugeThresholdsRenderer.
      * @param {IRadialGaugeThresholdsRendererConfig} [config]
@@ -33,12 +35,6 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
     public draw(renderSeries: IRenderSeries<IRadialAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
         const dataContainer = renderSeries.containers[RenderLayerName.data];
 
-        let gaugeThresholdsGroup = dataContainer.select(".gauge-thresholds");
-        if (gaugeThresholdsGroup.empty()) {
-            gaugeThresholdsGroup = dataContainer.append("svg:g")
-                .attr("class", "gauge-thresholds");
-        }
-
         const data = renderSeries.dataSeries.data;
 
         this.segmentWidth = this.config.annularWidth || 0;
@@ -47,11 +43,12 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0))
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
-        const markerSelection = gaugeThresholdsGroup.selectAll("circle.threshold-marker").data(GaugeRenderingUtils.generateThresholdData(data));
+        const markerSelection = dataContainer.selectAll(`circle.${RadialGaugeThresholdsRenderer.MARKER_CLASS}`)
+            .data(GaugeRenderingUtils.generateThresholdData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")
-            .attr("class", "threshold-marker")
+            .attr("class", RadialGaugeThresholdsRenderer.MARKER_CLASS)
             .merge(markerSelection as any)
             .attr("cx", d => markerGenerator.centroid(d)[0])
             .attr("cy", d => markerGenerator.centroid(d)[1])
