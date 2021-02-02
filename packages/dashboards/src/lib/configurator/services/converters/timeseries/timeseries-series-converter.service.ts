@@ -1,4 +1,4 @@
-import { AfterViewInit, Inject, OnDestroy } from "@angular/core";
+import { AfterViewInit, Inject, OnDestroy, Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import get from "lodash/get";
@@ -18,6 +18,7 @@ import { DATA_SOURCE_CHANGE, DATA_SOURCE_OUTPUT } from "../../../types";
 import { PreviewService } from "../../preview.service";
 import { BaseConverter } from "../base-converter";
 
+@Injectable()
 export class TimeseriesSeriesConverterService extends BaseConverter implements AfterViewInit, OnDestroy {
     private indicatorDataKey = "indicatorData";
     private previewSeriesPath = `providers.${WellKnownProviders.Adapter}.properties.series`;

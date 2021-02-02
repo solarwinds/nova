@@ -1,4 +1,4 @@
-import { AfterViewInit, Inject } from "@angular/core";
+import { AfterViewInit, Inject, Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
@@ -8,6 +8,7 @@ import { PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../../../types";
 import { PreviewService } from "../../../preview.service";
 import { BaseConverter } from "../../base-converter";
 
+@Injectable()
 export class TitleAndDescriptionConverterService extends BaseConverter implements AfterViewInit {
     public static readonly PROPERTIES_PATH = `${PizzagnaLayer.Configuration}.titleAndDescription.properties`;
 

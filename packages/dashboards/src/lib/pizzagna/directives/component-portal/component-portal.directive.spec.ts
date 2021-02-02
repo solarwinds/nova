@@ -1,18 +1,5 @@
 import { PortalModule } from "@angular/cdk/portal";
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ComponentRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    SimpleChange,
-    SimpleChanges
-} from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, Component, ComponentRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChange, SimpleChanges, Directive } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 
@@ -24,6 +11,7 @@ import { ComponentRegistryService } from "../../services/component-registry.serv
 
 import { ComponentPortalDirective } from "./component-portal.directive";
 
+@Directive()
 class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {
     public setComponent(component: any) {
     }
@@ -41,6 +29,7 @@ class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {
     }
 }
 
+@Directive()
 class MockProviderWithProperties extends MockProvider {
     public properties: IProperties = {};
 }

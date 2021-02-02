@@ -1,4 +1,4 @@
-import { Inject } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import get from "lodash/get";
@@ -11,6 +11,7 @@ import { PreviewService } from "../../../preview.service";
 import { BaseConverter } from "../../base-converter";
 import { IConverterFormPartsProperties } from "../../types";
 
+@Injectable()
 export class GenericConverterService extends BaseConverter {
     private formParts: IConverterFormPartsProperties[];
 

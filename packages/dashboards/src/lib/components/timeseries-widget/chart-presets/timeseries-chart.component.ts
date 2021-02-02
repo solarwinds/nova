@@ -1,4 +1,4 @@
-import { Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
+import { Input, OnChanges, OnDestroy, SimpleChanges, Injectable } from "@angular/core";
 import { IDataSource } from "@nova-ui/bits";
 import { IXYScales } from "@nova-ui/charts";
 import { Subject } from "rxjs";
@@ -13,6 +13,7 @@ import {
     ITimeseriesWidgetSeriesData
 } from "../types";
 
+@Injectable()
 export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData> implements OnChanges, OnDestroy {
 
     @Input() public widgetData: ITimeseriesOutput<T> = {} as ITimeseriesOutput<T>;

@@ -1,4 +1,4 @@
-import { OnDestroy } from "@angular/core";
+import { OnDestroy, Injectable } from "@angular/core";
 import get from "lodash/get";
 import { Observable, Subscription } from "rxjs";
 import { distinctUntilChanged, map } from "rxjs/operators";
@@ -10,6 +10,7 @@ import { IConfigurable, IProperties } from "../../types";
 
 import { BroadcasterTrackOnType, IBroadcasterConfig } from "./types";
 
+@Injectable()
 export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
     private component: any;
     private configs: IBroadcasterConfig[];

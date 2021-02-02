@@ -2,10 +2,12 @@ import { IScale, LinearScale, TimeIntervalScale, TimeScale } from "@nova-ui/char
 import { duration } from "moment/moment";
 
 import { ITimeseriesScaleConfig, TimeseriesScaleType } from "./types";
+import { Injectable } from "@angular/core";
 
 /**
  * This service handles scale creation and configuration for the timeseries widget
  */
+@Injectable()
 export class TimeseriesScalesService {
 
     /**

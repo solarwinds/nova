@@ -1,4 +1,4 @@
-import { AfterViewInit, Inject } from "@angular/core";
+import { AfterViewInit, Inject, Injectable } from "@angular/core";
 import { AbstractControl, FormArray, FormGroup, Validators } from "@angular/forms";
 import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import get from "lodash/get";
@@ -13,6 +13,7 @@ import { IItemConfiguration } from "../../../components/types";
 import { PreviewService } from "../../preview.service";
 import { BaseConverter } from "../base-converter";
 
+@Injectable()
 export class TableColumnsConverterService extends BaseConverter implements AfterViewInit {
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,

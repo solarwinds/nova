@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, DoCheck, Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
+import { ChangeDetectorRef, DoCheck, Input, OnChanges, OnDestroy, SimpleChanges, Injectable } from "@angular/core";
 import { LoggerService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
@@ -6,6 +6,7 @@ import { IValueChange, mergeChanges } from "../../functions/merge-changes";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { IComponentConfiguration, IHasChangeDetector } from "../../types";
 
+@Injectable()
 export abstract class BaseLayout implements IHasChangeDetector, OnChanges, DoCheck, OnDestroy {
     // components config from 'pizza'
     public nodeComponentsConfigs: IComponentConfiguration[];

@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import { ChangeDetectorRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, Injectable } from "@angular/core";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { LoggerService } from "@nova-ui/bits";
 
 import { IHasChangeDetector, IHasForm, IProperties } from "../../../../types";
 
+@Injectable()
 export abstract class DonutChartFormatterConfiguratorComponent implements IHasChangeDetector, IHasForm, OnChanges, OnInit {
     @Input() contentFormatterProperties: IProperties;
     @Input() dsOutput: any;

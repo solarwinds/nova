@@ -2,7 +2,9 @@ import defaultsDeep from "lodash/defaultsDeep";
 import set from "lodash/set";
 
 import { IWidget, IWidgetTypeDefinition, PizzagnaLayer } from "../types";
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class WidgetTypesService {
     private widgetTypes: Record<string, IWidgetTypeDefinition[]> = {};
 

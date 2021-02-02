@@ -1,4 +1,4 @@
-import { Inject } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import get from "lodash/get";
@@ -10,6 +10,7 @@ import { PIZZAGNA_EVENT_BUS, PizzagnaLayer, WellKnownProviders } from "../../../
 import { PreviewService } from "../../preview.service";
 import { BaseConverter } from "../base-converter";
 
+@Injectable()
 export class TimeseriesTileIndicatorDataConverterService extends BaseConverter {
     private previewSeriesPath = `chart.providers.${WellKnownProviders.Adapter}.properties.series`;
 

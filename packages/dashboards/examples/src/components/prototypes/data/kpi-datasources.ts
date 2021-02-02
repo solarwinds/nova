@@ -1,10 +1,11 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { DataSourceFeatures, DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
 import { IKpiData, WellKnownDataSourceFeatures } from "@nova-ui/dashboards";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
+@Injectable()
 export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements IDataSource, OnDestroy {
     public static providerId = "AcmeKpiDataSource";
     public static mockError = false;
@@ -51,6 +52,7 @@ export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements ID
     }
 }
 
+@Injectable()
 export class AcmeKpiDataSource2 extends DataSourceService<IKpiData> implements OnDestroy {
     public static providerId = "AcmeKpiDataSource2";
     public static mockError = false;
@@ -107,6 +109,7 @@ export class AcmeKpiDataSource2 extends DataSourceService<IKpiData> implements O
 
 }
 
+@Injectable()
 export class AcmeKpiDataSource3 extends DataSourceService<any> implements OnDestroy {
     public static providerId = "AcmeKpiDataSource3";
 

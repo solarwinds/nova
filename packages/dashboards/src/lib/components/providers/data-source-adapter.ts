@@ -1,4 +1,4 @@
-import { Inject, OnDestroy, Optional } from "@angular/core";
+import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
 import { EventBus, IDataSource, IEvent, IFilteringOutputs } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
@@ -11,6 +11,7 @@ import { DATA_SOURCE, IConfigurable, IProperties, PIZZAGNA_EVENT_BUS, PizzagnaLa
 
 import { IComponentIdPayload, IDataSourceBusyPayload, IDataSourceOutput } from "./types";
 
+@Injectable()
 export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs> implements IConfigurable, OnDestroy {
     protected componentId: string;
     protected lastValue: T;
