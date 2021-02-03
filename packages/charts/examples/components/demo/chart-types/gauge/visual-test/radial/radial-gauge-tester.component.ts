@@ -9,6 +9,7 @@ import {
     IChartAssistSeries,
     IGaugeThreshold,
     radial,
+    RadialGaugeThresholdLabelsPlugin,
     radialGrid
 } from "@nova-ui/charts";
 
@@ -32,6 +33,7 @@ export class RadialGaugeTesterComponent implements OnInit {
         this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
+        this.chartAssist.chart.addPlugin(new RadialGaugeThresholdLabelsPlugin());
 
         this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
         this.chartAssist.update(this.seriesSet);

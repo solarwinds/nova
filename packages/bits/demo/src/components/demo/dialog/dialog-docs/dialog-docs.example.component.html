@@ -131,6 +131,48 @@ option into <code>DialogService open</code> method as second argument. </p>
     <nui-dialog-inside-overlay-example></nui-dialog-inside-overlay-example>
 </nui-example-wrapper>
 
+<h2>Dialog Closure Actions</h2>
+<p>
+    The <code>nui-dialog</code> provides you with a number of ways to perform actions on it's closure. There are two built-in events <code>ESC</code> and <code>BACKDROP_CLICK</code>
+    which are triggered by the keyboard escape key and clicking the dialog's backdrop respectively. However, the user is able to create their own events, which they can pass as an argument into the 
+    <code>dismiss(event)</code> method of the <code>dialogRef</code>. To capture the events there are two types of EventEmitters of the <code>dialogRef</code> - <code>closed$</code>
+    and <code>beforeDismissed$</code>. As can be determined from their names, the <code>closed$</code> event emitter will emit an event right after the dialog window is closed, while the 
+    <code>beforeDismissed$</code> emits right before the dialog is dismissed. <strong>Note:</strong> <code>beforeDissmissed$</code>
+    is only emitted on dialog dismissal (or cancellation); it is not emitted on dialog submission. <code>beforeDismissed$</code>works best in conjunction with the special <code>beforeDismiss</code> function, which can 
+    be configured as an optional configuration parameter of the dialog. This function, if it returns <code>false</code>, will prevent the dialog from closing, until the <code>close</code> 
+    method is called. All this lets you be very flexible in how exactly you want the dialog to be dismissed and when to perform certain actions.
+</p>
+<br>
+<p>
+    The example of the dialog's closure actions below shows how flexible a simple dialog can be in terms of performing certain actions at certain points of the dialog's lifecycle
+</p>
+
+<p>
+    For this example:
+</p>
+<ol>
+    <li>
+        BACKDROP click - The logic specific to the backdrop click is performed, and the dialog stays open in this case.
+    </li>
+    <li>
+        ESC key pressed - First, the logic specific to the ESC button click is performed. Then, general logic before the dialog dismissal is performed. And, finally, the logic to perform right after dialog closure is run.
+    </li>
+    <li>
+        ACTION button pressed - The logic specific to the ACTION button click is performed. Then, the custom DONE event is sent, and finally the event is captured and custom logic is run in response. The dialog stays open in this case.
+    </li>
+    <li>
+        CANCEL button pressed - The logic specific to the CANCEL button click is performed. Then, general logic before the dialog dismissal is performed. And, finally, the logic to perform right after dialog closure is run.
+    </li>
+    <li>
+        Header Close button pressed - The logic specific to the header Close button click is performed. Then, general logic before the dialog dismissal is performed. And, finally, the logic to perform right after dialog closure is run.
+    </li>
+</ol>
+
+
+<nui-example-wrapper filenamePrefix="dialog-actions-before-closure" exampleTitle="Dialog Actions Before Closure">
+    <nui-dialog-actions-before-closure-example></nui-dialog-actions-before-closure-example>
+</nui-example-wrapper>
+
 <h2>React on afterOpened$</h2>
 <p>
     It's possible to perform some actions in your code when a dialog is opened by subscribing to the <code>DialogService</code>'s <code>afterOpened$</code> Subject.
