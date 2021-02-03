@@ -2,14 +2,16 @@ import { arc, Arc, DefaultArcObject, select } from "d3";
 import { Subject } from "rxjs";
 
 import { D3Selection, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../core/common/types";
-import { GaugeService, IGaugeThreshold } from "../../gauge/public-api";
+import { GaugeService } from "../../gauge/gauge.service";
+import { IGaugeThreshold } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { RadialAccessors } from "./accessors/radial-accessors";
+import { GaugeRenderingUtils } from "./gauge-rendering-utils";
 import { RadialGaugeThresholdsRenderer } from "./radial-gauge-thresholds-renderer";
 import { radialScales } from "./radial-scales";
 
-describe("GaugeThresholdsRenderer >", () => {
+describe("RadialGaugeThresholdsRenderer >", () => {
     let renderer: RadialGaugeThresholdsRenderer;
     let testThresholds: IGaugeThreshold[];
     let svg: D3Selection<SVGSVGElement> | any;
@@ -26,7 +28,7 @@ describe("GaugeThresholdsRenderer >", () => {
         containers[RenderLayerName.data] = svg.append("g");
         testThresholds = [{ value: 3 }, { value: 7 }, { value: 9 }];
 
-        dataSeries = gaugeService.generateRadialThresholdSeries(5, 10, testThresholds, accessors, scales);
+        dataSeries = gaugeService.generateThresholdSeries(5, 10, testThresholds, accessors, scales);
 
         renderSeries = {
             dataSeries,
@@ -48,7 +50,7 @@ describe("GaugeThresholdsRenderer >", () => {
             arcGenerator = arc()
                 .outerRadius(renderer.getOuterRadius(renderSeries.scales.r.range(), 0))
                 .innerRadius(innerRadius >= 0 ? innerRadius : 0);
-            markerData = renderer.generateCircleData(renderSeries.dataSeries.data);
+            markerData = GaugeRenderingUtils.generateThresholdData(renderSeries.dataSeries.data);
         });
 
         it("should render the correct number of threshold markers", () => {

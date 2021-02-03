@@ -2,8 +2,9 @@ import { Injectable } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 
 import { CHART_PALETTE_CS1 } from "../core/common/palette/palettes";
-import { IRadialScales, Scales } from "../core/common/scales/types";
-import { DataAccessor, IAccessors, IChartAssistSeries, IDataSeries } from "../core/common/types";
+import { Formatter, IRadialScales, Scales } from "../core/common/scales/types";
+import { DataAccessor, IAccessors, IChartAssistSeries, IChartSeries, IDataSeries } from "../core/common/types";
+import { RadialGaugeThresholdLabelsPlugin } from "../core/plugins/radial-gauge-threshold-labels-plugin";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
 import { VerticalBarAccessors } from "../renderers/bar/accessors/vertical-bar-accessors";
 import { BarRenderer } from "../renderers/bar/bar-renderer";
@@ -52,7 +53,7 @@ export class GaugeService {
 
         // TODO: generate threshold series for linear modes
         if (mode === GaugeMode.Radial) {
-            chartAssistSeries.push(this.generateRadialThresholdSeries(initialValue, initialMax, thresholds, accessors as RadialAccessors, scales));
+            chartAssistSeries.push(this.generateThresholdSeries(initialValue, initialMax, thresholds, accessors as RadialAccessors, scales));
         }
 
         return chartAssistSeries;
@@ -80,11 +81,11 @@ export class GaugeService {
         return updatedSeriesSet;
     }
 
-    public generateRadialThresholdSeries(value: number,
-                                         max: number,
-                                         thresholds: IGaugeThreshold[],
-                                         accessors: RadialAccessors,
-                                         scales: IRadialScales | Scales): IChartAssistSeries<RadialAccessors> {
+    public generateThresholdSeries(value: number,
+                                   max: number,
+                                   thresholds: IGaugeThreshold[],
+                                   accessors: RadialAccessors,
+                                   scales: IRadialScales | Scales): IChartAssistSeries<RadialAccessors> {
         return {
             id: GaugeService.THRESHOLD_MARKERS_SERIES_ID,
             data: this.getThresholdMarkerPoints(thresholds, value, max),
@@ -96,7 +97,17 @@ export class GaugeService {
         };
     }
 
-    private getGaugeAttributes(mode: GaugeMode): IGaugeAttributes {
+    public setThresholdLabelFormatter(formatter: Formatter<string>,
+                                      seriesSet: IChartAssistSeries<IAccessors>[],
+                                      formatterName = RadialGaugeThresholdLabelsPlugin.FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
+        const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof RadialGaugeThresholdsRenderer);
+        if (thresholdsSeries) {
+            thresholdsSeries.scales.r.formatters[formatterName] = formatter;
+        }
+        return seriesSet;
+    }
+
+    public getGaugeAttributes(mode: GaugeMode): IGaugeAttributes {
         const t: IGaugeTools = this.getGaugeTools(mode);
         const result: IGaugeAttributes = {
             accessors: t.accessorFunction(),
@@ -107,7 +118,7 @@ export class GaugeService {
         return result;
     }
 
-    private getGaugeTools(mode: GaugeMode): IGaugeTools {
+    public getGaugeTools(mode: GaugeMode): IGaugeTools {
         const barRendererFunction = () => {
             const renderer = new BarRenderer();
             renderer.config.padding = 0;
@@ -137,15 +148,15 @@ export class GaugeService {
         return chartTools[mode];
     }
 
-    private createDefaultValueColorAccessor(thresholds: IGaugeThreshold[]) {
+    public createDefaultValueColorAccessor(thresholds: IGaugeThreshold[]) {
         return (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (dataSeries.id === GaugeService.REMAINDER_SERIES_ID) {
                 return "var(--nui-color-semantic-unknown-bg-hover)";
             } else {
-                if (!isUndefined(thresholds[1].value) && thresholds[1].value <= data.value) {
+                if (!isUndefined(thresholds[1]?.value) && thresholds[1].value <= data.value) {
                     return "var(--nui-color-semantic-critical)";
                 }
-                if (!isUndefined(thresholds[0].value) && thresholds[0].value <= data.value) {
+                if (!isUndefined(thresholds[0]?.value) && thresholds[0].value <= data.value) {
                     return "var(--nui-color-semantic-warning)";
                 }
                 return CHART_PALETTE_CS1[0];
@@ -153,7 +164,7 @@ export class GaugeService {
         };
     }
 
-    private getGaugeData(value: number, max: number) {
+    public getGaugeData(value: number, max: number) {
         return [
             // category property is used for unifying the linear-style gauge visualization into a single bar stack
             { id: GaugeService.QUANTITY_SERIES_ID, data: [{ category: "gauge", value }] },
@@ -161,7 +172,7 @@ export class GaugeService {
         ];
     }
 
-    private getThresholdMarkerPoints(thresholds: IGaugeThreshold[], value: number, max: number): IGaugeThresholdMarker[] {
+    public getThresholdMarkerPoints(thresholds: IGaugeThreshold[], value: number, max: number): IGaugeThresholdMarker[] {
         const markerValues = thresholds.map(threshold => ({
             hit: threshold.value <= value,
             value: threshold.value,
