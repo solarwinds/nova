@@ -1,4 +1,4 @@
-import { ComponentRef, EventEmitter, Output } from "@angular/core";
+import { ComponentRef, EventEmitter, Injectable, Output } from "@angular/core";
 import noop from "lodash/noop";
 
 import {ContentRef} from "../../services/content-ref";
@@ -18,7 +18,7 @@ export class NuiDialogRef {
         }
     }
 
-    @Output() public closed$ = new EventEmitter();
+    public closed$ = new EventEmitter();
 
     result: Promise<any>;
 

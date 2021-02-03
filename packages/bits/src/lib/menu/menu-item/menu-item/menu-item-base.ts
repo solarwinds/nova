@@ -1,10 +1,10 @@
 import { Highlightable } from "@angular/cdk/a11y";
 import {
     ChangeDetectorRef,
-    Component,
     ElementRef,
     EventEmitter,
     HostBinding,
+    Injectable,
     Input,
     OnChanges,
     Optional,
@@ -21,7 +21,7 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
 /**
  * Base class for menu items. Adds styles to host element
  */
-@Component({})
+@Injectable()
 export abstract class MenuItemBaseComponent implements OnChanges, Highlightable {
     /**
      * Disables action, link and option components

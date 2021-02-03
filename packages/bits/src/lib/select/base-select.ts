@@ -14,7 +14,10 @@ import { NuiFormFieldControl } from "../form-field/public-api";
 
 import { ISelectChangedEvent, ISelectGroup } from "./public-api";
 
-@Component({})
+@Component({
+    template: "",
+    selector: "nui-base-select",
+})
 export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAccessor, NuiFormFieldControl {
     /**
      * The option to disable the select.

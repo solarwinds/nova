@@ -41,7 +41,10 @@ const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
 };
 
-@Component({})
+@Component({
+    template: "",
+    selector: "nui-base-select-v2",
+})
 export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, ControlValueAccessor, IOptionedComponent, OnDestroy, OnChanges {
 
     /** Value used as a placeholder for the select.*/
