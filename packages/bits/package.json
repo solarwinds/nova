@@ -120,10 +120,10 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1002.1",
     "@angular-devkit/build-ng-packagr": "^0.1002.1",
-    "@angular-devkit/build-optimizer": "^0.1000.0",
+    "@angular-devkit/build-optimizer": "^0.1002.1",
     "@angular-devkit/core": "^10.2.1",
     "@angular-devkit/schematics": "^10.2.1",
-    "@angular-devkit/schematics-cli": "^0.1000.0",
+    "@angular-devkit/schematics-cli": "^0.1002.1",
     "@angular/animations": "^10.2.4",
     "@angular/cdk": "^10.2.7",
     "@angular/cli": "^10.2.1",

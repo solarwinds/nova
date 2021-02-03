@@ -315,7 +315,6 @@ describe("components >", () => {
                 };
                 component.tableComponent.ngOnChanges(changes);
                 fixture.detectChanges();
-                console.log(component.tableComponent);
                 expect(component.tableComponent.dataSource).toEqual([]);
             });
         });
