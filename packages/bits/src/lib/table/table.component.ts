@@ -61,8 +61,15 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
     @Input() resizable = false;
     @Input() selectable = false;
     @Input() totalItems: number;
-    // @ts-ignore
-    @Input() dataSource: T[];
+
+    @Input()
+    get dataSource(): T[] {
+        return super.dataSource as any;
+    }
+    set dataSource(value: T[]) {
+        super.dataSource = value as any;
+    }
+
     @Input() selection: ISelection;
     @Input() sortedColumn: ISortedItem;
 
