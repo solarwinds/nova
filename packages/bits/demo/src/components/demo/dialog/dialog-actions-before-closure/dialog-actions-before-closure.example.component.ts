@@ -1,5 +1,5 @@
 import { Component, TemplateRef } from "@angular/core";
-import { DialogService, NuiDialogRef } from "@nova-ui/bits";
+import { DialogService, NuiDialogEvent, NuiDialogRef } from "@nova-ui/bits";
 import { take, takeUntil } from "rxjs/operators";
 
 @Component({
@@ -23,12 +23,12 @@ export class DialogActionBeforeClosureExampleComponent {
                         takeUntil(this.activeDialog.closed$)
                     )
                     .subscribe(event => {
-                        // Covering the 'ESC' button event origin
-                        if (event === "ESC") {
+                        // A dialog will typically close in response to the escape key
+                        if (event === NuiDialogEvent.EscapeKey) {
                             console.log($localize`ESC CLOSED`);
                         }
                         // Covering the 'BACKDROP_CLICK' event in case of clearing the dialog by clicking the backdrop
-                        if (event === "BACKDROP_CLICK") {
+                        if (event === NuiDialogEvent.BackdropClick) {
                             console.log($localize`BACKDROP CLICK CLOSED`);
                             return;
                         }
