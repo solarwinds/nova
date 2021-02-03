@@ -16,9 +16,9 @@ import { buildRelativePath, findModuleFromOptions } from "@schematics/angular/ut
 import { applyLintFix } from "@schematics/angular/utility/lint-fix";
 import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 import { parseName } from "@schematics/angular/utility/parse-name";
-import { buildDefaultPath } from "@schematics/angular/utility/workspace";
 import { getProjectTargets } from "@schematics/angular/utility/project-targets";
 import { validateHtmlSelector, validateName } from "@schematics/angular/utility/validation";
+import { buildDefaultPath } from "@schematics/angular/utility/workspace";
 import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
 
 import { buildSelector, readIntoSourceFile, updateModuleChanges } from "../schematics-helper";

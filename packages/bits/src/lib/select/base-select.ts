@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from "@angular/core";
+import { Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import _includes from "lodash/includes";
 import _isEqual from "lodash/isEqual";
@@ -14,10 +14,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
 
 import { ISelectChangedEvent, ISelectGroup } from "./public-api";
 
-@Component({
-    template: "",
-    selector: "nui-base-select",
-})
+@Directive()
 export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAccessor, NuiFormFieldControl {
     /**
      * The option to disable the select.
