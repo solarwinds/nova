@@ -3,6 +3,11 @@ import {Injector} from "@angular/core";
 export type SeverityLevels = "critical" | "warning" | "info";
 export type ConfirmationDialogButtons = "confirm" | "dismiss";
 
+export enum NuiDialogEvent {
+    EscapeKey = "ESC",
+    BackdropClick = "BACKDROP_CLICK",
+}
+
 export interface IDialogOptions {
     /**
      * Whether a backdrop element should be created for a given modal (true by default).
@@ -77,4 +82,3 @@ export interface IConfirmationDialogOptions extends IDialogOptions {
      */
     setFocus?: ConfirmationDialogButtons;
 }
-
