@@ -92,7 +92,7 @@
     "@applitools/eyes-protractor": "1.9.1",
     "@compodoc/compodoc": "1.1.9",
     "@locl/cli": "0.0.1-beta.9",
-    "@nova-ui/bits": "~9.34.0-0",
+    "@nova-ui/bits": "file:../../../nova-ui-bits-9.34.0-0.tgz",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
     "@types/jasmine": "~3.3.13",

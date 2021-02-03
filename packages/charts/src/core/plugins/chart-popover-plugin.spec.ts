@@ -2,7 +2,7 @@ import { fakeAsync, flush } from "@angular/core/testing";
 import { select } from "d3-selection";
 import cloneDeep from "lodash/cloneDeep";
 
-import { DATA_POINT_INTERACTION_RESET, INTERACTION_DATA_POINT_EVENT, INTERACTION_DATA_POINTS_EVENT } from "../../constants";
+import { DATA_POINT_INTERACTION_RESET, INTERACTION_DATA_POINTS_EVENT, INTERACTION_DATA_POINT_EVENT } from "../../constants";
 import { Chart } from "../chart";
 import { IChartEvent, IDataPoint, IDataPointsPayload, IInteractionDataPointEvent, IInteractionDataPointsEvent, InteractionType } from "../common/types";
 import { XYGridConfig } from "../grid/config/xy-grid-config";
