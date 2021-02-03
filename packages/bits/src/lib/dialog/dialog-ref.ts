@@ -1,4 +1,4 @@
-import { ComponentRef, EventEmitter, Injectable, Output } from "@angular/core";
+import { ComponentRef, EventEmitter } from "@angular/core";
 import noop from "lodash/noop";
 
 import {ContentRef} from "../../services/content-ref";
