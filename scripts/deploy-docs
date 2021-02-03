@@ -24,20 +24,46 @@ while [ -n "$1" ]; do
     esac
 done
 
-branch_name=$(echo "$BUILD_BRANCH" | sed -r "s/[\/ ]+/_/g")
-deploy_subdir="~/projects/${PACKAGE_NAME}/${branch_name}"
-extract_subdir="dist"
+# preparing paths to the docs inside apollo-doc-service
+BRANCH_PATH=$(echo "$CIRCLE_BRANCH" | tr / _)
+BITS_DOCS_PATH="./projects/bits/${BRANCH_PATH}"
+CHARTS_DOCS_PATH="./projects/charts/${BRANCH_PATH}"
+DASHBOARDS_DOCS_PATH="./projects/dashboards/${BRANCH_PATH}"
 
-echo "Deploy directory: $deploy_subdir"
-cat nova-ui-$PACKAGE_NAME-*.tgz | ssh -oStrictHostKeyChecking=no teamcity@apollo-docs.swdev.local "mkdir -p $deploy_subdir && rm -r $deploy_subdir/* ; cd $deploy_subdir && mkdir -p $extract_subdir && cd $extract_subdir && tar --strip-components=1 -xzvf -"
+mkdir nova-docs
+cd ./nova-docs
 
-echo "Copy directory: unzipped to apollo-docs.swdev.local"
-scp -r ./unzipped/** teamcity@apollo-docs.swdev.local:$deploy_subdir
+# avoid prompt related to the HostKeyChecking
+mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 
-echo "Update directory: unzipped"
-if test -f nova-ui-${PACKAGE_NAME}-*.tgz; then
-    echo "Extracting file nova-ui-${PACKAGE_NAME}-*.tgz to ./unzipped"
-    tar -xzvf nova-ui-${PACKAGE_NAME}-*.tgz --directory ./unzipped
-else
-	echo "File nova-ui-${PACKAGE_NAME}-*.tgz does not exist"
-fi
+git clone $DOC_SERVICE_REPO .
+
+# move bits docs
+mkdir --parents ./projects/bits
+mv ../packages/bits/sdk/api-docs-ng2 ./projects/bits/
+rm -rf $BITS_DOCS_PATH
+mv ./projects/bits/api-docs-ng2 $BITS_DOCS_PATH
+
+# move charts docs
+mkdir --parents ./projects/charts
+mv ../packages/charts/sdk/api-docs-ng2 ./projects/charts/
+rm -rf $CHARTS_DOCS_PATH
+mv ./projects/charts/api-docs-ng2 $CHARTS_DOCS_PATH
+
+# move dashboards docs
+mkdir --parents ./projects/dashboards
+mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
+rm -rf DASHBOARDS_DOCS_PATH
+mv ./projects/dashboards/api-docs-ng2 $DASHBOARDS_DOCS_PATH
+
+# creating artifact for the VM
+zip -r nova-docs.zip *
+mv ./nova-docs.zip ../
+
+# push changes to the repo
+git config user.email "circleci@circleci"
+git config user.name "${GITHUB_USER_NAME}"
+git remote set-url origin https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/nova-docs.git
+git add .
+git commit -m "add docs"
+git push origin main

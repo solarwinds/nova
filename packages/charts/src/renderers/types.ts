@@ -77,6 +77,8 @@ export interface IBarRendererConfig extends IRendererConfig {
     cursor?: string;
     /** Enables pointer events on the bars */
     pointerEvents?: boolean;
+    /** Set the stroke width in pixels */
+    strokeWidth?: number;
 }
 
 /** The configuration interface for the area renderer */
@@ -87,6 +89,8 @@ export interface IAreaRendererConfig extends IRendererConfig {
     areaClass?: string;
     /** Enables the pointer cursor when data point markers are hovered */
     markerInteraction?: IMarkerInteractionConfig;
+    /** The width of the area path's stroke in pixels. Default is 1. */
+    strokeWidth?: number;
 }
 
 export interface IRenderSeries<TA extends IAccessors> {

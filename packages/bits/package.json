@@ -1,7 +1,7 @@
 {
   "name": "@nova-ui/bits",
   "license": "Apache-2.0",
-  "version": "9.34.0-0",
+  "version": "10.0.0-0",
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "description": "SolarWinds Nova Framework",
   "contributors": [
@@ -81,7 +81,8 @@
     "compile-colors": "node ./scripts/colors-conf.js",
     "lint": "ng l",
     "lint:fix": "ng l --fix",
-    "i18n-locl-extract": "npx locl extract -s=dist/bundles/nova-ui-bits.umd.js -f=xlf -o=./sdk/locale/messages.en.xlf"
+    "i18n-locl-extract": "npx locl extract -s=dist/bundles/nova-ui-bits.umd.js -f=xlf -o=./sdk/locale/messages.en.xlf",
+    "postinstall": "cd ."
   },
   "analyze": false,
   "peerDependencies": {

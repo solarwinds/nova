@@ -24,6 +24,7 @@ import {
 import {
     ComponentAsContentExampleComponent,
     ConfirmationDialogExampleComponent,
+    DialogAfterOpenedExampleComponent,
     DialogContentExampleComponent,
     DialogCustomClassExampleComponent,
     DialogDocsComponent,
@@ -123,6 +124,7 @@ const routes = [
         SimpleDialogExampleComponent,
         DialogWithStaticBackdropExampleComponent,
         DialogZIndexTestComponent,
+        DialogAfterOpenedExampleComponent,
     ],
     providers: [
         {
