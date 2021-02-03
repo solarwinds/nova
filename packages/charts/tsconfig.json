@@ -4,12 +4,13 @@
         "baseUrl": "./",
         "declaration": false,
         "importHelpers": true,
-        "module": "esnext",
+        "module": "es2020",
         "outDir": "./dist/out-tsc",
         "preserveSymlinks": true,
         "typeRoots": [
             "node_modules/@types"
         ],
+        "target": "es2018",
         "lib": [
             "es2018",
             "dom"

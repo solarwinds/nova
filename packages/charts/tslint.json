@@ -1,4 +1,9 @@
 {
+  "rules": {
+    "deprecation": {
+      "severity": "warning"
+    }
+  },
   "extends": [
     "../../ts-lint-rules/tslint.angular.json"
   ]
