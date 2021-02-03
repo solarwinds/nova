@@ -20,7 +20,9 @@ import {
     ViewChildren,
 } from "@angular/core";
 import {
+    DEFAULT_INTERACTIVE_ELEMENTS,
     EventBus,
+    IDataField,
     IDataSource,
     IEvent,
     IFilter,
@@ -47,7 +49,7 @@ import { ITableFormatterDefinition } from "../types";
 
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
-import { DEFAULT_INTERACTIVE_ELEMENTS, IDataField, ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
+import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
 
 
 /**

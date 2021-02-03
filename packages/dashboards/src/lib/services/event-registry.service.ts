@@ -1,9 +1,5 @@
 import { Injectable } from "@angular/core";
 import { IEventDefinition } from "@nova-ui/bits";
-
-
-
-
 @Injectable({
     providedIn: "root",
 })

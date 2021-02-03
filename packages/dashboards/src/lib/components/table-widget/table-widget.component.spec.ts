@@ -5,6 +5,7 @@ import { SimpleChange, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import {
     EventBus,
+    IDataField,
     LocalFilteringDataSource,
     LoggerService,
     NuiBusyModule,
@@ -13,9 +14,8 @@ import {
     NuiTableModule,
     SearchService,
     SorterDirection,
-    VirtualViewportManager
+    VirtualViewportManager,
 } from "@nova-ui/bits";
-import { INovaFilteringOutputs, INovaFilters } from "@nova-ui/bits";
 import { BehaviorSubject } from "rxjs";
 import { skip, take, tap } from "rxjs/operators";
 
@@ -29,7 +29,7 @@ import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 
 import { TableWidgetComponent } from "./table-widget.component";
-import { IDataField, ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
+import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
 
 interface BasicTableModel {
     position: number;
