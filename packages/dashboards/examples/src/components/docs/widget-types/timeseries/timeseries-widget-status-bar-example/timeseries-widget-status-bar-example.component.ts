@@ -1,12 +1,11 @@
 import { Component, Injectable, OnInit } from "@angular/core";
-import { DataSourceService, IDataSourceOutput, INovaFilters, ITimeframe } from "@nova-ui/bits";
+import { DataSourceService, IDataSource, IDataSourceOutput, INovaFilters, ITimeframe } from "@nova-ui/bits";
 import { CHART_PALETTE_CS_S_EXTENDED } from "@nova-ui/charts";
 import {
     applyStatusEndpoints,
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
     IDashboard,
-    IDataSource,
     IProviderConfiguration,
     ISerializableTimeframe,
     ITimeseriesItemConfiguration,
