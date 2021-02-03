@@ -97,7 +97,7 @@ export class ChipsOverflowService {
                 }
             }
 
-            acc = acc + chipElementWidth;
+            acc += chipElementWidth;
 
             if (isLastLine() && chipsOverflow) {
                 chipElement.style.display = "none";
