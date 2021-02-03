@@ -1,7 +1,6 @@
 // If you need to work with back-end filtering, you need to extend DataSourceService instead of LocalFilteringDataSource
 import { Inject, Injectable } from "@angular/core";
-import { INovaFilters, LocalFilteringDataSource, SearchService } from "@nova-ui/bits";
-import { IDataField } from "@nova-ui/dashboards";
+import { IDataField, INovaFilters, LocalFilteringDataSource, SearchService } from "@nova-ui/bits";
 import { BehaviorSubject, Subject } from "rxjs";
 
 import { TABLE_DATA } from "../widget-data";
