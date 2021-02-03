@@ -30,11 +30,6 @@ BITS_DOCS_PATH="./projects/bits/${BRANCH_PATH}"
 CHARTS_DOCS_PATH="./projects/charts/${BRANCH_PATH}"
 DASHBOARDS_DOCS_PATH="./projects/dashboards/${BRANCH_PATH}"
 
-echo $BRANCH_PATH;
-echo $BITS_DOCS_PATH;
-echo $CHARTS_DOCS_PATH;
-echo $DASHBOARDS_DOCS_PATH;
-
 mkdir nova-docs
 cd ./nova-docs
 
