@@ -58,18 +58,8 @@ mv ./projects/charts/api-docs-ng2 $CHARTS_DOCS_PATH
 # move dashboards docs
 mkdir --parents ./projects/dashboards
 mv ../packages/dashboards/sdk/api-docs-ng2 ./projects/dashboards/
-echo "before ./projects/dashboards/==========="
-ls ./projects/dashboards/
-rm -rf DASHBOARDS_DOCS_PATH
-echo "./projects/dashboards/==========="
-ls ./projects/dashboards/
-echo "DASHBOARDS_DOCS_PATH==========="
-ls $DASHBOARDS_DOCS_PATH
+rm -rf $DASHBOARDS_DOCS_PATH
 mv ./projects/dashboards/api-docs-ng2 $DASHBOARDS_DOCS_PATH
-echo "./projects/dashboards/==========="
-ls ./projects/dashboards/
-echo "DASHBOARDS_DOCS_PATH==========="
-ls $DASHBOARDS_DOCS_PATH
 
 # creating artifact for the VM
 zip -r nova-docs.zip *
