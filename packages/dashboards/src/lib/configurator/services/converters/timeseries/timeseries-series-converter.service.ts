@@ -1,4 +1,4 @@
-import { AfterViewInit, Inject, OnDestroy, Injectable } from "@angular/core";
+import { AfterViewInit, Inject, Injectable, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import get from "lodash/get";
@@ -11,7 +11,7 @@ import { distinctUntilChanged, map, takeUntil } from "rxjs/operators";
 import { IDataSourceOutput } from "../../../../components/providers/types";
 import { ITimeseriesWidgetData, ITimeseriesWidgetSeries } from "../../../../components/timeseries-widget/types";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
-import { PIZZAGNA_EVENT_BUS, PizzagnaLayer, WellKnownProviders } from "../../../../types";
+import { PizzagnaLayer, PIZZAGNA_EVENT_BUS, WellKnownProviders } from "../../../../types";
 import { IItemConfiguration } from "../../../components/types";
 import { ITimeseriesItemConfiguration } from "../../../components/widgets/timeseries/types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_OUTPUT } from "../../../types";

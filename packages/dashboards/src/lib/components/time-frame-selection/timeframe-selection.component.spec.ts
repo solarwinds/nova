@@ -1,5 +1,5 @@
 import { SimpleChange } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants, ITimeframe, TimeFrameBarComponent } from "@nova-ui/bits";
 import moment from "moment/moment";
@@ -12,7 +12,7 @@ import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-compone
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { ProviderRegistryService } from "../../services/provider-registry.service";
 import { REFRESH, SET_TIMEFRAME } from "../../services/types";
-import { DATA_SOURCE, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
+import { DATA_SOURCE, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
 
 import { TimeframeSelectionComponent } from "./timeframe-selection.component";
 
@@ -46,7 +46,7 @@ describe("TimeframeSelectionComponent", () => {
     const pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
     const dataSource = new MockDataSource();
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [

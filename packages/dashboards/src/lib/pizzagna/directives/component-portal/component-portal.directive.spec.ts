@@ -1,5 +1,8 @@
 import { PortalModule } from "@angular/cdk/portal";
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChange, SimpleChanges, Directive } from "@angular/core";
+import {
+    AfterViewInit, ChangeDetectorRef, Component, ComponentRef, Directive, EventEmitter, Input, OnChanges,
+    OnDestroy, OnInit, Output, SimpleChange, SimpleChanges
+} from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 

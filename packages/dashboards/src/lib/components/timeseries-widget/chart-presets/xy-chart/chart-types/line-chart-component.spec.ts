@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus } from "@nova-ui/bits";
 import { XYGridConfig } from "@nova-ui/charts";
 
@@ -12,7 +12,7 @@ describe("LineChartComponent", () => {
     let component: LineChartComponent;
     let fixture: ComponentFixture<LineChartComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [

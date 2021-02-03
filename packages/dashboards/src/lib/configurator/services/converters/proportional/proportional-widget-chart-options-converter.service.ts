@@ -6,7 +6,7 @@ import { takeUntil } from "rxjs/operators";
 import { IProportionalWidgetChartOptions } from "../../../../components/proportional-widget/types";
 import { LegendPlacement } from "../../../../components/types";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
-import { PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../../types";
+import { PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { PreviewService } from "../../preview.service";
 import { BaseConverter } from "../base-converter";
 

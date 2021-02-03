@@ -1,5 +1,6 @@
-import { IWidget } from "../types";
 import { Injectable } from "@angular/core";
+
+import { IWidget } from "../types";
 
 @Injectable()
 export class WidgetConfigurationService {

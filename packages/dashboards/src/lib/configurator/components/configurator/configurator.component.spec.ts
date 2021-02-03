@@ -1,9 +1,9 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../dashboards.module";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
-import { IPizzagna, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../types";
+import { IPizzagna, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../types";
 
 import { ConfiguratorComponent } from "./configurator.component";
 
@@ -13,7 +13,7 @@ describe("ConfiguratorComponent", () => {
     let testPizzagna: IPizzagna;
     let detectChangesSpy: jasmine.Spy;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [

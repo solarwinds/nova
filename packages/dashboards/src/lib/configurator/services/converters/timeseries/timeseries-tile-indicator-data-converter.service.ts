@@ -6,7 +6,7 @@ import { takeUntil } from "rxjs/operators";
 
 import { ITimeseriesWidgetSeries } from "../../../../components/timeseries-widget/types";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
-import { PIZZAGNA_EVENT_BUS, PizzagnaLayer, WellKnownProviders } from "../../../../types";
+import { PizzagnaLayer, PIZZAGNA_EVENT_BUS, WellKnownProviders } from "../../../../types";
 import { PreviewService } from "../../preview.service";
 import { BaseConverter } from "../base-converter";
 

@@ -60,6 +60,6 @@ const routes: Routes = [
 })
 export class TableDocsModule {
     constructor(tableFormattersRegistryService: TableFormatterRegistryService) {
-        tableFormattersRegistryService.addFormatters(DEFAULT_TABLE_FORMATTERS);
+        tableFormattersRegistryService.addItems(DEFAULT_TABLE_FORMATTERS);
     }
 }

@@ -8,7 +8,7 @@ import { distinctUntilChanged, distinctUntilKeyChanged, filter, map, pluck, star
 
 import { ITableWidgetColumnConfig } from "../../../../components/table-widget/types";
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
-import { PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../../types";
+import { PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { IItemConfiguration } from "../../../components/types";
 import { PreviewService } from "../../preview.service";
 import { BaseConverter } from "../base-converter";

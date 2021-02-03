@@ -5,7 +5,7 @@ import omit from "lodash/omit";
 import { ReplaySubject } from "rxjs";
 
 import { ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../services/types";
-import { IComponentConfiguration, IPizza, IPizzagna, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
+import { IComponentConfiguration, IPizza, IPizzagna, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
 import { getPizzagnaPropertyPath, IPizzagnaProperty } from "../functions/get-pizzagna-property-path";
 
 import { DynamicComponentCreator } from "./dynamic-component-creator.service";

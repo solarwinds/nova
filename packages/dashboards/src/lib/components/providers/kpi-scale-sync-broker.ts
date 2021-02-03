@@ -6,7 +6,7 @@ import { distinctUntilChanged, filter, takeUntil, tap } from "rxjs/operators";
 
 import { IPizzagnaProperty } from "../../pizzagna/functions/get-pizzagna-property-path";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
-import { IConfigurable, IProperties, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
+import { IConfigurable, IProperties, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
 
 import { IBroker, IBrokerUserConfig, IBrokerValue } from "./types";
 

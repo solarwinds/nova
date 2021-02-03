@@ -4,7 +4,7 @@ import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
-import { PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../../../types";
+import { PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { PreviewService } from "../../../preview.service";
 import { BaseConverter } from "../../base-converter";
 

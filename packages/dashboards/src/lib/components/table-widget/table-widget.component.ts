@@ -42,7 +42,7 @@ import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { TableFormatterRegistryService } from "../../services/table-formatter-registry.service";
 import { INTERACTION, REFRESH, WIDGET_READY, WIDGET_RESIZE } from "../../services/types";
 import { WidgetConfigurationService } from "../../services/widget-configuration.service";
-import { DATA_SOURCE, PIZZAGNA_EVENT_BUS, PizzagnaLayer, WellKnownDataSourceFeatures } from "../../types";
+import { DATA_SOURCE, PizzagnaLayer, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../types";
 import { ITableFormatterDefinition } from "../types";
 
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
@@ -418,7 +418,7 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         if (this.formatters?.version !== this.formattersRegistryService.stateVersion) {
             this.formatters = {
                 // Transforming array into map
-                items: this.formattersRegistryService.getFormatters()
+                items: this.formattersRegistryService.getItems()
                     .reduce((prev, next) => ({ ...prev, [next.componentType]: next }), {}),
                 version: this.formattersRegistryService.stateVersion,
             };
