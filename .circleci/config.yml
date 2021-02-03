@@ -450,10 +450,10 @@ workflows:
             -   bits-visual-test:
                     requires:
                         - bits-build
-                    # filters:
-                    #     branches:
-                    #         only:
-                    #             - main
+                    filters:
+                        branches:
+                            only:
+                                - main
             -   bits-publish:
                     requires:
                         - bits-e2e-test
@@ -482,10 +482,10 @@ workflows:
             -   charts-visual-test:
                     requires:
                         - charts-build
-                    # filters:
-                    #     branches:
-                    #         only:
-                    #             - main
+                    filters:
+                        branches:
+                            only:
+                                - main
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -519,10 +519,10 @@ workflows:
             -   dashboards-visual-test:
                     requires:
                         - dashboards-build
-                    # filters:
-                    #     branches:
-                    #         only:
-                    #             - main
+                    filters:
+                        branches:
+                            only:
+                                - main
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
