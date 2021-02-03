@@ -12,13 +12,14 @@ export class DialogActionBeforeClosureExampleComponent {
     constructor(private dialogService: DialogService) {}
 
     public open(content: TemplateRef<string>) {
-        // If the beforeDismiss function returns 'false' it will prevent the dialog from closing.
+        // You can return 'false' from the optional beforeDismiss function anytime you want to prevent the dialog from closing.
         this.activeDialog = this.dialogService.open(content, {size: "sm", beforeDismiss: this.beforeDismiss});
 
-        // We can use the beforeDismissed$ event to execute actions right before the dialog gets closed
+        // You can use the beforeDismissed$ event to execute actions right before the dialog gets closed
         this.activeDialog
                 .beforeDismissed$
                     .pipe(
+                        // Be sure to unsubscribe on dialog closure
                         takeUntil(this.activeDialog.closed$)
                     )
                     .subscribe(event => {
@@ -31,18 +32,19 @@ export class DialogActionBeforeClosureExampleComponent {
                             console.log($localize`BACKDROP CLICK CLOSED`);
                             return;
                         }
-                        // Here we cover the custom 'DONE' event which you can create and then capture within the '.beforeDismiss' subscription
-                        // to run your custom logic in response to that event right before the dialog closure
+                        // Here we cover the custom 'DONE' event which you can create and then capture within the 'beforeDismissed$' subscription
+                        // to run your custom logic in response to that event right before the dialog closure.  See 'actionDone' implementation below.
                         if (event === "DONE") {
                             console.log($localize`DONE`);
                             return;
                         }
                         // Set of actions for all event origins before the dialog closes
                         console.log($localize`BEFORE CLOSED`);
+                        // Manually close the dialog since the `beforeDismiss` implementation below short-circuits dismissal with its 'false' return value
                         this.activeDialog.close();
         });
 
-        // Here we can perform actions required when the dialog just got closed
+        // You can perform any required actions just after dialog closure here
         this.activeDialog.closed$.pipe(take(1)).subscribe(() => {
             console.log($localize`CLOSED`);
         });
@@ -63,7 +65,7 @@ export class DialogActionBeforeClosureExampleComponent {
     }
 
     public closeFromHeader() {
-        console.log($localize`X pressed`);
+        console.log($localize`CLOSE BUTTON CLICKED`);
         this.activeDialog.dismiss();
     }
 }
