@@ -48,7 +48,5 @@
     "rimraf": "^3.0.0",
     "symlink-dir": "^3.1.0"
   },
-  "dependencies": {
-    "@angular-devkit/schematics": "^11.1.2"
-  }
+  "dependencies": {}
 }
