@@ -4,10 +4,10 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
 import { IRadialGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
-import { IGaugeThreshold } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { IRadialAccessors } from "./accessors/radial-accessors";
+import { GaugeRenderingUtils } from "./gauge-rendering-utils";
 import { RadialRenderer } from "./radial-renderer";
 
 /**
@@ -19,6 +19,8 @@ export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IRadialGaugeThresh
  * @ignore Renderer for drawing threshold level indicators for gauges
  */
 export class RadialGaugeThresholdsRenderer extends RadialRenderer {
+    public static readonly MARKER_CLASS = "threshold-marker";
+
     /**
      * Creates an instance of RadialGaugeThresholdsRenderer.
      * @param {IRadialGaugeThresholdsRendererConfig} [config]
@@ -32,50 +34,27 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
     /** See {@link Renderer#draw} */
     public draw(renderSeries: IRenderSeries<IRadialAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
         const dataContainer = renderSeries.containers[RenderLayerName.data];
+
         const data = renderSeries.dataSeries.data;
 
-        this.segmentWidth = this.config.annularWidth;
+        this.segmentWidth = this.config.annularWidth || 0;
         const innerRadius = this.getInnerRadius(renderSeries.scales.r.range(), 0);
-        const arcGenerator: Arc<any, DefaultArcObject> = arc()
+        const markerGenerator: Arc<any, DefaultArcObject> = arc()
             .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0))
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
-        const selection = dataContainer.selectAll("circle.threshold").data(this.generateCircleData(data));
-        selection.exit().remove();
-        selection.enter()
+        const markerSelection = dataContainer.selectAll(`circle.${RadialGaugeThresholdsRenderer.MARKER_CLASS}`)
+            .data(GaugeRenderingUtils.generateThresholdData(data));
+        markerSelection.exit().remove();
+        markerSelection.enter()
             .append("circle")
-            .attr("class", "threshold")
-            .merge(selection as any)
-            .attr("cx", d => arcGenerator.centroid(d)[0])
-            .attr("cy", d => arcGenerator.centroid(d)[1])
+            .attr("class", RadialGaugeThresholdsRenderer.MARKER_CLASS)
+            .merge(markerSelection as any)
+            .attr("cx", d => markerGenerator.centroid(d)[0])
+            .attr("cy", d => markerGenerator.centroid(d)[1])
             .attr("r", 4)
             .style("fill", (d, i) => data[i].hit ? "var(--nui-color-text-light)" : "var(--nui-color-text-default)")
             .style("stroke-width", 0);
-    }
-
-    public generateArcData(data: any[]) {
-        // arcs with a value of zero serve as the threshold points
-        const arcData: number[] = Array(data.length * 2 - 1).fill(0);
-        data.forEach((d: IGaugeThreshold, i: number) => {
-            // arcs with a non-zero value serve as the space between the threshold points
-            arcData[i * 2] = i === 0 ? d.value : d.value - data[i - 1].value;
-        });
-        return arcData;
-    }
-
-    public generateCircleData(data: any[]) {
-        const arcData: number[] = this.generateArcData(data);
-        const circleData: any[] = [];
-        const pieGenerator = pie().sort(null);
-        const arcsForCircles = pieGenerator(arcData);
-
-        arcsForCircles.forEach((arcDatum: any, i: number) => {
-            // Drawing circles at threshold points
-            if (i % 2 === 1) {
-                circleData.push(arcDatum);
-            }
-        });
-        return circleData;
     }
 
     public getInnerRadius(range: number[], index: number): number {
