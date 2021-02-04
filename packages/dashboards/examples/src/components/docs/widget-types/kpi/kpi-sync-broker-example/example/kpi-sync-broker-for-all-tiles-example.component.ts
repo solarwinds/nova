@@ -242,13 +242,13 @@ export class KpiSyncBrokerForAllTilesExampleComponent implements OnInit {
                 cols: 3,
                 rows: 6,
                 y: 0,
-                x: 0,
+                x: 3,
             },
             "kpiWidgetId3": {
                 cols: 3,
                 rows: 6,
                 y: 0,
-                x: 0,
+                x: 6,
             },
         };
 
