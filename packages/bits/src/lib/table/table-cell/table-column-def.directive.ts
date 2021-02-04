@@ -14,7 +14,13 @@ import { TableStateHandlerService } from "../table-state-handler.service";
 })
 export class TableColumnDefDirective extends CdkColumnDef implements OnInit, OnChanges {
     // tslint:disable:no-input-rename
-    @Input("nuiColumnDef") name: string;
+    public get name(): string {
+        return super.name;
+    }
+    @Input("nuiColumnDef")
+    public set name(value: string) {
+        super.name = value;
+    }
     // tslint:enable:no-input-rename
     @Input() type: ColumnTypes;
     @Input() columnWidth: number;

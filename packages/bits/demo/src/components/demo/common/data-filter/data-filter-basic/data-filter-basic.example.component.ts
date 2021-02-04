@@ -9,7 +9,7 @@ import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { LIST_DATA, ListModel, TABLE_DATA, TableModel } from "./mocked-data";
+import { ListModel, LIST_DATA, TableModel, TABLE_DATA } from "./mocked-data";
 
 // custom data sources used for filtering
 @Injectable()
