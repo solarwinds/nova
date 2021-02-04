@@ -37,13 +37,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    ReactiveFormsModule,
-                    NuiFormFieldModule,
-                ],
                 declarations: [
                     TextboxComponent,
-                    TextboxFormComponent,
                     SpinnerComponent,
                 ],
             }).compileComponents();
