@@ -454,6 +454,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   bits-publish:
                     requires:
                         - bits-e2e-test
@@ -467,6 +468,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
             -   charts-build:
                     requires:
                         - bits-pack
@@ -486,6 +488,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -499,6 +502,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
             -   dashboards-build:
                     requires:
                         - charts-pack
@@ -523,6 +527,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
@@ -536,6 +541,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
     nova-release:
         jobs:
             -   release-approval:
