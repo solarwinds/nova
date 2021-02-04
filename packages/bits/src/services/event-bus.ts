@@ -1,4 +1,4 @@
-import { OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import each from "lodash/each";
 import { Observable, ReplaySubject, Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -8,6 +8,7 @@ import { IEventDefinition } from "./public-api";
 /**
  * @ignore
  */
+@Injectable()
 export class EventBus<T> implements OnDestroy {
 
     public streamAdded = new ReplaySubject<string>();

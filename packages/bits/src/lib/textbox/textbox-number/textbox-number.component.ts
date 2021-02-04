@@ -247,16 +247,16 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
     }
 
     // We need to restrict user input because safari does not prevent non numerical input in type 'number'
-    public preventNonNumericalPaste(event: ClipboardEvent): void {
-        const pastedString: String | undefined = event.clipboardData?.getData("text/plain");
+    public preventNonNumericalPaste(event: ClipboardEvent): void {
+        const pastedString: String | undefined = event.clipboardData?.getData("text/plain");
         if (!pastedString) {
             throw new Error("Unable to parse clipboardData");
         }
         this.preventDefaultEventBehavior(event, pastedString, regexpValidation.multiCharNumeric);
     }
 
-    public preventNonNumericalInput(event: KeyboardEvent): void {
-        const inputString: String = event.key;
+    public preventNonNumericalInput(event: KeyboardEvent): void {
+        const inputString: String = event.key;
         if (!this.isMetaKey(event)) {
             this.preventDefaultEventBehavior(event, inputString, regexpValidation.singleCharNumeric);
         }

@@ -372,7 +372,9 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
 
     /* START - ITEM BEHAVIOUR DECIDERS */
     public isItemDisabled(item: T): boolean {
+        // @ts-ignore
         return item.hasOwnProperty(nameof<IRepeatItem>("disabled"))
+            // @ts-ignore
             ? item.disabled
             : !!this.itemConfig?.isDisabled?.(item);
     }
