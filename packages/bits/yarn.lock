@@ -342,6 +342,16 @@
   resolved "https://registry.yarnpkg.com/@applitools/dom-shared/-/dom-shared-1.0.4.tgz#1a59116f3f29fb140ac031949547531348c9d972"
   integrity sha512-WRGko/7pJLwcDbQ5r0q2KD58VemIHm+JyKeXSflQhJvQqA5ONYyBX6cZo0h3o1SqdlzQnWM5REzoxoOpOGflzQ==
 
+"@applitools/dom-snapshot@4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@applitools/dom-snapshot/-/dom-snapshot-4.2.0.tgz#72254be14ff073f6a2b05144e10dd2f1ae1ba93f"
+  integrity sha512-p2y8ndJAHVl95ZSlGw3n+5NIrF4DgeMai9bmY1NoZfgMPwOLPPFkCK3WqeRMHztT+BEcjhIrSR9eFg0R9DCkYw==
+  dependencies:
+    "@applitools/dom-shared" "1.0.4"
+    "@applitools/functional-commons" "1.6.0"
+    css-tree "1.0.0-alpha.39"
+    pako "1.0.11"
+
 "@applitools/dom-snapshot@4.2.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@applitools/dom-snapshot/-/dom-snapshot-4.2.1.tgz#26495372535109dd8d2ad35f1f9f171b21262b74"
@@ -360,13 +370,13 @@
     "@applitools/eyes-sdk-core" "12.4.2"
     "@applitools/visual-grid-client" "15.0.10"
 
-"@applitools/eyes-sdk-core@12.3.2":
-  version "12.3.2"
-  resolved "https://registry.yarnpkg.com/@applitools/eyes-sdk-core/-/eyes-sdk-core-12.3.2.tgz#4633c1f44c7fa210c4bbfa4501a543ea2be8666c"
-  integrity sha512-ObmVyfG5eUvTiJbufK4P+IJwZou5i4553zRQhR1HVJulSs/icXWy2ClMzA+gAM+Lg5RjzCYrPOUEmIzU9VE0jw==
+"@applitools/eyes-sdk-core@12.3.1":
+  version "12.3.1"
+  resolved "https://registry.yarnpkg.com/@applitools/eyes-sdk-core/-/eyes-sdk-core-12.3.1.tgz#bbbeae2b6cc2fb420b2217cd6143a948e6f08f9d"
+  integrity sha512-u0a69InidVqsjxZQqQMtTrOkqtf/rmt+UuMYBJaipbq4aLBYAqlsgxlyYXbtwSuCoLj2yXUeR7NXDj531Ms4Tw==
   dependencies:
     "@applitools/dom-capture" "8.0.0"
-    "@applitools/dom-snapshot" "4.2.1"
+    "@applitools/dom-snapshot" "4.2.0"
     "@applitools/isomorphic-fetch" "3.0.0"
     "@applitools/snippets" "2.0.3"
     axios "0.19.2"
@@ -1729,14 +1739,14 @@
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*", "@types/node@>=6":
-  version "14.14.22"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.22.tgz#0d29f382472c4ccf3bd96ff0ce47daf5b7b84b18"
-  integrity sha512-g+f/qj/cNcqKkc3tFqlXOYjrmZA+jNBiDzbP3kH+B+otKFqAdPgVTGP1IeKRdMml/aE69as5S4FqtxAbl+LaMw==
+  version "14.14.25"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.25.tgz#15967a7b577ff81383f9b888aa6705d43fbbae93"
+  integrity sha512-EPpXLOVqDvisVxtlbvzfyqSsFeQxltFbluZNRndIb8tr9KiBnYNLzrc1N3pyKUCww2RNrfHDViqDWWE1LCJQtQ==
 
 "@types/node@^12.11.1":
-  version "12.19.15"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.19.15.tgz#0de7e978fb43db62da369db18ea088a63673c182"
-  integrity sha512-lowukE3GUI+VSYSu6VcBXl14d61Rp5hA1D+61r16qnwC0lYNSqdxcvRh0pswejorHfS+HgwBasM8jLXz0/aOsw==
+  version "12.19.16"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.19.16.tgz#15753af35cbef636182d8d8ca55b37c8583cecb3"
+  integrity sha512-7xHmXm/QJ7cbK2laF+YYD7gb5MggHIIQwqyjin3bpEGiSuvScMQ5JZZXPvRipi1MwckTQbJZROMns/JxdnIL1Q==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -3685,11 +3695,11 @@ cookie@~0.4.1:
   integrity sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==
 
 copy-anything@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/copy-anything/-/copy-anything-2.0.1.tgz#2afbce6da684bdfcbec93752fa762819cb480d9a"
-  integrity sha512-lA57e7viQHOdPQcrytv5jFeudZZOXuyk47lZym279FiDQ8jeZomXiGuVf6ffMKkJ+3TIai3J1J3yi6M+/4U35g==
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/copy-anything/-/copy-anything-2.0.3.tgz#842407ba02466b0df844819bbe3baebbe5d45d87"
+  integrity sha512-GK6QUtisv4fNS+XcI7shX0Gx9ORg7QqIznyfho79JTnX1XhLiyZHfftvGiziqzRiEi/Bjhgpi+D2o7HxJFPnDQ==
   dependencies:
-    is-what "^3.7.1"
+    is-what "^3.12.0"
 
 copy-concurrently@^1.0.0:
   version "1.0.5"
@@ -6609,7 +6619,7 @@ is-unc-path@^1.0.0:
   dependencies:
     unc-path-regex "^0.1.2"
 
-is-what@^3.7.1:
+is-what@^3.12.0:
   version "3.12.0"
   resolved "https://registry.yarnpkg.com/is-what/-/is-what-3.12.0.tgz#f4405ce4bd6dd420d3ced51a026fb90e03705e55"
   integrity sha512-2ilQz5/f/o9V7WRWJQmpFYNmQFZ9iM+OXRonZKcYgTkCzjb949Vi4h282PD1UfmgHk666rcWonbRJ++KI41VGw==
