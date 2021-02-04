@@ -1,6 +1,6 @@
 import {AnimationEvent} from "@angular/animations";
 import {BooleanInput} from "@angular/cdk/coercion";
-import {CdkStep, CdkStepper, StepContentPositionState, STEPPER_GLOBAL_OPTIONS, StepperOptions} from "@angular/cdk/stepper";
+import {CdkStep, CdkStepper, StepContentPositionState, StepperOptions, STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -99,15 +99,10 @@ export class WizardDirective extends CdkStepper implements AfterContentInit {
     /** Steps that the stepper holds. */
     @ContentChildren(WizardStepV2Component, {descendants: true}) _steps: QueryList<WizardStepV2Component>;
 
-    /** The list of step components that the stepper is holding. */
-    get steps(): QueryList<WizardStepV2Component> {
-        return this._steps;
-    }
-
     /** The step that is selected. */
     @Input()
     get selected(): WizardStepV2Component {
-        return this.steps.toArray()[this.selectedIndex];
+        return this.steps.toArray()[this.selectedIndex] as WizardStepV2Component;
     }
 
     set selected(step: WizardStepV2Component) {
@@ -117,6 +112,7 @@ export class WizardDirective extends CdkStepper implements AfterContentInit {
     ngAfterContentInit() {
         // Mark the component for change detection whenever the content children query changes
         this._steps.changes.pipe(takeUntil(this._destroyed)).subscribe(() => {
+            this.steps.reset(this._steps as any);
             this._stateChanged();
         });
 

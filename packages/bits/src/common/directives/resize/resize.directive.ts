@@ -11,8 +11,8 @@ interface IResizeEventQueue {
 }
 /**@ignore*/
 interface IResizeElement extends HTMLElement {
-    resizedAttached: IResizeEventQueue;
-    resizeSensor: any;
+    resizedAttached?: IResizeEventQueue;
+    resizeSensor?: any;
 }
 
 /**
