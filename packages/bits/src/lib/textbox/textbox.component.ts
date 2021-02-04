@@ -125,17 +125,18 @@ export class TextboxComponent implements ControlValueAccessor, NuiFormFieldContr
         this.textboxInput.nativeElement.focus();
     }
 
-    public onBlurEventEmit($event: any) {
-        this.changeValue($event);
+    public onBlurEventEmit() {
         this._onTouched();
         this.blurred.emit(this.value);
     }
+
     public onChangeEvent($event: any) {
         if ($event.target.value !== this.value) {
             this.changeValue($event);
             this.textChange.emit(this.value);
         }
     }
+
     onChange(value: any) {}
 
     _onTouched() {}
