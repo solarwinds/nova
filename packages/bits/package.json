@@ -131,7 +131,7 @@
     "@angular/platform-browser": "^9.0.0",
     "@angular/platform-browser-dynamic": "^9.0.0",
     "@angular/router": "^9.0.0",
-    "@applitools/eyes-protractor": "^1.9.1",
+    "@applitools/eyes-protractor": "1.9.1",
     "@compodoc/compodoc": "1.1.7",
     "@locl/cli": "0.0.1-beta.9",
     "@schematics/angular": "^9.0.0",
