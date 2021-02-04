@@ -154,7 +154,7 @@
     "animate.css": "~3.7.2",
     "axe-webdriverjs": "^2.3.0",
     "bootstrap-less-port": "^0.3.0",
-    "codelyzer": "^5.1.2",
+    "codelyzer": "^6.0.1",
     "core-js": "^2.6.9",
     "cpx": "^1.5.0",
     "highlight.js": "9.12.0",
