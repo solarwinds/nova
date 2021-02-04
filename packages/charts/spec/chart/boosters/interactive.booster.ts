@@ -5,8 +5,9 @@ import { ChartAtom } from "../atoms/chart.atom";
 
 export class InteractiveBooster {
     public static async hover(chart: ChartAtom, location: ILocation): Promise<void> {
-        const layer = await chart.getLayer("rendering-area");
-        const element = layer ? layer.element(by.className("mouse-interactive-area")) : chart.getElement();
-        return chart.hover(element, location);
+        return chart.getLayer("rendering-area").then(layer => {
+            const element = layer ? layer.element(by.className("mouse-interactive-area")) : chart.getElement();
+            return chart.hover(element, location);
+        });
     }
 }
