@@ -20,6 +20,7 @@ export class ChartAtom extends Atom {
         this.lasagna = Atom.findIn(LasagnaAtom, this.grid);
     }
 
+    // tslint:disable-next-line:promise-function-async
     public getLayer(name: string): Promise<ElementFinder | undefined> {
         return this.lasagna.layer(name);
     }
