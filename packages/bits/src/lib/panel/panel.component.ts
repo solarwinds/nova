@@ -194,9 +194,9 @@ export class PanelComponent implements AfterViewInit, OnChanges, OnInit, OnDestr
     private _isHidden: boolean = false;
     private toggles = new Subject();
     private togglesSubscription: Subscription;
-    private _expandAnimationFactory: AnimationFactory;
-    private _collapseAnimationFactory: AnimationFactory;
-    private lastAnimationPlayer: AnimationPlayer;
+    private _expandAnimationFactory?: AnimationFactory;
+    private _collapseAnimationFactory?: AnimationFactory;
+    private lastAnimationPlayer?: AnimationPlayer;
 
     constructor(private renderer: Renderer2,
         private builder: AnimationBuilder,

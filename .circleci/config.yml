@@ -430,7 +430,9 @@ jobs:
                     command: |
                         git commit -am 'increment develop versions' && \
                         git push origin $SOURCE_BRANCH
-
+            -   run:
+                    name: Trigger release branch
+                    command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
 workflows:
     version: 2.1
     nova:
@@ -452,6 +454,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   bits-publish:
                     requires:
                         - bits-e2e-test
@@ -464,6 +467,8 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /release\/.*/
+                                - next
             -   charts-build:
                     requires:
                         - bits-pack
@@ -483,6 +488,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -495,6 +501,8 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /release\/.*/
+                                - next
             -   dashboards-build:
                     requires:
                         - charts-pack
@@ -519,6 +527,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
@@ -531,6 +540,8 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /release\/.*/
+                                - next
     nova-release:
         jobs:
             -   release-approval:
