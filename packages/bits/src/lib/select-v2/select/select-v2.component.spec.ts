@@ -1,6 +1,6 @@
 import { DOWN_ARROW, ESCAPE, PAGE_DOWN, PAGE_UP, TAB } from "@angular/cdk/keycodes";
 import { ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, ViewChild } from "@angular/core";
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
@@ -81,7 +81,7 @@ describe("components >", () => {
         let wrapperFixtureAsync: ComponentFixture<SelectV2WrapperAsyncComponent>;
         let wrapperComponentAsync: SelectV2WrapperAsyncComponent;
 
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
                 declarations: [
                     SelectV2Component,

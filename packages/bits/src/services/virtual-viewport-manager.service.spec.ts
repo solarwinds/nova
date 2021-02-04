@@ -1,7 +1,7 @@
 import { ListRange } from "@angular/cdk/collections";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { AfterViewInit, Component, NO_ERRORS_SCHEMA, OnDestroy, ViewChild } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { count, debounceTime, delay, shareReplay, skip, switchMap, take, takeUntil, tap } from "rxjs/operators";
 import { TestScheduler } from "rxjs/testing";
@@ -83,7 +83,7 @@ describe("services >", () => {
         let component: ViewportInRepeatComponent;
         let fixture: ComponentFixture<ViewportInRepeatComponent>;
 
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
                 declarations: [
                     ViewportInRepeatComponent,

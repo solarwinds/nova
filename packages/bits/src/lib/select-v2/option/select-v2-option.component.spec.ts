@@ -1,5 +1,5 @@
 import { Component, DebugElement, NO_ERRORS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { Observable } from "rxjs";
 
 import { NUI_SELECT_V2_OPTION_PARENT_COMPONENT } from "../constants";
@@ -30,7 +30,7 @@ describe("components >", () => {
         let fixture: ComponentFixture<SelectV2OptionComponent>;
         let debug: DebugElement;
 
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
                 declarations: [
                     SelectV2OptionComponent,
