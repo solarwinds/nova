@@ -284,16 +284,6 @@
   resolved "https://registry.yarnpkg.com/@applitools/dom-shared/-/dom-shared-1.0.4.tgz#1a59116f3f29fb140ac031949547531348c9d972"
   integrity sha512-WRGko/7pJLwcDbQ5r0q2KD58VemIHm+JyKeXSflQhJvQqA5ONYyBX6cZo0h3o1SqdlzQnWM5REzoxoOpOGflzQ==
 
-"@applitools/dom-snapshot@4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@applitools/dom-snapshot/-/dom-snapshot-4.2.0.tgz#72254be14ff073f6a2b05144e10dd2f1ae1ba93f"
-  integrity sha512-p2y8ndJAHVl95ZSlGw3n+5NIrF4DgeMai9bmY1NoZfgMPwOLPPFkCK3WqeRMHztT+BEcjhIrSR9eFg0R9DCkYw==
-  dependencies:
-    "@applitools/dom-shared" "1.0.4"
-    "@applitools/functional-commons" "1.6.0"
-    css-tree "1.0.0-alpha.39"
-    pako "1.0.11"
-
 "@applitools/dom-snapshot@4.2.1":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@applitools/dom-snapshot/-/dom-snapshot-4.2.1.tgz#26495372535109dd8d2ad35f1f9f171b21262b74"
@@ -312,13 +302,13 @@
     "@applitools/eyes-sdk-core" "12.4.2"
     "@applitools/visual-grid-client" "15.0.10"
 
-"@applitools/eyes-sdk-core@12.3.1":
-  version "12.3.1"
-  resolved "https://registry.yarnpkg.com/@applitools/eyes-sdk-core/-/eyes-sdk-core-12.3.1.tgz#bbbeae2b6cc2fb420b2217cd6143a948e6f08f9d"
-  integrity sha512-u0a69InidVqsjxZQqQMtTrOkqtf/rmt+UuMYBJaipbq4aLBYAqlsgxlyYXbtwSuCoLj2yXUeR7NXDj531Ms4Tw==
+"@applitools/eyes-sdk-core@12.3.2":
+  version "12.3.2"
+  resolved "https://registry.yarnpkg.com/@applitools/eyes-sdk-core/-/eyes-sdk-core-12.3.2.tgz#4633c1f44c7fa210c4bbfa4501a543ea2be8666c"
+  integrity sha512-ObmVyfG5eUvTiJbufK4P+IJwZou5i4553zRQhR1HVJulSs/icXWy2ClMzA+gAM+Lg5RjzCYrPOUEmIzU9VE0jw==
   dependencies:
     "@applitools/dom-capture" "8.0.0"
-    "@applitools/dom-snapshot" "4.2.0"
+    "@applitools/dom-snapshot" "4.2.1"
     "@applitools/isomorphic-fetch" "3.0.0"
     "@applitools/snippets" "2.0.3"
     axios "0.19.2"
@@ -1405,15 +1395,16 @@
     merge-source-map "^1.1.0"
     schema-utils "^2.7.0"
 
-"@locl/cli@0.0.1-beta.9":
-  version "0.0.1-beta.9"
-  resolved "https://registry.yarnpkg.com/@locl/cli/-/cli-0.0.1-beta.9.tgz#71d23a778b2d33674b176f9794f8588a9e5fcbf0"
-  integrity sha512-sTYl4q585AftySMct/qNF4i3bTsnVxAN6g1STOUinpfx84s4JYWW9WL0sgl0bdM4sL7+AjxlYg21RxCDc6JUkg==
+"@locl/cli@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@locl/cli/-/cli-1.0.0.tgz#5f2c975e7e9591559585f5861d89c412b1293e1d"
+  integrity sha512-8tREYN9HSzPT9n2/eUVdVw8i83oTj9dNcwawhmLmvEG03+7NRimC/J4+791WwKddn4gPoAZwyOteO0rzhtFXfg==
   dependencies:
     "@babel/core" "^7.8.6"
-    chalk "^3.0.0"
+    chalk "^4.1.0"
     find-up "^4.1.0"
     glob "^7.1.2"
+    tslib "^2.0.0"
     yargs "^13.1.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -3081,7 +3072,7 @@ chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chalk@3.0.0, chalk@^3.0.0:
+chalk@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-3.0.0.tgz#3f73c2bf526591f574cc492c51e2456349f844e4"
   integrity sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==
