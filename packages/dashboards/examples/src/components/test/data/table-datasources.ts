@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
-import { INovaFilteringOutputs, INovaFilters, LocalFilteringDataSource, SearchService } from "@nova-ui/bits";
-import { HttpStatusCode, IDataField, IDataSource, IDataSourceOutput } from "@nova-ui/dashboards";
+import { IDataField, IDataSource, INovaFilteringOutputs, INovaFilters, LocalFilteringDataSource, SearchService } from "@nova-ui/bits";
+import { HttpStatusCode, IDataSourceOutput } from "@nova-ui/dashboards";
 import { BehaviorSubject, Subject } from "rxjs";
 
 export interface BasicTableModel {

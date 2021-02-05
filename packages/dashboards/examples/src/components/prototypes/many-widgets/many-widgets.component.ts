@@ -1,11 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { immutableSet } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
     IDashboard,
     IDashboardBelowFoldLazyLoadingConfig,
-    immutableSet,
     IWidget,
     IWidgetSelector,
     PizzagnaLayer,
