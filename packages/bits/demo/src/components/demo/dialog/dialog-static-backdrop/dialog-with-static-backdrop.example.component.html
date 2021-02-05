@@ -24,11 +24,11 @@
 </ng-template>
 
 <p>
-    This example blocks user from closing the dialog with a click outside of the dialog. Still able to close via ESC button or dialog <code>Cancel</code> and 
-    <code>close</code> buttons.<br>
-    <button id="nui-demo-static-backdrop-dialog-btn" nui-button type="button" (click)="openWith(content)" i18n>Static Backdrop Only</button>
+    This example blocks the user from closing the dialog with a click outside of the dialog. Still able to close via the ESC key or dialog <code>Cancel</code> and
+    <code>Close</code> buttons:
 </p>
-<p>
-    This example allows user to close the dialog only with the <code>Cancel</code> and <code>close</code> buttons.<br>
-    <button id="nui-demo-static-backdrop-ESC-dialog-btn" nui-button type="button" (click)="openWithout(content)" i18n>Static Backdrop + ESC button</button>
+<button id="nui-demo-static-backdrop-dialog-btn" nui-button type="button" (click)="openWith(content)" i18n>Static Backdrop Only</button>
+<p class="mt-3">
+    This example allows the user to close the dialog only with the <code>Cancel</code> and <code>Close</code> buttons:
 </p>
+<button id="nui-demo-static-backdrop-ESC-dialog-btn" nui-button type="button" (click)="openWithout(content)" i18n>Static Backdrop + ESC Key</button>
