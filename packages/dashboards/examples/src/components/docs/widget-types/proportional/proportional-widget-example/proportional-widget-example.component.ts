@@ -1,11 +1,9 @@
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService } from "@nova-ui/bits";
-import { IFilteringOutputs } from "@nova-ui/bits/services/data-source/public-api";
+import { DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
     IDashboard,
-    IDataSource,
     IProportionalWidgetChartOptions,
     IProportionalWidgetConfig,
     IProviderConfiguration,

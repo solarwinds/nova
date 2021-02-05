@@ -1,10 +1,9 @@
 import { Component, Injectable, OnInit } from "@angular/core";
-import { DataSourceService, INovaFilters, ITimeframe } from "@nova-ui/bits";
+import { DataSourceService, IDataSource, INovaFilters, ITimeframe } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
     IDashboard,
-    IDataSource,
     IDataSourceOutput,
     IProviderConfiguration,
     ISerializableTimeframe,

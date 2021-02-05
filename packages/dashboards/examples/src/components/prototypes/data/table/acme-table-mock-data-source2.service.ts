@@ -1,6 +1,5 @@
 import { Inject, Injectable } from "@angular/core";
-import { SearchService } from "@nova-ui/bits";
-import { IDataField } from "@nova-ui/dashboards";
+import { IDataField, SearchService } from "@nova-ui/bits";
 import { BehaviorSubject } from "rxjs";
 
 import { AcmeTableMockDataSource } from "./acme-table-mock-data-source.service";

@@ -13,7 +13,7 @@ import {
     SimpleChanges
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent, IFilteringOutputs, LoggerService } from "@nova-ui/bits";
+import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import {
     DATA_SOURCE_CHANGE,
     DATA_SOURCE_OUTPUT,
