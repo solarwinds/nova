@@ -1,5 +1,5 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
-import { async, ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
@@ -17,7 +17,7 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
     // @ts-ignore: Suppressed for test purposes
     const pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [

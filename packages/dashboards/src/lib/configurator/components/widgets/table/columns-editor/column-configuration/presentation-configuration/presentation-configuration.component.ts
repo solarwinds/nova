@@ -217,9 +217,9 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     }
 
     private subscribeToFormattersRegistry(): void {
-        this.handleFormattersUpdate(this.formattersRegistry.getFormatters());
+        this.handleFormattersUpdate(this.formattersRegistry.getItems());
 
-        this.formattersRegistry.formattersStateChanged$.pipe(
+        this.formattersRegistry.stateChanged$.pipe(
             tap(this.handleFormattersUpdate.bind(this)),
             takeUntil(this.onDestroy$)
         ).subscribe();

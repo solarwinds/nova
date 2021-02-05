@@ -3,7 +3,7 @@ import { EventBus, IEvent, immutableSet, LoggerService } from "@nova-ui/bits";
 
 import { mergeChanges } from "../../../functions/merge-changes";
 import { DEFAULT_PIZZAGNA_ROOT, ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../../services/types";
-import { IComponentConfiguration, IPizza, IPizzagna, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../types";
+import { IComponentConfiguration, IPizza, IPizzagna, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../types";
 import { DynamicComponentCreator } from "../../services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../services/pizzagna.service";
 

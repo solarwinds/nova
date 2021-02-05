@@ -75,10 +75,10 @@ class MockRendererFactory {
         return new MockRenderer();
     }
 
-    public begin?(): void {
+    public begin(): void {
     }
 
-    public end?(): void {
+    public end(): void {
     }
 
     public async whenRenderingDone?(): Promise<any> {
@@ -118,8 +118,8 @@ describe("ConfiguratorService > ", () => {
         dashboardComponent = TestBed.createComponent(DashboardComponent).componentInstance;
         configComponentFixture = TestBed.createComponent(ConfiguratorComponent);
         configuratorNativeElement = configComponentFixture.debugElement.nativeElement;
-        const appRef = TestBed.get(ApplicationRef) as ApplicationRef;
-        const router = TestBed.get(Router);
+        const appRef = TestBed.inject(ApplicationRef) as ApplicationRef;
+        const router = TestBed.inject(Router);
         appRef.attachView = (): void => {
         };
 

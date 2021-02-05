@@ -1,7 +1,8 @@
-import { OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { HttpStatusCode, IDataSourceOutput, IKpiData } from "@nova-ui/dashboards";
 import { Subject } from "rxjs";
 
+@Injectable()
 export class TestKpiDataSource implements OnDestroy {
     public static providerId = "TestKpiDataSource";
     public static mockError = false;
@@ -31,6 +32,7 @@ export class TestKpiDataSource implements OnDestroy {
 
 }
 
+@Injectable()
 export class TestKpiDataSource2 implements OnDestroy {
     public static providerId = "TestKpiDataSource2";
 
@@ -48,6 +50,7 @@ export class TestKpiDataSource2 implements OnDestroy {
     }
 }
 
+@Injectable()
 export class TestKpiDataSourceSmallNumber implements OnDestroy {
     public static providerId = "TestKpiDataSourceSmallNumber";
 
@@ -65,6 +68,7 @@ export class TestKpiDataSourceSmallNumber implements OnDestroy {
     }
 }
 
+@Injectable()
 export class TestKpiDataSourceBigNumber implements OnDestroy {
     public static providerId = "TestKpiDataSourceBigNumber";
 

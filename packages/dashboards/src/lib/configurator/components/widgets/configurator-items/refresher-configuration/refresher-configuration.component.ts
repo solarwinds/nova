@@ -7,7 +7,7 @@ import { filter, takeUntil, tap } from "rxjs/operators";
 import { RefresherSettingsService } from "../../../../../components/providers/refresher-settings.service";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
 
-import { TIME_UNITS_SHORT, TimeUnit } from "./refresh-rate-configurator/time-units";
+import { TimeUnit, TIME_UNITS_SHORT } from "./refresh-rate-configurator/time-units";
 
 @Component({
     selector: "nui-refresher-configuration",

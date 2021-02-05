@@ -1,5 +1,5 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus, LoggerService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
@@ -56,7 +56,7 @@ describe("DataSourceConfigurationV2Component", () => {
     let providerRegistryService: ProviderRegistryService;
     let logger: LoggerService;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         logger = new LoggerService();
         providerRegistryService = new ProviderRegistryService(logger);
         TestBed.configureTestingModule({
