@@ -1,4 +1,5 @@
 <div [style.display]="(getItemsCount() !== 0 || !autoHide) ? 'flex' : 'none'"
+     #nuiChips
      class="nui-chips media"
      [ngClass]="customClass"
      role="presentation"
@@ -33,7 +34,7 @@
         <ng-content select=".nui-chips-overflowed"></ng-content>
     </div>
 
-    <div class="nui-chips__clear-cell" *ngIf="allowRemoveAll && getItemsCount() > 0">
+    <div class="nui-chips__clear-cell" #clearAll *ngIf="allowRemoveAll && getItemsCount() > 0">
         <a href class="nui-chips__clear" (click)="onRemoveAll($event)">{{ removeAllLinkText }}</a>
     </div>
 </div>

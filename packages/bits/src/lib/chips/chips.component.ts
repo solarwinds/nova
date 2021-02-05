@@ -113,6 +113,10 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
     public isOverflowed: Boolean;
 
     @ViewChild("chipsMainCell") private mainCell: ElementRef;
+    @ViewChild("clearAll") private set clearAll(elem: ElementRef) {
+        this.chipsOverflowService.clearAll = elem;
+    }
+    @ViewChild("nuiChips") private nuiChips: ElementRef;
     @ViewChildren("chipItem") private allChips: QueryList<ChipComponent | ElementRef<HTMLElement>>;
     @ContentChild("overflowCounterLabel") private set overflowCounter(el: ElementRef<HTMLElement>) {
         this.chipsOverflowService.overflowCounter = el;
@@ -182,6 +186,7 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
 
     private initChipsOverflow(): void {
         this.chipsOverflowService.mainCell = this.mainCell;
+        this.chipsOverflowService.nuiChips = this.nuiChips;
         this.chipsOverflowService.allChips = this.allChips;
         this.chipsOverflowService.itemsSource = this.itemsSource;
         this.chipsOverflowService.overflowLinesNumber = this.overflowLinesNumber;
