@@ -20,18 +20,20 @@ import {
     ViewChildren,
 } from "@angular/core";
 import {
+    DEFAULT_INTERACTIVE_ELEMENTS,
     EventBus,
+    IDataField,
     IDataSource,
     IEvent,
     IFilter,
     ISortedItem,
     LoggerService,
     SorterDirection,
+    TableAlignmentOptions,
     TableComponent,
     TableRowComponent,
-    VirtualViewportManager
+    VirtualViewportManager,
 } from "@nova-ui/bits";
-import { TableAlignmentOptions } from "@nova-ui/bits/lib/table/public-api";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import omit from "lodash/omit";
@@ -47,7 +49,7 @@ import { ITableFormatterDefinition } from "../types";
 
 import { SearchFeatureAddonService } from "./addons/search-feature-addon.service";
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
-import { DEFAULT_INTERACTIVE_ELEMENTS, IDataField, ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
+import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
 
 
 /**

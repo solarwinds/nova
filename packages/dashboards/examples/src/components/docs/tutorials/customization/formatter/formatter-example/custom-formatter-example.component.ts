@@ -1,13 +1,12 @@
 import { ListRange } from "@angular/cdk/collections";
 import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DataSourceService, IconService, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
+import { DataSourceService, IconService, IDataField, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     DATA_SOURCE,
     FormatterConfiguratorComponent,
     IDashboard,
-    IDataField,
     IDataSourceOutput,
     IFormatterDefinition,
     IHasChangeDetector,

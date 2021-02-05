@@ -48,9 +48,3 @@ export interface ITableWidgetSorterConfig {
     descendantSorting: boolean;
     sortBy: string;
 }
-
-// TODO: remove re-export in vNext
-export { IDataField } from "@nova-ui/bits";
-
-// TODO: import from bits
-export const DEFAULT_INTERACTIVE_ELEMENTS = ["button", "input[type='button']", "a[href]"];

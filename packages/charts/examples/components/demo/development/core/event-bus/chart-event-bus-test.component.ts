@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { LoggerService } from "@nova-ui/bits";
 import {
-    Chart, ChartAssist, HIGHLIGHT_DATA_POINT_EVENT, IAccessors, IChart, IChartAssistSeries, IChartEvent, INTERACTION_DATA_POINTS_EVENT,
-    INTERACTION_SERIES_EVENT, INTERACTION_VALUES_EVENT, InteractionType, LineAccessors, LinearScale, LineRenderer, LineSelectSeriesInteractionStrategy,
+    Chart, ChartAssist, HIGHLIGHT_DATA_POINT_EVENT, IAccessors, IChart, IChartAssistSeries, IChartEvent, InteractionType,
+    INTERACTION_DATA_POINTS_EVENT, INTERACTION_SERIES_EVENT, INTERACTION_VALUES_EVENT, LineAccessors, LinearScale, LineRenderer,
+    LineSelectSeriesInteractionStrategy,
     MOUSE_ACTIVE_EVENT, Scales, TimeScale, XYGrid, XYGridConfig
 } from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep";
