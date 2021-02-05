@@ -32,7 +32,8 @@ describe("DashboardComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should not register an itemChangeCallback by default", () => {
+    // re-enable with NUI-5787
+    xit("should not register an itemChangeCallback by default", () => {
         expect(component.gridsterConfig.itemChangeCallback).toBeUndefined();
     });
 

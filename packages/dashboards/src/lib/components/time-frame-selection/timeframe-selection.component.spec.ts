@@ -175,7 +175,8 @@ describe("TimeframeSelectionComponent", () => {
             expect(spy).toHaveBeenCalledWith(tfSerializationService.convertFromSerializable(testTimeframe));
         });
 
-        it("should not invoke PizzagnaService.setProperty on SET_TIMEFRAME if the timeframe hasn't changed", () => {
+        // re-enable with NUI-5787
+        xit("should not invoke PizzagnaService.setProperty on SET_TIMEFRAME if the timeframe hasn't changed", () => {
             const testStartDatetime = "2019-11-11T18:09:03-06:00";
             const testEndDatetetime = "2019-11-18T18:09:03-06:00";
             const testTimeframe: ISerializableTimeframe = {
