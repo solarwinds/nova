@@ -5,7 +5,6 @@ import { NuiButtonModule } from "../button/button.module";
 import { NuiCheckboxModule } from "../checkbox/checkbox.module";
 import { NuiMenuModule } from "../menu/menu.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
-import { NuiPopupModule } from "../popup/popup.module";
 
 import { SelectorComponent } from "./selector.component";
 
@@ -18,7 +17,6 @@ import { SelectorComponent } from "./selector.component";
         NuiCheckboxModule,
         NuiMenuModule,
         NuiButtonModule,
-        NuiPopupModule,
         NuiOverlayModule,
     ],
     declarations: [

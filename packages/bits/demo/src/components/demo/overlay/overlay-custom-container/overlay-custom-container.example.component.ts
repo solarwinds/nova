@@ -1,5 +1,5 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
-import {ChangeDetectionStrategy, Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core";
+import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, ViewEncapsulation } from "@angular/core";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
 
 @Component({

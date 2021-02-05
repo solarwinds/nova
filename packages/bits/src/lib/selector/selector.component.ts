@@ -1,4 +1,4 @@
-import {OverlayConfig} from "@angular/cdk/overlay";
+import { OverlayConfig } from "@angular/cdk/overlay";
 import {
     AfterViewInit,
     Component,
