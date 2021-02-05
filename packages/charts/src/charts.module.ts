@@ -62,9 +62,6 @@ import { ThresholdsService } from "./thresholds/thresholds-service";
         ChartCollectionService,
         ThresholdsService,
     ],
-    entryComponents: [
-        ChartTooltipComponent,
-    ],
 })
 export class NuiChartsModule {
 }
