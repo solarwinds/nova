@@ -1,5 +1,5 @@
 <ng-template #content let-close="close" let-dismiss="dismiss">
-    <nui-dialog-header title="Dialog title" i18n-title (closed)="close()"></nui-dialog-header>
+    <nui-dialog-header title="Dialog title" i18n-title (closed)="closeFromHeader()"></nui-dialog-header>
     <div class="dialog-body">
         <p i18n>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam maximus faucibus bibendum.
@@ -11,17 +11,13 @@
         </p>
     </div>
     <nui-dialog-footer>
-        <button nui-button type="button"
-                (click)="actionCanceled(); close()" i18n>
+        <button nui-button type="button" (click)="actionCanceled()" i18n>
             Cancel
         </button>
-        <button nui-button type="button"
-                displayStyle="primary"
-                (click)="actionDone(); close()" i18n>
+        <button nui-button type="button" displayStyle="primary" (click)="actionDone()" i18n>
             Action
         </button>
     </nui-dialog-footer>
 </ng-template>
 
-<button id="nui-demo-with-keyboard-dialog-btn" nui-button type="button" (click)="openWith(content)" i18n>Close me with ESC button</button>
-<button id="nui-demo-without-keyboard-dialog-btn" class="ml-4" nui-button type="button" (click)="openWithout(content)" i18n>ESC button won't close me</button>
+<button id="nui-demo-default-dialog-btn" nui-button type="button" (click)="open(content)" i18n>Click me!</button>

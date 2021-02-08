@@ -69,6 +69,15 @@ describe("USERCONTROL chips", () => {
             browser.driver.manage().window().setSize(900, 890);
             expect(await overflowChips.getChipsOverflowCounter()).toEqual("+8");
         });
+        it("should hide correct number of chips", async () => {
+            expect(await overflowChips.isVisible()).toEqual(true);
+            browser.driver.manage().window().setSize(900, 890);
+            const allChips = overflowChips.getChipElements();
+            const allChipsCount = await allChips.count();
+            const visibleChipsCount = await allChips.filter((elem) => elem.isDisplayed()).count();
+            const hiddenChips = allChipsCount - visibleChipsCount;
+            expect(hiddenChips).toEqual(8);
+        });
     });
 
     describe("behavior", async () => {
