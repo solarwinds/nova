@@ -2,6 +2,9 @@
 
 ## [11.0.0] - 2021-?-?
 
+<details>
+    <summary>Bits</summary>
+
 ### Added
 
 ### Changed
@@ -51,3 +54,12 @@
  - Styles
     - All styles marked **// deprecated** are now deprecated and will be removed in v12
     - All styles marked **// unofficial** are now deprecated and will be removed in v12
+</details>
+<details>
+    <summary>Charts</summary>
+
+</details>
+<details>
+    <summary>Dashboards</summary>
+
+</details>
