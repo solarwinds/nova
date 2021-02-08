@@ -26,6 +26,7 @@ const INITIAL_ARRAY = [
 ];
 
 /**
+ * TODO: Remove in v12
  * @deprecated
  */
 @Component({

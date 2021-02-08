@@ -148,7 +148,7 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
 
     /** Stream of clicks outside. */
     private overlayClickOutside(): Observable<MouseEvent> {
-        return this.eventBusService.getEventStream("document-click")
+        return this.eventBusService.getStream({id: "document-click"})
             .pipe(
                 filter(event => {
                     const clickTarget = event.target as HTMLElement;

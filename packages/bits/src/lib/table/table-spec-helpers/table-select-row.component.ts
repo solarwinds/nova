@@ -56,7 +56,7 @@ const ELEMENT_DATA: TableSelectModel[] = [
     selector: "nui-table-select",
     template: `
         <div class="nui-table__container" id="nui-demo-table-select">
-            <table nui-table [dataSource]="dataSource" [selectable]="true" (rowsSelected)="onSelectorChange($event)">
+            <table nui-table [dataSource]="dataSource" [selectable]="true" (selectionChange)="onSelectorChange($event)">
                 <ng-container nuiColumnDef="position">
                     <th nui-header-cell *nuiHeaderCellDef [style.width.px]="positionWidth"> No.</th>
                     <td nui-cell *nuiCellDef="let element"> {{element.position}}</td>

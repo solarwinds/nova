@@ -14,6 +14,10 @@ import { NuiFormFieldControl } from "../form-field/public-api";
 
 import { ISelectChangedEvent, ISelectGroup } from "./public-api";
 
+/**
+ * @deprecated
+ * TODO: Remove in v12
+ */
 @Directive()
 export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAccessor, NuiFormFieldControl {
     /**

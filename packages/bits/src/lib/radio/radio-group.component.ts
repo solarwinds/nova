@@ -295,6 +295,6 @@ export class RadioComponent implements OnInit, OnDestroy {
         // This will lead to multiple click events.
         // Preventing bubbling for the second event will solve that issue.
         event.stopPropagation();
-        this.eventBusService.getEventStream("document-click").next(event);
+        this.eventBusService.getStream({id: "document-click"}).next(event);
     }
 }

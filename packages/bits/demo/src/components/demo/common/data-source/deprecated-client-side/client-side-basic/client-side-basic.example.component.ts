@@ -30,6 +30,7 @@ interface ExampleItem {
 }
 
 /**
+ * TODO: Remove in v12
  * @deprecated
  */
 @Component({

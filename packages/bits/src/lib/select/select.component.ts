@@ -27,7 +27,10 @@ import { MenuComponent } from "../menu";
 import { BaseSelect } from "./base-select";
 
 // <example-url>./../examples/index.html#/select</example-url>
-
+/**
+ * @deprecated
+ * TODO: remove in v12
+ */
 @Component({
     selector: "nui-select",
     host: {"class": "nui-select"},

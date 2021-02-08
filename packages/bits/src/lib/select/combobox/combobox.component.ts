@@ -43,7 +43,10 @@ import { BaseSelect } from "../base-select";
 import { ISelectGroup } from "../public-api";
 
 // <example-url>./../examples/index.html#/combobox</example-url>
-
+/**
+ * @deprecated
+ * TODO: remove in v12
+ */
 @Component({
     selector: "nui-combobox",
     host: { "class": "nui-combobox" },

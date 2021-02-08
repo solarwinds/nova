@@ -6,7 +6,12 @@ import { TextboxNumberAtom } from "../textbox-number/textbox-number.atom";
 
 import { ComboboxAtom } from "./combobox.atom";
 
-describe("USERCONTROL Combobox >", () => {
+/**
+ * @deprecated
+ * TODO: remove in v12
+ * Also, consider using this as a reference to the test cases to add to the combobox-v2 test suite
+ */
+xdescribe("USERCONTROL Combobox >", () => {
     let comboboxBasic: ComboboxAtom;
     let comboboxDisabled: ComboboxAtom;
     let inlineCombobox: ComboboxAtom;

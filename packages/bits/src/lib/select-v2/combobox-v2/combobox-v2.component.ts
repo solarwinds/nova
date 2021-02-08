@@ -60,6 +60,10 @@ import { InputValueTypes } from "../types";
         class: "nui-combobox-v2",
     },
 })
+/**
+ * @deprecated
+ * TODO: Remove 'V2' from the name in v12
+ */
 export class ComboboxV2Component extends BaseSelectV2 implements AfterContentInit, OnDestroy, OnChanges, AfterViewInit {
 
     /** Function that maps an Option's control value to its display value */

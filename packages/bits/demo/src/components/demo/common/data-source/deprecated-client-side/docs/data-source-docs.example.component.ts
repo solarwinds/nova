@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 
 /**
+ * TODO: Remove in v12
  * @deprecated
  */
 @Component({

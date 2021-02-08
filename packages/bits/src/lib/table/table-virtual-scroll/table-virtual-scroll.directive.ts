@@ -50,7 +50,7 @@ export class TableVirtualScrollLinearDirective implements OnChanges {
 }
 
 
-// TODO: Remove in V10
+// TODO: Remove in V12
 /** @ignore */
 /** @deprecated Use tableVirtualScroll with rowCount instead */
 @Directive({

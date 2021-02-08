@@ -22,13 +22,17 @@ import _isUndefined from "lodash/isUndefined";
 import {Subject, Subscription} from "rxjs";
 
 import { EdgeDetectionService } from "../../services/edge-detection.service";
-import { EventBusService, NuiEvent } from "../../services/event-bus.service";
+import { EventBusService } from "../../services/event-bus.service";
 
 import { PopupContainerComponent } from "./popup-container.component";
 import { PopupContainerService } from "./popup-container.service";
 import { PopupToggleDirective } from "./popup-toggle.directive";
 
 // <example-url>./../examples/index.html#/popup</example-url>
+/**
+ * @deprecated
+ * TODO: Remove in v12
+ */
 /**
  * __Name :__
  * NUI Pop-up component.
@@ -142,8 +146,8 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
             );
         }
         this.popupSubscriptions.push(
-            this.eventBusService.getEventStream("document-click")
-                .subscribe((event: NuiEvent) => {
+            this.eventBusService.getStream({id: "document-click"})
+                .subscribe((event: MouseEvent) => {
                     if (this.isOpen) {
                         this.closePopup(event);
                     }
@@ -216,7 +220,7 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
         }
     }
 
-    public closePopup(event?: MouseEvent | NuiEvent): void {
+    public closePopup(event?: MouseEvent): void {
         const isToggle = this.popupToggle && event ? (this.popupToggle.host.nativeElement as HTMLElement)
             .contains(event.target as HTMLElement) : false;
 

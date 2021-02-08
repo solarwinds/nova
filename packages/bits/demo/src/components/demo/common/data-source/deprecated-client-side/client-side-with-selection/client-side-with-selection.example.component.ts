@@ -10,6 +10,7 @@ interface IExampleItem {
 }
 
 /**
+ * TODO: Remove in v12
  * @deprecated
  */
 @Component({

@@ -41,6 +41,10 @@ const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
 };
 
+/**
+ * @deprecated
+ * TODO: Remove 'V2' from the name in v12
+ */
 @Directive()
 export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, ControlValueAccessor, IOptionedComponent, OnDestroy, OnChanges {
 

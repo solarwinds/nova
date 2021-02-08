@@ -48,5 +48,9 @@ import { SelectV2Component } from "./select/select-v2.component";
     ],
     providers: [],
 })
+/**
+ * @deprecated
+ * TODO: remove 'V2' from the name in v12
+ */
 export class NuiSelectV2Module {
 }

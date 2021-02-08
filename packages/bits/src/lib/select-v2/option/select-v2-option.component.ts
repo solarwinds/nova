@@ -9,6 +9,8 @@ import { IOptionedComponent } from "../types";
 
 /**
  * @ignore
+ * @deprecated
+ * TODO: Remove 'V2' from the name in v12
  */
 @Component({
     selector: "nui-select-v2-option",

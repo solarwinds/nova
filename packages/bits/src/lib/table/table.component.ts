@@ -1,7 +1,7 @@
 import { Directionality } from "@angular/cdk/bidi";
 import { Platform } from "@angular/cdk/platform";
 import { CdkVirtualForOf } from "@angular/cdk/scrolling";
-import { CdkTable, CDK_TABLE_TEMPLATE } from "@angular/cdk/table";
+import { CDK_TABLE_TEMPLATE, CdkTable } from "@angular/cdk/table";
 import { DOCUMENT } from "@angular/common";
 import {
     AfterContentInit,
@@ -75,10 +75,6 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
 
     @Output() columnsOrderChange: EventEmitter<Array<any>> = new EventEmitter();
     @Output() sortOrderChanged: EventEmitter<ISortedItem> = new EventEmitter();
-
-    /** @deprecated Use selectionChanged instead of rowsSelected */
-    @Output() rowsSelected: EventEmitter<ISelection> = new EventEmitter();
-    /** Use selectionChanged instead of rowsSelected */
     @Output() selectionChange: EventEmitter<ISelection> = new EventEmitter();
 
     public sortDirection: SorterDirection;
@@ -211,7 +207,6 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
         // if we try to manually trigger change detection in a parent component
         if (this.selectable) {
             this.selectionChangedSubscription = this.tableStateHandlerService.selectionChanged.subscribe((selection: ISelection) => {
-                this.rowsSelected.emit(selection); // tslint:disable-line:deprecation
                 this.selectionChange.emit(selection);
             });
 

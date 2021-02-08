@@ -23,7 +23,6 @@ import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
 
 // <example-url>./../examples/index.html#/select-v2</example-url>
-
 @Component({
     selector: "nui-select-v2",
     templateUrl: "./select-v2.component.html",
@@ -48,6 +47,10 @@ import { SelectV2OptionComponent } from "../option/select-v2-option.component";
         class: "nui-select-v2",
     },
 })
+/**
+ * @deprecated
+ * TODO: Remove 'V2' from the name in v12
+ */
 export class SelectV2Component extends BaseSelectV2 implements AfterContentInit, OnDestroy, OnChanges {
 
     /** Sets a custom template for displaying it in the Option */

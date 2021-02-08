@@ -28,6 +28,7 @@ interface ComparisonItems {
 }
 
 /**
+ * TODO: remove in v12
  * <example-url>./../examples/index.html#/common/data-source-service/deprecated-client-side</example-url>
  * @deprecated
  */

@@ -150,10 +150,10 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
 
     ngAfterViewInit() {
         this.rendererListener = this.renderer.listen(this.checkboxLabel.nativeElement, "keydown", (event) => {
-            this.eventBusService.getEventStream("checkbox-keydown").next(event);
+            this.eventBusService.getStream({id: "checkbox-keydown"}).next(event);
         });
 
-        this.sub = this.eventBusService.getEventStream("checkbox-keydown").subscribe((event: KeyboardEvent) => {
+        this.sub = this.eventBusService.getStream({id: "checkbox-keydown"}).subscribe((event: KeyboardEvent) => {
             if (event.target === this.checkboxLabel.nativeElement) {
                 if (event.keyCode === ENTER || event.keyCode === SPACE) {
                     event.stopPropagation();
@@ -185,7 +185,7 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
 
     public onClick(event: Event) {
         event.stopPropagation();
-        this.eventBusService.getEventStream("document-click").next(event);
+        this.eventBusService.getStream({id: "document-click"}).next(event);
     }
 
     public onChange(value: any) {}

@@ -114,7 +114,7 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
     }
 }
 
-// TODO: Remove in V10
+// TODO: Remove in V12
 /** @ignore */
 /** @deprecated Use TableVirtualScrollLinearStrategy instead */
 export class TableVirtualScrollStrategy implements VirtualScrollStrategy {

@@ -20,7 +20,7 @@ export class ClickInterceptorDirective {
     @HostListener("click", ["$event"])
     catchClick(event: MouseEvent) {
         event.stopPropagation();
-        this.eventBusService.getEventStream("document-click").next(event);
+        this.eventBusService.getStream({id: "document-click"}).next(event);
     }
 
     constructor(private eventBusService: EventBusService) { }
