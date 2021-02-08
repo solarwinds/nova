@@ -261,8 +261,7 @@ export class DrilldownWidgetExampleComponent implements OnInit {
         private widgetTypesService: WidgetTypesService,
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-    ) {
-    }
+    ) { }
 
     public ngOnInit(): void {
         // Registering the data source for injection into the KPI tile.
@@ -320,6 +319,12 @@ export class DrilldownWidgetExampleComponent implements OnInit {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();
+
+        const adapterProperties = widgetConfig.pizzagna[PizzagnaLayer.Configuration].listWidget.providers?.adapter?.properties;
+
+        if (adapterProperties) {
+            adapterProperties.drillstate = [];
+        }
 
         this.initializeDashboard();
     }
