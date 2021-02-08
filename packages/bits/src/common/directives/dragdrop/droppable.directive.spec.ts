@@ -170,7 +170,7 @@ describe("directives >", () => {
             expect(component.onDragOver).not.toHaveBeenCalled();
         });
 
-        it("should trigger emission of dragover event if validator returns true", () => {
+        xit("should trigger emission of dragover event if validator returns true", () => {
             spyOn(component, "onDragOver");
             setValidator(true);
             emitEvent("dragover", droppableElement.nativeElement);
@@ -213,7 +213,7 @@ describe("directives >", () => {
 
         });
 
-        it("should add invalidDragOverClass if validator returns false", async () => {
+        xit("should add invalidDragOverClass if validator returns false", async () => {
             const invalidDragOverClass = "drag-over-class";
             droppableDirective.invalidDragOverClass = invalidDragOverClass;
             setValidator(false);

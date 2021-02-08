@@ -4,7 +4,7 @@ import { FormBuilder, ReactiveFormsModule, ValidatorFn } from "@angular/forms";
 import { NuiValidators } from "./nui-validators";
 
 describe("validators >", () => {
-    describe("integerValidator >", () => {
+    xdescribe("integerValidator >", () => {
         let formBuilder: FormBuilder;
         const commonTestCases = [
             { num: "0", result: true },
