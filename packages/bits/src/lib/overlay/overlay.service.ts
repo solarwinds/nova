@@ -6,7 +6,7 @@ import { Subject } from "rxjs";
 
 import { OVERLAY_CONTAINER } from "./constants";
 import { OverlayCustomContainer } from "./overlay-custom-container";
-import { OverlayContainerType, OVERLAY_PANEL_CLASS } from "./types";
+import { OVERLAY_PANEL_CLASS, OverlayContainerType } from "./types";
 
 /* @dynamic */
 /**
