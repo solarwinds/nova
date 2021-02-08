@@ -44,7 +44,6 @@ import { ISelectGroup } from "../public-api";
 
 // <example-url>./../examples/index.html#/combobox</example-url>
 /**
- * @ignore
  * @deprecated
  * TODO: remove in v12
  */
