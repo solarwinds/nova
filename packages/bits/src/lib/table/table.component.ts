@@ -1,7 +1,7 @@
 import { Directionality } from "@angular/cdk/bidi";
 import { Platform } from "@angular/cdk/platform";
 import { CdkVirtualForOf } from "@angular/cdk/scrolling";
-import { CDK_TABLE_TEMPLATE, CdkTable } from "@angular/cdk/table";
+import { CdkTable, CDK_TABLE_TEMPLATE } from "@angular/cdk/table";
 import { DOCUMENT } from "@angular/common";
 import {
     AfterContentInit,
