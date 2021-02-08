@@ -28,6 +28,7 @@ import { BaseSelect } from "./base-select";
 
 // <example-url>./../examples/index.html#/select</example-url>
 /**
+ * @ignore
  * @deprecated
  * TODO: remove in v12
  */

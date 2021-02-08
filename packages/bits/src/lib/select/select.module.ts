@@ -14,6 +14,7 @@ import { SelectComponent } from "./select.component";
 
 /**
  * @ignore
+ * @deprecated
  */
 @NgModule({
     declarations: [
