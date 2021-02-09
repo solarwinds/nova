@@ -16,8 +16,8 @@
  - **REMOVED**: *@Input()* **required** of **TextboxNumberComponent**
  - **REMOVED**: *@Output()* **rowsSelected** of **TableComponent**. Use selectionChange instead.
  - **REMOVED**: deprecated lowercase entries of the IconStatus enum. Use Pascal case entries instead
- - **REMOVED**: *@Input()* **required** of **TextboxNumberComponent** (the input does not have any impact on the component)
- - **REMOVED**: *@Input()* **suffix** of **TextboxNumberComponent**  (the input does not have any impact on the component)
+ - **REMOVED**: *@Input()* **required** of **TextboxNumberComponent** (the input wasn't used by the component)
+ - **REMOVED**: *@Input()* **suffix** of **TextboxNumberComponent**  (the input wasn't used by the component)
 
 ### Deprecated
  - Components, Services, etc.

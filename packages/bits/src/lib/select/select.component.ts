@@ -20,6 +20,7 @@ import _isEmpty from "lodash/isEmpty";
 import _isNil from "lodash/isNil";
 import _toString from "lodash/toString";
 
+import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 import { MenuComponent } from "../menu";
@@ -81,8 +82,9 @@ export class SelectComponent extends BaseSelect implements OnInit, OnChanges, On
 
     @ViewChild("menu") public menu: MenuComponent;
 
-    constructor(utilService: UtilService, private renderer: Renderer2, public elRef: ElementRef) {
+    constructor(utilService: UtilService, private renderer: Renderer2, public elRef: ElementRef, private logger: LoggerService) {
         super(utilService);
+        this.logger.warn("<nui-select> is deprecated as of Nova v11. Please use <nui-select-v2> instead.");
     }
 
     private unsubscriber: () => void;

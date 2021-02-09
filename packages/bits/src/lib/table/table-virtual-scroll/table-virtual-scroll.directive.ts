@@ -51,7 +51,7 @@ export class TableVirtualScrollLinearDirective implements OnChanges {
 
 
 /**
- * @deprecated in v11 - Use tableVirtualScroll with rowCount instead - Removal: NUI-5796
+ * @deprecated in v11 - Use tableVirtualScroll with 'rowCount' attribute instead of 'offset' attribute - Removal: NUI-5796
  */
 @Directive({
     selector: "[tableVirtualScroll]:not([rowCount])",

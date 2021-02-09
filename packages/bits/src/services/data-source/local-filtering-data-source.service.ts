@@ -29,7 +29,7 @@ interface ComparisonItems {
 
 /**
  * <example-url>./../examples/index.html#/common/data-source-service/deprecated-client-side</example-url>
- * @deprecated in v11
+ * @deprecated in v11 - use ClientSideDataSource instead - Removal: NUI-5796
  */
 @Injectable()
 export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> extends DataSourceService<T, F> {

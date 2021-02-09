@@ -12,10 +12,8 @@ import { NuiTextboxModule } from "../textbox/textbox.module";
 import { ComboboxComponent } from "./combobox/combobox.component";
 import { SelectComponent } from "./select.component";
 
-/**
- * @ignore
- * @deprecated in v11
- */
+// tslint:disable-next-line:max-line-length
+/** @ignore @deprecated in v11 SelectComponent and ComboboxComponent in this module have been deprecated in favor of SelectV2Component and ComboboxV2Component which can be imported from SelectV2Module **/
 @NgModule({
     declarations: [
         ComboboxComponent,

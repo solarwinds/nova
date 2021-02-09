@@ -24,6 +24,7 @@ import {Subject, Subscription} from "rxjs";
 import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { EventBusService } from "../../services/event-bus.service";
+import { LoggerService } from "../../services/log-service";
 
 import { PopupContainerComponent } from "./popup-container.component";
 import { PopupContainerService } from "./popup-container.service";
@@ -135,7 +136,10 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
                 private componentFactoryResolver: ComponentFactoryResolver,
                 private injector: Injector,
                 private appRef: ApplicationRef,
+                private logger: LoggerService,
                 @Optional() private popupContainer: PopupContainerService) {
+
+                    this.logger.warn("<nui-popup-deprecated> is deprecated as of Nova v11. Please use <nui-popup> instead.");
     }
     public ngOnInit() {
         if (this.manualOpenControl) {
