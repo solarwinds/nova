@@ -32,7 +32,7 @@
 
 <nui-overlay #overlay2
               [toggleReference]="toggleButton1['el'].nativeElement"
-              [customContainer]="customContainerId.nativeElement"
+              [customContainer]="customContainer"
               [overlayConfig]="overlayConfig">
     <ng-container *ngFor="let item of itemsSource">
         <nui-overlay-item class="list-item">{{item}}</nui-overlay-item>

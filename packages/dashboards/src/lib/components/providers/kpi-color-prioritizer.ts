@@ -1,4 +1,4 @@
-import { Inject, OnDestroy, Optional } from "@angular/core";
+import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
 import { IDataSource } from "@nova-ui/bits";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -10,6 +10,7 @@ import { IKpiData } from "../kpi-widget/types";
 
 import { IDataSourceOutput, IKpiColorRules } from "./types";
 
+@Injectable()
 export class KpiColorPrioritizer implements IConfigurable, OnDestroy {
 
     protected destroy$ = new Subject();

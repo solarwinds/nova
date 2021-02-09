@@ -72,6 +72,24 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
+    bits-a11y-test:
+        working_directory: ~/nova
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+            PROJECT_DIR: ~/nova/packages/bits
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Start Selenium docker image
+                    command: docker-compose up -d --build selenium
+            -   run:
+                    name: a11y tests
+                    command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
+            -   run:
+                    name: Cleanup
+                    command: docker-compose down -v --rmi="all"
     bits-visual-test:
         working_directory: ~/nova
         machine:
@@ -454,6 +472,10 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
+            -   bits-a11y-test:
+                    requires:
+                        - bits-build
             -   bits-publish:
                     requires:
                         - bits-e2e-test
@@ -467,6 +489,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
             -   charts-build:
                     requires:
                         - bits-pack
@@ -486,6 +509,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -499,6 +523,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
             -   dashboards-build:
                     requires:
                         - charts-pack
@@ -523,6 +548,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
@@ -536,6 +562,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
     nova-release:
         jobs:
             -   release-approval:

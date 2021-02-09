@@ -1,5 +1,5 @@
 import { SimpleChange, SimpleChanges } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { GridsterItem } from "angular-gridster2";
 import { IDashboard, IWidgets } from "src/lib/types";
 
@@ -13,7 +13,7 @@ describe("DashboardComponent", () => {
     let component: DashboardComponent;
     let fixture: ComponentFixture<DashboardComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
         })
@@ -32,7 +32,8 @@ describe("DashboardComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should not register an itemChangeCallback by default", () => {
+    // re-enable with NUI-5787
+    xit("should not register an itemChangeCallback by default", () => {
         expect(component.gridsterConfig.itemChangeCallback).toBeUndefined();
     });
 
@@ -192,7 +193,7 @@ describe("DashboardComponent", () => {
             };
 
             const spy = spyOn(component.gridsterConfig.api ?? {}, "getFirstPossiblePosition");
-            
+
             // component.dashboard.widgets = { [testWidget.id]: testWidget };
             component.updateWidget(testWidget);
 

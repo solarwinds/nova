@@ -115,9 +115,7 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
 }
 
 /**
- * @deprecated in v11
- * Use TableVirtualScrollLinearStrategy instead
- * Removal: NUI-5796
+ * @deprecated in v11 - Use TableVirtualScrollLinearStrategy instead - Removal: NUI-5796
  */
 export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
 

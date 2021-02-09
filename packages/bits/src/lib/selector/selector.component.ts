@@ -1,6 +1,8 @@
+import { OverlayConfig } from "@angular/cdk/overlay";
 import {
     AfterViewInit,
     Component,
+    ElementRef,
     EventEmitter,
     Input,
     OnChanges,
@@ -11,12 +13,14 @@ import {
     ViewEncapsulation
 } from "@angular/core";
 import { Subject } from "rxjs";
-import { debounceTime } from "rxjs/operators";
+import { debounceTime, takeUntil } from "rxjs/operators";
 
 import { IFilter, IFilterPub, ISelectorFilter } from "../../services/data-source/public-api";
 import { CheckboxComponent } from "../checkbox/checkbox.component";
 import { CheckboxChangeEvent } from "../checkbox/public-api";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
+import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 
 import { CheckboxStatus, SelectionType } from "./public-api";
 
@@ -66,9 +70,17 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
     @ViewChild("checkbox")
     public checkbox: CheckboxComponent;
 
+    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+
+    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+
+    public customContainer: ElementRef | undefined;
     public checkboxChecked = false;
     public indeterminate = false;
     public onDestroy$ = new Subject<void>();
+    public overlayConfig: OverlayConfig = {
+        panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
+    };
 
     private status: SelectionType;
 
@@ -80,6 +92,9 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
             this.indeterminate = checkboxStatus === CheckboxStatus.Indeterminate;
             this.checkboxChecked = checkboxStatus === CheckboxStatus.Checked;
         }
+        if (changes.appendToBody) {
+            this.customContainer = changes.appendToBody.currentValue ? undefined : this.popupArea;
+        }
     }
 
     public ngAfterViewInit(): void {
@@ -87,6 +102,9 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
 
         this.checkbox.valueChange.pipe(debounceTime(debounceTimeValue))
             .subscribe(this.onCheckboxValueChange.bind(this));
+        this.overlay.clickOutside
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(_ => this.overlay.hide());
     }
 
     public ngOnDestroy(): void {

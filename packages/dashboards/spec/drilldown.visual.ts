@@ -7,7 +7,7 @@ import { DrilldownAtom } from "./drilldown.atom";
 describe("Visual tests: Dashboards - Drilldown Widget", () => {
     let eyes: any;
     let drilldownWidget: DrilldownAtom;
-    
+
     beforeEach(async () => {
         eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("test/drilldown");

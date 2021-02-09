@@ -20,7 +20,7 @@ import {
 import { noop, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { getTimeUnitsRatio, TIME_UNITS_LONG, TimeUnit } from "./time-units";
+import { getTimeUnitsRatio, TimeUnit, TIME_UNITS_LONG } from "./time-units";
 import { NumberValidationParams } from "./types";
 
 /**

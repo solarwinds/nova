@@ -1,4 +1,4 @@
-import { OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { HttpStatusCode, IDataSourceOutput } from "@nova-ui/dashboards";
 import { Subject } from "rxjs";
 
@@ -10,6 +10,7 @@ import {
     PROPORTIONAL_WIDGET_DATA_SMALL,
 } from "./widget-data";
 
+@Injectable()
 export class TestProportionalDataSource implements OnDestroy {
     public static providerId = "TestProportionalDataSource";
 
@@ -24,6 +25,7 @@ export class TestProportionalDataSource implements OnDestroy {
     }
 }
 
+@Injectable()
 export class TestProportionalDataSource2 implements OnDestroy {
     public static providerId = "TestProportionalDataSource2";
     public static mockError = false;
@@ -47,6 +49,7 @@ export class TestProportionalDataSource2 implements OnDestroy {
     }
 }
 
+@Injectable()
 export class TestProportionalDataSource3 implements OnDestroy {
     public static providerId = "TestProportionalDataSource3";
 
@@ -61,6 +64,7 @@ export class TestProportionalDataSource3 implements OnDestroy {
     }
 }
 
+@Injectable()
 export class TestProportionalDataSource4 implements OnDestroy {
     public static providerId = "TestProportionalDataSource4";
 

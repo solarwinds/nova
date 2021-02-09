@@ -6,7 +6,7 @@ import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { DATA_SOURCE_BUSY } from "../../services/types";
-import { IHasComponent, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
+import { IHasComponent, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
 
 import { IDataSourceBusyPayload } from "./types";
 

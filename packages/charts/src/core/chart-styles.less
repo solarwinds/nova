@@ -2,6 +2,8 @@
 @import (reference) "@nova-ui/bits/sdk/less/mixins";
 @import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables.less";
 
+@opacity-transition-duration: 200ms;
+
 .nui-chart {
     display: block;
     height: 100%;
@@ -236,7 +238,7 @@
 
         text {
             .setCssVariable(fill, nui-color-text-secondary);
-            font-size: 11px;
+            font-size: @nui-font-size-small;
 
             &.chart-label {
                 font-weight: bold;
@@ -255,6 +257,15 @@
 
             stroke-dasharray: 1 1; // "stroke-dasharray: 1" doesn't work properly on Safari
         }
+    }
+
+    .gauge-threshold-labels {
+        text {
+            .setCssVariable(fill, nui-color-text-secondary);
+            font-size: @nui-font-size-small;
+        }
+        transition-property: opacity;
+        transition-duration: @opacity-transition-duration;
     }
 }
 
@@ -275,7 +286,7 @@
 
 .data-series-container {
     transition-property: opacity;
-    transition-duration: 200ms;
+    transition-duration: @opacity-transition-duration;
 }
 
 .nui-chart {

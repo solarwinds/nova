@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart, CHART_PALETTE_CS_S, ChartAssist, ChartPalette, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales,
+    Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales,
     RadialTooltipsPlugin
 } from "@nova-ui/charts";
 

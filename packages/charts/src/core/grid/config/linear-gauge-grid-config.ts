@@ -1,4 +1,4 @@
-import { GAUGE_THICKNESS_DEFAULT, GaugeMode } from "../../../gauge/constants";
+import { GaugeMode, GAUGE_THICKNESS_DEFAULT } from "../../../gauge/constants";
 
 import { XYGridConfig } from "./xy-grid-config";
 

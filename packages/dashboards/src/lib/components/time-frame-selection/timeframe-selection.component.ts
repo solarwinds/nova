@@ -6,7 +6,7 @@ import { TimeframeSerializationService } from "../../configurator/services/timef
 import { ISerializableTimeframe } from "../../configurator/services/types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { REFRESH, SET_TIMEFRAME } from "../../services/types";
-import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
+import { DATA_SOURCE, IHasChangeDetector, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
 
 @Component({
     selector: "nui-timeframe-selection",

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart, CHART_PALETTE_CS_S, ChartAssist, ChartPalette, IChartAssistSeries, ILineAccessors, INTERACTION_SERIES_EVENT, LineAccessors, LinearScale,
+    Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, IChartAssistSeries, ILineAccessors, INTERACTION_SERIES_EVENT, LineAccessors, LinearScale,
     LineRenderer, LineSelectSeriesInteractionStrategy, MappedValueProvider, PointScale, Scales, XYGrid
 } from "@nova-ui/charts";
 import zipObject from "lodash/zipObject";

@@ -1,9 +1,8 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { DataSourceService, INovaFilters, ITimeframe } from "@nova-ui/bits";
+import { DataSourceService, IDataSource, INovaFilters, ITimeframe } from "@nova-ui/bits";
 import {
     applyStatusEndpoints,
-    IDataSource,
     IDataSourceOutput,
     ITimeseriesOutput,
     ITimeseriesWidgetData,

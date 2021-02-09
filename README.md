@@ -10,7 +10,7 @@ The main specification can be found in the [Nova Design System](https://ux.solar
 
 The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md#style-guide).
 
-## Project Structure
+## Project Structure 
 
 Nova UI consists of three packages within a single monorepo:
 

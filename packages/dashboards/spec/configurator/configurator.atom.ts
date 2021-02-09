@@ -21,7 +21,7 @@ export class ConfiguratorAtom extends Atom {
         return section?.getAccordionByLabel(accordionLabel);
     }
 
-    public async getResetColumnsButton() {
+    public getResetColumnsButton() {
         return this.root.element(by.id("table-widget-reset-indicator-btn"));
     }
     public async getSectionByHeaderText(text: string, isSubstring = false): Promise<ConfiguratorSectionAtom | undefined> {

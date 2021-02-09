@@ -166,9 +166,7 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
     }
 
     /**
-     * @deprecated in v11
-     * Use filtersChanged instead
-     * Removal: NUI-5796
+     * @deprecated in v11 - Use filtersChanged instead - Removal: NUI-5796
      */
     protected paginationReset(filters: any, itemsToCompare: any) {
         return this.filtersChanged(filters, itemsToCompare);

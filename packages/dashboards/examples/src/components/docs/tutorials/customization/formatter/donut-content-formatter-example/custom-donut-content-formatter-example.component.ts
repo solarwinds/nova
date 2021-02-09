@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, Injectable, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DataSourceService, IconService, IDataSource, IFilteringOutputs, LoggerService } from "@nova-ui/bits";
 import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@nova-ui/charts";
@@ -365,6 +365,7 @@ export const randomStatusesWidgetData: IStatusesWidgetData[] = [
         },
 ];
 
+@Injectable()
 export class StatusesExampleDatasource extends DataSourceService<IStatusesWidgetData>
                                        implements IDataSource<IStatusesWidgetData>, OnDestroy {
     public static providerId = "StatusesExampleDatasource";

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component } from "@angular/core";
 import {
-    BandScale, BarHighlightStrategy, BarHorizontalGridConfig, BarRenderer, Chart, CHART_PALETTE_CS1, ChartPalette, HorizontalBarAccessors, LinearScale,
+    BandScale, BarHighlightStrategy, BarHorizontalGridConfig, BarRenderer, Chart, ChartPalette, CHART_PALETTE_CS1, HorizontalBarAccessors, LinearScale,
     MappedValueProvider, XYGrid,
 } from "@nova-ui/charts";
 

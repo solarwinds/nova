@@ -6,7 +6,7 @@ import { takeUntil } from "rxjs/operators";
 
 import { DATA_SOURCE_DESTROYED } from "../../configurator/types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
-import { HttpStatusCode, IConfigurable, IHasComponent, IProperties, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
+import { HttpStatusCode, IConfigurable, IHasComponent, IProperties, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
 
 import { StatusContentFallbackAdapter } from "./status-content-fallback-adapter";
 import { IComponentIdPayload, IDataSourceOutputPayload } from "./types";

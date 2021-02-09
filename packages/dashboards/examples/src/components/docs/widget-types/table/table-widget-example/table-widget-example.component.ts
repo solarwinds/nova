@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { DataSourceService, INovaFilteringOutputs, INovaFilters, nameof } from "@nova-ui/bits";
+import { DataSourceService, IDataField, INovaFilteringOutputs, INovaFilters, nameof } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,
-    IDataField,
     ITableWidgetColumnConfig,
     IWidget,
     IWidgets,

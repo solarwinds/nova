@@ -145,7 +145,7 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
         }
     }
 
-    public onBlurEventEmit($event: any) {
+    public onBlurEventEmit() {
         this.onTouched();
         this.blurred.emit(this.value);
     }

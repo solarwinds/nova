@@ -188,7 +188,7 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
                 // @ts-ignore
                 const injections = portalInjector.get(registeredProvider.provide, null, null);
                 const providerInstance = isArray(injections)
-                    ? injections.find(v => v instanceof registeredProvider.useClass)
+                    ? (injections as any).find((v: any) => v instanceof registeredProvider.useClass)
                     : injections;
 
                 if (!providerInstance) {

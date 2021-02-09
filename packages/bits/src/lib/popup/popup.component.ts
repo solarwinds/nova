@@ -31,9 +31,7 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
 
 // <example-url>./../examples/index.html#/popup</example-url>
 /**
- * @deprecated in v11
- * Use PopupComponent instead
- * Removal: NUI-5796
+ * @deprecated in v11 - Use PopupComponent instead - Removal: NUI-5796
  */
 /**
  * __Name :__

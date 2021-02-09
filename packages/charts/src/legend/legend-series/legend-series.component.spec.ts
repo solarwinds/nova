@@ -5,7 +5,7 @@ import { RenderState } from "../../renderers/types";
 import { LegendComponent } from "../legend.component";
 import { LegendOrientation } from "../types";
 
-import { LEGEND_SERIES_CLASS_NAME, LegendSeriesComponent } from "./legend-series.component";
+import { LegendSeriesComponent, LEGEND_SERIES_CLASS_NAME } from "./legend-series.component";
 
 interface IMockLegendInput {
     seriesIcon?: string;

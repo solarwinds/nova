@@ -28,9 +28,7 @@ import { BaseSelect } from "./base-select";
 
 // <example-url>./../examples/index.html#/select</example-url>
 /**
- * @deprecated in v11
- * Use SelectV2Component instead
- * Removal: NUI-5796
+ * @deprecated in v11 - Use SelectV2Component instead - Removal: NUI-5796
  */
 @Component({
     selector: "nui-select",
