@@ -1,5 +1,5 @@
 import { Component, SimpleChange, SimpleChanges } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus, IEvent } from "@nova-ui/bits";
 import { Chart, ChartAssist, ChartPalette, defaultPalette, IAccessors, IValueProvider, LineAccessors, SET_DOMAIN_EVENT, XYGrid, ZoomPlugin } from "@nova-ui/charts";
 
@@ -38,7 +38,7 @@ describe("XYChartComponent", () => {
         return component.chartAssist.chart as Chart;
     }
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [TestComponent],
             imports: [NuiDashboardsModule],

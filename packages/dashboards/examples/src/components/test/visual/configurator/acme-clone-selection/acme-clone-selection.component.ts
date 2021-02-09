@@ -45,11 +45,11 @@ export class AcmeCloneSelectionComponent implements IWidgetTemplateSelector, OnI
         this.widgetItems.push({
             title: `Unconfigured ${typeDisplay} With Config Layer`,
             widget: {
+                ...cloneDeep(this.widgetTypesService.mergeWithWidgetType(widget)),
                 id: `unconfiguredWithConfigLayer${typeDisplay}`,
                 metadata: {
                     needsConfiguration: true,
                 },
-                ...cloneDeep(this.widgetTypesService.mergeWithWidgetType(widget)),
             },
         });
         set(this.widgetItems[this.widgetItems.length - 1].widget.pizzagna, `${PizzagnaLayer.Configuration}.header.properties.title`, `Unconfigured ${typeDisplay} With Config Layer`);

@@ -8,7 +8,7 @@ import {
     NOVA_VIRTUAL_VIEWPORT_MANAGER, WIDGET_RESIZE
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
-import { WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING, widgetBodyContentNodes } from "../common/widget/components";
+import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";
 import { refresher } from "../common/widget/providers";
 
 export const tableWidget: IPizzagna = {

@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, SimpleChange } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LoggerService, NuiFormFieldModule, NuiSelectV2Module, NuiValidationMessageModule } from "@nova-ui/bits";
 
@@ -39,7 +39,7 @@ describe("FormatterConfiguratorComponent", () => {
     let component: FormatterConfiguratorTestComponent;
     let fixture: ComponentFixture<FormatterConfiguratorTestComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 FormatterConfiguratorTestComponent,

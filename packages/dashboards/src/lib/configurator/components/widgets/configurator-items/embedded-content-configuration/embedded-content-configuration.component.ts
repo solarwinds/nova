@@ -17,7 +17,7 @@ import { IHasChangeDetector, IHasForm } from "../../../../../types";
 export class EmbeddedContentConfigurationComponent implements OnInit, OnChanges, IHasChangeDetector, IHasForm, OnDestroy {
     public static lateLoadKey = "EmbeddedContentConfigurationComponent";
 
-    @Input() mode: EmbeddedContentMode;
+    @Input() mode = EmbeddedContentMode.URL;
     @Input() messageComponent: IInfoMessage;
     @Input() customEmbeddedContent: string;
 
@@ -35,11 +35,11 @@ export class EmbeddedContentConfigurationComponent implements OnInit, OnChanges,
     public modes = [
         {
             value: EmbeddedContentMode.URL,
-            displayValue: "Show the contents of a specific URL",
+            displayValue: $localize`Show the contents of a specific URL`,
         },
         {
             value: EmbeddedContentMode.HTML,
-            displayValue: "Show the exact HTML I supply below",
+            displayValue: $localize`Show the exact HTML I supply below`,
         },
     ];
 

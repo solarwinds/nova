@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import {
-    BandScale, BarRenderer, Chart, CHART_PALETTE_CS_S, ChartAssist, ChartPalette, ChartTooltipsPlugin, getAutomaticDomainWithIncludedInterval, IAccessors,
+    BandScale, BarRenderer, Chart, ChartAssist, ChartPalette, ChartTooltipsPlugin, CHART_PALETTE_CS_S, getAutomaticDomainWithIncludedInterval, IAccessors,
     IChartAssistSeries, IChartSeries, IDataSeries, ILineAccessors, ISimpleThresholdZone, IXYScales, LineAccessors, LinearScale, LineRenderer,
-    MappedValueProvider, StatusAccessors, THRESHOLDS_SUMMARY_RENDERER_CONFIG, ThresholdsService, thresholdsSummaryGridConfig, thresholdsTopGridConfig,
+    MappedValueProvider, StatusAccessors, ThresholdsService, thresholdsSummaryGridConfig, thresholdsTopGridConfig, THRESHOLDS_SUMMARY_RENDERER_CONFIG,
     TimeScale, UtilityService, XYGrid,
 } from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep";

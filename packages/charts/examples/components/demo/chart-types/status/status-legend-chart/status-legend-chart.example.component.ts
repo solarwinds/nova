@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { IconService } from "@nova-ui/bits";
 import {
-    BandScale, BarHighlightStrategy, BarRenderer, BarStatusGridConfig, Chart, CHART_PALETTE_CS_S, ChartAssist, ChartPalette, IXYScales, MappedValueProvider,
+    BandScale, BarHighlightStrategy, BarRenderer, BarStatusGridConfig, Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, IXYScales, MappedValueProvider,
     statusAccessors, StatusAccessors, SvgMarker, TimeScale, XYGrid
 } from "@nova-ui/charts";
 import { Observable } from "rxjs";

@@ -20,13 +20,13 @@
 
 <p>You can pass an existing component as content of the dialog window. </p>
 <p>In this case remember to add content component as an entryComponents section of your NgModule.</p>
-<p>For this case you need to pass <code>Component</code> into <code>open</code> method of <code>DialogService</code></p>
-<p>Check both examples below.</p>
+<p>For this case you need to pass the component's class name to the <code>open</code> method of <code>DialogService</code>.</p>
+<p>See both example panels below.</p>
 <nui-example-wrapper filenamePrefix="component-as-content" exampleTitle="Component as content for dialog">
     <nui-component-as-content-example></nui-component-as-content-example>
 </nui-example-wrapper>
 <nui-example-wrapper filenamePrefix="dialog-content" exampleTitle="Dialog Content Example Component">
-    <p>Code of this example is related to the example above. It only shows code.</p>
+    <p>The code of this example panel is related to the example above. It only shows code.</p>
 </nui-example-wrapper>
 
 <h2>Severity</h2>
@@ -92,7 +92,7 @@ option into <code>DialogService open</code> method as second argument. </p>
     <a target="_parent" href="../interfaces/IConfirmationDialogOptions.html">IConfirmationDialogOptions</a>.
 
     <nui-message type="info">
-        By default, when the confirmation dialog opens, the <code>Confirm</code> button is focused. Use <code>setFocus</code> input to 
+        By default, when the confirmation dialog opens, the <code>Confirm</code> button is focused. Use <code>setFocus</code> input to
         set the <code>Dismiss</code> button focused on dialog open.
     </nui-message>
 </p>
@@ -122,8 +122,8 @@ option into <code>DialogService open</code> method as second argument. </p>
 
 <h2>Dialog Inside Overlay</h2>
 <p>
-    The implementation of the <code>nui-dialog</code> is not currently based on <code>nui-overlay</code>, which means there might be a need to display the dialog properly 
-    with overlay-based components, including nested ones. To make the dialog open inside the overlay container it is enough to passe in the <code>useOverlay</code> option 
+    The implementation of the <code>nui-dialog</code> is not currently based on <code>nui-overlay</code>, which means there might be a need to display the dialog properly
+    with overlay-based components, including nested ones. To make the dialog open inside the overlay container it is enough to passe in the <code>useOverlay</code> option
     when opening the dialog.
 </p>
 
@@ -131,15 +131,64 @@ option into <code>DialogService open</code> method as second argument. </p>
     <nui-dialog-inside-overlay-example></nui-dialog-inside-overlay-example>
 </nui-example-wrapper>
 
-<h2>React on afterOpened$</h2>
+<h2>Dialog Closure Actions</h2>
 <p>
-    It's possible to perform some actions in your code when a dialog is opened by subscribing to the <code>DialogService</code>'s <code>afterOpened$</code> Subject.
-    It emits a <code>NuiDialogRef</code> that contains the component's data.
-    This works for both a confirmation dialog and a dialog containing a consumer-defined component.
-    If you'd like to see the source code of a sample consumer-defined dialog content component, take 
-    a look at the <strong>Usage as a Component</strong> section on this page.
+    The <code>nui-dialog</code> provides you with a number of ways to perform actions on it's closure. There are two built-in events <code>ESC</code> and <code>BACKDROP_CLICK</code>
+    which are triggered by the keyboard escape key and clicking the dialog's backdrop respectively. However, the user is able to create their own events, which they can pass as an argument into the
+    <code>dismiss(event)</code> method of the <code>dialogRef</code>. To capture the events there are two types of EventEmitters of the <code>dialogRef</code> - <code>closed$</code>
+    and <code>beforeDismissed$</code>. As can be determined from their names, the <code>closed$</code> event emitter will emit an event right after the dialog window is closed, while the
+    <code>beforeDismissed$</code> emits right before the dialog is dismissed. <strong>Note:</strong> <code>beforeDissmissed$</code>
+    is only emitted on dialog dismissal (or cancellation); it is not emitted on dialog submission. <code>beforeDismissed$</code>works best in conjunction with the special <code>beforeDismiss</code> function, which can
+    be configured as an optional configuration parameter of the dialog. This function, if it returns <code>false</code>, will prevent the dialog from closing, until the <code>close</code>
+    method is called. All this lets you be very flexible in how exactly you want the dialog to be dismissed and when to perform certain actions.
+</p>
+<br>
+<p>
+    The example of the dialog's closure actions below shows how flexible a simple dialog can be in terms of performing certain actions at certain points of the dialog's lifecycle
 </p>
 
-<nui-example-wrapper filenamePrefix="nui-dialog-after-opened" exampleTitle="Do something when dialog appears">
+<p>
+    For this example:
+</p>
+<ol>
+    <li>
+        BACKDROP click - The logic specific to the backdrop click is performed, and the dialog stays open in this case.
+    </li>
+    <li>
+        ESC key pressed - First, the logic specific to the ESC button click is performed. Then, general logic before the dialog dismissal is performed. And, finally, the logic to perform right after dialog closure is run.
+    </li>
+    <li>
+        ACTION button pressed - The logic specific to the ACTION button click is performed. Then, the custom DONE event is sent, and finally the event is captured and custom logic is run in response. The dialog stays open in this case.
+    </li>
+    <li>
+        CANCEL button pressed - The logic specific to the CANCEL button click is performed. Then, general logic before the dialog dismissal is performed. And, finally, the logic to perform right after dialog closure is run.
+    </li>
+    <li>
+        Header Close button pressed - The logic specific to the header Close button click is performed. Then, general logic before the dialog dismissal is performed. And, finally, the logic to perform right after dialog closure is run.
+    </li>
+</ol>
+
+
+<nui-example-wrapper filenamePrefix="dialog-actions-before-closure" exampleTitle="Dialog Actions Before Closure">
+    <nui-dialog-actions-before-closure-example></nui-dialog-actions-before-closure-example>
+</nui-example-wrapper>
+
+<h2>Dialog Open Actions</h2>
+<p>
+    It's possible to perform some actions in your code when a dialog is opened by subscribing to the
+    <code>DialogService</code>'s <code>afterOpened$</code> observable. It emits a
+    <code>NuiDialogRef</code> that contains the component's data. This works for both a confirmation
+    dialog and a dialog containing a consumer-defined component. The examples below trigger a toast on
+    the top right of the page when each dialog is opened.
+</p>
+<nui-message type="info" [allowDismiss]="false">
+    To see the source code of the consumer-defined component used in this example, open the source
+    expander of the second example panel in this section.
+</nui-message>
+
+<nui-example-wrapper filenamePrefix="dialog-after-opened" exampleTitle="Perform an action on dialog open">
     <nui-dialog-after-opened-example></nui-dialog-after-opened-example>
+</nui-example-wrapper>
+<nui-example-wrapper filenamePrefix="dialog-content" exampleTitle="Dialog Content Example Component">
+    <p>The code of this example panel is related to the example above. It only shows code.</p>
 </nui-example-wrapper>

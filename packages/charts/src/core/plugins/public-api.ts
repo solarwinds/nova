@@ -5,5 +5,6 @@ export * from "./chart-popover-plugin";
 export * from "./chart-donut-content-plugin";
 export * from "./mouse-interactive-area-plugin";
 export * from "./radial-popover-plugin";
+export * from "./radial-gauge-threshold-labels-plugin";
 export * from "./render-engine-plugin";
 export * from "./interaction/public-api";

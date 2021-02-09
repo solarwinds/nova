@@ -20,7 +20,9 @@ export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
         this.dialogService.afterOpened$.pipe(
             takeUntil(this.destroy$$)
         ).subscribe((dialog: NuiDialogRef) => {
-            this.toastService.info({ message: `${dialog.componentInstance.constructor.name} was opened` });
+            if (dialog.componentInstance) {
+                this.toastService.info({ message: `${dialog.componentInstance.constructor.name} was opened` });
+            }
         });
     }
 

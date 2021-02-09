@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Inject, OnChanges, OnDestroy, Optional } from "@angular/core";
+import { ChangeDetectorRef, Inject, Injectable, OnChanges, OnDestroy, Optional } from "@angular/core";
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import {
     ChartAssist,
@@ -10,9 +10,9 @@ import {
     IDataPointsPayload,
     IInteractionDataPointsEvent,
     IInteractionValuesPayload,
+    InteractionType,
     INTERACTION_DATA_POINTS_EVENT,
     INTERACTION_VALUES_EVENT,
-    InteractionType,
     ISetDomainEventPayload,
     IValueProvider,
     IXYScales, Renderer,
@@ -30,6 +30,7 @@ import { TimeseriesScalesService } from "../../timeseries-scales.service";
 import { TimeseriesInteractionType } from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
 
+@Injectable()
 export abstract class XYChartComponent extends TimeseriesChartComponent
     implements OnChanges, OnDestroy, IHasChangeDetector {
 

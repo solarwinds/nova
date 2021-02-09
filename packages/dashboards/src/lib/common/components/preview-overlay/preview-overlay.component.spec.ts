@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { NuiDashboardsModule } from "../../../dashboards.module";
 
@@ -8,7 +8,7 @@ describe("PreviewOverlayComponent", () => {
     let component: PreviewOverlayComponent;
     let fixture: ComponentFixture<PreviewOverlayComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [ NuiDashboardsModule ],
         })

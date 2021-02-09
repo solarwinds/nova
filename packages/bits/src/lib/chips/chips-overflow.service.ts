@@ -15,6 +15,8 @@ export class ChipsOverflowService {
 
     public itemsSource: IChipsItemsSource;
     public mainCell: ElementRef<HTMLElement>;
+    public clearAll: ElementRef<HTMLElement>;
+    public nuiChips: ElementRef<HTMLElement>;
     public allChips: QueryList<ChipComponent | ElementRef<HTMLElement>>;
     public overflowCounter: ElementRef<HTMLElement>;
     public overflowLinesNumber: number;
@@ -69,27 +71,30 @@ export class ChipsOverflowService {
 
     private processChipsOverflow(): void {
         let acc = 0;
+        let renderedLines = 1;
         let chipsOverflow = false;
 
-        const linesDiff: number[] = [];
-        const mainCellWidth = this.mainCell?.nativeElement.getBoundingClientRect().width;
+        const rowMaxWidth = this.getRowWidth();
         const counterWidth = this.overflowCounter?.nativeElement.getBoundingClientRect().width || 0;
 
         this.allChips.toArray().forEach((item: ElementRef | ChipComponent) => {
             const chipElement = this.getNativeElement(item);
             chipElement.style.display = "inline";
             const chipElementWidth = chipElement.getBoundingClientRect().width;
-            const isLastLine = () => linesDiff.length >= this.overflowLinesNumber - 1;
+            const isLastLine = () => renderedLines === this.overflowLinesNumber;
 
-            if (!isLastLine() && Math.ceil(acc + chipElementWidth) > Math.ceil(mainCellWidth)) {
-                linesDiff.push(mainCellWidth - acc);
+            if (!isLastLine() && (acc + chipElementWidth) > rowMaxWidth) {
+                renderedLines++;
                 acc = 0;
             }
 
-            if (isLastLine() && Math.ceil(acc + chipElementWidth + counterWidth) > Math.ceil(mainCellWidth)) {
-                linesDiff.push(mainCellWidth - acc - counterWidth);
+            if (isLastLine() && (acc + chipElementWidth + counterWidth) > rowMaxWidth) {
                 acc = 0;
                 chipsOverflow = true;
+
+                if (!chipsOverflow) {
+                    renderedLines++;
+                }
             }
 
             acc += chipElementWidth;
@@ -136,5 +141,12 @@ export class ChipsOverflowService {
 
     private getNativeElement(item: ChipComponent | ElementRef): HTMLElement {
         return item instanceof ChipComponent ? item.host.nativeElement : item.nativeElement;
+    }
+
+    private getRowWidth(): number {
+        return this.nuiChips?.nativeElement.getBoundingClientRect().width
+        - this.clearAll?.nativeElement.getBoundingClientRect().width
+        - parseFloat(getComputedStyle(this.nuiChips?.nativeElement).paddingLeft)
+        - parseFloat(getComputedStyle(this.nuiChips?.nativeElement).paddingRight);
     }
 }

@@ -1,19 +1,19 @@
 import { HttpClient } from "@angular/common/http";
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { immutableSet } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
     IDashboard,
     IDashboardBelowFoldLazyLoadingConfig,
-    immutableSet,
     IWidget,
     IWidgetSelector,
     PizzagnaLayer,
     ProviderRegistryService,
     RefresherSettingsService,
-    WIDGET_CREATE,
     WidgetClonerService,
-    WidgetTypesService
+    WidgetTypesService,
+    WIDGET_CREATE
 } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";

@@ -14,11 +14,11 @@ import {
     SimpleChanges
 } from "@angular/core";
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
+import { IDataField } from "@nova-ui/bits";
 import capitalize from "lodash/capitalize";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
-import { IDataField } from "../../../../../../../components/table-widget/types";
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
 import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
 import { FORMATTERS_REGISTRY, IHasChangeDetector } from "../../../../../../../types";
@@ -217,9 +217,9 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     }
 
     private subscribeToFormattersRegistry(): void {
-        this.handleFormattersUpdate(this.formattersRegistry.getFormatters());
+        this.handleFormattersUpdate(this.formattersRegistry.getItems());
 
-        this.formattersRegistry.formattersStateChanged$.pipe(
+        this.formattersRegistry.stateChanged$.pipe(
             tap(this.handleFormattersUpdate.bind(this)),
             takeUntil(this.onDestroy$)
         ).subscribe();

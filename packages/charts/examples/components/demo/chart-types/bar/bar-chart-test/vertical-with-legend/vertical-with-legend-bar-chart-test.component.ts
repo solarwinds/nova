@@ -6,8 +6,8 @@ import {
     barScales,
     BarSeriesHighlightStrategy,
     Chart,
-    CHART_PALETTE_CS_S,
     ChartAssist,
+    CHART_PALETTE_CS_S,
     MappedValueProvider
 } from "@nova-ui/charts";
 

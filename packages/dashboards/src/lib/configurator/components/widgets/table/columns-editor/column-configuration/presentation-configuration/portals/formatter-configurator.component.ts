@@ -1,11 +1,11 @@
-import { ChangeDetectorRef, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import { ChangeDetectorRef, EventEmitter, Injectable, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { LoggerService } from "@nova-ui/bits";
+import { IDataField, LoggerService } from "@nova-ui/bits";
 
-import { IDataField } from "../../../../../../../../components/table-widget/types";
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../../components/types";
 import { IHasChangeDetector, IHasForm } from "../../../../../../../../types";
 
+@Injectable()
 export abstract class FormatterConfiguratorComponent implements IFormatterConfigurator, IHasChangeDetector, IHasForm, OnChanges {
     @Input() formatter: IFormatter;
     @Input() formatterDefinition: IFormatterDefinition;

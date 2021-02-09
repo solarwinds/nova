@@ -1,5 +1,5 @@
 import { PortalModule } from "@angular/cdk/portal";
-import { Component } from "@angular/core";
+import { Component, Injectable } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { LoggerService } from "@nova-ui/bits";
@@ -22,6 +22,7 @@ import { GridsterItemWidgetIdDirective } from "../gridster-item-widget-id/gridst
 
 import { WidgetEditorDirective } from "./widget-editor.directive";
 
+@Injectable()
 class MockSubmitHandler implements IDashboardPersistenceHandler {
     public trySubmit(widget: IWidget, source: IConfiguratorSource): Observable<IWidget> {
         // @ts-ignore: Suppressed for test purposes

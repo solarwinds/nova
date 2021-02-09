@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { NuiImageModule } from "@nova-ui/bits";
 
 import { WidgetErrorComponent } from "./widget-error.component";
@@ -7,7 +7,7 @@ describe("WidgetErrorComponent", () => {
     let component: WidgetErrorComponent;
     let fixture: ComponentFixture<WidgetErrorComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 WidgetErrorComponent,

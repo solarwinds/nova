@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { OnDestroy } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import { IKpiData } from "@nova-ui/dashboards";
 import { BehaviorSubject } from "rxjs";
@@ -7,6 +7,7 @@ import { finalize } from "rxjs/operators";
 
 import { GOOGLE_BOOKS_URL } from "./table/constants";
 
+@Injectable()
 export class HarryPotterAverageRatingDataSource extends DataSourceService<IKpiData> implements OnDestroy {
     public static providerId = "HarryPotterAverageRatingDataSource";
 
@@ -47,6 +48,7 @@ export class HarryPotterAverageRatingDataSource extends DataSourceService<IKpiDa
     }
 }
 
+@Injectable()
 export class HarryPotterRatingsCountDataSource extends DataSourceService<IKpiData> implements OnDestroy {
     public static providerId = "HarryPotterRatingsCountDataSource";
 

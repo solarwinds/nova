@@ -1,8 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { OnDestroy } from "@angular/core";
-import { DataSourceService } from "@nova-ui/bits";
-import { IFilteringOutputs } from "@nova-ui/bits/services/data-source/public-api";
-import { IConfigurable, IDataSource, IProperties } from "@nova-ui/dashboards";
+import { Injectable, OnDestroy } from "@angular/core";
+import { DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
+import { IConfigurable, IProperties } from "@nova-ui/dashboards";
 import { BehaviorSubject, Subject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
@@ -10,6 +9,7 @@ import { getFixedProportionalWidgetData, getRandomProportionalWidgetData, IPropo
 
 const EUROPEAN_CITIES = ["London", "Paris", "Brno", "Kyiv", "Lisbon"];
 
+@Injectable()
 export class AcmeProportionalDataSource extends DataSourceService<IProportionalWidgetData>
     implements IDataSource<IProportionalWidgetData>, OnDestroy, IConfigurable {
     public static providerId = "AcmeProportionalDataSource";
@@ -68,6 +68,7 @@ export class AcmeProportionalDataSource extends DataSourceService<IProportionalW
     }
 }
 
+@Injectable()
 export class AcmeProportionalDataSource2 extends DataSourceService<IProportionalWidgetData>
     implements IDataSource<IProportionalWidgetData>, OnDestroy, IConfigurable {
     public static providerId = "AcmeProportionalDataSource2";

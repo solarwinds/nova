@@ -4,7 +4,7 @@ import values from "lodash/values";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { INTERACTION_DATA_POINT_EVENT, INTERACTION_DATA_POINTS_EVENT } from "../../constants";
+import { INTERACTION_DATA_POINTS_EVENT, INTERACTION_DATA_POINT_EVENT } from "../../constants";
 import { ChartPlugin } from "../common/chart-plugin";
 import { IChartEvent, IDataPoint, IDataPointsPayload, InteractionType } from "../common/types";
 

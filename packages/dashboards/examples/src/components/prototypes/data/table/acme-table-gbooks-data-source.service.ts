@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable, Input } from "@angular/core";
-import { DataSourceService,
+import { Injectable } from "@angular/core";
+import { DataSourceFeatures,
+    DataSourceService,
+    IDataField,
     IDataSource,
     IDataSourceFeatures,
     IDataSourceFeaturesConfiguration,
@@ -8,10 +10,9 @@ import { DataSourceService,
     IFilters,
     INovaFilteringOutputs,
     INovaFilters,
-    LoggerService
+    LoggerService,
 } from "@nova-ui/bits";
-import { DataSourceFeatures } from "@nova-ui/bits";
-import { IDataField, IDataSourceOutput } from "@nova-ui/dashboards";
+import { IDataSourceOutput } from "@nova-ui/dashboards";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";

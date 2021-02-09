@@ -3,6 +3,7 @@ import { Component, Injectable, OnInit } from "@angular/core";
 import {
     DataSourceFeatures,
     DataSourceService,
+    IDataField,
     IDataSource,
     IDataSourceFeatures,
     IDataSourceFeaturesConfiguration,
@@ -16,7 +17,6 @@ import {
 import {
     DATA_SOURCE,
     IDashboard,
-    IDataField,
     ITableWidgetConfig,
     IWidget,
     IWidgets,

@@ -13,7 +13,7 @@
                [min]="minValue"
                [max]="maxValue"
                [attr.name]="name"
-               (blur)="onBlurEventEmit($event)"
+               (blur)="onBlurEventEmit()"
                (keydown)="preventNonNumericalInput($event)"
                (paste)="preventNonNumericalPaste($event)"
                [placeholder]="placeholder"
