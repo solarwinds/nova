@@ -16,7 +16,7 @@ import { MouseInteractiveAreaPlugin } from "../plugins/mouse-interactive-area-pl
 
 import { XYGridConfig } from "./config/xy-grid-config";
 import { Grid } from "./grid";
-import { IXYGridConfig } from "./types";
+import { ITickLabelConfig, IXYGridConfig } from "./types";
 import { XYGrid } from "./xy-grid";
 
 describe("XYGrid >", () => {
@@ -435,13 +435,14 @@ describe("XYGrid >", () => {
                 const widthLimit = (grid.scales["x"].index[grid.bottomScaleId as string] as BandScale).bandwidth();
                 const horizontalPadding = config.axis.bottom.tickLabel.horizontalPadding;
 
-                const spy = spyOn(config.axis.bottom.tickLabel, "overflowHandler" as never);
+                spyOn(config.axis.bottom.tickLabel, "overflowHandler" as never);
                 (<any>grid).handleTickLabelOverflow((<any>grid).axisX.labelGroup, grid.scales["x"].index[grid.bottomScaleId as string], allAxisLabels);
 
                 flush();
 
                 // using jasmine.anything() as a stand-in for the text element
-                expect(spy).toHaveBeenCalledWith(jasmine.anything(), { widthLimit, horizontalPadding, ellipsisWidth });
+                expect(config.axis.bottom.tickLabel.overflowHandler).toHaveBeenCalledWith(
+                    jasmine.anything() as never, { widthLimit, horizontalPadding, ellipsisWidth });
             }));
         });
 
@@ -463,13 +464,14 @@ describe("XYGrid >", () => {
                 const widthLimit = config.dimension.margin.left - config.axis.left.padding - config.axis.left.tickSize;
                 const horizontalPadding = config.axis.left.tickLabel.horizontalPadding;
 
-                const spy = spyOn(config.axis.left.tickLabel, "overflowHandler" as never);
+                spyOn(config.axis.left.tickLabel, "overflowHandler" as never);
                 (<any>grid).handleTickLabelOverflow((<any>grid).axisYLeft.labelGroup, grid.scales["y"].index[grid.leftScaleId as string], allAxisLabels);
 
                 flush();
 
                 // using jasmine.anything() as a stand-in for the text element
-                expect(spy).toHaveBeenCalledWith(jasmine.anything(), { widthLimit, horizontalPadding, ellipsisWidth });
+                expect(config.axis.left.tickLabel.overflowHandler).toHaveBeenCalledWith(
+                    jasmine.anything() as never, { widthLimit, horizontalPadding, ellipsisWidth });
             }));
 
             it("should not invoke the 'overflowHandler' if 'fit' is true", fakeAsync(() => {
@@ -505,13 +507,14 @@ describe("XYGrid >", () => {
                 const widthLimit = config.dimension.margin.right - config.axis.right.padding - config.axis.right.tickSize;
                 const horizontalPadding = config.axis.right.tickLabel.horizontalPadding;
 
-                const spy = spyOn(config.axis.right.tickLabel, "overflowHandler" as never);
+                spyOn(config.axis.right.tickLabel, "overflowHandler" as never);
                 (<any>grid).handleTickLabelOverflow((<any>grid).axisYRight.labelGroup, grid.scales["y"].index[grid.rightScaleId as string], allAxisLabels);
 
                 flush();
 
                 // using jasmine.anything() as a stand-in for the text element
-                expect(spy).toHaveBeenCalledWith(jasmine.anything(), { widthLimit, horizontalPadding, ellipsisWidth });
+                expect(config.axis.right.tickLabel.overflowHandler).toHaveBeenCalledWith(
+                    jasmine.anything() as never, { widthLimit, horizontalPadding, ellipsisWidth });
             }));
 
             it("should not invoke the 'overflowHandler' if 'fit' is true", fakeAsync(() => {
