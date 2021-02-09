@@ -11,11 +11,11 @@
 
 ### Breaking
  - **REMOVED**: NuiModule module. From now on you should import each component separately
- - **REMOVED**: NuiEvent interface
- - **REMOVED**: *getEventStream()* method of **EventBusService**. It was deprecated a while ago, the native *getStream()* method must be used instead.
+ - **REMOVED**: NuiEvent interface. Use native TypeScript Event instead.
+ - **REMOVED**: *getEventStream()* method of **EventBusService**. It was deprecated a while ago, the EventBus base class's *getStream()* method must be used instead.
  - **REMOVED**: *@Input()* **required** of **TextboxNumberComponent**
  - **REMOVED**: *@Output()* **rowsSelected** of **TableComponent**. Use selectionChange instead.
- - **REMOVED**: deprecated entries of the IconStatus enum. Use Pascal case entries instead
+ - **REMOVED**: deprecated lowercase entries of the IconStatus enum. Use Pascal case entries instead
  - **REMOVED**: *@Input()* **required** of **TextboxNumberComponent** (the input does not have any impact on the component)
  - **REMOVED**: *@Input()* **suffix** of **TextboxNumberComponent**  (the input does not have any impact on the component)
 
