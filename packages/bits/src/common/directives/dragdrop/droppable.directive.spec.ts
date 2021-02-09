@@ -214,6 +214,7 @@ describe("directives >", () => {
 
         });
 
+        // TODO: Bring back in after NUI-5787
         xit("should add invalidDragOverClass if validator returns false", async () => {
             const invalidDragOverClass = "drag-over-class";
             droppableDirective.invalidDragOverClass = invalidDragOverClass;

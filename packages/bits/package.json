@@ -1,7 +1,7 @@
 {
   "name": "@nova-ui/bits",
   "license": "Apache-2.0",
-  "version": "10.0.0-0",
+  "version": "11.0.0-0",
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "description": "SolarWinds Nova Framework",
   "contributors": [
@@ -145,8 +145,8 @@
     "@schematics/angular": "^11.1.2",
     "@types/axe-webdriverjs": "^2.1.0",
     "@types/highlight.js": "~9.1.9",
-    "@types/jasmine": "~3.3.13",
-    "@types/jasminewd2": "2.0.5",
+    "@types/jasmine": "~3.5.0",
+    "@types/jasminewd2": "2.0.8",
     "@types/lodash": "^4.14.135",
     "@types/node": "^12.11.1",
     "@types/selenium-webdriver": "^3.0.17",
