@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, Injectable, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { DataSourceService, IFilters, INovaFilters } from "@nova-ui/bits";
 import {
     DashboardComponent,
@@ -162,7 +162,7 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
 })
 export class DrilldownWidgetTestComponent implements OnInit {
 
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
     public gridsterConfig: GridsterConfig = {};
     public editMode: boolean = false;
 
@@ -171,7 +171,9 @@ export class DrilldownWidgetTestComponent implements OnInit {
     constructor(
         private drilldownRegistry: UnitTestRegistryService,
         private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService
+        private providerRegistry: ProviderRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
+
     ) {
         const drilldownWidget = _cloneDeep(this.widgetTypesService.getWidgetType("drilldown"));
         drilldownWidget.widget[PizzagnaLayer.Structure].navigationBar.providers = {
@@ -181,6 +183,15 @@ export class DrilldownWidgetTestComponent implements OnInit {
             },
         };
         this.widgetTypesService.registerWidgetType("drilldown", 2, drilldownWidget);
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
+
+        this.initializeDashboard();
     }
 
     public ngOnInit(): void {

@@ -1,4 +1,4 @@
-import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { DataSourceService, IDataField, IFilteringOutputs } from "@nova-ui/bits";
 import { IAccessors, IChartAssistSeries } from "@nova-ui/charts";
 import {
@@ -140,7 +140,7 @@ export class BeerReviewCountsByCityMockDataSource extends DataSourceService<ICha
     styleUrls: ["./proportional-donut-content-formatters-example.component.less"],
 })
 export class ProportionalWidgetDonutContentFormattersExampleComponent implements OnInit {
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
     // Pass this to the dashboard component's gridsterConfig input in the template.
@@ -159,7 +159,8 @@ export class ProportionalWidgetDonutContentFormattersExampleComponent implements
         // registry for adding the formatter for proportional legend
         legendFormattersRegistry: ProportionalLegendFormattersRegistryService,
         // registry for adding the aggregators for donut content
-        aggregatorRegistry: ProportionalContentAggregatorsRegistryService
+        aggregatorRegistry: ProportionalContentAggregatorsRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
     ) {
         // on the dashboard startup, it's necessary to add possible content formatters, legend formatters and content aggregators to the registry.
         // using registry is a way for setting the available formatters.
@@ -198,6 +199,15 @@ export class ProportionalWidgetDonutContentFormattersExampleComponent implements
                 deps: [],
             },
         });
+
+        this.initializeDashboard();
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
 
         this.initializeDashboard();
     }

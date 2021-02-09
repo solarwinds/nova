@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -160,13 +160,14 @@ export class MockKpiDataSource extends DataSourceService<IKpiData> implements On
     styleUrls: ["./kpi-sync-broker-example.component.less"],
 })
 export class KpiSyncBrokerExampleComponent implements OnInit {
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
     public gridsterConfig: GridsterConfig = {};
     public editMode: boolean = false;
 
     constructor(
         private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService
+        private providerRegistry: ProviderRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
     ) { }
 
     public ngOnInit(): void {
@@ -202,6 +203,16 @@ export class KpiSyncBrokerExampleComponent implements OnInit {
                 deps: [],
             },
         });
+    }
+
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
+
+        this.initializeDashboard();
     }
 
     private initializeDashboard(): void {

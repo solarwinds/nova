@@ -176,7 +176,7 @@ export class CustomConfiguratorSectionComponent implements OnInit, OnChanges, IH
 export class CustomWidgetComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
     // Pass this to the dashboard component's gridsterConfig input in the template.
@@ -190,7 +190,8 @@ export class CustomWidgetComponent implements OnInit {
         private widgetTypesService: WidgetTypesService,
 
         // Inject the ComponentRegistryService to make our custom component available for late loading by the dashboards framework
-        private componentRegistry: ComponentRegistryService
+        private componentRegistry: ComponentRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
     ) { }
 
     public ngOnInit(): void {
@@ -205,6 +206,15 @@ export class CustomWidgetComponent implements OnInit {
         this.registerImageOptions();
 
         // Initialize our current instance of a dashboard with an instance of our custom widget
+        this.initializeDashboard();
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
+
         this.initializeDashboard();
     }
 
