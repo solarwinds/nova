@@ -417,6 +417,18 @@ describe("components >", () => {
 
                 expect(wrapperComponent.combobox.getLastSelectedOption()?.active).toBeTruthy();
             });
+
+            it("should items be correctly outfiltered if value sets using formControl", () => {
+                expect(wrapperComponent.combobox.options.toArray()[3].outfiltered).toBe(false);
+                expect(wrapperComponent.combobox.options.toArray()[4].outfiltered).toBe(false);
+
+                wrapperComponent.combobox.multiselect = true;
+                const itemsToSet = [wrapperComponent.items[3], wrapperComponent.items[4]];
+                wrapperComponent.comboboxControl.setValue(itemsToSet);
+
+                expect(wrapperComponent.combobox.options.toArray()[3].outfiltered).toBe(true);
+                expect(wrapperComponent.combobox.options.toArray()[4].outfiltered).toBe(true);
+            });
         });
 
         describe("options change >", () => {
