@@ -21,8 +21,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";
-import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 

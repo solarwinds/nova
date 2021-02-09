@@ -24,8 +24,8 @@ import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
 import { BehaviorSubject, EMPTY, merge, Subject, Subscription } from "rxjs";
-import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { popoverConstants } from "../../constants/popover.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { UtilService } from "../../services/util.service";

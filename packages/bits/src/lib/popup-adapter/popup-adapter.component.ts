@@ -21,8 +21,8 @@ import {
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
