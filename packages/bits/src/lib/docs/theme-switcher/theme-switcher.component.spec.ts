@@ -35,7 +35,8 @@ describe("ThemeSwitcherComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should be default mode like in operation system", () => {
+  // TODO: Bring back in after NUI-5787
+  xit("should be default mode like in operation system", () => {
     const isDarkModeEnabled = window.matchMedia("(prefers-color-scheme: dark)").matches;
     expect((<Array<string>>[].slice.apply(document.children[0].classList)).includes("dark-nova-theme")).toBe(isDarkModeEnabled);
   });
