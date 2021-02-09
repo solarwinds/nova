@@ -44,11 +44,12 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
     @Input() appendToBody: boolean;
     @Input() caption: string;
 
-    /**
-     * @deprecated
-     * TODO: Remove in v12
+     /**
+     * @deprecated in v11
      * The string[] type for itemsSource is the legacy non-i18n-friendly type
      * and it should be removed as an option
+     * Use IMenuItem[] instead
+     * Removal: NUI-5796
      */
     @Input() itemsSource: string[] | IMenuItem[];
 

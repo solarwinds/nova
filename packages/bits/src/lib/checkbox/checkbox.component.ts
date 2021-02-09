@@ -18,6 +18,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import {Subscription} from "rxjs";
 
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
@@ -185,7 +186,7 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
 
     public onClick(event: Event) {
         event.stopPropagation();
-        this.eventBusService.getStream({id: "document-click"}).next(event);
+        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT}).next(event);
     }
 
     public onChange(value: any) {}

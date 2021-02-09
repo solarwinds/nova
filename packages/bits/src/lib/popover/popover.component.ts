@@ -24,6 +24,7 @@ import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
 import { BehaviorSubject, EMPTY, merge, Subject, Subscription } from "rxjs";
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 
 import { popoverConstants } from "../../constants/popover.constants";
 import { EventBusService } from "../../services/event-bus.service";
@@ -163,7 +164,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         } else {
             this.onTrigger("click");
         }
-        this.eventBusService.getStream({id: "document-click"}).next(event);
+        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT}).next(event);
         event.stopPropagation();
     }
 
@@ -340,7 +341,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         });
 
         if (this.isTriggerPresent("click") && !this.preventClosing) {
-            const documentClickSubscription = this.eventBusService.getStream({id: "document-click"})
+            const documentClickSubscription = this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
                 .subscribe((event: any) => {
                     const popoverModalNativeElement = this.popover?.instance.elRef.nativeElement;
                     const eventPath = UtilService.getEventPath(event);

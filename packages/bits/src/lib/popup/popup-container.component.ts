@@ -12,8 +12,9 @@ import { PositionService } from "../../services/position.service";
 
 /**
  * @ignore
- * @deprecated
- * TODO: Remove in v12
+ * @deprecated in v11
+ * Use PopupComponent instead
+ * Removal: NUI-5796
  */
 @Component({
     selector: "nui-popup-container",

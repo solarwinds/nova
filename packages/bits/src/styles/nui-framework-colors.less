@@ -4,7 +4,7 @@
 // Add '/* SECTION: nameOfSection' to create a named section and include
 // colors into it (all colors from that point until next section will
 // be included)
-// Add '// unofficial' at the end of line for not including the color
+// Add '// unofficial/deprecated' at the end of line for not including the color
 // into section and thus not to display it in api-docs/demo
 // --------------------------------------------------
 
@@ -31,14 +31,14 @@
 @nui-color-bg-table_header-hover: shade(@white, 11%);
 @nui-color-bg-inverse-hover: tint(@black, 10%);
 @nui-color-bg-platformbar-hover: tint(@black, 15%);
-@nui-color-bg-light: @white; // unofficial
-@nui-color-bg-light-hover: darken(@white, 5%); // unofficial
-@nui-color-bg-dark: @black; // unofficial
-@nui-color-bg-dark-offset: fade(@black, 5%); // unofficial
-@nui-color-bg-dark-offset-hover: fade(@black, 10%); // unofficial
-@nui-color-bg-mid_dark: @light_black; // unofficial
-@nui-color-bg-dark-hover: lighten(@black, 15%); // unofficial
-@nui-color-bg-mid_dark-hover: darken(@light_black, 15%); // unofficial
+@nui-color-bg-light: @white; // unofficial/deprecated
+@nui-color-bg-light-hover: darken(@white, 5%); // unofficial/deprecated
+@nui-color-bg-dark: @black; // unofficial/deprecated
+@nui-color-bg-dark-offset: fade(@black, 5%); // unofficial/deprecated
+@nui-color-bg-dark-offset-hover: fade(@black, 10%); // unofficial/deprecated
+@nui-color-bg-mid_dark: @light_black; // unofficial/deprecated
+@nui-color-bg-dark-hover: lighten(@black, 15%); // unofficial/deprecated
+@nui-color-bg-mid_dark-hover: darken(@light_black, 15%); // unofficial/deprecated
 
 /* effects & interactions */
 /* SECTION: effects and interactions */
@@ -46,17 +46,17 @@
 @nui-color-active-hover: shade(@primary_blue, 10%);
 @nui-color-selected: fade(@cyan, 10%);
 @nui-color-selected-hover: fade(@cyan, 20%);
-@nui-color-selected-active: fade(@cyan, 20%); // unofficial
+@nui-color-selected-active: fade(@cyan, 20%); // unofficial/deprecated
 @nui-color-selected-contrast: @cyan;
 @nui-color-selected-contrast-hover: shade(@cyan, 10%);
 @nui-color-drag_selection: shade(@cyan, 40%);
 @nui-color-on: @ok_green;
 @nui-color-off: shade(@white, 70%);
-@nui-color-off-offset: lighten(@nui-color-off, 30%); // unofficial
-@nui-color-off-offset2: fade(@nui-color-off, 30%); // unofficial
+@nui-color-off-offset: lighten(@nui-color-off, 30%); // unofficial/deprecated
+@nui-color-off-offset2: fade(@nui-color-off, 30%); // unofficial/deprecated
 @nui-color-disabled: shade(@white, 30%);
 @nui-color-disabled-secondary: shade(@white, 9%);
-@nui-color-disabled-light: @color-disabled-light; // unofficial
+@nui-color-disabled-light: @color-disabled-light; // unofficial/deprecated
 @nui-color-progress: @cyan;
 @nui-color-focus: fade(@cyan, 50%);
 @nui-color-busy-default: fade(@cyan, 20%);
@@ -66,14 +66,14 @@
 /* texts */
 /* SECTION: texts */
 @nui-color-text-default: @black;
-@nui-color-text-default-hover: darken(@nui-color-text-default, 10%); // unofficial
+@nui-color-text-default-hover: darken(@nui-color-text-default, 10%); // unofficial/deprecated
 @nui-color-text-secondary: fade(@black, 60%);
 @nui-color-text-link: @primary_blue;
 @nui-color-text-link-inverse: tint(@primary_blue, 30%);
 @nui-color-text-disabled: fade(@black, 30%);
 @nui-color-text-light: @white;
 @nui-color-text-inverse: @white;
-@nui-color-text-light-secondary: fade(@white, 60%); // unofficial
+@nui-color-text-light-secondary: fade(@white, 60%); // unofficial/deprecated
 @nui-color-text-inverse-secondary: fade(@white, 60%);
 @nui-color-text-inverse-disabled: fade(@white, 30%);
 @nui-color-text-highlight-platform_bar: @swi_orange;
@@ -91,7 +91,7 @@
 @nui-color-line-dark: shade(@white, 40%);
 @nui-color-line-inverse: @white;
 @nui-color-line-highlight: @black;
-@nui-color-line-light: @white; // unofficial
+@nui-color-line-light: @white; // unofficial/deprecated
 @nui-color-line-active: @primary_blue;
 @nui-color-line-critical: @critical_red;
 @nui-color-line-warning: @warning_yellow;
@@ -99,9 +99,9 @@
 @nui-color-line-ok: @ok_green;
 @nui-color-line-ok-secondary: fade(@ok_green, 40%);
 @nui-color-line-ok-secondary-hover: fade(@ok_green, 50%);
-@nui-color-line-ok-graph: fade(@ok_green, 40%); //unofficial
-@nui-color-line-ok-graph-hover: fade(@ok_green, 50%); //unofficial
-@nui-color-line-action: @cyan; // unofficial
+@nui-color-line-ok-graph: fade(@ok_green, 40%); // unofficial/deprecated
+@nui-color-line-ok-graph-hover: fade(@ok_green, 50%); // unofficial/deprecated
+@nui-color-line-action: @cyan; // unofficial/deprecated
 @nui-color-line-selected-contrast: @cyan;
 @nui-color-line-threshold-critical: fade(@nui-color-line-critical, 60%);
 @nui-color-line-threshold-warning: @nui-color-line-warning;
@@ -110,21 +110,21 @@
 /* SECTION: icons */
 @nui-color-icon-active: @primary_blue;
 @nui-color-icon-default: fade(@black, 50%);
-@nui-color-icon-light: @white; // unofficial
+@nui-color-icon-light: @white; // unofficial/deprecated
 @nui-color-icon-inverse: @white;
 @nui-color-icon-critical: @critical_red;
 @nui-color-icon-disabled: fade(@black, 30%);
 @nui-color-icon-highlight-platform_bar: @swi_orange;
 @nui-color-icon-highlight: @black;
-@nui-color-icon-highlight-default: @black;  //unofficial
+@nui-color-icon-highlight-default: @black;  // unofficial/deprecated
 @nui-color-icon-warning: @warning_yellow;
 @nui-color-icon-ok: @ok_green;
 @nui-color-icon-info: @info_blue;
 
 /* overlays */
 /* SECTION: overlays */
-@nui-color-overlay-dark: fade(@black, 50%); // unofficial
-@nui-color-overlay-light: fade(@white, 90%); // unofficial
+@nui-color-overlay-dark: fade(@black, 50%); // unofficial/deprecated
+@nui-color-overlay-light: fade(@white, 90%); // unofficial/deprecated
 @nui-color-overlay-modal: fade(@black, 50%);
 @nui-color-overlay-busy: fade(@nui-color-bg-content, 90%);
 @nui-color-overlay-busy-secondary: fade(@nui-color-bg-secondary, 90%);
@@ -220,106 +220,106 @@
     Chart color names changed with v8 release. These are now deprecated.
     It is strongly recommended to switch to new naming before v9.
 */
-@nui-chart-one-dark: shade(@chart-blue, 40%); // unofficial
-@nui-chart-two-dark: shade(@chart-pink, 40%); // unofficial
-@nui-chart-three-dark: shade(@chart-seagreen, 40%); // unofficial
-@nui-chart-four-dark: shade(@chart-violet, 40%); // unofficial
-@nui-chart-five-dark: shade(@chart-limegreen, 40%); // unofficial
-@nui-chart-six-dark: shade(@chart-orange, 40%); // unofficial
-@nui-chart-seven-dark: shade(@chart-ultramarine, 40%); // unofficial
-@nui-chart-eight-dark: shade(@chart-bordeaux, 40%); // unofficial
-@nui-chart-nine-dark: shade(@chart-ochroid, 40%); // unofficial
-@nui-chart-ten-dark: shade(@chart-anthracite, 40%); // unofficial
+@nui-chart-one-dark: shade(@chart-blue, 40%); // unofficial/deprecated
+@nui-chart-two-dark: shade(@chart-pink, 40%); // unofficial/deprecated
+@nui-chart-three-dark: shade(@chart-seagreen, 40%); // unofficial/deprecated
+@nui-chart-four-dark: shade(@chart-violet, 40%); // unofficial/deprecated
+@nui-chart-five-dark: shade(@chart-limegreen, 40%); // unofficial/deprecated
+@nui-chart-six-dark: shade(@chart-orange, 40%); // unofficial/deprecated
+@nui-chart-seven-dark: shade(@chart-ultramarine, 40%); // unofficial/deprecated
+@nui-chart-eight-dark: shade(@chart-bordeaux, 40%); // unofficial/deprecated
+@nui-chart-nine-dark: shade(@chart-ochroid, 40%); // unofficial/deprecated
+@nui-chart-ten-dark: shade(@chart-anthracite, 40%); // unofficial/deprecated
 
-@nui-chart-one: @chart-blue; // unofficial
-@nui-chart-two: @chart-pink; // unofficial
-@nui-chart-three: @chart-seagreen; // unofficial
-@nui-chart-four: @chart-violet; // unofficial
-@nui-chart-five: @chart-limegreen; // unofficial
-@nui-chart-six: @chart-orange; // unofficial
-@nui-chart-seven: @chart-ultramarine; // unofficial
-@nui-chart-eight: @chart-bordeaux; // unofficial
-@nui-chart-nine: @chart-ochroid; // unofficial
-@nui-chart-ten: @chart-anthracite; // unofficial
+@nui-chart-one: @chart-blue; // unofficial/deprecated
+@nui-chart-two: @chart-pink; // unofficial/deprecated
+@nui-chart-three: @chart-seagreen; // unofficial/deprecated
+@nui-chart-four: @chart-violet; // unofficial/deprecated
+@nui-chart-five: @chart-limegreen; // unofficial/deprecated
+@nui-chart-six: @chart-orange; // unofficial/deprecated
+@nui-chart-seven: @chart-ultramarine; // unofficial/deprecated
+@nui-chart-eight: @chart-bordeaux; // unofficial/deprecated
+@nui-chart-nine: @chart-ochroid; // unofficial/deprecated
+@nui-chart-ten: @chart-anthracite; // unofficial/deprecated
 
-@nui-chart-one-light: tint(@chart-blue, 60%); // unofficial
-@nui-chart-two-light: tint(@chart-pink, 60%); // unofficial
-@nui-chart-three-light: tint(@chart-seagreen, 60%); // unofficial
-@nui-chart-four-light: tint(@chart-violet, 60%); // unofficial
-@nui-chart-five-light: tint(@chart-limegreen, 60%); // unofficial
-@nui-chart-six-light: tint(@chart-orange, 60%); // unofficial
-@nui-chart-seven-light: tint(@chart-ultramarine, 60%); // unofficial
-@nui-chart-eight-light: tint(@chart-bordeaux, 60%); // unofficial
-@nui-chart-nine-light: tint(@chart-ochroid, 60%); // unofficial
-@nui-chart-ten-light: tint(@chart-anthracite, 60%); // unofficial
+@nui-chart-one-light: tint(@chart-blue, 60%); // unofficial/deprecated
+@nui-chart-two-light: tint(@chart-pink, 60%); // unofficial/deprecated
+@nui-chart-three-light: tint(@chart-seagreen, 60%); // unofficial/deprecated
+@nui-chart-four-light: tint(@chart-violet, 60%); // unofficial/deprecated
+@nui-chart-five-light: tint(@chart-limegreen, 60%); // unofficial/deprecated
+@nui-chart-six-light: tint(@chart-orange, 60%); // unofficial/deprecated
+@nui-chart-seven-light: tint(@chart-ultramarine, 60%); // unofficial/deprecated
+@nui-chart-eight-light: tint(@chart-bordeaux, 60%); // unofficial/deprecated
+@nui-chart-nine-light: tint(@chart-ochroid, 60%); // unofficial/deprecated
+@nui-chart-ten-light: tint(@chart-anthracite, 60%); // unofficial/deprecated
 // end of legacy chart colors
 
-@nui-progress-ripple-color: fade(@white, 40%); // unofficial
-@nui-border-fade: fade(@nui-color-line-default, 70%); // unofficial
-@nui-color-tab-link: @mid_gray; // unofficial
-@nui-color-line-offset: fade(@nui-color-line-default, 50%); // unofficial
+@nui-progress-ripple-color: fade(@white, 40%); // unofficial/deprecated
+@nui-border-fade: fade(@nui-color-line-default, 70%); // unofficial/deprecated
+@nui-color-tab-link: @mid_gray; // unofficial/deprecated
+@nui-color-line-offset: fade(@nui-color-line-default, 50%); // unofficial/deprecated
 
 
-@nui-color-btn1-focusBrd: darken(@nui-color-line-default, 5.5%); // unofficial
-@nui-color-btn1-activeOpenBrd: darken(@nui-color-line-default, 12%); // unofficial
-@nui-color-btn1-activeHoverBrd: darken(@nui-color-line-default, 25%); // unofficial
-@nui-color-btn2-focusBk: darken(@nui-color-text-link, 5.5%); // unofficial
-@nui-color-btn2-activeOpenBk: darken(@nui-color-text-link, 12%); // unofficial
-@nui-color-btn2-activeHoverBk: darken(@nui-color-text-link, 25%); // unofficial
-@nui-color-btn4-focus: darken(@nui-color-active, 5.5%); // unofficial
-@nui-color-btn4-activeOpen: darken(@nui-color-active, 12%); // unofficial
-@nui-color-btn4-activeHover: darken(@nui-color-active, 25%); // unofficial
+@nui-color-btn1-focusBrd: darken(@nui-color-line-default, 5.5%); // unofficial/deprecated
+@nui-color-btn1-activeOpenBrd: darken(@nui-color-line-default, 12%); // unofficial/deprecated
+@nui-color-btn1-activeHoverBrd: darken(@nui-color-line-default, 25%); // unofficial/deprecated
+@nui-color-btn2-focusBk: darken(@nui-color-text-link, 5.5%); // unofficial/deprecated
+@nui-color-btn2-activeOpenBk: darken(@nui-color-text-link, 12%); // unofficial/deprecated
+@nui-color-btn2-activeHoverBk: darken(@nui-color-text-link, 25%); // unofficial/deprecated
+@nui-color-btn4-focus: darken(@nui-color-active, 5.5%); // unofficial/deprecated
+@nui-color-btn4-activeOpen: darken(@nui-color-active, 12%); // unofficial/deprecated
+@nui-color-btn4-activeHover: darken(@nui-color-active, 25%); // unofficial/deprecated
 
-@nui-color-input-box-shadow: fade(@nui-color-line-default,50%); // unofficial
-@nui-color-input-box-shadow-hover: fade(@nui-color-line-default, 60%); // unofficial
+@nui-color-input-box-shadow: fade(@nui-color-line-default,50%); // unofficial/deprecated
+@nui-color-input-box-shadow-hover: fade(@nui-color-line-default, 60%); // unofficial/deprecated
 
 //** Shadow color
 @nui-shadow-color: fade(@black, 30%);
 @nui-shadow-color-stronger: fade(@black, 60%);
 
 //** Background color for `<body>`.
-@body-bg:               @nui-color-bg-workspace; // unofficial
+@body-bg:               @nui-color-bg-workspace; // unofficial/deprecated
 //** Global text color on `<body>`.
-@text-color:            @nui-color-text-default; // unofficial
+@text-color:            @nui-color-text-default; // unofficial/deprecated
 
 //** Global textual link color.
-@link-color:            @nui-color-text-link; // unofficial
+@link-color:            @nui-color-text-link; // unofficial/deprecated
 //** Link hover color set via `darken()` function.
-@link-hover-color:      @nui-color-text-link; // unofficial
+@link-hover-color:      @nui-color-text-link; // unofficial/deprecated
 
 //** Border color for inputs on focus
-@input-border-focus:             @nui-color-line-active; // unofficial
+@input-border-focus:             @nui-color-line-active; // unofficial/deprecated
 
 //** Placeholder text color
-@input-color-placeholder:        @nui-color-text-secondary; // unofficial
+@input-color-placeholder:        @nui-color-text-secondary; // unofficial/deprecated
 
-@kbd-color:                   @white; // unofficial
-@kbd-bg:                      @light_black; // unofficial
+@kbd-color:                   @white; // unofficial/deprecated
+@kbd-bg:                      @light_black; // unofficial/deprecated
 
-@pre-color:                   @light_black; // unofficial
-@pre-border-color:            @nui-color-line-default; // unofficial
+@pre-color:                   @light_black; // unofficial/deprecated
+@pre-border-color:            @nui-color-line-default; // unofficial/deprecated
 
 //** Text muted color
-@text-muted:                  @nui-color-text-secondary; // unofficial
+@text-muted:                  @nui-color-text-secondary; // unofficial/deprecated
 //** Abbreviations and acronyms border color
-@abbr-border-color:           @nui-color-line-default; // unofficial
+@abbr-border-color:           @nui-color-line-default; // unofficial/deprecated
 //** Headings small color
-@headings-small-color:        @nui-color-text-secondary; // unofficial
+@headings-small-color:        @nui-color-text-secondary; // unofficial/deprecated
 //** Blockquote small color
-@blockquote-small-color:      @nui-color-text-secondary; // unofficial
+@blockquote-small-color:      @nui-color-text-secondary; // unofficial/deprecated
 
 //** Page header border color
-@page-header-border-color:    @nui-color-line-default; // unofficial
+@page-header-border-color:    @nui-color-line-default; // unofficial/deprecated
 
 //** Horizontal line color.
-@hr-border:                   @nui-color-line-default; // unofficial
+@hr-border:                   @nui-color-line-default; // unofficial/deprecated
 
 //** Thumbnail background color
-@thumbnail-bg:                @body-bg; // unofficial
+@thumbnail-bg:                @body-bg; // unofficial/deprecated
 
 //** Background color, that .nui-scroll-shadow class will try to simulate
-@nui-color-bg-scroll:         @nui-color-bg-content; // unofficial
+@nui-color-bg-scroll:         @nui-color-bg-content; // unofficial/deprecated
 
 //** Code component colors
-@nui-code-bg-color:           @nui-color-bg-mid_dark; // unofficial
-@nui-code-color:              @nui-color-bg-content; // unofficial
+@nui-code-bg-color:           @nui-color-bg-mid_dark; // unofficial/deprecated
+@nui-code-color:              @nui-color-bg-content; // unofficial/deprecated

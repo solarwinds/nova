@@ -44,8 +44,9 @@ import { ISelectGroup } from "../public-api";
 
 // <example-url>./../examples/index.html#/combobox</example-url>
 /**
- * @deprecated
- * TODO: remove in v12
+ * @deprecated in v11
+ * Use ComboboxV2Component instead
+ * Removal: NUI-5796
  */
 @Component({
     selector: "nui-combobox",

@@ -21,6 +21,7 @@ import {
 import _isUndefined from "lodash/isUndefined";
 import {Subject, Subscription} from "rxjs";
 
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { EventBusService } from "../../services/event-bus.service";
 
@@ -30,8 +31,9 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
 
 // <example-url>./../examples/index.html#/popup</example-url>
 /**
- * @deprecated
- * TODO: Remove in v12
+ * @deprecated in v11
+ * Use PopupComponent instead
+ * Removal: NUI-5796
  */
 /**
  * __Name :__
@@ -146,7 +148,7 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
             );
         }
         this.popupSubscriptions.push(
-            this.eventBusService.getStream({id: "document-click"})
+            this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
                 .subscribe((event: MouseEvent) => {
                     if (this.isOpen) {
                         this.closePopup(event);

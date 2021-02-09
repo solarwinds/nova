@@ -11,8 +11,7 @@ import { InputValueTypes } from "../types";
 
 /**
  * @ignore
- * @deprecated
- * TODO: Remove 'V2' from the name in v12
+ *  Will be renamed in scope of the NUI-5797
  */
 @Directive({
     selector: "[nuiComboboxV2OptionHighlight]",

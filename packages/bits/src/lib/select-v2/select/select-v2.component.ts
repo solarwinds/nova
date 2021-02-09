@@ -47,10 +47,8 @@ import { SelectV2OptionComponent } from "../option/select-v2-option.component";
         class: "nui-select-v2",
     },
 })
-/**
- * @deprecated
- * TODO: Remove 'V2' from the name in v12
- */
+
+// Will be renamed in scope of the NUI-5797
 export class SelectV2Component extends BaseSelectV2 implements AfterContentInit, OnDestroy, OnChanges {
 
     /** Sets a custom template for displaying it in the Option */
