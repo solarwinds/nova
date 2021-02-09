@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, ValidatorFn } from "@angular/forms";
 import { NuiValidators } from "./nui-validators";
 
 describe("validators >", () => {
+    // TODO: Bring back in after NUI-5787
     xdescribe("integerValidator >", () => {
         let formBuilder: FormBuilder;
         const commonTestCases = [

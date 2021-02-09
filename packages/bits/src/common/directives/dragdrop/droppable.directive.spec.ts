@@ -170,6 +170,7 @@ describe("directives >", () => {
             expect(component.onDragOver).not.toHaveBeenCalled();
         });
 
+        // TODO: Bring back in after NUI-5787
         xit("should trigger emission of dragover event if validator returns true", () => {
             spyOn(component, "onDragOver");
             setValidator(true);
