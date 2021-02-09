@@ -139,6 +139,7 @@
     "zone.js": "0.10.3"
   },
   "dependencies": {
+    "@angular-devkit/schematics": "^11.1.4",
     "resize-observer-polyfill": "^1.5.0"
   }
 }
