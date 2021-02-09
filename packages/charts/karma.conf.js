@@ -30,11 +30,11 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromNaked'],
+    browsers: ['ChromeNaked'],
     browserDisconnectTolerance: 2,
     browserNoActivityTimeout: 30000,
     customLaunchers: {
-      ChromNaked: {
+      ChromeNaked: {
         base: 'ChromeHeadless',
         flags: ['--no-sandbox', '--headless', '--disable-translate', '--disable-extensions']
       }
