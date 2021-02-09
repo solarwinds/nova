@@ -10,12 +10,14 @@
     }
     &__node-item {
         .setCssVariable(background-color, nui-color-bg-light);
-        margin: 0 15px 0;
-        padding-bottom: 15px;
-    }
+        margin: 15px;
 
-    .widget-configurator-section {
-        margin: 0;
+        .widget-configurator-section {
+            margin: 0;
+        }
+    }
+    &__drop-area {
+        margin: 15px;
     }
 }
 
@@ -28,12 +30,6 @@
 }
 .cdk-drag-preview {
     z-index: @zindex-drag !important;
-}
-
-.cdk-drag-placeholder {
-    opacity: 0;
-}
-
-.cdk-drop-list-dragging {
-    border: 5px @nui-color-brand-five solid;
+    opacity: 0.9;
+    box-shadow: @nui-shadow-default;
 }

@@ -40,6 +40,7 @@ import { ComponentRegistryService, IComponentWithLateLoadKey } from "../pizzagna
 
 import { ColorPickerComponent } from "./components/color-picker/color-picker.component";
 import { ConfiguratorComponent } from "./components/configurator/configurator.component";
+import { DropAreaComponent } from "./components/drop-area/drop-area.component";
 import { FormStackComponent } from "./components/form-stack/form-stack.component";
 import { DonutContentPercentageConfigurationComponent } from "./components/formatters/donut-content-percentage-formatter/donut-content-percentage-configuration.component";
 import { DonutContentPercentageFormatterComponent } from "./components/formatters/donut-content-percentage-formatter/donut-content-percentage-formatter.component";
@@ -177,6 +178,7 @@ const exportedDeclarations = [
     DonutContentConfigurationComponent,
     AggregatorMetricSelectorConfigurationComponent,
     FieldMapperAggregatorConfiguratorComponent,
+    DropAreaComponent,
 ];
 
 @NgModule({
