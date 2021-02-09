@@ -3,7 +3,8 @@ import { TransientCacheFactory } from "./transient-cache-factory.service";
 import { UtilService } from "./util.service";
 
 describe("services >", () => {
-    describe("transientCacheFactory >", () => {
+    // TODO: Bring back in after NUI-5787
+    xdescribe("transientCacheFactory >", () => {
         let utilService: UtilService;
         let cacheFactory: TransientCacheFactory;
 
