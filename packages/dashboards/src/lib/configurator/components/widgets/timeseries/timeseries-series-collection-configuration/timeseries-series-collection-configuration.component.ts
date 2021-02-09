@@ -7,7 +7,7 @@ import { map } from "rxjs/operators";
 import { ITimeseriesWidgetData } from "../../../../../components/timeseries-widget/types";
 import { IPizzagnaProperty } from "../../../../../pizzagna/functions/get-pizzagna-property-path";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
-import { IHasChangeDetector, IHasForm, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../../../types";
+import { IHasChangeDetector, IHasForm, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { ITimeseriesItemConfiguration } from "../types";
 
 @Component({

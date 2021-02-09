@@ -1,4 +1,4 @@
-import { Inject, NgZone, OnDestroy } from "@angular/core";
+import { Inject, Injectable, NgZone, OnDestroy } from "@angular/core";
 import { EventBus, EventDefinition } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -21,6 +21,7 @@ export interface IRefresherProperties extends IProperties {
 /**
  * This provider emits the REFRESH event every X milliseconds
  */
+@Injectable()
 export class Refresher implements OnDestroy, IConfigurable {
     private intervalRef?: number;
 

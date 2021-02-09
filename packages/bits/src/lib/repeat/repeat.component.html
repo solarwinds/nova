@@ -61,7 +61,7 @@
                           [ngTemplateOutletContext]="{item:sourceItem, itemIndex: itemIndex}"></ng-container>
         </div>
         <cdk-virtual-scroll-viewport style="height: 100%" [itemSize]="itemSize" *ngIf="virtualScroll && itemSize">
-            <ng-container *cdkVirtualFor="let sourceItem of itemsSource;">
+            <ng-container *cdkVirtualFor="let sourceItem of itemsSource; templateCacheSize: 0">
                 <ng-container [ngTemplateOutlet]="repeatItems" [ngTemplateOutletContext]="{item:sourceItem}"></ng-container>
             </ng-container>
         </cdk-virtual-scroll-viewport>

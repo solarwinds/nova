@@ -1,7 +1,7 @@
 import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { ChangeDetectorRef, Component, Input, LOCALE_ID, SimpleChange, SimpleChanges, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
-import { async, ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 import {
     LoggerService,
@@ -59,7 +59,7 @@ describe("Pizzagna", () => {
         },
     };
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         const entryComponents = [
             TemplateLoadErrorComponent,
             StackComponent,

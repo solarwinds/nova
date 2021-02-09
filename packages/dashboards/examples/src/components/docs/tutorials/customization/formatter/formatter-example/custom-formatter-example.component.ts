@@ -224,7 +224,7 @@ export class CustomFormatterExampleComponent implements OnInit {
         ];
 
         // Registering the formatters
-        this.tableFormatterRegistryService.addFormatters(tableFormatters);
+        this.tableFormatterRegistryService.addItems(tableFormatters);
 
         // This sets the table's datasource to have the BeerDataSource so the drop down is filled similar to the line above.
         this.widgetTypesService.setNode(table, "configurator", WellKnownPathKey.DataSourceProviders, [BeerDataSource.providerId]);

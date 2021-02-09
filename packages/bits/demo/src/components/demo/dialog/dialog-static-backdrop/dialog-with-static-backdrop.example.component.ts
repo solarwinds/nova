@@ -19,12 +19,12 @@ export class DialogWithStaticBackdropExampleComponent {
         this.activeDialog = this.dialogService.open(content, {size: "sm", keyboard: false, backdrop: "static"});
     }
 
-    private actionDone(): void {
+    public actionDone(): void {
         this.toastService.success({message: $localize `Action Done!`, title: $localize `Event`});
         this.activeDialog.close();
     }
 
-    private actionCanceled(): void {
+    public actionCanceled(): void {
         this.toastService.info({message: $localize `Action Cancelled!`, title: $localize `Event`});
         this.activeDialog.close();
     }

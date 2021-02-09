@@ -1,4 +1,4 @@
-import { AfterViewInit, Inject, OnDestroy } from "@angular/core";
+import { AfterViewInit, Inject, Injectable, OnDestroy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { EventBus, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
@@ -10,6 +10,7 @@ import { PreviewService } from "../preview.service";
 
 import { IConfiguratorConverter } from "./types";
 
+@Injectable()
 export abstract class BaseConverter implements AfterViewInit, IConfiguratorConverter, OnDestroy {
     public component: any;
     public componentId: string;

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
@@ -9,7 +9,7 @@ describe("DataSourceConfigurationComponent", () => {
     let component: KpiDescriptionConfigurationComponent;
     let fixture: ComponentFixture<KpiDescriptionConfigurationComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [

@@ -304,7 +304,7 @@
     css-tree "1.0.0-alpha.39"
     pako "1.0.11"
 
-"@applitools/eyes-protractor@~1.9.1":
+"@applitools/eyes-protractor@1.9.1":
   version "1.9.1"
   resolved "https://registry.npmjs.org/@applitools/eyes-protractor/-/eyes-protractor-1.9.1.tgz#d10a5a8beaa597089c6486d0e4b5ab82bc149290"
   integrity sha512-oEci8GAznu2GHEURsANNmLcI3GwvXx32wKYGxZCBGhR5TyWaSPv8+EWswlGA3b5g/VnXMubzFxyl2cKIUWFlkw==

@@ -46,9 +46,9 @@ export class RadialGrid extends Grid implements IGrid {
     protected adjustRenderingArea = () => {
         const d = this.config().dimension;
         const attrs = {
-            "width": d.width(),
-            "height": d.height(),
-            "transform": `translate(${-d.width() / 2}, ${-d.height() / 2})`,
+            "width": d.outerWidth(),
+            "height": d.outerHeight(),
+            "transform": `translate(${-d.outerWidth() / 2}, ${-d.outerHeight() / 2})`,
         };
         this.renderingAreaClipPath.attrs(attrs);
         this.renderingArea.attrs(attrs);
@@ -56,7 +56,7 @@ export class RadialGrid extends Grid implements IGrid {
 
     private recenter() {
         this.container.attrs({
-            "transform": `translate(${this.config().dimension.width() / 2},${this.config().dimension.height() / 2})`,
+            "transform": `translate(${this.config().dimension.outerWidth() / 2},${this.config().dimension.outerHeight() / 2})`,
         });
     }
 }
