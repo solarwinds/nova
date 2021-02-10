@@ -115,7 +115,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1101.2",
     "@angular-devkit/build-ng-packagr": "^0.1002.1",
-    "@angular-devkit/build-optimizer": "^0.1002.1",
+    "@angular-devkit/build-optimizer": "^0.1101.4",
     "@angular-devkit/core": "^11.1.2",
     "@angular-devkit/schematics": "^11.1.2",
     "@angular-devkit/schematics-cli": "^0.1002.1",
@@ -158,7 +158,7 @@
     "cpx": "^1.5.0",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
-    "highlight.js": "9.12.0",
+    "highlight.js": "10.6.0",
     "jasmine-core": "~3.5.0",
     "jasmine-reporters": "^2.3.1",
     "jasmine-spec-reporter": "~5.0.0",
