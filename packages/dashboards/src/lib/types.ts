@@ -54,6 +54,7 @@ export enum WellKnownPathKey {
 
 export enum WellKnownDataSourceFeatures {
     Interactivity = "interactivity",
+    DisableTableColumnGeneration = "disableTableColumnGeneration",
 }
 
 export interface IProperties extends Record<string, any> {
