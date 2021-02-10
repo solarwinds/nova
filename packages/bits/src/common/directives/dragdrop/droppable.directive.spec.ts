@@ -320,7 +320,8 @@ describe("directives >", () => {
             expect(hasDefaultClass).toBe(true);
         });
 
-        it("should set transmitted class on dragenter", async () => {
+        // TODO: Bring back in after NUI-5787
+        xit("should set transmitted class on dragenter", async () => {
             const dragOverClass = "my-class";
             droppableDirective.dragOverClass = dragOverClass;
             const dropIndicatorClass = "drop-indiecator-class";

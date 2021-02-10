@@ -1,5 +1,5 @@
 import { ElementRef } from "@angular/core";
-const hljs = require("highlight.js/lib/highlight");
+import hljs from "highlight.js/lib/core";
 
 import { ExampleCodeComponent } from "./example-code.component";
 
@@ -11,7 +11,7 @@ describe("components >", () => {
             subject.codeElement =  {nativeElement: document.createElement("div")} as ElementRef;
         });
 
-        describe("ngAfterViewInit", () => {
+        fdescribe("ngAfterViewInit", () => {
             it("should call hljs highlightBlock method", () => {
                 spyOn(hljs, "highlightBlock");
                 subject.ngAfterViewInit();

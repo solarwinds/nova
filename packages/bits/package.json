@@ -137,7 +137,7 @@
     "@locl/cli": "1.0.0",
     "@schematics/angular": "^11.1.2",
     "@types/axe-webdriverjs": "^2.1.0",
-    "@types/highlight.js": "~9.1.9",
+    "@types/highlight.js": "~10.1.0",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "2.0.8",
     "@types/lodash": "^4.14.135",

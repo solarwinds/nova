@@ -8,7 +8,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
-import hljs from "highlight.js";
+import hljs from "highlight.js/lib/core";
 
 /**
  * <example-url>./../examples/index.html#/code</example-url><br />
