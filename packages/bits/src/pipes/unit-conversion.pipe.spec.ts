@@ -226,7 +226,7 @@ describe("filters >", () => {
             },
         ];
 
-        beforeAll(() => {
+        beforeEach(() => {
             TestBed
                 .configureTestingModule({
                     providers: [LoggerService, UnitConversionService],

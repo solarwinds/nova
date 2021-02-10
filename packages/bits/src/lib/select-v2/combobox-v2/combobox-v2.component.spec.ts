@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, ViewChild } from "@angular/core";
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
@@ -46,7 +46,7 @@ describe("components >", () => {
         let wrapperFixture: ComponentFixture<ComboboxV2WrapperComponent>;
         let wrapperComponent: ComboboxV2WrapperComponent;
 
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
                 declarations: [
                     ComboboxV2Component,

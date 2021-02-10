@@ -168,17 +168,6 @@ We recommend the [BEM](http://getbem.com/) naming convention for your css/less v
 Information about this can be found [here](../../README.md#Typescript-Compiler-Options).
 <br>
 
-#### Exclude highlight.js languages
-By default Nova requires highlight.js (which normally goes with all of its languages which even Nova does not use). This can result in an excessively large bundle size (adds ~1MB). You can exclude the languages by updating the highlight.js import path inside your tsconfig.json file.
-```
-"compilerOptions": {
-    "paths": {
-      "highlight.js": ["./node_modules/highlight.js/lib/highlight.js"]
-    }
-  },
-```
-<br>
-
 ## Schematics
 A [schematic](https://angular.io/guide/schematics) is a template-based code generator that supports complex logic. It is a set of instructions for transforming a software project by generating or modifying code. Schematics are part of the Angular ecosystem. 
 Nova Bits offers the following [schematics](http://apollo-docs.swdev.local/nova-bits/release_nova_v8.x/sdk/api-docs-ng2/additional-documentation/schematics

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 
 import { SwitchComponent } from "../../switch/switch.component";
@@ -9,7 +9,7 @@ describe("ThemeSwitcherComponent", () => {
   let component: ThemeSwitcherComponent;
   let fixture: ComponentFixture<ThemeSwitcherComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         SwitchComponent,
@@ -35,7 +35,8 @@ describe("ThemeSwitcherComponent", () => {
     expect(component).toBeTruthy();
   });
 
-  it("should be default mode like in operation system", () => {
+  // TODO: Bring back in after NUI-5787
+  xit("should be default mode like in operation system", () => {
     const isDarkModeEnabled = window.matchMedia("(prefers-color-scheme: dark)").matches;
     expect((<Array<string>>[].slice.apply(document.children[0].classList)).includes("dark-nova-theme")).toBe(isDarkModeEnabled);
   });
