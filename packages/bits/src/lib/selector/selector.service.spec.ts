@@ -458,7 +458,8 @@ describe("services >", () => {
                     RepeatSelectionMode.multi,
                     TOTAL_SIZE
                 );
-                expect(newSelection).toEqual(FULL_SELECTION);
+                expect(newSelection).toEqual(FIRST_AND_SECOND_PAGES_SELECTION);
+                expect(newSelection.isAllPages).toEqual(false);
             });
             it("should return correct selection if isAllPages is false and something is (un)selected", () => {
                 const newSelection = selectorService.selectItems(

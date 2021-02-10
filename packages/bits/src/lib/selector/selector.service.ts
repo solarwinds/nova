@@ -47,7 +47,7 @@ export class SelectorService {
 
         if (virtualScroll) {
             if (selectorValue === SelectionType.AllPages || selectorValue === SelectionType.All) {
-                return new SelectionModel({isAllPages: true});
+                return new SelectionModel({ isAllPages: true });
             }
             return new SelectionModel();
         }
@@ -217,15 +217,10 @@ export class SelectorService {
         const includedItems = this.getIncludedItems(prevSelection, items, selectedItems);
 
         if (prevSelection.isAllPages) {
-
             return new SelectionModel({
                 isAllPages: prevSelection.isAllPages,
                 exclude: this.getExcludedItems(prevSelection, items, selectedItems),
             });
-        } else {
-            if (totalItems > 0 && totalItems === includedItems.length) {
-                return new SelectionModel({isAllPages: true});
-            }
         }
 
         return new SelectionModel({
