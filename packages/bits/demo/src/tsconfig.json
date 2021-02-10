@@ -6,8 +6,7 @@
     "skipLibCheck": true,
     "declaration": false,
     "paths": {
-      "@nova-ui/bits": ["../../src/public_api.ts"],
-      "highlight.js": ["../../node_modules/highlight.js/lib/highlight.js"] // to ensure we load highlight without languages
+      "@nova-ui/bits": ["../../src/public_api.ts"]
     }
   },
   "files": [

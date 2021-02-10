@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-const hljs = require("highlight.js/lib/core");
+import hljs from "highlight.js";
 
 import { ThemeSwitchService } from "../../../../src/services/theme-switch.service";
 
