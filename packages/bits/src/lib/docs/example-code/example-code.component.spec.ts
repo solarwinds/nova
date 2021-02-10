@@ -11,7 +11,7 @@ describe("components >", () => {
             subject.codeElement =  {nativeElement: document.createElement("div")} as ElementRef;
         });
 
-        fdescribe("ngAfterViewInit", () => {
+        describe("ngAfterViewInit", () => {
             it("should call hljs highlightBlock method", () => {
                 spyOn(hljs, "highlightBlock");
                 subject.ngAfterViewInit();
