@@ -379,8 +379,7 @@ describe("services >", () => {
                     FULL_SELECTION,
                     [ITEM_ON_FIRST_PAGE],
                     FIRST_PAGE,
-                    RepeatSelectionMode.none,
-                    TOTAL_SIZE
+                    RepeatSelectionMode.none
                 );
                 expect(newSelection).toEqual(EMPTY_SELECTION);
             });
@@ -391,8 +390,7 @@ describe("services >", () => {
                             EMPTY_SELECTION,
                             [ITEM_ON_FIRST_PAGE],
                             FIRST_PAGE,
-                            selectionMode,
-                            TOTAL_SIZE
+                            selectionMode
                         );
                         expect(newSelection).toEqual(ONE_ON_FIRST_PAGE_SELECTION);
                     }
@@ -405,8 +403,7 @@ describe("services >", () => {
                             FULL_SELECTION,
                             [ITEM_ON_FIRST_PAGE],
                             FIRST_PAGE,
-                            selectionMode,
-                            TOTAL_SIZE
+                            selectionMode
                         );
                         expect(newSelection).toEqual(ONE_ON_FIRST_PAGE_SELECTION);
                     }
@@ -419,8 +416,7 @@ describe("services >", () => {
                             ONE_ON_SECOND_PAGE_SELECTION,
                             [ITEM_ON_FIRST_PAGE],
                             FIRST_PAGE,
-                            selectionMode,
-                            TOTAL_SIZE
+                            selectionMode
                         );
                         expect(newSelection).toEqual(ONE_ON_FIRST_PAGE_SELECTION);
                     }
@@ -433,8 +429,7 @@ describe("services >", () => {
                             EMPTY_SELECTION,
                             [],
                             FIRST_PAGE,
-                            selectionMode,
-                            TOTAL_SIZE
+                            selectionMode
                         );
                         expect(newSelection).toEqual(EMPTY_SELECTION);
                     }
@@ -445,8 +440,7 @@ describe("services >", () => {
                     FULL_SELECTION,
                     [],
                     SECOND_PAGE,
-                    RepeatSelectionMode.multi,
-                    TOTAL_SIZE
+                    RepeatSelectionMode.multi
                 );
                 expect(newSelection).toEqual(FULL_SELECTION_WITHOUT_SECOND_PAGE);
             });
@@ -455,8 +449,7 @@ describe("services >", () => {
                     FIRST_PAGE_SELECTION,
                     SECOND_PAGE,
                     SECOND_PAGE,
-                    RepeatSelectionMode.multi,
-                    TOTAL_SIZE
+                    RepeatSelectionMode.multi
                 );
                 expect(newSelection).toEqual(FIRST_AND_SECOND_PAGES_SELECTION);
                 expect(newSelection.isAllPages).toEqual(false);
@@ -466,8 +459,7 @@ describe("services >", () => {
                     ONE_ON_EACH_PAGE_SELECTION,
                     [],
                     FIRST_PAGE,
-                    RepeatSelectionMode.multi,
-                    TOTAL_SIZE
+                    RepeatSelectionMode.multi
                 );
                 expect(newSelection).toEqual(ONE_ON_SECOND_PAGE_SELECTION);
             });

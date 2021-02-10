@@ -1,10 +1,12 @@
-import { Injectable, TrackByFunction } from "@angular/core";
+import { Injectable, Optional, TrackByFunction } from "@angular/core";
 import _differenceWith from "lodash/differenceWith";
 import _intersectionWith from "lodash/intersectionWith";
 import _isEqual from "lodash/isEqual";
+import _isUndefined from "lodash/isUndefined";
 import _reject from "lodash/reject";
 import _unionWith from "lodash/unionWith";
 
+import { LoggerService } from "../../services/log-service";
 import { ISelection, ISelectorState, SelectionModel } from "../../services/public-api";
 import { IMenuGroup } from "../menu/public-api";
 import { RepeatSelectionMode } from "../repeat/types";
@@ -21,7 +23,7 @@ export class SelectorService {
      */
     public i18nTitleMap: Record<string, string> = {};
 
-    constructor() {
+    constructor(@Optional() private logger?: LoggerService) {
         this.i18nTitleMap[SelectionType.All] = $localize`Select all items on this page`;
         this.i18nTitleMap[SelectionType.AllPages] = $localize`Select all items on all pages`;
         this.i18nTitleMap[SelectionType.None] = $localize`Unselect all items`;
@@ -194,14 +196,18 @@ export class SelectorService {
      * @param {any[]} selectedItems Selected items on the current page
      * @param {any[]} items Items on the current page
      * @param {RepeatSelectionMode} selectionMode One of possible repeater selection modes
-     * @param {number} totalItems Total number of items on all pages
+     * @param {number} totalItems Deprecated in v9 - Unused - Removal: NUI-5809
      * @returns {ISelection} New selection
      */
     public selectItems(prevSelection: ISelection,
                        selectedItems: any[],
                        items: any[],
                        selectionMode: RepeatSelectionMode,
-                       totalItems: number): ISelection {
+                       totalItems?: number): ISelection {
+        if (!_isUndefined(totalItems)) {
+            this.logger?.warn("'totalItems' parameter of SelectorService.selectItems is unused - deprecated in v9");
+        }
+
         if (selectionMode === RepeatSelectionMode.radio ||
             selectionMode === RepeatSelectionMode.single ||
             selectionMode === RepeatSelectionMode.radioWithNonRequiredSelection ||
