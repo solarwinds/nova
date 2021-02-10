@@ -22,7 +22,8 @@ import {
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { EventBusService, NuiEvent } from "../../services/event-bus.service";
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
+import { EventBusService } from "../../services/event-bus.service";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { PopupToggleDirective } from "../popup/popup-toggle.directive";
@@ -151,11 +152,11 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
             this.customContainer = this.popupArea;
         }
 
-        this.eventBusService.getEventStream("document-click")
+        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
             .pipe(
                 takeUntil(this.destroy$)
             )
-            .subscribe((event: NuiEvent) => {
+            .subscribe((event: Event) => {
                 const isToggle = this.popupToggle && event ? (this.popupToggle.host.nativeElement as HTMLElement)
                     .contains(event.target as HTMLElement) : false;
                 if (this.isOpen && !isToggle) {

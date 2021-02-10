@@ -59,6 +59,6 @@ export class TreeWithAdditionalContentExampleComponent {
     }
 
     public onToggleClick() {
-        this.eventBusService.getEventStream("document-click").next(new MouseEvent("click"));
+        this.eventBusService.getStream({id: "document-click"}).next(new MouseEvent("click"));
     }
 }

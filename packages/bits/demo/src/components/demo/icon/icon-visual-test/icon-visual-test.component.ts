@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {IconStatus} from "@nova-ui/bits";
-import uniq from "lodash/uniq";
 
 import {icons as iconsData} from "../../../../../../src/lib/icon/icons";
 
@@ -11,9 +10,7 @@ import {icons as iconsData} from "../../../../../../src/lib/icon/icons";
 export class IconVisualTestComponent implements OnInit {
     public icons: any[];
     public categories: any[];
-    // TODO: Remove in V10 | Remove uniq function when the IconStatus enum no longer contains deprecated keys
-    // Using uniq to avoid duplication of values from enum that contains two sets of keys (lowercase and uppercase) but the same values
-    public iconStatuses: string[] = uniq(Object.values(IconStatus));
+    public iconStatuses: string[] = Object.values(IconStatus);
 
     public ngOnInit(): void {
 

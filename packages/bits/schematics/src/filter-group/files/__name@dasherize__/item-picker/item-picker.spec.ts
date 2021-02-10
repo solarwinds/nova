@@ -2,7 +2,7 @@ import { DatePipe } from "@angular/common";
 import { Xliff } from "@angular/compiler";
 import { TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { ISelection, NuiModule } from "@nova-ui/bits";
+import { ISelection, NuiCommonModule, NuiRepeatModule, NuiSorterModule } from "@nova-ui/bits";
 
 import { IFilterGroupOption } from "../public-api";
 
@@ -38,7 +38,9 @@ describe("components >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [
-                    NuiModule,
+                    NuiCommonModule,
+                    NuiSorterModule,
+                    NuiRepeatModule,
                 ],
                 declarations: [
                     ItemPickerComponent,

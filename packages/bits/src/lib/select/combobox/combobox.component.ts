@@ -32,6 +32,7 @@ import _some from "lodash/some";
 import _unescape from "lodash/unescape";
 import { Subject, Subscription } from "rxjs";
 
+import { LoggerService } from "../../../services/log-service";
 import { UtilService } from "../../../services/util.service";
 import { NuiFormFieldControl } from "../../form-field/public-api";
 import { MenuActionComponent } from "../../menu/menu-item/menu-action/menu-action.component";
@@ -43,7 +44,9 @@ import { BaseSelect } from "../base-select";
 import { ISelectGroup } from "../public-api";
 
 // <example-url>./../examples/index.html#/combobox</example-url>
-
+/**
+ * @deprecated in v11 - Use ComboboxV2Component instead - Removal: NUI-5796
+ */
 @Component({
     selector: "nui-combobox",
     host: { "class": "nui-combobox" },
@@ -107,7 +110,8 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
                 private renderer: Renderer2,
                 private changeDetector: ChangeDetectorRef,
                 private keyControlService: MenuKeyControlService,
-                private focusMonitor: FocusMonitor) {
+                private focusMonitor: FocusMonitor,
+                private logger: LoggerService) {
         super(utilService);
         // Blur is debounced cause when you click on menu item blur is triggered twice: from textbox and when popup is closed.
         this.comboboxEventListeners.push(
@@ -115,6 +119,8 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
                 this.debouncedBlur();
             })
         );
+
+        this.logger.warn("<nui-combobox> is deprecated as of Nova v11. Please use <nui-combobox-v2> instead.");
     }
 
     ngOnInit() {

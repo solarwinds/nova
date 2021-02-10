@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, EventEmitter, InjectionToken, Injector, StaticProvider } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
-import { EventBus, IEvent } from "@nova-ui/bits";
+import { EventBus } from "@nova-ui/bits";
 import { GridsterItem } from "angular-gridster2";
 import { Observable } from "rxjs";
 
@@ -12,11 +12,11 @@ import { IConfiguratorSource } from "./configurator/services/types";
  */
 export type DeepPartial<T> = T extends object ? { [K in keyof T]?: DeepPartial<T[K]> } : T;
 
-export const PIZZAGNA_EVENT_BUS = new InjectionToken<EventBus<IEvent>>("PIZZAGNA_EVENT_BUS");
-export const DASHBOARD_EVENT_BUS = new InjectionToken<EventBus<IEvent>>("DASHBOARD_EVENT_BUS");
-export const DATA_SOURCE = new InjectionToken<EventBus<IEvent>>("DATA_SOURCE");
-export const FORMATTERS_REGISTRY = new InjectionToken<EventBus<IEvent>>("FORMATTERS_REGISTRY");
-export const TEST_REGISTRY = new InjectionToken<EventBus<IEvent>>("TEST_REGISTRY");
+export const PIZZAGNA_EVENT_BUS = new InjectionToken<EventBus<Event>>("PIZZAGNA_EVENT_BUS");
+export const DASHBOARD_EVENT_BUS = new InjectionToken<EventBus<Event>>("DASHBOARD_EVENT_BUS");
+export const DATA_SOURCE = new InjectionToken<EventBus<Event>>("DATA_SOURCE");
+export const FORMATTERS_REGISTRY = new InjectionToken<EventBus<Event>>("FORMATTERS_REGISTRY");
+export const TEST_REGISTRY = new InjectionToken<EventBus<Event>>("TEST_REGISTRY");
 
 export type WidgetUpdateOperation = (widget: IWidget, source: IConfiguratorSource) => Observable<IWidget>;
 export type WidgetRemovalOperation = (widgetId: string, source: IConfiguratorSource) => Observable<string>;

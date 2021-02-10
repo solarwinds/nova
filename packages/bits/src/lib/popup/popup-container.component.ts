@@ -12,6 +12,7 @@ import { PositionService } from "../../services/position.service";
 
 /**
  * @ignore
+ * @deprecated in v11 - Use PopupComponent instead - Removal: NUI-5796
  */
 @Component({
     selector: "nui-popup-container",
@@ -24,6 +25,7 @@ import { PositionService } from "../../services/position.service";
     `,
     encapsulation: ViewEncapsulation.None,
 })
+
 /* tslint:disable:use-host-property-decorator */
 export class PopupContainerComponent implements AfterViewInit {
     public hostElement: HTMLElement;
