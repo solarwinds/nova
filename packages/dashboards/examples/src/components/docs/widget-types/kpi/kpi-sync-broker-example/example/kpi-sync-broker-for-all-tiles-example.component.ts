@@ -1,9 +1,8 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { DataSourceService, IDataField, IFilteringOutputs } from "@nova-ui/bits";
+import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import {
     DATA_SOURCE,
-    IBrokerUserConfig,
     IDashboard,
     IKpiData,
     IProviderConfiguration,
@@ -179,17 +178,27 @@ export class MockKpiDataSource extends DataSourceService<IKpiData> implements On
     styleUrls: ["./kpi-sync-broker-for-all-tiles-example.component.less"],
 })
 export class KpiSyncBrokerForAllTilesExampleComponent implements OnInit {
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
     public gridsterConfig: GridsterConfig = {};
     public editMode: boolean = false;
 
     constructor(
         private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService
+        private providerRegistry: ProviderRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
     ) { }
 
     public ngOnInit(): void {
         this.setupDashboard();
+
+        this.initializeDashboard();
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
 
         this.initializeDashboard();
     }
@@ -263,13 +272,13 @@ export class KpiSyncBrokerForAllTilesExampleComponent implements OnInit {
                 cols: 3,
                 rows: 6,
                 y: 0,
-                x: 0,
+                x: 3,
             },
             "kpiWidgetId3": {
                 cols: 3,
                 rows: 6,
                 y: 0,
-                x: 0,
+                x: 6,
             },
         };
 

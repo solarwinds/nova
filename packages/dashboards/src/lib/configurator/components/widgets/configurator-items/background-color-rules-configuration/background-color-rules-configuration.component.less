@@ -1,3 +1,4 @@
+@import (reference) "@nova-ui/bits/sdk/less/nui-framework-colors";
 @import (reference) '@nova-ui/bits/sdk/less/nui-framework-variables';
 @import (reference) '@nova-ui/bits/sdk/less/mixins';
 
@@ -37,8 +38,12 @@
 }
 
 .kpi-color-rule {
-    display: flex;
+    .setCssVariable(background-color, nui-color-bg-content);
     &__drag {
         cursor: move;
+    }
+    &__control {
+        min-width: 30px;
+        height: 30px;
     }
 }

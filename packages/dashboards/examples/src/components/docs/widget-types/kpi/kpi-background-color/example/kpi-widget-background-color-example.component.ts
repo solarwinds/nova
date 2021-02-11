@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { DataSourceService, IDataField, IFilteringOutputs } from "@nova-ui/bits";
+import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import {
     DATA_SOURCE,
     DEFAULT_KPI_BACKGROUND_COLORS,
@@ -84,13 +84,15 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
     styleUrls: ["./kpi-widget-background-color-example.component.less"],
 })
 export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
     public gridsterConfig: GridsterConfig = {};
     public editMode: boolean = false;
 
     constructor(
         private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService
+        private providerRegistry: ProviderRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
+
     ) { }
 
     public ngOnInit(): void {
@@ -104,6 +106,16 @@ export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
 
         // Sets the custom pallette to the 'Background color rules' section
         this.setupCustomPalletteRules();
+
+        this.initializeDashboard();
+    }
+
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
 
         this.initializeDashboard();
     }
