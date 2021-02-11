@@ -191,7 +191,7 @@ describe("directives >", () => {
             expect(component.onDragEnter).not.toHaveBeenCalled();
         });
 
-        it("should trigger emission of dragenter event if validator returns true", () => {
+        xit("should trigger emission of dragenter event if validator returns true", () => {
             spyOn(component, "onDragEnter");
             setValidator(true);
             emitEvent("dragenter", droppableElement.nativeElement);
