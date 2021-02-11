@@ -165,7 +165,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "less": "~3.8.1",
+    "less": "~4.1.1",
     "lodash": "^4.17.12",
     "modernizr": "~3.8.0",
     "moment": "^2.25.3",
