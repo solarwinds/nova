@@ -191,6 +191,7 @@ describe("directives >", () => {
             expect(component.onDragEnter).not.toHaveBeenCalled();
         });
 
+        // TODO: Bring back in after NUI-5787
         xit("should trigger emission of dragenter event if validator returns true", () => {
             spyOn(component, "onDragEnter");
             setValidator(true);
