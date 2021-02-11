@@ -16,7 +16,7 @@ import { MouseInteractiveAreaPlugin } from "../plugins/mouse-interactive-area-pl
 
 import { XYGridConfig } from "./config/xy-grid-config";
 import { Grid } from "./grid";
-import { ITickLabelConfig, IXYGridConfig } from "./types";
+import { IXYGridConfig } from "./types";
 import { XYGrid } from "./xy-grid";
 
 describe("XYGrid >", () => {

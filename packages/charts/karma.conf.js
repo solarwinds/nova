@@ -19,7 +19,7 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, 'coverage'),
       reports: [
         { type: 'html', subdir: 'report-html' },
-        { type: 'lcov', subdir: 'report-lcov' },
+        { type: 'lcovonly', subdir: 'report-lcovonly' },
       ],
     },
     angularCli: {
