@@ -80,8 +80,7 @@ export class ListService {
                     state.selector.selection,
                     selectedItems,
                     state.repeat.itemsSource,
-                    selectionMode,
-                    state.paginator.total
+                    selectionMode
                 ),
             },
         };
