@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 
 @Component({
   selector: "nui-drop-area",
-  templateUrl: "./drop-area.component.html",
+  template: ``,
   styleUrls: ["./drop-area.component.less"],
 })
 export class DropAreaComponent {
