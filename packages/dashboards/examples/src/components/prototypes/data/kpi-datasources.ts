@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { OnDestroy } from "@angular/core";
-import { DataSourceFeatures, DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
+import { DataSourceFeatures, DataSourceService, IDataField, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
 import { IKpiData, WellKnownDataSourceFeatures } from "@nova-ui/dashboards";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
@@ -11,8 +11,15 @@ export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements ID
 
     public busy = new BehaviorSubject<boolean>(false);
 
+    public dataFields: Partial<IDataField>[] = [
+        { id: "value", label: "Value" },
+        { id: "anotherFieldFromDataSource", label: "Another Field From DataSource" },
+    ];
+
     constructor(private http: HttpClient) {
         super();
+        // TODO: remove Partial in vNext after marking dataType field as optional
+        (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
     }
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
@@ -58,8 +65,17 @@ export class AcmeKpiDataSource2 extends DataSourceService<IKpiData> implements O
 
     public busy = new BehaviorSubject<boolean>(false);
 
+    public dataFields: Partial<IDataField>[] = [
+        { id: "value", label: "Value" },
+        { id: "numberFormat", label: "Number Format" },
+        { id: "link", label: "Link" },
+        { id: "icon", label: "Icon" },
+    ];
+
     constructor(private http: HttpClient) {
         super();
+        // TODO: remove Partial in vNext after marking dataType field as optional
+        (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
     }
 
     public properties: any;
@@ -111,6 +127,16 @@ export class AcmeKpiDataSource3 extends DataSourceService<any> implements OnDest
     public static providerId = "AcmeKpiDataSource3";
 
     public busy = new BehaviorSubject<boolean>(false);
+
+    public dataFields: Partial<IDataField>[] = [
+        { id: "value", label: "Value" },
+    ];
+
+    constructor(private http: HttpClient) {
+        super();
+        // TODO: remove Partial in vNext after marking dataType field as optional
+        (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
+    }
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);

@@ -19,8 +19,10 @@ import {
     DEFAULT_PIZZAGNA_ROOT,
     IProviderConfigurationForDisplay,
     NuiDashboardsModule,
+    PizzagnaLayer,
     ProviderRegistryService,
     WellKnownPathKey,
+    WellKnownProviders,
     WidgetTypesService
 } from "@nova-ui/dashboards";
 
@@ -117,6 +119,9 @@ export class Prototype1Module {
             // We are changing it to use the v2 so we can have one data source since the logic is similar.
             DataSourceConfigurationV2Component.lateLoadKey
         );
+
+        // removing broadcaster because of dataFields approach used in the dataSource
+        delete kpiWidgetTemplate?.configurator?.[PizzagnaLayer.Structure].tiles?.properties?.template[1].providers[WellKnownProviders.Broadcaster];
 
         this.setDataSourceProviders("kpi", [
             {

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
+import { DataSourceService, IDataField, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -33,8 +33,14 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
     // Use this subject to communicate the data source's busy state
     public busy = new BehaviorSubject<boolean>(false);
 
+    public dataFields: Partial<IDataField>[] = [
+        { id: "value", label: "Value" },
+    ];
+
     constructor(private http: HttpClient) {
         super();
+        // TODO: remove Partial in vNext after marking dataType field as optional
+        (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
     }
 
     // In this example, getFilteredData is invoked every 10 minutes (Take a look at the refresher
@@ -101,6 +107,21 @@ export class KpiWidgetExampleComponent implements OnInit {
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
         const widgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);
+
+        // removing broadcaster because of dataFields approach used in the dataSource
+        delete widgetTemplate?.configurator?.[PizzagnaLayer.Structure].tiles?.properties?.template[1].providers[WellKnownProviders.Broadcaster];
+
+        // Registering the data source for injection into the KPI tile.
+        // Note: Each tile of a KPI widget is assigned its own instance of the data source
+        this.providerRegistry.setProviders({
+            [AverageRatingKpiDataSource.providerId]: {
+                provide: DATA_SOURCE,
+                useClass: AverageRatingKpiDataSource,
+                // Any dependencies that need to be injected into the provider must be listed here
+                deps: [HttpClient],
+            },
+        });
+
         // Registering our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
         // multiple dashboards could have access to the same widget template modification.
@@ -115,17 +136,6 @@ export class KpiWidgetExampleComponent implements OnInit {
             // We are setting the data sources available for selection in the editor
             [AverageRatingKpiDataSource.providerId]
         );
-
-        // Registering the data source for injection into the KPI tile.
-        // Note: Each tile of a KPI widget is assigned its own instance of the data source
-        this.providerRegistry.setProviders({
-            [AverageRatingKpiDataSource.providerId]: {
-                provide: DATA_SOURCE,
-                useClass: AverageRatingKpiDataSource,
-                // Any dependencies that need to be injected into the provider must be listed here
-                deps: [HttpClient],
-            },
-        });
 
         this.initializeDashboard();
     }

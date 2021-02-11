@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
+import { DataSourceService, IDataField, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_KPI_BACKGROUND_COLORS,
@@ -31,8 +31,14 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
     public static providerId = "AverageRatingKpiDataSource";
     public busy = new BehaviorSubject<boolean>(false);
 
+    public dataFields: Partial<IDataField>[] = [
+        { id: "value", label: "Value" },
+    ];
+
     constructor(private http: HttpClient) {
         super();
+        // TODO: remove Partial in vNext after marking dataType field as optional
+        (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
     }
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
@@ -104,6 +110,10 @@ export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
 
     private setupCustomPalletteDescription() {
         const kpiWidgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);
+
+        // removing broadcaster because of dataFields approach used in the dataSource
+        delete kpiWidgetTemplate?.configurator?.[PizzagnaLayer.Structure].tiles?.properties?.template[1].providers[WellKnownProviders.Broadcaster];
+
         this.widgetTypesService.setNode(
             kpiWidgetTemplate,
             "configurator",

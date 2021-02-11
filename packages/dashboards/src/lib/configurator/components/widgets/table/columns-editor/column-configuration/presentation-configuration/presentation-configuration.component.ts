@@ -14,6 +14,8 @@ import {
     SimpleChanges
 } from "@angular/core";
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
+import { cloneDeep } from "lodash";
 import capitalize from "lodash/capitalize";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
@@ -21,7 +23,8 @@ import { takeUntil, tap } from "rxjs/operators";
 import { IDataField } from "../../../../../../../components/table-widget/types";
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
 import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
-import { FORMATTERS_REGISTRY, IHasChangeDetector } from "../../../../../../../types";
+import { FORMATTERS_REGISTRY, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../../../../types";
+import { DATA_SOURCE_CREATED } from "../../../../../../types";
 
 @Component({
     selector: "nui-table-column-presentation-configuration",
@@ -68,7 +71,9 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     @Output() formDestroy: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
     public form: FormGroup;
-    public formatterForm: FormGroup;
+    public formatterForm: FormGroup = this.formBuilder.group({
+        "componentType": [],
+    });
     public formatterConfigurator: string | null;
     public formatterConfiguratorProps: IFormatterConfigurator;
     public readonly formatterFormGroupName = "formatter";
@@ -80,7 +85,8 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
         public changeDetector: ChangeDetectorRef,
         @Optional() @Inject(FORMATTERS_REGISTRY) private formattersRegistryCommon: FormatterRegistryService,
         // used as a fallback, remove in vNext
-        private tableFormattersRegistryService: TableFormatterRegistryService
+        private tableFormattersRegistryService: TableFormatterRegistryService,
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
     ) {
         this.subscribeToFormattersRegistry();
     }
@@ -106,6 +112,10 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
                 this.updateSubtitle();
                 this.changeDetector.detectChanges();
             });
+
+        this.eventBus.getStream(DATA_SOURCE_CREATED)
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((provider: IEvent<IDataSource>) => this.onDataSourceCreated(provider));
     }
 
     ngAfterViewInit() {
@@ -154,6 +164,17 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
 
     public onFormReady(form: FormGroup) {
         (this.form.get(this.formatterFormGroupName) as FormGroup).setControl("properties", form);
+    }
+
+    private onDataSourceCreated(provider: IEvent<IDataSource>) {
+        provider?.payload?.dataFieldsConfig?.dataFields$?.pipe(
+            takeUntil(this.onDestroy$)
+        ).subscribe((dataFields: IDataField[]) => {
+            if (dataFields) {
+                this.dataFields = dataFields;
+                this.updateSubtitle();
+            }
+        });
     }
 
     private updateSubtitle() {

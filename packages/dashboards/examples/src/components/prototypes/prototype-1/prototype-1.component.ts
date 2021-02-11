@@ -58,7 +58,7 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
         minRows: 12,
     };
 
-    public editMode = false;
+    public editMode = true;
     public systemRefreshInterval: number = 60;
 
     private destroy$ = new Subject();
