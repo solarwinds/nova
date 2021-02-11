@@ -164,8 +164,7 @@ describe("components >", () => {
             expect(componentInstance.calendarNavigated.emit).toHaveBeenCalled();
         });
 
-        // TODO: Bring back in after NUI-5787
-        xit("should select 1 march when selecting March month in Australia timezone", () => {
+        it("should select 1 march when selecting March month in Australia timezone", () => {
             const australiaTimezone = "Australia/Sydney";
             const marchDateISO = "2020-03-01T11:00:00.000+11:00";
 
