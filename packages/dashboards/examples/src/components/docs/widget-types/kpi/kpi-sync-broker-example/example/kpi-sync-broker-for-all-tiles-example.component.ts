@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { DataSourceService, IDataField, IFilteringOutputs } from "@nova-ui/bits";
 import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import { DataSourceService, IDataField, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,
