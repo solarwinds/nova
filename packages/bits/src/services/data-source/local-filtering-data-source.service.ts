@@ -29,7 +29,7 @@ interface ComparisonItems {
 
 /**
  * <example-url>./../examples/index.html#/common/data-source-service/deprecated-client-side</example-url>
- * @deprecated
+ * @deprecated in v11 - use ClientSideDataSource instead - Removal: NUI-5796
  */
 @Injectable()
 export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> extends DataSourceService<T, F> {
@@ -166,7 +166,7 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
     }
 
     /**
-     * @deprecated - use filtersChanged instead
+     * @deprecated in v11 - Use filtersChanged instead - Removal: NUI-5796
      */
     protected paginationReset(filters: any, itemsToCompare: any) {
         return this.filtersChanged(filters, itemsToCompare);

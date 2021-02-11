@@ -93,15 +93,6 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
      * The option to make the textboxNumber read only.
      */
     @Input() public readonly = false;
-    /**
-     * @ignore @deprecated This input no longer has any effect on the component. Please wrap the
-     * component in a nui-form-field to apply the 'required' styling.
-     */
-    @Input() public required = false;
-    /**
-     * @ignore @deprecated This input no longer has any effect on the component.
-     */
-    @Input() public suffix = "";
 
     /**
      * Step by which the value are increased/decreased
@@ -199,11 +190,6 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
 
     public setDisabledState(isDisabled: boolean): void {
         this.disabled = isDisabled;
-    }
-
-    /** @ignore @deprecated - 'suffix' is no longer used on this component */
-    public hasSuffix(): boolean {
-        return !!this.suffix; // tslint:disable-line: deprecation
     }
 
     public compareMin(): boolean {

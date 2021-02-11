@@ -37,7 +37,7 @@ describe("DashboardComponent", () => {
         expect(component.gridsterConfig.itemChangeCallback).toBeUndefined();
     });
 
-    // flacky test
+    // re-enable with NUI-5787
     xit("should not register an itemResizeCallback by default", () => {
         expect(component.gridsterConfig.itemResizeCallback).toBeUndefined();
     });

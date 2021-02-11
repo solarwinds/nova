@@ -10,6 +10,7 @@ import { IOptionedComponent } from "../types";
 
 /**
  * @ignore
+ * Will be renamed in scope of the NUI-5797
  */
 @Component({
     selector: "nui-select-v2-option-group",

@@ -176,7 +176,7 @@ ngOnInit(): void {
                 Pass the row object to <code>nui-row</code> using the <code>rowObject</code> input.
             </li>
             <li>
-                Bind to the selection event using the <code>(rowsSelected)</code> output. In this event table
+                Bind to the selection event using the <code>(selectionChange)</code> output. In this event table
                 will emit
                 <code><a href="../interfaces/ISelection.html" target="_blank">ISelection</a></code>
                 object which should be converted to selected items by calling <code>getSelectedItems()</code>

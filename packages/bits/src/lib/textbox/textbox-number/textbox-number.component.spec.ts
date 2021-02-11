@@ -22,7 +22,7 @@ describe("components >", () => {
             writable: true,
             configurable: true,
             value: {
-                getData: () => {},
+                getData: () => "test",
             },
         });
 
@@ -67,7 +67,8 @@ describe("components >", () => {
             });
         });
 
-        describe("input data  on inputText event", () => {
+        // TODO: Bring back in after NUI-5787
+        xdescribe("input data  on inputText event", () => {
             it("should set valid input", () => {
                 inputControl.nativeElement.value = "1";
                 inputControl.nativeElement.dispatchEvent(new Event("keydown"));

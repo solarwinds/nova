@@ -49,7 +49,6 @@ export { NuiWizardV2Module } from "./lib/wizard-v2/wizard.module";
 
 export { NuiDocsModule } from "./lib/docs/docs.module";
 
-export { NuiModule } from "./module";
 export * from "./lib/public-api";
 export * from "./types";
 export * from "./constants";

@@ -62,6 +62,7 @@ const RANDOM_ARRAY = [
 ];
 
 /**
+ * TODO: Remove in v12
  * @deprecated
  */
 @Component({

@@ -352,7 +352,7 @@ describe("convenience components >", () => {
             it("should shift the range left by emitting the timeFrameChange event with the correct output value", () => {
                 spyOn(component.timeFrameChange, "emit");
                 component.shiftRange(-1);
-                expect(component.timeFrameChange.emit).toHaveBeenCalledWith({
+                expect(component.timeFrameChange.emit).toHaveBeenCalledWith(<any>{
                     startDatetime: fixture.componentInstance.timeFrame.startDatetime.clone().subtract(1, "weeks"),
                     endDatetime: fixture.componentInstance.timeFrame.endDatetime.clone().subtract(1, "weeks"),
                     selectedPresetId: null,
@@ -362,7 +362,7 @@ describe("convenience components >", () => {
             it("should shift the range left by emitting the timeFrameChange event with the correct output value", () => {
                 spyOn(component.timeFrameChange, "emit");
                 component.shiftRange(1);
-                expect(component.timeFrameChange.emit).toHaveBeenCalledWith({
+                expect(component.timeFrameChange.emit).toHaveBeenCalledWith(<any>{
                     startDatetime: fixture.componentInstance.timeFrame.startDatetime.clone().add(1, "weeks"),
                     endDatetime: fixture.componentInstance.timeFrame.endDatetime.clone().add(1, "weeks"),
                     selectedPresetId: null,
