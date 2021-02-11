@@ -147,6 +147,8 @@ export const kpiConfigurator = {
                                     ],
                                 },
                             } as IProviderConfiguration,
+                            // removeBroadcaster in v11, presentation component can get dataFields itself.
+                            // all examples have their dataSource dataFields configured in a proper way.
                             [WellKnownProviders.Broadcaster]: {
                                 providerId: NOVA_PIZZAGNA_BROADCASTER,
                                 properties: {
