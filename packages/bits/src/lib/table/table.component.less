@@ -1,7 +1,7 @@
 @import (reference) "../../styles/mixins.less";
 @import (reference) "../../styles/nui-framework-colors";
 
-@nui-table-row-height-default: (@nui-table-row-container-height-default + 2 * @nui-space-xs);
+@nui-table-row-height-default: (@nui-table-row-container-height-default + (2 * @nui-space-xs));
 
 .nui .nui-table {
     &__table {
@@ -160,12 +160,12 @@
         }
 
         &_height_compact {
-            height: (@nui-table-row-container-height-small + 2 * @nui-space-xs);
+            height: (@nui-table-row-container-height-small + (2 * @nui-space-xs));
             .compact-selector();
         }
 
         &_height_tiny {
-            height: (@nui-table-row-container-height-small + 2 * @nui-space-xxs);
+            height: (@nui-table-row-container-height-small + (2 * @nui-space-xxs));
             .compact-selector();
         }
     }
@@ -184,11 +184,11 @@
         }
 
         &_height_compact {
-            height: (@nui-table-row-container-height-small + 2 * @nui-space-xs);
+            height: (@nui-table-row-container-height-small + (2 * @nui-space-xs));
         }
 
         &_height_tiny {
-            height: (@nui-table-row-container-height-small + 2 * @nui-space-xxs);
+            height: (@nui-table-row-container-height-small + (2 * @nui-space-xxs));
         }
 
         // Workaround for Firefox table bug, where first row's <td> cells left borders are 1px narrower than specified

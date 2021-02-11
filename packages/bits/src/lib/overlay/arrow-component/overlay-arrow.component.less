@@ -28,7 +28,7 @@
             display: block;
             left: 49%;
             & when (@value = top) {
-                bottom: @arrow-shadow * 2;
+                bottom: (@arrow-shadow * 2);
 
                 border-left-color: transparent;
                 border-top-color: transparent;
@@ -37,7 +37,7 @@
             }
 
             & when (@value = bottom) {
-                top: @arrow-shadow * 2;
+                top: (@arrow-shadow * 2);
 
                 border-right-color: transparent;
                 border-bottom-color: transparent;
@@ -49,13 +49,13 @@
         .overlay-@{value}-left &, .overlay-@{value}-right & {
             display: block;
             & when (@value = top) {
-                bottom: @arrow-shadow * 2;
+                bottom: (@arrow-shadow * 2);
                 .setCssVariable(border-bottom-color, nui-color-bg-content_popover);
                 border-top-color: transparent;
                 box-shadow: @arrow-shadow @arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
             }
             & when (@value = bottom) {
-                top: @arrow-shadow * 2;
+                top: (@arrow-shadow * 2);
                 border-bottom-color: transparent;
                 .setCssVariable(border-top-color, nui-color-bg-content_popover);
                 box-shadow: -@arrow-shadow -@arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
@@ -81,7 +81,7 @@
     .overlay-left-top &,
     .overlay-center-left & {
         display: block;
-        right: @arrow-shadow * 2;
+        right: (@arrow-shadow * 2);
         top: 50%;
 
         transform: translate(0, -50%) rotate(@arrow-rotation-angle);
@@ -99,7 +99,7 @@
     .overlay-right-top &,
     .overlay-center-right & {
         display: block;
-        left: @arrow-shadow * 2;
+        left: (@arrow-shadow * 2);
         top: 50%;
 
         transform: translate(0, -50%) rotate(@arrow-rotation-angle);

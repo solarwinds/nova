@@ -31,7 +31,7 @@
 
     &__buttons {
         display: inline-flex;
-        height: @nui-space-md * 2;
+        height: (@nui-space-md * 2);
         border: solid @nui-line-default;
         .setCssVariable(border-color, nui-color-line-default);
         border-top-right-radius: @nui-radius-default;
@@ -42,12 +42,12 @@
     &__updown {
         display: block;
         line-height: 1;
-        height: @nui-space-md * 2;
+        height: (@nui-space-md * 2);
         top: 1px;
         text-align: center;
         .nui & button.nui-button {
             padding-left: @nui-space-xs;
-            width: @nui-space-md * 2;
+            width: (@nui-space-md * 2);
             height: 28px;
             &:focus {
                 outline: none;
@@ -57,7 +57,7 @@
             z-index: 1;
             height: 28px;
             top: 1px;
-            right: @nui-space-md * 2;
+            right: (@nui-space-md * 2);
             width: 0;
             border-right: solid @nui-line-default;
             .setCssVariable(border-right-color, nui-color-line-default);
@@ -69,7 +69,7 @@
     }
 
     &__down-button {
-        right: @nui-space-md * 2;
+        right: (@nui-space-md * 2);
     }
 
     .has-feedback {
