@@ -15,7 +15,6 @@ import {
 } from "@angular/core";
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
-import { cloneDeep } from "lodash";
 import capitalize from "lodash/capitalize";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
