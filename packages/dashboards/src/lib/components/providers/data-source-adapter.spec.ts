@@ -57,7 +57,7 @@ describe("DataSourceAdapter > ", () => {
         expect(spy).toHaveBeenCalledWith({
             pizzagnaKey: PizzagnaLayer.Data,
             componentId: (<any>adapter).componentId,
-            propertyPath: [undefined],
+            propertyPath: [undefined] as never,
         }, dsOutput);
     });
 
@@ -72,7 +72,7 @@ describe("DataSourceAdapter > ", () => {
         expect(spy).toHaveBeenCalledWith({
             pizzagnaKey: PizzagnaLayer.Data,
             componentId: (<any>adapter).componentId,
-            propertyPath: [undefined],
+            propertyPath: [undefined] as never,
         }, testFilteringOutput);
     });
 
