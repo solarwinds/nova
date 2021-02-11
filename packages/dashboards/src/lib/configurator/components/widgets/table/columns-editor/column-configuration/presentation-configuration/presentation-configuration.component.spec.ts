@@ -1,14 +1,18 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { IFormatterDefinition } from "../../../../../../../components/types";
 import { NuiDashboardsModule } from "../../../../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../../../../services/provider-registry.service";
+import { PIZZAGNA_EVENT_BUS } from "../../../../../../../types";
 
 import { PresentationConfigurationComponent } from "./presentation-configuration.component";
 
 describe("PresentationConfigurationComponent", () => {
     let component: PresentationConfigurationComponent;
     let fixture: ComponentFixture<PresentationConfigurationComponent>;
+    const eventBus = new EventBus<IEvent>();
+
     const rawFormatter: IFormatterDefinition = {
         componentType: "RawFormatterComponent",
         label: $localize`No Formatter`,
@@ -32,6 +36,10 @@ describe("PresentationConfigurationComponent", () => {
             imports: [NuiDashboardsModule],
             providers: [
                 ProviderRegistryService,
+                {
+                    provide: PIZZAGNA_EVENT_BUS,
+                    useValue: eventBus,
+                },
             ],
         }).compileComponents();
     }));
