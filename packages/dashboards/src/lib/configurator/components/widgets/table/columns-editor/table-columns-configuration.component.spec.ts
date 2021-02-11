@@ -75,9 +75,11 @@ describe("TableColumnsConfigurationComponent", () => {
     describe("automatic column generation", () => {
 
         let resetColumnsSpy: Spy;
+        let onItemsChangeSpy: Spy;
 
         beforeEach(() => {
             resetColumnsSpy = spyOn(component, "resetColumns");
+            onItemsChangeSpy = spyOn(component, "onItemsChange");
         });
 
         it("generates columns", () => {
@@ -101,6 +103,7 @@ describe("TableColumnsConfigurationComponent", () => {
             component.ngOnChanges(changes);
 
             expect(resetColumnsSpy).toHaveBeenCalledTimes(1);
+            expect(onItemsChangeSpy).not.toHaveBeenCalled();
         });
 
         it("generates columns when related feature is disabled", () => {
@@ -128,6 +131,7 @@ describe("TableColumnsConfigurationComponent", () => {
             component.ngOnChanges(changes);
 
             expect(resetColumnsSpy).toHaveBeenCalledTimes(1);
+            expect(onItemsChangeSpy).not.toHaveBeenCalled();
         });
 
         it("doesn't generates columns when the data source features disables that", () => {
@@ -155,6 +159,7 @@ describe("TableColumnsConfigurationComponent", () => {
             component.ngOnChanges(changes);
 
             expect(resetColumnsSpy).not.toHaveBeenCalled();
+            expect(onItemsChangeSpy).toHaveBeenCalled();
         });
 
     });

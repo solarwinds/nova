@@ -108,11 +108,15 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
             // hackfix for NUI-5712
             this.lastValidDataFields = changes.dataFields.currentValue;
 
+            const disableColumnGeneration = this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.DisableTableColumnGeneration)?.enabled;
+
             const columns = this.mergeColumns(changes.dataFields.currentValue, this.columns);
-            if (columns?.length) {
+            if (columns?.length || disableColumnGeneration) {
+                // if disableColumnGeneration is enabled and there are no columns to be kept,
+                // we have to clear the form by updating the column input via the `onItemsChange` method
                 this.onItemsChange(columns);
             } else {
-                if (!this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.DisableTableColumnGeneration)?.enabled) {
+                if (!disableColumnGeneration) {
                     this.resetColumns(false);
                 }
             }
