@@ -101,7 +101,8 @@ describe("LocalFilteringDataSource >", () => {
     });
 
     describe("test filtering mechanism with new filters", () => {
-        it("getFilteredData should return filtered data when found match", async () => {
+        // TODO: Add back in after NUI-5787
+        xit("getFilteredData should return filtered data when found match", async () => {
             service.setData(newFiltersbigArrForSearch);
             const result = await service.getFilteredData(newFilters);
             expect(result.number).toEqual(newFiltersExpectedallCategoriesResult().number);

@@ -8,7 +8,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
-import hljs from "highlight.js";
+const hljs = require("highlight.js/lib/core");
 
 /**
  * <example-url>./../examples/index.html#/code</example-url><br />
@@ -27,7 +27,7 @@ import hljs from "highlight.js";
  *
  * import hljs from "highlight.js";
  *
- * where "highlight.js" should be used as alias to regular "highlight.js/lib/highlight.js"
+ * where "highlight.js" should be used as alias to regular "highlight.js/lib/core.js"
  * to avoid loading all languages. And then just load what you really need, e.g. typescript
  *
  * hljs.registerLanguage("typescript", require("highlight.js/lib/languages/typescript"));

@@ -19,6 +19,7 @@ import some from "lodash/some";
 import { Observable, Subject, Subscription } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 
+import { DOCUMENT_CLICK_EVENT } from "../../../constants/event.constants";
 import { EventBusService } from "../../../services/event-bus.service";
 import { OverlayCustomContainer } from "../overlay-custom-container";
 import { OverlayPositionService } from "../overlay-position.service";
@@ -148,7 +149,7 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
 
     /** Stream of clicks outside. */
     private overlayClickOutside(): Observable<MouseEvent> {
-        return this.eventBusService.getEventStream("document-click")
+        return this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
             .pipe(
                 filter(event => {
                     const clickTarget = event.target as HTMLElement;

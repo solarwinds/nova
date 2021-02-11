@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { ChipsOverflowComponent } from "./chips-overflow.component";
 
@@ -8,7 +8,7 @@ describe("components >", () => {
         let component: ChipsOverflowComponent;
         let fixture: ComponentFixture<ChipsOverflowComponent>;
 
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
                 declarations: [ ChipsOverflowComponent ],
                 imports: [],

@@ -168,7 +168,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     protected addSubscription() {
-        this.resizeSubscription = this.eventBusService.getEventStream("complete-resize")
+        this.resizeSubscription = this.eventBusService.getStream({id: "complete-resize"})
             .subscribe(resize =>
                 this.refreshStyle());
     }
@@ -282,7 +282,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         this.renderer.removeStyle(document.documentElement, "cursor");
         this.renderer.removeClass(this.resizeGutter, `${this.resizeClass}--active`);
         this._isDragging = false;
-        this.eventBusService.getEventStream("complete-resize").next();
+        this.eventBusService.getStream({id: "complete-resize"}).next();
     }
 
     private calculatePosition() {

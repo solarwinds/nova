@@ -11,6 +11,7 @@ import { InputValueTypes } from "../types";
 
 /**
  * @ignore
+ *  Will be renamed in scope of the NUI-5797
  */
 @Directive({
     selector: "[nuiComboboxV2OptionHighlight]",

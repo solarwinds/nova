@@ -6,9 +6,6 @@
         "target": "es6",
         "module": "es6",
         "baseUrl": ".",
-        "paths": {
-            "highlight.js": ["./node_modules/highlight.js/lib/highlight.js"] // to ensure we load highlight without languages
-        }
     },
     "typeRoots": [
         "node_modules/@types"
