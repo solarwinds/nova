@@ -123,9 +123,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
                     overlayY: "top",
                 },
             ];
-        // It is common to use 'flexibleConnectedTo()' position strategy, however it not applicable for this case, because
-        // the overlay would stay within the viewport on page load. What we needed here is to have the overlay connected solidly
-        // to the chart, even if the chart initially is out of the viewport on page load.
+
         this.positionStrategy = this.overlay.position()
             .flexibleConnectedTo(this.gridChartPlaceholder)
             .withPositions(positions)
