@@ -11,7 +11,11 @@ export class SimpleDialogExampleComponent {
     constructor(private dialogService: DialogService, private toastService: ToastService) {}
 
     public open(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm"});
+        this.activeDialog = this.dialogService.open(content, {
+            size: "sm",
+            useOverlay: true,
+            backdrop: true,
+        });
     }
 
     private actionDone(): void {

@@ -10,6 +10,7 @@ import {
     NuiIconModule,
     NuiMenuModule,
     NuiMessageModule,
+    NuiOverlayModule,
     NuiPopoverModule,
     NuiPopupModule,
     NuiSelectModule,
@@ -117,6 +118,7 @@ const routes = [
         NuiTimeFrameBarModule,
         NuiTimeFramePickerModule,
         NuiIconModule,
+        NuiOverlayModule,
     ],
     declarations: [
         DialogContentExampleComponent,

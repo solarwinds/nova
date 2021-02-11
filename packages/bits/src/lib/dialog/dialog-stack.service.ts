@@ -1,3 +1,5 @@
+import { Overlay, OverlayConfig } from "@angular/cdk/overlay";
+import { CdkPortal } from "@angular/cdk/portal";
 import { DOCUMENT } from "@angular/common";
 import {
     ApplicationRef,
@@ -12,7 +14,7 @@ import {
 import isNil from "lodash/isNil";
 
 import { ContentRef } from "../../services/content-ref";
-import { OverlayContainerService } from "../overlay/public-api";
+import { OverlayComponent, OverlayContainerService } from "../overlay/public-api";
 
 import { DialogBackdropComponent } from "./dialog-backdrop.component";
 import { NuiActiveDialog, NuiDialogRef } from "./dialog-ref";
@@ -29,6 +31,7 @@ export class DialogStackService {
     constructor(private applicationRef: ApplicationRef, private injector: Injector,
                 private factoryResolver: ComponentFactoryResolver,
                 private overlayContainerService: OverlayContainerService,
+                private overlay: Overlay,
                 @Inject(DOCUMENT) private document: Document) {
     }
 
@@ -36,6 +39,7 @@ export class DialogStackService {
         let containerEl: HTMLElement = options.container
                                             ? this.document.querySelector(options.container)
                                             : this.document.body;
+        const activeDialog = new NuiActiveDialog();
 
         // This handles the case when the nui-dialog is being used within the nui-overlay based components
         if (options.useOverlay) {
@@ -49,19 +53,39 @@ export class DialogStackService {
             throw new Error(`The specified dialog container '${options.container || "body"}' was not found in the DOM.`);
         }
 
-        const activeDialog = new NuiActiveDialog();
         const contentRef = this.getContentRef(moduleCFR, options.injector || contentInjector, content, activeDialog);
 
         const backdropCmptRef: ComponentRef<DialogBackdropComponent> | undefined =
             options.backdrop !== false ? this.attachBackdrop(containerEl) : undefined;
         const windowCmptRef: ComponentRef<DialogComponent> = this.attachWindowComponent(containerEl, contentRef, DialogComponent);
-        const nuiDialogRef: NuiDialogRef = new NuiDialogRef(windowCmptRef, contentRef, backdropCmptRef, options.beforeDismiss);
-
+        
         activeDialog.close = (result: any) => { nuiDialogRef.close(result); };
         activeDialog.dismiss = (reason: any) => { nuiDialogRef.dismiss(reason); };
-
+        
         this.applyWindowOptions(windowCmptRef.instance, options);
+        
+        const overlayReference = this.attachOverlay(windowCmptRef, backdropCmptRef);
+        const nuiDialogRef: NuiDialogRef = new NuiDialogRef(windowCmptRef, contentRef, backdropCmptRef, options.beforeDismiss, overlayReference);
+        console.log(">>>", overlayReference);
+
         return nuiDialogRef;
+    }
+
+    private attachOverlay(dialog: ComponentRef<DialogComponent>, backdrop: ComponentRef<DialogBackdropComponent> | undefined) {
+        const overlayFactory: ComponentFactory<OverlayComponent> = this.factoryResolver.resolveComponentFactory(OverlayComponent);
+        console.log(">>>", dialog.location.nativeElement);
+        const overlayRef = overlayFactory.create(this.injector, [[backdrop?.location?.nativeElement, dialog.location.nativeElement]]);
+        this.applicationRef.attachView(overlayRef.hostView);
+
+        overlayRef.instance.overlayConfig = {
+            ...overlayRef.instance.overlayConfig,
+            positionStrategy: this.overlay.position().global(),
+        };
+        overlayRef.changeDetectorRef.detectChanges();
+        overlayRef.instance.show();
+
+        return overlayRef;
+        // containerEl.appendChild(overlayRef.location.nativeElement);
     }
 
     private attachBackdrop(containerEl: any): ComponentRef<DialogBackdropComponent> {
@@ -69,7 +93,7 @@ export class DialogStackService {
             this.factoryResolver.resolveComponentFactory(DialogBackdropComponent);
         const backdropCmptRef = backdropFactory.create(this.injector);
         this.applicationRef.attachView(backdropCmptRef.hostView);
-        containerEl.appendChild(backdropCmptRef.location.nativeElement);
+        // containerEl.appendChild(backdropCmptRef.location.nativeElement);
         return backdropCmptRef;
     }
 
@@ -77,7 +101,7 @@ export class DialogStackService {
         const windowFactory = this.factoryResolver.resolveComponentFactory(component);
         const windowCmptRef = windowFactory.create(this.injector, contentRef.nodes);
         this.applicationRef.attachView(windowCmptRef.hostView);
-        containerEl.appendChild(windowCmptRef.location.nativeElement);
+        // containerEl.appendChild(windowCmptRef.location.nativeElement);
         return windowCmptRef;
     }
 

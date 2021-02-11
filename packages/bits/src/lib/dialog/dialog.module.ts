@@ -4,6 +4,7 @@ import { NgModule } from "@angular/core";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiIconModule } from "../icon/icon.module";
+import { NuiOverlayModule } from "../overlay/overlay.module";
 
 import { ConfirmationDialogComponent } from "./confirmation-dialog.component";
 import { DialogBackdropComponent } from "./dialog-backdrop.component";
@@ -22,6 +23,7 @@ import { DialogService } from "./dialog.service";
         NuiCommonModule,
         NuiIconModule,
         NuiButtonModule,
+        NuiOverlayModule,
     ],
     declarations: [
         ConfirmationDialogComponent,

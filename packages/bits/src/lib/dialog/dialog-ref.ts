@@ -2,6 +2,7 @@ import { ComponentRef, EventEmitter, Output } from "@angular/core";
 import noop from "lodash/noop";
 
 import {ContentRef} from "../../services/content-ref";
+import { OverlayComponent } from "../overlay/public-api";
 
 import {DialogBackdropComponent} from "./dialog-backdrop.component";
 
@@ -27,7 +28,8 @@ export class NuiDialogRef {
         public windowCmptRef?: ComponentRef<any>,
         private contentRef?: ContentRef,
         private backdropCmptRef?: ComponentRef<DialogBackdropComponent>,
-        private beforeDismiss?: Function) {
+        private beforeDismiss?: Function,
+        private overlayRef?: ComponentRef<OverlayComponent>) {
 
         windowCmptRef?.instance.dismissEvent.subscribe((reason: any) => {
             this.dismiss(reason);
@@ -67,9 +69,12 @@ export class NuiDialogRef {
         windowNativeEl.parentNode.removeChild(windowNativeEl);
         this.windowCmptRef?.destroy();
 
+        this.overlayRef?.instance.hide();
+        this.overlayRef?.destroy();
+
         if (this.backdropCmptRef) {
-            const backdropNativeEl = this.backdropCmptRef.location.nativeElement;
-            backdropNativeEl.parentNode.removeChild(backdropNativeEl);
+            // const backdropNativeEl = this.backdropCmptRef.location.nativeElement;
+            // backdropNativeEl.parentNode.removeChild(backdropNativeEl);
             this.backdropCmptRef.destroy();
         }
 
@@ -80,6 +85,7 @@ export class NuiDialogRef {
         this.windowCmptRef = undefined;
         this.backdropCmptRef = undefined;
         this.contentRef = undefined;
+        this.overlayRef = undefined;
     }
 }
 /**@ignore*/
