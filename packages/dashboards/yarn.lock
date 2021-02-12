@@ -185,7 +185,7 @@
   dependencies:
     tslib "^2.0.0"
 
-"@angular/cdk@^11.1.1":
+"@angular/cdk@^11.2.0":
   version "11.2.0"
   resolved "https://registry.npmjs.org/@angular/cdk/-/cdk-11.2.0.tgz#4f0d8e9865d29ee1b2ab3ce7be9a7af0a87b0ef4"
   integrity sha512-25k1giKAJ7DPzJBZfAVZmw/VfR4pZUaZnhgVAMwIdGPl5SaXJEW3e2znGlhzwkuQsiBgrSKfMgJmwKSyUbe2tg==
@@ -2309,10 +2309,10 @@ amdefine@>=0.0.4:
   resolved "https://registry.npmjs.org/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular-gridster2@^10.1.7:
-  version "10.1.7"
-  resolved "https://registry.npmjs.org/angular-gridster2/-/angular-gridster2-10.1.7.tgz#9c550a062feccea80d35bbba68fcccc9dca8b6e3"
-  integrity sha512-tlM6zm1+WNZUWu3GS73sl8z7FJgM/SdqmO/A5uz7HelqBv/tVMXln9Nv4flc8pkgIl7vvCGIgksavYfgWnpYIw==
+angular-gridster2@^11.0.1:
+  version "11.0.1"
+  resolved "https://registry.npmjs.org/angular-gridster2/-/angular-gridster2-11.0.1.tgz#b11f4cb897517ed568e2e1895b5c531d9fa811a6"
+  integrity sha512-eS1ks3EsKoofn2YKU8YuforeXjUa/9TPWR+CJITweNRbVTUQCGFoSwG7tHF+qR8a2cjT7qIK7wtwTCDaYtM//w==
   dependencies:
     tslib "^2.0.0"
 
@@ -8119,7 +8119,7 @@ mkdirp@^1.0.3, mkdirp@^1.0.4, mkdirp@~1.0.4:
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-moment@^2.16.0:
+moment@^2.25.3:
   version "2.29.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -11647,15 +11647,10 @@ typescript@4.1.3:
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.1.3.tgz#519d582bd94cba0cf8934c7d8e8467e473f53bb7"
   integrity sha512-B3ZIOf1IKeH2ixgHhj6la6xdwR9QrLC5d1VKeCSY4tvkqhF2eqd9O7txNlS0PO3GrBAFIdr3L1ndNwteUbZLYg==
 
-typescript@^4.0.3:
+typescript@^4.0.3, typescript@~4.1.5:
   version "4.1.5"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.1.5.tgz#123a3b214aaff3be32926f0d8f1f6e704eb89a72"
   integrity sha512-6OSu9PTIzmn9TCDiovULTnET6BgXtDYL4Gg4szY+cGsc3JP1dQL8qvE8kShTRx1NIw4Q9IBHlwODjkjWEtMUyA==
-
-typescript@~4.0.5:
-  version "4.0.7"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.0.7.tgz#7168032c43d2a2671c95c07812f69523c79590af"
-  integrity sha512-yi7M4y74SWvYbnazbn8/bmJmX4Zlej39ZOqwG/8dut/MYoSQ119GY9ZFbbGsD4PFZYWxqik/XsP3vk3+W5H3og==
 
 ua-parser-js@0.7.22:
   version "0.7.22"
