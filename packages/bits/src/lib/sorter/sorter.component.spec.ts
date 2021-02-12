@@ -26,8 +26,9 @@ import { RepeatComponent } from "../repeat/repeat.component";
 
 import { ISortedItem, SorterDirection } from "./public-api";
 import { SorterComponent } from "./sorter.component";
+import {OverlayComponent} from "../overlay/overlay-component/overlay.component";
 
-describe("components >", () => {
+fdescribe("components >", () => {
     describe("sorter >", () => {
         let fixture: ComponentFixture<SorterComponent>;
         let component: SorterComponent;
@@ -40,7 +41,8 @@ describe("components >", () => {
                 declarations: [
                     ButtonComponent,
                     SorterComponent,
-                    PopupComponent,
+                    // PopupComponent,
+                    OverlayComponent,
                     RepeatComponent,
                     RepeatItemComponent,
                     IconComponent,

@@ -6,6 +6,7 @@ import { NuiMenuModule } from "../menu/menu.module";
 import { NuiPopupModule } from "../popup/popup.module";
 
 import { SorterComponent } from "./sorter.component";
+import {NuiOverlayModule} from "../overlay/overlay.module";
 
 /**
  * @ignore
@@ -16,6 +17,7 @@ import { SorterComponent } from "./sorter.component";
         NuiMenuModule,
         NuiPopupModule,
         NuiButtonModule,
+        NuiOverlayModule,
     ],
     declarations: [
         SorterComponent,

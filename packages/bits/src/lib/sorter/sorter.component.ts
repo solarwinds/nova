@@ -2,7 +2,7 @@ import { OverlayConfig } from "@angular/cdk/overlay";
 import {
     AfterViewInit,
     ChangeDetectorRef,
-    Component,
+    Component, ElementRef,
     EventEmitter,
     Input,
     OnChanges,
@@ -25,6 +25,8 @@ import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { PopupComponent } from "../popup-adapter/popup-adapter.component";
 
 import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
+import {OVERLAY_WITH_POPUP_STYLES_CLASS} from "../overlay/constants";
+import {OverlayComponent} from "../overlay/overlay-component/overlay.component";
 
 const SORTER_MAX_WIDTH = 450;
 
@@ -54,17 +56,21 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
     @Output() sorterAction = new EventEmitter<ISorterChanges>();
 
     @ViewChild(PopupComponent) popupElement: PopupComponent;
+    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
     // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
     // before any new search is performed
     public detectFilterChanges = true;
 
+    public customContainer: ElementRef | undefined;
     public popupWidth: string;
     public onDestroy$ = new Subject<void>();
     public items: IMenuGroup[] = [{
         itemsSource: [],
     }];
     public overlayConfig: OverlayConfig = {
+        panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
         maxWidth: SORTER_MAX_WIDTH,
     };
 
@@ -98,6 +104,10 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
 
             this.setPopupSelection();
         }
+
+        if (changes.appendToBody) {
+            this.customContainer = changes.appendToBody.currentValue ? undefined : this.popupArea;
+        }
     }
 
     public ngAfterViewInit() {
@@ -108,8 +118,10 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
             sortBy: this.selectedItem,
             direction: this.sortDirection,
         };
-
-        this.handleSyncWidth();
+        this.overlay.clickOutside
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(_ => this.overlay.hide());
+        // this.handleSyncWidth();
     }
 
     public select(item: IMenuItem) {
