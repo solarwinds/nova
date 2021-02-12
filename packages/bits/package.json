@@ -109,7 +109,7 @@
   },
   "dependencies": {
     "resize-observer-polyfill": "^1.5.0",
-    "tslib": "^2.0.0"
+    "tslib": "^2.1.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1101.2",
