@@ -7,6 +7,7 @@ import { RawFormatterComponent } from "../../configurator/components/formatters/
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
+import { TableColumnsConfigurationComponentV2 } from "../../configurator/components/widgets/table/columns-editor-v2/table-columns-configuration-v2.component";
 import { DescriptionConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/column-configuration/description-configuration/description-configuration.component";
 import { PresentationConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/column-configuration/presentation-configuration/presentation-configuration.component";
 import { TableColumnsConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/table-columns-configuration.component";
@@ -141,22 +142,8 @@ export const tableConfigurator: IPizzagna = {
         // into the formatter.
         columns: {
             id: "columns",
-            componentType: TableColumnsConfigurationComponent.lateLoadKey,
+            componentType: TableColumnsConfigurationComponentV2.lateLoadKey,
             properties: {
-                template: [
-                    {
-                        id: "description",
-                        componentType: DescriptionConfigurationComponent.lateLoadKey,
-                    },
-                    {
-                        id: "presentation",
-                        componentType: PresentationConfigurationComponent.lateLoadKey,
-                        properties: {
-                            // Note: Now you can define your formatters in the TableFormatterRegistry which can contain more formatter options
-                            formatters: DEFAULT_TABLE_FORMATTERS,
-                        },
-                    },
-                ],
             },
             providers: {
                 [WellKnownProviders.Converter]: {

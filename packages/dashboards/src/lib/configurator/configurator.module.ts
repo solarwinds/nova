@@ -79,6 +79,10 @@ import { FieldMapperAggregatorConfiguratorComponent } from "./components/widgets
 import { ProportionalChartOptionsEditorV2Component } from "./components/widgets/proportional/chart-options-editor-v2/proportional-chart-options-editor-v2.component";
 import { ProportionalChartOptionsEditorComponent } from "./components/widgets/proportional/chart-options-editor/proportional-chart-options-editor.component";
 import { DonutContentConfigurationComponent } from "./components/widgets/proportional/donut-content-configuration/donut-content-configuration.component";
+import { DescriptionConfigurationV2Component } from "./components/widgets/table/columns-editor-v2/column-configuration/description-configuration/description-configuration-v2.component";
+import { PresentationConfigurationV2Component } from "./components/widgets/table/columns-editor-v2/column-configuration/presentation-configuration/presentation-configuration-v2.component";
+import { TableColumnConfigurationComponent } from "./components/widgets/table/columns-editor-v2/column-configuration/table-column-configuration/table-column-configuration.component";
+import { TableColumnsConfigurationComponentV2 } from "./components/widgets/table/columns-editor-v2/table-columns-configuration-v2.component";
 import { DescriptionConfigurationComponent } from "./components/widgets/table/columns-editor/column-configuration/description-configuration/description-configuration.component";
 import { LinkConfiguratorComponent } from "./components/widgets/table/columns-editor/column-configuration/presentation-configuration/portals/link-configurator/link-configurator.component";
 import { ValueSelectorComponent } from "./components/widgets/table/columns-editor/column-configuration/presentation-configuration/portals/value-selector/value-selector.component";
@@ -117,6 +121,8 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     TimeseriesMetadataConfigurationComponent,
     TimeseriesSeriesCollectionConfigurationComponent,
     TableColumnsConfigurationComponent,
+    TableColumnsConfigurationComponentV2,
+    TableColumnConfigurationComponent,
     DonutContentPercentageFormatterComponent,
     DonutContentPercentageConfigurationComponent,
     DonutContentSumFormatterComponent,
@@ -137,7 +143,9 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     WidgetEditorComponent,
     WidgetClonerComponent,
     DescriptionConfigurationComponent,
+    DescriptionConfigurationV2Component,
     PresentationConfigurationComponent,
+    PresentationConfigurationV2Component,
     TimeseriesTileDescriptionConfigurationComponent,
     TimeseriesTileIndicatorDataConfigurationComponent,
     RefresherConfigurationComponent,

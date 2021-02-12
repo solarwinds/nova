@@ -1,0 +1,33 @@
+<div *ngFor="let columnForm of columnForms; index as i; trackBy: trackBy">
+    <nui-widget-configurator-section [headerText]="columnForm?.value.label">
+        <nui-table-column-configuration [formControl]="columnForm"></nui-table-column-configuration>
+    </nui-widget-configurator-section>
+</div>
+
+<div class="pl-4 pr-4" *ngIf="(emptyColumns$ | async) && form.touched">
+    <nui-message type="critical" [allowDismiss]="false" i18n>
+        <b>At least one column must be added.</b>
+    </nui-message>
+</div>
+
+<button nui-button
+        icon="add"
+        displayStyle="action"
+        id="table-widget-add-indicator-btn"
+        type="button"
+        class="ml-4 mb-4"
+        (click)="addColumn()"
+        i18n>Add new column
+</button>
+
+<button nui-button
+        icon="reset"
+        displayStyle="action"
+        id="table-widget-reset-indicator-btn"
+        type="button"
+        class="ml-4 mb-4"
+        (click)="onResetColumns()"
+        i18n>Reset columns
+</button>
+
+<pre>{{form.value | json}}</pre>

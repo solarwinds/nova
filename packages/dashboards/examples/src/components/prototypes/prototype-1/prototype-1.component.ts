@@ -10,7 +10,7 @@ import {
     IWidgetSelector,
     PizzagnaLayer,
     ProviderRegistryService,
-    RefresherSettingsService,
+    RefresherSettingsService, TableFormatterRegistryService,
     WIDGET_CREATE,
     WidgetClonerService,
     WidgetTypesService,
@@ -18,6 +18,7 @@ import {
 import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
+import { DEFAULT_TABLE_FORMATTERS } from "../../../../../src/lib/widget-types/table/table-configurator";
 
 import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
 import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
@@ -58,7 +59,7 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
         minRows: 12,
     };
 
-    public editMode = false;
+    public editMode = true;
     public systemRefreshInterval: number = 60;
 
     private destroy$ = new Subject();
@@ -67,7 +68,10 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 public submitHandler: AcmeFormSubmitHandler,
                 private widgetTypesService: WidgetTypesService,
                 private widgetClonerService: WidgetClonerService,
-                private refreshSettings: RefresherSettingsService) {
+                private refreshSettings: RefresherSettingsService,
+                private tableFormattersRegistryService: TableFormatterRegistryService) {
+        tableFormattersRegistryService.addItems(DEFAULT_TABLE_FORMATTERS);
+
         this.providerRegistry.setProviders({
             [AcmeKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
