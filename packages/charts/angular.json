@@ -9,10 +9,10 @@
       "projectType": "library",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "tsconfig.lib.json",
-            "project": "ng-package.json",
+            "project": "ng-package.json"
           },
           "configurations": {
             "production": {
@@ -95,7 +95,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -118,7 +117,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -219,7 +217,6 @@
             "tsConfig": "tsconfig.json",
             "index": "index.html",
             "deleteOutputPath": false,
-            "extractCss": true,
             "optimization": true,
             "styles": [
               "src/styles.less"
