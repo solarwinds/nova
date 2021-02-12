@@ -145,7 +145,7 @@ nui-icon.nui-icon-flex {
         height: @icon-size-small;
         background-size: @icon-size-small;
         line-height: @icon-size-small;
-        font-size: @icon-size-default/2;
+        font-size: (@icon-size-default/2);
     }
 
     &[status]:not([status=""]), &[counter]:not([counter=""]) {
@@ -153,8 +153,8 @@ nui-icon.nui-icon-flex {
 
         &::after {
             position: absolute;
-            top: @icon-size-default/2;
-            left: @icon-size-default/2;
+            top: (@icon-size-default/2);
+            left: (@icon-size-default/2);
         }
     }
 
@@ -169,13 +169,13 @@ nui-icon.nui-icon-flex {
             height: @icon-size-small;
             background-size: @icon-size-small;
             line-height: @icon-size-small;
-            font-size: @icon-size-default/2;
+            font-size: (@icon-size-default/2);
         }
 
         &[status]:not([status=""])::after, &[counter]:not([counter=""])::after {
             position: absolute;
-            top: @icon-size-small/2;
-            left: @icon-size-small/2;
+            top: (@icon-size-small/2);
+            left: (@icon-size-small/2);
         }
     }
 
@@ -195,8 +195,8 @@ nui-icon.nui-icon-flex {
 
         &[status]:not([status=""])::after, &[counter]:not([counter=""])::after {
             position: absolute;
-            top: @icon-size-medium/2;
-            left: @icon-size-medium/2;
+            top: (@icon-size-medium/2);
+            left: (@icon-size-medium/2);
         }
     }
 
