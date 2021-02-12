@@ -4,7 +4,7 @@
         "baseUrl": "./",
         "declaration": false,
         "importHelpers": true,
-        "module": "es2020",
+        "module": "commonjs",
         "outDir": "./dist/out-tsc",
         "preserveSymlinks": true,
         "typeRoots": [

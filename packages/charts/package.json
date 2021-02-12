@@ -27,8 +27,8 @@
     "build-lib:locl": "run-s \"ng b lib --configuration=locl\" i18n-locl-extract",
     "build-lib:watch": "run-s dist-copy \"build-lib -- -c dev --watch\"",
     "build-examples": "ng b examples",
-    "build-examples:prod": "npm run build-examples -- --prod",
-    "build-examples:watch": "npm run build-examples -- --watch",
+    "build-examples:prod": "npm run build-examples --prod",
+    "build-examples:watch": "npm run build-examples --watch",
     "serve-examples": "ng s examples",
     "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
     "test": "ng t lib --watch=false --code-coverage",
@@ -62,7 +62,7 @@
     "postinstall": "node scripts/remove-deps-constraints.js"
   },
   "peerDependencies": {
-    "@nova-ui/bits": "~10.0.0-0",
+    "@nova-ui/bits": "~11.0.0-0",
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0",
     "d3": "^5.0.0",
@@ -90,7 +90,7 @@
     "@applitools/eyes-protractor": "1.9.1",
     "@compodoc/compodoc": "1.1.9",
     "@locl/cli": "^1.0.0",
-    "@nova-ui/bits": "~10.0.0-0",
+    "@nova-ui/bits": "~11.0.0-0",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
     "@types/jasmine": "~3.5.0",
