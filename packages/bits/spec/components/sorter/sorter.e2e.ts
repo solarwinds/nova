@@ -6,7 +6,7 @@ import {
     SorterAtom
 } from "../public_api";
 
-fdescribe("USERCONTROL Sorter >", () => {
+describe("USERCONTROL Sorter >", () => {
     let sorter: SorterAtom;
     let sorterButton: ButtonAtom;
     let icon: IconAtom | undefined;

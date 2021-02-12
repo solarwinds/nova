@@ -1,12 +1,13 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
     AfterViewInit,
-    ChangeDetectorRef,
-    Component, ElementRef,
+    Component,
+    ElementRef,
     EventEmitter,
     Input,
     OnChanges,
     OnDestroy,
+    OnInit,
     Output,
     SimpleChanges,
     ViewChild,
@@ -15,20 +16,17 @@ import {
 import _assign from "lodash/assign";
 import _isEqual from "lodash/isEqual";
 import _values from "lodash/values";
-import ResizeObserver from "resize-observer-polyfill";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { IFilter, IFilterPub, ISorterFilter } from "../../services/data-source/public-api";
 import { LoggerService } from "../../services/log-service";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
-import { PopupComponent } from "../popup-adapter/popup-adapter.component";
+import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
+import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
 
 import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
-import {OVERLAY_WITH_POPUP_STYLES_CLASS} from "../overlay/constants";
-import {OverlayComponent} from "../overlay/overlay-component/overlay.component";
-
-const SORTER_MAX_WIDTH = 450;
 
 // <example-url>./../examples/index.html#/sorter</example-url>
 
@@ -42,8 +40,8 @@ const SORTER_MAX_WIDTH = 450;
     encapsulation: ViewEncapsulation.None,
 })
 
-export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFilterPub {
-    @Input() appendToBody: boolean;
+export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit, IFilterPub {
+    @Input() appendToBody: boolean = false;
     @Input() caption: string;
 
     // Note: The string[] type for itemsSource is the legacy non-i18n-friendly type
@@ -55,7 +53,6 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
 
     @Output() sorterAction = new EventEmitter<ISorterChanges>();
 
-    @ViewChild(PopupComponent) popupElement: PopupComponent;
     @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
@@ -64,25 +61,28 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
     public detectFilterChanges = true;
 
     public customContainer: ElementRef | undefined;
-    public popupWidth: string;
     public onDestroy$ = new Subject<void>();
     public items: IMenuGroup[] = [{
         itemsSource: [],
     }];
     public overlayConfig: OverlayConfig = {
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
-        maxWidth: SORTER_MAX_WIDTH,
     };
+
+    protected popupUtilities: OverlayUtilitiesService = new OverlayUtilitiesService();
 
     private sortConfig: ISortedItem;
     private sortIcons: { [key: string]: string } = {
         [SorterDirection.ascending]: "arrow-up",
         [SorterDirection.descending]: "arrow-down",
     };
-    private overlayResizeObserver: ResizeObserver;
 
     constructor(private logger: LoggerService,
-                private cdRef: ChangeDetectorRef) {}
+                private el: ElementRef) {}
+
+    public ngOnInit() {
+        this.onAppendToBodyChange(this.appendToBody);
+    }
 
     public ngOnChanges(changes: SimpleChanges) {
         if (changes.itemsSource && !_isEqual(changes.itemsSource.previousValue, changes.itemsSource.currentValue)) {
@@ -106,7 +106,7 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
         }
 
         if (changes.appendToBody) {
-            this.customContainer = changes.appendToBody.currentValue ? undefined : this.popupArea;
+            this.onAppendToBodyChange(changes.appendToBody.currentValue);
         }
     }
 
@@ -121,7 +121,8 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(_ => this.overlay.hide());
-        // this.handleSyncWidth();
+
+        this.initPopupUtilities();
     }
 
     public select(item: IMenuItem) {
@@ -136,6 +137,7 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
 
             this.triggerSorterAction(oldValue);
             this.setPopupSelection();
+            this.overlay.hide();
         }
     }
 
@@ -169,22 +171,9 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
         };
     }
 
-    public toggleSorter() {
-        if (this.appendToBody || !this.popupWidth) {
-            this.cdRef.detectChanges();
-        }
-    }
-
     public ngOnDestroy() {
         this.onDestroy$.next();
         this.onDestroy$.complete();
-
-        if (this.popupElement?.popup) {
-            this.popupElement.popup.ngOnDestroy();
-        }
-        if (this.overlayResizeObserver) {
-            this.overlayResizeObserver.disconnect();
-        }
     }
 
     private initSelectedItem() {
@@ -218,33 +207,26 @@ export class SorterComponent implements OnChanges, OnDestroy, AfterViewInit, IFi
         });
     }
 
-    private handleSyncWidth() {
-        this.popupElement.opened
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(this.handleOverlayResize);
-    }
+    private initPopupUtilities() {
+        const resizeObserver = this.popupUtilities
+            .setPopupComponent(this.overlay)
+            .getResizeObserver();
 
-    private handleOverlayResize = (isOpened: boolean): void => {
-        if (!isOpened) {
-            this.overlayResizeObserver.disconnect();
-            return;
-        }
-
-        this.overlayResizeObserver = new ResizeObserver(() => {
-            const overlayWidth = this.popupElement.popupAreaContent.nativeElement.offsetWidth;
-            const toggleRefWidth = this.popupElement.toggleReference.offsetWidth;
-
-            if (overlayWidth < toggleRefWidth) {
-                this.popupElement.popup.getOverlayRef().updateSize({
-                    minWidth: toggleRefWidth,
-                });
-            }
+        this.overlay.show$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.popupUtilities.syncWidth();
+            resizeObserver.observe(this.el.nativeElement);
         });
 
-        this.overlayResizeObserver.observe(this.popupElement.popupAreaContent.nativeElement);
+        this.overlay.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            resizeObserver.unobserve(this.el.nativeElement);
+        });
     }
 
     private triggerSorterAction(oldValue: ISortedItem) {
         this.sorterAction.emit({ newValue: this.sortConfig, oldValue });
+    }
+
+    private onAppendToBodyChange(appendToBody: boolean): void {
+        this.customContainer = appendToBody ? undefined : this.popupArea;
     }
 }

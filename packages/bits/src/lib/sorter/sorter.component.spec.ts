@@ -1,3 +1,4 @@
+import { OverlayModule } from "@angular/cdk/overlay";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import {
     DebugElement,
@@ -18,17 +19,15 @@ import { DomUtilService } from "../../services/dom-util.service";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { LoggerService } from "../../services/log-service";
 import { IMenuItem } from "../menu/public-api";
-import { PopupComponent } from "../popup-adapter/popup-adapter.component";
-import { PopupAdapterModule } from "../popup-adapter/popup-adapter.module";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { RadioComponent } from "../radio/radio-group.component";
 import { RepeatItemComponent } from "../repeat/repeat-item/repeat-item.component";
 import { RepeatComponent } from "../repeat/repeat.component";
 
 import { ISortedItem, SorterDirection } from "./public-api";
 import { SorterComponent } from "./sorter.component";
-import {OverlayComponent} from "../overlay/overlay-component/overlay.component";
 
-fdescribe("components >", () => {
+describe("components >", () => {
     describe("sorter >", () => {
         let fixture: ComponentFixture<SorterComponent>;
         let component: SorterComponent;
@@ -37,11 +36,10 @@ fdescribe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ScrollingModule, PopupAdapterModule],
+                imports: [ScrollingModule, OverlayModule],
                 declarations: [
                     ButtonComponent,
                     SorterComponent,
-                    // PopupComponent,
                     OverlayComponent,
                     RepeatComponent,
                     RepeatItemComponent,
@@ -223,6 +221,8 @@ fdescribe("components >", () => {
 
         describe("getSelectedItem() >", () => {
             it("should return the correct item", () => {
+                fixture.detectChanges();
+                component.ngAfterViewInit();
                 component.select(itemsSource[2]);
                 expect(component.getSelectedItem()).toEqual(itemsSource[2].value);
             });
