@@ -4,7 +4,7 @@
 @import (reference) "../../../styles/nui-framework-colors.less";
 
 @min-width: 100px;
-@line-height: calc(@nui-space-lg - 2 * @nui-space-xs - 2 * @nui-line-default); // @nui-space-xs for padding, @nui-line-default - for borders
+@line-height: calc(@nui-space-lg - (2 * @nui-space-xs) - (2 * @nui-line-default)); // @nui-space-xs for padding, @nui-line-default - for borders
 
 .nui-select-v2 {
     .button-base();
@@ -13,7 +13,7 @@
     position: relative;
     .setCssVariable(color, nui-color-text-default);
     box-sizing: border-box;
-    min-height: calc(@nui-space-lg - 2 * @nui-line-default);
+    min-height: calc(@nui-space-lg - (2 * @nui-line-default));
     min-width: @min-width;
 
     &:focus-within {
