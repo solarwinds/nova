@@ -21,7 +21,7 @@
   "scripts": {
     "ng": "ng",
     "start": "run-p -lr compodoc:serve build-examples:watch",
-    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc build-examples:prod",
+    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc build-examples:prod build-schematics",
     "build-lib": "ng b lib",
     "build-lib:prod": "run-s \"build-lib --prod\" dist-copy",
     "build-lib:locl": "run-s \"ng b lib --configuration=locl\" i18n-locl-extract",
@@ -63,7 +63,7 @@
   "peerDependencies": {
     "@nova-ui/bits": "~11.0.0-0",
     "@nova-ui/charts": "~11.0.0-0",
-    "@schematics/angular": "^11.1.2",
+    "@schematics/angular": "^11.1.4",
     "angular-gridster2": "^10.1.7",
     "d3": "^5.9.2",
     "d3-selection-multi": "^1.0.1"
@@ -89,7 +89,7 @@
     "@locl/cli": "^1.0.0",
     "@nova-ui/bits": "~11.0.0-0",
     "@nova-ui/charts": "~11.0.0-0",
-    "@schematics/angular": "^11.1.2",
+    "@schematics/angular": "^11.1.4",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
     "@types/jasmine": "~3.5.0",
