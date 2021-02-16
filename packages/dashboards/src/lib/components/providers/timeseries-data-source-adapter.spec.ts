@@ -74,7 +74,7 @@ describe("TimeseriesDataSourceAdapter > ", () => {
             pizzagnaKey: PizzagnaLayer.Data,
             componentId: undefined,
             propertyPath: [undefined],
-        }, testAdapterOutput);
+        } as never, testAdapterOutput);
     });
 
     describe("updateConfiguration > ", () => {
