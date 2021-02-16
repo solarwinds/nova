@@ -1,3 +1,10 @@
+/*****************************************************************
+ *
+ * This file consists of json utility functions recovered from deletions in the angular-cli repo
+ * https://github.com/angular/angular-cli/commit/621f15aa187a2112a71d24a182e20174759fc23c
+ *
+ *****************************************************************/
+
 import { JsonAstArray, JsonAstKeyValue, JsonAstNode, JsonAstObject, JsonValue } from "@angular-devkit/core";
 import { UpdateRecorder } from "@angular-devkit/schematics";
 

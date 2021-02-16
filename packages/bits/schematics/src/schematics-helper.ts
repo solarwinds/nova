@@ -132,6 +132,19 @@ export function updateModuleChanges(
     host.commitUpdate(declarationRecorder);
 }
 
+export function getBrowserProjectTargets(host: Tree, options: any): BrowserBuilderTarget {
+    const workspace = getWorkspace(host);
+    const clientProject = getProject(workspace, options.project);
+    // @ts-ignore: Avoiding strict mode errors, preserving old behavior
+    return getProjectTargets(clientProject)["build"];
+}
+
+/*****************************************************************
+ * Begin - Code recovered from deletions in the angular-cli repo
+ * https://github.com/angular/angular-cli/commit/5ebb100877d7d73da4379e244371194190f818fa
+ * https://github.com/angular/angular-cli/commit/51549977286904b65c800f44792e19ed671c3b8d
+ *****************************************************************/
+
 export function getWorkspacePath(host: Tree): string {
     const possibleFiles = ["/angular.json", "/.angular.json"];
     const path = possibleFiles.filter(p => host.exists(p))[0];
@@ -199,9 +212,6 @@ export function getProjectTargets(
     return projectTargets;
 }
 
-export function getBrowserProjectTargets(host: Tree, options: any): BrowserBuilderTarget {
-    const workspace = getWorkspace(host);
-    const clientProject = getProject(workspace, options.project);
-    // @ts-ignore: Avoiding strict mode errors, preserving old behavior
-    return getProjectTargets(clientProject)["build"];
-}
+/*****************************************************************
+ * End - Code recovered from deletions in the angular-cli repo
+ *****************************************************************/
