@@ -77,6 +77,7 @@ describe("components >", () => {
             component.selectedItem = itemsSource[0].value;
             component.itemsSource = itemsSource;
             component.ngOnChanges({ selectedItem: {} as SimpleChange, itemsSource: {} as SimpleChange });
+            fixture.detectChanges();
         });
 
         describe("ngOnChanges() >", () => {
@@ -124,7 +125,6 @@ describe("components >", () => {
             });
 
             it("should emit the sorterAction when selectedItem changes", () => {
-                fixture.detectChanges();
                 spyOn(component.sorterAction, "emit");
 
                 const newSelectedItem = itemsSource[2].value;
@@ -192,7 +192,6 @@ describe("components >", () => {
                 };
                 component.selectedItem = oldValue.sortBy;
                 component.sortDirection = oldValue.direction;
-                fixture.detectChanges();
 
                 component.select({ value: expectedSortConfig.sortBy } as IMenuItem);
 
@@ -210,7 +209,7 @@ describe("components >", () => {
                 const newValue = _assign({}, oldValue, {
                     sortBy: item.value,
                 });
-                fixture.detectChanges();
+
                 spyOn(component.sorterAction, "emit");
 
                 component.select(item);
@@ -221,8 +220,6 @@ describe("components >", () => {
 
         describe("getSelectedItem() >", () => {
             it("should return the correct item", () => {
-                fixture.detectChanges();
-                component.ngAfterViewInit();
                 component.select(itemsSource[2]);
                 expect(component.getSelectedItem()).toEqual(itemsSource[2].value);
             });
@@ -230,7 +227,6 @@ describe("components >", () => {
 
         describe("getSortIcon() >", () => {
             it("should sorter contain an arrow icon", () => {
-                fixture.detectChanges();
                 expect(component.getSortIcon()).toBe("arrow-up");
             });
         });
@@ -260,7 +256,7 @@ describe("components >", () => {
                 component.sortDirection = SorterDirection.ascending;
                 component.selectedItem = itemsSource[0].value;
                 component.select(itemsSource[0]);
-                fixture.detectChanges();
+
                 spyOn(component.sorterAction, "emit");
 
                 component.toggleSortDirection();
