@@ -7,8 +7,8 @@ import {
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
 import { MenuPopupAtom } from "../menu-popup/menu-popup.atom";
-import { PopupAtom } from "../popup/popup.atom";
-import {OverlayAtom} from "../overlay/overlay.atom";
+import { OverlayAtom } from "../overlay/overlay.atom";
+
 
 
 export class SorterAtom extends Atom {
