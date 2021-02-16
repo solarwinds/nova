@@ -1,4 +1,9 @@
+import { JsonParseMode, parseJson } from "@angular-devkit/core";
 import { SchematicTestRunner, UnitTestTree } from "@angular-devkit/schematics/testing";
+
+function readJsonFile(tree: UnitTestTree, path: string): any {
+    return parseJson(tree.readContent(path).toString(), JsonParseMode.CommentsAllowed);
+}
 
 describe("ng-add", () => {
     const runner = new SchematicTestRunner("schematics", require.resolve("../collection.json"));
@@ -42,7 +47,7 @@ describe("ng-add", () => {
             })
         );
         const afterTree = await runner.runSchematicAsync("ng-add", { skipTsConfig: true, project: "bar", skipCss: false }, appTree).toPromise();
-        const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
+        const file = readJsonFile(afterTree, "angular.json");
         expect(file.projects.bar.architect.build.options.styles[0]).toEqual("./node_modules/@nova-ui/bits/bundles/css/styles.css");
     });
     it("adds style to angular.json without property", async () => {
@@ -62,7 +67,7 @@ describe("ng-add", () => {
             })
         );
         const afterTree = await runner.runSchematicAsync("ng-add", { skipTsConfig: true, project: "bar", skipCss: false }, appTree).toPromise();
-        const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
+        const file = readJsonFile(afterTree, "angular.json");
         expect(file.projects.bar.architect.build.options.stylePreprocessorOptions.includePaths[0]).toEqual("node_modules");
     });
 
@@ -87,13 +92,13 @@ describe("ng-add", () => {
         );
 
         const afterTree = await runner.runSchematicAsync("ng-add", { skipTsConfig: true, project: "bar", skipCss: false }, appTree).toPromise();
-        const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
+        const file = readJsonFile(afterTree, "angular.json");
         expect(file.projects.bar.architect.build.options.styles.length).toEqual(1);
     });
 
     it("updates style array in angular.json", async () => {
         const afterTree = await runner.runSchematicAsync("ng-add", { skipTsConfig: true, project: "bar" }, appTree).toPromise();
-        const file = JSON.parse((afterTree.read("angular.json") ?? "").toString("utf-8"));
+        const file = readJsonFile(afterTree, "angular.json");
         expect(file.projects.bar.architect.build.options.styles[1]).toContain("@nova-ui/bits");
     });
 
@@ -105,7 +110,7 @@ describe("ng-add", () => {
     it("add property to tsConfig", async () => {
         const afterTree = await runner.runSchematicAsync("ng-add", { skipCss: true, skipProviders: true, skipPackageJson: true, project: "bar" }, appTree)
             .toPromise();
-        const afterFile = JSON.parse((afterTree.read(`projects/bar/tsconfig.app.json`) ?? "").toString("utf-8"));
+        const afterFile = readJsonFile(afterTree, `projects/bar/tsconfig.app.json`);
         expect(afterFile.compilerOptions.allowSyntheticDefaultImports).toEqual(true);
     });
 
@@ -128,7 +133,7 @@ describe("ng-add", () => {
 
         const afterTree = await runner.runSchematicAsync("ng-add", { skipCss: true, skipProviders: true, skipPackageJson: true, project: "bar" }, appTree)
             .toPromise();
-        const afterFile = JSON.parse((afterTree.read(`projects/bar/tsconfig.app.json`) ?? "").toString("utf-8"));
+        const afterFile = readJsonFile(afterTree, `projects/bar/tsconfig.app.json`);
         expect(afterFile.compilerOptions.allowSyntheticDefaultImports).toEqual(false);
     });
 
@@ -140,7 +145,7 @@ describe("ng-add", () => {
                 skipProviders: true,
                 skipTsConfig: true,
             }, appTree).toPromise();
-        const file = JSON.parse((afterTree.read("package.json") ?? "").toString("utf-8"));
+        const file = readJsonFile(afterTree, "package.json");
         const { peerDependencies } = require("../../../package.json");
         Object.keys(peerDependencies).forEach((key) => {
             expect(peerDependencies[key]).toEqual(file.dependencies[key], `Dependency ${key} wasn't updated`);

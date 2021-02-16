@@ -29,7 +29,7 @@
     "ng": "ng",
     "prepublish": "modernizr -c ./src/vendor/modernizr.config.json -d ./node_modules/modernizr/",
     "start": "run-p -lr compodoc:serve build-examples:watch",
-    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
+    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod build-schematics",
     "build-lib": "ng b lib",
     "build-lib:prod": "run-s \"build-lib -- --prod\" dist-copy",
     "build-lib:locl": "run-s \"ng b lib --configuration=locl\" i18n-locl-extract",

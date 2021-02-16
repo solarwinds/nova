@@ -13,7 +13,7 @@ export function updateJsonFile(host: Tree, context: SchematicContext, filename: 
     const lastProperty = propertyChain[propertyChain.length - 1];
     try {
         const source = host.read(<string>filename)?.toString("utf-8") ?? "";
-        const sourceAstObj = <JsonAstObject>parseJsonAst(source, JsonParseMode.Strict);
+        const sourceAstObj = <JsonAstObject>parseJsonAst(source, JsonParseMode.CommentsAllowed);
 
         let targetObj: JsonAstObject, parentObj: JsonAstObject | undefined;
 
