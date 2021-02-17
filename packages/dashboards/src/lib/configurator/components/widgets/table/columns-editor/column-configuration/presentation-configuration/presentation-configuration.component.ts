@@ -80,6 +80,9 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
         public changeDetector: ChangeDetectorRef,
         @Optional() @Inject(FORMATTERS_REGISTRY) private formattersRegistryCommon: FormatterRegistryService,
         // used as a fallback, remove in vNext
+        /**
+         * @deprecated  will be removed in the scope of NUI-5839
+         */
         private tableFormattersRegistryService: TableFormatterRegistryService
     ) {
         this.subscribeToFormattersRegistry();

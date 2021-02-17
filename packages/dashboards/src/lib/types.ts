@@ -130,7 +130,7 @@ export interface IWidgetTypeDefinition {
     configurator?: IPizzagna;
     widget: IPizzagna;
     /**
-     * Paths to various important values in pizzagnas - this should be coupled with respective pizzagnas in v10
+     * Paths to various important values in pizzagnas - this should be coupled with respective pizzagnas in v10 - NUI-5829
      */
     paths?: {
         widget?: Record<string, string>,
@@ -166,7 +166,7 @@ export interface IHasComponent<T = any> {
 export interface IConfigurable {
     providerKey?: string;
     setComponent?: (component: any, componentId: string) => void;
-    // TODO: BREAKING rename to 'updateProperties' in v10
+    // TODO: BREAKING rename to 'updateProperties' in v10 - NUI-5828
     updateConfiguration(properties: IProperties): void;
 }
 
