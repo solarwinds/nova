@@ -228,7 +228,7 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
     public editMode: boolean = false;
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
     // Pass this to the dashboard component's gridsterConfig input in the template.
@@ -240,7 +240,8 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
         // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
         private providerRegistry: ProviderRegistryService,
         // Inject the ComponentRegistryService to make our custom component available for late loading by the dashboards framework
-        private componentRegistry: ComponentRegistryService
+        private componentRegistry: ComponentRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
     ) {
         // Register the custom configurator component with the component registry to make it available
         // for late loading by the dashboard framework.
@@ -296,6 +297,15 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.initializeDashboard();
+    }
+
+     /** Used for restoring widgets state */
+     public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
+
         this.initializeDashboard();
     }
 

@@ -1,0 +1,12 @@
+@import (reference) "@nova-ui/bits/sdk/less/nui-framework-colors";
+@import (reference) "@nova-ui/bits/sdk/less/mixins";
+
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid;
+
+    .setCssVariable(border-color, nui-color-selected-contrast);
+    .setCssVariable(background-color, nui-color-busy-default);
+}

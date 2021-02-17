@@ -109,8 +109,8 @@ export class Helpers {
                     : eyes.setBatch(batchName);
 
             eyes.setBranchName(branchName);
-            if (branchName !== "develop") {
-                eyes.setParentBranchName("develop");
+            if (branchName !== "main") {
+                eyes.setParentBranchName("main");
             }
             eyes.setForceFullPageScreenshot(true);
             eyes.setIgnoreCaret(true);

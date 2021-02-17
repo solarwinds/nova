@@ -1,4 +1,4 @@
-import { CdkDragDrop } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, CdkDragStart } from "@angular/cdk/drag-drop";
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import isArray from "lodash/isArray";
@@ -29,6 +29,7 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
     public formLocal: FormGroup;
     public availableComparators: IComparatorsDict;
     public palette: Partial<IPaletteColor[]>;
+    public height: number;
 
     private destroy$ = new Subject();
 
@@ -97,6 +98,10 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
 
     public drop(event: CdkDragDrop<string[]>) {
         this.move(event.currentIndex, event.previousIndex);
+    }
+
+    public cdkDragStarted(event: CdkDragStart): void {
+        this.height = event.source.element.nativeElement.offsetHeight;
     }
 
     public ngOnDestroy() {
