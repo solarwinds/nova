@@ -20,8 +20,11 @@ import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 import { parseName } from "@schematics/angular/utility/parse-name";
 import { validateHtmlSelector, validateName } from "@schematics/angular/utility/validation";
 import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
+import { getProject, buildDefaultPath } from "../utility/project";
+import { getProjectTargets } from "../utility/project-targets";
 
-import { buildDefaultPath, buildSelector, getProject, getProjectTargets, getWorkspace, readIntoSourceFile, updateModuleChanges } from "../schematics-helper";
+import { buildSelector, readIntoSourceFile, updateModuleChanges } from "../utility/schematics-helper";
+import { getWorkspace } from "../utility/workspace";
 
 import { Schema as ComponentOptions } from "./schema";
 

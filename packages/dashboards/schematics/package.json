@@ -9,7 +9,7 @@
     "copy": "npm run copy-collection && npm run copy-schematics",
     "copy-ng-add": "cpx \"src/ng-add/{*.json,index.js}\" ../dist/sdk/schematics/ng-add/",
     "copy-collection": "cpx \"src/collection.json\" ../dist/sdk/schematics/",
-    "copy-schematics": "cpx \"src/**/{*.json,index.js,schematics-helpers.js}\" ../dist/sdk/schematics/ && cpx \"src/**/files/**\" ../dist/sdk/schematics/"
+    "copy-schematics": "cpx \"src/**/{*.json,index.js}\" ../dist/sdk/schematics/ && cpx \"src/**/files/**\" ../dist/sdk/schematics/"
   },
   "keywords": [
     "schematics"

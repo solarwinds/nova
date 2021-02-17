@@ -1,13 +1,18 @@
-import { JsonAstArray, JsonAstObject, JsonParseMode, parseJson, parseJsonAst, strings } from "@angular-devkit/core";
-import { SchematicContext, SchematicsException } from "@angular-devkit/schematics";
+import { JsonAstArray, JsonAstObject, JsonParseMode, parseJsonAst, strings } from "@angular-devkit/core";
+import { Rule, SchematicContext, SchematicsException } from "@angular-devkit/schematics";
 import { Tree } from "@angular-devkit/schematics/src/tree/interface";
+import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
 import { addImportToModule } from "@angular/cdk/schematics";
 import { addDeclarationToModule, addProviderToModule, isImported } from "@schematics/angular/utility/ast-utils";
 import { InsertChange } from "@schematics/angular/utility/change";
-import { BrowserBuilderTarget, ProjectType, WorkspaceProject, WorkspaceSchema, WorkspaceTargets } from "@schematics/angular/utility/workspace-models";
+import { NodeDependency, NodeDependencyType } from "@schematics/angular/utility/dependencies";
+import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
 import ts from "typescript";
 
 import { appendValueInAstArray, findPropertyInAstObject, insertPropertyInAstObjectInOrder } from "./json-utils";
+import { getProject } from "./project";
+import { getProjectTargets } from "./project-targets";
+import { getWorkspace } from "./workspace";
 
 export function updateJsonFile(host: Tree, context: SchematicContext, filename: string, propertyChain: string[], itemToAdd: any) {
     const lastProperty = propertyChain[propertyChain.length - 1];
@@ -139,79 +144,39 @@ export function getBrowserProjectTargets(host: Tree, options: any): BrowserBuild
     return getProjectTargets(clientProject)["build"];
 }
 
-/*****************************************************************
- * Begin - Code recovered from deletions in the angular-cli repo
- * https://github.com/angular/angular-cli/commit/5ebb100877d7d73da4379e244371194190f818fa
- * https://github.com/angular/angular-cli/commit/51549977286904b65c800f44792e19ed671c3b8d
- *****************************************************************/
-
-export function getWorkspacePath(host: Tree): string {
-    const possibleFiles = ["/angular.json", "/.angular.json"];
-    const path = possibleFiles.filter(p => host.exists(p))[0];
-    return path;
+export function addStylesToAngularJson(options: any, stylePaths: string[]) {
+    return (host: Tree, context: SchematicContext) => {
+        updateJsonFile(host,
+            context,
+            "angular.json",
+            [
+                "projects",
+                options.project,
+                "architect",
+                "build",
+                "options",
+                "styles",
+            ],
+            stylePaths
+        );
+    };
 }
 
-export function getWorkspace(host: Tree): WorkspaceSchema {
-    const path = getWorkspacePath(host);
-    const configBuffer = host.read(path);
-    if (configBuffer === null) {
-        throw new SchematicsException(`Could not find (${path})`);
-    }
-    const content = configBuffer.toString();
-
-    return parseJson(content, JsonParseMode.Loose) as {} as WorkspaceSchema;
+export function installPackageJsonDependencies(): Rule {
+    return (host: Tree, context: SchematicContext) => {
+        context.addTask(new NodePackageInstallTask());
+        context.logger.info(` Installing packages...`);
+        return host;
+    };
 }
 
-export function buildDefaultPath(project: WorkspaceProject): string {
-    const root = project.sourceRoot
-        ? `/${project.sourceRoot}/`
-        : `/${project.root}/src/`;
-
-    const projectDirName = project.projectType === ProjectType.Application ? "app" : "lib";
-
-    return `${root}${projectDirName}`;
+export function assembleDependencies(dependencies: Record<string, string>): NodeDependency[] {
+    return Object.keys(dependencies).map((key) => (
+        {
+            type: NodeDependencyType.Default,
+            version: dependencies[key],
+            name: key,
+            overwrite: true,
+        }
+    ));
 }
-
-export function getProject<TProjectType extends ProjectType = ProjectType.Application>(
-    workspaceOrHost: WorkspaceSchema | Tree,
-    projectName: string
-): WorkspaceProject<TProjectType> {
-    const workspace = isWorkspaceSchema(workspaceOrHost)
-        ? workspaceOrHost
-        : getWorkspace(workspaceOrHost);
-
-    return workspace.projects[projectName] as WorkspaceProject<TProjectType>;
-}
-
-export function isWorkspaceSchema(workspace: any): workspace is WorkspaceSchema {
-    return !!(workspace && (workspace as WorkspaceSchema).projects);
-}
-
-export function isWorkspaceProject(project: any): project is WorkspaceProject {
-    return !!(project && (project as WorkspaceProject).projectType);
-}
-
-export function getProjectTargets(project: WorkspaceProject): WorkspaceTargets;
-export function getProjectTargets(
-    workspaceOrHost: WorkspaceSchema | Tree,
-    projectName: string
-): WorkspaceTargets;
-export function getProjectTargets(
-    projectOrHost: WorkspaceProject | Tree | WorkspaceSchema,
-    projectName = ""
-): WorkspaceTargets {
-    const project = isWorkspaceProject(projectOrHost)
-        ? projectOrHost
-        : getProject(projectOrHost, projectName);
-
-    const projectTargets = project.targets || project.architect;
-    if (!projectTargets) {
-        throw new Error("Project target not found.");
-    }
-
-    return projectTargets;
-}
-
-/*****************************************************************
- * End - Code recovered from deletions in the angular-cli repo
- *****************************************************************/
