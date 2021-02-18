@@ -159,7 +159,7 @@ export interface IDataFieldsConfig {
 }
 
 // TODO: mark dataType field as optional in vNext, because previously it was used only for TableWidget,
-//  but IDataField is using in DataSource now so that consumers are required to fill these fields
+//  but IDataField is using in DataSource now so that consumers are required to fill these fields - will be done in the scope of NUI-5836
 export interface IDataField {
     id: string;
     label: string;

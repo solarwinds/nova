@@ -124,7 +124,7 @@ export const tableConfigurator: IPizzagna = {
                         formParts: [
                             {
                                 previewPath: "table.providers.dataSource",
-                                // TODO: Remove 'properties' key in v10
+                                // TODO: Remove 'properties' key in v10 - NUI-5831
                                 keys: ["providerId", "properties"],
                             },
                             {

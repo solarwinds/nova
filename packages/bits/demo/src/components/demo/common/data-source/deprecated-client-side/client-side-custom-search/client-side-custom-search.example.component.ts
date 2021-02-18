@@ -41,7 +41,7 @@ export class ClientSideCustomSearchService extends SearchService {
 }
 
 /**
- * TODO: Remove in v12
+ * TODO: Remove in v12 - NUI-5835
  * @deprecated
  */
 @Component({
