@@ -24,6 +24,7 @@ export class SelectorExampleComponent {
                 this.availableStatuses = this.getMenuItems([SelectionType.All, SelectionType.None]);
                 break;
             case SelectionType.None:
+            case SelectionType.UnselectAll:
                 this.checkBoxStatus =  CheckboxStatus.Unchecked;
                 this.availableStatuses = this.getMenuItems([SelectionType.All, SelectionType.AllPages]);
                 break;
