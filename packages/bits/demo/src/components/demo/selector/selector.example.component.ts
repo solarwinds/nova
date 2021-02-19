@@ -16,12 +16,15 @@ export class SelectorExampleComponent {
         this.selection = event;
         switch (this.selection) {
             case SelectionType.All:
+                this.checkBoxStatus =  CheckboxStatus.Checked;
                 this.availableStatuses = this.getMenuItems([SelectionType.AllPages, SelectionType.None]);
                 break;
             case SelectionType.AllPages:
+                this.checkBoxStatus =  CheckboxStatus.Checked;
                 this.availableStatuses = this.getMenuItems([SelectionType.All, SelectionType.None]);
                 break;
             case SelectionType.None:
+                this.checkBoxStatus =  CheckboxStatus.Unchecked;
                 this.availableStatuses = this.getMenuItems([SelectionType.All, SelectionType.AllPages]);
                 break;
         }
@@ -44,5 +47,4 @@ export class SelectorExampleComponent {
         });
         return resultArr;
     }
-
 }
