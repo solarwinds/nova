@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Component, Injectable, OnDestroy, OnInit} from "@angular/core";
+import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit} from "@angular/core";
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -185,7 +185,7 @@ export class ErrorNotFoundDataSource extends DataSourceService<IKpiData> impleme
 export class WidgetErrorHandlingComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
     // Pass this to the dashboard component's gridsterConfig input in the template.
@@ -199,7 +199,9 @@ export class WidgetErrorHandlingComponent implements OnInit {
         private widgetTypesService: WidgetTypesService,
 
         // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
-        private providerRegistry: ProviderRegistryService
+        private providerRegistry: ProviderRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
+
     ) { }
 
     public ngOnInit(): void {
@@ -246,6 +248,15 @@ export class WidgetErrorHandlingComponent implements OnInit {
                 deps: [HttpClient],
             },
         });
+
+        this.initializeDashboard();
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
 
         this.initializeDashboard();
     }

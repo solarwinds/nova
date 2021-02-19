@@ -16,10 +16,12 @@
             <p class="mb-3">We can automatically change the background color when the value meets certain conditions.</p>
             <div cdkDropList (cdkDropListDropped)="drop($event)">
                 <ng-container *ngFor="let rule of formLocal.get('rules')?.value.controls; index as i">
-                    <div class="kpi-color-rule mb-3 flex-row flex-wrap" [formGroup]="rule" cdkDrag>
-                        <div class="mr-3 mb-3 d-flex flex-row justify-content-center flex-grow-1">
-                            <nui-icon icon="drag" class="mr-2 align-items-center kpi-color-rule__drag" cdkDragHandle></nui-icon>
-                            <nui-form-field class="d-flex flex-grow-1" [control]="rule.get('comparisonType')">
+                    <div class="kpi-color-rule d-flex pt-3" [formGroup]="rule" cdkDrag (cdkDragStarted)="cdkDragStarted($event)">
+                        <div class="kpi-color-rule__control justify-content-center d-flex">
+                            <nui-icon icon="drag" class="kpi-color-rule__drag align-items-center" cdkDragHandle></nui-icon>
+                        </div>
+                        <div class="d-flex flex-grow-1 flex-wrap">
+                            <nui-form-field class="mr-3 mb-3 flex-grow-1" [control]="rule.get('comparisonType')">
                                 <nui-select-v2 placeholder="Select Item"
                                                i18n-placeholder
                                                style="min-width: 220px;"
@@ -29,25 +31,23 @@
                                     </nui-select-v2-option>
                                 </nui-select-v2>
                             </nui-form-field>
-                        </div>
-                        <div class="mr-3 mb-3 d-flex flex-column justify-content-center flex-grow-1" style="width: 100px;">
-                            <nui-form-field [control]="rule.get('value')">
+
+                            <nui-form-field class="mr-3 mb-3" [control]="rule.get('value')" style="max-width: 100px;">
                                 <nui-textbox formControlName="value"></nui-textbox>
                             </nui-form-field>
-                        </div>
-                        <div class="mr-3 mb-3 d-flex flex-column justify-content-center">
-                            <nui-form-field [control]="rule.get('color')">
+
+                            <nui-form-field class="mr-3 mb-3" [control]="rule.get('color')">
                                 <nui-color-picker formControlName="color" [colorPalette]="palette"></nui-color-picker>
                             </nui-form-field>
                         </div>
-                        <div class="mb-3 d-flex flex-column justify-content-center">
-                            <button nui-button
-                                    icon="delete"
-                                    displayStyle="action"
-                                    type="button"
-                                    (click)="removeRule(i)">
-                            </button>
-                        </div>
+                        <button nui-button
+                                icon="delete"
+                                displayStyle="action"
+                                type="button"
+                                class="kpi-color-rule__control"
+                                (click)="removeRule(i)">
+                        </button>
+                        <nui-drop-area *cdkDragPlaceholder [style.height.px]="height"></nui-drop-area>
                     </div>
                 </ng-container>
             </div>

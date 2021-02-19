@@ -266,6 +266,13 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
         super.ngOnDestroy();
     }
 
+    protected handleValueChange (value: OptionValueType | OptionValueType[] | null): void {
+        if (this.multiselect) {
+            this.selectedOptions.forEach(selectedOption => selectedOption.outfiltered = false);
+        }
+        super.handleValueChange(value);
+    }
+
     private setInputValue(value: any): void {
         const inputValueToSet = this.multiselect ? "" : value;
         const toDisplay = this.displayWith ? this.displayWith(inputValueToSet) : inputValueToSet;

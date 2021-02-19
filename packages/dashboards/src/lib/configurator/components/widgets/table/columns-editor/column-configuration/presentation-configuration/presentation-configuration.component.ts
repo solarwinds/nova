@@ -68,7 +68,8 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     @Output() formDestroy: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
     public form: FormGroup;
-    public formatterForm: FormGroup;
+    public formatterForm: FormGroup = this.formBuilder.group({});
+
     public formatterConfigurator: string | null;
     public formatterConfiguratorProps: IFormatterConfigurator;
     public readonly formatterFormGroupName = "formatter";
@@ -131,6 +132,7 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
 
         if (changes.formatter) {
             this.form?.patchValue({ [this.formatterFormGroupName]: changes.formatter.currentValue }, { emitEvent: false });
+            this.updateSubtitle();
         }
 
         if (changes.dataFields && changes.dataFields.previousValue.length === 0 && this.formatterForm) {

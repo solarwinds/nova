@@ -67,6 +67,7 @@ import { FilteredViewWithTreeComponent } from "./filtered-view/filtered-view-wit
 import { FilteredViewWithTreeModule } from "./filtered-view/filtered-view-with-tree/filtered-view-with-tree.module";
 import { BasicListComponent } from "./list/basic-list/basic-list.component";
 import { ListSchematicExampleComponent } from "./list/list-schematic.example.component";
+import { ListSchematicsOutletComponent } from "./list/list-schematics-outlet.component";
 import { PaginatedListComponent } from "./list/paginated-list/paginated-list.component";
 import { SearchListComponent } from "./list/search-list/search-list.component";
 import { SelectionListComponent } from "./list/selection-list/selection-list.component";
@@ -189,6 +190,14 @@ const staticRoutes: Routes = [
         },
     },
     {
+        path: "list-outlet",
+        component: ListSchematicsOutletComponent,
+        children: [{
+            path: "selection",
+            component: SelectionListComponent,
+        }],
+    },
+    {
         path: "table",
         component: TableSchematicExampleComponent,
         data: {
@@ -214,6 +223,7 @@ const staticRoutes: Routes = [
     declarations: [
         FakeServer,
         FilteredViewSchematicOutletComponent,
+        ListSchematicsOutletComponent,
         FilteredViewSchematicExampleComponent,
         BasicFilterGroupExampleComponent,
         CustomDataSourceFilterGroupExampleComponent,

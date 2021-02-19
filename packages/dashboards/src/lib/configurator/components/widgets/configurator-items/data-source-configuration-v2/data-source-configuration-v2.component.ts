@@ -20,7 +20,7 @@ import { take } from "rxjs/operators";
 
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { IHasChangeDetector, IHasForm, IProperties, IProviderConfiguration, IProviderConfigurationForDisplay, PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { DATA_SOURCE_CHANGE, DATA_SOURCE_OUTPUT } from "../../../../types";
+import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 
 /**
  * This is a basic implementation of a data source configuration component. In the real world scenario, this component will most likely be replaced by a
@@ -134,6 +134,9 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
         const provider = this.providerRegistryService.getProvider(data.providerId);
         if (provider) {
             const dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
+
+            this.eventBus.next(DATA_SOURCE_CREATED, { payload: dataSource });
+
             dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any) => {

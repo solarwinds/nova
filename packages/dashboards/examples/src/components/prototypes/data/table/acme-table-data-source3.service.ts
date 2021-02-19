@@ -1,6 +1,7 @@
 import { ListRange } from "@angular/cdk/collections";
 import { Injectable } from "@angular/core";
-import { DataSourceService, IDataField, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
+import { DataSourceFeatures, DataSourceService, IDataField, IDataSource, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
+import { WellKnownDataSourceFeatures } from "@nova-ui/dashboards";
 import isEqual from "lodash/isEqual";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject } from "rxjs";
@@ -10,7 +11,7 @@ import { IBrewDatasourceResponse, IBrewInfo } from "../../../types";
 import { BREW_API_URL } from "./constants";
 
 @Injectable()
-export class AcmeTableDataSource3 extends DataSourceService<IBrewInfo> {
+export class AcmeTableDataSource3 extends DataSourceService<IBrewInfo> implements IDataSource {
     public static providerId = "AcmeTableDataSource3";
 
     private cache = Array.from<IBrewInfo>({ length: 0 });
@@ -20,6 +21,13 @@ export class AcmeTableDataSource3 extends DataSourceService<IBrewInfo> {
 
     public page: number = 1;
     public busy = new BehaviorSubject(false);
+
+    // disable column generation for this data source
+    public features = new DataSourceFeatures({
+        [WellKnownDataSourceFeatures.DisableTableColumnGeneration]: {
+            enabled: true,
+        },
+    });
 
     public dataFields: Array<IDataField> = [
         { id: "id", label: "No", dataType: "number" },

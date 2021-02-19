@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { DataSourceService, IDataField, INovaFilteringOutputs, INovaFilters, nameof } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -115,7 +115,7 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
 export class TableWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
     // Pass this to the dashboard component's gridsterConfig input in the template.
@@ -128,7 +128,8 @@ export class TableWidgetExampleComponent implements OnInit {
         // WidgetTypesService provides the widget's necessary structure information
         private widgetTypesService: WidgetTypesService,
         // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
-        private providerRegistry: ProviderRegistryService
+        private providerRegistry: ProviderRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
     ) {
     }
 
@@ -160,6 +161,15 @@ export class TableWidgetExampleComponent implements OnInit {
                 deps: [],
             },
         });
+
+        this.initializeDashboard();
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
 
         this.initializeDashboard();
     }

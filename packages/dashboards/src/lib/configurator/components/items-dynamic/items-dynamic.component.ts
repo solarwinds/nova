@@ -1,4 +1,4 @@
-import { CdkDragDrop } from "@angular/cdk/drag-drop";
+import { CdkDragDrop, CdkDragStart } from "@angular/cdk/drag-drop";
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewEncapsulation } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IEvent, LoggerService } from "@nova-ui/bits";
@@ -28,6 +28,7 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
     @Output() itemsChange = new EventEmitter();
 
     public form: FormArray;
+    public height: number;
     public headerMap: Map<string, string> = new Map<string, string>();
 
     constructor(changeDetector: ChangeDetectorRef,
@@ -140,7 +141,11 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
 
     public drop(event: CdkDragDrop<string[]>) {
         this.moveItem(event.previousIndex, event.currentIndex);
-      }
+    }
+
+    public cdkDragStarted(event: CdkDragStart): void {
+        this.height = event.source.element.nativeElement.offsetHeight;
+    }
 
     private moveFormValues(index: number, toIndex: number) {
         const oldValue = this.form.at(index);

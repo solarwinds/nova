@@ -130,6 +130,10 @@ export class RefreshRateConfiguratorComponent implements ControlValueAccessor, O
         this.cd.markForCheck();
     }
 
+    resetUnits(): void {
+        this.unitControl.setValue(this.displayedUnitItems[0]);
+    }
+
     private generateUnitItems() {
         this.possibleUnits.forEach((item, index) => {
             this.unitItems[index] = {
