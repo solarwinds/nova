@@ -140,7 +140,7 @@ describe("USERCONTROL datepicker", () => {
         const date: Moment = moment();
         date.date(day);
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.popup.getPopupBox().isPresent()).toBe(true);
+        expect(await datepickerWithPreserve.popup.isOpened()).toBe(true);
 
         await datepickerWithPreserve.selectDate(day);
         expect(await datepickerWithPreserve.getInputValue()).toEqual(datepickerWithPreserve.formatDate(date, "en-US"));

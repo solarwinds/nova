@@ -1,11 +1,14 @@
+import { OverlayConfig } from "@angular/cdk/overlay";
 import {
     AfterViewInit,
     ChangeDetectorRef,
-    Component, ElementRef,
+    Component,
+    ElementRef,
     EventEmitter,
     forwardRef,
     HostBinding,
-    Input, OnChanges,
+    Input,
+    OnChanges,
     OnDestroy,
     OnInit,
     Output,
@@ -13,7 +16,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
-import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from "@angular/forms";
+import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _defaults from "lodash/defaults";
 import _isEqual from "lodash/isEqual";
 import _isNil from "lodash/isNil";
@@ -24,8 +27,8 @@ import { debounceTime, takeUntil } from "rxjs/operators";
 
 import { NuiValidators } from "../../validators";
 import { NuiFormFieldControl } from "../form-field/public-api";
+import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-import {PopupComponent} from "../popup-adapter/popup-adapter.component";
 import { TextboxComponent } from "../textbox/textbox.component";
 
 import { DatePickerInnerComponent } from "./date-picker-inner.component";
@@ -145,7 +148,6 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
 
     @ViewChild("date") textbox: TextboxComponent;
 
-    // @ViewChild(PopupComponent) popup: PopupComponent;
     @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
@@ -153,6 +155,9 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
     public customContainer: ElementRef | undefined;
     public selectedDate: Moment;
     public initDate: Moment;
+    public overlayConfig: OverlayConfig = {
+        panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
+    };
 
     protected _value: Moment;
     protected _todayDate: Moment = moment();
@@ -189,6 +194,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
             });
         this.onAppendToBodyChange(this.appendToBody);
     }
+
     public ngOnChanges(changes: SimpleChanges) {
         if (changes.appendToBody) {
             this.onAppendToBodyChange(changes.appendToBody.currentValue);
@@ -199,19 +205,24 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         this.calendarChanged = this._datePicker.calendarMoved.subscribe((value: Moment) => this.calendarNavigated.emit(value));
         this.updateTextboxValue();
         this.cd.detectChanges();
+        if (this.overlay) {
+            this.overlay.clickOutside
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(_ => this.overlay.hide());
 
-        this.overlay.clickOutside
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(_ => this.overlay.hide());
+            // Sets innerDatePicker 'value' to 'null' on popup close and refreshView() on popup open,
+            // so in case datePicker.value is invalid it will build the calendar from the scratch
+            // and not keep its previous state.
 
-        this.overlay.show$.subscribe(_ => this._datePicker.refreshView());
-        this.overlay.hide$.subscribe(_ => {
-            const currentDateValid = moment(this.value).isValid();
+            this.overlay.show$.subscribe(_ => this._datePicker.refreshView());
+            this.overlay.hide$.subscribe(_ => {
+                const currentDateValid = moment(this.value).isValid();
                 if (!currentDateValid) {
                     this._datePicker.value = undefined;
                     this._datePicker.datepickerMode = "day";
                 }
-        });
+            });
+        }
     }
 
     public updateTouchedState() {
@@ -269,22 +280,6 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         this.isInErrorState = isInErrorState;
     }
 
-    // public onPopupOpened(isOpened: boolean) {
-    //     // Sets innerDatePicker 'value' to 'null' on popup close and refreshView() on popup open,
-    //     // so in case datePicker.value is invalid it will build the calendar from the scratch
-    //     // and not keep its previous state.
-    //
-    //     if (isOpened) {
-    //         this._datePicker.refreshView();
-    //     } else {
-    //         const currentDateValid = moment(this.value).isValid();
-    //         if (!currentDateValid) {
-    //             this._datePicker.value = undefined;
-    //             this._datePicker.datepickerMode = "day";
-    //         }
-    //     }
-    // }
-
     private updateTextboxValue(value: any = this._value) {
         if (!this.textbox || !value) { return; }
         this.textbox.writeValue(moment(value).format(this.momentDateFormat));
@@ -306,6 +301,9 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         if (this.calendarChanged) {
             this.calendarChanged.unsubscribe();
         }
+
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 
     private onAppendToBodyChange(appendToBody: boolean): void {

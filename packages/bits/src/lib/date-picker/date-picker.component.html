@@ -1,14 +1,9 @@
 <div class="nui-datepicker">
-<!--    <nui-popup *ngIf="!inline"-->
-<!--        (opened)="onPopupOpened($event)"-->
-<!--        [appendToBody]="appendToBody">-->
-    <div #toggleRef>
-        <div *ngIf="!inline"
-            nuiPopupToggle
+    <ng-container *ngIf="!inline">
+        <div #toggleRef
              class="nui-datepicker__container"
-             [disabled]="isDisabled"
              [class.disabled]="isDisabled"
-             (click)="overlay.toggle()">
+             (click)="!isDisabled && overlay.toggle()">
             <nui-textbox #date
                          autocomplete="off"
                          [disabled]="isDisabled"
@@ -22,48 +17,19 @@
                       aria-hidden="true"
                       [iconColor]="getIconColor()"></nui-icon>
         </div>
-    </div>
-<!--        <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>-->
-<!--    </nui-popup>-->
-<!--    <div *ngIf="inline"><ng-container *ngTemplateOutlet="datePickerInner"></ng-container></div>-->
-<!--</div>-->
-        <div *ngIf="inline"> <nui-date-picker-inner [preserveInsignificant]="preserveInsignificant"
-                                                    [selectedDate]="selectedDate"
-                                                    [inline]="inline"
-                                                    (update)="onUpdate($event)"
-                                                    [locale]="locale"
-                                                    [datepickerMode]="datepickerMode"
-                                                    [initDate]="initDate"
-                                                    [minDate]="minDate"
-                                                    [maxDate]="maxDate"
-                                                    [minMode]="minMode"
-                                                    [maxMode]="maxMode"
-                                                    [showWeeks]="showWeeks"
-                                                    [dateFormat]="dateFormat"
-                                                    [formatDay]="formatDay"
-                                                    [formatMonth]="formatMonth"
-                                                    [formatYear]="formatYear"
-                                                    [formatDayHeader]="formatDayHeader"
-                                                    [formatDayTitle]="formatDayTitle"
-                                                    [formatMonthTitle]="formatMonthTitle"
-                                                    [startingDay]="startingDay"
-                                                    [yearRange]="yearRange"
-                                                    [disabledDates]="disabledDates"
-                                                    [onlyCurrentMonth]="onlyCurrentMonth"
-                                                    [handleTimezone]="handleTimezone"
-                                                    [value]="value"
-        >
-            <nui-day-picker tabindex="0"></nui-day-picker>
-            <nui-month-picker tabindex="0"></nui-month-picker>
-            <nui-year-picker tabindex="0"></nui-year-picker>
-        </nui-date-picker-inner></div>
+    <nui-overlay #overlay
+                 [toggleReference]="toggleRef"
+                 [overlayConfig]="overlayConfig"
+                 [customContainer]="customContainer">
+             <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
+    </nui-overlay>
+    </ng-container>
 
-<div #popupArea></div>
+    <div *ngIf="inline"><ng-container *ngTemplateOutlet="datePickerInner"></ng-container></div>
 
-<nui-overlay #overlay
-             [toggleReference]="toggleRef"
-             [customContainer]="customContainer">
-<!--<ng-template #datePickerInner>-->
+    <div #popupArea></div>
+</div>
+<ng-template #datePickerInner>
     <nui-date-picker-inner [preserveInsignificant]="preserveInsignificant"
                            [selectedDate]="selectedDate"
                            [inline]="inline"
@@ -94,6 +60,5 @@
         <nui-month-picker tabindex="0"></nui-month-picker>
         <nui-year-picker tabindex="0"></nui-year-picker>
     </nui-date-picker-inner>
-<!--</ng-template>-->
-</nui-overlay>
-</div>
+</ng-template>
+

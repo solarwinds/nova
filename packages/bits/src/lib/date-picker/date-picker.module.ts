@@ -4,7 +4,6 @@ import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiOverlayModule } from "../overlay/overlay.module";
-import { NuiPopupModule } from "../popup/popup.module";
 import { NuiTextboxModule } from "../textbox/textbox.module";
 
 import { DayPickerComponent } from "./date-picker-day-picker.component";
@@ -21,7 +20,6 @@ import { DatePickerComponent } from "./date-picker.component";
         NuiCommonModule,
         NuiTextboxModule,
         NuiIconModule,
-        NuiPopupModule,
         NuiButtonModule,
         NuiOverlayModule,
     ],

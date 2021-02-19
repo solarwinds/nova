@@ -2,7 +2,7 @@ import moment, { Moment } from "moment/moment";
 import { by, ElementFinder, Key, protractor } from "protractor";
 
 import { Atom } from "../../atom";
-import { PopupAtom } from "../popup/popup.atom";
+import { OverlayAtom } from "../overlay/overlay.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
 
 
@@ -14,7 +14,7 @@ export class DatepickerAtom extends Atom {
     public static MONTHNAMES_LONG: string[] = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];
 
-    public popup = Atom.findIn(PopupAtom, this.getElement());
+    public popup = Atom.findIn(OverlayAtom, this.getElement());
     public textbox = Atom.findIn(TextboxAtom, this.getElement());
 
     public selectDate = async (day: number): Promise<void> => this.clickCalendarItem(day.toString());
