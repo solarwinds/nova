@@ -5,7 +5,7 @@
  *
  *****************************************************************/
 
-import { parseJson, JsonParseMode } from "@angular-devkit/core";
+import { JsonParseMode, parseJson } from "@angular-devkit/core";
 import { SchematicsException, Tree } from "@angular-devkit/schematics";
 import { WorkspaceSchema } from "@schematics/angular/utility/workspace-models";
 

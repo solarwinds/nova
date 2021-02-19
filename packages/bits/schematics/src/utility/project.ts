@@ -6,7 +6,8 @@
  *****************************************************************/
 
 import { Tree } from "@angular-devkit/schematics/src/tree/interface";
-import { WorkspaceProject, ProjectType, WorkspaceSchema } from "@schematics/angular/utility/workspace-models";
+import { ProjectType, WorkspaceProject, WorkspaceSchema } from "@schematics/angular/utility/workspace-models";
+
 import { getWorkspace } from "./workspace";
 
 export function buildDefaultPath(project: WorkspaceProject): string {

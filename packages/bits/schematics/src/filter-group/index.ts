@@ -16,6 +16,7 @@ import { applyLintFix } from "@schematics/angular/utility/lint-fix";
 import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 import { parseName } from "@schematics/angular/utility/parse-name";
 import { validateHtmlSelector, validateName } from "@schematics/angular/utility/validation";
+
 import { buildDefaultPath, getProject } from "../utility/project";
 import { buildSelector, getBrowserProjectTargets, readIntoSourceFile, updateModuleChanges } from "../utility/schematics-helper";
 
