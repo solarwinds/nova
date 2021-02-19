@@ -86,7 +86,6 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     @Input() public isInErrorState: boolean;
 
     /** Input to set aria label text */
-    private _ariaLabel: string = "";
     @Input() public get ariaLabel(): string {
         return this._ariaLabel;
     }
@@ -134,6 +133,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     protected destroy$: Subject<void> = new Subject();
     protected mouseDown: boolean;
     private _selectedOptions: SelectV2OptionComponent[] = [];
+
+    private _ariaLabel: string = "";
 
     /** Emits value which has been selected */
     @Output() public valueSelected = new EventEmitter<OptionValueType | OptionValueType[] | null>();
