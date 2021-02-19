@@ -211,12 +211,14 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         this.overlay.hide();
     }
 
-    public scrollToView(event: any) {
-        this.overlay.toggle();
+    public scrollToView() {
+        if (!this.isDisabled) {
+            this.overlay.toggle();
+        }
         const selectedItem = this.elementRef
             .nativeElement
             .getElementsByClassName("nui-menu-item--selected")[0];
-            selectedItem?.scrollIntoView({ block: "center" });
+        selectedItem?.scrollIntoView({ block: "center" });
     }
 
     public generateTimeItems(timeStep: number): Moment[] {

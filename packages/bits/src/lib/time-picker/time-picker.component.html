@@ -1,5 +1,5 @@
 <div class="nui-timepicker">
-    <div class="nui-timepicker__container" (click)="scrollToView($event)" #toggleRef>
+    <div class="nui-timepicker__container" (click)="scrollToView()" #toggleRef>
         <nui-textbox [disabled]="isDisabled"
                     autocomplete="off"
                     [class.nui-timepicker__input-disabled]="isDisabled"
@@ -19,7 +19,7 @@
 
     <div #popupArea></div>
 
-    <nui-overlay #overlay class="nui-timepicker__menu"
+    <nui-overlay #overlay
                  [toggleReference]="toggleRef"
                  [overlayConfig]="overlayConfig"
                  [customContainer]="customContainer">
