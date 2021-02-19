@@ -92,6 +92,7 @@ export class FormFieldComponent implements AfterContentInit, AfterContentChecked
                 );
         }
         if (this.nuiFormControl) {
+            // using setTimeout to prevent "expression changed after it has been checked" error
             setTimeout(() => {
                 this.nuiFormControl.ariaLabel = this.caption;
             });
