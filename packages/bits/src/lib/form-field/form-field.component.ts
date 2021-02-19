@@ -1,6 +1,6 @@
 import {
     AfterContentChecked,
-    AfterContentInit, ChangeDetectorRef,
+    AfterContentInit,
     Component,
     ContentChild,
     ContentChildren,
@@ -68,9 +68,6 @@ export class FormFieldComponent implements AfterContentInit, AfterContentChecked
 
     public controlIsOptional: boolean = false;
 
-    constructor(private cdRef: ChangeDetectorRef) {
-    }
-
     ngAfterContentChecked() {
         this.controlIsOptional = this.showOptionalText && !this.hasRequiredField(this.control);
     }
@@ -79,7 +76,7 @@ export class FormFieldComponent implements AfterContentInit, AfterContentChecked
         if (this.control) {
             merge(this.control.valueChanges, this.control.statusChanges, extractTouchedChanges(this.control))
                 .subscribe(
-                    (changes: any) => {
+                    () => {
                         this.validationMessages.forEach(message => {
                             if (_isNull(this.control.errors)) {
                                 message.show = false;
@@ -95,8 +92,9 @@ export class FormFieldComponent implements AfterContentInit, AfterContentChecked
                 );
         }
         if (this.nuiFormControl) {
-            this.nuiFormControl.ariaLabel = this.caption;
-            this.cdRef.detectChanges();
+            setTimeout(() => {
+                this.nuiFormControl.ariaLabel = this.caption;
+            });
         }
     }
 
