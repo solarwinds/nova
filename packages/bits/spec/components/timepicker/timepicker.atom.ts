@@ -1,9 +1,10 @@
 import moment from "moment/moment";
+import { by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { IconAtom } from "../icon/icon.atom";
 import { MenuPopupAtom } from "../menu-popup/menu-popup.atom";
-import { PopupAtom } from "../popup/popup.atom";
+import { OverlayAtom } from "../overlay/overlay.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
 
 export class TimepickerAtom extends Atom {
@@ -27,15 +28,17 @@ export class TimepickerAtom extends Atom {
 
     public icon = Atom.findIn(IconAtom, this.getElement());
 
-    public popup = Atom.findIn(PopupAtom, this.getElement());
+    public overlay = Atom.findIn(OverlayAtom, element(by.className("nui-timepicker__menu")));
+
+    public getToggleElement(): ElementFinder { return this.getElement().element(by.className("nui-timepicker__container")); }
 
     public selectTime = async (time: string): Promise<void> => {
-        await this.popup.open();
+        await this.getToggleElement().click();
         return this.menuPopup.clickItemByText(time);
     }
 
     public getHighlightedMenuValue = async (): Promise<string> => {
-        await this.popup.open();
+        await this.getToggleElement().click();
         return this.menuPopup.getSelectedItem().getText();
     }
 }
