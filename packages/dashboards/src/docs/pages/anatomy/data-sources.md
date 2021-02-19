@@ -51,7 +51,7 @@ Data Fields Config.
 DataFieldsConfig is a part of [IDataSource](https://ux.solarwinds.io/nova/docs/nova-bits/latest/sdk/api-docs-ng2/interfaces/IDataSource.html)
 interface that data sources usually implement. You can add it this way:
 
-<!--- TODO: Remove Partial in the vNext -->
+<!--- TODO: Remove Partial in the vNext - NUI-5838 -->
 
 ```
 @Injectable()

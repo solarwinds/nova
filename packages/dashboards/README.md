@@ -22,7 +22,7 @@ $ ng add @nova-ui/bits
 If needed, further instructions for Bits installation can be found 
 <a href="http://apollo-docs.swdev.local/nova-bits/release_nova_v9.x/sdk/api-docs-ng2/" target="_blank">here</a>.
 
-[//]: # (TODO: Update bits link above with v10)
+[//]: # (TODO: Update bits link above with v10 -  NUI-5832)
 
 #### Installing NodeJS and npm
 To check your version of NodeJS, run node -v in a terminal/console window.
@@ -95,7 +95,7 @@ addition to the styles source paths:
 }
 ```
 
-[//]: # (TODO: Update links with v10)
+[//]: # (TODO: Update links with v10 - NUI-5832)
 ## Start Implementing Your Dashboards
 An **overview** of Nova Dashboards is available 
 <a href="http://apollo-docs.swdev.local/nova-dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/overview.html">here</a>,

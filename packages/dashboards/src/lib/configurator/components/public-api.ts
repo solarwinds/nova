@@ -22,3 +22,4 @@ export * from "./widget-configurator-section/widget-configurator-section.compone
 export * from "./widget-editor/widget-editor.component";
 export * from "./widget-editor-accordion/widget-editor-accordion.component";
 export * from "./color-picker/color-picker.component";
+export * from "./drop-area/drop-area.component";

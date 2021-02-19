@@ -222,6 +222,9 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     }
 
     // TODO: remove in vNext. Needs only for backward compatibility
+    /**
+     * @deprecated - remove in v12. Needs only for backward compatibility - Removal: NUI-5837
+     */
     public onPageSizeChange(value: InputValueTypes): void {
         this.setItemsPerPage({
             oldValue: 0,
@@ -229,7 +232,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         });
     }
 
-    // TODO: refactor in vNext. Replace ISelectChangedEvent to InputValueTypes
+    // TODO: refactor in vNext. Replace ISelectChangedEvent to InputValueTypes - NUI-5837
     /**
      * Set items per page that should displayed
      * @param changedEvent select change event

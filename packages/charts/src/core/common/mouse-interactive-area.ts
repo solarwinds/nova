@@ -110,13 +110,13 @@ export class MouseInteractiveArea<TTarget extends D3Selection<SVGGElement> = D3S
         this.active.next(false);
     }
 
-    // Remove in v10
+    // Remove in v10 - NUI-5827
     /** @deprecated - Please use 'onMouseOver' instead */
     public onMouseEnter = () => {
         this.onMouseOver();
     }
 
-    // Remove in v10
+    // Remove in v10 - NUI-5827
     /** @deprecated - Please use 'onMouseOut' instead */
     public onMouseLeave = () => {
         this.onMouseOut();

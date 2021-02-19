@@ -184,7 +184,7 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
 
     /**
      * @deprecated use resetVisibleSeries instead
-     * TODO: Remove in V10
+     * TODO: Remove in V10 - NUI-5826
      */
     public deemphasizeSeries(): void {
         this.resetVisibleSeries();
