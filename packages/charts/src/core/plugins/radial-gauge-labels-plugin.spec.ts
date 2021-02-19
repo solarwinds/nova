@@ -10,12 +10,12 @@ import { RadialRenderer } from "../../renderers/radial/radial-renderer";
 import { Chart } from "../chart";
 import { D3Selection, IChartAssistSeries } from "../common/types";
 
-import { RadialGaugeThresholdLabelsPlugin } from "./radial-gauge-threshold-labels-plugin";
+import { RadialGaugeLabelsPlugin } from "./radial-gauge-labels-plugin";
 
 describe("RadialGaugeThresholdLabelsPlugin >", () => {
 
     let chart: Chart;
-    let plugin: RadialGaugeThresholdLabelsPlugin;
+    let plugin: RadialGaugeLabelsPlugin;
     let labelsGroup: D3Selection;
     let labels: D3Selection;
     const gaugeService = new GaugeService();
@@ -26,7 +26,7 @@ describe("RadialGaugeThresholdLabelsPlugin >", () => {
 
     beforeEach(() => {
         chart = new Chart(radialGrid());
-        plugin = new RadialGaugeThresholdLabelsPlugin();
+        plugin = new RadialGaugeLabelsPlugin();
         chart.addPlugin(plugin);
 
         const { accessors, scales } = gaugeService.getGaugeAttributes(GaugeMode.Radial);
@@ -35,13 +35,13 @@ describe("RadialGaugeThresholdLabelsPlugin >", () => {
         dataSeries = gaugeService.generateThresholdSeries(5, 10, thresholds, accessors as RadialAccessors, scales);
         chart.update([dataSeries]);
         chart.updateDimensions();
-        labelsGroup = plugin.chart.getGrid().getLasagna().getLayerContainer(RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS).select(`.${RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS}`);
+        labelsGroup = plugin.chart.getGrid().getLasagna().getLayerContainer(RadialGaugeLabelsPlugin.CONTAINER_CLASS).select(`.${RadialGaugeLabelsPlugin.CONTAINER_CLASS}`);
         labels = labelsGroup.selectAll("text");
 
         const renderer = dataSeries.renderer as RadialRenderer;
         const labelRadius = renderer?.getOuterRadius(dataSeries.scales.r.range() ?? [0, 0], 0) + (plugin.config.labelPadding as number);
         labelGenerator = arc().outerRadius(labelRadius).innerRadius(labelRadius);
-        labelData = GaugeRenderingUtils.generateThresholdData(dataSeries.data);
+        labelData = GaugeRenderingUtils.generateRadialThresholdData(dataSeries.data);
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {

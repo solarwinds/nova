@@ -12,8 +12,9 @@ import {
     IGaugeThreshold,
     IRadialRendererConfig,
     radial,
-    RadialGaugeThresholdLabelsPlugin,
-    radialGrid
+    RadialGaugeLabelsPlugin,
+    radialGrid,
+    IRadialGaugeLabelsPluginConfig
 } from "@nova-ui/charts";
 
 @Component({
@@ -47,10 +48,10 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
         this.chartAssist = new ChartAssist(new Chart(grid), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
-        const labelConfig = {
+        const labelConfig: IRadialGaugeLabelsPluginConfig = {
             gridMargin: { top: 40, right: 40, bottom: 40, left: 40 },
         };
-        this.chartAssist.chart.addPlugin(new RadialGaugeThresholdLabelsPlugin(labelConfig));
+        this.chartAssist.chart.addPlugin(new RadialGaugeLabelsPlugin(labelConfig));
 
         this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
         this.seriesSet = this.gaugeService.setThresholdLabelFormatter((d: string) => `${d}MS`, this.seriesSet);
