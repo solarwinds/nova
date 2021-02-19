@@ -43,6 +43,7 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
         barClass: "bar-outline",
         highlightStrategy: undefined,
         pointerEvents: true,
+        enableMinBarThickness: true,
     };
 
     public readonly barContainerClass = "bar-container";
@@ -239,7 +240,9 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
                 thickness -= this.config.padding * 2;
             }
 
-            thickness = Math.max(thickness, BarRenderer.MIN_BAR_THICKNESS);
+            if (this.config.enableMinBarThickness) {
+                thickness = Math.max(thickness, BarRenderer.MIN_BAR_THICKNESS);
+            }
         }
         return {start, thickness};
     }

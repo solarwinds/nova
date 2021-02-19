@@ -1,10 +1,11 @@
 import { Injectable } from "@angular/core";
+import { Renderer } from "@nova-ui/charts";
 import isUndefined from "lodash/isUndefined";
+import { LinearGaugeThresholdsRenderer } from "../renderers/radial/linear-gauge-thresholds-renderer";
 
 import { CHART_PALETTE_CS1 } from "../core/common/palette/palettes";
 import { Formatter, IRadialScales, Scales } from "../core/common/scales/types";
 import { DataAccessor, IAccessors, IChartAssistSeries, IChartSeries, IDataSeries } from "../core/common/types";
-import { RadialGaugeThresholdLabelsPlugin } from "../core/plugins/radial-gauge-threshold-labels-plugin";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
 import { VerticalBarAccessors } from "../renderers/bar/accessors/vertical-bar-accessors";
 import { BarRenderer } from "../renderers/bar/bar-renderer";
@@ -17,6 +18,7 @@ import { radialScales } from "../renderers/radial/radial-scales";
 
 import { GaugeMode } from "./constants";
 import { IGaugeAttributes, IGaugeThreshold, IGaugeThresholdMarker, IGaugeTools } from "./types";
+import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
 
 /**
  * @ignore
@@ -35,26 +37,23 @@ export class GaugeService {
                              thresholds: IGaugeThreshold[],
                              mode: GaugeMode,
                              valueColorAccessor?: DataAccessor): IChartAssistSeries<IAccessors>[] {
-        const initialValue = value ?? 0;
-        const initialMax = max ?? 0;
-        const { accessors, scales, renderer } = this.getGaugeAttributes(mode);
+        value = value ?? 0;
+        max = max ?? 0;
+        const { accessors, scales, mainRenderer, thresholdsRenderer } = this.getGaugeAttributes(mode);
         if (accessors.data) {
             accessors.data.color = valueColorAccessor || this.createDefaultValueColorAccessor(thresholds);
         }
 
         const chartAssistSeries: IChartAssistSeries<IAccessors>[] = [
-            ...this.getGaugeData(initialValue, initialMax).map(s => ({
+            ...this.getGaugeData(value, max).map(s => ({
                 ...s,
                 accessors,
                 scales,
-                renderer,
+                renderer: mainRenderer,
             })),
         ];
 
-        // TODO: generate threshold series for linear modes
-        if (mode === GaugeMode.Radial) {
-            chartAssistSeries.push(this.generateThresholdSeries(initialValue, initialMax, thresholds, accessors as RadialAccessors, scales));
-        }
+        chartAssistSeries.push(this.generateThresholdSeries(value, max, thresholds, accessors, scales, thresholdsRenderer));
 
         return chartAssistSeries;
     }
@@ -84,14 +83,15 @@ export class GaugeService {
     public generateThresholdSeries(value: number,
                                    max: number,
                                    thresholds: IGaugeThreshold[],
-                                   accessors: RadialAccessors,
-                                   scales: IRadialScales | Scales): IChartAssistSeries<RadialAccessors> {
+                                   accessors: IAccessors,
+                                   scales: IRadialScales | Scales,
+                                   thresholdsRenderer: Renderer<IAccessors>): IChartAssistSeries<IAccessors> {
         return {
             id: GaugeService.THRESHOLD_MARKERS_SERIES_ID,
             data: this.getThresholdMarkerPoints(thresholds, value, max),
             accessors,
             scales,
-            renderer: new RadialGaugeThresholdsRenderer(),
+            renderer: thresholdsRenderer,
             excludeFromArcCalculation: true,
             preprocess: false,
         };
@@ -99,7 +99,7 @@ export class GaugeService {
 
     public setThresholdLabelFormatter(formatter: Formatter<string>,
                                       seriesSet: IChartAssistSeries<IAccessors>[],
-                                      formatterName = RadialGaugeThresholdLabelsPlugin.FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
+                                      formatterName = GAUGE_LABEL_FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
         const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof RadialGaugeThresholdsRenderer);
         if (thresholdsSeries) {
             thresholdsSeries.scales.r.formatters[formatterName] = formatter;
@@ -111,7 +111,8 @@ export class GaugeService {
         const t: IGaugeTools = this.getGaugeTools(mode);
         const result: IGaugeAttributes = {
             accessors: t.accessorFunction(),
-            renderer: t.rendererFunction(),
+            mainRenderer: t.mainRendererFunction(),
+            thresholdsRenderer: t.thresholdsRendererFunction(),
             scales: t.scaleFunction(),
         };
 
@@ -123,23 +124,26 @@ export class GaugeService {
             const renderer = new BarRenderer();
             renderer.config.padding = 0;
             renderer.config.strokeWidth = 0;
+            renderer.config.enableMinBarThickness = false;
             return renderer;
         };
 
         const chartTools: Record<GaugeMode, IGaugeTools> = {
             [GaugeMode.Radial]: {
-                rendererFunction: () => new RadialRenderer(radialGaugeRendererConfig()),
+                mainRendererFunction: () => new RadialRenderer(radialGaugeRendererConfig()),
+                thresholdsRendererFunction: () => new RadialGaugeThresholdsRenderer(),
                 accessorFunction: () => new RadialAccessors(),
                 scaleFunction: () => radialScales(),
             },
             [GaugeMode.Horizontal]: {
-                rendererFunction: barRendererFunction,
+                mainRendererFunction: barRendererFunction,
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
                 accessorFunction: () => new HorizontalBarAccessors(),
                 scaleFunction: () => barScales({ horizontal: true }),
             },
             [GaugeMode.Vertical]: {
-                // TODO
-                rendererFunction: barRendererFunction,
+                mainRendererFunction: barRendererFunction,
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
                 accessorFunction: () => new VerticalBarAccessors(),
                 scaleFunction: () => barScales(),
             },
@@ -174,10 +178,11 @@ export class GaugeService {
 
     public getThresholdMarkerPoints(thresholds: IGaugeThreshold[], value: number, max: number): IGaugeThresholdMarker[] {
         const markerValues = thresholds.map(threshold => ({
+            category: "gauge",
             hit: threshold.value <= value,
             value: threshold.value,
         }));
 
-        return [...markerValues, { value: max }];
+        return [...markerValues, { category: "gauge", value: max }];
     }
 }

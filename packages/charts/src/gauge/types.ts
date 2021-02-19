@@ -28,7 +28,8 @@ export interface IGaugeThresholdMarker extends IGaugeThreshold {
 export interface IGaugeAttributes {
     accessors: IAccessors;
     scales: Scales;
-    renderer: Renderer<IAccessors>;
+    mainRenderer: Renderer<IAccessors>;
+    thresholdsRenderer: Renderer<IAccessors>;
 }
 
 /**
@@ -40,6 +41,8 @@ export interface IGaugeTools {
     accessorFunction: () => IAccessors;
     /** Function for creating scales */
     scaleFunction: () => Scales | IRadialScales;
-    /** Function for creating a renderer */
-    rendererFunction: () => Renderer<IAccessors>;
+    /** Function for creating a main renderer */
+    mainRendererFunction: () => Renderer<IAccessors>;
+    /** Function for creating a thresholds renderer */
+    thresholdsRendererFunction: () => Renderer<IAccessors>;
 }

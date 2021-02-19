@@ -4,13 +4,14 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT, STANDARD_RENDER_LAYERS } from "../../constants";
-import { GaugeRenderingUtils } from "../../renderers/radial/gauge-rendering-utils";
-import { RadialGaugeThresholdsRenderer } from "../../renderers/radial/radial-gauge-thresholds-renderer";
-import { RenderLayerName } from "../../renderers/types";
-import { ChartPlugin } from "../common/chart-plugin";
-import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../common/types";
-import { IAllAround } from "../grid/types";
+import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT, STANDARD_RENDER_LAYERS } from "../../../constants";
+import { GaugeRenderingUtils } from "../../../renderers/radial/gauge-rendering-utils";
+import { RadialGaugeThresholdsRenderer } from "../../../renderers/radial/radial-gauge-thresholds-renderer";
+import { RenderLayerName } from "../../../renderers/types";
+import { ChartPlugin } from "../../common/chart-plugin";
+import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../../common/types";
+import { IAllAround } from "../../grid/types";
+import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "./constants";
 
 /**
  * @ignore
@@ -31,9 +32,7 @@ export interface IRadialGaugeLabelsPluginConfig {
  * A chart plugin that handles the rendering of labels for radial gauge thresholds
  */
 export class RadialGaugeLabelsPlugin extends ChartPlugin {
-    public static readonly CONTAINER_CLASS = "gauge-labels";
     public static readonly THRESHOLD_LABEL_CLASS = "threshold-label";
-    public static readonly FORMATTER_NAME_DEFAULT = "threshold-label";
     public static readonly MARGIN_DEFAULT = 25;
 
     /** The default plugin configuration */
@@ -45,7 +44,7 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
             left: RadialGaugeLabelsPlugin.MARGIN_DEFAULT,
         },
         labelPadding: 5,
-        formatterName: RadialGaugeLabelsPlugin.FORMATTER_NAME_DEFAULT,
+        formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
         enableThresholdLabels: true,
     };
 
@@ -59,7 +58,7 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
 
     public initialize(): void {
         this.lasagnaLayer = this.chart.getGrid().getLasagna().addLayer({
-            name: RadialGaugeLabelsPlugin.CONTAINER_CLASS,
+            name: GAUGE_LABELS_CONTAINER_CLASS,
             order: STANDARD_RENDER_LAYERS[RenderLayerName.data].order,
             clipped: false,
         });
@@ -70,7 +69,7 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
         this.chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT as string).pipe(
             takeUntil(this.destroy$)
         ).subscribe((event: IChartEvent) => {
-            const gaugeThresholdLabelsGroup = this.lasagnaLayer.select(`.${RadialGaugeLabelsPlugin.CONTAINER_CLASS}`);
+            const gaugeThresholdLabelsGroup = this.lasagnaLayer.select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);
             if (!gaugeThresholdLabelsGroup.empty()) {
                 const dataPoints = event.data.dataPoints;
                 const labelOpacity = Object.keys(dataPoints).find((key, index) => dataPoints[key].index === DATA_POINT_NOT_FOUND) ? 0 : 1;
@@ -105,10 +104,10 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
             throw new Error("Gauge threshold series data is undefined");
         }
 
-        let gaugeThresholdsLabelsGroup = this.lasagnaLayer.select(`.${RadialGaugeLabelsPlugin.CONTAINER_CLASS}`);
+        let gaugeThresholdsLabelsGroup = this.lasagnaLayer.select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);
         if (gaugeThresholdsLabelsGroup.empty()) {
             gaugeThresholdsLabelsGroup = this.lasagnaLayer.append("svg:g")
-                .attr("class", RadialGaugeLabelsPlugin.CONTAINER_CLASS)
+                .attr("class", GAUGE_LABELS_CONTAINER_CLASS)
                 .style("opacity", 0);
         }
 

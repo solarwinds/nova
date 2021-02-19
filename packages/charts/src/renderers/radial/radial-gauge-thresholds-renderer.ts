@@ -44,7 +44,7 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
         const markerSelection = dataContainer.selectAll(`circle.${RadialGaugeThresholdsRenderer.MARKER_CLASS}`)
-            .data(GaugeRenderingUtils.generateThresholdData(data));
+            .data(GaugeRenderingUtils.generateRadialThresholdData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")
@@ -53,7 +53,7 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .attr("cx", d => markerGenerator.centroid(d)[0])
             .attr("cy", d => markerGenerator.centroid(d)[1])
             .attr("r", 4)
-            .style("fill", (d, i) => data[i].hit ? "var(--nui-color-text-light)" : "var(--nui-color-text-default)")
+            .style("fill", (d, i) => data[i].hit ? "var(--nui-color-text-light)" : "var(--nui-color-icon-default)")
             .style("stroke-width", 0);
     }
 

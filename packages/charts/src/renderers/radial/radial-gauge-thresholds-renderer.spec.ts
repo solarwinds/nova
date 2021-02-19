@@ -50,7 +50,7 @@ describe("RadialGaugeThresholdsRenderer >", () => {
             arcGenerator = arc()
                 .outerRadius(renderer.getOuterRadius(renderSeries.scales.r.range(), 0))
                 .innerRadius(innerRadius >= 0 ? innerRadius : 0);
-            markerData = GaugeRenderingUtils.generateThresholdData(renderSeries.dataSeries.data);
+            markerData = GaugeRenderingUtils.generateRadialThresholdData(renderSeries.dataSeries.data);
         });
 
         it("should render the correct number of threshold markers", () => {
