@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiIconModule } from "../icon/icon.module";
+import { NuiOverlayModule } from "../overlay/overlay.module";
 import { NuiPopupModule } from "../popup/popup.module";
 import { NuiTextboxModule } from "../textbox/textbox.module";
 
@@ -22,6 +23,7 @@ import { DatePickerComponent } from "./date-picker.component";
         NuiIconModule,
         NuiPopupModule,
         NuiButtonModule,
+        NuiOverlayModule,
     ],
     declarations: [
         YearPickerComponent,

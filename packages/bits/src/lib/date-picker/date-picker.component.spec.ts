@@ -31,6 +31,7 @@ import { DomUtilService } from "../../services/dom-util.service";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { LoggerService } from "../../services/log-service";
 import { UtilService } from "../../services/util.service";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { NuiOverlayModule } from "../overlay/overlay.module";
 import { PopoverComponent } from "../popover/popover.component";
 import { ValidationMessageComponent } from "../validation-message/validation-message.component";
@@ -61,6 +62,7 @@ describe("components >", () => {
                     YearPickerComponent,
                     IconComponent,
                     PopupComponent,
+                    OverlayComponent,
                     PopupToggleDirective,
                     TextboxComponent,
                     SpinnerComponent,
@@ -89,14 +91,14 @@ describe("components >", () => {
         it("should contain nui-popup when not inline option", () => {
             componentInstance.inline = false;
             fixture.detectChanges();
-            const popupExists = debugElement.queryAll(By.css("nui-popup")).length > 0;
+            const popupExists = debugElement.queryAll(By.css("nui-overlay")).length > 0;
             expect(popupExists).toBeTruthy();
         });
 
         it("should NOT contain nui-popup when inline option is set", () => {
             componentInstance.inline = true;
             fixture.detectChanges();
-            const noPopup = debugElement.queryAll(By.css("nui-popup")).length === 0;
+            const noPopup = debugElement.queryAll(By.css("nui-overlay")).length === 0;
             expect(noPopup).toBeTruthy();
         });
 
@@ -104,7 +106,8 @@ describe("components >", () => {
             componentInstance.datepickerMode = "year";
             componentInstance.yearRange = 10;
             fixture.detectChanges();
-            componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
+            // componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.overlay.toggle();
             fixture.detectChanges();
             const numberOfYearTiles = debugElement.queryAll(By.css("table .year")).length;
             expect(numberOfYearTiles).toBe(10);
@@ -114,7 +117,8 @@ describe("components >", () => {
         xit("should load with selected date being today", () => {
             const activeDate = moment();
             componentInstance.writeValue(activeDate);
-            componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
+            // componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.overlay.toggle();
             fixture.detectChanges();
             const activeDateTile = debugElement.query(By.css("table button.selected"));
             const activeDateValue = activeDateTile.nativeElement.innerText.trim();
@@ -148,7 +152,8 @@ describe("components >", () => {
             componentInstance.value = moment("");
             fixture.detectChanges();
             // componentInstance._datePicker.value = moment(null);
-            componentInstance.onPopupOpened(false);
+            // need be fixed
+            // componentInstance.onPopupOpened(false);
             expect(componentInstance._datePicker.value).toBeUndefined();
         });
 

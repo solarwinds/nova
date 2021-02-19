@@ -1,14 +1,15 @@
 import {
     AfterViewInit,
     ChangeDetectorRef,
-    Component,
+    Component, ElementRef,
     EventEmitter,
     forwardRef,
     HostBinding,
-    Input,
+    Input, OnChanges,
     OnDestroy,
     OnInit,
     Output,
+    SimpleChanges,
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
@@ -18,16 +19,17 @@ import _isEqual from "lodash/isEqual";
 import _isNil from "lodash/isNil";
 import _isNull from "lodash/isNull";
 import moment, {Moment} from "moment/moment";
-import {Subject, Subscription} from "rxjs";
-import {debounceTime} from "rxjs/operators";
+import { Subject, Subscription } from "rxjs";
+import { debounceTime, takeUntil } from "rxjs/operators";
 
-import {NuiValidators} from "../../validators";
-import {NuiFormFieldControl} from "../form-field/public-api";
+import { NuiValidators } from "../../validators";
+import { NuiFormFieldControl } from "../form-field/public-api";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import {PopupComponent} from "../popup-adapter/popup-adapter.component";
-import {TextboxComponent} from "../textbox/textbox.component";
+import { TextboxComponent } from "../textbox/textbox.component";
 
-import {DatePickerInnerComponent} from "./date-picker-inner.component";
-import {datePickerDateFormats, datePickerDefaults, IDatePickerDisabledDate} from "./public-api";
+import { DatePickerInnerComponent } from "./date-picker-inner.component";
+import { datePickerDateFormats, datePickerDefaults, IDatePickerDisabledDate } from "./public-api";
 
 // <example-url>./../examples/index.html#/date-picker</example-url><br />
 @Component({
@@ -53,7 +55,7 @@ import {datePickerDateFormats, datePickerDefaults, IDatePickerDisabledDate} from
     styleUrls: ["./date-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class DatePickerComponent implements OnInit, ControlValueAccessor, NuiFormFieldControl, AfterViewInit, OnDestroy {
+export class DatePickerComponent implements OnChanges, OnInit, ControlValueAccessor, NuiFormFieldControl, AfterViewInit, OnDestroy {
     /** sets date-picker inline mode */
     @HostBinding("class.nui-datepicker--inline")
     @Input() inline: boolean;
@@ -143,8 +145,12 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor, NuiFor
 
     @ViewChild("date") textbox: TextboxComponent;
 
-    @ViewChild(PopupComponent) popup: PopupComponent;
+    // @ViewChild(PopupComponent) popup: PopupComponent;
+    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
+    public onDestroy$ = new Subject<void>();
+    public customContainer: ElementRef | undefined;
     public selectedDate: Moment;
     public initDate: Moment;
 
@@ -181,12 +187,31 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor, NuiFor
 
                 if (this.value.isValid() && !_isEqual(this.value.format(this.momentDateFormat), value)) { this.updateTextboxValue(); }
             });
+        this.onAppendToBodyChange(this.appendToBody);
+    }
+    public ngOnChanges(changes: SimpleChanges) {
+        if (changes.appendToBody) {
+            this.onAppendToBodyChange(changes.appendToBody.currentValue);
+        }
     }
 
     ngAfterViewInit() {
         this.calendarChanged = this._datePicker.calendarMoved.subscribe((value: Moment) => this.calendarNavigated.emit(value));
         this.updateTextboxValue();
         this.cd.detectChanges();
+
+        this.overlay.clickOutside
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(_ => this.overlay.hide());
+
+        this.overlay.show$.subscribe(_ => this._datePicker.refreshView());
+        this.overlay.hide$.subscribe(_ => {
+            const currentDateValid = moment(this.value).isValid();
+                if (!currentDateValid) {
+                    this._datePicker.value = undefined;
+                    this._datePicker.datepickerMode = "day";
+                }
+        });
     }
 
     public updateTouchedState() {
@@ -244,21 +269,21 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor, NuiFor
         this.isInErrorState = isInErrorState;
     }
 
-    public onPopupOpened(isOpened: boolean) {
-        // Sets innerDatePicker 'value' to 'null' on popup close and refreshView() on popup open,
-        // so in case datePicker.value is invalid it will build the calendar from the scratch
-        // and not keep its previous state.
-
-        if (isOpened) {
-            this._datePicker.refreshView();
-        } else {
-            const currentDateValid = moment(this.value).isValid();
-            if (!currentDateValid) {
-                this._datePicker.value = undefined;
-                this._datePicker.datepickerMode = "day";
-            }
-        }
-    }
+    // public onPopupOpened(isOpened: boolean) {
+    //     // Sets innerDatePicker 'value' to 'null' on popup close and refreshView() on popup open,
+    //     // so in case datePicker.value is invalid it will build the calendar from the scratch
+    //     // and not keep its previous state.
+    //
+    //     if (isOpened) {
+    //         this._datePicker.refreshView();
+    //     } else {
+    //         const currentDateValid = moment(this.value).isValid();
+    //         if (!currentDateValid) {
+    //             this._datePicker.value = undefined;
+    //             this._datePicker.datepickerMode = "day";
+    //         }
+    //     }
+    // }
 
     private updateTextboxValue(value: any = this._value) {
         if (!this.textbox || !value) { return; }
@@ -281,5 +306,9 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor, NuiFor
         if (this.calendarChanged) {
             this.calendarChanged.unsubscribe();
         }
+    }
+
+    private onAppendToBodyChange(appendToBody: boolean): void {
+        this.customContainer = appendToBody ? undefined : this.popupArea;
     }
 }
