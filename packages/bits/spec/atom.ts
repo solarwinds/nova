@@ -96,6 +96,10 @@ export class Atom {
 
     private element: ElementFinder;
 
+    public async isDisabled(): Promise<boolean> {
+        return !(await this.element.isEnabled());
+    }
+
     public async isDisplayed(): Promise<boolean> {
         return this.element.isDisplayed();
     }
