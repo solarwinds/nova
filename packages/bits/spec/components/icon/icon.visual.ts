@@ -1,18 +1,19 @@
-import { browser } from "protractor";
+import { percySnapshot } from "@percy/protractor";
+import fs from "fs";
+import { browser, by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { IconAtom } from "../icon/icon.atom";
 
-describe("Visual tests: Icon", () => {
+const name: string = "Icon";
+
+fdescribe("Visual tests: Icon", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any,
-        // TODO Will fix in NUI-4891
-        regionSize: any,
+    let regionSize: any,
         iconBasic: IconAtom;
 
     beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("icon/icon-visual-test");
 
         regionSize = {left: 0, top: 0, width: 230, height: 150};
@@ -20,22 +21,23 @@ describe("Visual tests: Icon", () => {
     });
 
     afterAll(async () => {
-        await eyes.abortIfNotClosed();
     });
 
     it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Icon");
-        await eyes.checkWindow("All icons");
         await iconBasic.hover();
+        await percySnapshot(`All ${name}s`);
         /**
          * "Any" is used here because of a mistake in typings delivered by Applitools (checkRegion() method parameters
          * are declared in different and incorrect order).
          */
-        await eyes.checkRegion(regionSize, "Icon is hovered" as any);
+        // const el1: ElementFinder = element(by.tagName("body"));
+        // const png = await (iconBasic.getElement()).takeScreenshot();
+        // fs.writeFileSync("./spec/icon.png", png, {encoding: "base64"});
+        // await percySnapshot(`${name} is hovered`);
+        // await eyes.checkRegion(regionSize, "Icon is hovered" as any);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await percySnapshot(`The ${name} Dark Theme Look`);
 
-        await eyes.close();
     }, 100000);
 });

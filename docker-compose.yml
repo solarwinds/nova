@@ -12,6 +12,7 @@ services:
       - CIRCLE_USERNAME
       - CIRCLE_SHA1
       - CIRCLE_JOB
+      - PERCY_TOKEN
       - TEAMCITY_VERSION
       - PACKAGE_VERSION
       - PACKAGE_NAME

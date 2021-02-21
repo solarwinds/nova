@@ -1,12 +1,13 @@
-import { browser, by, element, ElementFinder } from "protractor";
+import { percySnapshot } from "@percy/protractor";
+import fs from "fs";
+import { $, browser, by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { PanelAtom } from "../panel/panel.atom";
 
-describe("Visual tests: Panel", () => {
+fdescribe("Visual tests: Panel", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
     let closablePanel: PanelAtom;
     let collapsiblePanel: PanelAtom;
     let customStylesPanel: PanelAtom;
@@ -17,7 +18,6 @@ describe("Visual tests: Panel", () => {
     let expanders: {[key: string]: ElementFinder};
 
     beforeEach(async (done) => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("panel/panel-visual-test");
 
         collapsiblePanel = Atom.find(PanelAtom, "nui-visual-test-embedded-content-panel");
@@ -44,46 +44,58 @@ describe("Visual tests: Panel", () => {
     });
 
     afterAll(async (done) => {
-        await eyes.abortIfNotClosed();
         done();
     }, 1000);
 
     it("Default look", async (done) => {
-        await eyes.open(browser, "NUI", "Panel");
+        for (const key of Object.keys(expanders)) { await expanders[key].click(); }
+        const window: number = (await browser.manage().window().getSize()).height;
+        // const window: number = await browser.executeScript("window.outerHeight");
+        // const body: number = await browser.executeScript("document.body.scrollHeight");
+        const body: number = (await $("body").getSize()).height;
+
+        // console.log(">>> window", window);
+        // console.log(">>> body", body);
 
         // First we expand all expanders to check the default state of all panel cases
-        for (const key of Object.keys(expanders)) { await expanders[key].click(); }
-        await eyes.checkWindow("Basic view with hover on top orienter arrow button");
+        await browser.manage().window().setSize(1920, body);
+        // console.log(">>> window 2", (await browser.manage().window().getSize()).height);
+        await percySnapshot(`The panel full page`);
 
-        await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
-        await Helpers.switchDarkTheme("off");
+        // const png = await $("body").takeScreenshot(true);
+        
+        // fs.writeFileSync("./spec/panel.png", png, {encoding: "base64"});
 
-        // Then we close fist four expanders to hide examples we don't need for the test
-        // This is done to reduce the amount of information on the screenshot and therefore
-        // reduce it's size.
-        await expanders.detailsBasicPanel.click();
-        await expanders.detailsCustomSizes.click();
-        await expanders.detailsHoverable.click();
-        await expanders.detailsClosable.click();
+        await browser.manage().window().setSize(1920, window);
 
-        // Toggling outer panel, because its style previously overwritten styles of inner panel
-        await nestedPanelOuter.toggleExpanded();
-        await collapsiblePanel.toggleExpanded();
-        await customStylesPanel.toggleExpanded();
-        await resizablePanel.toggleExpanded();
-        await topOrientedPanel.toggleExpanded();
-        await resizablePanel.getToggleIcon().hover();
-        await eyes.checkWindow("Expandable panes can be collapsed");
+        // await Helpers.switchDarkTheme("on");
+        // await eyes.checkWindow("Dark theme");
+        // await Helpers.switchDarkTheme("off");
 
-        // This closes last 4 examples that are already tested and expand ones closed in previous test
-        for (const key of Object.keys(expanders)) { await expanders[key].click(); }
+        // // Then we close fist four expanders to hide examples we don't need for the test
+        // // This is done to reduce the amount of information on the screenshot and therefore
+        // // reduce it's size.
+        // await expanders.detailsBasicPanel.click();
+        // await expanders.detailsCustomSizes.click();
+        // await expanders.detailsHoverable.click();
+        // await expanders.detailsClosable.click();
 
-        await closablePanel.closeSidePane();
-        await hoverablePanel.hoverOnSidePane();
-        await eyes.checkWindow("Closable paned can be closed. Hoverable panel can be hovered");
+        // // Toggling outer panel, because its style previously overwritten styles of inner panel
+        // await nestedPanelOuter.toggleExpanded();
+        // await collapsiblePanel.toggleExpanded();
+        // await customStylesPanel.toggleExpanded();
+        // await resizablePanel.toggleExpanded();
+        // await topOrientedPanel.toggleExpanded();
+        // await resizablePanel.getToggleIcon().hover();
+        // await eyes.checkWindow("Expandable panes can be collapsed");
 
-        await eyes.close();
+        // // This closes last 4 examples that are already tested and expand ones closed in previous test
+        // for (const key of Object.keys(expanders)) { await expanders[key].click(); }
+
+        // await closablePanel.closeSidePane();
+        // await hoverablePanel.hoverOnSidePane();
+        // await eyes.checkWindow("Closable paned can be closed. Hoverable panel can be hovered");
+
         done();
     }, 300000);
 });
