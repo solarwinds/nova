@@ -474,9 +474,9 @@ workflows:
     nova:
         jobs:
             - bits-build
-            -   bits-pack:
-                    requires:
-                        - bits-build
+            # -   bits-pack:
+            #         requires:
+            #             - bits-build
             # -   bits-unit-test:
             #         requires:
             #             - bits-build
