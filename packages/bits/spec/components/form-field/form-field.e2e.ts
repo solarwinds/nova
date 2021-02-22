@@ -165,14 +165,13 @@ describe("USERCONTROL form-field >", () => {
         expect(await datepicker.popup.isOpened()).toBeFalsy();
         expect(await radioGroup.getNumberOfDisabledItems()).toBe(1);
         expect(await checkbox.isDisabled()).toBeTruthy();
-        expect(await checkboxGroup.isDisplayed()).toBeTruthy();
+        expect(await checkboxGroup.isDisabled()).toBeTruthy();
         expect(await select.isSelectDisabled()).toBeTruthy();
         expect(await combobox.isSelectDisabled()).toBeTruthy();
         expect(await switchElement.disabled()).toBeTruthy();
         expect(await timepicker.textbox.disabled()).toBeTruthy();
         await timepicker.popup.getPopupToggle().click();
         expect(await timepicker.popup.isOpened()).toBeFalsy();
-        expect(await checkbox.isDisabled()).toBeTruthy();
         expect(await dateTimepicker.isDisabled()).toBeTruthy();
     });
 
