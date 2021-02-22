@@ -124,6 +124,7 @@ jobs:
                     name: Visual tests
                     command: |
                       export PERCY_BRANCH=$CIRCLE_BRANCH
+                      export PERCY_COMMIT=$CIRCLE_SHA1
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
