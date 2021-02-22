@@ -43,7 +43,7 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
         delete this._components?.[componentKey];
     }
 
-    public async abstract getFilteredData(filters: F): Promise<IFilteringOutputs>;
+    public abstract getFilteredData(filters: F): Promise<IFilteringOutputs>;
 
     public connect(collectionViewer: CollectionViewer): Observable<T[] | ReadonlyArray<T>> {
         return this.dataSubject.asObservable();

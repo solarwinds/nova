@@ -7,7 +7,8 @@ import {
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";
 import { MenuPopupAtom } from "../menu-popup/menu-popup.atom";
-import { PopupAtom } from "../popup/popup.atom";
+import { OverlayAtom } from "../overlay/overlay.atom";
+
 
 
 export class SorterAtom extends Atom {
@@ -60,7 +61,7 @@ export class SorterAtom extends Atom {
 
     public getSelectedItems = (): ElementArrayFinder => this.menuPopup.getSelectedItems();
 
-    public isPopupDisplayed = () => Atom.findIn(PopupAtom, this.getElement()).isOpened();
+    public isPopupDisplayed = () => Atom.findIn(OverlayAtom, this.getElement()).isOpened();
 
     // private helpers
     private getToggleElement(): ElementFinder { return super.getElement().element(by.className("nui-selector__toggle")); }

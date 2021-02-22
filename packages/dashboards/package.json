@@ -64,7 +64,7 @@
     "@nova-ui/bits": "~11.0.0-0",
     "@nova-ui/charts": "~11.0.0-0",
     "@schematics/angular": "^11.1.2",
-    "angular-gridster2": "^10.1.7",
+    "angular-gridster2": "^11.0.1",
     "d3": "^5.9.2",
     "d3-selection-multi": "^1.0.1"
   },

@@ -1,6 +1,10 @@
 <div class="nui-items-dynamic" cdkDropList (cdkDropListDropped)="drop($event)" [formGroup]="form">
     <div cdkDrag class="nui-items-dynamic__node-item"
-        *ngFor="let node of nodeConfigs; let i = index; let first = first; let last = last; trackBy: trackBy">
+         (cdkDragStarted)="cdkDragStarted($event)"
+         *ngFor="let node of nodeConfigs; let i = index; trackBy: trackBy">
+
+        <nui-drop-area class="nui-items-dynamic__drop-area" *cdkDragPlaceholder [style.height.px]="height"></nui-drop-area>
+
         <ng-template #headerText>
             <ng-container *ngIf="moveButtons">
                 <div class="nui-items-dynamic__drag-handler" cdkDragHandle>
@@ -12,9 +16,10 @@
                 {{ headerMap.get(node.id) | nuiWidgetConfiguratorSectionHeader : i : headerPrefix }}
             </span>
         </ng-template>
+
         <ng-template #headerButtons>
             <div class="d-flex">
-                <!-- TODO: remove "kpi" prefix in v11 -->
+                <!-- TODO: remove "kpi" prefix in v11 - NUI-5833 -->
                 <button id="kpi-widget-remove-btn-{{i}}"
                         nui-button
                         type="button"

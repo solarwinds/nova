@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { DataSourceService, IFilteringOutputs, ToastService, uuid } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -113,7 +113,7 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
 export class PersistenceHandlerSetupComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
     // Pass this to the dashboard component's gridsterConfig input in the template.
@@ -130,7 +130,9 @@ export class PersistenceHandlerSetupComponent implements OnInit {
         private providerRegistry: ProviderRegistryService,
 
         // We are injecting the PersistenceHandler we created and assigning it to a property we use in the template.
-        public persistenceHandler: PersistenceHandler
+        public persistenceHandler: PersistenceHandler,
+        private changeDetectorRef: ChangeDetectorRef
+
     ) { }
 
     public ngOnInit(): void {
@@ -166,6 +168,15 @@ export class PersistenceHandlerSetupComponent implements OnInit {
                 deps: [HttpClient],
             },
         });
+
+        this.initializeDashboard();
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
 
         this.initializeDashboard();
     }
