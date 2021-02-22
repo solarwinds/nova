@@ -14,6 +14,7 @@ export class SelectorExampleComponent {
 
     public onSelectionChange(event: SelectionType): void {
         this.selection = event;
+
         switch (this.selection) {
             case SelectionType.All:
                 this.checkBoxStatus =  CheckboxStatus.Checked;
