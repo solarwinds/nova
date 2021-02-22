@@ -34,6 +34,7 @@
                            [selectedDate]="selectedDate"
                            [inline]="inline"
                            (update)="onUpdate($event)"
+                           (selectionDone)="overlay?.hide()"
                            [locale]="locale"
                            [datepickerMode]="datepickerMode"
                            [initDate]="initDate"
