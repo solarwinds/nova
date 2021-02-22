@@ -165,6 +165,7 @@ fdescribe("USERCONTROL form-field >", () => {
         expect(await datepicker.popup.isOpened()).toBeFalsy();
         expect(await radioGroup.getNumberOfDisabledItems()).toBe(1);
         expect(await checkbox.isDisabled()).toBeTruthy();
+        expect(await checkboxGroup.isDisabled()).toBeTruthy();
         expect(await select.isSelectDisabled()).toBeTruthy();
         expect(await combobox.isSelectDisabled()).toBeTruthy();
         expect(await switchElement.disabled()).toBeTruthy();
