@@ -18,7 +18,7 @@ import {
     TimepickerAtom
 } from "../public_api";
 
-fdescribe("USERCONTROL form-field >", () => {
+describe("USERCONTROL form-field >", () => {
     let atom: FormFieldAtom;
     let hintWithTemplate: FormFieldAtom;
     let atomWithTemplate: FormFieldAtom;
