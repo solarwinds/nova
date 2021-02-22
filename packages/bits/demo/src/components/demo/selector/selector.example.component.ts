@@ -34,6 +34,7 @@ export class SelectorExampleComponent {
 
     public makeIndeterminate(): void {
         this.checkBoxStatus = CheckboxStatus.Indeterminate;
+        this.selection = SelectionType.SomePages;
     }
 
     public makeAppendedToBody(): void {
