@@ -12,7 +12,7 @@ The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md#style-g
 
 ## Project Structure 
 
-Nova UI consists of three packages within a single monorepo:
+Nova UI consists of three packages within a single monorepo: 
 
 * [Bits](./packages/bits/README.md#bits-overview) - A set of atomic components to be used as building blocks for applications and more complex 
 components. Exception - **convenience components** - prototypes of composite components, that are meant 
