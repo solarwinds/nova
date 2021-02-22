@@ -18,8 +18,9 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public async toggle(): Promise<void> {
+        const opening = !(await this.popup.isOpened());
         await this.getElement().click();
-        await this.waitForPopup();
+        await this.waitForToggle(opening);
     }
 
     public async getOption(index: number): Promise<SelectV2OptionAtom> {
@@ -79,7 +80,11 @@ export class BaseSelectV2Atom extends Atom {
         }
     }
 
-    private async waitForPopup() {
-        return await browser.wait(ExpectedConditions.visibilityOf(this.popup.getElement()));
+    private async waitForToggle(opening: boolean) {
+        let expectedCondition = ExpectedConditions.visibilityOf(this.popup.getElement());
+        if (!opening) {
+            expectedCondition = ExpectedConditions.not(expectedCondition);
+        }
+        return await browser.wait(expectedCondition);
     }
 }
