@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import {
     ComponentRegistryService,
     EmbeddedContentComponent,
@@ -20,7 +20,7 @@ import { GridsterConfig, GridsterItem } from "angular-gridster2";
 export class EmbeddedContentWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
     // Pass this to the dashboard component's gridsterConfig input in the template.
@@ -33,13 +33,24 @@ export class EmbeddedContentWidgetExampleComponent implements OnInit {
         // WidgetTypesService provides the widget's necessary structure information
         private widgetTypesService: WidgetTypesService,
 
-        private componentRegistry: ComponentRegistryService
+        private componentRegistry: ComponentRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
+
     ) { }
 
     public ngOnInit(): void {
         const widgetTemplate = this.widgetTypesService.getWidgetType("embedded-content");
 
         this.prepareNovaDashboards();
+        this.initializeDashboard();
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
+
         this.initializeDashboard();
     }
 

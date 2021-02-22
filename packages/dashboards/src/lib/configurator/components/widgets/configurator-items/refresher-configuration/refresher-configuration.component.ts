@@ -1,4 +1,15 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+    ViewChild
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { LoggerService } from "@nova-ui/bits";
 import { combineLatest, Subject } from "rxjs";
@@ -7,6 +18,7 @@ import { filter, takeUntil, tap } from "rxjs/operators";
 import { RefresherSettingsService } from "../../../../../components/providers/refresher-settings.service";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
 
+import { RefreshRateConfiguratorComponent } from "./refresh-rate-configurator/refresh-rate-configurator.component";
 import { TimeUnit, TIME_UNITS_SHORT } from "./refresh-rate-configurator/time-units";
 
 @Component({
@@ -28,6 +40,7 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
     public form: FormGroup;
 
     private destroyed$ = new Subject();
+    @ViewChild(RefreshRateConfiguratorComponent) private refreshRateComp: RefreshRateConfiguratorComponent;
 
     constructor(public changeDetector: ChangeDetectorRef,
                 private formBuilder: FormBuilder,
@@ -50,14 +63,10 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
             this.cd.detectChanges();
         });
 
-        combineLatest([this.form.get("enabled")?.valueChanges, this.form.get("overrideDefaultSettings")?.valueChanges])
+        combineLatest([this.form.controls["enabled"].valueChanges, this.form.controls["overrideDefaultSettings"].valueChanges])
             .pipe(
                 filter(values => values.some(v => !v)),
-                tap(() => {
-                    if (this.form.get("interval")?.invalid) {
-                        this.form.get("interval")?.setValue(this.interval || this.minSeconds);
-                    }
-                }),
+                tap(this.resetInterval),
                 takeUntil(this.destroyed$)
             )
             .subscribe();
@@ -130,5 +139,10 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
         }
 
         return result;
+    }
+
+    private resetInterval = () => {
+        this.refreshRateComp.resetUnits();
+        this.form.get("interval")?.setValue(this.interval || this.minSeconds);
     }
 }

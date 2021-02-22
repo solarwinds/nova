@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Injectable, OnInit } from "@angular/core";
 import { DataSourceService, IDataSource, INovaFilters, ITimeframe } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -24,6 +24,7 @@ import {
     WidgetTypesService
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
+import cloneDeep from "lodash/cloneDeep";
 import keyBy from "lodash/keyBy";
 import moment, { Moment } from "moment/moment";
 import { BehaviorSubject } from "rxjs";
@@ -79,7 +80,7 @@ function filterDates(dateToCheck: Date, startDate: Moment, endDate: Moment) {
 export class TimeseriesWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
     // Pass this to the dashboard component's gridsterConfig input in the template.
@@ -93,7 +94,10 @@ export class TimeseriesWidgetExampleComponent implements OnInit {
         private widgetTypesService: WidgetTypesService,
 
         // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
-        private providerRegistry: ProviderRegistryService
+        private providerRegistry: ProviderRegistryService,
+
+        // Angular's ChangeDetectorRef
+        private changeDetectorRef: ChangeDetectorRef
     ) { }
 
     public ngOnInit(): void {
@@ -135,9 +139,18 @@ export class TimeseriesWidgetExampleComponent implements OnInit {
 
         // Finally, assigning the variables we created above to the dashboard
         this.dashboard = {
-            positions,
+            positions: cloneDeep(positions),
             widgets: widgetsIndex,
         };
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
+
+        this.initializeDashboard();
     }
 
 }
