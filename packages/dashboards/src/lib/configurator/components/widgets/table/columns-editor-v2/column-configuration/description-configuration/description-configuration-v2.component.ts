@@ -62,6 +62,8 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
             isActive: obj.isActive,
             width: obj.width,
         }, { emitEvent: false });
+
+        this.changeDetector.markForCheck();
     }
 
     public ngOnDestroy(): void {

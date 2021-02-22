@@ -89,7 +89,7 @@ describe("PresentationConfigurationComponent", () => {
             component.ngOnInit();
 
             expect(component.formatterConfiguratorProps.formatter?.properties?.dataFieldIds?.value).toEqual("john");
-            component.formatterForm.controls["componentType"].setValue(linkFormatter.componentType);
+            component.form.controls["componentType"].setValue(linkFormatter.componentType);
 
             expect(component.formatterConfiguratorProps.formatter?.properties?.dataFieldIds?.value).toBeFalsy(); // null
         });

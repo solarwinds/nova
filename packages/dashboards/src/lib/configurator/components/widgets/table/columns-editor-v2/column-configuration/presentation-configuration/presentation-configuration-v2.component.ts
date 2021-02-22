@@ -19,10 +19,11 @@ import { takeUntil, tap } from "rxjs/operators";
 
 import { IDataSourceOutput } from "../../../../../../../components/providers/types";
 import { IDataField } from "../../../../../../../components/table-widget/types";
-import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
+import { IFormatter, IFormatterConfigurator, IFormatterDefinition, IFormatterProperties } from "../../../../../../../components/types";
 import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
 import { FORMATTERS_REGISTRY, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../../../../types";
 import { DATA_SOURCE_OUTPUT } from "../../../../../../types";
+import { IFormatterData } from "../../../../../formatters/types";
 
 @Component({
     selector: "nui-table-column-presentation-configuration-v2",
@@ -75,16 +76,14 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     }
 
     public get formatter(): IFormatter {
-        return this.formatterForm.value;
+        return this.form.value;
     }
 
-    public form: FormGroup;
-    public formatterForm: FormGroup = this.formBuilder.group({});
+    public form: FormGroup = this.formBuilder.group({});
     public propertiesForm: FormGroup;
 
     public formatterConfigurator: string | null;
     public formatterConfiguratorProps: IFormatterConfigurator;
-    public readonly formatterFormGroupName = "formatter";
     public subtitleText: string;
     private onDestroy$: Subject<void> = new Subject();
 
@@ -97,20 +96,17 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
         private tableFormattersRegistryService: TableFormatterRegistryService) {
         this.subscribeToFormattersRegistry();
 
-        this.formatterForm = this.formBuilder.group({
+        this.form = this.formBuilder.group({
             "componentType":
                 [(this.formatter && this.formatter.componentType) ||
                 (this._providedFormatters && this._providedFormatters.length > 0 && this._providedFormatters[0].componentType), [Validators.required]],
         });
-        this.form = this.formBuilder.group({
-            [this.formatterFormGroupName]: this.formatterForm,
-        });
 
-        this.formatterForm.get("componentType")?.valueChanges.pipe(takeUntil(this.onDestroy$))
+        this.form.get("componentType")?.valueChanges.pipe(takeUntil(this.onDestroy$))
             .subscribe(() => this.createFormatterConfigurator());
 
         this.createFormatterConfigurator();
-        this.formatterForm.valueChanges
+        this.form.valueChanges
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => {
                 this.updateSubtitle();
@@ -170,19 +166,22 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
 
     public writeValue(obj: IFormatter): void {
         this.input = obj;
-        // console.log("PresentationConfigurationV2", obj);
+
+        this.form.controls["componentType"].setValue(obj.componentType, { emitEvent: false });
+
+        this.changeDetector.markForCheck();
     }
 
     public getSelectedFormatterDefinition(): IFormatterDefinition | null {
         if (this._providedFormatters.length > 0) {
-            const formatterId = this.formatterForm.get("componentType")?.value;
+            const formatterId = this.form.get("componentType")?.value;
             return this._providedFormatters.find(formatter => formatter.componentType === formatterId) ?? null;
         }
         return null;
     }
 
     public getSelectedDataField(): IDataField | null {
-        const propertiesControl = this.formatterForm.controls["properties"];
+        const propertiesControl = this.form.controls["properties"];
         if (propertiesControl && this.dataFields && this.dataFields.length > 0) {
             const dataFieldId = propertiesControl.get("dataFieldIds")?.value.value;
             return this.dataFields.find(dataField => dataField.id === dataFieldId) ?? null;
@@ -197,12 +196,22 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
         }
 
         this.propertiesForm = form;
-        if (this.input.componentType === this.formatter.componentType) {
-            this.propertiesForm.setValue(this.input.properties, { emitEvent: false });
-        }
         this.propertiesValueChangeSubscription = this.propertiesForm.valueChanges.subscribe(() => {
             this.onValueChange();
         });
+
+        if (this.input.componentType === this.formatter.componentType) {
+            this.propertiesForm.setValue(this.input.properties);
+        } else {
+            const dataFieldIds = this.propertiesForm.controls["dataFieldIds"].value;
+            // we need to reset all formatter data field mappings to `empty`
+            const resetValue = Object.keys(dataFieldIds).reduce((acc, next) => {
+                acc[next] = null;
+                return acc;
+            }, {} as IFormatterData);
+
+            this.propertiesForm.setValue({ dataFieldIds: resetValue});
+        }
     }
 
     public onValueChange() {
@@ -210,10 +219,11 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
             return;
         }
 
-        this.changeFn({
-            ...this.formatterForm.value,
+        const outputValue = {
+            ...this.form.value,
             properties: this.propertiesForm.value,
-        });
+        };
+        this.changeFn(outputValue);
     }
 
     private updateSubtitle() {
@@ -229,7 +239,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
      */
     private createFormatterConfigurator() {
         const formatterDefinition = this._providedFormatters.find(
-            formatter => formatter.componentType === this.formatterForm.get("componentType")?.value
+            formatter => formatter.componentType === this.form.get("componentType")?.value
         );
 
         // if configurationComponent property is present in formatters configuration, use it to render portal,
@@ -271,7 +281,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
                 return formatterDataTypes.some(v => sourceDataTypes[v]);
             }
         );
-        if (this.formatterForm) {
+        if (this.form) {
             this.createFormatterConfigurator();
         }
     }

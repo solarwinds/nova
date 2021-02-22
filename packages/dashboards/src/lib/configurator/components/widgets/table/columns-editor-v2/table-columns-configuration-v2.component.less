@@ -1,0 +1,28 @@
+@import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables";
+@import (reference) "@nova-ui/bits/sdk/less/mixins";
+
+.nui-table-columns-configuration {
+    &__header-text {
+        .text-overflow(ellipsis);
+    }
+    &__drag-handler {
+        cursor: move;
+    }
+    &__node-item {
+        .setCssVariable(background-color, nui-color-bg-light);
+        margin: 15px;
+
+        .widget-configurator-section {
+            margin: 0;
+        }
+    }
+    &__drop-area {
+        margin: 15px;
+    }
+}
+
+.cdk-drag-preview {
+    z-index: @zindex-drag !important;
+    opacity: 0.9;
+    box-shadow: @nui-shadow-default;
+}

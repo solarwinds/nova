@@ -1,3 +1,4 @@
+import { CdkDragDrop, CdkDragStart } from "@angular/cdk/drag-drop";
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
@@ -10,6 +11,7 @@ import {
     OnInit,
     Output,
     SimpleChanges,
+    ViewEncapsulation,
 } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { DialogService, EventBus, IDataSource, IEvent, uuid } from "@nova-ui/bits";
@@ -19,7 +21,6 @@ import { Observable, Subject } from "rxjs";
 
 import { IDataSourceOutput } from "../../../../../components/providers/types";
 import { IDataField, ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
-import { IFormatterDefinition } from "../../../../../components/types";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { IHasForm, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
 import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
@@ -27,7 +28,9 @@ import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 @Component({
     selector: "nui-table-columns-configuration",
     templateUrl: "./table-columns-configuration-v2.component.html",
+    styleUrls: ["./table-columns-configuration-v2.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
 })
 export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, OnChanges, OnDestroy {
     static lateLoadKey = "TableColumnsConfigurationComponentV2";
@@ -59,6 +62,8 @@ export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, O
         this.form = this.formBuilder.group({
             columns: this.formBuilder.array([]),
         });
+
+        this.form.valueChanges.subscribe(x => console.log(x));
 
         this.eventBus.subscribeUntil(DATA_SOURCE_CREATED, this.onDestroy$, (event: IEvent<IDataSource>) => {
             if (!event.payload) {
@@ -107,7 +112,11 @@ export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, O
 
     public updateColumns(columns: ITableWidgetColumnConfig[], emitEvent: boolean = true) {
         const arr = this.form.controls["columns"] as FormArray;
-        arr.controls = columns.map(c => new FormControl(c));
+        arr.controls = columns.map(c => {
+            const fc = new FormControl(c);
+            fc.setParent(arr);
+            return fc;
+        });
         arr.updateValueAndValidity({ emitEvent });
 
         this.changeDetector.markForCheck();
@@ -191,4 +200,34 @@ export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, O
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
+
+    // ------------------------------------------------- items dynamic stuff ------------------------------------------------
+
+    public height: number;
+
+    public moveItem(index: number, toIndex: number) {
+        const columns = (this.form.controls["columns"] as FormArray);
+
+        const column = columns.at(index);
+        columns.removeAt(index);
+        columns.insert(toIndex, column);
+
+        this.changeDetector.detectChanges();
+    }
+
+    public removeItem(index: number): void {
+        const columns = (this.form.controls["columns"] as FormArray);
+        columns.removeAt(index);
+
+        this.changeDetector.detectChanges();
+    }
+
+    public drop(event: CdkDragDrop<string[]>) {
+        this.moveItem(event.previousIndex, event.currentIndex);
+    }
+
+    public cdkDragStarted(event: CdkDragStart): void {
+        this.height = event.source.element.nativeElement.offsetHeight;
+    }
+
 }

@@ -1,4 +1,4 @@
-import { Component, forwardRef } from "@angular/core";
+import { ChangeDetectorRef, Component, forwardRef } from "@angular/core";
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -25,18 +25,20 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor {
     private destroy$ = new Subject();
     private input: ITableWidgetColumnConfig;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef) {
         this.form = this.formBuilder.group({
             description: this.formBuilder.control({}),
             presentation: this.formBuilder.control({}),
         });
 
         this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-            this.changeFn({
+            let newVar = {
                 id: this.input?.id,
                 ...value.description,
                 formatter: value.presentation,
-            });
+            };
+            console.log("TableColumnOutput:", newVar);
+            this.changeFn(newVar);
         });
     }
 
@@ -57,6 +59,8 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor {
             presentation: obj?.formatter || {},
             description: obj,
         }, { emitEvent: false });
+
+        this.changeDetector.markForCheck();
     }
 
     public ngOnDestroy(): void {
