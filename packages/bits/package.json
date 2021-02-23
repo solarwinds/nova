@@ -73,7 +73,7 @@
     "dist-copy:less": "npx copyfiles -u 3 \"src/styles/mixins/**/*\" dist/sdk/less/mixins/ && npx copyfiles -f \"src/styles/{mixins,nui-framework-*}.less\" dist/sdk/less",
     "dist-copy:tslint": "npx copyfiles \"tslint.*\" dist/sdk/",
     "dist-copy:xliff": "npx copyfiles -f \"src/locale/*\" dist/sdk/locale",
-    "dist-copy:css": "ng b generate-css && npx copyfiles \"./.tmp/css/*.{css,svg,woff,woff2}\" dist/bundles/css/",
+    "dist-copy:css": "ng b generate-css && npx copyfiles -f \"./.tmp/css/*.{css,svg,woff,woff2}\" dist/bundles/css/",
     "prexliff": "npm run compile-colors",
     "xliff": "run-s xliff:*",
     "xliff:lib": "ng xi18n lib && ngx-extractor -i \"src/**/*.ts\" -f xlf -o .tmp/messages.xlf && xliffmerge --profile xliffmerge.json",
