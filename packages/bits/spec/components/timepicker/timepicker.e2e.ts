@@ -20,12 +20,12 @@ describe("USERCONTROL timepicker", () => {
 
     describe(" basic >", () => {
         it("should display menu after toggling timepicker", async () => {
-            await basicTimePicker.popup.getPopupToggle().click();
-            const firstCheckOfMenu = await basicTimePicker.popup.isOpened();
+            await basicTimePicker.toggle();
+            const firstCheckOfMenu = await basicTimePicker.overlay.isOpened();
             expect(firstCheckOfMenu).toBeTruthy();
 
-            await basicTimePicker.popup.getPopupToggle().click();
-            const secondCheckOfMenu = await basicTimePicker.popup.isOpened();
+            await basicTimePicker.toggle();
+            const secondCheckOfMenu = await basicTimePicker.overlay.isOpened();
             expect(secondCheckOfMenu).toBeFalsy();
         });
 
@@ -39,7 +39,7 @@ describe("USERCONTROL timepicker", () => {
 
         describe("select time in menu >", () => {
             it("should select last item", async () => {
-                await basicTimePicker.popup.getPopupToggle().click();
+                await basicTimePicker.toggle();
                 const lastItem = await basicTimePicker.menuPopup.getItems().last().getText();
                 await basicTimePicker.menuPopup.clickItemByText(lastItem);
                 const selectedValue = await basicTimePicker.textbox.getValue();
@@ -47,7 +47,7 @@ describe("USERCONTROL timepicker", () => {
             });
 
             it("should select first item", async () => {
-                await basicTimePicker.popup.getPopupToggle().click();
+                await basicTimePicker.toggle();
                 const firstItem = await basicTimePicker.menuPopup.getItems().first().getText();
                 await basicTimePicker.menuPopup.clickItemByText(firstItem);
                 const selectedValue = await basicTimePicker.textbox.getValue();
@@ -136,8 +136,8 @@ describe("USERCONTROL timepicker", () => {
         });
 
         it("should not display menu after timepicker toggle", async () => {
-            await disabledTimePicker.popup.getPopupToggle().click();
-            const firstCheckOfMenu = await disabledTimePicker.popup.isOpened();
+            await disabledTimePicker.toggle();
+            const firstCheckOfMenu = await disabledTimePicker.overlay.isOpened();
             expect(firstCheckOfMenu).toBeFalsy();
         });
     });
@@ -151,15 +151,15 @@ describe("USERCONTROL timepicker", () => {
         it("time picker should have 'h:mm:ss' format after selecting item in menu", async () => {
             const timepickerValue = await customFormatTimePicker.textbox.getValue();
             const timeToSelect = TimepickerAtom.createTimeString(7, 0, "h:mm:ss");
-            await basicTimePicker.selectTime(timeToSelect);
+            await customFormatTimePicker.selectTime(timeToSelect);
             expect(TimepickerAtom.isCorrectTimeFormat(timepickerValue, "h:mm:ss")).toBeTruthy();
         });
 
         it("time picker should have 'h:mm:ss' format after typing in textbox", async () => {
             const timepickerValue = await customFormatTimePicker.textbox.getValue();
             const timeToType = TimepickerAtom.createTimeString(7, 0, "h:mm:ss");
-            await basicTimePicker.textbox.clearText();
-            await basicTimePicker.textbox.acceptText(timeToType);
+            await customFormatTimePicker.textbox.clearText();
+            await customFormatTimePicker.textbox.acceptText(timeToType);
             expect(TimepickerAtom.isCorrectTimeFormat(timepickerValue, "h:mm:ss")).toBeTruthy();
         });
     });
