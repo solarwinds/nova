@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Renderer } from "@nova-ui/charts";
 import isUndefined from "lodash/isUndefined";
 
 import { CHART_PALETTE_CS1 } from "../core/common/palette/palettes";
+import { Renderer } from "../core/common/renderer";
 import { Formatter, IRadialScales, Scales } from "../core/common/scales/types";
 import { DataAccessor, IAccessors, IChartAssistSeries, IChartSeries, IDataSeries } from "../core/common/types";
 import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
@@ -153,7 +153,8 @@ export class GaugeUtil {
     }
 
     public static createDefaultValueColorAccessor(thresholds: IGaugeThreshold[]) {
-        return (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
+        // assigning to variable to prevent "Lambda not supported" error
+        const valueColorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (dataSeries.id === GaugeUtil.REMAINDER_SERIES_ID) {
                 return "var(--nui-color-semantic-unknown-bg-hover)";
             } else {
@@ -166,6 +167,8 @@ export class GaugeUtil {
                 return CHART_PALETTE_CS1[0];
             }
         };
+
+        return valueColorAccessor;
     }
 
     public static getGaugeData(value: number, max: number) {

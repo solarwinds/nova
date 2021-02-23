@@ -1,8 +1,8 @@
 import { select } from "d3";
 import { Subject } from "rxjs";
 
+import { IXYScales } from "../../core/common/scales/types";
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../core/common/types";
-import { IXYScales } from "../../core/public-api";
 import { GaugeUtil } from "../../gauge/gauge-util";
 import { IGaugeThreshold } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";

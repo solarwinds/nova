@@ -28,11 +28,11 @@ describe("Line Renderer >", () => {
         expect(layers.length).toBe(3);
         expect(layers).toContain(STANDARD_RENDER_LAYERS[RenderLayerName.data]);
         expect(layers).toContain(STANDARD_RENDER_LAYERS[RenderLayerName.foreground]);
-        expect(layers.map(layer => layer.name)).toContain(LineRenderer.UNCLIPPED_DATA_LAYER_NAME);
+        expect(layers).toContain(STANDARD_RENDER_LAYERS[RenderLayerName.unclippedData]);
     });
 
     it("should have an unclipped data layer", () => {
-        expect(renderer.getRequiredLayers().find(layer => layer.name === LineRenderer.UNCLIPPED_DATA_LAYER_NAME)?.clipped).toEqual(false);
+        expect(renderer.getRequiredLayers().find(layer => layer.name === RenderLayerName.unclippedData)?.clipped).toEqual(false);
     });
 
     it("should disable enhanced line caps by default", () => {
@@ -56,7 +56,7 @@ describe("Line Renderer >", () => {
         beforeEach(() => {
             svg = select(document.createElement("div")).append("svg");
             containers[RenderLayerName.data] = svg.append("g");
-            containers[LineRenderer.UNCLIPPED_DATA_LAYER_NAME] = svg.append("g");
+            containers[RenderLayerName.unclippedData] = svg.append("g");
             dataSeries = {
                 id: "1",
                 name: "Series 1",
@@ -70,7 +70,7 @@ describe("Line Renderer >", () => {
             };
             renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
             path = containers[RenderLayerName.data].select("path");
-            lineCaps = containers[LineRenderer.UNCLIPPED_DATA_LAYER_NAME].selectAll("circle");
+            lineCaps = containers[RenderLayerName.unclippedData].selectAll("circle");
         });
 
         it("should create the path", () => {
@@ -106,7 +106,7 @@ describe("Line Renderer >", () => {
             it("should draw enhanced line caps if 'useEnhancedLineCaps' is 'true'", () => {
                 renderer.config.useEnhancedLineCaps = true;
                 renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
-                lineCaps = containers[LineRenderer.UNCLIPPED_DATA_LAYER_NAME].selectAll("circle");
+                lineCaps = containers[RenderLayerName.unclippedData].selectAll("circle");
 
                 expect(lineCaps.nodes().length).toEqual(dataSeries.data.length);
                 lineCaps.nodes().forEach((node, index) => {
@@ -124,7 +124,7 @@ describe("Line Renderer >", () => {
                 renderSeries.dataSeries.data[1].x = 3;
                 renderSeries.dataSeries.data[1].y = 4;
                 renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
-                lineCaps = containers[LineRenderer.UNCLIPPED_DATA_LAYER_NAME].selectAll("circle");
+                lineCaps = containers[RenderLayerName.unclippedData].selectAll("circle");
 
                 lineCaps.nodes().forEach((node, index) => {
                     expect(node.getAttribute("cx")).toEqual(dataSeries.data[index].x.toString());
@@ -140,7 +140,7 @@ describe("Line Renderer >", () => {
                     fill: "red",
                 };
                 renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
-                lineCaps = containers[LineRenderer.UNCLIPPED_DATA_LAYER_NAME].selectAll("circle");
+                lineCaps = containers[RenderLayerName.unclippedData].selectAll("circle");
 
                 lineCaps.nodes().forEach((node) => {
                     expect(node.getAttribute("style")).toEqual(`stroke-width: ${renderer.config.enhancedLineCap?.strokeWidth}; ` +
@@ -154,7 +154,7 @@ describe("Line Renderer >", () => {
                     radius: 10,
                 };
                 renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
-                lineCaps = containers[LineRenderer.UNCLIPPED_DATA_LAYER_NAME].selectAll("circle");
+                lineCaps = containers[RenderLayerName.unclippedData].selectAll("circle");
 
                 lineCaps.nodes().forEach((node) => {
                     expect(node.getAttribute("r")).toEqual(renderer.config.enhancedLineCap?.radius?.toString() as string);

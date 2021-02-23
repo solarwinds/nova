@@ -20,6 +20,7 @@ export enum RenderState {
 export enum RenderLayerName {
     background = "background",
     data = "data",
+    unclippedData = "unclipped-data",
     foreground = "foreground",
 }
 

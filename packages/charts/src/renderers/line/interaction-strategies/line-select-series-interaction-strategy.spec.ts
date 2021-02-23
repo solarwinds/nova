@@ -2,13 +2,8 @@ import { select } from "d3";
 import cloneDeep from "lodash/cloneDeep";
 import { Subject } from "rxjs";
 
-import {
-    D3Selection,
-    IDataSeries,
-    IRenderContainers,
-    IRendererEventPayload,
-    LinearScale,
-} from "../../../core/common/public-api";
+import { LinearScale } from "../../../core/common/scales/linear-scale";
+import { D3Selection, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../../core/common/types";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import {ILineAccessors, LineAccessors} from "../line-accessors";
 import { LineRenderer } from "../line-renderer";

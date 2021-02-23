@@ -2,7 +2,8 @@ import cloneDeep from "lodash/cloneDeep";
 import defaultsDeep from "lodash/defaultsDeep";
 import { Subject } from "rxjs";
 
-import { ILinearGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
+import { STANDARD_RENDER_LAYERS } from "../../constants";
+import { ILasagnaLayer, ILinearGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
 import { IRectangleAccessors } from "../accessors/rectangle-accessors";
 import { GAUGE_THRESHOLD_MARKER_CLASS } from "../constants";
 import { IRenderSeries, RenderLayerName } from "../types";
@@ -29,7 +30,7 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
 
     /** See {@link Renderer#draw} */
     public draw(renderSeries: IRenderSeries<IRectangleAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
-        const dataContainer = renderSeries.containers[RenderLayerName.data];
+        const dataContainer = renderSeries.containers[RenderLayerName.unclippedData];
         const dataSeries = renderSeries.dataSeries;
         const accessors = dataSeries.accessors;
 
@@ -51,5 +52,13 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
             .attr("r", 4)
             .style("fill", (d, i) => `var(--nui-color-icon-${data[i].hit ? "light" : "default"})`)
             .style("stroke-width", 0);
+    }
+
+    /** See {@link Renderer#getRequiredLayers} */
+    public getRequiredLayers(): ILasagnaLayer[] {
+        return [
+            STANDARD_RENDER_LAYERS[RenderLayerName.data],
+            STANDARD_RENDER_LAYERS[RenderLayerName.unclippedData],
+        ];
     }
 }

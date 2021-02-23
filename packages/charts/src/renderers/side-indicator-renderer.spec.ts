@@ -7,7 +7,7 @@ import { D3Selection, IDataSeries, IRenderContainers, IRendererEventPayload } fr
 import { GRAYSCALE_FILTER } from "../core/types";
 
 import { ISideIndicatorAccessors, SideIndicatorAccessors, SideIndicatorRenderer } from "./side-indicator-renderer";
-import { IRenderSeries } from "./types";
+import { IRenderSeries, RenderLayerName } from "./types";
 
 describe("Side Indicator Renderer >", () => {
 
@@ -22,7 +22,7 @@ describe("Side Indicator Renderer >", () => {
     it("should have correct render layers", () => {
         const layers = renderer.getRequiredLayers();
         expect(layers.length).toBe(1);
-        expect(-1 !== layers.findIndex(layer => layer.name === SideIndicatorRenderer.SIDE_INDICATORS_LAYER)).toEqual(true);
+        expect(-1 !== layers.findIndex(layer => layer.name === RenderLayerName.unclippedData)).toEqual(true);
     });
 
     describe("draw()", () => {
@@ -37,7 +37,7 @@ describe("Side Indicator Renderer >", () => {
 
         beforeEach(() => {
             svg = select(document.createElement("div")).append("svg").attr("height", 10);
-            containers[SideIndicatorRenderer.SIDE_INDICATORS_LAYER] = svg.append("g");
+            containers[RenderLayerName.unclippedData] = svg.append("g");
             yScale = new LinearScale();
             xScale = new TimeScale();
             dataSeries = {
