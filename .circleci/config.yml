@@ -122,9 +122,7 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: |
-                        PERCY_PULL_REQUEST=$CIRCLE_PR_NUMBER
-                        docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
+                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
