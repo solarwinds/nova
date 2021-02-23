@@ -8,7 +8,7 @@ exports.config = {
     allScriptsTimeout: 100000,
     suites: {
         e2e: './spec/**/*.e2e.ts',
-        visual: './spec/**/*.visual.ts',
+        visual: './spec/**/*.percy.visual.ts',
         a11y: './spec/**/*.a11y.ts'
     },
     capabilities: {
