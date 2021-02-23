@@ -79,7 +79,7 @@ export interface IBarRendererConfig extends IRendererConfig {
     pointerEvents?: boolean;
     /** Set the stroke width in pixels */
     strokeWidth?: number;
-    /** Enable the minimum bar thickness (2px) */
+    /** Enable the minimum bar thickness (BarRenderer.MIN_BAR_THICKNESS) */
     enableMinBarThickness?: boolean;
 }
 

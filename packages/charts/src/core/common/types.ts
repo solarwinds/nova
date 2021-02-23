@@ -108,10 +108,18 @@ export interface IRadialRendererConfig extends IRendererConfig {
 
 /**
  * @ignore
- * Configuration for the GaugeThresholdsRenderer
+ * Configuration for the RadialGaugeThresholdsRenderer
  */
 // tslint:disable-next-line: no-empty-interface
 export interface IRadialGaugeThresholdsRendererConfig extends IRadialRendererConfig {
+}
+
+/**
+ * @ignore
+ * Configuration for the LinearGaugeThresholdsRenderer
+ */
+// tslint:disable-next-line: no-empty-interface
+export interface ILinearGaugeThresholdsRendererConfig extends IRendererConfig {
 }
 
 export interface ILinearScales {

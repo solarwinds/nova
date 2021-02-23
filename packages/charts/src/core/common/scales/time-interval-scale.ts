@@ -2,6 +2,7 @@ import { ScaleBand, scaleBand } from "d3-scale";
 import isEqual from "lodash/isEqual";
 import moment, { Duration } from "moment/moment";
 
+import { BAND_CENTER } from "./constants";
 import { datetimeFormatter } from "./formatters/datetime-formatter";
 import { TimeScale } from "./time-scale";
 import { EMPTY_CONTINUOUS_DOMAIN, IBandScale } from "./types";
@@ -97,7 +98,7 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
         return bands;
     }
 
-    public convert(value: Date, position: number = 0.5): number {
+    public convert(value: Date, position: number = BAND_CENTER): number {
         const interval: Date | undefined = this.truncToInterval(value, this.interval());
         if (!interval) {
             throw new Error("Could not convert interval");

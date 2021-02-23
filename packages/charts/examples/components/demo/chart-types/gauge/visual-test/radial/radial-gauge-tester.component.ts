@@ -4,7 +4,7 @@ import {
     ChartAssist,
     ChartDonutContentPlugin,
     GaugeMode,
-    GaugeService,
+    GaugeUtil,
     IAccessors,
     IChartAssistSeries,
     IGaugeThreshold,
@@ -27,15 +27,13 @@ export class RadialGaugeTesterComponent implements OnInit {
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    constructor(private gaugeService: GaugeService) { }
-
     public ngOnInit() {
         this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
         this.chartAssist.chart.addPlugin(new RadialGaugeLabelsPlugin());
 
-        this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
         this.chartAssist.update(this.seriesSet);
     }
 }

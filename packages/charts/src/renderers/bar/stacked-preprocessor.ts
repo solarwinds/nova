@@ -1,4 +1,5 @@
 import isUndefined from "lodash/isUndefined";
+
 import { ChartAssist } from "../../core/chart-assists/chart-assist";
 import { IChartAssistSeries, IChartSeries } from "../../core/common/types";
 import { IBarAccessors } from "../public-api";

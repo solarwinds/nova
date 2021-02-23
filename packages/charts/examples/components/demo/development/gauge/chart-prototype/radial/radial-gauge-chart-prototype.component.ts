@@ -6,15 +6,15 @@ import {
     ChartDonutContentPlugin,
     GAUGE_THICKNESS_DEFAULT,
     GaugeMode,
-    GaugeService,
+    GaugeUtil,
     IAccessors,
     IChartAssistSeries,
     IGaugeThreshold,
+    IRadialGaugeLabelsPluginConfig,
     IRadialRendererConfig,
     radial,
     RadialGaugeLabelsPlugin,
-    radialGrid,
-    IRadialGaugeLabelsPluginConfig
+    radialGrid
 } from "@nova-ui/charts";
 
 @Component({
@@ -32,14 +32,12 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    constructor(private gaugeService: GaugeService) { }
-
     public ngOnChanges(changes: ComponentChanges<RadialGaugeChartPrototypeComponent>) {
         if ((changes.annularWidth && !changes.annularWidth.firstChange) || (changes.value && !changes.value.firstChange)) {
             if (changes.annularWidth) {
                 this.updateAnnularWidth();
             }
-            this.chartAssist.update(this.gaugeService.updateSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
+            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
         }
     }
 
@@ -53,8 +51,8 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
         };
         this.chartAssist.chart.addPlugin(new RadialGaugeLabelsPlugin(labelConfig));
 
-        this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
-        this.seriesSet = this.gaugeService.setThresholdLabelFormatter((d: string) => `${d}MS`, this.seriesSet);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
+        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}MS`, this.seriesSet);
 
         this.updateAnnularWidth();
         this.chartAssist.update(this.seriesSet);

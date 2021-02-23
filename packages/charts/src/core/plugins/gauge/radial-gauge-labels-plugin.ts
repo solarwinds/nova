@@ -5,13 +5,14 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT, STANDARD_RENDER_LAYERS } from "../../../constants";
-import { GaugeRenderingUtils } from "../../../renderers/radial/gauge-rendering-utils";
-import { RadialGaugeThresholdsRenderer } from "../../../renderers/radial/radial-gauge-thresholds-renderer";
+import { RadialGaugeRenderingUtil } from "../../../renderers/radial/gauge/radial-gauge-rendering-util";
+import { RadialGaugeThresholdsRenderer } from "../../../renderers/radial/gauge/radial-gauge-thresholds-renderer";
 import { RenderLayerName } from "../../../renderers/types";
 import { ChartPlugin } from "../../common/chart-plugin";
 import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../../common/types";
 import { IAllAround } from "../../grid/types";
-import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "./constants";
+
+import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_LABELS_CONTAINER_CLASS } from "./constants";
 
 /**
  * @ignore
@@ -92,7 +93,8 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private drawThresholdLabels() {
-        const thresholdsSeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof RadialGaugeThresholdsRenderer);
+        const thresholdsSeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) =>
+            series.renderer instanceof RadialGaugeThresholdsRenderer);
         const renderer = (thresholdsSeries?.renderer as RadialGaugeThresholdsRenderer);
         const labelRadius = renderer?.getOuterRadius(thresholdsSeries?.scales.r.range() ?? [0, 0], 0) + (this.config.labelPadding as number);
         if (isUndefined(labelRadius)) {
@@ -117,7 +119,7 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
 
         const formatter = thresholdsSeries?.scales.r.formatters[this.config.formatterName as string] ?? (d => d);
         const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${RadialGaugeLabelsPlugin.THRESHOLD_LABEL_CLASS}`)
-            .data(GaugeRenderingUtils.generateRadialThresholdData(data));
+            .data(RadialGaugeRenderingUtil.generateThresholdData(data));
         labelSelection.exit().remove();
         labelSelection.enter()
             .append("text")

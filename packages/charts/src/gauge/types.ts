@@ -26,9 +26,13 @@ export interface IGaugeThresholdMarker extends IGaugeThreshold {
  * Attributes needed by a gauge
  */
 export interface IGaugeAttributes {
+    /** Accessors for the gauge data and series */
     accessors: IAccessors;
+    /** Scales for the gauge */
     scales: Scales;
+    /** Renderer for the primary gauge visualization */
     mainRenderer: Renderer<IAccessors>;
+    /** Renderer for the gauge threshold visualization */
     thresholdsRenderer: Renderer<IAccessors>;
 }
 
