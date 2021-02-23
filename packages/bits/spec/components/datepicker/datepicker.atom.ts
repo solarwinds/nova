@@ -76,7 +76,7 @@ export class DatepickerAtom extends Atom {
 
     public clickTodayButton = async (): Promise<void> => this.getElementByCss("button.today-button").click();
 
-    public clickCalendarIcon = async (): Promise<void> => this.getElementByCss(".nui-datepicker__icon").click();
+    public toggle = async (): Promise<void> => this.getElementByCss(".nui-datepicker__icon").click();
 
     public clickChangeModeButton = async (): Promise<void> => this.getElementByCss(".change-mode-button").click();
 
