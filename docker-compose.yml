@@ -5,13 +5,25 @@ services:
     image: circleci/node:12-browsers
     working_dir: /nova
     environment:
-      - CIRCLE_API_TOKEN
+      - CI
+      - CIRCLECI
       - CIRCLE_BRANCH
+      - CIRCLE_BUILD_NUM
+      - CIRCLE_JOB
+      - CIRCLE_NODE_INDEX
+      - CIRCLE_NODE_TOTAL
+      - CIRCLE_PR_NUMBER
+      - CIRCLE_PR_REPONAME
+      - CIRCLE_PR_USERNAME
+      - CIRCLE_PREVIOUS_BUILD_NUM
       - CIRCLE_PROJECT_REPONAME
       - CIRCLE_PROJECT_USERNAME
-      - CIRCLE_USERNAME
       - CIRCLE_SHA1
-      - CIRCLE_JOB
+      - CIRCLE_TAG
+      - CIRCLE_USERNAME
+      - CIRCLE_WORKFLOW_ID
+      - CIRCLE_API_TOKEN
+      - PERCY_TOKEN
       - TEAMCITY_VERSION
       - PACKAGE_VERSION
       - PACKAGE_NAME
