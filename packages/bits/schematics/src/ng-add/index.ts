@@ -1,15 +1,10 @@
 import { chain, noop, Rule, SchematicContext, SchematicsException, Tree } from "@angular-devkit/schematics";
-import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
 import { addProviderToModule, insertImport } from "@schematics/angular/utility/ast-utils";
 import { InsertChange } from "@schematics/angular/utility/change";
-import { getWorkspace } from "@schematics/angular/utility/config";
-import { addPackageJsonDependency, NodeDependency, NodeDependencyType } from "@schematics/angular/utility/dependencies";
+import { addPackageJsonDependency, NodeDependency } from "@schematics/angular/utility/dependencies";
 import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
-import { getProject } from "@schematics/angular/utility/project";
-import { getProjectTargets } from "@schematics/angular/utility/project-targets";
-import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
 
-import { readIntoSourceFile, updateJsonFile } from "../schematics-helper";
+import { assembleDependencies, getBrowserProjectTargets, installPackageJsonDependencies, readIntoSourceFile, updateJsonFile } from "../utility/schematics-helper";
 
 export default function (options: any): Rule {
     if (!options.project) {
@@ -36,25 +31,6 @@ function addPackageJsonDependencies(): Rule {
             context.logger.info(`✅️ Added "${dependency.name}" into ${dependency.type}`);
         });
 
-        return host;
-    };
-}
-
-function assembleDependencies(dependencies: Record<string, string>): NodeDependency[] {
-    return Object.keys(dependencies).map((key) => (
-        {
-            type: NodeDependencyType.Default,
-            version: dependencies[key],
-            name: key,
-            overwrite: true,
-        }
-    ));
-}
-
-function installPackageJsonDependencies(): Rule {
-    return (host: Tree, context: SchematicContext) => {
-        context.addTask(new NodePackageInstallTask());
-        context.logger.info(` Installing packages...`);
         return host;
     };
 }
@@ -207,11 +183,4 @@ function addPreprocessorOptionsToAngularJson(options: any) {
             }
         );
     };
-}
-
-function getBrowserProjectTargets(host: Tree, options: any): BrowserBuilderTarget {
-    const workspace = getWorkspace(host);
-    const clientProject = getProject(workspace, options.project);
-    // @ts-ignore: Avoiding strict mode errors, preserving old behaviour
-    return getProjectTargets(clientProject)["build"];
 }
