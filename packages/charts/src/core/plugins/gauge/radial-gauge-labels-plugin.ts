@@ -12,7 +12,7 @@ import { ChartPlugin } from "../../common/chart-plugin";
 import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../../common/types";
 import { IAllAround } from "../../grid/types";
 
-import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_LABELS_CONTAINER_CLASS } from "./constants";
+import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_LABELS_CONTAINER_CLASS, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
 
 /**
  * @ignore
@@ -24,7 +24,7 @@ export interface IRadialGaugeLabelsPluginConfig {
     formatterName?: string;
     enableThresholdLabels?: boolean;
 
-    // TODO: coming soon
+    // TODO: NUI-5815
     // enableIntervalLabels?: boolean;
 }
 
@@ -33,7 +33,6 @@ export interface IRadialGaugeLabelsPluginConfig {
  * A chart plugin that handles the rendering of labels for radial gauge thresholds
  */
 export class RadialGaugeLabelsPlugin extends ChartPlugin {
-    public static readonly THRESHOLD_LABEL_CLASS = "threshold-label";
     public static readonly MARGIN_DEFAULT = 25;
 
     /** The default plugin configuration */
@@ -118,12 +117,12 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
             .innerRadius(labelRadius);
 
         const formatter = thresholdsSeries?.scales.r.formatters[this.config.formatterName as string] ?? (d => d);
-        const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${RadialGaugeLabelsPlugin.THRESHOLD_LABEL_CLASS}`)
+        const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`)
             .data(RadialGaugeRenderingUtil.generateThresholdData(data));
         labelSelection.exit().remove();
         labelSelection.enter()
             .append("text")
-            .attr("class", RadialGaugeLabelsPlugin.THRESHOLD_LABEL_CLASS)
+            .attr("class", GAUGE_THRESHOLD_LABEL_CLASS)
             .merge(labelSelection as any)
             .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
             .attr("title", (d, i) => formatter(data[i].value))
