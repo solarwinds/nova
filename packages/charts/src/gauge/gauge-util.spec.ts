@@ -1,4 +1,5 @@
 import { BarRenderer } from "../renderers/bar/bar-renderer";
+import { LinearGaugeThresholdsRenderer } from "../renderers/bar/linear-gauge-thresholds-renderer";
 import { RadialGaugeThresholdsRenderer } from "../renderers/radial/gauge/radial-gauge-thresholds-renderer";
 import { RadialRenderer } from "../renderers/radial/radial-renderer";
 
@@ -33,9 +34,11 @@ describe("GaugeUtil >", () => {
             expect(series?.data[0].value).toEqual(max - value);
             expect(series?.renderer instanceof BarRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID);
+            expect(series?.data[0].value).toEqual(thresholds[0].value);
+            expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
         });
 
-        it("should generate a series set for a radial gauge", () => {
+        it("should generate a series set for a vertical gauge", () => {
             const seriesSet = GaugeUtil.assembleSeriesSet(value, max, thresholds, GaugeMode.Vertical);
             let series = seriesSet.find(s => s.id === GaugeUtil.QUANTITY_SERIES_ID);
             expect(series?.data[0].value).toEqual(value);
@@ -44,6 +47,8 @@ describe("GaugeUtil >", () => {
             expect(series?.data[0].value).toEqual(max - value);
             expect(series?.renderer instanceof BarRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID);
+            expect(series?.data[0].value).toEqual(thresholds[0].value);
+            expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
         });
     });
 
