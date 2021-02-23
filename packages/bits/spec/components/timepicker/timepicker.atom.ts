@@ -30,15 +30,15 @@ export class TimepickerAtom extends Atom {
 
     public overlay = Atom.findIn(OverlayAtom, element(by.className("nui-timepicker__menu")));
 
-    public getToggleElement(): ElementFinder { return this.getElement().element(by.className("nui-timepicker__container")); }
+    public toggle = async (): Promise<void> => this.getElement().element(by.className("nui-timepicker__container")).click();
 
     public selectTime = async (time: string): Promise<void> => {
-        await this.getToggleElement().click();
+        await this.toggle();
         return this.menuPopup.clickItemByText(time);
     }
 
     public getHighlightedMenuValue = async (): Promise<string> => {
-        await this.getToggleElement().click();
+        await this.toggle();
         return this.menuPopup.getSelectedItem().getText();
     }
 }

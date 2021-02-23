@@ -20,11 +20,11 @@ describe("USERCONTROL timepicker", () => {
 
     describe(" basic >", () => {
         it("should display menu after toggling timepicker", async () => {
-            await basicTimePicker.getToggleElement().click();
+            await basicTimePicker.toggle();
             const firstCheckOfMenu = await basicTimePicker.overlay.isOpened();
             expect(firstCheckOfMenu).toBeTruthy();
 
-            await basicTimePicker.getToggleElement().click();
+            await basicTimePicker.toggle();
             const secondCheckOfMenu = await basicTimePicker.overlay.isOpened();
             expect(secondCheckOfMenu).toBeFalsy();
         });
@@ -39,7 +39,7 @@ describe("USERCONTROL timepicker", () => {
 
         describe("select time in menu >", () => {
             it("should select last item", async () => {
-                await basicTimePicker.getToggleElement().click();
+                await basicTimePicker.toggle();
                 const lastItem = await basicTimePicker.menuPopup.getItems().last().getText();
                 await basicTimePicker.menuPopup.clickItemByText(lastItem);
                 const selectedValue = await basicTimePicker.textbox.getValue();
@@ -47,7 +47,7 @@ describe("USERCONTROL timepicker", () => {
             });
 
             it("should select first item", async () => {
-                await basicTimePicker.getToggleElement().click();
+                await basicTimePicker.toggle();
                 const firstItem = await basicTimePicker.menuPopup.getItems().first().getText();
                 await basicTimePicker.menuPopup.clickItemByText(firstItem);
                 const selectedValue = await basicTimePicker.textbox.getValue();
@@ -136,7 +136,7 @@ describe("USERCONTROL timepicker", () => {
         });
 
         it("should not display menu after timepicker toggle", async () => {
-            await disabledTimePicker.getToggleElement().click();
+            await disabledTimePicker.toggle();
             const firstCheckOfMenu = await disabledTimePicker.overlay.isOpened();
             expect(firstCheckOfMenu).toBeFalsy();
         });

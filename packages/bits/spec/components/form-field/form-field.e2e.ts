@@ -116,7 +116,7 @@ describe("USERCONTROL form-field", () => {
         expect(await select.isSelectDisabled()).toBeTruthy();
         expect(await switchElement.disabled()).toBeTruthy();
         expect(await timepicker.textbox.disabled()).toBeTruthy();
-        await timepicker.getToggleElement().click();
+        await timepicker.toggle();
         expect(await timepicker.overlay.isOpened()).toBeFalsy();
         expect(await checkbox.isDisabled()).toBeTruthy();
         expect(await dateTimepicker.isDisabled()).toBeTruthy();
@@ -150,7 +150,7 @@ describe("USERCONTROL form-field", () => {
         });
         it("should dynamically enable timepicker", async () => {
             expect(await timepicker.textbox.disabled()).toBeFalsy();
-            await timepicker.getToggleElement().click();
+            await timepicker.toggle();
             expect(await timepicker.overlay.isOpened()).toBeTruthy();
         });
 
@@ -186,7 +186,7 @@ describe("USERCONTROL form-field", () => {
             expect(await select.isSelectDisabled()).toBeTruthy();
             expect(await switchElement.disabled()).toBeTruthy();
             expect(await timepicker.textbox.disabled()).toBeTruthy();
-            await timepicker.getToggleElement().click();
+            await timepicker.toggle();
             expect(await timepicker.overlay.isOpened()).toBeFalsy();
             expect(await checkbox.isDisabled()).toBeTruthy();
             expect(await dateTimepicker.isDisabled()).toBeTruthy();
