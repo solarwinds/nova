@@ -88,7 +88,7 @@
     "@angular/platform-browser-dynamic": "^11.1.2",
     "@angular/router": "^11.1.2",
     "@applitools/eyes-protractor": "1.9.1",
-    "@compodoc/compodoc": "1.1.9",
+    "@compodoc/compodoc": "^1.1.11",
     "@locl/cli": "^1.0.0",
     "@nova-ui/bits": "~11.0.0-0",
     "@types/d3": "^5.7.2",
