@@ -55,8 +55,12 @@ describe("LinearGaugeThresholdsRenderer >", () => {
 
             it("should position the threshold markers correctly", () => {
                 thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
-                    expect(node.getAttribute("cx")).toEqual((renderSeries.scales.x.convert(accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString());
-                    expect(node.getAttribute("cy")).toEqual((renderSeries.scales.y.convert(accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString());
+                    expect(node.getAttribute("cx")).toEqual(
+                        (renderSeries.scales.x.convert(accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                    );
+                    expect(node.getAttribute("cy")).toEqual(
+                        (renderSeries.scales.y.convert(accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                    );
                 });
             });
 
@@ -91,8 +95,12 @@ describe("LinearGaugeThresholdsRenderer >", () => {
 
             it("should position the threshold markers correctly", () => {
                 thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
-                    expect(node.getAttribute("cx")).toEqual((renderSeries.scales.x.convert(accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString());
-                    expect(node.getAttribute("cy")).toEqual((renderSeries.scales.y.convert(accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString());
+                    expect(node.getAttribute("cx")).toEqual(
+                        (renderSeries.scales.x.convert(accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                    );
+                    expect(node.getAttribute("cy")).toEqual(
+                        (renderSeries.scales.y.convert(accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                    );
                 });
             });
 
