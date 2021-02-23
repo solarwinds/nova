@@ -2,16 +2,6 @@ import { RenderState } from "../../renderers/types";
 import { IAccessors, IChart, IChartAssistSeries, IChartSeries, IRenderStateData } from "../common/types";
 
 /**
- * @deprecated Removal ticket NUI-3327
- *
- * Replaced by ISpark
- */
-export interface ISparkChartAssistChart {
-    chart: IChart;
-    chartSeries: IChartAssistSeries<IAccessors>;
-}
-
-/**
  * Interface representing the spark chart assist's
  * association between one of its charts and a series set
  */

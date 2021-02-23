@@ -38,11 +38,6 @@ export class RadialGrid extends Grid implements IGrid {
         return this;
     }
 
-    /** @deprecated - Deprecated in favor of adjustRenderingArea - Removal ticket NUI-3273 */
-    protected adjustClipPath = () => {
-        this.adjustRenderingArea();
-    }
-
     protected adjustRenderingArea = () => {
         const d = this.config().dimension;
         const attrs = {
