@@ -25,7 +25,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
     beforeEach(() => {
         renderer = new LinearGaugeThresholdsRenderer();
         svg = select(document.createElement("div")).append("svg");
-        containers[RenderLayerName.data] = svg.append("g");
+        containers[RenderLayerName.unclippedData] = svg.append("g");
         testThresholds = [{ value: 3 }, { value: 7 }, { value: 9 }];
     });
 
@@ -46,7 +46,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
                 };
 
                 renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
-                thresholdMarkers = containers[RenderLayerName.data].selectAll("circle");
+                thresholdMarkers = containers[RenderLayerName.unclippedData].selectAll("circle");
             });
 
             it("should render the correct number of threshold markers", () => {
@@ -86,7 +86,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
                 };
 
                 renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
-                thresholdMarkers = containers[RenderLayerName.data].selectAll("circle");
+                thresholdMarkers = containers[RenderLayerName.unclippedData].selectAll("circle");
             });
 
             it("should render the correct number of threshold markers", () => {
