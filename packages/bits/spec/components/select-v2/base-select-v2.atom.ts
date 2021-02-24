@@ -17,10 +17,13 @@ export class BaseSelectV2Atom extends Atom {
         return this.popup.getElement();
     }
 
+    /**
+     * Note: Despite its name, this method will only OPEN the dropdown. To toggle it closed, use this
+     * Atom's "click" method.
+     */
     public async toggle(): Promise<void> {
-        const opening = !(await this.popup.isOpened());
         await this.getElement().click();
-        await this.waitForToggle(opening);
+        await this.waitForPopup();
     }
 
     public async getOption(index: number): Promise<SelectV2OptionAtom> {
@@ -46,6 +49,11 @@ export class BaseSelectV2Atom extends Atom {
         return Atom.findCount(SelectV2OptionAtom, this.popup.getElement());
     }
 
+    /**
+     * Note: This method checks whether ANY 'cdk-overlay-pane' on the document body is present
+     * (not just this dropdown instance). Close any other cdk-overlay-pane instances before invoking this
+     * method to ensure an accurate return value.
+     */
     public async isOpened(): Promise<boolean> {
         return this.popup.isOpened();
     }
@@ -66,7 +74,7 @@ export class BaseSelectV2Atom extends Atom {
         return classAttr.includes("disabled");
     }
 
-    public async select (title: string): Promise<void> {
+    public async select(title: string): Promise<void> {
         if (! await this.popup.isPresent()) {
             await this.toggle();
         }
@@ -80,11 +88,7 @@ export class BaseSelectV2Atom extends Atom {
         }
     }
 
-    private async waitForToggle(opening: boolean) {
-        let expectedCondition = ExpectedConditions.visibilityOf(this.popup.getElement());
-        if (!opening) {
-            expectedCondition = ExpectedConditions.not(expectedCondition);
-        }
-        return await browser.wait(expectedCondition);
+    private async waitForPopup() {
+        return await browser.wait(ExpectedConditions.visibilityOf(this.popup.getElement()));
     }
 }

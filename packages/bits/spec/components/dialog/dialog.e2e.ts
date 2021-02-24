@@ -210,14 +210,12 @@ describe("USERCONTROL Dialog", () => {
 
         describe("dialog with overlay >", () => {
             beforeEach(async () => {
-                await selectToOpenDialog.toggle();
                 await (await selectToOpenDialog.getFirstOption()).click();
                 await browser.wait(ExpectedConditions.visibilityOf(dialog.getElement()), 3000, "Could not find the dialog!");
             });
 
             afterEach(async () => {
                 await Helpers.pressKey(Key.ESCAPE);
-                await selectToOpenDialog.toggle();
             });
 
             it("should append to cdk overlay custom container (NUI-5169)", async () => {
