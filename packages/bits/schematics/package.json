@@ -9,7 +9,7 @@
     "copy": "npm run copy-collection && npm run copy-schematics && npm run copy-utilities",
     "copy-collection": "npx copyfiles -f \"src/collection.json\" ../dist/sdk/schematics/",
     "copy-schematics": "npx copyfiles -u 1 \"src/**/{*.json,index.js,index.js.map,index.d.ts}\" ../dist/sdk/schematics/ && npx copyfiles -u 1 \"src/**/files/**\" ../dist/sdk/schematics/",
-    "copy-utilities": "npx copyfiles -u 3 \"src/utility/**/{*.js,*.js.map,*.d.ts}\" ../dist/sdk/schematics/utility/"
+    "copy-utilities": "npx copyfiles -u 2 \"src/utility/**/{*.js,*.js.map,*.d.ts}\" ../dist/sdk/schematics/utility/"
   },
   "keywords": [
     "schematics"
