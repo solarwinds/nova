@@ -7,9 +7,9 @@
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && jasmine src/**/*_spec.js",
     "copy": "npm run copy-collection && npm run copy-schematics && npm run copy-utilities",
-    "copy-collection": "cpx \"src/collection.json\" ../dist/sdk/schematics/",
-    "copy-schematics": "cpx \"src/**/{*.json,index.js,index.js.map,index.d.ts}\" ../dist/sdk/schematics/ && cpx \"src/**/files/**\" ../dist/sdk/schematics/",
-    "copy-utilities": "cpx \"src/utility/**/{*.js,*.js.map,*.d.ts}\" ../dist/sdk/schematics/utility/"
+    "copy-collection": "npx copyfiles -f \"src/collection.json\" ../dist/sdk/schematics/",
+    "copy-schematics": "npx copyfiles -u 1 \"src/**/{*.json,index.js,index.js.map,index.d.ts}\" ../dist/sdk/schematics/ && npx copyfiles -u 1 \"src/**/files/**\" ../dist/sdk/schematics/",
+    "copy-utilities": "npx copyfiles -u 3 \"src/utility/**/{*.js,*.js.map,*.d.ts}\" ../dist/sdk/schematics/utility/"
   },
   "keywords": [
     "schematics"
