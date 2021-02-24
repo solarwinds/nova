@@ -8,12 +8,12 @@ import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.servi
 import { PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
 import { DATA_SOURCE_CREATED } from "../../../../types";
 
-import { TableColumnsConfigurationComponentV2 } from "./table-columns-configuration-v2.component";
+import { TableColumnsConfigurationV2Component } from "./table-columns-configuration-v2.component";
 import Spy = jasmine.Spy;
 
 describe("TableColumnsConfigurationComponent", () => {
-    let component: TableColumnsConfigurationComponentV2;
-    let fixture: ComponentFixture<TableColumnsConfigurationComponentV2>;
+    let component: TableColumnsConfigurationV2Component;
+    let fixture: ComponentFixture<TableColumnsConfigurationV2Component>;
     let eventBus: EventBus<any>;
 
     beforeEach(async(() => {
@@ -33,7 +33,7 @@ describe("TableColumnsConfigurationComponent", () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TableColumnsConfigurationComponentV2);
+        fixture = TestBed.createComponent(TableColumnsConfigurationV2Component);
         component = fixture.componentInstance;
     });
 

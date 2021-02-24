@@ -5,7 +5,7 @@
              class="nui-table-columns-configuration__node-item"
              *ngFor="let columnForm of columnForms; index as i; trackBy: trackBy">
 
-            <nui-drop-area class="nui-table-columns-configuration__drop-area" *cdkDragPlaceholder [style.height.px]="height"></nui-drop-area>
+            <nui-drop-area class="nui-table-columns-configuration__drop-area" *cdkDragPlaceholder [style.height.px]="draggedItemHeight"></nui-drop-area>
 
             <ng-template #headerText>
                 <ng-container>
@@ -62,8 +62,5 @@
                 (click)="onResetColumns()"
                 i18n>Reset columns
         </button>
-
-        <pre>Valid = {{form.valid | json}}</pre>
-        <pre>{{form.value | json}}</pre>
     </div>
 </div>

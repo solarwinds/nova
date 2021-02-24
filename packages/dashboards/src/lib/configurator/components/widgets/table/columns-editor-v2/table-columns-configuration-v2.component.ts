@@ -32,8 +32,8 @@ import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, OnChanges, OnDestroy {
-    static lateLoadKey = "TableColumnsConfigurationComponentV2";
+export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, OnChanges, OnDestroy {
+    static lateLoadKey = "TableColumnsConfigurationV2Component";
 
     @Input() columns: ITableWidgetColumnConfig[] = [];
     // @Input() formatters: Array<IFormatterDefinition> = [];
@@ -44,6 +44,7 @@ export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, O
     public form: FormGroup;
     public emptyColumns$: Observable<boolean>;
     public dataSourceFields: Array<IDataField> = [];
+    public draggedItemHeight: number;
 
     public get columnForms(): FormControl[] {
         return (this.form.controls["columns"] as FormArray).controls as FormControl[];
@@ -202,8 +203,6 @@ export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, O
 
     // ------------------------------------------------- items dynamic stuff ------------------------------------------------
 
-    public height: number;
-
     public moveItem(index: number, toIndex: number) {
         const columns = (this.form.controls["columns"] as FormArray);
 
@@ -226,7 +225,7 @@ export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, O
     }
 
     public cdkDragStarted(event: CdkDragStart): void {
-        this.height = event.source.element.nativeElement.offsetHeight;
+        this.draggedItemHeight = event.source.element.nativeElement.offsetHeight;
     }
 
 }
