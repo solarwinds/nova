@@ -11,17 +11,17 @@ import { IAddFormattersOptions } from "./types";
 export abstract class FormatterRegistryService<TFormatter extends IFormatterDefinition = IFormatterDefinition>
     extends RegistryService<TFormatter> {
 
-    /** @deprecated use 'stateChanged$' instead */
+    /** @deprecated use 'stateChanged$' instead - NUI-5852 */
     public formattersStateChanged$: Observable <TFormatter[]> = this.stateChanged$;
 
-    /** @deprecated use 'addItems' instead */
+    /** @deprecated use 'addItems' instead - NUI-5852 */
     public addFormatters(
         formatters: TFormatter[],
         options: IAddFormattersOptions = { overrideExisting: true }): void {
         super.addItems(formatters, options);
     }
 
-    /** @deprecated use 'getItems' instead */
+    /** @deprecated use 'getItems' instead - NUI-5852*/
     public getFormatters(): TFormatter[] {
         return super.getItems();
     }

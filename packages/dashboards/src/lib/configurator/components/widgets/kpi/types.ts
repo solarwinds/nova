@@ -17,7 +17,7 @@ export interface IKpiThresholdsConfig {
 }
 
 /**
- * @deprecated - Please use IKpiData instead
+ * @deprecated - Please use IKpiData instead - NUI-5853
  */
 export interface IKpiWidgetIndicatorData extends IKpiData {
     description?: string;
