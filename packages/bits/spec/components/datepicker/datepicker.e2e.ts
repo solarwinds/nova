@@ -55,7 +55,7 @@ describe("USERCONTROL datepicker", () => {
     });
 
     it("should not have today selected by default", async () => {
-        await datepickerDisabledTodayButton.clickCalendarIcon();
+        await datepickerDisabledTodayButton.toggle();
         expect(await datepickerDisabledTodayButton.getActiveDay().isPresent()).toBe(false);
     });
 
@@ -104,13 +104,13 @@ describe("USERCONTROL datepicker", () => {
     });
 
     it("should open popup upon click on icon", async () => {
-        await datepickerWithPreserve.clickCalendarIcon();
-        expect(await datepickerWithPreserve.popup.isOpened()).toBe(true);
+        await datepickerWithPreserve.toggle();
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
     });
 
     it("should show datepicker popup upon click on input", async () => {
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.popup.isOpened()).toBe(true);
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
     });
 
     it("should have the same date both on input form and popped up window upon the click on input", async () => {
@@ -130,7 +130,7 @@ describe("USERCONTROL datepicker", () => {
     });
 
     it("should select current date upon click on 'Today'", async () => {
-        await datepickerWithPreserve.clickCalendarIcon();
+        await datepickerWithPreserve.toggle();
         await datepickerWithPreserve.clickTodayButton();
         expect(await datepickerWithPreserve.getInputValue()).toEqual(datepickerInline.formatDate(moment(), "en-US"));
     });
@@ -140,21 +140,21 @@ describe("USERCONTROL datepicker", () => {
         const date: Moment = moment();
         date.date(day);
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.popup.getPopupBox().isPresent()).toBe(true);
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
 
         await datepickerWithPreserve.selectDate(day);
         expect(await datepickerWithPreserve.getInputValue()).toEqual(datepickerWithPreserve.formatDate(date, "en-US"));
 
-        await datepickerWithPreserve.clickCalendarIcon();
+        await datepickerWithPreserve.toggle();
         expect(await datepickerWithPreserve.getActiveDayText()).toEqual("20");
     });
 
     it("should close datepicker popup upon click on a date", async () => {
         // open popup by clicking on popup
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.popup.isOpened()).toBe(true);
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
         await datepickerWithPreserve.getActiveDay().click();
-        expect(await datepickerWithPreserve.popup.isOpened()).toBe(false);
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(false);
     });
 
     describe("when minDate, maxDate or dateDisabled is set", () => {
@@ -171,7 +171,7 @@ describe("USERCONTROL datepicker", () => {
             let date: Moment = moment(minDate);
 
             date.date(date.date() + 1);
-            await datepickerMinMax.clickCalendarIcon();
+            await datepickerMinMax.toggle();
             await datepickerMinMax.clearText();
             await datepickerMinMax.acceptText(datepickerMinMax.formatDate(date, "en-US"));
 
@@ -199,7 +199,7 @@ describe("USERCONTROL datepicker", () => {
             let date: Moment = moment(maxDate);
 
             date.date(date.date() - 1);
-            await datepickerMinMax.clickCalendarIcon();
+            await datepickerMinMax.toggle();
             await datepickerMinMax.clearText();
             await datepickerMinMax.acceptText(datepickerMinMax.formatDate(date, "en-US"));
 
@@ -227,7 +227,7 @@ describe("USERCONTROL datepicker", () => {
             const secondInvalidDate = moment().add(1, "month");
             const thirdInvalidDate = moment().add(1, "year");
 
-            await datepickerDisabledDates.clickCalendarIcon();
+            await datepickerDisabledDates.toggle();
 
             await datepickerDisabledDates.clearText();
             await datepickerDisabledDates.acceptText(datepickerDisabledDates.formatDate(firstInvalidDate, "en-US"));
@@ -243,7 +243,7 @@ describe("USERCONTROL datepicker", () => {
         });
 
         it("should disable Today button if today date is disabled", async () => {
-            await datepickerDisabledTodayButton.clickCalendarIcon();
+            await datepickerDisabledTodayButton.toggle();
             expect (await datepickerDisabledTodayButton.isTodayButtonEnabled()).toEqual(false);
         });
     });
@@ -252,7 +252,7 @@ describe("USERCONTROL datepicker", () => {
         it("should change date (saving hours, minutes, seconds)", async () => {
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.selectDate(11);
-            await datepickerWithPreserve.clickCalendarIcon();
+            await datepickerWithPreserve.toggle();
             const oldValue = await browser.element(by.id(activeDateValueIdPreserved)).getText();
             await datepickerWithPreserve.selectDate(10);
             const newValue = await browser.element(by.id(activeDateValueIdPreserved)).getText();
@@ -448,13 +448,13 @@ describe("USERCONTROL datepicker", () => {
         const newDateCustomFormat = newDate.format(customFormat);
 
         it("should display date in textbox in accordance with default dateFormat", async () => {
-            await datepickerBasic.clickCalendarIcon();
+            await datepickerBasic.toggle();
             await datepickerBasic.clickTodayButton();
             expect(await datepickerBasic.getInputValue()).toEqual(todayDateDefaultFormat);
         });
 
         it("should display date in textbox in accordance with custom user's dateFormat", async () => {
-            await datepickerWithCustomDateFormat.clickCalendarIcon();
+            await datepickerWithCustomDateFormat.toggle();
             await datepickerWithCustomDateFormat.clickTodayButton();
             expect(await datepickerWithCustomDateFormat.getInputValue()).toEqual(todayDateCustomFormat);
         });

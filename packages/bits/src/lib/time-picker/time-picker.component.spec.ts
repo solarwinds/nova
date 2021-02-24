@@ -97,7 +97,7 @@ describe("components >", () => {
         });
 
         it("should change selected element", () => {
-            componentInstance.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.overlay.toggle();
             fixture.detectChanges();
             const initialState
                 = debugElement.query(By.css(".nui-menu-item--selected")).nativeElement.innerText;
