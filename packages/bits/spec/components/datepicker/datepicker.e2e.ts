@@ -105,12 +105,12 @@ describe("USERCONTROL datepicker", () => {
 
     it("should open popup upon click on icon", async () => {
         await datepickerWithPreserve.toggle();
-        expect(await datepickerWithPreserve.popup.isOpened()).toBe(true);
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
     });
 
     it("should show datepicker popup upon click on input", async () => {
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.popup.isOpened()).toBe(true);
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
     });
 
     it("should have the same date both on input form and popped up window upon the click on input", async () => {
@@ -140,7 +140,7 @@ describe("USERCONTROL datepicker", () => {
         const date: Moment = moment();
         date.date(day);
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.popup.isOpened()).toBe(true);
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
 
         await datepickerWithPreserve.selectDate(day);
         expect(await datepickerWithPreserve.getInputValue()).toEqual(datepickerWithPreserve.formatDate(date, "en-US"));
@@ -152,9 +152,9 @@ describe("USERCONTROL datepicker", () => {
     it("should close datepicker popup upon click on a date", async () => {
         // open popup by clicking on popup
         await datepickerWithPreserve.clickInput();
-        expect(await datepickerWithPreserve.popup.isOpened()).toBe(true);
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
         await datepickerWithPreserve.getActiveDay().click();
-        expect(await datepickerWithPreserve.popup.isOpened()).toBe(false);
+        expect(await datepickerWithPreserve.overlay.isOpened()).toBe(false);
     });
 
     describe("when minDate, maxDate or dateDisabled is set", () => {

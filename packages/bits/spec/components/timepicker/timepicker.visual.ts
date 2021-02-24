@@ -29,20 +29,20 @@ describe("Visual tests: Timepicker", () => {
         await eyes.open(browser, "NUI", "Timepicker");
         await eyes.checkWindow("Default");
 
-        await customStepTimepicker.popup.getPopupToggle().click();
+        await customStepTimepicker.toggle();
         await basicTimepicker.textbox.hover();
         await eyes.checkWindow("Timepicker with custom step is toggled and Basic Timepicker is hovered");
 
-        await customFormatTimepicker.popup.getPopupToggle().click();
+        await customFormatTimepicker.toggle();
         await eyes.checkWindow("Timepicker with custom format is toggled");
 
-        await customFormatTimepicker.popup.getPopupToggle().click();
-        await requiredTimepicker.popup.getPopupToggle().click();
+        await customFormatTimepicker.toggle();
+        await requiredTimepicker.toggle();
         await eyes.checkWindow("Timepicker with validation is toggled");
 
-        await basicTimepicker.popup.getPopupToggle().click();
+        await basicTimepicker.toggle();
         await basicTimepicker.menuPopup.clickItemByText("2");
-        await basicTimepicker.popup.getPopupToggle().click();
+        await basicTimepicker.toggle();
         await basicTimepicker.menuPopup.hover(basicTimepicker.menuPopup.getSelectedItem());
         await eyes.checkWindow("Selected menuitem in Basic Timepicker is focused");
 
