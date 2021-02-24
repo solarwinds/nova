@@ -1,13 +1,16 @@
+import { OverlayConfig } from "@angular/cdk/overlay";
 import {
+    AfterViewInit,
     Component,
     ElementRef,
     EventEmitter,
     forwardRef,
     Input,
-    NgZone,
+    OnChanges,
     OnDestroy,
     OnInit,
     Output,
+    SimpleChanges,
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
@@ -17,11 +20,13 @@ import _isNil from "lodash/isNil";
 import moment from "moment/moment";
 import { Moment } from "moment/moment";
 import { Subject } from "rxjs";
-import { debounceTime, take } from "rxjs/operators";
+import { debounceTime, takeUntil } from "rxjs/operators";
 
 import { NuiFormFieldControl } from "../form-field/public-api";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
-import { PopupComponent } from "../popup-adapter/popup-adapter.component";
+import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
+import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
 import { TextboxComponent } from "../textbox/textbox.component";
 
 // <example-url>./../examples/index.html#/time-picker</example-url><br />
@@ -44,10 +49,11 @@ import { TextboxComponent } from "../textbox/textbox.component";
     styleUrls: ["./time-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAccessor, NuiFormFieldControl {
+export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit, ControlValueAccessor, NuiFormFieldControl {
 
     @ViewChild("date", {static: true}) textbox: TextboxComponent;
-    @ViewChild(PopupComponent, {static: true}) popup: PopupComponent;
+    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+    @ViewChild(OverlayComponent) public overlay: OverlayComponent;
     /** sets a step (difference between item in picker) */
     @Input() timeStep =  30;
     /** sets disable state of the timepicker */
@@ -63,7 +69,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
     /** to allow the empty values for init state */
     @Input() initEmpty: boolean;
     /** Allows popup box to be attached to document.body */
-    @Input() appendToBody: boolean;
+    @Input() appendToBody: boolean = false;
 
     @Input()
     get model(): Moment | undefined {
@@ -83,7 +89,6 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
     }
 
     @Output() public timeChanged = new EventEmitter();
-
     @Output() inputBlurred: EventEmitter<any> = new EventEmitter<Moment>();
 
     public times: Moment[];
@@ -91,13 +96,20 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
         itemsSource: [],
     }];
     public innerModel?: Moment;
+    public customContainer: ElementRef | undefined;
+    public overlayConfig: OverlayConfig = {
+        panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS, "nui-timepicker__menu"],
+    };
+    public onDestroy$ = new Subject<void>();
+
+    protected popupUtilities: OverlayUtilitiesService = new OverlayUtilitiesService();
+    
     private itemToSelect: any;
     private inputChanged: Subject<string> = new Subject<string>();
 
-    constructor(private elementRef: ElementRef,
-                private ngZone: NgZone) {}
+    constructor(private elementRef: ElementRef) {}
 
-    ngOnInit() {
+    public ngOnInit() {
         this.times = this.generateTimeItems(this.timeStep);
         this.times.map((value: Moment) => {
             this.itemsSource[0].itemsSource.push({title: value, displayFormat: this.timeFormat, isSelected: false});
@@ -117,6 +129,21 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
                 this.onChange(this.innerModel);
                 this.setErrorState(value);
             });
+        this.onAppendToBodyChange(this.appendToBody);
+    }
+
+    public ngOnChanges(changes: SimpleChanges) {
+        if (changes.appendToBody) {
+            this.onAppendToBodyChange(changes.appendToBody.currentValue);
+        }
+    }
+
+    public ngAfterViewInit() {
+        this.overlay.clickOutside
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(_ => this.overlay.hide());
+        
+        this.initPopupUtilities();
     }
 
     onChange(value: any) {}
@@ -163,6 +190,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
     registerOnTouched(fn: () => {}) {
         this.onTouched = fn;
     }
+
     setDisabledState(isDisabled: boolean): void {
         this.isDisabled = isDisabled;
     }
@@ -180,29 +208,17 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
         this.textbox.writeValue(this.formatValue() as string);
         this.timeChanged.emit(this.innerModel);
         this.onChange(this.innerModel);
+        this.overlay.hide();
     }
 
-    public scrollToView(event: any) {
+    public scrollToView() {
+        if (!this.isDisabled) {
+            this.overlay.toggle();
+        }
         const selectedItem = this.elementRef
             .nativeElement
             .getElementsByClassName("nui-menu-item--selected")[0];
-        this.ngZone.onStable.asObservable().pipe(take(1))
-            .subscribe(() => {
-                // to scroll to selected item on timepicker opening.
-                this.ngZone.run(() => {
-                    if (event && selectedItem) {
-                        const menuElement = this.elementRef
-                            .nativeElement
-                            .getElementsByClassName("nui-timepicker__menu")[0];
-                        const topPos = this.elementRef
-                            .nativeElement
-                            .getElementsByClassName("nui-menu-item--selected")[0]
-                            .offsetTop;
-                        const height = menuElement.offsetHeight;
-                        menuElement.scrollTop = topPos - height / 2;
-                    }
-                });
-            });
+        selectedItem?.scrollIntoView({ block: "center" });
     }
 
     public generateTimeItems(timeStep: number): Moment[] {
@@ -254,7 +270,29 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
         return this.isDisabled ? "gray" : "primary-blue";
     }
 
+    private onAppendToBodyChange(appendToBody: boolean): void {
+        this.customContainer = appendToBody ? undefined : this.popupArea;
+    }
+
+    private initPopupUtilities(): void {
+        const resizeObserver = this.popupUtilities
+            .setPopupComponent(this.overlay)
+            .getResizeObserver();
+
+        this.overlay.show$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.popupUtilities.syncWidth();
+            resizeObserver.observe(this.elementRef.nativeElement);
+        });
+
+        this.overlay.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            resizeObserver.unobserve(this.elementRef.nativeElement);
+        });
+    }
+
     ngOnDestroy() {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
+
         this.inputChanged.unsubscribe();
     }
 }

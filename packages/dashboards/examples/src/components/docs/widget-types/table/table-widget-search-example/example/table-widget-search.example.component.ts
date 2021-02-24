@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, Injectable, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Injectable, OnInit } from "@angular/core";
 import {
     DataSourceFeatures,
     DataSourceService,
@@ -186,13 +186,14 @@ export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> 
     styleUrls: ["./table-widget-search.example.component.less"],
 })
 export class TableWidgetSearchExampleComponent implements OnInit {
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
     public gridsterConfig: GridsterConfig = {};
     public editMode: boolean = false;
 
     constructor(
         private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService
+        private providerRegistry: ProviderRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
     ) { }
 
     public ngOnInit(): void {
@@ -211,6 +212,15 @@ export class TableWidgetSearchExampleComponent implements OnInit {
                 deps: [LoggerService, HttpClient],
             },
         });
+
+        this.initializeDashboard();
+    }
+
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
 
         this.initializeDashboard();
     }

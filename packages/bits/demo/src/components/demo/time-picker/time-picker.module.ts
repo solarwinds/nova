@@ -4,7 +4,7 @@ import { RouterModule } from "@angular/router";
 import {
     DEMO_PATH_TOKEN,
     NuiButtonModule,
-    NuiDateTimerPickerModule,
+    NuiDateTimePickerModule,
     NuiDocsModule,
     NuiFormFieldModule,
     NuiIconModule,
@@ -68,7 +68,7 @@ const routes = [
         NuiDocsModule,
         NuiIconModule,
         NuiTimeFrameBarModule,
-        NuiDateTimerPickerModule,
+        NuiDateTimePickerModule,
         NuiTimeFramePickerModule,
         RouterModule.forChild(routes),
     ],

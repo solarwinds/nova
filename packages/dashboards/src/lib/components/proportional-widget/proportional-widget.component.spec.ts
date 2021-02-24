@@ -88,8 +88,8 @@ describe("ProportionalWidgetComponent", () => {
             };
         });
 
-        // Fix in NUI-5709
-        xit("should update the color provider if colors are specified in the configuration", () => {
+        it("should update the color provider if colors are specified in the configuration", () => {
+            component.configuration.chartColors = ["blue"];
             changes.configuration.currentValue.chartColors = ["blue"];
             component.ngOnChanges(changes);
             expect((<any>component).chartPalette.standardColors.get("testEntityId")).toEqual("blue");

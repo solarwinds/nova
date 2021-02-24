@@ -18,6 +18,7 @@
  - **REMOVED**: deprecated lowercase entries of the IconStatus enum. Use Pascal case entries instead
  - **REMOVED**: *@Input()* **required** of **TextboxNumberComponent** (the input wasn't used by the component)
  - **REMOVED**: *@Input()* **suffix** of **TextboxNumberComponent**  (the input wasn't used by the component)
+ - **RENAMED**: NuiDateTimerPickerModule to NuiDateTimePickerModule
 
 ### Deprecated
  - Components, Services, etc.

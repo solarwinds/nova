@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import {
     DataSourceFeatures,
     IconStatus,
@@ -247,7 +247,7 @@ export class DrilldownDataSourceRealApi<T = any> extends ServerSideDataSource<T>
 export class DrilldownWidgetExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
-    public dashboard: IDashboard;
+    public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
     // Pass this to the dashboard component's gridsterConfig input in the template.
@@ -259,20 +259,11 @@ export class DrilldownWidgetExampleComponent implements OnInit {
     constructor(
         // WidgetTypesService provides the widget's necessary structure information
         private widgetTypesService: WidgetTypesService,
-        private providerRegistry: ProviderRegistryService
-    ) {
-    }
+        private providerRegistry: ProviderRegistryService,
+        private changeDetectorRef: ChangeDetectorRef
+    ) { }
 
     public ngOnInit(): void {
-        // this.prepareNovaDashboards();
-        this.initializeDashboard();
-        const widgetTemplate = this.widgetTypesService.getWidgetType("drilldown", 1);
-        this.widgetTypesService.setNode(widgetTemplate, "configurator", WellKnownPathKey.DataSourceProviders, [
-            DrilldownDataSourceRealApi.providerId, DrilldownDataSource.providerId,
-        ]);
-    }
-
-    public initializeDashboard(): void {
         // Registering the data source for injection into the KPI tile.
         // Note: Each tile of a KPI widget is assigned its own instance of the data source
         this.providerRegistry.setProviders({
@@ -294,7 +285,14 @@ export class DrilldownWidgetExampleComponent implements OnInit {
             },
         });
 
+        this.initializeDashboard();
+        const widgetTemplate = this.widgetTypesService.getWidgetType("drilldown", 1);
+        this.widgetTypesService.setNode(widgetTemplate, "configurator", WellKnownPathKey.DataSourceProviders, [
+            DrilldownDataSourceRealApi.providerId, DrilldownDataSource.providerId,
+        ]);
+    }
 
+    public initializeDashboard(): void {
         // We're using a static configuration object for this example, but this is where
         // the widget's configuration could potentially be populated from a database
         const drilldownWidget = widgetConfig;
@@ -317,6 +315,19 @@ export class DrilldownWidgetExampleComponent implements OnInit {
         this.dashboard = { positions, widgets };
     }
 
+    public reInitializeDashboard() {
+        // destroys the components and their providers so the dashboard can re init data
+        this.dashboard = undefined;
+        this.changeDetectorRef.detectChanges();
+
+        const adapterProperties = widgetConfig.pizzagna[PizzagnaLayer.Configuration].listWidget.providers?.adapter?.properties;
+
+        if (adapterProperties) {
+            adapterProperties.drillstate = [];
+        }
+
+        this.initializeDashboard();
+    }
 }
 
 const widgetConfig: IWidget = {

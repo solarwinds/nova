@@ -1,14 +1,15 @@
 {
   "name": "nova-schematics",
   "license": "Apache-2.0",
-  "version": "10.0.0-0",
+  "version": "11.0.0-0",
   "scripts": {
     "assemble": "npm run build && npm run test && npm run copy",
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && jasmine src/**/*_spec.js",
-    "copy": "npm run copy-collection && npm run copy-schematics",
+    "copy": "npm run copy-collection && npm run copy-schematics && npm run copy-utilities",
     "copy-collection": "cpx \"src/collection.json\" ../dist/sdk/schematics/",
-    "copy-schematics": "cpx \"src/**/{*.json,index.js,schematics-helper.js}\" ../dist/sdk/schematics/ && cpx \"src/**/files/**\" ../dist/sdk/schematics/"
+    "copy-schematics": "cpx \"src/**/{*.json,index.js,index.js.map,index.d.ts}\" ../dist/sdk/schematics/ && cpx \"src/**/files/**\" ../dist/sdk/schematics/",
+    "copy-utilities": "cpx \"src/utility/**/{*.js,*.js.map,*.d.ts}\" ../dist/sdk/schematics/utility/"
   },
   "keywords": [
     "schematics"

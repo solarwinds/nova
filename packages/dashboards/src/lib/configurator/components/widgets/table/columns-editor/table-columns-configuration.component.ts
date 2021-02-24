@@ -12,7 +12,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { DialogService, EventBus, IDataField, IEvent, immutableSet, uuid } from "@nova-ui/bits";
+import { DialogService, EventBus, IDataField, IDataSource, IEvent, immutableSet, uuid } from "@nova-ui/bits";
 import get from "lodash/get";
 import isUndefined from "lodash/isUndefined";
 import values from "lodash/values";
@@ -25,8 +25,8 @@ import { IFormatterDefinition } from "../../../../../components/types";
 import { IPizzagnaProperty } from "../../../../../pizzagna/functions/get-pizzagna-property-path";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../../../../services/types";
-import { IHasForm, IPizzagna, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { DATA_SOURCE_OUTPUT } from "../../../../types";
+import { IHasForm, IPizzagna, PizzagnaLayer, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
+import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 
 @Component({
     selector: "nui-table-columns-configuration",
@@ -47,6 +47,9 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
     public form: FormGroup;
     public emptyColumns$: Observable<boolean>;
 
+    // the last selected data source will be stored here
+    public dataSource: IDataSource;
+
     private onDestroy$: Subject<void> = new Subject<void>();
 
     // hackfix for NUI-5712
@@ -59,6 +62,14 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
                 private dialogService: DialogService,
                 private pizzagnaService: PizzagnaService,
                 @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
+        this.eventBus.subscribeUntil(DATA_SOURCE_CREATED, this.onDestroy$, (event: IEvent<IDataSource>) => {
+            if (!event.payload) {
+                return;
+            }
+
+            this.dataSource = event.payload;
+        });
+
         this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent<any | IDataSourceOutput<any>>) => {
             // Because typing is lenient for the data source output, the event may or may not contain an IDataSourceOutput
             // with a result property; the payload may actually be the result itself, so both possibilities are accommodated.
@@ -97,11 +108,17 @@ export class TableColumnsConfigurationComponent implements OnInit, IHasForm, OnC
             // hackfix for NUI-5712
             this.lastValidDataFields = changes.dataFields.currentValue;
 
+            const disableColumnGeneration = this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.DisableTableColumnGeneration)?.enabled;
+
             const columns = this.mergeColumns(changes.dataFields.currentValue, this.columns);
-            if (columns?.length) {
+            if (columns?.length || disableColumnGeneration) {
+                // if disableColumnGeneration is enabled and there are no columns to be kept,
+                // we have to clear the form by updating the column input via the `onItemsChange` method
                 this.onItemsChange(columns);
             } else {
-                this.resetColumns(false);
+                if (!disableColumnGeneration) {
+                    this.resetColumns(false);
+                }
             }
             // column components are not updated properly without this one
             setTimeout(() => this.changeDetector.markForCheck());
