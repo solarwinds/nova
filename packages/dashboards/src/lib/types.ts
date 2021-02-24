@@ -167,7 +167,7 @@ export interface IHasComponent<T = any> {
 export interface IConfigurable {
     providerKey?: string;
     setComponent?: (component: any, componentId: string) => void;
-    /** @deprecated rename to 'updateProperties' in v12 - NUI-5828 */
+    // TODO: BREAKING rename to 'updateProperties' in v12 - NUI-5828
     updateConfiguration(properties: IProperties): void;
 }
 
