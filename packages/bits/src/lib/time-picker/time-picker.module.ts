@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiMenuModule } from "../menu/menu.module";
-import { NuiPopupModule } from "../popup/popup.module";
+import { NuiOverlayModule } from "../overlay/overlay.module";
 import { NuiTextboxModule } from "../textbox/textbox.module";
 
 import { TimePickerComponent } from "./time-picker.component";
@@ -16,7 +16,7 @@ import { TimePickerComponent } from "./time-picker.component";
         NuiCommonModule,
         NuiTextboxModule,
         NuiIconModule,
-        NuiPopupModule,
+        NuiOverlayModule,
         NuiMenuModule,
     ],
     declarations: [

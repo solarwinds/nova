@@ -1,28 +1,20 @@
-<div class="row m-auto">
-    <h4 class="w-100">Multiselect with manual dropdown control</h4>
-        <nui-select-v2 [placeholder]="selectMultiDimensions.selectedOptions.length ? '' : 'Select Items'"
-                         [manualDropdownControl]="true"
-                         [popupViewportMargin]="100"
-                         class="w-50"
-                         #selectMultiDimensions>
-
-            <nui-select-v2-option *ngFor="let option of optionsMultiDimensions"
-                                  [value]="option"
-                                  class="d-flex align-items-center"
-                                  (click)="openInOverlay(headerButtonsContent)">
-                <span class="mr-3 nui-select-v2-option__label">{{ option.name }}</span>
-            </nui-select-v2-option>
-        </nui-select-v2>
-        <button nui-button type="button" id="select-toggle" class="ml-3" (click)="toggleList($event)">Toggle</button>
-</div>
+<nui-select-v2 id="select-to-open-dialog" placeholder="Select an item"
+               i18n-placeholder
+               [popupViewportMargin]="100">
+    <nui-select-v2-option *ngFor="let option of options1"
+                          [value]="option"
+                          (click)="openInOverlay(headerButtonsContent)">
+        {{ option }}
+    </nui-select-v2-option>
+</nui-select-v2>
 
 <ng-template  #headerButtonsContent let-close="close">
-    <nui-dialog-header title="Dialog title" (closed)="close()"></nui-dialog-header>
+    <nui-dialog-header title="Dialog Title" i18n-title (closed)="close()"></nui-dialog-header>
     <div class="dialog-body">
         <p>
-            <nui-select-v2 placeholder="Select Item" id="select-inside-dialog">
-                <nui-select-v2-option *ngFor="let item of items" [value]="item">
-                    {{item}}
+            <nui-select-v2 placeholder="Select an item" i18n-placeholder>
+                <nui-select-v2-option *ngFor="let option of options2" [value]="option">
+                    {{ option }}
                 </nui-select-v2-option>
             </nui-select-v2>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam maximus faucibus bibendum.
@@ -34,14 +26,7 @@
         </p>
     </div>
     <nui-dialog-footer>
-        <button nui-button type="button"
-                (click)="onButtonClick('Cancel')">
-            Cancel
-        </button>
-        <button nui-button type="button"
-                displayStyle="primary"
-                (click)="onButtonClick('Action')">
-            Action
-        </button>
+        <button nui-button type="button" (click)="onCancel()" i18n>Cancel</button>
+        <button nui-button type="button" displayStyle="primary" (click)="onDone()" i18n>Action</button>
     </nui-dialog-footer>
 </ng-template>

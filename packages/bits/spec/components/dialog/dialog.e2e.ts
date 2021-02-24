@@ -17,8 +17,7 @@ describe("USERCONTROL Dialog", () => {
     let customClassButton: ButtonAtom;
     let staticBackdropButton: ButtonAtom;
     let staticBackdropESCButton: ButtonAtom;
-    let selectToggle: ButtonAtom;
-    let select: SelectV2Atom;
+    let selectToOpenDialog: SelectV2Atom;
     let overlayContainer: ElementFinder;
     let dialog: DialogAtom;
     let closeButton: ElementFinder;
@@ -39,8 +38,7 @@ describe("USERCONTROL Dialog", () => {
         customClassButton = Atom.find(ButtonAtom, "nui-demo-custom-class-btn");
         staticBackdropButton = Atom.find(ButtonAtom, "nui-demo-static-backdrop-dialog-btn");
         staticBackdropESCButton = Atom.find(ButtonAtom, "nui-demo-static-backdrop-ESC-dialog-btn");
-        selectToggle = Atom.find(ButtonAtom, "select-toggle");
-        select = Atom.find(SelectV2Atom, "select");
+        selectToOpenDialog = Atom.find(SelectV2Atom, "select-to-open-dialog");
         themeSwitcher = await Helpers.getElementByCSS(".nui-switch__bar");
         overlayContainer = $(".overlay-container-priority");
         dialog = new DialogAtom(element(by.className("nui-dialog")));
@@ -212,14 +210,14 @@ describe("USERCONTROL Dialog", () => {
 
         describe("dialog with overlay >", () => {
             beforeEach(async () => {
-                await selectToggle.click();
-                await (await select.getFirstOption()).click();
+                await selectToOpenDialog.toggle();
+                await (await selectToOpenDialog.getFirstOption()).click();
                 await browser.wait(ExpectedConditions.visibilityOf(dialog.getElement()), 3000, "Could not find the dialog!");
             });
 
             afterEach(async () => {
                 await Helpers.pressKey(Key.ESCAPE);
-                await selectToggle.click();
+                await selectToOpenDialog.toggle();
             });
 
             it("should append to cdk overlay custom container (NUI-5169)", async () => {

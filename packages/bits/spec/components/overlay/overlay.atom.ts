@@ -1,4 +1,4 @@
-import { by, element, ElementFinder } from "protractor";
+import { by, element } from "protractor";
 
 import { Atom } from "../../atom";
 

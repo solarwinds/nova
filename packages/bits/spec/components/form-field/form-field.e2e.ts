@@ -110,14 +110,14 @@ describe("USERCONTROL form-field", () => {
         expect(await textbox.disabled()).toBeTruthy();
         expect(await textboxNumber.isDisabled()).toBe(true);
         expect(await datepicker.isDisabled()).toBeTruthy();
-        await datepicker.popup.getPopupToggle().click();
+        await datepicker.toggle();
         expect(await datepicker.popup.isOpened()).toBeFalsy();
         expect(await radioGroup.getNumberOfDisabledItems()).toBe(1);
         expect(await select.isSelectDisabled()).toBeTruthy();
         expect(await switchElement.disabled()).toBeTruthy();
         expect(await timepicker.textbox.disabled()).toBeTruthy();
-        await timepicker.popup.getPopupToggle().click();
-        expect(await timepicker.popup.isOpened()).toBeFalsy();
+        await timepicker.toggle();
+        expect(await timepicker.overlay.isOpened()).toBeFalsy();
         expect(await checkbox.isDisabled()).toBeTruthy();
         expect(await dateTimepicker.isDisabled()).toBeTruthy();
     });
@@ -135,9 +135,9 @@ describe("USERCONTROL form-field", () => {
         });
         it("should dynamically enable datepicker", async () => {
             expect(await datepicker.isDisabled()).toBeFalsy();
-            await datepicker.popup.getPopupToggle().click();
+            await datepicker.toggle();
             expect(await datepicker.popup.isOpened()).toBeTruthy();
-            await datepicker.popup.getPopupToggle().click();
+            await datepicker.toggle();
         });
         it("should dynamically enable radioGroup", async () => {
             expect(await radioGroup.getNumberOfDisabledItems()).toBe(0);
@@ -150,8 +150,8 @@ describe("USERCONTROL form-field", () => {
         });
         it("should dynamically enable timepicker", async () => {
             expect(await timepicker.textbox.disabled()).toBeFalsy();
-            await timepicker.popup.getPopupToggle().click();
-            expect(await timepicker.popup.isOpened()).toBeTruthy();
+            await timepicker.toggle();
+            expect(await timepicker.overlay.isOpened()).toBeTruthy();
         });
 
         it("should dynamically enable checkbox", async () => {
@@ -180,14 +180,14 @@ describe("USERCONTROL form-field", () => {
             expect(await textbox.disabled()).toBeTruthy();
             expect(await textboxNumber.isDisabled()).toBe(true);
             expect(await datepicker.isDisabled()).toBeTruthy();
-            await datepicker.popup.getPopupToggle().click();
+            await datepicker.toggle();
             expect(await datepicker.popup.isOpened()).toBeFalsy();
             expect(await radioGroup.getNumberOfDisabledItems()).toBe(1);
             expect(await select.isSelectDisabled()).toBeTruthy();
             expect(await switchElement.disabled()).toBeTruthy();
             expect(await timepicker.textbox.disabled()).toBeTruthy();
-            await timepicker.popup.getPopupToggle().click();
-            expect(await timepicker.popup.isOpened()).toBeFalsy();
+            await timepicker.toggle();
+            expect(await timepicker.overlay.isOpened()).toBeFalsy();
             expect(await checkbox.isDisabled()).toBeTruthy();
             expect(await dateTimepicker.isDisabled()).toBeTruthy();
         });
