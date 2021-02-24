@@ -63,8 +63,6 @@ export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, O
             columns: this.formBuilder.array([]),
         });
 
-        this.form.valueChanges.subscribe(x => console.log(x));
-
         this.eventBus.subscribeUntil(DATA_SOURCE_CREATED, this.onDestroy$, (event: IEvent<IDataSource>) => {
             if (!event.payload) {
                 return;
@@ -97,6 +95,7 @@ export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, O
     }
 
     public ngOnInit() {
+        this.formReady.emit(this.form);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -122,8 +121,8 @@ export class TableColumnsConfigurationComponentV2 implements OnInit, IHasForm, O
         this.changeDetector.markForCheck();
     }
 
-    public trackBy(index: number, item: ITableWidgetColumnConfig) {
-        return item.id;
+    public trackBy(index: number, item: FormControl) {
+        return item.value.id;
     }
 
     public addColumn() {

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef } from "@angular/core";
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from "@angular/forms";
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -14,6 +14,11 @@ import { IHasChangeDetector } from "../../../../../../../types";
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DescriptionConfigurationV2Component),
+            multi: true,
+        },
+        {
+            provide: NG_VALIDATORS,
             useExisting: forwardRef(() => DescriptionConfigurationV2Component),
             multi: true,
         },
@@ -56,6 +61,10 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
         }
     }
 
+    public validate(c: FormControl): ValidationErrors | null {
+        return this.form.valid ? null : { "nestedForm": true };
+    }
+
     public writeValue(obj: ITableWidgetColumnConfig): void {
         this.form.patchValue({
             label: obj.label,
@@ -69,6 +78,10 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
     public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    public stub() {
+        // empty function to hotfix textbox-number behavior
     }
 
 }

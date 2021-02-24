@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    DoCheck,
     forwardRef,
     Inject,
     Input,
@@ -11,19 +12,29 @@ import {
     Optional,
     SimpleChanges
 } from "@angular/core";
-import { ControlContainer, ControlValueAccessor, FormBuilder, FormGroup, FormGroupDirective, NG_VALUE_ACCESSOR, Validators } from "@angular/forms";
+import {
+    ControlContainer,
+    ControlValueAccessor,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    FormGroupDirective,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR,
+    ValidationErrors,
+    Validators
+} from "@angular/forms";
 import { EventBus, IEvent } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
-import { Subject, Subscription } from "rxjs";
+import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
 import { IDataSourceOutput } from "../../../../../../../components/providers/types";
 import { IDataField } from "../../../../../../../components/table-widget/types";
-import { IFormatter, IFormatterConfigurator, IFormatterDefinition, IFormatterProperties } from "../../../../../../../components/types";
+import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
 import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
 import { FORMATTERS_REGISTRY, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../../../../types";
 import { DATA_SOURCE_OUTPUT } from "../../../../../../types";
-import { IFormatterData } from "../../../../../formatters/types";
 
 @Component({
     selector: "nui-table-column-presentation-configuration-v2",
@@ -37,15 +48,21 @@ import { IFormatterData } from "../../../../../formatters/types";
             useExisting: forwardRef(() => PresentationConfigurationV2Component),
             multi: true,
         },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => PresentationConfigurationV2Component),
+            multi: true,
+        },
     ],
 })
-export class PresentationConfigurationV2Component implements IHasChangeDetector, OnInit, OnDestroy, OnChanges, ControlValueAccessor {
+export class PresentationConfigurationV2Component implements IHasChangeDetector, OnInit, OnDestroy, OnChanges, DoCheck, ControlValueAccessor {
     static lateLoadKey = "PresentationConfigurationV2Component";
 
     private _providedFormatters: Array<IFormatterDefinition> = [];
     private _formatters: Array<IFormatterDefinition> = [];
     private changeFn: Function;
-    private propertiesValueChangeSubscription?: Subscription;
+    private touchFn: Function;
+    private propertiesFormReady = new Subject();
     private input: IFormatter;
 
     @Input()
@@ -76,10 +93,10 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     }
 
     public get formatter(): IFormatter {
-        return this.form.value;
+        return this.form?.value;
     }
 
-    public form: FormGroup = this.formBuilder.group({});
+    public form: FormGroup;
     public propertiesForm: FormGroup;
 
     public formatterConfigurator: string | null;
@@ -97,21 +114,29 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
         this.subscribeToFormattersRegistry();
 
         this.form = this.formBuilder.group({
-            "componentType":
-                [(this.formatter && this.formatter.componentType) ||
-                (this._providedFormatters && this._providedFormatters.length > 0 && this._providedFormatters[0].componentType), [Validators.required]],
+            "componentType": this.formBuilder.control(this._providedFormatters?.[0]?.componentType, Validators.required),
+            "properties": this.formBuilder.control({},
+                () => this.propertiesForm?.invalid ? { properties: true } : null
+            ),
         });
 
         this.form.get("componentType")?.valueChanges.pipe(takeUntil(this.onDestroy$))
             .subscribe(() => this.createFormatterConfigurator());
 
-        this.createFormatterConfigurator();
         this.form.valueChanges
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(() => {
                 this.updateSubtitle();
                 this.onValueChange();
                 this.changeDetector.detectChanges();
+            });
+
+        this.form.statusChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe(() => {
+                if (this.form.touched) {
+                    this.touchFn();
+                }
             });
 
         this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent<any | IDataSourceOutput<any>>) => {
@@ -130,28 +155,6 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        //     if (changes.dataFieldIds) {
-        //         const { currentValue, previousValue } = changes.dataFieldIds;
-        //
-        //         if (currentValue && currentValue !== previousValue) {
-        //             const dataFields = currentValue.map((df: string) => ({
-        //                 id: df,
-        //                 label: capitalize(df),
-        //             } as IDataField));
-        //
-        //             this.dataFields = dataFields;
-        //             this.updateSubtitle();
-        //         }
-        //     }
-        //
-        //     if (changes.dataFields && changes.dataFields.previousValue.length === 0 && this.formatterForm) {
-        //         this.updateSubtitle();
-        //     }
-        //
-        //     if (changes.formatter) {
-        //         this.form?.patchValue({ [this.formatterFormGroupName]: changes.formatter.currentValue }, { emitEvent: false });
-        //         this.updateSubtitle();
-        //     }
     }
 
     public registerOnChange(fn: any): void {
@@ -159,6 +162,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     }
 
     public registerOnTouched(fn: any): void {
+        this.touchFn = fn;
     }
 
     public setDisabledState(isDisabled: boolean): void {
@@ -167,9 +171,15 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     public writeValue(obj: IFormatter): void {
         this.input = obj;
 
-        this.form.controls["componentType"].setValue(obj.componentType, { emitEvent: false });
+        this.form.patchValue(obj, { emitEvent: false });
+
+        this.createFormatterConfigurator();
 
         this.changeDetector.markForCheck();
+    }
+
+    public validate(c: FormControl): ValidationErrors | null {
+        return this.form.valid && (!this.propertiesForm || this.propertiesForm.valid) ? null : { "error": "error" };
     }
 
     public getSelectedFormatterDefinition(): IFormatterDefinition | null {
@@ -183,35 +193,42 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     public getSelectedDataField(): IDataField | null {
         const propertiesControl = this.form.controls["properties"];
         if (propertiesControl && this.dataFields && this.dataFields.length > 0) {
-            const dataFieldId = propertiesControl.get("dataFieldIds")?.value.value;
+            const dataFieldId = propertiesControl.value.dataFieldIds?.value;
             return this.dataFields.find(dataField => dataField.id === dataFieldId) ?? null;
         }
         return null;
     }
 
-    public onFormReady(form: FormGroup) {
-        if (this.propertiesValueChangeSubscription) {
-            this.propertiesValueChangeSubscription.unsubscribe();
-            this.propertiesValueChangeSubscription = undefined;
+    public ngDoCheck() {
+        if (!this.form || !this.propertiesForm) {
+            return;
         }
+
+        const propertiesControl = this.form.controls["properties"];
+        if (this.propertiesForm.touched && propertiesControl.untouched) {
+            propertiesControl.markAsTouched();
+            this.changeDetector.markForCheck();
+        }
+        if (this.propertiesForm.untouched && propertiesControl.touched) {
+            propertiesControl.markAsUntouched();
+            this.changeDetector.markForCheck();
+        }
+    }
+
+    public onFormReady(form: FormGroup) {
+        this.propertiesFormReady.next();
 
         this.propertiesForm = form;
-        this.propertiesValueChangeSubscription = this.propertiesForm.valueChanges.subscribe(() => {
+        const updateParentForm = () => {
+            this.form.controls["properties"].setValue(this.propertiesForm.value);
             this.onValueChange();
-        });
+        };
 
-        if (this.input.componentType === this.formatter.componentType) {
-            this.propertiesForm.setValue(this.input.properties);
-        } else {
-            const dataFieldIds = this.propertiesForm.controls["dataFieldIds"].value;
-            // we need to reset all formatter data field mappings to `empty`
-            const resetValue = Object.keys(dataFieldIds).reduce((acc, next) => {
-                acc[next] = null;
-                return acc;
-            }, {} as IFormatterData);
+        updateParentForm();
 
-            this.propertiesForm.setValue({ dataFieldIds: resetValue});
-        }
+        this.propertiesForm.valueChanges
+            .pipe(takeUntil(this.propertiesFormReady))
+            .subscribe(updateParentForm);
     }
 
     public onValueChange() {
@@ -219,11 +236,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
             return;
         }
 
-        const outputValue = {
-            ...this.form.value,
-            properties: this.propertiesForm.value,
-        };
-        this.changeFn(outputValue);
+        this.changeFn(this.form.value);
     }
 
     private updateSubtitle() {

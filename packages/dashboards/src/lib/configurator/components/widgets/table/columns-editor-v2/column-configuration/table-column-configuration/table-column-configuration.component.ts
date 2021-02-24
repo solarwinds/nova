@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, forwardRef } from "@angular/core";
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -11,6 +11,11 @@ import { ITableWidgetColumnConfig } from "../../../../../../../components/table-
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TableColumnConfigurationComponent),
+            multi: true,
+        },
+        {
+            provide: NG_VALIDATORS,
             useExisting: forwardRef(() => TableColumnConfigurationComponent),
             multi: true,
         },
@@ -32,13 +37,12 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor {
         });
 
         this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
-            let newVar = {
+            const newValue = {
                 id: this.input?.id,
                 ...value.description,
                 formatter: value.presentation,
             };
-            console.log("TableColumnOutput:", newVar);
-            this.changeFn(newVar);
+            this.changeFn(newValue);
         });
     }
 
@@ -50,6 +54,10 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor {
     }
 
     public setDisabledState(isDisabled: boolean): void {
+    }
+
+    public validate(c: FormControl): ValidationErrors | null {
+        return this.form.valid ? null : { "error": "error" };
     }
 
     public writeValue(obj: ITableWidgetColumnConfig): void {
