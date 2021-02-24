@@ -28,28 +28,28 @@ describe("Visual tests: Date-time-picker", () => {
         await eyes.open(browser, "NUI", "DateTimePicker");
         await eyes.checkWindow("Default");
 
-        await dateTimePickerBasic.getTimePicker().popup.getPopupToggle().click();
+        await dateTimePickerBasic.getTimePicker().toggle();
         await dateTimePickerRanged.getDatePicker().hover();
         await eyes.checkWindow("Focus time-picker, hover date-picker");
-        await dateTimePickerBasic.getDatePicker().clickCalendarIcon();
+        await dateTimePickerBasic.getDatePicker().toggle();
         await dateTimePickerRanged.getTimePicker().hover();
         await eyes.checkWindow("Hover time-picker, focus date-picker");
 
-        await dateTimePickerRanged.getDatePicker().clickCalendarIcon();
+        await dateTimePickerRanged.getDatePicker().toggle();
         await eyes.checkWindow("Ranged picker disables dates out of range");
 
         await dialogButtonElem.click();
         dateTimePickerDialog = Atom.find(DateTimepickerAtom, "nui-date-time-picker-dialog");
 
-        await dateTimePickerDialog.getDatePicker().clickCalendarIcon();
+        await dateTimePickerDialog.getDatePicker().toggle();
         await eyes.checkWindow("Date Time Picker Dialog Date");
-        await dateTimePickerDialog.getTimePicker().popup.getPopupToggle().click();
+        await dateTimePickerDialog.getTimePicker().toggle();
         await eyes.checkWindow("Date Time Picker Dialog Time");
 
         await Helpers.switchDarkTheme("on");
-        await dateTimePickerDialog.getDatePicker().clickCalendarIcon();
+        await dateTimePickerDialog.getDatePicker().toggle();
         await eyes.checkWindow("Dark theme - Date Time Picker Dialog Date");
-        await dateTimePickerDialog.getTimePicker().popup.getPopupToggle().click();
+        await dateTimePickerDialog.getTimePicker().toggle();
         await eyes.checkWindow("Dark theme - Date Time Picker Dialog Time");
 
         await eyes.close();
