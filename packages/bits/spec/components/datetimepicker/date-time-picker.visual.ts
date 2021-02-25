@@ -53,5 +53,5 @@ describe("Visual tests: Date-time-picker", () => {
         await eyes.checkWindow("Dark theme - Date Time Picker Dialog Time");
 
         await eyes.close();
-    }, 100000);
+    }, 200000);
 });
