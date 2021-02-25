@@ -46,4 +46,13 @@
 <details>
     <summary>Dashboards</summary>
 
+### Deprecated
+- Interfaces
+  - **IKpiWidgetIndicatorData**. Use **IKpiData** instead.
+- Inputs, Methods, etc.
+    - *updateConfiguration* of **IConfigurable**. Will be renamed to *updateProperties*.
+    - *radioButtonGroupValue* of **ThresholdsConfigurationComponent**. No necessity in this after refactoring.
+    - *formattersStateChanged$* of **FormatterRegistryService**. Use *stateChanged$*
+    - *formattersStateChanged$* of **FormatterRegistryService**. Use *addItems*
+    - *getFormatters* of **FormatterRegistryService**. Use *getItems*
 </details>
