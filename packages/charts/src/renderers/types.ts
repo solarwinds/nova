@@ -65,8 +65,6 @@ export interface ILineRendererConfig extends IRendererConfig {
 
 /** The configuration interface for the bar renderer */
 export interface IBarRendererConfig extends IRendererConfig {
-    /** @deprecated This property has no effect on the renderer */
-    minOrdinalSize?: number;
     /** Set the padding on both sides of each bar */
     padding?: number;
     /** Set the class name to apply custom styles to the bars */
