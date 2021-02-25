@@ -77,7 +77,7 @@ describe("USERCONTROL time-frame-picker", () => {
             const datePicker = startDateTimePicker.getDatePicker();
             await datePicker.clearText();
             await datePicker.acceptText("04/11/2018");
-            await datePicker.toggle();
+            await datePicker.clickCalendarIcon();
             await datePicker.goBack();
             let clickable = true;
             try {
@@ -92,10 +92,10 @@ describe("USERCONTROL time-frame-picker", () => {
         it("should not be able to select any date in the next month if MaxDate is now", async () => {
             const startDateTimePicker = basicTimeFramePicker.getStartDatetimePicker();
             const datePicker = startDateTimePicker.getDatePicker();
-            await datePicker.toggle();
+            await datePicker.clickCalendarIcon();
             await datePicker.clickTodayButton();
             const expectedDate = await datePicker.getInputValue();
-            await datePicker.toggle();
+            await datePicker.clickCalendarIcon();
             await datePicker.goNext();
             let clickable = true;
             try {

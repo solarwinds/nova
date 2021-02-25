@@ -55,7 +55,7 @@ describe("USERCONTROL datepicker", () => {
     });
 
     it("should not have today selected by default", async () => {
-        await datepickerDisabledTodayButton.toggle();
+        await datepickerDisabledTodayButton.clickCalendarIcon();
         expect(await datepickerDisabledTodayButton.getActiveDay().isPresent()).toBe(false);
     });
 
@@ -104,7 +104,7 @@ describe("USERCONTROL datepicker", () => {
     });
 
     it("should open popup upon click on icon", async () => {
-        await datepickerWithPreserve.toggle();
+        await datepickerWithPreserve.clickCalendarIcon();
         expect(await datepickerWithPreserve.overlay.isOpened()).toBe(true);
     });
 
@@ -130,7 +130,7 @@ describe("USERCONTROL datepicker", () => {
     });
 
     it("should select current date upon click on 'Today'", async () => {
-        await datepickerWithPreserve.toggle();
+        await datepickerWithPreserve.clickCalendarIcon();
         await datepickerWithPreserve.clickTodayButton();
         expect(await datepickerWithPreserve.getInputValue()).toEqual(datepickerInline.formatDate(moment(), "en-US"));
     });
@@ -145,7 +145,7 @@ describe("USERCONTROL datepicker", () => {
         await datepickerWithPreserve.selectDate(day);
         expect(await datepickerWithPreserve.getInputValue()).toEqual(datepickerWithPreserve.formatDate(date, "en-US"));
 
-        await datepickerWithPreserve.toggle();
+        await datepickerWithPreserve.clickCalendarIcon();
         expect(await datepickerWithPreserve.getActiveDayText()).toEqual("20");
     });
 
@@ -171,7 +171,7 @@ describe("USERCONTROL datepicker", () => {
             let date: Moment = moment(minDate);
 
             date.date(date.date() + 1);
-            await datepickerMinMax.toggle();
+            await datepickerMinMax.clickCalendarIcon();
             await datepickerMinMax.clearText();
             await datepickerMinMax.acceptText(datepickerMinMax.formatDate(date, "en-US"));
 
@@ -199,7 +199,7 @@ describe("USERCONTROL datepicker", () => {
             let date: Moment = moment(maxDate);
 
             date.date(date.date() - 1);
-            await datepickerMinMax.toggle();
+            await datepickerMinMax.clickCalendarIcon();
             await datepickerMinMax.clearText();
             await datepickerMinMax.acceptText(datepickerMinMax.formatDate(date, "en-US"));
 
@@ -227,7 +227,7 @@ describe("USERCONTROL datepicker", () => {
             const secondInvalidDate = moment().add(1, "month");
             const thirdInvalidDate = moment().add(1, "year");
 
-            await datepickerDisabledDates.toggle();
+            await datepickerDisabledDates.clickCalendarIcon();
 
             await datepickerDisabledDates.clearText();
             await datepickerDisabledDates.acceptText(datepickerDisabledDates.formatDate(firstInvalidDate, "en-US"));
@@ -243,7 +243,7 @@ describe("USERCONTROL datepicker", () => {
         });
 
         it("should disable Today button if today date is disabled", async () => {
-            await datepickerDisabledTodayButton.toggle();
+            await datepickerDisabledTodayButton.clickCalendarIcon();
             expect (await datepickerDisabledTodayButton.isTodayButtonEnabled()).toEqual(false);
         });
     });
@@ -252,7 +252,7 @@ describe("USERCONTROL datepicker", () => {
         it("should change date (saving hours, minutes, seconds)", async () => {
             await datepickerWithPreserve.clickInput();
             await datepickerWithPreserve.selectDate(11);
-            await datepickerWithPreserve.toggle();
+            await datepickerWithPreserve.clickCalendarIcon();
             const oldValue = await browser.element(by.id(activeDateValueIdPreserved)).getText();
             await datepickerWithPreserve.selectDate(10);
             const newValue = await browser.element(by.id(activeDateValueIdPreserved)).getText();
@@ -448,13 +448,13 @@ describe("USERCONTROL datepicker", () => {
         const newDateCustomFormat = newDate.format(customFormat);
 
         it("should display date in textbox in accordance with default dateFormat", async () => {
-            await datepickerBasic.toggle();
+            await datepickerBasic.clickCalendarIcon();
             await datepickerBasic.clickTodayButton();
             expect(await datepickerBasic.getInputValue()).toEqual(todayDateDefaultFormat);
         });
 
         it("should display date in textbox in accordance with custom user's dateFormat", async () => {
-            await datepickerWithCustomDateFormat.toggle();
+            await datepickerWithCustomDateFormat.clickCalendarIcon();
             await datepickerWithCustomDateFormat.clickTodayButton();
             expect(await datepickerWithCustomDateFormat.getInputValue()).toEqual(todayDateCustomFormat);
         });
