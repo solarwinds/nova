@@ -4,7 +4,7 @@ import { Tree } from "@angular-devkit/schematics/src/tree/interface";
 import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
 import { addImportToModule } from "@angular/cdk/schematics";
 import { addDeclarationToModule, addProviderToModule, isImported } from "@schematics/angular/utility/ast-utils";
-import { InsertChange } from "@schematics/angular/utility/change";
+import { Change, InsertChange } from "@schematics/angular/utility/change";
 import { NodeDependency, NodeDependencyType } from "@schematics/angular/utility/dependencies";
 import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
 import ts from "typescript";
@@ -104,29 +104,29 @@ export function updateModuleChanges(
 
     const declarationRecorder = host.beginUpdate(modulePath);
 
-    declarations.forEach(item => {
+    declarations.forEach((item: IModuleItem) => {
         const changeList = addDeclarationToModule(moduleSource, modulePath, item.item, item.path);
-        changeList.forEach(change => {
+        changeList.forEach((change: Change) => {
             if (change instanceof InsertChange) {
                 declarationRecorder.insertLeft(change.pos, change.toAdd);
             }
         });
     });
 
-    providers.forEach(item => {
+    providers.forEach((item: IModuleItem) => {
         const changeList = addProviderToModule(moduleSource, modulePath, item.item, item.path);
 
-        changeList.forEach(change => {
+        changeList.forEach((change: Change) => {
             if (change instanceof InsertChange) {
                 declarationRecorder.insertLeft(change.pos, change.toAdd);
             }
         });
     });
 
-    modules.forEach(item => {
+    modules.forEach((item: IModuleItem) => {
         if (!isImported(moduleSource, item.item, item.path)) {
-            const moduleChanges = addImportToModule(moduleSource, modulePath, item.item, module.path);
-            moduleChanges.forEach(change => {
+            const moduleChanges = addImportToModule(moduleSource, modulePath, item.item, item.path);
+            moduleChanges.forEach((change: Change) => {
                 if (change instanceof InsertChange) {
                     declarationRecorder.insertLeft(change.pos, change.toAdd);
                 }

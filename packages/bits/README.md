@@ -7,7 +7,7 @@ In Bits, the philosophy is all about flexibility – it provides the Legos, plum
 
 ## Prerequisites
 
-Before you begin, make sure your development environment includes Node.js®, an npm package manager and the npm registries set.
+Before you begin, make sure your development environment includes Node.js® and a package manager such as [npm](https://www.npmjs.com/get-npm).
 <br>
 
 #### Installing NodeJS
@@ -21,9 +21,15 @@ You may want to check first whether it's already installed by running the follow
 ```
 ng --version
 ```
-If you want to install it globally, run the following command: 
+If you want to install the latest Angular CLI globally, run the following command: 
 ```
 npm install -g @angular/cli
+```
+
+#### Installing Angular CDK
+Nova uses Angular CDK as part of its schematics functionality. To install it, you can run the following command:
+```
+npm install @angular/cdk --save-dev
 ```
 
 <br>
