@@ -206,9 +206,8 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
     }
 
     public hasError() {
-        return this.formControl != null
-            && (this.formControl.touched || this.formControl.dirty)
-            && !this.formControl.valid;
+        return (this.formControl?.touched || this.formControl?.dirty)
+            && !this.formControl?.valid;
     }
 
     private nativeValidator(): ValidationErrors | null {
