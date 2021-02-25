@@ -8,7 +8,7 @@ import { PopoverAtom } from "../popover/popover.atom";
 import { QuickPickerAtom } from "./quick-picker.atom";
 import { TimeFramePickerAtom } from "./time-frame-picker.atom";
 
-describe("Visual tests: Timeframe Picker", () => {
+fdescribe("Visual tests: Timeframe Picker", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any;
     let popoverWithTimeframePicker: PopoverAtom;
@@ -67,5 +67,5 @@ describe("Visual tests: Timeframe Picker", () => {
         await eyes.checkWindow("Complex popover with timeframepicker and datepicker");
 
         await eyes.close();
-    }, 100000);
+    }, 200000);
 });
