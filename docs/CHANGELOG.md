@@ -42,6 +42,13 @@
 <details>
     <summary>Charts</summary>
 
+### Breaking
+ - **REMOVED**: *deemphasizeSeries()* method of **ChartAssist**. Use *resetVisibleSeries()* method instead.
+ - **REMOVED**: **charts** property from **SparkChartAssist**. Use **sparks** instead as collection of ISpark objects.
+ - **REMOVED**: ISparkChartAssistChart interface. Use ISpark instead.
+ - **REMOVED**: *adjustClipPath()* method of **RadialGrid**. Use *adjustRenderingArea()* method instead.
+ - **REMOVED**: **minOrdinalSize** property from **IBarRendererConfig**, because of no effect on the renderer.
+ - **REMOVED**: **STROKE_STYLE_DASHED** and **STROKE_STYLE_DOTTED** properties. Use *getStrokeStyleDashed()* and *getStrokeStyleDotted()* accordingly.
 </details>
 <details>
     <summary>Dashboards</summary>
