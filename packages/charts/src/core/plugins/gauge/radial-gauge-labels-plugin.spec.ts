@@ -1,47 +1,47 @@
 import { arc, Arc, DefaultArcObject } from "d3-shape";
-import { GaugeRenderingUtils } from "src/renderers/radial/gauge-rendering-utils";
 
-import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT } from "../../constants";
-import { GaugeMode } from "../../gauge/constants";
-import { GaugeService } from "../../gauge/gauge.service";
-import { RadialAccessors } from "../../renderers/radial/accessors/radial-accessors";
-import { radialGrid } from "../../renderers/radial/radial-grid";
-import { RadialRenderer } from "../../renderers/radial/radial-renderer";
-import { Chart } from "../chart";
-import { D3Selection, IChartAssistSeries } from "../common/types";
+import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT } from "../../../constants";
+import { GaugeMode } from "../../../gauge/constants";
+import { GaugeUtil } from "../../../gauge/gauge-util";
+import { RadialAccessors } from "../../../renderers/radial/accessors/radial-accessors";
+import { RadialGaugeRenderingUtil } from "../../../renderers/radial/gauge/radial-gauge-rendering-util";
+import { radialGrid } from "../../../renderers/radial/radial-grid";
+import { RadialRenderer } from "../../../renderers/radial/radial-renderer";
+import { Chart } from "../../chart";
+import { D3Selection, IAccessors, IChartAssistSeries } from "../../common/types";
 
-import { RadialGaugeThresholdLabelsPlugin } from "./radial-gauge-threshold-labels-plugin";
+import { GAUGE_LABELS_CONTAINER_CLASS } from "./constants";
+import { RadialGaugeLabelsPlugin } from "./radial-gauge-labels-plugin";
 
 describe("RadialGaugeThresholdLabelsPlugin >", () => {
 
     let chart: Chart;
-    let plugin: RadialGaugeThresholdLabelsPlugin;
+    let plugin: RadialGaugeLabelsPlugin;
     let labelsGroup: D3Selection;
     let labels: D3Selection;
-    const gaugeService = new GaugeService();
     const thresholds = [{ value: 3 }, { value: 7 }];
-    let dataSeries: IChartAssistSeries<RadialAccessors>;
+    let dataSeries: IChartAssistSeries<IAccessors>;
     let labelGenerator: Arc<any, DefaultArcObject>;
     let labelData: any[];
 
     beforeEach(() => {
         chart = new Chart(radialGrid());
-        plugin = new RadialGaugeThresholdLabelsPlugin();
+        plugin = new RadialGaugeLabelsPlugin();
         chart.addPlugin(plugin);
 
-        const { accessors, scales } = gaugeService.getGaugeAttributes(GaugeMode.Radial);
+        const { accessors, scales, thresholdsRenderer } = GaugeUtil.getGaugeAttributes(GaugeMode.Radial);
         const element = document.createElement("div");
         chart.build(element);
-        dataSeries = gaugeService.generateThresholdSeries(5, 10, thresholds, accessors as RadialAccessors, scales);
+        dataSeries = GaugeUtil.generateThresholdSeries(5, 10, thresholds, accessors as RadialAccessors, scales, thresholdsRenderer);
         chart.update([dataSeries]);
         chart.updateDimensions();
-        labelsGroup = plugin.chart.getGrid().getLasagna().getLayerContainer(RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS).select(`.${RadialGaugeThresholdLabelsPlugin.CONTAINER_CLASS}`);
+        labelsGroup = plugin.chart.getGrid().getLasagna().getLayerContainer(GAUGE_LABELS_CONTAINER_CLASS).select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);
         labels = labelsGroup.selectAll("text");
 
         const renderer = dataSeries.renderer as RadialRenderer;
         const labelRadius = renderer?.getOuterRadius(dataSeries.scales.r.range() ?? [0, 0], 0) + (plugin.config.labelPadding as number);
         labelGenerator = arc().outerRadius(labelRadius).innerRadius(labelRadius);
-        labelData = GaugeRenderingUtils.generateThresholdData(dataSeries.data);
+        labelData = RadialGaugeRenderingUtil.generateThresholdData(dataSeries.data);
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {

@@ -3,7 +3,7 @@ import {
     Chart,
     ChartAssist,
     GaugeMode,
-    GaugeService,
+    GaugeUtil,
     IAccessors,
     IChartAssistSeries,
     IGaugeThreshold,
@@ -26,15 +26,13 @@ export class HorizontalGaugeTesterComponent implements OnInit {
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    constructor(private gaugeService: GaugeService) { }
-
     public ngOnInit() {
         const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal) as XYGridConfig);
         const chart = new Chart(grid);
 
         this.chartAssist = new ChartAssist(chart, stack);
 
-        this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Horizontal);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Horizontal);
         this.chartAssist.update(this.seriesSet);
     }
 }

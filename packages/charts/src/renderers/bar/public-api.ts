@@ -5,3 +5,4 @@ export * from "./bar-scales";
 export * from "./types";
 export * from "./accessors/public-api";
 export * from "./highlight-strategies/public-api";
+export * from "./linear-gauge-thresholds-renderer";

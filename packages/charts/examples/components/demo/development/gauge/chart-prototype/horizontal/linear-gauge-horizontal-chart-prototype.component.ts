@@ -6,7 +6,7 @@ import {
     ChartAssist,
     GAUGE_THICKNESS_DEFAULT,
     GaugeMode,
-    GaugeService,
+    GaugeUtil,
     HorizontalBarAccessors,
     IAccessors,
     IChartAssistSeries,
@@ -31,25 +31,24 @@ export class LinearGaugeChartHorizontalPrototypeComponent implements OnChanges, 
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    constructor(private gaugeService: GaugeService) { }
-
     public ngOnChanges(changes: ComponentChanges<LinearGaugeChartHorizontalPrototypeComponent>) {
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.value && !changes.value.firstChange)) {
             if (changes.thickness) {
                 this.chartAssist.chart.getGrid().config().dimension.height(this.thickness);
                 this.chartAssist.chart.updateDimensions();
             }
-            this.chartAssist.update(this.gaugeService.updateSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
+            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.value, this.max, this.thresholds, this.seriesSet));
         }
     }
 
     public ngOnInit() {
         const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal, this.thickness) as XYGridConfig);
+        grid.config().dimension.margin.right = 5;
         const chart = new Chart(grid);
 
         this.chartAssist = new ChartAssist(chart, stack);
 
-        this.seriesSet = this.gaugeService.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Horizontal);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Horizontal);
         this.chartAssist.update(this.seriesSet);
     }
 }

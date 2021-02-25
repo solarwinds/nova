@@ -3,6 +3,7 @@ import { scaleBand } from "d3-scale";
 import isUndefined from "lodash/isUndefined";
 import toString from "lodash/toString";
 
+import { BAND_CENTER } from "./constants";
 import { LinearScale } from "./linear-scale";
 import { Scale } from "./scale";
 import { IBandScale, IHasInnerScale, IScale } from "./types";
@@ -39,7 +40,7 @@ export class BandScale<T = string> extends Scale<T> implements IBandScale<T>, IH
      * @param {number} [position=0.5] Number in the range of [0, 1] that will define the point inside of the band. Where 0 stands for start.
      * @returns {number} Center of a band
      */
-    public convert(value: T, position: number = 0.5): number {
+    public convert(value: T, position: number = BAND_CENTER): number {
         return this._d3Scale(value) + position * this.bandwidth();
     }
 
