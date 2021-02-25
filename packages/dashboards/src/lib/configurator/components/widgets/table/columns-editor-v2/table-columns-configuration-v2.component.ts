@@ -23,7 +23,8 @@ import { IDataSourceOutput } from "../../../../../components/providers/types";
 import { IDataField, ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { IHasForm, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
-import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
+import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
+import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 
 @Component({
     selector: "nui-table-columns-configuration",
@@ -45,6 +46,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     public emptyColumns$: Observable<boolean>;
     public dataSourceFields: Array<IDataField> = [];
     public draggedItemHeight: number;
+    public busy: boolean = true;
 
     public get columnForms(): FormControl[] {
         return (this.form.controls["columns"] as FormArray).controls as FormControl[];
@@ -59,6 +61,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
                 private changeDetector: ChangeDetectorRef,
                 private dialogService: DialogService,
                 private pizzagnaService: PizzagnaService,
+                // private dataSourceManager: ConfiguratorDataSourceManagerService,
                 @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
         this.form = this.formBuilder.group({
             columns: this.formBuilder.array([]),
@@ -70,8 +73,13 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
             }
 
             this.dataSource = event.payload;
+            this.busy = true;
+            this.changeDetector.markForCheck();
         });
-
+        this.eventBus.subscribeUntil(DATA_SOURCE_CHANGE, this.onDestroy$, (event: IEvent<any>) => {
+            this.busy = true;
+            this.changeDetector.markForCheck();
+        });
         this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent<any | IDataSourceOutput<any>>) => {
             const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
 
@@ -89,7 +97,8 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
                     this.resetColumns(false);
                 }
             }
-
+            this.busy = false;
+            this.changeDetector.markForCheck();
             // column components are not updated properly without this one
             // setTimeout(() => this.changeDetector.markForCheck());
         });

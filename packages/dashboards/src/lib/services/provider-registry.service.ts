@@ -17,6 +17,7 @@ import { RefresherSettingsService } from "../components/providers/refresher-sett
 import { StatusContentFallbackAdapter } from "../components/providers/status-content-fallback-adapter";
 import { TableDataSourceAdapter } from "../components/providers/table-data-source-adapter";
 import { TimeseriesDataSourceAdapter } from "../components/providers/timeseries-data-source-adapter";
+import { ConfiguratorDataSourceManagerService } from "../configurator/services/configurator-data-source-manager.service";
 import { KpiSectionConverterService } from "../configurator/services/converters/kpi/kpi-section-converter/kpi-section-converter.service";
 import { KpiTilesConverterService } from "../configurator/services/converters/kpi/kpi-tiles-converter.service";
 // tslint:disable-next-line: max-line-length
@@ -37,9 +38,14 @@ import { DASHBOARD_EVENT_BUS, DATA_SOURCE, FORMATTERS_REGISTRY, PIZZAGNA_EVENT_B
 
 import { EventRegistryService } from "./event-registry.service";
 import { KpiColorComparatorsRegistryService } from "./kpi-color-comparators-registry.service";
-import { KpiFormattersRegistryService, ProportionalDonutContentFormattersRegistryService, TableFormatterRegistryService } from "./table-formatter-registry.service";
+import {
+    KpiFormattersRegistryService,
+    ProportionalDonutContentFormattersRegistryService,
+    TableFormatterRegistryService,
+} from "./table-formatter-registry.service";
 import {
     IStaticProviders,
+    NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
     NOVA_DASHBOARD_EVENT_PROXY,
     NOVA_DATASOURCE_ADAPTER,
     NOVA_DATASOURCE_INTERVAL_REFRESHER,
@@ -73,7 +79,6 @@ import {
 } from "./types";
 import { WidgetConfigurationService } from "./widget-configuration.service";
 import { WidgetToDashboardEventProxyService } from "./widget-to-dashboard-event-proxy.service";
-
 
 
 @Injectable({ providedIn: "root" })
@@ -221,6 +226,10 @@ export class ProviderRegistryService {
                 provide: FORMATTERS_REGISTRY,
                 useExisting: ProportionalDonutContentFormattersRegistryService,
                 deps: [PizzagnaService],
+            },
+            [NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER]: {
+                provide: ConfiguratorDataSourceManagerService,
+                deps: [PIZZAGNA_EVENT_BUS],
             },
         });
     }

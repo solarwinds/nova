@@ -1,4 +1,4 @@
-<div class="nui-table-columns-configuration" cdkDropList (cdkDropListDropped)="drop($event)" [formGroup]="form">
+<div class="nui-table-columns-configuration" nui-busy [busy]="busy" cdkDropList (cdkDropListDropped)="drop($event)" [formGroup]="form">
     <div formArrayName="columns">
         <div cdkDrag
              (cdkDragStarted)="cdkDragStarted($event)"
