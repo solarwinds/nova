@@ -5,7 +5,7 @@
   "scripts": {
     "assemble": "npm run build && npm run test && npm run copy",
     "build": "tsc -p tsconfig.json",
-    "test": "npm run build && jasmine src/**/*_spec.js",
+    "test": "npm run build && jasmine src/**/*.spec.js",
     "copy": "npm run copy-collection && npm run copy-schematics",
     "copy-ng-add": "cpx \"src/ng-add/{*.json,index.js}\" ../dist/sdk/schematics/ng-add/",
     "copy-collection": "cpx \"src/collection.json\" ../dist/sdk/schematics/",
