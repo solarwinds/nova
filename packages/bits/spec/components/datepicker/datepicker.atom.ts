@@ -76,8 +76,10 @@ export class DatepickerAtom extends Atom {
 
     public clickTodayButton = async (): Promise<void> => this.getElementByCss("button.today-button").click();
 
-    /** @deprecated - will be named as toggle() in v12 - NUI 5865 */
-    public clickCalendarIcon = async (): Promise<void> => this.getElementByCss(".nui-datepicker__icon").click();
+    /** @deprecated As of Nova v11, use 'toggle' method instead. Removal: NUI-5865 */
+    public clickCalendarIcon = async (): Promise<void> => this.toggle();
+
+    public toggle = async (): Promise<void> => this.getElementByCss(".nui-datepicker__icon").click();
 
     public clickChangeModeButton = async (): Promise<void> => this.getElementByCss(".change-mode-button").click();
 
