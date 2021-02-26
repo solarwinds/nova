@@ -1,8 +1,9 @@
 import { Tree, UpdateRecorder } from "@angular-devkit/schematics/src/tree/interface";
-import ts from "typescript";
-import { updateModuleChanges } from "./schematics-helper";
 import * as vendoredAstUtils from "@angular/cdk/schematics/utils/vendored-ast-utils";
 import * as astUtils from "@schematics/angular/utility/ast-utils";
+import ts from "typescript";
+
+import { updateModuleChanges } from "./schematics-helper";
 
 describe("Schematics Helper >", () => {
     describe("updateModuleChanges", () => {
