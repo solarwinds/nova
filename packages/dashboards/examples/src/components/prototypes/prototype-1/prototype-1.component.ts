@@ -29,6 +29,7 @@ import { AcmeTableGBooksDataSource } from "../data/table/acme-table-gbooks-data-
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
 import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/timeseries-data-sources";
 
+import { AcmeTableDataSourceNoDataFields } from "../data/table/acme-table-data-source-no-data-fields.service";
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
@@ -111,6 +112,11 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
             [AcmeTableDataSource3.providerId]: {
                 provide: DATA_SOURCE,
                 useClass: AcmeTableDataSource3,
+                deps: [LoggerService],
+            },
+            [AcmeTableDataSourceNoDataFields.providerId]: {
+                provide: DATA_SOURCE,
+                useClass: AcmeTableDataSourceNoDataFields,
                 deps: [LoggerService],
             },
             [AcmeTableMockDataSource.providerId]: {

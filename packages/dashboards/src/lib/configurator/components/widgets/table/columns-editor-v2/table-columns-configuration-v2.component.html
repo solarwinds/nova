@@ -1,66 +1,80 @@
-<div class="nui-table-columns-configuration" nui-busy [busy]="busy" cdkDropList (cdkDropListDropped)="drop($event)" [formGroup]="form">
-    <div formArrayName="columns">
-        <div cdkDrag
-             (cdkDragStarted)="cdkDragStarted($event)"
-             class="nui-table-columns-configuration__node-item"
-             *ngFor="let columnForm of columnForms; index as i; trackBy: trackBy">
+<div nui-busy [busy]="dataSourceManager?.dataSource?.busy | async" class="nui-table-columns-configuration">
+    <div *ngIf="dataSourceFields.length" cdkDropList (cdkDropListDropped)="drop($event)"
+         [formGroup]="form">
+        <div formArrayName="columns">
+            <div cdkDrag
+                 (cdkDragStarted)="cdkDragStarted($event)"
+                 class="nui-table-columns-configuration__node-item"
+                 *ngFor="let columnForm of columnForms; index as i; trackBy: trackBy">
 
-            <nui-drop-area class="nui-table-columns-configuration__drop-area" *cdkDragPlaceholder [style.height.px]="draggedItemHeight"></nui-drop-area>
+                <nui-drop-area class="nui-table-columns-configuration__drop-area" *cdkDragPlaceholder [style.height.px]="draggedItemHeight"></nui-drop-area>
 
-            <ng-template #headerText>
-                <ng-container>
-                    <div class="nui-table-columns-configuration__drag-handler" cdkDragHandle>
-                        <nui-icon icon="drag"></nui-icon>
-                    </div>
-                </ng-container>
-                <span class="nui-table-columns-configuration__header-text">
+                <ng-template #headerText>
+                    <ng-container>
+                        <div class="nui-table-columns-configuration__drag-handler" cdkDragHandle>
+                            <nui-icon icon="drag"></nui-icon>
+                        </div>
+                    </ng-container>
+                    <span class="nui-table-columns-configuration__header-text">
                     {{ columnForm?.value.label | nuiWidgetConfiguratorSectionHeader : i : "Column" }} <!-- TODO: i18n -->
                 </span>
-            </ng-template>
+                </ng-template>
 
-            <ng-template #headerButtons>
-                <div class="d-flex">
-                    <!-- TODO: remove "kpi" prefix in v11 -->
-                    <button id="table-widget-remove-column-btn-{{i}}"
-                            nui-button
-                            type="button"
-                            icon="delete"
-                            displayStyle="action"
-                            (click)="removeItem(i)"></button>
-                </div>
-            </ng-template>
+                <ng-template #headerButtons>
+                    <div class="d-flex">
+                        <!-- TODO: remove "kpi" prefix in v11 -->
+                        <button id="table-widget-remove-column-btn-{{i}}"
+                                nui-button
+                                type="button"
+                                icon="delete"
+                                displayStyle="action"
+                                (click)="removeItem(i)"></button>
+                    </div>
+                </ng-template>
 
-            <nui-widget-configurator-section class="no-margin"
-                                             [headerTextTemplate]="headerText"
-                                             [headerButtonsTemplate]="headerButtons">
-                <nui-table-column-configuration [formControl]="columnForm"></nui-table-column-configuration>
-            </nui-widget-configurator-section>
+                <nui-widget-configurator-section class="no-margin"
+                                                 [headerTextTemplate]="headerText"
+                                                 [headerButtonsTemplate]="headerButtons">
+                    <nui-table-column-configuration [formControl]="columnForm"></nui-table-column-configuration>
+                </nui-widget-configurator-section>
+            </div>
+
+            <div class="pl-4 pr-4" *ngIf="(emptyColumns$ | async) && form.touched">
+                <nui-message type="critical" [allowDismiss]="false" i18n>
+                    <b>At least one column must be added.</b>
+                </nui-message>
+            </div>
+
+            <button nui-button
+                    icon="add"
+                    displayStyle="action"
+                    id="table-widget-add-indicator-btn"
+                    type="button"
+                    class="ml-4 mb-4"
+                    (click)="addColumn()"
+                    i18n>Add new column
+            </button>
+
+            <button nui-button
+                    icon="reset"
+                    displayStyle="action"
+                    id="table-widget-reset-indicator-btn"
+                    type="button"
+                    class="ml-4 mb-4"
+                    (click)="onResetColumns()"
+                    i18n>Reset columns
+            </button>
         </div>
-
-        <div class="pl-4 pr-4" *ngIf="(emptyColumns$ | async) && form.touched">
-            <nui-message type="critical" [allowDismiss]="false" i18n>
-                <b>At least one column must be added.</b>
-            </nui-message>
-        </div>
-
-        <button nui-button
-                icon="add"
-                displayStyle="action"
-                id="table-widget-add-indicator-btn"
-                type="button"
-                class="ml-4 mb-4"
-                (click)="addColumn()"
-                i18n>Add new column
-        </button>
-
-        <button nui-button
-                icon="reset"
-                displayStyle="action"
-                id="table-widget-reset-indicator-btn"
-                type="button"
-                class="ml-4 mb-4"
-                (click)="onResetColumns()"
-                i18n>Reset columns
-        </button>
     </div>
+    <nui-message class="m-4 d-block"
+                 *ngIf="dataSourceManager?.dataSource && !(dataSourceManager?.dataSource?.busy | async) && !dataSourceFields.length"
+                 type="info"
+                 [allowDismiss]="false" i18n>
+        <b>Data source needs to be configured</b>
+    </nui-message>
+    <nui-message class="m-4 d-block" *ngIf="!dataSourceManager?.dataSource" type="info"
+                 [allowDismiss]="false" i18n>
+        <b>Select a data source</b>
+    </nui-message>
 </div>
+

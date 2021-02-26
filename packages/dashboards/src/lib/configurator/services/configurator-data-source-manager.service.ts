@@ -6,7 +6,6 @@ import { IDataSourceOutput } from "../../components/providers/types";
 import { PIZZAGNA_EVENT_BUS } from "../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../types";
 
-
 @Injectable()
 export class ConfiguratorDataSourceManagerService implements OnDestroy {
 
@@ -28,7 +27,6 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
         });
 
         this.eventBus.subscribeUntil(DATA_SOURCE_CHANGE, this.onDestroy$, (event: IEvent<any>) => {
-
         });
     }
 

@@ -14,12 +14,13 @@ import { TableColumnsConfigurationComponent } from "../../configurator/component
 import { TableFiltersEditorComponent } from "../../configurator/components/widgets/table/filters-editor/table-filters-editor.component";
 import {
     DEFAULT_PIZZAGNA_ROOT,
+    NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
     NOVA_GENERIC_ARRAY_CONVERTER,
     NOVA_GENERIC_CONVERTER,
     NOVA_TABLE_COLUMNS_CONVERTER,
     NOVA_TABLE_FILTERS_CONVERTER,
     NOVA_TABLE_FORMATTERS_REGISTRY,
-    NOVA_TITLE_AND_DESCRIPTION_CONVERTER
+    NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
@@ -69,6 +70,9 @@ export const tableConfigurator: IPizzagna = {
                 [WellKnownProviders.FormattersRegistry]: {
                     providerId: NOVA_TABLE_FORMATTERS_REGISTRY,
                 },
+                "dataSourceManager": {
+                    providerId: NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
+                }
             },
         },
         // /presentation
