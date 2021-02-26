@@ -5,11 +5,11 @@
   "scripts": {
     "assemble": "npm run build && npm run test && npm run copy",
     "build": "tsc -p tsconfig.json",
-    "test": "npm run build && jasmine src/**/*_spec.js",
+    "test": "npm run build && jasmine src/**/*.spec.js",
     "copy": "npm run copy-collection && npm run copy-schematics && npm run copy-utilities",
     "copy-collection": "npx copyfiles -f \"src/collection.json\" ../dist/sdk/schematics/",
     "copy-schematics": "npx copyfiles -u 1 \"src/**/{*.json,index.js,index.js.map,index.d.ts}\" ../dist/sdk/schematics/ && npx copyfiles -u 1 \"src/**/files/**\" ../dist/sdk/schematics/",
-    "copy-utilities": "npx copyfiles -u 2 \"src/utility/**/{*.js,*.js.map,*.d.ts}\" ../dist/sdk/schematics/utility/"
+    "copy-utilities": "npx copyfiles -u 2 \"src/utility/**/!(*.ts|*.spec.js|*.spec.js.map)\" ../dist/sdk/schematics/utility/ && npx copyfiles -u 2 \"src/utility/**/!(*spec)*.d.ts\" ../dist/sdk/schematics/utility/"
   },
   "keywords": [
     "schematics"
