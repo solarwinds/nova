@@ -88,7 +88,18 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     @Input() public isInErrorState: boolean;
 
     /** Input to set aria label text */
-    @Input() public ariaLabel: string = "";
+    @Input() public get ariaLabel(): string {
+        return this._ariaLabel;
+    }
+
+    // changing the value with regular @Input doesn't trigger change detection
+    // so we need to do that manually in the setter
+    public set ariaLabel(value: string) {
+        if (value !== this._ariaLabel) {
+            this._ariaLabel = value;
+            this.cdRef.markForCheck();
+        }
+    }
 
     /** Corresponds to the Textbox of the Combobox */
     @ViewChild("input", { static: false})
@@ -124,6 +135,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     protected destroy$: Subject<void> = new Subject();
     protected mouseDown: boolean;
     private _selectedOptions: SelectV2OptionComponent[] = [];
+
+    private _ariaLabel: string = "";
 
     /** Emits value which has been selected */
     @Output() public valueSelected = new EventEmitter<OptionValueType | OptionValueType[] | null>();

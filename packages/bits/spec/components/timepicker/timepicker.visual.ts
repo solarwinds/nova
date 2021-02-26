@@ -54,5 +54,5 @@ describe("Visual tests: Timepicker", () => {
         await eyes.checkWindow("Unelected menuitem in Basic Timepicker is focused");
 
         await eyes.close();
-    }, 100000);
+    }, 200000);
 });

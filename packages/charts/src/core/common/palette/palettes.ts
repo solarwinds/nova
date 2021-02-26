@@ -73,7 +73,7 @@ export const CHART_PALETTE_CS3: string[] = [
 ];
 
 /** @deprecated
- * Will be removed in v.11
+ * Will be removed in v.12
  * https://jira.solarwinds.com/browse/NUI-4296?jql=text%20~%20%22v11%22
  *
  * Default status color sequence for charts */
@@ -87,7 +87,7 @@ export const CHART_PALETTE_CS_S: string[] = [
 ];
 
 /** Extended status color sequence for charts
- * It will substitute the default one above in v.11
+ * It will substitute the default one above in v.12
  * https://jira.solarwinds.com/browse/NUI-5367
  */
 export const CHART_PALETTE_CS_S_EXTENDED: string[] = [
