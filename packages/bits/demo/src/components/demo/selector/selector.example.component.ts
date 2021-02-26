@@ -14,14 +14,19 @@ export class SelectorExampleComponent {
 
     public onSelectionChange(event: SelectionType): void {
         this.selection = event;
+
         switch (this.selection) {
             case SelectionType.All:
+                this.checkBoxStatus =  CheckboxStatus.Checked;
                 this.availableStatuses = this.getMenuItems([SelectionType.AllPages, SelectionType.None]);
                 break;
             case SelectionType.AllPages:
+                this.checkBoxStatus =  CheckboxStatus.Checked;
                 this.availableStatuses = this.getMenuItems([SelectionType.All, SelectionType.None]);
                 break;
             case SelectionType.None:
+            case SelectionType.UnselectAll:
+                this.checkBoxStatus =  CheckboxStatus.Unchecked;
                 this.availableStatuses = this.getMenuItems([SelectionType.All, SelectionType.AllPages]);
                 break;
         }
@@ -29,6 +34,7 @@ export class SelectorExampleComponent {
 
     public makeIndeterminate(): void {
         this.checkBoxStatus = CheckboxStatus.Indeterminate;
+        this.selection = SelectionType.SomePages;
     }
 
     public makeAppendedToBody(): void {
@@ -44,5 +50,4 @@ export class SelectorExampleComponent {
         });
         return resultArr;
     }
-
 }

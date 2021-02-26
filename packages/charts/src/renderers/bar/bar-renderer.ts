@@ -38,7 +38,6 @@ export class BarRenderer extends XYRenderer<IRectangleAccessors> {
 
     public DEFAULT_CONFIG: IBarRendererConfig = {
         transitionDuration: 300,
-        minOrdinalSize: 0,
         padding: 1,
         barClass: "bar-outline",
         highlightStrategy: undefined,

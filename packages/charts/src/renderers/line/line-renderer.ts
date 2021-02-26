@@ -18,11 +18,6 @@ import { ILineAccessors } from "./line-accessors";
  * Renderer that is able to draw line chart
  */
 export class LineRenderer extends XYRenderer<ILineAccessors> {
-
-    /** @Deprecated, use getStrokeStyleDashed */
-    public static STROKE_STYLE_DASHED = "2,2";
-    /** @Deprecated, use getStrokeStyleDotted */
-    public static STROKE_STYLE_DOTTED = "1,1";
     public static UNCLIPPED_DATA_LAYER_NAME = "unclipped-data";
     public static LINE_CAP_CLASS_NAME = "nui-chart-line-cap";
 

@@ -28,7 +28,7 @@ describe("Visual tests: DatePicker", () => {
         await datepickerBasic.hover();
         await eyes.checkWindow("Hover state");
 
-        await datepickerBasic.clickCalendarIcon();
+        await datepickerBasic.toggle();
         await datepickerBasic.hover(datepickerBasic.getActiveDay());
         await eyes.checkWindow("Opened state");
 
