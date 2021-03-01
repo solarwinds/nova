@@ -461,11 +461,10 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    name: snyk auth
-                    command: snyk auth $SNYK_TOKEN
             -   snyk/scan:
+                    fail-on-issues: false
                     monitor-on-build: true
+                    token-variable: SNYK_TOKEN
                     additional-arguments: "--dev --all-projects --strict-out-of-sync=false"
 workflows:
     version: 2.1
