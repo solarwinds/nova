@@ -465,7 +465,7 @@ jobs:
                     fail-on-issues: false
                     monitor-on-build: true
                     token-variable: SNYK_TOKEN
-                    additional-arguments: "--dev --all-projects --exclude=[dist,nova/package.json] --strict-out-of-sync=false"
+                    additional-arguments: "--dev --all-projects --exclude=dist,nova/package.json --strict-out-of-sync=false"
 workflows:
     version: 2.1
     nova:
