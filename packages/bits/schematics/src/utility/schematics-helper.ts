@@ -1,21 +1,24 @@
 import { JsonAstArray, JsonAstObject, JsonParseMode, parseJsonAst, strings } from "@angular-devkit/core";
-import { SchematicContext, SchematicsException } from "@angular-devkit/schematics";
+import { Rule, SchematicContext, SchematicsException } from "@angular-devkit/schematics";
 import { Tree } from "@angular-devkit/schematics/src/tree/interface";
+import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
 import { addImportToModule } from "@angular/cdk/schematics";
 import { addDeclarationToModule, addProviderToModule, isImported } from "@schematics/angular/utility/ast-utils";
-import { InsertChange } from "@schematics/angular/utility/change";
-import {
-    appendValueInAstArray,
-    findPropertyInAstObject,
-    insertPropertyInAstObjectInOrder
-} from "@schematics/angular/utility/json-utils";
-import * as ts from "typescript";
+import { Change, InsertChange } from "@schematics/angular/utility/change";
+import { NodeDependency, NodeDependencyType } from "@schematics/angular/utility/dependencies";
+import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
+import ts from "typescript";
+
+import { appendValueInAstArray, findPropertyInAstObject, insertPropertyInAstObjectInOrder } from "./json-utils";
+import { getProject } from "./project";
+import { getProjectTargets } from "./project-targets";
+import { getWorkspace } from "./workspace";
 
 export function updateJsonFile(host: Tree, context: SchematicContext, filename: string, propertyChain: string[], itemToAdd: any) {
     const lastProperty = propertyChain[propertyChain.length - 1];
     try {
-        const source = host.read(<string> filename)?.toString("utf-8") ?? "";
-        const sourceAstObj = <JsonAstObject>parseJsonAst(source, JsonParseMode.Strict);
+        const source = host.read(<string>filename)?.toString("utf-8") ?? "";
+        const sourceAstObj = <JsonAstObject>parseJsonAst(source, JsonParseMode.CommentsAllowed);
 
         let targetObj: JsonAstObject, parentObj: JsonAstObject | undefined;
 
@@ -101,29 +104,29 @@ export function updateModuleChanges(
 
     const declarationRecorder = host.beginUpdate(modulePath);
 
-    declarations.forEach(item => {
+    declarations.forEach((item: IModuleItem) => {
         const changeList = addDeclarationToModule(moduleSource, modulePath, item.item, item.path);
-        changeList.forEach(change => {
+        changeList.forEach((change: Change) => {
             if (change instanceof InsertChange) {
                 declarationRecorder.insertLeft(change.pos, change.toAdd);
             }
         });
     });
 
-    providers.forEach(item => {
+    providers.forEach((item: IModuleItem) => {
         const changeList = addProviderToModule(moduleSource, modulePath, item.item, item.path);
 
-        changeList.forEach(change => {
+        changeList.forEach((change: Change) => {
             if (change instanceof InsertChange) {
                 declarationRecorder.insertLeft(change.pos, change.toAdd);
             }
         });
     });
 
-    modules.forEach(item => {
+    modules.forEach((item: IModuleItem) => {
         if (!isImported(moduleSource, item.item, item.path)) {
-            const moduleChanges = addImportToModule(moduleSource, modulePath, item.item, module.path);
-            moduleChanges.forEach(change => {
+            const moduleChanges = addImportToModule(moduleSource, modulePath, item.item, item.path);
+            moduleChanges.forEach((change: Change) => {
                 if (change instanceof InsertChange) {
                     declarationRecorder.insertLeft(change.pos, change.toAdd);
                 }
@@ -132,4 +135,48 @@ export function updateModuleChanges(
     });
 
     host.commitUpdate(declarationRecorder);
+}
+
+export function getBrowserProjectTargets(host: Tree, options: any): BrowserBuilderTarget {
+    const workspace = getWorkspace(host);
+    const clientProject = getProject(workspace, options.project);
+    // @ts-ignore: Avoiding strict mode errors, preserving old behavior
+    return getProjectTargets(clientProject)["build"];
+}
+
+export function addStylesToAngularJson(options: any, stylePaths: string[]) {
+    return (host: Tree, context: SchematicContext) => {
+        updateJsonFile(host,
+            context,
+            "angular.json",
+            [
+                "projects",
+                options.project,
+                "architect",
+                "build",
+                "options",
+                "styles",
+            ],
+            stylePaths
+        );
+    };
+}
+
+export function installPackageJsonDependencies(): Rule {
+    return (host: Tree, context: SchematicContext) => {
+        context.addTask(new NodePackageInstallTask());
+        context.logger.info(` Installing packages...`);
+        return host;
+    };
+}
+
+export function assembleDependencies(dependencies: Record<string, string>): NodeDependency[] {
+    return Object.keys(dependencies).map((key) => (
+        {
+            type: NodeDependencyType.Default,
+            version: dependencies[key],
+            name: key,
+            overwrite: true,
+        }
+    ));
 }

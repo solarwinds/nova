@@ -62,7 +62,18 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
     /**
      * Input to set aria label text
      */
-    @Input() ariaLabel: string;
+    @Input() public get ariaLabel(): string {
+        return this._ariaLabel;
+    }
+
+    // changing the value with regular @Input doesn't trigger change detection
+    // so we need to do that manually in the setter
+    public set ariaLabel(value: string) {
+        if (value !== this._ariaLabel) {
+            this._ariaLabel = value;
+            this.changeDetector.markForCheck();
+        }
+    }
 
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
@@ -145,6 +156,8 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
 
     private rendererListener: Function;
     private sub: Subscription;
+
+    private _ariaLabel: string = "";
 
     constructor(private changeDetector: ChangeDetectorRef,
                 private eventBusService: EventBusService,

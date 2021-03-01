@@ -18,7 +18,7 @@ import { InteractionLabelPlugin } from "../plugins/interaction/interaction-label
 import { InteractionLinePlugin } from "../plugins/interaction/interaction-line-plugin";
 
 import { ChartAssist } from "./chart-assist";
-import { IChartAssist, ISpark, ISparkChartAssistChart } from "./types";
+import { IChartAssist, ISpark } from "./types";
 
 /**
  * Chart assist implementation to be used with spark charts
@@ -33,12 +33,6 @@ export class SparkChartAssist implements IChartAssist {
     /** Grid config for the last (bottom) spark */
     public readonly lastGridConfig: XYGridConfig;
 
-    /**
-     * @deprecated Removal ticket NUI-3327
-     * Please use SparkChartAssist.sparks instead
-     */
-    public charts: ISparkChartAssistChart[] = []; // tslint:disable-line:deprecation
-
     public highlightedDataPoints: IDataPointsPayload = {};
 
     constructor(public readonly showBottomAxis = true,
@@ -50,14 +44,6 @@ export class SparkChartAssist implements IChartAssist {
 
         this.lastGridConfig = sparkChartGridConfig(new XYGridConfig(), showBottomAxis, showTopBorder);
         this.lastGridConfig.interactionPlugins = false;
-    }
-
-    /**
-     * @deprecated Removal ticket NUI-3327
-     * Please use SparkChartAssist.sparks[0] instead
-     */
-    public get sparkChart(): ISparkChartAssistChart | null {          // tslint:disable-line:deprecation
-        return this.charts.length > 0 ? this.charts[0] : null; // tslint:disable-line:deprecation
     }
 
     /**
@@ -78,7 +64,6 @@ export class SparkChartAssist implements IChartAssist {
      */
     public updateSparks(sparks: ISpark<IAccessors>[]): void {
         const inputSparks = cloneDeep(sparks);
-        this.charts = []; // tslint:disable-line:deprecation
         this.sparks = inputSparks.map((spark, index): ISpark<IAccessors> => {
             const lastSpark = index === inputSparks.length - 1;
             const existingSparkIndex = spark.id ? this.sparks.findIndex(existingSpark => existingSpark.id === spark.id) : -1;
@@ -90,9 +75,6 @@ export class SparkChartAssist implements IChartAssist {
             }
 
             spark.chart.update(spark.chartSeriesSet);
-
-            // tslint:disable-next-line:deprecation
-            this.charts.push({ chart: spark.chart, chartSeries: spark.chartSeriesSet[0] });
 
             return spark;
         });

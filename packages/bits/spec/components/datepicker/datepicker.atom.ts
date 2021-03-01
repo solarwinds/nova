@@ -2,7 +2,7 @@ import moment, { Moment } from "moment/moment";
 import { by, ElementFinder, Key, protractor } from "protractor";
 
 import { Atom } from "../../atom";
-import { PopupAtom } from "../popup/popup.atom";
+import { OverlayAtom } from "../overlay/overlay.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
 
 
@@ -14,7 +14,7 @@ export class DatepickerAtom extends Atom {
     public static MONTHNAMES_LONG: string[] = ["January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"];
 
-    public popup = Atom.findIn(PopupAtom, this.getElement());
+    public overlay = Atom.findIn(OverlayAtom, this.getElement());
     public textbox = Atom.findIn(TextboxAtom, this.getElement());
 
     public selectDate = async (day: number): Promise<void> => this.clickCalendarItem(day.toString());
@@ -76,7 +76,10 @@ export class DatepickerAtom extends Atom {
 
     public clickTodayButton = async (): Promise<void> => this.getElementByCss("button.today-button").click();
 
-    public clickCalendarIcon = async (): Promise<void> => this.getElementByCss(".nui-datepicker__icon").click();
+    /** @deprecated As of Nova v11, use 'toggle' method instead. Removal: NUI-5865 */
+    public clickCalendarIcon = async (): Promise<void> => this.toggle();
+
+    public toggle = async (): Promise<void> => this.getElementByCss(".nui-datepicker__icon").click();
 
     public clickChangeModeButton = async (): Promise<void> => this.getElementByCss(".change-mode-button").click();
 

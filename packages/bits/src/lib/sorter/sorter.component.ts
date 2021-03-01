@@ -24,7 +24,6 @@ import { LoggerService } from "../../services/log-service";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
 
 import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
 
@@ -71,8 +70,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
     };
 
-    protected popupUtilities: OverlayUtilitiesService = new OverlayUtilitiesService();
-
+    @ViewChild("toggleRef", {static: true}) private toggleRef: ElementRef;
     private sortConfig: ISortedItem;
     private sortIcons: { [key: string]: string } = {
         [SorterDirection.ascending]: "arrow-up",
@@ -124,7 +122,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(_ => this.overlay.hide());
 
-        this.initPopupUtilities();
+        this.updateOverlayWidth();
     }
 
     public select(item: IMenuItem) {
@@ -137,6 +135,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
                 sortBy: item.value,
             });
 
+            this.updateOverlayWidth();
             this.triggerSorterAction(oldValue);
             this.setPopupSelection();
             this.overlay.hide();
@@ -173,6 +172,10 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         };
     }
 
+    public updateOverlayWidth() {
+        this.overlayConfig.minWidth = (this.toggleRef.nativeElement as HTMLElement).offsetWidth;
+    }
+
     public ngOnDestroy() {
         this.onDestroy$.next();
         this.onDestroy$.complete();
@@ -206,21 +209,6 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     private setPopupSelection(): void {
         this.items[0].itemsSource.forEach((popupItem: IMenuItem) => {
             popupItem.isSelected = popupItem.value === this.selectedItem;
-        });
-    }
-
-    private initPopupUtilities() {
-        const resizeObserver = this.popupUtilities
-            .setPopupComponent(this.overlay)
-            .getResizeObserver();
-
-        this.overlay.show$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            this.popupUtilities.syncWidth();
-            resizeObserver.observe(this.el.nativeElement);
-        });
-
-        this.overlay.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            resizeObserver.unobserve(this.el.nativeElement);
         });
     }
 
