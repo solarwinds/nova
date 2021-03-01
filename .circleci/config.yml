@@ -461,11 +461,14 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Install node_modules
+                    command: npm install -q
             -   snyk/scan:
-                    fail-on-issues: false
+                    fail-on-issues: true
                     monitor-on-build: true
                     token-variable: SNYK_TOKEN
-                    additional-arguments: "--dev --all-projects --exclude=dist,nova/package.json --strict-out-of-sync=false"
+                    additional-arguments: "--dev --all-projects --exclude=dist --strict-out-of-sync=false"
 workflows:
     version: 2.1
     nova:
