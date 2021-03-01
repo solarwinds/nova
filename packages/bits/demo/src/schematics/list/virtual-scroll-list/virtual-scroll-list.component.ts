@@ -3,6 +3,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    ElementRef,
     Inject,
     OnDestroy,
     OnInit,
@@ -90,15 +91,19 @@ export class VirtualScrollListComponent implements OnInit, AfterViewInit, OnDest
     @ViewChild(SorterComponent) sorter: SorterComponent;
 
     private destroy$ = new Subject();
+    private intersectionObserver: IntersectionObserver;
 
     constructor(
         @Inject(DataSourceService) private dataSource: VirtualScrollListDataSource<IServer>,
         private changeDetection: ChangeDetectorRef,
-        private viewportManager: VirtualViewportManager
+        private viewportManager: VirtualViewportManager,
+        private elRef: ElementRef
     ) {
     }
 
     public ngOnInit() {
+        this.intersectionObserver = new IntersectionObserver(this.intersectionObserverCallback);
+        this.intersectionObserver.observe(this.elRef.nativeElement);
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -163,6 +168,7 @@ export class VirtualScrollListComponent implements OnInit, AfterViewInit, OnDest
     }
 
     public ngOnDestroy() {
+        this.intersectionObserver?.unobserve(<Element>this.elRef.nativeElement);
         this.destroy$.next();
         this.destroy$.complete();
     }
@@ -197,5 +203,11 @@ export class VirtualScrollListComponent implements OnInit, AfterViewInit, OnDest
     public async onSorterAction(changes: ISorterChanges) {
         this.sortBy = changes.newValue.sortBy;
         await this.applyFilters();
+    }
+
+    private intersectionObserverCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+        if (entries[0].isIntersecting) {
+            this.repeat.viewportRef.checkViewportSize();
+        }
     }
 }
