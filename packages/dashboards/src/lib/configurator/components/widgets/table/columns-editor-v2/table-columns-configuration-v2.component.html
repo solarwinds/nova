@@ -1,4 +1,4 @@
-<div nui-busy [busy]="dataSourceManager?.dataSource?.busy | async" class="nui-table-columns-configuration">
+<div class="nui-table-columns-configuration">
     <div *ngIf="dataSourceFields.length" cdkDropList (cdkDropListDropped)="drop($event)"
          [formGroup]="form">
         <div formArrayName="columns">

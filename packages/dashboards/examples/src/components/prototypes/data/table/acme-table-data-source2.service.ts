@@ -106,6 +106,7 @@ export class AcmeTableDataSource2 extends DataSourceService<IRandomUserTableMode
                 start: start,
             } as UsersQueryResponse;
         } catch (e) {
+            this.busy.next(false);
             this.logger.error(responseError);
         }
     }

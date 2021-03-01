@@ -27,6 +27,7 @@ import { DashwizStepComponent } from "../dashwiz-step/dashwiz-step.component";
 import { IDashwizButtonsComponent, IDashwizStepComponent, IDashwizStepNavigatedEvent, IDashwizWaitEvent } from "../types";
 
 import { DashwizButtonsComponent } from "./dashwiz-buttons.component";
+import { DashwizService } from "./dashwiz.service";
 
 /**
  * Component that provides wizard functionality.
@@ -114,7 +115,12 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
 
     constructor(private changeDetector: ChangeDetectorRef,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private logger: LoggerService) { }
+        private logger: LoggerService,
+        private dashwizService: DashwizService) {
+        if (dashwizService) {
+            dashwizService.component = this;
+        }
+    }
 
     ngOnInit() {
         this.buttonComponentTypes = this.buttonComponentTypes || [DashwizButtonsComponent.lateLoadKey];
@@ -175,6 +181,7 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
     public ngOnDestroy() {
         this.steps.toArray().forEach((step: DashwizStepComponent) => step.valid.unsubscribe());
         this.navigationControl.unsubscribe();
+        this.dashwizService.component = undefined;
     }
 
     public addStepDynamic(wizardStep: IDashwizStepComponent, indexToInsert: number) {

@@ -17,6 +17,7 @@ import { RefresherSettingsService } from "../components/providers/refresher-sett
 import { StatusContentFallbackAdapter } from "../components/providers/status-content-fallback-adapter";
 import { TableDataSourceAdapter } from "../components/providers/table-data-source-adapter";
 import { TimeseriesDataSourceAdapter } from "../components/providers/timeseries-data-source-adapter";
+import { DashwizService } from "../configurator/components/wizard/dashwiz/dashwiz.service";
 import { ConfiguratorDataSourceManagerService } from "../configurator/services/configurator-data-source-manager.service";
 import { KpiSectionConverterService } from "../configurator/services/converters/kpi/kpi-section-converter/kpi-section-converter.service";
 import { KpiTilesConverterService } from "../configurator/services/converters/kpi/kpi-tiles-converter.service";
@@ -229,7 +230,7 @@ export class ProviderRegistryService {
             },
             [NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER]: {
                 provide: ConfiguratorDataSourceManagerService,
-                deps: [PIZZAGNA_EVENT_BUS],
+                deps: [PIZZAGNA_EVENT_BUS, [new Optional(), DashwizService]],
             },
         });
     }
