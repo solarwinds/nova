@@ -462,7 +462,8 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run: 
-                    npm install -q
+                    name: Install node_modules
+                    command: npm install -q
             -   snyk/scan:
                     fail-on-issues: false
                     monitor-on-build: true
