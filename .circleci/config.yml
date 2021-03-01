@@ -461,6 +461,9 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: snyk auth
+                    command: snyk auth $SNYK_TOKEN
             -   snyk/scan:
                     monitor-on-build: true
                     additional-arguments: "--dev --all-projects --strict-out-of-sync=false"
