@@ -15,6 +15,9 @@
         "lib": ["es2015", "dom"],
         "importHelpers": true
     },
+    // "angularCompilerOptions": {
+    //     "strictTemplates": true,
+    // },
     "exclude": [
         "node_modules",
         "atoms.d.ts"

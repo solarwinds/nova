@@ -3,7 +3,7 @@ import { ITransientCache } from "./public-api";
 import { TransientCacheFactory } from "./transient-cache-factory.service";
 import { UtilService } from "./util.service";
 
-fdescribe("services >", () => {
+describe("services >", () => {
     describe("transientCacheFactory >", () => {
         let utilService: UtilService;
         let cacheFactory: TransientCacheFactory;

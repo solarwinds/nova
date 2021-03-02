@@ -5,7 +5,7 @@ import { NuiValidators } from "./nui-validators";
 
 describe("validators >", () => {
     // TODO: Bring back in after NUI-5787
-    fdescribe("integerValidator >", () => {
+    describe("integerValidator >", () => {
         let formBuilder: FormBuilder;
         const commonTestCases = [
             { num: "0", result: true },

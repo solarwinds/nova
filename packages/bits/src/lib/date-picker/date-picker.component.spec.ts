@@ -109,7 +109,7 @@ const eventMock = {};
         });
 
         // TODO: Bring back in after NUI-5787
-        fit("should load with selected date being today", () => {
+        it("should load with selected date being today", () => {
             const activeDate = moment();
             componentInstance.writeValue(activeDate);
             componentInstance.overlay.toggle();

@@ -44,7 +44,7 @@ class DroppableTestingComponent {
     public onDragLeave(event: DragEvent) { _noop(); }
 }
 
-fdescribe("directives >", () => {
+describe("directives >", () => {
     describe("droppable >", () => {
         type DragEventType = "drag" |
             "dragstart" |
