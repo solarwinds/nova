@@ -74,7 +74,7 @@
             </nui-schematic-docs-example>
         </nui-tab>
 
-        <nui-tab heading="Virtual Scroll">
+        <nui-tab heading="Virtual Scroll" #vs>
             <h2>Virtual Scroll</h2>
             <p>
                 This example shows how to add virtual scroll to <code>nui-repeat</code> with a remote data source.
@@ -87,7 +87,7 @@
             </nui-message>
             <nui-schematic-docs-command>ng g @nova-ui/bits:list --name=scrollable-list --p=app --pagingMode=virtualScroll --dataSource=serverSide</nui-schematic-docs-command>
             <nui-schematic-docs-example exampleFolderName="virtual-scroll-list">
-                <app-virtual-scroll-list></app-virtual-scroll-list>
+                <app-virtual-scroll-list *ngIf="vs.active"></app-virtual-scroll-list>
             </nui-schematic-docs-example>
         </nui-tab>
     </nui-tab-group>
