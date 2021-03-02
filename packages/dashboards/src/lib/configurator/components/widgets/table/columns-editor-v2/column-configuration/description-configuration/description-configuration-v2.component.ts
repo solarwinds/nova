@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef } from "@angular/core";
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validators } from "@angular/forms";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import {
+    AbstractControl,
+    ControlValueAccessor,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR,
+    ValidationErrors,
+    Validators
+} from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -24,8 +34,11 @@ import { IHasChangeDetector } from "../../../../../../../types";
         },
     ],
 })
-export class DescriptionConfigurationV2Component implements IHasChangeDetector, ControlValueAccessor {
+export class DescriptionConfigurationV2Component implements IHasChangeDetector, ControlValueAccessor, OnInit {
     static lateLoadKey = "DescriptionConfigurationV2Component";
+
+    @Input() formControl: AbstractControl;
+    @Input() isWidthMessageDisplayed = false;
 
     public form: FormGroup;
     public changeFn: Function;
@@ -75,6 +88,16 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
         this.changeDetector.markForCheck();
     }
 
+    public ngOnInit(): void {
+        const origFunc = this.formControl.markAsTouched;
+        this.formControl.markAsTouched = () => {
+            // @ts-ignore
+            origFunc.apply(this.formControl, arguments);
+
+            this.form.markAllAsTouched();
+        };
+    }
+
     public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
@@ -82,6 +105,11 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
 
     public stub() {
         // empty function to hotfix textbox-number behavior
+    }
+
+    public isWidthMessageDisplayedForThisColumn() {
+        const width = this.form.controls["width"].value;
+        return this.isWidthMessageDisplayed && typeof width !== "number";
     }
 
 }

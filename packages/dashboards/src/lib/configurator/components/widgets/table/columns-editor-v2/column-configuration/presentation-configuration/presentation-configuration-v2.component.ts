@@ -13,6 +13,7 @@ import {
     SimpleChanges
 } from "@angular/core";
 import {
+    AbstractControl,
     ControlContainer,
     ControlValueAccessor,
     FormBuilder,
@@ -81,6 +82,8 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
 
     @Input() public dataFieldIds: string[];
 
+    @Input() formControl: AbstractControl;
+
     private _dataFields: Array<IDataField> = [];
 
     public set dataFields(dataFields: Array<IDataField>) {
@@ -131,14 +134,6 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
                 this.changeDetector.detectChanges();
             });
 
-        this.form.statusChanges
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe(() => {
-                if (this.form.touched) {
-                    this.touchFn();
-                }
-            });
-
         this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent<any | IDataSourceOutput<any>>) => {
             const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
 
@@ -147,6 +142,14 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     }
 
     public ngOnInit(): void {
+        const origFunc = this.formControl.markAsTouched;
+        this.formControl.markAsTouched = () => {
+            // @ts-ignore
+            origFunc.apply(this.formControl, arguments);
+
+            this.form.markAllAsTouched();
+            this.propertiesForm.markAllAsTouched();
+        };
     }
 
     public ngOnDestroy(): void {
@@ -219,12 +222,15 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
         this.propertiesFormReady.next();
 
         this.propertiesForm = form;
+
+        const propertiesControl = this.form.controls["properties"];
         const updateParentForm = () => {
-            this.form.controls["properties"].setValue(this.propertiesForm.value);
+            propertiesControl.setValue(this.propertiesForm.value);
             this.onValueChange();
         };
 
         updateParentForm();
+        propertiesControl.markAsPristine();
 
         this.propertiesForm.valueChanges
             .pipe(takeUntil(this.propertiesFormReady))

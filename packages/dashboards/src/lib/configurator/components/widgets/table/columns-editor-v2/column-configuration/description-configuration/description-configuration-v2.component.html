@@ -28,7 +28,7 @@
             </nui-form-field>
 
             <ng-container *ngIf="form.get('isActive')?.value">
-                <ng-container *ngIf="!isWidthMessageDisplayed">
+                <ng-container *ngIf="!isWidthMessageDisplayedForThisColumn()">
                     <div class="mt-4">
                         <nui-form-field caption="Column width (px)" i18n-caption
                                         class="mb-3"
@@ -45,9 +45,11 @@
                         </nui-form-field>
                     </div>
                 </ng-container>
-                <nui-message *ngIf="isWidthMessageDisplayed" type="info" [allowDismiss]="false" i18n>
-                    <b>All columns can not have fixed width.</b>
-                </nui-message>
+                <div *ngIf="isWidthMessageDisplayedForThisColumn()" class="mt-4">
+                    <nui-message type="info" [allowDismiss]="false" i18n>
+                        <b>All columns can not have fixed width.</b>
+                    </nui-message>
+                </div>
             </ng-container>
         </div>
 

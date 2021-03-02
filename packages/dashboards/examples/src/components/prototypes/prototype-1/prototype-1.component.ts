@@ -18,10 +18,11 @@ import {
 import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
-import { DEFAULT_TABLE_FORMATTERS } from "../../../../../src/lib/widget-types/table/table-configurator";
 
+import { DEFAULT_TABLE_FORMATTERS } from "../../../../../src/lib/widget-types/table/table-configurator";
 import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
 import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
+import { AcmeTableDataSourceNoDataFields } from "../data/table/acme-table-data-source-no-data-fields.service";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
 import { AcmeTableDataSource3 } from "../data/table/acme-table-data-source3.service";
@@ -29,7 +30,6 @@ import { AcmeTableGBooksDataSource } from "../data/table/acme-table-gbooks-data-
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
 import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/timeseries-data-sources";
 
-import { AcmeTableDataSourceNoDataFields } from "../data/table/acme-table-data-source-no-data-fields.service";
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
