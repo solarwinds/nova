@@ -55,6 +55,9 @@ describe("Visual tests: Tooltip", () => {
         Helpers.switchDarkTheme("on");
         await eyes.checkWindow("Dark theme");
 
+        await manualTooltipButton.click();
+        await eyes.checkWindow("After tooltip triggered manually with dark theme mode on");
+
         await eyes.close();
     }, 100000);
 });
