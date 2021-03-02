@@ -9,6 +9,9 @@
       "@nova-ui/bits": ["../../src/public_api.ts"]
     }
   },
+    "angularCompilerOptions": {
+      "strictTemplates": true,
+  },
   "files": [
     "index.ts",
     "polyfills.ts"
