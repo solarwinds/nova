@@ -61,7 +61,7 @@ describe("DashboardComponent", () => {
         });
 
         it("should invoke optionsChanged on gridsterConfig.api", () => {
-            spyOn(component.gridsterConfig.api ?? {}, "optionsChanged");
+            spyOn(component.gridsterConfig.api ?? {}, "optionsChanged" as never);
             component.ngOnChanges(changes);
             expect(component.gridsterConfig.api?.optionsChanged).toHaveBeenCalled();
         });
@@ -191,12 +191,12 @@ describe("DashboardComponent", () => {
                 cols: DEFAULT_GRIDSTER_CONFIG.defaultItemCols,
             };
 
-            const spy = spyOn(component.gridsterConfig.api ?? {}, "getFirstPossiblePosition");
+            const spy = spyOn(component.gridsterConfig.api ?? {}, "getFirstPossiblePosition" as never);
 
             // component.dashboard.widgets = { [testWidget.id]: testWidget };
             component.updateWidget(testWidget);
 
-            expect(spy).toHaveBeenCalledWith(expectedPositions);
+            expect(spy).toHaveBeenCalledWith(expectedPositions as never);
         });
     });
 
