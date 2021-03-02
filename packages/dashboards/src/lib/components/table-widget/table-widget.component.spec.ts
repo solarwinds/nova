@@ -428,7 +428,6 @@ describe("TableWidgetComponent", () => {
     });
 
     describe("table columns mapping >", () => {
-        // re-enable with NUI-5787
         it("should correctly map data with one data field", () => {
             configuration.columns = oneDataFieldColumns;
             component.ngOnChanges(createSimpleChanges(configuration, tableData, dataFields));
