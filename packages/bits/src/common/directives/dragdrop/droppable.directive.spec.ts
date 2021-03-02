@@ -1,4 +1,3 @@
-// TODO: Bring back in after NUI-5787
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";

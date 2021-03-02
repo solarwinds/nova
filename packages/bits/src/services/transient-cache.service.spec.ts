@@ -1,4 +1,3 @@
-// TODO: Bring back in after NUI-5787
 import { ITransientCache } from "./public-api";
 import { TransientCacheService } from "./transient-cache.service";
 import { UtilService } from "./util.service";

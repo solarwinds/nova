@@ -67,7 +67,6 @@ describe("components >", () => {
             });
         });
 
-        // TODO: Bring back in after NUI-5787
         describe("input data  on inputText event", () => {
             it("should set valid input", () => {
                 inputControl.nativeElement.value = "1";
