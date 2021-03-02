@@ -34,8 +34,8 @@
                     [itemsSource]="<%
                         if (dataSource === 'none' || dataSource === 'clientSide') {%>filteringState.repeat?.itemsSource<%}
                         else if (dataSource === "serverSide") {%>listItems$ | async<% } %>"
-                    virtualScroll="true"
-                    itemSize="30"<%
+                    [virtualScroll]="true"
+                    [itemSize]="30"<%
                     } else { %>
                     [itemsSource]="filteringState.repeat?.itemsSource"<% } if (selectionMode !== "none") { %>
                     (selectionChange)="onRepeatOutput($event)"><% } else { %>><% } %>
@@ -49,7 +49,7 @@
                 <div class="d-flex pt-3 pb-3" i18n>
                     Showing {{<%
                     if (dataSource === 'none' || dataSource === 'clientSide') {%>filteringState.repeat?.itemsSource<% }
-                    else if (dataSource === "serverSide") {%>(listItems$ | async)<% }%>.length}} of {{ totalItems }}.
+                    else if (dataSource === "serverSide") {%>(listItems$ | async)<% }%>.length}} of {{ totalItems }}
                 </div><%
                 if (pagingMode === "virtualScroll") {%>
                 <div class="d-flex pt-3 pb-3">

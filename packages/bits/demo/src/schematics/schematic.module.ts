@@ -106,8 +106,8 @@ enum FilteredViewRoutes {
 
 const FILTERED_VIEW_CHILD_ROUTES: (Route & { path: FilteredViewRoutes })[] = [
     {
-      path: FilteredViewRoutes.Main,
-      component: FilteredViewSchematicExampleComponent,
+        path: FilteredViewRoutes.Main,
+        component: FilteredViewSchematicExampleComponent,
     },
     {
         path: FilteredViewRoutes.List,
@@ -192,10 +192,16 @@ const staticRoutes: Routes = [
     {
         path: "list-outlet",
         component: ListSchematicsOutletComponent,
-        children: [{
-            path: "selection",
-            component: SelectionListComponent,
-        }],
+        children: [
+            {
+                path: "selection",
+                component: SelectionListComponent,
+            },
+            {
+                path: "vscroll",
+                component: VirtualScrollListComponent,
+            },
+        ],
     },
     {
         path: "table",
@@ -306,13 +312,12 @@ const staticRoutes: Routes = [
         },
         {
             provide: APOLLO_OPTIONS,
-            useFactory: (httpLink: HttpLink) =>
-                ({
-                    cache: new InMemoryCache(),
-                    link: httpLink.create({
-                        uri: COUNTRIES_API,
-                    }),
+            useFactory: (httpLink: HttpLink) => ({
+                cache: new InMemoryCache(),
+                link: httpLink.create({
+                    uri: COUNTRIES_API,
                 }),
+            }),
             deps: [HttpLink],
         },
     ],
