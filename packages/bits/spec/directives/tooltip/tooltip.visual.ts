@@ -33,7 +33,6 @@ describe("Visual tests: Tooltip", () => {
     });
     it("Default look", async () => {
         await eyes.open(browser, "NUI", "Tooltip");
-        await eyes.checkWindow("Default");
 
         await basicTooltipButton.hover();
         await eyes.checkWindow("Hover on button with basic tooltip");
@@ -50,11 +49,8 @@ describe("Visual tests: Tooltip", () => {
         await manualTooltipButton.click();
         await eyes.checkWindow("After tooltip triggered manually");
         await manualTooltipButton.click();
-        await eyes.checkWindow("After tooltip manually dismissed");
 
         Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
-
         await manualTooltipButton.click();
         await eyes.checkWindow("After tooltip triggered manually with dark theme mode on");
 
