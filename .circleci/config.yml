@@ -1,6 +1,4 @@
 version: 2.1
-orbs:
-    snyk: snyk/snyk@0.0.12
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -581,6 +579,7 @@ workflows:
                                 - main
                                 - /release\/.*/
                                 - next
+            # Waiting on dashboards build before running scan because it's currently the last package to be built.
             -   snyk-scan:
                     requires:
                         - dashboards-build
