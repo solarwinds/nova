@@ -429,7 +429,7 @@ describe("TableWidgetComponent", () => {
 
     describe("table columns mapping >", () => {
         // re-enable with NUI-5787
-        xit("should correctly map data with one data field", () => {
+        it("should correctly map data with one data field", () => {
             configuration.columns = oneDataFieldColumns;
             component.ngOnChanges(createSimpleChanges(configuration, tableData, dataFields));
             fixture.detectChanges();

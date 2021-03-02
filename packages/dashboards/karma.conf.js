@@ -13,7 +13,10 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma')
     ],
     client:{
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
+      jasmine: {
+        random: false
+      },
     },
     coverageReporter: {
       dir: require('path').join(__dirname, 'coverage'), 
@@ -21,7 +24,6 @@ module.exports = function (config) {
         { type: 'html', subdir: 'report-html' },
         { type: 'lcovonly', subdir: 'report-lcovonly' },
       ],
-        fixWebpackSourcePaths: true
     },
       angularCli: {
           environment: 'dev'
