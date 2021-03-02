@@ -18,13 +18,14 @@ import { DialogService, EventBus, IDataSource, IEvent, uuid } from "@nova-ui/bit
 import isUndefined from "lodash/isUndefined";
 import values from "lodash/values";
 import { Observable, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 import { IDataSourceOutput } from "../../../../../components/providers/types";
 import { IDataField, ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { IHasForm, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
 import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
-import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
+import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 
 @Component({
     selector: "nui-table-columns-configuration",
@@ -46,6 +47,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     public emptyColumns$: Observable<boolean>;
     public dataSourceFields: Array<IDataField> = [];
     public draggedItemHeight: number;
+    public isWidthMessageDisplayed = false;
 
     public get columnForms(): FormControl[] {
         return (this.form.controls["columns"] as FormArray).controls as FormControl[];
@@ -65,6 +67,14 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
         this.form = this.formBuilder.group({
             columns: this.formBuilder.array([]),
         });
+
+        this.form.controls["columns"].valueChanges
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((columns: ITableWidgetColumnConfig[]) => {
+                this.isWidthMessageDisplayed = this.getWidthMessageDisplayed(columns);
+                console.log(columns.map(c => c.width));
+                this.changeDetector.markForCheck();
+            });
 
         this.eventBus.subscribeUntil(DATA_SOURCE_CREATED, this.onDestroy$, (event: IEvent<IDataSource>) => {
             if (!event.payload) {
@@ -107,6 +117,11 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
         if (changes.columns) {
             this.updateColumns(this.columns, false);
         }
+    }
+
+    public ngOnDestroy(): void {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 
     public getColumns() {
@@ -199,9 +214,23 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
         });
     }
 
-    ngOnDestroy(): void {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
+    /**
+     * This method calculates whether the width message should be displayed
+     *
+     * @param columns
+     * @private
+     */
+    private getWidthMessageDisplayed(columns: ITableWidgetColumnConfig[]) {
+        let count = 0;
+        for (const c of columns) {
+            if (typeof c.width !== "number") {
+                count++;
+            }
+            if (count > 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // ------------------------------------------------- items dynamic stuff ------------------------------------------------

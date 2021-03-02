@@ -16,7 +16,6 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
     public dataSource: IDataSource;
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>, private dashwizService: DashwizService) {
-
         this.eventBus.subscribeUntil(DATA_SOURCE_CREATED, this.onDestroy$, (event: IEvent<IDataSource>) => {
             if (!event.payload) {
                 return;
@@ -24,13 +23,13 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
 
             this.dataSource = event.payload;
             this.dataSourceCreated.next();
-            console.log(dashwizService?.component);
+
             this.dataSource.busy?.pipe(takeUntil(this.dataSourceCreated)).subscribe((isBusy) => {
                 dashwizService?.component?.navigationControl.next({
                     busyState: {
                         busy: isBusy,
                     },
-                    allowStepChange: false,
+                    allowStepChange: !isBusy,
                 });
             });
         });

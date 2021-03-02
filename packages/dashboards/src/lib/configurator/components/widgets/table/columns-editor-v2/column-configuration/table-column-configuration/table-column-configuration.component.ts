@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, forwardRef } from "@angular/core";
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
+import { ChangeDetectorRef, Component, forwardRef, Input, OnInit } from "@angular/core";
+import { AbstractControl, ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -21,7 +21,7 @@ import { ITableWidgetColumnConfig } from "../../../../../../../components/table-
         },
     ],
 })
-export class TableColumnConfigurationComponent implements ControlValueAccessor {
+export class TableColumnConfigurationComponent implements ControlValueAccessor, OnInit {
     public static lateLoadKey = "TableColumnConfigurationComponent";
 
     public form: FormGroup;
@@ -29,6 +29,9 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor {
 
     private destroy$ = new Subject();
     private input: ITableWidgetColumnConfig;
+
+    @Input() formControl: AbstractControl;
+    @Input() isWidthMessageDisplayed = false;
 
     constructor(private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef) {
         this.form = this.formBuilder.group({
@@ -44,6 +47,16 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor {
             };
             this.changeFn(newValue);
         });
+    }
+
+    public ngOnInit(): void {
+        const origFunc = this.formControl.markAsTouched;
+        this.formControl.markAsTouched = () => {
+            // @ts-ignore
+            origFunc.apply(this.formControl, arguments);
+
+            this.form.markAllAsTouched();
+        };
     }
 
     public registerOnChange(fn: any): void {

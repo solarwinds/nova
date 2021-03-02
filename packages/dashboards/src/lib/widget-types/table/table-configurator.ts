@@ -8,14 +8,10 @@ import { WidgetConfiguratorSectionComponent } from "../../configurator/component
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
 import { TableColumnsConfigurationV2Component } from "../../configurator/components/widgets/table/columns-editor-v2/table-columns-configuration-v2.component";
-import { DescriptionConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/column-configuration/description-configuration/description-configuration.component";
-import { PresentationConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/column-configuration/presentation-configuration/presentation-configuration.component";
-import { TableColumnsConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/table-columns-configuration.component";
 import { TableFiltersEditorComponent } from "../../configurator/components/widgets/table/filters-editor/table-filters-editor.component";
 import {
     DEFAULT_PIZZAGNA_ROOT,
     NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
-    NOVA_GENERIC_ARRAY_CONVERTER,
     NOVA_GENERIC_CONVERTER,
     NOVA_TABLE_COLUMNS_CONVERTER,
     NOVA_TABLE_FILTERS_CONVERTER,
@@ -25,7 +21,6 @@ import {
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
 // tslint:enable:max-line-length
-
 
 export const DEFAULT_TABLE_FORMATTERS: IFormatterDefinition[] = [
     {
@@ -54,7 +49,6 @@ export const DEFAULT_TABLE_FORMATTERS: IFormatterDefinition[] = [
     },
 ];
 
-
 export const tableConfigurator: IPizzagna = {
     [PizzagnaLayer.Structure]: {
         [DEFAULT_PIZZAGNA_ROOT]: {
@@ -72,7 +66,7 @@ export const tableConfigurator: IPizzagna = {
                 },
                 "dataSourceManager": {
                     providerId: NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
-                }
+                },
             },
         },
         // /presentation
@@ -147,8 +141,7 @@ export const tableConfigurator: IPizzagna = {
         columns: {
             id: "columns",
             componentType: TableColumnsConfigurationV2Component.lateLoadKey,
-            properties: {
-            },
+            properties: {},
             providers: {
                 [WellKnownProviders.Converter]: {
                     // this specialized converter does all the work with building the complex forms for every column of the table and mapping the data back
