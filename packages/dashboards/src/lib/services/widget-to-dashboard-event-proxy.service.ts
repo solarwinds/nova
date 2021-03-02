@@ -6,7 +6,7 @@ import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
-import { DASHBOARD_EVENT_BUS, IConfigurable, IProperties, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../types";
+import { DASHBOARD_EVENT_BUS, IConfigurable, IProperties, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../types";
 
 import { EventRegistryService } from "./event-registry.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";

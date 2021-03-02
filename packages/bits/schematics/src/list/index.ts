@@ -18,10 +18,10 @@ import { InsertChange } from "@schematics/angular/utility/change";
 import { buildRelativePath, findModuleFromOptions } from "@schematics/angular/utility/find-module";
 import { applyLintFix } from "@schematics/angular/utility/lint-fix";
 import { parseName } from "@schematics/angular/utility/parse-name";
-import { buildDefaultPath, getProject } from "@schematics/angular/utility/project";
 import { validateHtmlSelector, validateName } from "@schematics/angular/utility/validation";
 
-import {buildSelector, readIntoSourceFile, updateModuleChanges} from "../schematics-helper";
+import { buildDefaultPath, getProject } from "../utility/project";
+import { buildSelector, readIntoSourceFile, updateModuleChanges } from "../utility/schematics-helper";
 
 import { Schema as ComponentOptions } from "./schema";
 

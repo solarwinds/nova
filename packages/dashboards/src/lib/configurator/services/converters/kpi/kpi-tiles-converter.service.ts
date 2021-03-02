@@ -1,4 +1,4 @@
-import { AfterViewInit, Inject } from "@angular/core";
+import { AfterViewInit, Inject, Injectable } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { EventBus, IEvent } from "@nova-ui/bits";
 import { immutableSet } from "@nova-ui/bits";
@@ -8,12 +8,13 @@ import omit from "lodash/omit";
 import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
-import { IComponentConfiguration, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../../types";
+import { IComponentConfiguration, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { IItemConfiguration } from "../../../components/types";
 import { IKpiItemConfiguration } from "../../../components/widgets/kpi/types";
 import { PreviewService } from "../../preview.service";
 import { BaseConverter } from "../base-converter";
 
+@Injectable()
 export class KpiTilesConverterService extends BaseConverter implements AfterViewInit {
     private shouldReadForm = false;
 

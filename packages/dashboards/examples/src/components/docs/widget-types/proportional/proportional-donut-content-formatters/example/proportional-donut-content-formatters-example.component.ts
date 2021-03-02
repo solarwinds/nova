@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IDataField, IFilteringOutputs } from "@nova-ui/bits";
+import { DataSourceService, IDataField, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
 import { IAccessors, IChartAssistSeries } from "@nova-ui/charts";
 import {
     DATA_SOURCE,
@@ -9,7 +9,6 @@ import {
     DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS,
     DONUT_CONTENT_CONFIGURATION_SLICE,
     IDashboard,
-    IDataSource,
     IDonutContentConfig,
     IProportionalDataFieldsConfig,
     IProportionalWidgetChartOptions,

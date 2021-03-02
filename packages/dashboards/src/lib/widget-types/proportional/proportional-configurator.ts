@@ -241,7 +241,7 @@ export const proportionalConfigurator = {
                             {
                                 // this component updates the 'providerId' of the 'dataSource'
                                 previewPath: "chart.providers.dataSource",
-                                // TODO: Remove 'properties' key in v10
+                                // TODO: Remove 'properties' key in v10 - NUI-5831
                                 keys: ["providerId", "properties"],
                             },
                             {

@@ -7,7 +7,7 @@ import { takeUntil } from "rxjs/operators";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { DASHBOARD_EDIT_MODE, REFRESH, WIDGET_EDIT, WIDGET_REMOVE } from "../../../services/types";
 import { WidgetToDashboardEventProxyService } from "../../../services/widget-to-dashboard-event-proxy.service";
-import { PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../types";
+import { PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../types";
 
 @Component({
     selector: "nui-widget-header",

@@ -93,15 +93,6 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
      * The option to make the textboxNumber read only.
      */
     @Input() public readonly = false;
-    /**
-     * @ignore @deprecated This input no longer has any effect on the component. Please wrap the
-     * component in a nui-form-field to apply the 'required' styling.
-     */
-    @Input() public required = false;
-    /**
-     * @ignore @deprecated This input no longer has any effect on the component.
-     */
-    @Input() public suffix = "";
 
     /**
      * Step by which the value are increased/decreased
@@ -154,7 +145,7 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
         }
     }
 
-    public onBlurEventEmit($event: any) {
+    public onBlurEventEmit() {
         this.onTouched();
         this.blurred.emit(this.value);
     }
@@ -201,11 +192,6 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
         this.disabled = isDisabled;
     }
 
-    /** @ignore @deprecated - 'suffix' is no longer used on this component */
-    public hasSuffix(): boolean {
-        return !!this.suffix; // tslint:disable-line: deprecation
-    }
-
     public compareMin(): boolean {
         return this.value <= this.minValue;
     }
@@ -220,9 +206,8 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
     }
 
     public hasError() {
-        return this.formControl != null
-            && (this.formControl.touched || this.formControl.dirty)
-            && !this.formControl.valid;
+        return (this.formControl?.touched || this.formControl?.dirty)
+            && !this.formControl?.valid;
     }
 
     private nativeValidator(): ValidationErrors | null {
@@ -247,16 +232,16 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
     }
 
     // We need to restrict user input because safari does not prevent non numerical input in type 'number'
-    public preventNonNumericalPaste(event: ClipboardEvent): void {
-        const pastedString: String | undefined = event.clipboardData?.getData("text/plain");
+    public preventNonNumericalPaste(event: ClipboardEvent): void {
+        const pastedString: String | undefined = event.clipboardData?.getData("text/plain");
         if (!pastedString) {
             throw new Error("Unable to parse clipboardData");
         }
         this.preventDefaultEventBehavior(event, pastedString, regexpValidation.multiCharNumeric);
     }
 
-    public preventNonNumericalInput(event: KeyboardEvent): void {
-        const inputString: String = event.key;
+    public preventNonNumericalInput(event: KeyboardEvent): void {
+        const inputString: String = event.key;
         if (!this.isMetaKey(event)) {
             this.preventDefaultEventBehavior(event, inputString, regexpValidation.singleCharNumeric);
         }

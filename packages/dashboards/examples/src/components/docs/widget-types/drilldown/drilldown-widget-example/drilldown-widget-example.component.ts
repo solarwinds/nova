@@ -70,7 +70,7 @@ export class DrilldownDataSourceRealApi<T = any> extends ServerSideDataSource<T>
     ) {
         super();
         this.features = new DataSourceFeatures(this.supportedFeatures);
-        // TODO: remove Partial in vNext after marking dataType field as optional
+        // TODO: remove Partial in vNext after marking dataType field as optional - NUI-5838
         (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
     }
 

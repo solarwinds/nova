@@ -33,12 +33,12 @@ import {
     TitleAndDescriptionConfigurationComponent,
     WellKnownPathKey,
     WellKnownProviders,
-    WIDGET_BODY,
-    WIDGET_HEADER,
-    WIDGET_LOADING,
     widgetBodyContentNodes,
     WidgetConfiguratorSectionComponent,
     WidgetTypesService,
+    WIDGET_BODY,
+    WIDGET_HEADER,
+    WIDGET_LOADING,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 

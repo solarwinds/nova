@@ -7,23 +7,33 @@ In Bits, the philosophy is all about flexibility – it provides the Legos, plum
 
 ## Prerequisites
 
-Before you begin, make sure your development environment includes Node.js®, an npm package manager and the npm registries set.
+Before you begin, make sure your development environment includes the following:
+* Node.js®
+* A package manager such as [npm](https://www.npmjs.com/get-npm)
+* Angular CLI v11
+* Angular CDK v11 as a devDependency
 <br>
 
-#### Installing NodeJS
+### Installing NodeJS and `npm`
 To check your version, run node -v in a terminal/console window.
-To get Node.js, go to [nodejs.org](https://nodejs.org/en/).
+To get Node.js (which comes with `npm` out of the box), go to [nodejs.org](https://nodejs.org/en/).
 
-#### Installing Angular CLI
+### Installing Angular CLI
 The Angular CLI is a command-line interface tool that you can use to initialize, develop, scaffold and maintain Angular applications. 
 
 You may want to check first whether it's already installed by running the following command: 
 ```
 ng --version
 ```
-If you want to install it globally, run the following command: 
+If you want to install the latest Angular CLI globally, run the following command: 
 ```
-npm install -g @angular/cli
+npm install -g @angular/cli@^11
+```
+
+### Installing Angular CDK
+Nova uses Angular CDK as part of its schematics functionality. To install it, you can run the following command:
+```
+npm install @angular/cdk@^11 --save-dev
 ```
 
 <br>
@@ -166,17 +176,6 @@ We recommend the [BEM](http://getbem.com/) naming convention for your css/less v
 
 #### Typescript Compiler Options
 Information about this can be found [here](../../README.md#Typescript-Compiler-Options).
-<br>
-
-#### Exclude highlight.js languages
-By default Nova requires highlight.js (which normally goes with all of its languages which even Nova does not use). This can result in an excessively large bundle size (adds ~1MB). You can exclude the languages by updating the highlight.js import path inside your tsconfig.json file.
-```
-"compilerOptions": {
-    "paths": {
-      "highlight.js": ["./node_modules/highlight.js/lib/highlight.js"]
-    }
-  },
-```
 <br>
 
 ## Schematics

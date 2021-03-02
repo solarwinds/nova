@@ -12,7 +12,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from "@angular/forms";
-import { DialogService, EventBus, IDataSource, IEvent, immutableSet, uuid } from "@nova-ui/bits";
+import { DialogService, EventBus, IDataField, IDataSource, IEvent, immutableSet, uuid } from "@nova-ui/bits";
 import get from "lodash/get";
 import isUndefined from "lodash/isUndefined";
 import values from "lodash/values";
@@ -20,12 +20,12 @@ import { Observable, Subject } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { IDataSourceOutput } from "../../../../../components/providers/types";
-import { IDataField, ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
+import { ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
 import { IFormatterDefinition } from "../../../../../components/types";
 import { IPizzagnaProperty } from "../../../../../pizzagna/functions/get-pizzagna-property-path";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { ISetPropertyPayload, SET_PROPERTY_VALUE } from "../../../../../services/types";
-import { IHasForm, IPizzagna, PIZZAGNA_EVENT_BUS, PizzagnaLayer, WellKnownDataSourceFeatures } from "../../../../../types";
+import { IHasForm, IPizzagna, PizzagnaLayer, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
 import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 
 @Component({

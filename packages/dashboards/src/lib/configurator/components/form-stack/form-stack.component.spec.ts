@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { AbstractControl, FormGroup, FormGroupDirective } from "@angular/forms";
 import { EventBus } from "@nova-ui/bits";
 import { Subject } from "rxjs";
@@ -23,7 +23,7 @@ describe("FormStackComponent", () => {
     let component: FormStackComponent;
     let fixture: ComponentFixture<FormStackComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [
@@ -65,9 +65,9 @@ describe("FormStackComponent", () => {
         it("should invoke addFormGroup on formReady event", () => {
             const testComponentId = "testComponentId";
             const testPayload = "test payload";
-            const addFormGroupSpy = spyOn(component, "addFormGroup");
+            spyOn(component, "addFormGroup" as never);
             component.onEvent(testComponentId, { id: "formReady", payload: testPayload });
-            expect(addFormGroupSpy).toHaveBeenCalledWith(testComponentId, testPayload);
+            expect(component.addFormGroup).toHaveBeenCalledWith( testComponentId, testPayload as never);
         });
     });
 
@@ -76,9 +76,9 @@ describe("FormStackComponent", () => {
             const testComponentId = "testComponentId";
             const testFormGroup = { test: {} };
             component.ngOnInit();
-            const addControlSpy = spyOn(component.form, "addControl");
+            spyOn(component.form, "addControl" as never);
             component.addFormGroup(testComponentId, testFormGroup as unknown as FormGroup);
-            expect(addControlSpy).toHaveBeenCalledWith(testComponentId, testFormGroup);
+            expect(component.form.addControl).toHaveBeenCalledWith(testComponentId, testFormGroup as never);
         });
     });
 });

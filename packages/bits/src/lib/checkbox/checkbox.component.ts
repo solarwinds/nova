@@ -18,6 +18,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import {Subscription} from "rxjs";
 
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
@@ -40,6 +41,7 @@ import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
         },
     ],
     styleUrls: ["./checkbox.component.less"],
+    // TODO: turn on the view envapsulation in the scope of NUI-5823
     encapsulation: ViewEncapsulation.None,
     host: {
         "[class.nui-checkbox--hovered]": "hovered",
@@ -60,7 +62,18 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
     /**
      * Input to set aria label text
      */
-    @Input() ariaLabel: string;
+    @Input() public get ariaLabel(): string {
+        return this._ariaLabel;
+    }
+
+    // changing the value with regular @Input doesn't trigger change detection
+    // so we need to do that manually in the setter
+    public set ariaLabel(value: string) {
+        if (value !== this._ariaLabel) {
+            this._ariaLabel = value;
+            this.changeDetector.markForCheck();
+        }
+    }
 
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
@@ -144,16 +157,18 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
     private rendererListener: Function;
     private sub: Subscription;
 
+    private _ariaLabel: string = "";
+
     constructor(private changeDetector: ChangeDetectorRef,
                 private eventBusService: EventBusService,
                 private renderer: Renderer2) {}
 
     ngAfterViewInit() {
         this.rendererListener = this.renderer.listen(this.checkboxLabel.nativeElement, "keydown", (event) => {
-            this.eventBusService.getEventStream("checkbox-keydown").next(event);
+            this.eventBusService.getStream({id: "checkbox-keydown"}).next(event);
         });
 
-        this.sub = this.eventBusService.getEventStream("checkbox-keydown").subscribe((event: KeyboardEvent) => {
+        this.sub = this.eventBusService.getStream({id: "checkbox-keydown"}).subscribe((event: KeyboardEvent) => {
             if (event.target === this.checkboxLabel.nativeElement) {
                 if (event.keyCode === ENTER || event.keyCode === SPACE) {
                     event.stopPropagation();
@@ -185,7 +200,7 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
 
     public onClick(event: Event) {
         event.stopPropagation();
-        this.eventBusService.getEventStream("document-click").next(event);
+        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT}).next(event);
     }
 
     public onChange(value: any) {}

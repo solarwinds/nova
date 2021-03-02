@@ -4,7 +4,7 @@ import { ListWidgetComponent } from "../../components/list-widget/list-widget.co
 import { WidgetSearchComponent } from "../../components/widget-search/widget-search.component";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
-import { WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING, widgetBodyContentNodes } from "../common/widget/components";
+import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";
 import { EVENT_PROXY } from "../common/widget/providers";
 
 export const drilldownWidget: IPizzagna = {

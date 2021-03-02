@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, QueryList, ViewChild, ViewChildren } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { IconComponent } from "../../icon/icon.component";
 import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
@@ -57,7 +57,7 @@ describe("components >", () => {
         let componentFixture: ComponentFixture<TestTabHeadingComponent>;
         let subject: TestTabHeadingComponent;
 
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
                 declarations: [
                     TabHeadingGroupComponent,

@@ -109,7 +109,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -132,7 +131,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": false,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -258,7 +256,6 @@
             "tsConfig": "tsconfig.json",
             "index": "index.html",
             "deleteOutputPath": false,
-            "extractCss": true,
             "optimization": true,
             "styles": [
               "src/styles.less",
@@ -310,5 +307,8 @@
       "prefix": "nui",
       "lintFix": true
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

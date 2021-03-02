@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiMenuModule } from "../menu/menu.module";
-import { NuiPopupModule } from "../popup/popup.module";
+import { NuiOverlayModule } from "../overlay/overlay.module";
 
 import { SorterComponent } from "./sorter.component";
 
@@ -14,8 +14,8 @@ import { SorterComponent } from "./sorter.component";
     imports: [
         NuiCommonModule,
         NuiMenuModule,
-        NuiPopupModule,
         NuiButtonModule,
+        NuiOverlayModule,
     ],
     declarations: [
         SorterComponent,

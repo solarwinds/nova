@@ -14,6 +14,6 @@ export class DateTimepickerAtom extends Atom {
     }
 
     public async isDisabled(): Promise<boolean> {
-        return this.getDatePicker().isDisabled() && await this.getTimePicker().textbox.disabled();
+        return await this.getDatePicker().isDisabled() && await this.getTimePicker().textbox.disabled();
     }
 }

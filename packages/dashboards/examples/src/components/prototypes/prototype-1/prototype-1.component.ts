@@ -1,16 +1,16 @@
 import { HttpClient } from "@angular/common/http";
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { LoggerService, SearchService } from "@nova-ui/bits";
+import { immutableSet, LoggerService, SearchService} from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
     IDashboard,
-    immutableSet,
     IWidget,
     IWidgetSelector,
     PizzagnaLayer,
     ProviderRegistryService,
-    RefresherSettingsService, TableFormatterRegistryService,
+    RefresherSettingsService,
+    TableFormatterRegistryService,
     WIDGET_CREATE,
     WidgetClonerService,
     WidgetTypesService,

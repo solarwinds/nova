@@ -2,7 +2,7 @@ import { StackComponent } from "../../components/layouts/stack/stack.component";
 import { ProportionalWidgetComponent } from "../../components/proportional-widget/proportional-widget.component";
 import { DEFAULT_PIZZAGNA_ROOT, NOVA_DATASOURCE_ADAPTER } from "../../services/types";
 import { PizzagnaLayer, WellKnownProviders } from "../../types";
-import { WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING, widgetBodyContentNodes } from "../common/widget/components";
+import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";
 import { EVENT_PROXY, refresher } from "../common/widget/providers";
 
 export const proportionalWidget = {

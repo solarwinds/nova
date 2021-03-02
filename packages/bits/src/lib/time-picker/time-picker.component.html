@@ -1,26 +1,29 @@
 <div class="nui-timepicker">
-    <nui-popup (opened)="scrollToView($event)"
-        [appendToBody]="appendToBody">
-        <div class="nui-timepicker__container" nuiPopupToggle [disabled]="isDisabled">
-            <nui-textbox [disabled]="isDisabled"
-                         autocomplete="off"
-                         [class.nui-timepicker__input-disabled]="isDisabled"
-                         #date
-                         [isInErrorState]="isInErrorState"
-                         (textChange)="onInputActiveDateChanged($event)"
-                         (blurred)="updateInnerModel($event)"
-                         [ariaLabel]="ariaLabel">
-            </nui-textbox>
-            <nui-icon
-                class="nui-timepicker__icon"
-                icon="clock"
-                aria-hidden="true"
-                [iconColor]="getIconColor()"
-                (click)="focusOnForm()"></nui-icon>
-        </div>
-        <div class="nui-timepicker__menu" popupAreaContent>
-            <nui-menu-popup [itemsSource]="itemsSource" (menuItemClicked)="select($event)">
-            </nui-menu-popup>
-        </div>
-    </nui-popup>
+    <div class="nui-timepicker__container" (click)="scrollToView()" #toggleRef>
+        <nui-textbox [disabled]="isDisabled"
+                    autocomplete="off"
+                    [class.nui-timepicker__input-disabled]="isDisabled"
+                    #date
+                    [isInErrorState]="isInErrorState"
+                    (textChange)="onInputActiveDateChanged($event)"
+                    (blurred)="updateInnerModel($event)"
+                    [ariaLabel]="ariaLabel">
+        </nui-textbox>
+        <nui-icon
+            class="nui-timepicker__icon"
+            icon="clock"
+            aria-hidden="true"
+            [iconColor]="getIconColor()"
+            (click)="focusOnForm()"></nui-icon>
+    </div>
+
+    <div #popupArea></div>
+
+    <nui-overlay #overlay
+                 [toggleReference]="toggleRef"
+                 [overlayConfig]="overlayConfig"
+                 [customContainer]="customContainer">
+                 <nui-menu-popup [itemsSource]="itemsSource" (menuItemClicked)="select($event)">
+                </nui-menu-popup>
+    </nui-overlay>
 </div>

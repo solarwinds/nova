@@ -17,6 +17,10 @@ export class BaseSelectV2Atom extends Atom {
         return this.popup.getElement();
     }
 
+    /**
+     * Note: Despite its name, this method will only OPEN the dropdown. To toggle it closed, use this
+     * Atom's "click" method.
+     */
     public async toggle(): Promise<void> {
         await this.getElement().click();
         await this.waitForPopup();
@@ -45,6 +49,11 @@ export class BaseSelectV2Atom extends Atom {
         return Atom.findCount(SelectV2OptionAtom, this.popup.getElement());
     }
 
+    /**
+     * Note: This method checks whether ANY 'cdk-overlay-pane' on the document body is present
+     * (not just this dropdown instance). Close any other cdk-overlay-pane instances before invoking this
+     * method to ensure an accurate return value.
+     */
     public async isOpened(): Promise<boolean> {
         return this.popup.isOpened();
     }
@@ -65,7 +74,7 @@ export class BaseSelectV2Atom extends Atom {
         return classAttr.includes("disabled");
     }
 
-    public async select (title: string): Promise<void> {
+    public async select(title: string): Promise<void> {
         if (! await this.popup.isPresent()) {
             await this.toggle();
         }

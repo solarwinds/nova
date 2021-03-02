@@ -1,15 +1,15 @@
 {
   "name": "dashboards-schematics",
   "license": "Apache-2.0",
-  "version": "9.36.0-0",
+  "version": "11.0.0-0",
   "scripts": {
     "assemble": "npm run build && npm run test && npm run copy",
     "build": "tsc -p tsconfig.json",
-    "test": "npm run build && jasmine src/**/*_spec.js",
+    "test": "npm run build && jasmine src/**/*.spec.js",
     "copy": "npm run copy-collection && npm run copy-schematics",
-    "copy-ng-add": "cpx \"src/ng-add/{*.json,index.js}\" ../dist/sdk/schematics/ng-add/",
-    "copy-collection": "cpx \"src/collection.json\" ../dist/sdk/schematics/",
-    "copy-schematics": "cpx \"src/**/{*.json,index.js,schematics-helpers.js}\" ../dist/sdk/schematics/ && cpx \"src/**/files/**\" ../dist/sdk/schematics/"
+    "copy-ng-add": "npx copyfiles -f \"src/ng-add/{*.json,index.js}\" ../dist/sdk/schematics/ng-add/",
+    "copy-collection": "npx copyfiles -f \"src/collection.json\" ../dist/sdk/schematics/",
+    "copy-schematics": "npx copyfiles -u 1 \"src/**/{*.json,index.js}\" ../dist/sdk/schematics/ && npx copyfiles -u 1 \"src/**/files/**\" ../dist/sdk/schematics/"
   },
   "keywords": [
     "schematics"

@@ -14,17 +14,17 @@ import {
     Tree,
     url
 } from "@angular-devkit/schematics";
-import { getWorkspace } from "@schematics/angular/utility/config";
 import { buildRelativePath, findModuleFromOptions } from "@schematics/angular/utility/find-module";
 import { applyLintFix } from "@schematics/angular/utility/lint-fix";
 import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 import { parseName } from "@schematics/angular/utility/parse-name";
-import { buildDefaultPath, getProject } from "@schematics/angular/utility/project";
-import { getProjectTargets } from "@schematics/angular/utility/project-targets";
 import { validateHtmlSelector, validateName } from "@schematics/angular/utility/validation";
 import { BrowserBuilderTarget } from "@schematics/angular/utility/workspace-models";
 
-import { buildSelector, readIntoSourceFile, updateModuleChanges } from "../schematics-helper";
+import { buildDefaultPath, getProject } from "../utility/project";
+import { getProjectTargets } from "../utility/project-targets";
+import { buildSelector, readIntoSourceFile, updateModuleChanges } from "../utility/schematics-helper";
+import { getWorkspace } from "../utility/workspace";
 
 import { Schema as ComponentOptions } from "./schema";
 

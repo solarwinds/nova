@@ -10,7 +10,6 @@
         // currently it's the only available workaround
         "paths": {
             "@nova-ui/bits": ["./src/public_api.ts"],
-            "highlight.js": ["./node_modules/highlight.js/lib/highlight.js"], // to ensure we load highlight without languages
             "protractor": ["../stub/protractor.d.ts"]
         },
         "lib": ["es2015", "dom"],

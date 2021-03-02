@@ -9,6 +9,3 @@ export * from "./lib/directives/public-api";
 export * from "./lib/functions/public-api";
 export * from "./lib/widget-types/public-api";
 export * from "./lib/constants/public-api";
-
-// Backwards compatible, remove in v10
-export { IDataSource } from "@nova-ui/bits";

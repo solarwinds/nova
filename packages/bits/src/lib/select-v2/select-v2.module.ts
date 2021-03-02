@@ -48,5 +48,6 @@ import { SelectV2Component } from "./select/select-v2.component";
     ],
     providers: [],
 })
+// Will be renamed in scope of the NUI-5797
 export class NuiSelectV2Module {
 }

@@ -1,10 +1,7 @@
-import { TableAlignmentOptions } from "@nova-ui/bits";
+import { IDataField, TableAlignmentOptions } from "@nova-ui/bits";
 
 import { IFormatterData } from "../configurator/components/formatters/types";
 import { IProperties } from "../types";
-
-import { IDataField } from "./table-widget/types";
-
 export interface IFormatterProperties extends IProperties {
     dataFieldIds?: IFormatterData;
 }

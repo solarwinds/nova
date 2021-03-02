@@ -1,5 +1,5 @@
 import { SimpleChange } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { EmbeddedContentMode } from "../../../../../components/types";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
@@ -10,7 +10,7 @@ describe("EmbeddedContentConfigurationComponent > ", () => {
     let component: EmbeddedContentConfigurationComponent;
     let fixture: ComponentFixture<EmbeddedContentConfigurationComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
         })

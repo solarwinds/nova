@@ -1,3 +1,4 @@
+import { OverlayModule } from "@angular/cdk/overlay";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import {
     DebugElement,
@@ -18,8 +19,7 @@ import { DomUtilService } from "../../services/dom-util.service";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
 import { LoggerService } from "../../services/log-service";
 import { IMenuItem } from "../menu/public-api";
-import { PopupComponent } from "../popup-adapter/popup-adapter.component";
-import { PopupAdapterModule } from "../popup-adapter/popup-adapter.module";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { RadioComponent } from "../radio/radio-group.component";
 import { RepeatItemComponent } from "../repeat/repeat-item/repeat-item.component";
 import { RepeatComponent } from "../repeat/repeat.component";
@@ -36,11 +36,11 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [ScrollingModule, PopupAdapterModule],
+                imports: [ScrollingModule, OverlayModule],
                 declarations: [
                     ButtonComponent,
                     SorterComponent,
-                    PopupComponent,
+                    OverlayComponent,
                     RepeatComponent,
                     RepeatItemComponent,
                     IconComponent,
@@ -77,6 +77,7 @@ describe("components >", () => {
             component.selectedItem = itemsSource[0].value;
             component.itemsSource = itemsSource;
             component.ngOnChanges({ selectedItem: {} as SimpleChange, itemsSource: {} as SimpleChange });
+            fixture.detectChanges();
         });
 
         describe("ngOnChanges() >", () => {
@@ -124,7 +125,6 @@ describe("components >", () => {
             });
 
             it("should emit the sorterAction when selectedItem changes", () => {
-                fixture.detectChanges();
                 spyOn(component.sorterAction, "emit");
 
                 const newSelectedItem = itemsSource[2].value;
@@ -192,7 +192,6 @@ describe("components >", () => {
                 };
                 component.selectedItem = oldValue.sortBy;
                 component.sortDirection = oldValue.direction;
-                fixture.detectChanges();
 
                 component.select({ value: expectedSortConfig.sortBy } as IMenuItem);
 
@@ -210,7 +209,7 @@ describe("components >", () => {
                 const newValue = _assign({}, oldValue, {
                     sortBy: item.value,
                 });
-                fixture.detectChanges();
+
                 spyOn(component.sorterAction, "emit");
 
                 component.select(item);
@@ -228,7 +227,6 @@ describe("components >", () => {
 
         describe("getSortIcon() >", () => {
             it("should sorter contain an arrow icon", () => {
-                fixture.detectChanges();
                 expect(component.getSortIcon()).toBe("arrow-up");
             });
         });
@@ -258,7 +256,7 @@ describe("components >", () => {
                 component.sortDirection = SorterDirection.ascending;
                 component.selectedItem = itemsSource[0].value;
                 component.select(itemsSource[0]);
-                fixture.detectChanges();
+
                 spyOn(component.sorterAction, "emit");
 
                 component.toggleSortDirection();

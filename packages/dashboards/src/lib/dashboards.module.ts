@@ -218,6 +218,6 @@ export class NuiDashboardsModule {
         eventRegistry.registerEvent(DATA_SOURCE_OUTPUT);
         eventRegistry.registerEvent(DATA_SOURCE_BUSY);
 
-        kpiFormattersRegistry.addFormatters(DEFAULT_KPI_FORMATTERS);
+        kpiFormattersRegistry.addItems(DEFAULT_KPI_FORMATTERS);
     }
 }

@@ -53,7 +53,7 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     constructor(private http: HttpClient, private apollo: Apollo) {
         super();
 
-        // TODO: remove Partial in vNext after marking dataType field as optional
+        // TODO: remove Partial in vNext after marking dataType field as optional - NUI-5838
         (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
 
         this.applyFilters$.pipe(switchMap(filters => this.getData(filters)))

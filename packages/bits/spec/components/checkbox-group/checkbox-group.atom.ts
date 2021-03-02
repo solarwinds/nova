@@ -27,4 +27,18 @@ export class CheckboxGroupAtom extends Atom {
 
     public getFirst = (): CheckboxAtom => this.getCheckboxByIndex(0);
 
+    public async isDisabled(): Promise<boolean> {
+        const childCount = await this.children.count();
+        if (childCount === 0) {
+            return false;
+        }
+        for (let i = 0; i < childCount; i++) {
+            const checkbox = this.getCheckboxByIndex(i);
+            if (!(await checkbox.isDisabled())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

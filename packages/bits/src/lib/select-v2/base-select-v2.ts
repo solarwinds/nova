@@ -5,6 +5,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ContentChildren,
+    Directive,
     ElementRef,
     EventEmitter,
     forwardRef,
@@ -30,8 +31,7 @@ import { delay, takeUntil, tap } from "rxjs/operators";
 import { OVERLAY_ITEM, OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
-import { OverlayContainerType } from "../overlay/types";
-import { IOption, OptionValueType } from "../overlay/types";
+import { IOption, OptionValueType, OverlayContainerType } from "../overlay/types";
 
 import { OptionKeyControlService } from "./option-key-control.service";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
@@ -41,6 +41,8 @@ const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
 };
 
+// Will be renamed in scope of the NUI-5797
+@Directive()
 export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, ControlValueAccessor, IOptionedComponent, OnDestroy, OnChanges {
 
     /** Value used as a placeholder for the select.*/
@@ -86,7 +88,18 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     @Input() public isInErrorState: boolean;
 
     /** Input to set aria label text */
-    @Input() public ariaLabel: string = "";
+    @Input() public get ariaLabel(): string {
+        return this._ariaLabel;
+    }
+
+    // changing the value with regular @Input doesn't trigger change detection
+    // so we need to do that manually in the setter
+    public set ariaLabel(value: string) {
+        if (value !== this._ariaLabel) {
+            this._ariaLabel = value;
+            this.cdRef.markForCheck();
+        }
+    }
 
     /** Corresponds to the Textbox of the Combobox */
     @ViewChild("input", { static: false})
@@ -122,6 +135,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     protected destroy$: Subject<void> = new Subject();
     protected mouseDown: boolean;
     private _selectedOptions: SelectV2OptionComponent[] = [];
+
+    private _ariaLabel: string = "";
 
     /** Emits value which has been selected */
     @Output() public valueSelected = new EventEmitter<OptionValueType | OptionValueType[] | null>();

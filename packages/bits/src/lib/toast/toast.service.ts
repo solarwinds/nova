@@ -196,7 +196,7 @@ export class ToastService implements IToastService {
 
         // max opened and auto dismiss = true
         if (body && config.preventDuplicates && this.isDuplicate(body)) {
-            // TODO: Update buildNotification return type in V10
+            // TODO: Update buildNotification return type in V10 in the scope of NUI-5824
             // @ts-ignore: Suppressing error until v10 to prevent API breaking changes
             return null;
         }

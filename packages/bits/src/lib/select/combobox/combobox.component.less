@@ -109,13 +109,13 @@
     &__input {
         float: left;
         width: @input-default-width;
-        height: @nui-space-md * 2;
+        height: (@nui-space-md * 2);
         border-radius: @nui-radius-default 0 0 @nui-radius-default;
         border: 0;
         box-shadow: none;
 
         &--with-remove-value {
-            width: @input-default-width - @nui-space-md * 2;
+            width: @input-default-width - (@nui-space-md * 2);
         }
 
         &:not(:disabled) {

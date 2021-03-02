@@ -6,7 +6,7 @@
 .draggable-container {
     width: 50%;
     float: left;
-    min-height: @min-height * 5;
+    min-height: (@min-height * 5);
 
     .draggable-list {
         border: solid @dnd-zone-border-width transparent;
@@ -34,7 +34,7 @@
 
 .dropzone {
     margin: 10px 0;
-    min-height: 2 * (@min-height + @nui-space-md + @dnd-zone-border-width);
+    min-height: (2 * (@min-height + @nui-space-md + @dnd-zone-border-width));
 
     .cdk-drag-placeholder, .draggable-placeholder {
         visibility: hidden;

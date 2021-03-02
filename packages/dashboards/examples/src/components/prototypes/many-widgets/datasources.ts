@@ -1,10 +1,11 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { OnDestroy } from "@angular/core";
-import { DataSourceFeatures, DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
-import { IKpiData, WellKnownDataSourceFeatures } from "@nova-ui/dashboards";
+import { Injectable, OnDestroy } from "@angular/core";
+import { DataSourceService, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
+import { IKpiData } from "@nova-ui/dashboards";
 import { BehaviorSubject } from "rxjs";
 import { finalize } from "rxjs/operators";
 
+@Injectable()
 export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements IDataSource, OnDestroy {
     public static providerId = "AcmeKpiDataSource";
     public static mockError = false;

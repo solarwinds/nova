@@ -408,7 +408,7 @@ jobs:
             SOURCE_BRANCH: main
             # TODO: Change to false
             CREATE_RELEASE_BRANCH: true
-            RELEASE_BRANCH: release/v9.x
+            RELEASE_BRANCH: release/v11.x
             INCREMENT_TYPE: minor
         steps:
             -   checkout:
@@ -472,6 +472,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   bits-a11y-test:
                     requires:
                         - bits-build
@@ -488,6 +489,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
             -   charts-build:
                     requires:
                         - bits-pack
@@ -507,6 +509,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -520,6 +523,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
             -   dashboards-build:
                     requires:
                         - charts-pack
@@ -544,6 +548,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
@@ -557,6 +562,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
     nova-release:
         jobs:
             -   release-approval:

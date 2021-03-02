@@ -114,7 +114,7 @@ export const timeseriesConfigurator: IPizzagna = {
                             {
                                 // this component updates 'providerId' of 'dataSource'
                                 previewPath: "/.providers.dataSource",
-                                // TODO: Remove 'properties' key in v10
+                                // TODO: Remove 'properties' key in v10 - NUI-5831
                                 keys: ["providerId", "properties"],
                             },
                             {

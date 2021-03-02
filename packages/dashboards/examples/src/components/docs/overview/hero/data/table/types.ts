@@ -1,7 +1,4 @@
-import { IFilteringParticipants, INovaFilteringOutputs } from "@nova-ui/bits";
-import { IDataField } from "@nova-ui/dashboards";
-import { BehaviorSubject } from "rxjs";
-
+import { IDataField, INovaFilteringOutputs } from "@nova-ui/bits";
 export interface BasicTableModel {
     position: number;
     name: string;

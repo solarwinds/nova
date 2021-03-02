@@ -1,4 +1,4 @@
-import { Inject, OnDestroy, Optional } from "@angular/core";
+import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
 import { EventBus, IDataSource, IEvent, IFilteringOutputs } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
@@ -7,10 +7,11 @@ import { takeUntil } from "rxjs/operators";
 import { DATA_SOURCE_DESTROYED, DATA_SOURCE_OUTPUT } from "../../configurator/types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { DATA_SOURCE_BUSY, DATA_SOURCE_INVOKED, REFRESH } from "../../services/types";
-import { DATA_SOURCE, IConfigurable, IProperties, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../types";
+import { DATA_SOURCE, IConfigurable, IProperties, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
 
 import { IComponentIdPayload, IDataSourceBusyPayload, IDataSourceOutput } from "./types";
 
+@Injectable()
 export class DataSourceAdapter<T extends IFilteringOutputs = IFilteringOutputs> implements IConfigurable, OnDestroy {
     protected componentId: string;
     protected lastValue: T;

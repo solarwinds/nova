@@ -24,7 +24,7 @@ export { NuiBusyModule } from "./lib/busy/busy.module";
 export { NuiChipsModule } from "./lib/chips/chips.module";
 export { NuiContentModule } from "./lib/content/content.module";
 export { NuiDatePickerModule } from "./lib/date-picker/date-picker.module";
-export { NuiDateTimerPickerModule } from "./lib/date-time-picker/date-time-picker.module";
+export { NuiDateTimePickerModule } from "./lib/date-time-picker/date-time-picker.module";
 export { NuiDialogModule } from "./lib/dialog/dialog.module";
 export { NuiExpanderModule } from "./lib/expander/expander.module";
 export { NuiFormFieldModule } from "./lib/form-field/form-field.module";
@@ -49,7 +49,6 @@ export { NuiWizardV2Module } from "./lib/wizard-v2/wizard.module";
 
 export { NuiDocsModule } from "./lib/docs/docs.module";
 
-export { NuiModule } from "./module";
 export * from "./lib/public-api";
 export * from "./types";
 export * from "./constants";

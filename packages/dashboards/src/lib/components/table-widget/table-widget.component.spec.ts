@@ -2,9 +2,10 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import { DatePipe } from "@angular/common";
 import { Xliff } from "@angular/compiler";
 import { SimpleChange, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import {
     EventBus,
+    IDataField,
     LocalFilteringDataSource,
     LoggerService,
     NuiBusyModule,
@@ -13,9 +14,8 @@ import {
     NuiTableModule,
     SearchService,
     SorterDirection,
-    VirtualViewportManager
+    VirtualViewportManager,
 } from "@nova-ui/bits";
-import { INovaFilteringOutputs, INovaFilters } from "@nova-ui/bits";
 import { BehaviorSubject } from "rxjs";
 import { skip, take, tap } from "rxjs/operators";
 
@@ -29,7 +29,7 @@ import { REFRESH, SCROLL_NEXT_PAGE } from "../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../types";
 
 import { TableWidgetComponent } from "./table-widget.component";
-import { IDataField, ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
+import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
 
 interface BasicTableModel {
     position: number;
@@ -216,7 +216,7 @@ describe("TableWidgetComponent", () => {
         return { widgetData: widgetDataChanges };
     }
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [
                 NuiTableModule,
@@ -428,7 +428,8 @@ describe("TableWidgetComponent", () => {
     });
 
     describe("table columns mapping >", () => {
-        it("should correctly map data with one data field", () => {
+        // re-enable with NUI-5787
+        xit("should correctly map data with one data field", () => {
             configuration.columns = oneDataFieldColumns;
             component.ngOnChanges(createSimpleChanges(configuration, tableData, dataFields));
             fixture.detectChanges();

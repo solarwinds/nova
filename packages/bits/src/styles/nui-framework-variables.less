@@ -55,17 +55,6 @@
 @headings-font-family:    inherit;
 @headings-line-height:    1.1;
 
-//== Iconography
-//
-//## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
-
-//** Load fonts from this directory.
-@icon-font-path:          "../fonts/";
-//** File name for all font files.
-@icon-font-name:          "glyphicons-halflings-regular";
-//** Element ID within SVG icon file.
-@icon-font-svg-id:        "glyphicons_halflingsregular";
-
 //== Images
 //
 //## Some predefined values for images
@@ -111,7 +100,7 @@
 @switch-toggle-width: 20px;
 
 //== Checkbox
-@checkbox-min-size: 20px + 2 * @nui-space-xs;
+@checkbox-min-size: 20px + (2 * @nui-space-xs);
 
 //== Content
 @content-size-large: 400px;
@@ -364,7 +353,7 @@
 
 //** chip
 @nui-tag-height: 18px;
-@nui-tag-border-radius: @nui-tag-height / 2;
+@nui-tag-border-radius: (@nui-tag-height / 2);
 
 @nui-border-solid: solid;
 

@@ -119,7 +119,7 @@ export class DroppableDirective implements OnInit, OnDestroy {
         this.dragElements = this.dragElements.filter(el => el !== event.target);
         if (this.validateDrop(payload) && this.dragElements.length === 0) {
             this.elRef.nativeElement.classList.remove(this.dragOverClass);
-            if (!payload.isExternal) {
+            if (!payload?.isExternal) {
                 // dropIndicatorClass shouldn't be added if dragged item comes from outside of the browser - there is no easy way to remove it later.
                 this.elRef.nativeElement.classList.add(this.dropIndicatorClass);
             }

@@ -1,6 +1,6 @@
 import { Overlay } from "@angular/cdk/overlay";
 import { AfterViewInit, Component, ElementRef, Input, NO_ERRORS_SCHEMA, ViewChild } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import set from "lodash/set";
 import { first } from "rxjs/operators";
 
@@ -39,7 +39,7 @@ describe("components >", () => {
         let fixture: ComponentFixture<OverlayComponent>;
         let wrapperFixture: ComponentFixture<PopupWrapperComponent>;
 
-        beforeEach(async(() => {
+        beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
                 declarations: [
                     PopupWrapperComponent,
