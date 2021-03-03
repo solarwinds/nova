@@ -467,6 +467,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
 
     private intersectionObserverCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
         if (entries[0].isIntersecting && this.virtualScroll) {
+            // recheck the cdk viewport size in case the repeat is instantiated before becoming visible in the viewport (NUI-5820)
             this.viewportRef.checkViewportSize();
         }
     }

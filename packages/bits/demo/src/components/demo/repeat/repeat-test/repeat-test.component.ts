@@ -7,15 +7,25 @@ import { Component } from "@angular/core";
 export class RepeatTestComponent {
 
     public colors = [
-        { color: $localize `blue`},
-        { color: $localize `green`},
-        { color: $localize `yellow`},
-        { color: $localize `cyan`},
-        { color: $localize `magenta`},
-        { color: $localize `black`},
+        { color: $localize`blue` },
+        { color: $localize`green` },
+        { color: $localize`yellow` },
+        { color: $localize`cyan` },
+        { color: $localize`magenta` },
+        { color: $localize`black` },
     ];
 
-    constructor() { }
+    public tabs = [
+        {
+            id: "tab1",
+            title: "No Content",
+        },
+        {
+            id: "tab2",
+            title: "Repeat VScroll",
+        },
+    ];
+    public currentTabId = this.tabs[0].id;
 
     private colorIndex: number = 1;
 
@@ -24,4 +34,8 @@ export class RepeatTestComponent {
             { color: `new color ${this.colorIndex++}` }
         );
     }
+
+    // using display css rule instead of *ngIf to test RepeatComponent's IntersectionObserver
+    // (*ngIf would instantiate the test component only when the tab is selected instead of immediately on page load)
+    public getTabDisplayMode = (tabId: string) => this.currentTabId === tabId ? "block" : "none";
 }

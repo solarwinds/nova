@@ -29,9 +29,9 @@ import {
     RepeatSimpleExampleComponent,
     RepeatSingleSelectionModeExampleComponent,
     RepeatSingleWithRequiredSelectionModeExampleComponent,
+    RepeatTestComponent,
     RepeatVirtualScrollComponent,
 } from "./index";
-import { RepeatTestComponent } from "./repeat-test/repeat-test.component";
 
 const routes = [
     {
@@ -71,7 +71,7 @@ const routes = [
         NuiProgressModule,
         NuiSearchModule,
         NuiFormFieldModule,
-        NuiTabsModule
+        NuiTabsModule,
     ],
     declarations: [
         RepeatExampleComponent,
