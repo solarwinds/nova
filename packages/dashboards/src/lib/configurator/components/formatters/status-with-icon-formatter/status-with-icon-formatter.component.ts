@@ -12,7 +12,7 @@ import { IHasChangeDetector } from "../../../../types";
         <ng-container *ngIf="isValid">
             <div class="nui-text-label align-items-center status-icon-formatter">
                 <span class="nui-text-ellipsis text-right pl-3">{{ data.data }}</span>
-                <nui-icon [icon]="data.icon" class="mx-2"></nui-icon>
+                <nui-icon [icon]="data.icon" class="nui-icon nui-icon-line-height mx-2"></nui-icon>
                 <span class="nui-text-ellipsis" [style.font-size.px]="11">{{data.name}}</span>
             </div>
         </ng-container>
