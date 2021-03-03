@@ -35,7 +35,7 @@ export class RepeatTestComponent {
         );
     }
 
-    // using display css rule instead of *ngIf to test RepeatComponent's IntersectionObserver
+    // using css display rule instead of *ngIf to test RepeatComponent's IntersectionObserver
     // (*ngIf would instantiate the test component only when the tab is selected instead of immediately on page load)
     public getTabDisplayMode = (tabId: string) => this.currentTabId === tabId ? "block" : "none";
 }

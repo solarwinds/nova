@@ -22,12 +22,11 @@ export class RepeatVirtualScrollDataSource<T> extends ServerSideDataSource<T> im
 
     protected getBackendData(filters: IServerFilters): Observable<IServersCollection> {
         return of({
-            items: DATA.items?.map(item => ({
+            items: DATA?.map(item => ({
                 name: item.name,
                 location: item.location,
                 status: item.status,
             })) || [],
-            count: DATA.count,
         });
     }
 }

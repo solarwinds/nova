@@ -28,7 +28,6 @@ export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDe
     public filteringState: INovaFilteringOutputs = {};
     public isBusy = false;
 
-    // This value is obtained from the server and used to evaluate the total number of pages to display
     public totalItems: number = 0;
 
     public itemConfig: IRepeatItemConfig<IServer> = {
@@ -82,12 +81,10 @@ export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDe
                     tap((data: IFilteringOutputs) => {
                         // update the list of items to be rendered
                         const items = data.repeat?.itemsSource || [];
+                        this.totalItems = data.repeat?.itemsSource.length;
 
                         // after receiving data we need to append it to our previous fetched results
                         this.listItems$.next(this.listItems$.getValue().concat(items));
-
-                        this.totalItems = data.paginator?.total || 0;
-
                         this.changeDetection.detectChanges();
                     })
                 )
