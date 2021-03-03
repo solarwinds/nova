@@ -302,6 +302,10 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
             this.calendarChanged.unsubscribe();
         }
 
+        if (this.overlay.showing) {
+            this.overlay.hide();
+        }
+
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
