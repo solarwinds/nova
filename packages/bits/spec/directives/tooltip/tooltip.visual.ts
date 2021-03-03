@@ -5,8 +5,6 @@ import {Atom} from "../../atom";
 import {ButtonAtom} from "../../components/button/button.atom";
 import {Animations, Helpers} from "../../helpers";
 
-// TODO: enable the test after NUI-3683 is fixed
-// Until the issue is fixed, these tests do not make sense since no tooltip appears on the screenshots
 describe("Visual tests: Tooltip", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any,
