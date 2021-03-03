@@ -1,15 +1,6 @@
 @import (reference) "../../styles/nui-framework-variables.less";
 @import (reference) "../../styles/mixins.less";
 
-/** Add "display: flex" for .nui-icon-item in v.11
- * https://jira.solarwinds.com/browse/NUI-5630
- */
-nui-icon.nui-icon-flex {
-    .nui-icon-item {
-        display: flex;
-    }
-}
-
 .nui-icon-wrapper {
     display: inline-flex;
     .nui-svg-wrapper {
@@ -19,6 +10,7 @@ nui-icon.nui-icon-flex {
         position: absolute;
         top: 0px;
         left: 0px;
+        display: flex;
         &__child {
             position: absolute;
             top: 8px;
