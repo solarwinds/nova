@@ -290,10 +290,10 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     }
 
     ngOnDestroy() {
-        if (this.overlay.showing) {
+        if (this.overlay?.showing) {
             this.overlay.hide();
         }
-        
+
         this.onDestroy$.next();
         this.onDestroy$.complete();
 

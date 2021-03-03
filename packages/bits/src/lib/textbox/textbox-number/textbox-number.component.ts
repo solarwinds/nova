@@ -248,7 +248,7 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
     }
 
     private preventDefaultEventBehavior(event: KeyboardEvent | ClipboardEvent, inputString: String, regexp: RegExp): void {
-        if (!inputString.match(regexp)) {
+        if (!inputString?.match(regexp)) {
             event.preventDefault();
         }
     }
