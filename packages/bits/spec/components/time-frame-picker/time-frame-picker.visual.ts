@@ -67,5 +67,5 @@ describe("Visual tests: Timeframe Picker", () => {
         await eyes.checkWindow("Complex popover with timeframepicker and datepicker");
 
         await eyes.close();
-    }, 100000);
+    }, 200000);
 });
