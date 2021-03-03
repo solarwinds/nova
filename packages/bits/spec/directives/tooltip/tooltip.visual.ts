@@ -5,9 +5,7 @@ import {Atom} from "../../atom";
 import {ButtonAtom} from "../../components/button/button.atom";
 import {Animations, Helpers} from "../../helpers";
 
-// TODO: enable the test after NUI-3683 is fixed
-// Until the issue is fixed, these tests do not make sense since no tooltip appears on the screenshots
-xdescribe("Visual tests: Tooltip", () => {
+describe("Visual tests: Tooltip", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any,
         basicTooltipButton: ButtonAtom,
@@ -33,7 +31,6 @@ xdescribe("Visual tests: Tooltip", () => {
     });
     it("Default look", async () => {
         await eyes.open(browser, "NUI", "Tooltip");
-        await eyes.checkWindow("Default");
 
         await basicTooltipButton.hover();
         await eyes.checkWindow("Hover on button with basic tooltip");
@@ -50,10 +47,10 @@ xdescribe("Visual tests: Tooltip", () => {
         await manualTooltipButton.click();
         await eyes.checkWindow("After tooltip triggered manually");
         await manualTooltipButton.click();
-        await eyes.checkWindow("After tooltip manually dismissed");
 
         Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await manualTooltipButton.click();
+        await eyes.checkWindow("After tooltip triggered manually with dark theme mode on");
 
         await eyes.close();
     }, 100000);
