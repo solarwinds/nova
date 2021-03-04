@@ -1,5 +1,5 @@
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewEncapsulation
+    ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation
 } from "@angular/core";
 import _cloneDeep from "lodash/cloneDeep";
 import { Moment } from "moment/moment";
@@ -18,7 +18,7 @@ import { TimeframeService } from "./services/timeframe.service";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TimeFramePickerComponent implements OnChanges, OnInit, OnDestroy {
+export class TimeFramePickerComponent implements OnChanges, OnInit {
 
     /**  earliest selectable date */
     @Input() minDate: Moment;
@@ -38,8 +38,6 @@ export class TimeFramePickerComponent implements OnChanges, OnInit, OnDestroy {
     public modelDefault: any;
 
     public distanceToEndDate: number; // to keep distance between start and end-date
-
-    public onDestroy$ = new Subject<void>();
     
     constructor(private timeFrameService: TimeframeService, public changeDetector: ChangeDetectorRef) {}
 
@@ -129,10 +127,5 @@ export class TimeFramePickerComponent implements OnChanges, OnInit, OnDestroy {
             }
         }
         this.changed.emit(this.model);
-    }
-
-    ngOnDestroy() {
-        this.onDestroy$.next();
-        this.onDestroy$.complete();
     }
 }
