@@ -66,7 +66,7 @@ describe("RadialGaugeThresholdsRenderer >", () => {
         it("should assign marker fill color based on the hit value", () => {
             thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
                 // only the first threshold is hit for these tests
-                expect(node.getAttribute("style")).toEqual(`fill: var(--nui-color-icon-${i === 0 ? "light" : "default"}); stroke-width: 0;`);
+                expect(node.getAttribute("style")).toEqual(`fill: var(--nui-color-${i === 0 ? "text-light" : "icon-default"}); stroke-width: 0;`);
             });
         });
     });

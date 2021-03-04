@@ -50,7 +50,7 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
             .attr("cx", (d, i) => renderSeries.scales.x.convert(accessors?.data?.endX?.(d, i, dataSeries.data, dataSeries)))
             .attr("cy", (d, i) => renderSeries.scales.y.convert(accessors?.data?.endY?.(d, i, dataSeries.data, dataSeries)))
             .attr("r", 4)
-            .style("fill", (d, i) => `var(${data[i].hit ? "--nui-color-text-light" : "--nui-color-icon-default"})`)
+            .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
             .style("stroke-width", 0);
     }
 
