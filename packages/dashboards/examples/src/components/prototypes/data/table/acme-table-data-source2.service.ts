@@ -1,6 +1,6 @@
 import { ListRange } from "@angular/cdk/collections";
 import { Injectable } from "@angular/core";
-import { DataSourceService, IDataField, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
+import { DataSourceService, IDataField, IDataSourceOutput, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject } from "rxjs";
@@ -64,12 +64,13 @@ export class AcmeTableDataSource2 extends DataSourceService<IRandomUserTableMode
         // almost immediately. We need it longer to be able the show the spinner component on data load
         return new Promise(resolve => {
             setTimeout(() => {
-                this.getData(start, end).then((response: INovaFilteringOutputs | undefined) => {
-                    if (!response) {
+                this.getData(start, end).then((response) => {
+                    if (!response?.result) {
+                        this.outputsSubject.next(response);
                         return;
                     }
 
-                    this.cache = this.cache.concat(response.users);
+                    this.cache = this.cache.concat(response.result.users);
 
                     this.dataSubject.next(this.cache);
                     resolve({
@@ -83,30 +84,39 @@ export class AcmeTableDataSource2 extends DataSourceService<IRandomUserTableMode
                     this.lastSortValue = filters.sorter?.value;
                     this.lastVirtualScroll = filters.virtualScroll?.value;
                     this.busy.next(false);
+                    this.outputsSubject.next(response);
                 });
             }, 300);
         });
     }
 
-    public async getData(start: number = 0, end: number = 20): Promise<INovaFilteringOutputs | undefined> {
+    public async getData(start: number = 0, end: number = 20): Promise<IDataSourceOutput<UsersQueryResponse | null>> {
         let response: IRandomUserResponse | null = null;
         try {
             response = await
                 (await fetch(`${corsProxy}${RANDOMUSER_API_URL}${apiRoute}/?page=${end / (end - start) || 0}&results=${end - start}&seed=${this.seed}`)).json();
             return {
-                users: response?.results.map((result: IRandomUserResults, i: number) => ({
-                    no: this.cache.length + i + 1,
-                    nameFirst: result.name.first,
-                    nameLast: result.name.last,
-                    country: result.location.country,
-                    city: result.location.city,
-                })),
-                total: response?.results.length,
-                start: start,
-            } as UsersQueryResponse;
+                result: {
+                    users: response?.results.map((result: IRandomUserResults, i: number) => ({
+                        no: this.cache.length + i + 1,
+                        nameFirst: result.name.first,
+                        nameLast: result.name.last,
+                        country: result.location.country,
+                        city: result.location.city,
+                    })),
+                    total: response?.results.length,
+                    start: start,
+                },
+            } as IDataSourceOutput<UsersQueryResponse>;
         } catch (e) {
             this.busy.next(false);
             this.logger.error(responseError);
+            return {
+                result: null,
+                error: {
+                    type: responseError,
+                },
+            };
         }
     }
 

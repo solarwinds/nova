@@ -254,6 +254,13 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         this.onDestroy$.complete();
         this.tableUpdate$.complete();
         this.searchTerm$?.complete();
+
+        // erase the error status when this component gets destroyed to prevent an error status leak when changing data sources
+        this.pizzagnaService.setProperty({
+            componentId: "bodyContent",
+            propertyPath: ["fallbackKey"],
+            pizzagnaKey: PizzagnaLayer.Data,
+        }, undefined);
     }
 
     /** Checks if table should be displayed */

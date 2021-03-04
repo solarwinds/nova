@@ -17,7 +17,7 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from "@angular/core";
-import { IEvent, LoggerService } from "@nova-ui/bits";
+import { IBusyConfig, IEvent, LoggerService } from "@nova-ui/bits";
 import find from "lodash/find";
 import findIndex from "lodash/findIndex";
 import isUndefined from "lodash/isUndefined";
@@ -114,9 +114,9 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
     private arraySteps: any[];
 
     constructor(private changeDetector: ChangeDetectorRef,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private logger: LoggerService,
-        private dashwizService: DashwizService) {
+                private componentFactoryResolver: ComponentFactoryResolver,
+                private logger: LoggerService,
+                private dashwizService: DashwizService) {
         if (dashwizService) {
             dashwizService.component = this;
         }
@@ -127,7 +127,7 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
 
         if (this.finishText === DashwizComponent.placeholderFinishText) {
             this.logger.warn(`DashwizComponent input "finishText" is using placeholder text
-"${DashwizComponent.placeholderFinishText}". A value should be specified.`);
+"${ DashwizComponent.placeholderFinishText }". A value should be specified.`);
         }
     }
 
@@ -162,7 +162,7 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
             });
         });
 
-        this.navigationControl.subscribe(value => {
+        this.navigationControl.subscribe((value: { busyState: IBusyConfig; allowStepChange: any; }) => {
             this.currentStep.busyConfig = value.busyState;
             if (value.allowStepChange && !isUndefined(this.futureStep) && this.currentStep !== this.futureStep) {
                 this.enterAnotherStep();

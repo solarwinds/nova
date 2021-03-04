@@ -14,14 +14,14 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { DialogService, EventBus, IDataSource, IEvent, uuid } from "@nova-ui/bits";
+import { DialogService, EventBus, IDataField, IDataSource, IEvent, uuid } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 import values from "lodash/values";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { IDataSourceOutput } from "../../../../../components/providers/types";
-import { IDataField, ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
+import { IDataSourceError, IDataSourceOutput } from "../../../../../components/providers/types";
+import { ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { IHasForm, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
 import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
@@ -48,6 +48,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     public dataSourceFields: Array<IDataField> = [];
     public draggedItemHeight: number;
     public isWidthMessageDisplayed = false;
+    public dataSourceError: IDataSourceError | null;
 
     public get columnForms(): FormControl[] {
         return (this.form.controls["columns"] as FormArray).controls as FormControl[];
@@ -72,7 +73,6 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((columns: ITableWidgetColumnConfig[]) => {
                 this.isWidthMessageDisplayed = this.getWidthMessageDisplayed(columns);
-                console.log(columns.map(c => c.width));
                 this.changeDetector.markForCheck();
             });
 
@@ -86,8 +86,10 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
         });
 
         this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent<any | IDataSourceOutput<any>>) => {
+            if (event.payload?.error) {
+                return;
+            }
             const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
-
             this.dataSourceFields = dataFields;
 
             const disableColumnGeneration = this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.DisableTableColumnGeneration)?.enabled;
@@ -103,8 +105,10 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
                 }
             }
             this.changeDetector.markForCheck();
-            // column components are not updated properly without this one
-            // setTimeout(() => this.changeDetector.markForCheck());
+        });
+        dataSourceManager.error.subscribe((err) => {
+            this.dataSourceError = err;
+            this.changeDetector.markForCheck();
         });
     }
 
@@ -159,7 +163,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
 
     public resetColumns(confirmation: boolean) {
         const reset = () => {
-            const columns: ITableWidgetColumnConfig[] = this.dataSourceFields.map(df => ({
+            const columns: ITableWidgetColumnConfig[] = this.dataSourceFields?.map(df => ({
                 id: uuid("column"),
                 formatter: {
                     componentType: "RawFormatterComponent",

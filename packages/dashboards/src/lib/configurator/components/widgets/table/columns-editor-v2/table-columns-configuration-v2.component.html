@@ -1,5 +1,5 @@
 <div class="nui-table-columns-configuration">
-    <div *ngIf="dataSourceFields.length" cdkDropList (cdkDropListDropped)="drop($event)"
+    <div *ngIf="!dataSourceError && dataSourceFields.length" cdkDropList (cdkDropListDropped)="drop($event)"
          [formGroup]="form">
         <div formArrayName="columns">
             <div cdkDrag
@@ -76,6 +76,10 @@
     <nui-message class="m-4 d-block" *ngIf="!dataSourceManager?.dataSource" type="info"
                  [allowDismiss]="false" i18n>
         <b>Select a data source</b>
+    </nui-message>
+    <nui-message class="m-4 d-block" *ngIf="dataSourceError" type="critical"
+                 [allowDismiss]="false" i18n>
+        <b>The data source errored out with error: </b> {{dataSourceError.type}}
     </nui-message>
 </div>
 

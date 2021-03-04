@@ -25,13 +25,12 @@ import {
     ValidationErrors,
     Validators
 } from "@angular/forms";
-import { EventBus, IEvent } from "@nova-ui/bits";
+import { EventBus, IDataField, IEvent } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
 import { IDataSourceOutput } from "../../../../../../../components/providers/types";
-import { IDataField } from "../../../../../../../components/table-widget/types";
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
 import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
 import { FORMATTERS_REGISTRY, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../../../../types";
@@ -283,7 +282,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     }
 
     private updateAvailableFormatters() {
-        if (!this._dataFields.length || !this._providedFormatters.length) {
+        if (!this._dataFields?.length || !this._providedFormatters.length) {
             return;
         }
 

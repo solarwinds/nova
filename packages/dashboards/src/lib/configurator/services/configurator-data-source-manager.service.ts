@@ -1,9 +1,9 @@
-import { Inject, Injectable, Injector, OnDestroy } from "@angular/core";
+import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { IDataSourceOutput } from "../../components/providers/types";
+import { IDataSourceError, IDataSourceOutput } from "../../components/providers/types";
 import { PIZZAGNA_EVENT_BUS } from "../../types";
 import { DashwizService } from "../components/wizard/dashwiz/dashwiz.service";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../types";
@@ -14,6 +14,7 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
     private onDestroy$: Subject<void> = new Subject<void>();
     private dataSourceCreated: Subject<void> = new Subject<void>();
     public dataSource: IDataSource;
+    public error: Subject<(IDataSourceError) | null> = new Subject<IDataSourceError | null>();
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>, private dashwizService: DashwizService) {
         this.eventBus.subscribeUntil(DATA_SOURCE_CREATED, this.onDestroy$, (event: IEvent<IDataSource>) => {
@@ -35,6 +36,11 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
         });
 
         this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent<any | IDataSourceOutput<any>>) => {
+            if (event.payload?.error) {
+                this.error.next(event.payload.error);
+            } else {
+                this.error.next(null);
+            }
         });
 
         this.eventBus.subscribeUntil(DATA_SOURCE_CHANGE, this.onDestroy$, (event: IEvent<any>) => {
