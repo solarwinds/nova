@@ -52,7 +52,7 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .attr("cx", d => markerGenerator.centroid(d)[0])
             .attr("cy", d => markerGenerator.centroid(d)[1])
             .attr("r", 4)
-            .style("fill", (d, i) => `var(--nui-color-icon-${data[i].hit ? "light" : "default"})`)
+            .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
             .style("stroke-width", 0);
     }
 

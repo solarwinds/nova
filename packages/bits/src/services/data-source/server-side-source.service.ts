@@ -17,7 +17,7 @@ export abstract class ServerSideDataSource<T, F extends IFilters = IFilters, D =
     protected applyFilters$ = new Subject<F>();
     protected destroy$: Subject<void> = new Subject();
 
-    protected constructor() {
+    constructor() {
         super();
 
         this.setupFilters();
