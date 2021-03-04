@@ -24,8 +24,8 @@
                     [repeatItemTemplateRef]="listRepeatItemTemplate"
                     [selection]="filteringState.repeat?.selectedItems"
                     [itemsSource]="listItems$ | async"
-                    virtualScroll="true"
-                    itemSize="30">
+                    [virtualScroll]="true"
+                    [itemSize]="30">
         </nui-repeat>
     </div>
 

@@ -14,9 +14,9 @@
 <!-- Note that the height is defined in order to accommodate virtual scrolling -->
 <nui-repeat [itemsSource]="books$ | async"
             [repeatItemTemplateRef]="userItemTemplate"
-            virtualScroll="true"
+            [virtualScroll]="true"
             style="height: 300px;"
-            itemSize="30">
+            [itemSize]="30">
 </nui-repeat>
 
 <!--This progress bar is for demo purposes only. Please consult with your UX designer to determine an appropriate layout for your implementation.-->

@@ -45,3 +45,9 @@ export const DEFAULT_MARKER_INTERACTION_CONFIG: IMarkerInteractionConfig = {
     enabled: false,
     clickable: false,
 };
+
+/**
+ * @ignore
+ * Class name for gauge threshold markers
+ */
+export const GAUGE_THRESHOLD_MARKER_CLASS = "gauge-threshold-marker";

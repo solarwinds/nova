@@ -137,7 +137,16 @@ describe("components >", () => {
                 dataManager.update(mockDoubleSeriesSet);
 
                 mockDoubleSeriesSet.forEach(series => spyOn(series.renderer, "draw"));
+
+                // suppress console warning
+                const consoleWarnFn = console.warn;
+                console.warn = () => null;
+
                 renderEngine.update();
+
+                // restore console warning
+                console.warn = consoleWarnFn;
+
                 mockDoubleSeriesSet.forEach(async series => expect(series.renderer.draw).not.toHaveBeenCalled());
             });
         });

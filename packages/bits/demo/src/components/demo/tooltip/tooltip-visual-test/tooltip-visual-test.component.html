@@ -34,7 +34,7 @@
     <div class="row"><h3>Manual Triggering</h3></div>
     <div class="row">
         <span #tooltip="nuiTooltip"
-              nuiTooltip="This tooltip has been called manually">
+              [nuiTooltip]="tooltipMessage">
         </span>
         <button id="manual-tooltip" nui-button type="button" (click)="tooltip.toggle()">
             Manually toggle tooltip

@@ -33,8 +33,8 @@
     background-size: @icon-size-default;
     vertical-align: middle;
     background-repeat: no-repeat;
-    /** Add "line-height: 1" in v.11
-    * https://jira.solarwinds.com/browse/NUI-5662
+    /** Add "line-height: 1" in v.12
+    * https://jira.solarwinds.com/browse/NUI-5880
     */
     line-height: @line-height-base;
     position: relative;
@@ -44,6 +44,17 @@
         display: inline-block;
         background-repeat: no-repeat;
         line-height: @line-height-base;
+    }
+
+    &.nui-icon-line-height {
+        line-height: 1;
+
+        i.nui-icon {
+            line-height: 1;
+        }
+        svg {
+            line-height: 1;
+        }
     }
 
     // Supported sizes for icons
