@@ -228,14 +228,14 @@ describe("USERCONTROL Dialog", () => {
             });
 
             it("should close overlay in datepicker on click outside dialog", async () => {
-                const datePicker = await dialog.getDatetimePicker().getDatePicker();
+                const datePicker = dialog.getDatetimePicker().getDatePicker();
                 await datePicker.toggle();
                 await browser.actions().mouseMove({x: -500, y: 0}).click().perform();
                 expect(await datePicker.overlay.isOpened()).toBe(false);
             });
 
             it("should close overlay in timepicker on click outside dialog", async () => {
-                const timePicker = await dialog.getDatetimePicker().getTimePicker();
+                const timePicker = dialog.getDatetimePicker().getTimePicker();
                 await timePicker.toggle();
                 await browser.actions().mouseMove({x: -500, y: 0}).click().perform();
                 expect(await timePicker.overlay.isOpened()).toBe(false);
