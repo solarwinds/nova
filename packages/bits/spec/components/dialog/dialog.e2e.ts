@@ -226,6 +226,20 @@ describe("USERCONTROL Dialog", () => {
                 expect(await overlayContainer?.$(`.${DialogAtom.DIALOG_WINDOW_CSS_CLASS}`).getCssValue("z-index")).toEqual("1000");
                 expect(await overlayContainer?.$(`.${DialogAtom.BACKDROP_CSS_CLASS}`).getCssValue("z-index")).toEqual("1000");
             });
+
+            it("should close overlay in datepicker on click outside dialog", async () => {
+                const datePicker = await dialog.getDatetimePicker().getDatePicker();
+                await datePicker.toggle();
+                await browser.actions().mouseMove({x: -500, y: 0}).click().perform();
+                expect(await datePicker.overlay.isOpened()).toBe(false);
+            });
+
+            it("should close overlay in timepicker on click outside dialog", async () => {
+                const timePicker = await dialog.getDatetimePicker().getTimePicker();
+                await timePicker.toggle();
+                await browser.actions().mouseMove({x: -500, y: 0}).click().perform();
+                expect(await timePicker.overlay.isOpened()).toBe(false);
+            });
         });
     });
 });

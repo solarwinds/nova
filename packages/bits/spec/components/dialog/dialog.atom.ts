@@ -6,6 +6,7 @@ import {
 } from "protractor";
 
 import { Atom } from "../../atom";
+import { DateTimepickerAtom } from "../datetimepicker/datetimepicker.atom";
 
 export class DialogAtom extends Atom {
     public static CSS_CLASS = "modal-dialog";
@@ -41,4 +42,10 @@ export class DialogAtom extends Atom {
     public scrollToEnd = async (): Promise<void> => browser.executeScript<void>(`arguments[0].scrollIntoView({block: "end"})`, this.getDialog());
 
     public getDialog(): ElementFinder { return super.getElement().element(by.className("modal-dialog")); }
+
+    public getDatetimePicker(): DateTimepickerAtom {
+        return Atom.findIn(DateTimepickerAtom, this.getElement().element(by.className("date-time-picker")));
+    }
+
+    public getBody(): ElementFinder { return super.getElement().element(by.className("body")); }
 }
