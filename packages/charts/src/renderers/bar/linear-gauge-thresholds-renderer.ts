@@ -57,7 +57,6 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
     /** See {@link Renderer#getRequiredLayers} */
     public getRequiredLayers(): ILasagnaLayer[] {
         return [
-            STANDARD_RENDER_LAYERS[RenderLayerName.data],
             STANDARD_RENDER_LAYERS[RenderLayerName.unclippedData],
         ];
     }
