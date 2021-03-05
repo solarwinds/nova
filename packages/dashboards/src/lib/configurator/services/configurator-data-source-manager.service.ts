@@ -42,9 +42,6 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
                 this.error.next(undefined);
             }
         });
-
-        this.eventBus.subscribeUntil(DATA_SOURCE_CHANGE, this.onDestroy$, (event: IEvent<any>) => {
-        });
     }
 
     ngOnDestroy(): void {
