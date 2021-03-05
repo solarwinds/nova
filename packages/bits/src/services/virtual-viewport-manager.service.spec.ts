@@ -19,8 +19,8 @@ import { VirtualViewportManager } from "./virtual-viewport-manager.service";
 
         <nui-repeat [itemsSource]="items$ | async"
                     [repeatItemTemplateRef]="repeatItemTemplate"
-                    virtualScroll="true"
-                    itemSize="30">
+                    [virtualScroll]="true"
+                    [itemSize]="30">
         </nui-repeat>
     `,
     styles: [

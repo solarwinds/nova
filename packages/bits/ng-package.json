@@ -90,5 +90,5 @@
             "webpack-rxjs-externals": "webpack-rxjs-externals"
         }
     },
-    "whitelistedNonPeerDependencies": ["."]
+    "allowedNonPeerDependencies": ["."]
 }

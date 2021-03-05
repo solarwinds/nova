@@ -121,21 +121,21 @@ export class RefresherConfigurationComponent implements OnInit, OnChanges, OnDes
         const calculatedSeconds = totalSeconds % 60;
 
         if (hours > 0) {
-            result += hours + TIME_UNITS_SHORT[TimeUnit.Hour] + " ";
+            result += hours + " " + TIME_UNITS_SHORT[TimeUnit.Hour] + " ";
         }
 
         if (minutes > 0) {
-            result += minutes + TIME_UNITS_SHORT[TimeUnit.Minute] + " ";
+            result += minutes + " " + TIME_UNITS_SHORT[TimeUnit.Minute] + " ";
         }
 
         if (calculatedSeconds > 0) {
-            result += calculatedSeconds + TIME_UNITS_SHORT[TimeUnit.Second] + " ";
+            result += calculatedSeconds + " " + TIME_UNITS_SHORT[TimeUnit.Second] + " ";
         }
 
         result = result.trim();
 
         if (result === "") {
-            return "0" + TIME_UNITS_SHORT[TimeUnit.Second];
+            return "0 " + TIME_UNITS_SHORT[TimeUnit.Second];
         }
 
         return result;

@@ -66,6 +66,7 @@ export class SideIndicatorAccessors implements ISideIndicatorAccessors {
  */
 export class SideIndicatorRenderer extends XYRenderer<ISideIndicatorAccessors> {
 
+    /** @deprecated As of Nova v9, use RenderLayerName.unclippedData enum value instead. Removal: NUI-5753 */
     public static SIDE_INDICATORS_LAYER = "side-indicators";
 
     private DEFAULT_CONFIG: IRendererConfig = {};
@@ -82,7 +83,7 @@ export class SideIndicatorRenderer extends XYRenderer<ISideIndicatorAccessors> {
 
     /** See {@link Renderer#draw} */
     public draw(renderSeries: IRenderSeries<ISideIndicatorAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
-        const target = renderSeries.containers[SideIndicatorRenderer.SIDE_INDICATORS_LAYER];
+        const target = renderSeries.containers[RenderLayerName.unclippedData];
         const dataSeries = renderSeries.dataSeries;
         const scales = renderSeries.scales;
         const accessors = renderSeries.dataSeries.accessors;
@@ -122,12 +123,9 @@ export class SideIndicatorRenderer extends XYRenderer<ISideIndicatorAccessors> {
 
     /** See {@link Renderer#getRequiredLayers} */
     public getRequiredLayers(): ILasagnaLayer[] {
-        return [{
-            name: SideIndicatorRenderer.SIDE_INDICATORS_LAYER,
-            // order calculated by adding 1 to the data layer order to ensure the unclipped data layer appears just after the data layer in the DOM
-            order: STANDARD_RENDER_LAYERS[RenderLayerName.data].order + 1,
-            clipped: false,
-        }];
+        return [
+            STANDARD_RENDER_LAYERS[RenderLayerName.unclippedData],
+        ];
     }
 
 }

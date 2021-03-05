@@ -1,10 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 
 @Component({
     selector: "nui-runtime-i18n-example",
     templateUrl: "./runtime-i18n-example.component.html",
 })
-export class RuntimeI18NExampleComponent {
+export class RuntimeI18NExampleComponent implements OnDestroy {
     public firstNamePlaceholder: string = `John`;
     public lastNamePlaceholder: string = `Doe`;
     public email: string = `john.doe@whatever.com`;
@@ -21,5 +21,9 @@ export class RuntimeI18NExampleComponent {
     public setDefaultLocale() {
         localStorage.removeItem("locale");
         this.pageReload();
+    }
+
+    public ngOnDestroy() {
+        localStorage.removeItem("locale");
     }
 }

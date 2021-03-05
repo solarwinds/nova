@@ -1,6 +1,7 @@
 import isArray from "lodash/isArray";
 
 import { BandScale } from "../band-scale";
+import { BAND_CENTER } from "../constants";
 import { isBandScale, IScale } from "../types";
 
 /**
@@ -11,7 +12,7 @@ import { isBandScale, IScale } from "../types";
  * @param {number} position Number in the range of [0, 1] that will define the point inside of the band. Where 0 stands for start.
  * @param levels how many levels deep can we go during the conversion
  */
-export function convert(scale: IScale<any>, value: any, position: number = 0.5, levels: number = Number.MAX_VALUE): number {
+export function convert(scale: IScale<any>, value: any, position: number = BAND_CENTER, levels: number = Number.MAX_VALUE): number {
     if (!scale) {
         return 0;
     }

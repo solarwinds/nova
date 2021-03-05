@@ -1,7 +1,9 @@
+import isUndefined from "lodash/isUndefined";
+
 import { ChartAssist } from "../../core/chart-assists/chart-assist";
 import { IChartAssistSeries, IChartSeries } from "../../core/common/types";
-import { IBarAccessors } from "../public-api";
 
+import { IBarAccessors } from "./accessors/bar-accessors";
 import { gatherCategories } from "./preprocessor-utils";
 
 export function stackedPreprocessor(chartSeriesSet: IChartSeries<IBarAccessors>[],
@@ -15,6 +17,10 @@ export function stackedPreprocessor(chartSeriesSet: IChartSeries<IBarAccessors>[
 
     // This is adding metadata to the dataset and filling missing
     const forExtents = chartSeriesSet.reduce((acc: number[], chartSeries) => {
+        if (!isUndefined(chartSeries.preprocess) && !chartSeries.preprocess) {
+            return acc;
+        }
+
         const categoryAccessor = chartSeries.accessors.data["category"];
         const valueAccessor = chartSeries.accessors.data["value"];
 

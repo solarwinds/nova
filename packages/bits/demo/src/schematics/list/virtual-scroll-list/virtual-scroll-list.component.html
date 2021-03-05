@@ -24,8 +24,8 @@
                     [repeatItemTemplateRef]="listRepeatItemTemplate"
                     [selection]="filteringState.repeat?.selectedItems"
                     [itemsSource]="listItems$ | async"
-                    virtualScroll="true"
-                    itemSize="30">
+                    [virtualScroll]="true"
+                    [itemSize]="30">
         </nui-repeat>
     </div>
 
@@ -33,7 +33,7 @@
         <div class="d-flex justify-content-center align-items-center">
             <div class="p-1 d-flex">
                 <div class="d-flex pt-3 pb-3" i18n>
-                    Showing {{(listItems$ | async).length}} of {{ totalItems }}.
+                    Showing {{(listItems$ | async).length}} of {{ totalItems }}
                 </div>
                 <div class="d-flex pt-3 pb-3">
                     <ng-container i18n *ngIf="(listItems$ | async).length !== totalItems; else endOfData">, scroll down for more.</ng-container>

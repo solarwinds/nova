@@ -16,6 +16,14 @@ export class RepeatAtom extends Atom {
 
     public isCompact = (): Promise<boolean> => this.hasClass("nui-repeat__compact");
 
+    public get vScrollViewport(): ElementFinder {
+        return super.getElement().element(by.className("cdk-virtual-scroll-viewport"));
+    }
+
+    public get vScrollViewportContent(): ElementFinder {
+        return super.getElement().element(by.className("cdk-virtual-scroll-content-wrapper"));
+    }
+
     public selectCheckbox = async (idx: number): Promise<void> =>
         this.getItem(idx).element(by.className("nui-checkbox")).click()
 
@@ -53,5 +61,13 @@ export class RepeatAtom extends Atom {
 
     public async getHeaderText(): Promise<string> {
         return super.getElement().element(by.css(".nui-repeat-header")).getText();
+    }
+
+    public async getVScrollViewportHeight(): Promise<string> {
+        return this.vScrollViewport.getCssValue("height");
+    }
+
+    public async getVScrollViewportContentHeight(): Promise<string> {
+        return this.vScrollViewportContent.getCssValue("height");
     }
 }

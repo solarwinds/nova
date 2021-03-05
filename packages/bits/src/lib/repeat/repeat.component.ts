@@ -249,15 +249,20 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
 
     private selectionHasChanged = false;
     private itemsSourceDiff: IterableDiffer<T>;
+    private intersectionObserver: IntersectionObserver;
 
     /** Emits when the drop list has been destroyed. */
     private readonly dropListDestroyed = new Subject<void>();
 
     constructor(public changeDetector: ChangeDetectorRef, public logger: LoggerService,
-                private iterableDiffers: IterableDiffers, public dragDropService: DragDrop) {
+                private iterableDiffers: IterableDiffers, public dragDropService: DragDrop,
+                private elRef: ElementRef) {
     }
 
     public ngOnInit() {
+        this.intersectionObserver = new IntersectionObserver(this.intersectionObserverCallback);
+        this.intersectionObserver.observe(this.elRef.nativeElement);
+
         if (this.dragPreviewTemplateRef || this.dragHandleTemplateRef || this._reorderable === true) {
             this._draggable = true;
             this.draggableChange.emit(this._draggable);
@@ -283,6 +288,16 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
 
     public ngAfterViewInit() {
         this.initializeCDKDropList();
+    }
+
+    /**
+     * Cleanup CDK
+     * PS: No need to unsubscribe from the EventEmitters, they are handled
+     * automatically by Angular & RxJs
+     */
+    public ngOnDestroy(): void {
+        this.intersectionObserver?.unobserve(<Element>this.elRef.nativeElement);
+        this.disposeCDKDropList();
     }
 
     public update() {
@@ -372,10 +387,8 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
 
     /* START - ITEM BEHAVIOUR DECIDERS */
     public isItemDisabled(item: T): boolean {
-        // @ts-ignore
-        return item.hasOwnProperty(nameof<IRepeatItem>("disabled"))
-            // @ts-ignore
-            ? item.disabled
+        return (item as IRepeatItem).hasOwnProperty(nameof<IRepeatItem>("disabled"))
+            ? (item as IRepeatItem).disabled
             : !!this.itemConfig?.isDisabled?.(item);
     }
 
@@ -452,13 +465,10 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
         }
     }
 
-    /**
-     * Cleanup CDK
-     * PS: No need to unsubscribe from the EventEmitters, they are handled
-     * automatically by Angular & RxJs
-     */
-    public ngOnDestroy(): void {
-        this.disposeCDKDropList();
+    private intersectionObserverCallback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
+        if (entries[0].isIntersecting && this.virtualScroll) {
+            // recheck the cdk viewport size in case the repeat is instantiated before becoming visible in the viewport (NUI-5820)
+            this.viewportRef.checkViewportSize();
+        }
     }
-
 }
