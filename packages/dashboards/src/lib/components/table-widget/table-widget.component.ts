@@ -233,19 +233,21 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
 
         // Note: Secondary stream used to trigger widget ready event when table is properly displayed and we can start
         // loading data for our virtual scroll
-        merge(
-            of(this.range * this.rowHeight),
-            tableHeightChanged$,
-            of(this.el.nativeElement.getBoundingClientRect().height)
-        ).pipe(
-            filter(value => !!value),
-            take(1),
-            tap((value) => {
-                this.tableWidgetHeight = value;
-                this.virtualScrollAddon.subscribeToVirtualScroll();
-                this.eventBus.getStream(WIDGET_READY).next();
-            })
-        ).subscribe();
+        setTimeout(() => {
+            merge(
+                of(this.range * this.rowHeight),
+                tableHeightChanged$,
+                of(this.el.nativeElement.getBoundingClientRect().height)
+            ).pipe(
+                filter(value => !!value),
+                take(1),
+                tap((value) => {
+                    this.tableWidgetHeight = value;
+                    this.virtualScrollAddon.subscribeToVirtualScroll();
+                    this.eventBus.getStream(WIDGET_READY).next();
+                })
+            ).subscribe();
+        });
 
     }
 

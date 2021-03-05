@@ -11,9 +11,9 @@ import {
     ProviderRegistryService,
     RefresherSettingsService,
     TableFormatterRegistryService,
-    WIDGET_CREATE,
     WidgetClonerService,
     WidgetTypesService,
+    WIDGET_CREATE,
 } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
