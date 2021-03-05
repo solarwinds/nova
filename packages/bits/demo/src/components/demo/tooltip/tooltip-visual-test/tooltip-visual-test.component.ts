@@ -5,4 +5,5 @@ import {Component} from "@angular/core";
     templateUrl: "./tooltip-visual-test.component.html",
 })
 export class TooltipVisualTestComponent {
+    tooltipMessage = "ThisTooltipHasBeenCalledManuallyWithCriticallyLongTooltipMessage";
 }

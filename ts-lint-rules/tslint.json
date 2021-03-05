@@ -89,7 +89,6 @@
     "import-blacklist": [
         true,
         "lodash",
-        true,
         "moment"
     ],
     "await-promise": [

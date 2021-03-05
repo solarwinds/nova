@@ -108,8 +108,7 @@ const eventMock = {};
             expect(numberOfYearTiles).toBe(10);
         });
 
-        // TODO: Bring back in after NUI-5787
-        xit("should load with selected date being today", () => {
+        it("should load with selected date being today", () => {
             const activeDate = moment();
             componentInstance.writeValue(activeDate);
             componentInstance.overlay.toggle();

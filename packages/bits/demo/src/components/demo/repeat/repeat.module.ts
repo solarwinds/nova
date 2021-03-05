@@ -10,6 +10,7 @@ import {
     NuiRepeatModule,
     NuiSearchModule,
     NuiSwitchModule,
+    NuiTabsModule,
     SrlcStage,
 } from "@nova-ui/bits";
 
@@ -28,8 +29,9 @@ import {
     RepeatSimpleExampleComponent,
     RepeatSingleSelectionModeExampleComponent,
     RepeatSingleWithRequiredSelectionModeExampleComponent,
+    RepeatTestComponent,
+    RepeatVirtualScrollComponent,
 } from "./index";
-import { RepeatTestComponent } from "./repeat-select-test/repeat-test.component";
 
 const routes = [
     {
@@ -49,6 +51,11 @@ const routes = [
     {
         path: "repeat-test",
         component: RepeatTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
     },
 ];
 
@@ -64,6 +71,7 @@ const routes = [
         NuiProgressModule,
         NuiSearchModule,
         NuiFormFieldModule,
+        NuiTabsModule,
     ],
     declarations: [
         RepeatExampleComponent,
@@ -81,6 +89,7 @@ const routes = [
         RepeatTestComponent,
         RepeatReorderItemConfigExampleComponent,
         RepeatDragHandleExampleComponent,
+        RepeatVirtualScrollComponent,
     ],
     providers: [
         {

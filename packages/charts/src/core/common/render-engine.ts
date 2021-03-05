@@ -69,7 +69,11 @@ export class RenderEngine {
             const childContainers = this.getSeriesChildContainers(chartSeries.id);
             const areDomainsValid = -1 === Object.values(chartSeries.scales).findIndex(scale => {
                 if (typeof scaleValidity[scale.id] === "undefined") {
-                    scaleValidity[scale.id] = scale.isDomainValid();
+                    const isValid = scale.isDomainValid();
+                    if (!isValid) {
+                        console.warn("Invalid scale domain detected for scale:", scale);
+                    }
+                    scaleValidity[scale.id] = isValid;
                 }
                 return !scaleValidity[scale.id];
             });
