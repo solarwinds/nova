@@ -28,7 +28,6 @@ import moment from "moment/moment";
 import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
 import { AcmeProportionalDataSource2 } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
-import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
 
 export const positions: Record<string, GridsterItem> = {
@@ -384,80 +383,79 @@ export const widgets: IWidget[] = [
                 "table": {
                     providers: {
                         [WellKnownProviders.DataSource]: {
-                            providerId: AcmeTableMockDataSource.providerId,
+                            providerId: AcmeTableDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                     properties: {
                         configuration: {
                             interactive: true,
-                            // columns: [
-                            //     {
-                            //         id: "column1",
-                            //         label: "No",
-                            //         isActive: true,
-                            //         formatter: {
-                            //             componentType: RawFormatterComponent.lateLoadKey,
-                            //             properties: {
-                            //                 dataFieldIds: {
-                            //                     value: "no",
-                            //                 },
-                            //             },
-                            //         },
-                            //     },
-                            //     {
-                            //         id: "column2",
-                            //         label: "Title",
-                            //         isActive: true,
-                            //         formatter: {
-                            //             componentType: RawFormatterComponent.lateLoadKey,
-                            //             properties: {
-                            //                 dataFieldIds: {
-                            //                     value: "nameTitle",
-                            //                 },
-                            //             },
-                            //         },
-                            //     },
-                            //     {
-                            //         id: "column3",
-                            //         label: "First Name",
-                            //         isActive: true,
-                            //         formatter: {
-                            //             componentType: RawFormatterComponent.lateLoadKey,
-                            //             properties: {
-                            //                 dataFieldIds: {
-                            //                     value: "nameFirst",
-                            //                 },
-                            //             },
-                            //         },
-                            //     },
-                            //     {
-                            //         id: "column4",
-                            //         label: "Last Name",
-                            //         isActive: true,
-                            //         formatter: {
-                            //             componentType: RawFormatterComponent.lateLoadKey,
-                            //             properties: {
-                            //                 dataFieldIds: {
-                            //                     value: "nameLast",
-                            //                 },
-                            //             },
-                            //         },
-                            //     },
-                            //     {
-                            //         id: "column5",
-                            //         label: "E-Mail",
-                            //         isActive: true,
-                            //         formatter: {
-                            //             componentType: RawFormatterComponent.lateLoadKey,
-                            //             properties: {
-                            //                 dataFieldIds: {
-                            //                     value: "email",
-                            //                 },
-                            //             },
-                            //         },
-                            //     },
-                            // ],
-                            columns: [],
+                            columns: [
+                                {
+                                    id: "column1",
+                                    label: "No",
+                                    isActive: true,
+                                    formatter: {
+                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "no",
+                                            },
+                                        },
+                                    },
+                                },
+                                {
+                                    id: "column2",
+                                    label: "Title",
+                                    isActive: true,
+                                    formatter: {
+                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "nameTitle",
+                                            },
+                                        },
+                                    },
+                                },
+                                {
+                                    id: "column3",
+                                    label: "First Name",
+                                    isActive: true,
+                                    formatter: {
+                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "nameFirst",
+                                            },
+                                        },
+                                    },
+                                },
+                                {
+                                    id: "column4",
+                                    label: "Last Name",
+                                    isActive: true,
+                                    formatter: {
+                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "nameLast",
+                                            },
+                                        },
+                                    },
+                                },
+                                {
+                                    id: "column5",
+                                    label: "E-Mail",
+                                    isActive: true,
+                                    formatter: {
+                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        properties: {
+                                            dataFieldIds: {
+                                                value: "email",
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
                             sorterConfiguration: {
                                 descendantSorting: true,
                                 sortBy: "column4",
