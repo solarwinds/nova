@@ -3,7 +3,7 @@ import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { IDataSourceError, IDataSourceOutput } from "../../components/providers/types";
+import { IDataSourceError } from "../../components/providers/types";
 import { PIZZAGNA_EVENT_BUS } from "../../types";
 import { DashwizService } from "../components/wizard/dashwiz/dashwiz.service";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../types";
@@ -35,11 +35,11 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
             });
         });
 
-        this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent<any | IDataSourceOutput<any>>) => {
+        this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent) => {
             if (event.payload?.error) {
                 this.error.next(event.payload.error);
             } else {
-                this.error.next(null);
+                this.error.next(undefined);
             }
         });
 

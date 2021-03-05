@@ -34,6 +34,7 @@ import { IDataSourceOutput } from "../../../../../../../components/providers/typ
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
 import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
 import { FORMATTERS_REGISTRY, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../../../../types";
+import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../../widget-types/table/table-configurator";
 import { DATA_SOURCE_OUTPUT } from "../../../../../../types";
 
 @Component({
@@ -315,7 +316,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
 
     private handleFormattersUpdate(formatters: IFormatterDefinition[]): void {
         if (formatters !== this._providedFormatters) {
-            this._providedFormatters = formatters;
+            this._providedFormatters = formatters?.length > 0 ? formatters : DEFAULT_TABLE_FORMATTERS;
             this.updateAvailableFormatters();
         }
     }

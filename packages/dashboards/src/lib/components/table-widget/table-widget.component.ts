@@ -51,7 +51,6 @@ import { SearchFeatureAddonService } from "./addons/search-feature-addon.service
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
 import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
 
-
 /**
  * @ignore
  */

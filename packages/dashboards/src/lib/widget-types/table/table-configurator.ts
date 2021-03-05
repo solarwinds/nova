@@ -141,7 +141,17 @@ export const tableConfigurator: IPizzagna = {
         columns: {
             id: "columns",
             componentType: TableColumnsConfigurationV2Component.lateLoadKey,
-            properties: {},
+            properties: {
+                // Deprecated (see TableColumnsConfigurationV2Component.template)
+                template: [
+                    {},
+                    {
+                        properties: {
+                            formatters: DEFAULT_TABLE_FORMATTERS,
+                        },
+                    },
+                ],
+            },
             providers: {
                 [WellKnownProviders.Converter]: {
                     // this specialized converter does all the work with building the complex forms for every column of the table and mapping the data back

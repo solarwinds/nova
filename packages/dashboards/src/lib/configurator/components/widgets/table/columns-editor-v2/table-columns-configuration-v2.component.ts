@@ -23,6 +23,7 @@ import { takeUntil } from "rxjs/operators";
 import { IDataSourceError, IDataSourceOutput } from "../../../../../components/providers/types";
 import { ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
+import { TableFormatterRegistryService } from "../../../../../services/table-formatter-registry.service";
 import { IHasForm, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
 import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
 import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
@@ -40,6 +41,13 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     @Input() columns: ITableWidgetColumnConfig[] = [];
     // @Input() formatters: Array<IFormatterDefinition> = [];
     @Input() componentId: string;
+
+    /**
+     * @Deprecated backward compatibility measure - deprecated in v11
+     *
+     * This property is here because it was present in V1 component and was used to configure formatters
+     */
+    @Input() template: any;
 
     @Output() formReady = new EventEmitter<FormGroup>();
 
@@ -64,6 +72,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
                 private dialogService: DialogService,
                 private pizzagnaService: PizzagnaService,
                 public dataSourceManager: ConfiguratorDataSourceManagerService,
+                public tableFormatterRegistry: TableFormatterRegistryService,
                 @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
         this.form = this.formBuilder.group({
             columns: this.formBuilder.array([]),
@@ -114,6 +123,11 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
 
     public ngOnInit() {
         this.formReady.emit(this.form);
+
+        if (this.template && !this.tableFormatterRegistry.getItems()?.length) {
+            const formatters = this.template?.[1].properties?.formatters;
+            this.tableFormatterRegistry.addItems(formatters);
+        }
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

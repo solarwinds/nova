@@ -69,10 +69,7 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 public submitHandler: AcmeFormSubmitHandler,
                 private widgetTypesService: WidgetTypesService,
                 private widgetClonerService: WidgetClonerService,
-                private refreshSettings: RefresherSettingsService,
-                private tableFormattersRegistryService: TableFormatterRegistryService) {
-        tableFormattersRegistryService.addItems(DEFAULT_TABLE_FORMATTERS);
-
+                private refreshSettings: RefresherSettingsService) {
         this.providerRegistry.setProviders({
             [AcmeKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
