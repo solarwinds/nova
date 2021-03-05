@@ -1,16 +1,15 @@
 import { pie } from "d3-shape";
 
-import { IGaugeThreshold } from "../../gauge/types";
+import { IGaugeThreshold } from "../../../gauge/types";
 
-export class GaugeRenderingUtils {
+export class RadialGaugeRenderingUtil {
     public static generateThresholdData(data: any[]) {
-        const arcData: number[] = GaugeRenderingUtils.generateArcData(data);
+        const arcData: number[] = RadialGaugeRenderingUtil.generateArcData(data);
         const thresholdsData: any[] = [];
         const pieGenerator = pie().sort(null);
-        const arcsForCircles = pieGenerator(arcData);
+        const arcsForMarkers = pieGenerator(arcData);
 
-        arcsForCircles.forEach((arcDatum: any, i: number) => {
-            // Drawing circles at threshold points
+        arcsForMarkers.forEach((arcDatum: any, i: number) => {
             if (i % 2 === 1) {
                 thresholdsData.push(arcDatum);
             }

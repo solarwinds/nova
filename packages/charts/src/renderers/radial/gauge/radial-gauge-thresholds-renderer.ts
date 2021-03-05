@@ -3,12 +3,13 @@ import defaultsDeep from "lodash/defaultsDeep";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
-import { IRadialGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
-import { IRenderSeries, RenderLayerName } from "../types";
+import { IRadialGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../../core/common/types";
+import { GAUGE_THRESHOLD_MARKER_CLASS } from "../../constants";
+import { IRenderSeries, RenderLayerName } from "../../types";
+import { IRadialAccessors } from "../accessors/radial-accessors";
+import { RadialRenderer } from "../radial-renderer";
 
-import { IRadialAccessors } from "./accessors/radial-accessors";
-import { GaugeRenderingUtils } from "./gauge-rendering-utils";
-import { RadialRenderer } from "./radial-renderer";
+import { RadialGaugeRenderingUtil } from "./radial-gauge-rendering-util";
 
 /**
  * @ignore Default configuration for Radial Gauge Thresholds Renderer
@@ -19,8 +20,6 @@ export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IRadialGaugeThresh
  * @ignore Renderer for drawing threshold level indicators for gauges
  */
 export class RadialGaugeThresholdsRenderer extends RadialRenderer {
-    public static readonly MARKER_CLASS = "threshold-marker";
-
     /**
      * Creates an instance of RadialGaugeThresholdsRenderer.
      * @param {IRadialGaugeThresholdsRendererConfig} [config]
@@ -43,17 +42,17 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0))
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
-        const markerSelection = dataContainer.selectAll(`circle.${RadialGaugeThresholdsRenderer.MARKER_CLASS}`)
-            .data(GaugeRenderingUtils.generateThresholdData(data));
+        const markerSelection = dataContainer.selectAll(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`)
+            .data(RadialGaugeRenderingUtil.generateThresholdData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")
-            .attr("class", RadialGaugeThresholdsRenderer.MARKER_CLASS)
+            .attr("class", GAUGE_THRESHOLD_MARKER_CLASS)
             .merge(markerSelection as any)
             .attr("cx", d => markerGenerator.centroid(d)[0])
             .attr("cy", d => markerGenerator.centroid(d)[1])
             .attr("r", 4)
-            .style("fill", (d, i) => data[i].hit ? "var(--nui-color-text-light)" : "var(--nui-color-text-default)")
+            .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
             .style("stroke-width", 0);
     }
 
