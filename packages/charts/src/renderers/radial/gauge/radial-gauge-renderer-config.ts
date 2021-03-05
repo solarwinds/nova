@@ -1,4 +1,4 @@
-import { IRadialRendererConfig } from "../../core/common/types";
+import { IRadialRendererConfig } from "../../../core/common/types";
 
 /**
  * Convenience function for generating a standard radial renderer configuration for a gauge
