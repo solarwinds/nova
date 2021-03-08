@@ -33,6 +33,7 @@ describe("WidgetEditorAccordionFormStatePipe > ", () => {
             expect(spy).toHaveBeenCalledWith(AccordionState.DEFAULT);
         });
 
+        // TODO: add back in after NUI-5893
         xit("should trigger the subscription after a value changes", () => {
             const spy = jasmine.createSpy();
             pipe.transform(form).pipe(takeUntil(unsubscribe$)).subscribe(spy);

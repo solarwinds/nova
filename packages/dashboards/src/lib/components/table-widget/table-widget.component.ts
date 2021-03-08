@@ -232,6 +232,8 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
 
         // Note: Secondary stream used to trigger widget ready event when table is properly displayed and we can start
         // loading data for our virtual scroll
+        // setTimeout is needed because this.el.nativeElement.getBoundingClientRect().height is 0  when it switches components from
+        // fallback component to table widget and it needs to have height
         setTimeout(() => {
             merge(
                 of(this.range * this.rowHeight),

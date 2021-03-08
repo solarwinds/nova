@@ -39,7 +39,6 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     static lateLoadKey = "TableColumnsConfigurationV2Component";
 
     @Input() columns: ITableWidgetColumnConfig[] = [];
-    // @Input() formatters: Array<IFormatterDefinition> = [];
     @Input() componentId: string;
 
     /**
@@ -159,7 +158,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     }
 
     public trackBy(index: number, item: FormControl) {
-        return item.value.id;
+        return item?.value?.id;
     }
 
     public addColumn() {

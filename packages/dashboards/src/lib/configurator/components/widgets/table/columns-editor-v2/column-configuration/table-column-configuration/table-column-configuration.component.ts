@@ -27,7 +27,7 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor, 
     public form: FormGroup;
     public changeFn: Function;
 
-    private destroy$ = new Subject();
+    private onDestroy$ = new Subject();
     private input: ITableWidgetColumnConfig;
 
     @Input() formControl: AbstractControl;
@@ -39,7 +39,7 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor, 
             presentation: this.formBuilder.control({}),
         });
 
-        this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((value) => {
+        this.form.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
             const newValue = {
                 id: this.input?.id,
                 ...value.description,
@@ -85,8 +85,8 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor, 
     }
 
     public ngOnDestroy(): void {
-        this.destroy$.next();
-        this.destroy$.complete();
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 
 }

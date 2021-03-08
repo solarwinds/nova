@@ -125,6 +125,7 @@ export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> 
                 })),
                 catchError(e => {
                     this.logger.error(e);
+                    this.busy.next(false);
                     return of({
                         books: [],
                         totalItems: 0,

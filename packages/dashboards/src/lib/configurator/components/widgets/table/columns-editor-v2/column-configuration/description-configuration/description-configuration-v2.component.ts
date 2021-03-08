@@ -17,7 +17,7 @@ import { ITableWidgetColumnConfig } from "../../../../../../../components/table-
 import { IHasChangeDetector } from "../../../../../../../types";
 
 @Component({
-    selector: "nui-table-column-description-configuration-v2",
+    selector: "nui-description-configuration-v2",
     templateUrl: "./description-configuration-v2.component.html",
     styleUrls: ["./description-configuration-v2.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -104,7 +104,7 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
     }
 
     public stub() {
-        // empty function to hotfix textbox-number behavior
+        // empty function to hotfix textbox-number behavior (NUI-3442)
     }
 
     public isWidthMessageDisplayedForThisColumn() {

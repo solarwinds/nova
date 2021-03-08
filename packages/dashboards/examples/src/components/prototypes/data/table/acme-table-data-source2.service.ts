@@ -1,6 +1,7 @@
 import { ListRange } from "@angular/cdk/collections";
 import { Injectable } from "@angular/core";
-import { DataSourceService, IDataField, IDataSourceOutput, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
+import { DataSourceService, IDataField, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
+import { IDataSourceOutput } from "@nova-ui/dashboards";
 import isEqual from "lodash/isEqual";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject } from "rxjs";
@@ -115,6 +116,7 @@ export class AcmeTableDataSource2 extends DataSourceService<IRandomUserTableMode
                 result: null,
                 error: {
                     type: responseError,
+                    message: responseError,
                 },
             };
         }

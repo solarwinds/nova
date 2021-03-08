@@ -38,7 +38,7 @@ import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../../widget-types/tabl
 import { DATA_SOURCE_OUTPUT } from "../../../../../../types";
 
 @Component({
-    selector: "nui-table-column-presentation-configuration-v2",
+    selector: "nui-presentation-configuration-v2",
     templateUrl: "./presentation-configuration-v2.component.html",
     styleUrls: ["./presentation-configuration-v2.component.less"],
     viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
@@ -59,13 +59,6 @@ import { DATA_SOURCE_OUTPUT } from "../../../../../../types";
 export class PresentationConfigurationV2Component implements IHasChangeDetector, OnInit, OnDestroy, OnChanges, DoCheck, ControlValueAccessor {
     static lateLoadKey = "PresentationConfigurationV2Component";
 
-    private _providedFormatters: Array<IFormatterDefinition> = [];
-    private _formatters: Array<IFormatterDefinition> = [];
-    private changeFn: Function;
-    private touchFn: Function;
-    private propertiesFormReady = new Subject();
-    private input: IFormatter;
-
     @Input()
     public set formatters(formatters: Array<IFormatterDefinition>) {
         // Note: As discussed we will ignore the config formatters if
@@ -83,8 +76,6 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     @Input() public dataFieldIds: string[];
 
     @Input() formControl: AbstractControl;
-
-    private _dataFields: Array<IDataField> = [];
 
     public set dataFields(dataFields: Array<IDataField>) {
         this._dataFields = dataFields;
@@ -105,7 +96,15 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     public formatterConfigurator: string | null;
     public formatterConfiguratorProps: IFormatterConfigurator;
     public subtitleText: string;
+
+    private _dataFields: Array<IDataField> = [];
     private onDestroy$: Subject<void> = new Subject();
+    private _providedFormatters: Array<IFormatterDefinition> = [];
+    private _formatters: Array<IFormatterDefinition> = [];
+    private changeFn: Function;
+    private touchFn: Function;
+    private propertiesFormReady = new Subject();
+    private input: IFormatter;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -238,11 +237,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     }
 
     public onValueChange() {
-        if (!this.changeFn) {
-            return;
-        }
-
-        this.changeFn(this.form.value);
+        this.changeFn?.(this.form.value);
     }
 
     private updateSubtitle() {

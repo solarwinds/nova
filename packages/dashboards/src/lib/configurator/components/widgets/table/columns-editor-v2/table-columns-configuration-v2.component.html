@@ -15,14 +15,14 @@
                             <nui-icon icon="drag"></nui-icon>
                         </div>
                     </ng-container>
-                    <span class="nui-table-columns-configuration__header-text">
+                    <span class="nui-table-columns-configuration__header-text"
+                          [title]="columnForm?.value.label | nuiWidgetConfiguratorSectionHeader : i : 'Column'">
                     {{ columnForm?.value.label | nuiWidgetConfiguratorSectionHeader : i : "Column" }} <!-- TODO: i18n -->
                 </span>
                 </ng-template>
 
                 <ng-template #headerButtons>
                     <div class="d-flex">
-                        <!-- TODO: remove "kpi" prefix in v11 -->
                         <button id="table-widget-remove-column-btn-{{i}}"
                                 nui-button
                                 type="button"
@@ -41,8 +41,8 @@
             </div>
 
             <div class="pl-4 pr-4" *ngIf="(emptyColumns$ | async) && form.touched">
-                <nui-message type="critical" [allowDismiss]="false" i18n>
-                    <b>At least one column must be added.</b>
+                <nui-message type="critical" [allowDismiss]="false">
+                    <b i18n>At least one column must be added.</b>
                 </nui-message>
             </div>
 
@@ -70,16 +70,16 @@
     <nui-message class="m-4 d-block"
                  *ngIf="dataSourceManager?.dataSource && !(dataSourceManager?.dataSource?.busy | async) && !dataSourceFields.length"
                  type="info"
-                 [allowDismiss]="false" i18n>
-        <b>Data source needs to be configured</b>
+                 [allowDismiss]="false">
+        <b i18n>Data source needs to be configured</b>
     </nui-message>
     <nui-message class="m-4 d-block" *ngIf="!dataSourceManager?.dataSource" type="info"
-                 [allowDismiss]="false" i18n>
-        <b>Select a data source</b>
+                 [allowDismiss]="false">
+        <b i18n>Select a data source</b>
     </nui-message>
     <nui-message class="m-4 d-block" *ngIf="dataSourceError" type="critical"
                  [allowDismiss]="false" i18n>
-        <b>The data source errored out with error: </b> {{dataSourceError.type}}
+        <b>Something went wrong with the data source: </b> {{dataSourceError.message || dataSourceError.type}}
     </nui-message>
 </div>
 
