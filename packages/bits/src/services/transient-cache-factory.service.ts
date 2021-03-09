@@ -32,7 +32,7 @@ export class TransientCacheFactory {
      *      remove(key:string) - Removes pair from the cache identified by the key.
      *      removeAll() - Removes all cached pairs.
      *      destroy() - Removes references to this cache from nuiTransientCacheFactory.
-     **/
+     */
     public create = (cacheId: string): ITransientCache => {
 
         if (this.cacheMap[cacheId] == null) {
@@ -50,7 +50,7 @@ export class TransientCacheFactory {
      *  @param {string} cacheId Unique identifier of the cache.
      *  @returns {ITransientCache} cache Identified by cacheId. See
      *  {@link https://github.com/solarwinds/nova/blob/main/packages/bits/src/services/public-api.ts ITransientCache}.
-     **/
+     */
     public get = (cacheId: string): ITransientCache => this.cacheMap[cacheId];
 
     /** @ngdoc method
@@ -59,7 +59,7 @@ export class TransientCacheFactory {
      *  @description Return the count of ITransientCache objects.
      *  @param {string} cacheId Unique identifier of the cache.
      *  @returns {number} Count of ITransientCache objects.
-     **/
+     */
     public count = (): number =>
         size(this.cacheMap)
 }

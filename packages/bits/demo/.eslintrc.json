@@ -1,0 +1,17 @@
+{
+    "extends": "../.eslintrc.json",
+    "overrides": [
+      {
+        "files": [
+          "*.ts"
+        ],
+        "parserOptions": {
+          "project": [
+              "../spec/tsconfig.atom.json"
+            ],
+          "createDefaultProgram": true
+        }
+      }
+    ]
+  }
+  

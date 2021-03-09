@@ -1,5 +1,5 @@
 /** @ignore */
-declare var require: any;
+declare let require: any;
 import {
     AfterViewInit,
     Component,
@@ -8,6 +8,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
+
 const hljs = require("highlight.js/lib/core");
 
 /**

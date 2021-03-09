@@ -1,4 +1,4 @@
-///<reference path="ref.d.ts"/>
+/// <reference path="ref.d.ts"/>
 
 import { HttpClientModule } from "@angular/common/http";
 import {

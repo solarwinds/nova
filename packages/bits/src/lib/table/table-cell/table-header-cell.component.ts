@@ -19,7 +19,7 @@ import { TableColumnDefDirective } from "./table-column-def.directive";
  */
 
 @Component({
-    // tslint:disable-next-line
+    // eslint-disable-next-line
     selector: "nui-header-cell, th[nui-header-cell]",
     host: {
         "role": "columnheader",

@@ -26,7 +26,7 @@ import { PositionService } from "../../services/position.service";
     encapsulation: ViewEncapsulation.None,
 })
 
-/* tslint:disable:use-host-property-decorator */
+/* eslint-disable */
 export class PopupContainerComponent implements AfterViewInit {
     public hostElement: HTMLElement;
     public top: number;

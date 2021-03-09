@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 /** @ignore */
 export const imagesData = [
     {

@@ -45,7 +45,7 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
  * 1st layer of content to define "popup area". DO NOT USE "opened" WITH "nuiPopupToggle".
  * IT IS NEEDED TO CHOOSE ONE.
  */
-/* tslint:disable:use-host-property-decorator */
+/* eslint-disable  */
 @Component({
     selector: "nui-popup-deprecated",
     host: {
@@ -70,7 +70,7 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
     styleUrls: ["./popup.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-/* tslint:disable:use-host-property-decorator */
+/* eslint-disable */
 export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, OnInit {
     @Input() width: string;
     /**

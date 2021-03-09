@@ -15,7 +15,7 @@ export interface ICheckboxComponent {
     hoverHandler(): void;
     changeHandler(event: CheckboxChangeEvent): void;
 }
-/**@ignore*/
+/** @ignore */
 export class CheckboxChangeEvent {
     public target: ICheckboxComponent;
 }

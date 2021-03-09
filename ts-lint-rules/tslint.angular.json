@@ -1,11 +1,11 @@
 {
   "extends": "./tslint.json",
   "rules": {
-    "directive-selector": [true, "attribute", "app", "camelCase"],
-    "component-selector": [true, "element", "app", "kebab-case"],
+    "directive-selector": [false, "attribute", "nui", "camelCase"],
+    "component-selector": [false, "element", "nui", "kebab-case"],
     "no-inputs-metadata-property": true,
     "no-outputs-metadata-property": true,
-    "no-host-metadata-property": true,
+    "no-host-metadata-property": false,
     "no-duplicate-super": true,
     "no-input-rename": true,
     "no-misused-new": true,
@@ -17,6 +17,6 @@
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true
+    "directive-class-suffix": false
   }
 }

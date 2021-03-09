@@ -8,7 +8,7 @@ import { ToastRef } from "./toast-ref";
  * __Description:__ Represents metadata of a toast.
  * Used as an injectable entity, that injects into a toast component.
  */
-/**@ignore*/
+/** @ignore */
 export class ToastPackage {
     private onClickSubject: Subject<any> = new Subject();
 

@@ -82,7 +82,7 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
      */
     @Output() public valueChange = new EventEmitter<any>();
 
-    /* tslint:disable-next-line:no-use-before-declare */
+    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     @ContentChildren(forwardRef(() => RadioComponent), { descendants: true }) private children: QueryList<RadioComponent>;
     private _value: any = null;
     private selectedRadio: RadioComponent | null = null;

@@ -23,7 +23,7 @@ import {UtilService} from "../../../services/util.service";
 
 import {IResizeProperties, ResizeDirection, resizeDirectionHelpers, ResizeUnit} from "./public-api";
 
-/**@ignore*/
+/** @ignore */
 const resizeClass = "nui-resize-gutter";
 
 /**
