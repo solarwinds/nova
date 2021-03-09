@@ -16,8 +16,8 @@
                         </div>
                     </ng-container>
                     <span class="nui-table-columns-configuration__header-text"
-                          [title]="columnForm?.value.label | nuiWidgetConfiguratorSectionHeader : i : 'Column'">
-                    {{ columnForm?.value.label | nuiWidgetConfiguratorSectionHeader : i : "Column" }} <!-- TODO: i18n -->
+                          [title]="columnForm?.value.label | nuiWidgetConfiguratorSectionHeader : i : columnLabel">
+                    {{ columnForm?.value.label | nuiWidgetConfiguratorSectionHeader : i : columnLabel }}
                 </span>
                 </ng-template>
 
@@ -78,8 +78,8 @@
         <b i18n>Select a data source</b>
     </nui-message>
     <nui-message class="m-4 d-block" *ngIf="dataSourceError" type="critical"
-                 [allowDismiss]="false" i18n>
-        <b>Something went wrong with the data source: </b> {{dataSourceError.message || dataSourceError.type}}
+                 [allowDismiss]="false">
+        <b i18n>Something went wrong with the data source: </b> {{dataSourceError.message || dataSourceError.type}}
     </nui-message>
 </div>
 

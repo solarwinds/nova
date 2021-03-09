@@ -42,7 +42,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     @Input() componentId: string;
 
     /**
-     * @Deprecated backward compatibility measure - deprecated in v11
+     * @deprecated backward compatibility measure - deprecated in v11. Removal: NUI-5898
      *
      * This property is here because it was present in V1 component and was used to configure formatters
      */
@@ -52,6 +52,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
 
     public form: FormGroup;
     public emptyColumns$: Observable<boolean>;
+    // this can't be "dataFields" because that's an already used name for a property in pizzagna
     public dataSourceFields: Array<IDataField> = [];
     public draggedItemHeight: number;
     public isWidthMessageDisplayed = false;
@@ -63,6 +64,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
 
     // the last selected data source will be stored here
     public dataSource: IDataSource;
+    public columnLabel = $localize`Column`;
 
     private onDestroy$: Subject<void> = new Subject<void>();
 
@@ -146,13 +148,13 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     }
 
     public updateColumns(columns: ITableWidgetColumnConfig[], emitEvent: boolean = true) {
-        const arr = this.form.controls["columns"] as FormArray;
-        arr.controls = columns.map(c => {
+        const cols = this.form.controls["columns"] as FormArray;
+        cols.controls = columns.map(c => {
             const fc = new FormControl(c);
-            fc.setParent(arr);
+            fc.setParent(cols);
             return fc;
         });
-        arr.updateValueAndValidity({ emitEvent });
+        cols.updateValueAndValidity({ emitEvent });
 
         this.changeDetector.markForCheck();
     }

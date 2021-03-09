@@ -64,7 +64,7 @@ export const tableConfigurator: IPizzagna = {
                 [WellKnownProviders.FormattersRegistry]: {
                     providerId: NOVA_TABLE_FORMATTERS_REGISTRY,
                 },
-                "dataSourceManager": {
+                [WellKnownProviders.DataSourceManager]: {
                     providerId: NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
                 },
             },

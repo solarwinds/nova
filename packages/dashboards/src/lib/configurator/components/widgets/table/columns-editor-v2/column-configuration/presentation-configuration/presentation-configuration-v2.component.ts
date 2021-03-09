@@ -99,7 +99,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
 
     private _dataFields: Array<IDataField> = [];
     private onDestroy$: Subject<void> = new Subject();
-    private _providedFormatters: Array<IFormatterDefinition> = [];
+    private providedFormatters: Array<IFormatterDefinition> = [];
     private _formatters: Array<IFormatterDefinition> = [];
     private changeFn: Function;
     private touchFn: Function;
@@ -112,11 +112,14 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         @Optional() @Inject(FORMATTERS_REGISTRY) private formattersRegistryCommon: FormatterRegistryService,
         // used as a fallback, remove in vNext
+        /**
+         * @deprecated  will be removed in the scope of NUI-5839
+         */
         private tableFormattersRegistryService: TableFormatterRegistryService) {
         this.subscribeToFormattersRegistry();
 
         this.form = this.formBuilder.group({
-            "componentType": this.formBuilder.control(this._providedFormatters?.[0]?.componentType, Validators.required),
+            "componentType": this.formBuilder.control(this.providedFormatters?.[0]?.componentType, Validators.required),
             "properties": this.formBuilder.control({},
                 () => this.propertiesForm?.invalid ? { properties: true } : null
             ),
@@ -185,9 +188,9 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     }
 
     public getSelectedFormatterDefinition(): IFormatterDefinition | null {
-        if (this._providedFormatters.length > 0) {
+        if (this.providedFormatters.length > 0) {
             const formatterId = this.form.get("componentType")?.value;
-            return this._providedFormatters.find(formatter => formatter.componentType === formatterId) ?? null;
+            return this.providedFormatters.find(formatter => formatter.componentType === formatterId) ?? null;
         }
         return null;
     }
@@ -252,7 +255,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
      * @returns ComponentPortal
      */
     private createFormatterConfigurator() {
-        const formatterDefinition = this._providedFormatters.find(
+        const formatterDefinition = this.providedFormatters.find(
             formatter => formatter.componentType === this.form.get("componentType")?.value
         );
 
@@ -272,20 +275,19 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
         this.formatterConfiguratorProps = {
             dataFields: this.dataFields,
             formatter: this.formatter,
-            // TODO: Ensure that formatterDefinition is not undefined
             formatterDefinition: formatterDefinition as IFormatterDefinition,
         };
     }
 
     private updateAvailableFormatters() {
-        if (!this._dataFields?.length || !this._providedFormatters.length) {
+        if (!this._dataFields?.length || !this.providedFormatters.length) {
             return;
         }
 
         // allow by default RawFormatter which has null as dataType
         const sourceDataTypes: Record<string, boolean> = { null: true };
         this._dataFields.forEach(f => sourceDataTypes[f.dataType] = true);
-        this._formatters = this._providedFormatters.filter(
+        this._formatters = this.providedFormatters.filter(
             (f) => {
                 // cast to array in case we have a single value
                 const formatterDataTypes = f.dataTypes.value instanceof Array
@@ -304,14 +306,15 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
         this.handleFormattersUpdate(this.formattersRegistry.getItems());
 
         this.formattersRegistry.stateChanged$.pipe(
-            tap(this.handleFormattersUpdate.bind(this)),
             takeUntil(this.onDestroy$)
-        ).subscribe();
+        ).subscribe((formatters) => {
+            this.handleFormattersUpdate(formatters);
+        });
     }
 
     private handleFormattersUpdate(formatters: IFormatterDefinition[]): void {
-        if (formatters !== this._providedFormatters) {
-            this._providedFormatters = formatters?.length > 0 ? formatters : DEFAULT_TABLE_FORMATTERS;
+        if (formatters !== this.providedFormatters) {
+            this.providedFormatters = formatters?.length > 0 ? formatters : DEFAULT_TABLE_FORMATTERS;
             this.updateAvailableFormatters();
         }
     }

@@ -50,11 +50,14 @@ export class TableColumnConfigurationComponent implements ControlValueAccessor, 
     }
 
     public ngOnInit(): void {
+        // This is the only way to be notified of the parent form control being "touched"
         const origFunc = this.formControl.markAsTouched;
+        // we replace the parent formControl method with our own implementation that also calls the original function
         this.formControl.markAsTouched = () => {
             // @ts-ignore
             origFunc.apply(this.formControl, arguments);
 
+            // here we mark the internal form as touched
             this.form.markAllAsTouched();
         };
     }
