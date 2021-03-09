@@ -36,6 +36,7 @@ import { IDashwizButtonsComponent } from "../types";
                     type="button"
                     displayStyle="primary"
                     [isBusy]="busy"
+                    [disabled]="busy"
                     (click)="onFinish()">
                 <span>{{finishText}}</span>
             </button>

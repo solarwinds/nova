@@ -10,6 +10,7 @@ import {
     PizzagnaLayer,
     ProviderRegistryService,
     RefresherSettingsService,
+    TableFormatterRegistryService,
     WidgetClonerService,
     WidgetTypesService,
     WIDGET_CREATE,
@@ -18,8 +19,10 @@ import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
 
+import { DEFAULT_TABLE_FORMATTERS } from "../../../../../src/lib/widget-types/table/table-configurator";
 import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
 import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
+import { AcmeTableDataSourceNoDataFields } from "../data/table/acme-table-data-source-no-data-fields.service";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
 import { AcmeTableDataSource3 } from "../data/table/acme-table-data-source3.service";
@@ -106,6 +109,11 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
             [AcmeTableDataSource3.providerId]: {
                 provide: DATA_SOURCE,
                 useClass: AcmeTableDataSource3,
+                deps: [LoggerService],
+            },
+            [AcmeTableDataSourceNoDataFields.providerId]: {
+                provide: DATA_SOURCE,
+                useClass: AcmeTableDataSourceNoDataFields,
                 deps: [LoggerService],
             },
             [AcmeTableMockDataSource.providerId]: {

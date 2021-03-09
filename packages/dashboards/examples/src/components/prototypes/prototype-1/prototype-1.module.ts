@@ -27,6 +27,7 @@ import {
 import { AcmeProportionalDSConfigComponent } from "../components/data-source-configuration/proportional-ds-config.component";
 import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
 import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
+import { AcmeTableDataSourceNoDataFields } from "../data/table/acme-table-data-source-no-data-fields.service";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
 import { AcmeTableDataSource3 } from "../data/table/acme-table-data-source3.service";
@@ -103,6 +104,7 @@ export class Prototype1Module {
             AcmeTableDataSource3.providerId,
             AcmeTableMockDataSource.providerId,
             AcmeTableGBooksDataSource.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
         ]);
 
         const kpiWidgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);

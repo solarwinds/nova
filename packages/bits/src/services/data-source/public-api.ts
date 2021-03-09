@@ -112,6 +112,7 @@ export const defaultFilters: INovaFilters = {
 
 export interface IDataSourceError {
     type: string | number;
+    message?: string;
 }
 
 export interface IDataSourceOutput<T> {
