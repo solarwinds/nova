@@ -71,7 +71,7 @@ export class TableStateHandlerService {
     public shouldHighlightEdge = new Subject<TableCellEdgeHighlight>();
     public dataSourceChanged = new Subject<Array<any>>();
     public selectionChanged = new Subject<ISelection>();
-    public selectabilityChanged = new Subject<boolean>();
+    public selectableChanged = new Subject<boolean>();
     public columnWidthSubject = new Subject<void>();
     public stickyHeaderChangedSubject = new Subject<void>();
 
@@ -210,7 +210,7 @@ export class TableStateHandlerService {
 
     set selectable(isSelectable: boolean) {
         if (isSelectable !== this._selectable) {
-            this.selectabilityChanged.next(isSelectable);
+            this.selectableChanged.next(isSelectable);
         }
         this._selectable = isSelectable;
     }

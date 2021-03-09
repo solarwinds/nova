@@ -239,7 +239,7 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
             this.updateSelectorState();
         });
 
-        this.tableStateHandlerService.selectabilityChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
+        this.tableStateHandlerService.selectableChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
             this.selectable = selectable;
             this.changeDetectorRef.detectChanges();
         });
@@ -342,7 +342,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
             this.changeDetectorRef.detectChanges();
         });
 
-        this.tableStateHandlerService.selectabilityChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
+        this.tableStateHandlerService.selectableChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
             this.selectable = selectable;
             this.changeDetectorRef.detectChanges();
         });
