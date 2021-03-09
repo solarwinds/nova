@@ -22,8 +22,12 @@
                 "prefer-arrow"
             ],
             "rules": {
-                // Angular-specific rules
+                /****************************** 
+                * Angular-specific rules
+                *******************************/
+                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/no-empty-lifecycle-method": "off",
+                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/component-selector": [
                     "off",
                     {
@@ -32,7 +36,9 @@
                         "style": "kebab-case"
                     }
                 ],
+                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/directive-class-suffix": "off",
+                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/directive-selector": [
                     "off",
                     {
@@ -41,25 +47,45 @@
                         "style": "camelCase"
                     }
                 ],
+                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/no-host-metadata-property": "off",
-                // Typescript-specific rules
+
+                /******************************
+                * Typescript-specific rules
+                *******************************/
                 "@typescript-eslint/await-thenable": "error",
                 "@typescript-eslint/consistent-type-definitions": "error",
-                "@typescript-eslint/dot-notation": "off", // ok
-                // Substitutes tslint 'member-access'
-                "@typescript-eslint/explicit-member-accessibility": [
-                    "off",
-                    {
-                        "accessibility": "explicit"
-                    }
-                ],
-                "@typescript-eslint/no-inferrable-types": "off", // ok
+
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/dot-notation.md
+                "dot-notation": "off", // ! Candidate for removal
+                "@typescript-eslint/dot-notation": ["off"], // ! Candidate for removal
+                "@typescript-eslint/no-inferrable-types": "off",
                 // TODO: review
                 "@typescript-eslint/promise-function-async": "off",
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-empty-function.md
                 "no-empty-function": "off",
-                "@typescript-eslint/no-empty-function": "off",
+                "@typescript-eslint/no-empty-function": [
+                    "error",
+                    {
+                        "allow": [
+                            "constructors",
+                            "private-constructors",
+                            "protected-constructors",
+                            "decoratedFunctions",
+                            "functions",
+                            "arrowFunctions",
+                            "asyncFunctions",
+                            "asyncMethods"
+                        ]
+                    }
+                ], // <----------
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/dot-notation.md
                 "no-unused-vars": "off",
                 "@typescript-eslint/no-unused-vars": "off",
+
                 "@typescript-eslint/restrict-template-expressions": "off",
                 "@typescript-eslint/no-explicit-any": "off",
                 "@typescript-eslint/no-unsafe-assignment": "off",
