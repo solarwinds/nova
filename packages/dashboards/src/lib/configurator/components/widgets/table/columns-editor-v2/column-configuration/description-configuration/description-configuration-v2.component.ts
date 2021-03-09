@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit } from "@angular/core";
 import {
     AbstractControl,
     ControlValueAccessor,
@@ -14,6 +14,7 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { ITableWidgetColumnConfig } from "../../../../../../../components/table-widget/types";
+import { onMarkAsTouched } from "../../../../../../../functions/on-mark-as-touched";
 import { IHasChangeDetector } from "../../../../../../../types";
 
 @Component({
@@ -89,13 +90,9 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
     }
 
     public ngOnInit(): void {
-        const origFunc = this.formControl.markAsTouched;
-        this.formControl.markAsTouched = () => {
-            // @ts-ignore
-            origFunc.apply(this.formControl, arguments);
-
+        onMarkAsTouched(this.formControl, () => {
             this.form.markAllAsTouched();
-        };
+        });
     }
 
     public ngOnDestroy(): void {

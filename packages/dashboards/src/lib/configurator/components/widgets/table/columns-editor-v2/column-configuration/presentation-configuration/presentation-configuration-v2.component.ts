@@ -28,10 +28,11 @@ import {
 import { EventBus, IDataField, IEvent } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
-import { takeUntil, tap } from "rxjs/operators";
+import { takeUntil } from "rxjs/operators";
 
 import { IDataSourceOutput } from "../../../../../../../components/providers/types";
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
+import { onMarkAsTouched } from "../../../../../../../functions/on-mark-as-touched";
 import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
 import { FORMATTERS_REGISTRY, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../../../../types";
 import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../../widget-types/table/table-configurator";
@@ -144,14 +145,10 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     }
 
     public ngOnInit(): void {
-        const origFunc = this.formControl.markAsTouched;
-        this.formControl.markAsTouched = () => {
-            // @ts-ignore
-            origFunc.apply(this.formControl, arguments);
-
+        onMarkAsTouched(this.formControl, () => {
             this.form.markAllAsTouched();
             this.propertiesForm.markAllAsTouched();
-        };
+        });
     }
 
     public ngOnDestroy(): void {
