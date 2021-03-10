@@ -75,7 +75,7 @@ describe("UrlInteractionHandler", () => {
             expect(window.location.href).toEqual("default");
         });
 
-        it("logger should warn if properties is not loaded", () => {
+        it("logger should warn if properties are not loaded", () => {
             // @ts-ignore
             handler.updateConfiguration(undefined);
             eventBus.getStream(INTERACTION).next({ payload });
