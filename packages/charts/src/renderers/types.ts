@@ -20,6 +20,7 @@ export enum RenderState {
 export enum RenderLayerName {
     background = "background",
     data = "data",
+    unclippedData = "unclipped-data",
     foreground = "foreground",
 }
 
@@ -77,6 +78,8 @@ export interface IBarRendererConfig extends IRendererConfig {
     pointerEvents?: boolean;
     /** Set the stroke width in pixels */
     strokeWidth?: number;
+    /** Enable the minimum bar thickness (BarRenderer.MIN_BAR_THICKNESS) */
+    enableMinBarThickness?: boolean;
 }
 
 /** The configuration interface for the area renderer */

@@ -30,6 +30,7 @@ export interface IDataSourceBusyPayload extends IComponentIdPayload {
 
 export interface IDataSourceError {
     type: string | number;
+    message?: string;
 }
 
 

@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
 import { combineLatest, Observable } from "rxjs";
-import { map, startWith } from "rxjs/operators";
+import { distinct, map, startWith } from "rxjs/operators";
 
 import { AccordionState } from "../../types";
 import { hasControlInErrorState } from "../functions/has-control-in-error-state";
@@ -20,7 +20,8 @@ export class WidgetEditorAccordionFormStatePipe implements PipeTransform {
         return combineLatest([form.statusChanges, form.valueChanges])
             .pipe(
                 startWith(null),
-                map(() => hasControlInErrorState(form) ? AccordionState.CRITICAL : AccordionState.DEFAULT)
+                map(() => hasControlInErrorState(form) ? AccordionState.CRITICAL : AccordionState.DEFAULT),
+                distinct()
             );
     }
 

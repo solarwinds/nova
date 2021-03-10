@@ -59,37 +59,37 @@ describe("RefresherConfigurationComponent", () => {
     describe("seconds to label", () => {
         it("should convert random seconds to proper seconds label", () => {
             const label = component.getDurationLabel(54);
-            expect(label).toEqual("54sec");
+            expect(label).toEqual("54 sec");
         });
 
         it("should convert random seconds to proper minutes label", () => {
             const label = component.getDurationLabel(654);
-            expect(label).toEqual("10min 54sec");
+            expect(label).toEqual("10 min 54 sec");
         });
 
         it("should convert random seconds to proper hour label", () => {
             const label = component.getDurationLabel(6054);
-            expect(label).toEqual("1h 40min 54sec");
+            expect(label).toEqual("1 h 40 min 54 sec");
         });
 
         it("should convert random seconds to proper hour label more than 23h", () => {
             const label = component.getDurationLabel(600054);
-            expect(label).toEqual("166h 40min 54sec");
+            expect(label).toEqual("166 h 40 min 54 sec");
         });
 
         it("should convert 60 seconds to one minute ", () => {
             const label = component.getDurationLabel(60);
-            expect(label).toEqual("1min");
+            expect(label).toEqual("1 min");
         });
 
         it("should convert 3600 seconds to one hour ", () => {
             const label = component.getDurationLabel(3600);
-            expect(label).toEqual("1h");
+            expect(label).toEqual("1 h");
         });
 
         it("should convert 0 seconds to 0 seconds", () => {
             const label = component.getDurationLabel(0);
-            expect(label).toEqual("0sec");
+            expect(label).toEqual("0 sec");
         });
 
     });

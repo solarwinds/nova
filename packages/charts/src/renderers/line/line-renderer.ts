@@ -140,12 +140,7 @@ export class LineRenderer extends XYRenderer<ILineAccessors> {
         return [
             STANDARD_RENDER_LAYERS[RenderLayerName.data],
             STANDARD_RENDER_LAYERS[RenderLayerName.foreground],
-            {
-                name: LineRenderer.UNCLIPPED_DATA_LAYER_NAME,
-                // order calculated by adding 1 to the data layer order to ensure the unclipped data layer appears just after the data layer in the DOM
-                order: STANDARD_RENDER_LAYERS[RenderLayerName.data].order + 1,
-                clipped: false,
-            },
+            STANDARD_RENDER_LAYERS[RenderLayerName.unclippedData],
         ];
     }
 
@@ -223,7 +218,7 @@ export class LineRenderer extends XYRenderer<ILineAccessors> {
         const updateCy = (d: any, i: number) => renderSeries.scales.y.convert(accessors.data.y(d, i, dataSeries.data, dataSeries));
 
         // use an unclipped layer to ensure the line caps on the left and right sides of the chart don't get clipped
-        const lineCaps = renderSeries.containers[LineRenderer.UNCLIPPED_DATA_LAYER_NAME].selectAll(`.${LineRenderer.LINE_CAP_CLASS_NAME}`)
+        const lineCaps = renderSeries.containers[RenderLayerName.unclippedData].selectAll(`.${LineRenderer.LINE_CAP_CLASS_NAME}`)
             .data(definedData)
             .attr("cx", updateCx)
             .attr("cy", updateCy);

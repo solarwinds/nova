@@ -17,7 +17,7 @@ import {
     ViewChildren,
     ViewContainerRef,
 } from "@angular/core";
-import { IEvent, LoggerService } from "@nova-ui/bits";
+import { IBusyConfig, IEvent, LoggerService } from "@nova-ui/bits";
 import find from "lodash/find";
 import findIndex from "lodash/findIndex";
 import isUndefined from "lodash/isUndefined";
@@ -27,6 +27,7 @@ import { DashwizStepComponent } from "../dashwiz-step/dashwiz-step.component";
 import { IDashwizButtonsComponent, IDashwizStepComponent, IDashwizStepNavigatedEvent, IDashwizWaitEvent } from "../types";
 
 import { DashwizButtonsComponent } from "./dashwiz-buttons.component";
+import { DashwizService } from "./dashwiz.service";
 
 /**
  * Component that provides wizard functionality.
@@ -113,15 +114,20 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
     private arraySteps: any[];
 
     constructor(private changeDetector: ChangeDetectorRef,
-        private componentFactoryResolver: ComponentFactoryResolver,
-        private logger: LoggerService) { }
+                private componentFactoryResolver: ComponentFactoryResolver,
+                private logger: LoggerService,
+                private dashwizService: DashwizService) {
+        if (dashwizService) {
+            dashwizService.component = this;
+        }
+    }
 
     ngOnInit() {
         this.buttonComponentTypes = this.buttonComponentTypes || [DashwizButtonsComponent.lateLoadKey];
 
         if (this.finishText === DashwizComponent.placeholderFinishText) {
             this.logger.warn(`DashwizComponent input "finishText" is using placeholder text
-"${DashwizComponent.placeholderFinishText}". A value should be specified.`);
+"${ DashwizComponent.placeholderFinishText }". A value should be specified.`);
         }
     }
 
@@ -156,7 +162,7 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
             });
         });
 
-        this.navigationControl.subscribe(value => {
+        this.navigationControl.subscribe((value: { busyState: IBusyConfig; allowStepChange: any; }) => {
             this.currentStep.busyConfig = value.busyState;
             if (value.allowStepChange && !isUndefined(this.futureStep) && this.currentStep !== this.futureStep) {
                 this.enterAnotherStep();
@@ -175,6 +181,7 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
     public ngOnDestroy() {
         this.steps.toArray().forEach((step: DashwizStepComponent) => step.valid.unsubscribe());
         this.navigationControl.unsubscribe();
+        this.dashwizService.component = undefined;
     }
 
     public addStepDynamic(wizardStep: IDashwizStepComponent, indexToInsert: number) {

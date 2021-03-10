@@ -363,8 +363,8 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
                     [itemConfig]="itemConfig"
                     [repeatItemTemplateRef]="repeatItemTemplate"
                     [itemsSource]="items"
-                    virtualScroll="true"
-                    itemSize="30"
+                    [virtualScroll]="true"
+                    [itemSize]="30"
                 ></nui-repeat>
             </div>
         </div>

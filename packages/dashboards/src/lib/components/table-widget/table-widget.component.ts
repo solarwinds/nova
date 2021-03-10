@@ -51,7 +51,6 @@ import { SearchFeatureAddonService } from "./addons/search-feature-addon.service
 import { VirtualScrollFeatureAddonService } from "./addons/virtual-scroll-feature-addon.service";
 import { ITableWidgetColumnConfig, ITableWidgetConfig } from "./types";
 
-
 /**
  * @ignore
  */
@@ -233,19 +232,23 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
 
         // Note: Secondary stream used to trigger widget ready event when table is properly displayed and we can start
         // loading data for our virtual scroll
-        merge(
-            of(this.range * this.rowHeight),
-            tableHeightChanged$,
-            of(this.el.nativeElement.getBoundingClientRect().height)
-        ).pipe(
-            filter(value => !!value),
-            take(1),
-            tap((value) => {
-                this.tableWidgetHeight = value;
-                this.virtualScrollAddon.subscribeToVirtualScroll();
-                this.eventBus.getStream(WIDGET_READY).next();
-            })
-        ).subscribe();
+        // setTimeout is needed because this.el.nativeElement.getBoundingClientRect().height is 0  when it switches components from
+        // fallback component to table widget and it needs to have height
+        setTimeout(() => {
+            merge(
+                of(this.range * this.rowHeight),
+                tableHeightChanged$,
+                of(this.el.nativeElement.getBoundingClientRect().height)
+            ).pipe(
+                filter(value => !!value),
+                take(1),
+                tap((value) => {
+                    this.tableWidgetHeight = value;
+                    this.virtualScrollAddon.subscribeToVirtualScroll();
+                    this.eventBus.getStream(WIDGET_READY).next();
+                })
+            ).subscribe();
+        });
 
     }
 
@@ -254,6 +257,13 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
         this.onDestroy$.complete();
         this.tableUpdate$.complete();
         this.searchTerm$?.complete();
+
+        // erase the error status when this component gets destroyed to prevent an error status leak when changing data sources
+        this.pizzagnaService.setProperty({
+            componentId: "bodyContent",
+            propertyPath: ["fallbackKey"],
+            pizzagnaKey: PizzagnaLayer.Data,
+        }, undefined);
     }
 
     /** Checks if table should be displayed */

@@ -1,11 +1,11 @@
 import { select } from "d3-selection";
 import { duration } from "moment/moment";
 import { Subject } from "rxjs";
-import { TimeIntervalScale } from "src/public-api";
 
 import { DATA_POINT_INTERACTION_RESET, DATA_POINT_NOT_FOUND } from "../../../constants";
 import { BandScale } from "../../../core/common/scales/band-scale";
 import { LinearScale } from "../../../core/common/scales/linear-scale";
+import { TimeIntervalScale } from "../../../core/common/scales/time-interval-scale";
 import { D3Selection, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../../core/common/types";
 import { flushAllD3Transitions } from "../../../spec-helpers/flush-transitions";
 import { IRenderSeries, RenderLayerName, RenderState } from "../../types";

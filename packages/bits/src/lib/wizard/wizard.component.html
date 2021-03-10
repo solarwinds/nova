@@ -50,7 +50,7 @@
                 nui-button
                 type="button"
                 class="nui-wizard__back-button"
-                [isBusy]="currentStep?.busyConfig.busy"
+                [isBusy]="currentStep?.busyConfig?.busy"
                 [icon]="'caret-left'"
                 (click)="onBackClick()">
         <span i18n>Back</span>
@@ -59,7 +59,7 @@
                 nui-button
                 type="button"
                 class="nui-wizard__next-button"
-                [isBusy]="currentStep?.busyConfig.busy"
+                [isBusy]="currentStep?.busyConfig?.busy"
                 [displayStyle]="'primary'"
                 [icon]="'caret-right'"
                 [iconRight]="true"

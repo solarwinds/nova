@@ -34,6 +34,12 @@ export const STANDARD_RENDER_LAYERS: { [name: string]: ILasagnaLayer } = {
         order: 50,
         clipped: true,
     },
+    [RenderLayerName.unclippedData]: {
+        name: RenderLayerName.unclippedData,
+        // order is one greater than the data layer to ensure the unclipped data layer appears just after the data layer in the DOM
+        order: 51,
+        clipped: false,
+    },
     [RenderLayerName.foreground]: {
         name: RenderLayerName.foreground,
         order: 1000,

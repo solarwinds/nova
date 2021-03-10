@@ -2,20 +2,30 @@ import {browser, by, element, ElementFinder, Key} from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { RepeatAtom } from "../public_api";
+import { RepeatAtom, TabHeadingAtom } from "../public_api";
+import { TabHeadingGroupAtom } from "../tab-heading-group/tab-heading-group.atom";
 
 describe("USERCONTROL Repeat", () => {
     let multiSelectList: RepeatAtom;
     let singleSelectList: RepeatAtom;
     let radioSelectList: RepeatAtom;
     let radioSelectListNonRequiredSelection: RepeatAtom;
+    let vScrollTabHeading: TabHeadingAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("repeat/repeat-test");
+
         multiSelectList = Atom.find(RepeatAtom, "nui-demo-multi-repeat");
         singleSelectList = Atom.find(RepeatAtom, "nui-demo-single-repeat");
         radioSelectList = Atom.find(RepeatAtom, "nui-demo-radio-repeat");
+        vScrollTabHeading = await Atom.find(TabHeadingGroupAtom, "repeat-test-tab-group").getTabByText("Repeat VScroll");
         radioSelectListNonRequiredSelection = Atom.find(RepeatAtom, "nui-demo-radio-non-required-selection-repeat");
+    });
+
+    it("should render enough content to fill the full height of the virtual scroll viewport", async () => {
+        await vScrollTabHeading.click();
+        const vScrollList = Atom.find(RepeatAtom, "repeat-test-vscroll");
+        expect(parseInt(await vScrollList.getVScrollViewportHeight(), 10)).toBeLessThan(parseInt(await vScrollList.getVScrollViewportContentHeight(), 10));
     });
 
     it("should contain 6 items", async () => {

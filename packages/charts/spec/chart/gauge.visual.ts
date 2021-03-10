@@ -2,7 +2,7 @@ import { Atom } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser } from "protractor";
 
-import { GaugeService } from "../../src/gauge/gauge.service";
+import { GaugeUtil } from "../../src/gauge/gauge-util";
 
 import { ChartAtom } from "./atoms/chart.atom";
 import { SeriesAtom } from "./atoms/series.atom";
@@ -28,7 +28,7 @@ describe("Visual Tests: Charts - Gauge", () => {
         await eyes.open(browser, "NUI", "Charts - Gauge");
         await eyes.checkWindow("Default look");
 
-        const gaugeSeries = await gauge.getDataSeriesById(SeriesAtom, GaugeService.REMAINDER_SERIES_ID) as SeriesAtom;
+        const gaugeSeries = await gauge.getDataSeriesById(SeriesAtom, GaugeUtil.REMAINDER_SERIES_ID) as SeriesAtom;
         await gaugeSeries.hover();
         await eyes.checkWindow("Default look with gauge hovered");
 

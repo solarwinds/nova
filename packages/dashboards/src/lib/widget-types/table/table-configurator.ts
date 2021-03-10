@@ -7,23 +7,20 @@ import { RawFormatterComponent } from "../../configurator/components/formatters/
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
-import { DescriptionConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/column-configuration/description-configuration/description-configuration.component";
-import { PresentationConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/column-configuration/presentation-configuration/presentation-configuration.component";
-import { TableColumnsConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/table-columns-configuration.component";
+import { TableColumnsConfigurationV2Component } from "../../configurator/components/widgets/table/columns-editor-v2/table-columns-configuration-v2.component";
 import { TableFiltersEditorComponent } from "../../configurator/components/widgets/table/filters-editor/table-filters-editor.component";
 import {
     DEFAULT_PIZZAGNA_ROOT,
-    NOVA_GENERIC_ARRAY_CONVERTER,
+    NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
     NOVA_GENERIC_CONVERTER,
     NOVA_TABLE_COLUMNS_CONVERTER,
     NOVA_TABLE_FILTERS_CONVERTER,
     NOVA_TABLE_FORMATTERS_REGISTRY,
-    NOVA_TITLE_AND_DESCRIPTION_CONVERTER
+    NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
 // tslint:enable:max-line-length
-
 
 export const DEFAULT_TABLE_FORMATTERS: IFormatterDefinition[] = [
     {
@@ -52,7 +49,6 @@ export const DEFAULT_TABLE_FORMATTERS: IFormatterDefinition[] = [
     },
 ];
 
-
 export const tableConfigurator: IPizzagna = {
     [PizzagnaLayer.Structure]: {
         [DEFAULT_PIZZAGNA_ROOT]: {
@@ -67,6 +63,9 @@ export const tableConfigurator: IPizzagna = {
             providers: {
                 [WellKnownProviders.FormattersRegistry]: {
                     providerId: NOVA_TABLE_FORMATTERS_REGISTRY,
+                },
+                [WellKnownProviders.DataSourceManager]: {
+                    providerId: NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
                 },
             },
         },
@@ -141,18 +140,13 @@ export const tableConfigurator: IPizzagna = {
         // into the formatter.
         columns: {
             id: "columns",
-            componentType: TableColumnsConfigurationComponent.lateLoadKey,
+            componentType: TableColumnsConfigurationV2Component.lateLoadKey,
             properties: {
+                // Deprecated (see TableColumnsConfigurationV2Component.template)
                 template: [
+                    {},
                     {
-                        id: "description",
-                        componentType: DescriptionConfigurationComponent.lateLoadKey,
-                    },
-                    {
-                        id: "presentation",
-                        componentType: PresentationConfigurationComponent.lateLoadKey,
                         properties: {
-                            // Note: Now you can define your formatters in the TableFormatterRegistry which can contain more formatter options
                             formatters: DEFAULT_TABLE_FORMATTERS,
                         },
                     },

@@ -39,6 +39,7 @@ export enum WellKnownProviders {
     EventBusDebugger = "eventBusDebugger",
     KpiColorPrioritizer = "kpiColorPrioritizer",
     FormattersRegistry = "formattersRegistry",
+    DataSourceManager = "dataSourceManager",
 }
 
 export enum WellKnownPathKey {

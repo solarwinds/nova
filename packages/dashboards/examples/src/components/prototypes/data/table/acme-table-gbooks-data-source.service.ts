@@ -112,10 +112,9 @@ export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> 
         if (this.isNewSearchTerm(filters.search) || filters.virtualScroll?.value.start === 0) {
             this.cache = [];
         }
-
+        this.busy.next(true);
         return this.http.get<IGBooksApiResponse>(this.getComposedUrl(filters))
             .pipe(
-                tap(() => this.busy.next(true)),
                 delay(300), // mock
                 map(response => ({
                     books: response.items?.map(volume => ({
@@ -126,6 +125,7 @@ export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> 
                 })),
                 catchError(e => {
                     this.logger.error(e);
+                    this.busy.next(false);
                     return of({
                         books: [],
                         totalItems: 0,

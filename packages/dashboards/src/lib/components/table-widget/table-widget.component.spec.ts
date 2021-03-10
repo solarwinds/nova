@@ -345,7 +345,8 @@ describe("TableWidgetComponent", () => {
             fixture.detectChanges();
         });
 
-        it("should trigger the datasource if the viewport size is larger than the number of items per fetch", (done: DoneFn) => {
+        // TODO: Add back after NUI-5893
+        xit("should trigger the datasource if the viewport size is larger than the number of items per fetch", (done: DoneFn) => {
             component.ngOnChanges(createWidgetDataSimpleChanges(tableData));
             fixture.detectChanges();
             component.eventBus.getStream(SCROLL_NEXT_PAGE).pipe(
@@ -364,7 +365,8 @@ describe("TableWidgetComponent", () => {
             expect((<any>component).eventBus.getStream(SCROLL_NEXT_PAGE).next).not.toHaveBeenCalled();
         });
 
-        it("should reset to first page when sorting order changed", (done: DoneFn) => {
+        // TODO: Add back after NUI-5893
+        xit("should reset to first page when sorting order changed", (done: DoneFn) => {
             // Note: Simulating reset from data source adapter
             component.eventBus.getStream(REFRESH).pipe(
                 take(1),
@@ -401,7 +403,8 @@ describe("TableWidgetComponent", () => {
             ).subscribe();
         });
 
-        it("should fill the viewport with the data if there are more items to be loaded", (done: DoneFn) => {
+        // TODO: Add back after NUI-5893
+        xit("should fill the viewport with the data if there are more items to be loaded", (done: DoneFn) => {
             component.ngOnChanges(createWidgetDataSimpleChanges(tableData));
             fixture.detectChanges();
 
@@ -428,8 +431,7 @@ describe("TableWidgetComponent", () => {
     });
 
     describe("table columns mapping >", () => {
-        // re-enable with NUI-5787
-        xit("should correctly map data with one data field", () => {
+        it("should correctly map data with one data field", () => {
             configuration.columns = oneDataFieldColumns;
             component.ngOnChanges(createSimpleChanges(configuration, tableData, dataFields));
             fixture.detectChanges();
