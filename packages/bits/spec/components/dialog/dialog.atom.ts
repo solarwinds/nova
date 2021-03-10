@@ -41,5 +41,4 @@ export class DialogAtom extends Atom {
     public scrollToEnd = async (): Promise<void> => browser.executeScript<void>(`arguments[0].scrollIntoView({block: "end"})`, this.getDialog());
 
     public getDialog(): ElementFinder { return super.getElement().element(by.className("modal-dialog")); }
-
 }

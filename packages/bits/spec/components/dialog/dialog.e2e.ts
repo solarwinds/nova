@@ -233,7 +233,7 @@ describe("USERCONTROL Dialog", () => {
         });
     });
 
-    fdescribe("dialog with date-time-picker in overlay >", () => {
+    describe("dialog with date-time-picker in overlay >", () => {
         beforeEach(async () => {
             await insideOverlayWithDateTimePickerBtn.scrollTo({ block: "center" });
             await insideOverlayWithDateTimePickerBtn.click();

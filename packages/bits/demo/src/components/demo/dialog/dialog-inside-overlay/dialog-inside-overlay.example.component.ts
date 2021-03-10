@@ -9,8 +9,6 @@ export class DialogInsideOverlayExampleComponent {
     public options1 = Array.from({ length: 25 }).map((_, i) => $localize `Item ${i}`);
     public options2 = Array.from({ length: 25 }).map((_, i) => $localize `Item ${i}`);
 
-    public selectedDate: Date;
-
     private activeDialog: NuiDialogRef;
 
     constructor(private dialogService: DialogService) {}

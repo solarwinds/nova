@@ -4,7 +4,6 @@ import {
 import _cloneDeep from "lodash/cloneDeep";
 import { Moment } from "moment/moment";
 import moment from "moment/moment";
-import { Subject } from "rxjs";
 
 import { ITimeframe, ITimeFramePreset } from "./public-api";
 import { TimeframeService } from "./services/timeframe.service";
