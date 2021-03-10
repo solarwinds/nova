@@ -1,4 +1,7 @@
 version: 2.1
+orbs:
+    snyk: snyk/snyk@0.0.12
+
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -452,6 +455,25 @@ jobs:
             -   run:
                     name: Trigger release branch
                     command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
+    snyk-test:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Install node_modules
+                    command: npm install -q
+            - run:
+                    name: install-snyk
+                    command: npm install -g snyk     
+            - run:
+                    name: snyk auth
+                    command: snyk auth $SNYK_TOKEN
+            - run:
+                    name: snyk test
+                    command: snyk test --dev --all-projects --exclude=dist --strict-out-of-sync=false
 workflows:
     version: 2.1
     nova:
@@ -564,6 +586,10 @@ workflows:
                                 - main
                                 - /release\/.*/
                                 - next
+            -   snyk-test:
+                    requires:
+                        - dashboards-build
+
     nova-release:
         jobs:
             -   release-approval:
