@@ -15,6 +15,7 @@ describe("UrlInteractionHandler", () => {
         let handler: UrlInteractionHandler;
         let eventBus: EventBus<IEvent>;
         let window: any;
+        let loggerWarnSpy: Spy;
 
         beforeEach(() => {
             window = {
@@ -26,7 +27,7 @@ describe("UrlInteractionHandler", () => {
             };
             eventBus = new EventBus<IEvent>();
             const logger = new LoggerService();
-            spyOnProperty(logger, "warn").and.returnValue(noop); // suppress warnings
+            loggerWarnSpy = spyOnProperty(logger, "warn").and.returnValue(noop); // suppress warnings
             handler = new UrlInteractionHandler(eventBus, window, logger);
             handleInteractionSpy = spyOn(handler as any, "handleInteraction").and.callThrough();
 
@@ -72,6 +73,14 @@ describe("UrlInteractionHandler", () => {
             expect(handleInteractionSpy).toHaveBeenCalled();
 
             expect(window.location.href).toEqual("default");
+        });
+
+        it("logger should warn if properties is not loaded", () => {
+            // @ts-ignore
+            handler.updateConfiguration(undefined);
+            eventBus.getStream(INTERACTION).next({ payload });
+            expect(handleInteractionSpy).toHaveBeenCalled();
+            expect(loggerWarnSpy).toHaveBeenCalled();
         });
 
     });
