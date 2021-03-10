@@ -77,8 +77,8 @@ describe("UrlInteractionHandler", () => {
         it("logger should warn if properties are not loaded", () => {
             // @ts-ignore
             handler.updateConfiguration(undefined);
-            expect(() => eventBus.getStream(INTERACTION).next({ payload })).not.toThrow();
 
+            expect(() => eventBus.getStream(INTERACTION).next({ payload })).not.toThrow();
         });
 
     });
