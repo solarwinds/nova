@@ -15,7 +15,6 @@ describe("UrlInteractionHandler", () => {
         let handler: UrlInteractionHandler;
         let eventBus: EventBus<IEvent>;
         let window: any;
-        let loggerWarnSpy: Spy;
 
         beforeEach(() => {
             window = {
@@ -27,7 +26,7 @@ describe("UrlInteractionHandler", () => {
             };
             eventBus = new EventBus<IEvent>();
             const logger = new LoggerService();
-            loggerWarnSpy = spyOnProperty(logger, "warn").and.returnValue(noop); // suppress warnings
+            spyOnProperty(logger, "warn").and.returnValue(noop); // suppress warnings
             handler = new UrlInteractionHandler(eventBus, window, logger);
             handleInteractionSpy = spyOn(handler as any, "handleInteraction").and.callThrough();
 
