@@ -241,7 +241,7 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
 
         this.tableStateHandlerService.selectableChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
             this.selectable = selectable;
-            this.changeDetectorRef.detectChanges();
+            this.changeDetectorRef.markForCheck();
         });
     }
 
@@ -344,7 +344,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
 
         this.tableStateHandlerService.selectableChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
             this.selectable = selectable;
-            this.changeDetectorRef.detectChanges();
+            this.changeDetectorRef.markForCheck();
         });
     }
 
