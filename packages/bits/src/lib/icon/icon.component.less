@@ -1,8 +1,14 @@
 @import (reference) "../../styles/nui-framework-variables.less";
 @import (reference) "../../styles/mixins.less";
 
+nui-icon.nui-icon-flex {
+    .nui-icon-item {
+        display: flex;
+    }
+}
+
 .nui-icon-wrapper {
-    display: flex;
+    display: inline-flex;
     .nui-svg-wrapper {
         position: relative;
     }
@@ -10,7 +16,7 @@
         position: absolute;
         top: 0px;
         left: 0px;
-        display: flex;
+
         &__child {
             position: absolute;
             top: 8px;
