@@ -55,13 +55,8 @@
                 *******************************/
                 "@typescript-eslint/await-thenable": "error",
                 "@typescript-eslint/consistent-type-definitions": "error",
-
-                // Must disable the base rule as it can report incorrect errors
-                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/dot-notation.md
-                "dot-notation": "off", // ! Candidate for removal
-                "@typescript-eslint/dot-notation": ["off"], // ! Candidate for removal
                 "@typescript-eslint/no-inferrable-types": "off",
-                // TODO: review
+                // TODO: review - NUI-5901
                 "@typescript-eslint/promise-function-async": "off",
                 // Must disable the base rule as it can report incorrect errors
                 // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-empty-function.md
@@ -70,28 +65,37 @@
                     "error",
                     {
                         "allow": [
-                            "constructors",
                             "private-constructors",
                             "protected-constructors",
                             "decoratedFunctions",
+                            "methods",
+                            "constructors",
                             "functions",
                             "arrowFunctions",
                             "asyncFunctions",
                             "asyncMethods"
                         ]
                     }
-                ], // <----------
+                ],
                 // Must disable the base rule as it can report incorrect errors
                 // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/dot-notation.md
+                // TODO: resolve all the warnings for the following rule in the scope of NUI-5900
                 "no-unused-vars": "off",
-                "@typescript-eslint/no-unused-vars": "off",
-
+                "@typescript-eslint/no-unused-vars": [
+                    "warn",
+                    {
+                        "args": "none",
+                        "ignoreRestSiblings": true
+                    }
+                ],
                 "@typescript-eslint/restrict-template-expressions": "off",
                 "@typescript-eslint/no-explicit-any": "off",
                 "@typescript-eslint/no-unsafe-assignment": "off",
-                "@typescript-eslint/no-unsafe-return": "off",
+                "@typescript-eslint/no-unsafe-return": "off", 
                 "@typescript-eslint/no-unsafe-member-access": "off",
                 "@typescript-eslint/no-unsafe-call": "off",
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-expressions.md
                 "no-unused-expressions": "off",
                 "@typescript-eslint/no-unused-expressions": [
                     "error",
@@ -101,7 +105,14 @@
                 ],
                 "@typescript-eslint/ban-types": "off",
                 "@typescript-eslint/ban-ts-comment": "off",
-                "@typescript-eslint/explicit-module-boundary-types": "off",
+                // TODO: review - we should always specify return types of functions - NUI-5901
+                "@typescript-eslint/explicit-module-boundary-types": [
+                    "off",
+                    {
+                        "allowArgumentsExplicitlyTypedAsAny": true,
+                        "allowTypedFunctionExpressions": false
+                    }
+                ],
                 "@typescript-eslint/no-type-alias": [
                     "error",
                     {
@@ -115,15 +126,6 @@
                 "@typescript-eslint/no-empty-interface": "error",
                 "@typescript-eslint/no-floating-promises": "off",
                 "@typescript-eslint/no-misused-promises": "off",
-                "no-restricted-imports": [
-                    "error",
-                    {
-                        "paths": [
-                            "lodash",
-                            "moment"
-                        ]
-                    }
-                ],
                 "@typescript-eslint/no-this-alias": "off",
                 "@typescript-eslint/no-var-requires": "off",
                 "@typescript-eslint/prefer-regexp-exec": "off",
@@ -142,14 +144,17 @@
                 "@typescript-eslint/unified-signatures": "error",
                 "@typescript-eslint/type-annotation-spacing": "error",
                 "@typescript-eslint/restrict-plus-operands": "off",
+
+                "require-await": "off",
                 "@typescript-eslint/require-await": "off",
                 "@typescript-eslint/no-unnecessary-type-assertion": "off",
                 "@typescript-eslint/triple-slash-reference": "off",
                 // Substitutes the 'callable-types' tslint rule
                 "@typescript-eslint/prefer-function-type": "error",
+
                 // "semi": "off",
                 // "@typescript-eslint/semi": ["error"],
-                // TODO: consider enablint it
+                // TODO: review and consider enabling - NUI-5901
                 "@typescript-eslint/member-delimiter-style": [
                     "off",
                     {
@@ -164,7 +169,7 @@
                     }
                 ],
                 // Substitutes the 'class-name' tslint rule.
-                // TODO: NEEDS TO BE CONFIGURED!
+                // TODO: Review - NEEDS TO BE CONFIGURED! - NUI-5901
                 // "@typescript-eslint/naming-convention": [
                 //     "error",
                 //     {
@@ -172,7 +177,10 @@
                 //       "format": ["camelCase", "UPPER_CASE"]
                 //     }
                 //   ],
-                // ESlint native rules
+
+                /******************************
+                * ESLint rules
+                *******************************/
                 // Substitutes the 'arrow-return-shorthand' tslint rule
                 "arrow-body-style": [
                     "error",
@@ -191,7 +199,7 @@
                         "objects": "always-multiline",
                         "arrays": "always-multiline",
                         "functions": "never",
-                        // TODO: Consider enabling the rules for the imports and exports
+                        // TODO: Consider enabling the rules for the imports and exports - NUI-5901
                         "imports": "ignore",
                         "exports": "ignore"
                     }
@@ -209,14 +217,14 @@
                 "import/no-duplicates": "off",
                 "import/no-named-as-default-member": "off",
                 "import/no-named-as-default": "off",
-                // TODO: review
+                // TODO: review - NUI-5901
                 "import/order": [
                     "off",
                     {
                         "newlines-between": "always"
                     }
                 ],
-                // TODO: Enable it!
+                // TODO: review - NUI-5901
                 "indent": [
                     "off",
                     4,
@@ -282,6 +290,15 @@
                 ],
                 "no-new-wrappers": "error",
                 "no-redeclare": "error",
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": [
+                            "lodash",
+                            "moment"
+                        ]
+                    }
+                ],
                 "no-trailing-spaces": [
                     "error",
                     {
@@ -289,6 +306,7 @@
                     }
                 ],
                 "no-prototype-builtins": "off",
+                //TODO: review - NUI-5901
                 "no-shadow": [
                     "off"
                     // {
@@ -308,7 +326,7 @@
                 "no-undef-init": "error",
                 "no-underscore-dangle": "off",
                 "no-useless-escape": "off",
-                //TODO: review
+                //TODO: review - NUI-5901
                 "prefer-arrow/prefer-arrow-functions": [
                     "off",
                     {
@@ -316,7 +334,7 @@
                         "singleReturnOnly": true
                     }
                 ],
-                // TODO: review
+                // TODO: review - NUI-5901
                 "prefer-const": [
                     "off",
                     {
