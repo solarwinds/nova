@@ -12,10 +12,10 @@ import { IFormatterData } from "../types";
 @Component({
     template: `
         <div *ngIf="isValid" class="d-flex align-items-center justify-content-center">
-            <nui-icon class="nui-icon-flex" *ngIf="iconFound; else iconNotFound" [icon]="data?.value"></nui-icon>
+            <nui-icon *ngIf="iconFound; else iconNotFound" [icon]="data?.value"></nui-icon>
         </div>
         <ng-template #iconNotFound>
-            <nui-icon class="nui-icon-flex" title="Unknown icon" i18n-title iconColor="disabled-gray" icon="help"></nui-icon>
+            <nui-icon title="Unknown icon" i18n-title iconColor="disabled-gray" icon="help"></nui-icon>
         </ng-template>
     `,
 })
