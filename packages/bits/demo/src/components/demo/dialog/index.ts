@@ -16,3 +16,4 @@ export * from "./dialog-actions-before-closure/dialog-actions-before-closure.exa
 export * from "./dialog-test/dialog-zindex-test.component";
 export * from "./dialog-after-opened/dialog-after-opened.example.component";
 export * from "./dialog-actions-before-closure/dialog-actions-before-closure.example.component";
+export * from "./dialog-inside-overlay-with-date-time-picker/dialog-inside-overlay-with-date-time-picker.example.component";
