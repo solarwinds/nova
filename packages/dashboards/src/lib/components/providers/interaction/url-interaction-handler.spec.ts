@@ -74,7 +74,7 @@ describe("UrlInteractionHandler", () => {
             expect(window.location.href).toEqual("default");
         });
 
-        it("logger should warn if properties are not loaded", () => {
+        it("should not throw error if properties is undefined", () => {
             // @ts-ignore
             handler.updateConfiguration(undefined);
 
