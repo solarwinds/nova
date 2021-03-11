@@ -1,6 +1,6 @@
 {
   "name": "nova",
-  "version": "9.37.0-0",
+  "version": "9.37.0",
   "description": "SolarWinds Nova Framework",
   "main": "index.js",
   "repository": {
