@@ -49,9 +49,9 @@ export class TimeFrameBarComponent implements AfterContentInit, OnChanges, OnDes
     @Input() maxDate: Moment;
 
     /** Current time frame value */
-    @Input() timeFrame: ITimeframe = {
-        startDatetime: this.minDate,
-        endDatetime: this.maxDate,
+    @Input() timeFrame: ITimeframe = <any> {
+        startDatetime: undefined,
+        endDatetime: undefined,
     };
     @Output() timeFrameChange = new EventEmitter<ITimeframe>();
 

@@ -1,4 +1,4 @@
-/**@ignore*/
+/** @ignore */
 export type ILayoutElementDirection = "row" | "column";
-/**@ignore*/
+/** @ignore */
 export type ISheetType = "separate" | "joined";

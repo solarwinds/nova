@@ -21,14 +21,19 @@ import {
 import _isUndefined from "lodash/isUndefined";
 import {Subject, Subscription} from "rxjs";
 
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
-import { EventBusService, NuiEvent } from "../../services/event-bus.service";
+import { EventBusService } from "../../services/event-bus.service";
+import { LoggerService } from "../../services/log-service";
 
 import { PopupContainerComponent } from "./popup-container.component";
 import { PopupContainerService } from "./popup-container.service";
 import { PopupToggleDirective } from "./popup-toggle.directive";
 
 // <example-url>./../examples/index.html#/popup</example-url>
+/**
+ * @deprecated in v11 - Use PopupComponent instead - Removal: NUI-5796
+ */
 /**
  * __Name :__
  * NUI Pop-up component.
@@ -40,7 +45,7 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
  * 1st layer of content to define "popup area". DO NOT USE "opened" WITH "nuiPopupToggle".
  * IT IS NEEDED TO CHOOSE ONE.
  */
-/* tslint:disable:use-host-property-decorator */
+/* eslint-disable @angular-eslint/no-host-metadata-property */
 @Component({
     selector: "nui-popup-deprecated",
     host: {
@@ -65,7 +70,7 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
     styleUrls: ["./popup.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-/* tslint:disable:use-host-property-decorator */
+/* eslint-disable @angular-eslint/no-host-metadata-property */
 export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, OnInit {
     @Input() width: string;
     /**
@@ -131,7 +136,10 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
                 private componentFactoryResolver: ComponentFactoryResolver,
                 private injector: Injector,
                 private appRef: ApplicationRef,
+                private logger: LoggerService,
                 @Optional() private popupContainer: PopupContainerService) {
+
+                    this.logger.warn("<nui-popup-deprecated> is deprecated as of Nova v11. Please use <nui-popup> instead.");
     }
     public ngOnInit() {
         if (this.manualOpenControl) {
@@ -142,8 +150,8 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
             );
         }
         this.popupSubscriptions.push(
-            this.eventBusService.getEventStream("document-click")
-                .subscribe((event: NuiEvent) => {
+            this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
+                .subscribe((event: MouseEvent) => {
                     if (this.isOpen) {
                         this.closePopup(event);
                     }
@@ -216,7 +224,7 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
         }
     }
 
-    public closePopup(event?: MouseEvent | NuiEvent): void {
+    public closePopup(event?: MouseEvent): void {
         const isToggle = this.popupToggle && event ? (this.popupToggle.host.nativeElement as HTMLElement)
             .contains(event.target as HTMLElement) : false;
 

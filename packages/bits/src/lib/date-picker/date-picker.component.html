@@ -1,11 +1,9 @@
 <div class="nui-datepicker">
-    <nui-popup *ngIf="!inline"
-        (opened)="onPopupOpened($event)"
-        [appendToBody]="appendToBody">
-        <div nuiPopupToggle
+    <ng-container *ngIf="!inline">
+        <div #toggleRef
              class="nui-datepicker__container"
-             [disabled]="isDisabled"
-             [class.disabled]="isDisabled">
+             [class.disabled]="isDisabled"
+             (click)="!isDisabled && overlay.toggle()">
             <nui-textbox #date
                          autocomplete="off"
                          [disabled]="isDisabled"
@@ -19,16 +17,24 @@
                       aria-hidden="true"
                       [iconColor]="getIconColor()"></nui-icon>
         </div>
-        <ng-container popupAreaContent *ngTemplateOutlet="datePickerInner"></ng-container>
-    </nui-popup>
-    <div *ngIf="inline"><ng-container *ngTemplateOutlet="datePickerInner"></ng-container></div>
-</div>
+    <nui-overlay #overlay
+                 [toggleReference]="toggleRef"
+                 [overlayConfig]="overlayConfig"
+                 [customContainer]="customContainer">
+             <ng-container *ngTemplateOutlet="datePickerInner"></ng-container>
+    </nui-overlay>
+    </ng-container>
 
+    <div *ngIf="inline"><ng-container *ngTemplateOutlet="datePickerInner"></ng-container></div>
+
+    <div #popupArea></div>
+</div>
 <ng-template #datePickerInner>
     <nui-date-picker-inner [preserveInsignificant]="preserveInsignificant"
                            [selectedDate]="selectedDate"
                            [inline]="inline"
                            (update)="onUpdate($event)"
+                           (selectionDone)="overlay?.hide()"
                            [locale]="locale"
                            [datepickerMode]="datepickerMode"
                            [initDate]="initDate"
@@ -56,3 +62,4 @@
         <nui-year-picker tabindex="0"></nui-year-picker>
     </nui-date-picker-inner>
 </ng-template>
+

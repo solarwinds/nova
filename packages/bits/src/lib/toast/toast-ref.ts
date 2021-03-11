@@ -7,7 +7,7 @@ import { ToastContainerService } from "./toast-container.service";
  * Reference to a toast opened via the Toast service.
  * Used to provide toast events hooks
  */
-/**@ignore*/
+/** @ignore */
 export class ToastRef<T> implements IToastRef<T> {
     /** The instance of component opened into the toast. */
     public componentInstance: T;

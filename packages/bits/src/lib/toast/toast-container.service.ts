@@ -11,7 +11,7 @@ import { OverlayContainerService } from "../overlay/overlay-container.service";
 import { OVERLAY_DEFAULT_PRIORITY } from "../overlay/types";
 
 import { ToastInjector } from "./toast-injector";
-/**@ignore*/
+/** @ignore */
 interface IToastContainers {
     [positionClass: string]: HTMLElement;
 }

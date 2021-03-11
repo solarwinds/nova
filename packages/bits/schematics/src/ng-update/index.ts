@@ -1,6 +1,6 @@
 import { chain, noop, Rule, SchematicContext, SchematicsException, Tree } from "@angular-devkit/schematics";
 
-import { updateJsonFile } from "../schematics-helper";
+import { updateJsonFile } from "../utility/schematics-helper";
 
 export default function (options: any): Rule {
     if (!options.project) {

@@ -1,15 +1,6 @@
 @import (reference) "../../styles/nui-framework-variables.less";
 @import (reference) "../../styles/mixins.less";
 
-/** Add "display: flex" for .nui-icon-item in v.11
- * https://jira.solarwinds.com/browse/NUI-5630
- */
-nui-icon.nui-icon-flex {
-    .nui-icon-item {
-        display: flex;
-    }
-}
-
 .nui-icon-wrapper {
     display: inline-flex;
     .nui-svg-wrapper {
@@ -19,19 +10,20 @@ nui-icon.nui-icon-flex {
         position: absolute;
         top: 0px;
         left: 0px;
+        display: flex;
         &__child {
             position: absolute;
             top: 8px;
             left: 8px;
             z-index: 1;
-            transform: scale(0.75,0.75) translate(-3px,-3px);
+            transform: scale(0.75,0.75) translate(-2.5px,-2.5px);
         }
         &__grand-child {
             position: absolute;
             top: 14px;
             left: 14px;
             z-index: 2;
-            transform:  scale(0.5,0.5) translate(-11px,-11px);
+            transform:  scale(0.5,0.5) translate(-9.5px,-9.5px);
         }
     }
 }
@@ -156,7 +148,7 @@ nui-icon.nui-icon-flex {
         height: @icon-size-small;
         background-size: @icon-size-small;
         line-height: @icon-size-small;
-        font-size: @icon-size-default/2;
+        font-size: (@icon-size-default/2);
     }
 
     &[status]:not([status=""]), &[counter]:not([counter=""]) {
@@ -164,8 +156,8 @@ nui-icon.nui-icon-flex {
 
         &::after {
             position: absolute;
-            top: @icon-size-default/2;
-            left: @icon-size-default/2;
+            top: (@icon-size-default/2);
+            left: (@icon-size-default/2);
         }
     }
 
@@ -180,13 +172,13 @@ nui-icon.nui-icon-flex {
             height: @icon-size-small;
             background-size: @icon-size-small;
             line-height: @icon-size-small;
-            font-size: @icon-size-default/2;
+            font-size: (@icon-size-default/2);
         }
 
         &[status]:not([status=""])::after, &[counter]:not([counter=""])::after {
             position: absolute;
-            top: @icon-size-small/2;
-            left: @icon-size-small/2;
+            top: (@icon-size-small/2);
+            left: (@icon-size-small/2);
         }
     }
 
@@ -206,8 +198,8 @@ nui-icon.nui-icon-flex {
 
         &[status]:not([status=""])::after, &[counter]:not([counter=""])::after {
             position: absolute;
-            top: @icon-size-medium/2;
-            left: @icon-size-medium/2;
+            top: (@icon-size-medium/2);
+            left: (@icon-size-medium/2);
         }
     }
 

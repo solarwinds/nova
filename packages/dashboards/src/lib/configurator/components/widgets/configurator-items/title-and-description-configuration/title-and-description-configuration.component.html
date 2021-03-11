@@ -10,7 +10,7 @@
     <div class="title-and-description-configuration__accordion-content">
         <div class="mb-4">
             <nui-form-field caption="Widget title" i18n-caption [control]="form.get('title')">
-                <!-- TODO: remove "kpi" prefix in v11 -->
+                <!-- TODO: remove "kpi" prefix in v11  - NUI-5833-->
                 <nui-textbox id="kpi-widget-title" formControlName="title" placeholder="Set widget title" i18n-placeholder></nui-textbox>
                 <nui-validation-message for="required" i18n>
                     This field is required
@@ -20,14 +20,14 @@
 
         <div class="mb-4">
             <nui-form-field caption="Widget subtitle" i18n-caption [control]="form.get('subtitle')">
-                <!-- TODO: remove "kpi" prefix in v11 -->
+                <!-- TODO: remove "kpi" prefix in v11 - NUI-5833 -->
                 <nui-textbox id="kpi-widget-subtitle" formControlName="subtitle" placeholder="Do not show a subtitle" i18n-placeholder></nui-textbox>
             </nui-form-field>
         </div>
 
         <div class="mb-4">
             <nui-form-field caption="Widget link URL" i18n-caption [control]="form.get('url')">
-                <!-- TODO: remove "kpi" prefix in v11 -->
+                <!-- TODO: remove "kpi" prefix in v11  - NUI-5833-->
                 <nui-textbox id="kpi-widget-url" formControlName="url" placeholder="Do not link to another page" i18n-placeholder></nui-textbox>
             </nui-form-field>
         </div>

@@ -22,6 +22,7 @@ import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";
 
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
@@ -81,7 +82,7 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
      */
     @Output() public valueChange = new EventEmitter<any>();
 
-    /* tslint:disable-next-line:no-use-before-declare */
+    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     @ContentChildren(forwardRef(() => RadioComponent), { descendants: true }) private children: QueryList<RadioComponent>;
     private _value: any = null;
     private selectedRadio: RadioComponent | null = null;
@@ -295,6 +296,6 @@ export class RadioComponent implements OnInit, OnDestroy {
         // This will lead to multiple click events.
         // Preventing bubbling for the second event will solve that issue.
         event.stopPropagation();
-        this.eventBusService.getEventStream("document-click").next(event);
+        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT}).next(event);
     }
 }

@@ -5,7 +5,7 @@
 
 :host {
     max-width: @max-width;
-    min-height: @nui-space-sm * 4 - @nui-line-thick;
+    min-height: (@nui-space-sm * 4) - @nui-line-thick;
     .setCssVariable(background-color, nui-color-bg-transparent);
     .nui-tab-heading {
         white-space: nowrap;
@@ -28,7 +28,7 @@
             display: block;
             padding: @nui-space-sm @nui-space-md;
             text-transform: uppercase;
-            min-height: @nui-space-sm * 4 - @nui-line-thick;
+            min-height: (@nui-space-sm * 4) - @nui-line-thick;
             cursor: pointer;
             &:hover {
                 .setCssVariable(background, transparent);
@@ -63,7 +63,7 @@
         // Setting max-width and min-height here as well so that the active marker
         // would have the required @nui-space-sm * 4 height if the content is less that that
         max-width: @max-width;
-        min-height: @nui-space-sm * 4;
+        min-height: (@nui-space-sm * 4);
         border-left: @nui-line-thick solid transparent;
         &.active {
             border-bottom: none;
@@ -71,7 +71,7 @@
             .setCssVariable(border-left-color, nui-color-selected-contrast);
         }
         .tab-link {
-            min-height: @nui-space-sm * 4;
+            min-height: (@nui-space-sm * 4);
         }
     }
 }

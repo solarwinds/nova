@@ -5,3 +5,7 @@ export * from "./columns-editor/column-configuration/presentation-configuration/
 export * from "./columns-editor/column-configuration/presentation-configuration/portals/value-selector/value-selector.component";
 export * from "./columns-editor/column-configuration/presentation-configuration/presentation-configuration.component";
 export * from "./columns-editor/column-configuration/description-configuration/description-configuration.component";
+export * from "./columns-editor-v2/column-configuration/description-configuration/description-configuration-v2.component";
+export * from "./columns-editor-v2/column-configuration/presentation-configuration/presentation-configuration-v2.component";
+export * from "./columns-editor-v2/column-configuration/table-column-configuration/table-column-configuration.component";
+export * from "./columns-editor-v2/table-columns-configuration-v2.component";

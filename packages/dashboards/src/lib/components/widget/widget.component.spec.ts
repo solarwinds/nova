@@ -1,5 +1,5 @@
 import { SimpleChange } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { NuiDashboardsModule } from "../../dashboards.module";
 import { ProviderRegistryService } from "../../services/provider-registry.service";
@@ -12,7 +12,7 @@ describe("WidgetComponent", () => {
     let component: WidgetComponent;
     let fixture: ComponentFixture<WidgetComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [ProviderRegistryService],

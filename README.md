@@ -6,7 +6,7 @@ The Nova Nui Framework provides a set of common UI-based components and services
 
 The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md#style-guide).
 
-## Project Structure
+## Project Structure 
 
 Nova UI consists of three packages within a single monorepo:
 

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus, IconService, IEvent } from "@nova-ui/bits";
 import { Chart, SET_DOMAIN_EVENT, ZoomPlugin } from "@nova-ui/charts";
 import moment from "moment/moment";
@@ -14,7 +14,7 @@ describe("StatusChartComponent", () => {
     let component: StatusBarChartComponent;
     let fixture: ComponentFixture<StatusBarChartComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             providers: [
                 IconService,

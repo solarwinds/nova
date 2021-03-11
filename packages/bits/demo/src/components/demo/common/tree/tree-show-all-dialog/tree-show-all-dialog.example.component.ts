@@ -298,7 +298,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
 
     /** Load first page on first open */
     public onToggleClick(node: IServerNode, nestedNode: CdkNestedTreeNode<any>) {
-        this.eventBusService.getEventStream("document-click").next();
+        this.eventBusService.getStream({id: "document-click"}).next();
 
         if (node.hasChildren && node.children && !node.children.length) {
             node.isLoading = true;

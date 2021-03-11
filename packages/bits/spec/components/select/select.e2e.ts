@@ -5,8 +5,10 @@ import { Helpers } from "../../helpers";
 
 import { SelectAtom } from "./select.atom";
 
-// TODO: we need to add tests for edge detection once NUI-410 will be done
-describe("USERCONTROL Select >", () => {
+/**
+ * Consider using this as a reference to the test cases to add to the select-v2 test suite in scope of NUI-4921
+ */
+xdescribe("USERCONTROL Select >", () => {
     let selectBasic: SelectAtom;
     let selectDisabled: SelectAtom;
     let inlineSelect: SelectAtom;

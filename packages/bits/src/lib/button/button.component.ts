@@ -30,7 +30,7 @@ import { ButtonSizeType } from "./public-api";
 
 // <example-url>./../examples/index.html#/button</example-url>
 
-/* tslint:disable:component-selector  */
+/* eslint-disable @angular-eslint/component-selector */
 @Component({
     selector: "[nui-button]",
     templateUrl: "./button.component.html",
@@ -39,7 +39,7 @@ import { ButtonSizeType } from "./public-api";
     styleUrls: ["./button.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-/* tslint:enable:component-selector */
+/* eslint-enable @angular-eslint/component-selector */
 
 export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     /**

@@ -1,4 +1,4 @@
-import { OnDestroy } from "@angular/core";
+import { Directive, OnDestroy } from "@angular/core";
 import { LoggerService, uuid } from "@nova-ui/bits";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map } from "rxjs/operators";
@@ -7,6 +7,7 @@ import { IRegistryAddOptions } from "./types";
 
 type IRegistryMap<T> = Record<string, T>;
 
+@Directive()
 export abstract class RegistryService<T = Object> implements OnDestroy {
     protected state$: BehaviorSubject<IRegistryMap<T>> =
         new BehaviorSubject<IRegistryMap<T>>({});

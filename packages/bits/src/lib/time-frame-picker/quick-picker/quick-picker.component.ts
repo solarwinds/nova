@@ -31,7 +31,7 @@ export class QuickPickerComponent {
     @Input() public presetKeysOrder: string[];
 
 
-    /** callback to invoke on selecting specific preset*/
+    /** callback to invoke on selecting specific preset */
     @Output() public presetSelected = new EventEmitter<string>();
 
     public get presetKeys(): string[] {

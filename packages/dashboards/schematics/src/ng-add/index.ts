@@ -4,7 +4,10 @@ import { InsertChange } from "@schematics/angular/utility/change";
 import { addPackageJsonDependency, NodeDependency } from "@schematics/angular/utility/dependencies";
 import { getAppModulePath } from "@schematics/angular/utility/ng-ast-utils";
 
-import { addStylesToAngularJson, assembleDependencies, getBrowserProjectTargets, installPackageJsonDependencies, readIntoSourceFile } from "../schematics-helpers";
+import {
+    addStylesToAngularJson, assembleDependencies, getBrowserProjectTargets,
+    installPackageJsonDependencies, readIntoSourceFile
+} from "@nova-ui/bits/sdk/schematics";
 
 const stylePaths = ["./node_modules/@nova-ui/charts/bundles/css/styles.css"];
 

@@ -2,17 +2,17 @@ import { AfterViewInit, Directive, ElementRef, EventEmitter, OnDestroy, Output }
 import filter from "lodash/filter";
 import forEach from "lodash/forEach";
 
-/**@ignore*/
+/** @ignore */
 interface IResizeEventQueue {
     events: any[];
     add(event: Function): void;
     call(): void;
     remove(event: Function): void;
 }
-/**@ignore*/
+/** @ignore */
 interface IResizeElement extends HTMLElement {
-    resizedAttached: IResizeEventQueue;
-    resizeSensor: any;
+    resizedAttached?: IResizeEventQueue;
+    resizeSensor?: any;
 }
 
 /**

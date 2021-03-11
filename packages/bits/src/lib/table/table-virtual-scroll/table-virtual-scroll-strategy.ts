@@ -114,9 +114,9 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
     }
 }
 
-// TODO: Remove in V10
-/** @ignore */
-/** @deprecated Use TableVirtualScrollLinearStrategy instead */
+/**
+ * @deprecated in v11 - Use TableVirtualScrollLinearStrategy instead - Removal: NUI-5796
+ */
 export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
 
     private readonly indexChange = new Subject<number>();

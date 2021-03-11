@@ -29,7 +29,7 @@ import { CheckboxStatus, SelectionType } from "../../selector/public-api";
 import { ClickableRowOptions, RowHeightOptions } from "../public-api";
 import { TableStateHandlerService } from "../table-state-handler.service";
 
-// tslint:disable:use-input-property-decorator
+/* eslint-disable */
 
 /**
  * @ignore

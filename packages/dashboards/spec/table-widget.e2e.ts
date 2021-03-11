@@ -53,8 +53,8 @@ describe("Dashboards - Table Widget", () => {
         // Amount of columns able to be sorted after datasource changed and before columns are reset
         expect(count).toEqual(2);
 
-        const resetButton = await configurator.getResetColumnsButton();
-        await resetButton.click();
+        const resetButton = configurator.getResetColumnsButton();
+        await (resetButton.click());
         await element(by.className("nui-dialog")).$(".btn-primary").click();
         count = await sortBy?.countOptions();
         // Amount of columns able to be sorted after datasource changed and after columns are reset

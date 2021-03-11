@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    BandScale, barGrid, BarRenderer, Chart, CHART_PALETTE_CS_S, ChartAssist, ChartDonutContentPlugin, getAutomaticDomainWithIncludedInterval,
+    BandScale, barGrid, BarRenderer, Chart, ChartAssist, ChartDonutContentPlugin, CHART_PALETTE_CS_S, getAutomaticDomainWithIncludedInterval,
     HorizontalBarAccessors, IAccessors, IScale, LinearScale, MappedValueProvider, PieRenderer, radial, RadialAccessors, radialGrid, RadialRenderer,
     radialScales, Renderer, Scales, VerticalBarAccessors,
 } from "@nova-ui/charts";

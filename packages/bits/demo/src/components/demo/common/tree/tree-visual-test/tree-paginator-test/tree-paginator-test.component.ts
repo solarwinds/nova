@@ -32,7 +32,7 @@ export class TreePaginatorTestComponent {
 
     /** Load first page on first open */
     public onToggleClick(node: FoodNode, nestedNode: CdkNestedTreeNode<any>) {
-        this.eventBusService.getEventStream("document-click").next();
+        this.eventBusService.getStream({id: "document-click"}).next();
 
         if (node.hasPagination && node.children && !node.children.length) {
             const paginatorOptions = {

@@ -14,13 +14,13 @@ import isNumber from "lodash/isNumber";
 import isObject from "lodash/isObject";
 import isString from "lodash/isString";
 
-/**@ignore*/
+/** @ignore */
 enum ByteCount {
     String = 2,
     Boolean = 4,
     Number = 8,
 }
-/**@ignore*/
+/** @ignore */
 export enum BrowserName {
     Chrome = "Chrome",
     Edge = "Edge",
@@ -251,11 +251,11 @@ export class UtilService {
             index--;
             digit = this.nextUniqueId[index].charCodeAt(0);
 
-            if (digit === 57 /*"9"*/) {
+            if (digit === 57 /* "9" */) {
                 this.nextUniqueId[index] = "A";
                 return this.nextUniqueId.join("");
             }
-            if (digit === 90 /*"Z"*/) {
+            if (digit === 90 /* "Z" */) {
                 this.nextUniqueId[index] = "0";
             } else {
                 this.nextUniqueId[index] = String.fromCharCode(digit + 1);

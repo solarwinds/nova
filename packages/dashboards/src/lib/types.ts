@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, EventEmitter, InjectionToken, Injector, StaticProvider } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
 import { EventBus } from "@nova-ui/bits";
-import { NuiEvent } from "@nova-ui/bits/services/event-bus.service";
 import { GridsterItem } from "angular-gridster2";
 import { Observable } from "rxjs";
 
@@ -13,11 +12,11 @@ import { IConfiguratorSource } from "./configurator/services/types";
  */
 export type DeepPartial<T> = T extends object ? { [K in keyof T]?: DeepPartial<T[K]> } : T;
 
-export const PIZZAGNA_EVENT_BUS = new InjectionToken<EventBus<NuiEvent>>("PIZZAGNA_EVENT_BUS");
-export const DASHBOARD_EVENT_BUS = new InjectionToken<EventBus<NuiEvent>>("DASHBOARD_EVENT_BUS");
-export const DATA_SOURCE = new InjectionToken<EventBus<NuiEvent>>("DATA_SOURCE");
-export const FORMATTERS_REGISTRY = new InjectionToken<EventBus<NuiEvent>>("FORMATTERS_REGISTRY");
-export const TEST_REGISTRY = new InjectionToken<EventBus<NuiEvent>>("TEST_REGISTRY");
+export const PIZZAGNA_EVENT_BUS = new InjectionToken<EventBus<Event>>("PIZZAGNA_EVENT_BUS");
+export const DASHBOARD_EVENT_BUS = new InjectionToken<EventBus<Event>>("DASHBOARD_EVENT_BUS");
+export const DATA_SOURCE = new InjectionToken<EventBus<Event>>("DATA_SOURCE");
+export const FORMATTERS_REGISTRY = new InjectionToken<EventBus<Event>>("FORMATTERS_REGISTRY");
+export const TEST_REGISTRY = new InjectionToken<EventBus<Event>>("TEST_REGISTRY");
 
 export type WidgetUpdateOperation = (widget: IWidget, source: IConfiguratorSource) => Observable<IWidget>;
 export type WidgetRemovalOperation = (widgetId: string, source: IConfiguratorSource) => Observable<string>;
@@ -40,6 +39,7 @@ export enum WellKnownProviders {
     EventBusDebugger = "eventBusDebugger",
     KpiColorPrioritizer = "kpiColorPrioritizer",
     FormattersRegistry = "formattersRegistry",
+    DataSourceManager = "dataSourceManager",
 }
 
 export enum WellKnownPathKey {
@@ -132,7 +132,7 @@ export interface IWidgetTypeDefinition {
     configurator?: IPizzagna;
     widget: IPizzagna;
     /**
-     * Paths to various important values in pizzagnas - this should be coupled with respective pizzagnas in v10
+     * Paths to various important values in pizzagnas - this should be coupled with respective pizzagnas in v10 - NUI-5829
      */
     paths?: {
         widget?: Record<string, string>,
@@ -168,7 +168,7 @@ export interface IHasComponent<T = any> {
 export interface IConfigurable {
     providerKey?: string;
     setComponent?: (component: any, componentId: string) => void;
-    // TODO: BREAKING rename to 'updateProperties' in v10
+    // TODO: BREAKING rename to 'updateProperties' in v12 - NUI-5828
     updateConfiguration(properties: IProperties): void;
 }
 

@@ -18,6 +18,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import {Subscription} from "rxjs";
 
+import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EventBusService } from "../../services/event-bus.service";
 import { NuiFormFieldControl } from "../form-field/public-api";
 
@@ -40,6 +41,7 @@ import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
         },
     ],
     styleUrls: ["./checkbox.component.less"],
+    // TODO: turn on the view envapsulation in the scope of NUI-5823
     encapsulation: ViewEncapsulation.None,
     host: {
         "[class.nui-checkbox--hovered]": "hovered",
@@ -163,10 +165,10 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
 
     ngAfterViewInit() {
         this.rendererListener = this.renderer.listen(this.checkboxLabel.nativeElement, "keydown", (event) => {
-            this.eventBusService.getEventStream("checkbox-keydown").next(event);
+            this.eventBusService.getStream({id: "checkbox-keydown"}).next(event);
         });
 
-        this.sub = this.eventBusService.getEventStream("checkbox-keydown").subscribe((event: KeyboardEvent) => {
+        this.sub = this.eventBusService.getStream({id: "checkbox-keydown"}).subscribe((event: KeyboardEvent) => {
             if (event.target === this.checkboxLabel.nativeElement) {
                 if (event.keyCode === ENTER || event.keyCode === SPACE) {
                     event.stopPropagation();
@@ -198,7 +200,7 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
 
     public onClick(event: Event) {
         event.stopPropagation();
-        this.eventBusService.getEventStream("document-click").next(event);
+        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT}).next(event);
     }
 
     public onChange(value: any) {}

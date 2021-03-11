@@ -5,12 +5,8 @@
     "baseUrl": "./",
     "types": [
       "jasmine",
-      "node",
-      "highlight.js"
+      "node"
     ],
-    "paths": {
-        "highlight.js": ["../node_modules/highlight.js/lib/highlight.js"] // to ensure we load highlight without languages
-    }
   },
   "files": [
     "test.ts",

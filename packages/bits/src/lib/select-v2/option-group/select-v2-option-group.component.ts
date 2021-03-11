@@ -1,4 +1,14 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChildren, forwardRef, HostBinding, Inject, OnDestroy, Optional, QueryList } from "@angular/core";
+import {
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    Component, ContentChildren,
+    forwardRef,
+    HostBinding,
+    Inject,
+    OnDestroy,
+    Optional,
+    QueryList
+} from "@angular/core";
 import every from "lodash/every";
 import { merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -10,6 +20,7 @@ import { IOptionedComponent } from "../types";
 
 /**
  * @ignore
+ * Will be renamed in scope of the NUI-5797
  */
 @Component({
     selector: "nui-select-v2-option-group",

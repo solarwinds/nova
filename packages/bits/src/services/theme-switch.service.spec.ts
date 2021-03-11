@@ -12,7 +12,7 @@ class FakeComponent {
     constructor(private zone: NgZone, private router: Router) { }
 
     public navigate(commands: any[]) {
-        this.zone.run(() => this.router.navigate(commands));
+        this.zone.run(async () => this.router.navigate(commands));
     }
 }
 

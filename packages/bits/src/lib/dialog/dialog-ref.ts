@@ -1,4 +1,4 @@
-import { ComponentRef, EventEmitter, Output } from "@angular/core";
+import { ComponentRef, EventEmitter } from "@angular/core";
 import noop from "lodash/noop";
 
 import {ContentRef} from "../../services/content-ref";
@@ -18,8 +18,8 @@ export class NuiDialogRef {
         }
     }
 
-    @Output() public closed$ = new EventEmitter();
-    @Output() public beforeDismissed$ = new EventEmitter();
+    public closed$ = new EventEmitter();
+    public beforeDismissed$ = new EventEmitter();
 
     result: Promise<any>;
 
@@ -82,7 +82,7 @@ export class NuiDialogRef {
         this.contentRef = undefined;
     }
 }
-/**@ignore*/
+/** @ignore */
 export class NuiActiveDialog {
     close(result?: any): void { noop(); }
     dismiss(reason?: any): void { noop(); }

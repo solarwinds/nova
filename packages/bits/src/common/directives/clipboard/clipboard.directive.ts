@@ -19,12 +19,12 @@ import { LoggerService } from "../../../services/log-service";
     selector: "[nuiClipboard]",
 })
 export class ClipboardDirective implements OnInit {
-    // tslint:disable:no-input-rename
+    /* eslint-disable @angular-eslint/no-input-rename */
     /**
      * Text to be copied to the clipboard
      */
     @Input("nuiClipboard") public textToCopy: string;
-    // tslint:enable:no-input-rename
+    /* eslint-enable @angular-eslint/no-input-rename */
 
     /**
      * Event that is fired when text was copied to the clipboard successfully

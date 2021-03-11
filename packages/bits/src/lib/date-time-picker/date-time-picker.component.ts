@@ -41,11 +41,11 @@ import {NuiFormFieldControl} from "../form-field/public-api";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlValueAccessor {
-    /** latest available date*/
+    /** latest available date */
     @Input() maxDate: Moment;
-    /** earliest available date*/
+    /** earliest available date */
     @Input() minDate: Moment;
-    /** sets mode of showing date-time-picker*/
+    /** sets mode of showing date-time-picker */
     @Input() displayMode: string;
 
     @Input() isDisabled: boolean;
@@ -73,11 +73,11 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
     }
 
     @ViewChild("nuiDatetimePicker", {static: true}) public codeElement: ElementRef;
-    /** Callback to invoke on model change*/
+    /** Callback to invoke on model change */
     @Output()
     modelChanged: EventEmitter<Moment> = new EventEmitter<Moment>();
 
-    /** model of picker*/
+    /** model of picker */
     @Input()
     get model(): Moment | undefined {
         return this._model;

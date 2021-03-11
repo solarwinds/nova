@@ -1,5 +1,5 @@
 import { NgZone, SimpleChange, SimpleChanges } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
 import { defaultPalette } from "@nova-ui/charts";
 import { Subject } from "rxjs";
@@ -46,7 +46,7 @@ describe("ProportionalWidgetComponent", () => {
         spyOn(ngZone, "runOutsideAngular").and.callFake((fn: Function) => fn());
     });
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [

@@ -1,7 +1,7 @@
 import { Directionality } from "@angular/cdk/bidi";
 import { Platform } from "@angular/cdk/platform";
 import { CdkVirtualForOf } from "@angular/cdk/scrolling";
-import { CdkTable } from "@angular/cdk/table";
+import { CdkTable, CDK_TABLE_TEMPLATE } from "@angular/cdk/table";
 import { DOCUMENT } from "@angular/common";
 import {
     AfterContentInit,
@@ -42,7 +42,9 @@ interface TableRowData {
 /** @dynamic */
 @Component({
     selector: "nui-table, table[nui-table]",
-    templateUrl: "./table.component.html",
+    // We used to have our own template for the table but it broke with Angular release 10 so we are now using this even though it is intended to be private
+    // so we can be up to date with the CDK table template.
+    template: CDK_TABLE_TEMPLATE,
     exportAs: "nuiTable",
     host: {
         "class": "nui-table__table",
@@ -59,16 +61,20 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
     @Input() resizable = false;
     @Input() selectable = false;
     @Input() totalItems: number;
-    @Input() dataSource: T[];
+
+    @Input()
+    get dataSource(): T[] {
+        return super.dataSource as any;
+    }
+    set dataSource(value: T[]) {
+        super.dataSource = value as any;
+    }
+
     @Input() selection: ISelection;
     @Input() sortedColumn: ISortedItem;
 
     @Output() columnsOrderChange: EventEmitter<Array<any>> = new EventEmitter();
     @Output() sortOrderChanged: EventEmitter<ISortedItem> = new EventEmitter();
-
-    /** @deprecated Use selectionChanged instead of rowsSelected */
-    @Output() rowsSelected: EventEmitter<ISelection> = new EventEmitter();
-    /** Use selectionChanged instead of rowsSelected */
     @Output() selectionChange: EventEmitter<ISelection> = new EventEmitter();
 
     public sortDirection: SorterDirection;
@@ -201,7 +207,6 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
         // if we try to manually trigger change detection in a parent component
         if (this.selectable) {
             this.selectionChangedSubscription = this.tableStateHandlerService.selectionChanged.subscribe((selection: ISelection) => {
-                this.rowsSelected.emit(selection); // tslint:disable-line:deprecation
                 this.selectionChange.emit(selection);
             });
 

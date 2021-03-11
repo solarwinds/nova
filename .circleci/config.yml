@@ -1,4 +1,7 @@
 version: 2.1
+orbs:
+    snyk: snyk/snyk@0.0.12
+
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -7,6 +10,7 @@ jobs:
         environment:
             PROJECT_DIR: ./packages/bits
             BUILD_COUNTER: << pipeline.number >>
+        resource_class: medium+
         steps:
             -   checkout:
                     path: ~/nova
@@ -426,7 +430,7 @@ jobs:
             SOURCE_BRANCH: main
             # TODO: Change to false
             CREATE_RELEASE_BRANCH: true
-            RELEASE_BRANCH: release/v9.x
+            RELEASE_BRANCH: release/v11.x
             INCREMENT_TYPE: minor
         steps:
             -   checkout:
@@ -469,6 +473,25 @@ jobs:
             -   run:
                     name: Trigger release branch
                     command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
+    snyk-test:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12-browsers
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Install node_modules
+                    command: npm install -q  
+            - run:
+                    name: snyk auth
+                    command: npm run snyk-auth
+            - run:
+                    name: snyk monitor
+                    command: npm run snyk-monitor
+            - run:
+                    name: snyk test
+                    command: npm run snyk-test
 workflows:
     version: 2.1
     nova:
@@ -497,6 +520,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   bits-a11y-test:
                     requires:
                         - bits-build
@@ -513,6 +537,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
             -   charts-build:
                     requires:
                         - bits-pack
@@ -532,6 +557,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -545,6 +571,7 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
             -   dashboards-build:
                     requires:
                         - charts-pack
@@ -569,6 +596,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - next
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
@@ -582,6 +610,12 @@ workflows:
                             only:
                                 - main
                                 - /release\/.*/
+                                - next
+            # Waiting on dashboards build before running scan because it's currently the last package to be built.
+            -   snyk-test:
+                    requires:
+                        - dashboards-build
+
     nova-release:
         jobs:
             -   release-approval:

@@ -1,16 +1,16 @@
-/**@ignore*/
+/** @ignore */
 export enum ResizeDirection {
     left = "left",
     right = "right",
     top = "top",
     bottom = "bottom",
 }
-/**@ignore*/
+/** @ignore */
 export enum ResizeUnit {
     percent = "%",
     pixel = "px",
 }
-/**@ignore*/
+/** @ignore */
 export interface IResizeProperties {
     appendDirection: "left" | "right" | "top" | "bottom";
     borderToCalculate: "left" | "right" | "top" | "bottom";
@@ -19,7 +19,7 @@ export interface IResizeProperties {
     otherSizeProperty: "width" | "height";
     nativeElementSizeProperty: "offsetHeight" | "offsetWidth";
 }
-/**@ignore*/
+/** @ignore */
 export const resizeDirectionHelpers: { [key: string]: IResizeProperties } = {
     right: {
         appendDirection: "left",

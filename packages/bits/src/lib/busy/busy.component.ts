@@ -8,7 +8,7 @@ import { SpinnerComponent } from "../spinner/spinner.component";
  * <example-url>./../examples/index.html#/busy</example-url>
  */
 
-/* tslint:disable:component-selector */
+/* eslint-disable @angular-eslint/component-selector */
 @Component({
     selector: "[nui-busy]",
     templateUrl: "./busy.component.html",
@@ -16,7 +16,7 @@ import { SpinnerComponent } from "../spinner/spinner.component";
     providers: [TabNavigationService],
     encapsulation: ViewEncapsulation.None,
 })
-/* tslint:enable:component-selector */
+/* eslint-enable @angular-eslint/component-selector */
 export class BusyComponent implements AfterContentInit, OnChanges {
     public isDefaultTemplate = false;
     public isSpinnerTemplate = false;

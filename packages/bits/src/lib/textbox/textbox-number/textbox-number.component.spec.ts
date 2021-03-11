@@ -22,7 +22,7 @@ describe("components >", () => {
             writable: true,
             configurable: true,
             value: {
-                getData: () => {},
+                getData: () => "test",
             },
         });
 

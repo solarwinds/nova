@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, SimpleChange } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../dashboards.module";
@@ -44,7 +44,7 @@ describe("BaseLayout", () => {
         },
     };
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         eventBus = new EventBus();
         dynamicComponentCreator = new DynamicComponentCreator();
         pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);

@@ -1,0 +1,384 @@
+{
+    "root": true,
+    "ignorePatterns": [
+        "projects/**/*"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.ts"
+            ],
+            "extends": [
+                "plugin:@angular-eslint/recommended",
+                "eslint:recommended",
+                "plugin:@typescript-eslint/recommended",
+                "plugin:@typescript-eslint/recommended-requiring-type-checking",
+                "plugin:import/errors",
+                "plugin:import/warnings",
+                "plugin:import/typescript",
+                "plugin:@angular-eslint/template/process-inline-templates"
+            ],
+            "plugins": [
+                "prefer-arrow"
+            ],
+            "rules": {
+                /****************************** 
+                * Angular-specific rules
+                *******************************/
+                // TODO: Review the viability and impact of enabling this rule
+                "@angular-eslint/no-empty-lifecycle-method": "off",
+                // TODO: Review the viability and impact of enabling this rule
+                "@angular-eslint/component-selector": [
+                    "off",
+                    {
+                        "type": "element",
+                        "prefix": "nui",
+                        "style": "kebab-case"
+                    }
+                ],
+                // TODO: Review the viability and impact of enabling this rule
+                "@angular-eslint/directive-class-suffix": "off",
+                // TODO: Review the viability and impact of enabling this rule
+                "@angular-eslint/directive-selector": [
+                    "off",
+                    {
+                        "type": "attribute",
+                        "prefix": "nui",
+                        "style": "camelCase"
+                    }
+                ],
+                // TODO: Review the viability and impact of enabling this rule
+                "@angular-eslint/no-host-metadata-property": "off",
+
+                /******************************
+                * Typescript-specific rules
+                *******************************/
+                "@typescript-eslint/await-thenable": "error",
+                "@typescript-eslint/consistent-type-definitions": "error",
+                "@typescript-eslint/no-inferrable-types": "off",
+                // TODO: review - NUI-5901
+                "@typescript-eslint/promise-function-async": "off",
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-empty-function.md
+                "no-empty-function": "off",
+                "@typescript-eslint/no-empty-function": [
+                    "error",
+                    {
+                        "allow": [
+                            "private-constructors",
+                            "protected-constructors",
+                            "decoratedFunctions",
+                            "methods",
+                            "constructors",
+                            "functions",
+                            "arrowFunctions",
+                            "asyncFunctions",
+                            "asyncMethods"
+                        ]
+                    }
+                ],
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/dot-notation.md
+                // TODO: resolve all the warnings for the following rule in the scope of NUI-5900
+                "no-unused-vars": "off",
+                "@typescript-eslint/no-unused-vars": [
+                    "warn",
+                    {
+                        "args": "none",
+                        "ignoreRestSiblings": true
+                    }
+                ],
+                "@typescript-eslint/restrict-template-expressions": "off",
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/no-unsafe-assignment": "off",
+                "@typescript-eslint/no-unsafe-return": "off", 
+                "@typescript-eslint/no-unsafe-member-access": "off",
+                "@typescript-eslint/no-unsafe-call": "off",
+                // Must disable the base rule as it can report incorrect errors
+                // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-expressions.md
+                "no-unused-expressions": "off",
+                "@typescript-eslint/no-unused-expressions": [
+                    "error",
+                    {
+                        "allowTernary": true
+                    }
+                ],
+                "@typescript-eslint/ban-types": "off",
+                "@typescript-eslint/ban-ts-comment": "off",
+                // TODO: review - we should always specify return types of functions - NUI-5901
+                "@typescript-eslint/explicit-module-boundary-types": [
+                    "off",
+                    {
+                        "allowArgumentsExplicitlyTypedAsAny": true,
+                        "allowTypedFunctionExpressions": false
+                    }
+                ],
+                "@typescript-eslint/no-type-alias": [
+                    "error",
+                    {
+                        "allowAliases": "always",
+                        "allowConditionalTypes": "always",
+                        "allowMappedTypes": "always",
+                        "allowCallbacks": "always",
+                        "allowLiterals": "never"
+                    }
+                ],
+                "@typescript-eslint/no-empty-interface": "error",
+                "@typescript-eslint/no-floating-promises": "off",
+                "@typescript-eslint/no-misused-promises": "off",
+                "@typescript-eslint/no-this-alias": "off",
+                "@typescript-eslint/no-var-requires": "off",
+                "@typescript-eslint/prefer-regexp-exec": "off",
+                "@typescript-eslint/unbound-method": "off",
+                "@typescript-eslint/member-ordering": [
+                    "error",
+                    {
+                        "default": [
+                            "static-field",
+                            "static-method",
+                            "instance-field",
+                            "instance-method"
+                        ]
+                    }
+                ],
+                "@typescript-eslint/unified-signatures": "error",
+                "@typescript-eslint/type-annotation-spacing": "error",
+                "@typescript-eslint/restrict-plus-operands": "off",
+
+                "require-await": "off",
+                "@typescript-eslint/require-await": "off",
+                "@typescript-eslint/no-unnecessary-type-assertion": "off",
+                "@typescript-eslint/triple-slash-reference": "off",
+                // Substitutes the 'callable-types' tslint rule
+                "@typescript-eslint/prefer-function-type": "error",
+
+                // "semi": "off",
+                // "@typescript-eslint/semi": ["error"],
+                // TODO: review and consider enabling - NUI-5901
+                "@typescript-eslint/member-delimiter-style": [
+                    "off",
+                    {
+                        "multiline": {
+                            "delimiter": "semi",
+                            "requireLast": true
+                        },
+                        "singleline": {
+                            "delimiter": "comma",
+                            "requireLast": false
+                        }
+                    }
+                ],
+                // Substitutes the 'class-name' tslint rule.
+                // TODO: Review - NEEDS TO BE CONFIGURED! - NUI-5901
+                // "@typescript-eslint/naming-convention": [
+                //     "error",
+                //     {
+                //       "selector": "variable",
+                //       "format": ["camelCase", "UPPER_CASE"]
+                //     }
+                //   ],
+
+                /******************************
+                * ESLint rules
+                *******************************/
+                // Substitutes the 'arrow-return-shorthand' tslint rule
+                "arrow-body-style": [
+                    "error",
+                    "as-needed"
+                ],
+                "brace-style": [
+                    "error",
+                    "1tbs",
+                    {
+                        "allowSingleLine": true
+                    }
+                ],
+                "comma-dangle": [
+                    "error",
+                    {
+                        "objects": "always-multiline",
+                        "arrays": "always-multiline",
+                        "functions": "never",
+                        // TODO: Consider enabling the rules for the imports and exports - NUI-5901
+                        "imports": "ignore",
+                        "exports": "ignore"
+                    }
+                ],
+                "curly": "error",
+                "guard-for-in": "error",
+                "eol-last": "error",
+                "eqeqeq": [
+                    "error",
+                    "smart"
+                ],
+                "import/export": "off",
+                // Substitutes the 'deprecation' tslint rule
+                "import/no-deprecated": "warn",
+                "import/no-duplicates": "off",
+                "import/no-named-as-default-member": "off",
+                "import/no-named-as-default": "off",
+                // TODO: review - NUI-5901
+                "import/order": [
+                    "off",
+                    {
+                        "newlines-between": "always"
+                    }
+                ],
+                // TODO: review - NUI-5901
+                "indent": [
+                    "off",
+                    4,
+                    {
+                        "SwitchCase": 1,
+                        "FunctionDeclaration": {
+                            "parameters": "first"
+                        },
+                        "FunctionExpression": {
+                            "parameters": "first"
+                        },
+                        "CallExpression": {
+                            "arguments": "first"
+                        },
+                        "VariableDeclarator": "first",
+                        "ArrayExpression": "first",
+                        "ObjectExpression": 1,
+                        "ImportDeclaration": 1,
+                        "MemberExpression": 1
+                    }
+                ],
+                "max-len": [
+                    "error",
+                    {
+                        "code": 160
+                    }
+                ],
+                "no-bitwise": "error",
+                "no-caller": "error",
+                "no-fallthrough": "error",
+                "no-eval": "error",
+                "no-console": [
+                    "error",
+                    {
+                        "allow": [
+                            "log",
+                            "warn",
+                            "dir",
+                            "timeLog",
+                            "assert",
+                            "clear",
+                            "count",
+                            "countReset",
+                            "group",
+                            "groupEnd",
+                            "table",
+                            "dirxml",
+                            "error",
+                            "groupCollapsed",
+                            "Console",
+                            "profile",
+                            "profileEnd",
+                            "timeStamp",
+                            "context"
+                        ]
+                    }
+                ],
+                "no-empty": [
+                    "error",
+                    {
+                        "allowEmptyCatch": true
+                    }
+                ],
+                "no-new-wrappers": "error",
+                "no-redeclare": "error",
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "paths": [
+                            "lodash",
+                            "moment"
+                        ]
+                    }
+                ],
+                "no-trailing-spaces": [
+                    "error",
+                    {
+                        "skipBlankLines": true
+                    }
+                ],
+                "no-prototype-builtins": "off",
+                //TODO: review - NUI-5901
+                "no-shadow": [
+                    "off"
+                    // {
+                    //     "hoist": "all"
+                    // }
+                ],
+                "no-throw-literal": "error",
+                "no-var": "error",
+                "id-denylist": [
+                    "error",
+                    "any",
+                    "string",
+                    "boolean",
+                    "undefined"
+                ],
+                "id-match": "error",
+                "no-undef-init": "error",
+                "no-underscore-dangle": "off",
+                "no-useless-escape": "off",
+                //TODO: review - NUI-5901
+                "prefer-arrow/prefer-arrow-functions": [
+                    "off",
+                    {
+                        "allowStandaloneDeclarations": true,
+                        "singleReturnOnly": true
+                    }
+                ],
+                // TODO: review - NUI-5901
+                "prefer-const": [
+                    "off",
+                    {
+                        "ignoreReadBeforeAssign": true
+                    }
+                ],
+                "quotes": [
+                    "error",
+                    "double",
+                    {
+                        "allowTemplateLiterals": true
+                    }
+                ],
+                "radix": "error",
+                "sort-imports": "off",
+                // Substitutes the 'comment-format' tslint rule
+                "spaced-comment": [
+                    "error",
+                    "always",
+                    {
+                        "line": {
+                            "markers": [
+                                "/"
+                            ]
+                        },
+                        "block": {
+                            "markers": [
+                                "/"
+                            ],
+                            "exceptions": ["*"],
+                            "balanced": true
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "files": [
+                "*.html"
+            ],
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
+            ],
+            "rules": {}
+        }
+    ]
+}

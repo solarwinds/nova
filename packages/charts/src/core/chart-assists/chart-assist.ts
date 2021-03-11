@@ -182,14 +182,6 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
         this.chartAssistSubject.next({ type: ChartAssistEventType.EmphasizeSeries, payload: { seriesId } });
     }
 
-    /**
-     * @deprecated use resetVisibleSeries instead
-     * TODO: Remove in V10
-     */
-    public deemphasizeSeries(): void {
-        this.resetVisibleSeries();
-    }
-
     public isSeriesHidden(seriesId: string): boolean {
         return this.legendInteractionAssist.isSeriesHidden(seriesId);
     }

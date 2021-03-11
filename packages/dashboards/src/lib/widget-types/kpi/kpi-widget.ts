@@ -10,7 +10,7 @@ import {
     NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER
 } from "../../services/types";
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
-import { WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING, widgetBodyContentNodes } from "../common/widget/components";
+import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";
 import { EVENT_PROXY, refresher } from "../common/widget/providers";
 
 export const kpiWidget = {

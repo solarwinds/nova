@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
 import { EventBus, IEvent, LoggerService, NuiBusyModule, NuiButtonModule, NuiIconModule, NuiSpinnerModule } from "@nova-ui/bits";
@@ -44,7 +44,7 @@ describe("WidgetEditorComponent", () => {
     let fixture: ComponentFixture<WidgetEditorComponent>;
     let previewService: PreviewService;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         previewService = new PreviewService();
 
         TestBed.configureTestingModule({

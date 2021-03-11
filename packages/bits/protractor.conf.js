@@ -41,7 +41,7 @@ exports.config = {
             project: require('path').join(__dirname, './spec/tsconfig.atom.json')
         });
 
-        jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+        jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: "pretty" } }));
 
         if (process.env.TEAMCITY_VERSION) {
             jasmine.getEnv().addReporter(new TeamCityReporter())

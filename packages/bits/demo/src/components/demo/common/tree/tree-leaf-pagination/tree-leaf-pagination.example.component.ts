@@ -63,7 +63,7 @@ export class TreeLeafPaginationExampleComponent {
 
     /** Load first page on first open */
     public onToggleClick(node: FoodNode, nestedNode: CdkNestedTreeNode<any>) {
-        this.eventBusService.getEventStream("document-click").next(new MouseEvent("click"));
+        this.eventBusService.getStream({id: "document-click"}).next(new MouseEvent("click"));
 
         if (node.hasPagination && node.children && !node.children.length) {
             const paginatorOptions = {

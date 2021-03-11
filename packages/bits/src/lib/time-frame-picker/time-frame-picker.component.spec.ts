@@ -4,7 +4,7 @@ import { By } from "@angular/platform-browser";
 import moment from "moment/moment";
 
 import { NuiCommonModule } from "../../common/common.module";
-import { NuiDateTimerPickerModule } from "../date-time-picker/date-time-picker.module";
+import { NuiDateTimePickerModule } from "../date-time-picker/date-time-picker.module";
 import { NuiMenuModule } from "../menu/menu.module";
 
 import { ITimeframe, ITimeFramePreset } from "./public-api";
@@ -24,7 +24,7 @@ describe("components >", () => {
                 imports: [
                     NuiCommonModule,
                     NuiMenuModule,
-                    NuiDateTimerPickerModule,
+                    NuiDateTimePickerModule,
                 ],
                 declarations: [
                     QuickPickerComponent,

@@ -41,10 +41,10 @@ describe("Visual tests: Timeframe Picker", () => {
         await quickpickerWithTimeramePicker.hoverPresetByTitle("Last 24 hours");
         await eyes.checkWindow("Default time frame picker view");
 
-        await timeFramePicker.getStartDatetimePicker().getDatePicker().clickCalendarIcon();
+        await timeFramePicker.getStartDatetimePicker().getDatePicker().toggle();
         await eyes.checkWindow("With date picker opened");
 
-        await timeFramePicker.getStartDatetimePicker().getDatePicker().clickCalendarIcon();
+        await timeFramePicker.getStartDatetimePicker().getDatePicker().toggle();
         await timeFramePicker.getEndDatetimePicker().getTimePicker().icon.getElement().click();
         await eyes.checkWindow("With time picker opened");
 

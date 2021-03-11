@@ -5,6 +5,7 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     ContentChildren,
+    Directive,
     ElementRef,
     EventEmitter,
     forwardRef,
@@ -30,8 +31,7 @@ import { delay, takeUntil, tap } from "rxjs/operators";
 import { OVERLAY_ITEM, OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
-import { OverlayContainerType } from "../overlay/types";
-import { IOption, OptionValueType } from "../overlay/types";
+import { IOption, OptionValueType, OverlayContainerType } from "../overlay/types";
 
 import { OptionKeyControlService } from "./option-key-control.service";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
@@ -41,9 +41,11 @@ const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
 };
 
+// Will be renamed in scope of the NUI-5797
+@Directive()
 export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, ControlValueAccessor, IOptionedComponent, OnDestroy, OnChanges {
 
-    /** Value used as a placeholder for the select.*/
+    /** Value used as a placeholder for the select. */
     @Input() public placeholder: string = "";
 
     /** Sets margin in px for the Dropdown relatively the container where the Dropdown appended to */
@@ -81,7 +83,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     @HostBinding("class.disabled")
     @Input() public isDisabled = false;
 
-    /** Input to apply error state styles*/
+    /** Input to apply error state styles */
     @HostBinding("class.has-error")
     @Input() public isInErrorState: boolean;
 

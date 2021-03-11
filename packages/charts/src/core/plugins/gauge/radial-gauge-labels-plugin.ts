@@ -12,7 +12,7 @@ import { ChartPlugin } from "../../common/chart-plugin";
 import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../../common/types";
 import { IAllAround } from "../../grid/types";
 
-import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_LABELS_CONTAINER_CLASS, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
+import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
 
 /**
  * @ignore

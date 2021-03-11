@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 
 import { SwitchComponent } from "../../switch/switch.component";
@@ -9,7 +9,7 @@ describe("ThemeSwitcherComponent", () => {
   let component: ThemeSwitcherComponent;
   let fixture: ComponentFixture<ThemeSwitcherComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         SwitchComponent,

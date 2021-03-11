@@ -1,7 +1,7 @@
 import { ListRange } from "@angular/cdk/collections";
 import { Injectable } from "@angular/core";
-import { DataSourceFeatures, DataSourceService, IDataSource, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
-import { IDataField, WellKnownDataSourceFeatures } from "@nova-ui/dashboards";
+import { DataSourceFeatures, DataSourceService, IDataField, IDataSource, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
+import { WellKnownDataSourceFeatures } from "@nova-ui/dashboards";
 import isEqual from "lodash/isEqual";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject } from "rxjs";

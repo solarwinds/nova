@@ -30,14 +30,14 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
 
     public model: ITimeframe;
 
-    /** callback to be invoked on model change*/
+    /** callback to be invoked on model change */
     @Output() public changed = new EventEmitter<ITimeframe>();
 
     public isFocused: boolean;
     public modelDefault: any;
 
     public distanceToEndDate: number; // to keep distance between start and end-date
-
+    
     constructor(private timeFrameService: TimeframeService, public changeDetector: ChangeDetectorRef) {}
 
     ngOnChanges(changes: any): void {

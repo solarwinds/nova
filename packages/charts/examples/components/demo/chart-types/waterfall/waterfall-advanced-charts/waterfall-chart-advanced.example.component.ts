@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import {
+    ConnectionPositionPair,
     OriginConnectionPosition,
     Overlay,
     OverlayConnectionPosition,
@@ -25,8 +26,8 @@ import {
     BarRenderer,
     BarStatusGridConfig,
     Chart,
-    CHART_PALETTE_CS1,
     ChartPalette,
+    CHART_PALETTE_CS1,
     HorizontalBarAccessors,
     ISetDomainEventPayload,
     LinearScale,
@@ -107,21 +108,27 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
         // Here you configure the template portal and overlay
 
         this.templatePortal = new TemplatePortal(this.templatePortalGrid, this._viewContainerRef);
-        const originPosition: OriginConnectionPosition = {
-            originX: "start",
-            originY: "top",
-        };
-        const overlayPosition: OverlayConnectionPosition = {
-            overlayX: "start",
-            overlayY: "top",
-        };
+        const positions: ConnectionPositionPair[] =
+            [
+                {
+                    originX: "start",
+                    originY: "top",
+                    overlayX: "start",
+                    overlayY: "top",
+                    },
+                {
+                    originX: "start",
+                    originY: "top",
+                    overlayX: "start",
+                    overlayY: "top",
+                },
+            ];
 
-        // It is common to use 'flexibleConnectedTo()' position strategy, however it not applicable for this case, because
-        // the overlay would stay within the viewport on page load. What we needed here is to have the overlay connected solidly
-        // to the chart, even if the chart initially is out of the viewport on page load.
-        this.positionStrategy = this.overlayPositionBuilder
-            .connectedTo(this.gridChartPlaceholder, originPosition, overlayPosition)
-            .withLockedPosition(true);
+        this.positionStrategy = this.overlay.position()
+            .flexibleConnectedTo(this.gridChartPlaceholder)
+            .withPositions(positions)
+            .withPush(false);
+
         this.overlayRef = this.overlay.create({
             positionStrategy: this.positionStrategy,
             scrollStrategy: this.scrollStrategyOptions.reposition(),

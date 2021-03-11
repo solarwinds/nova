@@ -3,11 +3,11 @@ import { Injectable } from "@angular/core";
 import { icons } from "./icons";
 import { IconCategoryNamespace, IconData } from "./public-api";
 
-/**@ignore*/
+/** @ignore */
 interface IStatus {
     [key: string]: string;
 }
-/**@ignore*/
+/** @ignore */
 interface IName {
     [key: string]: IconData;
 }

@@ -37,7 +37,7 @@ export class LoggerService {
      */
     get debug() {
         if (this.logLevel === LogLevel.debug) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             return console.debug.bind(console);
         }
         return noop;
@@ -51,7 +51,7 @@ export class LoggerService {
     get info() {
         if (this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info) {
-            // tslint:disable-next-line:no-console
+            // eslint-disable-next-line no-console
             return console.info.bind(console);
         }
         return noop;

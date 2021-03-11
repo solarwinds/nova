@@ -1,9 +1,11 @@
 import { ChangeDetectorRef } from "@angular/core";
-import createSpy = jasmine.createSpy;
-import Spy = jasmine.Spy;
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SwitchComponent } from "./switch.component";
+
+import createSpy = jasmine.createSpy;
+import Spy = jasmine.Spy;
+
 
 describe("components >", () => {
     describe("switch >", () => {

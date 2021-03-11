@@ -14,7 +14,7 @@ import { TableColumnDefDirective } from "./table-column-def.directive";
  */
 
 @Directive({
-    // tslint:disable-next-line
+    // eslint-disable-next-line
     selector: "nui-cell, td[nui-cell]",
     host: {
         "role": "gridcell",

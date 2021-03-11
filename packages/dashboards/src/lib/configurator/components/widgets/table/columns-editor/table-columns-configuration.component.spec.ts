@@ -1,5 +1,5 @@
 import { SimpleChanges } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { DataSourceFeatures, EventBus } from "@nova-ui/bits";
 
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
@@ -16,7 +16,7 @@ describe("TableColumnsConfigurationComponent", () => {
     let fixture: ComponentFixture<TableColumnsConfigurationComponent>;
     let eventBus: EventBus<any>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         eventBus = new EventBus<any>();
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],

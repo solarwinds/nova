@@ -58,7 +58,7 @@ export abstract class ServerSideDataSource<T, F extends IFilters = IFilters, D =
         this.applyFilters$.next(this.getFilters() as F);
     }
 
-    public async abstract getFilteredData(data: D): Promise<IFilteringOutputs>;
+    public abstract getFilteredData(data: D): Promise<IFilteringOutputs>;
 
     protected abstract getBackendData(filters: F): Observable<D>;
 }

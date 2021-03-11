@@ -3,7 +3,7 @@ import { ConnectionPositionPair, Overlay, OverlayPositionBuilder, PositionStrate
 import { TemplatePortal } from "@angular/cdk/portal";
 import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from "@angular/core";
 import {
-    BandScale, BarRenderer, BarStatusGridConfig, Chart, CHART_PALETTE_CS1, ChartPalette, HIGHLIGHT_DATA_POINT_EVENT, HorizontalBarAccessors,
+    BandScale, BarRenderer, BarStatusGridConfig, Chart, ChartPalette, CHART_PALETTE_CS1, HIGHLIGHT_DATA_POINT_EVENT, HorizontalBarAccessors,
     ISetDomainEventPayload, LinearScale, MappedValueProvider, NoopAccessors, NoopRenderer, SELECT_DATA_POINT_EVENT, SET_DOMAIN_EVENT, XYGrid, XYGridConfig,
     ZoomPlugin
 } from "@nova-ui/charts";

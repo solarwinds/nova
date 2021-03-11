@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 
 /**
+ * TODO: Remove in  - NUI-5835
  * @deprecated
  */
 @Component({

@@ -4,7 +4,7 @@ import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { DASHBOARD_EDIT_MODE } from "../../../services/types";
-import { PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../types";
+import { PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../types";
 import { BaseLayout } from "../../layouts/base-layout";
 
 @Component({

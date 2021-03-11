@@ -4,8 +4,8 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { DataSourceService, EventBus, IEvent, IFilteringOutputs, LoggerService } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
-    DATA_SOURCE,
     DataSourceConfigurationV2Component,
+    DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
     IConfigurable,
     IDashboard,
@@ -17,8 +17,8 @@ import {
     IWidgets,
     KpiComponent,
     NOVA_KPI_DATASOURCE_ADAPTER,
-    PIZZAGNA_EVENT_BUS,
     PizzagnaLayer,
+    PIZZAGNA_EVENT_BUS,
     ProviderRegistryService,
     WellKnownPathKey,
     WellKnownProviders,

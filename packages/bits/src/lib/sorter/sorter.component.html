@@ -1,8 +1,7 @@
 <div>
-    <label *ngIf="caption"
-           class="nui-sorter__label">{{caption}}</label>
-    <nui-popup [appendToBody]="appendToBody" [width]="popupWidth" [overlayConfig]="overlayConfig" [isHostToggleRef]="true">
-        <div class="btn-group nui-sorter__popup">
+    <label *ngIf="caption" class="nui-sorter__label">{{caption}}</label>
+    <div class="btn-group nui-sorter__popup">
+        <div class="d-inline-block" #toggleRef>
             <button nui-button
                     type="button"
                     class="nui-sorter__toggle-button"
@@ -12,15 +11,19 @@
             </button>
             <button nui-button
                     type="button"
-                    nuiPopupToggle
                     class="nui-selector__toggle"
-                    (click)="toggleSorter()"
+                    (click)="overlay.toggle()"
                     icon="caret-down">
             </button>
         </div>
+    </div>
 
-        <div popupAreaContent>
-            <nui-menu-popup [itemsSource]="items" (menuItemClicked)="select($event)"></nui-menu-popup>
-        </div>
-    </nui-popup>
+    <div #popupArea></div>
+
+    <nui-overlay #overlay
+                 [toggleReference]="toggleRef"
+                 [overlayConfig]="overlayConfig"
+                 [customContainer]="customContainer">
+        <nui-menu-popup [itemsSource]="items" (menuItemClicked)="select($event)"></nui-menu-popup>
+    </nui-overlay>
 </div>

@@ -31,7 +31,13 @@ export class WizardVerticalComponent extends WizardDirective {
     static ngAcceptInputTypeCompleted: BooleanInput = undefined;
     static ngAcceptInputTypeHasError: BooleanInput = undefined;
 
-    @Input() selectedIndex: number;
+    public get selectedIndex(): number {
+        return super.selectedIndex;
+    }
+    @Input()
+    public set selectedIndex(value: number) {
+        super.selectedIndex = value;
+    }
 
     constructor(
         @Optional() dir: Directionality,

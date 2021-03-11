@@ -1,0 +1,40 @@
+<ng-container [formGroup]="form">
+    <nui-widget-editor-accordion [state]="form | nuiWidgetEditorAccordionFormState | async">
+        <div accordionHeader
+             class="d-flex align-items-center px-4 py-2">
+            <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'customize' | async"></nui-icon>
+            <div class="d-flex flex-column ml-4 pt-1">
+                <span class="nui-text-label" i18n>Property and formatting</span>
+                <div class="nui-text-secondary" [title]="subtitleText">
+                    {{subtitleText}}
+                </div>
+            </div>
+        </div>
+        <div class="presentation-configuration__accordion-content">
+            <div class="mb-4">
+                <nui-form-field caption="Format" i18n-caption
+                                [control]="form.controls['componentType']">
+                    <nui-select-v2 placeholder="Select Format" i18n-placeholder
+                                formControlName="componentType">
+                        <nui-select-v2-option *ngFor="let formatter of formatters"
+                                            [displayValueContext]="formatter.label"
+                                            [value]="formatter.componentType">
+                            {{formatter.label}}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                </nui-form-field>
+            </div>
+            <ng-container *ngIf="formatterConfigurator"
+                          nuiComponentPortal
+                          componentId="formatterConfigurator"
+                          [componentType]="formatterConfigurator"
+                          [properties]="formatterConfiguratorProps"
+                          [outputs]="['formReady']"
+                          (output)="onFormReady($event.payload)"
+                          #componentPortal="nuiComponentPortal">
+                <ng-template [cdkPortalOutlet]="componentPortal.portal"
+                             (attached)="componentPortal.attached($event)"></ng-template>
+            </ng-container>
+        </div>
+    </nui-widget-editor-accordion>
+</ng-container>

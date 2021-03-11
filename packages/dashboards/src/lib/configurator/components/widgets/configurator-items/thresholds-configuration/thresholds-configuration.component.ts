@@ -35,8 +35,12 @@ export class ThresholdsConfigurationComponent implements OnInit, OnDestroy, OnCh
             displayValue: $localize`Set custom thresholds for this widget`,
         },
     ];
-    // this value is added because of the setTimeout in RadioButtonComponent which will be removed in v10 - NUI-4843.
-    // when setTimeout is removed this hack can be removed as well
+
+    /**
+     * this value is added because of the setTimeout in RadioButtonComponent which will be removed in v10 - NUI-4843.
+     * when setTimeout is removed this hack can be removed as well
+     * @deprecated - remove in scope of NUI-4843
+     * */
     public radioButtonGroupValue: boolean;
 
     public form: FormGroup;

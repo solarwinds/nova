@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 import {
     NuiExpanderModule,
@@ -22,7 +22,7 @@ describe("RefresherConfigurationComponent", () => {
     let component: RefresherConfigurationComponent;
     let fixture: ComponentFixture<RefresherConfigurationComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [
                 RefresherConfigurationComponent,

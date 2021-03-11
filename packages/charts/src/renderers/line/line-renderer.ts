@@ -18,12 +18,6 @@ import { ILineAccessors } from "./line-accessors";
  * Renderer that is able to draw line chart
  */
 export class LineRenderer extends XYRenderer<ILineAccessors> {
-
-    /** @deprecated As of Nova v9, use getStrokeStyleDashed method instead. Removal: NUI-5753 */
-    public static STROKE_STYLE_DASHED = "2,2";
-    /** @deprecated As of Nova v9, use getStrokeStyleDotted method instead. Removal: NUI-5753 */
-    public static STROKE_STYLE_DOTTED = "1,1";
-    /** @deprecated As of Nova v9, use RenderLayerName.unclippedData enum value instead. Removal: NUI-5753 */
     public static UNCLIPPED_DATA_LAYER_NAME = "unclipped-data";
     public static LINE_CAP_CLASS_NAME = "nui-chart-line-cap";
 

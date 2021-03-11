@@ -23,5 +23,5 @@ import { DateTimePickerComponent } from "./date-time-picker.component";
     ],
     providers: [],
 })
-export class NuiDateTimerPickerModule {
+export class NuiDateTimePickerModule {
 }
