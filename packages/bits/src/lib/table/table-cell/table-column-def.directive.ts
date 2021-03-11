@@ -13,7 +13,7 @@ import { TableStateHandlerService } from "../table-state-handler.service";
     providers: [{ provide: CdkColumnDef, useExisting: TableColumnDefDirective }],
 })
 export class TableColumnDefDirective extends CdkColumnDef implements OnInit, OnChanges {
-    // tslint:disable:no-input-rename
+    /* eslint-disable @angular-eslint/no-input-rename */
     public get name(): string {
         return super.name;
     }
@@ -21,7 +21,7 @@ export class TableColumnDefDirective extends CdkColumnDef implements OnInit, OnC
     public set name(value: string) {
         super.name = value;
     }
-    // tslint:enable:no-input-rename
+    /* eslint-enable @angular-eslint/no-input-rename */
     @Input() type: ColumnTypes;
     @Input() columnWidth: number;
 

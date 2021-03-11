@@ -20,7 +20,7 @@ import { InputValueTypes } from "../types";
 export class ComboboxV2OptionHighlightDirective implements OnChanges, OnInit, OnDestroy {
 
     /** Part of the text to be highlighted */
-    // tslint:disable-next-line:no-input-rename
+    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input("nuiComboboxV2OptionHighlight") public value: string;
 
     private destroy$ = new Subject();

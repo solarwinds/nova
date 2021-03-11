@@ -1,7 +1,9 @@
 import { ElementRef } from "@angular/core";
-const hljs = require("highlight.js/lib/core");
 
 import { ExampleCodeComponent } from "./example-code.component";
+
+const hljs = require("highlight.js/lib/core");
+
 
 describe("components >", () => {
     describe("code >", () => {

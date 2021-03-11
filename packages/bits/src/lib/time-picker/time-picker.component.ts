@@ -60,7 +60,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     @Input() isDisabled: boolean;
     /** sets custom formatting for time */
     @Input() timeFormat = "LT";
-    /** tells timepicker whether to save year, month, day and seconds of the date*/
+    /** tells timepicker whether to save year, month, day and seconds of the date */
     @Input() preserveInsignificant = false;
     /** to apply error state styles */
     @Input() isInErrorState = false;

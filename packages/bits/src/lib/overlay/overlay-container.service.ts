@@ -22,7 +22,7 @@ export class OverlayContainerService {
         elementOrSelector: Element | string = this.document.body,
         priority: number = OVERLAY_DEFAULT_PRIORITY
     ): HTMLElement {
-        // tslint:disable-next-line:no-unnecessary-initializer
+        // eslint-disable-next-line no-undef-init
         let elementFromSelector: HTMLElement | undefined = undefined;
 
         if (typeof elementOrSelector === "string") {

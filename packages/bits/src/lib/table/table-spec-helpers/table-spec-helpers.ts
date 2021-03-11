@@ -254,7 +254,7 @@ export class TableSpecHelpers {
         actualTableContent = actualTableContent.concat(rows);
 
         // Convert the nodes into their text content;
-        // tslint:disable-next-line
+        // eslint-disable-next-line
         return actualTableContent.map(row => row.map(cell => cell.textContent!.trim()));
     }
 

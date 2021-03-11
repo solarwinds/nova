@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ToastService } from "@nova-ui/bits";
 
-/* tslint:disable-next-line */
+/* eslint-disable-next-line */
 import * as colors from "../../../../src/styles/data/framework-colors.json";
 
 @Component({

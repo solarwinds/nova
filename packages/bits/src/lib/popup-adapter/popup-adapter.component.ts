@@ -34,7 +34,7 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: ["popup-adapter-overlay", OVERLAY_WITH_POPUP_STYLES_CLASS],
 };
 
-/** @dynamic **/
+/** @dynamic */
 @Component({
     selector: "nui-popup",
     templateUrl: "./popup-adapter.component.html",

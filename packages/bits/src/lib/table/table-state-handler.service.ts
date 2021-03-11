@@ -52,14 +52,14 @@ export interface ITableSortingState {
     isColumnSorted: boolean;
 }
 
-/**@ignore*/
+/** @ignore */
 const MIN_COLUMN_WIDTH_PX = 46;
-/**@ignore*/
+/** @ignore */
 const ICON_CELL_WIDTH_PX = 40;
-/**@ignore*/
+/** @ignore */
 const SELECTABLE_CELL_WIDTH_PX = 75;
 
-/**@ignore*/
+/** @ignore */
 const DEFAULT_TRACK_BY: TrackByFunction<any> = ((i, d) => d);
 
 @Injectable()

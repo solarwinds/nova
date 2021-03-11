@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { IconCategory, IconCategoryNamespace, IconData, IconSeverity, IconState } from "./types";
 
 interface ITypedIconData extends IconData {

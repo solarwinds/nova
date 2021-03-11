@@ -12,9 +12,9 @@ import {
     selector: "[nuiPopupToggle]",
 })
 export class PopupToggleDirective {
-    /** sets disable state and which prevents emitting toggle**/
+    /** sets disable state and which prevents emitting toggle */
     @Input() isDisabled: boolean;
-    /** sets disable state and which prevents emitting toggle (for using it on textbox component)**/
+    /** sets disable state and which prevents emitting toggle (for using it on textbox component) */
     @Input() disabled: boolean;
 
     @Output() toggle = new EventEmitter();

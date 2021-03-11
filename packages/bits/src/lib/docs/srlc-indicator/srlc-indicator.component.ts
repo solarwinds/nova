@@ -59,7 +59,7 @@ export class SrlcIndicatorComponent implements OnInit {
                 return `<strong>Under Development</strong> DO NOT USE. This component is under active development and significant,
                     API breaking changes are still expected. Its use will not be supported.`;
             case SrlcStage.alpha:
-                // tslint:disable-next-line:max-line-length
+                // eslint-disable-next-line max-len
                 return `<strong>Alpha</strong> USE AT YOUR OWN RISK. This component may be unstable, include defects and is still subject to API breaking changes.
                     We encourage prototypical use and feedback - but won't support production use.`;
             case SrlcStage.beta:

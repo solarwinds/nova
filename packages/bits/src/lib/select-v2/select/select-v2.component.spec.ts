@@ -54,10 +54,12 @@ class SelectV2WrapperAsyncComponent {
     constructor(public elRef: ElementRef<HTMLElement>) { }
 
     public setItems() {
-        setTimeout(() => { this.items = Array.from({ length : 10 }).map((_, i) => ({
-            id: i,
-            name: `Item ${i}`,
-        })); }, 200);
+        setTimeout(() => {
+            this.items = Array.from({ length : 10 }).map((_, i) => ({
+                        id: i,
+                        name: `Item ${i}`,
+                    }));
+        }, 200);
     }
 }
 

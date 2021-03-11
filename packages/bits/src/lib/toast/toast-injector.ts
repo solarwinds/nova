@@ -3,7 +3,7 @@ import { Injector, Type } from "@angular/core";
 import { ToastPackage } from "./toast-package";
 
 /** Custom injector type specifically for instantiating components with a toast. */
-/**@ignore*/
+/** @ignore */
 export class ToastInjector implements Injector {
     constructor(private toastPackage: ToastPackage,
                 private parentInjector: Injector) { }

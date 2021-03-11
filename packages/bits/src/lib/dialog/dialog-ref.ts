@@ -82,7 +82,7 @@ export class NuiDialogRef {
         this.contentRef = undefined;
     }
 }
-/**@ignore*/
+/** @ignore */
 export class NuiActiveDialog {
     close(result?: any): void { noop(); }
     dismiss(reason?: any): void { noop(); }

@@ -32,7 +32,7 @@ export class TabHeadingComponent {
         return this._active;
     }
 
-    /** Tab id **/
+    /** Tab id */
     @Input() tabId: string;
 
     /** Event is fired when tab became active, $event:Tab equals to selected instance of Tab component */

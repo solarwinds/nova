@@ -45,7 +45,7 @@ export class ToastVisualTestComponent implements OnInit {
         this.onShowError(highlightMode, timeout, progress, ToastPositionClass.TOP_RIGHT, header);
     }
 
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     public onShowInfo(highlightMode: boolean, timeout: number, progress: boolean = false, position: ToastPositionClass, title: string = "Information", message: string = "Some info message"): void {
         this.toastService.info({
             title: title,
@@ -54,7 +54,7 @@ export class ToastVisualTestComponent implements OnInit {
         });
     }
 
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     public onShowError(highlightMode: boolean, timeout: number, progress: boolean = false, position: ToastPositionClass, title: string = "Failure!", message: string = "Something went wrong"): void {
         this.toastService.error({
             title: title,
@@ -63,7 +63,7 @@ export class ToastVisualTestComponent implements OnInit {
         });
     }
 
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     public onShowSuccess(highlightMode: boolean, timeout: number, progress: boolean = false, position: ToastPositionClass, title: string = "Well Done!", message: string = "You're great!"): void {
         this.toastService.success({
             title: title,
@@ -72,7 +72,7 @@ export class ToastVisualTestComponent implements OnInit {
         });
     }
 
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     public onShowWarning(highlightMode: boolean, timeout: number, progress: boolean = false, position: ToastPositionClass, title: string = "Attention!", message: string = "Pay attention!"): void {
         this.toastService.warning({
             title: title,

@@ -98,7 +98,7 @@ export class IconComponent implements OnChanges {
 
     @Input()
     set counter(value: string | number | undefined) {
-        // tslint:disable-next-line:no-unnecessary-initializer
+        // eslint-disable-next-line no-undef-init
         let counterAttrValue = undefined;
 
         if (!isNil(value)) {

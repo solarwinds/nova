@@ -1,0 +1,3 @@
+node_modules/*
+src/schematics/**/files
+src/styles/data/*.json

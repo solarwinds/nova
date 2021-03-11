@@ -64,7 +64,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
     @Input() inline: boolean;
     /** checks if value in datepicker is required */
     @Input() isRequired: boolean;
-    /** Option to disabled datepicker.*/
+    /** Option to disabled datepicker. */
     @Input() isDisabled: boolean;
     /** to apply error state styles */
     @Input() isInErrorState: boolean;

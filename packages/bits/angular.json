@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "lib": {
-      "root": "lib",
+      "root": "src",
       "sourceRoot": "src",
       "projectType": "library",
       "architect": {
@@ -54,16 +54,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.json",
-              "tsconfig.lib.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "**/schematics/**/files/**",
-              "**/styles/data/*.json"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         }
@@ -185,16 +180,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.json",
-              "./demo/src/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "**/schematics/**/files/**",
-              "**/styles/data/*.json"
+            "lintFilePatterns": [
+              "demo/**/*.ts",
+              "demo/**/*.html"
             ]
           }
         }
@@ -227,16 +217,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.json",
-              "./spec/tsconfig.atom.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "**/schematics/**/files/**",
-              "**/styles/data/*.json"
+            "lintFilePatterns": [
+              "spec/**/*.ts",
+              "spec/**/*.html"
             ]
           }
         }

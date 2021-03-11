@@ -14,7 +14,7 @@ export enum Animations {
 }
 
 // Node typings have conflicts with webpack-env
-declare var process: any;
+declare let process: any;
 
 let eyes: any;
 
@@ -80,6 +80,7 @@ export class Helpers {
             eyes.close = async () => true;
             eyes.abortIfNotClosed = async () => true;
             eyes.setStitchMode = () => true;
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             eyes.checkWindow = async (s: string) => {  console.log(s); await browser.sleep(3000); },
             eyes.checkRegion = console.log;
         }
