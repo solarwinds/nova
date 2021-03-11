@@ -464,10 +464,7 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Install node_modules
-                    command: npm install -q
-            - run:
-                    name: install-snyk
-                    command: npm install -g snyk     
+                    command: npm install -q  
             - run:
                     name: snyk auth
                     command: snyk auth $SNYK_TOKEN
