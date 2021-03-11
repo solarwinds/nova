@@ -227,12 +227,16 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
     }
 
     ngOnInit() {
-        this.selectorState = this.tableStateHandlerService.getSelectorState();
-        this.updateSelectorState();
+        if (this.tableStateHandlerService.selectable) {
+            this.selectorState = this.tableStateHandlerService.getSelectorState();
+            this.updateSelectorState();
+        }
+
         // if dataSource changes we need to update selector state
         this.dataSourceChangeSubscription = this.tableStateHandlerService.dataSourceChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             this.updateSelectorState();
         });
+
         // when single row is selected we need to update selector state
         // we also need to detect changes for selector state
         this.selectionChangeSubscription = this.tableStateHandlerService.selectionChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
@@ -337,6 +341,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     ngOnInit() {
         const rowHeightClass = `nui-table__table-row_height_${this.density.toLowerCase()}`;
         this.elementRef.nativeElement.classList.add(rowHeightClass);
+
         // when selection changes we need to detect changes to check check-boxes
         this.selectionChangeSubscription = this.tableStateHandlerService.selectionChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
             this.changeDetectorRef.detectChanges();

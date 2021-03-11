@@ -1,5 +1,5 @@
-<button nui-button type="button" (click)="toggleSelectable()">Toggle Selectable</button>
-<div class="nui-table__container" id="nui-demo-table-select">
+<button id="demo-table-selectable-toggle-btn" nui-button type="button" (click)="toggleSelectable()">Toggle Selectable</button>
+<div class="nui-table__container" id="demo-table-selectable-toggle">
     <table nui-table [dataSource]="dataSource" [totalItems]="paginationTotal" [(selection)]="selection"
            [selectable]="selectable" [trackBy]="trackBy">
         <ng-container nuiColumnDef="position">
