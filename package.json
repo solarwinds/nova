@@ -45,7 +45,8 @@
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
     "bash": "bash scripts/runner",
     "snyk-auth": "snyk auth $SNYK_TOKEN",
-    "snyk-test": "snyk test --dev --all-projects --exclude=dist --strict-out-of-sync=false"
+    "snyk-test": "snyk test --dev --all-projects --exclude=dist --strict-out-of-sync=false",
+    "snyk-monitor": "snyk monitor --dev --all-projects --exclude=dist --strict-out-of-sync=false"
   },
   "devDependencies": {
     "rimraf": "^3.0.0",

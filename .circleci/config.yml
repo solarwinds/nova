@@ -469,6 +469,9 @@ jobs:
                     name: snyk auth
                     command: npm run snyk-auth
             - run:
+                    name: snyk monitor
+                    command: npm run snyk-monitor
+            - run:
                     name: snyk test
                     command: npm run snyk-test
 workflows:
