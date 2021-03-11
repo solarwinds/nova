@@ -130,7 +130,7 @@ export class TableAtom extends Atom {
      * @returns true if any row is clickable, false otherwise
      */
     public async isAnyRowClickable(): Promise<boolean> {
-        let isRowClickable = false;
+        let isAnyRowClickable = false;
         await this.getElement().all(by.tagName("tr")).each(async (row: ElementFinder | undefined, index: number | undefined) => {
             if (!row || isNil(index)) {
                 throw new Error("row is not defined");
@@ -139,11 +139,11 @@ export class TableAtom extends Atom {
             if (index >= 1) {
                 const clickable = await this.isRowClickable(index);
                 if (clickable) {
-                    isRowClickable = true;
+                    isAnyRowClickable = true;
                 }
             }
         });
-        return isRowClickable;
+        return isAnyRowClickable;
     }
 
     /**
