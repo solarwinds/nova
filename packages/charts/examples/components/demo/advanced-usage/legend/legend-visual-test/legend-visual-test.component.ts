@@ -4,6 +4,7 @@ import { CHART_MARKERS, IChartMarker, IValueProvider, RenderState, SequentialCha
 @Component({
     selector: "nui-legend-visual-test",
     templateUrl: "./legend-visual-test.component.html",
+    styleUrls: ["legend-visual-test.component.less"],
 })
 export class LegendVisualTestComponent {
     public markers: IValueProvider<IChartMarker> = new SequentialChartMarkerProvider(CHART_MARKERS);
