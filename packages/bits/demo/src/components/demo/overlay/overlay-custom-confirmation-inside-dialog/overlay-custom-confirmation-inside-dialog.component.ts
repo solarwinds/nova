@@ -1,19 +1,26 @@
 import { FlexibleConnectedPositionStrategy, OverlayRef } from "@angular/cdk/overlay";
-import { Component, TemplateRef, ViewChild } from "@angular/core";
+import { Component, OnDestroy, TemplateRef } from "@angular/core";
 import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: "nui-custom-confirmation-inside-dialog",
   templateUrl: "./overlay-custom-confirmation-inside-dialog.component.html",
   styleUrls: ["./overlay-custom-confirmation-inside-dialog.component.less"],
 })
-export class CustomConfirmationInsideDialogComponent {
+export class CustomConfirmationInsideDialogComponent implements OnDestroy {
+    public onDestroy$ = new Subject<void>();
+    public overlayTriggered$ = new Subject<void>();
+
     private overlayRef: OverlayRef;
     private activeDialog: NuiDialogRef;
 
     constructor(private dialogService: DialogService) { }
 
     triggerOverlay(overlay: OverlayComponent) {
+        this.overlayTriggered$.next();
+
         // Toggling the overlay to get an access to the 'overlayRef'
         overlay.toggle();
 
@@ -29,6 +36,11 @@ export class CustomConfirmationInsideDialogComponent {
         }]);
         // We update the size of the overlay container to follow the dimentions of the new 'toggle reference' container we set in the very first step
         this.updateOverlayDimensions(overlay);
+
+        // Handling ESC events inside overlay
+        this.activeDialog?.closed$.pipe(
+            takeUntil(this.overlayTriggered$),
+            takeUntil(this.onDestroy$)).subscribe(() => overlay.hide());
     }
 
     public open(content: TemplateRef<string>) {
@@ -41,6 +53,12 @@ export class CustomConfirmationInsideDialogComponent {
 
     public onContainerResize(overlay: OverlayComponent) {
         this.updateOverlayDimensions(overlay);
+    }
+
+    public ngOnDestroy() {
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
+        this.overlayTriggered$.complete();
     }
 
     private updateOverlayDimensions(overlay: OverlayComponent) {
