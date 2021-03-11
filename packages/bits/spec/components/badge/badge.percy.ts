@@ -1,4 +1,4 @@
-import { percySnapshot } from "@percy/protractor";
+import percySnapshot from "@percy/protractor";
 import fs from "fs";
 import { browser, by, element, ElementFinder, ExpectedConditions, WebElement } from "protractor";
 
