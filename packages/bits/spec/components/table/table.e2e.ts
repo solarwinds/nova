@@ -408,6 +408,31 @@ describe("USERCONTROL table >", () => {
         });
     });
 
+    describe("Selectability toggle >", () => {
+        const selectableToggleTable: TableAtom = Atom.find(TableAtom, "demo-table-selectable-toggle");
+        const selectableToggleBtn: ButtonAtom = Atom.find(ButtonAtom, "demo-table-selectable-toggle-btn");
+
+        beforeAll(async () => {
+            await Helpers.prepareBrowser("table/selectable-toggle");
+        });
+
+        it("should toggle selectability off", async () => {
+            expect(await selectableToggleTable.checkSelectability(true)).toEqual(true);
+            expect(await selectableToggleTable.checkRowClickability(true)).toEqual(true);
+            await selectableToggleBtn.click();
+            expect(await selectableToggleTable.checkSelectability(false)).toEqual(true);
+            expect(await selectableToggleTable.checkRowClickability(false)).toEqual(true);
+        });
+
+        it("should toggle selectability on", async () => {
+            expect(await selectableToggleTable.checkSelectability(false)).toEqual(true);
+            expect(await selectableToggleTable.checkRowClickability(false)).toEqual(true);
+            await selectableToggleBtn.click();
+            expect(await selectableToggleTable.checkSelectability(true)).toEqual(true);
+            expect(await selectableToggleTable.checkRowClickability(true)).toEqual(true);
+        });
+    });
+
     describe("Table with actions >", () => {
         const actionsMenu: ElementFinder = tableColumnsAddRemove.getElement().all(by.className("nui-menu")).get(0);
 

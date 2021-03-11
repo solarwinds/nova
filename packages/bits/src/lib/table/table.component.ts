@@ -135,7 +135,7 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
             this.tableStateHandlerService.sortable = changes.sortable.currentValue;
         }
         if (changes.dataSource) {
-            this.onDatasourceChange(changes.dataSource.currentValue);
+            this.onDataSourceChange(changes.dataSource.currentValue);
         }
         if (changes.selectable) {
             this.tableStateHandlerService.selectable = changes.selectable.currentValue;
@@ -226,14 +226,14 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
         this.tableStateHandlerService.sortingState.next(sortedColumn);
     }
 
-    private onDatasourceChange(ds: T[]) {
+    private onDataSourceChange(ds: T[]) {
         if (!ds) {
             this.dataSource = [];
         }
-        const changedDatasource = ds ? ds : [];
+        const changedDataSource = ds ? ds : [];
         // if no totalItems specified, we assume that there is only one page
-        this.tableStateHandlerService.changeDataSource(changedDatasource);
-        this.tableStateHandlerService.totalItems = this.totalItems || changedDatasource.length;
+        this.tableStateHandlerService.totalItems = this.totalItems || changedDataSource.length;
+        this.tableStateHandlerService.changeDataSource(changedDataSource);
     }
 
     ngOnDestroy() {

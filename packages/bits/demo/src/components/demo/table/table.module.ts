@@ -37,6 +37,7 @@ import {
     TableRowSelectInstructionsComponent,
     TableSearchExampleComponent,
     TableSearchWithSelectAndPaginationComponent,
+    TableSelectableToggleExampleComponent,
     TableSelectExampleComponent,
     TableSortingExampleComponent,
     TableTestComponent,
@@ -152,6 +153,15 @@ const routes = [
         },
     },
     {
+        path: "selectable-toggle",
+        component: TableSelectableToggleExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
         path: "select",
         component: TableSelectExampleComponent,
         data: {
@@ -257,6 +267,7 @@ const routes = [
         TableRowClickableExampleComponent,
         TableResizeExampleComponent,
         TableSearchExampleComponent,
+        TableSelectableToggleExampleComponent,
         TableSelectExampleComponent,
         TableSortingExampleComponent,
         TableCellContentAlignComponent,

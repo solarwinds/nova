@@ -44,11 +44,15 @@ export class TableAtom extends Atom {
         return this.getElement().all(by.tagName("tr")).count().then(value => value - 1); // -1 because we don't need to count header row
     }
 
-    public isRowSelected = async (rowIndex: number): Promise<boolean> => {
-        const row = this.getRow(rowIndex);
+    /**
+     * Check whether a row is selected
+     */
+    public isRowSelected = async (rowIndex: number): Promise<boolean> => Atom.hasClass(this.getRow(rowIndex), "nui-table__table-row--selected");
 
-        return Atom.hasClass(row, "nui-table__table-row--selected");
-    }
+    /**
+     * Check whether any part of a row can be clicked to make a selection (not just the checkbox)
+     */
+    public isRowClickable = async (rowIndex: number): Promise<boolean> => Atom.hasClass(this.getRow(rowIndex), "nui-table__table-row--clickable");
 
     /**
      *
@@ -95,6 +99,56 @@ export class TableAtom extends Atom {
     public getCheckbox = (element: ElementFinder): CheckboxAtom => Atom.findIn(CheckboxAtom, element);
 
     public getSelector = (element: ElementFinder): SelectorAtom => Atom.findIn(SelectorAtom, element);
+
+    /**
+     * Use this method to check whether selection is enabled or disabled for all rows including the header
+     *
+     * @param enabled Pass 'true' if you want to check whether selection is enabled for all rows including the header.
+     * Pass 'false' to check whether selection is disabled for all rows including the header.
+     *
+     * @returns The aggregate selectability status for all rows
+     */
+    public async checkSelectability(enabled: boolean): Promise<boolean> {
+        let rowsWithCheckboxes = 0;
+        const rowCount = await this.getElement().all(by.tagName("tr")).count();
+        await this.getElement().all(by.tagName("tr")).each(async (row: ElementFinder | undefined, rowIndex: number | undefined) => {
+            if (!row || isNil(rowIndex)) {
+                throw new Error("row is not defined");
+            }
+            const checkBoxPresent = await Atom.findIn(CheckboxAtom, this.getCell(rowIndex, 0)).isPresent();
+            if (checkBoxPresent) {
+                rowsWithCheckboxes++;
+            }
+        });
+        return rowsWithCheckboxes === (enabled ? rowCount : 0);
+    }
+
+    /**
+     * Use this method to check whether selection by clicking on a row is enabled or disabled for all body rows.
+     * (When row clicking is enabled, the user doesn't have to specifically click the checkbox in order to select the row.)
+     *
+     * @param enabled Pass 'true' if you want to check whether clicking to select is enabled for all body rows.
+     * Pass 'false' to check whether clicking to select is disabled for all body rows.
+     *
+     * @returns The aggregate clickability status for all body rows
+     */
+    public async checkRowClickability(enabled: boolean): Promise<boolean> {
+        let clickableRows = 0;
+        const rowCount = await this.getRowsCount();
+        await this.getElement().all(by.tagName("tr")).each(async (row: ElementFinder | undefined, index: number | undefined) => {
+            if (!row || isNil(index)) {
+                throw new Error("row is not defined");
+            }
+            // index >= 1 to skip header row
+            if (index >= 1) {
+                const clickable = await this.isRowClickable(index);
+                if (clickable) {
+                    clickableRows++;
+                }
+            }
+        });
+        return clickableRows === (enabled ? rowCount : 0);
+    }
 
     /**
      * Checks if all checkboxes in all rows selected

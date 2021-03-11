@@ -71,6 +71,7 @@ export class TableStateHandlerService {
     public shouldHighlightEdge = new Subject<TableCellEdgeHighlight>();
     public dataSourceChanged = new Subject<Array<any>>();
     public selectionChanged = new Subject<ISelection>();
+    public selectableChanged = new Subject<boolean>();
     public columnWidthSubject = new Subject<void>();
     public stickyHeaderChangedSubject = new Subject<void>();
 
@@ -208,6 +209,9 @@ export class TableStateHandlerService {
     }
 
     set selectable(isSelectable: boolean) {
+        if (isSelectable !== this._selectable) {
+            this.selectableChanged.next(isSelectable);
+        }
         this._selectable = isSelectable;
     }
 
@@ -268,7 +272,7 @@ export class TableStateHandlerService {
         }
         return this.state.columnsWidths[column].width;
     }
-    
+
     /**
      * Updates the width of the specified column,
      * then broadcasts that a width change has occurred to all listeners of columnWidthSubject
@@ -356,7 +360,7 @@ export class TableStateHandlerService {
 
         this.state.widthCalculationPerformed = true;
     }
-    
+
     /**
      * Updates the state's sortedColumn and sortedColumn.direction properties and then broadcasts the
      *  state object to all listeners of sortingState

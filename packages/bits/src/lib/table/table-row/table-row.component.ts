@@ -20,7 +20,8 @@ import {
 } from "@angular/core";
 import _includes from "lodash/includes";
 import _toArray from "lodash/toArray";
-import { Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 import { DEFAULT_INTERACTIVE_ELEMENTS } from "../../../constants/interaction.constants";
 import { ISelectorState } from "../../../services/public-api";
@@ -169,7 +170,7 @@ export class TableFooterRowDefDirective extends CdkFooterRowDef implements OnIni
  */
 
 @Component({
-    template:  `
+    template: `
         <th *ngIf="selectable"
             nuiClickInterceptor
             class="nui-table__table-header-cell nui-table__table-header-cell--selectable"
@@ -191,12 +192,12 @@ export class TableFooterRowDefDirective extends CdkFooterRowDef implements OnIni
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: "nuiHeaderRow",
-    providers: [{provide: CdkHeaderRow, useExisting: TableHeaderRowComponent}],
+    providers: [{ provide: CdkHeaderRow, useExisting: TableHeaderRowComponent }],
 })
 export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnDestroy, AfterViewInit {
     @Input() density: RowHeightOptions = "default";
     public selectorState: ISelectorState = {
-        checkboxStatus:  CheckboxStatus.Unchecked,
+        checkboxStatus: CheckboxStatus.Unchecked,
         selectorItems: [],
     };
     public selectable = this.tableStateHandlerService.selectable;
@@ -218,8 +219,10 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
         return this.selectorState.selectorItems.length > 0;
     }
 
+    private onDestroy$ = new Subject<void>();
+
     constructor(private tableStateHandlerService: TableStateHandlerService,
-                private changeDetectorRef: ChangeDetectorRef) {
+        private changeDetectorRef: ChangeDetectorRef) {
         super();
     }
 
@@ -227,16 +230,23 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
         if (this.tableStateHandlerService.selectable) {
             this.selectorState = this.tableStateHandlerService.getSelectorState();
             this.updateSelectorState();
-            // if dataSource changes we need to update selector state
-            this.dataSourceChangeSubscription = this.tableStateHandlerService.dataSourceChanged.subscribe(() => {
-                this.updateSelectorState();
-            });
-            // when single row is selected we need to update selector state
-            // we also need to detect changes for selector state
-            this.selectionChangeSubscription = this.tableStateHandlerService.selectionChanged.subscribe(() => {
-                this.updateSelectorState();
-            });
         }
+
+        // if dataSource changes we need to update selector state
+        this.dataSourceChangeSubscription = this.tableStateHandlerService.dataSourceChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.updateSelectorState();
+        });
+
+        // when single row is selected we need to update selector state
+        // we also need to detect changes for selector state
+        this.selectionChangeSubscription = this.tableStateHandlerService.selectionChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.updateSelectorState();
+        });
+
+        this.tableStateHandlerService.selectableChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
+            this.selectable = selectable;
+            this.changeDetectorRef.markForCheck();
+        });
     }
 
     ngAfterViewInit() {
@@ -257,13 +267,8 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
     }
 
     ngOnDestroy() {
-        if (this.dataSourceChangeSubscription) {
-            this.dataSourceChangeSubscription.unsubscribe();
-        }
-
-        if (this.selectionChangeSubscription) {
-            this.selectionChangeSubscription.unsubscribe();
-        }
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 }
 
@@ -293,7 +298,7 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: "nuiRow",
-    providers: [{provide: CdkRow, useExisting: TableRowComponent}],
+    providers: [{ provide: CdkRow, useExisting: TableRowComponent }],
 })
 export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     @Input() density: RowHeightOptions = "default";
@@ -305,7 +310,7 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     };
     public selectable = this.tableStateHandlerService.selectable;
     public selectionChangeSubscription: Subscription;
-    public rowClickSubscription: Subscription;
+
     @HostBinding("class.nui-table__table-row--selected")
     get isSelected() {
         return this.isRowSelected();
@@ -325,6 +330,8 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     @ViewChild("rowSelectionCheckbox", { read: ElementRef, static: false })
     private rowSelectionCheckbox: ElementRef;
 
+    private onDestroy$ = new Subject<void>();
+
     constructor(private elementRef: ElementRef,
                 private tableStateHandlerService: TableStateHandlerService,
                 private changeDetectorRef: ChangeDetectorRef) {
@@ -334,12 +341,16 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     ngOnInit() {
         const rowHeightClass = `nui-table__table-row_height_${this.density.toLowerCase()}`;
         this.elementRef.nativeElement.classList.add(rowHeightClass);
-        if (this.tableStateHandlerService.selectable) {
-            // when selection changes we need to detect changes to check check-boxes
-            this.selectionChangeSubscription = this.tableStateHandlerService.selectionChanged.subscribe(() => {
-               this.changeDetectorRef.detectChanges();
-            });
-        }
+
+        // when selection changes we need to detect changes to check check-boxes
+        this.selectionChangeSubscription = this.tableStateHandlerService.selectionChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
+            this.changeDetectorRef.detectChanges();
+        });
+
+        this.tableStateHandlerService.selectableChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
+            this.selectable = selectable;
+            this.changeDetectorRef.markForCheck();
+        });
     }
 
     @HostListener("click", ["$event.target"])
@@ -390,12 +401,8 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.selectionChangeSubscription) {
-            this.selectionChangeSubscription.unsubscribe();
-        }
-        if (this.rowClickSubscription) {
-            this.rowClickSubscription.unsubscribe();
-        }
+        this.onDestroy$.next();
+        this.onDestroy$.complete();
     }
 }
 

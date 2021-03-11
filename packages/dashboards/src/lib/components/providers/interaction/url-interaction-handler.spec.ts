@@ -74,6 +74,12 @@ describe("UrlInteractionHandler", () => {
             expect(window.location.href).toEqual("default");
         });
 
+        it("should not throw error if properties are undefined", () => {
+            (<any>handler).properties = undefined;
+
+            expect(() => eventBus.getStream(INTERACTION).next({ payload })).not.toThrow();
+        });
+
     });
 
 });

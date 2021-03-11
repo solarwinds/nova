@@ -12,6 +12,7 @@ export * from "./table-search/table-search.example.component";
 export * from "./table-sorting/table-sorting.example.component";
 export * from "./table-resize/table-resize.example.component";
 export * from "./table-select/table-select.example.component";
+export * from "./table-selectable-toggle/table-selectable-toggle.example.component";
 export * from "./table-test/table-test.component";
 export * from "./table-visual-test/table-visual-test.example";
 export * from "./table-virtual-scroll-real-api/table-virtual-scroll-real-api.example.component";

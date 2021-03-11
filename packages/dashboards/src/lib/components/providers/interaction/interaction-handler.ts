@@ -28,7 +28,7 @@ export abstract class InteractionHandler<T extends IInteractionHandlerProperties
 
     protected initializeSubscriptions() {
         this.eventBus.getStream(INTERACTION).subscribe((event: IEvent<IInteractionPayload<any>>) => {
-            if (!this.properties.interactionType || this.properties.interactionType === event.payload?.interactionType) {
+            if (!this.properties?.interactionType || this.properties?.interactionType === event.payload?.interactionType) {
                 // TODO: ensure that payload is defined
                 // @ts-ignore
                 this.handleInteraction(event.payload);
