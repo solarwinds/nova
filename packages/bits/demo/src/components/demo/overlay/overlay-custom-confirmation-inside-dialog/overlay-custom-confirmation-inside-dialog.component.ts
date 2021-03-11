@@ -11,6 +11,7 @@ import { takeUntil } from "rxjs/operators";
 })
 export class CustomConfirmationInsideDialogComponent implements OnDestroy {
     public onDestroy$ = new Subject<void>();
+    public overlayTriggered$ = new Subject<void>();
 
     private overlayRef: OverlayRef;
     private activeDialog: NuiDialogRef;
@@ -18,6 +19,8 @@ export class CustomConfirmationInsideDialogComponent implements OnDestroy {
     constructor(private dialogService: DialogService) { }
 
     triggerOverlay(overlay: OverlayComponent) {
+        this.overlayTriggered$.next();
+
         // Toggling the overlay to get an access to the 'overlayRef'
         overlay.toggle();
 
@@ -35,7 +38,9 @@ export class CustomConfirmationInsideDialogComponent implements OnDestroy {
         this.updateOverlayDimensions(overlay);
 
         // Handling ESC events inside overlay
-        this.activeDialog?.closed$.pipe(takeUntil(this.onDestroy$)).subscribe(() => overlay.hide());
+        this.activeDialog?.closed$.pipe(
+            takeUntil(this.overlayTriggered$),
+            takeUntil(this.onDestroy$)).subscribe(() => overlay.hide());
     }
 
     public open(content: TemplateRef<string>) {
@@ -53,6 +58,7 @@ export class CustomConfirmationInsideDialogComponent implements OnDestroy {
     public ngOnDestroy() {
         this.onDestroy$.next();
         this.onDestroy$.complete();
+        this.overlayTriggered$.complete();
     }
 
     private updateOverlayDimensions(overlay: OverlayComponent) {
