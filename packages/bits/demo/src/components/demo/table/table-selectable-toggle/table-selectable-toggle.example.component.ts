@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import { ClientSideDataSource, INovaFilteringOutputs, ISelection, PaginatorComponent, SelectionModel, SelectorService } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
@@ -14,6 +14,7 @@ interface IExampleTableModel {
     selector: "nui-table-selectable-toggle",
     providers: [ClientSideDataSource],
     templateUrl: "./table-selectable-toggle.example.component.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableSelectableToggleExampleComponent implements AfterViewInit, OnDestroy {
     public displayedColumns = ["position", "item", "description", "status", "location"];
@@ -33,7 +34,8 @@ export class TableSelectableToggleExampleComponent implements AfterViewInit, OnD
     private outputsSubscription: Subscription;
 
     constructor(public dataSourceService: ClientSideDataSource<IExampleTableModel>,
-        public selectorService: SelectorService) {
+        public selectorService: SelectorService,
+        public changeDetector: ChangeDetectorRef) {
     }
 
     public ngAfterViewInit() {
@@ -45,6 +47,7 @@ export class TableSelectableToggleExampleComponent implements AfterViewInit, OnD
         this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
             this.dataSource = data.repeat?.itemsSource;
             this.paginationTotal = data.paginator?.total;
+            this.changeDetector.markForCheck();
         });
         this.applyFilters();
     }

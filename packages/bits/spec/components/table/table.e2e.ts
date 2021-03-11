@@ -417,19 +417,19 @@ describe("USERCONTROL table >", () => {
         });
 
         it("should toggle selectability off", async () => {
-            expect(selectableToggleTable.checkSelectability(true)).toEqual(true);
-            expect(selectableToggleTable.isAnyRowClickable()).toEqual(true);
+            expect(await selectableToggleTable.checkSelectability(true)).toEqual(true);
+            expect(await selectableToggleTable.checkRowClickability(true)).toEqual(true);
             await selectableToggleBtn.click();
-            expect(selectableToggleTable.checkSelectability(false)).toEqual(true);
-            expect(selectableToggleTable.isAnyRowClickable()).toEqual(false);
+            expect(await selectableToggleTable.checkSelectability(false)).toEqual(true);
+            expect(await selectableToggleTable.checkRowClickability(false)).toEqual(true);
         });
 
         it("should toggle selectability on", async () => {
-            expect(selectableToggleTable.checkSelectability(false)).toEqual(true);
-            expect(selectableToggleTable.isAnyRowClickable()).toEqual(false);
+            expect(await selectableToggleTable.checkSelectability(false)).toEqual(true);
+            expect(await selectableToggleTable.checkRowClickability(false)).toEqual(true);
             await selectableToggleBtn.click();
-            expect(selectableToggleTable.checkSelectability(true)).toEqual(true);
-            expect(selectableToggleTable.isAnyRowClickable()).toEqual(true);
+            expect(await selectableToggleTable.checkSelectability(true)).toEqual(true);
+            expect(await selectableToggleTable.checkRowClickability(true)).toEqual(true);
         });
     });
 

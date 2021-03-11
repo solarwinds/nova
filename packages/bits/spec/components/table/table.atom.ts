@@ -110,13 +110,13 @@ export class TableAtom extends Atom {
      */
     public async checkSelectability(enabled: boolean): Promise<boolean> {
         let rowsWithCheckboxes = 0;
-        const rowCount = this.getElement().all(by.tagName("tr")).length;
+        const rowCount = await this.getElement().all(by.tagName("tr")).count();
         await this.getElement().all(by.tagName("tr")).each(async (row: ElementFinder | undefined, rowIndex: number | undefined) => {
             if (!row || isNil(rowIndex)) {
                 throw new Error("row is not defined");
             }
-            const checkBox = await Atom.findCount(CheckboxAtom, this.getCell(rowIndex, 0)) === 1;
-            if (checkBox) {
+            const checkBoxPresent = await Atom.findIn(CheckboxAtom, this.getCell(rowIndex, 0)).isPresent();
+            if (checkBoxPresent) {
                 rowsWithCheckboxes++;
             }
         });
@@ -124,13 +124,17 @@ export class TableAtom extends Atom {
     }
 
     /**
-     * Use this method to check whether any of the table's body rows can be selected by clicking on the row itself, i.e. the user doesn't have to
-     * specifically click the checkbox to select the row.
+     * Use this method to check whether selection by clicking on a row is enabled or disabled for all body rows.
+     * (When row clicking is enabled, the user doesn't have to specifically click the checkbox in order to select the row.)
      *
-     * @returns true if any row is clickable, false otherwise
+     * @param enabled Pass 'true' if you want to check whether clicking to select is enabled for all body rows.
+     * Pass 'false' to check whether clicking to select is disabled for all body rows.
+     *
+     * @returns The aggregate clickability status for all body rows
      */
-    public async isAnyRowClickable(): Promise<boolean> {
-        let isAnyRowClickable = false;
+    public async checkRowClickability(enabled: boolean): Promise<boolean> {
+        let clickableRows = 0;
+        const rowCount = await this.getRowsCount();
         await this.getElement().all(by.tagName("tr")).each(async (row: ElementFinder | undefined, index: number | undefined) => {
             if (!row || isNil(index)) {
                 throw new Error("row is not defined");
@@ -139,11 +143,11 @@ export class TableAtom extends Atom {
             if (index >= 1) {
                 const clickable = await this.isRowClickable(index);
                 if (clickable) {
-                    isAnyRowClickable = true;
+                    clickableRows++;
                 }
             }
         });
-        return isAnyRowClickable;
+        return clickableRows === (enabled ? rowCount : 0);
     }
 
     /**
