@@ -311,8 +311,5 @@
       "prefix": "nui",
       "lintFix": true
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }
