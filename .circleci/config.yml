@@ -467,10 +467,10 @@ jobs:
                     command: npm install -q  
             - run:
                     name: snyk auth
-                    command: snyk auth $SNYK_TOKEN
+                    command: npm run snyk-auth
             - run:
                     name: snyk test
-                    command: snyk test --dev --all-projects --exclude=dist --strict-out-of-sync=false
+                    command: npm run snyk-test
 workflows:
     version: 2.1
     nova:
