@@ -46,7 +46,7 @@
     "bash": "bash scripts/runner",
     "snyk-auth": "snyk auth $SNYK_TOKEN",
     "snyk-test": "snyk test --dev --all-projects --exclude=dist --strict-out-of-sync=false",
-    "snyk-monitor": "snyk monitor --dev --all-projects --exclude=dist --strict-out-of-sync=false"
+    "snyk-monitor": "snyk monitor --dev --all-projects --exclude=dist --strict-out-of-sync=false || true"
   },
   "devDependencies": {
     "rimraf": "^3.0.0",
