@@ -124,7 +124,7 @@ export class TableAtom extends Atom {
     }
 
     /**
-     * Use this method to check whether any of the table's body rows is can be selected by clicking on the row itself, i.e. the user doesn't have to
+     * Use this method to check whether any of the table's body rows can be selected by clicking on the row itself, i.e. the user doesn't have to
      * specifically click the checkbox to select the row.
      *
      * @returns true if any row is clickable, false otherwise
