@@ -139,6 +139,8 @@
     "@applitools/eyes-protractor": "1.9.1",
     "@compodoc/compodoc": "1.1.7",
     "@locl/cli": "0.0.1-beta.9",
+    "@percy/cli": "^1.0.0-beta.41",
+    "@percy/protractor": "^2.0.0",
     "@schematics/angular": "^9.0.0",
     "@types/axe-webdriverjs": "^2.1.0",
     "@types/highlight.js": "~9.1.9",
