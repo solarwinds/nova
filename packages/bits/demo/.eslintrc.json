@@ -8,8 +8,7 @@
         "parserOptions": {
           "project": [
               "../spec/tsconfig.atom.json"
-            ],
-          "createDefaultProgram": true
+            ]
         }
       }
     ]

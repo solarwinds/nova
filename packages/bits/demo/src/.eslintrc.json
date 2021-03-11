@@ -8,8 +8,7 @@
       "parserOptions": {
         "project": [
             "tsconfig.json"
-          ],
-        "createDefaultProgram": true
+          ]
       },
       "rules": {
         "max-len": "off"
