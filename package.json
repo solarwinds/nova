@@ -43,10 +43,14 @@
     "merge-ci": "bash scripts/merge",
     "deploy-docs-ci": "bash scripts/deploy-docs",
     "trigger-pipeline-build-ci": "bash scripts/trigger-pipeline-build",
-    "bash": "bash scripts/runner"
+    "bash": "bash scripts/runner",
+    "snyk-auth": "snyk auth $SNYK_TOKEN",
+    "snyk-test": "snyk test --dev --all-projects --exclude=dist --strict-out-of-sync=false || true",
+    "snyk-monitor": "snyk monitor --dev --all-projects --exclude=dist --strict-out-of-sync=false"
   },
   "devDependencies": {
     "rimraf": "^3.0.0",
+    "snyk": "^1.483.0",
     "symlink-dir": "^3.1.0"
   },
   "dependencies": {}
