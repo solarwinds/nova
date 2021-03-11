@@ -37,7 +37,7 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
     public modelDefault: any;
 
     public distanceToEndDate: number; // to keep distance between start and end-date
-
+    
     constructor(private timeFrameService: TimeframeService, public changeDetector: ChangeDetectorRef) {}
 
     ngOnChanges(changes: any): void {

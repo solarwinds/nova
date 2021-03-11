@@ -4,7 +4,7 @@ import { protractor } from "protractor/built/ptor";
 import { WebElement } from "../../../stub/protractor";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { ButtonAtom, DialogAtom } from "../public_api";
+import { ButtonAtom, DateTimepickerAtom, DialogAtom } from "../public_api";
 import { SelectV2Atom } from "../select-v2/select-v2.atom";
 
 describe("USERCONTROL Dialog", () => {
@@ -17,6 +17,8 @@ describe("USERCONTROL Dialog", () => {
     let customClassButton: ButtonAtom;
     let staticBackdropButton: ButtonAtom;
     let staticBackdropESCButton: ButtonAtom;
+    let insideOverlayWithDateTimePickerBtn: ButtonAtom;
+    let dateTimePicker: DateTimepickerAtom;
     let selectToOpenDialog: SelectV2Atom;
     let overlayContainer: ElementFinder;
     let dialog: DialogAtom;
@@ -39,6 +41,8 @@ describe("USERCONTROL Dialog", () => {
         staticBackdropButton = Atom.find(ButtonAtom, "nui-demo-static-backdrop-dialog-btn");
         staticBackdropESCButton = Atom.find(ButtonAtom, "nui-demo-static-backdrop-ESC-dialog-btn");
         selectToOpenDialog = Atom.find(SelectV2Atom, "select-to-open-dialog");
+        insideOverlayWithDateTimePickerBtn = Atom.find(ButtonAtom, "nui-dialog-inside-overlay-with-date-time-picker-btn");
+        dateTimePicker = Atom.find(DateTimepickerAtom, "date-time-picker");
         themeSwitcher = await Helpers.getElementByCSS(".nui-switch__bar");
         overlayContainer = $(".overlay-container-priority");
         dialog = new DialogAtom(element(by.className("nui-dialog")));
@@ -226,6 +230,32 @@ describe("USERCONTROL Dialog", () => {
                 expect(await overlayContainer?.$(`.${DialogAtom.DIALOG_WINDOW_CSS_CLASS}`).getCssValue("z-index")).toEqual("1000");
                 expect(await overlayContainer?.$(`.${DialogAtom.BACKDROP_CSS_CLASS}`).getCssValue("z-index")).toEqual("1000");
             });
+        });
+    });
+
+    describe("dialog with date-time-picker in overlay >", () => {
+        beforeEach(async () => {
+            await insideOverlayWithDateTimePickerBtn.scrollTo({ block: "center" });
+            await insideOverlayWithDateTimePickerBtn.click();
+            await browser.wait(ExpectedConditions.visibilityOf(dialog.getElement()), 3000, "Could not find the dialog!");
+        });
+
+        afterEach(async () => {
+            await Helpers.pressKey(Key.ESCAPE);
+        });
+
+        it("should close overlay in datepicker on click outside dialog", async () => {
+            const datePicker = dateTimePicker.getDatePicker();
+            await datePicker.toggle();
+            await browser.actions().mouseMove({x: -500, y: 0}).click().perform();
+            expect(await datePicker.overlay.isOpened()).toBe(false);
+        });
+
+        it("should close overlay in timepicker on click outside dialog", async () => {
+            const timePicker = dateTimePicker.getTimePicker();
+            await timePicker.toggle();
+            await browser.actions().mouseMove({x: -500, y: 0}).click().perform();
+            expect(await timePicker.overlay.isOpened()).toBe(false);
         });
     });
 });
