@@ -205,7 +205,8 @@ export class SelectorService {
                        selectionMode: RepeatSelectionMode,
                        totalItems?: number): ISelection {
         if (!_isUndefined(totalItems)) {
-            this.logger?.warn("'totalItems' parameter of SelectorService.selectItems is unused and deprecated. As of Nova v9, this argument may be omitted. Removal: NUI-5896");
+            this.logger?.warn("'totalItems' parameter of SelectorService.selectItems is unused and deprecated. As of Nova v9, this \
+                argument may be omitted. Removal: NUI-5896");
         }
 
         if (selectionMode === RepeatSelectionMode.radio ||
