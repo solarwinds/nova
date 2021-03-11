@@ -34,6 +34,7 @@ import {
     DialogPositionExampleComponent,
     DialogSeverityExampleComponent,
     DialogSizesExampleComponent,
+    DialogTestComponent,
     DialogVisualTestComponent,
     DialogWithKeyboardExampleComponent,
     DialogWithStaticBackdropExampleComponent,
@@ -55,7 +56,7 @@ const routes = [
     },
     {
         path: "dialog-test",
-        component: DialogDocsComponent,
+        component: DialogTestComponent,
         data: {
             showThemeSwitcher: true,
         },
@@ -125,6 +126,7 @@ const routes = [
         ConfirmationDialogExampleComponent,
         DialogCustomClassExampleComponent,
         DialogDocsComponent,
+        DialogTestComponent,
         DialogWithKeyboardExampleComponent,
         DialogPositionExampleComponent,
         DialogSeverityExampleComponent,
