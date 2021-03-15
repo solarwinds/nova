@@ -10,7 +10,7 @@ describe("Visual tests: Legend", () => {
     let seriesRenderStatesLegend: LegendAtom;
 
     beforeAll(async () => {
-        eyes = await Helpers.prepareEyes();
+        eyes = await Helpers.prepareFakeEyes();
         eyes.setStitchMode(StitchMode.Scroll);
         await Helpers.prepareBrowser("advanced-usage/legend/visual-test");
         await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
@@ -26,7 +26,7 @@ describe("Visual tests: Legend", () => {
     it("Default look", async () => {
         await eyes.open(browser, "NUI", "Legend");
         await eyes.checkWindow("Default");
-
+        await browser.sleep(10000)
         const unselectedLegendSeries = seriesRenderStatesLegend.getSeriesByIndex(0);
         await seriesRenderStatesLegend.hover(unselectedLegendSeries.getElement());
         await eyes.checkWindow("Check unselected/hidden series on hover");

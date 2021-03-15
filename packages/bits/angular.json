@@ -95,7 +95,7 @@
               "src/styles/nui-framework-theme.less",
               "src/styles/cdk-overlay-override.less",
               "demo/src/demostyles.less",
-              "dist/bundles/css/styles-font-roboto.css"
+              "src/styles/styles-font-roboto.less"
             ],
             "scripts": []
           },
