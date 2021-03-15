@@ -4,7 +4,7 @@ import { browser, by, element } from "protractor";
 
 import { LegendAtom } from "./legend.atom";
 const { StitchMode } = require("@applitools/eyes-protractor");
-describe("Visual tests: Legend", () => {
+fdescribe("Visual tests: Legend", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any;
     let seriesRenderStatesLegend: LegendAtom;
@@ -26,7 +26,8 @@ describe("Visual tests: Legend", () => {
     it("Default look", async () => {
         await eyes.open(browser, "NUI", "Legend");
         await eyes.checkWindow("Default");
-        await browser.sleep(10000)
+        await browser.sleep(10000);
+
         const unselectedLegendSeries = seriesRenderStatesLegend.getSeriesByIndex(0);
         await seriesRenderStatesLegend.hover(unselectedLegendSeries.getElement());
         await eyes.checkWindow("Check unselected/hidden series on hover");
