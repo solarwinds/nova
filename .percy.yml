@@ -16,14 +16,14 @@ snapshot:
       cursor: none !important;
     }
   # WE DON'T CARE ABOUT THE CONFIGS BELOW
-  discovery:
-    allowedHostnames: []
-    networkIdleTimeout: 100
-    disableCache: false
-  static:
-    baseUrl: /
-    files: "**/*.{html,htm}"
-    ignore: ""
-  upload:
-    files: "**/*.{png,jpg,jpeg}"
-    ignore: ""
+  # discovery:
+  #   allowedHostnames: []
+  #   networkIdleTimeout: 100
+  #   disableCache: false
+  # static:
+  #   baseUrl: /
+  #   files: "**/*.{html,htm}"
+  #   ignore: ""
+  # upload:
+  #   files: "**/*.{png,jpg,jpeg}"
+  #   ignore: ""
