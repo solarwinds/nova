@@ -1,8 +1,10 @@
 @import (reference) "../nui-framework-variables.less";
 
+@roboto-font: 'Roboto';
+
 .font-roboto() {
     @font-face {
-        font-family: 'Roboto';
+        font-family: @roboto-font;
         src: url('../../../bundles/css/Roboto-Regular.woff') format('woff'),
              url('../../../bundles/css/Roboto-Regular.woff2') format('woff2');
         font-weight: @nui-font-weight-regular;
@@ -10,11 +12,16 @@
     }
     
     @font-face {
-        font-family: 'Roboto';
+        font-family: @roboto-font;
         src: url('../../../bundles/css/Roboto-Bold.woff') format('woff'),
              url('../../../bundles/css/Roboto-Bold.woff2') format('woff2');
         font-weight: @nui-font-weight-bold;
         font-style: normal;
     }
+}
+
+.font-roboto-family() {
+    .font-roboto();
+    font-family: @roboto-font, @font-family-open-sans;
 }
 
