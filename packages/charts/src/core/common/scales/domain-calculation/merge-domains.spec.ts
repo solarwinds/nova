@@ -5,7 +5,7 @@ import { mergeDomains } from "./merge-domains";
 
 describe("merge domain >", () => {
 
-    it("have a top and bottom domain", () => {
+    it("should grab the max and min out of a two element array", () => {
         const scale = new LinearScale();
 
         const domains = [[100, 2], [1, 101]];
