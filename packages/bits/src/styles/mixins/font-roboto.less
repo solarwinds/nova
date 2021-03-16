@@ -2,26 +2,23 @@
 
 @roboto-font: 'Roboto';
 
-.font-roboto() {
+.font-roboto(
+    @regular-woff-file-path: "../../../bundles/css/Roboto-Regular";
+    @bold-woff-file-path: "../../../bundles/css/Roboto-Bold";
+    ) {
     @font-face {
         font-family: @roboto-font;
-        src: url('../../../bundles/css/Roboto-Regular.woff') format('woff'),
-             url('../../../bundles/css/Roboto-Regular.woff2') format('woff2');
+        src: url('@{regular-woff-file-path}.woff') format('woff'),
+             url('@{regular-woff-file-path}.woff2') format('woff2');
         font-weight: @nui-font-weight-regular;
         font-style: normal;
     }
     
     @font-face {
         font-family: @roboto-font;
-        src: url('../../../bundles/css/Roboto-Bold.woff') format('woff'),
-             url('../../../bundles/css/Roboto-Bold.woff2') format('woff2');
+        src: url('@{bold-woff-file-path}.woff') format('woff'),
+             url('@{bold-woff-file-path}.woff2') format('woff2');
         font-weight: @nui-font-weight-bold;
         font-style: normal;
     }
 }
-
-.font-roboto-family() {
-    .font-roboto();
-    font-family: @roboto-font, @font-family-open-sans;
-}
-
