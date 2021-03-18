@@ -54,9 +54,11 @@
             .placeholder();
 
             &:hover,
-            &:active,
-            &:focus {
+            &:active {
                 z-index: 1;
+            }
+            &:focus {
+                .focus-outline();
             }
         }
 

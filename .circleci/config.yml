@@ -482,7 +482,7 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Install node_modules
-                    command: npm install -q  
+                    command: npm install -q
             - run:
                     name: snyk auth
                     command: npm run snyk-auth
@@ -509,10 +509,10 @@ workflows:
             -   bits-visual-test:
                     requires:
                         - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
             - bits-percy-visual-test:
                   requires:
                       - bits-build

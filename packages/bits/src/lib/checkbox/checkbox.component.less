@@ -50,10 +50,8 @@
         }
 
         &:focus {
-            outline: none;
-            .nui-checkbox__mark {
-                .focus-outline();
-            }
+            .focus-outline();
+            .setCssVariable(background-color, nui-color-bg-transparent-hover);
         }
     }
 
