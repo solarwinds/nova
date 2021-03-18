@@ -9,7 +9,7 @@ commands:
                 type: string
         steps:
             - run: |
-                if [ <<parameters.to>> = "quit" ]; then
+                if [ <<parameters.package>> = "quit" ]; then
                     circleci-agent step halt
                 fi
             - run: |
