@@ -12,9 +12,16 @@ commands:
                 if [ <<parameters.package>> = "quit" ]; then
                     circleci-agent step halt
                 fi
-            - run: |
-                  export gitCommit=`git log --pretty=format:'%H' -n 1 <<parameters.package>>`
-                  echo $gitCommit
+            - run:
+                name: Grab latest commit of package
+                command: |
+                    export gitCommit=`git log --pretty=format:'%H' -n 1 <<parameters.package>>`
+                    echo $gitCommit > <<parameters.package>>/test
+                    ls <<parameters.package>>
+            -   save_cache:
+                      key: <<parameters.package>>-dist-{{ $gitCommit }}
+                      paths:
+                          - .<<parameters.package>>/test
 
 jobs:
     bits-build:
