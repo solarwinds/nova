@@ -55,6 +55,7 @@ jobs:
                     key: bits-dist-{{ checksum "packages/bits/git-commit" }}
                     paths:
                         - ./packages/bits/dist
+                        - ./packages/bits/sdk
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -240,6 +241,7 @@ jobs:
                     key: charts-dist-{{ checksum "packages/charts/git-commit" }}
                     paths:
                         - ./packages/charts/dist
+                        - ./packages/charts/sdk
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -385,6 +387,7 @@ jobs:
                     key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
                     paths:
                         - ./packages/dashboards/dist
+                        - ./packages/dashboards/sdk
             -   persist_to_workspace:
                     root: .
                     paths:
