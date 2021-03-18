@@ -19,7 +19,7 @@ commands:
                     echo $gitCommit > <<parameters.package>>/test
                     ls <<parameters.package>>
             -   save_cache:
-                      key: <<parameters.package>>-dist-{{ $gitCommit }}
+                      key: <<parameters.package>>-dist-$gitCommit
                       paths:
                           - .<<parameters.package>>/test
 
@@ -31,7 +31,7 @@ jobs:
         environment:
             PROJECT_DIR: ./packages/bits
             BUILD_COUNTER: << pipeline.number >>
-        resource_class: medium+
+#        resource_class: medium+
         steps:
             -   checkout:
                     path: ~/nova
