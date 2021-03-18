@@ -10,47 +10,51 @@ jobs:
         environment:
             PROJECT_DIR: ./packages/bits
             BUILD_COUNTER: << pipeline.number >>
-#        resource_class: medium+
+        resource_class: medium+
         steps:
             -   checkout:
                     path: ~/nova
-#            -   run:
-#                    name: Compute build version
-#                    command: yarn run compute-version-ci
+            -   run:
+                    name: Compute build version
+                    command: yarn run compute-version-ci
             -   run:
                     name: Grab latest commit of package
                     command: |
                         export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
                         echo $gitCommit > $PROJECT_DIR/git-commit
-                        echo "test" > $PROJECT_DIR/test
-                        ls $PROJECT_DIR
-#            -   restore_cache:
-#                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
-#            -   run:
-#                    working_directory: ~/nova/packages/bits
-#                    name: Installing node dependencies (if necessary)
-#                    command: |
-#                        if [ -d "node_modules" ];
-#                        then
-#                            echo "skipping npm install as it was restored from cache. Running only postinstall"
-#                            yarn run postinstall
-#                        else
-#                            yarn install --frozen-lockfile
-#                        fi
-#            -   save_cache:
-#                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
-#                    paths:
-#                        - ./packages/bits/node_modules
+            -   restore_cache:
+                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+            -   run:
+                    working_directory: ~/nova/packages/bits
+                    name: Installing node dependencies (if necessary)
+                    command: |
+                        if [ -d "node_modules" ];
+                        then
+                            echo "skipping npm install as it was restored from cache. Running only postinstall"
+                            yarn run postinstall
+                        else
+                            yarn install --frozen-lockfile
+                        fi
+            -   save_cache:
+                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+                    paths:
+                        - ./packages/bits/node_modules
             -   restore_cache:
                     key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-#            -   run:
-#                    working_directory: ~/nova/packages/bits
-#                    name: Assemble
-#                    command: yarn run assemble
+            -   run:
+                    working_directory: ~/nova/packages/bits
+                    name: Assemble
+                    command: |
+                            if [ -d "dist" ];
+                            then
+                                echo "skipping yarn assemble as it was restored from cache"
+                            else
+                                yarn run assemble
+                            fi
             -   save_cache:
                     key: bits-dist-{{ checksum "packages/bits/git-commit" }}
                     paths:
-                        - $PROJECT_DIR/test
+                        - $PROJECT_DIR/dist
             - run:
                   name: Read files
                   command: ls $PROJECT_DIR
