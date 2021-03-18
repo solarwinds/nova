@@ -634,12 +634,12 @@ workflows:
 #                        - common-build-creds
 #                    requires:
 #                        - dashboards-pack
-#            -   dashboards-unit-test:
-#                    requires:
-#                        - dashboards-build
-#            -   dashboards-e2e-test:
-#                    requires:
-#                        - dashboards-build
+            -   dashboards-unit-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-e2e-test:
+                    requires:
+                        - dashboards-build
 #            -   dashboards-visual-test:
 #                    requires:
 #                        - dashboards-build
