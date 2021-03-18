@@ -1,6 +1,20 @@
 version: 2.1
 orbs:
     snyk: snyk/snyk@0.0.12
+commands:
+    save-dist-assemble:
+        parameters:
+            package:
+                default: "quit"
+                type: string
+        steps:
+            - run: |
+                if [ <<parameters.to>> = "quit" ]; then
+                    circleci-agent step halt
+                fi
+            - run: |
+                  export gitCommit=`git log --pretty=format:'%H' -n 1 {{$package}}`
+                  echo $gitCommit
 
 jobs:
     bits-build:
@@ -14,40 +28,42 @@ jobs:
         steps:
             -   checkout:
                     path: ~/nova
-            -   run:
-                    name: Compute build version
-                    command: yarn run compute-version-ci
-            -   restore_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Installing node dependencies (if necessary)
-                    command: |
-                        if [ -d "node_modules" ];
-                        then
-                            echo "skipping npm install as it was restored from cache. Running only postinstall"
-                            yarn run postinstall
-                        else
-                            yarn install --frozen-lockfile
-                        fi
-            -   save_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
-                    paths:
-                        - ./packages/bits/node_modules
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Assemble
-                    command: yarn run assemble
-            -   persist_to_workspace:
-                    root: .
-                    paths:
-                        - packages
-                        - ts-lint-rules
-                        - scripts
-                        - docker-compose.yml
-                        - tsconfig.main.json
-                        - package.json
-                        - LICENSE
+#            -   run:
+#                    name: Compute build version
+#                    command: yarn run compute-version-ci
+#            -   restore_cache:
+#                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+#            -   run:
+#                    working_directory: ~/nova/packages/bits
+#                    name: Installing node dependencies (if necessary)
+#                    command: |
+#                        if [ -d "node_modules" ];
+#                        then
+#                            echo "skipping npm install as it was restored from cache. Running only postinstall"
+#                            yarn run postinstall
+#                        else
+#                            yarn install --frozen-lockfile
+#                        fi
+#            -   save_cache:
+#                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+#                    paths:
+#                        - ./packages/bits/node_modules
+#            -   run:
+#                    working_directory: ~/nova/packages/bits
+#                    name: Assemble
+#                    command: yarn run assemble
+            -   save-dist-assemble:
+                    package: $PROJECT_DIR
+#            -   persist_to_workspace:
+#                    root: .
+#                    paths:
+#                        - packages
+#                        - ts-lint-rules
+#                        - scripts
+#                        - docker-compose.yml
+#                        - tsconfig.main.json
+#                        - package.json
+#                        - LICENSE
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
@@ -482,14 +498,14 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Install node_modules
-                    command: npm install -q  
-            - run:
+                    command: npm install -q
+            -   run:
                     name: snyk auth
                     command: npm run snyk-auth
-            - run:
+            -   run:
                     name: snyk monitor
                     command: npm run snyk-monitor
-            - run:
+            -   run:
                     name: snyk test
                     command: npm run snyk-test
 workflows:
@@ -497,133 +513,133 @@ workflows:
     nova:
         jobs:
             - bits-build
-            -   bits-pack:
-                    requires:
-                        - bits-build
-            -   bits-unit-test:
-                    requires:
-                        - bits-build
-            -   bits-e2e-test:
-                    requires:
-                        - bits-build
-            -   bits-visual-test:
-                    requires:
-                        - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-            - bits-percy-visual-test:
-                  requires:
-                      - bits-build
-                  filters:
-                        branches:
-                            only:
-                                - main
-                                - next
-            -   bits-a11y-test:
-                    requires:
-                        - bits-build
-            -   bits-publish:
-                    requires:
-                        - bits-e2e-test
-                        - bits-unit-test
-                        - charts-e2e-test
-                        - charts-unit-test
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - /release\/.*/
-                                - next
-            -   charts-build:
-                    requires:
-                        - bits-pack
-            -   charts-pack:
-                    requires:
-                        - charts-build
-            -   charts-unit-test:
-                    requires:
-                        - charts-build
-            -   charts-e2e-test:
-                    requires:
-                        - charts-build
-            -   charts-visual-test:
-                    requires:
-                        - charts-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
-            -   charts-publish:
-                    requires:
-                        - bits-e2e-test
-                        - bits-unit-test
-                        - charts-e2e-test
-                        - charts-unit-test
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - /release\/.*/
-                                - next
-            -   dashboards-build:
-                    requires:
-                        - charts-pack
-            -   dashboards-pack:
-                    requires:
-                        - dashboards-build
-            -   nova-docs:
-                    context:
-                        - common-build-creds
-                    requires:
-                        - dashboards-pack
-            -   dashboards-unit-test:
-                    requires:
-                        - dashboards-build
-            -   dashboards-e2e-test:
-                    requires:
-                        - dashboards-build
-            -   dashboards-visual-test:
-                    requires:
-                        - dashboards-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
-            -   dashboards-publish:
-                    requires:
-                        - bits-e2e-test
-                        - bits-unit-test
-                        - charts-e2e-test
-                        - charts-unit-test
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - /release\/.*/
-                                - next
-            # Waiting on dashboards build before running scan because it's currently the last package to be built.
-            -   snyk-test:
-                    requires:
-                        - dashboards-build
-
-    nova-release:
-        jobs:
-            -   release-approval:
-                    type: approval
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   release-prep:
-                    requires:
-                        - release-approval
+#            -   bits-pack:
+#                    requires:
+#                        - bits-build
+#            -   bits-unit-test:
+#                    requires:
+#                        - bits-build
+#            -   bits-e2e-test:
+#                    requires:
+#                        - bits-build
+#            -   bits-visual-test:
+#                    requires:
+#                        - bits-build
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#            -   bits-percy-visual-test:
+#                    requires:
+#                        - bits-build
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#                                - next
+#            -   bits-a11y-test:
+#                    requires:
+#                        - bits-build
+#            -   bits-publish:
+#                    requires:
+#                        - bits-e2e-test
+#                        - bits-unit-test
+#                        - charts-e2e-test
+#                        - charts-unit-test
+#                        - dashboards-e2e-test
+#                        - dashboards-unit-test
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#                                - /release\/.*/
+#                                - next
+#            -   charts-build:
+#                    requires:
+#                        - bits-pack
+#            -   charts-pack:
+#                    requires:
+#                        - charts-build
+#            -   charts-unit-test:
+#                    requires:
+#                        - charts-build
+#            -   charts-e2e-test:
+#                    requires:
+#                        - charts-build
+#            -   charts-visual-test:
+#                    requires:
+#                        - charts-build
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#                                - next
+#            -   charts-publish:
+#                    requires:
+#                        - bits-e2e-test
+#                        - bits-unit-test
+#                        - charts-e2e-test
+#                        - charts-unit-test
+#                        - dashboards-e2e-test
+#                        - dashboards-unit-test
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#                                - /release\/.*/
+#                                - next
+#            -   dashboards-build:
+#                    requires:
+#                        - charts-pack
+#            -   dashboards-pack:
+#                    requires:
+#                        - dashboards-build
+#            -   nova-docs:
+#                    context:
+#                        - common-build-creds
+#                    requires:
+#                        - dashboards-pack
+#            -   dashboards-unit-test:
+#                    requires:
+#                        - dashboards-build
+#            -   dashboards-e2e-test:
+#                    requires:
+#                        - dashboards-build
+#            -   dashboards-visual-test:
+#                    requires:
+#                        - dashboards-build
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#                                - next
+#            -   dashboards-publish:
+#                    requires:
+#                        - bits-e2e-test
+#                        - bits-unit-test
+#                        - charts-e2e-test
+#                        - charts-unit-test
+#                        - dashboards-e2e-test
+#                        - dashboards-unit-test
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#                                - /release\/.*/
+#                                - next
+#            # Waiting on dashboards build before running scan because it's currently the last package to be built.
+#            -   snyk-test:
+#                    requires:
+#                        - dashboards-build
+#
+#    nova-release:
+#        jobs:
+#            -   release-approval:
+#                    type: approval
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
+#            -   release-prep:
+#                    requires:
+#                        - release-approval
