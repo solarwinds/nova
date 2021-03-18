@@ -1,27 +1,6 @@
 version: 2.1
 orbs:
     snyk: snyk/snyk@0.0.12
-commands:
-    save-dist-assemble:
-        parameters:
-            package:
-                default: "quit"
-                type: string
-        steps:
-            - run: |
-                if [ <<parameters.package>> = "quit" ]; then
-                    circleci-agent step halt
-                fi
-            - run:
-                name: Grab latest commit of package
-                command: |
-                    export gitCommit=`git log --pretty=format:'%H' -n 1 <<parameters.package>>`
-                    echo $gitCommit > <<parameters.package>>/test
-                    ls <<parameters.package>>
-            -   save_cache:
-                      key: <<parameters.package>>-dist-$gitCommit
-                      paths:
-                          - .<<parameters.package>>/test
 
 jobs:
     bits-build:
@@ -38,6 +17,12 @@ jobs:
 #            -   run:
 #                    name: Compute build version
 #                    command: yarn run compute-version-ci
+            -   run:
+                    name: Grab latest commit of package
+                    command: |
+                        export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
+                        echo $gitCommit > $PROJECT_DIR/test
+                        ls $PROJECT_DIR
 #            -   restore_cache:
 #                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
 #            -   run:
@@ -55,12 +40,17 @@ jobs:
 #                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
 #                    paths:
 #                        - ./packages/bits/node_modules
+            -   restore_cache:
+                    key: bits-dist-{{ .Environment.gitCommit }}
 #            -   run:
 #                    working_directory: ~/nova/packages/bits
 #                    name: Assemble
 #                    command: yarn run assemble
-            -   save-dist-assemble:
-                    package: $PROJECT_DIR
+            -   save_cache:
+                    key: bits-dist-{{ .Environment.gitCommit }}
+                    paths:
+                        - .$PROJECT_DIR/test
+
 #            -   persist_to_workspace:
 #                    root: .
 #                    paths:
