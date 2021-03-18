@@ -55,19 +55,16 @@ jobs:
                     key: bits-dist-{{ checksum "packages/bits/git-commit" }}
                     paths:
                         - $PROJECT_DIR/dist
-            - run:
-                  name: Read files
-                  command: ls $PROJECT_DIR
-#            -   persist_to_workspace:
-#                    root: .
-#                    paths:
-#                        - packages
-#                        - ts-lint-rules
-#                        - scripts
-#                        - docker-compose.yml
-#                        - tsconfig.main.json
-#                        - package.json
-#                        - LICENSE
+            -   persist_to_workspace:
+                    root: .
+                    paths:
+                        - packages
+                        - ts-lint-rules
+                        - scripts
+                        - docker-compose.yml
+                        - tsconfig.main.json
+                        - package.json
+                        - LICENSE
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
@@ -517,133 +514,133 @@ workflows:
     nova:
         jobs:
             - bits-build
-#            -   bits-pack:
-#                    requires:
-#                        - bits-build
-#            -   bits-unit-test:
-#                    requires:
-#                        - bits-build
-#            -   bits-e2e-test:
-#                    requires:
-#                        - bits-build
-#            -   bits-visual-test:
-#                    requires:
-#                        - bits-build
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#            -   bits-percy-visual-test:
-#                    requires:
-#                        - bits-build
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#                                - next
-#            -   bits-a11y-test:
-#                    requires:
-#                        - bits-build
-#            -   bits-publish:
-#                    requires:
-#                        - bits-e2e-test
-#                        - bits-unit-test
-#                        - charts-e2e-test
-#                        - charts-unit-test
-#                        - dashboards-e2e-test
-#                        - dashboards-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#                                - /release\/.*/
-#                                - next
-#            -   charts-build:
-#                    requires:
-#                        - bits-pack
-#            -   charts-pack:
-#                    requires:
-#                        - charts-build
-#            -   charts-unit-test:
-#                    requires:
-#                        - charts-build
-#            -   charts-e2e-test:
-#                    requires:
-#                        - charts-build
-#            -   charts-visual-test:
-#                    requires:
-#                        - charts-build
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#                                - next
-#            -   charts-publish:
-#                    requires:
-#                        - bits-e2e-test
-#                        - bits-unit-test
-#                        - charts-e2e-test
-#                        - charts-unit-test
-#                        - dashboards-e2e-test
-#                        - dashboards-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#                                - /release\/.*/
-#                                - next
-#            -   dashboards-build:
-#                    requires:
-#                        - charts-pack
-#            -   dashboards-pack:
-#                    requires:
-#                        - dashboards-build
-#            -   nova-docs:
-#                    context:
-#                        - common-build-creds
-#                    requires:
-#                        - dashboards-pack
-#            -   dashboards-unit-test:
-#                    requires:
-#                        - dashboards-build
-#            -   dashboards-e2e-test:
-#                    requires:
-#                        - dashboards-build
-#            -   dashboards-visual-test:
-#                    requires:
-#                        - dashboards-build
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#                                - next
-#            -   dashboards-publish:
-#                    requires:
-#                        - bits-e2e-test
-#                        - bits-unit-test
-#                        - charts-e2e-test
-#                        - charts-unit-test
-#                        - dashboards-e2e-test
-#                        - dashboards-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#                                - /release\/.*/
-#                                - next
-#            # Waiting on dashboards build before running scan because it's currently the last package to be built.
-#            -   snyk-test:
-#                    requires:
-#                        - dashboards-build
-#
-#    nova-release:
-#        jobs:
-#            -   release-approval:
-#                    type: approval
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#            -   release-prep:
-#                    requires:
-#                        - release-approval
+            -   bits-pack:
+                    requires:
+                        - bits-build
+            -   bits-unit-test:
+                    requires:
+                        - bits-build
+            -   bits-e2e-test:
+                    requires:
+                        - bits-build
+            -   bits-visual-test:
+                    requires:
+                        - bits-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   bits-percy-visual-test:
+                    requires:
+                        - bits-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - next
+            -   bits-a11y-test:
+                    requires:
+                        - bits-build
+            -   bits-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /release\/.*/
+                                - next
+            -   charts-build:
+                    requires:
+                        - bits-pack
+            -   charts-pack:
+                    requires:
+                        - charts-build
+            -   charts-unit-test:
+                    requires:
+                        - charts-build
+            -   charts-e2e-test:
+                    requires:
+                        - charts-build
+            -   charts-visual-test:
+                    requires:
+                        - charts-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - next
+            -   charts-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /release\/.*/
+                                - next
+            -   dashboards-build:
+                    requires:
+                        - charts-pack
+            -   dashboards-pack:
+                    requires:
+                        - dashboards-build
+            -   nova-docs:
+                    context:
+                        - common-build-creds
+                    requires:
+                        - dashboards-pack
+            -   dashboards-unit-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-e2e-test:
+                    requires:
+                        - dashboards-build
+            -   dashboards-visual-test:
+                    requires:
+                        - dashboards-build
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - next
+            -   dashboards-publish:
+                    requires:
+                        - bits-e2e-test
+                        - bits-unit-test
+                        - charts-e2e-test
+                        - charts-unit-test
+                        - dashboards-e2e-test
+                        - dashboards-unit-test
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /release\/.*/
+                                - next
+            # Waiting on dashboards build before running scan because it's currently the last package to be built.
+            -   snyk-test:
+                    requires:
+                        - dashboards-build
+
+    nova-release:
+        jobs:
+            -   release-approval:
+                    type: approval
+                    filters:
+                        branches:
+                            only:
+                                - main
+            -   release-prep:
+                    requires:
+                        - release-approval
