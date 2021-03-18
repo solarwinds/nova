@@ -13,7 +13,7 @@ commands:
                     circleci-agent step halt
                 fi
             - run: |
-                  export gitCommit=`git log --pretty=format:'%H' -n 1 {{$package}}`
+                  export gitCommit=`git log --pretty=format:'%H' -n 1 <<parameters.package>>`
                   echo $gitCommit
 
 jobs:
