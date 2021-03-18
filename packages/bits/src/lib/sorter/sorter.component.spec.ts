@@ -152,8 +152,6 @@ describe("components >", () => {
                 const newValue = _assign({}, oldValue, {
                     direction: SorterDirection.descending,
                 });
-                component.sortDirection = newValue.direction;
-                component.selectedItem = itemsSource[0].value;
 
                 const changes: SimpleChanges = {
                     sortDirection: { currentValue: newValue.direction, previousValue: oldValue.direction } as SimpleChange,

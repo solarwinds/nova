@@ -72,7 +72,6 @@ export class SorterTestExampleComponent implements OnInit {
         this.columns = this.emptyColumns;
         this.sortBy = "";
         this.showSubject.next(true);
-        console.log("THIS", this);
     }
 
     public updateSorterByProperty() {

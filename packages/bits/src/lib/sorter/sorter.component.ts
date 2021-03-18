@@ -107,6 +107,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
         if (changes.sortDirection && !changes.sortDirection.firstChange && this.sortConfig?.direction !== changes.sortDirection.currentValue) {
             const oldValue = this.sortConfig;
+            this.sortDirection = changes.sortDirection.currentValue;
             this.sortConfig = _assign({}, this.sortConfig, {
                 direction: this.sortDirection,
             });
