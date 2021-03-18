@@ -61,6 +61,7 @@ jobs:
                         - packages
                         - ts-lint-rules
                         - scripts
+                        - .git
                         - docker-compose.yml
                         - tsconfig.main.json
                         - package.json
@@ -187,10 +188,11 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
+                    working_directory: ~/nova/packages/charts
                     name: Grab latest commit of package
                     command: |
-                        export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
-                        echo $gitCommit > $PROJECT_DIR/git-commit
+                        export gitCommit=`git log --pretty=format:'%H' -n 1 .`
+                        echo $gitCommit > ./git-commit
             -   run:
                     working_directory: ~/nova/packages/charts
                     name: Temporarily remove dependencies
