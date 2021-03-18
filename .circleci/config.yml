@@ -54,7 +54,7 @@ jobs:
             -   save_cache:
                     key: bits-dist-{{ checksum "packages/bits/git-commit" }}
                     paths:
-                        - $PROJECT_DIR/dist
+                        - ./packages/bits/dist
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -237,7 +237,7 @@ jobs:
             -   save_cache:
                     key: charts-dist-{{ checksum "packages/charts/git-commit" }}
                     paths:
-                        - $PROJECT_DIR/dist
+                        - ./packages/charts/dist
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -382,7 +382,7 @@ jobs:
             -   save_cache:
                     key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
                     paths:
-                        - $PROJECT_DIR/dist
+                        - ./packages/dashboards/dist
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -678,4 +678,3 @@ workflows:
             -   release-prep:
                     requires:
                         - release-approval
-
