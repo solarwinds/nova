@@ -41,13 +41,13 @@ jobs:
 #                    paths:
 #                        - ./packages/bits/node_modules
             -   restore_cache:
-                    key: bits-dist-{{ .Environment.gitCommit }}
+                    key: bits-dist-${gitCommit}
 #            -   run:
 #                    working_directory: ~/nova/packages/bits
 #                    name: Assemble
 #                    command: yarn run assemble
             -   save_cache:
-                    key: bits-dist-{{ .Environment.gitCommit }}
+                    key: bits-dist-{{ $gitCommit }}
                     paths:
                         - .$PROJECT_DIR/test
 
