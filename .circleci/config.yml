@@ -187,6 +187,11 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
+                    name: Grab latest commit of package
+                    command: |
+                        export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
+                        echo $gitCommit > $PROJECT_DIR/git-commit
+            -   run:
                     working_directory: ~/nova/packages/charts
                     name: Temporarily remove dependencies
                     command: |
@@ -217,10 +222,22 @@ jobs:
                     working_directory: ~/nova/packages/charts
                     name: Restore package.json
                     command: mv -f package.json~ package.json
+            -   restore_cache:
+                    key: charts-dist-{{ checksum "packages/charts/git-commit" }}
             -   run:
                     working_directory: ~/nova/packages/charts
                     name: Assemble
-                    command: yarn run assemble
+                    command: |
+                        if [ -d "dist" ];
+                        then
+                            echo "skipping yarn assemble as it was restored from cache"
+                        else
+                            yarn run assemble
+                        fi
+            -   save_cache:
+                    key: charts-dist-{{ checksum "packages/charts/git-commit" }}
+                    paths:
+                        - $PROJECT_DIR/dist
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -311,6 +328,11 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
+                    name: Grab latest commit of package
+                    command: |
+                        export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
+                        echo $gitCommit > $PROJECT_DIR/git-commit
+            -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Temporarily remove dependencies
                     command: |
@@ -345,10 +367,22 @@ jobs:
                     working_directory: ~/nova/packages/dashboards
                     name: Restore package.json
                     command: mv -f package.json~ package.json
+            -   restore_cache:
+                    key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Assemble
-                    command: yarn run assemble
+                    command: |
+                        if [ -d "dist" ];
+                        then
+                            echo "skipping yarn assemble as it was restored from cache"
+                        else
+                            yarn run assemble
+                        fi
+            -   save_cache:
+                    key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
+                    paths:
+                        - $PROJECT_DIR/dist
             -   persist_to_workspace:
                     root: .
                     paths:
