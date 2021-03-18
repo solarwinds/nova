@@ -14,6 +14,7 @@ import { SorterExampleComponent } from "./sorter-docs/sorter-docs.example.compon
 import { SorterLegacyStringInputUsageVisualTestComponent } from "./sorter-visual-test/sorter-legacy-string-input-usage/sorter-legacy-string-input-usage-visual-test.component";
 import { SorterRecommendedUsageVisualTestComponent } from "./sorter-visual-test/sorter-recommended-usage/sorter-recommended-usage-visual-test.component";
 import { SorterVisualTestHarnessComponent } from "./sorter-visual-test/sorter-visual-test-harness.component";
+import {SorterTestExampleComponent} from "./sorter-test/sorter-test.example.component"; 
 
 const routes = [
     {
@@ -25,6 +26,10 @@ const routes = [
             },
             showThemeSwitcher: true,
         },
+    },
+    {
+        path: "sorter-test",
+        component: SorterTestExampleComponent,
     },
     {
         path: "visual-test",
@@ -51,6 +56,7 @@ const routes = [
         SorterExampleComponent,
         SorterRecommendedUsageVisualTestComponent,
         SorterVisualTestHarnessComponent,
+        SorterTestExampleComponent,
     ],
     providers: [
         {
