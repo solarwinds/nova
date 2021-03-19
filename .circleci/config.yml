@@ -89,7 +89,7 @@ jobs:
             -   run:
                     name: Check git diff to see if builds should skip e2e
                     command: |
-                        export $BIT_CHANGES=$(git diff HEAD..main .)
+                        export BIT_CHANGES=$(git diff HEAD..main .)
                         if [[ -n "$BIT_CHANGES" ]]
                         then
                             echo "Detecting changes running e2e"
