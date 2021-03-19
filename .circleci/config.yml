@@ -509,10 +509,10 @@ workflows:
             -   bits-visual-test:
                     requires:
                         - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
+#                    filters:
+#                        branches:
+#                            only:
+#                                - main
             - bits-percy-visual-test:
                   requires:
                       - bits-build

@@ -16,7 +16,7 @@
         &.btn {
             min-width: @nui-selector-checkbox-button-width;
             width: @nui-selector-checkbox-button-width;
-            padding: 0 @nui-space-xxs 0 @nui-space-xxs;
+            padding: 0;
             &:focus {
                 outline: none;
             }
@@ -25,6 +25,14 @@
 
     &__checkbox-container {
         margin: -(@nui-button-border-width) 0;
+    }
+
+    .nui-checkbox__label {
+        &:focus {
+            .nui-checkbox__mark {
+                .focus-outline();
+            }
+        }
     }
 
     &__toggle {

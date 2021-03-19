@@ -8,6 +8,12 @@
             font-weight: @nui-font-weight-regular;
             font-size: @nui-font-size-default;
             width: 100%;
+
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 @nui-line-medium transparent;
+                .setCssVariable(background-color, transparent);
+            }
         }
 
         .nui-menu-item__checkbox > .nui-checkbox {
