@@ -219,17 +219,20 @@ export class XYGrid extends Grid implements IGrid {
             .map(rs => rs.series);
 
         if (emphasizedSeries.length > 0) {
-            const emphasizedYScales = uniq(emphasizedSeries.map(s => s?.scales["y"]).filter(s => !!s));
+            const emphasizedYScales = uniq(emphasizedSeries.map(s => s?.scales["y"] as IScale<any>).filter(s => !!s));
             if (emphasizedYScales.length <= 0) {
                 return {};
             }
 
-            const emphasizedYScale = emphasizedYScales[0] as IScale<any>;
-
-            return axes.reduce((acc, next) => {
-                acc[next.scaleId] = emphasizedYScale.id === next.scaleId ? 1 : 0.1;
-                return acc;
-            }, {} as Record<string, number>);
+            for (const emphasizedYScale of emphasizedYScales) {
+                if (emphasizedYScale.id === this.leftScaleId || emphasizedYScale.id === this.rightScaleId) {
+                    return axes.reduce((acc, next) => {
+                        acc[next.scaleId] = emphasizedYScale.id === next.scaleId ? 1 : 0.1;
+                        return acc;
+                    }, {} as Record<string, number>);
+                }
+            }
+            return {};
         } else {
             return axes.reduce((acc, next) => {
                 acc[next.scaleId] = 1;

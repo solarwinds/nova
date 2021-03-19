@@ -3,10 +3,10 @@ import { Axis } from "d3-axis";
 import { Selection } from "d3-selection";
 import { Subject } from "rxjs";
 
+import { EventBus } from "../common/event-bus";
 import { Lasagna } from "../common/lasagna";
 import { ScalesIndex } from "../common/scales/types";
 import { D3Selection, IChart, IChartEvent, IChartPlugin } from "../common/types";
-import { EventBus } from "../common/event-bus";
 
 /**
  * Interface for defining aspects of the top, right, bottom, and left sides of a grid

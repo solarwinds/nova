@@ -30,7 +30,7 @@ describe("XYGrid >", () => {
 
     const testBottomScaleId = "testBottomId";
     const testLeftScaleId = "testLeftId";
-    const testRightScaleId = "testLeftId";
+    const testRightScaleId = "testRightId";
     let testBottomScale: IScale<any>;
     let testLeftScale: IScale<any>;
     let testRightScale: IScale<any>;
@@ -64,8 +64,13 @@ describe("XYGrid >", () => {
         testLeftScale = new LinearScale(testLeftScaleId);
         testRightScale = new LinearScale(testRightScaleId);
         grid.scales["x"] = createScale(testBottomScale);
-        grid.scales["y"] = createScale(testLeftScale);
-        grid.scales["y"] = createScale(testRightScale);
+        grid.scales["y"] = {
+            index: {
+                [testLeftScale.id]: testLeftScale,
+                [testRightScale.id]: testRightScale,
+            },
+            list: [testLeftScale, testRightScale],
+        };
         grid.bottomScaleId = testBottomScaleId;
         grid.leftScaleId = testLeftScaleId;
         grid.rightScaleId = testRightScaleId;
@@ -662,9 +667,7 @@ describe("XYGrid >", () => {
 
     describe("axes highlighting", () => {
 
-        fit("highlights axes", fakeAsync(() => {
-            // buildAndUpdateAxes();
-
+        fit("highlights axes", () => {
             const seriesSet = [
                 {
                     id: "series1",
@@ -673,7 +676,7 @@ describe("XYGrid >", () => {
                     renderer: new LineRenderer(),
                     accessors: new LineAccessors(),
                     scales: {
-                        x: grid.scales["x"].list[0],
+                        x: testBottomScale,
                         y: testLeftScale,
                     },
                 },
@@ -684,12 +687,13 @@ describe("XYGrid >", () => {
                     renderer: new LineRenderer(),
                     accessors: new LineAccessors(),
                     scales: {
-                        x: grid.scales["x"].list[0],
+                        x: testBottomScale,
                         y: testRightScale,
                     },
                 },
             ];
 
+            chart.update(seriesSet);
             chart.setSeriesStates([
                 {
                     series: seriesSet[0],
@@ -707,6 +711,6 @@ describe("XYGrid >", () => {
             expect(grid.axisYLeft.group.attr("opacity")).toBe("1");
             // @ts-ignore
             expect(grid.axisYRight.group.attr("opacity")).toBe("0.1");
-        }));
+        });
     });
 });

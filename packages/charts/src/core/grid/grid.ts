@@ -3,6 +3,7 @@ import each from "lodash/each";
 import isEmpty from "lodash/isEmpty";
 import { Subject } from "rxjs";
 
+import { EventBus } from "../common/event-bus";
 import { Lasagna } from "../common/lasagna";
 import { ScalesIndex } from "../common/scales/types";
 import { IChart, IChartEvent, IChartPlugin } from "../common/types";
@@ -11,7 +12,6 @@ import { UtilityService } from "../common/utility.service";
 
 import { GridConfig } from "./config/grid-config";
 import { IAllAround, IBorderConfig, IBorders, IDimensions, IGrid, IGridConfig } from "./types";
-import { EventBus } from "../common/event-bus";
 
 export const borderMidpoint = 0.5;
 

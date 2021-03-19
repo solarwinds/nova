@@ -2,14 +2,14 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import {
     Chart,
     ChartAssist,
+    IChartEvent,
     IChartSeries,
     ILineAccessors,
+    IXYGridOpacityEventPayload,
     LineAccessors,
     LinearScale,
     LineRenderer,
-    TimeScale,
-    XYGrid,
-    XY_GRID_AXES_OPACITY_EVENT, IXYGridOpacityEventPayload, IChartEvent
+    TimeScale, XYGrid, XY_GRID_AXES_OPACITY_EVENT
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 import { Subject } from "rxjs";
