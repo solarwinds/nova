@@ -87,6 +87,17 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    command: |
+                        export $BIT_CHANGES=$(git diff HEAD..main ./bits)
+                        if [[ -n "$BIT_CHANGES" ]]
+                        then
+                            echo "Detecting changes running e2e"
+                        else
+                            echo "No changes found skipping e2e"
+                            circleci step halt
+                        fi
+            -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
             -   run:
