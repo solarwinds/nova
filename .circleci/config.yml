@@ -48,6 +48,7 @@ jobs:
                             if [ -d "dist" ];
                             then
                                 echo "skipping yarn assemble as it was restored from cache"
+                                touch package-cached
                             else
                                 yarn run assemble
                             fi
@@ -89,12 +90,8 @@ jobs:
             -   run:
                     name: Check git diff to see if builds should skip e2e
                     command: |
-                        export BIT_CHANGES=$(git diff HEAD..main .)
-                        if [[ -n "$BIT_CHANGES" ]]
-                        then
-                            echo "Detecting changes running e2e"
-                        else
-                            echo "No changes found skipping e2e"
+                        if [ -f package-cached ]; then
+                            echo "Package was cached so skipping e2e tests"
                             circleci step halt
                         fi
             -   run:
