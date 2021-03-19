@@ -89,6 +89,7 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/bits
                     command: |
                         if [ -f package-cached ]; then
                             echo "Package was cached so skipping e2e tests"
