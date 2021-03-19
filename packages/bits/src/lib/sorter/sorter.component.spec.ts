@@ -141,6 +141,28 @@ describe("components >", () => {
                 expect(component.selectedItem).toEqual(newValue.sortBy);
                 expect(component.sorterAction.emit).toHaveBeenCalledWith({ newValue, oldValue });
             });
+
+            it("should emit the sorterAction and update the sortConfig direction when sortDirection changes", () => {
+                spyOn(component.sorterAction, "emit");
+
+                const oldValue = {
+                    sortBy: itemsSource[0].value,
+                    direction: SorterDirection.ascending,
+                };
+                const newValue = _assign({}, oldValue, {
+                    direction: SorterDirection.descending,
+                });
+
+                const changes: SimpleChanges = {
+                    sortDirection: { currentValue: newValue.direction, previousValue: oldValue.direction } as SimpleChange,
+                };
+
+                component.ngOnChanges(changes);
+
+                expect(component.sortDirection).toEqual(newValue.direction);
+                expect((<any>component).sortConfig.direction).toEqual(newValue.direction);
+                expect(component.sorterAction.emit).toHaveBeenCalledWith({ newValue, oldValue });
+            });
         });
 
         describe("ngAfterViewInit() >", () => {

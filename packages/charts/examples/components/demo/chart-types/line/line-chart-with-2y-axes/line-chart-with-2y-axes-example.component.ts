@@ -128,5 +128,10 @@ function getData() {
                 { x: moment("2017-01-03T15:14:29.909Z", format), y: 90 },
             ],
         },
+        {
+            id: "series-4",
+            name: "No data",
+            data: [],
+        },
     ];
 }
