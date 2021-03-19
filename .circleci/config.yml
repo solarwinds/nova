@@ -198,11 +198,12 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
-                    working_directory: ~/nova/packages/charts
+                    working_directory: ~/nova/packages
                     name: Grab latest commit of package
                     command: |
-                        export gitCommit=`git log --pretty=format:'%H' -n 1 .`
-                        echo $gitCommit > ./git-commit
+                        export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
+                        export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
+                        echo $bitsCommit $chartsCommit > ./charts/git-commit
             -   run:
                     working_directory: ~/nova/packages/charts
                     name: Temporarily remove dependencies
@@ -243,6 +244,7 @@ jobs:
                         if [ -d "dist" ];
                         then
                             echo "skipping yarn assemble as it was restored from cache"
+                            touch package-cached
                         else
                             yarn run assemble
                         fi
@@ -274,6 +276,14 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/charts
+                    command: |
+                        if [ -f package-cached ]; then
+                            echo "Package was cached so skipping e2e tests"
+                            circleci step halt
+                        fi
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
@@ -341,10 +351,13 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
+                    working_directory: ~/nova/packages
                     name: Grab latest commit of package
                     command: |
-                        export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
-                        echo $gitCommit > $PROJECT_DIR/git-commit
+                        export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
+                        export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
+                        export dashboardsCommit=`git log --pretty=format:'%H' -n 1 ./dashboards`
+                        echo $bitsCommit $chartsCommit $dashboardsCommit > ./dashboards/git-commit
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Temporarily remove dependencies
@@ -389,6 +402,7 @@ jobs:
                         if [ -d "dist" ];
                         then
                             echo "skipping yarn assemble as it was restored from cache"
+                            touch package-cached
                         else
                             yarn run assemble
                         fi
@@ -420,6 +434,14 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/dashboards
+                    command: |
+                        if [ -f package-cached ]; then
+                            echo "Package was cached so skipping e2e tests"
+                            circleci step halt
+                        fi
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium

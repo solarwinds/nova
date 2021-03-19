@@ -73,3 +73,4 @@ Getting started with charts is quite simple:
     - [Scales](./additional-documentation/advanced-usage/scales.html)
         - [Domains](./additional-documentation/advanced-usage/scales/domains.html)
         - [Formatters](./additional-documentation/advanced-usage/scales/formatters.html)
+
