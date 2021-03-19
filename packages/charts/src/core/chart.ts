@@ -35,6 +35,7 @@ export class Chart implements IChart {
             throw new Error("Grid has to be defined!");
         }
         grid.updateChartDimensionsSubject = this.updateDimensionsSubject;
+        grid.eventBus = this.eventBus;
     }
 
     public getEventBus(): EventBus<IChartEvent> {
@@ -154,7 +155,7 @@ export class Chart implements IChart {
     }
 
     public initialize() {
-        each(this.plugins, p => {
+        each(this.plugins, (p: IChartPlugin) => {
             p.initialize();
         });
     }

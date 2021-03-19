@@ -4,6 +4,9 @@ import find from "lodash/find";
 import { Subject } from "rxjs";
 
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
+import { LineAccessors } from "../../renderers/line/line-accessors";
+import { LineRenderer } from "../../renderers/line/line-renderer";
+import { RenderState } from "../../renderers/types";
 import { Chart } from "../chart";
 import { BandScale } from "../common/scales/band-scale";
 import { domain } from "../common/scales/helpers/domain";
@@ -655,5 +658,55 @@ describe("XYGrid >", () => {
             };
             expect(grid?.scales?.y?.list[0]?.__domainCalculatedWithTicks).toBeFalsy();
         });
+    });
+
+    describe("axes highlighting", () => {
+
+        fit("highlights axes", fakeAsync(() => {
+            // buildAndUpdateAxes();
+
+            const seriesSet = [
+                {
+                    id: "series1",
+                    name: "Series 1",
+                    data: [],
+                    renderer: new LineRenderer(),
+                    accessors: new LineAccessors(),
+                    scales: {
+                        x: grid.scales["x"].list[0],
+                        y: testLeftScale,
+                    },
+                },
+                {
+                    id: "series2",
+                    name: "Series 2",
+                    data: [],
+                    renderer: new LineRenderer(),
+                    accessors: new LineAccessors(),
+                    scales: {
+                        x: grid.scales["x"].list[0],
+                        y: testRightScale,
+                    },
+                },
+            ];
+
+            chart.setSeriesStates([
+                {
+                    series: seriesSet[0],
+                    state: RenderState.emphasized,
+                    seriesId: seriesSet[0].id,
+                },
+                {
+                    series: seriesSet[1],
+                    state: RenderState.deemphasized,
+                    seriesId: seriesSet[1].id,
+                },
+            ]);
+
+            // @ts-ignore
+            expect(grid.axisYLeft.group.attr("opacity")).toBe("1");
+            // @ts-ignore
+            expect(grid.axisYRight.group.attr("opacity")).toBe("0.1");
+        }));
     });
 });

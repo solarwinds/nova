@@ -5,14 +5,17 @@ import each from "lodash/each";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import isUndefined from "lodash/isUndefined";
+import uniq from "lodash/uniq";
+import { takeUntil } from "rxjs/operators";
 
-import { IGNORE_INTERACTION_CLASS } from "../../constants";
+import { DESTROY_EVENT, IGNORE_INTERACTION_CLASS, SERIES_STATE_CHANGE_EVENT, XY_GRID_AXES_OPACITY_EVENT } from "../../constants";
+import { RenderState } from "../../renderers/types";
 import { MouseInteractiveArea } from "../common/mouse-interactive-area";
 import { BandScale } from "../common/scales/band-scale";
 import { getAutomaticDomain, getAutomaticDomainWithTicks } from "../common/scales/domain-calculation/automatic-domain";
 import { LinearScale } from "../common/scales/linear-scale";
 import { IBandScale, IScale, ScalesIndex } from "../common/scales/types";
-import { D3Selection, IChart, IChartPlugin } from "../common/types";
+import { D3Selection, IChart, IChartEvent, IChartPlugin, IRenderStateData, IXYGridOpacityEventPayload } from "../common/types";
 import { InteractionLabelPlugin } from "../plugins/interaction/interaction-label-plugin";
 import { InteractionLinePlugin } from "../plugins/interaction/interaction-line-plugin";
 import { MouseInteractiveAreaPlugin } from "../plugins/mouse-interactive-area-plugin";
@@ -20,6 +23,16 @@ import { MouseInteractiveAreaPlugin } from "../plugins/mouse-interactive-area-pl
 import { XYGridConfig } from "./config/xy-grid-config";
 import { Grid } from "./grid";
 import { IAllAround, IAxis, IAxisConfig, IDimensionConfig, IGrid, IXYGridConfig, TextOverflowHandler } from "./types";
+
+/**
+ * Locally used interface for passing scales and associated SVG elements
+ *
+ * @internal
+ */
+interface IScaleSVGElement {
+    scaleId: string;
+    element: D3Selection<any>;
+}
 
 export class XYGrid extends Grid implements IGrid {
     public static TICK_LABEL_OVERFLOW_DEBOUNCE_INTERVAL = 200;
@@ -154,7 +167,75 @@ export class XYGrid extends Grid implements IGrid {
         this.buildAxes(this.gridElementsLayer);
         this.recalculateMargins(this.container);
 
+        const untilDestroy = <T>() => takeUntil<T>(this.eventBus.getStream(DESTROY_EVENT));
+        this.eventBus.getStream(SERIES_STATE_CHANGE_EVENT).pipe(untilDestroy()).subscribe((e: IChartEvent) => {
+            const axesOpacity = this.handleSeriesStateChange(e);
+
+            this.eventBus.getStream(XY_GRID_AXES_OPACITY_EVENT).next({ data: axesOpacity } as IChartEvent<IXYGridOpacityEventPayload>);
+        });
+
         return this;
+    }
+
+    /**
+     * Handle axis opacity when emphasizing/deemphasizing chart series
+     *
+     * @param e
+     * @private
+     */
+    public handleSeriesStateChange(e: IChartEvent) {
+        if (!this.rightScaleId) {
+            return;
+        }
+
+        const axes: IScaleSVGElement[] = [
+            { scaleId: this.leftScaleId as string, element: this.axisYLeft.group },
+            { scaleId: this.rightScaleId, element: this.axisYRight?.group },
+        ];
+
+        const axesOpacity = this.calculateAxesOpacity(e, axes);
+
+        for (const a of axes) {
+            if (a.scaleId) {
+                a.element.attr("opacity", axesOpacity[a.scaleId]);
+            }
+        }
+
+        return axesOpacity;
+    }
+
+    /**
+     * Return opacity for each axis
+     *
+     * @param e
+     * @param axes
+     * @private
+     */
+    private calculateAxesOpacity(e: IChartEvent, axes: IScaleSVGElement[]): Record<string, number> {
+        const renderStates = e.data as IRenderStateData[];
+
+        const emphasizedSeries = renderStates
+            .filter(rs => rs.state === RenderState.emphasized && rs.series)
+            .map(rs => rs.series);
+
+        if (emphasizedSeries.length > 0) {
+            const emphasizedYScales = uniq(emphasizedSeries.map(s => s?.scales["y"]).filter(s => !!s));
+            if (emphasizedYScales.length <= 0) {
+                return {};
+            }
+
+            const emphasizedYScale = emphasizedYScales[0] as IScale<any>;
+
+            return axes.reduce((acc, next) => {
+                acc[next.scaleId] = emphasizedYScale.id === next.scaleId ? 1 : 0.1;
+                return acc;
+            }, {} as Record<string, number>);
+        } else {
+            return axes.reduce((acc, next) => {
+                acc[next.scaleId] = 1;
+                return acc;
+            }, {} as Record<string, number>);
+        }
     }
 
     /** See {@link IGrid#buildPlugins} */

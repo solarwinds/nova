@@ -5,12 +5,13 @@ import { Subject } from "rxjs";
 
 import { Lasagna } from "../common/lasagna";
 import { ScalesIndex } from "../common/scales/types";
-import { IChart, IChartPlugin } from "../common/types";
+import { IChart, IChartEvent, IChartPlugin } from "../common/types";
 import { D3Selection } from "../common/types";
 import { UtilityService } from "../common/utility.service";
 
 import { GridConfig } from "./config/grid-config";
 import { IAllAround, IBorderConfig, IBorders, IDimensions, IGrid, IGridConfig } from "./types";
+import { EventBus } from "../common/event-bus";
 
 export const borderMidpoint = 0.5;
 
@@ -47,6 +48,9 @@ export abstract class Grid implements IGrid {
 
     /** Subject for indicating that the chart's dimensions should be updated */
     public updateChartDimensionsSubject: Subject<void>;
+
+    /** Event bus provided by the chart */
+    public eventBus: EventBus<IChartEvent>;
 
     /** d3 container for the grid */
     protected container: D3Selection<SVGGElement>;

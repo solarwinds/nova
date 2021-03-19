@@ -76,6 +76,8 @@ export interface IRenderStateData {
     seriesId: string;
     /** Series render state */
     state: RenderState;
+    /** Series */
+    series?: IChartSeries<IAccessors>;
 }
 
 /** @ignore */
@@ -324,6 +326,8 @@ export interface IInteractionPayload {
 export interface IInteractionDataPointEvent extends IInteractionPayload {
     dataPoint: IDataPoint;
 }
+
+export type IXYGridOpacityEventPayload = Record<string, number>;
 
 /**
  * Payload for interaction events regarding one or more data points
