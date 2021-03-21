@@ -1,38 +1,42 @@
-import percySnapshot from "@percy/protractor";
 import { browser } from "protractor";
-import fs from "fs";
 
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
+import { EyesLens } from "../../virtual-camera/EyesLens";
 
-const name: string = "Badge";
-const snapPath: string = "./spec/.snapshots/";
+const testName: string = "Badge";
+let camera: Camera;
+let eyes: EyesLens;
 
-describe(`Visual tests: PERCY ${name}`, () => {
+fdescribe(`Visual tests: ${testName}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("common/badge/badge-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
 
-        // if (!fs.existsSync(snapPath)) {
-        //     fs.mkdirSync(snapPath);
-        // }
+        camera = new Camera().loadFilm(browser, testName);
+        eyes = new EyesLens(browser, camera["cameraSettings"].currentSettings);
     });
 
-    afterAll(() => {
+    describe(`${testName} - Test suite`, () => {
+        it(`${testName} test`, async () => {
+            // await eyes.cameraON();
 
-    });
-
-    describe(`${name} - Test suite`, () => {
-        it(`${name} test`, async () => {
-            await percySnapshot(`The ${name} Default Look`);
+            // await eyes.takeSnapshot("cbhsdjcb djsh");
+            await camera.turn.on();
+            // await percySnapshot(`The ${testName} Default Look`);
+            await camera.say.cheese(`${testName} - The Default Look`);
     
             await Helpers.switchDarkTheme("on");
-            await percySnapshot(`The ${name} Dark Theme Look`);
-            // const png = await browser.takeScreenshot();
-            // fs.writeFileSync(snapPath + "badge-main.png", png, {encoding: "base64"});
+            await camera.be.responsive([800, 640]);
+            await camera.say.cheese("23432dwe");
 
-            // await Helpers.switchDarkTheme("on");
-            // fs.writeFileSync(snapPath + "badge-2.png", await browser.takeScreenshot(), {encoding: "base64"});
-        });
+            await camera.be.defaultResponsive();
+            await camera.say.cheese("vndfsivndfksj");
+
+            await camera.turn.off();
+
+            // await eyes.cameraOFF();
+        }, 200000);
     });
 });
