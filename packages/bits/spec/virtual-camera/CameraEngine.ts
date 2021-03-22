@@ -38,11 +38,11 @@ export class CameraEngine {
     }
 
     public async takePhoto(label: string) {
-        if (this.settings.crop) {
+        if (!this.settings.fullframe) {
             await this.currentLensInstance.takeSnapshot(label);
         }
 
-        if (!this.settings.crop) {
+        if (this.settings.fullframe) {
             await this.currentLensInstance.takeFullScreenSnapshot(label);
         }
     }

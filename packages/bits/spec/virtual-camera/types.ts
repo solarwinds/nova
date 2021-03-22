@@ -5,11 +5,10 @@ export enum LensType {
     PERCY = "percy"
 }
 
-export const LENSES: string[] =  [ "eyes", "percy"];
+export const LENSES: string[] =  [ ...Object.values(LensType) ];
 
 export const CAMERA_DEFAULT_SETTINGS: ICameraSettings = {
-    autofocus: true,
-    crop: false,
+    fullframe: true,
     responsive: [1920],
     currentSuiteName: "",
     currentTestName: "",
@@ -36,8 +35,7 @@ export interface ILens {
 }
 
 export interface ICameraSettings {
-    autofocus: boolean;
-    crop: boolean;
+    fullframe: boolean;
     responsive: number[];
     currentSuiteName: string;
     currentTestName: string;
@@ -47,7 +45,6 @@ export interface ICameraSettings {
 export interface ICameraSettingsActions {
     fullframe(): Promise<void>;
     crop(): Promise<void>;
-    manualfocus(): Promise<void>;
     responsive(values: Array<number>): Promise<void>;
     defaultResponsive(): Promise<void>;
 }

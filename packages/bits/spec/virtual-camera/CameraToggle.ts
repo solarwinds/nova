@@ -1,4 +1,3 @@
-import { ProtractorBrowser } from "protractor";
 import { CameraEngine } from "./CameraEngine";
 
 export class CameraToggle {

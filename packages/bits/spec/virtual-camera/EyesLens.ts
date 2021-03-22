@@ -8,37 +8,21 @@ export class EyesLens implements ILens {
     }
 
     public async takeSnapshot(label: string): Promise<void> {
-        await this.eyes.setForceFullPageScreenshot(true);
-        await this.snapshotEachWidth(label);
-    }
-
-    public async takeFullScreenSnapshot(label: string): Promise<void> {
         await this.eyes.setForceFullPageScreenshot(false);
         await this.snapshotEachWidth(label);
     }
 
-    public async cameraON() {
-        console.log(
-`
-*******************************
-    EYES Camera turned ON!
-*******************************
-\n`
-        );
-        this.eyes = await this.configure();
+    public async takeFullScreenSnapshot(label: string): Promise<void> {
+        await this.eyes.setForceFullPageScreenshot(true);
+        await this.snapshotEachWidth(label);
+    }
 
+    public async cameraON() {
+        this.eyes = await this.configure();
         await this.eyes.open(this.browser, this.settings.currentSuiteName, this.settings.currentTestName);
     }
 
     public async cameraOFF() {
-        console.log(
-`
-*******************************
-    EYES Camera turned OFF!
-*******************************
-\n`
-        );
-
         await this.eyes.close();
     }
 

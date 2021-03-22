@@ -20,25 +20,9 @@ export class PercyLens implements ILens {
         await this.takeSnapshot(label);
     }
 
-    public async cameraON() {
-        console.log(
-`
-*******************************
-    Percy Camera turned ON!
-*******************************
-\n`
-        );
-    }
+    public async cameraON() {}
 
-    public async cameraOFF() {
-        console.log(
-`
-*******************************
-    Percy Camera turned OFF!
-*******************************
-\n`
-        );
-    }
+    public async cameraOFF() {}
 
     private checkSettings() {
         this.percyConfig.widths = [...this.settings.responsive];
