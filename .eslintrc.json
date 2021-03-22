@@ -28,6 +28,10 @@
                 // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/no-empty-lifecycle-method": "off",
                 // TODO: Review the viability and impact of enabling this rule
+                "@angular-eslint/no-conflicting-lifecycle": "off",
+                // TODO: Review the viability and impact of enabling this rule
+                "@angular-eslint/contextual-lifecycle": "off",
+                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/component-selector": [
                     "off",
                     {
@@ -120,7 +124,7 @@
                         "allowConditionalTypes": "always",
                         "allowMappedTypes": "always",
                         "allowCallbacks": "always",
-                        "allowLiterals": "never"
+                        "allowLiterals": "in-intersections"
                     }
                 ],
                 "@typescript-eslint/no-empty-interface": "error",
