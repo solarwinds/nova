@@ -25,7 +25,7 @@ export class ConfiguratorComponent implements OnInit, OnDestroy {
     @Input() formPortal: Portal<any>;
     @Input() previewWidget: IWidget | null;
 
-    // tslint:disable-next-line: no-output-native
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() result = new EventEmitter<IWidget | null>();
     @Output() formPortalAttached = new EventEmitter<ComponentRef<any>>();
 

@@ -117,7 +117,7 @@ export class TableColumnsConverterService extends BaseConverter implements After
     private handleColumnsWithoutSpecifiedWidth(activeColumnsWithoutWidth: Array<ITableWidgetColumnConfig>) {
         switch (activeColumnsWithoutWidth.length) {
             // if all columns have specified width, reset last columns value so that other columns can resize
-            case 0:
+            case 0: {
                 const activeColumns = (this.component.form.get("columns") as FormArray).controls.filter(control =>
                     get(control, `value.properties[${control.value.id}/description].isActive`));
                 if (isEmpty(activeColumns)) {
@@ -130,6 +130,7 @@ export class TableColumnsConverterService extends BaseConverter implements After
                 console.warn(`Cannot set width for all columns. Resetting "${lastActiveColumn.value.label}" width.`);
                 lastActiveColumn.patchValue({ width: null }, { emitEvent: false });
                 return lastActiveColumn.value;
+            }
             case 1:
                 return activeColumnsWithoutWidth[0];
             default:
@@ -169,7 +170,8 @@ export class TableColumnsConverterService extends BaseConverter implements After
         const widthMessageInput = "isWidthMessageDisplayed";
         const { pizzagna } = this.pizzagnaService;
         const columns = pizzagna.data.columns.properties?.columns;
-        columns.forEach((col: ITableWidgetColumnConfig) => this.pizzagnaService.setProperty(`${PizzagnaLayer.Data}.${col.id}/description.properties.${widthMessageInput}`, false));
+        columns.forEach((col: ITableWidgetColumnConfig) =>
+        this.pizzagnaService.setProperty(`${PizzagnaLayer.Data}.${col.id}/description.properties.${widthMessageInput}`, false));
 
         if (!columnId) {
             return;

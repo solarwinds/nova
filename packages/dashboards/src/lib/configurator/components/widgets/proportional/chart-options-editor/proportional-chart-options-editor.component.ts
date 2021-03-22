@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IProportionalWidgetChartEditorOptions, ProportionalWidgetChartTypes } from "../../../../../components/proportional-widget/types";
 import { IFormatterDefinition, LegendPlacement } from "../../../../../components/types";
 import { IHasChangeDetector, IHasForm, IProperties } from "../../../../../types";
-import { DonutContentPercentageConfigurationComponent } from "../../../formatters/donut-content-percentage-formatter/donut-content-percentage-configuration.component";
 
 type ChartTypeNamesMap = { [key in ProportionalWidgetChartTypes]: string };
 const proportionalWidgetChartTypesNamesMap: ChartTypeNamesMap = {

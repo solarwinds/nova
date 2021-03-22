@@ -1,4 +1,4 @@
-/* tslint:disable:max-line-length */
+/* eslint-disable max-len */
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
@@ -104,7 +104,7 @@ import { ConfiguratorService } from "./services/configurator.service";
 import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
-/* tslint:enable:max-line-length */
+/* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [
     ConfiguratorComponent,

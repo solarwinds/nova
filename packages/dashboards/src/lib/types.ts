@@ -57,8 +57,7 @@ export enum WellKnownDataSourceFeatures {
     DisableTableColumnGeneration = "disableTableColumnGeneration",
 }
 
-export interface IProperties extends Record<string, any> {
-}
+export type IProperties = Record<string, any>
 
 export interface IProviderProperties extends IProperties {
     /** This is property is set by the component portal directive to give providers self-awareness they need to update properties in pizzagna. */
@@ -103,14 +102,11 @@ export interface IWidgets {
     [key: string]: IWidget;
 }
 
-export interface IPizzagnaLayer extends Record<string, DeepPartial<IComponentConfiguration>> {
-}
+export type IPizzagnaLayer = Record<string, DeepPartial<IComponentConfiguration>>
 
-export interface IPizzagna extends Record<string, IPizzagnaLayer> {
-}
+export type IPizzagna = Record<string, IPizzagnaLayer>
 
-export interface IPizza extends Record<string, IComponentConfiguration> {
-}
+export type IPizza = Record<string, IComponentConfiguration>
 
 export interface IWidget {
     id: string;
@@ -216,4 +212,4 @@ export interface IBackgroundColorComparator {
     comparatorFn: ComparatorFn;
     label?: string;
 }
-export interface IComparatorsDict extends Partial<Record<ComparatorTypes | string, IBackgroundColorComparator>> {}
+export type IComparatorsDict = Partial<Record<ComparatorTypes | string, IBackgroundColorComparator>>

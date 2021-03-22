@@ -1,4 +1,4 @@
-// tslint:disable:max-line-length
+/* eslint-disable max-len */
 import { IBroadcasterConfig } from "../../components/providers/types";
 import { IFormatterDefinition } from "../../components/types";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
@@ -19,7 +19,7 @@ import { DEFAULT_PIZZAGNA_ROOT, NOVA_KPI_FORMATTERS_REGISTRY, NOVA_KPI_SECTION_C
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
 
-// tslint:enable:max-line-length
+/* eslint-enable max-len */
 
 
 export const DEFAULT_KPI_FORMATTERS: IFormatterDefinition[] = [

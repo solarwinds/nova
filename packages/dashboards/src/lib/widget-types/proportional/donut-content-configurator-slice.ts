@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { IBroadcasterConfig } from "../../components/providers/types";
 import { LegendPlacement } from "../../components/types";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";

@@ -66,8 +66,10 @@ export class CategoryChartUtilService {
     }
 
     public static getChartAttributes(
-        chartType: ProportionalWidgetChartTypes, colors?: IValueProvider<string>, markers?: IValueProvider<IChartMarker>)
-        : IChartAttributes | IChartAttributes<IRadialAccessors> {
+        chartType: ProportionalWidgetChartTypes,
+        colors?: IValueProvider<string>,
+        markers?: IValueProvider<IChartMarker>
+    ): IChartAttributes | IChartAttributes<IRadialAccessors> {
         const t: IChartTools | IChartTools<IRadialAccessors> = CategoryChartUtilService.getChartTools(chartType);
         const result: IChartAttributes | IChartAttributes<IRadialAccessors> = {
             grid: t.gridFunction(),
