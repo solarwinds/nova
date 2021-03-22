@@ -3,7 +3,6 @@ export enum SelectionType {
     UnselectAll = "Unselect all items on this page",
     None = "Unselect all items",
     AllPages = "Select all items on all pages",
-    SomePages = "Select some items on all pages",
 }
 
 export enum CheckboxStatus {
