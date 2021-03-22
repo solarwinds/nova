@@ -10,6 +10,21 @@
         <li>
             Use <code>.font-roboto()</code> mixin to load Roboto font
         </li>
+        <li>
+            Mixin Example: 
+            <p>
+                <mark>
+                    .font-roboto();<br>
+                    .css-class &#123;
+                        <p style="text-indent:20px">
+                            <mark>
+                                font-family: @font-family-roboto;
+                            </mark>
+                        </p>
+                    &#125;
+                </mark>
+            </p>
+        </li>
     </ol>
 </nui-expander>
 <nui-expander header="Use stylesheet file">
@@ -21,12 +36,16 @@
             Add it to angular.json to set Roboto font globally, or use it locally by importing the file into the stylesheet where this font is needed.
         </li>
         <li>
-            Angular.json Examples: 
+            Angular.json Example: 
             <p>
                 <mark>
                     "styles": [
-                        "[path_to_node_modules]/@nova-ui/bits/bundles/css/styles-font-roboto.css"
-                        ],
+                        <p style="text-indent:20px">
+                            <mark>
+                                "[path_to_node_modules]/@nova-ui/bits/bundles/css/styles-font-roboto.css"
+                            </mark>
+                        </p>
+                    ],
                 </mark>
             </p>
         </li>
