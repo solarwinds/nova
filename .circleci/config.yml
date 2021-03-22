@@ -17,6 +17,11 @@ jobs:
             -   run:
                     name: Compute build version
                     command: yarn run compute-version-ci
+            -   run:
+                    name: Grab latest commit of package
+                    command: |
+                        export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
+                        echo $gitCommit > $PROJECT_DIR/git-commit
             -   restore_cache:
                     key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
             -   run:
@@ -34,16 +39,31 @@ jobs:
                     key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
                     paths:
                         - ./packages/bits/node_modules
+            -   restore_cache:
+                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
             -   run:
                     working_directory: ~/nova/packages/bits
                     name: Assemble
-                    command: yarn run assemble
+                    command: |
+                            if [ -d "dist" ];
+                            then
+                                echo "skipping yarn assemble as it was restored from cache"
+                                touch package-cached
+                            else
+                                yarn run assemble
+                            fi
+            -   save_cache:
+                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+                    paths:
+                        - ./packages/bits/dist
+                        - ./packages/bits/sdk
             -   persist_to_workspace:
                     root: .
                     paths:
                         - packages
                         - ts-lint-rules
                         - scripts
+                        - .git
                         - docker-compose.yml
                         - tsconfig.main.json
                         - package.json
@@ -67,6 +87,14 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/bits
+                    command: |
+                        if [ -f package-cached ]; then
+                            echo "Package was cached so skipping e2e tests"
+                            circleci step halt
+                        fi
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
@@ -170,6 +198,13 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
+                    working_directory: ~/nova/packages
+                    name: Grab latest commit of package
+                    command: |
+                        export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
+                        export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
+                        echo $bitsCommit $chartsCommit > ./charts/git-commit
+            -   run:
                     working_directory: ~/nova/packages/charts
                     name: Temporarily remove dependencies
                     command: |
@@ -200,10 +235,24 @@ jobs:
                     working_directory: ~/nova/packages/charts
                     name: Restore package.json
                     command: mv -f package.json~ package.json
+            -   restore_cache:
+                    key: charts-dist-{{ checksum "packages/charts/git-commit" }}
             -   run:
                     working_directory: ~/nova/packages/charts
                     name: Assemble
-                    command: yarn run assemble
+                    command: |
+                        if [ -d "dist" ];
+                        then
+                            echo "skipping yarn assemble as it was restored from cache"
+                            touch package-cached
+                        else
+                            yarn run assemble
+                        fi
+            -   save_cache:
+                    key: charts-dist-{{ checksum "packages/charts/git-commit" }}
+                    paths:
+                        - ./packages/charts/dist
+                        - ./packages/charts/sdk
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -227,6 +276,14 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/charts
+                    command: |
+                        if [ -f package-cached ]; then
+                            echo "Package was cached so skipping e2e tests"
+                            circleci step halt
+                        fi
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
@@ -294,6 +351,14 @@ jobs:
                     name: Compute build version
                     command: yarn run compute-version-ci
             -   run:
+                    working_directory: ~/nova/packages
+                    name: Grab latest commit of package
+                    command: |
+                        export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
+                        export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
+                        export dashboardsCommit=`git log --pretty=format:'%H' -n 1 ./dashboards`
+                        echo $bitsCommit $chartsCommit $dashboardsCommit > ./dashboards/git-commit
+            -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Temporarily remove dependencies
                     command: |
@@ -328,10 +393,24 @@ jobs:
                     working_directory: ~/nova/packages/dashboards
                     name: Restore package.json
                     command: mv -f package.json~ package.json
+            -   restore_cache:
+                    key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
             -   run:
                     working_directory: ~/nova/packages/dashboards
                     name: Assemble
-                    command: yarn run assemble
+                    command: |
+                        if [ -d "dist" ];
+                        then
+                            echo "skipping yarn assemble as it was restored from cache"
+                            touch package-cached
+                        else
+                            yarn run assemble
+                        fi
+            -   save_cache:
+                    key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
+                    paths:
+                        - ./packages/dashboards/dist
+                        - ./packages/dashboards/sdk
             -   persist_to_workspace:
                     root: .
                     paths:
@@ -355,6 +434,14 @@ jobs:
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Check git diff to see if builds should skip e2e
+                    working_directory: ~/nova/packages/dashboards
+                    command: |
+                        if [ -f package-cached ]; then
+                            echo "Package was cached so skipping e2e tests"
+                            circleci step halt
+                        fi
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
@@ -482,14 +569,14 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Install node_modules
-                    command: npm install -q  
-            - run:
+                    command: npm install -q
+            -   run:
                     name: snyk auth
                     command: npm run snyk-auth
-            - run:
+            -   run:
                     name: snyk monitor
                     command: npm run snyk-monitor
-            - run:
+            -   run:
                     name: snyk test
                     command: npm run snyk-test
 workflows:
@@ -513,10 +600,10 @@ workflows:
                         branches:
                             only:
                                 - main
-            - bits-percy-visual-test:
-                  requires:
-                      - bits-build
-                  filters:
+            -   bits-percy-visual-test:
+                    requires:
+                        - bits-build
+                    filters:
                         branches:
                             only:
                                 - main
