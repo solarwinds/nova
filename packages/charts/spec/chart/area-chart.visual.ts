@@ -1,6 +1,6 @@
 import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { browser, by, element } from "protractor";
+import { $, browser, by, element, ExpectedConditions } from "protractor";
 
 import { LegendAtom } from "../legend/legend.atom";
 
@@ -18,6 +18,9 @@ fdescribe(`Visual Tests: Charts - ${name}`, () => {
 
     it("Default look", async () => {
         await camera.turn.on();
+
+        // await browser.sleep(100);
+        // await browser.wait(ExpectedConditions.visibilityOf($(".sw-axis-y-left")));
 
         await camera.say.cheese("Default look");
 
