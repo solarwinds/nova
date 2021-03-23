@@ -171,7 +171,7 @@ export class TableColumnsConverterService extends BaseConverter implements After
         const { pizzagna } = this.pizzagnaService;
         const columns = pizzagna.data.columns.properties?.columns;
         columns.forEach((col: ITableWidgetColumnConfig) =>
-        this.pizzagnaService.setProperty(`${PizzagnaLayer.Data}.${col.id}/description.properties.${widthMessageInput}`, false));
+            this.pizzagnaService.setProperty(`${PizzagnaLayer.Data}.${col.id}/description.properties.${widthMessageInput}`, false));
 
         if (!columnId) {
             return;

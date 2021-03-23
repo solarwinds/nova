@@ -131,8 +131,8 @@
       }
     },
     "examples-e2e": {
-      "root": ".",
-      "sourceRoot": ".",
+      "root": "spec",
+      "sourceRoot": "spec",
       "projectType": "application",
       "architect": {
         "e2e": {
@@ -160,8 +160,8 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "./**/*.ts",
-              "./**/*.html"
+              "spec/**/*.ts",
+              "spec/**/*.html"
             ]
           }
         }
