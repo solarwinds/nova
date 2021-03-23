@@ -68,6 +68,7 @@ jobs:
                         - tsconfig.main.json
                         - package.json
                         - LICENSE
+                        - .eslintrc.json
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
