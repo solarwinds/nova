@@ -16,16 +16,29 @@
         &.btn {
             min-width: @nui-selector-checkbox-button-width;
             width: @nui-selector-checkbox-button-width;
-            padding: 0 @nui-space-xxs 0 @nui-space-xxs;
+            padding: 0;
+            border-width: 0;
             &:focus {
                 outline: none;
             }
         }
     }
 
-    &__checkbox-container {
-        margin: -(@nui-button-border-width) 0;
+    .nui-button__content {
+        width: 100%;
     }
+    .nui-checkbox__label {
+            width: 100%;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border: 1px solid @nui-color-line-default;
+            .nui-checkbox__mark {
+                margin: -(@nui-button-border-width) 0;
+            }
+            &:hover {
+                .setCssVariable(background-color, nui-color-bg-transparent-hover);
+            }
+        }
 
     &__toggle {
         margin-right: 0;
