@@ -1,22 +1,23 @@
+import { Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser } from "protractor";
 
-describe("Visual tests: Charts - Waterfall Chart", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Waterfall Chart";
+
+describe(`Visual tests: Charts - ${name}`, () => {
+    let camera: Camera;
 
     beforeAll(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("chart-types/waterfall/test");
+
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} - Default look`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Charts - Waterfall Chart");
-        await eyes.checkWindow("Default");
-        await eyes.close();
+        await camera.say.cheese(`${name} - Default`);
+
+        await camera.turn.off();
     }, 100000);
 });
