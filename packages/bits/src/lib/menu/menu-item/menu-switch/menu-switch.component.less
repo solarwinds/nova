@@ -7,6 +7,11 @@
             &:hover {
                 cursor: not-allowed;
             }
+            &:focus {
+                outline: none;
+                box-shadow: 0 0 0 @nui-line-medium transparent;
+                .setCssVariable(background-color, transparent);
+            }
         }
     }
     > .nui-menu-item__switch {

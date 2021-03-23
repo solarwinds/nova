@@ -30,9 +30,12 @@
 
     &.nui-menu-item--disabled {
         > .nui-menu-item__option {
+            padding-left: @nui-space-xs;
+            padding-right: @nui-space-xs;
             .setCssVariable(color, nui-color-off);
-            &:focus {
-                outline: 0;
+           &:active, &:focus {
+               outline: 0;
+               box-shadow: 0 0 0 @nui-line-medium transparent;
             }
         }
     }

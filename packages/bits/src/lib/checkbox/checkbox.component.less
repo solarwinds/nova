@@ -63,6 +63,13 @@
         &:hover {
             background-color: transparent;
         }
+
+       &:focus {
+            outline: none;
+            box-shadow: 0 0 0 @nui-line-medium transparent;
+            .setCssVariable(background-color, transparent);
+        }
+
     }
 
     &__mark {
