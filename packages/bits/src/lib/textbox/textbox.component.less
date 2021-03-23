@@ -46,6 +46,10 @@
         &.nui-textbox__input--multiline {
             padding-top: @nui-space-xs;
         }
+
+        &:focus {
+            .focus-outline()
+        }
     }
 
     &--centered {
@@ -60,10 +64,6 @@
 
         &[hidden] {
             display: none !important;
-        }
-
-        &:focus {
-            .focus-outline()
         }
     }
 
