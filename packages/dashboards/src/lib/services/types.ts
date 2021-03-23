@@ -23,7 +23,7 @@ export interface IPreviewEventPayload {
 export interface IRegistryAddOptions {
     overrideExisting: boolean;
 }
-export type IAddFormattersOptions = Pick<IRegistryAddOptions, "overrideExisting">
+export interface IAddFormattersOptions extends Pick<IRegistryAddOptions, "overrideExisting"> {}
 
 export const REFRESH = new EventDefinition("REFRESH");
 export const SCROLL_NEXT_PAGE = new EventDefinition("SCROLL_NEXT_PAGE");
