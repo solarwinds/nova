@@ -8,6 +8,7 @@ import {
     barScales,
     BarSeriesHighlightStrategy,
     Chart,
+    ChartAssist,
     ChartPalette,
     CHART_PALETTE_CS_S,
     CHART_VIEW_STATUS_EVENT,
@@ -36,6 +37,7 @@ import {
     Renderer,
     Scales,
     SELECT_DATA_POINT_EVENT,
+    SERIES_STATE_CHANGE_EVENT,
     stackedPreprocessor,
     XYGrid
 } from "@nova-ui/charts";
@@ -125,6 +127,11 @@ export class EventSamplerComponent implements OnInit {
             id: CHART_VIEW_STATUS_EVENT,
             name: "CHART_VIEW_STATUS_EVENT",
         },
+        {
+            id: SERIES_STATE_CHANGE_EVENT,
+            name: "SERIES_STATE_CHANGE_EVENT",
+            interactionTypes: [InteractionType.MouseMove],
+        },
     ];
 
     public selectedEvent: IEventInfo = this.eventFilters[0];
@@ -143,6 +150,7 @@ export class EventSamplerComponent implements OnInit {
     public valueAccessor: (i: number, j: number) => number;
 
     public chart: IChart;
+    public chartAssist: ChartAssist;
     public palette: ChartPalette;
 
     private accessors: IBarAccessors | IAccessors;
@@ -180,6 +188,8 @@ export class EventSamplerComponent implements OnInit {
         const {grid, accessors, renderer, scales, seriesProcessor} = this.getChartAttributes(this.selectedChartType);
 
         this.chart = new Chart(grid);
+        this.chartAssist = new ChartAssist(this.chart);
+
         this.chart.addPlugin(new InteractionLabelPlugin());
 
         this.renderer = renderer;
@@ -207,7 +217,7 @@ export class EventSamplerComponent implements OnInit {
             | IChartSeries<IBarAccessors>[] = this.buildChartSeries(this.categories, this.subCategories, this.valueAccessor);
         // TODO: Refactor this to be able to pass different types of seriesSet to get rid of the any
         seriesSet = this.seriesProcessor ? this.seriesProcessor(<any>seriesSet, () => true) : seriesSet;
-        this.chart.update(seriesSet);
+        this.chartAssist.update(seriesSet);
     }
 
     private buildChartSeries(categories: string[], subCategories: string[], valueAccessor: (i: number, j: number) => number)
