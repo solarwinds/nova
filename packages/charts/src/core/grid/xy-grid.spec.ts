@@ -667,7 +667,7 @@ describe("XYGrid >", () => {
 
     describe("axes highlighting", () => {
 
-        fit("highlights axes", () => {
+        it("highlights axes", () => {
             const seriesSet = [
                 {
                     id: "series1",
