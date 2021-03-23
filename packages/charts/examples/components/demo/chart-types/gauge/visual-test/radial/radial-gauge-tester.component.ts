@@ -7,7 +7,7 @@ import {
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
-    IGaugeThreshold,
+    IGaugeSeriesConfig,
     radial,
     RadialGaugeLabelsPlugin,
     radialGrid
@@ -19,9 +19,7 @@ import {
     styleUrls: ["./radial-gauge-tester.component.less"],
 })
 export class RadialGaugeTesterComponent implements OnInit {
-    @Input() public value: number;
-    @Input() public max: number = 200;
-    @Input() public thresholds: IGaugeThreshold[];
+    @Input() public seriesConfig: IGaugeSeriesConfig;
 
     public chartAssist: ChartAssist;
     public contentPlugin: ChartDonutContentPlugin;
@@ -33,7 +31,7 @@ export class RadialGaugeTesterComponent implements OnInit {
         this.chartAssist.chart.addPlugin(this.contentPlugin);
         this.chartAssist.chart.addPlugin(new RadialGaugeLabelsPlugin());
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Radial);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Radial);
         this.chartAssist.update(this.seriesSet);
     }
 }

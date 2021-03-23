@@ -1,8 +1,15 @@
 <charts-test-harness>
     <div class="d-flex">
-        <radial-gauge-chart-prototype [value]="value" [annularWidth]="thickness" [thresholds]="thresholds" [max]="maxValue"></radial-gauge-chart-prototype>
-        <linear-gauge-vertical-chart-prototype class="ml-5" [value]="value" [thickness]="thickness" [thresholds]="thresholds" [max]="maxValue"></linear-gauge-vertical-chart-prototype>
-        <linear-gauge-horizontal-chart-prototype class="ml-5" [value]="value" [thickness]="thickness" [thresholds]="thresholds" [max]="maxValue"></linear-gauge-horizontal-chart-prototype>
+        <div>
+            <h3 class="d-flex justify-content-center mb-0">Standard</h3>
+            <radial-gauge-chart-prototype [seriesConfig]="getSeriesConfig()" [annularWidth]="thickness"></radial-gauge-chart-prototype>
+        </div>
+        <div>
+            <h3 class="d-flex justify-content-center mb-0">Reversed</h3>
+            <radial-gauge-chart-prototype [seriesConfig]="getSeriesConfig(true)" [annularWidth]="thickness"></radial-gauge-chart-prototype>
+        </div>
+        <linear-gauge-vertical-chart-prototype class="ml-5" [seriesConfig]="getSeriesConfig()" [thickness]="thickness"></linear-gauge-vertical-chart-prototype>
+        <linear-gauge-horizontal-chart-prototype class="ml-5" [seriesConfig]="getSeriesConfig()" [thickness]="thickness"></linear-gauge-horizontal-chart-prototype>
     </div>
 
     <div class="mb-2">

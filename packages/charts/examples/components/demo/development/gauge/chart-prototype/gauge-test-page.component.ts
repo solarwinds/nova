@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { GAUGE_THICKNESS_DEFAULT, IGaugeThreshold } from "@nova-ui/charts";
+import { DataAccessor, GaugeMode, GaugeUtil, GAUGE_THICKNESS_DEFAULT, IGaugeSeriesConfig } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-test-page",
@@ -9,18 +9,22 @@ export class GaugeTestPageComponent {
     public value = 95;
     public maxValue = 200;
     public thickness = GAUGE_THICKNESS_DEFAULT;
-    public thresholds: IGaugeThreshold[] = [
-        { value: 100 },
-        { value: 112 },
-        { value: 125 },
-        { value: 150 },
-        { value: 187 },
-        { value: 200 },
-    ];
+    private reversedValueColorAccessor: DataAccessor<any, any> | undefined;
+
+    public thresholds: number[] = [100, 125];
 
     constructor() {
-        // this.thresholds = new Array(200).fill(null).map((e, i) => ({ value: i }));
-        // this.thresholds = [{ value: 187 }/* , { value: 50 }, { value: 75 },
-        // { value: 100 }, { value: 125 }, { value: 150 }, { value: 175 }, { value: 200 } */];
+        // this.thresholds = new Array(200).fill(null).map((e, i) => i);
+        // this.thresholds = [187, 50, 75, 100, 125, 150, 175, 200];
+        this.reversedValueColorAccessor = GaugeUtil.createReversedValueColorAccessor(this.thresholds);
+    }
+
+    public getSeriesConfig(reversed = false): IGaugeSeriesConfig {
+        return {
+            value: this.value,
+            max: this.maxValue,
+            thresholds: this.thresholds,
+            valueColorAccessor: reversed ? this.reversedValueColorAccessor : undefined,
+        };
     }
 }
