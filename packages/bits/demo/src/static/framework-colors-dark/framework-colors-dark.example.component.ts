@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { ToastService } from "@nova-ui/bits";
 
 /* eslint-disable-next-line */
-import {default as colors} from "../../../../src/styles/data/framework-colors-dark.json";
+import { default as colors } from "../../../../src/styles/data/framework-colors-dark.json";
 
 @Component({
     selector: "framework-colors-dark.example",
