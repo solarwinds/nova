@@ -8,13 +8,13 @@ import { GaugeUtil } from "./gauge-util";
 import { IGaugeSeriesConfig } from "./types";
 
 describe("GaugeUtil >", () => {
-    describe("assembleSeriesSet", () => {
-        const seriesConfig: IGaugeSeriesConfig = {
-            value: 3,
-            max: 10,
-            thresholds: [2],
-        };
+    const seriesConfig: IGaugeSeriesConfig = {
+        value: 3,
+        max: 10,
+        thresholds: [2],
+    };
 
+    describe("assembleSeriesSet", () => {
         it("should generate a series set for a donut gauge", () => {
             const seriesSet = GaugeUtil.assembleSeriesSet(seriesConfig, GaugeMode.Donut);
             let series = seriesSet.find(s => s.id === GaugeUtil.QUANTITY_SERIES_ID);
@@ -57,17 +57,12 @@ describe("GaugeUtil >", () => {
 
     describe("updateSeriesSet", () => {
         it("should update the gauge's series set", () => {
-            const seriesConfig: IGaugeSeriesConfig = {
-                value: 3,
-                max: 10,
-                thresholds: [2],
-            };
-
             const updatedSeriesConfig = { ...seriesConfig, value: 5 };
 
             let seriesSet = GaugeUtil.assembleSeriesSet(seriesConfig, GaugeMode.Donut);
             seriesSet = GaugeUtil.updateSeriesSet(seriesSet, updatedSeriesConfig);
             let series = seriesSet.find(s => s.id === GaugeUtil.QUANTITY_SERIES_ID);
+
             expect(series?.data[0].value).toEqual(updatedSeriesConfig.value);
             expect(series?.renderer instanceof RadialRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.REMAINDER_SERIES_ID);
@@ -78,5 +73,4 @@ describe("GaugeUtil >", () => {
             expect(series?.renderer instanceof DonutGaugeThresholdsRenderer).toEqual(true);
         });
     });
-
 });

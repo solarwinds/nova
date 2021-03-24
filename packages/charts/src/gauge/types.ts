@@ -21,7 +21,7 @@ export interface IGaugeSeriesConfig {
 
 /**
  * @ignore
- * Definition for a gauge threshold
+ * Definition for gauge threshold data
 */
 export interface IGaugeThreshold {
     /** The value of the threshold */

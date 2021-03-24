@@ -73,7 +73,7 @@ export class GaugeUtil {
             }
 
             // threshold level markers
-            return { ...series, data: GaugeUtil.generateThresholdPoints(seriesConfig) };
+            return { ...series, data: GaugeUtil.generateThresholdData(seriesConfig) };
         });
 
         return updatedSeriesSet;
@@ -82,7 +82,7 @@ export class GaugeUtil {
     public static generateThresholdSeries(seriesConfig: IGaugeSeriesConfig, gaugeAttributes: IGaugeAttributes): IChartAssistSeries<IAccessors> {
         return {
             id: GaugeUtil.THRESHOLD_MARKERS_SERIES_ID,
-            data: GaugeUtil.generateThresholdPoints(seriesConfig),
+            data: GaugeUtil.generateThresholdData(seriesConfig),
             accessors: gaugeAttributes.accessors,
             scales: gaugeAttributes.scales,
             renderer: gaugeAttributes.thresholdsRenderer,
@@ -192,14 +192,14 @@ export class GaugeUtil {
         ];
     }
 
-    public static generateThresholdPoints(seriesConfig: IGaugeSeriesConfig): IGaugeThreshold[] {
+    public static generateThresholdData(seriesConfig: IGaugeSeriesConfig): IGaugeThreshold[] {
         const markerValues = seriesConfig.thresholds.map(threshold => ({
             category: "gauge",
             hit: threshold <= seriesConfig.value,
             value: threshold,
         }));
 
-        // tack on the max value at the end (used for donut arc calculation)
+        // tack the max value onto the end (used for donut arc calculation)
         return [...markerValues, { category: "gauge", value: seriesConfig.max }];
     }
 }
