@@ -8,14 +8,14 @@ import isUndefined from "lodash/isUndefined";
 import uniq from "lodash/uniq";
 import { takeUntil } from "rxjs/operators";
 
-import { DESTROY_EVENT, IGNORE_INTERACTION_CLASS, SERIES_STATE_CHANGE_EVENT, XY_GRID_AXES_OPACITY_EVENT } from "../../constants";
+import { AXES_STYLE_CHANGE_EVENT, DESTROY_EVENT, IGNORE_INTERACTION_CLASS, SERIES_STATE_CHANGE_EVENT } from "../../constants";
 import { RenderState } from "../../renderers/types";
 import { MouseInteractiveArea } from "../common/mouse-interactive-area";
 import { BandScale } from "../common/scales/band-scale";
 import { getAutomaticDomain, getAutomaticDomainWithTicks } from "../common/scales/domain-calculation/automatic-domain";
 import { LinearScale } from "../common/scales/linear-scale";
 import { IBandScale, IScale, ScalesIndex } from "../common/scales/types";
-import { D3Selection, IChart, IChartEvent, IChartPlugin, IRenderStateData, IXYGridOpacityEventPayload } from "../common/types";
+import { D3Selection, IAxesStyleChangeEventPayload, IChart, IChartEvent, IChartPlugin, IRenderStateData } from "../common/types";
 import { InteractionLabelPlugin } from "../plugins/interaction/interaction-label-plugin";
 import { InteractionLinePlugin } from "../plugins/interaction/interaction-line-plugin";
 import { MouseInteractiveAreaPlugin } from "../plugins/mouse-interactive-area-plugin";
@@ -169,9 +169,9 @@ export class XYGrid extends Grid implements IGrid {
 
         const untilDestroy = <T>() => takeUntil<T>(this.eventBus.getStream(DESTROY_EVENT));
         this.eventBus.getStream(SERIES_STATE_CHANGE_EVENT).pipe(untilDestroy()).subscribe((e: IChartEvent) => {
-            const axesOpacity = this.handleSeriesStateChange(e);
+            const axesStyles = this.handleSeriesStateChange(e);
 
-            this.eventBus.getStream(XY_GRID_AXES_OPACITY_EVENT).next({ data: axesOpacity } as IChartEvent<IXYGridOpacityEventPayload>);
+            this.eventBus.getStream(AXES_STYLE_CHANGE_EVENT).next({ data: axesStyles } as IChartEvent<IAxesStyleChangeEventPayload>);
         });
 
         return this;
@@ -193,15 +193,15 @@ export class XYGrid extends Grid implements IGrid {
             { scaleId: this.rightScaleId, element: this.axisYRight?.group },
         ];
 
-        const axesOpacity = this.calculateAxesOpacity(e, axes);
+        const axesStyles = this.calculateAxesStyles(e, axes);
 
         for (const a of axes) {
             if (a.scaleId) {
-                a.element.attr("opacity", axesOpacity[a.scaleId]);
+                a.element.attrs(axesStyles[a.scaleId]);
             }
         }
 
-        return axesOpacity;
+        return axesStyles;
     }
 
     /**
@@ -211,7 +211,7 @@ export class XYGrid extends Grid implements IGrid {
      * @param axes
      * @private
      */
-    private calculateAxesOpacity(e: IChartEvent, axes: IScaleSVGElement[]): Record<string, number> {
+    private calculateAxesStyles(e: IChartEvent, axes: IScaleSVGElement[]): Record<string, Record<string, any>> {
         const renderStates = e.data as IRenderStateData[];
 
         const emphasizedSeries = renderStates
@@ -227,17 +227,17 @@ export class XYGrid extends Grid implements IGrid {
             for (const emphasizedYScale of emphasizedYScales) {
                 if (emphasizedYScale.id === this.leftScaleId || emphasizedYScale.id === this.rightScaleId) {
                     return axes.reduce((acc, next) => {
-                        acc[next.scaleId] = emphasizedYScale.id === next.scaleId ? 1 : 0.1;
+                        acc[next.scaleId] = { opacity: emphasizedYScale.id === next.scaleId ? 1 : 0.1 };
                         return acc;
-                    }, {} as Record<string, number>);
+                    }, {} as Record<string, Record<string, any>>);
                 }
             }
             return {};
         } else {
             return axes.reduce((acc, next) => {
-                acc[next.scaleId] = 1;
+                acc[next.scaleId] = { opacity: 1 };
                 return acc;
-            }, {} as Record<string, number>);
+            }, {} as Record<string, Record<string, any>>);
         }
     }
 

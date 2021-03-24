@@ -1,13 +1,12 @@
 <div class="nui-chart-layout">
-    <div class="axis-label-left nui-text-small"><strong i18n [style.opacity]="leftAxisOpacity">Left axis label</strong></div>
-    <div class="axis-label-right nui-text-small"><strong i18n [style.opacity]="rightAxisOpacity">Right axis label</strong></div>
+    <div class="axis-label-left nui-text-small"><strong i18n [style]="leftAxisStyles">Left axis label</strong></div>
+    <div class="axis-label-right nui-text-small"><strong i18n [style]="rightAxisStyles">Right axis label</strong></div>
     <div class="axis-label-bottom nui-text-small"><strong i18n>Bottom axis label</strong></div>
     <div class="chart">
         <nui-chart class="w-100" [chart]="chart"></nui-chart>
     </div>
     <div class="legend">
-        <nui-legend
-                    [active]="chartAssist.isLegendActive"
+        <nui-legend [active]="chartAssist.isLegendActive"
                     [interactive]="true"
                     (mouseleave)="chartAssist.resetVisibleSeries()">
             <nui-legend-series *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn"

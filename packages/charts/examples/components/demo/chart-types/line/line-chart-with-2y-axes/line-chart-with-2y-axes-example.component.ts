@@ -1,18 +1,21 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import {
+    AXES_STYLE_CHANGE_EVENT,
     Chart,
     ChartAssist,
+    IAxesStyleChangeEventPayload,
     IChartEvent,
     IChartSeries,
     ILineAccessors,
-    IXYGridOpacityEventPayload,
     LineAccessors,
     LinearScale,
     LineRenderer,
-    TimeScale, XYGrid, XY_GRID_AXES_OPACITY_EVENT
+    TimeScale,
+    XYGrid
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
     selector: "line-chart-with-2y-axes-example",
@@ -24,16 +27,16 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
 
     public yLeftScale: LinearScale;
     public yRightScale: LinearScale;
-    public axesOpacity: IXYGridOpacityEventPayload;
+    public axesStyles: IAxesStyleChangeEventPayload;
 
     private destroy$ = new Subject();
 
-    public get leftAxisOpacity() {
-        return this.axesOpacity?.[this.yLeftScale.id] ?? 1;
+    public get leftAxisStyles() {
+        return this.axesStyles?.[this.yLeftScale.id] ?? {};
     }
 
-    public get rightAxisOpacity() {
-        return this.axesOpacity?.[this.yRightScale.id] ?? 1;
+    public get rightAxisStyles() {
+        return this.axesStyles?.[this.yRightScale.id] ?? {};
     }
 
     constructor(public changeDetector: ChangeDetectorRef) {
@@ -77,11 +80,13 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
         // chart assist needs to be used to update data
         this.chartAssist.update(seriesSet);
 
-        //
-        this.chart.eventBus.getStream(XY_GRID_AXES_OPACITY_EVENT).subscribe((event: IChartEvent<IXYGridOpacityEventPayload>) => {
-            this.axesOpacity = event.data;
-            this.changeDetector.markForCheck();
-        });
+        // Here we subscribe to an event indicating changes on axis styling. We use that information to style axis labels
+        this.chart.eventBus.getStream(AXES_STYLE_CHANGE_EVENT)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((event: IChartEvent<IAxesStyleChangeEventPayload>) => {
+                this.axesStyles = event.data;
+                this.changeDetector.markForCheck();
+            });
     }
 
     public ngOnDestroy(): void {
