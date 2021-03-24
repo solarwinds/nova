@@ -2,8 +2,7 @@ import { Injectable } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 
 import { CHART_PALETTE_CS1 } from "../core/common/palette/palettes";
-import { Renderer } from "../core/common/renderer";
-import { Formatter, IRadialScales, Scales } from "../core/common/scales/types";
+import { Formatter } from "../core/common/scales/types";
 import { IAccessors, IChartAssistSeries, IChartSeries, IDataSeries } from "../core/common/types";
 import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
@@ -12,8 +11,8 @@ import { BarRenderer } from "../renderers/bar/bar-renderer";
 import { barScales } from "../renderers/bar/bar-scales";
 import { LinearGaugeThresholdsRenderer } from "../renderers/bar/linear-gauge-thresholds-renderer";
 import { RadialAccessors } from "../renderers/radial/accessors/radial-accessors";
-import { radialGaugeRendererConfig } from "../renderers/radial/gauge/radial-gauge-renderer-config";
-import { RadialGaugeThresholdsRenderer } from "../renderers/radial/gauge/radial-gauge-thresholds-renderer";
+import { donutGaugeRendererConfig } from "../renderers/radial/gauge/donut-gauge-renderer-config";
+import { DonutGaugeThresholdsRenderer } from "../renderers/radial/gauge/donut-gauge-thresholds-renderer";
 import { RadialRenderer } from "../renderers/radial/radial-renderer";
 import { radialScales } from "../renderers/radial/radial-scales";
 
@@ -95,7 +94,7 @@ export class GaugeUtil {
     public static setThresholdLabelFormatter(formatter: Formatter<string>,
                                              seriesSet: IChartAssistSeries<IAccessors>[],
                                              formatterName = GAUGE_LABEL_FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
-        const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof RadialGaugeThresholdsRenderer);
+        const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof DonutGaugeThresholdsRenderer);
         if (thresholdsSeries) {
             thresholdsSeries.scales.r.formatters[formatterName] = formatter;
         }
@@ -124,9 +123,9 @@ export class GaugeUtil {
         };
 
         const chartTools: Record<GaugeMode, IGaugeTools> = {
-            [GaugeMode.Radial]: {
-                mainRendererFunction: () => new RadialRenderer(radialGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new RadialGaugeThresholdsRenderer(),
+            [GaugeMode.Donut]: {
+                mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
+                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(),
                 accessorFunction: () => new RadialAccessors(),
                 scaleFunction: () => radialScales(),
             },

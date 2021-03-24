@@ -2,37 +2,40 @@ import { arc, Arc, DefaultArcObject, select } from "d3";
 import { Subject } from "rxjs";
 
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../../core/common/types";
+import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-import { IGaugeThreshold } from "../../../gauge/types";
+import { IGaugeSeriesConfig } from "../../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import { RadialAccessors } from "../accessors/radial-accessors";
-import { radialScales } from "../radial-scales";
 
-import { RadialGaugeRenderingUtil } from "./radial-gauge-rendering-util";
-import { RadialGaugeThresholdsRenderer } from "./radial-gauge-thresholds-renderer";
+import { DonutGaugeRenderingUtil } from "./donut-gauge-rendering-util";
+import { DonutGaugeThresholdsRenderer } from "./donut-gauge-thresholds-renderer";
 
-describe("RadialGaugeThresholdsRenderer >", () => {
-    let renderer: RadialGaugeThresholdsRenderer;
-    let testThresholds: IGaugeThreshold[];
+describe("DonutGaugeThresholdsRenderer >", () => {
+    let renderer: DonutGaugeThresholdsRenderer;
+    let seriesConfig: IGaugeSeriesConfig;
     let svg: D3Selection<SVGSVGElement> | any;
     let renderSeries: IRenderSeries<RadialAccessors>;
     let dataSeries: IDataSeries<IAccessors>;
-    const accessors = new RadialAccessors();
-    const scales = radialScales();
     const containers: IRenderContainers = {};
 
     beforeEach(() => {
-        renderer = new RadialGaugeThresholdsRenderer();
+        renderer = new DonutGaugeThresholdsRenderer();
         svg = select(document.createElement("div")).append("svg");
         containers[RenderLayerName.data] = svg.append("g");
-        testThresholds = [{ value: 3 }, { value: 7 }, { value: 9 }];
+        seriesConfig = {
+            value: 5,
+            max: 10,
+            thresholds: [3, 7, 9],
+        };
 
-        dataSeries = GaugeUtil.generateThresholdSeries(5, 10, testThresholds, accessors, scales, renderer);
+        const gaugeAttributes = GaugeUtil.getGaugeAttributes(GaugeMode.Donut);
+        dataSeries = GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes);
 
         renderSeries = {
             dataSeries: dataSeries as IDataSeries<RadialAccessors, any>,
             containers,
-            scales,
+            scales: gaugeAttributes.scales,
         };
     });
 
@@ -49,11 +52,11 @@ describe("RadialGaugeThresholdsRenderer >", () => {
             arcGenerator = arc()
                 .outerRadius(renderer.getOuterRadius(renderSeries.scales.r.range(), 0))
                 .innerRadius(innerRadius >= 0 ? innerRadius : 0);
-            markerData = RadialGaugeRenderingUtil.generateThresholdData(renderSeries.dataSeries.data);
+            markerData = DonutGaugeRenderingUtil.generateThresholdData(renderSeries.dataSeries.data);
         });
 
         it("should render the correct number of threshold markers", () => {
-            expect(thresholdMarkers.nodes().length).toEqual(testThresholds.length);
+            expect(thresholdMarkers.nodes().length).toEqual(seriesConfig.thresholds.length);
         });
 
         it("should position the threshold markers correctly", () => {

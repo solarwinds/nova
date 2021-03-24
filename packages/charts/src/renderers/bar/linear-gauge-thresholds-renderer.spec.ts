@@ -1,48 +1,49 @@
 import { select } from "d3";
 import { Subject } from "rxjs";
 
-import { IXYScales } from "../../core/common/scales/types";
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../core/common/types";
+import { GaugeMode } from "../../gauge/constants";
 import { GaugeUtil } from "../../gauge/gauge-util";
-import { IGaugeThreshold } from "../../gauge/types";
+import { IGaugeAttributes, IGaugeSeriesConfig } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
-import { BarAccessors, IBarAccessors } from "./accessors/bar-accessors";
-import { barAccessors } from "./accessors/bar-accessors-fn";
-import { barScales } from "./bar-scales";
+import { BarAccessors } from "./accessors/bar-accessors";
 import { LinearGaugeThresholdsRenderer } from "./linear-gauge-thresholds-renderer";
 
 describe("LinearGaugeThresholdsRenderer >", () => {
     let renderer: LinearGaugeThresholdsRenderer;
-    let testThresholds: IGaugeThreshold[];
+    let seriesConfig: IGaugeSeriesConfig;
     let svg: D3Selection<SVGSVGElement> | any;
     let renderSeries: IRenderSeries<BarAccessors>;
     let dataSeries: IDataSeries<IAccessors>;
-    let accessors: IBarAccessors;
-    let scales: IXYScales;
     const containers: IRenderContainers = {};
 
     beforeEach(() => {
         renderer = new LinearGaugeThresholdsRenderer();
         svg = select(document.createElement("div")).append("svg");
         containers[RenderLayerName.unclippedData] = svg.append("g");
-        testThresholds = [{ value: 3 }, { value: 7 }, { value: 9 }];
+        seriesConfig = {
+            value: 5,
+            max: 10,
+            thresholds: [3, 7, 9],
+        };
     });
 
     describe("draw", () => {
         let thresholdMarkers: D3Selection;
 
         describe("vertical gauge", () => {
+            let gaugeAttributes: IGaugeAttributes;
+
             beforeEach(() => {
-                accessors = barAccessors();
-                scales = barScales();
-                scales.x.domain(["gauge"]);
-                dataSeries = GaugeUtil.generateThresholdSeries(5, 10, testThresholds, accessors, scales, renderer);
+                gaugeAttributes = GaugeUtil.getGaugeAttributes(GaugeMode.Vertical);
+                gaugeAttributes.scales.x.domain(["gauge"]);
+                dataSeries = GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes);
 
                 renderSeries = {
                     dataSeries: dataSeries as IDataSeries<BarAccessors, any>,
                     containers,
-                    scales,
+                    scales: gaugeAttributes.scales,
                 };
 
                 renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
@@ -50,16 +51,16 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             });
 
             it("should render the correct number of threshold markers", () => {
-                expect(thresholdMarkers.nodes().length).toEqual(testThresholds.length);
+                expect(thresholdMarkers.nodes().length).toEqual(seriesConfig.thresholds.length);
             });
 
             it("should position the threshold markers correctly", () => {
                 thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
                     expect(node.getAttribute("cx")).toEqual(
-                        (renderSeries.scales.x.convert(accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                        (renderSeries.scales.x.convert(gaugeAttributes.accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
                     );
                     expect(node.getAttribute("cy")).toEqual(
-                        (renderSeries.scales.y.convert(accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                        (renderSeries.scales.y.convert(gaugeAttributes.accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
                     );
                 });
             });
@@ -73,16 +74,18 @@ describe("LinearGaugeThresholdsRenderer >", () => {
         });
 
         describe("horizontal gauge", () => {
+            let gaugeAttributes: IGaugeAttributes;
+
             beforeEach(() => {
-                accessors = barAccessors({ horizontal: true });
-                scales = barScales({ horizontal: true });
-                scales.y.domain(["gauge"]);
-                dataSeries = GaugeUtil.generateThresholdSeries(5, 10, testThresholds, accessors, scales, renderer);
+                gaugeAttributes = GaugeUtil.getGaugeAttributes(GaugeMode.Horizontal);
+                gaugeAttributes.scales.y.domain(["gauge"]);
+
+                dataSeries = GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes);
 
                 renderSeries = {
                     dataSeries: dataSeries as IDataSeries<BarAccessors, any>,
                     containers,
-                    scales,
+                    scales: gaugeAttributes.scales,
                 };
 
                 renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
@@ -90,16 +93,16 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             });
 
             it("should render the correct number of threshold markers", () => {
-                expect(thresholdMarkers.nodes().length).toEqual(testThresholds.length);
+                expect(thresholdMarkers.nodes().length).toEqual(seriesConfig.thresholds.length);
             });
 
             it("should position the threshold markers correctly", () => {
                 thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
                     expect(node.getAttribute("cx")).toEqual(
-                        (renderSeries.scales.x.convert(accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                        (renderSeries.scales.x.convert(gaugeAttributes.accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
                     );
                     expect(node.getAttribute("cy")).toEqual(
-                        (renderSeries.scales.y.convert(accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                        (renderSeries.scales.y.convert(gaugeAttributes.accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
                     );
                 });
             });

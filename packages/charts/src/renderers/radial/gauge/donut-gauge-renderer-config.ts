@@ -1,11 +1,11 @@
 import { IRadialRendererConfig } from "../../../core/common/types";
 
 /**
- * Convenience function for generating a standard radial renderer configuration for a gauge
+ * Convenience function for generating a standard renderer configuration for a donut gauge
  *
  * @returns {IRadialRendererConfig} Standard renderer configuration for a gauge
  */
-export function radialGaugeRendererConfig(): IRadialRendererConfig {
+export function donutGaugeRendererConfig(): IRadialRendererConfig {
     return {
         annularGrowth: 0,
         strokeWidth: 0,

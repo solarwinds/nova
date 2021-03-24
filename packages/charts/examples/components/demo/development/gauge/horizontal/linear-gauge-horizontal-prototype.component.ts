@@ -16,21 +16,21 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "linear-gauge-vertical-chart-prototype",
-    templateUrl: "./linear-gauge-vertical-chart-prototype.component.html",
-    styleUrls: ["./linear-gauge-vertical-chart-prototype.component.less"],
+    selector: "linear-gauge-horizontal-prototype",
+    templateUrl: "./linear-gauge-horizontal-prototype.component.html",
+    styleUrls: ["./linear-gauge-horizontal-prototype.component.less"],
 })
-export class LinearGaugeChartVerticalPrototypeComponent implements OnChanges, OnInit {
+export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnInit {
     @Input() public thickness = GAUGE_THICKNESS_DEFAULT;
     @Input() public seriesConfig: IGaugeSeriesConfig;
 
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnChanges(changes: ComponentChanges<LinearGaugeChartVerticalPrototypeComponent>) {
+    public ngOnChanges(changes: ComponentChanges<LinearGaugeHorizontalPrototypeComponent>) {
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.seriesConfig && !changes.seriesConfig.firstChange)) {
             if (changes.thickness) {
-                this.chartAssist.chart.getGrid().config().dimension.width(this.thickness);
+                this.chartAssist.chart.getGrid().config().dimension.height(this.thickness);
                 this.chartAssist.chart.updateDimensions();
             }
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
@@ -38,13 +38,13 @@ export class LinearGaugeChartVerticalPrototypeComponent implements OnChanges, On
     }
 
     public ngOnInit() {
-        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Vertical, this.thickness) as XYGridConfig);
-        grid.config().dimension.margin.top = 5;
+        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal, this.thickness) as XYGridConfig);
+        grid.config().dimension.margin.right = 5;
         const chart = new Chart(grid);
 
         this.chartAssist = new ChartAssist(chart, stack);
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Vertical);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Horizontal);
         this.chartAssist.update(this.seriesSet);
     }
 }

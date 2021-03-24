@@ -6,11 +6,10 @@ import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
 
-import { GaugeTestPageComponent } from "./chart-prototype/gauge-test-page.component";
-import { LinearGaugeChartHorizontalPrototypeComponent } from "./chart-prototype/horizontal/linear-gauge-horizontal-chart-prototype.component";
-import { RadialGaugeChartPrototypeComponent } from "./chart-prototype/radial/radial-gauge-chart-prototype.component";
-import { LinearGaugeChartVerticalPrototypeComponent } from "./chart-prototype/vertical/linear-gauge-vertical-chart-prototype.component";
-import { GaugeComponentPrototypeComponent } from "./component-prototype/gauge-component-prototype.component";
+import { DonutGaugePrototypeComponent } from "./donut/donut-gauge-prototype.component";
+import { GaugeTestPageComponent } from "./gauge-test-page.component";
+import { LinearGaugeHorizontalPrototypeComponent } from "./horizontal/linear-gauge-horizontal-prototype.component";
+import { LinearGaugeVerticalPrototypeComponent } from "./vertical/linear-gauge-vertical-prototype.component";
 
 const routes: Routes = [
     {
@@ -22,23 +21,13 @@ const routes: Routes = [
             },
         },
     },
-    {
-        path: "component",
-        component: GaugeComponentPrototypeComponent,
-        data: {
-            srlc: {
-                hideIndicator: true,
-            },
-        },
-    },
 ];
 
 @NgModule({
     declarations: [
-        GaugeComponentPrototypeComponent,
-        LinearGaugeChartHorizontalPrototypeComponent,
-        LinearGaugeChartVerticalPrototypeComponent,
-        RadialGaugeChartPrototypeComponent,
+        LinearGaugeHorizontalPrototypeComponent,
+        LinearGaugeVerticalPrototypeComponent,
+        DonutGaugePrototypeComponent,
         GaugeTestPageComponent,
     ],
     imports: [

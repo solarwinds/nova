@@ -4,25 +4,25 @@ import {
     Chart,
     ChartAssist,
     ChartDonutContentPlugin,
+    DonutGaugeLabelsPlugin,
     GaugeMode,
     GaugeUtil,
     GAUGE_THICKNESS_DEFAULT,
     IAccessors,
     IChartAssistSeries,
+    IDonutGaugeLabelsPluginConfig,
     IGaugeSeriesConfig,
-    IRadialGaugeLabelsPluginConfig,
     IRadialRendererConfig,
     radial,
-    RadialGaugeLabelsPlugin,
     radialGrid
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "radial-gauge-chart-prototype",
-    templateUrl: "./radial-gauge-chart-prototype.component.html",
-    styleUrls: ["./radial-gauge-chart-prototype.component.less"],
+    selector: "donut-gauge-prototype",
+    templateUrl: "./donut-gauge-prototype.component.html",
+    styleUrls: ["./donut-gauge-prototype.component.less"],
 })
-export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
+export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     @Input() public annularWidth = GAUGE_THICKNESS_DEFAULT;
     @Input() public seriesConfig: IGaugeSeriesConfig;
 
@@ -30,7 +30,7 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnChanges(changes: ComponentChanges<RadialGaugeChartPrototypeComponent>) {
+    public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>) {
         if ((changes.annularWidth && !changes.annularWidth.firstChange) || (changes.seriesConfig && !changes.seriesConfig.firstChange)) {
             if (changes.annularWidth) {
                 this.updateAnnularWidth();
@@ -44,12 +44,12 @@ export class RadialGaugeChartPrototypeComponent implements OnChanges, OnInit {
         this.chartAssist = new ChartAssist(new Chart(grid), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
-        const labelConfig: IRadialGaugeLabelsPluginConfig = {
+        const labelConfig: IDonutGaugeLabelsPluginConfig = {
             gridMargin: { top: 20, right: 20, bottom: 20, left: 20 },
         };
-        this.chartAssist.chart.addPlugin(new RadialGaugeLabelsPlugin(labelConfig));
+        this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin(labelConfig));
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Radial);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Donut);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}MS`, this.seriesSet);
 
         this.updateAnnularWidth();
