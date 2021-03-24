@@ -130,7 +130,6 @@ export class EventSamplerComponent implements OnInit {
         {
             id: SERIES_STATE_CHANGE_EVENT,
             name: "SERIES_STATE_CHANGE_EVENT",
-            interactionTypes: [InteractionType.MouseMove],
         },
     ];
 
@@ -149,7 +148,6 @@ export class EventSamplerComponent implements OnInit {
     ];
     public valueAccessor: (i: number, j: number) => number;
 
-    public chart: IChart;
     public chartAssist: ChartAssist;
     public palette: ChartPalette;
 
@@ -187,10 +185,10 @@ export class EventSamplerComponent implements OnInit {
     private buildChart() {
         const {grid, accessors, renderer, scales, seriesProcessor} = this.getChartAttributes(this.selectedChartType);
 
-        this.chart = new Chart(grid);
-        this.chartAssist = new ChartAssist(this.chart);
+        // this.chart = new Chart(grid);
+        this.chartAssist = new ChartAssist(new Chart(grid));
 
-        this.chart.addPlugin(new InteractionLabelPlugin());
+        this.chartAssist.chart.addPlugin(new InteractionLabelPlugin());
 
         this.renderer = renderer;
         this.accessors = accessors;
@@ -200,7 +198,7 @@ export class EventSamplerComponent implements OnInit {
 
     private subscribeToChart() {
         each(this.eventFilters, filter => {
-            this.chart.getEventBus().getStream(filter.id).subscribe((event: IChartEvent) => {
+            this.chartAssist.chart.getEventBus().getStream(filter.id).subscribe((event: IChartEvent) => {
                 if (this.selectedEvent.id === filter.id) {
                     if (!event.data.interactionType || this.selectedInteractionType === event.data.interactionType) {
                         recursivelyReplacePropValue(event, "dataSeries", "<< IChartSeries info is available here (replaced in output for brevity) >>");
