@@ -2,13 +2,15 @@ import { browser, by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 import { SelectorAtom } from "../selector/selector.atom";
 
 import { TableAtom } from "./table.atom";
 
-describe("Visual tests: Table", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Table";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let tableBasic: TableAtom;
     let sortableTable: TableAtom;
     let actionsMenu: ElementFinder;
@@ -18,8 +20,7 @@ describe("Visual tests: Table", () => {
     let resizeTable: TableAtom;
     let expanders: {[key: string]: ElementFinder};
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("table/table-visual-test");
 
         tableBasic = Atom.find(TableAtom, "table-basic-usage");
@@ -43,18 +44,17 @@ describe("Visual tests: Table", () => {
 
         const firstHeaderCell = selectedRowsTable.getCell(0, 0);
         selector = selectedRowsTable.getSelector(firstHeaderCell);
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Table");
-        await eyes.checkWindow("Default");
+        await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese("Dark theme");
         await Helpers.switchDarkTheme("off");
 
         for (const key of Object.keys(expanders)) { await expanders[key].click(); }
@@ -62,26 +62,26 @@ describe("Visual tests: Table", () => {
         await expanders.sorting.click();
         await sortableTable.getCell(0, 4).click();
         await browser.actions().mouseMove({x: 0, y: 300}).perform();
-        await eyes.checkWindow("Sorting table");
+        await camera.say.cheese("Sorting table");
         await expanders.sorting.click();
 
         await expanders.rowSelection.click();
         await selector.getCheckbox().toggle();
         await browser.actions().mouseMove({x: 0, y: 300}).perform();
-        await eyes.checkWindow("Selected rows in table");
+        await camera.say.cheese("Selected rows in table");
         await expanders.rowSelection.click();
 
         await expanders.columnResize.click();
         await resizeTable.hover(resizeTable.getResizers().get(1));
-        await eyes.checkWindow("Hover on resizable");
+        await camera.say.cheese("Hover on resizable");
         await expanders.columnResize.click();
 
         await expanders.customActions.click();
         await actionsMenu.click();
         await customActionTable.hover(customActionTable.getCell(2, 4));
-        await eyes.checkWindow("Edit columns");
+        await camera.say.cheese("Edit columns");
         await expanders.customActions.click();
 
-        await eyes.close();
-    }, 200000);
+        await camera.turn.off();
+    }, 100000);
 });

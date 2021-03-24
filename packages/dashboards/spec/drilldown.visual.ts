@@ -1,30 +1,30 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
+import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser } from "protractor";
 
 import { DrilldownAtom } from "./drilldown.atom";
 
-describe("Visual tests: Dashboards - Drilldown Widget", () => {
-    let eyes: any;
+const name: string = "Drilldown Widget";
+
+describe(`Visual tests: Dashboards - ${name}`, () => {
     let drilldownWidget: DrilldownAtom;
+    let camera: Camera;
 
     beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("test/drilldown");
         drilldownWidget = Atom.find(DrilldownAtom, "drilldown-widget");
+
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} - Default look`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Dashboards - Drilldown Widget");
-        await eyes.checkWindow("Default");
+        await camera.say.cheese(`${name} - Default`);
 
         await drilldownWidget.drillFirstGroup();
-        await eyes.checkWindow("Leaf");
+        await camera.say.cheese(`${name} - Leaf`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

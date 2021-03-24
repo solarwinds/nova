@@ -2,6 +2,7 @@ import { browser, by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 import { CheckboxGroupAtom } from "../checkbox-group/checkbox-group.atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 import { ComboboxAtom } from "../combobox/combobox.atom";
@@ -11,9 +12,10 @@ import { SwitchAtom } from "../switch/switch.atom";
 import { TextboxAtom } from "../textbox/textbox.atom";
 import { TimepickerAtom } from "../timepicker/timepicker.atom";
 
-describe("Visual tests: Form Field", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Form Field";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let textbox: TextboxAtom;
     let nickname: TextboxAtom;
     let city: TextboxAtom;
@@ -26,10 +28,8 @@ describe("Visual tests: Form Field", () => {
     let timepicker: TimepickerAtom;
     let markAsDirty: ElementFinder;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("form-field/form-field-visual-test");
-
         nickname = Atom.find(TextboxAtom, "nui-form-field-visual-test-nickname");
         city = Atom.find(TextboxAtom, "nui-form-field-visual-test-city");
         textbox = Atom.find(TextboxAtom, "nui-form-field-visual-test-textbox");
@@ -41,20 +41,18 @@ describe("Visual tests: Form Field", () => {
         select = Atom.find(SelectAtom, "nui-form-field-visual-test-select");
         timepicker = Atom.find(TimepickerAtom, "nui-form-field-visual-test-timepicker");
         markAsDirty = element(by.id("nui-demo-mark-as-touched-button"));
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Form Field");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
         await markAsDirty.click();
-        await eyes.checkWindow("The entire form is invalid");
+        await camera.say.cheese("The entire form is invalid");
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme test 1");
+        await camera.say.cheese("Dark theme test 1");
         
         await Helpers.switchDarkTheme("off");
         await nickname.acceptText("John Wick");
@@ -67,12 +65,11 @@ describe("Visual tests: Form Field", () => {
         await combobox.select("Cabbage");
         await select.select("Cabbage");
         await timepicker.selectTime("17:30");
-        await eyes.checkWindow("The entire form is valid");
-
+        await camera.say.cheese("The entire form is valid");
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme test 2");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

@@ -2,12 +2,14 @@ import { browser, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
 import { SelectV2Atom } from "./select-v2.atom";
 
-describe("Visual tests: Select V2", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Select-V2";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let selectBasic: SelectV2Atom;
     let selectDisabled: SelectV2Atom;
     let selectErrorState: SelectV2Atom;
@@ -17,7 +19,7 @@ describe("Visual tests: Select V2", () => {
     let selectInForm: SelectV2Atom;
     let selectOverlayStyles: SelectV2Atom;
 
-    beforeAll(() => {
+    beforeAll(async () => {
         selectBasic = Atom.find(SelectV2Atom, "basic");
         selectDisabled = Atom.find(SelectV2Atom, "disabled");
         selectErrorState = Atom.find(SelectV2Atom, "error-state");
@@ -29,17 +31,14 @@ describe("Visual tests: Select V2", () => {
     });
 
     beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("select-v2/test");
         await Helpers.disableCSSAnimations(Animations.ALL);
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Select V2");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
         /**
          * 1. TAB navigation is working
          * 2. First element is active while tab navigating
@@ -48,7 +47,7 @@ describe("Visual tests: Select V2", () => {
          */
         await Helpers.pressKey(Key.TAB, 3);
         await (await selectBasic.getOption(3)).hover();
-        await eyes.checkWindow("State 1");
+        await camera.say.cheese(`State 1`);
 
         /**
          * 1. Error state is gone on items choose
@@ -70,7 +69,7 @@ describe("Visual tests: Select V2", () => {
         await (await selectGrouped.getLastOption()).click();
         await (await selectDisplayValueSmall.getOption(6)).click();
         await (await selectDisplayValueSmall.getOption(3)).hover();
-        await eyes.checkWindow("State 2");
+        await camera.say.cheese(`State 2`);
         
         /**
          * 1. Hovered selected value styles checked
@@ -79,15 +78,15 @@ describe("Visual tests: Select V2", () => {
         await Helpers.switchDarkTheme("off");
         await selectGrouped.toggle();
         await (await selectGrouped.getLastOption()).hover();
-        await eyes.checkWindow("State 3");
+        await camera.say.cheese(`State 3`);
 
         /**
          * 1. Custom overlay styles are applied
          */
         // await selectGrouped.toggle();
         await selectOverlayStyles.toggle();
-        await eyes.checkWindow("State 4");
+        await camera.say.cheese(`State 4`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

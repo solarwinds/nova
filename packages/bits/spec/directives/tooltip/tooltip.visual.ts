@@ -4,10 +4,12 @@ import {browser} from "protractor";
 import {Atom} from "../../atom";
 import {ButtonAtom} from "../../components/button/button.atom";
 import {Animations, Helpers} from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
-describe("Visual tests: Tooltip", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any,
+const name: string = "Tooltip";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera,
         basicTooltipButton: ButtonAtom,
         leftTooltipButton: ButtonAtom,
         bottomTooltipButton: ButtonAtom,
@@ -15,7 +17,6 @@ describe("Visual tests: Tooltip", () => {
         manualTooltipButton: ButtonAtom;
 
     beforeAll(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("tooltip/tooltip-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
         basicTooltipButton = Atom.find(ButtonAtom, "basic-tooltip");
@@ -23,35 +24,33 @@ describe("Visual tests: Tooltip", () => {
         bottomTooltipButton = Atom.find(ButtonAtom, "bottom-tooltip");
         rightTooltipButton = Atom.find(ButtonAtom, "right-tooltip");
         manualTooltipButton = Atom.find(ButtonAtom, "manual-tooltip");
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        // Remove type conversion once NUI-4870 is done
-        await (eyes as any).abortIfNotClosed();
-    });
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Tooltip");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
         await basicTooltipButton.hover();
-        await eyes.checkWindow("Hover on button with basic tooltip");
+        await camera.say.cheese("Hover on button with basic tooltip");
 
         await leftTooltipButton.hover();
-        await eyes.checkWindow("Hover on button with tooltip on the left");
+        await camera.say.cheese("Hover on button with tooltip on the left");
 
         await bottomTooltipButton.hover();
-        await eyes.checkWindow("Hover on button with tooltip on the bottom");
+        await camera.say.cheese("Hover on button with tooltip on the bottom");
 
         await rightTooltipButton.hover();
-        await eyes.checkWindow("Hover on button with tooltip on the right");
+        await camera.say.cheese("Hover on button with tooltip on the right");
 
         await manualTooltipButton.click();
-        await eyes.checkWindow("After tooltip triggered manually");
+        await camera.say.cheese("After tooltip triggered manually");
         await manualTooltipButton.click();
 
         Helpers.switchDarkTheme("on");
         await manualTooltipButton.click();
-        await eyes.checkWindow("After tooltip triggered manually with dark theme mode on");
+        await camera.say.cheese("After tooltip triggered manually with dark theme mode on");
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

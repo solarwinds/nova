@@ -1,37 +1,36 @@
 import { browser, by, element } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
 import { SpinnerAtom } from "./spinner.atom";
 
-describe("Visual tests: Spinner", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any,
+const name: string = "Spinner";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera,
         spinnerLargeWithCancel: SpinnerAtom;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("spinner/spinner-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
-
         spinnerLargeWithCancel = new SpinnerAtom(element(by.id("nui-spinner-large-cancel")));
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Spinner");
-        await eyes.checkWindow("Default");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
+        await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
         await Helpers.switchDarkTheme("off");
 
         await spinnerLargeWithCancel.waitForDisplayed();
         await spinnerLargeWithCancel.cancel();
-        await eyes.checkWindow("Spinners with cancel buttons are cancelled");
-        await eyes.close();
+        await camera.say.cheese("Spinners with cancel buttons are cancelled");
+
+        await camera.turn.off();
     }, 100000);
 });

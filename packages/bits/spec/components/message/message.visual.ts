@@ -1,23 +1,26 @@
 import { browser } from "protractor";
 
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
-describe("Visual tests: Message", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Message";
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
+
+    beforeAll(async () => {
         await Helpers.prepareBrowser("message/message-visual-test");
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Message");
-        await eyes.checkWindow("Default");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
+        await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

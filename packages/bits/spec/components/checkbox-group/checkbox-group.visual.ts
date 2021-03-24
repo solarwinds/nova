@@ -2,34 +2,33 @@ import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
 import { CheckboxGroupAtom } from "./checkbox-group.atom";
 
-describe("Visual tests: Checkbox Group", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Checkbox Group";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let checkboxJustified: CheckboxGroupAtom;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("checkbox-group/checkbox-group-visual-test");
         checkboxJustified = Atom.find(CheckboxGroupAtom, "nui-demo-checkbox-group-justified");
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Checkbox Group");
-        await eyes.checkWindow("Default");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
+        await camera.say.cheese(`Default`);
 
         await checkboxJustified.getFirst().hover();
-        await eyes.checkWindow("First Checkbox in Justified Checkbox-Group is hovered");
+        await camera.say.cheese(`First Checkbox in Justified Checkbox-Group is hovered`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

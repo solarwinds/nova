@@ -3,43 +3,48 @@ import { $, browser } from "protractor";
 import { Atom } from "../../../atom";
 import { TooltipAtom } from "../../../directives/tooltip/tooltip.atom";
 import { Helpers } from "../../../helpers";
+import { Camera } from "../../../virtual-camera/Camera";
 
 import { TimeFrameBarAtom } from "./time-frame-bar.atom";
 
-describe("Visual tests: TimeFrameBar", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "TimeFrameBar";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     const timeFrameBarFirst: TimeFrameBarAtom = Atom.find(TimeFrameBarAtom, "first");
     const timeFrameBarSecond: TimeFrameBarAtom = Atom.find(TimeFrameBarAtom, "second");
     const timeFrameBarNoQuickPick: TimeFrameBarAtom = Atom.find(TimeFrameBarAtom, "bar-no-quick-pick");
     const tooltip: TooltipAtom = Atom.findIn(TooltipAtom, $(".cdk-overlay-container"));
 
-    beforeEach( async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("convenience/time-frame-bar/visual");
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
+        await camera.say.cheese(`Default`);
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "TimeFrameBar");
         await timeFrameBarSecond.quickPickPreset("Last 7 days");
-        await eyes.checkWindow("Default");
+        await camera.say.cheese(`Default with quick preset`);
 
         await timeFrameBarFirst.prevButton.hover();
         await tooltip.waitToBeDisplayed();
-        await eyes.checkWindow("With prev button hovered");
+        await camera.say.cheese(`With prev button hovered`);
 
         await timeFrameBarSecond.popover.open();
-        await eyes.checkWindow("With opened popover");
+        await camera.say.cheese(`With opened popover`);
         await timeFrameBarSecond.popover.closeModal();
 
+        await Helpers.switchDarkTheme("on");
+        await camera.say.cheese(`Dark theme`);
+
         await timeFrameBarNoQuickPick.popover.open();
-        await eyes.checkWindow("With opened popover and no quick picker");
+        await camera.say.cheese(`With opened popover and no quick picker`);
         await timeFrameBarNoQuickPick.popover.closeModal();
 
-        await eyes.close();
+
+        await camera.turn.off();
     }, 100000);
 });

@@ -2,11 +2,13 @@ import { browser, by, element, ElementFinder, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 import { ComboboxV2Atom } from "../combobox-v2/combobox-v2.atom";
 
-describe("Visual tests: Combobox V2", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Combobox V2";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let comboboxBasic: ComboboxV2Atom;
     let comboboxError: ComboboxV2Atom;
     let comboboxForm: ComboboxV2Atom;
@@ -23,8 +25,7 @@ describe("Visual tests: Combobox V2", () => {
 
     let focusdrop: ElementFinder;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("combobox-v2/test");
         await Helpers.disableCSSAnimations(Animations.ALL);
         comboboxBasic = Atom.find(ComboboxV2Atom, "basic");
@@ -42,14 +43,12 @@ describe("Visual tests: Combobox V2", () => {
         toggleButton = element(by.id("toggle"));
 
         focusdrop = element(by.className("focus-drop"));
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Combobox V2");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
         /**
          * The following state verifies:
@@ -69,7 +68,7 @@ describe("Visual tests: Combobox V2", () => {
         await Helpers.pressKey(Key.TAB);
         await ComboboxV2Atom.type("Item 3");
         await (await comboboxBasic.getOption(33)).hover();
-        await eyes.checkWindow("State 1");
+        await camera.say.cheese(`State 1`);
 
         /**
          * The following state verifies:
@@ -88,7 +87,7 @@ describe("Visual tests: Combobox V2", () => {
         await disableButton.click();
         await comboboxMulti.selectAll();
         await comboboxSingle.type("qwerty");
-        await eyes.checkWindow("State 2");
+        await camera.say.cheese(`State 2`);
 
         /**
          * The following state verifies:
@@ -108,7 +107,7 @@ describe("Visual tests: Combobox V2", () => {
         await Helpers.pressKey(Key.ARROW_UP);
         await Helpers.pressKey(Key.DOWN);
         await (await comboboxSingle.getLastOption()).hover();
-        await eyes.checkWindow("State 3");
+        await camera.say.cheese(`State 3`);
 
         /**
          * The following state verifies:
@@ -117,7 +116,7 @@ describe("Visual tests: Combobox V2", () => {
          */
         await Helpers.pressKey(Key.TAB);
         await comboboxValueRemoval.hover();
-        await eyes.checkWindow("State 4");
+        await camera.say.cheese(`State 4`);
 
         /**
          * The following state verifies:
@@ -127,11 +126,11 @@ describe("Visual tests: Combobox V2", () => {
         await toggleButton.click();
         await comboboxCustomControl.selectFirst(24);
         await comboboxCustomControl.removeChips(1);
-        await eyes.checkWindow("State 5");
+        await camera.say.cheese(`State 5`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
-    }, 200000);
+        await camera.turn.off();
+    }, 100000);
 });

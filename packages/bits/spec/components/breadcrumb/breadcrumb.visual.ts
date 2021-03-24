@@ -25,10 +25,10 @@ describe(`Visual tests: ${name}`, () => {
 
         await showSecondViewButton.click();
         await showThirdViewButton.click();
-        await camera.say.cheese(`${name} - Default breadcrumb styles`);
+        await camera.say.cheese(`Default breadcrumb styles`);
 
         await Helpers.switchDarkTheme("on");
-        await camera.say.cheese(`${name} - Dark theme`);
+        await camera.say.cheese(`Dark theme`);
         await Helpers.switchDarkTheme("off");
 
         await camera.turn.off();
