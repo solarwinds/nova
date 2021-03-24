@@ -35,7 +35,8 @@ export class GaugeUtil {
     public static assembleSeriesSet(seriesConfig: IGaugeSeriesConfig, mode: GaugeMode): IChartAssistSeries<IAccessors>[] {
         seriesConfig.value = seriesConfig.value ?? 0;
         seriesConfig.max = seriesConfig.max ?? 0;
-        const { accessors, scales, mainRenderer, thresholdsRenderer } = GaugeUtil.getGaugeAttributes(mode);
+        const gaugeAttributes = GaugeUtil.getGaugeAttributes(mode);
+        const { accessors, scales, mainRenderer } = gaugeAttributes;
         if (accessors.data) {
             accessors.data.color = seriesConfig.valueColorAccessor || GaugeUtil.createDefaultValueColorAccessor(seriesConfig.thresholds);
         }
@@ -50,7 +51,7 @@ export class GaugeUtil {
         ];
 
         chartAssistSeries.push(
-            GaugeUtil.generateThresholdSeries(seriesConfig, accessors, scales, thresholdsRenderer)
+            GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes)
         );
 
         return chartAssistSeries;
@@ -59,7 +60,11 @@ export class GaugeUtil {
     public static updateSeriesSet(seriesSet: IChartAssistSeries<IAccessors>[], seriesConfig: IGaugeSeriesConfig): IChartAssistSeries<IAccessors>[] {
         seriesConfig.value = seriesConfig.value ?? 0;
         seriesConfig.max = seriesConfig.max ?? 0;
-        const updatedSeriesSet = seriesSet.map(series => {
+        const updatedSeriesSet = seriesSet.map((series: IChartAssistSeries<IAccessors<any>>) => {
+            if (series.accessors.data) {
+                series.accessors.data.color = seriesConfig.valueColorAccessor || GaugeUtil.createDefaultValueColorAccessor(seriesConfig.thresholds);
+            }
+
             if (series.id === GaugeUtil.QUANTITY_SERIES_ID) {
                 return { ...series, data: [{ category: "gauge", value: seriesConfig.value }] };
             }
@@ -75,24 +80,21 @@ export class GaugeUtil {
         return updatedSeriesSet;
     }
 
-    public static generateThresholdSeries(seriesConfig: IGaugeSeriesConfig,
-                                   accessors: IAccessors,
-                                   scales: IRadialScales | Scales,
-                                   thresholdsRenderer: Renderer<IAccessors>): IChartAssistSeries<IAccessors> {
+    public static generateThresholdSeries(seriesConfig: IGaugeSeriesConfig, gaugeAttributes: IGaugeAttributes): IChartAssistSeries<IAccessors> {
         return {
             id: GaugeUtil.THRESHOLD_MARKERS_SERIES_ID,
             data: GaugeUtil.generateThresholdPoints(seriesConfig),
-            accessors,
-            scales,
-            renderer: thresholdsRenderer,
+            accessors: gaugeAttributes.accessors,
+            scales: gaugeAttributes.scales,
+            renderer: gaugeAttributes.thresholdsRenderer,
             excludeFromArcCalculation: true,
             preprocess: false,
         };
     }
 
     public static setThresholdLabelFormatter(formatter: Formatter<string>,
-                                      seriesSet: IChartAssistSeries<IAccessors>[],
-                                      formatterName = GAUGE_LABEL_FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
+                                             seriesSet: IChartAssistSeries<IAccessors>[],
+                                             formatterName = GAUGE_LABEL_FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
         const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof RadialGaugeThresholdsRenderer);
         if (thresholdsSeries) {
             thresholdsSeries.scales.r.formatters[formatterName] = formatter;

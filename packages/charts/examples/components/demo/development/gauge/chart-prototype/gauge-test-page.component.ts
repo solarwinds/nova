@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DataAccessor, GaugeMode, GaugeUtil, GAUGE_THICKNESS_DEFAULT, IGaugeSeriesConfig } from "@nova-ui/charts";
+import { DataAccessor, GaugeUtil, GAUGE_THICKNESS_DEFAULT, IGaugeSeriesConfig } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-test-page",
@@ -9,9 +9,10 @@ export class GaugeTestPageComponent {
     public value = 95;
     public maxValue = 200;
     public thickness = GAUGE_THICKNESS_DEFAULT;
-    private reversedValueColorAccessor: DataAccessor<any, any> | undefined;
-
     public thresholds: number[] = [100, 125];
+    public reversed = false;
+
+    private reversedValueColorAccessor: DataAccessor<any, any> | undefined;
 
     constructor() {
         // this.thresholds = new Array(200).fill(null).map((e, i) => i);
@@ -19,12 +20,12 @@ export class GaugeTestPageComponent {
         this.reversedValueColorAccessor = GaugeUtil.createReversedValueColorAccessor(this.thresholds);
     }
 
-    public getSeriesConfig(reversed = false): IGaugeSeriesConfig {
+    public getSeriesConfig(): IGaugeSeriesConfig {
         return {
             value: this.value,
             max: this.maxValue,
             thresholds: this.thresholds,
-            valueColorAccessor: reversed ? this.reversedValueColorAccessor : undefined,
+            valueColorAccessor: this.reversed ? this.reversedValueColorAccessor : undefined,
         };
     }
 }
