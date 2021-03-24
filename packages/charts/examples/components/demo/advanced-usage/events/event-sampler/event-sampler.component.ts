@@ -8,6 +8,7 @@ import {
     barScales,
     BarSeriesHighlightStrategy,
     Chart,
+    ChartAssist,
     ChartPalette,
     CHART_PALETTE_CS_S,
     CHART_VIEW_STATUS_EVENT,
@@ -36,6 +37,7 @@ import {
     Renderer,
     Scales,
     SELECT_DATA_POINT_EVENT,
+    SERIES_STATE_CHANGE_EVENT,
     stackedPreprocessor,
     XYGrid
 } from "@nova-ui/charts";
@@ -125,6 +127,10 @@ export class EventSamplerComponent implements OnInit {
             id: CHART_VIEW_STATUS_EVENT,
             name: "CHART_VIEW_STATUS_EVENT",
         },
+        {
+            id: SERIES_STATE_CHANGE_EVENT,
+            name: "SERIES_STATE_CHANGE_EVENT",
+        },
     ];
 
     public selectedEvent: IEventInfo = this.eventFilters[0];
@@ -141,8 +147,7 @@ export class EventSamplerComponent implements OnInit {
         [45, 87, 23, 48, 24, 9],
     ];
     public valueAccessor: (i: number, j: number) => number;
-
-    public chart: IChart;
+    public chartAssist: ChartAssist;
     public palette: ChartPalette;
 
     private accessors: IBarAccessors | IAccessors;
@@ -179,8 +184,9 @@ export class EventSamplerComponent implements OnInit {
     private buildChart() {
         const {grid, accessors, renderer, scales, seriesProcessor} = this.getChartAttributes(this.selectedChartType);
 
-        this.chart = new Chart(grid);
-        this.chart.addPlugin(new InteractionLabelPlugin());
+        this.chartAssist = new ChartAssist(new Chart(grid));
+
+        this.chartAssist.chart.addPlugin(new InteractionLabelPlugin());
 
         this.renderer = renderer;
         this.accessors = accessors;
@@ -190,7 +196,7 @@ export class EventSamplerComponent implements OnInit {
 
     private subscribeToChart() {
         each(this.eventFilters, filter => {
-            this.chart.getEventBus().getStream(filter.id).subscribe((event: IChartEvent) => {
+            this.chartAssist.chart.getEventBus().getStream(filter.id).subscribe((event: IChartEvent) => {
                 if (this.selectedEvent.id === filter.id) {
                     if (!event.data.interactionType || this.selectedInteractionType === event.data.interactionType) {
                         recursivelyReplacePropValue(event, "dataSeries", "<< IChartSeries info is available here (replaced in output for brevity) >>");
@@ -207,7 +213,7 @@ export class EventSamplerComponent implements OnInit {
             | IChartSeries<IBarAccessors>[] = this.buildChartSeries(this.categories, this.subCategories, this.valueAccessor);
         // TODO: Refactor this to be able to pass different types of seriesSet to get rid of the any
         seriesSet = this.seriesProcessor ? this.seriesProcessor(<any>seriesSet, () => true) : seriesSet;
-        this.chart.update(seriesSet);
+        this.chartAssist.update(seriesSet);
     }
 
     private buildChartSeries(categories: string[], subCategories: string[], valueAccessor: (i: number, j: number) => number)
