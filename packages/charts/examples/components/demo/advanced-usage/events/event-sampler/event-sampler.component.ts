@@ -147,7 +147,6 @@ export class EventSamplerComponent implements OnInit {
         [45, 87, 23, 48, 24, 9],
     ];
     public valueAccessor: (i: number, j: number) => number;
-
     public chartAssist: ChartAssist;
     public palette: ChartPalette;
 
@@ -185,7 +184,6 @@ export class EventSamplerComponent implements OnInit {
     private buildChart() {
         const {grid, accessors, renderer, scales, seriesProcessor} = this.getChartAttributes(this.selectedChartType);
 
-        // this.chart = new Chart(grid);
         this.chartAssist = new ChartAssist(new Chart(grid));
 
         this.chartAssist.chart.addPlugin(new InteractionLabelPlugin());
