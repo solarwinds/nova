@@ -10,6 +10,15 @@
           "examples/src/tsconfig.json"
         ]
       },
+      "settings": {
+        "import/resolver": {
+          "typescript": {
+            "project": [
+              "examples/src/tsconfig.json"
+            ]
+          }
+        }
+      },
       "rules": {
         "max-len": "off"
       }

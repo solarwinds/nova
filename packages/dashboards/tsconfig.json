@@ -17,8 +17,7 @@
         "paths": {
             "@nova-ui/dashboards": [
                 "./src/public-api.ts"
-            ],
-            "components/*": ["./examples/src/components/*"]
+            ]
         }
     }
 }

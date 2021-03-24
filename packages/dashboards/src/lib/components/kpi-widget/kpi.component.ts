@@ -9,7 +9,8 @@ import {
     Optional,
     SimpleChanges,
     ViewEncapsulation,
-} from "@angular/core";import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
+} from "@angular/core";
+import { EventBus, IDataSource, IEvent } from "@nova-ui/bits";
 
 import { mapDataToFormatterProperties } from "../../functions/map-data-to-formatter-properties";
 import { INTERACTION } from "../../services/types";
