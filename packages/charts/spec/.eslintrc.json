@@ -1,0 +1,18 @@
+{
+  "extends": "../.eslintrc.json",
+  "ignorePatterns": [
+    "!**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "spec/tsconfig.atom.json"
+        ]
+      }
+    }
+  ]
+}

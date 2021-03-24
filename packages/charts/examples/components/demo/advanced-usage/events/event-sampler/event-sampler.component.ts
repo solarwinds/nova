@@ -210,8 +210,11 @@ export class EventSamplerComponent implements OnInit {
         this.chart.update(seriesSet);
     }
 
-    private buildChartSeries(categories: string[], subCategories: string[], valueAccessor: (i: number, j: number) => number)
-        : IChartSeries<IBarAccessors>[] | IChartSeries<IAccessors>[] {
+    private buildChartSeries(
+        categories: string[],
+        subCategories: string[],
+        valueAccessor: (i: number, j: number) => number
+    ): IChartSeries<IBarAccessors>[] | IChartSeries<IAccessors>[] {
         return subCategories.map((subCategory, i) => ({
             id: subCategory,
             name: subCategory,

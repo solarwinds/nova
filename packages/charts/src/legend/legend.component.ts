@@ -4,7 +4,7 @@ import { LegendOrientation } from "./types";
 
 @Component({
     selector: "nui-legend",
-    // tslint:disable-next-line
+    // eslint-disable-next-line
     host: { "class": "d-inline-block" },
     templateUrl: "./legend.component.html",
     encapsulation: ViewEncapsulation.Emulated,

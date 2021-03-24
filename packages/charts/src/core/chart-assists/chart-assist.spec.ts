@@ -178,7 +178,7 @@ describe("chart assist >", () => {
             const spy = jasmine.createSpy("toggleSeriesSpy");
             (<any>syncedAssist).syncHandlerMap[ChartAssistEventType.ToggleSeries] = spy;
             const args: [string, boolean] = ["seriesId", true];
-            ca.toggleSeries.apply(ca, args);
+            ca.toggleSeries(...args);
             expect(spy).toHaveBeenCalledWith(...args);
         });
 
