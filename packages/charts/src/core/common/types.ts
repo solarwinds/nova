@@ -108,10 +108,10 @@ export interface IRadialRendererConfig extends IRendererConfig {
 
 /**
  * @ignore
- * Configuration for the RadialGaugeThresholdsRenderer
+ * Configuration for the DonutGaugeThresholdsRenderer
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IRadialGaugeThresholdsRendererConfig extends IRadialRendererConfig {
+export interface IDonutGaugeThresholdsRendererConfig extends IRadialRendererConfig {
 }
 
 /**

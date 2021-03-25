@@ -19,7 +19,7 @@ export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresh
  */
 export class LinearGaugeThresholdsRenderer extends BarRenderer {
     /**
-     * Creates an instance of RadialGaugeThresholdsRenderer.
+     * Creates an instance of LinearGaugeThresholdsRenderer.
      * @param {ILinearGaugeThresholdsRendererConfig} [config]
      * Renderer configuration object. Defaults to `DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG` constant value.
      */

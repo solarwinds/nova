@@ -14,7 +14,6 @@ import { ChartTooltipComponent } from "./chart-tooltips/chart-tooltip.component"
 import { ChartTooltipDirective } from "./chart-tooltips/chart-tooltip.directive";
 import { ChartTooltipsComponent } from "./chart-tooltips/chart-tooltips.component";
 import { ChartComponent } from "./chart/chart.component";
-import { GaugeComponent } from "./gauge/gauge.component";
 import { LegendSeriesComponent } from "./legend/legend-series/legend-series.component";
 import { BasicLegendTileComponent } from "./legend/legend-tile/basic-legend-tile/basic-legend-tile.component";
 import { RichLegendTileComponent } from "./legend/legend-tile/rich-legend-tile/rich-legend-tile.component";
@@ -41,7 +40,6 @@ import { ThresholdsService } from "./thresholds/thresholds-service";
         ChartTooltipsComponent,
         ChartTooltipComponent,
         ChartTooltipDirective,
-        GaugeComponent,
     ],
     exports: [
         LegendComponent,
@@ -56,7 +54,6 @@ import { ThresholdsService } from "./thresholds/thresholds-service";
         ChartTooltipsComponent,
         ChartTooltipComponent,
         ChartTooltipDirective,
-        GaugeComponent,
     ],
     providers: [
         ChartCollectionService,

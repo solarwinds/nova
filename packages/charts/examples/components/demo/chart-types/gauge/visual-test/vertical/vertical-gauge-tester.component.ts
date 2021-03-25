@@ -6,7 +6,7 @@ import {
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
-    IGaugeThreshold,
+    IGaugeSeriesConfig,
     linearGaugeGridConfig,
     stack,
     XYGrid,
@@ -19,9 +19,7 @@ import {
     styleUrls: ["./vertical-gauge-tester.component.less"],
 })
 export class VerticalGaugeTesterComponent implements OnInit {
-    @Input() public value = 42;
-    @Input() public max: number = 200;
-    @Input() public thresholds: IGaugeThreshold[];
+    @Input() public seriesConfig: IGaugeSeriesConfig;
 
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
@@ -32,7 +30,7 @@ export class VerticalGaugeTesterComponent implements OnInit {
 
         this.chartAssist = new ChartAssist(chart, stack);
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.value, this.max, this.thresholds, GaugeMode.Vertical);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Vertical);
         this.chartAssist.update(this.seriesSet);
     }
 }

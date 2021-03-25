@@ -22,12 +22,8 @@ import { Component } from "@angular/core";
 export class ChartExampleIndexComponent {
     public links = [
         {
-            title: "Chart Gauge",
-            path: "/development/gauge/chart",
-        },
-        {
-            title: "Component Gauge",
-            path: "/development/gauge/component",
+            title: "Gauge",
+            path: "/development/gauge",
         },
     ];
 
