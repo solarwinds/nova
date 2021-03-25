@@ -136,6 +136,10 @@ jobs:
             -   run:
                     name: Setting the correct Percy token for the Bits project
                     command: |
+                      echo ">>>>"
+                      echo $PERCY_TOKEN
+                      echo $BITS_PERCY_TOKEN
+                      echo ">>>>"
                       export PERCY_TOKEN=$BITS_PERCY_TOKEN
                       echo ">>>>"
                       echo $PERCY_TOKEN
