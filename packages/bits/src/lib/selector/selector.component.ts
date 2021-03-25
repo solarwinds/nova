@@ -105,6 +105,7 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(_ => this.overlay.hide());
+        this.checkbox.checkboxLabel.nativeElement.setAttribute("tabindex", "-1");
     }
 
     public ngOnDestroy(): void {

@@ -18,10 +18,11 @@
 
         .nui-menu-item__checkbox {
             width: 100%;
-                & > .nui-checkbox {
-                    padding: 0;
-                }
+
+            & > .nui-checkbox {
+                padding: 0;
             }
+        }
 
         .nui-checkbox__translucent {
             cursor: not-allowed;
@@ -32,9 +33,10 @@
         > .nui-menu-item__option {
             padding: @nui-space-xs;
             .setCssVariable(color, nui-color-off);
-           &:active, &:focus {
-               outline: 0;
-               .no-shadow();
+
+            &:active, &:focus {
+                outline: 0;
+                .no-shadow();
             }
         }
     }
