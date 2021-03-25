@@ -4,7 +4,16 @@ import { Subject } from "rxjs";
 import { DATA_POINT_INTERACTION_RESET, INTERACTION_DATA_POINT_EVENT } from "../constants";
 import { isInRange } from "../core/common/scales/helpers/is-in-range";
 import { IXYScales } from "../core/common/scales/types";
-import { D3Selection, IAccessors, IChartMarker, IDataPoint, IDataSeries, IInteractionDataPointEvent, InteractionType, IRendererEventPayload } from "../core/common/types";
+import {
+    D3Selection,
+    IAccessors,
+    IChartMarker,
+    IDataPoint,
+    IDataSeries,
+    IInteractionDataPointEvent,
+    InteractionType,
+    IRendererEventPayload,
+} from "../core/common/types";
 
 import { DEFAULT_MARKER_INTERACTION_CONFIG } from "./constants";
 

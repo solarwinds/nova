@@ -44,7 +44,7 @@ interface ILayerIndexEntry {
 export class RenderEngine {
     /** Subject for emitting events to the outside world about data points closest to an interaction on the chart */
     public interactionDataPointsSubject = new Subject<IInteractionDataPointsEvent>();
-    /** Subject passed to the renderer for triggering events regarding a data point*/
+    /** Subject passed to the renderer for triggering events regarding a data point */
     public rendererSubject = new Subject<IRendererEventPayload>();
 
     private highlightDataPointSubscription: Subscription;

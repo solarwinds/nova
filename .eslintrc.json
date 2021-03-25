@@ -123,7 +123,12 @@
                         "allowLiterals": "never"
                     }
                 ],
-                "@typescript-eslint/no-empty-interface": "error",
+                "@typescript-eslint/no-empty-interface": [
+                    "error",
+                    {
+                        "allowSingleExtends": true
+                    }
+                ],
                 "@typescript-eslint/no-floating-promises": "off",
                 "@typescript-eslint/no-misused-promises": "off",
                 "@typescript-eslint/no-this-alias": "off",

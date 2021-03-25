@@ -7,6 +7,7 @@ import { DemoCommonModule } from "../../common/demo-common.module";
 
 import { BarChartHorizontalExampleComponent } from "./bar-chart-horizontal/bar-chart-horizontal.example.component";
 import { BarChartTestComponent } from "./bar-chart-test/bar-chart-test.component";
+// eslint-disable-next-line max-len
 import { BarChartTickLabelMaxWidthWithMarginTestComponent } from "./bar-chart-test/bar-chart-tick-label-max-width-with-margin/bar-chart-tick-label-max-width-with-margin-test.component";
 import { BarChartTickLabelMaxWidthTestComponent } from "./bar-chart-test/bar-chart-tick-label-max-width/bar-chart-tick-label-max-width-test.component";
 import { BasicHorizontalBarChartTestComponent } from "./bar-chart-test/basic-horizontal/basic-horizontal-bar-chart-test.component";

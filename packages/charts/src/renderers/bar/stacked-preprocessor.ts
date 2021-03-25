@@ -51,7 +51,7 @@ export function stackedPreprocessor(chartSeriesSet: IChartSeries<IBarAccessors>[
 
         chartSeries.data = reorderedData;
         return acc;
-    }, Array.apply(null, Array(categories.length)).map(() => 0));
+    }, Array(categories.length).fill(0));
 
     return chartSeriesSet;
 }
