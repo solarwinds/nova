@@ -49,9 +49,7 @@ export class GaugeUtil {
             })),
         ];
 
-        chartAssistSeries.push(
-            GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes)
-        );
+        chartAssistSeries.push(GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes));
 
         return chartAssistSeries;
     }
@@ -196,11 +194,11 @@ export class GaugeUtil {
     public static generateThresholdData(seriesConfig: IGaugeSeriesConfig): IGaugeThreshold[] {
         const markerValues = seriesConfig.thresholds.map(threshold => ({
             category: "gauge",
-            hit: threshold <= seriesConfig.value,
             value: threshold,
+            hit: threshold <= seriesConfig.value,
         }));
 
         // tack the max value onto the end (used for donut arc calculation)
-        return [...markerValues, { category: "gauge", value: seriesConfig.max }];
+        return [...markerValues, { category: "gauge", value: seriesConfig.max, hit: false }];
     }
 }

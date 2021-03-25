@@ -25,7 +25,7 @@ export interface IGaugeThreshold {
     /** The value of the threshold */
     value: number;
     /** Boolean indicating whether the threshold is hit */
-    hit?: boolean;
+    hit: boolean;
     /** Additional metadata as needed */
     [key: string]: any;
 }
