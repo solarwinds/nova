@@ -283,7 +283,7 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
         this.cancel.emit(this.steps.toArray().filter(step => step.complete).length !== 0);
     }
 
-    // tslint:disable-next-line: member-ordering
+    // eslint-disable-next-line @typescript-eslint/member-ordering
     public buttonPortalActionMap: Record<string, Function> = {
         cancel: this.onCancel,
         next: this.onNext,

@@ -340,7 +340,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             if (setupColorsLength === this.widgetData?.length) {
                 colorProvider = new MappedValueProvider(configurationColors);
             } else {
-                // tslint:disable-next-line: max-line-length
+                // eslint-disable-next-line max-len
                 this.logger.warn(`Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(configurationColors)}`);
                 colorProvider = defaultColorProvider();
             }

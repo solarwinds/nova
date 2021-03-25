@@ -1,4 +1,4 @@
-// tslint:disable:max-line-length
+/* eslint-disable max-len */
 import { LegendPlacement } from "../../components/types";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
@@ -20,7 +20,7 @@ import {
 } from "../../services/types";
 import { IPizzagna, IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-// tslint:enable:max-line-length
+/* eslint-enable max-len */
 
 export const timeseriesConfigurator: IPizzagna = {
     [PizzagnaLayer.Structure]: {

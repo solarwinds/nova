@@ -5,7 +5,11 @@ import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { mapDataToFormatterProperties } from "../../../functions/map-data-to-formatter-properties";
-import { IProportionalDonutContentAggregator, IProportionalDonutContentAggregatorDefinition, IProportionalDonutContentAggregatorProperties } from "../../../functions/proportional-aggregators/types";
+import {
+    IProportionalDonutContentAggregator,
+    IProportionalDonutContentAggregatorDefinition,
+    IProportionalDonutContentAggregatorProperties,
+} from "../../../functions/proportional-aggregators/types";
 import { ProportionalContentAggregatorsRegistryService } from "../../../services/proportional-content-aggregators-registry.service";
 import { ProportionalDonutContentFormattersRegistryService } from "../../../services/public-api";
 import { IHasChangeDetector } from "../../../types";

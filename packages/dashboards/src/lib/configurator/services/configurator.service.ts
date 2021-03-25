@@ -1,4 +1,14 @@
-import { ApplicationRef, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector, Optional, Renderer2, RendererFactory2 } from "@angular/core";
+import {
+    ApplicationRef,
+    ComponentFactoryResolver,
+    ComponentRef,
+    EmbeddedViewRef,
+    Injectable,
+    Injector,
+    Optional,
+    Renderer2,
+    RendererFactory2,
+} from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { LoggerService, uuid } from "@nova-ui/bits";
 import cloneDeep from "lodash/cloneDeep";
@@ -15,7 +25,6 @@ import { IConfigurator, IConfiguratorSource } from "./types";
 
 @Injectable()
 export class ConfiguratorService {
-
     private renderer: Renderer2;
     private componentRef: ComponentRef<ConfiguratorComponent>;
     private close$: Subject<void> = new Subject();

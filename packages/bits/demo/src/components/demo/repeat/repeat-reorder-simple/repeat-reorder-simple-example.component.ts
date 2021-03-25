@@ -2,8 +2,7 @@ import {Component, ViewEncapsulation} from "@angular/core";
 import {IItemsReorderedEvent} from "@nova-ui/bits";
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-type ISortingOrderTrimmedData = Omit<IItemsReorderedEvent, "item"|"dropListRef">;
-
+interface ISortingOrderTrimmedData extends Omit<IItemsReorderedEvent, "item"|"dropListRef"> {}
 @Component({
     selector: "nui-repeat-reorder-simple-example",
     templateUrl: "./repeat-reorder-simple-example.component.html",
