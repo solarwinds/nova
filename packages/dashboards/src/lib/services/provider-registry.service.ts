@@ -21,11 +21,11 @@ import { DashwizService } from "../configurator/components/wizard/dashwiz/dashwi
 import { ConfiguratorDataSourceManagerService } from "../configurator/services/configurator-data-source-manager.service";
 import { KpiSectionConverterService } from "../configurator/services/converters/kpi/kpi-section-converter/kpi-section-converter.service";
 import { KpiTilesConverterService } from "../configurator/services/converters/kpi/kpi-tiles-converter.service";
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 import { ProportionalWidgetChartOptionsConverterService } from "../configurator/services/converters/proportional/proportional-widget-chart-options-converter.service";
 import { GenericArrayConverterService } from "../configurator/services/converters/shared/generic-array-converter/generic-array-converter.service";
 import { GenericConverterService } from "../configurator/services/converters/shared/generic-converter/generic-converter.service";
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 import { TitleAndDescriptionConverterService } from "../configurator/services/converters/shared/title-and-description-converter/title-and-description-converter.service";
 import { TableColumnsConverterService } from "../configurator/services/converters/table/table-columns-converter.service";
 import { TableFiltersConverterService } from "../configurator/services/converters/table/table-filters-converter.service";

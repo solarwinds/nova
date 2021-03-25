@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "lib": {
-      "root": "",
+      "root": "src",
       "sourceRoot": "src",
       "projectType": "library",
       "architect": {
@@ -43,22 +43,18 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "files": [
-              "src/**/*.ts"
-            ],
-            "tsConfig": "tsconfig.json",
-            "exclude": [
-              "**/node_modules/**",
-              "**/schematics/**/files/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         }
       }
     },
     "examples": {
-      "root": "",
+      "root": "examples",
       "sourceRoot": "src",
       "projectType": "application",
       "architect": {
@@ -124,23 +120,19 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "files": [
-              "examples/**/*.ts"
-            ],
-            "tsConfig": "tsconfig.json",
-            "exclude": [
-              "**/node_modules/**",
-              "**/schematics/**/files/**"
+            "lintFilePatterns": [
+              "examples/**/*.ts",
+              "examples/**/*.html"
             ]
           }
         }
       }
     },
     "examples-e2e": {
-      "root": ".",
-      "sourceRoot": ".",
+      "root": "spec",
+      "sourceRoot": "spec",
       "projectType": "application",
       "architect": {
         "e2e": {
@@ -165,17 +157,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "files": [
-              "spec/**/*.ts"
-            ],
-            "tsConfig": [
-              "tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "**/schematics/**/files/**"
+            "lintFilePatterns": [
+              "spec/**/*.ts",
+              "spec/**/*.html"
             ]
           }
         }

@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-len
 import { RefresherConfigurationComponent } from "../../../configurator/components/widgets/configurator-items/refresher-configuration/refresher-configuration.component";
 import { DEFAULT_PIZZAGNA_ROOT, NOVA_GENERIC_CONVERTER } from "../../../services/types";
 import { IComponentConfiguration, WellKnownProviders } from "../../../types";

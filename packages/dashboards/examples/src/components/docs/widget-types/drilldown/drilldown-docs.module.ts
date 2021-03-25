@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-// tslint:disable-next-line:max-line-length
+// eslint-disable-next-line max-len
 import { NuiButtonModule, NuiDocsModule, NuiMessageModule,  NuiSwitchModule } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 

@@ -7,6 +7,6 @@ import { Component } from "@angular/core";
 export class EmbeddedContentDocsComponent {
 
     public embeddedContentWidgetFileText = require("!!raw-loader!../../../../../../src/lib/widget-types/embedded-content/embedded-content-widget.ts").default;
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     public embeddedContentConfiguratorFileText = require("!!raw-loader!../../../../../../src/lib/widget-types/embedded-content/embedded-content-configurator.ts").default;
 }

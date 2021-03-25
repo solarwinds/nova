@@ -1,4 +1,4 @@
-// tslint:disable:max-line-length
+/* eslint-disable max-len */
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
@@ -8,7 +8,7 @@ import { GroupingConfigurationComponent } from "../../configurator/components/wi
 import { IConverterFormPartsProperties } from "../../configurator/services/converters/types";
 import { DEFAULT_PIZZAGNA_ROOT, NOVA_GENERIC_CONVERTER, NOVA_TITLE_AND_DESCRIPTION_CONVERTER } from "../../services/types";
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
-// tslint:enable:max-line-length
+/* eslint-enable max-len */
 
 export const drilldownConfigurator = {
     [PizzagnaLayer.Structure]: {
