@@ -7,7 +7,7 @@
                     [interactive]="true"
                     (mouseleave)="chartAssist.resetVisibleSeries()">
             <nui-legend-series *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn"
-                               [descriptionPrimary]="legendSeries['Name']"
+                               [descriptionPrimary]="legendSeries['name'] | titlecase"
                                (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
                                [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
                                [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
