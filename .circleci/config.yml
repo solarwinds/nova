@@ -129,6 +129,7 @@ jobs:
             image: ubuntu-2004:202010-01
         environment:
             PROJECT_DIR: ~/nova/packages/bits
+            PERCY_TOKEN: 
         steps:
             -   attach_workspace:
                     at: ~/nova
@@ -136,12 +137,12 @@ jobs:
                     name: Setting the correct Percy token for the Bits project
                     command: |
                       echo ">>>>"
-                      echo $PERCY_TOKEN
+                      echo $BASH_ENV
                       echo $BITS_PERCY_TOKEN
                       echo ">>>>"
-                      export PERCY_TOKEN=$BITS_PERCY_TOKEN
+                      echo 'export PERCY_TOKEN=$BITS_PERCY_TOKEN >> $BASH_ENV
                       echo ">>>>"
-                      echo $PERCY_TOKEN
+                      echo $BASH_ENV
                       echo $BITS_PERCY_TOKEN
                       echo ">>>>"
             -   run:
