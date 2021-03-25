@@ -68,7 +68,7 @@
         </div>
     </div>
     <nui-message class="m-4 d-block"
-                 *ngIf="dataSourceManager?.dataSource && (dataSourceManager?.dataSource?.busy | async) === false && !dataSourceFields.length"
+                 *ngIf="dataSourceManager?.dataSource && !(dataSourceManager?.dataSource?.busy | async) && !dataSourceFields.length"
                  type="info"
                  [allowDismiss]="false">
         <b i18n>Data source needs to be configured</b>

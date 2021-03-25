@@ -62,6 +62,8 @@
                 "@typescript-eslint/no-inferrable-types": "off",
                 // TODO: review - NUI-5901
                 "@typescript-eslint/promise-function-async": "off",
+                // TODO: review - NUI-5901
+                "no-case-declarations": "off",
                 // Must disable the base rule as it can report incorrect errors
                 // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-empty-function.md
                 "no-empty-function": "off",
@@ -387,7 +389,10 @@
             "extends": [
                 "plugin:@angular-eslint/template/recommended"
             ],
-            "rules": {}
+            "rules": {
+                // TODO: review - NUI-5901
+                "@angular-eslint/template/no-negated-async": "off"
+            }
         }
     ]
 }
