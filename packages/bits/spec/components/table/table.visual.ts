@@ -83,5 +83,5 @@ describe(`Visual tests: ${name}`, () => {
         await expanders.customActions.click();
 
         await camera.turn.off();
-    }, 100000);
+    }, 300000);
 });

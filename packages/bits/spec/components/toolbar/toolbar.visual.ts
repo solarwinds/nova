@@ -50,8 +50,7 @@ describe(`Visual tests: ${name}`, () => {
         await camera.be.responsive([1280, 1024, 800, 640, 320]);
         await camera.say.cheese("Checking responsivity");
 
-        await camera.be.responsive([1024]);
-        await toolbarBasic.getToolbarMenu().toggleMenu();
+        await camera.be.responsive([1024], async () => await toolbarBasic.getToolbarMenu().toggleMenu());
         await camera.say.cheese("Toggle menu in toolbar With screen width 1024");
         await toolbarBasic.getToolbarMenu().toggleMenu();
 
@@ -76,5 +75,5 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese("Menu toggled on selected Super-condenced toolbar");
 
         await camera.turn.off();
-    }, 200000);
+    }, 300000);
 });

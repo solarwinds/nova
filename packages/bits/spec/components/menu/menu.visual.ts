@@ -77,5 +77,5 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Dark theme`);
 
         await camera.turn.off();
-    }, 100000);
+    }, 300000);
 });

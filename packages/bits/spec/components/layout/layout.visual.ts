@@ -8,7 +8,7 @@ import { LayoutSheetGroupAtom } from "./layout-sheet-group.atom";
 
 const name: string = "Layout";
 
-describe(`Visual tests: ${name}`, () => {
+fdescribe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let separatedSheets: LayoutSheetGroupAtom;
     let joinedSheets: LayoutSheetGroupAtom;
@@ -20,9 +20,14 @@ describe(`Visual tests: ${name}`, () => {
         
         camera = new Camera().loadFilm(browser, name);
     });
-
+    
     it(`${name} visual test`, async () => {
         await camera.turn.on();
+
+        // TODO: Think about tool options generalization
+        // Needed by the Applitools Eyes to properly take some snapshots
+        camera.lens.configure()?.setStitchMode("CSS");
+
         await camera.say.cheese(`Default`);
 
         await separatedSheets.hover(separatedSheets.getVerticalResizerByIndex(0));
@@ -42,5 +47,5 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Dark theme`);
 
         await camera.turn.off();
-    }, 100000);
+    }, 200000);
 });

@@ -46,4 +46,12 @@ export class CameraEngine {
             await this.currentLensInstance.takeFullScreenSnapshot(label);
         }
     }
+
+    public getToolConfig() {
+        return this.currentLensInstance.toolConfig();
+        // if (this.currentLensInstance instanceof EyesLens) {
+        // }
+
+        // console.warn("No tool configuration is available for the selected lens");
+    }
 }

@@ -94,5 +94,5 @@ describe(`Visual tests: ${name}`, () => {
         await DialogAtom.dismissDialog();
 
         await camera.turn.off();
-    }, 200000);
+    }, 300000);
 });

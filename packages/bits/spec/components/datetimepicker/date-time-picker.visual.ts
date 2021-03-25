@@ -54,5 +54,5 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Dark theme - Date Time Picker Dialog Time`);
 
         await camera.turn.off();
-    }, 100000);
+    }, 200000);
 });

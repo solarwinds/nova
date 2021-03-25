@@ -24,6 +24,8 @@ export class PercyLens implements ILens {
 
     public async cameraOFF() {}
 
+    public toolConfig() { console.warn("No config is availalbe for Percy"); }
+
     private checkSettings() {
         this.percyConfig.widths = [...this.settings.responsive];
     }
