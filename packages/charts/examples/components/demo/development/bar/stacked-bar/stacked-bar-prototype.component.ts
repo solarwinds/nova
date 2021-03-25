@@ -15,7 +15,7 @@ import {
     TimeIntervalScale,
     XYGridConfig
 } from "@nova-ui/charts";
-// tslint:disable-next-line: import-blacklist
+// eslint-disable-next-line no-restricted-imports
 import moment, { duration } from "moment";
 
 @Component({

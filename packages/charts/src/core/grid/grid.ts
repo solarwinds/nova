@@ -14,6 +14,7 @@ import { IAllAround, IBorderConfig, IBorders, IDimensions, IGrid, IGridConfig } 
 
 export const borderMidpoint = 0.5;
 
+// eslint-disable-next-line @typescript-eslint/no-type-alias
 type BorderKey = keyof IAllAround<IBorderConfig>;
 
 /**

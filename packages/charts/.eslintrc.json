@@ -1,0 +1,24 @@
+{
+  "extends": "../../.eslintrc.json",
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".ts"],
+            "paths": ["./src"]
+          }
+        }
+      }
+    }
+  ]
+}
