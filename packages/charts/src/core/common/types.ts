@@ -97,7 +97,7 @@ export interface IRadialRendererConfig extends IRendererConfig {
     annularPadding?: number;
     /** annularGrowth is a percentage value to define annular width automatically.
      *  It will grow until it reaches maxThickness.
-     *  Set one to 0 to use annularWidth constant value instead*/
+     *  Set one to 0 to use annularWidth constant value instead */
     maxThickness?: number;
     annularGrowth?: number;
     cursor?: string;
@@ -110,7 +110,7 @@ export interface IRadialRendererConfig extends IRendererConfig {
  * @ignore
  * Configuration for the DonutGaugeThresholdsRenderer
  */
-// tslint:disable-next-line: no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IDonutGaugeThresholdsRendererConfig extends IRadialRendererConfig {
 }
 
@@ -118,7 +118,7 @@ export interface IDonutGaugeThresholdsRendererConfig extends IRadialRendererConf
  * @ignore
  * Configuration for the LinearGaugeThresholdsRenderer
  */
-// tslint:disable-next-line: no-empty-interface
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ILinearGaugeThresholdsRendererConfig extends IRendererConfig {
 }
 

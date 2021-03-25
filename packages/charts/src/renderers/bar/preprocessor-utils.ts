@@ -4,7 +4,7 @@ import { IChartSeries } from "../../core/common/types";
 
 import { IBarAccessors } from "./accessors/bar-accessors";
 
-/** @ignore*/
+/** @ignore */
 export function gatherCategories(chartSeriesSet: IChartSeries<IBarAccessors>[], type: string = "category"): string[] {
     return chartSeriesSet.reduce((acc: any[], chartSeries) => {
         const categoryAccessor = chartSeries.accessors.data[type];

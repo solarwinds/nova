@@ -68,6 +68,7 @@ jobs:
                         - tsconfig.main.json
                         - package.json
                         - LICENSE
+                        - .eslintrc.json
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
@@ -600,14 +601,15 @@ workflows:
                         branches:
                             only:
                                 - main
-            -   bits-percy-visual-test:
-                    requires:
-                        - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
+            # Temporary disabling until we migrated all the tests - NUI-5861
+            # - bits-percy-visual-test:
+            #       requires:
+            #           - bits-build
+            #       filters:
+            #             branches:
+            #                 only:
+            #                     - main
+            #                     - next
             -   bits-a11y-test:
                     requires:
                         - bits-build

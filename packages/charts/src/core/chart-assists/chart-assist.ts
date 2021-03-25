@@ -91,7 +91,7 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
             this.seriesProcessor = seriesProcessor;
         }
 
-        /* tslint:disable-next-line:no-use-before-declare */
+        /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
         this.legendInteractionAssist = new LegendInteractionAssist(this);
 
         this.syncHandlerMap = {

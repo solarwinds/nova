@@ -19,8 +19,8 @@ export class ChartAtom extends Atom {
         this.grid = rootElement.element(by.className("nui-chart-grid"));
         this.lasagna = Atom.findIn(LasagnaAtom, this.grid);
     }
-    // tslint-ignoring to accommodate ElementFinder's optional "then" method
-    // tslint:disable-next-line:promise-function-async
+    // eslint-ignoring to accommodate ElementFinder's optional "then" method
+    // eslint-disable-next-line @typescript-eslint/promise-function-async
     public getLayer(name: string): Promise<ElementFinder | undefined> {
         return this.lasagna.layer(name);
     }
