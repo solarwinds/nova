@@ -129,7 +129,7 @@ jobs:
             image: ubuntu-2004:202010-01
         environment:
             PROJECT_DIR: ~/nova/packages/bits
-            PERCY_TOKEN: 
+            PERCY_TOKEN: << BITS_PERCY_TOKEN >>
         steps:
             -   attach_workspace:
                     at: ~/nova
