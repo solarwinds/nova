@@ -38,6 +38,7 @@ describe(`Visual tests: ${name}`, () => {
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);
+        await Helpers.switchDarkTheme("off");
 
         await timeFrameBarNoQuickPick.popover.open();
         await camera.say.cheese(`With opened popover and no quick picker`);
