@@ -13,8 +13,7 @@
                                [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                                (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)">
                 <nui-basic-legend-tile>
-                    <nui-chart-marker
-                                      [marker]="chartAssist.markers.get(legendSeries.id)"
+                    <nui-chart-marker [marker]="chartAssist.markers.get(legendSeries.id)"
                                       [color]="chartAssist.palette.standardColors.get(legendSeries.id)">
                     </nui-chart-marker>
                 </nui-basic-legend-tile>
