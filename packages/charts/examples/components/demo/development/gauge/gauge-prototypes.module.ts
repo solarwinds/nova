@@ -13,7 +13,7 @@ import { LinearGaugeVerticalPrototypeComponent } from "./vertical/linear-gauge-v
 
 const routes: Routes = [
     {
-        path: "chart",
+        path: "",
         component: GaugeTestPageComponent,
         data: {
             srlc: {

@@ -59,9 +59,10 @@ export class GaugeUtil {
     public static updateSeriesSet(seriesSet: IChartAssistSeries<IAccessors>[], seriesConfig: IGaugeSeriesConfig): IChartAssistSeries<IAccessors>[] {
         seriesConfig.value = seriesConfig.value ?? 0;
         seriesConfig.max = seriesConfig.max ?? 0;
+        const colorAccessor = seriesConfig.valueColorAccessor || GaugeUtil.createDefaultValueColorAccessor(seriesConfig.thresholds);
         const updatedSeriesSet = seriesSet.map((series: IChartAssistSeries<IAccessors<any>>) => {
             if (series.accessors.data) {
-                series.accessors.data.color = seriesConfig.valueColorAccessor || GaugeUtil.createDefaultValueColorAccessor(seriesConfig.thresholds);
+                series.accessors.data.color = colorAccessor;
             }
 
             if (series.id === GaugeUtil.QUANTITY_SERIES_ID) {

@@ -2,8 +2,6 @@ import { Renderer } from "../core/common/renderer";
 import { IRadialScales, Scales } from "../core/common/scales/types";
 import { DataAccessor, IAccessors } from "../core/common/types";
 
-import { GaugeMode } from "./constants";
-
 /**
  * @ignore
  * Configuration for a gauge series
@@ -15,7 +13,7 @@ export interface IGaugeSeriesConfig {
     max: number;
     /** An array of the gauge's threshold values */
     thresholds: number[];
-    /** Optional color accessor for customizing the colors used for each threshold */
+    /** Optional accessor for customizing the color to display as each threshold is hit */
     valueColorAccessor?: DataAccessor;
 }
 
