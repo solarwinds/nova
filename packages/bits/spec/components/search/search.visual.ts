@@ -2,42 +2,44 @@ import { browser, protractor } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
 import { SearchAtom } from "./search.atom";
 
-describe("Visual tests: Search", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Search";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let basicSearch: SearchAtom;
     let customPlaceholderSearch: SearchAtom;
     let searchWithInput: SearchAtom;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("search/search-visual-test");
         basicSearch = Atom.find(SearchAtom, "nui-visual-test-basic-search" );
         customPlaceholderSearch = Atom.find(SearchAtom, "nui-visual-test-search-with-placeholder" );
         searchWithInput = Atom.find(SearchAtom, "nui-visual-test-search-with-input-text" );
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Search");
-        await eyes.checkWindow("Default");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
+        await camera.say.cheese(`Default`);
 
         await searchWithInput.getSearchButton().click();
         await browser.actions().sendKeys(protractor.Key.TAB).perform();
         await searchWithInput.getSearchButton().hover();
-        await eyes.checkWindow("Search with input text is focused and Search button is hovered");
+        await camera.say.cheese(`Search with input text is focused and Search button is hovered`);
 
         await browser.actions().mouseMove({x: 50, y: 0}).perform();
         await browser.actions().click().perform();
         await searchWithInput.getCancelButton().hover();
-        await eyes.checkWindow("Cancel button in Search with input text is hovered");
+        await camera.say.cheese(`Cancel button in Search with input text is hovered`);
 
-        await eyes.close();
+        await Helpers.switchDarkTheme("on");
+        await camera.say.cheese(`Dark theme`);
+
+        await camera.turn.off();
     }, 100000);
 });

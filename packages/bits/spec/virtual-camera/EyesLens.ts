@@ -2,7 +2,7 @@ import { ProtractorBrowser } from "protractor";
 import { ICameraSettings, ILens } from "./types";
 import { getCurrentBranchName } from "../helpers";
 export class EyesLens implements ILens {
-    private eyes: any;
+    public eyes: any;
 
     constructor(private browser: ProtractorBrowser, private settings: ICameraSettings) {
     }
@@ -24,6 +24,11 @@ export class EyesLens implements ILens {
 
     public async cameraOFF() {
         await this.eyes.close();
+        await this.eyes.abortIfNotClosed();
+    }
+
+    public toolConfig() {
+        return this.eyes;
     }
 
     private async configure() {
@@ -61,6 +66,11 @@ export class EyesLens implements ILens {
     private async snapshotEachWidth(label: string): Promise<void> {
         for (let width of this.settings.responsive) {
             await this.browser.manage().window().setSize(width, 1080);
+
+            if (this.settings.responsiveCallback) {
+                await this.settings.responsiveCallback();
+            }
+
             await this.eyes.checkWindow(label);
         }
     }

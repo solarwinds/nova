@@ -1,31 +1,30 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
+import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser, by, element } from "protractor";
 
 import { LegendAtom } from "../legend/legend.atom";
 
-describe("Visual Tests: Charts - Line Chart", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Line Chart";
+
+describe(`Visual Tests: Charts - ${name}`, () => {
+    let camera: Camera;
     let legend: LegendAtom;
 
     beforeAll(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("chart-types/line/visual-test");
         legend = Atom.findIn(LegendAtom, element(by.tagName("line-chart-with-axis-labels-example")));
+
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} - Default look`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Charts - Line Chart");
-        await eyes.checkWindow("Default look");
+        await camera.say.cheese(`${name} - Default look`);
 
         await legend.getSeriesByIndex(1).hover();
-        await eyes.checkWindow("Legend tile hovered");
+        await camera.say.cheese(`${name} - Legend tile hovered`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

@@ -21,10 +21,10 @@ describe(`Visual tests: ${name}`, () => {
         await camera.turn.on();
 
         await switchBusyState.click();
-        await camera.say.cheese(`${name} - States of Busy component`);
+        await camera.say.cheese(`States of Busy component`);
 
         await Helpers.switchDarkTheme("on");
-        await camera.say.cheese(`${name} - Dark theme`);
+        await camera.say.cheese(`Dark theme`);
 
         await camera.turn.off();
     }, 100000);

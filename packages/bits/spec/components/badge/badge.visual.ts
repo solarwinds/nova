@@ -2,7 +2,6 @@ import { browser } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-
 const name: string = "Badge";
 
 describe(`Visual tests: ${name}`, () => {
@@ -17,12 +16,13 @@ describe(`Visual tests: ${name}`, () => {
 
     it(`${name} visual test`, async () => {
         await camera.turn.on();
-        await camera.say.cheese(`${name} - Default`);
+
+        await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");
-        await camera.say.cheese(`${name} - Dark theme`);
-        await Helpers.switchDarkTheme("off");
+        await camera.say.cheese(`Dark theme`);
 
         await camera.turn.off();
     }, 100000);
 });
+

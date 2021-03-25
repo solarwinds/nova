@@ -13,6 +13,7 @@ export const CAMERA_DEFAULT_SETTINGS: ICameraSettings = {
     currentSuiteName: "",
     currentTestName: "",
     globalLens: "percy",
+    responsiveCallback: undefined,
 }
 
 export const PERCY_DEFAULT_CONFIG: SnapshotOptions = {
@@ -32,6 +33,7 @@ export interface ILens {
     takeFullScreenSnapshot(label: string): Promise<void>;
     cameraON(): Promise<void>;
     cameraOFF(): Promise<void>;
+    toolConfig(): void;
 }
 
 export interface ICameraSettings {
@@ -40,11 +42,12 @@ export interface ICameraSettings {
     currentSuiteName: string;
     currentTestName: string;
     globalLens: string;
+    responsiveCallback: Function | undefined;
 }
 
 export interface ICameraSettingsActions {
     fullframe(): Promise<void>;
     crop(): Promise<void>;
-    responsive(values: Array<number>): Promise<void>;
+    responsive(values: Array<number>, callback?: Function): Promise<void>;
     defaultResponsive(): Promise<void>;
 }

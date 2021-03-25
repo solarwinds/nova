@@ -1,23 +1,23 @@
+import { Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser } from "protractor";
 
-describe("Visual tests: Dashboards - Kpi Widget", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Kpi Widget";
+
+describe(`Visual tests: Dashboards - ${name}`, () => {
+    let camera: Camera;
 
     beforeAll(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("test/kpi");
+
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} - Default look`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Dashboards - Kpi Widget");
-        await eyes.checkWindow("Default");
+        await camera.say.cheese(`${name} - Default`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

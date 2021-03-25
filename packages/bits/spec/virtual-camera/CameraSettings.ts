@@ -18,7 +18,10 @@ export class CameraSettings {
 
     private async crop(): Promise<void> { this.currentSettings.fullframe = false }
 
-    private async responsive(values: Array<number>): Promise<void> { this.currentSettings.responsive = [...values] }
+    private async responsive(values: Array<number>, callback?: Function): Promise<void> {
+        this.currentSettings.responsive = [...values];
+        this.currentSettings.responsiveCallback = callback;
+    }
 
     private async defaultResponsive(): Promise<void> { this.currentSettings.responsive = CAMERA_DEFAULT_SETTINGS.responsive }
 

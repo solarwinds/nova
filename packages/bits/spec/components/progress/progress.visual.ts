@@ -1,34 +1,33 @@
 import { browser, by, element } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
 
-describe("Visual tests: Progress", async () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any,
+const name: string = "Progress";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera,
         startProgressBasic: ButtonAtom;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("progress/progress-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
 
         startProgressBasic = new ButtonAtom(element(by.id("nui-demo-start-basic-progress")));
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterEach(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Progress");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
         await startProgressBasic.click();
-        await eyes.checkWindow("Default");
+        await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
-    });
+        await camera.turn.off();
+    }, 100000);
 });

@@ -8,14 +8,14 @@ export class Camera {
     private currentBrowser: ProtractorBrowser;
     private cameraSettings: CameraSettings;
     private engine: CameraEngine;
-    
+
     public turn: CameraToggle;
     public info: ICameraSettings;
     public say = { cheese: this.cheese.bind(this) };
     public be: ICameraSettingsActions;
+    public lens = { configure: this.configure.bind(this) };
 
     constructor() {}
-
 
     public loadFilm(browser: ProtractorBrowser, testName: string, suiteName: string = "NUI") {
         this.currentBrowser = browser;
@@ -28,11 +28,15 @@ export class Camera {
 
         this.engine = new CameraEngine(this.currentBrowser, this.cameraSettings.currentSettings);
         this.turn = new CameraToggle(this.engine);
-        
+
         return this;
     }
 
     private async cheese(label: string) {
         await this.engine.takePhoto(label);
+    }
+
+    private configure(): any {
+        return this.engine.getToolConfig();
     }
 }
