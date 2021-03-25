@@ -10,6 +10,7 @@ export function onMarkAsTouched(formControl: AbstractControl, callback: Function
     const origFunc = formControl.markAsTouched;
     formControl.markAsTouched = () => {
         // @ts-ignore
+        // eslint-disable-next-line prefer-rest-params
         origFunc.apply(formControl, arguments);
 
         callback();

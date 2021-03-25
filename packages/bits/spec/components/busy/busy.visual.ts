@@ -1,33 +1,31 @@
 import { browser, by, element, ElementFinder } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
-describe("Visual tests: Busy", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Busy";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let switchBusyState: ElementFinder;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("busy/busy-visual-test");
         await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
-
+        
+        camera = new Camera().loadFilm(browser, name);
         switchBusyState = element(by.id("nui-busy-test-button"));
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Busy");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
         await switchBusyState.click();
-        await eyes.checkWindow("States of Busy component");
+        await camera.say.cheese(`States of Busy component`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

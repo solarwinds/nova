@@ -1,38 +1,36 @@
 import { browser, by, element, ElementFinder } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
-describe("Visual tests: Breadcrumb", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Breadcrumb";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let showSecondViewButton: ElementFinder;
     let showThirdViewButton: ElementFinder;
 
-    beforeAll(() => {
+    beforeAll(async () => {
         showSecondViewButton = element(by.id("nui-demo-breadcrumb-show-second-view"));
         showThirdViewButton = element(by.id("nui-demo-breadcrumb-show-third-view"));
-    });
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("breadcrumb/breadcrumb-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Breadcrumb");
         await showSecondViewButton.click();
         await showThirdViewButton.click();
-        await eyes.checkWindow("Default breadcrumb styles");
+        await camera.say.cheese(`Default breadcrumb styles`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
         await Helpers.switchDarkTheme("off");
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

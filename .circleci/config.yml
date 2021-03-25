@@ -68,6 +68,7 @@ jobs:
                         - tsconfig.main.json
                         - package.json
                         - LICENSE
+                        - .eslintrc.json
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
@@ -137,24 +138,6 @@ jobs:
             -   run:
                     name: Visual tests
                     command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
-            -   run:
-                    name: Cleanup
-                    command: docker-compose down -v --rmi="all"
-    bits-percy-visual-test:
-        working_directory: ~/nova
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
-            -   run:
-                    name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -600,14 +583,6 @@ workflows:
                         branches:
                             only:
                                 - main
-            -   bits-percy-visual-test:
-                    requires:
-                        - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
             -   bits-a11y-test:
                     requires:
                         - bits-build

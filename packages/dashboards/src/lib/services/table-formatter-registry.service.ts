@@ -21,7 +21,7 @@ export abstract class FormatterRegistryService<TFormatter extends IFormatterDefi
         super.addItems(formatters, options);
     }
 
-    /** @deprecated use 'getItems' instead - NUI-5852*/
+    /** @deprecated use 'getItems' instead - NUI-5852 */
     public getFormatters(): TFormatter[] {
         return super.getItems();
     }

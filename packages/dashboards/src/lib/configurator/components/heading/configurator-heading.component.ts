@@ -9,6 +9,6 @@ export class ConfiguratorHeadingComponent {
     @Input() public configuratorTitle: string;
     @Input() public disableCloseButton = false;
 
-    // tslint:disable-next-line: no-output-native
+    // eslint-disable-next-line @angular-eslint/no-output-native
     @Output() public close = new EventEmitter();
 }

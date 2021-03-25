@@ -1,30 +1,28 @@
 import { browser } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
+const name: string = "Badge";
 
-
-describe("Visual tests: Badge", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
 
     beforeAll(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("common/badge/badge-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Badge");
-        await eyes.checkWindow("Default");
+        await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
-        await Helpers.switchDarkTheme("off");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });
+

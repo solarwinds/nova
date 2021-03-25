@@ -2,40 +2,33 @@ import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 import { IconAtom } from "../icon/icon.atom";
 
-describe("Visual tests: Icon", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any,
-        // TODO Will fix in NUI-4891
-        regionSize: any,
+const name: string = "Icon";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera,
         iconBasic: IconAtom;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("icon/icon-visual-test");
-
-        regionSize = {left: 0, top: 0, width: 230, height: 150};
         iconBasic = Atom.find(IconAtom, "nui-icon-test-basic-usage");
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Icon");
-        await eyes.checkWindow("All icons");
+        await camera.say.cheese(`Default`);
+
         await iconBasic.hover();
-        /**
-         * "Any" is used here because of a mistake in typings delivered by Applitools (checkRegion() method parameters
-         * are declared in different and incorrect order).
-         */
-        await eyes.checkRegion(regionSize, "Icon is hovered" as any);
+        await camera.say.cheese(`Default with hover`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

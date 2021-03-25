@@ -1,16 +1,16 @@
 import { browser, by, element } from "protractor";
-import { ISize } from "selenium-webdriver";
 
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 import { SwitchAtom } from "../switch/switch.atom";
 
 import { ToolbarAtom } from "./toolbar.atom";
 
-describe("Visual tests: Toolbar", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
-    let originalSize: ISize;
+const name: string = "Toolbar";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let toolbarBasic: ToolbarAtom;
     let toolbarSelected: ToolbarAtom;
     let toolbarNoMenuSelected: ToolbarAtom;
@@ -26,49 +26,42 @@ describe("Visual tests: Toolbar", () => {
         toolbarNoMenuSelected: "nui-toolbar-with-selection-no-menu",
     };
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("toolbar/toolbar-visual-test");
         await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
-
-        originalSize = await browser.manage().window().getSize();
 
         toolbarBasic = Atom.find(ToolbarAtom, id.toolbarBasic);
         toolbarSelected = Atom.find(ToolbarAtom, id.toolbarSelected);
         toolbarNoMenuSelected = Atom.find(ToolbarAtom, id.toolbarNoMenuSelected);
         themeSwitch = Atom.findIn(SwitchAtom, element(by.tagName("nui-theme-switcher")));
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        // Restoring the initial window size
-        await browser.manage().window().setSize(originalSize.width, originalSize.height);
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Toolbar");
-        await eyes.checkWindow("Default");
+        await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese("Dark theme");
         await Helpers.switchDarkTheme("off");
 
-        await browser.manage().window().setSize(1024, originalSize.height);
-        await eyes.checkWindow("With screen width 1024");
+        await camera.be.responsive([1280, 1024, 800, 640, 320]);
+        await camera.say.cheese("Checking responsivity");
 
-        await toolbarBasic.getToolbarMenu().toggleMenu();
-        await eyes.checkWindow("Toggle menu in toolbar With screen width 1024");
+        await camera.be.responsive([1024], async () => await toolbarBasic.getToolbarMenu().toggleMenu());
+        await camera.say.cheese("Toggle menu in toolbar With screen width 1024");
         await toolbarBasic.getToolbarMenu().toggleMenu();
 
-        await browser.manage().window().setSize(800, originalSize.height);
-        await eyes.checkWindow("With screen width 800");
+        await camera.be.responsive([800]);
+        await camera.say.cheese("With screen width 800");
 
         await toolbarSelected.getToolbarMenu().toggleMenu();
-        await eyes.checkWindow("Toggle menu in selected toolbar With screen width 800");
+        await camera.say.cheese("Toggle menu in selected toolbar With screen width 800");
         await toolbarSelected.getToolbarMenu().toggleMenu();
 
-        await browser.manage().window().setSize(originalSize.width, originalSize.height);
-
+        await camera.be.defaultResponsive();
         await Helpers.setCustomWidth("200px", id.toolbarBasic);
         await Helpers.setCustomWidth("350px", id.toolbarWithEmbeddedContent);
         await Helpers.setCustomWidth("450px", id.toolbarSelected);
@@ -76,22 +69,11 @@ describe("Visual tests: Toolbar", () => {
         await Helpers.setCustomWidth("450px", id.toolbarNoMenuSelectedWithSearch);
         await Helpers.setCustomWidth("200px", id.toolbarNoMenu);
         await Helpers.setCustomWidth("200px", id.toolbarNoMenuSelected);
-        await eyes.checkWindow("Super-condenced toolbar");
+        await camera.say.cheese("Super-condenced toolbar");
 
         await toolbarNoMenuSelected.getToolbarMenu().toggleMenu();
-        await eyes.checkWindow("Menu toggled on selected Super-condenced toolbar");
+        await camera.say.cheese("Menu toggled on selected Super-condenced toolbar");
 
-        await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
-
-        await toolbarNoMenuSelected.getToolbarMenu().toggleMenu();
-
-        await eyes.close();
-
-        /**
-         * The jasmine timeout interval is that big because the test is quite large. Not only eyes.checkWindow()
-         * takes a screenshot and sends it to Applitools server, but also retries the screesnhot take if needed,
-         * does the comparison and returns a result.
-         */
-    }, 200000);
+        await camera.turn.off();
+    }, 300000);
 });

@@ -2,39 +2,37 @@ import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
 import { DatepickerAtom } from "./datepicker.atom";
 
-describe("Visual tests: DatePicker", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "DatePicker";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let datepickerBasic: DatepickerAtom;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("date-picker/date-picker-visual-test");
-
         datepickerBasic = Atom.find(DatepickerAtom, "nui-basic-usage-datepicker");
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "DatePicker");
-        await eyes.checkWindow("Default");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
+        await camera.say.cheese(`Default`);
 
         await datepickerBasic.hover();
-        await eyes.checkWindow("Hover state");
+        await camera.say.cheese(`Hover state`);
 
         await datepickerBasic.toggle();
         await datepickerBasic.hover(datepickerBasic.getActiveDay());
-        await eyes.checkWindow("Opened state");
+        await camera.say.cheese(`Opened state`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

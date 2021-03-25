@@ -75,10 +75,10 @@ export class UtilityService {
     public static uuid() {
         let dt = new Date().getTime();
         const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-            // tslint:disable-next-line
+            // eslint-disable-next-line
             const r = (dt + Math.random() * 16) % 16 | 0;
             dt = Math.floor(dt / 16);
-            // tslint:disable-next-line
+            // eslint-disable-next-line
             return (c === "x" ? r : (r & 0x3 | 0x8)).toString(16);
         });
         return uuid;
@@ -180,7 +180,7 @@ export class UtilityService {
         let low = 0, high = haystack == null ? low : haystack.length;
 
         while (low < high) {
-            // tslint:disable-next-line:no-bitwise
+            // eslint-disable-next-line no-bitwise
             const mid = (low + high) >>> 1, computed = selector(haystack[mid], mid);
 
             if (computed !== null && (computed < needle)) {

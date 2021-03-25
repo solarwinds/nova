@@ -12,7 +12,7 @@ import { LegendOrientation } from "../types";
 export const LEGEND_SERIES_CLASS_NAME = "nui-legend-series";
 
 @Component({
-    // tslint:disable-next-line
+    // eslint-disable-next-line
     host: { "class": LEGEND_SERIES_CLASS_NAME },
     selector: "nui-legend-series",
     templateUrl: "./legend-series.component.html",

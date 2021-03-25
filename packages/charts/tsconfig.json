@@ -13,13 +13,12 @@
         "lib": [
             "es2018",
             "dom"
-        ]
-        // ,
-        // "paths": {
-        //     "@nova-ui/charts": [
-        //         "./src/public-api.ts"
-        //     ]
-        // }
+        ],
+        "paths": {
+            "@nova-ui/charts": [
+                "./src/public-api.ts"
+            ]
+        }
     },
     "exclude": [
         "node_modules"

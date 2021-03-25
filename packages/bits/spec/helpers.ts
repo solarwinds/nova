@@ -18,7 +18,7 @@ declare let process: any;
 
 let eyes: any;
 
-function getCurrentBranchName(potentialGitRoot = process.cwd()): string | undefined {
+export function getCurrentBranchName(potentialGitRoot = process.cwd()): string | undefined {
     const gitHeadPath = `${potentialGitRoot}/.git/HEAD`;
 
     if (!fs.existsSync(potentialGitRoot)) {

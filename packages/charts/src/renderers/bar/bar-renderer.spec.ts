@@ -76,6 +76,7 @@ describe("Bar Renderer >", () => {
             flushAllD3Transitions();
             expect(svg.node().innerHTML)
                 .toEqual(`<g><g class="bar-container">` +
+                    // eslint-disable-next-line max-len
                     `<rect class="bar bar-outline pointer-events" x="1" width="98" y="0" height="5" style="cursor: pointer; fill: var(--nui-color-chart-one);"></rect>` +
                     `</g></g>`);
         });
@@ -95,6 +96,7 @@ describe("Bar Renderer >", () => {
             flushAllD3Transitions();
             expect(svg.node().innerHTML)
                 .toEqual(`<g><g class="bar-container">` +
+                    // eslint-disable-next-line max-len
                     `<rect class="bar bar-outline pointer-events test-class" x="1" width="98" y="0" height="5" style="fill: var(--nui-color-chart-one);"></rect>` +
                     `</g></g>`);
         });

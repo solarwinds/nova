@@ -2,13 +2,15 @@ import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
 import { PaginatorAtom } from "../paginator/paginator.atom";
 import { SelectV2Atom } from "../select-v2/select-v2.atom";
 
-describe("Visual tests: Paginator", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Paginator";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let basicPaginator: PaginatorAtom;
     let adjacentPaginator: PaginatorAtom;
     let customPaginator: PaginatorAtom;
@@ -18,8 +20,7 @@ describe("Visual tests: Paginator", () => {
     let dotsBasicButton: ButtonAtom;
     let dotsCustomStylingButton: ButtonAtom;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("paginator/paginator-visual-test");
         basicPaginator = Atom.find(PaginatorAtom, "nui-visual-test-basic-paginator");
         adjacentPaginator = Atom.find(PaginatorAtom, "nui-visual-test-adjacent-paginator");
@@ -29,33 +30,31 @@ describe("Visual tests: Paginator", () => {
         selectCustomPaginator = Atom.findIn(SelectV2Atom, customPaginator.getElement());
         dotsBasicButton = Atom.findIn(ButtonAtom, customPaginator.ellipsisLink(0));
         dotsCustomStylingButton = Atom.findIn(ButtonAtom, customStylingPaginator.ellipsisLink(1));
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Paginator");
-        await eyes.checkWindow("Default");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
+        await camera.say.cheese(`Default`);
 
         await adjacentPaginator.ellipsisLink(0).click();
         await adjacentPaginator.ellipsedPageLinkClick(35);
         await selectBasicPaginator.toggle();
         await dotsBasicButton.hover();
-        await eyes.checkWindow("Menu is toggled and button is hovered");
+        await camera.say.cheese(`Menu is toggled and button is hovered`);
 
         await selectCustomPaginator.toggle();
         await dotsCustomStylingButton.hover();
-        await eyes.checkWindow("Menu with custom pageSizeSet is toggled and button is hovered");
+        await camera.say.cheese(`Menu with custom pageSizeSet is toggled and button is hovered`);
 
         await customStylingPaginator.ellipsisLink(1).click();
-        await eyes.checkWindow("Paginator's ellipsis-pages are shown");
+        await camera.say.cheese(`Paginator's ellipsis-pages are shown`);
         await selectBasicPaginator.toggle();
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

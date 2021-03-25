@@ -56,7 +56,7 @@ export class LineChartTooltipsPrototypeComponent implements OnInit {
         return intNum.toLocaleString(undefined, {maximumFractionDigits: precision});
     }
 
-    // tslint:disable-next-line: arrow-return-shorthand
+    // eslint-disable-next-line arrow-body-style
     public isNumericValuePresent = (numericValue: number): boolean => {
         return numericValue !== undefined && numericValue !== null;
     }

@@ -13,6 +13,7 @@ import { ThresholdsSummaryExampleComponent } from "./thresholds-summary/threshol
 import { ThresholdsSummaryTestHarnessComponent } from "./thresholds-summary/thresholds-summary-test-harness/thresholds-summary-test-harness.component";
 import { ThresholdsSummaryTestComponent } from "./thresholds-summary/thresholds-summary-test/thresholds-summary-test.component";
 import { ThresholdsSummaryVisualTestComponent } from "./thresholds-summary/thresholds-summary-visual-test/thresholds-summary-visual-test.component";
+// eslint-disable-next-line max-len
 import { ThresholdsSummaryWithIntervalScaleTestComponent } from "./thresholds-summary/thresholds-summary-with-interval-scale-test/thresholds-summary-with-interval-scale-test.component";
 
 const exampleRoutes: Routes = [

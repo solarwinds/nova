@@ -71,7 +71,7 @@ export class WidgetConfiguratorSectionComponent extends BaseLayout implements On
     public ngOnDestroy(): void {
         this.formDestroy.emit(this.form);
 
-        // Invoke super.ngOnDestroy to ensure that any base class observables are unsubscribed.
+        // Invoke super.ngOnDestroy to ensure that any base class observables are unsubscribed.
         super.ngOnDestroy();
     }
 }

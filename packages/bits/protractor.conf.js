@@ -9,7 +9,6 @@ exports.config = {
     suites: {
         e2e: './spec/**/*.e2e.ts',
         visual: './spec/**/*.visual.ts',
-        percy: './spec/**/*.percy.ts',
         a11y: './spec/**/*.a11y.ts'
     },
     capabilities: {
@@ -31,6 +30,9 @@ exports.config = {
     baseUrl: process.env.E2E_BASE_URL || "http://localhost:4200/",
     directConnect: !process.env.SELENIUM_ADDRESS,
     framework: 'jasmine',
+    params: {
+        visual: "eyes"
+    },
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 100000,

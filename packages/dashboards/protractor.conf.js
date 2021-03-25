@@ -28,6 +28,9 @@ exports.config = {
     baseUrl: process.env.E2E_BASE_URL || "http://localhost:4200/",
     directConnect: !process.env.SELENIUM_ADDRESS,
     framework: 'jasmine',
+    params: {
+        visual: "eyes"
+    },
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 30000,

@@ -1,4 +1,4 @@
-// tslint:disable:max-line-length
+/* eslint-disable max-len */
 import { IFormatterDefinition } from "../../components/types";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { IconFormatterComponent } from "../../configurator/components/formatters/icon-formatter/icon-formatter.component";
@@ -20,7 +20,7 @@ import {
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-// tslint:enable:max-line-length
+/* eslint-enable max-len */
 
 export const DEFAULT_TABLE_FORMATTERS: IFormatterDefinition[] = [
     {
