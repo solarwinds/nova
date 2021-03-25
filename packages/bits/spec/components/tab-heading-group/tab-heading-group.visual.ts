@@ -29,7 +29,6 @@ describe(`Visual tests: ${name}`, () => {
 
     it(`${name} visual test`, async () => {
         await camera.turn.on();
-        await camera.say.cheese(`Default`);
 
         await (await tabGroupHorizontal.getFirstTab()).hover();
         await camera.say.cheese("Default with hover");

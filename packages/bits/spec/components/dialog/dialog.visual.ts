@@ -42,7 +42,6 @@ describe(`Visual tests: ${name}`, () => {
 
     it(`${name} visual test`, async () => {
         await camera.turn.on();
-        await camera.say.cheese(`Default`);
 
         await buttonCriticalDialog.click();
         await camera.say.cheese(`Critical dialog`);

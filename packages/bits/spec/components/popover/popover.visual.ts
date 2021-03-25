@@ -27,7 +27,6 @@ describe(`Visual tests: ${name}`, () => {
 
     it(`${name} visual test`, async () => {
         await camera.turn.on();
-        await camera.say.cheese(`Default`);
 
         await popoverPreventClosing.togglePopover();
         await placementCheckButtons.each(async btn => await btn?.click());

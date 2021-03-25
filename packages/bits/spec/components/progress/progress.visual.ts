@@ -21,6 +21,8 @@ describe(`Visual tests: ${name}`, () => {
 
     it(`${name} visual test`, async () => {
         await camera.turn.on();
+
+        await startProgressBasic.click();
         await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");

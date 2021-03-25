@@ -6,7 +6,7 @@ import { DrilldownAtom } from "./drilldown.atom";
 
 const name: string = "Drilldown Widget";
 
-describe(`Visual tests: Dashboards - ${name}`, () => {
+fdescribe(`Visual tests: Dashboards - ${name}`, () => {
     let drilldownWidget: DrilldownAtom;
     let camera: Camera;
 

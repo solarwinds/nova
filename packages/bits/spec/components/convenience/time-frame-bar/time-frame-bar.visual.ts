@@ -24,7 +24,6 @@ describe(`Visual tests: ${name}`, () => {
 
     it(`${name} visual test`, async () => {
         await camera.turn.on();
-        await camera.say.cheese(`Default`);
 
         await timeFrameBarSecond.quickPickPreset("Last 7 days");
         await camera.say.cheese(`Default with quick preset`);
