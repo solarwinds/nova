@@ -3,8 +3,7 @@
         <nui-chart class="w-100" [chart]="chartAssist.chart"></nui-chart>
     </div>
     <div class="legend">
-        <nui-legend [active]="chartAssist.isLegendActive"
-                    [interactive]="true"
+        <nui-legend [interactive]="true"
                     (mouseleave)="chartAssist.resetVisibleSeries()">
             <nui-legend-series *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn"
                                [descriptionPrimary]="legendSeries['name'] | titlecase"
