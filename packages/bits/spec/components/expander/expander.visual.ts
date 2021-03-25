@@ -17,7 +17,6 @@ describe(`Visual tests: ${name}`, () => {
     let menuEmbedded: MenuAtom;
 
     beforeAll(async () => {
-        await Helpers.prepareBrowser("common/badge/badge-visual-test");
         await Helpers.prepareBrowser("expander/expander-visual-test");
         basicExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-basic");
         lineLessExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-without-border");

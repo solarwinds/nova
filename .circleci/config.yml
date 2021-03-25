@@ -579,10 +579,10 @@ workflows:
             -   bits-visual-test:
                     requires:
                         - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
+                    # filters:
+                    #     branches:
+                    #         only:
+                    #             - main
             -   bits-a11y-test:
                     requires:
                         - bits-build
@@ -615,11 +615,11 @@ workflows:
             -   charts-visual-test:
                     requires:
                         - charts-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
+                    # filters:
+                    #     branches:
+                    #         only:
+                    #             - main
+                    #             - next
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -654,11 +654,11 @@ workflows:
             -   dashboards-visual-test:
                     requires:
                         - dashboards-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
+                    # filters:
+                    #     branches:
+                    #         only:
+                    #             - main
+                    #             - next
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test

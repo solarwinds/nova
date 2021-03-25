@@ -8,7 +8,7 @@ import { LayoutSheetGroupAtom } from "./layout-sheet-group.atom";
 
 const name: string = "Layout";
 
-fdescribe(`Visual tests: ${name}`, () => {
+describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let separatedSheets: LayoutSheetGroupAtom;
     let joinedSheets: LayoutSheetGroupAtom;
