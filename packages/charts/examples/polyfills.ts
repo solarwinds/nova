@@ -20,7 +20,7 @@
 
 /** Evergreen browsers require these. **/
 // Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
-// tslint:disable-next-line
+// eslint-disable-next-line
 import "@angular/localize/init";
 import "core-js/es7/reflect";
 import "zone.js/dist/zone";  // Included with Angular CLI.
@@ -46,7 +46,7 @@ import "zone.js/dist/zone";  // Included with Angular CLI.
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-// tslint:disable-next-line
+// eslint-disable-next-line
 
 
 

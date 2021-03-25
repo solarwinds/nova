@@ -10,25 +10,25 @@ import { ChartDonutContentComponent } from "./chart-donut-content.component";
     selector: "nui-chart-content-wrapper",
     template: `<nui-chart-donut-content [plugin]="plugin"></nui-chart-donut-content>`,
 })
-class ChartContentWrapper {
+class ChartContentWrapperComponent {
     @Input() plugin: ChartDonutContentPlugin;
     @ViewChild(ChartDonutContentComponent) donutContent: ChartDonutContentComponent;
 }
 
 describe("components >", () => {
     describe("chart-donut-content >", () => {
-        let fixture: ComponentFixture<ChartContentWrapper>;
-        let component: ChartContentWrapper;
+        let fixture: ComponentFixture<ChartContentWrapperComponent>;
+        let component: ChartContentWrapperComponent;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
                 declarations: [
-                    ChartContentWrapper,
+                    ChartContentWrapperComponent,
                     ChartDonutContentComponent,
                 ],
             });
 
-            fixture = TestBed.createComponent(ChartContentWrapper);
+            fixture = TestBed.createComponent(ChartContentWrapperComponent);
             component = fixture.componentInstance;
 
             component.plugin = new ChartDonutContentPlugin();

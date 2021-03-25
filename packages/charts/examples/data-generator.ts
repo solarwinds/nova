@@ -58,7 +58,7 @@ export class DataGenerator {
             id: `series-${index + 1}`,
             name: el,
             // for ordinal scale it is useful to identify each data point here somehow
-            data: Array.apply(null, Array(seriesCount)).map((_: any, i: any) => ({
+            data: Array(seriesCount).fill(undefined).map((_: any, i: any) => ({
                 value: Math.floor(Math.random() * 100),
                 description: `Category ${i + 1}`,
             })),

@@ -10,7 +10,7 @@ import { ChartDocsLineComponent } from "./chart-docs-line.component";
 import { LineChartBasicExampleComponent } from "./line-chart-basic/line-chart-basic.example.component";
 import { LineChartInterruptedBasicExampleComponent } from "./line-chart-interrupted-basic/line-chart-interrupted-basic-example.component";
 import { LineChartInterruptedCalculatedExampleComponent } from "./line-chart-interrupted-calculated/line-chart-interrupted-calculated-example.component";
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 import { LineChartInterruptedPathTerminusExampleComponent } from "./line-chart-interrupted-path-terminus/line-chart-interrupted-path-terminus-example.component";
 import { LineChartTestComponent } from "./line-chart-test/line-chart-test.component";
 import { LineChartVisualTestComponent } from "./line-chart-visual-test/line-chart-visual-test.component";

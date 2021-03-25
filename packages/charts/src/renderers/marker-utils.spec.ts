@@ -4,7 +4,15 @@ import { DATA_POINT_INTERACTION_RESET, INTERACTION_DATA_POINT_EVENT } from "src/
 
 import { LinearScale } from "../core/common/scales/linear-scale";
 import { IXYScales } from "../core/common/scales/types";
-import { D3Selection, IDataPoint, IDataSeries, IInteractionDataPointEvent, InteractionType, IRenderContainers, IRendererEventPayload } from "../core/common/types";
+import {
+    D3Selection,
+    IDataPoint,
+    IDataSeries,
+    IInteractionDataPointEvent,
+    InteractionType,
+    IRenderContainers,
+    IRendererEventPayload,
+} from "../core/common/types";
 
 import { ILineAccessors, LineAccessors } from "./line/line-accessors";
 import { MarkerUtils } from "./marker-utils";

@@ -105,7 +105,7 @@ export const CHART_PALETTE_CS_S_EXTENDED: string[] = [
     "var(--nui-color-semantic-info-bg)",
 ];
 
-// tslint:disable:max-line-length
+/* eslint-disable max-len */
 /** Standard shapes for chart markers */
 const regularShapes: string[] = [
     "m0 0m-4 0a4 4 0 1 0 8 0 4 4 0 1 0-8 0z", // circle
@@ -125,7 +125,7 @@ const emptyShapes: string[] = [
     "m0 4-4-8 8.001 0-4.001 8zm0-3.354 1.573-3.146-3.145 0 1.572 3.146z", // triangle down empty
     "m0-1.951-2.237 1.626.855 2.63 2.766 0 .855-2.63-2.237-1.626zm0-1.854 4.001 2.907-1.528 4.703-4.945 0-1.528-4.703 4.001-2.907z", // pentagon empty
 ];
-// tslint:enable:max-line-length
+/* eslint-enable max-len */
 
 /** Default chart marker set */
 export const CHART_MARKERS: SvgMarker[] = [
