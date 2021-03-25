@@ -4,6 +4,9 @@ import find from "lodash/find";
 import { Subject } from "rxjs";
 
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
+import { LineAccessors } from "../../renderers/line/line-accessors";
+import { LineRenderer } from "../../renderers/line/line-renderer";
+import { RenderState } from "../../renderers/types";
 import { Chart } from "../chart";
 import { BandScale } from "../common/scales/band-scale";
 import { domain } from "../common/scales/helpers/domain";
@@ -27,7 +30,7 @@ describe("XYGrid >", () => {
 
     const testBottomScaleId = "testBottomId";
     const testLeftScaleId = "testLeftId";
-    const testRightScaleId = "testLeftId";
+    const testRightScaleId = "testRightId";
     let testBottomScale: IScale<any>;
     let testLeftScale: IScale<any>;
     let testRightScale: IScale<any>;
@@ -61,8 +64,13 @@ describe("XYGrid >", () => {
         testLeftScale = new LinearScale(testLeftScaleId);
         testRightScale = new LinearScale(testRightScaleId);
         grid.scales["x"] = createScale(testBottomScale);
-        grid.scales["y"] = createScale(testLeftScale);
-        grid.scales["y"] = createScale(testRightScale);
+        grid.scales["y"] = {
+            index: {
+                [testLeftScale.id]: testLeftScale,
+                [testRightScale.id]: testRightScale,
+            },
+            list: [testLeftScale, testRightScale],
+        };
         grid.bottomScaleId = testBottomScaleId;
         grid.leftScaleId = testLeftScaleId;
         grid.rightScaleId = testRightScaleId;
@@ -654,6 +662,55 @@ describe("XYGrid >", () => {
 
             };
             expect(grid?.scales?.y?.list[0]?.__domainCalculatedWithTicks).toBeFalsy();
+        });
+    });
+
+    describe("axes highlighting", () => {
+
+        it("highlights axes", () => {
+            const seriesSet = [
+                {
+                    id: "series1",
+                    name: "Series 1",
+                    data: [],
+                    renderer: new LineRenderer(),
+                    accessors: new LineAccessors(),
+                    scales: {
+                        x: testBottomScale,
+                        y: testLeftScale,
+                    },
+                },
+                {
+                    id: "series2",
+                    name: "Series 2",
+                    data: [],
+                    renderer: new LineRenderer(),
+                    accessors: new LineAccessors(),
+                    scales: {
+                        x: testBottomScale,
+                        y: testRightScale,
+                    },
+                },
+            ];
+
+            chart.update(seriesSet);
+            chart.setSeriesStates([
+                {
+                    series: seriesSet[0],
+                    state: RenderState.emphasized,
+                    seriesId: seriesSet[0].id,
+                },
+                {
+                    series: seriesSet[1],
+                    state: RenderState.deemphasized,
+                    seriesId: seriesSet[1].id,
+                },
+            ]);
+
+            // @ts-ignore
+            expect(grid.axisYLeft.group.attr("opacity")).toBe("1");
+            // @ts-ignore
+            expect(grid.axisYRight.group.attr("opacity")).toBe("0.1");
         });
     });
 });

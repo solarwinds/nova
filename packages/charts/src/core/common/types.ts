@@ -76,6 +76,8 @@ export interface IRenderStateData {
     seriesId: string;
     /** Series render state */
     state: RenderState;
+    /** Series */
+    series?: IChartSeries<IAccessors>;
 }
 
 /** @ignore */
@@ -324,6 +326,11 @@ export interface IInteractionPayload {
 export interface IInteractionDataPointEvent extends IInteractionPayload {
     dataPoint: IDataPoint;
 }
+
+/**
+ * Payload for axes style change when emphasizing series on grid
+ */
+export type IAxesStyleChangeEventPayload = Record<string, Record<string, any>>;
 
 /**
  * Payload for interaction events regarding one or more data points
