@@ -3,16 +3,27 @@
 
 .nui-menu .nui-menu-item, .nui-menu-popup-host .nui-menu-item, .nui-menu-popup .nui-menu-item {
     .nui-menu-item__option {
-        padding: 0 @nui-space-xs;
+        padding: 0;
         .nui-checkbox__label {
             font-weight: @nui-font-weight-regular;
             font-size: @nui-font-size-default;
             width: 100%;
+            padding: @nui-space-xs+@nui-space-xxs @nui-space-sm+@nui-space-xxs;
+
+            &:focus {
+                border-radius: 0;
+                .setCssVariable(background-color, transparent);
+            }
         }
 
-        .nui-menu-item__checkbox > .nui-checkbox {
-            padding: 0;
+        .nui-menu-item__checkbox {
+            width: 100%;
+
+            & > .nui-checkbox {
+                padding: 0;
+            }
         }
+
         .nui-checkbox__translucent {
             cursor: not-allowed;
         }
@@ -20,9 +31,12 @@
 
     &.nui-menu-item--disabled {
         > .nui-menu-item__option {
+            padding: @nui-space-xs;
             .setCssVariable(color, nui-color-off);
-            &:focus {
+
+            &:active, &:focus {
                 outline: 0;
+                .no-shadow();
             }
         }
     }

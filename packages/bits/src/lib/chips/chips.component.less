@@ -100,6 +100,10 @@
         vertical-align: top;
         cursor: pointer;
         margin-left: @nui-space-sm;
+        &:focus {
+            .focus-outline();
+            border-radius: @nui-radius-default;
+        }
     }
 
     &__vertical {
