@@ -129,15 +129,19 @@ jobs:
             image: ubuntu-2004:202010-01
         environment:
             PROJECT_DIR: ~/nova/packages/bits
+            PERCY_TOKEN: 
         steps:
             -   attach_workspace:
                     at: ~/nova
+            -   run:
+                    name: Setting the correct Percy token for the Bits project
+                    command: export PERCY_TOKEN=$BITS_PERCY_TOKEN
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -286,11 +290,14 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
+                    name: Setting the correct Percy token for the Charts project
+                    command: export PERCY_TOKEN=$CHARTS_PERCY_TOKEN
+            -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/charts
+                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -444,11 +451,14 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
+                    name: Setting the correct Percy token for the Dashboards project
+                    command: export PERCY_TOKEN=$DASHBOARDS_PERCY_TOKEN
+            -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/dashboards
+                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -579,10 +589,10 @@ workflows:
             -   bits-visual-test:
                     requires:
                         - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
+                    # filters:
+                    #     branches:
+                    #         only:
+                    #             - main
             -   bits-a11y-test:
                     requires:
                         - bits-build
@@ -615,11 +625,11 @@ workflows:
             -   charts-visual-test:
                     requires:
                         - charts-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
+                    # filters:
+                    #     branches:
+                    #         only:
+                    #             - main
+                    #             - next
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -654,11 +664,11 @@ workflows:
             -   dashboards-visual-test:
                     requires:
                         - dashboards-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
+                    # filters:
+                    #     branches:
+                    #         only:
+                    #             - main
+                    #             - next
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
