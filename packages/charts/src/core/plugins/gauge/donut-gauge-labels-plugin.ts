@@ -127,7 +127,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
             .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
             .attr("title", (d, i) => formatter(data[i].value))
             .style("text-anchor", (d) => this.getTextAnchor(d.startAngle))
-            .style("alignment-baseline", (d) => this.getAlignmentBaseline(d.startAngle))
+            .style("dominant-baseline", (d) => this.getAlignmentBaseline(d.startAngle))
             .text((d, i) => formatter(data[i].value));
     }
 
