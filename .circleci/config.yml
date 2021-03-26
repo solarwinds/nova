@@ -129,7 +129,7 @@ jobs:
             image: ubuntu-2004:202010-01
         environment:
             PROJECT_DIR: ~/nova/packages/bits
-            PERCY_TOKEN: ""
+            PERCY_TOKEN: "empty token"
         steps:
             -   attach_workspace:
                     at: ~/nova
@@ -143,10 +143,14 @@ jobs:
                       echo $PERCY_TOKEN
             -   run:
                     name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
+                    command: |
+                      export PERCY_TOKEN=$BITS_PERCY_TOKEN
+                      docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
+                    command: |
+                      export PERCY_TOKEN=$BITS_PERCY_TOKEN
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
