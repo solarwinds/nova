@@ -129,12 +129,18 @@ jobs:
             image: ubuntu-2004:202010-01
         environment:
             PROJECT_DIR: ~/nova/packages/bits
+            PERCY_TOKEN: ""
         steps:
             -   attach_workspace:
                     at: ~/nova
             -   run:
                     name: Setting the correct Percy token for the Bits project
-                    command: echo $PERCY_TOKEN
+                    command: |
+                      echo ">>>> PERCY_TOKEN"
+                      echo $PERCY_TOKEN
+                      export PERCY_TOKEN=$BITS_PERCY_TOKEN
+                      echo ">>>> PERCY_TOKEN"
+                      echo $PERCY_TOKEN
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
