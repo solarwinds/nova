@@ -3,470 +3,470 @@ orbs:
     snyk: snyk/snyk@0.0.12
 
 jobs:
-    bits-build:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        environment:
-            PROJECT_DIR: ./packages/bits
-            BUILD_COUNTER: << pipeline.number >>
-        resource_class: medium+
-        steps:
-            -   checkout:
-                    path: ~/nova
-            -   run:
-                    name: Compute build version
-                    command: yarn run compute-version-ci
-            -   run:
-                    name: Grab latest commit of package
-                    command: |
-                        export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
-                        echo $gitCommit > $PROJECT_DIR/git-commit
-            -   restore_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Installing node dependencies (if necessary)
-                    command: |
-                        if [ -d "node_modules" ];
-                        then
-                            echo "skipping npm install as it was restored from cache. Running only postinstall"
-                            yarn run postinstall
-                        else
-                            yarn install --frozen-lockfile
-                        fi
-            -   save_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
-                    paths:
-                        - ./packages/bits/node_modules
-            -   restore_cache:
-                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-            -   run:
-                    working_directory: ~/nova/packages/bits
-                    name: Assemble
-                    command: |
-                            if [ -d "dist" ];
-                            then
-                                echo "skipping yarn assemble as it was restored from cache"
-                                touch package-cached
-                            else
-                                yarn run assemble
-                            fi
-            -   save_cache:
-                    key: bits-dist-{{ checksum "packages/bits/git-commit" }}
-                    paths:
-                        - ./packages/bits/dist
-                        - ./packages/bits/sdk
-            -   persist_to_workspace:
-                    root: .
-                    paths:
-                        - packages
-                        - ts-lint-rules
-                        - scripts
-                        - .git
-                        - docker-compose.yml
-                        - tsconfig.main.json
-                        - package.json
-                        - LICENSE
-                        - .eslintrc.json
-    bits-unit-test:
-        working_directory: ~/nova/packages/bits
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Unit tests
-                    command: yarn run test
-    bits-e2e-test:
-        working_directory: ~/nova
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Check git diff to see if builds should skip e2e
-                    working_directory: ~/nova/packages/bits
-                    command: |
-                        if [ -f package-cached ]; then
-                            echo "Package was cached so skipping e2e tests"
-                            circleci step halt
-                        fi
-            -   run:
-                    name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
-            -   run:
-                    name: E2E tests
-                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
-            -   run:
-                    name: Cleanup
-                    command: docker-compose down -v --rmi="all"
-    bits-a11y-test:
-        working_directory: ~/nova
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
-            -   run:
-                    name: a11y tests
-                    command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
-            -   run:
-                    name: Cleanup
-                    command: docker-compose down -v --rmi="all"
-    bits-visual-test:
-        working_directory: ~/nova
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
-            -   run:
-                    name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
-            -   run:
-                    name: Cleanup
-                    command: docker-compose down -v --rmi="all"
-    bits-pack:
-        working_directory: ~/nova/packages/bits
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Create bits package
-                    command: npm pack ./dist
-            -   persist_to_workspace:
-                    root: ~/nova
-                    paths:
-                        - ./packages/bits/*.tgz
-    bits-publish:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        environment:
-            PROJECT_DIR: ./packages/bits
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Publish bits
-                    command: yarn run publish-ci
-    charts-build:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        environment:
-            PROJECT_DIR: ./packages/charts
-            BUILD_COUNTER: << pipeline.number >>
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Compute build version
-                    command: yarn run compute-version-ci
-            -   run:
-                    working_directory: ~/nova/packages
-                    name: Grab latest commit of package
-                    command: |
-                        export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
-                        export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
-                        echo $bitsCommit $chartsCommit > ./charts/git-commit
-            -   run:
-                    working_directory: ~/nova/packages/charts
-                    name: Temporarily remove dependencies
-                    command: |
-                        cp package.json package.json~
-                        yarn run --cwd=../.. remove-dependencies packages/charts
-            -   restore_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
-            -   run:
-                    working_directory: ~/nova/packages/charts
-                    name: Installing node dependencies (if necessary)
-                    command: |
-                        if [ -d "node_modules" ];
-                        then
-                            echo "skipping npm install as it was restored from cache. Running only postinstall"
-                            yarn run postinstall
-                        else
-                            yarn install --frozen-lockfile
-                        fi
-            -   save_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
-                    paths:
-                        - ./packages/charts/node_modules
-            -   run:
-                    working_directory: ~/nova/packages/charts
-                    name: Install Bits
-                    command: yarn add ../bits/*.tgz
-            -   run:
-                    working_directory: ~/nova/packages/charts
-                    name: Restore package.json
-                    command: mv -f package.json~ package.json
-            -   restore_cache:
-                    key: charts-dist-{{ checksum "packages/charts/git-commit" }}
-            -   run:
-                    working_directory: ~/nova/packages/charts
-                    name: Assemble
-                    command: |
-                        if [ -d "dist" ];
-                        then
-                            echo "skipping yarn assemble as it was restored from cache"
-                            touch package-cached
-                        else
-                            yarn run assemble
-                        fi
-            -   save_cache:
-                    key: charts-dist-{{ checksum "packages/charts/git-commit" }}
-                    paths:
-                        - ./packages/charts/dist
-                        - ./packages/charts/sdk
-            -   persist_to_workspace:
-                    root: .
-                    paths:
-                        - packages/charts
-    charts-unit-test:
-        working_directory: ~/nova/packages/charts
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Unit tests
-                    command: yarn run test
-    charts-e2e-test:
-        working_directory: ~/nova
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-            PROJECT_DIR: ~/nova/packages/charts
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Check git diff to see if builds should skip e2e
-                    working_directory: ~/nova/packages/charts
-                    command: |
-                        if [ -f package-cached ]; then
-                            echo "Package was cached so skipping e2e tests"
-                            circleci step halt
-                        fi
-            -   run:
-                    name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
-            -   run:
-                    name: E2E tests
-                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/charts
-            -   run:
-                    name: Cleanup
-                    command: docker-compose down -v --rmi="all"
-    charts-visual-test:
-        working_directory: ~/nova
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-            PROJECT_DIR: ~/nova/packages/charts
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
-            -   run:
-                    name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/charts
-            -   run:
-                    name: Cleanup
-                    command: docker-compose down -v --rmi="all"
-    charts-pack:
-        working_directory: ~/nova/packages/charts
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Create charts package
-                    command: npm pack ./dist
-            -   persist_to_workspace:
-                    root: ~/nova
-                    paths:
-                        - ./packages/charts/*.tgz
-    charts-publish:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        environment:
-            PROJECT_DIR: ./packages/charts
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Publish charts
-                    command: yarn run publish-ci
-    dashboards-build:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        environment:
-            PROJECT_DIR: ./packages/dashboards
-            BUILD_COUNTER: << pipeline.number >>
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Compute build version
-                    command: yarn run compute-version-ci
-            -   run:
-                    working_directory: ~/nova/packages
-                    name: Grab latest commit of package
-                    command: |
-                        export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
-                        export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
-                        export dashboardsCommit=`git log --pretty=format:'%H' -n 1 ./dashboards`
-                        echo $bitsCommit $chartsCommit $dashboardsCommit > ./dashboards/git-commit
-            -   run:
-                    working_directory: ~/nova/packages/dashboards
-                    name: Temporarily remove dependencies
-                    command: |
-                        cp package.json package.json~
-                        yarn run --cwd=../.. remove-dependencies packages/dashboards
-            -   restore_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
-            -   run:
-                    working_directory: ~/nova/packages/dashboards
-                    name: Installing node dependencies (if necessary)
-                    command: |
-                        if [ -d "node_modules" ];
-                        then
-                            echo "skipping npm install as it was restored from cache. Running only postinstall"
-                            yarn run postinstall
-                        else
-                            yarn install --frozen-lockfile
-                        fi
-            -   save_cache:
-                    key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
-                    paths:
-                        - ./packages/dashboards/node_modules
-            -   run:
-                    working_directory: ~/nova/packages/dashboards
-                    name: Install bits
-                    command: yarn add ../bits/*.tgz
-            -   run:
-                    working_directory: ~/nova/packages/dashboards
-                    name: Install charts
-                    command: yarn add ../charts/*.tgz
-            -   run:
-                    working_directory: ~/nova/packages/dashboards
-                    name: Restore package.json
-                    command: mv -f package.json~ package.json
-            -   restore_cache:
-                    key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
-            -   run:
-                    working_directory: ~/nova/packages/dashboards
-                    name: Assemble
-                    command: |
-                        if [ -d "dist" ];
-                        then
-                            echo "skipping yarn assemble as it was restored from cache"
-                            touch package-cached
-                        else
-                            yarn run assemble
-                        fi
-            -   save_cache:
-                    key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
-                    paths:
-                        - ./packages/dashboards/dist
-                        - ./packages/dashboards/sdk
-            -   persist_to_workspace:
-                    root: .
-                    paths:
-                        - packages/dashboards
-    dashboards-unit-test:
-        working_directory: ~/nova/packages/dashboards
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Unit tests
-                    command: yarn run test
-    dashboards-e2e-test:
-        working_directory: ~/nova
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-            PROJECT_DIR: ~/nova/packages/dashboards
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Check git diff to see if builds should skip e2e
-                    working_directory: ~/nova/packages/dashboards
-                    command: |
-                        if [ -f package-cached ]; then
-                            echo "Package was cached so skipping e2e tests"
-                            circleci step halt
-                        fi
-            -   run:
-                    name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
-            -   run:
-                    name: E2E tests
-                    command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/dashboards
-            -   run:
-                    name: Cleanup
-                    command: docker-compose down -v --rmi="all"
-    dashboards-visual-test:
-        working_directory: ~/nova
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-            PROJECT_DIR: ~/nova/packages/dashboards
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
-            -   run:
-                    name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/dashboards
-            -   run:
-                    name: Cleanup
-                    command: docker-compose down -v --rmi="all"
-    dashboards-pack:
-        working_directory: ~/nova/packages/dashboards
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Create dashboards package
-                    command: npm pack ./dist
-            -   persist_to_workspace:
-                    root: ~/nova
-                    paths:
-                        - ./packages/dashboards/*.tgz
-    dashboards-publish:
+    # bits-build:
+    #     working_directory: ~/nova
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     environment:
+    #         PROJECT_DIR: ./packages/bits
+    #         BUILD_COUNTER: << pipeline.number >>
+    #     resource_class: medium+
+    #     steps:
+    #         -   checkout:
+    #                 path: ~/nova
+    #         -   run:
+    #                 name: Compute build version
+    #                 command: yarn run compute-version-ci
+    #         -   run:
+    #                 name: Grab latest commit of package
+    #                 command: |
+    #                     export gitCommit=`git log --pretty=format:'%H' -n 1 $PROJECT_DIR`
+    #                     echo $gitCommit > $PROJECT_DIR/git-commit
+    #         -   restore_cache:
+    #                 key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+    #         -   run:
+    #                 working_directory: ~/nova/packages/bits
+    #                 name: Installing node dependencies (if necessary)
+    #                 command: |
+    #                     if [ -d "node_modules" ];
+    #                     then
+    #                         echo "skipping npm install as it was restored from cache. Running only postinstall"
+    #                         yarn run postinstall
+    #                     else
+    #                         yarn install --frozen-lockfile
+    #                     fi
+    #         -   save_cache:
+    #                 key: yarn-node-mod-deps-{{ checksum "packages/bits/yarn.lock" }}
+    #                 paths:
+    #                     - ./packages/bits/node_modules
+    #         -   restore_cache:
+    #                 key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+    #         -   run:
+    #                 working_directory: ~/nova/packages/bits
+    #                 name: Assemble
+    #                 command: |
+    #                         if [ -d "dist" ];
+    #                         then
+    #                             echo "skipping yarn assemble as it was restored from cache"
+    #                             touch package-cached
+    #                         else
+    #                             yarn run assemble
+    #                         fi
+    #         -   save_cache:
+    #                 key: bits-dist-{{ checksum "packages/bits/git-commit" }}
+    #                 paths:
+    #                     - ./packages/bits/dist
+    #                     - ./packages/bits/sdk
+    #         -   persist_to_workspace:
+    #                 root: .
+    #                 paths:
+    #                     - packages
+    #                     - ts-lint-rules
+    #                     - scripts
+    #                     - .git
+    #                     - docker-compose.yml
+    #                     - tsconfig.main.json
+    #                     - package.json
+    #                     - LICENSE
+    #                     - .eslintrc.json
+    # bits-unit-test:
+    #     working_directory: ~/nova/packages/bits
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Unit tests
+    #                 command: yarn run test
+    # bits-e2e-test:
+    #     working_directory: ~/nova
+    #     machine:
+    #         image: ubuntu-2004:202010-01
+    #     environment:
+    #         PROJECT_DIR: ~/nova/packages/bits
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Check git diff to see if builds should skip e2e
+    #                 working_directory: ~/nova/packages/bits
+    #                 command: |
+    #                     if [ -f package-cached ]; then
+    #                         echo "Package was cached so skipping e2e tests"
+    #                         circleci step halt
+    #                     fi
+    #         -   run:
+    #                 name: Start Selenium docker image
+    #                 command: docker-compose up -d --build selenium
+    #         -   run:
+    #                 name: E2E tests
+    #                 command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/bits
+    #         -   run:
+    #                 name: Cleanup
+    #                 command: docker-compose down -v --rmi="all"
+    # bits-a11y-test:
+    #     working_directory: ~/nova
+    #     machine:
+    #         image: ubuntu-2004:202010-01
+    #     environment:
+    #         PROJECT_DIR: ~/nova/packages/bits
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Start Selenium docker image
+    #                 command: docker-compose up -d --build selenium
+    #         -   run:
+    #                 name: a11y tests
+    #                 command: docker-compose run --user="$UID" build npm run a11y:ci --prefix ./packages/bits
+    #         -   run:
+    #                 name: Cleanup
+    #                 command: docker-compose down -v --rmi="all"
+    # bits-visual-test:
+    #     working_directory: ~/nova
+    #     machine:
+    #         image: ubuntu-2004:202010-01
+    #     environment:
+    #         PROJECT_DIR: ~/nova/packages/bits
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Start Selenium docker image
+    #                 command: docker-compose up -d --build selenium
+    #         -   run:
+    #                 name: Visual tests
+    #                 command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+    #         -   run:
+    #                 name: Cleanup
+    #                 command: docker-compose down -v --rmi="all"
+    # bits-pack:
+    #     working_directory: ~/nova/packages/bits
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Create bits package
+    #                 command: npm pack ./dist
+    #         -   persist_to_workspace:
+    #                 root: ~/nova
+    #                 paths:
+    #                     - ./packages/bits/*.tgz
+    # bits-publish:
+    #     working_directory: ~/nova
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     environment:
+    #         PROJECT_DIR: ./packages/bits
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Publish bits
+    #                 command: yarn run publish-ci
+    # charts-build:
+    #     working_directory: ~/nova
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     environment:
+    #         PROJECT_DIR: ./packages/charts
+    #         BUILD_COUNTER: << pipeline.number >>
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Compute build version
+    #                 command: yarn run compute-version-ci
+    #         -   run:
+    #                 working_directory: ~/nova/packages
+    #                 name: Grab latest commit of package
+    #                 command: |
+    #                     export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
+    #                     export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
+    #                     echo $bitsCommit $chartsCommit > ./charts/git-commit
+    #         -   run:
+    #                 working_directory: ~/nova/packages/charts
+    #                 name: Temporarily remove dependencies
+    #                 command: |
+    #                     cp package.json package.json~
+    #                     yarn run --cwd=../.. remove-dependencies packages/charts
+    #         -   restore_cache:
+    #                 key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
+    #         -   run:
+    #                 working_directory: ~/nova/packages/charts
+    #                 name: Installing node dependencies (if necessary)
+    #                 command: |
+    #                     if [ -d "node_modules" ];
+    #                     then
+    #                         echo "skipping npm install as it was restored from cache. Running only postinstall"
+    #                         yarn run postinstall
+    #                     else
+    #                         yarn install --frozen-lockfile
+    #                     fi
+    #         -   save_cache:
+    #                 key: yarn-node-mod-deps-{{ checksum "packages/charts/yarn.lock" }}
+    #                 paths:
+    #                     - ./packages/charts/node_modules
+    #         -   run:
+    #                 working_directory: ~/nova/packages/charts
+    #                 name: Install Bits
+    #                 command: yarn add ../bits/*.tgz
+    #         -   run:
+    #                 working_directory: ~/nova/packages/charts
+    #                 name: Restore package.json
+    #                 command: mv -f package.json~ package.json
+    #         -   restore_cache:
+    #                 key: charts-dist-{{ checksum "packages/charts/git-commit" }}
+    #         -   run:
+    #                 working_directory: ~/nova/packages/charts
+    #                 name: Assemble
+    #                 command: |
+    #                     if [ -d "dist" ];
+    #                     then
+    #                         echo "skipping yarn assemble as it was restored from cache"
+    #                         touch package-cached
+    #                     else
+    #                         yarn run assemble
+    #                     fi
+    #         -   save_cache:
+    #                 key: charts-dist-{{ checksum "packages/charts/git-commit" }}
+    #                 paths:
+    #                     - ./packages/charts/dist
+    #                     - ./packages/charts/sdk
+    #         -   persist_to_workspace:
+    #                 root: .
+    #                 paths:
+    #                     - packages/charts
+    # charts-unit-test:
+    #     working_directory: ~/nova/packages/charts
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Unit tests
+    #                 command: yarn run test
+    # charts-e2e-test:
+    #     working_directory: ~/nova
+    #     machine:
+    #         image: ubuntu-2004:202010-01
+    #     environment:
+    #         PROJECT_DIR: ~/nova/packages/charts
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Check git diff to see if builds should skip e2e
+    #                 working_directory: ~/nova/packages/charts
+    #                 command: |
+    #                     if [ -f package-cached ]; then
+    #                         echo "Package was cached so skipping e2e tests"
+    #                         circleci step halt
+    #                     fi
+    #         -   run:
+    #                 name: Start Selenium docker image
+    #                 command: docker-compose up -d --build selenium
+    #         -   run:
+    #                 name: E2E tests
+    #                 command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/charts
+    #         -   run:
+    #                 name: Cleanup
+    #                 command: docker-compose down -v --rmi="all"
+    # charts-visual-test:
+    #     working_directory: ~/nova
+    #     machine:
+    #         image: ubuntu-2004:202010-01
+    #     environment:
+    #         PROJECT_DIR: ~/nova/packages/charts
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Start Selenium docker image
+    #                 command: docker-compose up -d --build selenium
+    #         -   run:
+    #                 name: Visual tests
+    #                 command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/charts
+    #         -   run:
+    #                 name: Cleanup
+    #                 command: docker-compose down -v --rmi="all"
+    # charts-pack:
+    #     working_directory: ~/nova/packages/charts
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Create charts package
+    #                 command: npm pack ./dist
+    #         -   persist_to_workspace:
+    #                 root: ~/nova
+    #                 paths:
+    #                     - ./packages/charts/*.tgz
+    # charts-publish:
+    #     working_directory: ~/nova
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     environment:
+    #         PROJECT_DIR: ./packages/charts
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Publish charts
+    #                 command: yarn run publish-ci
+    # dashboards-build:
+    #     working_directory: ~/nova
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     environment:
+    #         PROJECT_DIR: ./packages/dashboards
+    #         BUILD_COUNTER: << pipeline.number >>
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Compute build version
+    #                 command: yarn run compute-version-ci
+    #         -   run:
+    #                 working_directory: ~/nova/packages
+    #                 name: Grab latest commit of package
+    #                 command: |
+    #                     export bitsCommit=`git log --pretty=format:'%H' -n 1 ./bits`
+    #                     export chartsCommit=`git log --pretty=format:'%H' -n 1 ./charts`
+    #                     export dashboardsCommit=`git log --pretty=format:'%H' -n 1 ./dashboards`
+    #                     echo $bitsCommit $chartsCommit $dashboardsCommit > ./dashboards/git-commit
+    #         -   run:
+    #                 working_directory: ~/nova/packages/dashboards
+    #                 name: Temporarily remove dependencies
+    #                 command: |
+    #                     cp package.json package.json~
+    #                     yarn run --cwd=../.. remove-dependencies packages/dashboards
+    #         -   restore_cache:
+    #                 key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
+    #         -   run:
+    #                 working_directory: ~/nova/packages/dashboards
+    #                 name: Installing node dependencies (if necessary)
+    #                 command: |
+    #                     if [ -d "node_modules" ];
+    #                     then
+    #                         echo "skipping npm install as it was restored from cache. Running only postinstall"
+    #                         yarn run postinstall
+    #                     else
+    #                         yarn install --frozen-lockfile
+    #                     fi
+    #         -   save_cache:
+    #                 key: yarn-node-mod-deps-{{ checksum "packages/dashboards/yarn.lock" }}
+    #                 paths:
+    #                     - ./packages/dashboards/node_modules
+    #         -   run:
+    #                 working_directory: ~/nova/packages/dashboards
+    #                 name: Install bits
+    #                 command: yarn add ../bits/*.tgz
+    #         -   run:
+    #                 working_directory: ~/nova/packages/dashboards
+    #                 name: Install charts
+    #                 command: yarn add ../charts/*.tgz
+    #         -   run:
+    #                 working_directory: ~/nova/packages/dashboards
+    #                 name: Restore package.json
+    #                 command: mv -f package.json~ package.json
+    #         -   restore_cache:
+    #                 key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
+    #         -   run:
+    #                 working_directory: ~/nova/packages/dashboards
+    #                 name: Assemble
+    #                 command: |
+    #                     if [ -d "dist" ];
+    #                     then
+    #                         echo "skipping yarn assemble as it was restored from cache"
+    #                         touch package-cached
+    #                     else
+    #                         yarn run assemble
+    #                     fi
+    #         -   save_cache:
+    #                 key: dashboards-dist-{{ checksum "packages/dashboards/git-commit" }}
+    #                 paths:
+    #                     - ./packages/dashboards/dist
+    #                     - ./packages/dashboards/sdk
+    #         -   persist_to_workspace:
+    #                 root: .
+    #                 paths:
+    #                     - packages/dashboards
+    # dashboards-unit-test:
+    #     working_directory: ~/nova/packages/dashboards
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Unit tests
+    #                 command: yarn run test
+    # dashboards-e2e-test:
+    #     working_directory: ~/nova
+    #     machine:
+    #         image: ubuntu-2004:202010-01
+    #     environment:
+    #         PROJECT_DIR: ~/nova/packages/dashboards
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Check git diff to see if builds should skip e2e
+    #                 working_directory: ~/nova/packages/dashboards
+    #                 command: |
+    #                     if [ -f package-cached ]; then
+    #                         echo "Package was cached so skipping e2e tests"
+    #                         circleci step halt
+    #                     fi
+    #         -   run:
+    #                 name: Start Selenium docker image
+    #                 command: docker-compose up -d --build selenium
+    #         -   run:
+    #                 name: E2E tests
+    #                 command: docker-compose run --user="$UID" build npm run e2e:ci --prefix ./packages/dashboards
+    #         -   run:
+    #                 name: Cleanup
+    #                 command: docker-compose down -v --rmi="all"
+    # dashboards-visual-test:
+    #     working_directory: ~/nova
+    #     machine:
+    #         image: ubuntu-2004:202010-01
+    #     environment:
+    #         PROJECT_DIR: ~/nova/packages/dashboards
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Start Selenium docker image
+    #                 command: docker-compose up -d --build selenium
+    #         -   run:
+    #                 name: Visual tests
+    #                 command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/dashboards
+    #         -   run:
+    #                 name: Cleanup
+    #                 command: docker-compose down -v --rmi="all"
+    # dashboards-pack:
+    #     working_directory: ~/nova/packages/dashboards
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Create dashboards package
+    #                 command: npm pack ./dist
+    #         -   persist_to_workspace:
+    #                 root: ~/nova
+    #                 paths:
+    #                     - ./packages/dashboards/*.tgz
+    # dashboards-publish:
         working_directory: ~/nova
         docker:
             -   image: circleci/node:12-browsers
@@ -488,204 +488,207 @@ jobs:
             -   attach_workspace:
                     at: ~/nova
             -   run:
-                    name: Publish dashbords docs
-                    command: yarn run deploy-docs-ci
-            -   store_artifacts:
-                    path: ./nova-docs.zip
-    release-prep:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12
-        environment:
-            SOURCE_BRANCH: main
-            # TODO: Change to false
-            CREATE_RELEASE_BRANCH: true
-            RELEASE_BRANCH: release/v11.x
-            INCREMENT_TYPE: minor
-        steps:
-            -   checkout:
-                    path: ~/nova
-            -   run:
-                    name: Configure Git
-                    command: |
-                        git config --global user.email circleci@circleci
-                        git config --global user.name $CIRCLE_PROJECT_USERNAME
-            -   run:
-                    name: Merge Changes
-                    command: yarn run merge-ci
-            -   run:
-                    name: Check out release branch
-                    command: git checkout $RELEASE_BRANCH
-            -   run:
-                    name: Set Release Version
-                    command: yarn run set-release-versions-ci
-            -   run:
-                    name: Set Release Dependency Versions
-                    command: yarn run set-dependency-versions-ci
-            -   run:
-                    name: Commit and Push Release Branch Changes
-                    command: |
-                        git commit -am "update files for version $RELEASE_VERSION"
-                        git push --verbose
-            -   run:
-                    name: Increment source branch version
-                    command: |
-                        git checkout $SOURCE_BRANCH
-                        yarn run set-source-versions-ci
-            -   run:
-                    name: Set source dependency versions
-                    command: yarn run set-dependency-versions-ci
-            -   run:
-                    name: Push source branch changes
-                    command: |
-                        git commit -am 'increment develop versions' && \
-                        git push origin $SOURCE_BRANCH
-            -   run:
-                    name: Trigger release branch
-                    command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
-    snyk-test:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Install node_modules
-                    command: npm install -q
-            -   run:
-                    name: snyk auth
-                    command: npm run snyk-auth
-            -   run:
-                    name: snyk monitor
-                    command: npm run snyk-monitor
-            -   run:
-                    name: snyk test
-                    command: npm run snyk-test
-workflows:
-    version: 2.1
-    nova:
-        jobs:
-            - bits-build
-            -   bits-pack:
-                    requires:
-                        - bits-build
-            -   bits-unit-test:
-                    requires:
-                        - bits-build
-            -   bits-e2e-test:
-                    requires:
-                        - bits-build
-            -   bits-visual-test:
-                    requires:
-                        - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   bits-a11y-test:
-                    requires:
-                        - bits-build
-            -   bits-publish:
-                    requires:
-                        - bits-e2e-test
-                        - bits-unit-test
-                        - charts-e2e-test
-                        - charts-unit-test
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - /release\/.*/
-                                - next
-            -   charts-build:
-                    requires:
-                        - bits-pack
-            -   charts-pack:
-                    requires:
-                        - charts-build
-            -   charts-unit-test:
-                    requires:
-                        - charts-build
-            -   charts-e2e-test:
-                    requires:
-                        - charts-build
-            -   charts-visual-test:
-                    requires:
-                        - charts-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
-            -   charts-publish:
-                    requires:
-                        - bits-e2e-test
-                        - bits-unit-test
-                        - charts-e2e-test
-                        - charts-unit-test
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - /release\/.*/
-                                - next
-            -   dashboards-build:
-                    requires:
-                        - charts-pack
-            -   dashboards-pack:
-                    requires:
-                        - dashboards-build
-            -   nova-docs:
-                    context:
-                        - common-build-creds
-                    requires:
-                        - dashboards-pack
-            -   dashboards-unit-test:
-                    requires:
-                        - dashboards-build
-            -   dashboards-e2e-test:
-                    requires:
-                        - dashboards-build
-            -   dashboards-visual-test:
-                    requires:
-                        - dashboards-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
-            -   dashboards-publish:
-                    requires:
-                        - bits-e2e-test
-                        - bits-unit-test
-                        - charts-e2e-test
-                        - charts-unit-test
-                        - dashboards-e2e-test
-                        - dashboards-unit-test
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - /release\/.*/
-                                - next
-            # Waiting on dashboards build before running scan because it's currently the last package to be built.
-            -   snyk-test:
-                    requires:
-                        - dashboards-build
+                    name: Docs Cleanup
+                    command: yarn run clean-docs-ci
+            # -   run:
+            #         name: Publish dashbords docs
+            #         command: yarn run deploy-docs-ci
+            # -   store_artifacts:
+            #         path: ./nova-docs.zip
+#     release-prep:
+#         working_directory: ~/nova
+#         docker:
+#             -   image: circleci/node:12
+#         environment:
+#             SOURCE_BRANCH: main
+#             # TODO: Change to false
+#             CREATE_RELEASE_BRANCH: true
+#             RELEASE_BRANCH: release/v11.x
+#             INCREMENT_TYPE: minor
+#         steps:
+#             -   checkout:
+#                     path: ~/nova
+#             -   run:
+#                     name: Configure Git
+#                     command: |
+#                         git config --global user.email circleci@circleci
+#                         git config --global user.name $CIRCLE_PROJECT_USERNAME
+#             -   run:
+#                     name: Merge Changes
+#                     command: yarn run merge-ci
+#             -   run:
+#                     name: Check out release branch
+#                     command: git checkout $RELEASE_BRANCH
+#             -   run:
+#                     name: Set Release Version
+#                     command: yarn run set-release-versions-ci
+#             -   run:
+#                     name: Set Release Dependency Versions
+#                     command: yarn run set-dependency-versions-ci
+#             -   run:
+#                     name: Commit and Push Release Branch Changes
+#                     command: |
+#                         git commit -am "update files for version $RELEASE_VERSION"
+#                         git push --verbose
+#             -   run:
+#                     name: Increment source branch version
+#                     command: |
+#                         git checkout $SOURCE_BRANCH
+#                         yarn run set-source-versions-ci
+#             -   run:
+#                     name: Set source dependency versions
+#                     command: yarn run set-dependency-versions-ci
+#             -   run:
+#                     name: Push source branch changes
+#                     command: |
+#                         git commit -am 'increment develop versions' && \
+#                         git push origin $SOURCE_BRANCH
+#             -   run:
+#                     name: Trigger release branch
+#                     command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
+#     snyk-test:
+#         working_directory: ~/nova
+#         docker:
+#             -   image: circleci/node:12-browsers
+#         steps:
+#             -   attach_workspace:
+#                     at: ~/nova
+#             -   run:
+#                     name: Install node_modules
+#                     command: npm install -q
+#             -   run:
+#                     name: snyk auth
+#                     command: npm run snyk-auth
+#             -   run:
+#                     name: snyk monitor
+#                     command: npm run snyk-monitor
+#             -   run:
+#                     name: snyk test
+#                     command: npm run snyk-test
+# workflows:
+#     version: 2.1
+#     nova:
+#         jobs:
+#             - bits-build
+#             -   bits-pack:
+#                     requires:
+#                         - bits-build
+#             -   bits-unit-test:
+#                     requires:
+#                         - bits-build
+#             -   bits-e2e-test:
+#                     requires:
+#                         - bits-build
+#             -   bits-visual-test:
+#                     requires:
+#                         - bits-build
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#             -   bits-a11y-test:
+#                     requires:
+#                         - bits-build
+#             -   bits-publish:
+#                     requires:
+#                         - bits-e2e-test
+#                         - bits-unit-test
+#                         - charts-e2e-test
+#                         - charts-unit-test
+#                         - dashboards-e2e-test
+#                         - dashboards-unit-test
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#                                 - /release\/.*/
+#                                 - next
+#             -   charts-build:
+#                     requires:
+#                         - bits-pack
+#             -   charts-pack:
+#                     requires:
+#                         - charts-build
+#             -   charts-unit-test:
+#                     requires:
+#                         - charts-build
+#             -   charts-e2e-test:
+#                     requires:
+#                         - charts-build
+#             -   charts-visual-test:
+#                     requires:
+#                         - charts-build
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#                                 - next
+#             -   charts-publish:
+#                     requires:
+#                         - bits-e2e-test
+#                         - bits-unit-test
+#                         - charts-e2e-test
+#                         - charts-unit-test
+#                         - dashboards-e2e-test
+#                         - dashboards-unit-test
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#                                 - /release\/.*/
+#                                 - next
+#             -   dashboards-build:
+#                     requires:
+#                         - charts-pack
+#             -   dashboards-pack:
+#                     requires:
+#                         - dashboards-build
+#             -   nova-docs:
+#                     context:
+#                         - common-build-creds
+#                     requires:
+#                         - dashboards-pack
+#             -   dashboards-unit-test:
+#                     requires:
+#                         - dashboards-build
+#             -   dashboards-e2e-test:
+#                     requires:
+#                         - dashboards-build
+#             -   dashboards-visual-test:
+#                     requires:
+#                         - dashboards-build
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#                                 - next
+#             -   dashboards-publish:
+#                     requires:
+#                         - bits-e2e-test
+#                         - bits-unit-test
+#                         - charts-e2e-test
+#                         - charts-unit-test
+#                         - dashboards-e2e-test
+#                         - dashboards-unit-test
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#                                 - /release\/.*/
+#                                 - next
+#             # Waiting on dashboards build before running scan because it's currently the last package to be built.
+#             -   snyk-test:
+#                     requires:
+#                         - dashboards-build
 
-    nova-release:
-        jobs:
-            -   release-approval:
-                    type: approval
-                    filters:
-                        branches:
-                            only:
-                                - main
-            -   release-prep:
-                    requires:
-                        - release-approval
+#     nova-release:
+#         jobs:
+#             -   release-approval:
+#                     type: approval
+#                     filters:
+#                         branches:
+#                             only:
+#                                 - main
+#             -   release-prep:
+#                     requires:
+#                         - release-approval

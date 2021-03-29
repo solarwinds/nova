@@ -1,0 +1,82 @@
+#!/bin/bash
+
+BITS_DOCS_PATH="./projects/bits"
+CHARTS_DOCS_PATH="./projects/charts"
+DASHBOARDS_DOCS_PATH="./projects/dashboards"
+
+git clone $DOC_SERVICE_REPO .
+
+cd ./nova-docs
+
+touch temp_file
+
+# # Removing node_modules to avoid restoring the timestamps for each file of it
+# rm -rf node_modules
+
+# echo "\n"
+# echo " Restoring original timestamps for the nova-docs repo files"
+# echo "-------------------------------------------------------------\n"
+# OS=${OS:-`uname`}
+
+# if [ "$OS" = 'Darwin' ]; then
+#   get_touch_time() {
+#     date -r ${unixtime} +'%Y%m%d%H%M.%S'
+#   }
+# else
+#   # default Linux
+#   get_touch_time() {
+#     date -d @${unixtime} +'%Y%m%d%H%M.%S'
+#   }
+# fi
+
+# # modified git files
+# git diff --name-only > .git_diff_name-only
+
+# # all git files
+# git ls-tree -r --name-only HEAD	> .git_ls-tree_r_name-only_HEAD
+
+# # minus https://stackoverflow.com/questions/1370996/minus-operation-on-two-files-using-linux-commands                                                                      
+# # only restore files not modified
+# comm -2 -3 .git_ls-tree_r_name-only_HEAD .git_diff_name-only | while read filename; do
+#     if [[ $filename != *"/release"* ]] && [[ $filename != *"/main/"* ]] && [[ $filename != *"/next/"* ]]; then
+#         unixtime=$(git log -1 --format="%at" -- "${filename}")
+#         touchtime=$(get_touch_time)
+#         echo ${touchtime} "${filename}"
+#         touch -t ${touchtime} "${filename}"
+#     fi
+# done
+
+# rm .git_ls-tree_r_name-only_HEAD .git_diff_name-only
+
+# echo "\n"
+# echo " Removing files older than 7 days for each project"
+# echo "----------------------------------------------------\n"
+# find ./projects -mtime +7 \
+#     -not \( -path "$BITS_DOCS_PATH/release*" -prune \) \
+#     -not \( -path "$BITS_DOCS_PATH/next*" -prune \) \
+#     -not \( -path "$BITS_DOCS_PATH/main*" -prune \) \
+#     -not \( -path "$CHARTS_DOCS_PATH/release*" -prune \) \
+#     -not \( -path "$CHARTS_DOCS_PATH/next*" -prune \) \
+#     -not \( -path "$CHARTS_DOCS_PATH/main*" -prune \) \
+#     -not \( -path "$DASHBOARDS_DOCS_PATH/release*" -prune \) \
+#     -not \( -path "$DASHBOARDS_DOCS_PATH/next*" -prune \) \
+#     -not \( -path "$DASHBOARDS_DOCS_PATH/main*" -prune \) \
+#     -exec rm {} \;
+
+# # Removing empty folders recursively
+# find ./projects/ -type d -empty -delete
+
+# # Restoring the node_modules
+# echo "\n"
+# echo " Restoring the node_modules"
+# echo "-----------------------------\n"
+# npm install
+
+# push changes to the repo
+git config user.email "circleci@circleci"
+git config user.name "${GITHUB_USER_NAME}"
+git remote set-url origin https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/nova-docs.git
+git add .
+git commit -m "docs cleaned up"
+git push origin main
+
