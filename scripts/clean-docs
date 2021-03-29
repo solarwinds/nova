@@ -76,6 +76,8 @@ touch temp_file
 git config user.email "circleci@circleci"
 git config user.name "${GITHUB_USER_NAME}"
 git remote set-url origin https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/nova-docs.git
+git fetch
+git pull
 git add .
 git commit -m "docs cleaned up"
 git push origin main
