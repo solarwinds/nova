@@ -569,10 +569,10 @@ workflows:
     version: 2.1
     nova:
         jobs:
-            # - bits-build
-            # -   bits-pack:
-            #         requires:
-            #             - bits-build
+            - bits-build
+            -   bits-pack:
+                    requires:
+                        - bits-build
             # -   bits-unit-test:
             #         requires:
             #             - bits-build
@@ -603,12 +603,12 @@ workflows:
             #                     - main
             #                     - /release\/.*/
             #                     - next
-            # -   charts-build:
-            #         requires:
-            #             - bits-pack
-            # -   charts-pack:
-            #         requires:
-            #             - charts-build
+            -   charts-build:
+                    requires:
+                        - bits-pack
+            -   charts-pack:
+                    requires:
+                        - charts-build
             # -   charts-unit-test:
             #         requires:
             #             - charts-build
@@ -637,12 +637,12 @@ workflows:
             #                     - main
             #                     - /release\/.*/
             #                     - next
-            # -   dashboards-build:
-            #         requires:
-            #             - charts-pack
-            # -   dashboards-pack:
-            #         requires:
-            #             - dashboards-build
+            -   dashboards-build:
+                    requires:
+                        - charts-pack
+            -   dashboards-pack:
+                    requires:
+                        - dashboards-build
             -   nova-docs:
                     context:
                         - common-build-creds
