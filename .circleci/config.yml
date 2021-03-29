@@ -646,8 +646,8 @@ workflows:
             -   nova-docs:
                     context:
                         - common-build-creds
-                    # requires:
-                    #     - dashboards-pack
+                    requires:
+                        - dashboards-pack
     #         -   dashboards-unit-test:
     #                 requires:
     #                     - dashboards-build
