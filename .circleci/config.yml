@@ -490,7 +490,7 @@ jobs:
             -   run:
                     name: Docs Cleanup
                     command: yarn run clean-docs-ci
-            -   run:
+            # -   run:
             #         name: Publish dashbords docs
             #         command: yarn run deploy-docs-ci
             # -   store_artifacts:
