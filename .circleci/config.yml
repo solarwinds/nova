@@ -565,10 +565,10 @@ jobs:
 #             -   run:
 #                     name: snyk test
 #                     command: npm run snyk-test
-# workflows:
-#     version: 2.1
-#     nova:
-#         jobs:
+workflows:
+    version: 2.1
+    nova:
+        jobs:
 #             - bits-build
 #             -   bits-pack:
 #                     requires:
@@ -643,11 +643,11 @@ jobs:
 #             -   dashboards-pack:
 #                     requires:
 #                         - dashboards-build
-#             -   nova-docs:
-#                     context:
-#                         - common-build-creds
-#                     requires:
-#                         - dashboards-pack
+            -   nova-docs:
+                    context:
+                        - common-build-creds
+                    requires:
+                        - dashboards-pack
 #             -   dashboards-unit-test:
 #                     requires:
 #                         - dashboards-build
