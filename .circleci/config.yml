@@ -467,17 +467,17 @@ jobs:
     #                 paths:
     #                     - ./packages/dashboards/*.tgz
     # dashboards-publish:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        environment:
-            PROJECT_DIR: ./packages/dashboards
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Publish dashboards
-                    command: yarn run publish-ci
+    #     working_directory: ~/nova
+    #     docker:
+    #         -   image: circleci/node:12-browsers
+    #     environment:
+    #         PROJECT_DIR: ./packages/dashboards
+    #     steps:
+    #         -   attach_workspace:
+    #                 at: ~/nova
+    #         -   run:
+    #                 name: Publish dashboards
+    #                 command: yarn run publish-ci
     nova-docs:
         working_directory: ~/nova
         docker:
