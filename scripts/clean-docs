@@ -72,8 +72,8 @@ find ./projects -mtime +7 \
 find ./projects/ -type d -empty -delete
 
 echo ""
-echo " Configuring the git user and origin to push the changes to the docs repo"
-echo "---------------------------------------------------------------------------"
+echo " Pushing changes to the docs repo"
+echo "-----------------------------------"
 echo ""
 git config user.email "circleci@circleci"
 git config user.name "${GITHUB_USER_NAME}"
