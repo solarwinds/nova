@@ -51,6 +51,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     private userProvidedHeight: string;
 
     private unsubscribe$: Subject<unknown> = new Subject<unknown>();
+    private headerResizeObserver: ResizeObserver;
 
     private get viewportEl(): HTMLElement {
         return this.viewport.elementRef.nativeElement;
@@ -107,21 +108,22 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
         this.syncHorizontalScroll();
         this.syncColumnWidths();
+        this.updateContainerToFitHead();
 
-        // Note: While we're detaching header from CDK Viewport we have
-        // to recalculate viewport height to keep the same total height
-        // Skipping one tick to let header get his height;
-        // TODO: Find a better place to assign that
-        setTimeout(() => {
-            this.updateContainerToFitHead();
-        });
         this.headPosition = TableVirtualScrollHeaderPosition.Sticky;
     }
 
     public updateContainerToFitHead(): void {
-        const viewportComputedHeight: string = isEmpty(this.userProvidedHeight) ? this.viewportEl.offsetHeight + "px" : this.userProvidedHeight;
-        this.viewportEl.style.setProperty("height",
-            `calc(${ viewportComputedHeight } - ${ this.headRef?.rows.item(0)?.offsetHeight ?? 0 }px)`, "important");
+        if (this.headRef?.rows.item(0)) {
+            const adjustContainerToFitHead = () => {
+                const viewportComputedHeight: string = isEmpty(this.userProvidedHeight) ? this.viewportEl.offsetHeight + "px" : this.userProvidedHeight;
+                this.viewportEl.style.setProperty("height",
+                    `calc(${ viewportComputedHeight } - ${ this.headRef?.rows.item(0)?.offsetHeight ?? 0 }px)`, "important");
+            };
+
+            this.headerResizeObserver = new ResizeObserver(adjustContainerToFitHead);
+            this.headerResizeObserver.observe(this.headRef?.rows.item(0) as Element);
+        }
     }
 
     public handleColumnsUpdate$: () => Observable<unknown> = () => {
@@ -259,5 +261,9 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     public ngOnDestroy(): void {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
+
+        if (this.headerResizeObserver) {
+            this.headerResizeObserver.disconnect();
+        }
     }
 }
