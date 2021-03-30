@@ -4,13 +4,17 @@ BITS_DOCS_PATH="./projects/bits"
 CHARTS_DOCS_PATH="./projects/charts"
 DASHBOARDS_DOCS_PATH="./projects/dashboards"
 
-mkdir nova-docs
-cd ./nova-docs
+if [ -d "./nova-docs" ]; then
+    cd ./nova-docs
+else
+    mkdir nova-docs
+    cd ./nova-docs
 
-# avoid prompt related to the HostKeyChecking
-mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+    # avoid prompt related to the HostKeyChecking
+    mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
 
-git clone $DOC_SERVICE_REPO .
+    git clone $DOC_SERVICE_REPO .
+fi
 
 echo ""
 echo " Restoring original timestamps for the nova-docs repo files"
