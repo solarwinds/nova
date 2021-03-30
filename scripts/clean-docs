@@ -12,12 +12,10 @@ mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ss
 
 git clone $DOC_SERVICE_REPO .
 
-# Removing node_modules to avoid restoring the timestamps for each file of it
-rm -rf node_modules
-
-echo "\n"
+echo ""
 echo " Restoring original timestamps for the nova-docs repo files"
-echo "-------------------------------------------------------------\n"
+echo "-------------------------------------------------------------"
+echo ""
 OS=${OS:-`uname`}
 
 if [ "$OS" = 'Darwin' ]; then
@@ -50,9 +48,10 @@ done
 
 rm .git_ls-tree_r_name-only_HEAD .git_diff_name-only
 
-echo "\n"
+echo ""
 echo " Removing files older than 7 days for each project"
-echo "----------------------------------------------------\n"
+echo "----------------------------------------------------"
+echo ""
 find ./projects -mtime +7 \
     -not \( -path "$BITS_DOCS_PATH/release*" -prune \) \
     -not \( -path "$BITS_DOCS_PATH/next*" -prune \) \
@@ -68,15 +67,10 @@ find ./projects -mtime +7 \
 # Removing empty folders recursively
 find ./projects/ -type d -empty -delete
 
-# Restoring the node_modules
-echo "\n"
-echo " Restoring the node_modules"
-echo "-----------------------------\n"
-npm install
-
-echo "\n"
+echo ""
 echo " Pushing the changes to the docs repo"
-echo "-----------------------------\n"
+echo "---------------------------------------"
+echo ""
 git config user.email "circleci@circleci"
 git config user.name "${GITHUB_USER_NAME}"
 git remote set-url origin https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/nova-docs.git
