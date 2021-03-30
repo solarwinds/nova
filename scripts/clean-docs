@@ -7,6 +7,9 @@ DASHBOARDS_DOCS_PATH="./projects/dashboards"
 mkdir nova-docs
 cd ./nova-docs
 
+# avoid prompt related to the HostKeyChecking
+mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+
 git clone $DOC_SERVICE_REPO .
 
 # Removing node_modules to avoid restoring the timestamps for each file of it
