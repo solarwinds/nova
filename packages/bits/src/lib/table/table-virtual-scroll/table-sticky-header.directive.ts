@@ -128,6 +128,8 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     }
 
     public updateContainerHeightOnHeadResize(): void {
+        // This resize observer is needed in case a parent element has a height of zero upon instantiation
+        // thereby prohibiting the header from having its intended height when its initially rendered.
         if (this.headRef?.rows.item(0)) {
             this.headResizeObserver = new ResizeObserver(this.updateContainerToFitHead);
             this.headResizeObserver.observe(this.headRef?.rows.item(0) as Element);
