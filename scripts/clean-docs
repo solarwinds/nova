@@ -22,7 +22,7 @@ echo "-------------------------------------------------------------"
 echo ""
 OS=${OS:-`uname`}
 
-if [ "$OS" = 'Darwin' ]; then
+if [ "$OS" == 'Darwin' ]; then
   get_touch_time() {
     date -r ${unixtime} +'%Y%m%d%H%M.%S'
   }
@@ -79,5 +79,5 @@ git config user.email "circleci@circleci"
 git config user.name "${GITHUB_USER_NAME}"
 git remote set-url origin https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/nova-docs.git
 git add .
-git commit -m "docs cleaned up"
+git commit -m "docs cleaned up" --allow-empty
 git push
