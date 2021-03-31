@@ -11,6 +11,7 @@ import { SparkChartMultipleExampleComponent } from "./spark-chart-multiple/spark
 import { AreaSparkMinimalTestComponent } from "./spark-chart-stroke-test/area-spark-minimal-test.component";
 import { SparkChartTableExampleComponent } from "./spark-chart-table/spark-chart-table.example.component";
 import { SparkChartTestComponent } from "./spark-chart-test/spark-chart-test.component";
+import { SparkChartAreaMultipleExampleComponent } from "./spark-chart-area-multiple/spark-chart-area-multiple.example.component"
 
 const exampleRoutes: Routes = [
     {
@@ -60,6 +61,15 @@ const exampleRoutes: Routes = [
         },
     },
     {
+        path: "area",
+        component: SparkChartAreaMultipleExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
         path: "test",
         component: SparkChartTestComponent,
         data: {
@@ -77,6 +87,7 @@ const exampleRoutes: Routes = [
         SparkChartLegendExampleComponent,
         SparkChartMultipleExampleComponent,
         SparkChartTableExampleComponent,
+        SparkChartAreaMultipleExampleComponent,
         SparkChartTestComponent,
         AreaSparkMinimalTestComponent,
     ],

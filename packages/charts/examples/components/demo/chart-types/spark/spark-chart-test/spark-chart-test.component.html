@@ -1,3 +1,4 @@
+<h4>Sparkline Multiple</h4>
 <div class="nui-spark-chart-multiple-test">
     <div *ngFor="let spark of chartAssist.sparks; trackBy: chartAssist.trackByFn">
         <div class="d-flex">
@@ -20,4 +21,8 @@
     </div>
     <input id="data-input" type="text" class="w-100 mt-5" [ngModel]="input" (ngModelChange)="inputChanged($event)">
 </div>
+<h4>Minimal</h4>
 <nui-area-spark-minimal-test></nui-area-spark-minimal-test>
+<h4>Sparkline Area</h4>
+<nui-spark-chart-multiple-example></nui-spark-chart-multiple-example>
+
