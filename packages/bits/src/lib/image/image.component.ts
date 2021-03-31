@@ -33,6 +33,7 @@ import { IImagesPresetItem } from "./public-api";
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./image.component.less"],
     encapsulation: ViewEncapsulation.None,
+    host: { "role": "img" },
 })
 export class ImageComponent implements OnInit, AfterViewInit {
     /**

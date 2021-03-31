@@ -14,7 +14,6 @@
                         type="button"
                         [id]="datePicker.uniqueId + '-title'"
                         displayStyle="action"
-                        role="heading"
                         [disabled]="datePicker.datepickerMode === datePicker.maxMode"
                         class="change-mode-button"
                         [ngClass]="{disabled: datePicker.datepickerMode === datePicker.maxMode}"
@@ -37,8 +36,7 @@
     <tbody>
         <tr *ngFor="let row of rows">
             <td *ngFor="let cell of row"
-                class="text-center year"
-                role="gridcell">
+                class="text-center year">
                 <button nui-button
                         type="button"
                         displayStyle="action"

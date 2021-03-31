@@ -14,7 +14,10 @@ import {IconData, IconStatus} from "./types";
     selector: "nui-icon",
     templateUrl: "./icon.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { "class": "nui-icon-wrapper" },
+    host: {
+        "class": "nui-icon-wrapper",
+        "role": "img",
+    },
     styleUrls: ["./icon.component.less"],
     encapsulation: ViewEncapsulation.None,
 })

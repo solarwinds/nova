@@ -44,6 +44,7 @@ import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
     // TODO: turn on the view envapsulation in the scope of NUI-5823
     encapsulation: ViewEncapsulation.None,
     host: {
+        "role": "checkbox",
         "[class.nui-checkbox--hovered]": "hovered",
         "[class.nui-checkbox--checked]": "checked",
     },

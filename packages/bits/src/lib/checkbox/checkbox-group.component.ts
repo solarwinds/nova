@@ -36,6 +36,7 @@ import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
             multi: true,
         },
     ],
+    host: { "role": "group" },
 })
 /**
  * Component for combining of nui-checkbox components in to group
