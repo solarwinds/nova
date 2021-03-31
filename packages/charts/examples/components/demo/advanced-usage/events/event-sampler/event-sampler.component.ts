@@ -185,6 +185,7 @@ export class EventSamplerComponent implements OnInit {
         const {grid, accessors, renderer, scales, seriesProcessor} = this.getChartAttributes(this.selectedChartType);
 
         this.chartAssist = new ChartAssist(new Chart(grid));
+        this.chartAssist.palette = this.palette;
 
         this.chartAssist.chart.addPlugin(new InteractionLabelPlugin());
 

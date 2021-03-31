@@ -1,50 +1,51 @@
-import { browser, by, element } from "protractor";
+import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { SwitchAtom } from "../switch/switch.atom";
+import { Camera } from "../../virtual-camera/Camera";
 
 import { LayoutSheetGroupAtom } from "./layout-sheet-group.atom";
 
-describe("Visual tests: Layout", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Layout";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let separatedSheets: LayoutSheetGroupAtom;
     let joinedSheets: LayoutSheetGroupAtom;
 
-    beforeEach(async () => {
-        eyes = await Helpers.prepareEyes();
-        eyes.setStitchMode("CSS");
+    beforeAll(async () => {
         await Helpers.prepareBrowser("layout/layout-visual-test");
         separatedSheets = Atom.find(LayoutSheetGroupAtom, "nui-visual-test-layout-separated-sheet-group");
         joinedSheets = Atom.find(LayoutSheetGroupAtom, "nui-visual-test-layout-joined-sheet-group");
+        
+        camera = new Camera().loadFilm(browser, name);
     });
+    
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
-    afterAll(async () => {
-        eyes.setStitchMode("Scroll");
-        await eyes.abortIfNotClosed();
-    });
+        // TODO: Think about tool options generalization
+        // Needed by the Applitools Eyes to properly take some snapshots
+        camera.lens.configure()?.setStitchMode("CSS");
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Layout");
-        await eyes.checkWindow("Default");
+        await camera.say.cheese(`Default`);
 
         await separatedSheets.hover(separatedSheets.getVerticalResizerByIndex(0));
-        await eyes.checkWindow("Hovered HorizontalResizer");
+        await camera.say.cheese(`Hovered HorizontalResizer`);
 
         await separatedSheets.mouseDownVerticalResizerByIndex(0);
-        await eyes.checkWindow("HorizontalResizer on MouseDown");
+        await camera.say.cheese(`HorizontalResizer on MouseDown`);
 
         await separatedSheets.mouseUp();
         await joinedSheets.hover(joinedSheets.getHorizontalResizerByIndex(1));
-        await eyes.checkWindow("Hovered VerticalResizer");
+        await camera.say.cheese(`Hovered VerticalResizer`);
 
         await joinedSheets.mouseDownHorizontalResizerByIndex(1);
-        await eyes.checkWindow("VerticalResizer on MouseDown");
+        await camera.say.cheese(`VerticalResizer on MouseDown`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
-    }, 100000);
+        await camera.turn.off();
+    }, 200000);
 });

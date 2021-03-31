@@ -1,5 +1,4 @@
-// tslint:disable:max-line-length
-
+/* eslint-disable max-len */
 import { IBroadcasterConfig } from "../../components/providers/types";
 import { IFormatterDefinition, LegendPlacement } from "../../components/types";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
@@ -34,7 +33,7 @@ import {
 } from "../../services/types";
 import { PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-// tslint:enable:max-line-length
+/* eslint-enable max-len */
 
 export const DEFAULT_LEGEND_FORMATTERS: IFormatterDefinition[] = [
     {

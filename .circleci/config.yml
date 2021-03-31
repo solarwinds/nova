@@ -141,24 +141,6 @@ jobs:
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
-    bits-percy-visual-test:
-        working_directory: ~/nova
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-            PROJECT_DIR: ~/nova/packages/bits
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Start Selenium docker image
-                    command: docker-compose up -d --build selenium
-            -   run:
-                    name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
-            -   run:
-                    name: Cleanup
-                    command: docker-compose down -v --rmi="all"
     bits-pack:
         working_directory: ~/nova/packages/bits
         docker:
@@ -601,15 +583,6 @@ workflows:
                         branches:
                             only:
                                 - main
-            # Temporary disabling until we migrated all the tests - NUI-5861
-            # - bits-percy-visual-test:
-            #       requires:
-            #           - bits-build
-            #       filters:
-            #             branches:
-            #                 only:
-            #                     - main
-            #                     - next
             -   bits-a11y-test:
                     requires:
                         - bits-build

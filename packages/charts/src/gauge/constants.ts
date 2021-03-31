@@ -3,7 +3,7 @@
  * The visualization modes for a gauge
  */
 export enum GaugeMode {
-    Radial = "radial",
+    Donut = "donut",
     Horizontal = "horizontal",
     Vertical = "vertical",
 }

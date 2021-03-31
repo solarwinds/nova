@@ -1,4 +1,4 @@
-import { Atom } from "@nova-ui/bits/sdk/atoms";
+import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser } from "protractor";
 
@@ -8,33 +8,32 @@ import { ChartAtom } from "./atoms/chart.atom";
 import { SeriesAtom } from "./atoms/series.atom";
 import { TestPage } from "./test.po";
 
-describe("Visual Tests: Charts - Gauge", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Gauge";
+
+describe(`Visual Tests: Charts - ${name}`, () => {
+    let camera: Camera;
     let gauge: ChartAtom;
     const page = new TestPage();
 
     beforeAll(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("chart-types/gauge/visual-test");
         gauge = Atom.find(ChartAtom, "visual-test-gauge-high-value");
+
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
+    it(`${name} - Default look`, async () => {
+        await camera.turn.on();
 
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Charts - Gauge");
-        await eyes.checkWindow("Default look");
+        await camera.say.cheese(`${name} - Default look`);
 
         const gaugeSeries = await gauge.getDataSeriesById(SeriesAtom, GaugeUtil.REMAINDER_SERIES_ID) as SeriesAtom;
         await gaugeSeries.hover();
-        await eyes.checkWindow("Default look with gauge hovered");
+        await camera.say.cheese(`${name} - Default look with gauge hovered`);
 
         await page.enableDarkTheme();
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`${name} - Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

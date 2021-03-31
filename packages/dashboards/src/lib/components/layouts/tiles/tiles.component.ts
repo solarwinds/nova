@@ -39,7 +39,7 @@ export class TilesComponent extends BaseLayout implements OnDestroy, AfterViewIn
 
     public ngOnDestroy() {
         this.tilesResizeObserver?.disconnect();
-        // Ensures that any base class observables are unsubscribed.
+        // Ensures that any base class observables are unsubscribed.
         super.ngOnDestroy();
     }
 

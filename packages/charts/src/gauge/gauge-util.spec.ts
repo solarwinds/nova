@@ -1,75 +1,76 @@
 import { BarRenderer } from "../renderers/bar/bar-renderer";
 import { LinearGaugeThresholdsRenderer } from "../renderers/bar/linear-gauge-thresholds-renderer";
-import { RadialGaugeThresholdsRenderer } from "../renderers/radial/gauge/radial-gauge-thresholds-renderer";
+import { DonutGaugeThresholdsRenderer } from "../renderers/radial/gauge/donut-gauge-thresholds-renderer";
 import { RadialRenderer } from "../renderers/radial/radial-renderer";
 
 import { GaugeMode } from "./constants";
 import { GaugeUtil } from "./gauge-util";
+import { IGaugeSeriesConfig } from "./types";
 
 describe("GaugeUtil >", () => {
-    describe("assembleSeriesSet", () => {
-        const value = 3;
-        const max = 10;
-        const thresholds = [{ value: 2 }];
+    const seriesConfig: IGaugeSeriesConfig = {
+        value: 3,
+        max: 10,
+        thresholds: [2],
+    };
 
-        it("should generate a series set for a radial gauge", () => {
-            const seriesSet = GaugeUtil.assembleSeriesSet(value, max, thresholds, GaugeMode.Radial);
+    describe("assembleSeriesSet", () => {
+        it("should generate a series set for a donut gauge", () => {
+            const seriesSet = GaugeUtil.assembleSeriesSet(seriesConfig, GaugeMode.Donut);
             let series = seriesSet.find(s => s.id === GaugeUtil.QUANTITY_SERIES_ID);
-            expect(series?.data[0].value).toEqual(value);
+            expect(series?.data[0].value).toEqual(seriesConfig.value);
             expect(series?.renderer instanceof RadialRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.REMAINDER_SERIES_ID);
-            expect(series?.data[0].value).toEqual(max - value);
+            expect(series?.data[0].value).toEqual(seriesConfig.max - seriesConfig.value);
             expect(series?.renderer instanceof RadialRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID);
-            expect(series?.data[0].value).toEqual(thresholds[0].value);
-            expect(series?.renderer instanceof RadialGaugeThresholdsRenderer).toEqual(true);
+            expect(series?.data[0].value).toEqual(seriesConfig.thresholds[0]);
+            expect(series?.renderer instanceof DonutGaugeThresholdsRenderer).toEqual(true);
         });
 
         it("should generate a series set for a horizontal gauge", () => {
-            const seriesSet = GaugeUtil.assembleSeriesSet(value, max, thresholds, GaugeMode.Horizontal);
+            const seriesSet = GaugeUtil.assembleSeriesSet(seriesConfig, GaugeMode.Horizontal);
             let series = seriesSet.find(s => s.id === GaugeUtil.QUANTITY_SERIES_ID);
-            expect(series?.data[0].value).toEqual(value);
+            expect(series?.data[0].value).toEqual(seriesConfig.value);
             expect(series?.renderer instanceof BarRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.REMAINDER_SERIES_ID);
-            expect(series?.data[0].value).toEqual(max - value);
+            expect(series?.data[0].value).toEqual(seriesConfig.max - seriesConfig.value);
             expect(series?.renderer instanceof BarRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID);
-            expect(series?.data[0].value).toEqual(thresholds[0].value);
+            expect(series?.data[0].value).toEqual(seriesConfig.thresholds[0]);
             expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
         });
 
         it("should generate a series set for a vertical gauge", () => {
-            const seriesSet = GaugeUtil.assembleSeriesSet(value, max, thresholds, GaugeMode.Vertical);
+            const seriesSet = GaugeUtil.assembleSeriesSet(seriesConfig, GaugeMode.Vertical);
             let series = seriesSet.find(s => s.id === GaugeUtil.QUANTITY_SERIES_ID);
-            expect(series?.data[0].value).toEqual(value);
+            expect(series?.data[0].value).toEqual(seriesConfig.value);
             expect(series?.renderer instanceof BarRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.REMAINDER_SERIES_ID);
-            expect(series?.data[0].value).toEqual(max - value);
+            expect(series?.data[0].value).toEqual(seriesConfig.max - seriesConfig.value);
             expect(series?.renderer instanceof BarRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID);
-            expect(series?.data[0].value).toEqual(thresholds[0].value);
+            expect(series?.data[0].value).toEqual(seriesConfig.thresholds[0]);
             expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
         });
     });
 
     describe("updateSeriesSet", () => {
         it("should update the gauge's series set", () => {
-            const updatedValue = 5;
-            const max = 10;
-            const thresholds = [{ value: 2 }];
+            const updatedSeriesConfig = { ...seriesConfig, value: 5 };
 
-            let seriesSet = GaugeUtil.assembleSeriesSet(3, 10, [{ value: 2 }], GaugeMode.Radial);
-            seriesSet = GaugeUtil.updateSeriesSet(updatedValue, 10, [{ value: 2 }], seriesSet);
+            let seriesSet = GaugeUtil.assembleSeriesSet(seriesConfig, GaugeMode.Donut);
+            seriesSet = GaugeUtil.updateSeriesSet(seriesSet, updatedSeriesConfig);
             let series = seriesSet.find(s => s.id === GaugeUtil.QUANTITY_SERIES_ID);
-            expect(series?.data[0].value).toEqual(updatedValue);
+
+            expect(series?.data[0].value).toEqual(updatedSeriesConfig.value);
             expect(series?.renderer instanceof RadialRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.REMAINDER_SERIES_ID);
-            expect(series?.data[0].value).toEqual(max - updatedValue);
+            expect(series?.data[0].value).toEqual(updatedSeriesConfig.max - updatedSeriesConfig.value);
             expect(series?.renderer instanceof RadialRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID);
-            expect(series?.data[0].value).toEqual(thresholds[0].value);
-            expect(series?.renderer instanceof RadialGaugeThresholdsRenderer).toEqual(true);
+            expect(series?.data[0].value).toEqual(updatedSeriesConfig.thresholds[0]);
+            expect(series?.renderer instanceof DonutGaugeThresholdsRenderer).toEqual(true);
         });
     });
-
 });

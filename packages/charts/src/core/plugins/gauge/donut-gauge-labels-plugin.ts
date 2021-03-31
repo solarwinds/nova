@@ -5,8 +5,8 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT, STANDARD_RENDER_LAYERS } from "../../../constants";
-import { RadialGaugeRenderingUtil } from "../../../renderers/radial/gauge/radial-gauge-rendering-util";
-import { RadialGaugeThresholdsRenderer } from "../../../renderers/radial/gauge/radial-gauge-thresholds-renderer";
+import { DonutGaugeRenderingUtil } from "../../../renderers/radial/gauge/donut-gauge-rendering-util";
+import { DonutGaugeThresholdsRenderer } from "../../../renderers/radial/gauge/donut-gauge-thresholds-renderer";
 import { RenderLayerName } from "../../../renderers/types";
 import { ChartPlugin } from "../../common/chart-plugin";
 import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../../common/types";
@@ -18,7 +18,7 @@ import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE
  * @ignore
  * Configuration for the RadialGaugeLabelsPlugin
  */
-export interface IRadialGaugeLabelsPluginConfig {
+export interface IDonutGaugeLabelsPluginConfig {
     gridMargin?: IAllAround<number>;
     labelPadding?: number;
     formatterName?: string;
@@ -30,18 +30,18 @@ export interface IRadialGaugeLabelsPluginConfig {
 
 /**
  * @ignore
- * A chart plugin that handles the rendering of labels for radial gauge thresholds
+ * A chart plugin that handles the rendering of labels for a donut gauge
  */
-export class RadialGaugeLabelsPlugin extends ChartPlugin {
+export class DonutGaugeLabelsPlugin extends ChartPlugin {
     public static readonly MARGIN_DEFAULT = 25;
 
     /** The default plugin configuration */
-    public DEFAULT_CONFIG: IRadialGaugeLabelsPluginConfig = {
+    public DEFAULT_CONFIG: IDonutGaugeLabelsPluginConfig = {
         gridMargin: {
-            top: RadialGaugeLabelsPlugin.MARGIN_DEFAULT,
-            right: RadialGaugeLabelsPlugin.MARGIN_DEFAULT,
-            bottom: RadialGaugeLabelsPlugin.MARGIN_DEFAULT,
-            left: RadialGaugeLabelsPlugin.MARGIN_DEFAULT,
+            top: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
+            right: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
+            bottom: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
+            left: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
         },
         labelPadding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
@@ -51,7 +51,7 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
     private destroy$ = new Subject();
     private lasagnaLayer: D3Selection<SVGElement>;
 
-    constructor(public config: IRadialGaugeLabelsPluginConfig = {}) {
+    constructor(public config: IDonutGaugeLabelsPluginConfig = {}) {
         super();
         this.config = defaultsDeep(this.config, this.DEFAULT_CONFIG);
     }
@@ -93,8 +93,8 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
 
     private drawThresholdLabels() {
         const thresholdsSeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) =>
-            series.renderer instanceof RadialGaugeThresholdsRenderer);
-        const renderer = (thresholdsSeries?.renderer as RadialGaugeThresholdsRenderer);
+            series.renderer instanceof DonutGaugeThresholdsRenderer);
+        const renderer = (thresholdsSeries?.renderer as DonutGaugeThresholdsRenderer);
         const labelRadius = renderer?.getOuterRadius(thresholdsSeries?.scales.r.range() ?? [0, 0], 0) + (this.config.labelPadding as number);
         if (isUndefined(labelRadius)) {
             throw new Error("Radius is undefined");
@@ -118,7 +118,7 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
 
         const formatter = thresholdsSeries?.scales.r.formatters[this.config.formatterName as string] ?? (d => d);
         const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`)
-            .data(RadialGaugeRenderingUtil.generateThresholdData(data));
+            .data(DonutGaugeRenderingUtil.generateThresholdData(data));
         labelSelection.exit().remove();
         labelSelection.enter()
             .append("text")
@@ -127,7 +127,7 @@ export class RadialGaugeLabelsPlugin extends ChartPlugin {
             .attr("transform", (d) => `translate(${labelGenerator.centroid(d)})`)
             .attr("title", (d, i) => formatter(data[i].value))
             .style("text-anchor", (d) => this.getTextAnchor(d.startAngle))
-            .style("alignment-baseline", (d) => this.getAlignmentBaseline(d.startAngle))
+            .style("dominant-baseline", (d) => this.getAlignmentBaseline(d.startAngle))
             .text((d, i) => formatter(data[i].value));
     }
 

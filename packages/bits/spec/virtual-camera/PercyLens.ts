@@ -13,7 +13,7 @@ export class PercyLens implements ILens {
     public async takeSnapshot(label: string): Promise<void> {
         this.checkSettings();
 
-        await percySnapshot(label, { ...this.percyConfig });
+        await percySnapshot(`${this.settings.currentTestName} - ${label}`, { ...this.percyConfig });
     }
 
     public async takeFullScreenSnapshot(label: string): Promise<void> {
@@ -23,6 +23,8 @@ export class PercyLens implements ILens {
     public async cameraON() {}
 
     public async cameraOFF() {}
+
+    public toolConfig() { console.warn("No config is availalbe for Percy"); }
 
     private checkSettings() {
         this.percyConfig.widths = [...this.settings.responsive];

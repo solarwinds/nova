@@ -2,9 +2,9 @@ import { pie } from "d3-shape";
 
 import { IGaugeThreshold } from "../../../gauge/types";
 
-export class RadialGaugeRenderingUtil {
+export class DonutGaugeRenderingUtil {
     public static generateThresholdData(data: any[]) {
-        const arcData: number[] = RadialGaugeRenderingUtil.generateArcData(data);
+        const arcData: number[] = DonutGaugeRenderingUtil.generateArcData(data);
         const thresholdsData: any[] = [];
         const pieGenerator = pie().sort(null);
         const arcsForMarkers = pieGenerator(arcData);

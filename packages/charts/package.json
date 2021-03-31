@@ -1,7 +1,7 @@
 {
   "name": "@nova-ui/charts",
   "license": "Apache-2.0",
-  "version": "11.1.0-0",
+  "version": "11.2.0-0",
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "contributors": [
     {
@@ -42,6 +42,8 @@
     "e2e:full": "npm run e2e:base -- -c full",
     "e2e:watch": "npx watch \"npm run e2e:base\" src examples spec --watch=1",
     "e2e:debug": "npm run pree2e:base && node --inspect-brk ./node_modules/protractor/bin/protractor",
+    "percy": "percy exec -- npm run visual",
+    "percy:ci": "percy exec -- npm run visual:ci",
     "visual:base": "npm run e2e:base -- --suite visual",
     "visual:ci": "npm run e2e:ci -- --suite visual",
     "visual": "npx start-server-and-test serve-examples:prod 4200 visual:base",
@@ -62,7 +64,7 @@
     "postinstall": "node scripts/remove-deps-constraints.js"
   },
   "peerDependencies": {
-    "@nova-ui/bits": "~11.1.0-0",
+    "@nova-ui/bits": "~11.2.0-0",
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0",
     "d3": "^5.0.0",
@@ -95,7 +97,9 @@
     "@applitools/eyes-protractor": "1.9.1",
     "@compodoc/compodoc": "^1.1.11",
     "@locl/cli": "^1.0.0",
-    "@nova-ui/bits": "~11.1.0-0",
+    "@nova-ui/bits": "~11.2.0-0",
+    "@percy/cli": "^1.0.0-beta.41",
+    "@percy/protractor": "^2.0.0",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
     "@types/jasmine": "~3.5.0",

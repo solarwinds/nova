@@ -2,11 +2,13 @@ import { browser, by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 import { PanelAtom } from "../panel/panel.atom";
 
-describe("Visual tests: Panel", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Panel";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let closablePanel: PanelAtom;
     let collapsiblePanel: PanelAtom;
     let customStylesPanel: PanelAtom;
@@ -16,8 +18,7 @@ describe("Visual tests: Panel", () => {
     let resizablePanel: PanelAtom;
     let expanders: {[key: string]: ElementFinder};
 
-    beforeEach(async (done) => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async (done) => {
         await Helpers.prepareBrowser("panel/panel-visual-test");
 
         collapsiblePanel = Atom.find(PanelAtom, "nui-visual-test-embedded-content-panel");
@@ -41,22 +42,23 @@ describe("Visual tests: Panel", () => {
         };
 
         done();
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
     afterAll(async (done) => {
-        await eyes.abortIfNotClosed();
         done();
     }, 1000);
 
-    it("Default look", async (done) => {
-        await eyes.open(browser, "NUI", "Panel");
-
+    it(`${name} visual test`, async (done) => {
+        await camera.turn.on();
+        
         // First we expand all expanders to check the default state of all panel cases
         for (const key of Object.keys(expanders)) { await expanders[key].click(); }
-        await eyes.checkWindow("Basic view with hover on top orienter arrow button");
+        await camera.say.cheese(`Basic view with hover on top orienter arrow button`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
         await Helpers.switchDarkTheme("off");
 
         // Then we close fist four expanders to hide examples we don't need for the test
@@ -74,16 +76,18 @@ describe("Visual tests: Panel", () => {
         await resizablePanel.toggleExpanded();
         await topOrientedPanel.toggleExpanded();
         await resizablePanel.getToggleIcon().hover();
-        await eyes.checkWindow("Expandable panes can be collapsed");
+        await camera.say.cheese(`Expandable panes can be collapsed`);
 
         // This closes last 4 examples that are already tested and expand ones closed in previous test
         for (const key of Object.keys(expanders)) { await expanders[key].click(); }
 
         await closablePanel.closeSidePane();
         await hoverablePanel.hoverOnSidePane();
-        await eyes.checkWindow("Closable paned can be closed. Hoverable panel can be hovered");
+        await camera.say.cheese(`Closable paned can be closed. Hoverable panel can be hovered`);
 
-        await eyes.close();
+
+        await camera.turn.off();
+
         done();
     }, 300000);
 });

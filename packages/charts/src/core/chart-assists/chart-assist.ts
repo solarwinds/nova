@@ -1,4 +1,5 @@
 import each from "lodash/each";
+import keyBy from "lodash/keyBy";
 import values from "lodash/values";
 import { Observable, of, Subject, Subscription } from "rxjs";
 import { filter, map, switchMap, takeUntil } from "rxjs/operators";
@@ -8,8 +9,19 @@ import { RenderState } from "../../renderers/types";
 import { EventBus } from "../common/event-bus";
 import { defaultMarkerProvider, defaultPalette } from "../common/palette/default-providers";
 import {
-    IAccessors, IChart, IChartAssistSeries, IChartEvent, IChartMarker, IChartPalette, IChartSeries, IDataPoint, IDataPointsPayload, IInteractionDataPointsEvent,
-    InteractionType, IRenderStateData, IValueProvider
+    IAccessors,
+    IChart,
+    IChartAssistSeries,
+    IChartEvent,
+    IChartMarker,
+    IChartPalette,
+    IChartSeries,
+    IDataPoint,
+    IDataPointsPayload,
+    IInteractionDataPointsEvent,
+    InteractionType,
+    IRenderStateData,
+    IValueProvider
 } from "../common/types";
 
 import { ChartAssistEventType, ChartAssistRenderStateData, IChartAssist, IChartAssistEvent, IRenderStatesIndex } from "./types";
@@ -293,6 +305,7 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
 export class LegendInteractionAssist {
 
     private seriesGroups: Record<string, string[]> = {};
+    private seriesIndex: Record<string, IChartAssistSeries<IAccessors>>;
 
     public renderStatesIndex: IRenderStatesIndex = {};
 
@@ -301,6 +314,7 @@ export class LegendInteractionAssist {
 
     public update(seriesSet: IChartAssistSeries<IAccessors>[]): void {
         this.seriesGroups = this.getSeriesGroups(seriesSet);
+        this.seriesIndex = keyBy(seriesSet, s => s.id);
 
         this.resetSeries();
 
@@ -308,6 +322,7 @@ export class LegendInteractionAssist {
         for (const series of seriesSet.filter(s => s.renderState)) {
             this.renderStatesIndex[series.id] =
                 new ChartAssistRenderStateData(series.id,
+                    series,
                     series.renderState === RenderState.hidden ? RenderState.default : series.renderState,
                     series.renderState !== RenderState.hidden);
         }
@@ -390,7 +405,7 @@ export class LegendInteractionAssist {
         if (renderState) {
             renderState.emphasisState = state;
         } else {
-            renderState = new ChartAssistRenderStateData(seriesId, state);
+            renderState = new ChartAssistRenderStateData(seriesId, this.seriesIndex[seriesId], state);
             this.renderStatesIndex[seriesId] = renderState;
         }
     }
@@ -400,7 +415,7 @@ export class LegendInteractionAssist {
         if (renderState) {
             renderState.visible = visible;
         } else {
-            renderState = new ChartAssistRenderStateData(seriesId);
+            renderState = new ChartAssistRenderStateData(seriesId, this.seriesIndex[seriesId], RenderState.default, visible);
             this.renderStatesIndex[seriesId] = renderState;
         }
     }

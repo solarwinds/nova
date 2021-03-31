@@ -2,10 +2,12 @@
 import { browser, by, element, ElementFinder } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
-describe("Visual tests: Toast", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Toast";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let buttonAllPositions: ElementFinder;
     let buttonAdjustSize: ElementFinder;
     let buttonNoHeader: ElementFinder;
@@ -15,7 +17,6 @@ describe("Visual tests: Toast", () => {
     let buttonToastsWithProgressBar: ElementFinder;
 
     beforeAll(async () => {
-        eyes = await Helpers.prepareEyes();
         await Helpers.prepareBrowser("toast/toast-visual-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
 
@@ -26,46 +27,43 @@ describe("Visual tests: Toast", () => {
         buttonAdjustSize = element(by.id("nui-toast-adjust-size"));
         buttonNoHeader = element(by.id("nui-toast-no-header"));
         buttonToastsWithProgressBar = element(by.id("nui-toast-button-all-positions-progress-bar"));
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        // Remove type conversion once NUI-4870 is done
-        await (eyes as any).abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Toast");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
 
         await buttonAllPositions.click();
-        await eyes.checkWindow("Check all positions except of full width");
+        await camera.say.cheese("Check all positions except of full width");
         await buttonClearAllToasts.click();
 
         Helpers.switchDarkTheme("on");
         await buttonAllPositions.click();
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese("Dark theme");
         await buttonClearAllToasts.click();
         Helpers.switchDarkTheme("off");
 
         await buttonFW.click();
-        await eyes.checkWindow("Check full width positions");
+        await camera.say.cheese("Check full width positions");
         await buttonClearAllToasts.click();
 
         await buttonAdjustSize.click();
-        await eyes.checkWindow("Check toast messages ADJUST their sizes when triggered one after another");
+        await camera.say.cheese("Check toast messages ADJUST their sizes when triggered one after another");
         await buttonClearAllToasts.click();
 
         await buttonNoHeader.click();
-        await eyes.checkWindow("Checking the markup uis correct if no header is selected");
+        await camera.say.cheese("Checking the markup uis correct if no header is selected");
         await buttonClearAllToasts.click();
 
         await buttonCallStickyToast.click();
-        await eyes.checkWindow("Check sticky toast");
+        await camera.say.cheese("Check sticky toast");
         await buttonClearAllToasts.click();
 
         await buttonToastsWithProgressBar.click();
-        await eyes.checkWindow("Check progress by in scope of toast");
+        await camera.say.cheese("Check progress by in scope of toast");
         await buttonClearAllToasts.click();
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

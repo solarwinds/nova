@@ -1,24 +1,33 @@
 import { Renderer } from "../core/common/renderer";
 import { IRadialScales, Scales } from "../core/common/scales/types";
-import { IAccessors } from "../core/common/types";
+import { DataAccessor, IAccessors } from "../core/common/types";
 
 /**
  * @ignore
- * Definition for a gauge threshold
+ * Configuration for a gauge series
 */
-export interface IGaugeThreshold {
-    /** The value of the threshold */
+export interface IGaugeSeriesConfig {
+    /** The value of the gauge */
     value: number;
-    [key: string]: any;
+    /** The max value of the gauge */
+    max: number;
+    /** An array of the gauge's threshold values */
+    thresholds: number[];
+    /** Optional accessor for customizing the color to display as each threshold is hit */
+    valueColorAccessor?: DataAccessor;
 }
 
 /**
  * @ignore
- * Definition for a gauge threshold marker
- */
-export interface IGaugeThresholdMarker extends IGaugeThreshold {
-    /** Boolean indicating whether the threshold has been met */
-    hit?: boolean;
+ * Definition for gauge threshold data
+*/
+export interface IGaugeThreshold {
+    /** The value of the threshold */
+    value: number;
+    /** Boolean indicating whether the threshold is hit */
+    hit: boolean;
+    /** Additional metadata as needed */
+    [key: string]: any;
 }
 
 /**

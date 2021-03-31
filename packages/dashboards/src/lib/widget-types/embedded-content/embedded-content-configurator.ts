@@ -1,4 +1,4 @@
-// tslint:disable:max-line-length
+/* eslint-disable max-len */
 import { IInfoMessage, IInfoMessageProperties, ILinkDefinition } from "../../components/types";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
@@ -8,7 +8,7 @@ import { TitleAndDescriptionConfigurationComponent } from "../../configurator/co
 import { IConverterFormPartsProperties } from "../../configurator/services/converters/types";
 import { DEFAULT_PIZZAGNA_ROOT, NOVA_GENERIC_CONVERTER, NOVA_TITLE_AND_DESCRIPTION_CONVERTER } from "../../services/types";
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
-// tslint:enable:max-line-length
+/* eslint-enable max-len */
 
 export const embeddedContentConfigurator = {
     [PizzagnaLayer.Structure]: {

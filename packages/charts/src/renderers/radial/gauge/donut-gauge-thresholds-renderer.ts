@@ -3,29 +3,29 @@ import defaultsDeep from "lodash/defaultsDeep";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
-import { IRadialGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../../core/common/types";
+import { IDonutGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../../core/common/types";
 import { GAUGE_THRESHOLD_MARKER_CLASS } from "../../constants";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import { IRadialAccessors } from "../accessors/radial-accessors";
 import { RadialRenderer } from "../radial-renderer";
 
-import { RadialGaugeRenderingUtil } from "./radial-gauge-rendering-util";
+import { DonutGaugeRenderingUtil } from "./donut-gauge-rendering-util";
 
 /**
  * @ignore Default configuration for Radial Gauge Thresholds Renderer
  */
-export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IRadialGaugeThresholdsRendererConfig = {};
+export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IDonutGaugeThresholdsRendererConfig = {};
 
 /**
  * @ignore Renderer for drawing threshold level indicators for gauges
  */
-export class RadialGaugeThresholdsRenderer extends RadialRenderer {
+export class DonutGaugeThresholdsRenderer extends RadialRenderer {
     /**
      * Creates an instance of RadialGaugeThresholdsRenderer.
-     * @param {IRadialGaugeThresholdsRendererConfig} [config]
+     * @param {IDonutGaugeThresholdsRendererConfig} [config]
      * Renderer configuration object. Defaults to `DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG` constant value.
      */
-    constructor(config: IRadialGaugeThresholdsRendererConfig = {}) {
+    constructor(config: IDonutGaugeThresholdsRendererConfig = {}) {
         super(config);
         this.config = defaultsDeep(this.config, DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG);
     }
@@ -43,7 +43,7 @@ export class RadialGaugeThresholdsRenderer extends RadialRenderer {
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
         const markerSelection = dataContainer.selectAll(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`)
-            .data(RadialGaugeRenderingUtil.generateThresholdData(data));
+            .data(DonutGaugeRenderingUtil.generateThresholdData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")

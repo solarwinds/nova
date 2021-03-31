@@ -20,7 +20,7 @@ export const DEFAULT_COMPARATORS: IComparatorsDict = {
         label: "Value is less than, or equal to",
     },
     "==": {
-        // tslint:disable-next-line:triple-equals
+        // eslint-disable-next-line eqeqeq
         comparatorFn: (a: any, b: any) => a == b,
         label: "Value is exactly",
     },

@@ -1,0 +1,41 @@
+<charts-test-harness>
+    <div class="d-flex align-items-center justify-content-around">
+        <donut-gauge-prototype [seriesConfig]="getSeriesConfig()" [annularWidth]="thickness"></donut-gauge-prototype>
+        <linear-gauge-vertical-prototype [seriesConfig]="getSeriesConfig()" [thickness]="thickness"></linear-gauge-vertical-prototype>
+        <linear-gauge-horizontal-prototype [seriesConfig]="getSeriesConfig()" [thickness]="thickness"></linear-gauge-horizontal-prototype>
+    </div>
+
+    <div class="mb-2">
+        <label for="valueInput">
+            Value
+        </label>
+        <br />
+        <nui-textbox-number type="number"
+                            [(ngModel)]="value"
+                            [minValue]="0"
+                            [maxValue]="maxValue"
+                            customBoxWidth="75px"
+                            name="valueInput"></nui-textbox-number>
+    </div>
+    <div class="mb-2">
+        <label for="thicknessInput">
+            Thickness
+        </label>
+        <br />
+        <nui-textbox-number type="number"
+                            [(ngModel)]="thickness"
+                            [minValue]="10"
+                            [maxValue]="30"
+                            customBoxWidth="75px"
+                            name="thicknessInput"></nui-textbox-number>
+    </div>
+</charts-test-harness>
+<div class="ml-3">
+    <div class="d-flex align-items-center">
+        <input id="reversed"
+               class="mb-2"
+               type="checkbox"
+               [(ngModel)]="reversed" />
+        <label class="px-3" for="reversed">Reversed</label>
+    </div>
+</div>

@@ -154,7 +154,7 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
     }
 
     public ngOnDestroy() {
-        // Ensures that any base class observables are unsubscribed.
+        // Ensures that any base class observables are unsubscribed.
         super.ngOnDestroy();
     }
 }

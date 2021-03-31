@@ -3,9 +3,10 @@ import each from "lodash/each";
 import isEmpty from "lodash/isEmpty";
 import { Subject } from "rxjs";
 
+import { EventBus } from "../common/event-bus";
 import { Lasagna } from "../common/lasagna";
 import { ScalesIndex } from "../common/scales/types";
-import { IChart, IChartPlugin } from "../common/types";
+import { IChart, IChartEvent, IChartPlugin } from "../common/types";
 import { D3Selection } from "../common/types";
 import { UtilityService } from "../common/utility.service";
 
@@ -48,6 +49,9 @@ export abstract class Grid implements IGrid {
 
     /** Subject for indicating that the chart's dimensions should be updated */
     public updateChartDimensionsSubject: Subject<void>;
+
+    /** Event bus provided by the chart */
+    public eventBus: EventBus<IChartEvent>;
 
     /** d3 container for the grid */
     protected container: D3Selection<SVGGElement>;

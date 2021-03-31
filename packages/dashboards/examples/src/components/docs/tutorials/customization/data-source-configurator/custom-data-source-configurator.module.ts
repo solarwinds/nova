@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-// tslint:disable-next-line: max-line-length
+// eslint-disable-next-line max-len
 import { NuiButtonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSelectV2Module, NuiSwitchModule, NuiTextboxModule, NuiValidationMessageModule } from "@nova-ui/bits";
 import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@nova-ui/dashboards";
 

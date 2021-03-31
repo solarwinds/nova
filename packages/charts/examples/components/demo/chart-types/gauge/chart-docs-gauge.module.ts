@@ -9,7 +9,7 @@ import { DemoCommonModule } from "../../common/demo-common.module";
 import { ChartDocsGaugeComponent } from "./chart-docs-gauge.component";
 import { GaugeVisualTestComponent } from "./visual-test/gauge-visual-test.component";
 import { HorizontalGaugeTesterComponent } from "./visual-test/horizontal/horizontal-gauge-tester.component";
-import { RadialGaugeTesterComponent } from "./visual-test/radial/radial-gauge-tester.component";
+import { DonutGaugeTesterComponent } from "./visual-test/radial/donut-gauge-tester.component";
 import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
 
 const exampleRoutes: Routes = [
@@ -36,7 +36,7 @@ const exampleRoutes: Routes = [
         ChartDocsGaugeComponent,
         GaugeVisualTestComponent,
         HorizontalGaugeTesterComponent,
-        RadialGaugeTesterComponent,
+        DonutGaugeTesterComponent,
         VerticalGaugeTesterComponent,
     ],
     imports: [

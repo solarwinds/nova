@@ -76,6 +76,8 @@ export interface IRenderStateData {
     seriesId: string;
     /** Series render state */
     state: RenderState;
+    /** Series */
+    series?: IChartSeries<IAccessors>;
 }
 
 /** @ignore */
@@ -108,10 +110,10 @@ export interface IRadialRendererConfig extends IRendererConfig {
 
 /**
  * @ignore
- * Configuration for the RadialGaugeThresholdsRenderer
+ * Configuration for the DonutGaugeThresholdsRenderer
  */
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface IRadialGaugeThresholdsRendererConfig extends IRadialRendererConfig {
+export interface IDonutGaugeThresholdsRendererConfig extends IRadialRendererConfig {
 }
 
 /**
@@ -324,6 +326,11 @@ export interface IInteractionPayload {
 export interface IInteractionDataPointEvent extends IInteractionPayload {
     dataPoint: IDataPoint;
 }
+
+/**
+ * Payload for axes style change when emphasizing series on grid
+ */
+export type IAxesStyleChangeEventPayload = Record<string, Record<string, any>>;
 
 /**
  * Payload for interaction events regarding one or more data points

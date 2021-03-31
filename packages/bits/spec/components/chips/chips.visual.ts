@@ -2,48 +2,47 @@ import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
+import { Camera } from "../../virtual-camera/Camera";
 
 import { ChipsAtom } from "./chips.atom";
 
-describe("Visual tests: Chips", () => {
-    // Add typings and use Eyes class instead of any in scope of <NUI-5428>
-    let eyes: any;
+const name: string = "Chips";
+
+describe(`Visual tests: ${name}`, () => {
+    let camera: Camera;
     let chipsBasic: ChipsAtom;
     let chipsVertGroup: ChipsAtom;
     let chipsOverflow: ChipsAtom;
 
-    beforeEach( async () => {
-        eyes = await Helpers.prepareEyes();
+    beforeAll(async () => {
         await Helpers.prepareBrowser("chips/chips-visual-test");
 
         chipsBasic = Atom.find(ChipsAtom, "nui-demo-chips-flat-horizontal-visual");
         chipsVertGroup = Atom.find(ChipsAtom, "nui-demo-chips-grouped-vertical-visual");
         chipsOverflow = Atom.find(ChipsAtom, "nui-demo-chips-overflow");
+        
+        camera = new Camera().loadFilm(browser, name);
     });
 
-    afterAll(async () => {
-        await eyes.abortIfNotClosed();
-    });
-
-    it("Default look", async () => {
-        await eyes.open(browser, "NUI", "Chips");
-        await eyes.checkWindow("Default");
+    it(`${name} visual test`, async () => {
+        await camera.turn.on();
+        await camera.say.cheese(`Default`);
 
         const chipselement = chipsBasic.getChipElement(2);
         await chipsBasic.hover(chipselement);
-        await eyes.checkWindow("Hover effect");
+        await camera.say.cheese(`Hover effect`);
 
         await chipsBasic.removeItem(2);
         await chipsBasic.removeItem(3);
         await chipsVertGroup.clearAll();
-        await eyes.checkWindow("Removed 2 chips and 'Clear All' vertical group");
+        await camera.say.cheese(`Removed 2 chips and 'Clear All' vertical group`);
 
         await chipsOverflow.getChipsOverflowElement().click();
-        await eyes.checkWindow("Open popup with overflow chips");
+        await camera.say.cheese(`Open popup with overflow chips`);
 
         await Helpers.switchDarkTheme("on");
-        await eyes.checkWindow("Dark theme");
+        await camera.say.cheese(`Dark theme`);
 
-        await eyes.close();
+        await camera.turn.off();
     }, 100000);
 });

@@ -2,9 +2,8 @@ import { Injectable } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 
 import { CHART_PALETTE_CS1 } from "../core/common/palette/palettes";
-import { Renderer } from "../core/common/renderer";
-import { Formatter, IRadialScales, Scales } from "../core/common/scales/types";
-import { DataAccessor, IAccessors, IChartAssistSeries, IChartSeries, IDataSeries } from "../core/common/types";
+import { Formatter } from "../core/common/scales/types";
+import { IAccessors, IChartAssistSeries, IChartSeries, IDataSeries } from "../core/common/types";
 import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
 import { VerticalBarAccessors } from "../renderers/bar/accessors/vertical-bar-accessors";
@@ -12,13 +11,13 @@ import { BarRenderer } from "../renderers/bar/bar-renderer";
 import { barScales } from "../renderers/bar/bar-scales";
 import { LinearGaugeThresholdsRenderer } from "../renderers/bar/linear-gauge-thresholds-renderer";
 import { RadialAccessors } from "../renderers/radial/accessors/radial-accessors";
-import { radialGaugeRendererConfig } from "../renderers/radial/gauge/radial-gauge-renderer-config";
-import { RadialGaugeThresholdsRenderer } from "../renderers/radial/gauge/radial-gauge-thresholds-renderer";
+import { donutGaugeRendererConfig } from "../renderers/radial/gauge/donut-gauge-renderer-config";
+import { DonutGaugeThresholdsRenderer } from "../renderers/radial/gauge/donut-gauge-thresholds-renderer";
 import { RadialRenderer } from "../renderers/radial/radial-renderer";
 import { radialScales } from "../renderers/radial/radial-scales";
 
 import { GaugeMode } from "./constants";
-import { IGaugeAttributes, IGaugeThreshold, IGaugeThresholdMarker, IGaugeTools } from "./types";
+import { IGaugeAttributes, IGaugeSeriesConfig, IGaugeThreshold, IGaugeTools } from "./types";
 
 /**
  * @ignore
@@ -32,20 +31,17 @@ export class GaugeUtil {
     public static REMAINDER_SERIES_ID = "remainder";
     public static THRESHOLD_MARKERS_SERIES_ID = "threshold-markers";
 
-    public static assembleSeriesSet(value: number,
-                             max: number,
-                             thresholds: IGaugeThreshold[],
-                             mode: GaugeMode,
-                             valueColorAccessor?: DataAccessor): IChartAssistSeries<IAccessors>[] {
-        value = value ?? 0;
-        max = max ?? 0;
-        const { accessors, scales, mainRenderer, thresholdsRenderer } = GaugeUtil.getGaugeAttributes(mode);
+    public static assembleSeriesSet(seriesConfig: IGaugeSeriesConfig, mode: GaugeMode): IChartAssistSeries<IAccessors>[] {
+        seriesConfig.value = seriesConfig.value ?? 0;
+        seriesConfig.max = seriesConfig.max ?? 0;
+        const gaugeAttributes = GaugeUtil.getGaugeAttributes(mode);
+        const { accessors, scales, mainRenderer } = gaugeAttributes;
         if (accessors.data) {
-            accessors.data.color = valueColorAccessor || GaugeUtil.createDefaultValueColorAccessor(thresholds);
+            accessors.data.color = seriesConfig.valueColorAccessor || GaugeUtil.createDefaultValueColorAccessor(seriesConfig.thresholds);
         }
 
         const chartAssistSeries: IChartAssistSeries<IAccessors>[] = [
-            ...GaugeUtil.getGaugeData(value, max).map(s => ({
+            ...GaugeUtil.getGaugeData(seriesConfig.value, seriesConfig.max).map(s => ({
                 ...s,
                 accessors,
                 scales,
@@ -53,54 +49,51 @@ export class GaugeUtil {
             })),
         ];
 
-        chartAssistSeries.push(GaugeUtil.generateThresholdSeries(value, max, thresholds, accessors, scales, thresholdsRenderer));
+        chartAssistSeries.push(GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes));
 
         return chartAssistSeries;
     }
 
-    public static updateSeriesSet(value: number,
-                           max: number,
-                           thresholds: IGaugeThreshold[],
-                           seriesSet: IChartAssistSeries<IAccessors>[]): IChartAssistSeries<IAccessors>[] {
-        const newValue = value ?? 0;
-        const newMax = max ?? 0;
-        const updatedSeriesSet = seriesSet.map(series => {
+    public static updateSeriesSet(seriesSet: IChartAssistSeries<IAccessors>[], seriesConfig: IGaugeSeriesConfig): IChartAssistSeries<IAccessors>[] {
+        seriesConfig.value = seriesConfig.value ?? 0;
+        seriesConfig.max = seriesConfig.max ?? 0;
+        const colorAccessor = seriesConfig.valueColorAccessor || GaugeUtil.createDefaultValueColorAccessor(seriesConfig.thresholds);
+        const updatedSeriesSet = seriesSet.map((series: IChartAssistSeries<IAccessors<any>>) => {
+            if (series.accessors.data) {
+                series.accessors.data.color = colorAccessor;
+            }
+
             if (series.id === GaugeUtil.QUANTITY_SERIES_ID) {
-                return { ...series, data: [{ category: "gauge", value: newValue }] };
+                return { ...series, data: [{ category: "gauge", value: seriesConfig.value }] };
             }
 
             if (series.id === GaugeUtil.REMAINDER_SERIES_ID) {
-                return { ...series, data: [{ category: "gauge", value: newMax - newValue }] };
+                return { ...series, data: [{ category: "gauge", value: seriesConfig.max - seriesConfig.value }] };
             }
 
             // threshold level markers
-            return { ...series, data: GaugeUtil.getThresholdMarkerPoints(thresholds, newValue, newMax) };
+            return { ...series, data: GaugeUtil.generateThresholdData(seriesConfig) };
         });
 
         return updatedSeriesSet;
     }
 
-    public static generateThresholdSeries(value: number,
-                                   max: number,
-                                   thresholds: IGaugeThreshold[],
-                                   accessors: IAccessors,
-                                   scales: IRadialScales | Scales,
-                                   thresholdsRenderer: Renderer<IAccessors>): IChartAssistSeries<IAccessors> {
+    public static generateThresholdSeries(seriesConfig: IGaugeSeriesConfig, gaugeAttributes: IGaugeAttributes): IChartAssistSeries<IAccessors> {
         return {
             id: GaugeUtil.THRESHOLD_MARKERS_SERIES_ID,
-            data: GaugeUtil.getThresholdMarkerPoints(thresholds, value, max),
-            accessors,
-            scales,
-            renderer: thresholdsRenderer,
+            data: GaugeUtil.generateThresholdData(seriesConfig),
+            accessors: gaugeAttributes.accessors,
+            scales: gaugeAttributes.scales,
+            renderer: gaugeAttributes.thresholdsRenderer,
             excludeFromArcCalculation: true,
             preprocess: false,
         };
     }
 
     public static setThresholdLabelFormatter(formatter: Formatter<string>,
-                                      seriesSet: IChartAssistSeries<IAccessors>[],
-                                      formatterName = GAUGE_LABEL_FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
-        const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof RadialGaugeThresholdsRenderer);
+                                             seriesSet: IChartAssistSeries<IAccessors>[],
+                                             formatterName = GAUGE_LABEL_FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
+        const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof DonutGaugeThresholdsRenderer);
         if (thresholdsSeries) {
             thresholdsSeries.scales.r.formatters[formatterName] = formatter;
         }
@@ -129,9 +122,9 @@ export class GaugeUtil {
         };
 
         const chartTools: Record<GaugeMode, IGaugeTools> = {
-            [GaugeMode.Radial]: {
-                mainRendererFunction: () => new RadialRenderer(radialGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new RadialGaugeThresholdsRenderer(),
+            [GaugeMode.Donut]: {
+                mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
+                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(),
                 accessorFunction: () => new RadialAccessors(),
                 scaleFunction: () => radialScales(),
             },
@@ -152,19 +145,38 @@ export class GaugeUtil {
         return chartTools[mode];
     }
 
-    public static createDefaultValueColorAccessor(thresholds: IGaugeThreshold[]) {
+    public static createDefaultValueColorAccessor(thresholds: number[]) {
         // assigning to variable to prevent "Lambda not supported" error
         const valueColorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (dataSeries.id === GaugeUtil.REMAINDER_SERIES_ID) {
                 return "var(--nui-color-semantic-unknown-bg-hover)";
             } else {
-                if (!isUndefined(thresholds[1]?.value) && thresholds[1].value <= data.value) {
+                if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
                     return "var(--nui-color-semantic-critical)";
                 }
-                if (!isUndefined(thresholds[0]?.value) && thresholds[0].value <= data.value) {
+                if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
                     return "var(--nui-color-semantic-warning)";
                 }
                 return CHART_PALETTE_CS1[0];
+            }
+        };
+
+        return valueColorAccessor;
+    }
+
+    public static createReversedValueColorAccessor(thresholds: number[]) {
+        // assigning to variable to prevent "Lambda not supported" error
+        const valueColorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
+            if (dataSeries.id === GaugeUtil.REMAINDER_SERIES_ID) {
+                return "var(--nui-color-semantic-unknown-bg-hover)";
+            } else {
+                if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
+                    return CHART_PALETTE_CS1[0];
+                }
+                if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
+                    return "var(--nui-color-semantic-warning)";
+                }
+                return "var(--nui-color-semantic-critical)";
             }
         };
 
@@ -179,13 +191,14 @@ export class GaugeUtil {
         ];
     }
 
-    public static getThresholdMarkerPoints(thresholds: IGaugeThreshold[], value: number, max: number): IGaugeThresholdMarker[] {
-        const markerValues = thresholds.map(threshold => ({
+    public static generateThresholdData(seriesConfig: IGaugeSeriesConfig): IGaugeThreshold[] {
+        const markerValues = seriesConfig.thresholds.map(threshold => ({
             category: "gauge",
-            hit: threshold.value <= value,
-            value: threshold.value,
+            value: threshold,
+            hit: threshold <= seriesConfig.value,
         }));
 
-        return [...markerValues, { category: "gauge", value: max }];
+        // tack the max value onto the end (used for donut arc calculation)
+        return [...markerValues, { category: "gauge", value: seriesConfig.max, hit: false }];
     }
 }

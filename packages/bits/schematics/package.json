@@ -1,7 +1,7 @@
 {
   "name": "nova-schematics",
   "license": "Apache-2.0",
-  "version": "11.1.0-0",
+  "version": "11.2.0-0",
   "scripts": {
     "assemble": "npm run build && npm run test && npm run copy",
     "build": "tsc -p tsconfig.json",

@@ -79,7 +79,7 @@ export class KpiDocsModule {
     private backgroundColorDocsSetup() {
         this.comparatorsRegistry.registerComparators({
             "!=": {
-                // tslint:disable-next-line: triple-equals
+                // eslint-disable-next-line eqeqeq
                 comparatorFn: (actual: any, reference: any) => actual != reference,
                 label: "Not equal",
             },

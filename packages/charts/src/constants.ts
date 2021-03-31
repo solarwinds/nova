@@ -18,6 +18,7 @@ export const SET_DOMAIN_EVENT = "set_domain";
 export const REFRESH_EVENT = "refresh";
 export const CHART_VIEW_STATUS_EVENT = "chart_view_status";
 export const SERIES_STATE_CHANGE_EVENT = "series_state_change";
+export const AXES_STYLE_CHANGE_EVENT = "axes_style_change";
 
 /** @ignore */
 export const CHART_COMPONENT = new InjectionToken<IChartComponent>("chart_component");
