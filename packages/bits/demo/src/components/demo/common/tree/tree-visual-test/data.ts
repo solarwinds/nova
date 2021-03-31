@@ -46,8 +46,10 @@ export class HttpMock {
             ? this.vegetablesList
             : this.fruitsList;
 
-        const items: FoodNode[] = Array.from({ length: pageSize }).map(() => ({
-            name: this.getRandomFrom(itemList),
+        const totalItemList = this.getTotalItemList(itemList, this.totalItems/itemList.length);
+
+        const items: FoodNode[] = Array.from({ length: pageSize }).map((i, ind) => ({
+            name: totalItemList[ind],
             page,
         }));
 
@@ -58,8 +60,12 @@ export class HttpMock {
         return of(response).pipe(delay(1000));
     }
 
-    private getRandomFrom(list: any[]) {
-        return list[Math.floor(Math.random() * list.length)];
+    private getTotalItemList(list: any[], times: number) {
+        const totalArray = [];
+        for(let i = 0; i < times; i++) {
+            totalArray.push(...list)
+        }
+        return totalArray;
     }
 }
 

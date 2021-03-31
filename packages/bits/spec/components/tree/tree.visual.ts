@@ -26,13 +26,14 @@ describe(`Visual tests: ${name}`, () => {
         paginatorTree = Atom.find(TreeAtom, "nui-tree-paginator-example");
         paginator1 = Atom.find(PaginatorAtom, "nui-tree-paginator-component-vegetables");
         paginator2 = Atom.find(PaginatorAtom, "nui-tree-paginator-component-fruits");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
     it(`${name} visual test`, async () => {
         await camera.turn.on();
 
+        await paginatorTree.getAllHeaders().first().click();
         await paginatorTree.expandAll();
         await browser.wait(
                 EC.visibilityOf(paginator1.getElement()) &&
@@ -43,7 +44,8 @@ describe(`Visual tests: ${name}`, () => {
         await paginatorTree.getAllHeaders().last().click();
         await basicTree.expandAll();
         await checkboxTree.expandAll();
-        await Helpers.clickOnEmptySpace();
+        await checkboxTree.getLeafCheckboxNodes().get(1).click();
+        await checkboxTree.getLeafCheckboxNodes().get(2).click();
         await camera.say.cheese("Tree is fully opened up");
 
 

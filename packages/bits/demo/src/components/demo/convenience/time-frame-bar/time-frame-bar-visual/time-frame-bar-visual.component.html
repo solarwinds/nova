@@ -1,8 +1,8 @@
 <nui-time-frame-bar [id]="bar.id" *ngFor="let bar of bars"
                     [timeFrame]="bar.timeFrame"
-                    (timeFrameChange)="bar.change($event)"
+                    (timeFrameChange)="changeTimeFrame($event, bar)"
                     (undo)="bar.undo()"
-                    (clear)="bar.change()"
+                    (clear)="bar.restart()"
                     [historyIndex]="bar.history.index">
     <nui-icon icon="calendar" class="pr-3"></nui-icon>
     {{bar.timeFrame | timeFrame}}
