@@ -17,6 +17,7 @@ import {IconData, IconStatus} from "./types";
     host: {
         "class": "nui-icon-wrapper",
         "role": "img",
+        "[attr.aria-label]": "icon + ' icon'",
     },
     styleUrls: ["./icon.component.less"],
     encapsulation: ViewEncapsulation.None,
