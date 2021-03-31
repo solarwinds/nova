@@ -51,7 +51,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     private userProvidedHeight: string;
 
     private unsubscribe$: Subject<unknown> = new Subject<unknown>();
-    private headerResizeObserver: ResizeObserver;
+    private headResizeObserver: ResizeObserver;
 
     private get viewportEl(): HTMLElement {
         return this.viewport.elementRef.nativeElement;
@@ -108,6 +108,10 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
         this.syncHorizontalScroll();
         this.syncColumnWidths();
+
+        // Note: While we're detaching header from CDK Viewport we have
+        // to recalculate viewport height to keep the same total height.
+        // The setTimeout is for skipping one tick to let the header get his height.
         setTimeout(() => this.updateContainerToFitHead());
         this.updateContainerHeightOnHeadResize();
 
@@ -125,8 +129,8 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
     public updateContainerHeightOnHeadResize(): void {
         if (this.headRef?.rows.item(0)) {
-            this.headerResizeObserver = new ResizeObserver(this.updateContainerToFitHead);
-            this.headerResizeObserver.observe(this.headRef?.rows.item(0) as Element);
+            this.headResizeObserver = new ResizeObserver(this.updateContainerToFitHead);
+            this.headResizeObserver.observe(this.headRef?.rows.item(0) as Element);
         }
     }
 
@@ -266,8 +270,8 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         this.unsubscribe$.next();
         this.unsubscribe$.complete();
 
-        if (this.headerResizeObserver) {
-            this.headerResizeObserver.disconnect();
+        if (this.headResizeObserver) {
+            this.headResizeObserver.disconnect();
         }
     }
 }
