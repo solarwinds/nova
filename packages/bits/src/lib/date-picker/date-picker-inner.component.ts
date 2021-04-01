@@ -75,7 +75,7 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
 
     private modes: string[] = ["day", "month", "year"];
 
-    get role(): string | null { return this.inline ? "application" : "dialog"; }
+    get role(): string { return this.inline ? "application" : "dialog"; }
 
     @Input()
     get value(): Moment | undefined {
