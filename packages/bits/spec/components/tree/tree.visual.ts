@@ -9,7 +9,7 @@ import { TreeAtom } from "./tree.atom";
 
 const name: string = "Tree";
 
-describe(`Visual tests: ${name}`, () => {
+fdescribe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let basicTree: TreeAtom;
     let checkboxTree: TreeAtom;
@@ -33,7 +33,6 @@ describe(`Visual tests: ${name}`, () => {
     it(`${name} visual test`, async () => {
         await camera.turn.on();
 
-        await paginatorTree.getAllHeaders().first().click();
         await paginatorTree.expandAll();
         await browser.wait(
                 EC.visibilityOf(paginator1.getElement()) &&
@@ -44,8 +43,7 @@ describe(`Visual tests: ${name}`, () => {
         await paginatorTree.getAllHeaders().last().click();
         await basicTree.expandAll();
         await checkboxTree.expandAll();
-        await checkboxTree.getLeafCheckboxNodes().get(1).click();
-        await checkboxTree.getLeafCheckboxNodes().get(2).click();
+        await Helpers.clickOnEmptySpace();
         await camera.say.cheese("Tree is fully opened up");
 
 
