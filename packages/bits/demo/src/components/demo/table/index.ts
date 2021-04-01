@@ -17,6 +17,8 @@ export * from "./table-test/table-test.component";
 export * from "./table-visual-test/table-visual-test.example";
 export * from "./table-virtual-scroll-real-api/table-virtual-scroll-real-api.example.component";
 export * from "./table-virtual-scroll-steps-and-button/table-virtual-scroll-steps-and-button.example.component";
+export * from "./table-virtual-scroll-select-sticky-header/table-virtual-scroll-select-sticky-header-example.component";
+export * from "./table-virtual-scroll-sticky-header/table-virtual-scroll-sticky-header-example.component";
 export * from "./table-virtual-scroll-real-api-progress-footer/table-virtual-scroll-real-api-progress-footer.example.component";
 export * from "./table-virtual-scroll-real-api-progress-text-footer/table-virtual-scroll-real-api-progress-text-footer.example.component";
 export * from "./table-virtual-scroll-real-api-minimalist/table-virtual-scroll-real-api-minimalist.example.component";

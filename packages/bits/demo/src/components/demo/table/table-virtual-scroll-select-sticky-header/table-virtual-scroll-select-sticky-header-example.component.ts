@@ -61,14 +61,15 @@ export class TableVirtualScrollSelectStickyHeaderExampleComponent implements Aft
     }
 }
 
-export function generateUsers(length: number): IRandomUserTableModel[] {
+function generateUsers(length: number): IRandomUserTableModel[] {
     return Array.from({ length }).map((obj: unknown, id: number) => {
         const personName = sample(["Josh", "Lukas", "Blake", "Frantz", "Dima", "Serhii", "Vita", "Vlad", "Ivan", "Dumitru"]) || "Josh";
         return ({
             no: id,
             postcode: id * 1000000 * id,
             cell: "0000",
-            city: sample(["Bucharest", "Kiev", "Austin", "Brno", "Frankfurt pe Main", "Sutton-under-Whitestonecliffe", "Vila Bela da Santíssima Trindade"]) || "Bucharest",
+            city: sample(["Bucharest", "Kiev", "Austin", "Brno", "Frankfurt pe Main", "Sutton-under-Whitestonecliffe", "Vila Bela da Santíssima Trindade"]) ||
+                "Bucharest",
             country: "Unknown",
             email: `${ personName.toLocaleLowerCase() }@@sw.com`,
             gender: "Unknown",

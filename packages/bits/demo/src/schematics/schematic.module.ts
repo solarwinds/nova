@@ -75,6 +75,8 @@ import { VirtualScrollListComponent } from "./list/virtual-scroll-list/virtual-s
 import { SchematicsDocsComponent } from "./schematics-docs.component";
 import { BasicTableComponent } from "./table/basic-table/basic-table.component";
 import { TableSchematicExampleComponent } from "./table/table-schematic-example.component";
+import { TableSchematicsOutletComponent } from "./table/table-schematics-outlet.component";
+import { TableSchematicsVisualTestComponent } from "./table/visual-test/table-schematics-visual-test.component";
 import { TableWithCustomVirtualScrollComponent } from "./table/table-with-custom-virtual-scroll/table-with-custom-virtual-scroll.component";
 import { TableWithPaginationComponent } from "./table/table-with-pagination/table-with-pagination.component";
 import { TableWithSearchComponent } from "./table/table-with-search/table-with-search.component";
@@ -214,6 +216,30 @@ const staticRoutes: Routes = [
         },
     },
     {
+        path: "table-outlet",
+        component: TableSchematicsOutletComponent,
+        children: [
+            {
+                path: "virtual-scroll",
+                component: TableWithVirtualScrollComponent,
+                data: {
+                    "srlc": {
+                        "hideIndicator": true,
+                    },
+                },
+            },
+            {
+                path: "visual-test",
+                component: TableSchematicsVisualTestComponent,
+                data: {
+                    "srlc": {
+                        "hideIndicator": true,
+                    },
+                },
+            },
+        ],
+    },
+    {
         path: "tree",
         component: FilteredViewWithTreeComponent,
         data: {
@@ -241,6 +267,8 @@ const staticRoutes: Routes = [
         SelectionListComponent,
         ListSchematicExampleComponent,
         TableSchematicExampleComponent,
+        TableSchematicsOutletComponent,
+        TableSchematicsVisualTestComponent,
         RecursiveObjectViewComponent,
         SchematicJsonComponent,
         SchematicsDocsComponent,

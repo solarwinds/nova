@@ -45,11 +45,11 @@ import {
     TableVirtualScrollRealApiMinimalistExampleComponent,
     TableVirtualScrollRealApiProgressFooterExampleComponent,
     TableVirtualScrollRealApiProgressTextFooterExampleComponent,
+    TableVirtualScrollSelectStickyHeaderExampleComponent,
     TableVirtualScrollStepsAndButtonExampleComponent,
+    TableVirtualScrollStickyHeaderExampleComponent,
     TableVisualTestComponent,
 } from "./index";
-import { TableVirtualScrollSelectStickyHeaderExampleComponent } from "./table-virtual-scroll-select-sticky-header/table-virtual-scroll-select-sticky-header-example.component";
-import { TableVirtualScrollStickyHeaderExampleComponent } from "./table-virtual-scroll-sticky-header/table-virtual-scroll-sticky-header-example.component";
 
 const routes = [
     {
@@ -171,7 +171,7 @@ const routes = [
         },
     },
     {
-        path: "table-visual-test",
+        path: "visual-test",
         component: TableVisualTestComponent,
         data: {
             "srlc": {
