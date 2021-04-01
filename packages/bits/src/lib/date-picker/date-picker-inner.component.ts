@@ -47,7 +47,6 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
     @Input() selectedDate: Moment;
     /** Is used to handle timezone of date value */
     @Input() handleTimezone: boolean;
-    @Input() role: string;
 
     @Output()
     selectionDone: EventEmitter<Moment> = new EventEmitter<Moment>();
@@ -75,6 +74,8 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
     protected compareHandlerYear: Function;
 
     private modes: string[] = ["day", "month", "year"];
+
+    get role(): string | null { return this.inline ? "application" : "dialog"; }
 
     @Input()
     get value(): Moment | undefined {

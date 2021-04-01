@@ -166,9 +166,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
     private inputChanged: Subject<string> = new Subject<string>();
     private momentDateFormat: string;
     private calendarChanged: Subscription;
-
-    get role(): string | null { return this.overlay ? "dialog" : "application"; }
-
+    
     constructor(
         private cd: ChangeDetectorRef
     ) {}
