@@ -52,6 +52,8 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
     private unsubscribe$: Subject<unknown> = new Subject<unknown>();
     private headResizeObserver: ResizeObserver;
+    // this is for keeping track of the original viewport height on head resize
+    private origViewportHeight: number;
 
     private get viewportEl(): HTMLElement {
         return this.viewport.elementRef.nativeElement;
@@ -70,6 +72,15 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         // Waiting for the next tick to let cdk table properly draw the table header
         setTimeout(() => this.updateNativeHeaderPlaceholder());
         this.updateHeadPosition(this._sticky);
+    }
+
+    public ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+
+        if (this.headResizeObserver) {
+            this.headResizeObserver.disconnect();
+        }
     }
 
     public setNative(): void {
@@ -113,26 +124,30 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         // to recalculate viewport height to keep the same total height.
         // The setTimeout is for skipping one tick to let the header get his height.
         setTimeout(() => this.updateContainerToFitHead());
-        this.updateContainerHeightOnHeadResize();
+        this.updateViewportHeightOnHeadResize();
 
         this.headPosition = TableVirtualScrollHeaderPosition.Sticky;
     }
 
     public updateContainerToFitHead = (): void => {
         if (this._sticky) {
-            const viewportComputedHeight: string = isEmpty(this.userProvidedHeight) ?
-                this.viewportEl.parentElement?.offsetHeight + "px" : this.userProvidedHeight;
+            this.origViewportHeight = this.origViewportHeight || this.viewportEl?.offsetHeight;
+            const viewportComputedHeight: string = isEmpty(this.userProvidedHeight) ? this.origViewportHeight + "px" : this.userProvidedHeight;
             this.viewportEl.style.setProperty("height",
                 `calc(${viewportComputedHeight} - ${this.headRef?.rows.item(0)?.offsetHeight ?? 0}px)`, "important");
         }
     }
 
-    public updateContainerHeightOnHeadResize(): void {
+    public updateViewportHeightOnHeadResize(): void {
+        if (this.headResizeObserver) {
+            return;
+        }
+
         // This resize observer is needed in case a parent element has a height of zero upon instantiation
         // thereby prohibiting the header from having its intended height when its initially rendered.
-        if (this.headRef?.rows.item(0)) {
+        if (this.headRef) {
             this.headResizeObserver = new ResizeObserver(this.updateContainerToFitHead);
-            this.headResizeObserver.observe(this.headRef?.rows.item(0) as Element);
+            this.headResizeObserver.observe(this.headRef);
         }
     }
 
@@ -266,14 +281,5 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             return;
         }
         this.setSticky();
-    }
-
-    public ngOnDestroy(): void {
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
-
-        if (this.headResizeObserver) {
-            this.headResizeObserver.disconnect();
-        }
     }
 }
