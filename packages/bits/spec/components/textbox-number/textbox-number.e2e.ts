@@ -184,7 +184,7 @@ describe("USERCONTROL textbox-number >", () => {
                 .toEqual(await browser.switchTo().activeElement().getTagName());
 
             await Helpers.pressKey(Key.TAB);
-            expect(await component.getInputId())
+            expect(await component.input.getId())
                 .toEqual(await browser.switchTo().activeElement().getId());
 
             await Helpers.pressKey(Key.TAB);
@@ -200,7 +200,7 @@ describe("USERCONTROL textbox-number >", () => {
             await Helpers.pressKey(Key.TAB);
             await component.downButton.click();
 
-            expect(await component.getInputId())
+            expect(await component.input.getId())
                 .not.toEqual(await browser.switchTo().activeElement().getId());
             expect(await component.downButton.getElement().getId())
                 .toEqual(await browser.switchTo().activeElement().getId());

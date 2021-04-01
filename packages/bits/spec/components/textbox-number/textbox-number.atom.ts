@@ -11,7 +11,7 @@ export class TextboxNumberAtom extends Atom {
 
     public upButton: ButtonAtom;
     public downButton: ButtonAtom;
-    private input: ElementFinder;
+    public input: ElementFinder;
 
     constructor(private rootElement: ElementFinder) {
         super(rootElement);
@@ -38,7 +38,5 @@ export class TextboxNumberAtom extends Atom {
         && await this.downButton.isDisabled()
 
     public isValid = async (): Promise<boolean> => !(await this.rootElement.getAttribute("class")).includes("has-error");
-
-    public getInputId = async (): Promise<string> => await this.input.getId();
 
 }
