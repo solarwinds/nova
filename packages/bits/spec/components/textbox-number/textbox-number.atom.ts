@@ -1,7 +1,6 @@
 import {
     by,
-    ElementFinder,
-    Key
+    ElementFinder
 } from "protractor";
 
 import { Atom } from "../../atom";

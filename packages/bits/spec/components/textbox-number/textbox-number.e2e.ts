@@ -181,19 +181,19 @@ describe("USERCONTROL textbox-number >", () => {
 
         it("should navigate between elements using TAB", async () => {
             expect("body")
-                .toEqual(await (await browser.switchTo().activeElement().getTagName()));
+                .toEqual(await browser.switchTo().activeElement().getTagName());
 
             await Helpers.pressKey(Key.TAB);
             expect(await component.getInputId())
-                .toEqual(await (await browser.switchTo().activeElement()).getId());
+                .toEqual(await browser.switchTo().activeElement().getId());
 
             await Helpers.pressKey(Key.TAB);
             expect(await component.upButton.getElement().getId())
-                .toEqual(await (await browser.switchTo().activeElement()).getId());
+                .toEqual(await browser.switchTo().activeElement().getId());
 
             await Helpers.pressKey(Key.TAB);
             expect(await component.downButton.getElement().getId())
-                .toEqual(await (await browser.switchTo().activeElement()).getId());
+                .toEqual(await browser.switchTo().activeElement().getId());
         });
 
         it("should switch focus from input to button on click", async () => {
@@ -201,9 +201,9 @@ describe("USERCONTROL textbox-number >", () => {
             await component.downButton.click();
 
             expect(await component.getInputId())
-                .not.toEqual(await (await browser.switchTo().activeElement()).getId());
+                .not.toEqual(await browser.switchTo().activeElement().getId());
             expect(await component.downButton.getElement().getId())
-                .toEqual(await (await browser.switchTo().activeElement()).getId());
+                .toEqual(await browser.switchTo().activeElement().getId());
         })
     })
 });
