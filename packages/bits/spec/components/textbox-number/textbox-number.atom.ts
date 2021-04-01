@@ -40,4 +40,6 @@ export class TextboxNumberAtom extends Atom {
 
     public isValid = async (): Promise<boolean> => !(await this.rootElement.getAttribute("class")).includes("has-error");
 
+    public getInputId = async (): Promise<string> => await this.input.getId();
+
 }

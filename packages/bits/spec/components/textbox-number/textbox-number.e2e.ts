@@ -4,6 +4,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 
 import { TextboxNumberAtom } from "./textbox-number.atom";
+import { browser, Key } from "protractor";
 
 describe("USERCONTROL textbox-number >", () => {
 
@@ -171,4 +172,38 @@ describe("USERCONTROL textbox-number >", () => {
             expect(await component.getValue()).toBe("1");
         });
     });
+
+    describe("keyboard navigation", () => {
+        beforeEach(async () => {
+            await browser.refresh();
+            component = basic;
+        })
+
+        it("should navigate between elements using TAB", async () => {
+            expect("body")
+                .toEqual(await (await browser.switchTo().activeElement().getTagName()));
+
+            await Helpers.pressKey(Key.TAB);
+            expect(await component.getInputId())
+                .toEqual(await (await browser.switchTo().activeElement()).getId());
+
+            await Helpers.pressKey(Key.TAB);
+            expect(await component.upButton.getElement().getId())
+                .toEqual(await (await browser.switchTo().activeElement()).getId());
+
+            await Helpers.pressKey(Key.TAB);
+            expect(await component.downButton.getElement().getId())
+                .toEqual(await (await browser.switchTo().activeElement()).getId());
+        });
+
+        it("should switch focus from input to button on click", async () => {
+            await Helpers.pressKey(Key.TAB);
+            await component.downButton.click();
+
+            expect(await component.getInputId())
+                .not.toEqual(await (await browser.switchTo().activeElement()).getId());
+            expect(await component.downButton.getElement().getId())
+                .toEqual(await (await browser.switchTo().activeElement()).getId());
+        })
+    })
 });
