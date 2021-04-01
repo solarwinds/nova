@@ -23,7 +23,7 @@ import { IChipsItem } from "../public-api";
     encapsulation: ViewEncapsulation.None,
     host: {
         class: "nui-chip",
-        role: "option",
+        role: "listitem",
     },
 })
 export class ChipComponent implements AfterViewInit {

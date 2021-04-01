@@ -1,7 +1,7 @@
 <div class="nui-expander"
      [class.nui-expander--expanded]="state === 'expanded'">
     <div class="nui-expander__header"
-         role="button"
+         role="switch"
          [class.nui-expander__header--empty]="!header && isCustomHeaderContentEmpty"
          (click)="toggle()">
         <nui-icon class="nui-expander__header-icon"
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="nui-expander__body"
-         role="list"
+         role="section"
          [class.hide-left-border]="hideLeftBorder"
          [@expandedState]="state"
          (@expandedState.done)="expandedStateDone()">

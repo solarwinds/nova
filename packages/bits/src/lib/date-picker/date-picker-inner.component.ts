@@ -47,6 +47,7 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
     @Input() selectedDate: Moment;
     /** Is used to handle timezone of date value */
     @Input() handleTimezone: boolean;
+    @Input() role: string;
 
     @Output()
     selectionDone: EventEmitter<Moment> = new EventEmitter<Moment>();

@@ -125,7 +125,7 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
 
     private destroy$: Subject<void> = new Subject();
 
-    get role(): string | null { return this.getItemsCount() ? "listbox": null; }
+    get role(): string | null { return this.getItemsCount() ? "list": null; }
 
     constructor(private zone: NgZone,
                 private chipsOverflowService: ChipsOverflowService) {
