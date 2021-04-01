@@ -155,11 +155,6 @@ export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements On
     // In this example, getFilteredData is invoked every 10 minutes (Take a look at the refresher
     // provider definition in the widget configuration below to see how the interval is set)
     public async getFilteredData(): Promise<IFilteringOutputs> {
-        // Short-circuiting if the properties aren't defined yet
-        if (!this.properties) {
-            // @ts-ignore: Type 'undefined' is not assignable to type 'IFilteringOutputs'.
-            return;
-        }
         // For loading indicator to show
         this.busy.next(true);
         return new Promise((resolve) => {
@@ -317,17 +312,19 @@ const widgetConfig: IWidget = {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
                         "providerId": AcmeKpiDataSource.providerId,
-                        label: "Harry Potter Books",
-                        properties: {
-                            bookId: "5MQFrgEACAAJ",
-                            metric: "averageRating",
-                        },
+                        "label": "Harry Potter Books",
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
                         "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
                         "properties": {
                             "componentId": "kpi1",
                             "propertyPath": "widgetData",
+                            "dataSource": {
+                                "properties": {
+                                    "bookId": "5MQFrgEACAAJ",
+                                    "metric": "averageRating",
+                                },
+                            }
                         },
                     } as IProviderConfiguration,
                 },
