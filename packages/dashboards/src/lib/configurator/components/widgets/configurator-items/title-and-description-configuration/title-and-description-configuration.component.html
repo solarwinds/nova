@@ -37,12 +37,12 @@
                             [control]="form.get('description')"
                             hint="This won't be shown on the widget, but can be helpful for
                           other users who want to re-use this widget on their own dashboards" i18n-hint>
-                <nui-textbox formControlName="description" placeholder="No description"></nui-textbox>
+                <nui-textbox formControlName="description" placeholder="No description" i18n-placeholder></nui-textbox>
             </nui-form-field>
         </div>
         <div>
             <nui-form-field caption="Hide widget header" [showOptionalText]="false" i18n-caption [control]="form.get('collapsible')">
-                <nui-checkbox formControlName="collapsible">Collapsible</nui-checkbox>
+                <nui-checkbox formControlName="collapsible" i18n>Collapsible</nui-checkbox>
             </nui-form-field>
         </div>
     </div>
