@@ -579,10 +579,10 @@ workflows:
             -   bits-visual-test:
                     requires:
                         - bits-build
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
+                    filters:
+                        branches:
+                            only:
+                                - main
             -   bits-a11y-test:
                     requires:
                         - bits-build

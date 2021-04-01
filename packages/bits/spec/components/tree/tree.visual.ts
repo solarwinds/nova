@@ -9,7 +9,7 @@ import { TreeAtom } from "./tree.atom";
 
 const name: string = "Tree";
 
-fdescribe(`Visual tests: ${name}`, () => {
+describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let basicTree: TreeAtom;
     let checkboxTree: TreeAtom;
