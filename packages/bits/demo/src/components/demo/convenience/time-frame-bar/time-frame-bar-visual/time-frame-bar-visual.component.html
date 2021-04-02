@@ -2,7 +2,7 @@
                     [timeFrame]="bar.timeFrame"
                     (timeFrameChange)="changeTimeFrame($event, bar)"
                     (undo)="bar.undo()"
-                    (clear)="bar.restart()"
+                    (clear)="bar.change()"
                     [historyIndex]="bar.history.index">
     <nui-icon icon="calendar" class="pr-3"></nui-icon>
     {{bar.timeFrame | timeFrame}}
