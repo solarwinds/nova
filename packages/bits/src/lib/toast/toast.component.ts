@@ -54,7 +54,7 @@ export class ToastComponent implements OnDestroy {
     private intervalId: NodeJS.Timeout;
     private hideTime: number;
     private subscriptions: Array<Subscription> = [];
-    private animationFadeOutLength = 1000;
+    private animationFadeOutLength = 300;
     private toastTypeToSeverityIcon: { [key: string]: string } = {
         error: "severity_critical",
         warning: "severity_warning",
