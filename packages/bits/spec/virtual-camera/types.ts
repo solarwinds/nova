@@ -1,19 +1,19 @@
 import { SnapshotOptions } from "@percy/core";
 
 export enum LensType {
-    EYES = "eyes",
-    PERCY = "percy"
+    Eyes = "eyes",
+    Percy = "percy"
 }
 
 export const LENSES: string[] =  [ ...Object.values(LensType) ];
 
 export const CAMERA_DEFAULT_SETTINGS: ICameraSettings = {
     fullframe: true,
-    responsive: [1920],
+    responsiveWiths: [1920],
     currentSuiteName: "",
     currentTestName: "",
     globalLens: "percy",
-    responsiveCallback: undefined,
+    responsivityCallback: undefined,
 }
 
 export const PERCY_DEFAULT_CONFIG: SnapshotOptions = {
@@ -33,16 +33,16 @@ export interface ILens {
     takeFullScreenSnapshot(label: string): Promise<void>;
     cameraON(): Promise<void>;
     cameraOFF(): Promise<void>;
-    toolConfig(): void;
+    toolConfig(): any;
 }
 
 export interface ICameraSettings {
     fullframe: boolean;
-    responsive: number[];
+    responsiveWiths: number[];
     currentSuiteName: string;
     currentTestName: string;
     globalLens: string;
-    responsiveCallback: Function | undefined;
+    responsivityCallback: Function | undefined;
 }
 
 export interface ICameraSettingsActions {

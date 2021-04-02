@@ -23,9 +23,6 @@ describe(`Visual tests: ${name}`, () => {
     
     it(`${name} visual test`, async () => {
         await camera.turn.on();
-
-        // TODO: Think about tool options generalization
-        // Needed by the Applitools Eyes to properly take some snapshots
         camera.lens.configure()?.setStitchMode("CSS");
 
         await camera.say.cheese(`Default`);
