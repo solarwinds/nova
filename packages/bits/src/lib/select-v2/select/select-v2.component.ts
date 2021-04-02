@@ -45,7 +45,7 @@ import { SelectV2OptionComponent } from "../option/select-v2-option.component";
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         "class": "nui-select-v2",
-        "role": "select",
+        "role": "button",
     },
 })
 
