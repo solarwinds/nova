@@ -180,8 +180,8 @@ describe("USERCONTROL textbox-number >", () => {
         })
 
         it("should navigate between elements using TAB", async () => {
-            expect("body")
-                .toEqual(await browser.switchTo().activeElement().getTagName());
+            expect(await browser.switchTo().activeElement().getTagName())
+                .toEqual("body");
 
             await Helpers.pressKey(Key.TAB);
             expect(await component.input.getId())
