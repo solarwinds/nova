@@ -59,7 +59,7 @@ import { InputValueTypes } from "../types";
     host: {
         "class": "nui-combobox-v2",
         "role": "combobox",
-        "[attr.aria-expanded]": "isDropdownOpen",
+        "[attr.aria-expanded]": "isDropdownOpen || false",
     },
 })
 
