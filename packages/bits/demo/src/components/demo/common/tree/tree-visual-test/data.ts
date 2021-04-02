@@ -62,7 +62,7 @@ export class HttpMock {
 
     private getTotalItemList(list: any[], times: number) {
         const totalArray = [];
-        for(let i = 0; i < times; i++) {
+        for (let i = 0; i < times; i++) {
             totalArray.push(...list)
         }
         return totalArray;

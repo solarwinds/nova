@@ -17,9 +17,7 @@ class TestBar {
     public zoomIn = (value: ITimeframe) => this.timeFrame = this.history.save(value);
     public undo = () => this.timeFrame = this.history.undo();
     public restart = (value?: ITimeframe) => this.timeFrame = this.history.restart(value);
-    public change = (value: ITimeframe) => {
-        this.timeFrame = this.history.restart(value);
-    }
+    public change = (value: ITimeframe) => this.timeFrame = this.history.restart(value);
 
     private getDefaultTF(): ITimeframe {
         return {
