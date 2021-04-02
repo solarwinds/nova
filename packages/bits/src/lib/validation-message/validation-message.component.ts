@@ -9,6 +9,7 @@ import {
     templateUrl: "./validation-message.component.html",
     styleUrls: ["./validation-message.component.less"],
     encapsulation: ViewEncapsulation.None,
+    host: { "role": "alert" },
 })
 export class ValidationMessageComponent {
     /**

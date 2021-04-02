@@ -41,7 +41,10 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
     styleUrls: ["./popup-adapter.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: {"class": "nui-popup"},
+    host: {
+        "class": "nui-popup",
+        "role": "dialog",
+    },
 })
 export class PopupComponent implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
     @ContentChild(PopupToggleDirective)

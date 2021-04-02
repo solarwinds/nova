@@ -34,6 +34,7 @@ import { ButtonIcon, SpinnerSize } from "./public-api";
             ]),
         ]),
     ],
+    host: { "role": "progressbar" },
 })
 export class SpinnerComponent implements OnChanges, OnDestroy {
 

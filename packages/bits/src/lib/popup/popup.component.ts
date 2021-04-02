@@ -50,6 +50,7 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
     selector: "nui-popup-deprecated",
     host: {
         "class": "nui-popup",
+        "role": "dialog",
     },
     template: `
         <div class="nui-popup-container" [class.nui-popup--opened]="isOpen" nuiClickInterceptor>

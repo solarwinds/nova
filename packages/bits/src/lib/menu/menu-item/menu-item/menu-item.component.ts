@@ -34,6 +34,7 @@ import { MenuItemBaseComponent } from "./menu-item-base";
         },
     ],
     encapsulation: ViewEncapsulation.None,
+    host: { "role": "menuitem" },
 })
 export class MenuItemComponent extends MenuItemBaseComponent {
     @ViewChild("menuItemDefault") menuItem: ElementRef;

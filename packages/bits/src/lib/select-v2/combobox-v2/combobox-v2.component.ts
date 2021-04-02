@@ -57,7 +57,8 @@ import { InputValueTypes } from "../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        class: "nui-combobox-v2",
+        "class": "nui-combobox-v2",
+        "role": "combobox",
     },
 })
 

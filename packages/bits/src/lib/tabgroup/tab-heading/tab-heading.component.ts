@@ -13,6 +13,7 @@ import {
     selector: "nui-tab-heading",
     templateUrl: "./tab-heading.component.html",
     styleUrls: ["./tab-heading.component.less"],
+    host: { "role": "tab" },
 })
 
 export class TabHeadingComponent {

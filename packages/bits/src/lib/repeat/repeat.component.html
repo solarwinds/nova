@@ -3,6 +3,7 @@
                      (click)="itemClicked($event, item)"
                      [clickable]="!(selectionMode === repeatSelectionMode.none)"
                      [selected]="isItemSelected(item) && !isItemDisabled(item)"
+                     [draggable]="isItemDraggable(item)"
                      [ngClass]="{
             'repeat-group-item__disabled': isItemDisabled(item),
             'nui-dnd-without-drag-handle': isItemDraggable(item) && !dragHandleTemplateRef,
@@ -54,7 +55,7 @@
     <div class="nui-repeat-header">
         <ng-content select="[repeatHeaderTemplate]"></ng-content>
     </div>
-    <ul #dropListArea class="repeat-group" role="repeat">
+    <ul #dropListArea class="repeat-group">
         <div *ngIf="!virtualScroll">
             <ng-container *ngFor="let sourceItem of itemsSource;trackBy: itemConfig?.trackBy;let itemIndex=index"
                           [ngTemplateOutlet]="repeatItems"

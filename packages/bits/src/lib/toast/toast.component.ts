@@ -30,6 +30,7 @@ enum ToastState {
     templateUrl: "./toast.component.html",
     styleUrls: ["./toast.component.less"],
     encapsulation: ViewEncapsulation.None,
+    host: { "[attr.role]": "role" },
 })
 export class ToastComponent implements OnDestroy {
     public body?: string | SafeHtml | null;
@@ -39,6 +40,8 @@ export class ToastComponent implements OnDestroy {
     public width = -1;
     public toastIcon: string;
     public closeButton?: boolean;
+
+    get role(): string { return this.toastPackage.toastType === "success" || this.toastPackage.toastType === "info" ? "status" : "alert"; }
 
     /** a combination of toast type and options.toastClass */
     @HostBinding("class") toastClasses = "";
@@ -51,7 +54,7 @@ export class ToastComponent implements OnDestroy {
     private intervalId: NodeJS.Timeout;
     private hideTime: number;
     private subscriptions: Array<Subscription> = [];
-    private animationFadeOutLength = 300;
+    private animationFadeOutLength = 1000;
     private toastTypeToSeverityIcon: { [key: string]: string } = {
         error: "severity_critical",
         warning: "severity_warning",

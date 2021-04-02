@@ -36,6 +36,7 @@ import { NuiFormFieldControl } from "../form-field/public-api";
     ],
     styleUrls: ["./textbox.component.less"],
     encapsulation: ViewEncapsulation.None,
+    host: { "role": "textbox" },
 })
 export class TextboxComponent implements ControlValueAccessor, NuiFormFieldControl {
     /**

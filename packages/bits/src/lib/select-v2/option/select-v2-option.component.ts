@@ -17,7 +17,8 @@ import { IOptionedComponent } from "../types";
     styleUrls: ["./select-v2-option.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        class: "nui-select-v2-option",
+        "class": "nui-select-v2-option",
+        "role": "option",
     },
     providers: [
         { provide: OVERLAY_ITEM, useExisting: forwardRef(() => SelectV2OptionComponent) },

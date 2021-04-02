@@ -2,8 +2,7 @@
      (@dismiss.done)="animationFinished($event)"
      (@dismiss.start)="animationStart($event)"
      class="nui-flex-container nui-flex--nowrap nui-message {{messageClass}}"
-     [ngClass]="{'nui-message-allow-dismiss': allowDismiss}"
-     role="alert">
+     [ngClass]="{'nui-message-allow-dismiss': allowDismiss}">
     <nui-icon class="nui-message-icon" [icon]="icon"></nui-icon>
 
     <div class="nui-message-content">

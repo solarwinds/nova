@@ -27,6 +27,7 @@ import { IMenuGroup, IMenuItem } from "../public-api";
     selector: "nui-menu-popup",
     host: {
         "class": "nui-menu-popup",
+        "role": "dialog",
     },
     templateUrl: "./menu-popup.component.html",
     styleUrls: ["./menu-popup.component.less"],
