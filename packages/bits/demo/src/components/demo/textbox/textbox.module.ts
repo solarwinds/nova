@@ -6,6 +6,7 @@ import {
     NuiDocsModule,
     NuiFormFieldModule,
     NuiMessageModule,
+    NuiSwitchModule,
     NuiTextboxModule,
     SrlcStage,
 } from "@nova-ui/bits";
@@ -84,6 +85,7 @@ const routes = [
         NuiMessageModule,
         NuiDocsModule,
         RouterModule.forChild(routes),
+        NuiSwitchModule,
     ],
     declarations: [
         TextboxAreaExampleComponent,

@@ -94,6 +94,11 @@ export class TextboxComponent implements ControlValueAccessor, NuiFormFieldContr
     @Input() public type = "text";
 
     /**
+     * Makes textarea scrollable
+     */
+    @Input() public isScrollable: boolean = true;
+
+    /**
      * Input initial value
      */
     @Input() public value: string;

@@ -1,5 +1,6 @@
 <div class="nui-textbox"
      [class.nui-textbox--disabled]="disabled"
+     [class.textarea-scrollable]="isScrollable && rows > 1"
      [class.has-error]="isInErrorState">
 
     <div class="has-feedback"
