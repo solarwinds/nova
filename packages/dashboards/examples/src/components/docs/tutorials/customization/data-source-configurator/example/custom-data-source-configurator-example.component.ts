@@ -312,19 +312,16 @@ const widgetConfig: IWidget = {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
                         "providerId": AcmeKpiDataSource.providerId,
-                        "label": "Harry Potter Books",
+                        "properties": {
+                            "bookId": "5MQFrgEACAAJ",
+                            "metric": "averageRating",
+                        },
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
                         "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
                         "properties": {
                             "componentId": "kpi1",
                             "propertyPath": "widgetData",
-                            "dataSource": {
-                                "properties": {
-                                    "bookId": "5MQFrgEACAAJ",
-                                    "metric": "averageRating",
-                                },
-                            }
                         },
                     } as IProviderConfiguration,
                 },
