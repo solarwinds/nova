@@ -16,7 +16,7 @@ import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE
 
 /**
  * @ignore
- * Configuration for the RadialGaugeLabelsPlugin
+ * Configuration for the DonutGaugeLabelsPlugin
  */
 export interface IDonutGaugeLabelsPluginConfig {
     gridMargin?: IAllAround<number>;
