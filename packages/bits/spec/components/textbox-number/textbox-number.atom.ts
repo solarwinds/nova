@@ -1,7 +1,6 @@
 import {
     by,
-    ElementFinder,
-    Key
+    ElementFinder
 } from "protractor";
 
 import { Atom } from "../../atom";
@@ -12,7 +11,7 @@ export class TextboxNumberAtom extends Atom {
 
     public upButton: ButtonAtom;
     public downButton: ButtonAtom;
-    private input: ElementFinder;
+    public input: ElementFinder;
 
     constructor(private rootElement: ElementFinder) {
         super(rootElement);
