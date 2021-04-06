@@ -48,7 +48,6 @@ import { FilteredViewListWithPaginationModule } from "./filtered-view/filtered-v
 import { FilteredViewListWithVirtualScrollComponent } from "./filtered-view/filtered-view-list-with-virtual-scroll/filtered-view-list-with-virtual-scroll.component";
 import { FilteredViewListWithVirtualScrollModule } from "./filtered-view/filtered-view-list-with-virtual-scroll/filtered-view-list-with-virtual-scroll.module";
 import { FilteredViewSchematicExampleComponent } from "./filtered-view/filtered-view-schematic.example.component";
-import { FilteredViewSchematicOutletComponent } from "./filtered-view/filtered-view-schematics.outlet.component";
 import { FilteredViewTableWithCustomVirtualScrollComponent } from "./filtered-view/filtered-view-table-with-custom-virtual-scroll/filtered-view-table-with-custom-virtual-scroll.component";
 import { FilteredViewTableWithCustomVirtualScrollModule } from "./filtered-view/filtered-view-table-with-custom-virtual-scroll/filtered-view-table-with-custom-virtual-scroll.module";
 import { FilteredViewTableWithPaginationComponent } from "./filtered-view/filtered-view-table-with-pagination/filtered-view-table-with-pagination.component";
@@ -67,12 +66,12 @@ import { FilteredViewWithTreeComponent } from "./filtered-view/filtered-view-wit
 import { FilteredViewWithTreeModule } from "./filtered-view/filtered-view-with-tree/filtered-view-with-tree.module";
 import { BasicListComponent } from "./list/basic-list/basic-list.component";
 import { ListSchematicExampleComponent } from "./list/list-schematic.example.component";
-import { ListSchematicsOutletComponent } from "./list/list-schematics-outlet.component";
 import { PaginatedListComponent } from "./list/paginated-list/paginated-list.component";
 import { SearchListComponent } from "./list/search-list/search-list.component";
 import { SelectionListComponent } from "./list/selection-list/selection-list.component";
 import { VirtualScrollListComponent } from "./list/virtual-scroll-list/virtual-scroll-list.component";
 import { SchematicsDocsComponent } from "./schematics-docs.component";
+import { SchematicsOutletComponent } from "./schematics-outlet.component";
 import { BasicTableComponent } from "./table/basic-table/basic-table.component";
 import { TableSchematicExampleComponent } from "./table/table-schematic-example.component";
 import { TableWithCustomVirtualScrollComponent } from "./table/table-with-custom-virtual-scroll/table-with-custom-virtual-scroll.component";
@@ -81,6 +80,7 @@ import { TableWithSearchComponent } from "./table/table-with-search/table-with-s
 import { TableWithSelectionComponent } from "./table/table-with-selection/table-with-selection.component";
 import { TableWithSortComponent } from "./table/table-with-sort/table-with-sort.component";
 import { TableWithVirtualScrollComponent } from "./table/table-with-virtual-scroll/table-with-virtual-scroll.component";
+import { TableSchematicsVisualTestComponent } from "./table/visual-test/table-schematics-visual-test.component";
 import { RecursiveObjectViewComponent } from "./utils/recursive-object-view.component";
 import { SchematicsDocsCliOptionComponent } from "./utils/schematic-docs-cli-option/schematic-docs-cli-option.component";
 import { SchematicsDocsCommandComponent } from "./utils/schematic-docs-command/schematic-docs-command.component";
@@ -160,7 +160,7 @@ const staticRoutes: Routes = [
     },
     {
         path: "filtered-view",
-        component: FilteredViewSchematicOutletComponent,
+        component: SchematicsOutletComponent,
         data: {
             "srlc": {
                 "stage": SrlcStage.ga,
@@ -191,7 +191,7 @@ const staticRoutes: Routes = [
     },
     {
         path: "list-outlet",
-        component: ListSchematicsOutletComponent,
+        component: SchematicsOutletComponent,
         children: [
             {
                 path: "selection",
@@ -214,6 +214,30 @@ const staticRoutes: Routes = [
         },
     },
     {
+        path: "table-outlet",
+        component: SchematicsOutletComponent,
+        children: [
+            {
+                path: "virtual-scroll",
+                component: TableWithVirtualScrollComponent,
+                data: {
+                    "srlc": {
+                        "hideIndicator": true,
+                    },
+                },
+            },
+            {
+                path: "visual-test",
+                component: TableSchematicsVisualTestComponent,
+                data: {
+                    "srlc": {
+                        "hideIndicator": true,
+                    },
+                },
+            },
+        ],
+    },
+    {
         path: "tree",
         component: FilteredViewWithTreeComponent,
         data: {
@@ -228,8 +252,7 @@ const staticRoutes: Routes = [
 @NgModule({
     declarations: [
         FakeServer,
-        FilteredViewSchematicOutletComponent,
-        ListSchematicsOutletComponent,
+        SchematicsOutletComponent,
         FilteredViewSchematicExampleComponent,
         BasicFilterGroupExampleComponent,
         CustomDataSourceFilterGroupExampleComponent,
@@ -241,6 +264,7 @@ const staticRoutes: Routes = [
         SelectionListComponent,
         ListSchematicExampleComponent,
         TableSchematicExampleComponent,
+        TableSchematicsVisualTestComponent,
         RecursiveObjectViewComponent,
         SchematicJsonComponent,
         SchematicsDocsComponent,

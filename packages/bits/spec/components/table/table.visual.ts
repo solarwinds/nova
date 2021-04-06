@@ -21,7 +21,7 @@ describe(`Visual tests: ${name}`, () => {
     let expanders: {[key: string]: ElementFinder};
 
     beforeAll(async () => {
-        await Helpers.prepareBrowser("table/table-visual-test");
+        await Helpers.prepareBrowser("table/visual-test");
 
         tableBasic = Atom.find(TableAtom, "table-basic-usage");
         sortableTable = Atom.find(TableAtom, "table-sorting");
@@ -44,7 +44,7 @@ describe(`Visual tests: ${name}`, () => {
 
         const firstHeaderCell = selectedRowsTable.getCell(0, 0);
         selector = selectedRowsTable.getSelector(firstHeaderCell);
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 

@@ -51,6 +51,9 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
     private userProvidedHeight: string;
 
     private unsubscribe$: Subject<unknown> = new Subject<unknown>();
+    private headResizeObserver: ResizeObserver;
+    // this is for keeping track of the original viewport height on head resize
+    private origViewportHeight: number;
 
     private get viewportEl(): HTMLElement {
         return this.viewport.elementRef.nativeElement;
@@ -69,6 +72,15 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         // Waiting for the next tick to let cdk table properly draw the table header
         setTimeout(() => this.updateNativeHeaderPlaceholder());
         this.updateHeadPosition(this._sticky);
+    }
+
+    public ngOnDestroy(): void {
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+
+        if (this.headResizeObserver) {
+            this.headResizeObserver.disconnect();
+        }
     }
 
     public setNative(): void {
@@ -109,25 +121,49 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         this.syncColumnWidths();
 
         // Note: While we're detaching header from CDK Viewport we have
-        // to recalculate viewport height to keep the same total height
-        // Skipping one tick to let header get his height;
-        // TODO: Find a better place to assign that
-        setTimeout(() => {
-            this.updateContainerToFitHead();
-        });
+        // to recalculate viewport height to keep the same total height.
+        // The setTimeout is for skipping one tick to let the header get his height.
+        setTimeout(() => this.updateContainerToFitHead());
+        this.updateViewportHeightOnHeadResize();
+
         this.headPosition = TableVirtualScrollHeaderPosition.Sticky;
     }
 
-    public updateContainerToFitHead(): void {
-        const viewportComputedHeight: string = isEmpty(this.userProvidedHeight) ? this.viewportEl.offsetHeight + "px" : this.userProvidedHeight;
-        this.viewportEl.style.setProperty("height",
-            `calc(${ viewportComputedHeight } - ${ this.headRef?.rows.item(0)?.offsetHeight ?? 0 }px)`, "important");
+    public updateContainerToFitHead = (): void => {
+        if (this._sticky) {
+            this.origViewportHeight = this.origViewportHeight || this.viewportEl?.offsetHeight;
+            const viewportComputedHeight: string = isEmpty(this.userProvidedHeight) ? this.origViewportHeight + "px" : this.userProvidedHeight;
+            this.viewportEl.style.setProperty("height",
+                `calc(${viewportComputedHeight} - ${this.headRef?.rows.item(0)?.offsetHeight ?? 0}px)`, "important");
+        }
+    }
+
+    public updateViewportHeightOnHeadResize(): void {
+        if (this.headResizeObserver) {
+            return;
+        }
+
+        // This resize observer is needed in case a parent element has a height of zero upon instantiation
+        // thereby prohibiting the header from having its intended height when its initially rendered.
+        if (this.headRef) {
+            this.headResizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) =>
+                // We wrap this in requestAnimationFrame to avoid "ResizeObserver loop limit exceeded" error in unit tests
+                // https://stackoverflow.com/questions/49384120/resizeobserver-loop-limit-exceeded
+                window.requestAnimationFrame(() => {
+                    if (!Array.isArray(entries) || !entries.length) {
+                        return;
+                    }
+                    this.updateContainerToFitHead();
+                })
+            );
+            this.headResizeObserver.observe(this.headRef);
+        }
     }
 
     public handleColumnsUpdate$: () => Observable<unknown> = () => {
         // TODO: Perform a dirty check before starting assigning new values
         // Note: Setting the width of stickyHeadContainer container to be able to simulate horizontal scroll of the sticky header
-        this.renderer.setStyle(this.stickyHeadContainer, "width", `${ this.viewport._contentWrapper.nativeElement.scrollWidth }px`);
+        this.renderer.setStyle(this.stickyHeadContainer, "width", `${this.viewport._contentWrapper.nativeElement.scrollWidth}px`);
 
         const headColumns: HTMLTableHeaderCellElement[] = Array.from(this.stickyHeadContainer?.getElementsByTagName("th") || []);
         const firstDataRowCells: HTMLTableDataCellElement[] = Array.from(this.bodyRef?.rows.item(0)?.cells || []);
@@ -141,7 +177,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         firstDataRowCells.forEach((cell: HTMLTableDataCellElement, index: number) => {
             // Note: Assigning data cell width to the corresponding header column
             // (using the style width if specified; otherwise, falling back to the offsetWidth)
-            headColumns[index].style.width = cell.style.width || `${ cell.offsetWidth }px`;
+            headColumns[index].style.width = cell.style.width || `${cell.offsetWidth}px`;
         });
 
         // update the header placeholder to match the updated column widths
@@ -206,7 +242,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             tap((scrollLeft: number) => {
                 previousScrollLeft = scrollLeft;
                 // Note: Simulating horizontal scroll by assigning margin-left to be equal to scrolled distance
-                this.renderer.setStyle(this.stickyHeadContainer, "margin-left", `-${ scrollLeft }px`);
+                this.renderer.setStyle(this.stickyHeadContainer, "margin-left", `-${scrollLeft}px`);
             }),
             takeUntil(this.unsubscribe$)
         ).subscribe();
@@ -254,10 +290,5 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             return;
         }
         this.setSticky();
-    }
-
-    public ngOnDestroy(): void {
-        this.unsubscribe$.next();
-        this.unsubscribe$.complete();
     }
 }

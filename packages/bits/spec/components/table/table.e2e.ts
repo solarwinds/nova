@@ -1,4 +1,4 @@
-import { browser, by, ElementFinder } from "protractor";
+import { browser, by, element, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
@@ -299,6 +299,25 @@ describe("USERCONTROL table >", () => {
             const iconCell = resizableTable.getElement().element(by.id("nui-header-cell-icon"));
             const iconCellResizer = iconCell.element(by.className(".nui-table__resizer"));
             expect(await iconCellResizer.isPresent()).toBe(false);
+        });
+    });
+
+    describe("Sticky header >", () => {
+        beforeEach(async () => {
+            await Helpers.prepareBrowser("table/sticky");
+        });
+
+        it("adjust the virtual scroll viewport height to accommodate the header height", async () => {
+            const container = element(by.id("nui-demo-table-sticky-header"));
+            const containerHeight = (await container.getSize()).height;
+            const viewPortHeight = (await element(by.tagName("cdk-virtual-scroll-viewport")).getSize()).height;
+
+            // Table with sticky header actually consists of two tables (one for the header and one for the table itself).
+            // Here we are getting the first one for access to the header.
+            const stickyHeader: TableAtom = Atom.findIn(TableAtom, container, 0);
+            const headerHeight = (await stickyHeader.getElement().element(by.tagName("thead")).getSize()).height;
+
+            expect(headerHeight + viewPortHeight).toEqual(containerHeight);
         });
     });
 
