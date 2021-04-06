@@ -1,4 +1,4 @@
-import { CameraEngine } from "./CameraEngine";
+import { CameraEngine } from "./camera-engine";
 
 export class CameraToggle {
 

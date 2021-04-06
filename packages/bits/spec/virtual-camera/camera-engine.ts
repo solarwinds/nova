@@ -1,6 +1,6 @@
 import { ProtractorBrowser } from "protractor";
-import { EyesLens } from "./EyesLens";
-import { PercyLens } from "./PercyLens";
+import { EyesLens } from "./eyes-lens";
+import { PercyLens } from "./percy-lens";
 import { ICameraSettings, ILens, LENSES, LensType } from "./types";
 
 export class CameraEngine {
@@ -23,10 +23,10 @@ export class CameraEngine {
         if (this.settings.globalLens && LENSES.includes(this.settings.globalLens)) {
 
             switch (this.settings.globalLens) {
-                case(LensType.PERCY):
+                case(LensType.Percy):
                     this.currentLensInstance = new PercyLens(this.browser, this.settings);
                     break;
-                case(LensType.EYES):
+                case(LensType.Eyes):
                     this.currentLensInstance = new EyesLens(this.browser, this.settings);
                     break;
             }
@@ -49,9 +49,5 @@ export class CameraEngine {
 
     public getToolConfig() {
         return this.currentLensInstance.toolConfig();
-        // if (this.currentLensInstance instanceof EyesLens) {
-        // }
-
-        // console.warn("No tool configuration is available for the selected lens");
     }
 }
