@@ -9,21 +9,24 @@ import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT, MOUSE_ACTIVE_EVENT
 import { LinearGaugeThresholdsRenderer } from "../../../renderers/bar/linear-gauge-thresholds-renderer";
 import { RenderLayerName } from "../../../renderers/types";
 import { ChartPlugin } from "../../common/chart-plugin";
-import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../../common/types";
-import { IAllAround } from "../../grid/types";
+import { D3Selection, IAccessors, IChartEvent, IChartSeries, IDataSeries } from "../../common/types";
+import { IAllAround, IDimensionConfig } from "../../grid/types";
 
 import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
 import cloneDeep from "lodash/cloneDeep";
+import { HorizontalBarAccessors } from "../../../renderers/bar/accessors/horizontal-bar-accessors";
+import { GaugeUtil } from "../../../gauge/gauge-util";
 
 /**
  * @ignore
  * Configuration for the LinearGaugeLabelsPlugin
  */
 export interface ILinearGaugeLabelsPluginConfig {
-    gridMargin?: IAllAround<number>;
-    labelPadding?: number;
+    clearance?: IAllAround<number>;
+    padding?: number;
     formatterName?: string;
     enableThresholdLabels?: boolean;
+    flipLabels?: boolean
 
     // TODO: NUI-5815
     // enableIntervalLabels?: boolean;
@@ -34,23 +37,24 @@ export interface ILinearGaugeLabelsPluginConfig {
  * A chart plugin that handles the rendering of labels for a donut gauge
  */
 export class LinearGaugeLabelsPlugin extends ChartPlugin {
-    public static readonly MARGIN_DEFAULT = 25;
-
     /** The default plugin configuration */
     public DEFAULT_CONFIG: ILinearGaugeLabelsPluginConfig = {
-        gridMargin: {
-            top: 0,
-            right: 0,
-            bottom: LinearGaugeLabelsPlugin.MARGIN_DEFAULT,
-            left: 0,
+        clearance: {
+            top: 20,
+            right: 25,
+            bottom: 20,
+            left: 25,
         },
-        labelPadding: 5,
+        padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
         enableThresholdLabels: true,
+        flipLabels: false,
     };
 
     private destroy$ = new Subject();
     private lasagnaLayer: D3Selection<SVGElement>;
+    private isHorizontal = true;
+    private thresholdSeries: IChartSeries<IAccessors<any>> | undefined;
 
     constructor(public config: ILinearGaugeLabelsPluginConfig = {}) {
         super();
@@ -64,9 +68,6 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
             clipped: false,
         });
 
-        const gridConfig = this.chart.getGrid().config();
-        gridConfig.dimension.margin = this.config.gridMargin as IAllAround<number>;
-
         this.chart.getEventBus().getStream(MOUSE_ACTIVE_EVENT as string).pipe(
             takeUntil(this.destroy$)
         ).subscribe((event: IChartEvent) => {
@@ -79,6 +80,9 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
 
     public updateDimensions() {
         if (this.config.enableThresholdLabels) {
+            this.thresholdSeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) => series.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID);
+            this.isHorizontal = this.thresholdSeries?.accessors instanceof HorizontalBarAccessors;
+            this.adjustGridMargin();
             this.drawThresholdLabels();
         }
     }
@@ -91,12 +95,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private drawThresholdLabels() {
-        const quantitySeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) => series.id === "quantity");
-        const thresholdSeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) => series.id === "threshold-markers");
-        const renderer = (quantitySeries?.renderer as BarRenderer);
-        const accessors = thresholdSeries?.accessors;
-
-        const data = cloneDeep(thresholdSeries?.data);
+        const data = cloneDeep(this.thresholdSeries?.data);
         if (isUndefined(data)) {
             throw new Error("Gauge threshold series data is undefined");
         }
@@ -112,20 +111,77 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
         // removing this value to avoid rendering a marker for it
         data.pop();
 
-        const formatter = thresholdSeries?.scales.x.formatters[this.config.formatterName as string] ?? (d => d);
+        const formatter = this.thresholdSeries?.scales[this.isHorizontal ? "x" : "y"].formatters[this.config.formatterName as string] ?? (d => d);
         const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`).data(data);
-        const xTranslate = (d: any, i: number) => thresholdSeries?.scales.x.convert(accessors?.data?.endX?.(d, i, thresholdSeries.data, thresholdSeries));
-        const yTranslation = this.chart.getGrid().config().dimension.height() + 5;
+
         labelSelection.exit().remove();
         labelSelection.enter()
             .append("text")
             .attr("class", GAUGE_THRESHOLD_LABEL_CLASS)
             .merge(labelSelection as any)
-            .attr("transform", (d, i) => `translate(${xTranslate(d, i)}, ${yTranslation})`)
+            .attr("transform", (d, i) => `translate(${this.xTranslate(d, i)}, ${this.yTranslate(d, i)})`)
             .attr("title", (d, i) => formatter(data[i].value))
-            .style("text-anchor", (d) => "middle")
-            .style("dominant-baseline", (d) => "hanging")
+            .style("text-anchor", (d) => this.getTextAnchor())
+            .style("dominant-baseline", (d) => this.getAlignmentBaseline())
             .text((d, i) => formatter(data[i].value));
     }
 
+    private getLabelOffset() {
+        let labelStart = 0;
+        if (!this.config.flipLabels) {
+            const gridDimensions = this.chart.getGrid().config().dimension;
+            labelStart = this.isHorizontal ? gridDimensions.height() : gridDimensions.width()
+        };
+        let padding = this.config.padding as number;
+        padding = this.config.flipLabels ? -(padding) : padding;
+        return labelStart + padding;
+    }
+
+    private xTranslate = (d: any, i: number) => {
+        if (this.isHorizontal) {
+            const value = this.thresholdSeries?.accessors?.data?.endX?.(d, i, this.thresholdSeries?.data as any[], this.thresholdSeries as IDataSeries<IAccessors>);
+            return this.thresholdSeries?.scales.x.convert(value);
+        }
+
+        return this.getLabelOffset();
+    };
+
+    private yTranslate = (d: any, i: number) => {
+        if (this.isHorizontal) {
+            return this.getLabelOffset();
+        }
+
+        const value = this.thresholdSeries?.accessors?.data?.endY?.(d, i, this.thresholdSeries?.data as any[], this.thresholdSeries as IDataSeries<IAccessors>);
+        return this.thresholdSeries?.scales.y.convert(value);
+    }
+
+    private getTextAnchor(): string {
+        if (this.isHorizontal) {
+            return "middle";
+        }
+
+        return this.config.flipLabels ? "end" : "start";
+    }
+
+    private getAlignmentBaseline(): string {
+        if (this.isHorizontal) {
+            return this.config.flipLabels ? "text-after-edge" : "hanging";
+        }
+
+        return "central";
+    }
+
+    private adjustGridMargin() {
+        const gridConfig = this.chart.getGrid().config();
+        const marginToAdjust = this.getMarginToAdjust();
+        gridConfig.dimension.margin[marginToAdjust] = this.config.clearance?.[marginToAdjust] as number;
+    }
+
+    private getMarginToAdjust() {
+        if (this.isHorizontal ) {
+            return this.config.flipLabels ? "top" : "bottom";
+        }
+
+        return this.config.flipLabels ? "left" : "right";
+    }
 }

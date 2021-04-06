@@ -19,8 +19,8 @@ import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE
  * Configuration for the DonutGaugeLabelsPlugin
  */
 export interface IDonutGaugeLabelsPluginConfig {
-    gridMargin?: IAllAround<number>;
-    labelPadding?: number;
+    clearance?: IAllAround<number>;
+    padding?: number;
     formatterName?: string;
     enableThresholdLabels?: boolean;
 
@@ -37,13 +37,13 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
 
     /** The default plugin configuration */
     public DEFAULT_CONFIG: IDonutGaugeLabelsPluginConfig = {
-        gridMargin: {
+        clearance: {
             top: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
             right: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
             bottom: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
             left: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
         },
-        labelPadding: 5,
+        padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
         enableThresholdLabels: true,
     };
@@ -64,7 +64,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
         });
 
         const gridConfig = this.chart.getGrid().config();
-        gridConfig.dimension.margin = this.config.gridMargin as IAllAround<number>;
+        gridConfig.dimension.margin = this.config.clearance as IAllAround<number>;
 
         this.chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT as string).pipe(
             takeUntil(this.destroy$)
@@ -95,7 +95,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
         const thresholdsSeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) =>
             series.renderer instanceof DonutGaugeThresholdsRenderer);
         const renderer = (thresholdsSeries?.renderer as DonutGaugeThresholdsRenderer);
-        const labelRadius = renderer?.getOuterRadius(thresholdsSeries?.scales.r.range() ?? [0, 0], 0) + (this.config.labelPadding as number);
+        const labelRadius = renderer?.getOuterRadius(thresholdsSeries?.scales.r.range() ?? [0, 0], 0) + (this.config.padding as number);
         if (isUndefined(labelRadius)) {
             throw new Error("Radius is undefined");
         }
