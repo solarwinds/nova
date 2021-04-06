@@ -1,7 +1,7 @@
 import { ProtractorBrowser } from "protractor";
-import { CameraEngine } from "./CameraEngine";
-import { CameraSettings } from "./CameraSettings";
-import { CameraToggle } from "./CameraToggle";
+import { CameraEngine } from "./camera-engine";
+import { CameraSettings } from "./camera-settings";
+import { CameraToggle } from "./camera-toggle";
 import { ICameraSettings, ICameraSettingsActions } from "./types";
 
 export class Camera {

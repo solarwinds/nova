@@ -64,7 +64,7 @@ export class EyesLens implements ILens {
     }
 
     private async snapshotEachWidth(label: string): Promise<void> {
-        for (let width of this.cameraSettings.responsiveWiths) {
+        for (let width of this.cameraSettings.responsiveWidths) {
             await this.browser.manage().window().setSize(width, 1080);
 
             if (this.cameraSettings.responsivityCallback) {

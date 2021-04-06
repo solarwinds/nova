@@ -1,6 +1,6 @@
 import { ProtractorBrowser } from "protractor";
-import { EyesLens } from "./EyesLens";
-import { PercyLens } from "./PercyLens";
+import { EyesLens } from "./eyes-lens";
+import { PercyLens } from "./percy-lens";
 import { ICameraSettings, ILens, LENSES, LensType } from "./types";
 
 export class CameraEngine {

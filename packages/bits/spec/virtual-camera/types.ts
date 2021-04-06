@@ -9,7 +9,7 @@ export const LENSES: string[] =  [ ...Object.values(LensType) ];
 
 export const CAMERA_DEFAULT_SETTINGS: ICameraSettings = {
     fullframe: true,
-    responsiveWiths: [1920],
+    responsiveWidths: [1920],
     currentSuiteName: "",
     currentTestName: "",
     globalLens: "percy",
@@ -38,7 +38,7 @@ export interface ILens {
 
 export interface ICameraSettings {
     fullframe: boolean;
-    responsiveWiths: number[];
+    responsiveWidths: number[];
     currentSuiteName: string;
     currentTestName: string;
     globalLens: string;
