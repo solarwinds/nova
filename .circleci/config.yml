@@ -166,7 +166,13 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Publish bits
-                    command: yarn run publish-ci
+                    command: |
+                        if [ -f package-cached ]; then
+                            echo "Package was cached so skipping publish"
+                            circleci step halt
+                        else
+                            yarn run publish-ci
+                        fi
     charts-build:
         working_directory: ~/nova
         docker:
@@ -319,7 +325,13 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Publish charts
-                    command: yarn run publish-ci
+                    command: |
+                        if [ -f package-cached ]; then
+                            echo "Package was cached so skipping publish"
+                            circleci step halt
+                        else
+                            yarn run publish-ci
+                        fi
     dashboards-build:
         working_directory: ~/nova
         docker:
@@ -477,7 +489,13 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Publish dashboards
-                    command: yarn run publish-ci
+                    command: |
+                        if [ -f package-cached ]; then
+                            echo "Package was cached so skipping publish"
+                            circleci step halt
+                        else
+                            yarn run publish-ci
+                        fi
     nova-docs:
         working_directory: ~/nova
         docker:
