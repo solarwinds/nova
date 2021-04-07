@@ -23,5 +23,7 @@ export class RepeatItemComponent {
 
     @Input() public selected = false;
 
-    get role(): string { return this.clickable ? "option" : "listitem"; }
+    @Input() public selectable = false;
+
+    get role(): string { return this.selectable ? "option" : "listitem"; }
 }

@@ -2,6 +2,7 @@
     <nui-repeat-item cdkDrag #drag=cdkDrag [cdkDragData]="item" [cdkDragPreviewClass]="dragPreviewClass" [cdkDragDisabled]="!isItemDraggable(item)" class="repeat-group-item"
                      (click)="itemClicked($event, item)"
                      [clickable]="!(selectionMode === repeatSelectionMode.none)"
+                     [selectable]="!(selectionMode === repeatSelectionMode.none)"
                      [selected]="isItemSelected(item) && !isItemDisabled(item)"
                      [ngClass]="{
             'repeat-group-item__disabled': isItemDisabled(item),
