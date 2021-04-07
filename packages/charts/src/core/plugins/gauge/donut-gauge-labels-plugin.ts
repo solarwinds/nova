@@ -13,20 +13,8 @@ import { D3Selection, IAccessors, IChartEvent, IChartSeries } from "../../common
 import { IAllAround } from "../../grid/types";
 
 import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
+import { IGaugeLabelsPluginConfig } from "./types";
 
-/**
- * @ignore
- * Configuration for the DonutGaugeLabelsPlugin
- */
-export interface IDonutGaugeLabelsPluginConfig {
-    clearance?: IAllAround<number>;
-    padding?: number;
-    formatterName?: string;
-    enableThresholdLabels?: boolean;
-
-    // TODO: NUI-5815
-    // enableIntervalLabels?: boolean;
-}
 
 /**
  * @ignore
@@ -36,13 +24,14 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
     public static readonly MARGIN_DEFAULT = 25;
 
     /** The default plugin configuration */
-    public DEFAULT_CONFIG: IDonutGaugeLabelsPluginConfig = {
+    public DEFAULT_CONFIG: IGaugeLabelsPluginConfig = {
         clearance: {
             top: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
             right: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
             bottom: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
             left: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
         },
+        autoClearance: true,
         padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
         enableThresholdLabels: true,
@@ -51,7 +40,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
     private destroy$ = new Subject();
     private lasagnaLayer: D3Selection<SVGElement>;
 
-    constructor(public config: IDonutGaugeLabelsPluginConfig = {}) {
+    constructor(public config: IGaugeLabelsPluginConfig = {}) {
         super();
         this.config = defaultsDeep(this.config, this.DEFAULT_CONFIG);
     }
@@ -63,8 +52,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
             clipped: false,
         });
 
-        const gridConfig = this.chart.getGrid().config();
-        gridConfig.dimension.margin = this.config.clearance as IAllAround<number>;
+        this.adjustGridMargin();
 
         this.chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT as string).pipe(
             takeUntil(this.destroy$)
@@ -163,6 +151,13 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
 
         // used for left 60 degrees and right 60 degrees of chart
         return "central";
+    }
+
+    private adjustGridMargin() {
+        if (this.config.autoClearance) {
+            const gridConfig = this.chart.getGrid().config();
+            gridConfig.dimension.margin = this.config.clearance as IAllAround<number>;
+        }
     }
 
 }

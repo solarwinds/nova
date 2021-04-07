@@ -1,36 +1,18 @@
-import { Arc, arc, DefaultArcObject } from "d3-shape";
 import defaultsDeep from "lodash/defaultsDeep";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { BarRenderer } from "../../../renderers/bar/bar-renderer";
 
-import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT, MOUSE_ACTIVE_EVENT, STANDARD_RENDER_LAYERS } from "../../../constants";
-import { LinearGaugeThresholdsRenderer } from "../../../renderers/bar/linear-gauge-thresholds-renderer";
+import { MOUSE_ACTIVE_EVENT, STANDARD_RENDER_LAYERS } from "../../../constants";
 import { RenderLayerName } from "../../../renderers/types";
 import { ChartPlugin } from "../../common/chart-plugin";
 import { D3Selection, IAccessors, IChartEvent, IChartSeries, IDataSeries } from "../../common/types";
-import { IAllAround, IDimensionConfig } from "../../grid/types";
 
 import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
 import cloneDeep from "lodash/cloneDeep";
 import { HorizontalBarAccessors } from "../../../renderers/bar/accessors/horizontal-bar-accessors";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-
-/**
- * @ignore
- * Configuration for the LinearGaugeLabelsPlugin
- */
-export interface ILinearGaugeLabelsPluginConfig {
-    clearance?: IAllAround<number>;
-    padding?: number;
-    formatterName?: string;
-    enableThresholdLabels?: boolean;
-    flipLabels?: boolean
-
-    // TODO: NUI-5815
-    // enableIntervalLabels?: boolean;
-}
+import { IGaugeLabelsPluginConfig } from "./types";
 
 /**
  * @ignore
@@ -38,13 +20,14 @@ export interface ILinearGaugeLabelsPluginConfig {
  */
 export class LinearGaugeLabelsPlugin extends ChartPlugin {
     /** The default plugin configuration */
-    public DEFAULT_CONFIG: ILinearGaugeLabelsPluginConfig = {
+    public DEFAULT_CONFIG: IGaugeLabelsPluginConfig = {
         clearance: {
             top: 20,
             right: 25,
             bottom: 20,
             left: 25,
         },
+        autoClearance: true,
         padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
         enableThresholdLabels: true,
@@ -56,7 +39,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     private isHorizontal = true;
     private thresholdSeries: IChartSeries<IAccessors<any>> | undefined;
 
-    constructor(public config: ILinearGaugeLabelsPluginConfig = {}) {
+    constructor(public config: IGaugeLabelsPluginConfig = {}) {
         super();
         this.config = defaultsDeep(this.config, this.DEFAULT_CONFIG);
     }
@@ -172,9 +155,11 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private adjustGridMargin() {
-        const gridConfig = this.chart.getGrid().config();
-        const marginToAdjust = this.getMarginToAdjust();
-        gridConfig.dimension.margin[marginToAdjust] = this.config.clearance?.[marginToAdjust] as number;
+        if (this.config.autoClearance) {
+            const gridConfig = this.chart.getGrid().config();
+            const marginToAdjust = this.getMarginToAdjust();
+            gridConfig.dimension.margin[marginToAdjust] = this.config.clearance?.[marginToAdjust] as number;
+        }
     }
 
     private getMarginToAdjust() {
