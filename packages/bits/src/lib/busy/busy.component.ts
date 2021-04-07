@@ -35,10 +35,11 @@ export class BusyComponent implements AfterContentInit, OnChanges {
     constructor(
         private tabNavigationService: TabNavigationService,
         private elRef: ElementRef
-    ) {
-    }
+    ) {}
 
     public ngAfterContentInit() {
+        this.setBusyStateForContentComponents();
+
         this.isSpinnerTemplate = Boolean(this.spinnerComponent);
         this.isProgressTemplate = Boolean(this.progressComponent);
         if (this.spinnerComponent && this.progressComponent) {
@@ -50,7 +51,7 @@ export class BusyComponent implements AfterContentInit, OnChanges {
             this.isDefaultTemplate = true;
         }
     }
-
+ 
     public ngOnChanges(changes: SimpleChanges) {
         if (this.disableTabNavigation && changes.busy?.currentValue !== undefined) {
             if (this.busy) {
@@ -60,6 +61,10 @@ export class BusyComponent implements AfterContentInit, OnChanges {
             }
         }
 
+        this.setBusyStateForContentComponents();
+    }
+
+    private setBusyStateForContentComponents() {
         if (this.spinnerComponent) {
             this.spinnerComponent.showSpinner = this.busy;
         }
