@@ -34,7 +34,7 @@ export type PopoverModalEvents = "mouse-enter" | "mouse-leave" | "backdrop-click
     animations: [
         fadeIn,
     ],
-    host: { "[attr.role]": "role" },
+    host: { "role": "dialog" },
 })
 export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     /**
@@ -79,8 +79,6 @@ export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     public popoverModalEventSubject: Subject<PopoverModalEvents>;
 
     private popoverModalSubscriptions: Subscription[] = [];
-
-    get role(): string { return this.backdrop ? "alertdialog" : "dialog"; }
 
     @HostListener("click", ["$event"])
     onClick(event: MouseEvent) {
