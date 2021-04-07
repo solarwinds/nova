@@ -18,7 +18,7 @@
         [ngTemplateOutletContext]="{$implicit: getLastSelectedOption()?.displayValueContext || value, open: isDropdownOpen}"
     ></ng-container>
 </div>
-<nui-overlay [role]="'listbox'"
+<nui-overlay roleAttr="listbox"
               [toggleReference]="elRef.nativeElement"
               [viewportMargin]="popupViewportMargin"
               [overlayConfig]="overlayConfig">

@@ -3,7 +3,6 @@
                      (click)="itemClicked($event, item)"
                      [clickable]="!(selectionMode === repeatSelectionMode.none)"
                      [selected]="isItemSelected(item) && !isItemDisabled(item)"
-                     [draggable]="isItemDraggable(item)"
                      [ngClass]="{
             'repeat-group-item__disabled': isItemDisabled(item),
             'nui-dnd-without-drag-handle': isItemDraggable(item) && !dragHandleTemplateRef,

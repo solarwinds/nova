@@ -255,7 +255,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
     /** Emits when the drop list has been destroyed. */
     private readonly dropListDestroyed = new Subject<void>();
 
-    get role(): string { return this._draggable || this.selectionMode !== "none" ? "listbox" : "list"; }
+    get role(): string { return this.selectionMode !== "none" ? "listbox" : "list"; }
 
     constructor(public changeDetector: ChangeDetectorRef, public logger: LoggerService,
                 private iterableDiffers: IterableDiffers, public dragDropService: DragDrop,

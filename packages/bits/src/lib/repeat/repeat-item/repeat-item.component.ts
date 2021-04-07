@@ -23,7 +23,5 @@ export class RepeatItemComponent {
 
     @Input() public selected = false;
 
-    @Input() public draggable = false;
-
-    get role(): string { return this.clickable || this.draggable ? "option" : "listitem"; }
+    get role(): string { return this.clickable ? "option" : "listitem"; }
 }

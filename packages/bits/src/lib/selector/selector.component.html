@@ -13,7 +13,6 @@
     </button>
     <button nui-button *ngIf="items?.length"
             type="button"
-            role="menubutton"
             class="nui-selector__toggle"
             [displayStyle]="'default'"
             [icon]="'caret-down'"
@@ -25,7 +24,6 @@
 <div #popupArea></div>
 
 <nui-overlay #overlay
-             [role]="'menu'"
              [toggleReference]="toggleButton"
              [overlayConfig]="overlayConfig"
              [customContainer]="customContainer">

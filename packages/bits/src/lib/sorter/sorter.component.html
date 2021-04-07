@@ -11,7 +11,6 @@
             </button>
             <button nui-button
                     type="button"
-                    role="menubutton"
                     class="nui-selector__toggle"
                     (click)="overlay.toggle()"
                     icon="caret-down">
@@ -22,7 +21,6 @@
     <div #popupArea></div>
 
     <nui-overlay #overlay
-                 [role]="'menu'"
                  [toggleReference]="toggleRef"
                  [overlayConfig]="overlayConfig"
                  [customContainer]="customContainer">

@@ -35,7 +35,7 @@ export const POPUP_V2_VIEWPORT_MARGINS_DEFAULT = 30;
     selector: "nui-overlay",
     template: `
         <ng-template cdk-portal>
-            <div class="nui-overlay" [attr.role]="role" [ngClass]="{'empty': empty$ | async}">
+            <div class="nui-overlay" role="roleAttr" [ngClass]="{'empty': empty$ | async}">
                 <ng-content></ng-content>
             </div>
         </ng-template>`,
@@ -64,7 +64,7 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
     @Input() customContainer: OverlayContainerType;
 
     /** Sets the role attribute */
-    @Input() role: string;
+    @Input() roleAttr: string;
 
     /** Emits MouseEvent when click occurs outside Select/Combobox */
     @Output() public clickOutside = new EventEmitter<MouseEvent>();
