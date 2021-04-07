@@ -68,7 +68,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
                 right: 40,
                 bottom: 0,
                 left: 40,
-            }
+            },
         };
         this.labelsPlugin = new LinearGaugeLabelsPlugin(labelConfig);
         this.chartAssist.chart.addPlugin(this.labelsPlugin);

@@ -63,7 +63,9 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
 
     public updateDimensions() {
         if (this.config.enableThresholdLabels) {
-            this.thresholdSeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) => series.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID);
+            this.thresholdSeries = this.chart.getDataManager().chartSeriesSet.find(
+                (series: IChartSeries<IAccessors<any>>) => series.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID
+            );
             this.isHorizontal = this.thresholdSeries?.accessors instanceof HorizontalBarAccessors;
             this.adjustGridMargin();
             this.drawThresholdLabels();
@@ -114,7 +116,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
         if (!this.config.flipLabels) {
             const gridDimensions = this.chart.getGrid().config().dimension;
             labelStart = this.isHorizontal ? gridDimensions.height() : gridDimensions.width()
-        };
+        }
         let padding = this.config.padding as number;
         padding = this.config.flipLabels ? -(padding) : padding;
         return labelStart + padding;
@@ -122,7 +124,8 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
 
     private xTranslate = (d: any, i: number) => {
         if (this.isHorizontal) {
-            const value = this.thresholdSeries?.accessors?.data?.endX?.(d, i, this.thresholdSeries?.data as any[], this.thresholdSeries as IDataSeries<IAccessors>);
+            const thresholdSeries = this.thresholdSeries as IDataSeries<IAccessors>;
+            const value = this.thresholdSeries?.accessors?.data?.endX?.(d, i, thresholdSeries?.data as any[], thresholdSeries);
             return this.thresholdSeries?.scales.x.convert(value);
         }
 
