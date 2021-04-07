@@ -1,6 +1,6 @@
 <nui-time-frame-bar [id]="bar.id" *ngFor="let bar of bars"
                     [timeFrame]="bar.timeFrame"
-                    (timeFrameChange)="bar.change($event)"
+                    (timeFrameChange)="changeTimeFrame($event, bar)"
                     (undo)="bar.undo()"
                     (clear)="bar.change()"
                     [historyIndex]="bar.history.index">

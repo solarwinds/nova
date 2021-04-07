@@ -11,7 +11,7 @@ describe(`Visual tests: Charts - ${name}`, () => {
     let firstChart: ChartAtom;
 
     beforeAll(async () => {
-        await Helpers.prepareBrowser("chart-types/spark/multiple");
+        await Helpers.prepareBrowser("chart-types/spark/test");
         await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
 
         firstChart = Atom.findIn(ChartAtom, element(by.tagName("nui-spark-chart-multiple-example")), 0);

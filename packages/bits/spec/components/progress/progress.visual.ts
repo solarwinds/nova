@@ -1,8 +1,9 @@
-import { browser, by, element } from "protractor";
+import { $, browser, by, element, ExpectedConditions } from "protractor";
 
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { ButtonAtom } from "../button/button.atom";
+import { ProgressAtom } from "./progress.atom";
 
 const name: string = "Progress";
 
@@ -23,6 +24,7 @@ describe(`Visual tests: ${name}`, () => {
         await camera.turn.on();
 
         await startProgressBasic.click();
+        await browser.wait(ExpectedConditions.visibilityOf($(`.${ProgressAtom.CSS_CLASS}`)));
         await camera.say.cheese(`Default`);
 
         await Helpers.switchDarkTheme("on");

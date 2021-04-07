@@ -24,7 +24,7 @@ export class TreeAtom extends Atom {
     }
 
     public async expandAll(el: ElementFinder = this.root) {
-        (await this.getNestedNodes(el)).forEach(async expander => {
+        for (const expander of (await this.getNestedNodes(el))) {
             const expanded = await this.isExpanded(expander);
             if (!expanded) {
                 await expander.click();
@@ -33,7 +33,7 @@ export class TreeAtom extends Atom {
                     await this.expandAll(expander);
                 }
             }
-        });
+        }
     }
 
     public expandLevel = async () => {

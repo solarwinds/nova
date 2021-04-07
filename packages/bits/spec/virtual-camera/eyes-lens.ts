@@ -4,7 +4,7 @@ import { getCurrentBranchName } from "../helpers";
 export class EyesLens implements ILens {
     public eyes: any;
 
-    constructor(private browser: ProtractorBrowser, private settings: ICameraSettings) {
+    constructor(private browser: ProtractorBrowser, private cameraSettings: ICameraSettings) {
     }
 
     public async takeSnapshot(label: string): Promise<void> {
@@ -19,7 +19,7 @@ export class EyesLens implements ILens {
 
     public async cameraON() {
         this.eyes = await this.configure();
-        await this.eyes.open(this.browser, this.settings.currentSuiteName, this.settings.currentTestName);
+        await this.eyes.open(this.browser, this.cameraSettings.currentSuiteName, this.cameraSettings.currentTestName);
     }
 
     public async cameraOFF() {
@@ -64,11 +64,11 @@ export class EyesLens implements ILens {
     }
 
     private async snapshotEachWidth(label: string): Promise<void> {
-        for (let width of this.settings.responsive) {
+        for (let width of this.cameraSettings.responsiveWidths) {
             await this.browser.manage().window().setSize(width, 1080);
 
-            if (this.settings.responsiveCallback) {
-                await this.settings.responsiveCallback();
+            if (this.cameraSettings.responsivityCallback) {
+                await this.cameraSettings.responsivityCallback();
             }
 
             await this.eyes.checkWindow(label);

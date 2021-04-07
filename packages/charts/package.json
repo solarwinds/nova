@@ -28,7 +28,7 @@
     "build-lib:watch": "run-s dist-copy \"build-lib -- -c dev --watch\"",
     "build-examples": "ng b examples",
     "build-examples:prod": "npm run build-examples --prod",
-    "build-examples:watch": "npm run build-examples --watch",
+    "build-examples:watch": "ng b examples --watch",
     "serve-examples": "ng s examples",
     "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",
     "test": "ng t lib --watch=false --code-coverage",

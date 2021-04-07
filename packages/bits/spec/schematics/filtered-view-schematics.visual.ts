@@ -1,10 +1,11 @@
 import { browser, by, element } from "protractor";
 
-import { Atom, CheckboxGroupAtom } from "../..";
-import { Animations, Helpers } from "../../helpers";
+import { Atom } from "../atom";
+import { CheckboxGroupAtom } from "../components/checkbox-group/checkbox-group.atom";
+import { Animations, Helpers } from "../helpers";
 
 // Enable after NUI-5702 is fixed
-xdescribe("Visual tests: Filtered View", () => {
+xdescribe("Visual Tests: Filtered View Schematics", () => {
     // Add typings and use Eyes class instead of any in scope of <NUI-5428>
     let eyes: any;
     let checkboxJustified: CheckboxGroupAtom;
