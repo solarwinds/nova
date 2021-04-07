@@ -47,7 +47,9 @@ jobs:
                     command: |
                             if [ -d "dist" ];
                             then
-                                echo "skipping yarn assemble as it was restored from cache"
+                                echo "Skipping yarn assemble as it was restored from cache"
+                                # this 'package-cached' file indicates that the dist folder was restored from cache
+                                # we use it later to skip certain steps
                                 touch package-cached
                             else
                                 yarn run assemble
@@ -93,7 +95,7 @@ jobs:
                     working_directory: ~/nova/packages/bits
                     command: |
                         if [ -f package-cached ]; then
-                            echo "Package was cached so skipping e2e tests"
+                            echo "This package was restored from cache so we're skipping e2e tests"
                             circleci step halt
                         fi
             -   run:
@@ -166,7 +168,13 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Publish bits
-                    command: yarn run publish-ci
+                    command: |
+                        if [ -f $PROJECT_DIR/package-cached ]; then
+                            echo "This package was restored from cache so we're skipping the publish step"
+                            circleci step halt
+                        else
+                            yarn run publish-ci
+                        fi
     charts-build:
         working_directory: ~/nova
         docker:
@@ -264,7 +272,7 @@ jobs:
                     working_directory: ~/nova/packages/charts
                     command: |
                         if [ -f package-cached ]; then
-                            echo "Package was cached so skipping e2e tests"
+                            echo "This package was restored from cache so we're skipping e2e tests"
                             circleci step halt
                         fi
             -   run:
@@ -319,7 +327,13 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Publish charts
-                    command: yarn run publish-ci
+                    command: |
+                        if [ -f $PROJECT_DIR/package-cached ]; then
+                            echo "This package was restored from cache so we're skipping the publish step"
+                            circleci step halt
+                        else
+                            yarn run publish-ci
+                        fi
     dashboards-build:
         working_directory: ~/nova
         docker:
@@ -422,7 +436,7 @@ jobs:
                     working_directory: ~/nova/packages/dashboards
                     command: |
                         if [ -f package-cached ]; then
-                            echo "Package was cached so skipping e2e tests"
+                            echo "This package was restored from cache so we're skipping e2e tests"
                             circleci step halt
                         fi
             -   run:
@@ -477,7 +491,13 @@ jobs:
                     at: ~/nova
             -   run:
                     name: Publish dashboards
-                    command: yarn run publish-ci
+                    command: |
+                        if [ -f $PROJECT_DIR/package-cached ]; then
+                            echo "This package was restored from cache so we're skipping the publish step"
+                            circleci step halt
+                        else
+                            yarn run publish-ci
+                        fi
     nova-docs:
         working_directory: ~/nova
         docker:
