@@ -173,8 +173,7 @@ jobs:
                             echo "This package was restored from cache so we're skipping the publish step"
                             circleci step halt
                         else
-                            echo "PUBLISH!!!"
-                            # yarn run publish-ci
+                            yarn run publish-ci
                         fi
     charts-build:
         working_directory: ~/nova
@@ -333,8 +332,7 @@ jobs:
                             echo "This package was restored from cache so we're skipping the publish step"
                             circleci step halt
                         else
-                            echo "PUBLISH!!!"
-                            # yarn run publish-ci
+                            yarn run publish-ci
                         fi
     dashboards-build:
         working_directory: ~/nova
@@ -498,8 +496,7 @@ jobs:
                             echo "This package was restored from cache so we're skipping the publish step"
                             circleci step halt
                         else
-                            echo "PUBLISH!!!"
-                            # yarn run publish-ci
+                            yarn run publish-ci
                         fi
     nova-docs:
         working_directory: ~/nova
@@ -620,12 +617,12 @@ workflows:
                         - charts-unit-test
                         - dashboards-e2e-test
                         - dashboards-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#                                - /release\/.*/
-#                                - next
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /release\/.*/
+                                - next
             -   charts-build:
                     requires:
                         - bits-pack
@@ -654,12 +651,12 @@ workflows:
                         - charts-unit-test
                         - dashboards-e2e-test
                         - dashboards-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#                                - /release\/.*/
-#                                - next
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /release\/.*/
+                                - next
             -   dashboards-build:
                     requires:
                         - charts-pack
@@ -693,12 +690,12 @@ workflows:
                         - charts-unit-test
                         - dashboards-e2e-test
                         - dashboards-unit-test
-#                    filters:
-#                        branches:
-#                            only:
-#                                - main
-#                                - /release\/.*/
-#                                - next
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /release\/.*/
+                                - next
             # Waiting on dashboards build before running scan because it's currently the last package to be built.
             -   snyk-test:
                     requires:
