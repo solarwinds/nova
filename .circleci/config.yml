@@ -47,8 +47,8 @@ jobs:
                     command: |
                             if [ -d "dist" ];
                             then
-                                echo "skipping yarn assemble as it was restored from cache"
-                                # this 'package-cached' file indicates that the dist folder was restored from cached
+                                echo "Skipping yarn assemble as it was restored from cache"
+                                # this 'package-cached' file indicates that the dist folder was restored from cache
                                 # we use it later to skip certain steps
                                 touch package-cached
                             else
