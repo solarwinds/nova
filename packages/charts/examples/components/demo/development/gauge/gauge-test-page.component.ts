@@ -18,7 +18,7 @@ export class GaugeTestPageComponent {
 
     constructor() {
         // this.thresholds = new Array(200).fill(null).map((e, i) => i);
-        // this.thresholds = [187, 50, 75, 100, 125, 150, 175, 200];
+        // this.thresholds = [50, 75, 100, 125, 150, 175, 200];
         this.reversedValueColorAccessor = GaugeUtil.createReversedValueColorAccessor(this.thresholds);
 
         this.seriesConfig = this.getSeriesConfig();
