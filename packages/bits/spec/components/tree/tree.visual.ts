@@ -26,7 +26,7 @@ describe(`Visual tests: ${name}`, () => {
         paginatorTree = Atom.find(TreeAtom, "nui-tree-paginator-example");
         paginator1 = Atom.find(PaginatorAtom, "nui-tree-paginator-component-vegetables");
         paginator2 = Atom.find(PaginatorAtom, "nui-tree-paginator-component-fruits");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 

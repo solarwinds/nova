@@ -111,9 +111,9 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
             // TODO: apply groups mapping here
             statuses: [
                 { key: "state_ok", value: groupedDict[property].length },
-                { key: "status_unreachable", value: generateNumberUpTo(100000) },
-                { key: "status_warning", value: generateNumberUpTo(10000) },
-                { key: "status_unknown", value: generateNumberUpTo(1000) },
+                { key: "status_unreachable", value: groupedDict[property].length + 98255 },
+                { key: "status_warning", value: groupedDict[property].length + 8345 },
+                { key: "status_unknown", value: groupedDict[property].length + 517 },
             ],
         }));
 
@@ -309,5 +309,3 @@ const widgetConfig: IWidget = {
 };
 
 const getLast = (arr: any[]) => arr[arr.length - 1];
-
-const generateNumberUpTo = (upperLimit: number): number => Math.floor((Math.random() * upperLimit) + 1);

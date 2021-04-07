@@ -20,7 +20,7 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async (done) => {
         await Helpers.prepareBrowser("popover/popover-visual-test");
-        
+
         camera = new Camera().loadFilm(browser, name);
         done();
     });
@@ -30,6 +30,7 @@ describe(`Visual tests: ${name}`, () => {
 
         await popoverPreventClosing.togglePopover();
         await placementCheckButtons.each(async btn => await btn?.click());
+        await browser.actions().mouseMove(buttonPreventClosing).perform();
         await camera.say.cheese(`Popover placement and preventClose`);
 
         await Helpers.switchDarkTheme("on");
