@@ -154,7 +154,8 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
         if (isUndefined(this.value) || isNaN(this.value)) {
             this.value = 0;
         }
-        const newValue = this.clampToRange(this.value + valueChange);
+        // Explicitly converting current value to number because it can also be a string, and cause issues, like NUI-5599
+        const newValue = this.clampToRange(Number(this.value) + valueChange);
 
         this.onValueChange(round(newValue, this.stepPrecision));
     }
