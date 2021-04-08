@@ -31,7 +31,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
             bottom: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
             left: DonutGaugeLabelsPlugin.MARGIN_DEFAULT,
         },
-        autoClearance: true,
+        applyClearance: true,
         padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
         enableThresholdLabels: true,
@@ -154,7 +154,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private adjustGridMargin() {
-        if (this.config.autoClearance) {
+        if (this.config.applyClearance) {
             const gridConfig = this.chart.getGrid().config();
             gridConfig.dimension.margin = this.config.clearance as IAllAround<number>;
         }

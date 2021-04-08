@@ -10,10 +10,10 @@ export interface IGaugeLabelsPluginConfig {
      */
     clearance?: IAllAround<number>;
     /**
-     * If you want to disable the auto-reserving of space for the labels and instead
-     * adjust the grid margins yourself, set this property to false.
+     * If you want to disable the application of a fixed space clearance for the labels and instead
+     * adjust the grid margins manually, set this property to false.
      */
-    autoClearance?: boolean;
+    applyClearance?: boolean;
     /** Set the distance of the labels from the gauge (in pixels). */
     padding?: number;
     /** The name of the label formatter */

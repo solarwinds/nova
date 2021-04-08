@@ -27,7 +27,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
             bottom: 20,
             left: 25,
         },
-        autoClearance: true,
+        applyClearance: true,
         padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
         enableThresholdLabels: true,
@@ -159,7 +159,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private adjustGridMargin() {
-        if (this.config.autoClearance) {
+        if (this.config.applyClearance) {
             const gridConfig = this.chart.getGrid().config();
             const marginToAdjust = this.getMarginToAdjust();
             gridConfig.dimension.margin[marginToAdjust] = this.config.clearance?.[marginToAdjust] as number;
