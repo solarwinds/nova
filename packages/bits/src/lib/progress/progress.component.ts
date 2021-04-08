@@ -16,10 +16,7 @@ import {
     templateUrl: "./progress.component.html",
     styleUrls: ["./progress.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: {
-        "role": "progressbar",
-        "[attr.aria-label]": "ariaLabel + ' progress'",
-     },
+    host: { "role": "progressbar" },
 })
 export class ProgressComponent implements OnChanges {
     @Input() public show: boolean;
@@ -32,11 +29,6 @@ export class ProgressComponent implements OnChanges {
     @Input() public helpText?: string;
     @Input() public stacked: boolean;
     @Input() public compactMode: boolean;
-
-    /**
-     * Input to set aria label text
-     */
-    @Input() public ariaLabel: string = "";
 
     /**
      * Help template content displayed under the progress bar.
