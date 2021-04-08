@@ -1,5 +1,10 @@
+<div class="d-flex">
+    <nui-switch class="pb-3" [(value)]="scrollable">Scrollable</nui-switch>
+</div>
+
 <nui-textbox
     id="demo-options-area-textbox-item"
     value="Text area"
-    rows="5">
+    rows="5"
+    [isScrollable]="scrollable">
 </nui-textbox>
