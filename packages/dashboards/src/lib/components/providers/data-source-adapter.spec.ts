@@ -136,7 +136,7 @@ describe("DataSourceAdapter > ", () => {
             expect(spy).toHaveBeenCalled();
         });
 
-        it("should emit a REFRESH on the pizzagna event bus if there's a change in the data source properties and properties is undefined", fakeAsync( () => {
+        it("should emit a REFRESH on the pizzagna event bus if the data source properties is undefined", fakeAsync( () => {
             const testProperties: IProperties = {};
             const spy = spyOn(adapter.eventBus.getStream(REFRESH), "next");
             adapter.updateConfiguration(testProperties);
