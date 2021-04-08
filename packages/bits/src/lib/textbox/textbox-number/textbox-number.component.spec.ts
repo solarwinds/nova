@@ -163,6 +163,26 @@ describe("components >", () => {
 
                 expect(subject.onChange).toHaveBeenCalledWith(1);
             }));
+
+            it("should add numbers correctly in case the current value is of a type 'string'", fakeAsync(() => {
+                subject.value = "4.6";
+
+                subject.addNumber(1);
+
+                flush();
+
+                expect(subject.onChange).toHaveBeenCalledWith(5.6);
+            }));
+
+            it("should add numbers correctly in case the current value is of a type 'string' and step is negative", fakeAsync(() => {
+                subject.value = "4.6";
+
+                subject.addNumber(-1);
+
+                flush();
+
+                expect(subject.onChange).toHaveBeenCalledWith(3.6);
+            }));
         });
 
     });
