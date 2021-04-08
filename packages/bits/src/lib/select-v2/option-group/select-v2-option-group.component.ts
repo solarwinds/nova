@@ -27,6 +27,7 @@ import { IOptionedComponent } from "../types";
     template: "<ng-content></ng-content>",
     styleUrls: ["./select-v2-option-group.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { "role": "group" },
 })
 export class SelectV2OptionGroupComponent implements AfterContentInit, OnDestroy {
 

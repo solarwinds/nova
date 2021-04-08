@@ -2,6 +2,7 @@
     <nui-repeat-item cdkDrag #drag=cdkDrag [cdkDragData]="item" [cdkDragPreviewClass]="dragPreviewClass" [cdkDragDisabled]="!isItemDraggable(item)" class="repeat-group-item"
                      (click)="itemClicked($event, item)"
                      [clickable]="!(selectionMode === repeatSelectionMode.none)"
+                     [selectable]="!(selectionMode === repeatSelectionMode.none)"
                      [selected]="isItemSelected(item) && !isItemDisabled(item)"
                      [ngClass]="{
             'repeat-group-item__disabled': isItemDisabled(item),
@@ -54,7 +55,7 @@
     <div class="nui-repeat-header">
         <ng-content select="[repeatHeaderTemplate]"></ng-content>
     </div>
-    <ul #dropListArea class="repeat-group" role="repeat">
+    <ul #dropListArea class="repeat-group">
         <div *ngIf="!virtualScroll">
             <ng-container *ngFor="let sourceItem of itemsSource;trackBy: itemConfig?.trackBy;let itemIndex=index"
                           [ngTemplateOutlet]="repeatItems"

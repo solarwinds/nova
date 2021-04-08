@@ -16,6 +16,7 @@ import { IFilter, IFilterPub } from "../../services/data-source/public-api";
     selector: "nui-search",
     host: {
         "class": "nui-search",
+        "role": "search",
     },
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.less"],

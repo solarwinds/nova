@@ -38,7 +38,10 @@ import { ToolbarItemComponent } from "./toolbar-item.component";
 @Component({
     selector: "nui-toolbar",
     templateUrl: "./toolbar.component.html",
-    host: {"class": "nui-toolbar nui-strip-layout nui-flex-container"},
+    host: {
+        "class": "nui-toolbar nui-strip-layout nui-flex-container",
+        "role": "toolbar",
+    },
     styleUrls: ["./toolbar.component.less"],
     encapsulation: ViewEncapsulation.None,
 })

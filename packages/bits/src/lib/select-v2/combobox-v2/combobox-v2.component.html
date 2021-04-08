@@ -37,7 +37,8 @@
     [disabled]="isDisabled"
     (click)="selectTextInInput()">
 </button>
-<nui-overlay [toggleReference]="elRef.nativeElement"
+<nui-overlay roleAttr="listbox"
+              [toggleReference]="elRef.nativeElement"
               [viewportMargin]="popupViewportMargin"
               [overlayConfig]="overlayConfig">
     <ng-content></ng-content>

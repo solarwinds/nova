@@ -13,6 +13,7 @@ import {
     templateUrl: "./repeat-item.component.html",
     styleUrls: ["./repeat-item.component.less"],
     encapsulation: ViewEncapsulation.None,
+    host: { "[attr.role]": "role" },
 })
 export class RepeatItemComponent {
 
@@ -21,4 +22,8 @@ export class RepeatItemComponent {
     @Input() public nowrap = false;
 
     @Input() public selected = false;
+
+    @Input() public selectable = false;
+
+    get role(): string { return this.selectable ? "option" : "listitem"; }
 }

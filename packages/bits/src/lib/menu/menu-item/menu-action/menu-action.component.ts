@@ -30,6 +30,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-action.component.less"],
     encapsulation: ViewEncapsulation.None,
+    host: { "role": "menuitem" },
 })
 export class MenuActionComponent extends MenuItemBaseComponent {
     /**

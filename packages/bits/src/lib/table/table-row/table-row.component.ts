@@ -38,6 +38,7 @@ import { TableStateHandlerService } from "../table-state-handler.service";
 @Directive({
     selector: "[nuiHeaderRowDef]",
     providers: [{provide: CdkHeaderRowDef, useExisting: TableHeaderRowDefDirective}],
+    host: { "role": "row" },
 })
 export class TableHeaderRowDefDirective extends CdkHeaderRowDef implements OnInit, OnDestroy, OnChanges {
     @Input() set nuiHeaderRowDef(value: any) {

@@ -22,6 +22,7 @@ const ANIMATION_DELAY = 200; // ms
     host: {
         "(body:click)": "this._handleBodyInteraction()",
         "aria-hidden": "true",
+        "role": "tooltip",
     },
     template: `
         <nui-overlay [toggleReference]="toggleReference.nativeElement"

@@ -34,6 +34,7 @@ import { Subject, Subscription } from "rxjs";
         ])],
     styleUrls: ["./message.component.less"],
     encapsulation: ViewEncapsulation.None,
+    host: { "[attr.role]": "role" },
 })
 export class MessageComponent implements OnInit, OnDestroy {
     public static ICON_MAP: { [id: string]: string } = {
@@ -57,6 +58,8 @@ export class MessageComponent implements OnInit, OnDestroy {
 
     public dismissState: "initial" | "dismissed" = "initial";
     private dismissSubscription: Subscription;
+
+    get role(): string { return this.type === "ok" || this.type === "info" ? "status" : "alert"; }
 
     constructor(private element: ElementRef,
                 private renderer: Renderer2) { }

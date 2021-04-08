@@ -1,7 +1,7 @@
 <div class="nui-paginator" *ngIf="showPaginator()">
     <div class="nui-paginator__items">
-        <ul class="nui-paginator__list">
-            <li title="{{item.title}}" [ngClass]="item.style" *ngFor="let item of itemsList" value="{{item.value}}">
+        <ul class="nui-paginator__list" role="listbox">
+            <li role="option" title="{{item.title}}" [ngClass]="item.style" *ngFor="let item of itemsList" value="{{item.value}}">
                 <button nui-button
                         type="button"
                         displayStyle="action"
@@ -70,7 +70,7 @@
 <ng-template #tableRow let-pages="pages">
     <tr [ngClass]="{'stretch-row': pages.length === dotsPagesPerRow}">
         <td *ngFor="let value of pages"
-            class="nui-paginator__page-cell" role="gridcell">
+            class="nui-paginator__page-cell">
             <button nui-button
                     type="button"
                     displayStyle="action"

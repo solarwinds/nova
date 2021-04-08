@@ -13,7 +13,10 @@ import { DividerSize } from "./public-api";
 @Component({
     selector: "nui-divider",
     template: "",
-    host: { "class": "nui-divider" },
+    host: {
+        "class": "nui-divider",
+        "role": "separator",
+    },
     styleUrls: ["./divider.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
 })

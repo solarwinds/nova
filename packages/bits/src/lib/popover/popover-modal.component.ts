@@ -34,6 +34,7 @@ export type PopoverModalEvents = "mouse-enter" | "mouse-leave" | "backdrop-click
     animations: [
         fadeIn,
     ],
+    host: { "role": "dialog" },
 })
 export class PopoverModalComponent implements AfterViewInit, OnInit, OnDestroy {
     /**
