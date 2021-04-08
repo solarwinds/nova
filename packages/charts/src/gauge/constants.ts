@@ -12,4 +12,4 @@ export enum GaugeMode {
  * @ignore
  * The default gauge thickness
  */
-export const GAUGE_THICKNESS_DEFAULT = 20;
+export const GAUGE_THICKNESS_DEFAULT = 15;
