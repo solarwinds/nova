@@ -53,7 +53,6 @@
                 </td>
                 <td *ngFor="let cell of (row.days)"
                     class="text-center day"
-                    role="gridcell"
                     [id]="cell.uid">
                     <button *ngIf="cell.isCellVisible"
                             nui-button

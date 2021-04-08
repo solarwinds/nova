@@ -9,6 +9,7 @@ import { ConfirmationDialogButtons, SeverityLevels } from "./public-api";
 @Component({
     selector: "nui-confirmation-dialog-window",
     templateUrl: "./confirmation-dialog.component.html",
+    host: { "role": "alertdialog" },
 })
 export class ConfirmationDialogComponent {
 

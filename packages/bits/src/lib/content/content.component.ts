@@ -10,6 +10,7 @@ import {Component, Input, ViewEncapsulation} from "@angular/core";
     templateUrl: "./content.component.html",
     styleUrls: ["./content.component.less"],
     encapsulation: ViewEncapsulation.None,
+    host: { "role": "document" },
 })
 export class ContentComponent {
 

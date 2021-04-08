@@ -34,7 +34,10 @@ import { ButtonSizeType } from "./public-api";
 @Component({
     selector: "[nui-button]",
     templateUrl: "./button.component.html",
-    host: {"class": "nui-button btn"},
+    host: {
+        "role": "button",
+        "class": "nui-button btn",
+    },
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./button.component.less"],
     encapsulation: ViewEncapsulation.None,

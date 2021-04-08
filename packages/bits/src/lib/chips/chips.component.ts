@@ -19,7 +19,7 @@ import {
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import _size from "lodash/size";
-import { Subject, Subscription } from "rxjs";
+import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { ChipComponent } from "./chip/chip.component";
@@ -57,6 +57,7 @@ import {
     styleUrls: ["./chips.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [ ChipsOverflowService ],
+    host: {  "[attr.role]": "role" },
 })
 export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
     /**
@@ -123,6 +124,8 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
     }
 
     private destroy$: Subject<void> = new Subject();
+
+    get role(): string | null { return this.getItemsCount() ? "list": null; }
 
     constructor(private zone: NgZone,
                 private chipsOverflowService: ChipsOverflowService) {

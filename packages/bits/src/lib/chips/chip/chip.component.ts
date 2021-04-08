@@ -21,7 +21,10 @@ import { IChipsItem } from "../public-api";
     templateUrl: "./chip.component.html",
     styleUrls: ["./chip.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { class: "nui-chip" },
+    host: {
+        class: "nui-chip",
+        role: "listitem",
+    },
 })
 export class ChipComponent implements AfterViewInit {
     /**

@@ -40,10 +40,8 @@ describe("components >", () => {
 
             it("aria attributes", () => {
                 fixture.detectChanges();
-                const dialogEl: Element = fixture.nativeElement.querySelector(".modal-dialog");
 
                 expect(fixture.nativeElement.getAttribute("role")).toBe("dialog");
-                expect(dialogEl.getAttribute("role")).toBe("document");
             });
 
             it("should contain focus trap attribute", () => {
