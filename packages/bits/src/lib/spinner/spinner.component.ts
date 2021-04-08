@@ -34,7 +34,10 @@ import { ButtonIcon, SpinnerSize } from "./public-api";
             ]),
         ]),
     ],
-    host: { "role": "progressbar" },
+    host: {
+        "role": "progressbar",
+        "[attr.aria-label]": "ariaLabel + ' progress'",
+    },
 })
 export class SpinnerComponent implements OnChanges, OnDestroy {
 
@@ -52,6 +55,11 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
     @Input() public allowCancel: boolean;
     @Input() public message: string;
     @Input() public helpText: string;
+
+    /**
+     * Input to set aria label text
+     */
+    @Input() public ariaLabel: string = "";
 
     @Output() public cancel = new EventEmitter();
 
