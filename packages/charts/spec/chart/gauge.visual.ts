@@ -10,7 +10,7 @@ import { TestPage } from "./test.po";
 
 const name: string = "Gauge";
 
-fdescribe(`Visual Tests: Charts - ${name}`, () => {
+describe(`Visual Tests: Charts - ${name}`, () => {
     let camera: Camera;
     let donutGauge: ChartAtom;
     let horizontalGauge: ChartAtom;
