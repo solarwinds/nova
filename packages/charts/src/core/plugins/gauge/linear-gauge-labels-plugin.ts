@@ -111,21 +111,10 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
             .text((d, i) => formatter(data[i].value));
     }
 
-    private getLabelOffset() {
-        let labelStart = 0;
-        if (!this.config.flipLabels) {
-            const gridDimensions = this.chart.getGrid().config().dimension;
-            labelStart = this.isHorizontal ? gridDimensions.height() : gridDimensions.width()
-        }
-        let padding = this.config.padding as number;
-        padding = this.config.flipLabels ? -(padding) : padding;
-        return labelStart + padding;
-    }
-
     private xTranslate = (d: any, i: number) => {
         if (this.isHorizontal) {
             const thresholdSeries = this.thresholdSeries as IDataSeries<IAccessors>;
-            const value = this.thresholdSeries?.accessors?.data?.endX?.(d, i, thresholdSeries?.data as any[], thresholdSeries);
+            const value = this.thresholdSeries?.accessors?.data?.value?.(d, i, thresholdSeries?.data as any[], thresholdSeries);
             return this.thresholdSeries?.scales.x.convert(value);
         }
 
@@ -137,8 +126,20 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
             return this.getLabelOffset();
         }
 
-        const value = this.thresholdSeries?.accessors?.data?.endY?.(d, i, this.thresholdSeries?.data as any[], this.thresholdSeries as IDataSeries<IAccessors>);
+        const thresholdSeries = this.thresholdSeries as IDataSeries<IAccessors>;
+        const value = this.thresholdSeries?.accessors?.data?.value?.(d, i, thresholdSeries?.data as any[], thresholdSeries);
         return this.thresholdSeries?.scales.y.convert(value);
+    }
+
+    private getLabelOffset() {
+        let labelStart = 0;
+        if (!this.config.flipLabels) {
+            const gridDimensions = this.chart.getGrid().config().dimension;
+            labelStart = this.isHorizontal ? gridDimensions.height() : gridDimensions.width()
+        }
+        let padding = this.config.padding as number;
+        padding = this.config.flipLabels ? -(padding) : padding;
+        return labelStart + padding;
     }
 
     private getTextAnchor(): string {

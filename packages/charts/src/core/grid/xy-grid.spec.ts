@@ -34,6 +34,7 @@ describe("XYGrid >", () => {
     let testBottomScale: IScale<any>;
     let testLeftScale: IScale<any>;
     let testRightScale: IScale<any>;
+    let consoleWarnFn: any;
 
     function buildAndUpdateAxes() {
         (<any>grid).buildAxes(grid.getLasagna().getLayerContainer(Grid.GRID_ELEMENTS_LAYER_NAME));
@@ -48,6 +49,17 @@ describe("XYGrid >", () => {
             list: [scale],
         };
     }
+
+    beforeAll(() => {
+        // suppress "invalid scale domain" console warning in render-engine
+        consoleWarnFn = console.warn;
+        console.warn = () => null;
+    });
+
+    afterAll(() => {
+        // restore console warning
+        console.warn = consoleWarnFn;
+    });
 
     beforeEach(() => {
         grid = new XYGrid();
