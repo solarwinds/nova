@@ -1,3 +1,4 @@
+import { fakeAsync, flush } from "@angular/core/testing";
 import { EventBus, IDataSource, IEvent, IFilteringOutputs, IFilteringParticipants } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 
@@ -134,6 +135,15 @@ describe("DataSourceAdapter > ", () => {
             adapter.updateConfiguration(testProperties);
             expect(spy).toHaveBeenCalled();
         });
+
+        it("should emit a REFRESH on the pizzagna event bus if there's a change in the data source properties and properties is undefined", fakeAsync( () => {
+            const testProperties: IProperties = {};
+            const spy = spyOn(adapter.eventBus.getStream(REFRESH), "next");
+            adapter.updateConfiguration(testProperties);
+            expect(spy).not.toHaveBeenCalled();
+            flush();
+            expect(spy).toHaveBeenCalled();
+        }));
 
         it("should emit a DATA_SOURCE_OUTPUT on the pizzagna event bus if there's a change in the data source properties", () => {
             const testFilteringOutput = { result: { test: {} } };
