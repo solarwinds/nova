@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
+import { LinearScale } from "../core/common/scales/linear-scale";
 
 import { CHART_PALETTE_CS1 } from "../core/common/palette/palettes";
 import { Formatter } from "../core/common/scales/types";
@@ -93,9 +94,12 @@ export class GaugeUtil {
     public static setThresholdLabelFormatter(formatter: Formatter<string>,
                                              seriesSet: IChartAssistSeries<IAccessors>[],
                                              formatterName = GAUGE_LABEL_FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
-        const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.renderer instanceof DonutGaugeThresholdsRenderer);
+        const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID);
         if (thresholdsSeries) {
-            thresholdsSeries.scales.r.formatters[formatterName] = formatter;
+            const linearScale = Object.values(thresholdsSeries.scales).find(scale => scale instanceof LinearScale);
+            if (linearScale) {
+                linearScale.formatters[formatterName] = formatter;
+            }
         }
         return seriesSet;
     }

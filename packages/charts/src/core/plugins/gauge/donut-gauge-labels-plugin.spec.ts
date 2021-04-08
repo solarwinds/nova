@@ -43,7 +43,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
         labels = labelsGroup.selectAll("text");
 
         const renderer = dataSeries.renderer as RadialRenderer;
-        const labelRadius = renderer?.getOuterRadius(dataSeries.scales.r.range() ?? [0, 0], 0) + (plugin.config.labelPadding as number);
+        const labelRadius = renderer?.getOuterRadius(dataSeries.scales.r.range() ?? [0, 0], 0) + (plugin.config.padding as number);
         labelGenerator = arc().outerRadius(labelRadius).innerRadius(labelRadius);
         labelData = DonutGaugeRenderingUtil.generateThresholdData(dataSeries.data);
     });
@@ -52,7 +52,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
         expect(labels.nodes().length).toEqual(seriesConfig.thresholds.length);
     });
 
-    it("should position the threshold markers correctly", () => {
+    it("should position the threshold labels correctly", () => {
         labels.nodes().forEach((node: SVGElement, i: number) => {
             expect(node.getAttribute("transform")).toEqual(`translate(${labelGenerator.centroid(labelData[i])})`);
         });
@@ -66,19 +66,19 @@ describe("DonutGaugeLabelsPlugin >", () => {
 
     describe("Label opacity", () => {
         it("should render the threshold labels with zero opacity initially", () => {
-            expect(labelsGroup?.node()?.getAttribute("style")).toEqual("opacity: 0;");
+            expect(labelsGroup?.node()?.style.opacity).toEqual("0");
         });
 
         describe("INTERACTION_DATA_POINTS_EVENT", () => {
             it("should set the label group opacity to 1", () => {
                 chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { dataPoints: { quantity: { index: 0 } } } });
-                expect(labelsGroup?.node()?.getAttribute("style")).toEqual("opacity: 1;");
+                expect(labelsGroup?.node()?.style.opacity).toEqual("1");
             });
 
             it("should set the label group opacity to 0", () => {
                 chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { dataPoints: { quantity: { index: 0 } } } });
                 chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next({ data: { dataPoints: { quantity: { index: DATA_POINT_NOT_FOUND } } } });
-                expect(labelsGroup?.node()?.getAttribute("style")).toEqual("opacity: 0;");
+                expect(labelsGroup?.node()?.style.opacity).toEqual("0");
             });
         });
 

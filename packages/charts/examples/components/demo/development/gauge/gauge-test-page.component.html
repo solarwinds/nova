@@ -1,8 +1,8 @@
 <charts-test-harness>
     <div class="d-flex align-items-center justify-content-around">
-        <donut-gauge-prototype [seriesConfig]="getSeriesConfig()" [annularWidth]="thickness"></donut-gauge-prototype>
-        <linear-gauge-vertical-prototype [seriesConfig]="getSeriesConfig()" [thickness]="thickness"></linear-gauge-vertical-prototype>
-        <linear-gauge-horizontal-prototype [seriesConfig]="getSeriesConfig()" [thickness]="thickness"></linear-gauge-horizontal-prototype>
+        <donut-gauge-prototype [seriesConfig]="seriesConfig" [annularWidth]="thickness"></donut-gauge-prototype>
+        <linear-gauge-vertical-prototype [seriesConfig]="seriesConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-vertical-prototype>
+        <linear-gauge-horizontal-prototype [seriesConfig]="seriesConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-horizontal-prototype>
     </div>
 
     <div class="mb-2">
@@ -11,7 +11,8 @@
         </label>
         <br />
         <nui-textbox-number type="number"
-                            [(ngModel)]="value"
+                            [ngModel]="value"
+                            (ngModelChange)="onValueChange($event)"
                             [minValue]="0"
                             [maxValue]="maxValue"
                             customBoxWidth="75px"
@@ -35,7 +36,17 @@
         <input id="reversed"
                class="mb-2"
                type="checkbox"
-               [(ngModel)]="reversed" />
+               [ngModel]="reversed"
+               (ngModelChange)="onReverseChange($event)" />
         <label class="px-3" for="reversed">Reversed</label>
+    </div>
+</div>
+<div class="ml-3">
+    <div class="d-flex align-items-center">
+        <input id="flip-labels"
+               class="mb-2"
+               type="checkbox"
+               [(ngModel)]="flipLabels" />
+        <label class="px-3" for="flip-labels">Flip Labels</label>
     </div>
 </div>

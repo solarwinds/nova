@@ -10,7 +10,7 @@ import {
     GAUGE_THICKNESS_DEFAULT,
     IAccessors,
     IChartAssistSeries,
-    IDonutGaugeLabelsPluginConfig,
+    IGaugeLabelsPluginConfig,
     IGaugeSeriesConfig,
     IRadialRendererConfig,
     radial,
@@ -44,13 +44,13 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         this.chartAssist = new ChartAssist(new Chart(grid), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
-        const labelConfig: IDonutGaugeLabelsPluginConfig = {
-            gridMargin: { top: 20, right: 20, bottom: 20, left: 20 },
+        const labelConfig: IGaugeLabelsPluginConfig = {
+            clearance: { top: 40, right: 40, bottom: 40, left: 40 },
         };
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin(labelConfig));
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Donut);
-        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}MS`, this.seriesSet);
+        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
 
         this.updateAnnularWidth();
         this.chartAssist.update(this.seriesSet);

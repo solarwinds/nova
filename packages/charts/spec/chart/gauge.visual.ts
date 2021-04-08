@@ -12,12 +12,16 @@ const name: string = "Gauge";
 
 describe(`Visual Tests: Charts - ${name}`, () => {
     let camera: Camera;
-    let gauge: ChartAtom;
+    let donutGauge: ChartAtom;
+    let horizontalGauge: ChartAtom;
+    let verticalGauge: ChartAtom;
     const page = new TestPage();
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/gauge/visual-test");
-        gauge = Atom.find(ChartAtom, "visual-test-gauge-high-value");
+        donutGauge = Atom.find(ChartAtom, "visual-test-gauge-donut-high-value");
+        horizontalGauge = Atom.find(ChartAtom, "visual-test-gauge-horizontal-medium-value");
+        verticalGauge = Atom.find(ChartAtom, "visual-test-gauge-vertical-low-value");
 
         camera = new Camera().loadFilm(browser, name);
     });
@@ -27,9 +31,17 @@ describe(`Visual Tests: Charts - ${name}`, () => {
 
         await camera.say.cheese(`${name} - Default look`);
 
-        const gaugeSeries = await gauge.getDataSeriesById(SeriesAtom, GaugeUtil.REMAINDER_SERIES_ID) as SeriesAtom;
+        let gaugeSeries = await donutGauge.getDataSeriesById(SeriesAtom, GaugeUtil.REMAINDER_SERIES_ID) as SeriesAtom;
         await gaugeSeries.hover();
-        await camera.say.cheese(`${name} - Default look with gauge hovered`);
+        await camera.say.cheese(`${name} - Donut hovered`);
+
+        gaugeSeries = await horizontalGauge.getDataSeriesById(SeriesAtom, GaugeUtil.REMAINDER_SERIES_ID) as SeriesAtom;
+        await gaugeSeries.hover();
+        await camera.say.cheese(`${name} - Horizontal hovered`);
+
+        gaugeSeries = await verticalGauge.getDataSeriesById(SeriesAtom, GaugeUtil.REMAINDER_SERIES_ID) as SeriesAtom;
+        await gaugeSeries.hover();
+        await camera.say.cheese(`${name} - Vertical hovered`);
 
         await page.enableDarkTheme();
         await camera.say.cheese(`${name} - Dark theme`);

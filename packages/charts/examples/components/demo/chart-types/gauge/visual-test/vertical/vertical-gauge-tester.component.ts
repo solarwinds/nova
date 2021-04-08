@@ -8,6 +8,7 @@ import {
     IChartAssistSeries,
     IGaugeSeriesConfig,
     linearGaugeGridConfig,
+    LinearGaugeLabelsPlugin,
     stack,
     XYGrid,
     XYGridConfig
@@ -29,6 +30,7 @@ export class VerticalGaugeTesterComponent implements OnInit {
         const chart = new Chart(grid);
 
         this.chartAssist = new ChartAssist(chart, stack);
+        this.chartAssist.chart.addPlugin(new LinearGaugeLabelsPlugin());
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Vertical);
         this.chartAssist.update(this.seriesSet);
