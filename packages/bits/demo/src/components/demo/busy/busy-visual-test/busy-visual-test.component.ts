@@ -9,6 +9,7 @@ import { Component } from "@angular/core";
 })
 export class BusyVisualTestComponent {
     public busy: boolean;
+    public busyAtTheStart: boolean = true;
 
     public switchBusy() {
         this.busy = !this.busy;
