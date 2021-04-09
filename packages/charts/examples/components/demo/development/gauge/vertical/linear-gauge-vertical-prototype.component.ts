@@ -5,7 +5,6 @@ import {
     ChartAssist,
     GaugeMode,
     GaugeUtil,
-    GAUGE_THICKNESS_DEFAULT,
     IAccessors,
     IChartAssistSeries,
     IGaugeLabelsPluginConfig,
@@ -23,7 +22,7 @@ import {
     styleUrls: ["./linear-gauge-vertical-prototype.component.less"],
 })
 export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit {
-    @Input() public thickness = GAUGE_THICKNESS_DEFAULT;
+    @Input() public thickness: number;
     @Input() public seriesConfig: IGaugeSeriesConfig;
     @Input() public flipLabels = false;
 
@@ -32,9 +31,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
     private labelsPlugin: LinearGaugeLabelsPlugin;
 
     public ngOnChanges(changes: ComponentChanges<LinearGaugeVerticalPrototypeComponent>) {
-        if ((changes.thickness && !changes.thickness.firstChange) ||
-            (changes.seriesConfig && !changes.seriesConfig.firstChange) ||
-            (changes.flipLabels && !changes.flipLabels.firstChange)) {
+        if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             if (changes.thickness) {
                 gridConfig.dimension.width(this.thickness);
@@ -50,6 +47,9 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
                 };
             }
             this.chartAssist.chart.updateDimensions();
+        }
+
+        if (changes.seriesConfig && !changes.seriesConfig.firstChange) {
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
         }
     }

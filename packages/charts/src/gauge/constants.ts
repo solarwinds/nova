@@ -9,7 +9,19 @@ export enum GaugeMode {
 }
 
 /**
- * @ignore
- * The default gauge thickness
+ * Standard thicknesses for the linear gauge
  */
-export const GAUGE_THICKNESS_DEFAULT = 15;
+export enum StandardLinearGaugeThickness {
+    // Small may or may not be added as a standard thickness at some point
+    // Small = 5,
+    Medium = 10,
+    Large = 15,
+}
+
+/**
+ * Standard values for gauge threshold marker radii
+ */
+export enum StandardGaugeThresholdMarkerRadius {
+    Small = 3,
+    Large = 4,
+}

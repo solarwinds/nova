@@ -1,3 +1,4 @@
+import isUndefined from "lodash/isUndefined";
 import { Grid } from "./grid";
 import {
     IDimensions,
@@ -15,15 +16,19 @@ export class RadialGrid extends Grid implements IGrid {
     }
 
     public updateDimensions(dimensions: IDimensions): IGrid {
-        this.config().dimension
-            .outerWidth(dimensions.width)
-            .outerHeight(dimensions.height);
+        const dimensionConfig = this.config().dimension;
+        if (!isUndefined(dimensions.width)) {
+            dimensionConfig.outerWidth(dimensions.width)
+        }
+        if (!isUndefined(dimensions.height)) {
+            dimensionConfig.outerHeight(dimensions.height)
+        }
 
         // TODO: Chart's update: this.grid.scales = collectScales(seriesSet) may not yet happened
         if (this.scales) {
             const radiusScale = this.scales["r"];
             if (radiusScale) {
-                radiusScale.list[0].range([0, Math.min(this.config().dimension.width(), this.config().dimension.height()) / 2]);
+                radiusScale.list[0].range([0, Math.min(dimensionConfig.width(), dimensionConfig.height()) / 2]);
             }
         }
 
