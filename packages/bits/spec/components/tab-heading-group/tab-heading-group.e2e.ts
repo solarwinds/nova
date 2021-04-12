@@ -1,4 +1,4 @@
-import { by, element } from "protractor";
+import { by, element, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
@@ -59,6 +59,14 @@ describe("USERCONTROL tab heading group", () => {
         await tabGroupResponsive.clickCaretRight(10);
         await (await tabGroupResponsive.getLastTab()).click();
         expect(await tabGroupResponsive.getLastTab().then(tab => tab.isActive())).toBe(true);
+    });
+
+    it("should select tab by pressing enter", async () => {
+        await (await tabGroupHorizontal.getFirstTab()).click();
+        await Helpers.pressKey(Key.TAB);
+        await Helpers.pressKey(Key.ENTER);
+        const secondTab = await tabGroupHorizontal.getTabByText("Tab 2");
+        expect(await secondTab.isActive()).toBe(true);
     });
 
 });
