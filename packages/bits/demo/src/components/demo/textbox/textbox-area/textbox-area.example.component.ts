@@ -5,4 +5,6 @@ import { Component } from "@angular/core";
     templateUrl: "./textbox-area.example.component.html",
 })
 
-export class TextboxAreaExampleComponent {}
+export class TextboxAreaExampleComponent {
+    public scrollable: boolean = true;
+}
