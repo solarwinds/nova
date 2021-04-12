@@ -11,8 +11,10 @@ import {
     IChartAssistSeries,
     IGaugeLabelsPluginConfig,
     IGaugeSeriesConfig,
+    IRadialRendererConfig,
     radial,
     radialGrid,
+    StandardLinearGaugeThickness,
 } from "@nova-ui/charts";
 
 @Component({
@@ -22,6 +24,8 @@ import {
 })
 export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     @Input() public size: number;
+    @Input() public annularGrowth: number;
+    @Input() public annularWidth: number;
     @Input() public seriesConfig: IGaugeSeriesConfig;
 
     public chartAssist: ChartAssist;
@@ -30,12 +34,16 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
 
     public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>) {
         if (changes.size && !changes.size.firstChange) {
-                this.updateDonutSize();
-                this.chartAssist.chart.updateDimensions();
+            this.updateDonutSize();
+            this.chartAssist.chart.updateDimensions();
         }
 
-        if (changes.seriesConfig && !changes.seriesConfig.firstChange) {
+        if ((changes.annularGrowth && !changes.annularGrowth.firstChange) ||
+            (changes.annularWidth && !changes.annularWidth.firstChange) ||
+            (changes.seriesConfig && !changes.seriesConfig.firstChange)) {
+            this.updateAnnularAttributes();
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
+            this.chartAssist.chart.updateDimensions();
         }
     }
 
@@ -55,6 +63,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
 
         this.updateDonutSize();
+        this.updateAnnularAttributes();
         this.chartAssist.update(this.seriesSet);
     }
 
@@ -62,5 +71,15 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         const gridDimensions = this.chartAssist.chart.getGrid().config().dimension;
         gridDimensions.height(this.size);
         gridDimensions.width(this.size);
+    }
+
+    private updateAnnularAttributes() {
+        this.seriesSet.forEach(series => {
+            const rendererConfig = (series.renderer.config as IRadialRendererConfig);
+            // increase the max thickness from 30 for testing purposes
+            rendererConfig.maxThickness = 200;
+            rendererConfig.annularGrowth = this.annularGrowth;
+            rendererConfig.annularWidth = this.annularWidth;
+        });
     }
 }

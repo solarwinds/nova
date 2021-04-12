@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DataAccessor, GaugeUtil, IGaugeSeriesConfig, StandardLinearGaugeThickness } from "@nova-ui/charts";
+import { DataAccessor, DEFAULT_RADIAL_RENDERER_CONFIG, GaugeUtil, IGaugeSeriesConfig, StandardLinearGaugeThickness } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-test-page",
@@ -9,7 +9,8 @@ import { DataAccessor, GaugeUtil, IGaugeSeriesConfig, StandardLinearGaugeThickne
 export class GaugeTestPageComponent {
     public value = 95;
     public maxValue = 200;
-    public linearThickness = StandardLinearGaugeThickness.Large;
+    public annularGrowth = DEFAULT_RADIAL_RENDERER_CONFIG.annularGrowth;
+    public thickness = StandardLinearGaugeThickness.Large;
     public donutSize = 200;
     public thresholds: number[] = [100, 150];
     public reversed = false;

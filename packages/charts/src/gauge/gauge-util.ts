@@ -128,7 +128,7 @@ export class GaugeUtil {
         const chartTools: Record<GaugeMode, IGaugeTools> = {
             [GaugeMode.Donut]: {
                 mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(donutGaugeRendererConfig()),
+                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(),
                 accessorFunction: () => new RadialAccessors(),
                 scaleFunction: () => radialScales(),
             },

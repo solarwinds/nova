@@ -1,8 +1,8 @@
 <charts-test-harness>
     <div class="testing-region d-flex align-items-center justify-content-around">
-        <donut-gauge-prototype [seriesConfig]="seriesConfig" [size]="donutSize"></donut-gauge-prototype>
-        <linear-gauge-vertical-prototype [seriesConfig]="seriesConfig" [thickness]="linearThickness" [flipLabels]="flipLabels"></linear-gauge-vertical-prototype>
-        <linear-gauge-horizontal-prototype [seriesConfig]="seriesConfig" [thickness]="linearThickness" [flipLabels]="flipLabels"></linear-gauge-horizontal-prototype>
+        <donut-gauge-prototype [seriesConfig]="seriesConfig" [size]="donutSize" [annularGrowth]="annularGrowth" [annularWidth]="thickness"></donut-gauge-prototype>
+        <linear-gauge-vertical-prototype [seriesConfig]="seriesConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-vertical-prototype>
+        <linear-gauge-horizontal-prototype [seriesConfig]="seriesConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-horizontal-prototype>
     </div>
 
     <div class="mb-2">
@@ -20,15 +20,25 @@
     </div>
     <div class="mb-2">
         <label for="thicknessInput">
-            Linear Thickness
+            Thickness
         </label>
         <br />
         <nui-textbox-number type="number"
-                            [(ngModel)]="linearThickness"
-                            [minValue]="15"
-                            [maxValue]="30"
+                            [(ngModel)]="thickness"
+                            [minValue]="0"
                             customBoxWidth="75px"
                             name="thicknessInput"></nui-textbox-number>
+    </div>
+    <div class="mb-2">
+        <nui-form-field caption="Donut Annular Growth"
+                        hint="Set to zero to have the donut obey the manual thickness setting"
+                        [showOptionalText]="false">
+            <nui-textbox-number type="number"
+                                [(ngModel)]="annularGrowth"
+                                [minValue]="0"
+                                [step]="0.01"
+                                customBoxWidth="75px"></nui-textbox-number>
+        </nui-form-field>
     </div>
     <div class="mb-2">
         <label for="donutSizeInput">
@@ -37,9 +47,8 @@
         <br />
         <nui-textbox-number type="number"
                             [(ngModel)]="donutSize"
-                            [step]=50
-                            [minValue]="200"
-                            [maxValue]="700"
+                            [minValue]="0"
+                            [step]="25"
                             customBoxWidth="75px"
                             name="donutSizeInput"></nui-textbox-number>
     </div>
