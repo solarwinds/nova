@@ -1,10 +1,12 @@
 import {
     ChangeDetectorRef,
     Component,
+    ElementRef,
     EventEmitter,
-    HostBinding,
+    HostBinding, HostListener,
     Input,
     Output,
+    ViewChild,
 } from "@angular/core";
 
 /** @ignore */
@@ -17,6 +19,8 @@ import {
 })
 
 export class TabHeadingComponent {
+    protected _active: boolean;
+
     /** This adds 'disabled' class to the host component depending on the 'disabled' @Input to properly style disabled tabs */
     @HostBinding("class.disabled") get isDisabled() { return this.disabled; }
 
@@ -29,17 +33,29 @@ export class TabHeadingComponent {
         this.changeDetector.detectChanges();
     }
 
-    get active() {
-        return this._active;
-    }
-
     /** Tab id */
     @Input() tabId: string;
 
     /** Event is fired when tab became active, $event:Tab equals to selected instance of Tab component */
     @Output() selected: EventEmitter<TabHeadingComponent> = new EventEmitter();
 
-    protected _active: boolean;
+    @ViewChild("tab") tabEl: ElementRef<HTMLElement>;
+
+    @HostListener("keydown", ["$event"])
+    onKeyDown(event: KeyboardEvent): void {
+        const { key } = event;
+
+        if(key === "Enter" || key === "Space"){
+            if (document.activeElement === this.tabEl.nativeElement) {
+                this.selectTab();
+            }
+        }
+    }
+
+    // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
+    get active() {
+        return this._active;
+    }
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 
