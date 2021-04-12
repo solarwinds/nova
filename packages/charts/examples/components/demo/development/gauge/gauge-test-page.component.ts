@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DataAccessor, DEFAULT_RADIAL_RENDERER_CONFIG, GaugeUtil, IGaugeSeriesConfig, StandardLinearGaugeThickness } from "@nova-ui/charts";
+import { DataAccessor, DEFAULT_RADIAL_RENDERER_CONFIG, GaugeUtil, IGaugeConfig, StandardLinearGaugeThickness } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-test-page",
@@ -15,30 +15,31 @@ export class GaugeTestPageComponent {
     public thresholds: number[] = [100, 150];
     public reversed = false;
     public flipLabels = false;
-    public seriesConfig: IGaugeSeriesConfig;
+    public gaugeConfig: IGaugeConfig;
 
     private reversedValueColorAccessor: DataAccessor<any, any> | undefined;
 
     constructor() {
         // this.thresholds = new Array(200).fill(null).map((e, i) => i);
         // this.thresholds = [50, 75, 100, 125, 150, 175, 200];
-        this.reversedValueColorAccessor = GaugeUtil.createReversedValueColorAccessor(this.thresholds);
+        this.reversedValueColorAccessor = GaugeUtil.createReversedColorAccessor(this.thresholds);
 
-        this.seriesConfig = this.getSeriesConfig();
+        this.gaugeConfig = this.getGaugeConfig();
     }
 
     public onReverseChange(reversed: boolean) {
         this.reversed = reversed;
-        this.seriesConfig = this.getSeriesConfig();
+        this.gaugeConfig = this.getGaugeConfig();
     }
 
     public onValueChange(value: number) {
         this.value = value;
-        this.seriesConfig = this.getSeriesConfig();
+        this.gaugeConfig = this.getGaugeConfig();
     }
 
-    private getSeriesConfig() {
+    private getGaugeConfig(): IGaugeConfig {
         return {
+            // hideThresholdMarkers: true,
             value: this.value,
             max: this.maxValue,
             thresholds: this.thresholds,

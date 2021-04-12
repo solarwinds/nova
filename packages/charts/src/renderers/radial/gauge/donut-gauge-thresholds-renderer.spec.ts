@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../../core/common/types";
 import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-import { IGaugeSeriesConfig } from "../../../gauge/types";
+import { IGaugeConfig } from "../../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import { RadialAccessors } from "../accessors/radial-accessors";
 
@@ -13,7 +13,7 @@ import { DonutGaugeThresholdsRenderer } from "./donut-gauge-thresholds-renderer"
 
 describe("DonutGaugeThresholdsRenderer >", () => {
     let renderer: DonutGaugeThresholdsRenderer;
-    let seriesConfig: IGaugeSeriesConfig;
+    let gaugeConfig: IGaugeConfig;
     let svg: D3Selection<SVGSVGElement> | any;
     let renderSeries: IRenderSeries<RadialAccessors>;
     let dataSeries: IDataSeries<IAccessors>;
@@ -23,14 +23,14 @@ describe("DonutGaugeThresholdsRenderer >", () => {
         renderer = new DonutGaugeThresholdsRenderer();
         svg = select(document.createElement("div")).append("svg");
         containers[RenderLayerName.data] = svg.append("g");
-        seriesConfig = {
+        gaugeConfig = {
             value: 5,
             max: 10,
             thresholds: [3, 7, 9],
         };
 
         const gaugeAttributes = GaugeUtil.getGaugeAttributes(GaugeMode.Donut);
-        dataSeries = GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes);
+        dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
 
         renderSeries = {
             dataSeries: dataSeries as IDataSeries<RadialAccessors, any>,
@@ -56,7 +56,7 @@ describe("DonutGaugeThresholdsRenderer >", () => {
         });
 
         it("should render the correct number of threshold markers", () => {
-            expect(thresholdMarkers.nodes().length).toEqual(seriesConfig.thresholds.length);
+            expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds.length);
         });
 
         it("should position the threshold markers correctly", () => {

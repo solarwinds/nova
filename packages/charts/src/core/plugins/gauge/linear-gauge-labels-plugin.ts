@@ -10,9 +10,9 @@ import { D3Selection, IAccessors, IChartEvent, IChartSeries, IDataSeries } from 
 
 import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
 import cloneDeep from "lodash/cloneDeep";
-import { GaugeUtil } from "../../../gauge/gauge-util";
 import { IGaugeLabelsPluginConfig } from "./types";
 import { LinearScale } from "../../common/scales/linear-scale";
+import { GAUGE_THRESHOLD_MARKERS_SERIES_ID } from "../../../gauge/constants";
 
 /**
  * @ignore
@@ -64,7 +64,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     public updateDimensions() {
         if (this.config.enableThresholdLabels) {
             this.thresholdSeries = this.chart.getDataManager().chartSeriesSet.find(
-                (series: IChartSeries<IAccessors<any>>) => series.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID
+                (series: IChartSeries<IAccessors<any>>) => series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
             );
             this.isHorizontal = this.thresholdSeries?.scales.x instanceof LinearScale;
             this.adjustGridMargin();

@@ -1,18 +1,18 @@
-import { Renderer } from "../core/common/renderer";
-import { IRadialScales, Scales } from "../core/common/scales/types";
-import { DataAccessor, IAccessors } from "../core/common/types";
+import { DataAccessor } from "../core/common/types";
 
 /**
  * @ignore
  * Configuration for a gauge series
 */
-export interface IGaugeSeriesConfig {
+export interface IGaugeConfig {
     /** The value of the gauge */
     value: number;
     /** The max value of the gauge */
     max: number;
     /** An array of the gauge's threshold values */
     thresholds: number[];
+    /** Set to true to hide the threshold markers */
+    hideThresholdMarkers?: boolean;
     /** Optional accessor for customizing the color to display as each threshold is hit */
     valueColorAccessor?: DataAccessor;
 }
@@ -28,34 +28,4 @@ export interface IGaugeThreshold {
     hit: boolean;
     /** Additional metadata as needed */
     [key: string]: any;
-}
-
-/**
- * @ignore
- * Attributes needed by a gauge
- */
-export interface IGaugeAttributes {
-    /** Accessors for the gauge data and series */
-    accessors: IAccessors;
-    /** Scales for the gauge */
-    scales: Scales;
-    /** Renderer for the primary gauge visualization */
-    mainRenderer: Renderer<IAccessors>;
-    /** Renderer for the gauge threshold visualization */
-    thresholdsRenderer: Renderer<IAccessors>;
-}
-
-/**
- * @ignore
- * Interface for an object that can be used to create the attributes needed by a gauge
- */
-export interface IGaugeTools {
-    /** Function for creating accessors */
-    accessorFunction: () => IAccessors;
-    /** Function for creating scales */
-    scaleFunction: () => Scales | IRadialScales;
-    /** Function for creating a main renderer */
-    mainRendererFunction: () => Renderer<IAccessors>;
-    /** Function for creating a thresholds renderer */
-    thresholdsRendererFunction: () => Renderer<IAccessors>;
 }

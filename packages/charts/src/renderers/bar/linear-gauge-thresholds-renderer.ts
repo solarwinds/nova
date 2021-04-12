@@ -15,6 +15,7 @@ import { BarRenderer } from "./bar-renderer";
  */
 export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresholdsRendererConfig = {
     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
+    hideMarkers: false,
 };
 
 /**
@@ -46,15 +47,18 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
         const markerSelection = dataContainer.selectAll(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`).data(data);
 
         markerSelection.exit().remove();
-        markerSelection.enter()
-            .append("circle")
-            .attr("class", GAUGE_THRESHOLD_MARKER_CLASS)
-            .merge(markerSelection as any)
-            .attr("cx", (d, i) => renderSeries.scales.x.convert(accessors?.data?.endX?.(d, i, dataSeries.data, dataSeries)))
-            .attr("cy", (d, i) => renderSeries.scales.y.convert(accessors?.data?.endY?.(d, i, dataSeries.data, dataSeries)))
-            .attr("r", this.config.markerRadius as number)
-            .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
-            .style("stroke-width", 0);
+
+        if (!this.config.hideMarkers) {
+            markerSelection.enter()
+                .append("circle")
+                .attr("class", GAUGE_THRESHOLD_MARKER_CLASS)
+                .merge(markerSelection as any)
+                .attr("cx", (d, i) => renderSeries.scales.x.convert(accessors?.data?.endX?.(d, i, dataSeries.data, dataSeries)))
+                .attr("cy", (d, i) => renderSeries.scales.y.convert(accessors?.data?.endY?.(d, i, dataSeries.data, dataSeries)))
+                .attr("r", this.config.markerRadius as number)
+                .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
+                .style("stroke-width", 0);
+        }
     }
 
     /** See {@link Renderer#getRequiredLayers} */

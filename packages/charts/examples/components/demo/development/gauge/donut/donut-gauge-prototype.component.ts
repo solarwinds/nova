@@ -10,11 +10,10 @@ import {
     IAccessors,
     IChartAssistSeries,
     IGaugeLabelsPluginConfig,
-    IGaugeSeriesConfig,
+    IGaugeConfig,
     IRadialRendererConfig,
     radial,
     radialGrid,
-    StandardLinearGaugeThickness,
 } from "@nova-ui/charts";
 
 @Component({
@@ -26,24 +25,23 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     @Input() public size: number;
     @Input() public annularGrowth: number;
     @Input() public annularWidth: number;
-    @Input() public seriesConfig: IGaugeSeriesConfig;
+    @Input() public gaugeConfig: IGaugeConfig;
 
     public chartAssist: ChartAssist;
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
     public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>) {
-        if (changes.size && !changes.size.firstChange) {
+        if ((changes.size && !changes.size.firstChange) ||
+            (changes.annularWidth && !changes.annularWidth.firstChange) ||
+            (changes.annularGrowth && !changes.annularGrowth.firstChange)) {
             this.updateDonutSize();
+            this.updateAnnularAttributes();
             this.chartAssist.chart.updateDimensions();
         }
 
-        if ((changes.annularGrowth && !changes.annularGrowth.firstChange) ||
-            (changes.annularWidth && !changes.annularWidth.firstChange) ||
-            (changes.seriesConfig && !changes.seriesConfig.firstChange)) {
-            this.updateAnnularAttributes();
-            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
-            this.chartAssist.chart.updateDimensions();
+        if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
 
@@ -59,7 +57,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         };
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin(labelConfig));
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
 
         this.updateDonutSize();

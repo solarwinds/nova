@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../core/common/types";
 import { GaugeMode } from "../../gauge/constants";
 import { GaugeUtil } from "../../gauge/gauge-util";
-import { IGaugeAttributes, IGaugeSeriesConfig } from "../../gauge/types";
+import { IGaugeAttributes, IGaugeConfig } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { BarAccessors } from "./accessors/bar-accessors";
@@ -12,7 +12,7 @@ import { LinearGaugeThresholdsRenderer } from "./linear-gauge-thresholds-rendere
 
 describe("LinearGaugeThresholdsRenderer >", () => {
     let renderer: LinearGaugeThresholdsRenderer;
-    let seriesConfig: IGaugeSeriesConfig;
+    let gaugeConfig: IGaugeConfig;
     let svg: D3Selection<SVGSVGElement> | any;
     let renderSeries: IRenderSeries<BarAccessors>;
     let dataSeries: IDataSeries<IAccessors>;
@@ -22,7 +22,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
         renderer = new LinearGaugeThresholdsRenderer();
         svg = select(document.createElement("div")).append("svg");
         containers[RenderLayerName.unclippedData] = svg.append("g");
-        seriesConfig = {
+        gaugeConfig = {
             value: 5,
             max: 10,
             thresholds: [3, 7, 9],
@@ -38,7 +38,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             beforeEach(() => {
                 gaugeAttributes = GaugeUtil.getGaugeAttributes(GaugeMode.Vertical);
                 gaugeAttributes.scales.x.domain(["gauge"]);
-                dataSeries = GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes);
+                dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
 
                 renderSeries = {
                     dataSeries: dataSeries as IDataSeries<BarAccessors, any>,
@@ -51,7 +51,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             });
 
             it("should render the correct number of threshold markers", () => {
-                expect(thresholdMarkers.nodes().length).toEqual(seriesConfig.thresholds.length);
+                expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds.length);
             });
 
             it("should position the threshold markers correctly", () => {
@@ -80,7 +80,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
                 gaugeAttributes = GaugeUtil.getGaugeAttributes(GaugeMode.Horizontal);
                 gaugeAttributes.scales.y.domain(["gauge"]);
 
-                dataSeries = GaugeUtil.generateThresholdSeries(seriesConfig, gaugeAttributes);
+                dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
 
                 renderSeries = {
                     dataSeries: dataSeries as IDataSeries<BarAccessors, any>,
@@ -93,7 +93,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             });
 
             it("should render the correct number of threshold markers", () => {
-                expect(thresholdMarkers.nodes().length).toEqual(seriesConfig.thresholds.length);
+                expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds.length);
             });
 
             it("should position the threshold markers correctly", () => {
