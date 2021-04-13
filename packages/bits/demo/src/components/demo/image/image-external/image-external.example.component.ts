@@ -7,7 +7,10 @@ import { IImagesPresetItem } from "@nova-ui/bits";
 })
 
 export class ImageExternalExampleComponent {
-    public bookCoverUrl = "https://imgc.allpostersimages.com/img/print/u-g-F8PQ9I0.jpg?w=550&h=550&p=0";
+    public bookCover = {
+        url: "https://imgc.allpostersimages.com/img/print/u-g-F8PQ9I0.jpg?w=550&h=550&p=0",
+        description: 'Harry Potter book'
+    };
 
     public imageObject: IImagesPresetItem = {
         "svgFile": "watermark-data.svg",

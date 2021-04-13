@@ -33,13 +33,21 @@ import { IImagesPresetItem } from "./public-api";
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./image.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "img" },
+    host: {
+        "role": "img",
+        "[attr.aria-label]": "ariaLabel || null",
+    },
 })
 export class ImageComponent implements OnInit, AfterViewInit {
     /**
      * Image name from nui image preset or external source
      */
     @Input() public image: any;
+
+    /**
+     * Sets alt for image from external source
+     */
+    @Input() public imageAlt: string;
 
     /**
      * Available values are: 'left' and 'right'
@@ -65,6 +73,8 @@ export class ImageComponent implements OnInit, AfterViewInit {
      * When set to true sets the hardcoded width and height of the svg to 100% to fill the parent container
      */
     @Input() public autoFill: boolean;
+
+    public ariaLabel: string;
 
     constructor(private logger: LoggerService,
                 private utilService: UtilService,
@@ -116,8 +126,9 @@ export class ImageComponent implements OnInit, AfterViewInit {
         let imageHtml: string = "";
         if (_has(image, "code") && _isString(image.code)) {
             imageHtml = image.code;
+            this.ariaLabel = image.name;
         } else {
-            imageHtml = `<img src="${this.image}">`;
+            imageHtml = `<img src="${this.image}" alt="${this.imageAlt}">`;
         }
 
         return this.domSanitizer.bypassSecurityTrustHtml(imageHtml);
