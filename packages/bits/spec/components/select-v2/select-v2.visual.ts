@@ -11,7 +11,6 @@ const name: string = "Select-V2";
 describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let selectBasic: SelectV2Atom;
-    let selectDisabled: SelectV2Atom;
     let selectErrorState: SelectV2Atom;
     let selectDisplayValueSmall: SelectV2Atom;
     let selectDisplayValue: SelectV2Atom;
@@ -21,7 +20,6 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         selectBasic = Atom.find(SelectV2Atom, "basic");
-        selectDisabled = Atom.find(SelectV2Atom, "disabled");
         selectErrorState = Atom.find(SelectV2Atom, "error-state");
         selectDisplayValueSmall = Atom.find(SelectV2Atom, "display-value-mw200");
         selectDisplayValue = Atom.find(SelectV2Atom, "display-value");
@@ -33,7 +31,7 @@ describe(`Visual tests: ${name}`, () => {
     beforeEach(async () => {
         await Helpers.prepareBrowser("select-v2/test");
         await Helpers.disableCSSAnimations(Animations.ALL);
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -70,7 +68,7 @@ describe(`Visual tests: ${name}`, () => {
         await (await selectDisplayValueSmall.getOption(6)).click();
         await (await selectDisplayValueSmall.getOption(3)).hover();
         await camera.say.cheese(`State 2`);
-        
+
         /**
          * 1. Hovered selected value styles checked
          * 2. Inline selects positioning checked

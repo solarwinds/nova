@@ -8,14 +8,8 @@ import { ComboboxV2Atom } from "./combobox-v2.atom";
 describe("USERCONTROL Combobox >", () => {
     let comboboxBasic: ComboboxV2Atom;
     let comboboxError: ComboboxV2Atom;
-    let comboboxForm: ComboboxV2Atom;
-    let comboboxSingle: ComboboxV2Atom;
     let comboboxMulti: ComboboxV2Atom;
     let comboboxCustomControl: ComboboxV2Atom;
-    let comboboxDisabled: ComboboxV2Atom;
-    let comboboxValueRemoval: ComboboxV2Atom;
-
-    let disableButton: ElementFinder;
     let showButton: ElementFinder;
     let hideButton: ElementFinder;
     let toggleButton: ElementFinder;
@@ -26,14 +20,8 @@ describe("USERCONTROL Combobox >", () => {
         await Helpers.prepareBrowser("combobox-v2/test");
         comboboxBasic = Atom.find(ComboboxV2Atom, "basic");
         comboboxError = Atom.find(ComboboxV2Atom, "error");
-        comboboxForm = Atom.find(ComboboxV2Atom, "form");
-        comboboxSingle = Atom.find(ComboboxV2Atom, "single");
         comboboxMulti = Atom.find(ComboboxV2Atom, "multi");
         comboboxCustomControl = Atom.find(ComboboxV2Atom, "custom-control");
-        comboboxDisabled = Atom.find(ComboboxV2Atom, "disabled");
-        comboboxValueRemoval = Atom.find(ComboboxV2Atom, "removal");
-
-        disableButton = element(by.id("trigger-disabled"));
         showButton = element(by.id("show"));
         hideButton = element(by.id("hide"));
         toggleButton = element(by.id("toggle"));

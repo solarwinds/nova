@@ -16,7 +16,6 @@ describe("USERCONTROL datepicker", () => {
     let datepickerInline: DatepickerAtom;
     let datepickerWithPreserve: DatepickerAtom;
     let datepickerMinMax: DatepickerAtom;
-    let datepickerReactive: DatepickerAtom;
     let datepickerDisabledDates: DatepickerAtom;
     let datepickerDisabledTodayButton: DatepickerAtom;
     let datepickerWithInitAndPreserve: DatepickerAtom;
@@ -31,7 +30,6 @@ describe("USERCONTROL datepicker", () => {
         datepickerInline = Atom.find(DatepickerAtom, "nui-demo-datepicker-inline");
         datepickerWithPreserve = Atom.find(DatepickerAtom, "nui-demo-datepicker-preserve");
         datepickerMinMax = Atom.find(DatepickerAtom, "nui-demo-datepicker-min-max");
-        datepickerReactive = Atom.find(DatepickerAtom, "nui-demo-date-picker-reactive");
         datepickerDisabledDates = Atom.find(DatepickerAtom, "nui-demo-datepicker-disabled-dates");
         datepickerDisabledTodayButton = Atom.find(DatepickerAtom, "nui-demo-datepicker-disabled-today");
         datepickerWithInitAndPreserve = Atom.find(DatepickerAtom, "nui-demo-datepicker-init-date-preserve");

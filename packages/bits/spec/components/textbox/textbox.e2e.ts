@@ -18,7 +18,6 @@ import {
 describe("USERCONTROL textbox >", () => {
 
     let textBox: TextboxAtom;
-    let multiTextBox: TextboxAtom;
     let disabledTextbox: TextboxAtom;
     let readonlyTextbox: TextboxAtom;
     let customWidthTextbox: TextboxAtom;
@@ -37,7 +36,6 @@ describe("USERCONTROL textbox >", () => {
         requiredTextbox = Atom.find(TextboxAtom, "demo-options-required-textbox-item");
         readonlyTextbox = Atom.find(TextboxAtom, "demo-options-readonly-textbox-item");
         customWidthTextbox = Atom.find(TextboxAtom, "demo-options-custom-width-textbox-item");
-        multiTextBox = Atom.find(TextboxAtom, "test-multi-textbox");
         asyncSpinner = Atom.findIn(SpinnerAtom, element(by.id("test-textbox")));
         checkboxGroup = Atom.findIn(CheckboxGroupAtom, element.all(by.className("demo-options-section")).first());
         validationMessage = element(by.className("nui-textbox__messages"));

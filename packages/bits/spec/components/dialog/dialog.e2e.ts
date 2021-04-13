@@ -24,7 +24,6 @@ describe("USERCONTROL Dialog", () => {
     let dialog: DialogAtom;
     let closeButton: ElementFinder;
     let header: ElementFinder;
-    let footer: ElementFinder;
     let cancelButton: ElementFinder;
     let actionButton: ElementFinder;
     let themeSwitcher: WebElement;
@@ -48,7 +47,6 @@ describe("USERCONTROL Dialog", () => {
         dialog = new DialogAtom(element(by.className("nui-dialog")));
         closeButton = dialog.getCloseButton();
         header = dialog.getHeader();
-        footer = dialog.getFooter();
         cancelButton = dialog.getCancelButton();
         actionButton = dialog.getActionButton();
     });

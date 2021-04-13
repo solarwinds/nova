@@ -10,16 +10,12 @@ const name: string = "Search";
 
 describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
-    let basicSearch: SearchAtom;
-    let customPlaceholderSearch: SearchAtom;
     let searchWithInput: SearchAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("search/search-visual-test");
-        basicSearch = Atom.find(SearchAtom, "nui-visual-test-basic-search" );
-        customPlaceholderSearch = Atom.find(SearchAtom, "nui-visual-test-search-with-placeholder" );
         searchWithInput = Atom.find(SearchAtom, "nui-visual-test-search-with-input-text" );
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 

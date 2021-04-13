@@ -15,12 +15,9 @@ describe(`Visual tests: ${name}`, () => {
     let comboboxSingle: ComboboxV2Atom;
     let comboboxMulti: ComboboxV2Atom;
     let comboboxCustomControl: ComboboxV2Atom;
-    let comboboxDisabled: ComboboxV2Atom;
     let comboboxValueRemoval: ComboboxV2Atom;
 
     let disableButton: ElementFinder;
-    let showButton: ElementFinder;
-    let hideButton: ElementFinder;
     let toggleButton: ElementFinder;
 
     let focusdrop: ElementFinder;
@@ -34,16 +31,13 @@ describe(`Visual tests: ${name}`, () => {
         comboboxSingle = Atom.find(ComboboxV2Atom, "single");
         comboboxMulti = Atom.find(ComboboxV2Atom, "multi");
         comboboxCustomControl = Atom.find(ComboboxV2Atom, "custom-control");
-        comboboxDisabled = Atom.find(ComboboxV2Atom, "disabled");
         comboboxValueRemoval = Atom.find(ComboboxV2Atom, "removal");
 
         disableButton = element(by.id("trigger-disabled"));
-        showButton = element(by.id("show"));
-        hideButton = element(by.id("hide"));
         toggleButton = element(by.id("toggle"));
 
         focusdrop = element(by.className("focus-drop"));
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
