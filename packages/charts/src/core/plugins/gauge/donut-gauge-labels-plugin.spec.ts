@@ -36,7 +36,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
         const element = document.createElement("div");
         chart.build(element);
 
-        dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateGaugeAttributes(GaugeMode.Donut));
+        dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateRenderingAttributes(GaugeMode.Donut));
         chart.update([dataSeries]);
         chart.updateDimensions();
         labelsGroup = plugin.chart.getGrid().getLasagna().getLayerContainer(GAUGE_LABELS_CONTAINER_CLASS).select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);

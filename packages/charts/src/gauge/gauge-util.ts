@@ -25,7 +25,7 @@ import { Renderer } from "../core/common/renderer";
  * @ignore
  * Attributes needed by a gauge
  */
- export interface IGaugeAttributes {
+export interface IGaugeRenderingAttributes {
     /** Accessors for the gauge data and series */
     accessors: IAccessors;
     /** Scales for the gauge */
@@ -38,9 +38,9 @@ import { Renderer } from "../core/common/renderer";
 
 /**
  * @ignore
- * Interface for an object that can be used to create the attributes needed by a gauge
+ * Interface for an object that can be used to create the rendering attributes needed by a gauge
  */
- export interface IGaugeRenderingTools {
+export interface IGaugeRenderingTools {
     /** Function for creating accessors */
     accessorFunction: () => IAccessors;
     /** Function for creating scales */
@@ -60,28 +60,6 @@ export class GaugeUtil {
     /** Value used for unifying the linear-style gauge visualization into a single bar stack */
     public static readonly DATA_CATEGORY = "gauge";
 
-    /** A dictionary of tools for assembling a standard gauge by mode */
-    public static readonly renderingTools: Record<GaugeMode, IGaugeRenderingTools> = {
-        [GaugeMode.Donut]: {
-            mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
-            thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(),
-            accessorFunction: () => new RadialAccessors(),
-            scaleFunction: () => radialScales(),
-        },
-        [GaugeMode.Horizontal]: {
-            mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-            thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
-            accessorFunction: () => new HorizontalBarAccessors(),
-            scaleFunction: () => barScales({ horizontal: true }),
-        },
-        [GaugeMode.Vertical]: {
-            mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-            thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
-            accessorFunction: () => new VerticalBarAccessors(),
-            scaleFunction: () => barScales(),
-        },
-    };
-
     /**
      * Assembles a gauge series set with all of the standard requisite scales, renderers, accessors, etc. needed for creating a gauge visualization
      *
@@ -93,8 +71,8 @@ export class GaugeUtil {
     public static assembleSeriesSet(gaugeConfig: IGaugeConfig, mode: GaugeMode): IChartAssistSeries<IAccessors>[] {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
-        const gaugeAttributes = GaugeUtil.generateGaugeAttributes(mode);
-        const { accessors, scales, mainRenderer } = gaugeAttributes;
+        const renderingAttributes = GaugeUtil.generateRenderingAttributes(mode);
+        const { accessors, scales, mainRenderer } = renderingAttributes;
         if (accessors.data) {
             accessors.data.color = gaugeConfig.valueColorAccessor || GaugeUtil.createDefaultColorAccessor(gaugeConfig.thresholds);
         }
@@ -109,7 +87,7 @@ export class GaugeUtil {
         ] as IChartAssistSeries<IAccessors>[];
 
         if (gaugeConfig.enableThresholdMarkers) {
-            chartAssistSeries.push(GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes));
+            chartAssistSeries.push(GaugeUtil.generateThresholdSeries(gaugeConfig, renderingAttributes));
         }
 
         return chartAssistSeries;
@@ -158,7 +136,7 @@ export class GaugeUtil {
      *
      * @returns {IChartAssistSeries<IAccessors>} The threshold series
      */
-    public static generateThresholdSeries(gaugeConfig: IGaugeConfig, gaugeAttributes: IGaugeAttributes): IChartAssistSeries<IAccessors> {
+    public static generateThresholdSeries(gaugeConfig: IGaugeConfig, gaugeAttributes: IGaugeRenderingAttributes): IChartAssistSeries<IAccessors> {
         return {
             ...GaugeUtil.generateThresholdData(gaugeConfig),
             accessors: gaugeAttributes.accessors,
@@ -196,11 +174,11 @@ export class GaugeUtil {
      *
      * @param mode The mode of the gauge (Donut, Horizontal, or Vertical)
      *
-     * @returns {IGaugeAttributes} The attributes required to instantiate a gauge
+     * @returns {IGaugeRenderingAttributes} The attributes required to instantiate a gauge
      */
-    public static generateGaugeAttributes(mode: GaugeMode): IGaugeAttributes {
-        const renderingTools = GaugeUtil.renderingTools[mode];
-        const result: IGaugeAttributes = {
+    public static generateRenderingAttributes(mode: GaugeMode): IGaugeRenderingAttributes {
+        const renderingTools = GaugeUtil.generateRenderingTools(mode);
+        const result: IGaugeRenderingAttributes = {
             accessors: renderingTools.accessorFunction(),
             mainRenderer: renderingTools.mainRendererFunction(),
             thresholdsRenderer: renderingTools.thresholdsRendererFunction(),
@@ -208,6 +186,38 @@ export class GaugeUtil {
         };
 
         return result;
+    }
+
+    /**
+     * Generates rendering tools for standard gauge attributes
+     *
+     * @param mode The mode of the gauge (Donut, Horizontal, or Vertical)
+     *
+     * @returns {IGaugeRenderingTools} The rendering tools for standard gauge attributes
+     */
+     public static generateRenderingTools(mode: GaugeMode): IGaugeRenderingTools {
+        const renderingTools: Record<GaugeMode, IGaugeRenderingTools> = {
+            [GaugeMode.Donut]: {
+                mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
+                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(),
+                accessorFunction: () => new RadialAccessors(),
+                scaleFunction: () => radialScales(),
+            },
+            [GaugeMode.Horizontal]: {
+                mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
+                accessorFunction: () => new HorizontalBarAccessors(),
+                scaleFunction: () => barScales({ horizontal: true }),
+            },
+            [GaugeMode.Vertical]: {
+                mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
+                accessorFunction: () => new VerticalBarAccessors(),
+                scaleFunction: () => barScales(),
+            },
+        }
+
+        return renderingTools[mode];
     }
 
     /**
@@ -248,7 +258,7 @@ export class GaugeUtil {
      *
      * @returns {DataAccessor} An accessor for determining the color to use based on the series id and/or data value
      */
-     public static createReversedColorAccessor(thresholds: number[]): DataAccessor {
+    public static createReversedColorAccessor(thresholds: number[]): DataAccessor {
         // assigning to variable to prevent "Lambda not supported" error
         const valueColorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (dataSeries.id === GAUGE_REMAINDER_SERIES_ID) {

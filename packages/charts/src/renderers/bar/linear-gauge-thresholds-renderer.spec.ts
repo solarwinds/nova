@@ -3,7 +3,7 @@ import { Subject } from "rxjs";
 
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../core/common/types";
 import { GaugeMode } from "../../gauge/constants";
-import { GaugeUtil, IGaugeAttributes } from "../../gauge/gauge-util";
+import { GaugeUtil, IGaugeRenderingAttributes } from "../../gauge/gauge-util";
 import { IGaugeConfig } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
@@ -33,10 +33,10 @@ describe("LinearGaugeThresholdsRenderer >", () => {
         let thresholdMarkers: D3Selection;
 
         describe("vertical gauge", () => {
-            let gaugeAttributes: IGaugeAttributes;
+            let gaugeAttributes: IGaugeRenderingAttributes;
 
             beforeEach(() => {
-                gaugeAttributes = GaugeUtil.generateGaugeAttributes(GaugeMode.Vertical);
+                gaugeAttributes = GaugeUtil.generateRenderingAttributes(GaugeMode.Vertical);
                 gaugeAttributes.scales.x.domain(["gauge"]);
                 dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
 
@@ -74,10 +74,10 @@ describe("LinearGaugeThresholdsRenderer >", () => {
         });
 
         describe("horizontal gauge", () => {
-            let gaugeAttributes: IGaugeAttributes;
+            let gaugeAttributes: IGaugeRenderingAttributes;
 
             beforeEach(() => {
-                gaugeAttributes = GaugeUtil.generateGaugeAttributes(GaugeMode.Horizontal);
+                gaugeAttributes = GaugeUtil.generateRenderingAttributes(GaugeMode.Horizontal);
                 gaugeAttributes.scales.y.domain(["gauge"]);
 
                 dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);

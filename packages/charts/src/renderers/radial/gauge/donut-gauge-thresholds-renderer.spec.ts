@@ -29,7 +29,7 @@ describe("DonutGaugeThresholdsRenderer >", () => {
             thresholds: [3, 7, 9],
         };
 
-        const gaugeAttributes = GaugeUtil.generateGaugeAttributes(GaugeMode.Donut);
+        const gaugeAttributes = GaugeUtil.generateRenderingAttributes(GaugeMode.Donut);
         dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
 
         renderSeries = {
