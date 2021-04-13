@@ -3,8 +3,7 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import { AfterViewInit, Component, NO_ERRORS_SCHEMA, OnDestroy, ViewChild } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { count, debounceTime, delay, shareReplay, skip, switchMap, take, takeUntil, tap } from "rxjs/operators";
-import { TestScheduler } from "rxjs/testing";
+import { debounceTime, delay, shareReplay, skip, switchMap, take, takeUntil, tap } from "rxjs/operators";
 
 import { RepeatComponent } from "../lib/repeat/repeat.component";
 import { NuiRepeatModule } from "../lib/repeat/repeat.module";
@@ -204,7 +203,7 @@ describe("services >", () => {
                         skip(1),
                         take(1),
                         tap((range: ListRange) => {
-                            expect(range.end).toEqual(component.pageSize * 2);
+                            expect(range.end) .toEqual(component.pageSize * 2);
                             done();
                         })
                     );

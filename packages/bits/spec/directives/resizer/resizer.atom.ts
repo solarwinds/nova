@@ -1,4 +1,4 @@
-import { browser, by, ElementFinder } from "protractor";
+import { browser, by } from "protractor";
 import { ILocation } from "selenium-webdriver";
 
 import { Atom } from "../../atom";
@@ -20,7 +20,7 @@ export class ResizerAtom extends Atom {
     public getResizeDirection = async (): Promise<"horizontal" | "vertical"> => {
         const className = await this.resizeSplitElement.getAttribute("class");
         return className.includes("horizontal") ? "horizontal" : "vertical";
-    }
+    };
 
     private resizeElement = async (resizeCoords: ILocation): Promise<void> => {
         await this.hover();

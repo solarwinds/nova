@@ -184,7 +184,6 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
         // when datasource change we need to re-initialize key control stuff
         this.itemsChangeSubscription = this.menuItems.changes
             .subscribe((changes: QueryList<MenuItemBaseComponent>) => {
-                const activeIndex = this.keyControlService.getActiveItemIndex();
                 this.keyControlService.initKeyboardManager();
                 this.keyControlService.setActiveItem(0);
                 this.changeDetector.detectChanges();
@@ -192,7 +191,7 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
 
         // when appendToBody is set width of the popup element should be calculated
         // To get actual value detectChanges() call afterViewInit is needed
-        this.changeDetector.detectChanges();
+        this.changeDetector.detectChanges ();
     }
 
     private setKeyboardManagerServiceData(): void {

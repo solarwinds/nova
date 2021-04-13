@@ -4,7 +4,6 @@ import {
     element,
     ElementFinder,
     ExpectedConditions,
-    until
 } from "protractor";
 
 import { Atom } from "../../atom";

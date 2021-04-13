@@ -1,6 +1,6 @@
 import { OverlayModule } from "@angular/cdk/overlay";
 import { Component, DebugElement } from "@angular/core";
-import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { NuiButtonModule } from "../button/button.module";
