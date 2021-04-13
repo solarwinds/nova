@@ -446,6 +446,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             .flexibleConnectedTo(this.host.nativeElement)
             .withPush(false)
             .withViewportMargin(0)
+            .withGrowAfterOpen(true)
             .withPositions(this.getPopoverConnectedPosition(position));
 
         const subscription = positionStrategy.positionChanges
