@@ -286,7 +286,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     }
 
     /**
-     * Resets the size of the popover based on the overlay's position.
+     * Resets the size of the popover.
      */
     public resetSize() {
         // This is set to undefined so that angular cdk will set the height and width automatically
