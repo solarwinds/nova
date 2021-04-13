@@ -3,8 +3,8 @@ import { Subject } from "rxjs";
 
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../core/common/types";
 import { GaugeMode } from "../../gauge/constants";
-import { GaugeUtil } from "../../gauge/gauge-util";
-import { IGaugeAttributes, IGaugeConfig } from "../../gauge/types";
+import { GaugeUtil, IGaugeAttributes } from "../../gauge/gauge-util";
+import { IGaugeConfig } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { BarAccessors } from "./accessors/bar-accessors";
