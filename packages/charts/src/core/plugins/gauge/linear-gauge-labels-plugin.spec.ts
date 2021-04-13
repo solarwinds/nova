@@ -37,7 +37,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
         document.body.appendChild(element);
         chart.build(element);
 
-        dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.getGaugeAttributes(GaugeMode.Horizontal));
+        dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateGaugeAttributes(GaugeMode.Horizontal));
         chart.update([dataSeries]);
         chart.updateDimensions();
 
@@ -120,7 +120,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
             element.setAttribute("style", "height: 200px");
             gridConfig = linearGaugeGridConfig(GaugeMode.Vertical);
             chart.getGrid().config(gridConfig);
-            dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.getGaugeAttributes(GaugeMode.Vertical));
+            dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateGaugeAttributes(GaugeMode.Vertical));
             chart.update([dataSeries]);
             chart.updateDimensions();
         });

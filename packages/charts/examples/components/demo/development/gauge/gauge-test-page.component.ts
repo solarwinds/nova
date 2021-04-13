@@ -39,11 +39,11 @@ export class GaugeTestPageComponent {
 
     private getGaugeConfig(): IGaugeConfig {
         return {
-            // hideThresholdMarkers: true,
             value: this.value,
             max: this.maxValue,
             thresholds: this.thresholds,
             valueColorAccessor: this.reversed ? this.reversedValueColorAccessor : undefined,
+            enableThresholdMarkers: true,
         };
     }
 }

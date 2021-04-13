@@ -80,9 +80,9 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private drawThresholdLabels() {
-        const data = cloneDeep(this.thresholdSeries?.data);
-        if (isUndefined(data)) {
-            throw new Error("Gauge threshold series data is undefined");
+        if (isUndefined(this.thresholdSeries)) {
+            console.warn("Threshold series is undefined. As a result, threshold labels for the linear gauge will not be rendered.");
+            return;
         }
 
         let gaugeThresholdsLabelsGroup = this.lasagnaLayer.select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);
@@ -90,6 +90,11 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
             gaugeThresholdsLabelsGroup = this.lasagnaLayer.append("svg:g")
                 .attr("class", GAUGE_LABELS_CONTAINER_CLASS)
                 .style("opacity", 0);
+        }
+
+        const data = cloneDeep(this.thresholdSeries?.data);
+        if (isUndefined(data)) {
+            throw new Error("Gauge threshold series data is undefined");
         }
 
         // last value in the thresholds series is the max value of the gauge (needed by RadialGaugeThresholdsRenderer).

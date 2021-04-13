@@ -3,7 +3,7 @@ import isUndefined from "lodash/isUndefined";
 import { LinearScale } from "../core/common/scales/linear-scale";
 
 import { Formatter, IRadialScales, Scales } from "../core/common/scales/types";
-import { IAccessors, IChartAssistSeries, IChartSeries, IDataSeries } from "../core/common/types";
+import { DataAccessor, IAccessors, IChartAssistSeries, IChartSeries, IDataSeries } from "../core/common/types";
 import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
 import { VerticalBarAccessors } from "../renderers/bar/accessors/vertical-bar-accessors";
@@ -40,7 +40,7 @@ import { Renderer } from "../core/common/renderer";
  * @ignore
  * Interface for an object that can be used to create the attributes needed by a gauge
  */
- export interface IGaugeTools {
+ export interface IGaugeRenderingTools {
     /** Function for creating accessors */
     accessorFunction: () => IAccessors;
     /** Function for creating scales */
@@ -58,39 +58,71 @@ import { Renderer } from "../core/common/renderer";
 @Directive() // decorator required in Angular 11+
 export class GaugeUtil {
     /** Value used for unifying the linear-style gauge visualization into a single bar stack */
-    public static DATA_CATEGORY = "gauge";
+    public static readonly DATA_CATEGORY = "gauge";
+
+    /** A dictionary of tools for assembling a standard gauge by mode */
+    public static readonly renderingTools: Record<GaugeMode, IGaugeRenderingTools> = {
+        [GaugeMode.Donut]: {
+            mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
+            thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(),
+            accessorFunction: () => new RadialAccessors(),
+            scaleFunction: () => radialScales(),
+        },
+        [GaugeMode.Horizontal]: {
+            mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
+            thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
+            accessorFunction: () => new HorizontalBarAccessors(),
+            scaleFunction: () => barScales({ horizontal: true }),
+        },
+        [GaugeMode.Vertical]: {
+            mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
+            thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
+            accessorFunction: () => new VerticalBarAccessors(),
+            scaleFunction: () => barScales(),
+        },
+    };
 
     /**
-     * Assembles a gauge series set with all of the standard requisite scales, renderers, and accessors needed for creating a gauge visualization
+     * Assembles a gauge series set with all of the standard requisite scales, renderers, accessors, etc. needed for creating a gauge visualization
      *
-     * @param gaugeConfig The configuration for the series
-     * @param mode Horizontal, Vertical, or Donut mode
+     * @param gaugeConfig The configuration for the gauge
+     * @param mode The mode of the gauge (Donut, Horizontal, or Vertical)
      *
      * @returns {IChartAssistSeries<IAccessors>[]} The assembled series set
      */
     public static assembleSeriesSet(gaugeConfig: IGaugeConfig, mode: GaugeMode): IChartAssistSeries<IAccessors>[] {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
-        const gaugeAttributes = GaugeUtil.getGaugeAttributes(gaugeConfig, mode);
+        const gaugeAttributes = GaugeUtil.generateGaugeAttributes(mode);
         const { accessors, scales, mainRenderer } = gaugeAttributes;
         if (accessors.data) {
             accessors.data.color = gaugeConfig.valueColorAccessor || GaugeUtil.createDefaultColorAccessor(gaugeConfig.thresholds);
         }
 
         const chartAssistSeries: IChartAssistSeries<IAccessors>[] = [
-            ...GaugeUtil.getGaugeData(gaugeConfig.value, gaugeConfig.max).map(s => ({
+            ...GaugeUtil.generateGaugeData(gaugeConfig).map((s: Partial<IDataSeries<IAccessors>>) => ({
                 ...s,
                 accessors,
                 scales,
                 renderer: mainRenderer,
             })),
-        ];
+        ] as IChartAssistSeries<IAccessors>[];
 
-        chartAssistSeries.push(GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes));
+        if (gaugeConfig.enableThresholdMarkers) {
+            chartAssistSeries.push(GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes));
+        }
 
         return chartAssistSeries;
     }
 
+    /**
+     * Updates the series set based on the provided configuration
+     *
+     * @param seriesSet The set of series to update
+     * @param gaugeConfig The configuration for the gauge
+     *
+     * @returns {IChartAssistSeries<IAccessors>[]} The updated series set
+     */
     public static updateSeriesSet(seriesSet: IChartAssistSeries<IAccessors>[], gaugeConfig: IGaugeConfig): IChartAssistSeries<IAccessors>[] {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
@@ -108,25 +140,44 @@ export class GaugeUtil {
                 return { ...series, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max - gaugeConfig.value }] };
             }
 
-            // series for the threshold level markers
-            return { ...series, data: GaugeUtil.generateThresholdData(gaugeConfig) };
+            if (series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID) {
+                return { ...series, ...GaugeUtil.generateThresholdData(gaugeConfig) };
+            }
+
+            return series;
         });
 
         return updatedSeriesSet;
     }
 
+    /**
+     * Generates a series for visualizing the gauge's thresholds
+     *
+     * @param gaugeConfig The configuration for the gauge
+     * @param gaugeAttributes The attributes needed to visualized the thresholds
+     *
+     * @returns {IChartAssistSeries<IAccessors>} The threshold series
+     */
     public static generateThresholdSeries(gaugeConfig: IGaugeConfig, gaugeAttributes: IGaugeAttributes): IChartAssistSeries<IAccessors> {
         return {
-            id: GAUGE_THRESHOLD_MARKERS_SERIES_ID,
-            data: GaugeUtil.generateThresholdData(gaugeConfig),
+            ...GaugeUtil.generateThresholdData(gaugeConfig),
             accessors: gaugeAttributes.accessors,
             scales: gaugeAttributes.scales,
             renderer: gaugeAttributes.thresholdsRenderer,
             excludeFromArcCalculation: true,
             preprocess: false,
-        };
+        } as IChartAssistSeries<IAccessors>;
     }
 
+    /**
+     * Sets the formatter to use for the threshold labels
+     *
+     * @param formatter The formatter to use for the threshold labels
+     * @param seriesSet The series set to apply the formatter to
+     * @param formatterName Optional name for the formatter
+     *
+     * @returns {IChartAssistSeries<IAccessors>[]} The series set as modified to use the provided formatter
+     */
     public static setThresholdLabelFormatter(formatter: Formatter<string>,
                                              seriesSet: IChartAssistSeries<IAccessors>[],
                                              formatterName = GAUGE_LABEL_FORMATTER_NAME_DEFAULT): IChartAssistSeries<IAccessors>[] {
@@ -140,50 +191,41 @@ export class GaugeUtil {
         return seriesSet;
     }
 
-    public static getGaugeAttributes(gaugeConfig: IGaugeConfig, mode: GaugeMode): IGaugeAttributes {
-        const t: IGaugeTools = GaugeUtil.getGaugeTools(gaugeConfig, mode);
+    /**
+     * Generates the attributes required to instantiate a standard gauge in the specified mode
+     *
+     * @param mode The mode of the gauge (Donut, Horizontal, or Vertical)
+     *
+     * @returns {IGaugeAttributes} The attributes required to instantiate a gauge
+     */
+    public static generateGaugeAttributes(mode: GaugeMode): IGaugeAttributes {
+        const renderingTools = GaugeUtil.renderingTools[mode];
         const result: IGaugeAttributes = {
-            accessors: t.accessorFunction(),
-            mainRenderer: t.mainRendererFunction(),
-            thresholdsRenderer: t.thresholdsRendererFunction(),
-            scales: t.scaleFunction(),
+            accessors: renderingTools.accessorFunction(),
+            mainRenderer: renderingTools.mainRendererFunction(),
+            thresholdsRenderer: renderingTools.thresholdsRendererFunction(),
+            scales: renderingTools.scaleFunction(),
         };
 
         return result;
     }
 
-    public static getGaugeTools(gaugeConfig: IGaugeConfig, mode: GaugeMode): IGaugeTools {
-        const thresholdsConfig = { hideMarkers: gaugeConfig.hideThresholdMarkers };
-        const chartTools: Record<GaugeMode, IGaugeTools> = {
-            [GaugeMode.Donut]: {
-                mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(thresholdsConfig),
-                accessorFunction: () => new RadialAccessors(),
-                scaleFunction: () => radialScales(),
-            },
-            [GaugeMode.Horizontal]: {
-                mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(thresholdsConfig),
-                accessorFunction: () => new HorizontalBarAccessors(),
-                scaleFunction: () => barScales({ horizontal: true }),
-            },
-            [GaugeMode.Vertical]: {
-                mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(thresholdsConfig),
-                accessorFunction: () => new VerticalBarAccessors(),
-                scaleFunction: () => barScales(),
-            },
-        };
-
-        return chartTools[mode];
-    }
-
-    public static createDefaultColorAccessor(thresholds: number[]) {
+    /**
+     * Convenience function for creating a standard gauge color accessor in which low values are considered good
+     * and high values are considered bad. It provides colors for the remainder series and the quantity series.
+     * For the quantity series, it returns standard colors for Ok, Warning, and Critical statuses.
+     *
+     * @param thresholds An array of threshold values
+     *
+     * @returns {DataAccessor} An accessor for determining the color to use based on the series id and/or data value
+     */
+    public static createDefaultColorAccessor(thresholds: number[]): DataAccessor {
         // assigning to variable to prevent "Lambda not supported" error
         const valueColorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (dataSeries.id === GAUGE_REMAINDER_SERIES_ID) {
                 return StandardGaugeColor.Remainder;
             } else {
+                // quantity series
                 if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
                     return StandardGaugeColor.Critical;
                 }
@@ -197,12 +239,22 @@ export class GaugeUtil {
         return valueColorAccessor;
     }
 
-    public static createReversedColorAccessor(thresholds: number[]) {
+    /**
+     * Convenience function for creating the reverse of the standard gauge color accessor in which low values are considered
+     * bad and high values are considered good. It provides colors for the remainder series and the quantity series.
+     * For the quantity series, it returns standard colors for Ok, Warning, and Critical statuses.
+     *
+     * @param thresholds An array of threshold values
+     *
+     * @returns {DataAccessor} An accessor for determining the color to use based on the series id and/or data value
+     */
+     public static createReversedColorAccessor(thresholds: number[]): DataAccessor {
         // assigning to variable to prevent "Lambda not supported" error
         const valueColorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (dataSeries.id === GAUGE_REMAINDER_SERIES_ID) {
                 return StandardGaugeColor.Remainder;
             } else {
+                // quantity series
                 if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
                     return StandardGaugeColor.Ok;
                 }
@@ -216,22 +268,39 @@ export class GaugeUtil {
         return valueColorAccessor;
     }
 
-    public static getGaugeData(value: number, max: number) {
+    /**
+     * Generates data in the form needed by the gauge visualization
+     *
+     * @param gaugeConfig The configuration for the gauge
+     *
+     * @returns {Partial<IDataSeries<IAccessors>>[]} Data in the form needed by the gauge visualization
+     */
+    public static generateGaugeData(gaugeConfig: IGaugeConfig): Partial<IDataSeries<IAccessors>>[] {
         return [
             // category property is used for unifying the linear-style gauge visualization into a single bar stack
-            { id: GAUGE_QUANTITY_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value }] },
-            { id: GAUGE_REMAINDER_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: max - value }] },
+            { id: GAUGE_QUANTITY_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.value }] },
+            { id: GAUGE_REMAINDER_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max - gaugeConfig.value }] },
         ];
     }
 
-    public static generateThresholdData(gaugeConfig: IGaugeConfig): IGaugeThreshold[] {
+    /**
+     * Generates threshold data in the form needed by the gauge's thresholds visualization
+     *
+     * @param gaugeConfig The configuration for the gauge
+     *
+     * @returns {Partial<IDataSeries<IAccessors, IGaugeThreshold>>} Threshold data in the form needed by the gauge's thresholds visualization
+     */
+    public static generateThresholdData(gaugeConfig: IGaugeConfig): Partial<IDataSeries<IAccessors, IGaugeThreshold>> {
         const markerValues = gaugeConfig.thresholds.map(threshold => ({
             category: GaugeUtil.DATA_CATEGORY,
             value: threshold,
             hit: threshold <= gaugeConfig.value,
         }));
 
-        // tack the max value onto the end (used for donut arc calculation)
-        return [...markerValues, { category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max, hit: false }];
+        return {
+            id: GAUGE_THRESHOLD_MARKERS_SERIES_ID,
+            // tack the max value onto the end (used for donut arc calculation)
+            data: [...markerValues, { category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max, hit: false }],
+        };
     }
 }

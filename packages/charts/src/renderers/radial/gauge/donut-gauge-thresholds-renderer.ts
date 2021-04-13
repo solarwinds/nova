@@ -17,7 +17,6 @@ import { DonutGaugeRenderingUtil } from "./donut-gauge-rendering-util";
  */
 export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IDonutGaugeThresholdsRendererConfig = {
     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
-    hideMarkers: false,
 };
 
 /**
@@ -50,18 +49,15 @@ export class DonutGaugeThresholdsRenderer extends RadialRenderer {
         const markerSelection = dataContainer.selectAll(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`)
             .data(DonutGaugeRenderingUtil.generateThresholdData(data));
         markerSelection.exit().remove();
-
-        if (!this.config.hideMarkers) {
-            markerSelection.enter()
-                .append("circle")
-                .attr("class", GAUGE_THRESHOLD_MARKER_CLASS)
-                .merge(markerSelection as any)
-                .attr("cx", d => markerGenerator.centroid(d)[0])
-                .attr("cy", d => markerGenerator.centroid(d)[1])
-                .attr("r", this.config.markerRadius as number)
-                .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
-                .style("stroke-width", 0);
-        }
+        markerSelection.enter()
+            .append("circle")
+            .attr("class", GAUGE_THRESHOLD_MARKER_CLASS)
+            .merge(markerSelection as any)
+            .attr("cx", d => markerGenerator.centroid(d)[0])
+            .attr("cy", d => markerGenerator.centroid(d)[1])
+            .attr("r", this.config.markerRadius as number)
+            .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
+            .style("stroke-width", 0);
     }
 
     public getInnerRadius(range: number[], index: number): number {

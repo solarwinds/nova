@@ -36,7 +36,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             let gaugeAttributes: IGaugeAttributes;
 
             beforeEach(() => {
-                gaugeAttributes = GaugeUtil.getGaugeAttributes(GaugeMode.Vertical);
+                gaugeAttributes = GaugeUtil.generateGaugeAttributes(GaugeMode.Vertical);
                 gaugeAttributes.scales.x.domain(["gauge"]);
                 dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
 
@@ -77,7 +77,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             let gaugeAttributes: IGaugeAttributes;
 
             beforeEach(() => {
-                gaugeAttributes = GaugeUtil.getGaugeAttributes(GaugeMode.Horizontal);
+                gaugeAttributes = GaugeUtil.generateGaugeAttributes(GaugeMode.Horizontal);
                 gaugeAttributes.scales.y.domain(["gauge"]);
 
                 dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
