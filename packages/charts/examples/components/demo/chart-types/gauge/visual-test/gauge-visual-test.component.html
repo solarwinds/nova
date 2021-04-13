@@ -3,9 +3,9 @@
     <charts-test-harness>
         <h3>Donut</h3>
         <div class="d-flex justify-content-around">
-            <donut-gauge-tester [seriesConfig]="getSeriesConfig(lowValue)"></donut-gauge-tester>
-            <donut-gauge-tester [seriesConfig]="getSeriesConfig(mediumValue)"></donut-gauge-tester>
-            <donut-gauge-tester id="visual-test-gauge-donut-high-value" [seriesConfig]="getSeriesConfig(highValue)"></donut-gauge-tester>
+            <donut-gauge-tester [seriesConfig]="getSeriesConfig(lowValue)" [size]="250"></donut-gauge-tester>
+            <donut-gauge-tester [seriesConfig]="getSeriesConfig(mediumValue)" [size]="300"></donut-gauge-tester>
+            <donut-gauge-tester id="visual-test-gauge-donut-high-value" [seriesConfig]="getSeriesConfig(highValue)" [size]="350"></donut-gauge-tester>
         </div>
         <h3>Horizontal</h3>
         <div class="d-flex justify-content-around">

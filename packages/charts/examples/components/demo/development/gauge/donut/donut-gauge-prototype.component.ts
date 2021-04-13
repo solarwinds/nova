@@ -7,14 +7,12 @@ import {
     DonutGaugeLabelsPlugin,
     GaugeMode,
     GaugeUtil,
-    GAUGE_THICKNESS_DEFAULT,
     IAccessors,
     IChartAssistSeries,
     IGaugeLabelsPluginConfig,
     IGaugeSeriesConfig,
-    IRadialRendererConfig,
     radial,
-    radialGrid
+    radialGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -23,7 +21,7 @@ import {
     styleUrls: ["./donut-gauge-prototype.component.less"],
 })
 export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
-    @Input() public annularWidth = GAUGE_THICKNESS_DEFAULT;
+    @Input() public size: number;
     @Input() public seriesConfig: IGaugeSeriesConfig;
 
     public chartAssist: ChartAssist;
@@ -31,16 +29,20 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
     public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>) {
-        if ((changes.annularWidth && !changes.annularWidth.firstChange) || (changes.seriesConfig && !changes.seriesConfig.firstChange)) {
-            if (changes.annularWidth) {
-                this.updateAnnularWidth();
-            }
+        if (changes.size && !changes.size.firstChange) {
+                this.updateDonutSize();
+                this.chartAssist.chart.updateDimensions();
+        }
+
+        if (changes.seriesConfig && !changes.seriesConfig.firstChange) {
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
         }
     }
 
     public ngOnInit() {
         const grid = radialGrid();
+        grid.config().dimension.autoHeight = false;
+        grid.config().dimension.autoWidth = false;
         this.chartAssist = new ChartAssist(new Chart(grid), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
@@ -52,13 +54,13 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Donut);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
 
-        this.updateAnnularWidth();
+        this.updateDonutSize();
         this.chartAssist.update(this.seriesSet);
     }
 
-    private updateAnnularWidth() {
-        this.seriesSet.forEach(series => {
-            (series.renderer.config as IRadialRendererConfig).annularWidth = this.annularWidth;
-        });
+    private updateDonutSize() {
+        const gridDimensions = this.chartAssist.chart.getGrid().config().dimension;
+        gridDimensions.height(this.size);
+        gridDimensions.width(this.size);
     }
 }

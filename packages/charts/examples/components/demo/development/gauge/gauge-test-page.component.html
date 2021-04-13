@@ -1,8 +1,8 @@
 <charts-test-harness>
-    <div class="d-flex align-items-center justify-content-around">
-        <donut-gauge-prototype [seriesConfig]="seriesConfig" [annularWidth]="thickness"></donut-gauge-prototype>
-        <linear-gauge-vertical-prototype [seriesConfig]="seriesConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-vertical-prototype>
-        <linear-gauge-horizontal-prototype [seriesConfig]="seriesConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-horizontal-prototype>
+    <div class="testing-region d-flex align-items-center justify-content-around">
+        <donut-gauge-prototype [seriesConfig]="seriesConfig" [size]="donutSize"></donut-gauge-prototype>
+        <linear-gauge-vertical-prototype [seriesConfig]="seriesConfig" [thickness]="linearThickness" [flipLabels]="flipLabels"></linear-gauge-vertical-prototype>
+        <linear-gauge-horizontal-prototype [seriesConfig]="seriesConfig" [thickness]="linearThickness" [flipLabels]="flipLabels"></linear-gauge-horizontal-prototype>
     </div>
 
     <div class="mb-2">
@@ -20,15 +20,28 @@
     </div>
     <div class="mb-2">
         <label for="thicknessInput">
-            Thickness
+            Linear Thickness
         </label>
         <br />
         <nui-textbox-number type="number"
-                            [(ngModel)]="thickness"
-                            [minValue]="10"
+                            [(ngModel)]="linearThickness"
+                            [minValue]="15"
                             [maxValue]="30"
                             customBoxWidth="75px"
                             name="thicknessInput"></nui-textbox-number>
+    </div>
+    <div class="mb-2">
+        <label for="donutSizeInput">
+            Donut Size
+        </label>
+        <br />
+        <nui-textbox-number type="number"
+                            [(ngModel)]="donutSize"
+                            [step]=50
+                            [minValue]="200"
+                            [maxValue]="700"
+                            customBoxWidth="75px"
+                            name="donutSizeInput"></nui-textbox-number>
     </div>
 </charts-test-harness>
 <div class="ml-3">

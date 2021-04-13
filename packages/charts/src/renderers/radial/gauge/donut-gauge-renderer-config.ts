@@ -7,7 +7,6 @@ import { IRadialRendererConfig } from "../../../core/common/types";
  */
 export function donutGaugeRendererConfig(): IRadialRendererConfig {
     return {
-        annularGrowth: 0,
         strokeWidth: 0,
         enableSeriesHighlighting: false,
     };

@@ -1,14 +1,16 @@
 import { Component } from "@angular/core";
-import { DataAccessor, GaugeUtil, GAUGE_THICKNESS_DEFAULT, IGaugeSeriesConfig } from "@nova-ui/charts";
+import { DataAccessor, GaugeUtil, IGaugeSeriesConfig, StandardLinearGaugeThickness } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-test-page",
     templateUrl: "./gauge-test-page.component.html",
+    styleUrls: ["./gauge-test-page.component.less"],
 })
 export class GaugeTestPageComponent {
     public value = 95;
     public maxValue = 200;
-    public thickness = GAUGE_THICKNESS_DEFAULT;
+    public linearThickness = StandardLinearGaugeThickness.Large;
+    public donutSize = 200;
     public thresholds: number[] = [100, 150];
     public reversed = false;
     public flipLabels = false;

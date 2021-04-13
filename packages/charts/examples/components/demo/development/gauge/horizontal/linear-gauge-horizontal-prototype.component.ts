@@ -5,7 +5,6 @@ import {
     ChartAssist,
     GaugeMode,
     GaugeUtil,
-    GAUGE_THICKNESS_DEFAULT,
     IAccessors,
     IChartAssistSeries,
     IGaugeSeriesConfig,
@@ -22,7 +21,7 @@ import {
     styleUrls: ["./linear-gauge-horizontal-prototype.component.less"],
 })
 export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnInit {
-    @Input() public thickness = GAUGE_THICKNESS_DEFAULT;
+    @Input() public thickness: number;
     @Input() public seriesConfig: IGaugeSeriesConfig;
     @Input() public flipLabels = false;
 
@@ -31,9 +30,7 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
     private labelsPlugin: LinearGaugeLabelsPlugin;
 
     public ngOnChanges(changes: ComponentChanges<LinearGaugeHorizontalPrototypeComponent>) {
-        if ((changes.thickness && !changes.thickness.firstChange) ||
-            (changes.seriesConfig && !changes.seriesConfig.firstChange) ||
-            (changes.flipLabels && !changes.flipLabels.firstChange)) {
+        if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             if (changes.thickness) {
                 gridConfig.dimension.height(this.thickness);
@@ -49,6 +46,9 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
                 };
             }
             this.chartAssist.chart.updateDimensions();
+        }
+
+        if (changes.seriesConfig && !changes.seriesConfig.firstChange) {
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
         }
     }

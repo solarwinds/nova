@@ -20,6 +20,7 @@ import {
 })
 export class DonutGaugeTesterComponent implements OnInit {
     @Input() public seriesConfig: IGaugeSeriesConfig;
+    @Input() public size = 250;
 
     public chartAssist: ChartAssist;
     public contentPlugin: ChartDonutContentPlugin;

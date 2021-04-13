@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { GaugeMode, IGaugeSeriesConfig } from "@nova-ui/charts";
+import {  IGaugeSeriesConfig } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-visual-test",
