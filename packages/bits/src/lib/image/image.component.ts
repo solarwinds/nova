@@ -35,7 +35,7 @@ import { IImagesPresetItem } from "./public-api";
     encapsulation: ViewEncapsulation.None,
     host: {
         "role": "img",
-        "[attr.aria-label]": "ariaLabel || null",
+        "[attr.aria-label]": "ariaLabel || imageName || null",
     },
 })
 export class ImageComponent implements OnInit, AfterViewInit {
@@ -47,7 +47,12 @@ export class ImageComponent implements OnInit, AfterViewInit {
     /**
      * Sets alt for image from external source
      */
-    @Input() public imageAlt: string;
+    @Input() public imageAlt: string = "";
+
+    /**
+     * Sets aria-label text
+     */
+    @Input() public ariaLabel: string;
 
     /**
      * Available values are: 'left' and 'right'
@@ -74,7 +79,7 @@ export class ImageComponent implements OnInit, AfterViewInit {
      */
     @Input() public autoFill: boolean;
 
-    public ariaLabel: string;
+    public imageName: string;
 
     constructor(private logger: LoggerService,
                 private utilService: UtilService,
@@ -126,8 +131,8 @@ export class ImageComponent implements OnInit, AfterViewInit {
         let imageHtml: string = "";
         if (_has(image, "code") && _isString(image.code)) {
             imageHtml = image.code;
-            if(image.name && this.ariaLabel !== image.name) {
-                Promise.resolve().then(_ => this.ariaLabel = image.name);
+            if(image.name && !this.ariaLabel && this.imageName !== image.name) {
+                Promise.resolve().then(_ => this.imageName = image.name);
             }
         } else {
             imageHtml = `<img src="${this.image}" alt="${this.imageAlt}">`;
