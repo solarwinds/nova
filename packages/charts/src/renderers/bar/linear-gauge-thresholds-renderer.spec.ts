@@ -56,12 +56,10 @@ describe("LinearGaugeThresholdsRenderer >", () => {
 
             it("should position the threshold markers correctly", () => {
                 thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
-                    expect(node.getAttribute("cx")).toEqual(
-                        (renderSeries.scales.x.convert(gaugeAttributes.quantityAccessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
-                    );
-                    expect(node.getAttribute("cy")).toEqual(
-                        (renderSeries.scales.y.convert(gaugeAttributes.quantityAccessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
-                    );
+                    const endX = gaugeAttributes.quantityAccessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries);
+                    const endY = gaugeAttributes.quantityAccessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries);
+                    expect(node.getAttribute("cx")).toEqual(renderSeries.scales.x.convert(endX).toString());
+                    expect(node.getAttribute("cy")).toEqual(renderSeries.scales.y.convert(endY).toString());
                 });
             });
 
@@ -98,12 +96,10 @@ describe("LinearGaugeThresholdsRenderer >", () => {
 
             it("should position the threshold markers correctly", () => {
                 thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
-                    expect(node.getAttribute("cx")).toEqual(
-                        (renderSeries.scales.x.convert(gaugeAttributes.quantityAccessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
-                    );
-                    expect(node.getAttribute("cy")).toEqual(
-                        (renderSeries.scales.y.convert(gaugeAttributes.quantityAccessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
-                    );
+                    const endX = gaugeAttributes.quantityAccessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries);
+                    const endY = gaugeAttributes.quantityAccessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries);
+                    expect(node.getAttribute("cx")).toEqual(renderSeries.scales.x.convert(endX).toString());
+                    expect(node.getAttribute("cy")).toEqual(renderSeries.scales.y.convert(endY).toString());
                 });
             });
 
