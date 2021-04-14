@@ -76,6 +76,8 @@ describe("USERCONTROL Repeat", () => {
         beforeEach(async () => {
             await browser.refresh();
             await Helpers.pressKey(Key.TAB);
+            await Helpers.pressKey(Key.TAB);
+            await Helpers.pressKey(Key.TAB);
         });
 
         it("should allow check/uncheck items using ENTER", async () => {
