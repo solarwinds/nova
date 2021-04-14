@@ -44,7 +44,7 @@ describe("ChartPopoverComponent", () => {
         it("should invoke popover.updatePosition and popover.resetSize", () => {
             component.popover = {
                 updatePosition: () => { },
-                resetSize: () => { }
+                resetSize: () => { },
             } as PopoverComponent;
 
             const updatePositionSpy = spyOn(component.popover, "updatePosition");
