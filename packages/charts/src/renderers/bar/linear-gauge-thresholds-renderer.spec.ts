@@ -57,10 +57,10 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             it("should position the threshold markers correctly", () => {
                 thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
                     expect(node.getAttribute("cx")).toEqual(
-                        (renderSeries.scales.x.convert(gaugeAttributes.accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                        (renderSeries.scales.x.convert(gaugeAttributes.quantityAccessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
                     );
                     expect(node.getAttribute("cy")).toEqual(
-                        (renderSeries.scales.y.convert(gaugeAttributes.accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                        (renderSeries.scales.y.convert(gaugeAttributes.quantityAccessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
                     );
                 });
             });
@@ -99,10 +99,10 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             it("should position the threshold markers correctly", () => {
                 thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
                     expect(node.getAttribute("cx")).toEqual(
-                        (renderSeries.scales.x.convert(gaugeAttributes.accessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                        (renderSeries.scales.x.convert(gaugeAttributes.quantityAccessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
                     );
                     expect(node.getAttribute("cy")).toEqual(
-                        (renderSeries.scales.y.convert(gaugeAttributes.accessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
+                        (renderSeries.scales.y.convert(gaugeAttributes.quantityAccessors?.data?.endY?.(dataSeries.data[i], i, dataSeries.data, dataSeries))).toString()
                     );
                 });
             });

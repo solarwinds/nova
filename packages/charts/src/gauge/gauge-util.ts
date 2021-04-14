@@ -26,8 +26,10 @@ import { Renderer } from "../core/common/renderer";
  * Attributes needed by a gauge
  */
 export interface IGaugeRenderingAttributes {
-    /** Accessors for the gauge data and series */
-    accessors: IAccessors;
+    /** Accessors for the gauge quantity segment */
+    quantityAccessors: IAccessors;
+    /** Accessors for the gauge remainder segment */
+    remainderAccessors: IAccessors;
     /** Scales for the gauge */
     scales: Scales;
     /** Renderer for the primary gauge visualization */
@@ -41,8 +43,10 @@ export interface IGaugeRenderingAttributes {
  * Interface for an object that can be used to create the rendering attributes needed by a gauge
  */
 export interface IGaugeRenderingTools {
-    /** Function for creating accessors */
-    accessorFunction: () => IAccessors;
+    /** Function for creating quantity accessors */
+    quantityAccessorFunction: () => IAccessors;
+    /** Function for creating remainder accessors */
+    remainderAccessorFunction: () => IAccessors;
     /** Function for creating scales */
     scaleFunction: () => Scales | IRadialScales;
     /** Function for creating a main renderer */
@@ -72,15 +76,17 @@ export class GaugeUtil {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
         const renderingAttributes = GaugeUtil.generateRenderingAttributes(mode);
-        const { accessors, scales, mainRenderer } = renderingAttributes;
-        if (accessors.data) {
-            accessors.data.color = gaugeConfig.colorAccessor || GaugeUtil.createDefaultColorAccessor(gaugeConfig.thresholds);
+        const { quantityAccessors, remainderAccessors, scales, mainRenderer } = renderingAttributes;
+        if (quantityAccessors.data) {
+            quantityAccessors.data.color = gaugeConfig.quantityColorAccessor || GaugeUtil.createDefaultQuantityColorAccessor(gaugeConfig.thresholds);
         }
-
+        if (remainderAccessors.data) {
+            remainderAccessors.data.color = gaugeConfig.remainderColorAccessor || (() => (StandardGaugeColor.Remainder));
+        }
         const chartAssistSeries: IChartAssistSeries<IAccessors>[] = [
             ...GaugeUtil.generateGaugeData(gaugeConfig).map((s: Partial<IDataSeries<IAccessors>>) => ({
                 ...s,
-                accessors,
+                accessors: s.id === GAUGE_QUANTITY_SERIES_ID ? quantityAccessors : remainderAccessors,
                 scales,
                 renderer: mainRenderer,
             })),
@@ -104,17 +110,21 @@ export class GaugeUtil {
     public static updateSeriesSet(seriesSet: IChartAssistSeries<IAccessors>[], gaugeConfig: IGaugeConfig): IChartAssistSeries<IAccessors>[] {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
-        const colorAccessor = gaugeConfig.colorAccessor || GaugeUtil.createDefaultColorAccessor(gaugeConfig.thresholds);
         const updatedSeriesSet = seriesSet.map((series: IChartAssistSeries<IAccessors<any>>) => {
-            if (series.accessors.data) {
-                series.accessors.data.color = colorAccessor;
-            }
 
             if (series.id === GAUGE_QUANTITY_SERIES_ID) {
+                if (series.accessors.data) {
+                    series.accessors.data.color = gaugeConfig.quantityColorAccessor || GaugeUtil.createDefaultQuantityColorAccessor(gaugeConfig.thresholds);
+                }
+
                 return { ...series, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.value }] };
             }
 
             if (series.id === GAUGE_REMAINDER_SERIES_ID) {
+                if (series.accessors.data) {
+                    series.accessors.data.color = gaugeConfig.remainderColorAccessor || (() => (StandardGaugeColor.Remainder));
+                }
+
                 return { ...series, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max - gaugeConfig.value }] };
             }
 
@@ -139,7 +149,7 @@ export class GaugeUtil {
     public static generateThresholdSeries(gaugeConfig: IGaugeConfig, gaugeAttributes: IGaugeRenderingAttributes): IChartAssistSeries<IAccessors> {
         return {
             ...GaugeUtil.generateThresholdData(gaugeConfig),
-            accessors: gaugeAttributes.accessors,
+            accessors: gaugeAttributes.quantityAccessors,
             scales: gaugeAttributes.scales,
             renderer: gaugeAttributes.thresholdsRenderer,
             excludeFromArcCalculation: true,
@@ -179,7 +189,8 @@ export class GaugeUtil {
     public static generateRenderingAttributes(mode: GaugeMode): IGaugeRenderingAttributes {
         const renderingTools = GaugeUtil.generateRenderingTools(mode);
         const result: IGaugeRenderingAttributes = {
-            accessors: renderingTools.accessorFunction(),
+            quantityAccessors: renderingTools.quantityAccessorFunction(),
+            remainderAccessors: renderingTools.remainderAccessorFunction(),
             mainRenderer: renderingTools.mainRendererFunction(),
             thresholdsRenderer: renderingTools.thresholdsRendererFunction(),
             scales: renderingTools.scaleFunction(),
@@ -195,24 +206,27 @@ export class GaugeUtil {
      *
      * @returns {IGaugeRenderingTools} The rendering tools for standard gauge attributes
      */
-     public static generateRenderingTools(mode: GaugeMode): IGaugeRenderingTools {
+    public static generateRenderingTools(mode: GaugeMode): IGaugeRenderingTools {
         const renderingTools: Record<GaugeMode, IGaugeRenderingTools> = {
             [GaugeMode.Donut]: {
                 mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
                 thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(),
-                accessorFunction: () => new RadialAccessors(),
+                quantityAccessorFunction: () => new RadialAccessors(),
+                remainderAccessorFunction: () => new RadialAccessors(),
                 scaleFunction: () => radialScales(),
             },
             [GaugeMode.Horizontal]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
                 thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
-                accessorFunction: () => new HorizontalBarAccessors(),
+                quantityAccessorFunction: () => new HorizontalBarAccessors(),
+                remainderAccessorFunction: () => new HorizontalBarAccessors(),
                 scaleFunction: () => barScales({ horizontal: true }),
             },
             [GaugeMode.Vertical]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
                 thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(),
-                accessorFunction: () => new VerticalBarAccessors(),
+                quantityAccessorFunction: () => new VerticalBarAccessors(),
+                remainderAccessorFunction: () => new VerticalBarAccessors(),
                 scaleFunction: () => barScales(),
             },
         }
@@ -221,61 +235,50 @@ export class GaugeUtil {
     }
 
     /**
-     * Convenience function for creating a standard gauge color accessor in which low values are considered good
-     * and high values are considered bad. It provides colors for the remainder series and the quantity series.
-     * For the quantity series, it returns standard colors for Ok, Warning, and Critical statuses.
+     * Convenience function for creating a standard gauge quantity color accessor in which low values are considered good
+     * and high values are considered bad. It provides standard colors for Ok, Warning, and Critical statuses.
      *
      * @param thresholds An array of threshold values
      *
      * @returns {DataAccessor} An accessor for determining the color to use based on the series id and/or data value
      */
-    public static createDefaultColorAccessor(thresholds: number[]): DataAccessor {
+    public static createDefaultQuantityColorAccessor(thresholds: number[]): DataAccessor {
         // assigning to variable to prevent "Lambda not supported" error
-        const valueColorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
-            if (dataSeries.id === GAUGE_REMAINDER_SERIES_ID) {
-                return StandardGaugeColor.Remainder;
-            } else {
-                // quantity series
-                if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
-                    return StandardGaugeColor.Critical;
-                }
-                if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
-                    return StandardGaugeColor.Warning;
-                }
-                return StandardGaugeColor.Ok;
+        const colorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
+            if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
+                return StandardGaugeColor.Critical;
             }
+            if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
+                return StandardGaugeColor.Warning;
+            }
+            return StandardGaugeColor.Ok;
         };
 
-        return valueColorAccessor;
+        return colorAccessor;
     }
 
     /**
-     * Convenience function for creating the reverse of the standard gauge color accessor in which low values are considered
-     * bad and high values are considered good. It provides colors for the remainder series and the quantity series.
-     * For the quantity series, it returns standard colors for Ok, Warning, and Critical statuses.
+     * Convenience function for creating the reverse of the standard gauge quantity color accessor in which low values are considered
+     * bad and high values are considered good. It provides standard colors for Ok, Warning, and Critical statuses.
      *
      * @param thresholds An array of threshold values
      *
      * @returns {DataAccessor} An accessor for determining the color to use based on the series id and/or data value
      */
-    public static createReversedColorAccessor(thresholds: number[]): DataAccessor {
+    public static createReversedQuantityColorAccessor(thresholds: number[]): DataAccessor {
         // assigning to variable to prevent "Lambda not supported" error
-        const valueColorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
-            if (dataSeries.id === GAUGE_REMAINDER_SERIES_ID) {
-                return StandardGaugeColor.Remainder;
-            } else {
-                // quantity series
-                if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
-                    return StandardGaugeColor.Ok;
-                }
-                if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
-                    return StandardGaugeColor.Warning;
-                }
-                return StandardGaugeColor.Critical;
+        const colorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
+            if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
+                return StandardGaugeColor.Ok;
             }
+            if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
+                return StandardGaugeColor.Warning;
+            }
+            return StandardGaugeColor.Critical;
+
         };
 
-        return valueColorAccessor;
+        return colorAccessor;
     }
 
     /**

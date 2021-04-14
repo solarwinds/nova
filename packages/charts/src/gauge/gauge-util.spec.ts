@@ -122,14 +122,12 @@ describe("GaugeUtil >", () => {
 
     describe("createDefaultColorAccessor", () => {
         it("should create a standard color accessor", () => {
-            const colorAccessor = GaugeUtil.createDefaultColorAccessor(gaugeConfig.thresholds);
+            const colorAccessor = GaugeUtil.createDefaultQuantityColorAccessor(gaugeConfig.thresholds);
 
             gaugeConfig.enableThresholdMarkers = true;
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-            const remainderSeries = seriesSet.find(s => s.id === GAUGE_REMAINDER_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
             const quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
-            expect(colorAccessor({ }, 0, remainderSeries.data, remainderSeries)).toEqual(StandardGaugeColor.Remainder);
             expect(colorAccessor({ value: 1 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);
             expect(colorAccessor({ value: 3 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Warning);
             expect(colorAccessor({ value: 4 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Critical);
@@ -138,14 +136,12 @@ describe("GaugeUtil >", () => {
 
     describe("createReversedColorAccessor", () => {
         it("should create a standard reversed color accessor", () => {
-            const colorAccessor = GaugeUtil.createReversedColorAccessor(gaugeConfig.thresholds);
+            const colorAccessor = GaugeUtil.createReversedQuantityColorAccessor(gaugeConfig.thresholds);
 
             gaugeConfig.enableThresholdMarkers = true;
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-            const remainderSeries = seriesSet.find(s => s.id === GAUGE_REMAINDER_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
             const quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
-            expect(colorAccessor({ }, 0, remainderSeries.data, remainderSeries)).toEqual(StandardGaugeColor.Remainder);
             expect(colorAccessor({ value: 1 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Critical);
             expect(colorAccessor({ value: 3 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Warning);
             expect(colorAccessor({ value: 4 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);

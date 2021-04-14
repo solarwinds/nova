@@ -13,8 +13,10 @@ export interface IGaugeConfig {
     thresholds: number[];
     /** Set to true to enable the threshold markers */
     enableThresholdMarkers?: boolean;
-    /** Optional accessor for customizing the colors to display for the quantity and remainder segments as each threshold is hit */
-    colorAccessor?: DataAccessor;
+    /** Optional accessor for customizing the color to display for the quantity segment as each threshold is hit */
+    quantityColorAccessor?: DataAccessor;
+    /** Optional accessor for customizing the color to display for the remainder segment */
+    remainderColorAccessor?: DataAccessor;
 }
 
 /**
