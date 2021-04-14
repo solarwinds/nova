@@ -17,12 +17,12 @@ export class GaugeTestPageComponent {
     public flipLabels = false;
     public gaugeConfig: IGaugeConfig;
 
-    private reversedValueColorAccessor: DataAccessor<any, any> | undefined;
+    private reversedColorAccessor: DataAccessor<any, any> | undefined;
 
     constructor() {
         // this.thresholds = new Array(200).fill(null).map((e, i) => i);
         // this.thresholds = [50, 75, 100, 125, 150, 175, 200];
-        this.reversedValueColorAccessor = GaugeUtil.createReversedColorAccessor(this.thresholds);
+        this.reversedColorAccessor = GaugeUtil.createReversedColorAccessor(this.thresholds);
 
         this.gaugeConfig = this.getGaugeConfig();
     }
@@ -42,7 +42,7 @@ export class GaugeTestPageComponent {
             value: this.value,
             max: this.maxValue,
             thresholds: this.thresholds,
-            valueColorAccessor: this.reversed ? this.reversedValueColorAccessor : undefined,
+            colorAccessor: this.reversed ? this.reversedColorAccessor : undefined,
             enableThresholdMarkers: true,
         };
     }

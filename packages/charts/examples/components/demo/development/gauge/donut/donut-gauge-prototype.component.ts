@@ -75,7 +75,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         this.seriesSet.forEach(series => {
             const rendererConfig = (series.renderer.config as IRadialRendererConfig);
             // increase the max thickness from 30 for testing purposes
-            rendererConfig.maxThickness = 200;
+            rendererConfig.maxThickness = 20000;
             rendererConfig.annularGrowth = this.annularGrowth;
             rendererConfig.annularWidth = this.annularWidth;
         });

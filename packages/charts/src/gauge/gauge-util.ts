@@ -74,7 +74,7 @@ export class GaugeUtil {
         const renderingAttributes = GaugeUtil.generateRenderingAttributes(mode);
         const { accessors, scales, mainRenderer } = renderingAttributes;
         if (accessors.data) {
-            accessors.data.color = gaugeConfig.valueColorAccessor || GaugeUtil.createDefaultColorAccessor(gaugeConfig.thresholds);
+            accessors.data.color = gaugeConfig.colorAccessor || GaugeUtil.createDefaultColorAccessor(gaugeConfig.thresholds);
         }
 
         const chartAssistSeries: IChartAssistSeries<IAccessors>[] = [
@@ -104,7 +104,7 @@ export class GaugeUtil {
     public static updateSeriesSet(seriesSet: IChartAssistSeries<IAccessors>[], gaugeConfig: IGaugeConfig): IChartAssistSeries<IAccessors>[] {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
-        const colorAccessor = gaugeConfig.valueColorAccessor || GaugeUtil.createDefaultColorAccessor(gaugeConfig.thresholds);
+        const colorAccessor = gaugeConfig.colorAccessor || GaugeUtil.createDefaultColorAccessor(gaugeConfig.thresholds);
         const updatedSeriesSet = seriesSet.map((series: IChartAssistSeries<IAccessors<any>>) => {
             if (series.accessors.data) {
                 series.accessors.data.color = colorAccessor;
