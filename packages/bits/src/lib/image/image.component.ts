@@ -126,7 +126,9 @@ export class ImageComponent implements OnInit, AfterViewInit {
         let imageHtml: string = "";
         if (_has(image, "code") && _isString(image.code)) {
             imageHtml = image.code;
-            this.ariaLabel = image.name;
+            if(image.name && this.ariaLabel !== image.name) {
+                Promise.resolve().then(_ => this.ariaLabel = image.name);
+            }
         } else {
             imageHtml = `<img src="${this.image}" alt="${this.imageAlt}">`;
         }
