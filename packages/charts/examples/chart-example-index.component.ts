@@ -25,6 +25,10 @@ export class ChartExampleIndexComponent {
             title: "Gauge",
             path: "/development/gauge",
         },
+        {
+            title: "Daylight Saving Time",
+            path: "/development/dst",
+        },
     ];
 
     public archivedLinks = [
@@ -42,7 +46,7 @@ export class ChartExampleIndexComponent {
         },
         {
             title: "Stacked Vertical Bar",
-            path: "/development/bar/stacked-vertical",
+            path: "/development/bar/stacked-bar",
         },
         {
             title: "Data Point Popovers",
