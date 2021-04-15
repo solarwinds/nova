@@ -70,6 +70,7 @@ export class ChartPopoverComponent implements OnChanges, OnInit, OnDestroy {
             takeUntil(this.initPlugin$),
             takeUntil(this.destroy$)
         ).subscribe((position: IElementPosition) => {
+            this.popover?.resetSize();
             // calculating a width offset to position the popover's host element at the midpoint of the popover target
             const widthOffset = position.width / 2;
             this.element.nativeElement.style.left = position.left + widthOffset + "px";

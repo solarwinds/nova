@@ -54,12 +54,7 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
             const separateArc = this.getArc(renderSeries.scales.r.range(), arc(), index);
             return separateArc(d);
         };
-        if (!(this.config.maxThickness && this.config.annularGrowth)) {
-            this.segmentWidth = this.config.annularWidth;
-        } else {
-            this.segmentWidth =
-                Math.min((renderSeries.scales.r.range()[1] - renderSeries.scales.r.range()[0]) * this.config.annularGrowth, this.config.maxThickness);
-        }
+        this.segmentWidth = this.getSegmentWidth(renderSeries);
 
         const g: any = dataContainer.selectAll("path.arc")
             .data(data);
@@ -93,39 +88,6 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
             .attr("fill", (d: any, i: number) => accessors.data.color ?
                 accessors.data.color(d.data, i, data, renderSeries.dataSeries) :
                 accessors.series.color?.(renderSeries.dataSeries.id, renderSeries.dataSeries));
-    }
-
-    private emitDataPointHighlight(renderSeries: IRenderSeries<IRadialAccessors>, data: any, i: number,
-                                   rendererSubject: Subject<IRendererEventPayload>) {
-
-        const position: IPosition | undefined = this.getDataPointPosition(renderSeries.dataSeries, i, renderSeries.scales);
-
-        const dataPoint: IDataPoint = {
-            seriesId: renderSeries.dataSeries.id,
-            dataSeries: renderSeries.dataSeries,
-            index: i,
-            data: data,
-            position: position,
-        };
-
-        if (this.config.enableSeriesHighlighting) {
-            rendererSubject.next({ eventName: HIGHLIGHT_SERIES_EVENT, data: dataPoint });
-        }
-
-        if (this.config.enableDataPointHighlighting) {
-            rendererSubject.next({ eventName: HIGHLIGHT_DATA_POINT_EVENT, data: dataPoint });
-        }
-
-        // we're emitting this event manually, because it's not triggered by mouse interactive area in this case
-        rendererSubject.next({
-            eventName: INTERACTION_DATA_POINTS_EVENT,
-            data: {
-                interactionType: InteractionType.MouseMove,
-                dataPoints: {
-                    [renderSeries.dataSeries.id]: dataPoint,
-                },
-            },
-        });
     }
 
     /** See {@link Renderer#getDataPointPosition} */
@@ -165,4 +127,44 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
     }
 
+    protected getSegmentWidth(renderSeries: IRenderSeries<IRadialAccessors>) {
+        if (!(this.config.maxThickness && this.config.annularGrowth)) {
+            return this.config.annularWidth;
+        } else {
+            return Math.min((renderSeries.scales.r.range()[1] - renderSeries.scales.r.range()[0]) * this.config.annularGrowth, this.config.maxThickness);
+        }
+    }
+
+    private emitDataPointHighlight(renderSeries: IRenderSeries<IRadialAccessors>, data: any, i: number,
+        rendererSubject: Subject<IRendererEventPayload>) {
+
+        const position: IPosition | undefined = this.getDataPointPosition(renderSeries.dataSeries, i, renderSeries.scales);
+
+        const dataPoint: IDataPoint = {
+            seriesId: renderSeries.dataSeries.id,
+            dataSeries: renderSeries.dataSeries,
+            index: i,
+            data: data,
+            position: position,
+        };
+
+        if (this.config.enableSeriesHighlighting) {
+            rendererSubject.next({ eventName: HIGHLIGHT_SERIES_EVENT, data: dataPoint });
+        }
+
+        if (this.config.enableDataPointHighlighting) {
+            rendererSubject.next({ eventName: HIGHLIGHT_DATA_POINT_EVENT, data: dataPoint });
+        }
+
+        // we're emitting this event manually, because it's not triggered by mouse interactive area in this case
+        rendererSubject.next({
+            eventName: INTERACTION_DATA_POINTS_EVENT,
+            data: {
+                interactionType: InteractionType.MouseMove,
+                dataPoints: {
+                    [renderSeries.dataSeries.id]: dataPoint,
+                },
+            },
+        });
+    }
 }

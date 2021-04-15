@@ -10,9 +10,9 @@ import { D3Selection, IAccessors, IChartEvent, IChartSeries, IDataSeries } from 
 
 import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
 import cloneDeep from "lodash/cloneDeep";
-import { HorizontalBarAccessors } from "../../../renderers/bar/accessors/horizontal-bar-accessors";
 import { GaugeUtil } from "../../../gauge/gauge-util";
 import { IGaugeLabelsPluginConfig } from "./types";
+import { LinearScale } from "../../common/scales/linear-scale";
 
 /**
  * @ignore
@@ -66,7 +66,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
             this.thresholdSeries = this.chart.getDataManager().chartSeriesSet.find(
                 (series: IChartSeries<IAccessors<any>>) => series.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID
             );
-            this.isHorizontal = this.thresholdSeries?.accessors instanceof HorizontalBarAccessors;
+            this.isHorizontal = this.thresholdSeries?.scales.x instanceof LinearScale;
             this.adjustGridMargin();
             this.drawThresholdLabels();
         }
@@ -93,7 +93,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
         }
 
         // last value in the thresholds series is the max value of the gauge (needed by RadialGaugeThresholdsRenderer).
-        // removing this value to avoid rendering a marker for it
+        // removing this value to avoid rendering a label for it
         data.pop();
 
         const formatter = this.thresholdSeries?.scales[this.isHorizontal ? "x" : "y"].formatters[this.config.formatterName as string] ?? (d => d);

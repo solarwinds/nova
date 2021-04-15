@@ -24,7 +24,7 @@ export interface IGaugeLabelsPluginConfig {
      * Currently only supported on linear gauges. Set this to true to change the side
      * of the gauge that the labels appear on.
      */
-    flipLabels?: boolean
+    flipLabels?: boolean;
 
     // TODO: NUI-5815
     /** Set whether labels should be displayed for each value interval when the gauge is hovered. */
