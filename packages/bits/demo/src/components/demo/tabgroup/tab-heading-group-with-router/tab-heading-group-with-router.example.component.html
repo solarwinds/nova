@@ -1,12 +1,10 @@
 <div>
     <nui-tab-heading-group>
-        <nui-tab-heading
-            *ngFor="let tab of tabsetContent"
-            [tabId]="tab.id"
-            routerLink="/tabgroup/{{tab.id}}"
-            tabindex="-1"
-            [active]="currentTabRoute === tab.id"
-        >
+        <nui-tab-heading *ngFor="let tab of tabsetContent"
+                        [tabId]="tab.id"
+                        routerLink="/tabgroup/{{tab.id}}"
+                        tabindex="-1"
+                        [active]="currentTabRoute === tab.id">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">
                     <nui-icon *ngIf="icon && tab != tabsetContent[2]"
