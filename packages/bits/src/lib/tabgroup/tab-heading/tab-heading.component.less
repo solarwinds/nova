@@ -14,15 +14,16 @@
                 .setCssVariable(color, nui-color-text-default);
                 .setCssVariable(background-color, nui-color-bg-content);
             }
+
+            &:focus-within {
+                .tab-link {
+                    background: transparent;
+                }
+            }
+
             border-left: none;
             border-bottom: @nui-line-thick solid;
             .setCssVariable( border-bottom-color, nui-color-selected-contrast);
-        }
-
-        &.active:focus-within {
-            .tab-link {
-                background: transparent;
-            }
         }
 
         .tab-link {
