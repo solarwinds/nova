@@ -19,6 +19,12 @@
             .setCssVariable( border-bottom-color, nui-color-selected-contrast);
         }
 
+        &.active:focus-within {
+            .tab-link {
+                background: transparent;
+            }
+        }
+
         .tab-link {
             .setCssVariable(background, nui-color-bg-transparent);
             .setCssVariable(color, nui-color-text-secondary);
@@ -34,15 +40,9 @@
                 .setCssVariable(background, transparent);
             }
         }
-    }
 
-    .nui-tab-heading:focus-within {
-        .focus-outline-inset();
-    }
-
-    .nui-tab-heading.active:focus-within {
-        .tab-link {
-            background: transparent;
+        &:focus-within {
+            .focus-outline-inset();
         }
     }
 
