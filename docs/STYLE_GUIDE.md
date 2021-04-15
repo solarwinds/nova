@@ -17,9 +17,9 @@ Why? setTimeout is tied to a wider context of executed code, which might not be 
     ```
 	But the following works in all major browsers:
     ```js
-    this.ngZone.runOutsideAngular(() => {​​​
+    this.ngZone.runOutsideAngular(() => {
         this.resizeObserver.observe(this.el.nativeElement);
-    }​​​​​​​​​​);
+    });
     ```
 The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
 
@@ -30,7 +30,7 @@ The reason for this is that, since in Firefox ResizeObserver is not native (as o
 When wrapping attributes please put the first attribute on the same line as the opening element tag, and put the closing bracket of the opening element on the same
 line as the last attribute:
 
-<div style="color: darkred">Not Preferred</div>
+<em>Less Desirable</em>
 
 ```html
 <div 
@@ -40,7 +40,7 @@ line as the last attribute:
 </div>
 ```
 
-<div style="color: green">Preferred</div>
+<em>Preferred</em>
 
 ```html
 <div id="my-id"
