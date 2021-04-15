@@ -5,8 +5,8 @@ import {
     Component,
     ElementRef,
     Inject,
-    Input,
-    OnInit,
+    Input, OnChanges,
+    OnInit, SimpleChanges,
     ViewEncapsulation
 } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
@@ -38,7 +38,7 @@ import { IImagesPresetItem } from "./public-api";
         "[attr.aria-label]": "ariaLabel || imageName || null",
     },
 })
-export class ImageComponent implements OnInit, AfterViewInit {
+export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     /**
      * Image name from nui image preset or external source
      */
@@ -79,7 +79,8 @@ export class ImageComponent implements OnInit, AfterViewInit {
      */
     @Input() public autoFill: boolean;
 
-    public imageName: string;
+    public imageTemplate: SafeHtml;
+    public imageName: string | null;
 
     constructor(private logger: LoggerService,
                 private utilService: UtilService,
@@ -97,6 +98,13 @@ export class ImageComponent implements OnInit, AfterViewInit {
                 this.logger.error("Image size should be specified in 'px', '%', or 'auto");
             }
         });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if(changes.image || changes.imageAlt){
+            this.imageName = this.image.name || this.getImage(this.image)?.name || null;
+            this.imageTemplate = this.getImageTemplate();
+        }
     }
 
     public ngAfterViewInit() {
@@ -131,9 +139,6 @@ export class ImageComponent implements OnInit, AfterViewInit {
         let imageHtml: string = "";
         if (_has(image, "code") && _isString(image.code)) {
             imageHtml = image.code;
-            if(image.name && !this.ariaLabel && this.imageName !== image.name) {
-                Promise.resolve().then(_ => this.imageName = image.name);
-            }
         } else {
             imageHtml = `<img src="${this.image}" alt="${this.imageAlt}">`;
         }
