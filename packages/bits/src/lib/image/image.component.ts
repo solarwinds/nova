@@ -5,9 +5,9 @@ import {
     Component,
     ElementRef,
     Inject,
-    Input, 
+    Input,
     OnChanges,
-    OnInit, 
+    OnInit,
     SimpleChanges,
     ViewEncapsulation
 } from "@angular/core";
