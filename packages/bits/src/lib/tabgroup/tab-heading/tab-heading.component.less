@@ -40,6 +40,12 @@
         .focus-outline-inset();
     }
 
+    .nui-tab-heading.active:focus-within {
+        .tab-link {
+            background: transparent;
+        }
+    }
+
     &.disabled {
         >.nui-tab-heading .tab-link {
             cursor: not-allowed;
