@@ -72,7 +72,7 @@ describe("USERCONTROL tab heading group", () => {
     it("should select tab by pressing space", async () => {
         await (await tabGroupHorizontal.getFirstTab()).click();
         await Helpers.pressKey(Key.TAB);
-        await Helpers.pressKey(Key.ENTER);
+        await Helpers.pressKey(Key.SPACE);
         const secondTab = await tabGroupHorizontal.getTabByText("Tab 2");
         expect(await secondTab.isActive()).toBe(true);
     });
