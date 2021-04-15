@@ -44,9 +44,9 @@ export class TabHeadingComponent {
 
     @HostListener("keydown", ["$event"])
     onKeyDown(event: KeyboardEvent): void {
-        const { key } = event;
+        const { code } = event;
 
-        if(key === "Enter" || key === "Space"){
+        if(code === "Enter" || code === "Space"){
             if (document.activeElement === this.tabEl.nativeElement) {
                 this.selectTab();
             }
