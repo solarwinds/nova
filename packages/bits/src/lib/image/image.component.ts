@@ -5,8 +5,10 @@ import {
     Component,
     ElementRef,
     Inject,
-    Input, OnChanges,
-    OnInit, SimpleChanges,
+    Input, 
+    OnChanges,
+    OnInit, 
+    SimpleChanges,
     ViewEncapsulation
 } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
@@ -100,7 +102,7 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
         });
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
+    public ngOnChanges(changes: SimpleChanges): void {
         if(changes.image || changes.imageAlt){
             this.imageName = this.image.name || this.getImage(this.image)?.name || null;
             this.imageTemplate = this.getImageTemplate();
