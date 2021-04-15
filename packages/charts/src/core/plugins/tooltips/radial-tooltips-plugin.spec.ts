@@ -5,7 +5,7 @@ import { radialPreprocessor } from "../../../renderers/radial/radial-preprocesso
 import { RadialRenderer } from "../../../renderers/radial/radial-renderer";
 import { radialScales } from "../../../renderers/radial/radial-scales";
 import { Chart } from "../../chart";
-import { IRadialScales, Scales } from "../../common/scales/types";
+import { IRadialScales } from "../../common/scales/types";
 import { IDataPoint, IDataPointsPayload, IDataSeries } from "../../common/types";
 import { GridConfig } from "../../grid/config/grid-config";
 import { RadialGrid } from "../../grid/radial-grid";

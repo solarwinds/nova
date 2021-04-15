@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    BandScale,
     barAccessors,
     barGrid,
     BarHighlightStrategy,
@@ -10,10 +9,8 @@ import {
     ChartAssist,
     InteractionLabelPlugin,
     LinearScale,
-    Scales,
     stack,
     TimeIntervalScale,
-    XYGridConfig
 } from "@nova-ui/charts";
 // eslint-disable-next-line no-restricted-imports
 import moment, { duration } from "moment";
@@ -47,7 +44,7 @@ export class StackedBarPrototypeComponent implements OnInit {
 
         accessors.data.value = (data: any) => data.value;
         accessors.data.category = (data: any) => moment(data.time, "YYYY-MM-DD HH:mm:ss").toDate();
-        
+
         this.chartAssist.update(getData().map(s => ({
             ...s,
             accessors,

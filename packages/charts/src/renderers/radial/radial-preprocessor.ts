@@ -1,7 +1,7 @@
 import { pie } from "d3-shape";
 
 import { ChartAssist } from "../../core/chart-assists/chart-assist";
-import { IAccessors, IChartAssistSeries, IChartSeries } from "../../core/common/types";
+import { IChartAssistSeries, IChartSeries } from "../../core/common/types";
 
 import { IRadialAccessors } from "./accessors/radial-accessors";
 
