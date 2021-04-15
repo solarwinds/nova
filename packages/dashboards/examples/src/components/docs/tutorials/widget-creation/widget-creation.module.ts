@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiButtonModule, NuiDocsModule, NuiImageModule, NuiMenuModule, NuiMessageModule, NuiRepeatModule, NuiSwitchModule, NuiToastModule } from "@nova-ui/bits";
+import { NuiButtonModule, NuiDocsModule, NuiImageModule, NuiMessageModule, NuiRepeatModule, NuiSwitchModule, NuiToastModule } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { WidgetCreationDocsComponent } from "./widget-creation-docs.component";

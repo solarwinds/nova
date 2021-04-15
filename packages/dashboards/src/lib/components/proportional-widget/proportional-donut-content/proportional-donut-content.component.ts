@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
 import { LoggerService } from "@nova-ui/bits";
 import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@nova-ui/charts";
 import { Subject, Subscription } from "rxjs";
