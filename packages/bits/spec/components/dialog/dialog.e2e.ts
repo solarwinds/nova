@@ -147,12 +147,9 @@ describe("USERCONTROL Dialog", () => {
         })
 
         it("should close dialog with router changed", async () => {
-            await browser.waitForAngular();
-            await browser.get("http://localhost:4200/#/dialog");
-            await setLocation("dialog/dialog-test")
             await defaultDialogBtn.click();
             expect(await dialog.isDialogDisplayed()).toBe(true);
-            await browser.navigate().back();
+            await setLocation("dialog")
             expect(await dialog.isDialogDisplayed()).toBe(false);
         });
     });
