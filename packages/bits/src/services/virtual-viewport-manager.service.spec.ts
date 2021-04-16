@@ -203,7 +203,7 @@ describe("services >", () => {
                         skip(1),
                         take(1),
                         tap((range: ListRange) => {
-                            expect(range.end) .toEqual(component.pageSize * 2);
+                            expect(range.end).toEqual(component.pageSize * 2);
                             done();
                         })
                     );

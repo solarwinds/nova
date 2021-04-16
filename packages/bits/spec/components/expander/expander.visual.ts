@@ -20,7 +20,6 @@ describe(`Visual tests: ${name}`, () => {
         lineLessExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-without-border");
         customHeaderExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-custom-header");
         stakedExpander = Atom.find(ExpanderAtom, "nui-visual-test-staked-expander-1");
-
         camera = new Camera().loadFilm(browser, name);
     });
 

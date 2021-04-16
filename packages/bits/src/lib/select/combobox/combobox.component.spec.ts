@@ -219,7 +219,7 @@ describe("components >", () => {
             expect(inputIcon.classes["nui-combobox__input-icon"]).toBeUndefined();
         });
 
-        it("should modify text position while being editable and i f the icon is set", () => {
+        it("should modify text position while being editable and if the icon is set", () => {
             componentInstance.icon = "add";
             fixture.detectChanges();
             const inputIcon = debugElement.query(By.css(".nui-combobox__input"));

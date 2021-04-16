@@ -31,7 +31,6 @@ describe(`Visual tests: ${name}`, () => {
         toolbarBasic = Atom.find(ToolbarAtom, id.toolbarBasic);
         toolbarSelected = Atom.find(ToolbarAtom, id.toolbarSelected);
         toolbarNoMenuSelected = Atom.find(ToolbarAtom, id.toolbarNoMenuSelected);
-
         camera = new Camera().loadFilm(browser, name);
     });
 

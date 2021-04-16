@@ -44,7 +44,6 @@ export class StackedBarPrototypeComponent implements OnInit {
 
         accessors.data.value = (data: any) => data.value;
         accessors.data.category = (data: any) => moment(data.time, "YYYY-MM-DD HH:mm:ss").toDate();
-
         this.chartAssist.update(getData().map(s => ({
             ...s,
             accessors,

@@ -35,9 +35,7 @@ describe(`Visual tests: ${name}`, () => {
 
         disableButton = element(by.id("trigger-disabled"));
         toggleButton = element(by.id("toggle"));
-
         focusdrop = element(by.className("focus-drop"));
-
         camera = new Camera().loadFilm(browser, name);
     });
 

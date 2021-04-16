@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { FormBuilder } from "@angular/forms";
 import { TimeframeService } from "@nova-ui/bits";
 
@@ -6,7 +6,7 @@ import { IPizzagnaLayer, WellKnownProviders } from "../../../../types";
 import { IConfiguratorForm } from "../types";
 
 import { TimeseriesMetadataConverterService } from "./timeseries-metadata-converter.service";
-/* eslint-enable */
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 describe("TimeseriesPresentationConverterService", () => {
     // TODO: uncomment when API will be stable

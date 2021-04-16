@@ -191,7 +191,7 @@ export class ComboboxComponent extends BaseSelect implements OnInit, OnChanges, 
 
         // when appendToBody is set width of the popup element should be calculated
         // To get actual value detectChanges() call afterViewInit is needed
-        this.changeDetector.detectChanges ();
+        this.changeDetector.detectChanges();
     }
 
     private setKeyboardManagerServiceData(): void {

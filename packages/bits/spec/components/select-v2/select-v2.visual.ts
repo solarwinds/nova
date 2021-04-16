@@ -31,7 +31,6 @@ describe(`Visual tests: ${name}`, () => {
     beforeEach(async () => {
         await Helpers.prepareBrowser("select-v2/test");
         await Helpers.disableCSSAnimations(Animations.ALL);
-
         camera = new Camera().loadFilm(browser, name);
     });
 

@@ -64,13 +64,10 @@ export class BarHighlightStrategy implements IHighlightStrategy<IRectangleAccess
                     (d, i) => valueOf >= startAccessor?.(d, i, series.data, series).valueOf() &&
                         valueOf <= endAccessor?.(d, i, series.data, series).valueOf());
                 if (index === -1 && typeof endAccessor !== "undefined") {
-
                     if (isBandScale(scales[scaleKey])) {
                         const accessor = (d: any, i: any) => startAccessor?.(d, i, series.data, series);
                         const nearestIndex = UtilityService.findNearestIndex(series.data, value, accessor);
-
                         index = (nearestIndex >= series.data.length || accessor(series.data[nearestIndex], nearestIndex) > valueOf) ? -1 : nearestIndex;
-
                     } else {
                         // @ts-ignore
                         // Needs to catch -1 otherwise typescript errors

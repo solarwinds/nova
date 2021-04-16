@@ -2,7 +2,7 @@
  * @ignore
  */
 import { CommonModule, DatePipe } from "@angular/common";
-import { NgModule, Provider } from "@angular/core" ;
+import { NgModule, Provider } from "@angular/core";
 // This is not technically used here, but it does pull in the type for $localize
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {LocalizeFn} from "@angular/localize/init";

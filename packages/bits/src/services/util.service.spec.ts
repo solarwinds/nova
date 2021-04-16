@@ -300,7 +300,7 @@ describe("services >", () => {
 
             it("returns false for undefined and null", () => {
                 // @ts-ignore: Suppressing error for testing purposes
-                expect( utilService.dateEquals(undefined, null)).toBe(false);
+                expect(utilService.dateEquals(undefined, null)).toBe(false);
             });
 
             it("returns false for null and undefined", () => {

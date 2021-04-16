@@ -26,7 +26,6 @@ describe(`Visual tests: ${name}`, () => {
         popoverComplex = Atom.find(PopoverAtom, "nui-demo-visual-complex-popover");
         quickpickerWithTimeramePicker = Atom.findIn(QuickPickerAtom, popoverWithTimeframePicker.getPopoverBody());
         timeFramePicker = Atom.findIn(TimeFramePickerAtom, popoverWithTimeframePicker.getPopoverBody());
-
         camera = new Camera().loadFilm(browser, name);
     });
 

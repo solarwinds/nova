@@ -15,7 +15,6 @@ describe(`Visual tests: ${name}`, () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("search/search-visual-test");
         searchWithInput = Atom.find(SearchAtom, "nui-visual-test-search-with-input-text" );
-
         camera = new Camera().loadFilm(browser, name);
     });
 
