@@ -1,6 +1,6 @@
 import { ScaleBand, scaleBand } from "d3-scale";
 import isEqual from "lodash/isEqual";
-import moment, { Duration } from "moment/moment";
+import moment, { duration, Duration } from "moment/moment";
 
 import { BAND_CENTER } from "./constants";
 import { datetimeFormatter } from "./formatters/datetime-formatter";
@@ -30,8 +30,18 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
 
         this.formatters.title = (inputDate: Date) => {
             const intervalDays = this.interval().asDays();
-            // if the date is outside of daylight saving time and interval >= 1 day, add an hour to the time to format the day as "mmm d" instead of "11:00pm"
-            const standardTimeOffsetMs = intervalDays >= 1 && !isDaylightSavingTime(inputDate) && isDaylightSavingTime(this.domain()[0]) ? 3600000 : 0;
+            const isDst = isDaylightSavingTime(inputDate);
+            const isDomainStartDst = isDaylightSavingTime(this.domain()[0]);
+
+            const isTransFromDst = !isDst && isDomainStartDst;
+            const isTransToDst = isDst && !isDomainStartDst;
+
+            let standardTimeOffsetMs = 0;
+            if ((isTransFromDst || isTransToDst) && intervalDays >= 1) {
+                // if transitioning from/to daylight saving time and interval >= 1 day, add/subtract an hour to/from
+                // the time to format the day as "mmm d" instead of "11:00pm" or "1:00am" respectively
+                standardTimeOffsetMs = isTransFromDst ? 3600000 : -3600000;
+            }
             const adjustedDate = new Date(inputDate.getTime() + standardTimeOffsetMs);
             const endDate = intervalDays >= 1 ? moment(adjustedDate).add(intervalDays, "days").toDate() : moment(adjustedDate).add(this.interval()).toDate();
             return datetimeFormatter(adjustedDate) + " - " + datetimeFormatter(endDate);
@@ -91,7 +101,11 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
             throw new Error("Could not get bands for interval");
         }
         const intervalMs = this.interval().asMilliseconds();
-        while (date <= to) {
+        const isDomainStartDst = isDaylightSavingTime(from);
+        const isDomainEndDst = isDaylightSavingTime(to);
+        const dstAdjustment = !isDomainStartDst && isDomainEndDst ? duration(1, "hour").asMilliseconds() : 0;
+        const adjustedToDate = new Date(to.getTime() + dstAdjustment)
+        while (date <= adjustedToDate) {
             bands.push(date);
             date = new Date(date.getTime() + intervalMs);
         }
@@ -129,15 +143,30 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
         if (!datetime) {
             return datetime;
         }
-        const isDomainStartDst = isDomainChange ? isDaylightSavingTime(datetime) : isDaylightSavingTime(this.domain()[0]);
-        const standardTimeOffsetMinutes = !isDaylightSavingTime(datetime) && isDomainStartDst ? 60 : 0;
-        const timeZoneOffsetMs = (datetime.getTimezoneOffset() - standardTimeOffsetMinutes) * 60000;
-        const timestamp = datetime.getTime() - timeZoneOffsetMs;
+
+        const isDst = isDaylightSavingTime(datetime);
+        const isDomainStartDst = isDomainChange ? isDst : isDaylightSavingTime(this.domain()[0]);
+
+        const isTransFromDst = isDomainStartDst && !isDst;
+        const isTransToDst = !isDomainStartDst && isDst;
+
+        const transToDstAdjustment = isTransToDst ? duration(1, "hour").asMilliseconds() : 0;
+        const adjustedDt = new Date(datetime.getTime() + transToDstAdjustment);
+
+        let standardTimeOffsetMinutes = 0;
+        if (isTransFromDst || isTransToDst) {
+            standardTimeOffsetMinutes = isTransFromDst ? -60 : 60;
+        }
+
+        const timeZoneOffsetMs = (adjustedDt.getTimezoneOffset() + standardTimeOffsetMinutes) * 60000;
+        const timestamp = adjustedDt.getTime() - timeZoneOffsetMs;
         const intervalMs = interval.asMilliseconds();
         const remainder = timestamp % intervalMs;
+
         if (remainder === 0) {
-            return datetime;
+            return adjustedDt;
         }
+
         // round to interval
         const truncatedTimestamp = timestamp - remainder;
 
