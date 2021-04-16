@@ -20,7 +20,7 @@ export class ResizerAtom extends Atom {
     public getResizeDirection = async (): Promise<"horizontal" | "vertical"> => {
         const className = await this.resizeSplitElement.getAttribute("class");
         return className.includes("horizontal") ? "horizontal" : "vertical";
-    };
+    }
 
     private resizeElement = async (resizeCoords: ILocation): Promise<void> => {
         await this.hover();
