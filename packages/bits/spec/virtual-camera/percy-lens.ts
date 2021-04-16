@@ -1,12 +1,5 @@
 import { ProtractorBrowser } from "protractor";
-import { ICameraSettings, ILens, PERCY_DEFAULT_CONFIG } from "./types";
-
-export interface PercyLensSnapshotOptions {
-    widths?: number[];
-    minHeight?: number;
-    percyCSS?: string;
-    enableJavaScript?: boolean;
-  }
+import { ICameraSettings, ILens, PercyLensSnapshotOptions, PERCY_DEFAULT_CONFIG } from "./types";
 
 export class PercyLens implements ILens {
     private percySnapshot = require("@percy/protractor");
