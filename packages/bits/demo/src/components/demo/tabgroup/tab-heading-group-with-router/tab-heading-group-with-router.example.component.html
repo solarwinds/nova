@@ -1,9 +1,7 @@
 <div>
-    <nui-tab-heading-group>
+    <nui-tab-heading-group (selected)="navigate($event)">
         <nui-tab-heading *ngFor="let tab of tabsetContent"
                         [tabId]="tab.id"
-                        routerLink="/tabgroup/{{tab.id}}"
-                        tabindex="-1"
                         [active]="currentTabRoute === tab.id">
             <div class="d-flex align-content-center">
                 <div class="d-inline-flex align-items-center">

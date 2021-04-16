@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy } from "@angular/core";
-import { NavigationEnd, Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 
 
 @Component({
@@ -12,7 +12,8 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
 
     @Input() public icon: boolean = false;
 
-    constructor(private _router: Router) {}
+    constructor(private _router: Router,
+                private _activatedRoute: ActivatedRoute) {}
 
     private routeSubscription = this._router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -49,6 +50,10 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
                 activeColor: "black",
             },
         }];
+
+    public navigate(route: string): void {
+        this._router.navigate([route], { relativeTo: this._activatedRoute });
+    }
 
     ngOnDestroy() {
         this.routeSubscription.unsubscribe();
