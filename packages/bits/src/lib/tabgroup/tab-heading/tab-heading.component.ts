@@ -48,6 +48,7 @@ export class TabHeadingComponent {
 
         if(code === "Enter" || code === "Space"){
             if (document.activeElement === this.tabEl.nativeElement) {
+                event.preventDefault();
                 this.selectTab();
             }
         }
