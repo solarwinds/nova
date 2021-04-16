@@ -18,6 +18,8 @@ import { NuiActiveDialog, NuiDialogRef } from "./dialog-ref";
 import { DialogStackService } from "./dialog-stack.service";
 import {NuiDialogModule} from "./dialog.module";
 import { DialogService } from "./dialog.service";
+import {Router} from "@angular/router";
+import {Subject} from "rxjs/internal/Subject";
 
 @Injectable()
 class SpyService {
@@ -189,9 +191,16 @@ describe("nui-dialog", () => {
     });
 
     beforeEach(() => {
+        const mockRouter = {
+            events: new Subject<any>(),
+        }
+
         TestBed.configureTestingModule({
             imports: [DialogTestModule],
-            providers: [DialogService, DialogStackService],
+            providers: [
+                DialogService,
+                DialogStackService,
+                { provide: Router, useValue: mockRouter }],
         });
         fixture = TestBed.createComponent(TestComponent);
     });

@@ -77,11 +77,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         private ngZone: NgZone,
         private scrollDispatcher: ScrollDispatcher,
         private router: Router
-    ) {
-        this.router.events.pipe(take(1)).subscribe(() => {
-            this.dismiss("ROUTE_CHANGED");
-        });
-    }
+    ) {}
 
     @HostListener("window:keydown.shift.tab", ["$event"])
     onShiftTab(event: KeyboardEvent): void {
@@ -124,6 +120,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         this.renderer.addClass(this.document.body, "dialog-open");
         this.scrollableElement = new CdkScrollable(this.elRef, this.scrollDispatcher, this.ngZone);
         this.scrollDispatcher.register(this.scrollableElement);
+        this.router.events.pipe(take(1)).subscribe(() => {
+            this.dismiss("ROUTE_CHANGED");
+        });
     }
 
     ngAfterViewInit() {
