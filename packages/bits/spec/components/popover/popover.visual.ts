@@ -2,14 +2,14 @@ import { browser, by, element, ElementArrayFinder, ElementFinder } from "protrac
 
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
 import { ComboboxV2Atom } from "../combobox-v2/combobox-v2.atom";
+
 import { PopoverAtom } from "./popover.atom";
 
 const name: string = "Popover";
 
-fdescribe(`Visual tests: ${name}`, () => {
+describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     const buttonPreventClosing: ElementFinder = element(by.id("nui-demo-button-prevent-onclick"));
     const placementCheckButtons: ElementArrayFinder = element.all(by.css(".placement-check-btn"));
