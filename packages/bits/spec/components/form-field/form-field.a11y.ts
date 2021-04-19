@@ -45,8 +45,7 @@ describe("a11y: form-field", () => {
         expect(accessibilityScanResults.violations).toEqual([]);
     });
 
-    // Enable once NUI-5955 is fixed
-    xit("switch", async () => {
+    it("switch", async () => {
         const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${SwitchAtom.CSS_CLASS}`).analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);

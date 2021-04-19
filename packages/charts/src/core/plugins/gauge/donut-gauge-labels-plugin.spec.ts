@@ -5,7 +5,7 @@ import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
 import { IGaugeSeriesConfig } from "../../../gauge/types";
 import { DonutGaugeRenderingUtil } from "../../../renderers/radial/gauge/donut-gauge-rendering-util";
-import { radialGrid } from "../../../renderers/radial/radial-grid";
+import { radialGrid } from "../../../renderers/radial/radial-grid-fn";
 import { RadialRenderer } from "../../../renderers/radial/radial-renderer";
 import { Chart } from "../../chart";
 import { D3Selection, IAccessors, IChartAssistSeries } from "../../common/types";

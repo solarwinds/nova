@@ -1,4 +1,10 @@
-import { SnapshotOptions } from "@percy/core";
+
+export interface PercyLensSnapshotOptions {
+    widths?: number[];
+    minHeight?: number;
+    percyCSS?: string;
+    enableJavaScript?: boolean;
+  }
 
 export enum LensType {
     Eyes = "eyes",
@@ -16,7 +22,7 @@ export const CAMERA_DEFAULT_SETTINGS: ICameraSettings = {
     responsivityCallback: undefined,
 }
 
-export const PERCY_DEFAULT_CONFIG: SnapshotOptions = {
+export const PERCY_DEFAULT_CONFIG: PercyLensSnapshotOptions = {
     widths: [1920],
     minHeight: 1080,
     percyCSS: `
