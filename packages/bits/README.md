@@ -237,4 +237,3 @@ Nova formally supports the following browsers. Support for IE11 has been dropped
 ### Date pipe Safari issue
 
 Using date pipe, string should be provided according to ISO format. Otherwise, put Moment object instead to avoid error in Safari browser. Follow [this link](https://github.com/angular/angular/issues/17575) for more details.
-
