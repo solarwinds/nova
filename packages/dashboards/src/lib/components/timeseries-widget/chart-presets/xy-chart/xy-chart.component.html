@@ -10,8 +10,8 @@
                     [interactive]="true"
                     [orientation]="legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'">
             <nui-legend-series *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn"
-                               [descriptionPrimary]="legendSeries.legendDescriptionPrimary"
-                               [descriptionSecondary]="legendSeries.legendDescriptionSecondary"
+                            [descriptionPrimary]="!(legendSeries.link) ? legendSeries.legendDescriptionPrimary : undefined"
+                            [descriptionSecondary]="!(legendSeries.link) ? legendSeries.legendDescriptionSecondary : undefined"
                                [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                                (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)"
                                (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
@@ -26,6 +26,25 @@
                                       [color]="chartAssist.palette.standardColors.get(legendSeries.id)">
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
+
+                <div description 
+                    class="d-flex align-items-center px-2"
+                    (click)="$event.stopPropagation()">
+                    <div class="description-container d-flex flex-column justify-content-center">
+                            <div class= "nui-text-link-small"
+                                (click)="onLegendDescriptionClick(legendSeries)">
+                                <div class="description description-primary" 
+                                    [title]="legendSeries.legendDescriptionPrimary">
+                                        {{legendSeries.legendDescriptionPrimary}}
+                                </div>
+                                <div class="description description-secondary" 
+                                    [title]="legendSeries.legendDescriptionSecondary">
+                                        {{legendSeries.legendDescriptionSecondary}}
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                
             </nui-legend-series>
         </nui-legend>
     </div>

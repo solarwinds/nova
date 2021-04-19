@@ -85,6 +85,10 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
         }
     }
 
+    public onLegendDescriptionClick(legendSeries: IChartAssistSeries<IAccessors>) {
+        this.eventBus.getStream(INTERACTION).next({ payload: { data: legendSeries } });
+    }
+
     /** Updates chart data. */
     protected updateChartData(): void {
         this.chartAssist.update(this.mapSeriesSet(this.widgetData.series, this.scales));

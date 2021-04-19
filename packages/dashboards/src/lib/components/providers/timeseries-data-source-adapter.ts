@@ -49,6 +49,7 @@ export class TimeseriesDataSourceAdapter extends DataSourceAdapter {
             .map((series: ITimeseriesWidgetData) => ({
                 id: series.id,
                 data: series.data,
+                link: series.link,
                 legendDescriptionPrimary: this.seriesIndex.find(s => s.selectedSeriesId === series.id)?.label,
                 legendDescriptionSecondary: series.description,
             }));

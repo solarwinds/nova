@@ -307,6 +307,9 @@ export const widgets: IWidget[] = [
                         } as IProviderConfiguration,
                         [WellKnownProviders.InteractionHandler]: {
                             providerId: NOVA_URL_INTERACTION_HANDLER,
+                            properties: {
+                                url: "${data.link}",
+                            },
                         },
                         // [WellKnownProviders.EventBusDebugger]: {
                         //     providerId: NOVA_EVENT_BUS_DEBUGGER,

@@ -6,6 +6,7 @@ import {
     ITimeseriesWidgetConfig,
     IWidget,
     LegendPlacement,
+    NOVA_URL_INTERACTION_HANDLER,
     PizzagnaLayer,
     TimeseriesChartPreset,
     TimeseriesScaleType,
@@ -90,6 +91,12 @@ export const widgetConfigs: IWidget[] = [
                         [WellKnownProviders.DataSource]: {
                             "providerId": AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
+                        [WellKnownProviders.InteractionHandler]: {
+                            providerId: NOVA_URL_INTERACTION_HANDLER,
+                            properties: {
+                                url: "${data.link}",
+                            },
+                        },
                     },
                 },
                 "header": {
@@ -142,6 +149,12 @@ export const widgetConfigs: IWidget[] = [
                         [WellKnownProviders.DataSource]: {
                             "providerId": AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
+                        [WellKnownProviders.InteractionHandler]: {
+                            providerId: NOVA_URL_INTERACTION_HANDLER,
+                            properties: {
+                                url: "${data.link}",
+                            },
+                        },
                     },
                 },
                 "header": {

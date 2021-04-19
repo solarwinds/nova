@@ -9,6 +9,7 @@ import { XYChartComponent } from "../xy-chart.component";
 @Component({
     selector: "nui-line-chart",
     templateUrl: "../xy-chart.component.html",
+    styleUrls: ["../xy-chart.component.less"],
 })
 export class LineChartComponent extends XYChartComponent {
     public static lateLoadKey = "LineChartComponent";

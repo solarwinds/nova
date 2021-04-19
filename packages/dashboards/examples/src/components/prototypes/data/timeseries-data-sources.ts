@@ -121,6 +121,7 @@ function filterData(filters: INovaFilters, data: ITimeseriesWidgetData[]): ITime
                 id: item.id,
                 name: item.name,
                 description: item.description,
+                link: item.link,
                 data: item.data.filter((seriesData: ITimeseriesWidgetSeriesData) =>
                     filterDates(seriesData.x, timeframeFilter.value.startDatetime, timeframeFilter.value.endDatetime)),
             }));

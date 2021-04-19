@@ -119,6 +119,7 @@ export function getTimeseriesWidgetData(): ITimeseriesWidgetData[] {
             id: "series-1",
             name: "Average CPU Load",
             description: "AII ESXi Hosts",
+            link: "https://en.wikipedia.org/wiki/Nur-Sultan",
             data: [
                 { x: moment(startOfToday).subtract(59, "day").toDate(), y: 35 },
                 { x: moment(startOfToday).subtract(58, "day").toDate(), y: 33 },
@@ -186,6 +187,7 @@ export function getTimeseriesWidgetData(): ITimeseriesWidgetData[] {
             id: "series-2",
             name: "Average CPU Load",
             description: "test1234.demo.lab",
+            link: "https://en.wikipedia.org/wiki/Brno",
             data: [
                 { x: moment(startOfToday).subtract(59, "day").toDate(), y: 35 },
                 { x: moment(startOfToday).subtract(58, "day").toDate(), y: 33 },
@@ -253,6 +255,7 @@ export function getTimeseriesWidgetData(): ITimeseriesWidgetData[] {
             id: "series-3",
             name: "Average CPU Load",
             description: "test2334.demo.lab",
+            link: "https://en.wikipedia.org/wiki/Austin",
             data: [
                 { x: moment(startOfToday).subtract(59, "day").toDate(), y: 35 },
                 { x: moment(startOfToday).subtract(58, "day").toDate(), y: 33 },
@@ -427,6 +430,7 @@ export function getTimeseriesStatusData(): ITimeseriesWidgetData[] {
             id: "series-1",
             name: "Average CPU Load",
             description: "lastchance.demo.lab",
+            link: "https://en.wikipedia.org/wiki/Austin",
             data: [
                 { x: moment(startOfToday).subtract(30, "day").toDate(), y: Status.Critical },
                 { x: moment(startOfToday).subtract(28, "day").toDate(), y: Status.Warning },
@@ -455,6 +459,7 @@ export function getTimeseriesStatusData(): ITimeseriesWidgetData[] {
             id: "series-2",
             name: "Average CPU Load",
             description: "newhope.demo.lab",
+            link: "https://en.wikipedia.org/wiki/Brno",
             data: [
                 { x: moment(startOfToday).subtract(30, "day").toDate(), y: Status.Up },
                 { x: moment(startOfToday).subtract(28, "day").toDate(), y: Status.Down },
@@ -505,6 +510,7 @@ export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData[] {
             id: "series-1",
             name: "Average CPU Load",
             description: "lastchance.demo.lab",
+            link: "https://en.wikipedia.org/wiki/Brno",
             data: [
                 { x: moment(startOfToday).subtract(59, "day").toDate(), y: Status.Critical },
                 { x: moment(startOfToday).subtract(58, "day").toDate(), y: Status.Warning },
@@ -572,6 +578,7 @@ export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData[] {
             id: "series-2",
             name: "Average CPU Load",
             description: "newhope.demo.lab",
+            link: "https://en.wikipedia.org/wiki/Austin",
             data: [
                 { x: moment(startOfToday).subtract(59, "day").toDate(), y: Status.Up },
                 { x: moment(startOfToday).subtract(58, "day").toDate(), y: Status.Down },
