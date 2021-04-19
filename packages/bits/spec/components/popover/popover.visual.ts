@@ -3,11 +3,13 @@ import { browser, by, element, ElementArrayFinder, ElementFinder } from "protrac
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 
+import { CheckboxAtom } from "../checkbox/checkbox.atom";
+import { ComboboxV2Atom } from "../combobox-v2/combobox-v2.atom";
 import { PopoverAtom } from "./popover.atom";
 
 const name: string = "Popover";
 
-describe(`Visual tests: ${name}`, () => {
+fdescribe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     const buttonPreventClosing: ElementFinder = element(by.id("nui-demo-button-prevent-onclick"));
     const placementCheckButtons: ElementArrayFinder = element.all(by.css(".placement-check-btn"));
@@ -17,6 +19,8 @@ describe(`Visual tests: ${name}`, () => {
     const popoverNoPadding: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-no-padding")));
     const popoverBasicMultiline: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-limited-and-multiline")));
     const popoverModal: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-modal")));
+    const checkboxInPopover: CheckboxAtom = new CheckboxAtom(element(by.id("nui-demo-checkbox-in-popover")));
+    const comboboxV2InPopover: ComboboxV2Atom = new ComboboxV2Atom(element(by.id("nui-demo-combobox-v2-in-popover")));
 
     beforeAll(async (done) => {
         await Helpers.prepareBrowser("popover/popover-visual-test");
@@ -31,6 +35,11 @@ describe(`Visual tests: ${name}`, () => {
         await popoverPreventClosing.togglePopover();
         await placementCheckButtons.each(async btn => await btn?.click());
         await browser.actions().mouseMove(buttonPreventClosing).perform();
+        await checkboxInPopover.toggle();
+        await comboboxV2InPopover.click();
+        await (await comboboxV2InPopover.getFirstOption()).click();
+        await comboboxV2InPopover.click();
+
         await camera.say.cheese(`Popover placement and preventClose`);
 
         await Helpers.switchDarkTheme("on");

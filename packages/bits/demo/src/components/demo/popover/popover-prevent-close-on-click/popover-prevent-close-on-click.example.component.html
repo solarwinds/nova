@@ -14,7 +14,10 @@
         <nui-checkbox id="nui-demo-checkbox-in-popover" i18n>Hi, check me!</nui-checkbox>
         <nui-combobox id="nui-demo-popover-combobox"
                       [itemsSource]="dataset.items"
-                      placeholder="Select item" i18n-placeholder></nui-combobox>
+                      placeholder="Select item combobox" i18n-placeholder></nui-combobox>
+        <nui-combobox-v2 id="nui-demo-popover-comboboxV2" placeholder="Select item comboboxV2" i18n-placeholder>
+            <nui-select-v2-option *ngFor="let item of dataset.items" [value]="item">{{ item }}</nui-select-v2-option>
+        </nui-combobox-v2>
         <div class="mt-2 d-flex justify-content-end">
             <button id="nui-demo-custom-close-popover"
                     nui-button
