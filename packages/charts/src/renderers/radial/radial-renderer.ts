@@ -55,12 +55,7 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
             const separateArc = this.getArc(renderSeries.scales.r.range(), arc(), index);
             return separateArc(d);
         };
-        if (!(this.config.maxThickness && this.config.annularGrowth)) {
-            this.segmentWidth = this.config.annularWidth;
-        } else {
-            this.segmentWidth =
-                Math.min((renderSeries.scales.r.range()[1] - renderSeries.scales.r.range()[0]) * this.config.annularGrowth, this.config.maxThickness);
-        }
+        this.segmentWidth = this.getSegmentWidth(renderSeries);
 
         const g: any = dataContainer.selectAll("path.arc")
             .data(data);
@@ -96,8 +91,57 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
                 accessors.series.color?.(renderSeries.dataSeries.id, renderSeries.dataSeries));
     }
 
+    /** See {@link Renderer#getDataPointPosition} */
+    public getDataPointPosition(dataSeries: IDataSeries<IRadialAccessors>, index: number, scales: Scales): IPosition | undefined {
+        if (index < 0) {
+            return undefined;
+        }
+        const pieArcData: DefaultArcObject = dataSeries.data[index];
+        const dataPointArc = this.getArc(scales.r.range(), arc(), index);
+        const centroid = dataPointArc.centroid(pieArcData);
+
+        return {
+            x: centroid[0],
+            y: centroid[1],
+            width: 0,
+            height: 0,
+        };
+    }
+
+    public getInnerRadius(range: number[], index: number): number {
+        if (isUndefined(this.segmentWidth) || isUndefined(this.config.annularPadding)) {
+            throw new Error("Can't compute inner radius");
+        }
+
+        const calculatedRadius = (range[1] - range[0] - this.segmentWidth) - index * (this.config.annularPadding + this.segmentWidth)
+        return calculatedRadius >= 0 ? calculatedRadius : 0;
+    }
+
+    public getOuterRadius(range: [number, number], index: number): number {
+        if (isUndefined(this.segmentWidth) || isUndefined(this.config.annularPadding)) {
+            throw new Error("Can't compute outer radius");
+        }
+
+        const calculatedRadius = (range[1] - range[0]) - index * (this.config.annularPadding + this.segmentWidth)
+        return calculatedRadius >= 0 ? calculatedRadius : 0;
+    }
+
+    protected getArc(range: [number, number], generatedArc: Arc<any, DefaultArcObject>, index: number): Arc<any, DefaultArcObject> {
+        const innerRadius = this.getInnerRadius(range, index);
+        return generatedArc.outerRadius(this.getOuterRadius(range, index))
+            .innerRadius(innerRadius);
+    }
+
+    protected getSegmentWidth(renderSeries: IRenderSeries<IRadialAccessors>) {
+        if (!(this.config.maxThickness && this.config.annularGrowth)) {
+            return this.config.annularWidth;
+        } else {
+            return Math.min((renderSeries.scales.r.range()[1] - renderSeries.scales.r.range()[0]) * this.config.annularGrowth, this.config.maxThickness);
+        }
+    }
+
     private emitDataPointHighlight(renderSeries: IRenderSeries<IRadialAccessors>, data: any, i: number,
-                                   rendererSubject: Subject<IRendererEventPayload>) {
+        rendererSubject: Subject<IRendererEventPayload>) {
 
         const position: IPosition | undefined = this.getDataPointPosition(renderSeries.dataSeries, i, renderSeries.scales);
 
@@ -128,42 +172,4 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
             },
         });
     }
-
-    /** See {@link Renderer#getDataPointPosition} */
-    public getDataPointPosition(dataSeries: IDataSeries<IRadialAccessors>, index: number, scales: Scales): IPosition | undefined {
-        if (index < 0) {
-            return undefined;
-        }
-        const pieArcData: DefaultArcObject = dataSeries.data[index];
-        const dataPointArc = this.getArc(scales.r.range(), arc(), index);
-        const centroid = dataPointArc.centroid(pieArcData);
-
-        return {
-            x: centroid[0],
-            y: centroid[1],
-            width: 0,
-            height: 0,
-        };
-    }
-
-    public getInnerRadius(range: number[], index: number): number {
-        if (isUndefined(this.segmentWidth) || isUndefined(this.config.annularPadding)) {
-            throw new Error("Can't compute inner radius");
-        }
-        return (range[1] - range[0] - this.segmentWidth) - index * (this.config.annularPadding + this.segmentWidth);
-    }
-
-    public getOuterRadius(range: [number, number], index: number): number {
-        if (isUndefined(this.segmentWidth) || isUndefined(this.config.annularPadding)) {
-            throw new Error("Can't compute outer radius");
-        }
-        return (range[1] - range[0]) - index * (this.config.annularPadding + this.segmentWidth);
-    }
-
-    protected getArc(range: [number, number], generatedArc: Arc<any, DefaultArcObject>, index: number): Arc<any, DefaultArcObject> {
-        const innerRadius = this.getInnerRadius(range, index);
-        return generatedArc.outerRadius(this.getOuterRadius(range, index))
-            .innerRadius(innerRadius >= 0 ? innerRadius : 0);
-    }
-
 }

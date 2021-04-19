@@ -3,9 +3,9 @@ import { arc, Arc, DefaultArcObject } from "d3-shape";
 import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT } from "../../../constants";
 import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-import { IGaugeSeriesConfig } from "../../../gauge/types";
+import { IGaugeConfig } from "../../../gauge/types";
 import { DonutGaugeRenderingUtil } from "../../../renderers/radial/gauge/donut-gauge-rendering-util";
-import { radialGrid } from "../../../renderers/radial/radial-grid";
+import { radialGrid } from "../../../renderers/radial/radial-grid-fn";
 import { RadialRenderer } from "../../../renderers/radial/radial-renderer";
 import { Chart } from "../../chart";
 import { D3Selection, IAccessors, IChartAssistSeries } from "../../common/types";
@@ -19,7 +19,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
     let plugin: DonutGaugeLabelsPlugin;
     let labelsGroup: D3Selection;
     let labels: D3Selection;
-    const seriesConfig: IGaugeSeriesConfig = {
+    const gaugeConfig: IGaugeConfig = {
         value: 5,
         max: 10,
         thresholds: [3, 7],
@@ -36,7 +36,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
         const element = document.createElement("div");
         chart.build(element);
 
-        dataSeries = GaugeUtil.generateThresholdSeries(seriesConfig, GaugeUtil.getGaugeAttributes(GaugeMode.Donut));
+        dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateRenderingAttributes(GaugeMode.Donut));
         chart.update([dataSeries]);
         chart.updateDimensions();
         labelsGroup = plugin.chart.getGrid().getLasagna().getLayerContainer(GAUGE_LABELS_CONTAINER_CLASS).select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);
@@ -49,7 +49,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {
-        expect(labels.nodes().length).toEqual(seriesConfig.thresholds.length);
+        expect(labels.nodes().length).toEqual(gaugeConfig.thresholds.length);
     });
 
     it("should position the threshold labels correctly", () => {
@@ -60,7 +60,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
 
     it("should render the threshold values as text", () => {
         labels.nodes().forEach((node, index) => {
-            expect(node.textContent).toEqual(seriesConfig.thresholds[index].toString());
+            expect(node.textContent).toEqual(gaugeConfig.thresholds[index].toString());
         });
     });
 

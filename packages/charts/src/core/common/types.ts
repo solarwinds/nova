@@ -1,6 +1,7 @@
 import { ScaleLinear } from "d3-scale";
 import { Selection } from "d3-selection";
 import { ValueMap } from "d3-selection-multi";
+import { StandardGaugeThresholdMarkerRadius } from "../../gauge/constants";
 
 import { RenderState } from "../../renderers/types";
 import { IGrid } from "../grid/types";
@@ -112,16 +113,18 @@ export interface IRadialRendererConfig extends IRendererConfig {
  * @ignore
  * Configuration for the DonutGaugeThresholdsRenderer
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IDonutGaugeThresholdsRendererConfig extends IRadialRendererConfig {
+    /** The radius of each threshold marker */
+    markerRadius?: StandardGaugeThresholdMarkerRadius | number;
 }
 
 /**
  * @ignore
  * Configuration for the LinearGaugeThresholdsRenderer
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ILinearGaugeThresholdsRendererConfig extends IRendererConfig {
+    /** The radius of each threshold marker */
+    markerRadius?: StandardGaugeThresholdMarkerRadius | number;
 }
 
 export interface ILinearScales {

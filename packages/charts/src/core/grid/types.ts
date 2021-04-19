@@ -174,6 +174,10 @@ export interface IGridConfig {
     borders: IAllAround<IBorderConfig>;
     /** String indicating the desired cursor style */
     cursor: string;
+    /** Set to true to disable the render area height correction */
+    disableRenderAreaHeightCorrection?: boolean;
+    /** Set to true to disable the render area width correction */
+    disableRenderAreaWidthCorrection?: boolean;
 }
 
 /**

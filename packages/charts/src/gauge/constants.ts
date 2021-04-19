@@ -1,3 +1,7 @@
+export const GAUGE_QUANTITY_SERIES_ID = "quantity";
+export const  GAUGE_REMAINDER_SERIES_ID = "remainder";
+export const  GAUGE_THRESHOLD_MARKERS_SERIES_ID = "threshold-markers";
+
 /**
  * @ignore
  * The visualization modes for a gauge
@@ -9,7 +13,33 @@ export enum GaugeMode {
 }
 
 /**
- * @ignore
- * The default gauge thickness
+ * Standard thicknesses for the linear gauge
  */
-export const GAUGE_THICKNESS_DEFAULT = 20;
+export enum StandardLinearGaugeThickness {
+    // Small may or may not be added as a standard thickness at some point
+    // Small = 5,
+    Medium = 10,
+    Large = 15,
+}
+
+/**
+ * Standard values for gauge threshold marker radii
+ */
+export enum StandardGaugeThresholdMarkerRadius {
+    Small = 3,
+    Large = 4,
+}
+
+/**
+ * Standard gauge colors
+ */
+export enum StandardGaugeColor {
+    /** Standard color for the part of the gauge that's not filled in */
+    Remainder = "var(--nui-color-semantic-unknown-bg-hover)",
+    /** Standard color for the value part of the gauge when the value represents an ok status */
+    Ok = "var(--nui-color-chart-one)",
+    /** Standard color for the value part of the gauge when the value has a warning status */
+    Warning = "var(--nui-color-semantic-warning)",
+    /** Standard color for the value part of the gauge when the value has a critical status */
+    Critical = "var(--nui-color-semantic-critical)",
+}

@@ -5,10 +5,9 @@ import {
     ChartAssist,
     GaugeMode,
     GaugeUtil,
-    GAUGE_THICKNESS_DEFAULT,
     IAccessors,
     IChartAssistSeries,
-    IGaugeSeriesConfig,
+    IGaugeConfig,
     linearGaugeGridConfig,
     LinearGaugeLabelsPlugin,
     stack,
@@ -22,8 +21,8 @@ import {
     styleUrls: ["./linear-gauge-horizontal-prototype.component.less"],
 })
 export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnInit {
-    @Input() public thickness = GAUGE_THICKNESS_DEFAULT;
-    @Input() public seriesConfig: IGaugeSeriesConfig;
+    @Input() public thickness: number;
+    @Input() public gaugeConfig: IGaugeConfig;
     @Input() public flipLabels = false;
 
     public chartAssist: ChartAssist;
@@ -31,9 +30,7 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
     private labelsPlugin: LinearGaugeLabelsPlugin;
 
     public ngOnChanges(changes: ComponentChanges<LinearGaugeHorizontalPrototypeComponent>) {
-        if ((changes.thickness && !changes.thickness.firstChange) ||
-            (changes.seriesConfig && !changes.seriesConfig.firstChange) ||
-            (changes.flipLabels && !changes.flipLabels.firstChange)) {
+        if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             if (changes.thickness) {
                 gridConfig.dimension.height(this.thickness);
@@ -49,7 +46,10 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
                 };
             }
             this.chartAssist.chart.updateDimensions();
-            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
+        }
+
+        if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
 
@@ -62,7 +62,7 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
         this.labelsPlugin = new LinearGaugeLabelsPlugin({ flipLabels: this.flipLabels });
         this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Horizontal);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
 
         this.chartAssist.update(this.seriesSet);
