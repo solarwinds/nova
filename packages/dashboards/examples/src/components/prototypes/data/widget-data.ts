@@ -328,6 +328,7 @@ export function getTimeseriesWidgetData2() {
             id: "series-a",
             name: "Average CPU Load",
             description: "lastchance.demo.lab",
+            link: "https://en.wikipedia.org/wiki/Brno",
             data: [
                 { x: moment(startOfToday).subtract(20, "day").toDate(), y: 10 },
                 { x: moment(startOfToday).subtract(19, "day").toDate(), y: 15 },
