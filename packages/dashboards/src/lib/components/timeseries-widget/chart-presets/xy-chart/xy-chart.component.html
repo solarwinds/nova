@@ -10,8 +10,8 @@
                     [interactive]="true"
                     [orientation]="legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'">
             <nui-legend-series *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn"
-                            [descriptionPrimary]="(!interactionOrLink(legendSeries))? legendSeries.legendDescriptionPrimary : undefined"
-                            [descriptionSecondary]="(!interactionOrLink(legendSeries))? legendSeries.legendDescriptionSecondary : undefined"
+                            [descriptionPrimary]="(!isSeriesInteractive(legendSeries))? legendSeries.legendDescriptionPrimary : undefined"
+                            [descriptionSecondary]="(!isSeriesInteractive(legendSeries))? legendSeries.legendDescriptionSecondary : undefined"
                                [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                                (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)"
                                (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
@@ -32,7 +32,7 @@
                         <div *ngIf="(legendSeries?.link? false : true) else elseLinkHref">
                             <div class= "nui-text-link-small"
                                 (click)="onInteraction(legendSeries)">
-                                <div class="description description-primary" 
+                                <div class="description description-primary legend-description-primary" 
                                     [title]="legendSeries.legendDescriptionPrimary">
                                         {{legendSeries.legendDescriptionPrimary}}
                                 </div>
@@ -47,7 +47,7 @@
                                 <a class="nui-text-link-small"
                                         [href]="legendSeries.link" 
                                         target="_blank">
-                                    <div class="description description-primary" 
+                                    <div class="description description-primary legend-description-primary" 
                                         [title]="legendSeries.legendDescriptionPrimary">
                                             {{legendSeries.legendDescriptionPrimary}}
                                     </div>
