@@ -8,7 +8,7 @@ import {
     IAccessors,
     IChartAssistSeries,
     IGaugeLabelsPluginConfig,
-    IGaugeSeriesConfig,
+    IGaugeConfig,
     linearGaugeGridConfig,
     LinearGaugeLabelsPlugin,
     stack,
@@ -23,7 +23,7 @@ import {
 })
 export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit {
     @Input() public thickness: number;
-    @Input() public seriesConfig: IGaugeSeriesConfig;
+    @Input() public gaugeConfig: IGaugeConfig;
     @Input() public flipLabels = false;
 
     public chartAssist: ChartAssist;
@@ -49,8 +49,8 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
             this.chartAssist.chart.updateDimensions();
         }
 
-        if (changes.seriesConfig && !changes.seriesConfig.firstChange) {
-            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
+        if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
 
@@ -73,7 +73,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
         this.labelsPlugin = new LinearGaugeLabelsPlugin(labelConfig);
         this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Vertical);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Vertical);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
 
         this.chartAssist.update(this.seriesSet);

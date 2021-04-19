@@ -183,5 +183,21 @@ describe("components >", () => {
             });
 
         });
+
+        describe("popover resize >", () => {
+            it("when overlay changes in size and resetSize gets called the height and width of the popover is undefined", ()=> {
+                subject.showPopover();
+                subject.overlayComponent.getOverlayRef().updateSize({
+                    height: 100,
+                    width: 100,
+                });
+                expect(subject.overlayComponent.getOverlayRef().getConfig().height).toEqual(100);
+                expect(subject.overlayComponent.getOverlayRef().getConfig().width).toEqual(100);
+                subject.resetSize();
+                expect(subject.overlayComponent.getOverlayRef().getConfig().height).toBeUndefined();
+                expect(subject.overlayComponent.getOverlayRef().getConfig().width).toBeUndefined();
+            });
+        });
+
     });
 });
