@@ -245,16 +245,22 @@ export abstract class Grid implements IGrid {
      */
     protected adjustRenderingArea = () => {
         const d = this.config().dimension;
+        const disableHeightCorrection = this.config().disableRenderAreaHeightCorrection;
+        const disableWidthCorrection = this.config().disableRenderAreaWidthCorrection;
+
         const renderingAreaClipPathAttrs = {
             "width": d.width(),
-            "height": d.height() + Grid.RENDER_AREA_HEIGHT_CORRECTION,
-            "y": -Grid.RENDER_AREA_HEIGHT_CORRECTION,
-        };
+            "height": d.height() + (disableHeightCorrection ? 0 : Grid.RENDER_AREA_HEIGHT_CORRECTION),
+        } as any;
+
+        if (!disableHeightCorrection) {
+            renderingAreaClipPathAttrs["y"] = -Grid.RENDER_AREA_HEIGHT_CORRECTION;
+        }
 
         const renderingAreaAttrs = {
             ...renderingAreaClipPathAttrs,
             // Width correction needed to prevent interaction gap between right side of grid and the edge of the rendering area
-            "width": d.width() > 0 ? d.width() - Grid.RENDER_AREA_WIDTH_CORRECTION : d.width(),
+            "width": d.width() > 0 ? d.width() - (disableWidthCorrection ? 0 : Grid.RENDER_AREA_WIDTH_CORRECTION) : d.width(),
         };
 
         this.renderingAreaClipPath.attrs(renderingAreaClipPathAttrs);

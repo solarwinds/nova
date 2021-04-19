@@ -114,6 +114,7 @@ export interface IRadialRendererConfig extends IRendererConfig {
  * Configuration for the DonutGaugeThresholdsRenderer
  */
 export interface IDonutGaugeThresholdsRendererConfig extends IRadialRendererConfig {
+    /** The radius of each threshold marker */
     markerRadius?: StandardGaugeThresholdMarkerRadius | number;
 }
 

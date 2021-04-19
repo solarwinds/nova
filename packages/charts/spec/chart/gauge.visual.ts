@@ -1,8 +1,7 @@
 import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
 import { browser } from "protractor";
-
-import { GaugeUtil } from "../../src/gauge/gauge-util";
+import { GAUGE_REMAINDER_SERIES_ID } from "../../src/gauge/constants";
 
 import { ChartAtom } from "./atoms/chart.atom";
 import { SeriesAtom } from "./atoms/series.atom";
@@ -31,15 +30,15 @@ describe(`Visual Tests: Charts - ${name}`, () => {
 
         await camera.say.cheese(`${name} - Default look`);
 
-        let gaugeSeries = await donutGauge.getDataSeriesById(SeriesAtom, GaugeUtil.REMAINDER_SERIES_ID) as SeriesAtom;
+        let gaugeSeries = await donutGauge.getDataSeriesById(SeriesAtom, GAUGE_REMAINDER_SERIES_ID) as SeriesAtom;
         await gaugeSeries.hover();
         await camera.say.cheese(`${name} - Donut hovered`);
 
-        gaugeSeries = await horizontalGauge.getDataSeriesById(SeriesAtom, GaugeUtil.REMAINDER_SERIES_ID) as SeriesAtom;
+        gaugeSeries = await horizontalGauge.getDataSeriesById(SeriesAtom, GAUGE_REMAINDER_SERIES_ID) as SeriesAtom;
         await gaugeSeries.hover();
         await camera.say.cheese(`${name} - Horizontal hovered`);
 
-        gaugeSeries = await verticalGauge.getDataSeriesById(SeriesAtom, GaugeUtil.REMAINDER_SERIES_ID) as SeriesAtom;
+        gaugeSeries = await verticalGauge.getDataSeriesById(SeriesAtom, GAUGE_REMAINDER_SERIES_ID) as SeriesAtom;
         await gaugeSeries.hover();
         await camera.say.cheese(`${name} - Vertical hovered`);
 

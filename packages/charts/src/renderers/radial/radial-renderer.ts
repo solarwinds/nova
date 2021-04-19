@@ -112,20 +112,24 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
         if (isUndefined(this.segmentWidth) || isUndefined(this.config.annularPadding)) {
             throw new Error("Can't compute inner radius");
         }
-        return (range[1] - range[0] - this.segmentWidth) - index * (this.config.annularPadding + this.segmentWidth);
+
+        const calculatedRadius = (range[1] - range[0] - this.segmentWidth) - index * (this.config.annularPadding + this.segmentWidth)
+        return calculatedRadius >= 0 ? calculatedRadius : 0;
     }
 
     public getOuterRadius(range: [number, number], index: number): number {
         if (isUndefined(this.segmentWidth) || isUndefined(this.config.annularPadding)) {
             throw new Error("Can't compute outer radius");
         }
-        return (range[1] - range[0]) - index * (this.config.annularPadding + this.segmentWidth);
+
+        const calculatedRadius = (range[1] - range[0]) - index * (this.config.annularPadding + this.segmentWidth)
+        return calculatedRadius >= 0 ? calculatedRadius : 0;
     }
 
     protected getArc(range: [number, number], generatedArc: Arc<any, DefaultArcObject>, index: number): Arc<any, DefaultArcObject> {
         const innerRadius = this.getInnerRadius(range, index);
         return generatedArc.outerRadius(this.getOuterRadius(range, index))
-            .innerRadius(innerRadius >= 0 ? innerRadius : 0);
+            .innerRadius(innerRadius);
     }
 
     protected getSegmentWidth(renderSeries: IRenderSeries<IRadialAccessors>) {

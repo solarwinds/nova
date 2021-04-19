@@ -12,6 +12,7 @@ import { XYGridConfig } from "./xy-grid-config";
 export function linearGaugeGridConfig(mode: GaugeMode.Vertical | GaugeMode.Horizontal, thickness = StandardLinearGaugeThickness.Large): XYGridConfig {
     const gridConfig = new XYGridConfig();
     gridConfig.interactionPlugins = false;
+    gridConfig.disableRenderAreaHeightCorrection = true;
 
     gridConfig.axis.bottom.visible = false;
     gridConfig.axis.bottom.gridTicks = false;

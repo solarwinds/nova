@@ -1,7 +1,7 @@
 import find from "lodash/find";
 import isArray from "lodash/isArray";
 import isEmpty from "lodash/isEmpty";
-import { Subject, Subscription } from "rxjs";
+import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { CHART_VIEW_STATUS_EVENT, INTERACTION_VALUES_EVENT } from "../../../constants";
