@@ -99,7 +99,7 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if(changes.image || changes.description){
+        if (changes.image || changes.description) {
             this.imageName = this.image.name || this.getImage(this.image)?.name || null;
             this.imageTemplate = this.getImageTemplate();
         }
