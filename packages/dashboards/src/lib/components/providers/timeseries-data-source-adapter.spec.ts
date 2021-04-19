@@ -62,6 +62,7 @@ describe("TimeseriesDataSourceAdapter > ", () => {
                     id: "sourceId",
                     legendDescriptionPrimary: "adapterLabel",
                     legendDescriptionSecondary: "sourceDescription",
+                    link: undefined,
                     data: [1],
                 },
             ],
