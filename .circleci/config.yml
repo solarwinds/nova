@@ -666,6 +666,10 @@ workflows:
             -   nova-docs:
                     context:
                         - common-build-creds
+                    filters:
+                        branches:
+                            ignore:
+                                - pull/*
                     requires:
                         - dashboards-pack
             -   dashboards-unit-test:
@@ -700,6 +704,10 @@ workflows:
             -   snyk-test:
                     requires:
                         - dashboards-build
+                    filters:
+                        branches:
+                            ignore:
+                                - pull/*
 
     nova-release:
         jobs:
