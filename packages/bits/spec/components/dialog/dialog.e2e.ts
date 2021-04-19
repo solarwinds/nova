@@ -28,8 +28,6 @@ describe("USERCONTROL Dialog", () => {
     let cancelButton: ElementFinder;
     let actionButton: ElementFinder;
     let themeSwitcher: WebElement;
-    const setLocation = (url: string) =>
-        browser.executeScript((pUrl: string) => window.location.href = `/#/${pUrl}`, url);
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("dialog/dialog-test");
@@ -149,7 +147,7 @@ describe("USERCONTROL Dialog", () => {
         it("should close dialog with router changed", async () => {
             await defaultDialogBtn.click();
             expect(await dialog.isDialogDisplayed()).toBe(true);
-            await setLocation("dialog")
+            await Helpers.setLocation("dialog")
             expect(await dialog.isDialogDisplayed()).toBe(false);
         });
     });
