@@ -4,6 +4,6 @@ export * from "./gauge/donut-gauge-thresholds-renderer";
 export * from "./gauge/donut-gauge-renderer-config";
 export * from "./gauge/donut-gauge-rendering-util";
 export * from "./pie-renderer";
-export * from "./radial-grid";
+export * from "./radial-grid-fn";
 export * from "./radial-scales";
 export * from "./accessors/radial-accessors";

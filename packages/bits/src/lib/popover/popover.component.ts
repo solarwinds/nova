@@ -285,6 +285,17 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         this.overlayComponent?.getOverlayRef()?.updatePosition();
     }
 
+    /**
+     * Resets the size of the popover.
+     */
+    public resetSize() {
+        // This is set to undefined so that angular cdk will set the height and width automatically
+        this.overlayComponent?.getOverlayRef()?.updateSize({
+            height: undefined,
+            width: undefined,
+        });
+    }
+
     private onTrigger(triggerType: PopoverTrigger) {
         if (this.isTriggerPresent(triggerType)) {
             if (this.delay > 0 && triggerType === "mouseenter" && this.isTriggerPresent("mouseenter")) {
@@ -446,6 +457,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             .flexibleConnectedTo(this.host.nativeElement)
             .withPush(false)
             .withViewportMargin(0)
+            .withGrowAfterOpen(true)
             .withPositions(this.getPopoverConnectedPosition(position));
 
         const subscription = positionStrategy.positionChanges
