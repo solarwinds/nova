@@ -510,9 +510,6 @@ jobs:
             -   run:
                     name: Publish dashbords docs
                     command: yarn run deploy-docs-ci
-            -   run:
-                    name: Docs Cleanup
-                    command: yarn run clean-docs-ci
             -   store_artifacts:
                     path: ./nova-docs.zip
     nova-docs-cleanup:
