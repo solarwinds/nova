@@ -37,7 +37,7 @@ import { IImagesPresetItem } from "./public-api";
     encapsulation: ViewEncapsulation.None,
     host: {
         "role": "img",
-        "[attr.aria-label]": "ariaLabel || imageName || null",
+        "[attr.aria-label]": "hasAlt ? null : description || imageName",
     },
 })
 export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
@@ -47,14 +47,9 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     @Input() public image: any;
 
     /**
-     * Sets alt for image from external source
+     * Sets aria-label text or alt for image from external source
      */
-    @Input() public imageAlt: string = "";
-
-    /**
-     * Sets aria-label text
-     */
-    @Input() public ariaLabel: string;
+    @Input() public description: string;
 
     /**
      * Available values are: 'left' and 'right'
@@ -83,6 +78,7 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
 
     public imageTemplate: SafeHtml;
     public imageName: string | null;
+    public hasAlt: boolean;
 
     constructor(private logger: LoggerService,
                 private utilService: UtilService,
@@ -103,7 +99,7 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if(changes.image || changes.imageAlt){
+        if(changes.image || changes.description){
             this.imageName = this.image.name || this.getImage(this.image)?.name || null;
             this.imageTemplate = this.getImageTemplate();
         }
@@ -141,8 +137,10 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
         let imageHtml: string = "";
         if (_has(image, "code") && _isString(image.code)) {
             imageHtml = image.code;
+            this.hasAlt = false;
         } else {
-            imageHtml = `<img src="${this.image}" alt="${this.imageAlt}">`;
+            imageHtml = `<img src="${this.image}" alt="${this.description}">`;
+            this.hasAlt = true;
         }
 
         return this.domSanitizer.bypassSecurityTrustHtml(imageHtml);
