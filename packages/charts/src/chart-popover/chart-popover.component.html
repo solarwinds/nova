@@ -8,7 +8,8 @@
                  [closePopover]="plugin.closePopoverSubject"
                  [hasPadding]="false"
                  [container]="element.nativeElement"
-                 [style.height.px]="plugin.popoverTargetPosition.height">
+                 [style.height.px]="plugin.popoverTargetPosition.height"
+                 [withGrowAfterOpen]="true">
     </nui-popover>
 
     <ng-template #popoverTemplate>
