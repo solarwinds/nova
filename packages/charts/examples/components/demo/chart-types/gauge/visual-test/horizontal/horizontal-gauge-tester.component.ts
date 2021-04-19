@@ -6,7 +6,7 @@ import {
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
-    IGaugeSeriesConfig,
+    IGaugeConfig,
     linearGaugeGridConfig,
     LinearGaugeLabelsPlugin,
     stack,
@@ -20,7 +20,7 @@ import {
     styleUrls: ["./horizontal-gauge-tester.component.less"],
 })
 export class HorizontalGaugeTesterComponent implements OnInit {
-    @Input() public seriesConfig: IGaugeSeriesConfig;
+    @Input() public gaugeConfig: IGaugeConfig;
 
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
@@ -32,7 +32,7 @@ export class HorizontalGaugeTesterComponent implements OnInit {
         this.chartAssist = new ChartAssist(chart, stack);
         this.chartAssist.chart.addPlugin(new LinearGaugeLabelsPlugin());
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Horizontal);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
         this.chartAssist.update(this.seriesSet);
     }
 }
