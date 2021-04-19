@@ -29,6 +29,9 @@
          [class.hide-left-border]="hideLeftBorder"
          [@expandedState]="state"
          (@expandedState.done)="expandedStateDone()">
-        <ng-content *ngIf="renderBody"></ng-content>
+            <div *ngIf="renderBody else noBody">
+                <ng-content></ng-content>
+            </div>
+            <ng-template #noBody></ng-template>
     </div>
 </div>
