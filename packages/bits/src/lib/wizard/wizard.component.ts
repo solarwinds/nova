@@ -156,8 +156,15 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WizardStepComponent);
         const componentRef = this.dynamicStep.createComponent(componentFactory);
         const instance: IWizardStepComponent = componentRef.instance;
-        instance.title = wizardStep.title;
-        instance.stepTemplate = wizardStep.stepTemplate;
+        const wizardStepInputs = [
+            "title", "stepTemplate","nextText", "stepControl", "shortTitle", "description", "hidden", "disabled", "enter", "valid", "exit", "next"]
+
+        wizardStepInputs.forEach(key => {
+            if (wizardStep[key]) {
+                instance[key] =  wizardStep[key]
+            }
+        })
+
         this.arraySteps.splice(indexToInsert, 0, componentRef.instance);
         this.steps.reset(this.arraySteps);
         return componentRef.instance;
