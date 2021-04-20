@@ -25,10 +25,6 @@ export class ChartExampleIndexComponent {
             title: "Gauge",
             path: "/development/gauge",
         },
-        {
-            title: "Daylight Saving Time",
-            path: "/development/dst",
-        },
     ];
 
     public archivedLinks = [

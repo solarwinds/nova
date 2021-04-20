@@ -42,8 +42,8 @@ describe(`Visual tests: Charts - ${name}`, () => {
         await legendOfVerticalBarChart.getSeriesByIndex(3).hover();
         await camera.say.cheese(`${name} - Default look with middle legend tile hovered`);
 
-        await Helpers.prepareBrowser("chart-types/bar/dst-test");
-        await camera.say.cheese(`${name} - Daylight Saving Time Scenarios`);
+        await Helpers.prepareBrowser("chart-types/bar/dst-time-interval-test");
+        await camera.say.cheese(`${name} - Time Interval Daylight Saving Time Scenarios`);
 
         await camera.turn.off();
     }, 100000);

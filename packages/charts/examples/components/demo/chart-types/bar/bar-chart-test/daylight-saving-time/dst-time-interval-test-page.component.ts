@@ -3,9 +3,9 @@ import { IAccessors, IDataSeries } from "@nova-ui/charts";
 import moment, { duration } from "moment/moment";
 
 @Component({
-    templateUrl: "./dst-test-page.component.html",
+    templateUrl: "./dst-time-interval-test-page.component.html",
 })
-export class DstTestPageComponent {
+export class DstTimeIntervalTestPageComponent {
     public insideDstData = getInsideDstData();
     public outsideDstData = getOutsideDstData();
     public startDstOneMinuteData = getStartDstOneMinuteData();
