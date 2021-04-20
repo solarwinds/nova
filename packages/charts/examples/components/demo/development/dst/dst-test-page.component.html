@@ -1,8 +1,32 @@
-<h3>Inside of Daylight Saving Time</h3>
-<nui-bar-chart-time-interval-example [data]="insideDstData"></nui-bar-chart-time-interval-example>
-<h3>Outside of Daylight Saving Time</h3>
-<nui-bar-chart-time-interval-example [data]="outsideDstData"></nui-bar-chart-time-interval-example>
-<h3>Start of Daylight Saving Time</h3>
-<nui-bar-chart-time-interval-example [data]="startDstData"></nui-bar-chart-time-interval-example>
-<h3>End of Daylight Saving Time</h3>
-<nui-bar-chart-time-interval-example [data]="endDstData"></nui-bar-chart-time-interval-example>
+<div class="d-flex">
+    <div class="mr-5">
+        <h3>Start of Daylight Saving Time</h3>
+        <h4>1-minute Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="startDstOneMinuteData" [interval]="oneMinuteInterval"></nui-bar-chart-time-interval-example>
+        <h4>1-hour Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="startDstOneHourData" [interval]="oneHourInterval"></nui-bar-chart-time-interval-example>
+        <h4>2-hour Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="startDstTwoHourData" [interval]="twoHourInterval"></nui-bar-chart-time-interval-example>
+        <h4>1-Day Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="startDstOneDayData" [interval]="oneDayInterval"></nui-bar-chart-time-interval-example>
+    </div>
+    <div class="mr-5">
+        <h3>End of Daylight Saving Time</h3>
+        <h4>1-minute Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="endDstOneMinuteData" [interval]="oneMinuteInterval"></nui-bar-chart-time-interval-example>
+        <h4>1-hour Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="endDstOneHourData" [interval]="oneHourInterval"></nui-bar-chart-time-interval-example>
+        <h4>2-hour Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="endDstTwoHourData" [interval]="twoHourInterval"></nui-bar-chart-time-interval-example>
+        <h4>1-Day Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="endDstOneDayData" [interval]="oneDayInterval"></nui-bar-chart-time-interval-example>
+    </div>
+    <div>
+        <h3>Inside Daylight Saving Time</h3>
+        <h4>1-Day Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="insideDstData" [interval]="oneDayInterval"></nui-bar-chart-time-interval-example>
+        <h3>Outside of Daylight Saving Time</h3>
+        <h4>1-Day Interval</h4>
+        <nui-bar-chart-time-interval-example [data]="outsideDstData" [interval]="oneDayInterval"></nui-bar-chart-time-interval-example>
+    </div>
+</div>

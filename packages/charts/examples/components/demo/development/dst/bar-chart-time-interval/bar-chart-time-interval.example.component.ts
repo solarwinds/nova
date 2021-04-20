@@ -13,7 +13,7 @@ import {
     Scales,
     TimeIntervalScale,
 } from "@nova-ui/charts";
-import { duration } from "moment/moment";
+import moment, { duration } from "moment/moment";
 
 @Component({
     selector: "nui-bar-chart-time-interval-example",
@@ -21,6 +21,7 @@ import { duration } from "moment/moment";
 })
 export class BarChartTimeIntervalExampleComponent implements OnInit {
     @Input() data: Partial<IDataSeries<IAccessors>>[];
+    @Input() interval: moment.Duration;
 
     public chart = new Chart(barGrid());
 
@@ -32,7 +33,7 @@ export class BarChartTimeIntervalExampleComponent implements OnInit {
         const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x"), pointerEvents: false });
 
         const scales: Scales = {
-            x: new TimeIntervalScale(duration(1, "days")),
+            x: new TimeIntervalScale(this.interval),
             y: new LinearScale(),
         };
 
