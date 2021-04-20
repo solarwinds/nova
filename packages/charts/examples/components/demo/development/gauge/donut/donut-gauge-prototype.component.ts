@@ -10,7 +10,8 @@ import {
     IAccessors,
     IChartAssistSeries,
     IGaugeLabelsPluginConfig,
-    IGaugeSeriesConfig,
+    IGaugeConfig,
+    IRadialRendererConfig,
     radial,
     radialGrid,
 } from "@nova-ui/charts";
@@ -22,20 +23,25 @@ import {
 })
 export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     @Input() public size: number;
-    @Input() public seriesConfig: IGaugeSeriesConfig;
+    @Input() public annularGrowth: number;
+    @Input() public annularWidth: number;
+    @Input() public gaugeConfig: IGaugeConfig;
 
     public chartAssist: ChartAssist;
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
     public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>) {
-        if (changes.size && !changes.size.firstChange) {
-                this.updateDonutSize();
-                this.chartAssist.chart.updateDimensions();
+        if ((changes.size && !changes.size.firstChange) ||
+            (changes.annularWidth && !changes.annularWidth.firstChange) ||
+            (changes.annularGrowth && !changes.annularGrowth.firstChange)) {
+            this.updateDonutSize();
+            this.updateAnnularAttributes();
+            this.chartAssist.chart.updateDimensions();
         }
 
-        if (changes.seriesConfig && !changes.seriesConfig.firstChange) {
-            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
+        if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
 
@@ -51,10 +57,11 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         };
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin(labelConfig));
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
 
         this.updateDonutSize();
+        this.updateAnnularAttributes();
         this.chartAssist.update(this.seriesSet);
     }
 
@@ -62,5 +69,15 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         const gridDimensions = this.chartAssist.chart.getGrid().config().dimension;
         gridDimensions.height(this.size);
         gridDimensions.width(this.size);
+    }
+
+    private updateAnnularAttributes() {
+        this.seriesSet.forEach(series => {
+            const rendererConfig = (series.renderer.config as IRadialRendererConfig);
+            // increase the max thickness from 30 for testing purposes
+            rendererConfig.maxThickness = 20000;
+            rendererConfig.annularGrowth = this.annularGrowth;
+            rendererConfig.annularWidth = this.annularWidth;
+        });
     }
 }
