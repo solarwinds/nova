@@ -101,7 +101,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
             }
             const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
             this.dataSourceFields = dataFields;
-
+            this.dataSourceManager.dataSourceFields.next(this.dataSourceFields);
             const disableColumnGeneration = this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.DisableTableColumnGeneration)?.enabled;
 
             const columns = this.mergeColumns(this.dataSourceFields, this.getColumns());
@@ -116,7 +116,9 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
             }
             this.changeDetector.markForCheck();
         });
-        dataSourceManager.error.subscribe((err) => {
+        dataSourceManager.error
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((err: IDataSourceError | null) => {
             this.dataSourceError = err;
             this.changeDetector.markForCheck();
         });

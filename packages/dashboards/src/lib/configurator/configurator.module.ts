@@ -104,6 +104,7 @@ import { ConfiguratorService } from "./services/configurator.service";
 import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
+import { DataSourceErrorHandlingComponent } from "./components/widgets/configurator-items/data-source-error-handling/data-source-error-handling.component";
 /* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -112,6 +113,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     DashwizButtonsComponent,
     DataSourceConfigurationComponent,
     DataSourceConfigurationV2Component,
+    DataSourceErrorHandlingComponent,
     KpiTilesConfigurationComponent,
     EmbeddedContentConfigurationComponent,
     InfoMessageConfigurationComponent,
@@ -166,6 +168,7 @@ const exportedDeclarations = [
     WidgetConfiguratorSectionComponent,
     DataSourceConfigurationComponent,
     DataSourceConfigurationV2Component,
+    DataSourceErrorHandlingComponent,
     ItemsDynamicComponent,
     ColorPickerComponent,
     ConfiguratorComponent,

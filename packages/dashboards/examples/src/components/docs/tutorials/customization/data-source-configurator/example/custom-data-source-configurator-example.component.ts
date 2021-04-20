@@ -99,7 +99,7 @@ export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfig
         },
     ];
 
-    // These need to be injected because DataSourceConfigurationV2Component uses them
+    // These need to be injected because DataSourceErrorHandlingComponent uses them
     constructor(changeDetector: ChangeDetectorRef,
         formBuilder: FormBuilder,
         providerRegistryService: ProviderRegistryService,
