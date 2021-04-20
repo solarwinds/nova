@@ -57,7 +57,7 @@ export class ConfirmationDialogComponent {
         return this.setFocus === buttonType ? true : false;
     }
 
-    private getAriaLabel() {
+    public getAriaLabel() {
         return (this.severity ? `${this.severity} ${this.title}` : this.title) || this.ariaLabel
     }
 
