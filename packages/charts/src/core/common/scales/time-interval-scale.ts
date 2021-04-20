@@ -77,31 +77,6 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
         return this._bandScale.domain();
     }
 
-    private getBandsForInterval(from: Date, to: Date): Date[] {
-        const bands: Date[] = [];
-        let bandDate = this.truncToInterval(from, this.interval(), true);
-        if (!bandDate) {
-            throw new Error("Could not get bands for interval");
-        }
-
-        const intervalMs = this.interval().asMilliseconds();
-        const intervalDays = this.interval().asDays();
-        const isDomainStartDst = isDaylightSavingTime(from);
-        const isDomainEndDst = isDaylightSavingTime(to);
-
-        // Add one hour to the "to" date if:
-        // 1) we're transitioning to daylight saving time and 2) the interval is >= one day.
-        // This ensures that the last day in the domain, which starts an hour later, is included in the generated bands.
-        const dstAdjustment = !isDomainStartDst && isDomainEndDst ? duration(1, "hour").asMilliseconds() : 0;
-        const adjustedToDate = intervalDays >= 1 ? new Date(to.getTime() + dstAdjustment) : to;
-
-        while (bandDate <= adjustedToDate) {
-            bands.push(bandDate);
-            bandDate = new Date(bandDate.getTime() + intervalMs);
-        }
-        return bands;
-    }
-
     public convert(value: Date, position: number = BAND_CENTER): number {
         const truncatedDate: Date | undefined = this.truncToInterval(value, this.interval());
         if (!truncatedDate) {
@@ -185,6 +160,31 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
         const adjustedDate = new Date(inputDate.getTime() + standardTimeOffsetMs);
         const endDate = intervalDays >= 1 ? moment(adjustedDate).add(intervalDays, "days").toDate() : moment(adjustedDate).add(this.interval()).toDate();
         return datetimeFormatter(adjustedDate) + " - " + datetimeFormatter(endDate);
+    }
+
+    private getBandsForInterval(from: Date, to: Date): Date[] {
+        const bands: Date[] = [];
+        let bandDate = this.truncToInterval(from, this.interval(), true);
+        if (!bandDate) {
+            throw new Error("Could not get bands for interval");
+        }
+
+        const intervalMs = this.interval().asMilliseconds();
+        const intervalDays = this.interval().asDays();
+        const isDomainStartDst = isDaylightSavingTime(from);
+        const isDomainEndDst = isDaylightSavingTime(to);
+
+        // Add one hour to the "to" date if:
+        // 1) we're transitioning to daylight saving time and 2) the interval is >= one day.
+        // This ensures that the last day in the domain, which starts an hour later, is included in the generated bands.
+        const dstAdjustment = !isDomainStartDst && isDomainEndDst ? duration(1, "hour").asMilliseconds() : 0;
+        const adjustedToDate = intervalDays >= 1 ? new Date(to.getTime() + dstAdjustment) : to;
+
+        while (bandDate <= adjustedToDate) {
+            bands.push(bandDate);
+            bandDate = new Date(bandDate.getTime() + intervalMs);
+        }
+        return bands;
     }
 
 }

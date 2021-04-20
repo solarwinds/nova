@@ -13,13 +13,13 @@ import {
     Scales,
     TimeIntervalScale,
 } from "@nova-ui/charts";
-import moment, { duration } from "moment/moment";
+import moment from "moment/moment";
 
 @Component({
-    selector: "nui-bar-chart-time-interval-example",
-    templateUrl: "./bar-chart-time-interval.example.component.html",
+    selector: "bar-chart-time-interval-dst-test",
+    templateUrl: "./bar-chart-time-interval-dst-test.component.html",
 })
-export class BarChartTimeIntervalExampleComponent implements OnInit {
+export class BarChartTimeIntervalDstTestComponent implements OnInit {
     @Input() data: Partial<IDataSeries<IAccessors>>[];
     @Input() interval: moment.Duration;
 

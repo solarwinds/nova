@@ -54,10 +54,6 @@ const chartsRoutes: Routes = [
         path: "thresholds",
         loadChildren: () => import("./thresholds/thresholds-prototype.module").then(m => m.ThresholdsPrototypeModule),
     },
-    {
-        path: "dst",
-        loadChildren: () => import("./dst/daylight-saving-time-prototype.module").then(m => m.DaylightSavingTimePrototypeModule),
-    },
 ];
 
 @NgModule({
