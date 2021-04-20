@@ -56,7 +56,6 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     public dataSourceFields: Array<IDataField> = [];
     public draggedItemHeight: number;
     public isWidthMessageDisplayed = false;
-    public dataSourceError: IDataSourceError | null;
 
     public get columnForms(): FormControl[] {
         return (this.form.controls["columns"] as FormArray).controls as FormControl[];
@@ -101,7 +100,6 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
             }
             const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
             this.dataSourceFields = dataFields;
-            this.dataSourceManager.dataSourceFields.next(this.dataSourceFields);
             const disableColumnGeneration = this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.DisableTableColumnGeneration)?.enabled;
 
             const columns = this.mergeColumns(this.dataSourceFields, this.getColumns());
@@ -114,12 +112,6 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
                     this.resetColumns(false);
                 }
             }
-            this.changeDetector.markForCheck();
-        });
-        dataSourceManager.error
-            .pipe(takeUntil(this.onDestroy$))
-            .subscribe((err: IDataSourceError | null) => {
-            this.dataSourceError = err;
             this.changeDetector.markForCheck();
         });
     }

@@ -7,6 +7,7 @@ import { IDataSourceError } from "../../components/providers/types";
 import { PIZZAGNA_EVENT_BUS } from "../../types";
 import { DashwizService } from "../components/wizard/dashwiz/dashwiz.service";
 import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../types";
+import isUndefined from "lodash/isUndefined";
 
 @Injectable()
 export class ConfiguratorDataSourceManagerService implements OnDestroy {
@@ -41,6 +42,8 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
                 this.error.next(event.payload.error);
             } else {
                 this.error.next(undefined);
+                const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
+                this.dataSourceFields.next(dataFields);
             }
         });
     }
