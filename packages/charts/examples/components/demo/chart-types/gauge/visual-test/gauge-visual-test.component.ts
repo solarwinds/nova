@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import {  IGaugeConfig } from "@nova-ui/charts";
+import { IGaugeConfig } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-visual-test",

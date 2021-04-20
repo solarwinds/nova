@@ -1,7 +1,6 @@
 import { OverlayModule } from "@angular/cdk/overlay";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import {
-    DebugElement,
     NO_ERRORS_SCHEMA,
     SimpleChange,
     SimpleChanges
@@ -31,7 +30,6 @@ describe("components >", () => {
     describe("sorter >", () => {
         let fixture: ComponentFixture<SorterComponent>;
         let component: SorterComponent;
-        let debugElement: DebugElement;
         let itemsSource: IMenuItem[];
 
         beforeEach(() => {
@@ -58,7 +56,6 @@ describe("components >", () => {
             });
             fixture = TestBed.createComponent(SorterComponent);
             component = fixture.componentInstance;
-            debugElement = fixture.debugElement;
             itemsSource = [
                 {
                     value: "animal",

@@ -1,22 +1,16 @@
-import { browser, by, element } from "protractor";
-
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { ButtonAtom, MessageAtom } from "../public_api";
+import { MessageAtom } from "../public_api";
 
 describe("USERCONTROL Message", () => {
     let messageDismissAllowed: MessageAtom;
     let messageDismissNotAllowed: MessageAtom;
-    let messageManualControl: MessageAtom;
-    let manualControlToggle: ButtonAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("message/message-test");
 
         messageDismissAllowed = Atom.find(MessageAtom, "nui-demo-message-dismiss-allowed");
         messageDismissNotAllowed = Atom.find(MessageAtom, "nui-demo-message-dismiss-not-allowed");
-        messageManualControl = Atom.find(MessageAtom, "nui-demo-message-manual-control");
-        manualControlToggle = Atom.findIn(ButtonAtom, element(by.css("#nui-demo-message-manual-control .toggle-btn")));
     });
 
     it("should be visible", async () => {
@@ -62,10 +56,6 @@ describe("USERCONTROL Message", () => {
         expect(await messageDismissAllowed.isVisible()).toBe(true);
         await messageDismissAllowed.dismissMessage();
         expect(await messageDismissAllowed.isPresent()).toBe(false);
-    });
-
-    it("new test", async () => {
-        await manualControlToggle.click();
     });
 
 });

@@ -39,8 +39,6 @@ export class EmbeddedContentWidgetExampleComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
-        const widgetTemplate = this.widgetTypesService.getWidgetType("embedded-content");
-
         this.prepareNovaDashboards();
         this.initializeDashboard();
     }

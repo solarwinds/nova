@@ -3,7 +3,6 @@ import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@an
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
-    IBrokerUserConfig,
     IDashboard,
     IKpiData,
     IProviderConfiguration,

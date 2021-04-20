@@ -13,7 +13,6 @@ import {
     DataSourceService,
     IFilteringOutputs,
     ISelection,
-    nameof,
     TableComponent,
     VirtualViewportManager,
 } from "@nova-ui/bits";
@@ -29,7 +28,7 @@ import {
     RESULTS_PER_PAGE,
 } from "../filtered-view-table-with-virtual-scroll-selection-data";
 import { FilteredViewTableWithVirtualScrollSelectionDataSource } from "../filtered-view-table-with-virtual-scroll-selection-data-source.service";
-import { IServer, IServerFilters } from "../types";
+import { IServer } from "../types";
 
 @Component({
     selector: "app-filtered-view-table-with-virtual-scroll-selection-table",

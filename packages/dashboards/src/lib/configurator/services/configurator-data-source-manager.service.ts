@@ -6,7 +6,7 @@ import { takeUntil } from "rxjs/operators";
 import { IDataSourceError } from "../../components/providers/types";
 import { PIZZAGNA_EVENT_BUS } from "../../types";
 import { DashwizService } from "../components/wizard/dashwiz/dashwiz.service";
-import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../types";
+import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../types";
 
 @Injectable()
 export class ConfiguratorDataSourceManagerService implements OnDestroy {
