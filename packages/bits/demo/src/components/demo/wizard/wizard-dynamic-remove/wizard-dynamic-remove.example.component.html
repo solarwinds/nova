@@ -15,8 +15,16 @@
 </ng-template>
 
 <div class="d-flex">
-    <span class="font-weight-semibold">Step index to remove</span>
-    <nui-textbox-number [minValue]="1" #number></nui-textbox-number>
-    <button nui-button type="button" (click)="removeStep(+number.value)" i18n>Remove step dynamically</button>
+    <div class="">
+        <span class="nui-textbox--bold" [ngStyle]="{ 'font-weight': 'bold' }">Step index to remove</span> <br>
+        <nui-textbox-number [minValue]="1" #number></nui-textbox-number>
+    </div>
+    <button class="ml-3 h-25 align-self-end"
+            displayStyle="destructive"
+            nui-button type="button"
+            (click)="removeStep(+number.value)"
+            i18n>
+        Remove step dynamically
+    </button>
 </div>
 
