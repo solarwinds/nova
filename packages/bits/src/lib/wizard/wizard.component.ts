@@ -159,16 +159,19 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         instance.title = wizardStep.title;
         instance.stepTemplate = wizardStep.stepTemplate;
         this.arraySteps.splice(indexToInsert, 0, componentRef.instance);
+        this.steps.reset([]);
         this.steps.reset(this.arraySteps);
         return componentRef.instance;
     }
 
     public removeStep(index: number): void {
-        if (index < 1) {
+        const steps = this.steps.toArray();
+
+        if (index < 1 || index > steps.length - 1) {
             return;
         }
 
-        const stepToRemove = this.steps.toArray()[index];
+        const stepToRemove = steps[index];
 
         if (this.currentStep === stepToRemove) {
             this.onBackClick();
@@ -176,6 +179,7 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
 
         stepToRemove.valid.unsubscribe();
         this.arraySteps.splice(index, 1);
+        this.steps.reset([]);
         this.steps.reset(this.arraySteps);
     }
 
