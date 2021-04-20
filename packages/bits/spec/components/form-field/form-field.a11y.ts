@@ -57,14 +57,17 @@ describe("a11y: form-field", () => {
         expect(accessibilityScanResults.violations).toEqual([]);
     });
 
+    // disabling the rule until NUI-6015 is addressed
     it("checkbox", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${CheckboxAtom.CSS_CLASS}`).analyze();
+        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${CheckboxAtom.CSS_CLASS}`).disableRules("aria-allowed-role").analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);
     });
 
+    // disabling the rule until NUI-6015 is addressed
     it("checkbox group", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${CheckboxGroupAtom.CSS_CLASS}`).analyze();
+        const accessibilityScanResults =
+            await new AxeBuilder(browser.driver).include(`.${CheckboxGroupAtom.CSS_CLASS}`).disableRules("aria-allowed-role").analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);
     });

@@ -58,7 +58,7 @@ export class ConfirmationDialogComponent {
     }
 
     public getAriaLabel() {
-        return (this.severity ? `${this.severity} ${this.title}` : this.title) || this.ariaLabel
+        return (this.severity ? `${this.severity} ${this.title}` : this.title) || this.ariaLabel;
     }
 
 }
