@@ -138,6 +138,20 @@ describe("USERCONTROL Dialog", () => {
             expect(await dialog.isDialogDisplayed()).toBe(true);
         });
     });
+
+    describe("Dismissal on route changes", async () => {
+        afterAll(async ()=> {
+           await browser.navigate().back();
+        })
+
+        it("should close dialog with router changed", async () => {
+            await defaultDialogBtn.click();
+            expect(await dialog.isDialogDisplayed()).toBe(true);
+            await Helpers.setLocation("dialog")
+            expect(await dialog.isDialogDisplayed()).toBe(false);
+        });
+    });
+
     describe("Tab navigation inside the dialog", async () => {
         let initiallyFocusedCloseButtonElement: string;
         const assert = async () => expect(initiallyFocusedCloseButtonElement)

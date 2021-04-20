@@ -15,6 +15,8 @@ import {
     Renderer2,
     ViewEncapsulation
 } from "@angular/core";
+import { Router } from "@angular/router";
+import { take } from "rxjs/operators";
 
 const FOCUSABLE_SELECTOR = "a, button, input, textarea, select, details, [tabindex]:not([tabindex='-1'])";
 
@@ -74,7 +76,8 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         private elRef: ElementRef,
         private renderer: Renderer2,
         private ngZone: NgZone,
-        private scrollDispatcher: ScrollDispatcher
+        private scrollDispatcher: ScrollDispatcher,
+        private router: Router
     ) {}
 
     @HostListener("window:keydown.shift.tab", ["$event"])
@@ -118,6 +121,9 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         this.renderer.addClass(this.document.body, "dialog-open");
         this.scrollableElement = new CdkScrollable(this.elRef, this.scrollDispatcher, this.ngZone);
         this.scrollDispatcher.register(this.scrollableElement);
+        this.router.events.pipe(take(1)).subscribe(() => {
+            this.dismiss("ROUTE_CHANGED");
+        });
     }
 
     ngAfterViewInit() {
