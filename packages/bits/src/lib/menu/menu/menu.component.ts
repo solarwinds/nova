@@ -36,6 +36,7 @@ import { IMenuItem } from "../public-api";
     host: {
         "class": "nui-menu",
         "role": "menu",
+        "[attr.aria-label]": "title || ariaLabel",
     },
     templateUrl: "./menu.component.html",
     styleUrls: ["./menu.component.less"],
@@ -51,6 +52,10 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
      * Should dropdown be appended to body or not
      */
     @Input() public appendToBody: boolean;
+    /**
+     * sets aria-label for menu button
+     */
+    @Input() public ariaLabel: string;
     /**
      * sets title/name for menu button
      */

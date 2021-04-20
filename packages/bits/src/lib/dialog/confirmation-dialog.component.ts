@@ -9,7 +9,10 @@ import { ConfirmationDialogButtons, SeverityLevels } from "./public-api";
 @Component({
     selector: "nui-confirmation-dialog-window",
     templateUrl: "./confirmation-dialog.component.html",
-    host: { "role": "alertdialog" },
+    host: {
+        "role": "dialog",
+        "[attr.aria-label]": "getAriaLabel()",
+    },
 })
 export class ConfirmationDialogComponent {
 
@@ -31,6 +34,9 @@ export class ConfirmationDialogComponent {
     @Input()
     public severity: SeverityLevels;
 
+    @Input()
+    public ariaLabel: string = "";
+
     constructor(private activeDialog: NuiActiveDialog,
                 private changeDetector: ChangeDetectorRef) {
     }
@@ -49,6 +55,10 @@ export class ConfirmationDialogComponent {
 
     public focusButton(buttonType: ConfirmationDialogButtons): boolean {
         return this.setFocus === buttonType ? true : false;
+    }
+
+    private getAriaLabel() {
+        return (this.severity ? `${this.severity} ${this.title}` : this.title) || this.ariaLabel
     }
 
 }

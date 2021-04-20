@@ -69,6 +69,11 @@ export class CheckboxGroupComponent implements AfterViewInit, OnDestroy, Control
      */
     @Input() public ariaLabel = "";
 
+    /**
+     * Input to set aria label text
+     */
+    @Input() public ariaLabeledby = "";
+
     private subscriptionsArray = new Array<Subscription>();
     private disabled: boolean = false;
 

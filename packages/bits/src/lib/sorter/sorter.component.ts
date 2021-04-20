@@ -186,6 +186,12 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         this.overlayConfig.minWidth = (this.toggleRef.nativeElement as HTMLElement).offsetWidth;
     }
 
+    public getAriaLabelForSortingButton(): string {
+        return this.sortDirection === SorterDirection.descending
+                    ? `${this.getSelectedItemTitle()}. Sorter direction - descending`
+                    : `${this.getSelectedItemTitle()}. Sorter direction - ascending`;
+    }
+
     public ngOnDestroy() {
         this.onDestroy$.next();
         this.onDestroy$.complete();

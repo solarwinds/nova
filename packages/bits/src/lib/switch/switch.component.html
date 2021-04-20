@@ -4,7 +4,9 @@
              (click)="toggle()"
              (keyup.enter)="toggle()"
              (keyup.space)="toggle()"
-              role="presentation" tabindex="{{disabled ? -1 : 0}}"
+              tabindex="{{disabled ? -1 : 0}}"
+              role="checkbox"
+             [attr.aria-checked]="value"
              [attr.aria-label]="ariaLabel">
             <div class="nui-switch__on">
                 <svg aria-hidden="true" class="nui-switch__svg" viewBox="0 0 7.1 6.7"><polyline class="nui-switch__icon-on" points="0.6,2.9 3.2,4.8 7.2,1.0 "/></svg>

@@ -6,6 +6,7 @@
                     type="button"
                     class="nui-sorter__toggle-button"
                     [icon]="getSortIcon()"
+                    [ariaLabel]="getAriaLabelForSortingButton()"
                     (click)="toggleSortDirection()">
                 <span class="nui-sorter__display-value">{{ getSelectedItemTitle() }}</span>
             </button>
@@ -13,6 +14,7 @@
                     type="button"
                     class="nui-selector__toggle"
                     (click)="overlay.toggle()"
+                    ariaLabel="Open Sorter Menu"
                     icon="caret-down">
             </button>
         </div>

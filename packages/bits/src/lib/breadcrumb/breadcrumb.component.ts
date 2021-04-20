@@ -9,9 +9,11 @@ import { BreadcrumbItem } from "./public-api";
     styleUrls: ["./breadcrumb.component.less"],
     templateUrl: "./breadcrumb.component.html",
     encapsulation: ViewEncapsulation.None,
+    host: { "aria-label": "Breadcrumb" },
 })
 export class BreadcrumbComponent {
     @Input() items: BreadcrumbItem[];
+    @Input() ariaLabel: string = "Breadcrumb"
     @Output() navigation = new EventEmitter<string>();
 
     public handleClick(event: Event, item: BreadcrumbItem) {

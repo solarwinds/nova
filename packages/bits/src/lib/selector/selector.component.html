@@ -1,6 +1,8 @@
 <div class="btn-group" #toggleButton>
     <button nui-button
             type="button"
+            role="checkbox"
+            [attr.aria-checked]="checkboxChecked"
             class="nui-selector__checkbox-button"
             [displayStyle]="'default'"
             (click)="handleSelectorClick($event)">
@@ -17,6 +19,7 @@
             [displayStyle]="'default'"
             [icon]="'caret-down'"
             (click)="overlay.toggle()"
+            [ariaLabel]="'Open Selector Menu'"
             >
     </button>
 </div>

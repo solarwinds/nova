@@ -4,6 +4,7 @@ import {
     Input,
     OnChanges,
     Output,
+    SimpleChanges,
     TemplateRef,
     ViewEncapsulation
 } from "@angular/core";
@@ -16,7 +17,6 @@ import {
     templateUrl: "./progress.component.html",
     styleUrls: ["./progress.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "progressbar" },
 })
 export class ProgressComponent implements OnChanges {
     @Input() public show: boolean;
@@ -29,6 +29,7 @@ export class ProgressComponent implements OnChanges {
     @Input() public helpText?: string;
     @Input() public stacked: boolean;
     @Input() public compactMode: boolean;
+    @Input() public ariaLabel: string = "";
 
     /**
      * Help template content displayed under the progress bar.
@@ -40,8 +41,9 @@ export class ProgressComponent implements OnChanges {
     @Output() public cancel = new EventEmitter();
 
     public isIndeterminate = false;
+    public ariaValueNow: string | undefined;
 
-    public ngOnChanges() {
+    public ngOnChanges(changes: SimpleChanges) {
         this.isIndeterminate = this.percent === undefined;
     }
 

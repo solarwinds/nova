@@ -28,6 +28,7 @@ const FOCUSABLE_SELECTOR = "a, button, input, textarea, select, details, [tabind
     host: {
         "[class]": "\"nui-dialog fade in show\" + (windowClass ? \" \" + windowClass : \"\")",
         "role": "dialog",
+        "aria-modal": "true",
         "tabindex": "-1",
         "(keyup.esc)": "escKey($event)",
         "(mousedown)": "backdropMouseDown($event)",
