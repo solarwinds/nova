@@ -82,15 +82,10 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
     private drawThresholdLabels() {
         const thresholdsSeries = this.chart.getDataManager().chartSeriesSet.find((series: IChartSeries<IAccessors<any>>) =>
             series.renderer instanceof DonutGaugeThresholdsRenderer);
-        const renderer = (thresholdsSeries?.renderer as DonutGaugeThresholdsRenderer);
-        const labelRadius = renderer?.getOuterRadius(thresholdsSeries?.scales.r.range() ?? [0, 0], 0) + (this.config.padding as number);
-        if (isUndefined(labelRadius)) {
-            throw new Error("Radius is undefined");
-        }
 
-        const data = thresholdsSeries?.data;
-        if (isUndefined(data)) {
-            throw new Error("Gauge threshold series data is undefined");
+        if (isUndefined(thresholdsSeries)) {
+            console.warn("Threshold series is undefined. As a result, threshold labels for the donut gauge will not be rendered.");
+            return;
         }
 
         let gaugeThresholdsLabelsGroup = this.lasagnaLayer.select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);
@@ -100,11 +95,23 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
                 .style("opacity", 0);
         }
 
+        const renderer = (thresholdsSeries?.renderer as DonutGaugeThresholdsRenderer);
+        const labelRadius = renderer?.getOuterRadius(thresholdsSeries?.scales.r.range() ?? [0, 0], 0) + (this.config.padding as number);
+        if (isUndefined(labelRadius)) {
+            throw new Error("Radius is undefined");
+        }
+
         const labelGenerator: Arc<any, DefaultArcObject> = arc()
             .outerRadius(labelRadius)
             .innerRadius(labelRadius);
 
         const formatter = thresholdsSeries?.scales.r.formatters[this.config.formatterName as string] ?? (d => d);
+
+        const data = thresholdsSeries?.data;
+        if (isUndefined(data)) {
+            throw new Error("Gauge threshold series data is undefined");
+        }
+
         const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`)
             .data(DonutGaugeRenderingUtil.generateThresholdData(data));
         labelSelection.exit().remove();

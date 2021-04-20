@@ -64,6 +64,8 @@ export class DonutGaugeThresholdsRenderer extends RadialRenderer {
         if (isUndefined(this.segmentWidth)) {
             throw new Error("Can't compute inner radius");
         }
-        return range[1] - range[0] - this.segmentWidth;
+
+        const calculatedRadius = range[1] - range[0] - this.segmentWidth;
+        return calculatedRadius >= 0 ? calculatedRadius : 0;
     }
 }

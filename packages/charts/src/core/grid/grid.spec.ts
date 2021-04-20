@@ -154,25 +154,60 @@ describe("Grid >", () => {
         });
 
         it("should adjust the clip path and rendering area according to the configured width and height", () => {
-            const expectedClipPathWidth = 10;
-            const expectedRenderAreaWidth = expectedClipPathWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
-            const expectedHeight = 21;
+            const gridWidth = 10;
+            const gridHeight = 20;
+            const expectedClipPathWidth = gridWidth;
+            const expectedClipPathHeight = gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
+            const expectedRenderAreaWidth = gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
+            const expectedRenderAreaHeight = gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
             const config = new GridConfig();
-            config.dimension.width(expectedClipPathWidth);
-            config.dimension.height(expectedHeight - Grid.RENDER_AREA_HEIGHT_CORRECTION);
+            config.dimension.width(gridWidth);
+            config.dimension.height(gridHeight);
             grid.config(config);
 
             grid.build();
             const clipPathRect = grid.target().selectAll("clipPath rect");
             expect(clipPathRect.attr("width")).toEqual(`${expectedClipPathWidth}`);
-            expect(clipPathRect.attr("height")).toEqual(`${expectedHeight}`);
+            expect(clipPathRect.attr("height")).toEqual(`${expectedClipPathHeight}`);
             expect(clipPathRect.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
 
             const renderingAreaLayer = grid.getLasagna().getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
             const renderingArea = renderingAreaLayer.select("rect");
             expect(renderingArea.attr("width")).toEqual(`${expectedRenderAreaWidth}`);
-            expect(renderingArea.attr("height")).toEqual(`${expectedHeight}`);
+            expect(renderingArea.attr("height")).toEqual(`${expectedRenderAreaHeight}`);
             expect(renderingArea.attr("y")).toEqual(`${-Grid.RENDER_AREA_HEIGHT_CORRECTION}`);
+        });
+
+        it(`should not apply disabled dimension corrections when adjusting the clip path
+            and rendering area according to the configured width and height`, () => {
+
+            const gridWidth = 10;
+            const gridHeight = 20;
+            const expectedClipPathWidth = gridWidth;
+            const expectedClipPathHeight = gridHeight;
+            const expectedRenderAreaWidth = gridWidth;
+            const expectedRenderAreaHeight = gridHeight;
+            const config = new GridConfig();
+
+            // disable the dimension corrections
+            config.disableRenderAreaHeightCorrection = true;
+            config.disableRenderAreaWidthCorrection = true;
+
+            config.dimension.width(gridWidth);
+            config.dimension.height(gridHeight);
+            grid.config(config);
+
+            grid.build();
+            const clipPathRect = grid.target().selectAll("clipPath rect");
+            expect(clipPathRect.attr("width")).toEqual(`${expectedClipPathWidth}`);
+            expect(clipPathRect.attr("height")).toEqual(`${expectedClipPathHeight}`);
+            expect(clipPathRect.attr("y") === null).toEqual(true);
+
+            const renderingAreaLayer = grid.getLasagna().getLayerContainer(Grid.RENDERING_AREA_LAYER_NAME);
+            const renderingArea = renderingAreaLayer.select("rect");
+            expect(renderingArea.attr("width")).toEqual(`${expectedRenderAreaWidth}`);
+            expect(renderingArea.attr("height")).toEqual(`${expectedRenderAreaHeight}`);
+            expect(renderingArea.attr("y") === null).toEqual(true);
         });
 
         it("should return the grid instance", () => {
