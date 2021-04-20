@@ -510,11 +510,18 @@ jobs:
             -   run:
                     name: Publish dashbords docs
                     command: yarn run deploy-docs-ci
+            -   store_artifacts:
+                    path: ./nova-docs.zip
+    nova-docs-cleanup:
+        working_directory: ~/nova
+        docker:
+            -   image: circleci/node:12
+        environment:
+            NOVA_DIR: ~/nova
+        steps:
             -   run:
                     name: Docs Cleanup
                     command: yarn run clean-docs-ci
-            -   store_artifacts:
-                    path: ./nova-docs.zip
     release-prep:
         working_directory: ~/nova
         docker:
@@ -666,6 +673,10 @@ workflows:
             -   nova-docs:
                     context:
                         - common-build-creds
+                    filters:
+                        branches:
+                            ignore:
+                                - pull/*
                     requires:
                         - dashboards-pack
             -   dashboards-unit-test:
@@ -700,6 +711,10 @@ workflows:
             -   snyk-test:
                     requires:
                         - dashboards-build
+                    filters:
+                        branches:
+                            ignore:
+                                - pull/*
 
     nova-release:
         jobs:
@@ -712,3 +727,14 @@ workflows:
             -   release-prep:
                     requires:
                         - release-approval
+
+    nightly:
+        triggers:
+            - schedule:
+                  cron: "0 0 * * *"
+                  filters:
+                      branches:
+                          only:
+                              - main
+        jobs:
+            - nova-docs-cleanup
