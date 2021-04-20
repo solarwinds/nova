@@ -1,6 +1,7 @@
 import cloneDeep from "lodash/cloneDeep";
 import defaultsDeep from "lodash/defaultsDeep";
 import { Subject } from "rxjs";
+import { StandardGaugeThresholdMarkerRadius } from "../../gauge/constants";
 
 import { STANDARD_RENDER_LAYERS } from "../../constants";
 import { ILasagnaLayer, ILinearGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
@@ -12,7 +13,9 @@ import { BarRenderer } from "./bar-renderer";
 /**
  * @ignore Default configuration for Linear Gauge Thresholds Renderer
  */
-export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresholdsRendererConfig = {};
+export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresholdsRendererConfig = {
+    markerRadius: StandardGaugeThresholdMarkerRadius.Large,
+};
 
 /**
  * @ignore Renderer for drawing threshold level indicators for gauges
@@ -23,7 +26,7 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
      * @param {ILinearGaugeThresholdsRendererConfig} [config]
      * Renderer configuration object. Defaults to `DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG` constant value.
      */
-    constructor(config: ILinearGaugeThresholdsRendererConfig = {}) {
+    constructor(public config: ILinearGaugeThresholdsRendererConfig = {}) {
         super(config);
         this.config = defaultsDeep(this.config, DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG);
     }
@@ -49,7 +52,7 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
             .merge(markerSelection as any)
             .attr("cx", (d, i) => renderSeries.scales.x.convert(accessors?.data?.endX?.(d, i, dataSeries.data, dataSeries)))
             .attr("cy", (d, i) => renderSeries.scales.y.convert(accessors?.data?.endY?.(d, i, dataSeries.data, dataSeries)))
-            .attr("r", 4)
+            .attr("r", this.config.markerRadius as number)
             .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
             .style("stroke-width", 0);
     }

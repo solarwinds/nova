@@ -8,7 +8,7 @@ import {
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
-    IGaugeSeriesConfig,
+    IGaugeConfig,
     radial,
     radialGrid
 } from "@nova-ui/charts";
@@ -19,7 +19,8 @@ import {
     styleUrls: ["./donut-gauge-tester.component.less"],
 })
 export class DonutGaugeTesterComponent implements OnInit {
-    @Input() public seriesConfig: IGaugeSeriesConfig;
+    @Input() public gaugeConfig: IGaugeConfig;
+    @Input() public size = 250;
 
     public chartAssist: ChartAssist;
     public contentPlugin: ChartDonutContentPlugin;
@@ -31,7 +32,7 @@ export class DonutGaugeTesterComponent implements OnInit {
         this.chartAssist.chart.addPlugin(this.contentPlugin);
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.chartAssist.update(this.seriesSet);
     }
 }

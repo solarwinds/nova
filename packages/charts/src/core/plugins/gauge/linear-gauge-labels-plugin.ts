@@ -10,9 +10,9 @@ import { D3Selection, IAccessors, IChartEvent, IChartSeries, IDataSeries } from 
 
 import { GAUGE_LABELS_CONTAINER_CLASS, GAUGE_LABEL_FORMATTER_NAME_DEFAULT, GAUGE_THRESHOLD_LABEL_CLASS } from "./constants";
 import cloneDeep from "lodash/cloneDeep";
-import { HorizontalBarAccessors } from "../../../renderers/bar/accessors/horizontal-bar-accessors";
-import { GaugeUtil } from "../../../gauge/gauge-util";
 import { IGaugeLabelsPluginConfig } from "./types";
+import { LinearScale } from "../../common/scales/linear-scale";
+import { GAUGE_THRESHOLD_MARKERS_SERIES_ID } from "../../../gauge/constants";
 
 /**
  * @ignore
@@ -64,9 +64,9 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     public updateDimensions() {
         if (this.config.enableThresholdLabels) {
             this.thresholdSeries = this.chart.getDataManager().chartSeriesSet.find(
-                (series: IChartSeries<IAccessors<any>>) => series.id === GaugeUtil.THRESHOLD_MARKERS_SERIES_ID
+                (series: IChartSeries<IAccessors<any>>) => series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
             );
-            this.isHorizontal = this.thresholdSeries?.accessors instanceof HorizontalBarAccessors;
+            this.isHorizontal = this.thresholdSeries?.scales.x instanceof LinearScale;
             this.adjustGridMargin();
             this.drawThresholdLabels();
         }
@@ -80,9 +80,9 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private drawThresholdLabels() {
-        const data = cloneDeep(this.thresholdSeries?.data);
-        if (isUndefined(data)) {
-            throw new Error("Gauge threshold series data is undefined");
+        if (isUndefined(this.thresholdSeries)) {
+            console.warn("Threshold series is undefined. As a result, threshold labels for the linear gauge will not be rendered.");
+            return;
         }
 
         let gaugeThresholdsLabelsGroup = this.lasagnaLayer.select(`.${GAUGE_LABELS_CONTAINER_CLASS}`);
@@ -92,8 +92,13 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
                 .style("opacity", 0);
         }
 
+        const data = cloneDeep(this.thresholdSeries?.data);
+        if (isUndefined(data)) {
+            throw new Error("Gauge threshold series data is undefined");
+        }
+
         // last value in the thresholds series is the max value of the gauge (needed by RadialGaugeThresholdsRenderer).
-        // removing this value to avoid rendering a marker for it
+        // removing this value to avoid rendering a label for it
         data.pop();
 
         const formatter = this.thresholdSeries?.scales[this.isHorizontal ? "x" : "y"].formatters[this.config.formatterName as string] ?? (d => d);

@@ -5,11 +5,10 @@ import {
     ChartAssist,
     GaugeMode,
     GaugeUtil,
-    GAUGE_THICKNESS_DEFAULT,
     IAccessors,
     IChartAssistSeries,
     IGaugeLabelsPluginConfig,
-    IGaugeSeriesConfig,
+    IGaugeConfig,
     linearGaugeGridConfig,
     LinearGaugeLabelsPlugin,
     stack,
@@ -23,8 +22,8 @@ import {
     styleUrls: ["./linear-gauge-vertical-prototype.component.less"],
 })
 export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit {
-    @Input() public thickness = GAUGE_THICKNESS_DEFAULT;
-    @Input() public seriesConfig: IGaugeSeriesConfig;
+    @Input() public thickness: number;
+    @Input() public gaugeConfig: IGaugeConfig;
     @Input() public flipLabels = false;
 
     public chartAssist: ChartAssist;
@@ -32,9 +31,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
     private labelsPlugin: LinearGaugeLabelsPlugin;
 
     public ngOnChanges(changes: ComponentChanges<LinearGaugeVerticalPrototypeComponent>) {
-        if ((changes.thickness && !changes.thickness.firstChange) ||
-            (changes.seriesConfig && !changes.seriesConfig.firstChange) ||
-            (changes.flipLabels && !changes.flipLabels.firstChange)) {
+        if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             if (changes.thickness) {
                 gridConfig.dimension.width(this.thickness);
@@ -50,7 +47,10 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
                 };
             }
             this.chartAssist.chart.updateDimensions();
-            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.seriesConfig));
+        }
+
+        if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
 
@@ -73,7 +73,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
         this.labelsPlugin = new LinearGaugeLabelsPlugin(labelConfig);
         this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.seriesConfig, GaugeMode.Vertical);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Vertical);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
 
         this.chartAssist.update(this.seriesSet);

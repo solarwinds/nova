@@ -41,13 +41,19 @@ describe("ChartPopoverComponent", () => {
             expect(component.element.nativeElement.style.left).toEqual("5px");
         });
 
-        it("should invoke popover.updatePosition", () => {
-            component.popover = { updatePosition: () => { } } as PopoverComponent;
+        it("should invoke popover.updatePosition and popover.resetSize", () => {
+            component.popover = {
+                updatePosition: () => { },
+                resetSize: () => { },
+            } as PopoverComponent;
 
-            const spy = spyOn(component.popover, "updatePosition");
+            const updatePositionSpy = spyOn(component.popover, "updatePosition");
+            const resetSizeSpy = spyOn(component.popover, "resetSize");
+
             component.plugin.updatePositionSubject.next({ top: 5, left: 5, height: 0, width: 0 });
 
-            expect(spy).toHaveBeenCalled();
+            expect(updatePositionSpy).toHaveBeenCalled();
+            expect(resetSizeSpy).toHaveBeenCalled();
         });
 
         it("should emit 'update'", () => {
