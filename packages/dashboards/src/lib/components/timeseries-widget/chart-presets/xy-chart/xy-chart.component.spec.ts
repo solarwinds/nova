@@ -7,7 +7,6 @@ import {
     ChartPalette,
     defaultPalette,
     IAccessors,
-    IChartAssistSeries,
     IValueProvider,
     LineAccessors,
     SET_DOMAIN_EVENT,
@@ -181,7 +180,7 @@ describe("XYChartComponent", () => {
             component.onInteraction(component.chartAssist.legendSeriesSet[0]);
             const interactionData = {
                 payload: { data: component.chartAssist.legendSeriesSet[0], interactionType: TimeseriesInteractionType.Series },
-                id: 'INTERACTION' 
+                id: "INTERACTION",
             };
             expect(spy).toHaveBeenCalledWith(interactionData);
         });
