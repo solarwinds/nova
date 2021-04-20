@@ -30,7 +30,7 @@ The reason for this is that, since in Firefox ResizeObserver is not native (as o
 When wrapping attributes please put the first attribute on the same line as the opening element tag, and put the closing bracket of the opening element on the same
 line as the last attribute:
 
-<em>Less Desirable</em>
+<em>Not Preferred</em>
 
 ```html
 <div 
