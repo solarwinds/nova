@@ -101,10 +101,12 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
             throw new Error("Could not get bands for interval");
         }
         const intervalMs = this.interval().asMilliseconds();
+        const intervalDays = this.interval().asDays();
+
         const isDomainStartDst = isDaylightSavingTime(from);
         const isDomainEndDst = isDaylightSavingTime(to);
         const dstAdjustment = !isDomainStartDst && isDomainEndDst ? duration(1, "hour").asMilliseconds() : 0;
-        const adjustedToDate = new Date(to.getTime() + dstAdjustment)
+        const adjustedToDate = intervalDays >= 1 ? new Date(to.getTime() + dstAdjustment) : to;
         while (date <= adjustedToDate) {
             bands.push(date);
             date = new Date(date.getTime() + intervalMs);
@@ -150,7 +152,8 @@ export class TimeIntervalScale extends TimeScale implements IBandScale<Date> {
         const isTransFromDst = isDomainStartDst && !isDst;
         const isTransToDst = !isDomainStartDst && isDst;
 
-        const transToDstAdjustment = isTransToDst ? duration(1, "hour").asMilliseconds() : 0;
+        const intervalDays = this.interval().asDays();
+        const transToDstAdjustment = intervalDays >= 1 && isTransToDst ? duration(1, "hour").asMilliseconds() : 0;
         const adjustedDt = new Date(datetime.getTime() + transToDstAdjustment);
 
         let standardTimeOffsetMinutes = 0;
