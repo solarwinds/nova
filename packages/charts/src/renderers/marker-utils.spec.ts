@@ -16,12 +16,11 @@ import {
 
 import { ILineAccessors, LineAccessors } from "./line/line-accessors";
 import { MarkerUtils } from "./marker-utils";
-import { IRenderSeries, RenderLayerName } from "./types";
+import { RenderLayerName } from "./types";
 
 describe("Marker Utils", () => {
     let svg: Selection<SVGSVGElement, any, null, undefined>;
     let dataSeries: IDataSeries<ILineAccessors>;
-    let renderSeries: IRenderSeries<ILineAccessors>;
     let scales: IXYScales;
     const containers: IRenderContainers = {};
 
@@ -42,12 +41,6 @@ describe("Marker Utils", () => {
             name: "Series 1",
             data: [{ x: 50, y: 50 }, { x: 1000, y: 1000 }],
             accessors: accessors,
-        };
-
-        renderSeries = {
-            dataSeries,
-            containers,
-            scales: { x: new LinearScale(), y: new LinearScale() },
         };
     });
 

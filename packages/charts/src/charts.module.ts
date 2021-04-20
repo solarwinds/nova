@@ -1,6 +1,7 @@
 import { OverlayModule } from "@angular/cdk/overlay";
 import { NgModule } from "@angular/core";
 // This is not technically used here, but it does pull in the type for $localize
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { LocalizeFn } from "@angular/localize/init";
 import { NuiCommonModule, NuiIconModule, NuiPopoverModule } from "@nova-ui/bits";
 import "d3-selection-multi";

@@ -109,6 +109,8 @@ describe("components >", () => {
             });
             it(`should log an error for buttons without a type attribute`, () => {
                 const errorSpy = spyOnProperty(logger, "error", "get").and.callThrough();
+                fixture = TestBed.createComponent(TestAppButtonNoTypeComponent);
+                expect(errorSpy).toHaveBeenCalled();
             });
             it(`should not log an error for non-buttons without a type attribute`, () => {
                 const errorSpy = spyOnProperty(logger, "error", "get").and.callThrough();

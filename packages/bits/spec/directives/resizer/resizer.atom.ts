@@ -1,4 +1,4 @@
-import { browser, by, ElementFinder } from "protractor";
+import { browser, by } from "protractor";
 import { ILocation } from "selenium-webdriver";
 
 import { Atom } from "../../atom";

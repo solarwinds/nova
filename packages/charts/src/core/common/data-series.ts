@@ -1,4 +1,4 @@
-import { DataAccessor, IAccessors, IDataAccessors, IDataSeries, SeriesAccessor } from "./types";
+import { DataAccessor, IAccessors, IDataSeries, SeriesAccessor } from "./types";
 
 export class DataSeries implements IDataSeries<IAccessors> {
 

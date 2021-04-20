@@ -5,7 +5,7 @@ import {
     Input,
     Output,
 } from "@angular/core";
-import { ISelection, NuiActiveDialog, SelectorService } from "@nova-ui/bits";
+import { NuiActiveDialog, SelectorService } from "@nova-ui/bits";
 
 import { IFilterGroupOption } from "../public-api";
 

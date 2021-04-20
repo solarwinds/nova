@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { KpiTilesConverterService } from "./kpi-tiles-converter.service";
 
 describe("KpiTilesConverterService", () => {

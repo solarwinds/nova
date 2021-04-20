@@ -1,4 +1,4 @@
-import { browser, by } from "protractor";
+import { by } from "protractor";
 
 import { Atom } from "../../atom";
 

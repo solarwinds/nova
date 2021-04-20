@@ -348,7 +348,6 @@ describe("components >", () => {
     describe("combobox with reactive form >", () => {
         let fixture: ComponentFixture<ComboboxReactiveFormTestComponent>;
         let componentInstance: ComboboxReactiveFormTestComponent;
-        let debugElement: DebugElement;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -369,7 +368,6 @@ describe("components >", () => {
 
             fixture = TestBed.createComponent(ComboboxReactiveFormTestComponent);
             componentInstance = fixture.componentInstance;
-            debugElement = fixture.debugElement;
         });
 
         it("should validate form on submit, emit error toast if no value is selected and re-validate form on value selection", () => {

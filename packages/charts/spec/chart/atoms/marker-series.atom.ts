@@ -1,5 +1,4 @@
 import { Atom } from "@nova-ui/bits/sdk/atoms";
-import { ElementFinder } from "protractor";
 
 import { MarkerAtom } from "./marker.atom";
 import { SeriesAtom } from "./series.atom";

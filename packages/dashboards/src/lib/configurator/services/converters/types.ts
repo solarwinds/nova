@@ -1,7 +1,7 @@
 import { InjectionToken } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 
-import { IPizzagna, IPizzagnaLayer } from "../../../types";
+import { IPizzagna } from "../../../types";
 
 export const CONFIGURATOR_CONVERTER = new InjectionToken<IConfiguratorConverter>("CONFIGURATOR_CONVERTER");
 
