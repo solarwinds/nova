@@ -14,5 +14,9 @@
     <p i18n>Hi! I'm dynamic step!</p>
 </ng-template>
 
-<label>Step index to remove<input type="number" min="1" #input></label>
-<button nui-button type="button" (click)="removeStep(+input.value)" i18n>Remove step dynamically</button>
+<div class="d-flex">
+    <span class="font-weight-semibold">Step index to remove</span>
+    <nui-textbox-number [minValue]="1" #number></nui-textbox-number>
+    <button nui-button type="button" (click)="removeStep(+number.value)" i18n>Remove step dynamically</button>
+</div>
+
