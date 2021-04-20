@@ -29,7 +29,7 @@
 
                 <div description class="d-flex align-items-center px-2">
                     <div class="description-container d-flex flex-column justify-content-center">
-                        <div *ngIf="(legendSeries?.link? false : true) else elseLinkHref">
+                        <div *ngIf="!legendSeries?.link else elseLinkHref">
                             <div class= "nui-text-link-small"
                                 (click)="onInteraction(legendSeries)">
                                 <div class="description description-primary legend-description-primary" 
@@ -45,8 +45,7 @@
                         <ng-template #elseLinkHref>
                             <div (click)="$event.stopPropagation()">
                                 <a class="nui-text-link-small"
-                                        [href]="legendSeries.link" 
-                                        target="_blank">
+                                        [href]="legendSeries.link">
                                     <div class="description description-primary legend-description-primary" 
                                         [title]="legendSeries.legendDescriptionPrimary">
                                             {{legendSeries.legendDescriptionPrimary}}

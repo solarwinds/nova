@@ -72,9 +72,7 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
 
     /** Checks if the series is interactive or if the dataSource has a link property */
     public isSeriesInteractive(legendSeries: IChartAssistSeries<IAccessors>): boolean {
-        const link: boolean = !(legendSeries?.link === undefined) || !(this.seriesInteractive === undefined);
-        return link;
-
+        return !(legendSeries?.link === undefined) || !(this.seriesInteractive === undefined);
     }
 
     public onLegendClick(legendSeries: IChartAssistSeries<IAccessors>, event: MouseEvent) {
