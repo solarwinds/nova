@@ -8,159 +8,218 @@ import moment, { duration } from "moment/moment";
 export class DstTimeIntervalTestPageComponent {
     public insideDstData = getInsideDstData();
     public outsideDstData = getOutsideDstData();
-    public startDstOneMinuteData = getStartDstOneMinuteData();
-    public startDstOneHourData = getStartDstOneHourData();
-    public startDstTwoHourData = getStartDstTwoHourData();
-    public startDstOneDayData = getStartDstOneDayData();
-    public endDstOneMinuteData = getEndDstOneMinuteData();
-    public endDstOneHourData = getEndDstOneHourData();
-    public endDstTwoHourData = getEndDstTwoHourData();
-    public endDstOneDayData = getEndDstOneDayData();
+    public startDstOneMinuteData: Partial<IDataSeries<IAccessors>>[];
+    public startDstOneHourData: Partial<IDataSeries<IAccessors>>[];
+    public startDstTwoHourData: Partial<IDataSeries<IAccessors>>[];
+    public startDstOneDayData: Partial<IDataSeries<IAccessors>>[];
+    public endDstOneMinuteData: Partial<IDataSeries<IAccessors>>[];
+    public endDstOneHourData: Partial<IDataSeries<IAccessors>>[];
+    public endDstTwoHourData: Partial<IDataSeries<IAccessors>>[];
+    public endDstOneDayData: Partial<IDataSeries<IAccessors>>[];
     public oneMinuteInterval = duration(1, "minute");
     public oneDayInterval = duration(1, "days");
     public oneHourInterval = duration(1, "hours");
     public twoHourInterval = duration(2, "hours");
+
+    private startDstMidnight: Date;
+    private startDstHour: Date;
+    private endDstMidnight: Date;
+    private endDstHour: Date;
+
+    constructor() {
+        this.populateStartAndEndDstDates();
+
+        this.startDstOneMinuteData = getStartDstOneMinuteData(this.startDstHour);
+        this.startDstOneHourData = getStartDstOneHourData(this.startDstHour);
+        this.startDstTwoHourData = getStartDstTwoHourData(this.startDstHour);
+        this.startDstOneDayData = getStartDstOneDayData(this.startDstMidnight);
+        this.endDstOneMinuteData = getEndDstOneMinuteData(this.endDstHour);
+        this.endDstOneHourData = getEndDstOneHourData(this.endDstHour);
+        this.endDstTwoHourData = getEndDstTwoHourData(this.endDstHour);
+        this.endDstOneDayData = getEndDstOneDayData(this.endDstMidnight);
+    }
+
+    private populateStartAndEndDstDates() {
+        let datesInYear2021 = [];
+        for (let i = 1; i <= 365; i++) {
+            let d = new Date(2021, 0, 1);
+            d.setDate(i);
+            datesInYear2021.push(d);
+        }
+
+        let foundStart = false;
+        this.startDstMidnight = datesInYear2021.reduce((prev: Date, curr: Date) => {
+            if (curr.getTimezoneOffset() < prev.getTimezoneOffset()) {
+                foundStart = true;
+                return prev;
+            }
+            return foundStart ? prev : curr;
+        });
+
+        let hoursInDstStartDay = [];
+        for (let i = 0; i < 24; i++) {
+            let d = new Date(this.startDstMidnight);
+            d.setHours(i);
+            hoursInDstStartDay.push(d);
+        }
+
+        foundStart = false;
+        this.startDstHour = hoursInDstStartDay.reduce((prev: Date, curr: Date) => {
+            if (curr.getTimezoneOffset() < prev.getTimezoneOffset()) {
+                foundStart = true;
+                return curr;
+            }
+            return foundStart ? prev : curr;
+        });
+
+        this.endDstMidnight = datesInYear2021.reduce((prev: Date, curr: Date) => {
+            if (curr.getTimezoneOffset() > prev.getTimezoneOffset()) {
+                return prev;
+            }
+            return curr;
+        });
+
+        let hoursInDstEndDay = [];
+        for (let i = 0; i < 24; i++) {
+            let d = new Date(this.endDstMidnight);
+            d.setHours(i);
+            hoursInDstEndDay.push(d);
+        }
+
+        this.endDstHour = hoursInDstEndDay.reduce((prev: Date, curr: Date) => {
+            if (curr.getTimezoneOffset() > prev.getTimezoneOffset()) {
+                return moment(curr).subtract(1, "hour").toDate();
+            }
+            return prev;
+        });
+
+        console.log("Local Time Zone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
+    }
 }
 
-function getStartDstOneMinuteData(): Partial<IDataSeries<IAccessors>>[] {
-    const format = "YYYY-MM-DDTHH:mm:ssZ";
-
+function getStartDstOneMinuteData(startDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2021-03-14T07:58:00.000Z", format).toDate(), y: 30 },
-                { x: moment("2021-03-14T07:59:00.000Z", format).toDate(), y: 95 },
-                { x: moment("2021-03-14T08:00:00.000Z", format).toDate(), y: 15 },
-                { x: moment("2021-03-14T08:01:00.000Z", format).toDate(), y: 60 },
-                { x: moment("2021-03-14T08:02:00.000Z", format).toDate(), y: 35 },
+                { x: moment(startDstHour).subtract(1, "minute").toDate(), y: 30 },
+                { x: startDstHour, y: 95 },
+                { x: moment(startDstHour).add(1, "minute").toDate(), y: 15 },
+                { x: moment(startDstHour).add(2, "minutes").toDate(), y: 60 },
+                { x: moment(startDstHour).add(3, "minutes").toDate(), y: 35 },
             ],
         },
     ];
 }
 
-function getStartDstOneHourData(): Partial<IDataSeries<IAccessors>>[] {
-    const format = "YYYY-MM-DDTHH:mm:ssZ";
-
+function getStartDstOneHourData(startDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2021-03-14T06:00:00.000Z", format).toDate(), y: 30 },
-                { x: moment("2021-03-14T07:00:00.000Z", format).toDate(), y: 95 },
-                { x: moment("2021-03-14T08:00:00.000Z", format).toDate(), y: 15 },
-                { x: moment("2021-03-14T09:00:00.000Z", format).toDate(), y: 60 },
-                { x: moment("2021-03-14T10:00:00.000Z", format).toDate(), y: 35 },
+                { x: moment(startDstHour).subtract(1, "hour").toDate(), y: 30 },
+                { x: startDstHour, y: 95 },
+                { x: moment(startDstHour).add(1, "hour").toDate(), y: 15 },
+                { x: moment(startDstHour).add(2, "hours").toDate(), y: 60 },
+                { x: moment(startDstHour).add(3, "hours").toDate(), y: 35 },
             ],
         },
     ];
 }
 
-function getStartDstTwoHourData(): Partial<IDataSeries<IAccessors>>[] {
-    const format = "YYYY-MM-DDTHH:mm:ssZ";
-
+function getStartDstTwoHourData(startDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2021-03-14T04:00:00.000Z", format).toDate(), y: 30 },
-                { x: moment("2021-03-14T06:00:00.000Z", format).toDate(), y: 95 },
-                { x: moment("2021-03-14T08:00:00.000Z", format).toDate(), y: 15 },
-                { x: moment("2021-03-14T10:00:00.000Z", format).toDate(), y: 60 },
-                { x: moment("2021-03-14T12:00:00.000Z", format).toDate(), y: 35 },
+                { x: moment(startDstHour).subtract(2, "hours").toDate(), y: 30 },
+                { x: startDstHour, y: 95 },
+                { x: moment(startDstHour).add(2, "hours").toDate(), y: 15 },
+                { x: moment(startDstHour).add(4, "hours").toDate(), y: 60 },
+                { x: moment(startDstHour).add(6, "hours").toDate(), y: 35 },
             ],
         },
     ];
 }
 
-function getStartDstOneDayData(): Partial<IDataSeries<IAccessors>>[] {
-    const format = "YYYY-MM-DDTHH";
-
+function getStartDstOneDayData(startDstMidnight: Date): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2021-03-13T0", format).toDate(), y: 30 },
-                { x: moment("2021-03-14T0", format).toDate(), y: 95 },
-                { x: moment("2021-03-15T0", format).toDate(), y: 15 },
-                { x: moment("2021-03-16T0", format).toDate(), y: 60 },
-                { x: moment("2021-03-17T0", format).toDate(), y: 35 },
+                { x: moment(startDstMidnight).subtract(1, "day").toDate(), y: 30 },
+                { x: startDstMidnight, y: 95 },
+                { x: moment(startDstMidnight).add(1, "day").toDate(), y: 15 },
+                { x: moment(startDstMidnight).add(2, "days").toDate(), y: 60 },
+                { x: moment(startDstMidnight).add(3, "days").toDate(), y: 35 },
             ],
         },
     ];
 }
 
-function getEndDstOneMinuteData(): Partial<IDataSeries<IAccessors>>[] {
-    const format = "YYYY-MM-DDTHH:mm:ssZ";
-
+function getEndDstOneMinuteData(endDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2020-11-01T06:58:00.000Z", format).toDate(), y: 30 },
-                { x: moment("2020-11-01T06:59:00.000Z", format).toDate(), y: 95 },
-                { x: moment("2020-11-01T07:00:00.000Z", format).toDate(), y: 15 },
-                { x: moment("2020-11-01T07:01:00.000Z", format).toDate(), y: 60 },
-                { x: moment("2020-11-01T07:02:00.000Z", format).toDate(), y: 35 },
+                { x: moment(endDstHour).subtract(1, "minute").toDate(), y: 30 },
+                { x: endDstHour, y: 95 },
+                { x: moment(endDstHour).add(1, "minute").toDate(), y: 15 },
+                { x: moment(endDstHour).add(2, "minutes").toDate(), y: 60 },
+                { x: moment(endDstHour).add(3, "minutes").toDate(), y: 35 },
             ],
         },
     ];
 }
 
-function getEndDstOneHourData(): Partial<IDataSeries<IAccessors>>[] {
-    const format = "YYYY-MM-DDTHH:mm:ssZ";
-
+function getEndDstOneHourData(endDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2020-11-01T06:00:00.000Z", format).toDate(), y: 30 },
-                { x: moment("2020-11-01T07:00:00.000Z", format).toDate(), y: 95 },
-                { x: moment("2020-11-01T08:00:00.000Z", format).toDate(), y: 15 },
-                { x: moment("2020-11-01T09:00:00.000Z", format).toDate(), y: 60 },
-                { x: moment("2020-11-01T10:00:00.000Z", format).toDate(), y: 35 },
+                { x: moment(endDstHour).subtract(1, "hour").toDate(), y: 30 },
+                { x: endDstHour, y: 95 },
+                { x: moment(endDstHour).add(1, "hour").toDate(), y: 15 },
+                { x: moment(endDstHour).add(2, "hours").toDate(), y: 60 },
+                { x: moment(endDstHour).add(3, "hours").toDate(), y: 35 },
             ],
         },
     ];
 }
 
-function getEndDstTwoHourData(): Partial<IDataSeries<IAccessors>>[] {
-    const format = "YYYY-MM-DDTHH:mm:ssZ";
-
+function getEndDstTwoHourData(endDstHour: Date): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2020-11-01T03:00:00.000Z", format).toDate(), y: 30 },
-                { x: moment("2020-11-01T05:00:00.000Z", format).toDate(), y: 95 },
-                { x: moment("2020-11-01T07:00:00.000Z", format).toDate(), y: 15 },
-                { x: moment("2020-11-01T09:00:00.000Z", format).toDate(), y: 60 },
-                { x: moment("2020-11-01T11:00:00.000Z", format).toDate(), y: 35 },
+                { x: moment(endDstHour).subtract(2, "hours").toDate(), y: 30 },
+                { x: endDstHour, y: 95 },
+                { x: moment(endDstHour).add(2, "hours").toDate(), y: 15 },
+                { x: moment(endDstHour).add(4, "hours").toDate(), y: 60 },
+                { x: moment(endDstHour).add(6, "hours").toDate(), y: 35 },
             ],
         },
     ];
 }
 
-function getEndDstOneDayData(): Partial<IDataSeries<IAccessors>>[] {
-    const format = "YYYY-MM-DDTHH";
-
+function getEndDstOneDayData(endDstMidnight: Date): Partial<IDataSeries<IAccessors>>[] {
     return [
         {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2020-10-31T0", format).toDate(), y: 30 },
-                { x: moment("2020-11-01T0", format).toDate(), y: 95 },
-                { x: moment("2020-11-02T0", format).toDate(), y: 15 },
-                { x: moment("2020-11-03T0", format).toDate(), y: 60 },
-                { x: moment("2020-11-04T0", format).toDate(), y: 35 },
+                { x: moment(endDstMidnight).subtract(1, "day").toDate(), y: 30 },
+                { x: endDstMidnight, y: 95 },
+                { x: moment(endDstMidnight).add(1, "day").toDate(), y: 15 },
+                { x: moment(endDstMidnight).add(2, "days").toDate(), y: 60 },
+                { x: moment(endDstMidnight).add(3, "days").toDate(), y: 35 },
             ],
         },
     ];
@@ -174,11 +233,11 @@ function getInsideDstData(): Partial<IDataSeries<IAccessors>>[] {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2021-04-03T0", format).toDate(), y: 30 },
-                { x: moment("2021-04-04T0", format).toDate(), y: 95 },
-                { x: moment("2021-04-05T0", format).toDate(), y: 15 },
-                { x: moment("2021-04-06T0", format).toDate(), y: 60 },
-                { x: moment("2021-04-07T0", format).toDate(), y: 35 },
+                { x: moment("2021-07-03T0", format).toDate(), y: 30 },
+                { x: moment("2021-07-04T0", format).toDate(), y: 95 },
+                { x: moment("2021-07-05T0", format).toDate(), y: 15 },
+                { x: moment("2021-07-06T0", format).toDate(), y: 60 },
+                { x: moment("2021-07-07T0", format).toDate(), y: 35 },
             ],
         },
     ];
