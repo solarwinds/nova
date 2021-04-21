@@ -3,7 +3,11 @@ import moment, { duration } from "moment/moment";
 import { TimeIntervalScale } from "./time-interval-scale";
 import { EMPTY_CONTINUOUS_DOMAIN, Formatter } from "./types";
 
-describe("TimeIntervalScale >", () => {
+fdescribe("TimeIntervalScale >", () => {
+    beforeAll(() => {
+        console.log("Local Time Zone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
+    });
+
     describe("domain", () => {
         it("assignment should maintain an empty domain as-is", () => {
             const scale = new TimeIntervalScale(duration(1, "days"));
