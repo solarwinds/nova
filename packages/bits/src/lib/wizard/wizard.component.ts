@@ -152,12 +152,6 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         this.navigationControl.unsubscribe();
     }
 
-    private getInputsAndOutputs(compType: IWizardStepComponent): string[] {
-        const inputs = compType.inputsList;
-        const outputs = Object.keys(compType).filter( key => compType[key] instanceof EventEmitter);
-        return [ ...inputs, ...outputs];
-    }
-
     public addStepDynamic (wizardStep: IWizardStepComponent, indexToInsert: number) {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WizardStepComponent);
         const componentRef = this.dynamicStep.createComponent(componentFactory);
@@ -290,6 +284,12 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         this.arraySteps.slice(this.stepIndex + 1).map((item) => {
             item.disabled = false;
         });
+    }
+
+    private getInputsAndOutputs(compType: IWizardStepComponent): string[] {
+        const inputs = compType.inputsList;
+        const outputs = Object.keys(compType).filter( key => compType[key] instanceof EventEmitter);
+        return [ ...inputs, ...outputs];
     }
 
     private handleStepControl(step?: WizardStepComponent) {
