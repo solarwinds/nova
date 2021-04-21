@@ -28,6 +28,7 @@ import {
     WizardExampleComponent,
     WizardHiddenExampleComponent,
     WizardSimpleExampleComponent,
+    WizardStepsExampleComponent,
     WizardValidationExampleComponent,
     WizardVisualTestComponent,
 } from "./index";
@@ -55,6 +56,10 @@ const routes = [
                 "hideIndicator": true,
             },
         },
+    },
+    {
+        path: "wizard-steps",
+        component: WizardStepsExampleComponent,
     },
 ];
 
@@ -88,6 +93,7 @@ const routes = [
         WizardValidationExampleComponent,
         WizardVisualTestComponent,
         WizardCustomStepLineWidthComponent,
+        WizardStepsExampleComponent,
     ],
     providers: [
         {
