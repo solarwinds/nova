@@ -28,6 +28,7 @@ import {
     WizardExampleComponent,
     WizardHiddenExampleComponent,
     WizardSimpleExampleComponent,
+    WizardStepsExampleComponent,
     WizardValidationExampleComponent,
     WizardVisualTestComponent,
     WizardDynamicRemoveExampleComponent,
@@ -56,6 +57,10 @@ const routes = [
                 "hideIndicator": true,
             },
         },
+    },
+    {
+        path: "wizard-steps",
+        component: WizardStepsExampleComponent,
     },
 ];
 
@@ -90,6 +95,7 @@ const routes = [
         WizardVisualTestComponent,
         WizardCustomStepLineWidthComponent,
         WizardDynamicRemoveExampleComponent,
+        WizardStepsExampleComponent,
     ],
     providers: [
         {
