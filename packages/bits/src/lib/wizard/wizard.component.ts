@@ -163,8 +163,30 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         })
 
         this.arraySteps.splice(indexToInsert, 0, componentRef.instance);
+        this.steps.reset([]);
         this.steps.reset(this.arraySteps);
         return componentRef.instance;
+    }
+
+    public removeStep(index: number): void {
+        const steps = this.steps.toArray();
+
+        if (index < 1 || index > steps.length - 1) {
+            return;
+        }
+
+        const stepToRemove = steps[index];
+
+        if (this.currentStep === stepToRemove) {
+            this.onBackClick();
+        }
+
+        stepToRemove.valid.unsubscribe();
+        this.arraySteps.splice(index, 1);
+        this.steps.reset([]);
+        this.steps.reset(this.arraySteps);
+        this.stepIndex = this.steps.toArray()
+            .findIndex((s) => s === this.currentStep);
     }
 
     public disableStep (step: WizardStepComponent) {

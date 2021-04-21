@@ -11,3 +11,4 @@ export * from "./wizard-confirmation-dialog/wizard-confirmation-dialog.example.c
 export * from "./wizard-visual-test/wizard-visual-test.component";
 export * from "./wizard-constant-height/wizard-constant-height.example.component";
 export * from "./wizard-custom-step-line-width/wizard-custom-step-line-width.example.component";
+export * from "./wizard-dynamic-remove/wizard-dynamic-remove.example.component";
