@@ -3,10 +3,9 @@ import moment, { duration } from "moment/moment";
 import { TimeIntervalScale } from "./time-interval-scale";
 import { EMPTY_CONTINUOUS_DOMAIN, Formatter } from "./types";
 
-fdescribe("TimeIntervalScale >", () => {
-    beforeAll(() => {
-        console.log("Local Time Zone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
-    });
+describe("TimeIntervalScale >", () => {
+    let localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const testedTimeZone = "America/Chicago";
 
     describe("domain", () => {
         it("assignment should maintain an empty domain as-is", () => {
@@ -23,21 +22,26 @@ fdescribe("TimeIntervalScale >", () => {
             expect(scale.domain()).toEqual([startDate, moment(endDate).add(1, "week").toDate()]);
         });
 
-        it("should include bands for all intervals if transitioning to daylight saving time with a one day or longer interval", () => {
-            const startDate = new Date(2021, 2, 14);
-            const endDate = new Date(2021, 2, 18);
-            const scale = new TimeIntervalScale(duration(1, "day"));
-            scale.domain([startDate, endDate]);
-            expect((<any>scale)._bandScale.domain().length).toEqual(5);
-        });
+        // These tests are tailored to the 'testedTimeZone'
+        if (testedTimeZone === localTimezone) {
+            describe("daylight saving time transitions", () => {
+                it("should include bands for all intervals if transitioning to daylight saving time with a one day or longer interval", () => {
+                    const startDate = new Date(2021, 2, 14);
+                    const endDate = new Date(2021, 2, 18);
+                    const scale = new TimeIntervalScale(duration(1, "day"));
+                    scale.domain([startDate, endDate]);
+                    expect((<any>scale)._bandScale.domain().length).toEqual(5);
+                });
 
-        it("should include bands for all intervals if transitioning to daylight saving time with an interval shorter than a day", () => {
-            const startDate = new Date(2021, 2, 14, 1);
-            const endDate = new Date(2021, 2, 14, 6);
-            const scale = new TimeIntervalScale(duration(1, "hour"));
-            scale.domain([startDate, endDate]);
-            expect((<any>scale)._bandScale.domain().length).toEqual(5);
-        });
+                it("should include bands for all intervals if transitioning to daylight saving time with an interval shorter than a day", () => {
+                    const startDate = new Date(2021, 2, 14, 1);
+                    const endDate = new Date(2021, 2, 14, 6);
+                    const scale = new TimeIntervalScale(duration(1, "hour"));
+                    scale.domain([startDate, endDate]);
+                    expect((<any>scale)._bandScale.domain().length).toEqual(5);
+                });
+            });
+        }
     });
 
     describe("title formatter", () => {
@@ -61,41 +65,46 @@ fdescribe("TimeIntervalScale >", () => {
             });
         });
 
-        describe("transition to daylight saving time", () => {
-            it("should subtract an hour from the output if the interval is a day or longer", () => {
-                const startDate = new Date(2021, 2, 14);
-                const endDate = new Date(2021, 2, 18);
-                const scale = new TimeIntervalScale(duration(1, "day"));
-                scale.domain([startDate, endDate]);
-                expect((scale.formatters.title as Formatter<Date>)(new Date(2021, 2, 16, 1))).toEqual("Mar 16 - Mar 17");
-            });
+        // These tests are tailored to the 'testedTimeZone'
+        if (testedTimeZone === localTimezone) {
+            describe("daylight saving time transitions", () => {
+                describe("transition to daylight saving time", () => {
+                    it("should subtract an hour from the output if the interval is a day or longer", () => {
+                        const startDate = new Date(2021, 2, 14);
+                        const endDate = new Date(2021, 2, 18);
+                        const scale = new TimeIntervalScale(duration(1, "day"));
+                        scale.domain([startDate, endDate]);
+                        expect((scale.formatters.title as Formatter<Date>)(new Date(2021, 2, 16, 1))).toEqual("Mar 16 - Mar 17");
+                    });
 
-            it("should not subtract an hour from the output if the interval is shorter than a day", () => {
-                const startDate = new Date(2021, 2, 14, 1);
-                const endDate = new Date(2021, 2, 14, 6);
-                const scale = new TimeIntervalScale(duration(1, "hour"));
-                scale.domain([startDate, endDate]);
-                expect((scale.formatters.title as Formatter<Date>)(new Date(2021, 2, 14, 3))).toEqual("3:00 AM - 4:00 AM");
-            });
-        });
+                    it("should not subtract an hour from the output if the interval is shorter than a day", () => {
+                        const startDate = new Date(2021, 2, 14, 1);
+                        const endDate = new Date(2021, 2, 14, 6);
+                        const scale = new TimeIntervalScale(duration(1, "hour"));
+                        scale.domain([startDate, endDate]);
+                        expect((scale.formatters.title as Formatter<Date>)(new Date(2021, 2, 14, 3))).toEqual("3:00 AM - 4:00 AM");
+                    });
+                });
 
-        describe("transition from daylight saving time", () => {
-            it("should add an hour to the output if the interval is a day or longer", () => {
-                const startDate = new Date(2020, 9, 31);
-                const endDate = new Date(2020, 10, 4);
-                const scale = new TimeIntervalScale(duration(1, "day"));
-                scale.domain([startDate, endDate]);
-                expect((scale.formatters.title as Formatter<Date>)(new Date(2020, 10, 2, 23))).toEqual("Nov 03 - Nov 04");
-            });
+                describe("transition from daylight saving time", () => {
+                    it("should add an hour to the output if the interval is a day or longer", () => {
+                        const startDate = new Date(2020, 9, 31);
+                        const endDate = new Date(2020, 10, 4);
+                        const scale = new TimeIntervalScale(duration(1, "day"));
+                        scale.domain([startDate, endDate]);
+                        expect((scale.formatters.title as Formatter<Date>)(new Date(2020, 10, 2, 23))).toEqual("Nov 03 - Nov 04");
+                    });
 
-            it("should not add an hour to the output if the interval is shorter than a day", () => {
-                const startDate = new Date(2020, 10, 1, 1);
-                const endDate = new Date(2020, 10, 1, 6);
-                const scale = new TimeIntervalScale(duration(1, "hour"));
-                scale.domain([startDate, endDate]);
-                expect((scale.formatters.title as Formatter<Date>)(new Date(2020, 10, 1, 5))).toEqual("5:00 AM - 6:00 AM");
+                    it("should not add an hour to the output if the interval is shorter than a day", () => {
+                        const startDate = new Date(2020, 10, 1, 1);
+                        const endDate = new Date(2020, 10, 1, 6);
+                        const scale = new TimeIntervalScale(duration(1, "hour"));
+                        scale.domain([startDate, endDate]);
+                        expect((scale.formatters.title as Formatter<Date>)(new Date(2020, 10, 1, 5))).toEqual("5:00 AM - 6:00 AM");
+                    });
+                });
             });
-        });
+        }
     });
 
     describe("truncToInterval", () => {
@@ -139,28 +148,33 @@ fdescribe("TimeIntervalScale >", () => {
             });
         });
 
-        describe("transition to daylight saving time", () => {
-            it("should add one hour to the output date", () => {
-                const startDate = new Date(2021, 2, 14);
-                const endDate = new Date(2021, 2, 18);
-                scale.domain([startDate, endDate]);
-                const testDatetime = new Date(2020, 2, 15);
-                const oneHourInMs = 60 * 60 * 1000;
-                const expectedDate = new Date(testDatetime.getTime() + oneHourInMs);
-                expect(scale.truncToInterval(testDatetime, scale.interval())).toEqual(expectedDate);
-            });
-        });
+        // These tests are tailored to the 'testedTimeZone'
+        if (testedTimeZone === localTimezone) {
+            describe("daylight saving time transitions", () => {
+                describe("transition to daylight saving time", () => {
+                    it("should add one hour to the output date", () => {
+                        const startDate = new Date(2021, 2, 14);
+                        const endDate = new Date(2021, 2, 18);
+                        scale.domain([startDate, endDate]);
+                        const testDatetime = new Date(2020, 2, 15);
+                        const oneHourInMs = 60 * 60 * 1000;
+                        const expectedDate = new Date(testDatetime.getTime() + oneHourInMs);
+                        expect(scale.truncToInterval(testDatetime, scale.interval())).toEqual(expectedDate);
+                    });
+                });
 
-        describe("transition from daylight saving time", () => {
-            it("should subtract one hour from the output date", () => {
-                const startDate = new Date(2020, 9, 31);
-                const endDate = new Date(2020, 10, 4);
-                scale.domain([startDate, endDate]);
-                const testDatetime = new Date(2020, 10, 3);
-                const oneHourInMs = 60 * 60 * 1000;
-                const expectedDate = new Date(testDatetime.getTime() - oneHourInMs);
-                expect(scale.truncToInterval(testDatetime, scale.interval())).toEqual(expectedDate);
+                describe("transition from daylight saving time", () => {
+                    it("should subtract one hour from the output date", () => {
+                        const startDate = new Date(2020, 9, 31);
+                        const endDate = new Date(2020, 10, 4);
+                        scale.domain([startDate, endDate]);
+                        const testDatetime = new Date(2020, 10, 3);
+                        const oneHourInMs = 60 * 60 * 1000;
+                        const expectedDate = new Date(testDatetime.getTime() - oneHourInMs);
+                        expect(scale.truncToInterval(testDatetime, scale.interval())).toEqual(expectedDate);
+                    });
+                });
             });
-        });
+        }
     });
 });

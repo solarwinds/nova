@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IAccessors, IDataSeries } from "@nova-ui/charts";
+import { IAccessors, IDataSeries, DateTimeUtil } from "@nova-ui/charts";
 import moment, { duration } from "moment/moment";
 
 @Component({
@@ -27,7 +27,10 @@ export class DstTimeIntervalTestPageComponent {
     private endDstHour: Date;
 
     constructor() {
-        this.populateStartAndEndDstDates();
+        this.startDstMidnight = DateTimeUtil.getStartDstMidnight(2021);
+        this.startDstHour = DateTimeUtil.getStartDstHour(2021);
+        this.endDstMidnight = DateTimeUtil.getEndDstMidnight(2021);
+        this.endDstHour = DateTimeUtil.getEndDstHour(2021);
 
         this.startDstOneMinuteData = getStartDstOneMinuteData(this.startDstHour);
         this.startDstOneHourData = getStartDstOneHourData(this.startDstHour);
@@ -37,61 +40,6 @@ export class DstTimeIntervalTestPageComponent {
         this.endDstOneHourData = getEndDstOneHourData(this.endDstHour);
         this.endDstTwoHourData = getEndDstTwoHourData(this.endDstHour);
         this.endDstOneDayData = getEndDstOneDayData(this.endDstMidnight);
-    }
-
-    private populateStartAndEndDstDates() {
-        let datesInYear2021 = [];
-        for (let i = 1; i <= 365; i++) {
-            let d = new Date(2021, 0, 1);
-            d.setDate(i);
-            datesInYear2021.push(d);
-        }
-
-        let foundStart = false;
-        this.startDstMidnight = datesInYear2021.reduce((prev: Date, curr: Date) => {
-            if (curr.getTimezoneOffset() < prev.getTimezoneOffset()) {
-                foundStart = true;
-                return prev;
-            }
-            return foundStart ? prev : curr;
-        });
-
-        let hoursInDstStartDay = [];
-        for (let i = 0; i < 24; i++) {
-            let d = new Date(this.startDstMidnight);
-            d.setHours(i);
-            hoursInDstStartDay.push(d);
-        }
-
-        foundStart = false;
-        this.startDstHour = hoursInDstStartDay.reduce((prev: Date, curr: Date) => {
-            if (curr.getTimezoneOffset() < prev.getTimezoneOffset()) {
-                foundStart = true;
-                return curr;
-            }
-            return foundStart ? prev : curr;
-        });
-
-        this.endDstMidnight = datesInYear2021.reduce((prev: Date, curr: Date) => {
-            if (curr.getTimezoneOffset() > prev.getTimezoneOffset()) {
-                return prev;
-            }
-            return curr;
-        });
-
-        let hoursInDstEndDay = [];
-        for (let i = 0; i < 24; i++) {
-            let d = new Date(this.endDstMidnight);
-            d.setHours(i);
-            hoursInDstEndDay.push(d);
-        }
-
-        this.endDstHour = hoursInDstEndDay.reduce((prev: Date, curr: Date) => {
-            if (curr.getTimezoneOffset() > prev.getTimezoneOffset()) {
-                return moment(curr).subtract(1, "hour").toDate();
-            }
-            return prev;
-        });
 
         console.log("Local Time Zone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
     }
