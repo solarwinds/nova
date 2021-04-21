@@ -229,15 +229,6 @@ describe("components >", () => {
                 expect(component.steps.toArray().length).toEqual(length - 1);
             });
 
-            it("should unsubscribe from step valid", () => {
-                const index = 2;
-                const stepToRemove = component.steps.toArray()[index];
-                const spy = spyOn(stepToRemove.valid, "unsubscribe");
-
-                component.removeStep(index);
-                expect(spy).toHaveBeenCalled();
-            });
-
             it("should call steps reset method", () => {
                 const spy = spyOn(component.steps, "reset");
 

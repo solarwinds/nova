@@ -101,6 +101,7 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
     private futureStep?: WizardStepComponent;
 
     private arraySteps: any[];
+    private dynamicSubscriptions = new Map();
 
     constructor(private changeDetector: ChangeDetectorRef,
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -160,15 +161,16 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
 
         wizardStepInputs.forEach(key => {
             instance[key] =  wizardStep[key];
-        })
+        });
 
-        instance.valid?.subscribe((event: any) => {
+        const subscription = instance.valid?.subscribe((event: any) => {
             if (!_isUndefined(event)) {
                 instance.stepControl = wizardStep.stepControl;
                 this.handleStepControl(componentRef.instance);
             }
         });
 
+        this.dynamicSubscriptions.set(instance, subscription);
         this.arraySteps.splice(indexToInsert, 0, componentRef.instance);
         this.steps.reset([]);
         this.steps.reset(this.arraySteps);
@@ -183,12 +185,16 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         }
 
         const stepToRemove = steps[index];
+        const dynamicSubscription = this.dynamicSubscriptions.get(stepToRemove);
 
         if (this.currentStep === stepToRemove) {
             this.onBackClick();
         }
 
-        stepToRemove.valid.unsubscribe();
+        if (dynamicSubscription) {
+            dynamicSubscription.unsubscribe();
+        }
+
         this.arraySteps.splice(index, 1);
         this.steps.reset([]);
         this.steps.reset(this.arraySteps);
