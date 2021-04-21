@@ -162,7 +162,7 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
             instance[key] =  wizardStep[key];
         })
         this.handleStepControl(componentRef.instance);
-        
+
         instance.valid?.subscribe((event: any) => {
             if (!_isUndefined(event)) {
                 instance.stepControl = wizardStep.stepControl;
@@ -324,7 +324,6 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
 
     private handleStepControl(step?: WizardStepComponent) {
         if (!_isUndefined(step?.stepControl)) {
-            console.log(step?.stepControl);
             if (step?.stepControl) {
                 this.enableFollowingSteps();
             } else {
