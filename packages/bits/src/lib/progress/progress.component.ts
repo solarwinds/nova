@@ -4,7 +4,6 @@ import {
     Input,
     OnChanges,
     Output,
-    SimpleChanges,
     TemplateRef,
     ViewEncapsulation
 } from "@angular/core";
@@ -43,7 +42,7 @@ export class ProgressComponent implements OnChanges {
     public isIndeterminate = false;
     public ariaValueNow: string | undefined;
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges() {
         this.isIndeterminate = this.percent === undefined;
     }
 

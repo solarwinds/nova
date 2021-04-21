@@ -16,10 +16,10 @@
     <button nui-button *ngIf="items?.length"
             type="button"
             class="nui-selector__toggle"
+            ariaLabel="Open Selector Menu"
             [displayStyle]="'default'"
             [icon]="'caret-down'"
             (click)="overlay.toggle()"
-            [ariaLabel]="'Open Selector Menu'"
             >
     </button>
 </div>
