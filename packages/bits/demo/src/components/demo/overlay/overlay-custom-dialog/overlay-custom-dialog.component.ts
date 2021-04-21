@@ -1,5 +1,5 @@
 import { FlexibleConnectedPositionStrategy, OverlayRef } from "@angular/cdk/overlay";
-import { Component, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
+import { Component, ViewChild, ViewEncapsulation } from "@angular/core";
 import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
 
 @Component({

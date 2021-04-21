@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement } from "@angular/core";
-import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import _noop from "lodash/noop";
 import { Subject } from "rxjs";
@@ -60,7 +60,6 @@ describe("directives >", () => {
         let dragStartSubject: Subject<IDragState>;
         let fixture: ComponentFixture<DroppableTestingComponent>;
         let component: DroppableTestingComponent;
-        let draggableElement: DebugElement;
         let droppableElement: DebugElement;
         let droppableDirective: DroppableDirective;
 
@@ -90,7 +89,6 @@ describe("directives >", () => {
             fixture = TestBed.createComponent(DroppableTestingComponent);
             fixture.autoDetectChanges(true);
             component = fixture.componentInstance;
-            draggableElement = fixture.debugElement.query(By.directive(DraggableDirective));
             droppableElement = fixture.debugElement.query(By.directive(DroppableDirective));
             droppableDirective = droppableElement.injector.get(DroppableDirective) as DroppableDirective;
 

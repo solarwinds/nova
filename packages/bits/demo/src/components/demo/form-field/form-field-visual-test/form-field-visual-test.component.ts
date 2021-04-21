@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import moment from "moment/moment";
 
 @Component({
     selector: "nui-form-field-visual-test",

@@ -12,7 +12,6 @@ xdescribe("USERCONTROL Select >", () => {
     let selectBasic: SelectAtom;
     let selectDisabled: SelectAtom;
     let inlineSelect: SelectAtom;
-    let selectJustified: SelectAtom;
     let selectRequired: SelectAtom;
     let selectWithTemplate: SelectAtom;
     let selectWithReactiveForms: SelectAtom;
@@ -22,7 +21,6 @@ xdescribe("USERCONTROL Select >", () => {
         selectBasic = Atom.find(SelectAtom, "nui-demo-basic-select");
         selectDisabled = Atom.find(SelectAtom, "nui-demo-basic-select-disabled");
         inlineSelect = Atom.find(SelectAtom, "nui-demo-inline-select");
-        selectJustified = Atom.find(SelectAtom, "nui-demo-select-justified");
         selectRequired = Atom.find(SelectAtom, "nui-demo-basic-select-required");
         selectWithTemplate = Atom.find(SelectAtom, "nui-demo-select-with-template");
         selectWithReactiveForms = Atom.find(SelectAtom, "nui-demo-basic-select-reactive-form");

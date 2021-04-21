@@ -13,7 +13,6 @@ import {
     DataSourceService,
     INovaFilteringOutputs,
     ISortedItem,
-    nameof,
     SearchComponent,
     SorterDirection,
     TableComponent,
@@ -31,7 +30,7 @@ import {
     RESULTS_PER_PAGE,
 } from "./table-with-custom-virtual-scroll-data";
 import { TableWithCustomVirtualScrollDataSource } from "./table-with-custom-virtual-scroll-data-source.service";
-import { IServer, IServerFilters } from "./types";
+import { IServer } from "./types";
 import { VirtualScrollCustomStrategyService } from "./virtual-scroll-custom-strategy.service";
 
 @Component({

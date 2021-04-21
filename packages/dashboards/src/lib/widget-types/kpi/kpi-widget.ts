@@ -1,12 +1,10 @@
 import { KpiComponent } from "../../components/kpi-widget/kpi.component";
 import { StackComponent } from "../../components/layouts/stack/stack.component";
 import { TilesComponent } from "../../components/layouts/tiles/tiles.component";
-import { IKpiColorRules } from "../../components/providers/types";
 import {
     DEFAULT_PIZZAGNA_ROOT,
     NOVA_KPI_COLOR_PRIORITIZER,
     NOVA_KPI_DATASOURCE_ADAPTER,
-    NOVA_KPI_SCALE_SYNC_BROKER,
     NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER
 } from "../../services/types";
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";

@@ -4,7 +4,6 @@ import { INTERACTION_DATA_POINTS_EVENT, SERIES_STATE_CHANGE_EVENT } from "../../
 import { RenderState } from "../../../renderers/types";
 import { Chart } from "../../chart";
 import { IDataPointsPayload, InteractionType, IRenderStateData } from "../../common/types";
-import { XYGridConfig } from "../../grid/config/xy-grid-config";
 import { IGrid, IGridConfig } from "../../grid/types";
 import { XYGrid } from "../../grid/xy-grid";
 
@@ -13,7 +12,6 @@ import { ChartTooltipsPlugin } from "./chart-tooltips-plugin";
 describe("ChartTooltipsPlugin >", () => {
 
     let grid: IGrid;
-    let gridConfig: IGridConfig;
     let chart: Chart;
     let plugin: ChartTooltipsPlugin;
     let pluginTopOriented: ChartTooltipsPlugin;
@@ -21,7 +19,6 @@ describe("ChartTooltipsPlugin >", () => {
 
     beforeEach(() => {
         grid = new XYGrid();
-        gridConfig = new XYGridConfig();
 
         chart = new Chart(grid);
 

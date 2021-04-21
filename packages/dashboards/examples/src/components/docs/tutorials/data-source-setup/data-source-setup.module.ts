@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiDocsModule, NuiMenuModule, NuiMessageModule } from "@nova-ui/bits";
+import { NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { DataSourceDocsComponent } from "./data-source-setup-docs.component";

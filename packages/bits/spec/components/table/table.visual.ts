@@ -11,7 +11,6 @@ const name: string = "Table";
 
 describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
-    let tableBasic: TableAtom;
     let sortableTable: TableAtom;
     let actionsMenu: ElementFinder;
     let customActionTable: TableAtom;
@@ -23,7 +22,6 @@ describe(`Visual tests: ${name}`, () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("table/visual-test");
 
-        tableBasic = Atom.find(TableAtom, "table-basic-usage");
         sortableTable = Atom.find(TableAtom, "table-sorting");
         customActionTable = Atom.find(TableAtom, "table-custom-action");
         selectedRowsTable = Atom.find(TableAtom, "table-selected-row");

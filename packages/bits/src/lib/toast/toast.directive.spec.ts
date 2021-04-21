@@ -23,7 +23,6 @@ describe("directives >", () => {
         const successStatus = "success";
         const highlightOnClass = "highlight-on";
         let fixture: ComponentFixture<ToastTestingComponent>;
-        let component: ToastTestingComponent;
         let element: HTMLElement;
         let notificationService: INotificationService;
 
@@ -35,7 +34,6 @@ describe("directives >", () => {
                 });
             fixture = TestBed.createComponent(ToastTestingComponent);
             fixture.autoDetectChanges(true);
-            component = fixture.componentInstance;
             notificationService = TestBed.inject(NotificationService);
             element = fixture.nativeElement.firstChild;
         });

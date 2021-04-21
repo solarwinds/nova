@@ -13,7 +13,6 @@ import { ToastService } from "./toast.service";
 describe("components >", () => {
     describe("toast >", () => {
         let toastService: IToastService;
-        let toastContainerService: any;
         let toastPackage: ToastPackage;
         let toastRef: ToastRef<ToastComponent>;
         const mockNgZone = jasmine.createSpyObj("mockNgZone", ["run", "runOutsideAngular"]);
@@ -66,7 +65,6 @@ describe("components >", () => {
                 });
 
             toastService = TestBed.inject(ToastService);
-            toastContainerService = TestBed.inject(ToastContainerService);
 
             setToastMetadata();
         });

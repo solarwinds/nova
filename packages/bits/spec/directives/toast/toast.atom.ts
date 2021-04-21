@@ -1,7 +1,6 @@
 import {
     browser,
     by,
-    element,
     ElementFinder,
     ExpectedConditions
 } from "protractor";
