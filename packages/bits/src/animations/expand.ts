@@ -19,17 +19,17 @@ export const expand = trigger("expandedState", [
     /**
      * This animation is using the special selectors that ngIf and ngFor use on newly inserted or removed content.
      */
-export const expandV2 = trigger('expandedAddition', [
+export const expandV2 = trigger("expandContent", [
     transition(":enter", [
         style({ height: 0 }),
         animate("350ms ease-in", style({ height: "*" })),
-        query("@*", 
+        query("@*",
             stagger(300, [
                 animate("350ms ease-in", style({ height: "*" })),
-            ]),{optional: true})
+            ]),{optional: true}),
     ]),
     transition(":leave", [
         style({ height: "*" }),
         animate("350ms ease-out", style({ height: 0 })),
-    ])
+    ]),
 ]);
