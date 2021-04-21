@@ -32,7 +32,8 @@ export class Camera {
         return this;
     }
 
-    private async cheese(label: string) {
+    private async cheese(label: string, delay_ms: number = 100) {
+        // await this.engine.waitFor(delay_ms);
         await this.engine.takePhoto(label);
     }
 

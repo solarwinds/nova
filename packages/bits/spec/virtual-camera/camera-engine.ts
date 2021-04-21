@@ -47,6 +47,10 @@ export class CameraEngine {
         }
     }
 
+    public async waitFor(delay: number): Promise<void> {
+        await this.browser.sleep(delay);
+    }
+
     public getToolConfig() {
         return this.currentLensInstance.toolConfig();
     }
