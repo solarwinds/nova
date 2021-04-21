@@ -139,7 +139,7 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build export PERCY_TOKEN=${BITS_PERCY_TOKEN} && npm run percy:ci --prefix ./packages/bits
+                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
