@@ -293,15 +293,12 @@ jobs:
         working_directory: ~/nova
         machine:
             image: ubuntu-2004:202010-01
+            timezone: America/Chicago
         environment:
             PROJECT_DIR: ~/nova/packages/charts
         steps:
             -   attach_workspace:
                     at: ~/nova
-            -   run:
-                    # Needed for daylight saving time tests
-                    name: Set Timezone
-                    command: sudo systemsetup -settimezone "America/Chicago"
             -   run:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
