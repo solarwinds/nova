@@ -1,9 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 import {
     ConnectionPositionPair,
-    OriginConnectionPosition,
     Overlay,
-    OverlayConnectionPosition,
     OverlayPositionBuilder,
     OverlayRef,
     PositionStrategy,

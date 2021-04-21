@@ -3,7 +3,6 @@ import { IBroadcasterConfig } from "../../components/providers/types";
 import { IFormatterDefinition } from "../../components/types";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { IconFormatterComponent } from "../../configurator/components/formatters/icon-formatter/icon-formatter.component";
-import { LinkFormatterComponent } from "../../configurator/components/formatters/link-formatter/link-formatter.component";
 import { RawFormatterComponent } from "../../configurator/components/formatters/raw-formatter/raw-formatter.component";
 import { SiUnitsFormatterComponent } from "../../configurator/components/formatters/si-units-formatter/si-units-formatter.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";

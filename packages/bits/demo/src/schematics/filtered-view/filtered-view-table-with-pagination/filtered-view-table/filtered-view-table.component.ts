@@ -11,7 +11,6 @@ import {
 import {
     DataSourceService,
     INovaFilteringOutputs,
-    nameof,
     PaginatorComponent,
     TableComponent,
 } from "@nova-ui/bits";
@@ -25,7 +24,7 @@ import {
     RESULTS_PER_PAGE,
 } from "../filtered-view-table-with-pagination-data";
 import { FilteredViewTableWithPaginationDataSource } from "../filtered-view-table-with-pagination-data-source.service";
-import { IServer, IServerFilters } from "../types";
+import { IServer } from "../types";
 
 @Component({
     selector: "app-filtered-view-table-with-pagination-table",

@@ -6,8 +6,6 @@ import { PopupAtom } from "./popup.atom";
 describe("USERCONTROL Popup", () => {
     let popupSimple: PopupAtom;
     let popupCustomWidth: PopupAtom;
-    let popupDirectionRight: PopupAtom;
-    let popupDirectionTop: PopupAtom;
     let popupIsOpened: PopupAtom;
     let popupAppendToBody: PopupAtom;
 
@@ -15,8 +13,6 @@ describe("USERCONTROL Popup", () => {
         await Helpers.prepareBrowser("popup/popup-test");
         popupSimple = Atom.find(PopupAtom, "nui-demo-popup-simple");
         popupCustomWidth = Atom.find(PopupAtom, "nui-demo-popup-custom-width");
-        popupDirectionRight = Atom.find(PopupAtom, "nui-demo-popup-direction-right");
-        popupDirectionTop = Atom.find(PopupAtom, "nui-demo-popup-direction-top");
         popupIsOpened = Atom.find(PopupAtom, "nui-demo-popup-isOpen-true");
         popupAppendToBody = Atom.find(PopupAtom, "nui-demo-popup-append-to-body");
     });

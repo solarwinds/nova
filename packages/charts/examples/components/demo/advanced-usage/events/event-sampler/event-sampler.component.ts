@@ -16,7 +16,6 @@ import {
     HIGHLIGHT_SERIES_EVENT,
     IAccessors,
     IBarAccessors,
-    IChart,
     IChartEvent,
     IChartMarker,
     IChartSeries,

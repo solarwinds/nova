@@ -235,7 +235,6 @@ describe("components >", () => {
     describe("timepicker with reactive form >", () => {
         let fixture: ComponentFixture<TimePickerReactiveFormTestComponent>;
         let componentInstance: TimePickerReactiveFormTestComponent;
-        let debugElement: DebugElement;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -256,7 +255,6 @@ describe("components >", () => {
 
             fixture = TestBed.createComponent(TimePickerReactiveFormTestComponent);
             componentInstance = fixture.componentInstance;
-            debugElement = fixture.debugElement;
         });
 
         it("should change selected item on 'timeChanged' event", () => {

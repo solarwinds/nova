@@ -1,6 +1,5 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { Component } from "@angular/core";
-import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
 
 const CHART_PALETTE_CS1: string[] = [
     "var(--nui-color-bg-secondary)",

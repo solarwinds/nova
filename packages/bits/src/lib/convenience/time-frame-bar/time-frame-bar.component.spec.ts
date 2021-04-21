@@ -1,4 +1,4 @@
-import { Component, OnInit, Provider, SimpleChange } from "@angular/core";
+import { Component, OnInit, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import cloneDeep from "lodash/cloneDeep";
 import noop from "lodash/noop";

@@ -1,5 +1,5 @@
-import { Component, Inject } from "@angular/core";
-import { IChipsGroup, IChipsItem, IToastService, ToastService } from "@nova-ui/bits";
+import { Component } from "@angular/core";
+import { IChipsGroup, IChipsItem } from "@nova-ui/bits";
 import _cloneDeep from "lodash/cloneDeep";
 import _pull from "lodash/pull";
 

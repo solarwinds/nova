@@ -3,7 +3,6 @@ import { browser } from "protractor";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { DatepickerAtom } from "../datepicker/datepicker.atom";
 import { PopoverAtom } from "../popover/popover.atom";
 
 import { QuickPickerAtom } from "./quick-picker.atom";
@@ -18,7 +17,6 @@ describe(`Visual tests: ${name}`, () => {
     let popoverComplex: PopoverAtom;
     let quickpickerWithTimeramePicker: QuickPickerAtom;
     let timeFramePicker: TimeFramePickerAtom;
-    let datePicker: DatepickerAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("time-frame-picker/time-frame-picker-visual-test");
@@ -28,8 +26,6 @@ describe(`Visual tests: ${name}`, () => {
         popoverComplex = Atom.find(PopoverAtom, "nui-demo-visual-complex-popover");
         quickpickerWithTimeramePicker = Atom.findIn(QuickPickerAtom, popoverWithTimeframePicker.getPopoverBody());
         timeFramePicker = Atom.findIn(TimeFramePickerAtom, popoverWithTimeframePicker.getPopoverBody());
-        datePicker = Atom.findIn(DatepickerAtom, popoverWithDatePicker.getPopoverBody());
-        
         camera = new Camera().loadFilm(browser, name);
     });
 

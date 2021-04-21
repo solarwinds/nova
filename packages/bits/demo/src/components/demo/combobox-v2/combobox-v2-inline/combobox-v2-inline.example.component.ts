@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { FormControl } from "@angular/forms";
 
 @Component({
     selector: "nui-combobox-v2-inline-example",

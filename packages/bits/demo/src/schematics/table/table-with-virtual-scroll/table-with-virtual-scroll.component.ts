@@ -13,7 +13,6 @@ import {
     DataSourceService,
     IFilteringOutputs,
     ISortedItem,
-    nameof,
     SearchComponent,
     SorterDirection,
     TableComponent,
@@ -32,7 +31,7 @@ import {
     RESULTS_PER_PAGE,
 } from "./table-with-virtual-scroll-data";
 import { TableWithVirtualScrollDataSource } from "./table-with-virtual-scroll-data-source.service";
-import { IServer, IServerFilters } from "./types";
+import { IServer } from "./types";
 
 @Component({
     selector: "app-table-with-virtual-scroll",
