@@ -21,6 +21,7 @@ import { take } from "rxjs/operators";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { IHasChangeDetector, IHasForm, IProperties, IProviderConfiguration, IProviderConfigurationForDisplay, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
+import { DataSourceErrorHandlingComponent } from "../data-source-error-handling/data-source-error-handling.component";
 
 /**
  * This is a basic implementation of a data source configuration component. In the real world scenario, this component will most likely be replaced by a
@@ -42,6 +43,7 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
 
     @Input() properties: IProperties;
     @Input() providerId: string;
+    @Input() errorHandlingComponent: string = DataSourceErrorHandlingComponent.lateLoadKey;
 
     @Output() formReady = new EventEmitter<FormGroup>();
 

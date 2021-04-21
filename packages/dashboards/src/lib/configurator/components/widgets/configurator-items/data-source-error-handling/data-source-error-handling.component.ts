@@ -3,7 +3,7 @@ import {
     ChangeDetectorRef,
     Component,
     OnDestroy,
-    OnInit,
+    OnInit, Optional,
 } from "@angular/core";
 import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
 import { IDataSourceError } from "@nova-ui/dashboards";
@@ -23,11 +23,11 @@ export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
 
     constructor(
         private changeDetector: ChangeDetectorRef,
-        public dataSourceManager: ConfiguratorDataSourceManagerService
+        @Optional() public dataSourceManager: ConfiguratorDataSourceManagerService
     ) {}
 
     ngOnInit() {
-        this.dataSourceManager.error
+        this.dataSourceManager?.error
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((err: IDataSourceError | null) => {
             this.dataSourceError = err;
