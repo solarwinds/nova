@@ -9,8 +9,7 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
-
-import { expand } from "../../animations/expand";
+import { expandV2 } from "../../animations/expand";
 
 /**
  * <example-url>./../examples/index.html#/expander</example-url>
@@ -18,7 +17,7 @@ import { expand } from "../../animations/expand";
 @Component({
     selector: "nui-expander",
     templateUrl: "./expander.component.html",
-    animations: [expand],
+    animations: [expandV2],
     styleUrls: ["./expander.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
@@ -78,12 +77,6 @@ export class ExpanderComponent implements AfterContentInit {
             this.open = !this.open;
             this.openChange.emit(this.open);
             this.cdRef.detectChanges();
-        }
-    }
-
-    public expandedStateDone(): void {
-        if (!this.open) {
-            this.renderBody = false;
         }
     }
 

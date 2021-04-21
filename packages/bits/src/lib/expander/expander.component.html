@@ -27,10 +27,8 @@
     </div>
     <div class="nui-expander__body"
          [class.hide-left-border]="hideLeftBorder"
-         [@expandedState]="state"
-         (@expandedState.done)="expandedStateDone()">
-        <div [style.display]="(this.open || this.renderBody)? 'block' : 'none'">
-            <ng-content></ng-content>
-        </div>
+         *ngIf="open"
+         @expandedAddition>
+        <ng-content></ng-content>
     </div>
 </div>
