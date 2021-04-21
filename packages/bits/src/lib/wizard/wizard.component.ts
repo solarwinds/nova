@@ -162,6 +162,7 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         wizardStepInputs.forEach(key => {
             instance[key] =  wizardStep[key];
         });
+        this.handleStepControl(componentRef.instance);
 
         const subscription = instance.valid?.subscribe((event: any) => {
             if (!_isUndefined(event)) {
