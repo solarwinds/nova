@@ -102,6 +102,7 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
 
     private arraySteps: any[];
     private dynamicSubscriptions = new Map();
+    private dynamicRefs = new Map();
 
     constructor(private changeDetector: ChangeDetectorRef,
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -171,6 +172,7 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
             }
         });
 
+        this.dynamicRefs.set(instance, componentRef);
         this.dynamicSubscriptions.set(instance, subscription);
         this.arraySteps.splice(indexToInsert, 0, componentRef.instance);
         this.steps.reset([]);
@@ -186,16 +188,12 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         }
 
         const stepToRemove = steps[index];
-        const dynamicSubscription = this.dynamicSubscriptions.get(stepToRemove);
 
         if (this.currentStep === stepToRemove) {
             this.onBackClick();
         }
 
-        if (dynamicSubscription) {
-            dynamicSubscription.unsubscribe();
-        }
-
+        this.onRemoveDynamic(stepToRemove);
         this.arraySteps.splice(index, 1);
         this.steps.reset([]);
         this.steps.reset(this.arraySteps);
@@ -342,5 +340,18 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         const widths = this.stepTitles.map((title) => title.nativeElement.offsetWidth);
 
         return Math.round(Math.max(...widths));
+    }
+
+    private onRemoveDynamic(step: WizardStepComponent): void {
+        const dynamicSubscription = this.dynamicSubscriptions.get(step);
+        const ref = this.dynamicRefs.get(step);
+
+        if (ref) {
+            ref.destroy();
+        }
+
+        if (dynamicSubscription) {
+            dynamicSubscription.unsubscribe();
+        }
     }
 }
