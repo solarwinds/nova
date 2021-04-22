@@ -41,11 +41,11 @@ describe(`Visual tests: ${name}`, () => {
         await lineLessExpander.toggle();
         await lineLessExpander.toggle();
         await stakedExpander.toggle();
+        await nestedChildExpander.toggle();
         await nestedParentExpander.toggle();
         await customHeaderExpander.hover();
         await camera.say.cheese(`Some expanders are in expanded state`);
 
-        await nestedChildExpander.toggle();
         await nestedParentExpander.toggle();
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme and expanded NestedExpander and NestedChildExpander`);
