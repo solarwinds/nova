@@ -6,7 +6,7 @@ import {
 } from "../public_api";
 const AxeBuilder = require("@axe-core/webdriverjs");
 
-fdescribe("a11y: busy", () => {
+describe("a11y: busy", () => {
     let switchBusyState: ElementFinder;
 
     beforeAll(async () => {
