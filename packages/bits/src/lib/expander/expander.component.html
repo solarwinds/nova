@@ -25,10 +25,11 @@
             </div>
         </div>
     </div>
-    <div class="nui-expander__body"
-        [class.hide-left-border]="hideLeftBorder"
-        *ngIf="open"
-        @expandContent>
+    <div class="nui-expander__body-wrapper">
+        <div class="nui-expander__body"
+            [class.hide-left-border]="hideLeftBorder"
+            *ngIf="open"
+            @expandContent>
         <ng-content></ng-content>
     </div>
 </div>
