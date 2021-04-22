@@ -1,5 +1,4 @@
 import { browser } from "protractor";
-
 import { Helpers } from "../../helpers";
 
 const AxeBuilder = require("@axe-core/webdriverjs");

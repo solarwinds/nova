@@ -1,9 +1,6 @@
-import { browser} from "protractor";
-
+import { browser } from "protractor";
 import { Helpers } from "../../helpers";
-import {
-    ImageAtom
-} from "../public_api";
+import { ImageAtom } from "../public_api";
 const AxeBuilder = require("@axe-core/webdriverjs");
 
 describe("a11y: image", () => {

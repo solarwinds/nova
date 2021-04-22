@@ -1,9 +1,7 @@
 import { browser } from "protractor";
-
 import { Helpers } from "../../helpers";
-import {
-    IconAtom
-} from "../public_api";
+import { IconAtom } from "../public_api";
+
 const AxeBuilder = require("@axe-core/webdriverjs");
 
 describe("a11y: icon", () => {

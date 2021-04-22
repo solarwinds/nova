@@ -1,9 +1,7 @@
 import { browser } from "protractor";
-
 import { Helpers } from "../../helpers";
-import {
-    CdkDropListAtom, CdkDraggableItemAtom
-} from "../public_api";
+import { CdkDropListAtom, CdkDraggableItemAtom } from "../public_api";
+
 const AxeBuilder = require("@axe-core/webdriverjs");
 
 describe("a11y: drag-and-drop", () => {
@@ -17,6 +15,7 @@ describe("a11y: drag-and-drop", () => {
 
         expect(accessibilityScanResults.violations).toEqual([]);
     });
+
     it("should check a11y of drop list", async () => {
         const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${CdkDropListAtom.CSS_CLASS}`).disableRules("color-contrast").analyze();
 
