@@ -33,15 +33,14 @@ if (dataSource === "clientSide") { %>
 
 if (dataSource === "serverSide") {%>
 
-import {<%
-    if (pagingMode === "virtualScroll" || (pagingMode === "pagination" && dataSource === "serverSide")) {%>
-    IServerFilters,<% } %>
+import {
+    IServerFilters,
     IServersApiResponse,
     IServersCollection,
 } from "./types";
 <% }
 if (dataSource === "clientSide") {%>
-import { IServersCollection } from "./types";
+import { IServersCollection, IServerFilters } from "./types";
 <% }
 if (dataSource === "serverSide") { %>
 // @TODO customize the backend API URL
@@ -127,8 +126,8 @@ export class <%= classify(name) %>DataSource<T> extends <%
         return multiFilterArr;
     }
 
-    public async getFilteredData(data: IServersCollection): Promise<INovaFilteringOutputs> {
-        return of(data).pipe(
+    public async getFilteredData(filters: IServerFilters): Promise<INovaFilteringOutputs> {
+        return this.getBackendData(filters).pipe(
             map((response: IServersCollection) => {
                 const itemsSource = <%
                     if (pagingMode === "none") {%>LOCAL_DATA<%
@@ -179,6 +178,8 @@ export class <%= classify(name) %>DataSource<T> extends <%
         return of({
             items: items,
             count: data.length,
+            status: filters.status,
+            location: filters.location,
         }).pipe(delay(300));
         <% }
         if (dataSource === "serverSide") {%>
