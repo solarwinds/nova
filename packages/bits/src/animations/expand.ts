@@ -32,7 +32,7 @@ export const expandV2 = trigger("expandContent", [
                 style({ height: 0}),
                 stagger(10, [
                     animate("250ms ease-in-out", style({ height: "*" })),
-                ])
+                ]),
             ], {optional: true}),
         ]),
     ]),
