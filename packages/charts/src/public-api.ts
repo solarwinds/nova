@@ -14,4 +14,3 @@ export * from "./legend/public-api";
 export * from "./renderers/public-api";
 export * from "./constants";
 export * from "./thresholds/public-api";
-export * from "./utility/date-time-util";

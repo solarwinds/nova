@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { IAccessors, IDataSeries, DateTimeUtil } from "@nova-ui/charts";
+import { IAccessors, IDataSeries } from "@nova-ui/charts";
 import moment, { duration } from "moment/moment";
+import { DateTimeUtil } from "./date-time-util";
 
 @Component({
     templateUrl: "./dst-time-interval-test-page.component.html",
