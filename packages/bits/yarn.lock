@@ -523,7 +523,7 @@
     postcss-value-parser "4.1.0"
     throat "5.0.0"
 
-"@axe-core/webdriverjs@4.1.1":
+"@axe-core/webdriverjs@^4.1.1":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@axe-core/webdriverjs/-/webdriverjs-4.1.1.tgz#8fb1cc895695566a5597ac8efc2e3c689e688ef7"
   integrity sha512-1X8ed71XL6gH235Mi6TlvkkdIOvUh4/QVh1iW5Xp3IbNOb3ve76tod/tWaoMv9XFT+5YgtAC13loV8wx8P9SNA==
