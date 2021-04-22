@@ -45,7 +45,7 @@ describe("USERCONTROL Message", () => {
     });
 
     it("message should disappear after click on 'Toggle state of message' button", async () => {
-        expect(await messageManualControl.isVisible()).toBe(true);        
+        expect(await messageManualControl.isVisible()).toBe(true);
         await manualControlToggle.click();
         await browser.wait(ExpectedConditions.invisibilityOf(messageManualControl.getElement()));
         expect(await messageManualControl.isVisible()).toBe(false);
