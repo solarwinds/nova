@@ -11,8 +11,8 @@ describe("a11y: drag-and-drop", () => {
     });
 
     it("should check a11y of draggable item", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).
-        include(`.${CdkDraggableItemAtom.CSS_CLASS}`)
+        const accessibilityScanResults = await new AxeBuilder(browser.driver)
+        .include(`.${CdkDraggableItemAtom.CSS_CLASS}`)
         .disableRules("color-contrast")
         .analyze();
 
@@ -20,7 +20,10 @@ describe("a11y: drag-and-drop", () => {
     });
 
     it("should check a11y of drop list", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${CdkDropListAtom.CSS_CLASS}`).disableRules("color-contrast").analyze();
+        const accessibilityScanResults = await new AxeBuilder(browser.driver)
+        .include(`.${CdkDropListAtom.CSS_CLASS}`)
+        .disableRules("color-contrast")
+        .analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);
     });
