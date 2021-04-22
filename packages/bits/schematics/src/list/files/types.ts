@@ -15,9 +15,9 @@ if (enableSearch || (dataSource === "clientSide" || dataSource === "serverSide")
 
 // implement custom filters
 export interface IServerFilters extends INovaFilters {
-    location?: IFilter<string>;
     name?: IFilter<string>;
-    status?: IFilter<ServerStatus>;
+    status?: IFilter<Record<string, number>>;
+    location?: IFilter<Record<string, number>>;
 }<% }
 if (dataSource === "serverSide") { %>
 
@@ -31,4 +31,6 @@ export interface IServersApiResponse {
 export interface IServersCollection {
     items: IServer[];
     count: number;
+    status?: IFilter<Record<string, number>>;
+    location?: IFilter<Record<string, number>>;
 }<% } %>
