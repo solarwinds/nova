@@ -309,7 +309,11 @@ export class GaugeUtil {
      * @returns {Partial<IDataSeries<IAccessors, IGaugeThreshold>>} Threshold data in the form needed by the gauge's thresholds visualization
      */
     public static generateThresholdData(gaugeConfig: IGaugeConfig): Partial<IDataSeries<IAccessors, IGaugeThreshold>> {
-        const markerValues = gaugeConfig.thresholds?.map(threshold => ({
+        if (!gaugeConfig.thresholds) {
+            throw new Error("Thresholds are not defined in the gauge config. Unable to generate threshold data.")
+        }
+
+        const markerValues = gaugeConfig.thresholds.map(threshold => ({
             category: GaugeUtil.DATA_CATEGORY,
             value: threshold,
             hit: threshold <= gaugeConfig.value,
@@ -318,7 +322,7 @@ export class GaugeUtil {
         return {
             id: GAUGE_THRESHOLD_MARKERS_SERIES_ID,
             // tack the max value onto the end (used for donut arc calculation)
-            data: [...(markerValues || []), { category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max, hit: false }],
+            data: [...markerValues, { category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max, hit: false }],
         };
     }
 }
