@@ -4,7 +4,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom, MessageAtom } from "../public_api";
 
-fdescribe("USERCONTROL Message", () => {
+describe("USERCONTROL Message", () => {
     let messageDismissAllowed: MessageAtom;
     let messageDismissNotAllowed: MessageAtom;
     let messageManualControl: MessageAtom;
