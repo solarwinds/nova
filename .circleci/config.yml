@@ -139,7 +139,9 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
+                    command: |
+                      export PERCY_TOKEN=${BITS_PERCY_TOKEN}
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -298,7 +300,9 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
+                    command: |
+                      export PERCY_TOKEN=${CHARTS_PERCY_TOKEN}
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -462,7 +466,9 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
+                    command: |
+                      export PERCY_TOKEN=${DASHBOARDS_PERCY_TOKEN}
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"

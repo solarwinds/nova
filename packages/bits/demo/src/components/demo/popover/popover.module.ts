@@ -7,6 +7,7 @@ import {
     NuiDocsModule,
     NuiPopoverModule,
     NuiSelectModule,
+    NuiSelectV2Module,
     SrlcStage,
 } from "@nova-ui/bits";
 
@@ -64,6 +65,7 @@ const routes = [
         NuiPopoverModule,
         NuiCheckboxModule,
         NuiSelectModule,
+        NuiSelectV2Module,
         NuiDocsModule,
         RouterModule.forChild(routes),
     ],
