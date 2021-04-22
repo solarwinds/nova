@@ -196,4 +196,7 @@ export class Helpers {
         });
     }
 
+    static async setLocation(url: string): Promise<void> {
+        return browser.executeScript((pUrl: string) => window.location.href = `/#/${pUrl}`, url);
+    }
 }

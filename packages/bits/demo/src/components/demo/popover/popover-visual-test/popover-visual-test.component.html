@@ -60,7 +60,11 @@
                     <div class="mb-2">
                         <nui-combobox id="nui-demo-popover-combobox"
                                       [itemsSource]="dataset.items"
-                                      placeholder="Select item"></nui-combobox>
+                                      placeholder="Select item combo"></nui-combobox>
+                        <nui-combobox-v2 [overlayConfig]="overlayConfig" id="nui-demo-combobox-v2-in-popover" placeholder="Select item combo v2">
+                            <nui-select-v2-option *ngFor="let item of dataset.items" [value]="item">{{ item }}</nui-select-v2-option>
+                        </nui-combobox-v2>
+
                     </div>
                     <div class="d-flex justify-content-end">
                         <button nui-button

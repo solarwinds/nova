@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component } from "@angular/core";
 
 
 @Component({

@@ -32,6 +32,7 @@ describe("ConfiguratorComponent", () => {
     }));
 
     beforeEach(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         testPizzagna = {
             [PizzagnaLayer.Configuration]: {},
             [PizzagnaLayer.Data]: {},
@@ -40,6 +41,7 @@ describe("ConfiguratorComponent", () => {
         fixture = TestBed.createComponent(ConfiguratorComponent);
         fixture.detectChanges();
         component = fixture.componentInstance;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         detectChangesSpy = spyOn(component.changeDetector, "detectChanges");
     });
 

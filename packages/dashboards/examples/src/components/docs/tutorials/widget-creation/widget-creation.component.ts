@@ -5,7 +5,6 @@ import {
     DashboardComponent,
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
-    IConfiguratorSource,
     IDashboard,
     IDashboardPersistenceHandler,
     IDataSourceOutput,

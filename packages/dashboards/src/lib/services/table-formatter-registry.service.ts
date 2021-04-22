@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { LoggerService } from "@nova-ui/bits";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
 
 import { IFormatterDefinition, ITableFormatterDefinition } from "../components/types";
 

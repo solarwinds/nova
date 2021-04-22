@@ -14,6 +14,7 @@ import { AreaChartVariableBaselineExampleComponent } from "./area-chart-variable
 import { AreaChartVerticalExampleComponent } from "./area-chart-vertical/area-chart-vertical-example.component";
 import { ChartDocsAreaComponent } from "./chart-docs-area.component";
 import { AreaChartTestComponent } from "./test/area-chart-test.component";
+import { AreaChartBiDirectionalStackedExampleComponent } from "./area-chart-bi-directional-stacked/area-chart-bi-directional-stacked-example.component";
 
 const exampleRoutes: Routes = [
     {
@@ -80,6 +81,15 @@ const exampleRoutes: Routes = [
             },
         },
     },
+    {
+        path: "bi-directional-stacked",
+        component: AreaChartBiDirectionalStackedExampleComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -87,6 +97,7 @@ const exampleRoutes: Routes = [
         ChartDocsAreaComponent,
         AreaChartBasicExampleComponent,
         AreaChartBiDirectionalExampleComponent,
+        AreaChartBiDirectionalStackedExampleComponent,
         AreaChartVariableBaselineExampleComponent,
         AreaChartVerticalExampleComponent,
         AreaChartStackExampleComponent,

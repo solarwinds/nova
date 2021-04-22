@@ -1,4 +1,4 @@
-import { browser, Key } from "protractor";
+import { Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";

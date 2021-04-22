@@ -1,5 +1,4 @@
 import { browser, by, element, ExpectedConditions } from "protractor";
-
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { ButtonAtom, MessageAtom } from "../public_api";

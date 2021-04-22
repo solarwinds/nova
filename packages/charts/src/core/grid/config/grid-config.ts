@@ -26,4 +26,8 @@ export class GridConfig implements IGridConfig {
     };
     /** See {@link IGridConfig#cursor} */
     public cursor = "crosshair";
+    /** See {@link IGridConfig#disableRenderAreaHeightCorrection} */
+    public disableRenderAreaHeightCorrection = false;
+    /** See {@link IGridConfig#disableRenderAreaWidthCorrection} */
+    public disableRenderAreaWidthCorrection = false;
 }

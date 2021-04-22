@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import {  IGaugeSeriesConfig } from "@nova-ui/charts";
+import { IGaugeConfig } from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-visual-test",
@@ -10,11 +10,12 @@ export class GaugeVisualTestComponent {
     public mediumValue = 130;
     public highValue = 178;
 
-    public getSeriesConfig(value: number): IGaugeSeriesConfig {
+    public getGaugeConfig(value: number): IGaugeConfig {
         return {
             value,
             max: 200,
             thresholds: [100, 158],
+            enableThresholdMarkers: true,
         };
     }
  }

@@ -1,8 +1,7 @@
 import { CHART_VIEW_STATUS_EVENT, INTERACTION_VALUES_EVENT } from "../../constants";
 import { Chart } from "../chart";
 import { InteractionType } from "../common/types";
-import { XYGridConfig } from "../grid/config/xy-grid-config";
-import { IGrid, IGridConfig } from "../grid/types";
+import { IGrid } from "../grid/types";
 import { XYGrid } from "../grid/xy-grid";
 
 import { RenderEnginePlugin } from "./render-engine-plugin";
@@ -11,7 +10,6 @@ import { IInteractionValuesPayload } from "./types";
 describe("RenderEnginePlugin >", () => {
 
     let grid: IGrid;
-    let gridConfig: IGridConfig;
     let chart: Chart;
     let plugin: RenderEnginePlugin;
     let chartElement: HTMLDivElement;
@@ -22,7 +20,6 @@ describe("RenderEnginePlugin >", () => {
 
     beforeEach(() => {
         grid = new XYGrid();
-        gridConfig = new XYGridConfig();
 
         chart = new Chart(grid);
         chart.build(chartElement);

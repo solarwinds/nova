@@ -1,13 +1,23 @@
 import {ComponentFixture, TestBed} from "@angular/core/testing";
 
 import {DialogComponent} from "./dialog.component";
+import {Subject} from "rxjs";
+import {Router} from "@angular/router";
 
 describe("components >", () => {
     describe("dialog >", () => {
         let fixture: ComponentFixture<DialogComponent>;
 
         beforeEach(() => {
-            TestBed.configureTestingModule({declarations: [DialogComponent]});
+            const mockRouter = {
+                events: new Subject<any>(),
+
+            }
+
+            TestBed.configureTestingModule({
+                declarations: [DialogComponent],
+                providers: [{ provide: Router, useValue: mockRouter }],
+            });
             fixture = TestBed.createComponent(DialogComponent);
         });
 

@@ -14,12 +14,13 @@ describe("ZoomPlugin >", () => {
     let plugin: ZoomPlugin;
     let xScale: LinearScale;
     let seriesSet: IChartSeries<IAccessors<any>>[];
+    const gridWidth = 5;
     const xScaleId = "testId";
 
     beforeEach(() => {
         plugin = new ZoomPlugin();
         const gridConfig = new XYGridConfig();
-        gridConfig.dimension.width(5);
+        gridConfig.dimension.width(gridWidth);
         plugin.chart = new Chart(new XYGrid(gridConfig));
         plugin.chart.build(document.createElement("div"));
         plugin.initialize();
@@ -203,8 +204,30 @@ describe("ZoomPlugin >", () => {
         describe("mouseup", () => {
             it("should set a new domain on the chart", () => {
                 const expectedBrushStart = 2;
-                const expectedBrushMovement = 4;
+                const expectedBrushMovement = gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
                 const expectedDomain = [xScale.invert(expectedBrushStart), xScale.invert(expectedBrushMovement + Grid.RENDER_AREA_WIDTH_CORRECTION)];
+
+                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
+                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 2 } },
+                });
+
+                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
+                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: expectedBrushMovement, y: 2 } },
+                });
+
+                const spy = spyOn(plugin.chart.getEventBus().getStream(SET_DOMAIN_EVENT), "next");
+                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
+                    data: { interactionType: InteractionType.MouseUp, coordinates: { x: expectedBrushMovement, y: 2 } },
+                });
+
+                expect(spy).toHaveBeenCalledWith({ data: { [xScaleId]: expectedDomain } });
+            });
+
+            it("should ignore a disabled render area width correction when setting a new domain on the chart", () => {
+                const expectedBrushStart = 2;
+                const expectedBrushMovement = gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
+                plugin.chart.getGrid().config().disableRenderAreaWidthCorrection = true;
+                const expectedDomain = [xScale.invert(expectedBrushStart), xScale.invert(expectedBrushMovement)];
 
                 plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
                     data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 2 } },
