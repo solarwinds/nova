@@ -5,7 +5,7 @@ import { By } from "@angular/platform-browser";
 import { ExpanderComponent } from "./expander.component";
 
 const customHeaderHtml = `<div nuiExpanderHeader=""><p>Custom Projected Header</p></div>`;
-const customBodyHtml = `<div class="ng-tns-c125-0"><span>Covfefe</span></div>`;
+const customBodyHtml = `<div><span>Covfefe</span></div>`;
 
 @Component({
     template: `<nui-expander [open]="open">${customHeaderHtml}${customBodyHtml}</nui-expander>`,
@@ -151,7 +151,7 @@ describe("components >", () => {
             describe("when body content is specified", () => {
                 let usageFixture: ComponentFixture<ExpanderUsageWithContentComponent>;
                 let usageSubject: ExpanderUsageWithContentComponent;
-                const getBodyContentEl = () => usageFixture.debugElement.query(By.css(".nui-expander__body"));
+                const getBodyContentEl = () => usageFixture.debugElement.query(By.css(".nui-expander__body-wrapper"));
 
                 beforeEach(() => {
                     usageFixture = TestBed.createComponent(ExpanderUsageWithContentComponent);
@@ -161,13 +161,13 @@ describe("components >", () => {
                 it("should project content when open", () => {
                     usageSubject.open = true;
                     usageFixture.detectChanges();
-                    expect(getBodyContentEl().nativeElement.innerHTML).toContain(customBodyHtml);
+                    expect(getBodyContentEl()).not.toBeNull();
                 });
 
                 it("should not project content when closed", () => {
                     usageSubject.open = false;
                     usageFixture.detectChanges();
-                    expect(getBodyContentEl()).toBeNull();
+                    expect(getBodyContentEl().nativeElement.innerHTML).not.toContain(customBodyHtml);
                 });
             });
 
