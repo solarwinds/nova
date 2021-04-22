@@ -4,7 +4,6 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { ExpanderAtom } from "../expander/expander.atom";
-import { MenuAtom } from "../menu/menu.atom";
 
 const name: string = "Expander";
 
@@ -16,7 +15,6 @@ describe(`Visual tests: ${name}`, () => {
     let stakedExpander: ExpanderAtom;
     let nestedParentExpander: ExpanderAtom;
     let nestedChildExpander: ExpanderAtom;
-    let menuEmbedded: MenuAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("expander/expander-visual-test");
@@ -26,7 +24,6 @@ describe(`Visual tests: ${name}`, () => {
         stakedExpander = Atom.find(ExpanderAtom, "nui-visual-test-staked-expander-1");
         nestedParentExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-nested-expander");
         nestedChildExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-nested-expander-child");
-        menuEmbedded = Atom.find(MenuAtom, "nui-demo-expander-header-menu");
         
         camera = new Camera().loadFilm(browser, name);
     });

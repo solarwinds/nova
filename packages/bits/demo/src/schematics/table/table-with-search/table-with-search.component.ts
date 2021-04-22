@@ -11,7 +11,6 @@ import {
 import {
     DataSourceService,
     INovaFilteringOutputs,
-    nameof,
     PaginatorComponent,
     SearchComponent,
     TableComponent,
@@ -27,7 +26,7 @@ import {
     RESULTS_PER_PAGE,
 } from "./table-with-search-data";
 import { TableWithSearchDataSource } from "./table-with-search-data-source.service";
-import { IServer, IServerFilters } from "./types";
+import { IServer } from "./types";
 
 @Component({
     selector: "app-table-with-search",

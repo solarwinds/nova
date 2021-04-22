@@ -1,4 +1,4 @@
-import { Component, NO_ERRORS_SCHEMA, Provider } from "@angular/core";
+import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
@@ -213,5 +213,38 @@ describe("components >", () => {
                 expect(wizardBodyContainer.style.height).toEqual("10%");
             });
         });
+
+        describe("remove step >", () => {
+            it("should not remove step if index less 1", () => {
+                const length = component.steps.toArray().length;
+
+                component.removeStep(0);
+                expect(component.steps.toArray().length).toEqual(length);
+            });
+
+            it("should remove step by index", () => {
+                const length = component.steps.toArray().length;
+
+                component.removeStep(2);
+                expect(component.steps.toArray().length).toEqual(length - 1);
+            });
+
+            it("should call steps reset method", () => {
+                const spy = spyOn(component.steps, "reset");
+
+                component.removeStep(2);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should call onBackClick method when remove selected", () => {
+                const index = 1;
+                const spy = spyOn(component, "onBackClick");
+                const toSelectStep = component.steps.toArray()[index];
+
+                component.selectStep(toSelectStep);
+                component.removeStep(index);
+                expect(spy).toHaveBeenCalled();
+            });
+        })
     });
 });

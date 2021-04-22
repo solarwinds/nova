@@ -93,8 +93,6 @@ describe("USERCONTROL data-filter-service >", () => {
         let basicTimeFramePickerPopover: PopoverAtom;
         let basicTimeFramePicker: TimeFramePickerAtom;
         let basicTimeFramePickerApplyButton: ButtonAtom;
-        let basicTimeFramePickerCancelButton: ButtonAtom;
-        let basicStartTimeFramePicker: DatepickerAtom;
         let basicEndTimeFramePicker: DatepickerAtom;
         let basicRepeat: RepeatAtom;
         let sorterButton: ButtonAtom;
@@ -106,14 +104,12 @@ describe("USERCONTROL data-filter-service >", () => {
             await Helpers.disableCSSAnimations(Animations.ALL);
             basicTimeFramePickerPopover = Atom.find(PopoverAtom, "nui-data-filter-basic-time-frame-picker-popover");
             basicTimeFramePicker = Atom.findIn(TimeFramePickerAtom, basicTimeFramePickerPopover.getPopoverBody());
-            basicTimeFramePickerCancelButton = Atom.find(ButtonAtom, "nui-data-filter-basic-time-frame-picker-cancel-btn");
             basicTimeFramePickerApplyButton = Atom.find(ButtonAtom, "nui-data-filter-basic-time-frame-picker-apply-btn");
             basicRepeat = Atom.find(RepeatAtom, "nui-data-filter-basic-repeat");
             basicTable = Atom.find(TableAtom, "nui-data-filter-basic-table");
             basicSorter = Atom.find(SorterAtom, "nui-data-filter-basic-sorter");
             basicSearch = Atom.find(SearchAtom, "nui-data-filter-basic-search");
             sorterButton = basicSorter.getSorterButton();
-            basicStartTimeFramePicker = basicTimeFramePicker.getStartDatetimePicker().getDatePicker();
             basicEndTimeFramePicker = basicTimeFramePicker.getEndDatetimePicker().getDatePicker();
         });
 
@@ -163,8 +159,6 @@ describe("USERCONTROL data-filter-service >", () => {
         let isolatedTimeFramePickerPopover: PopoverAtom;
         let isolatedTimeFramePicker: TimeFramePickerAtom;
         let isolatedTimeFramePickerApplyButton: ButtonAtom;
-        let isolatedTimeFramePickerCancelButton: ButtonAtom;
-        let isolatedStartTimeFramePicker: DatepickerAtom;
         let isolatedEndTimeFramePicker: DatepickerAtom;
         let isolatedRepeat: RepeatAtom;
         let isolatedTable: TableAtom;
@@ -175,13 +169,11 @@ describe("USERCONTROL data-filter-service >", () => {
             await Helpers.disableCSSAnimations(Animations.ALL);
             isolatedTimeFramePickerPopover = Atom.find(PopoverAtom, "nui-data-filter-isolated-time-frame-picker-popover");
             isolatedTimeFramePicker = Atom.findIn(TimeFramePickerAtom, isolatedTimeFramePickerPopover.getPopoverBody());
-            isolatedTimeFramePickerCancelButton = Atom.find(ButtonAtom, "nui-data-filter-isolated-time-frame-picker-cancel-btn");
             isolatedTimeFramePickerApplyButton = Atom.find(ButtonAtom, "nui-data-filter-isolated-time-frame-picker-apply-btn");
             isolatedRepeat = Atom.find(RepeatAtom, "nui-data-filter-list-isolated-repeat");
             isolatedTable = Atom.find(TableAtom, "nui-data-filter-isolated-table");
             isolatedTableSearch = Atom.find(SearchAtom, "nui-data-filter-isolated-table-search");
             isolatedListSearch = Atom.find(SearchAtom, "nui-data-filter-isolated-list-search");
-            isolatedStartTimeFramePicker = isolatedTimeFramePicker.getStartDatetimePicker().getDatePicker();
             isolatedEndTimeFramePicker = isolatedTimeFramePicker.getEndDatetimePicker().getDatePicker();
         });
 

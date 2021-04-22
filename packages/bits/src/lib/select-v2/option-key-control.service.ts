@@ -1,6 +1,6 @@
 import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
 import { DOWN_ARROW, ENTER, ESCAPE, PAGE_DOWN, PAGE_UP, TAB, UP_ARROW } from "@angular/cdk/keycodes";
-import { EventEmitter, Injectable, QueryList } from "@angular/core";
+import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
 
 import { IOption, IOverlayComponent } from "../overlay/types";

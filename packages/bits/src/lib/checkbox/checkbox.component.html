@@ -1,6 +1,11 @@
 <div class="nui-checkbox">
     <label class="nui-checkbox__label"
            #checkboxLabel
+           role="checkbox"
+           [attr.aria-label]="ariaLabel || null"
+           [attr.aria-labelledby]="ariaLabelledby"
+           [attr.aria-checked]="getAriaChecked()"
+           [attr.aria-describedby]="ariaDescribedby"
            [attr.tabindex]="!disabled ? 0 : -1"
            [title]="title"
            [class.nui-checkbox__translucent]="disabled"
@@ -10,7 +15,6 @@
             <input #inputViewContainer
                    class="nui-checkbox__input"
                    type="checkbox"
-                   [attr.aria-label]="ariaLabel"
                    [attr.name]="name"
                    [value]="value"
                    [checked]="checked"

@@ -212,7 +212,6 @@ describe("components >", () => {
     describe("select with reactive form >", () => {
         let fixture: ComponentFixture<SelectReactiveFormTestComponent>;
         let componentInstance: SelectReactiveFormTestComponent;
-        let debugElement: DebugElement;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -233,7 +232,6 @@ describe("components >", () => {
 
             fixture = TestBed.createComponent(SelectReactiveFormTestComponent);
             componentInstance = fixture.componentInstance;
-            debugElement = fixture.debugElement;
         });
 
         it("should change selected item on 'changed' event", () => {

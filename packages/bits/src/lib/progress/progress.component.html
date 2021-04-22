@@ -3,7 +3,14 @@
         <span class="nui-progress__message nui-text-label nui-progress__header-item">{{message}}</span>
     </div>
 
-    <div class="nui-progress__container" *ngIf="show && showProgress">
+    <div *ngIf="show && showProgress"
+         class="nui-progress__container"
+         role="progressbar"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         [attr.aria-label]="ariaLabel"
+         [attr.aria-valuenow]="percent || null"
+         >
         <div class="nui-progress__bar" [ngClass]="{'nui-progress--indeterminate': isIndeterminate, 'nui-progress__bar--compact': compactMode}">
             <div class="nui-progress__bar-value" [ngStyle]="{'width.%': percent}"></div>
         </div>

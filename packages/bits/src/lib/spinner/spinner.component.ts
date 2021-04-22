@@ -3,11 +3,13 @@ import {
     ChangeDetectorRef,
     Component,
     EventEmitter,
+    HostBinding,
     Input,
     NgZone,
     OnChanges,
     OnDestroy,
     Output,
+    SimpleChange,
     SimpleChanges,
     ViewEncapsulation
 } from "@angular/core";
@@ -36,7 +38,9 @@ import { ButtonIcon, SpinnerSize } from "./public-api";
     ],
     host: {
         "role": "progressbar",
-        "[attr.aria-label]": "ariaLabel + ' progress'",
+        "aria-valuemin": "0",
+        "aria-valuemax": "100",
+        "[attr.aria-label]": "ariaLabel",
     },
 })
 export class SpinnerComponent implements OnChanges, OnDestroy {
@@ -49,6 +53,8 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
     public showSpinner = false;
     public isDeterminate = false;
 
+    @HostBinding("attr.aria-valuenow") ariaValueNow: string | undefined;
+
     @Input() public percent: number;
     @Input() public show = false;
     @Input() public delay = 250;
@@ -59,7 +65,7 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "";
+    @Input() public ariaLabel: string = "Spinner";
 
     @Output() public cancel = new EventEmitter();
 
@@ -96,6 +102,10 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
         private ngZone: NgZone) { }
 
     public ngOnChanges(changes: SimpleChanges) {
+        if (changes?.percent) {
+            this.ariaValueNow = this.percent ? String(this.percent) : undefined;
+        }
+
         if (!changes["show"]) {
             return;
         }

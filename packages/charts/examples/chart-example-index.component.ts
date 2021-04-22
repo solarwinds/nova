@@ -42,7 +42,7 @@ export class ChartExampleIndexComponent {
         },
         {
             title: "Stacked Vertical Bar",
-            path: "/development/bar/stacked-vertical",
+            path: "/development/bar/stacked-bar",
         },
         {
             title: "Data Point Popovers",
