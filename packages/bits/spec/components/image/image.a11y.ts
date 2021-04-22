@@ -10,7 +10,6 @@ describe("a11y: image", () => {
     });
 
     it("should check a11y of images", async () => {
-
         const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${ImageAtom.CSS_CLASS}`).disableRules("duplicate-id").analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);
