@@ -4,7 +4,6 @@ import { ValueMap } from "d3-selection-multi";
 import defaultsDeep from "lodash/defaultsDeep";
 import each from "lodash/each";
 import get from "lodash/get";
-import isNil from "lodash/isNil";
 import { Subject } from "rxjs";
 
 import { DATA_POINT_NOT_FOUND, STANDARD_RENDER_LAYERS } from "../../constants";

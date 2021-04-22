@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { LoggerService, SearchService, ThemeSwitchService } from "@nova-ui/bits";
+import { LoggerService, ThemeSwitchService } from "@nova-ui/bits";
 import { DATA_SOURCE, IDashboard, IWidget, ProviderRegistryService, WidgetTypesService } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 

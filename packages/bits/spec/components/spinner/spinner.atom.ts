@@ -1,5 +1,5 @@
-import { browser, by, ExpectedConditions, until } from "protractor";
-import { ISize, WebElementCondition } from "selenium-webdriver";
+import { browser, by, ExpectedConditions } from "protractor";
+import { ISize } from "selenium-webdriver";
 
 import { Atom } from "../../atom";
 import { ButtonAtom } from "../button/button.atom";

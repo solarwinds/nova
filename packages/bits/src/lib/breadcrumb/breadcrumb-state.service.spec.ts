@@ -1,4 +1,3 @@
-import { Provider } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 
 import { BreadcrumbStateService } from "./breadcrumb-state.service";

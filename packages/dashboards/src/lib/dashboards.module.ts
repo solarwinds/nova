@@ -4,6 +4,7 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 // This is not technically used here, but it does pull in the type for $localize
 // noinspection ES6UnusedImports
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { LocalizeFn } from "@angular/localize/init";
 import {
     NuiBusyModule,

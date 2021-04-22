@@ -1,7 +1,6 @@
 import {
     AfterContentInit,
     AfterViewInit,
-    ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     Host,

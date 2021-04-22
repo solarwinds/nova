@@ -1,5 +1,3 @@
-import { browser, by } from "protractor";
-
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { MessageAtom } from "../public_api";

@@ -13,7 +13,6 @@ import {
     INovaFilteringOutputs,
     ISelection,
     ISortedItem,
-    nameof,
     PaginatorComponent,
     SearchComponent,
     SorterDirection,
@@ -30,7 +29,7 @@ import {
     RESULTS_PER_PAGE,
 } from "../filtered-view-table-with-selection-data";
 import { FilteredViewTableWithSelectionDataSource } from "../filtered-view-table-with-selection-data-source.service";
-import { IServer, IServerFilters } from "../types";
+import { IServer } from "../types";
 
 @Component({
     selector: "app-filtered-view-table-with-selection-table",

@@ -5,8 +5,6 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
 import { DATA_POINT_INTERACTION_RESET, DATA_POINT_NOT_FOUND } from "../../../constants";
-import { TimeIntervalScale } from "../../../core/common/scales/time-interval-scale";
-import { TimeScale } from "../../../core/common/scales/time-scale";
 import { isBandScale, IXYScales, Scales } from "../../../core/common/scales/types";
 import { IDataSeries, IRendererEventPayload } from "../../../core/common/types";
 import { UtilityService } from "../../../core/common/utility.service";
@@ -66,13 +64,10 @@ export class BarHighlightStrategy implements IHighlightStrategy<IRectangleAccess
                     (d, i) => valueOf >= startAccessor?.(d, i, series.data, series).valueOf() &&
                         valueOf <= endAccessor?.(d, i, series.data, series).valueOf());
                 if (index === -1 && typeof endAccessor !== "undefined") {
-                    
                     if (isBandScale(scales[scaleKey])) {
                         const accessor = (d: any, i: any) => startAccessor?.(d, i, series.data, series);
                         const nearestIndex = UtilityService.findNearestIndex(series.data, value, accessor);
-                        
                         index = (nearestIndex >= series.data.length || accessor(series.data[nearestIndex], nearestIndex) > valueOf) ? -1 : nearestIndex;
-                        
                     } else {
                         // @ts-ignore
                         // Needs to catch -1 otherwise typescript errors

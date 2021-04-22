@@ -139,7 +139,9 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+                    command: |
+                      export PERCY_TOKEN=${BITS_PERCY_TOKEN}
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -298,7 +300,9 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/charts
+                    command: |
+                      export PERCY_TOKEN=${CHARTS_PERCY_TOKEN}
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -462,7 +466,9 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/dashboards
+                    command: |
+                      export PERCY_TOKEN=${DASHBOARDS_PERCY_TOKEN}
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -609,10 +615,6 @@ workflows:
             -   bits-visual-test:
                     requires:
                         - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
             -   bits-a11y-test:
                     requires:
                         - bits-build
@@ -645,11 +647,6 @@ workflows:
             -   charts-visual-test:
                     requires:
                         - charts-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -688,11 +685,6 @@ workflows:
             -   dashboards-visual-test:
                     requires:
                         - dashboards-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test

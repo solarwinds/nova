@@ -12,7 +12,6 @@ import {
     DataSourceService,
     INovaFilteringOutputs,
     ISortedItem,
-    nameof,
     PaginatorComponent,
     SorterDirection,
     TableComponent,
@@ -27,7 +26,7 @@ import {
     RESULTS_PER_PAGE,
 } from "./table-with-sort-data";
 import { TableWithSortDataSource } from "./table-with-sort-data-source.service";
-import { IServer, IServerFilters } from "./types";
+import { IServer } from "./types";
 
 @Component({
     selector: "app-table-with-sort",

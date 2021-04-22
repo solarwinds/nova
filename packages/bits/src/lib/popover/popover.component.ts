@@ -113,6 +113,11 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
      */
     @Input() delay: number = 0;
 
+    /**
+     * Sets whether the overlay can grow after the initial open via flexible width/height.
+     */
+    @Input() withGrowAfterOpen: boolean = false;
+
     @Input() popoverOverlayPosition: PopoverOverlayPosition[];
 
     /**
@@ -457,7 +462,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             .flexibleConnectedTo(this.host.nativeElement)
             .withPush(false)
             .withViewportMargin(0)
-            .withGrowAfterOpen(true)
+            .withGrowAfterOpen(this.withGrowAfterOpen)
             .withPositions(this.getPopoverConnectedPosition(position));
 
         const subscription = positionStrategy.positionChanges

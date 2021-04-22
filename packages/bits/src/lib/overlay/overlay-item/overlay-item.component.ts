@@ -1,5 +1,5 @@
 import { Highlightable } from "@angular/cdk/a11y";
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, HostBinding, Input, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, HostBinding, Input } from "@angular/core";
 
 import { OVERLAY_ITEM } from "../constants";
 import { IOption } from "../types";
