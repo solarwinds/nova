@@ -237,9 +237,9 @@ export class GaugeUtil {
      * Convenience function for creating a standard gauge quantity color accessor in which low values are considered good
      * and high values are considered bad. It provides standard colors for Ok, Warning, and Critical statuses.
      *
-     * @param thresholds An array of threshold values
+     * @param thresholds An optional array of threshold values
      *
-     * @returns {DataAccessor} An accessor for determining the color to use based on the series id and/or data value
+     * @returns {DataAccessor} An accessor for determining the color to use for the quantity visualization
      */
     public static createDefaultQuantityColorAccessor(thresholds?: number[]): DataAccessor {
         // assigning to variable to prevent "Lambda not supported" error
