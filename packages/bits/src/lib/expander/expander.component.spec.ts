@@ -5,7 +5,7 @@ import { By } from "@angular/platform-browser";
 import { ExpanderComponent } from "./expander.component";
 
 const customHeaderHtml = `<div nuiExpanderHeader=""><p>Custom Projected Header</p></div>`;
-const customBodyHtml = `<div><span>Covfefe</span></div>`;
+const customBodyHtml = `<div class="ng-tns-c125-0"><span>Covfefe</span></div>`;
 
 @Component({
     template: `<nui-expander [open]="open">${customHeaderHtml}${customBodyHtml}</nui-expander>`,
@@ -158,16 +158,16 @@ describe("components >", () => {
                     usageSubject = usageFixture.componentInstance;
                 });
 
-                xit("project content when when open", () => {
+                it("should project content when open", () => {
                     usageSubject.open = true;
                     usageFixture.detectChanges();
                     expect(getBodyContentEl().nativeElement.innerHTML).toContain(customBodyHtml);
                 });
 
-                it("does not project content when when closed", () => {
+                it("should not project content when closed", () => {
                     usageSubject.open = false;
                     usageFixture.detectChanges();
-                    expect(getBodyContentEl().nativeElement.innerHTML).not.toContain(customBodyHtml);
+                    expect(getBodyContentEl()).toBeNull();
                 });
             });
 

@@ -45,9 +45,6 @@ export class ExpanderComponent implements AfterContentInit {
         const previousValue: boolean = this.state === "expanded";
         if (previousValue !== value) {
             this.state = value ? "expanded" : "collapsed";
-            if (value) {
-                this.renderBody = true;
-            }
         }
     }
 
@@ -63,7 +60,6 @@ export class ExpanderComponent implements AfterContentInit {
     public customHeaderContent: ElementRef;
 
     public state: "expanded" | "collapsed" = "collapsed";
-    public renderBody: boolean = false;
     public isCustomHeaderContentEmpty: boolean = false;
 
     constructor(private cdRef: ChangeDetectorRef) {}
