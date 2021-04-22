@@ -45,7 +45,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
         const renderer = dataSeries.renderer as RadialRenderer;
         const labelRadius = renderer?.getOuterRadius(dataSeries.scales.r.range() ?? [0, 0], 0) + (plugin.config.padding as number);
         labelGenerator = arc().outerRadius(labelRadius).innerRadius(labelRadius);
-        labelData = DonutGaugeRenderingUtil.generateThresholdData(dataSeries.data);
+        labelData = DonutGaugeRenderingUtil.generateThresholdRenderingData(dataSeries.data);
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {

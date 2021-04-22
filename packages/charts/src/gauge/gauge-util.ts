@@ -59,7 +59,6 @@ export interface IGaugeRenderingTools {
  * @ignore
  * Convenience utility to simplify gauge usage
  */
-@Directive() // decorator required in Angular 11+
 export class GaugeUtil {
     /** Value used for unifying the linear-style gauge visualization into a single bar stack */
     public static readonly DATA_CATEGORY = "gauge";
@@ -242,17 +241,23 @@ export class GaugeUtil {
      *
      * @returns {DataAccessor} An accessor for determining the color to use based on the series id and/or data value
      */
-    public static createDefaultQuantityColorAccessor(thresholds: number[]): DataAccessor {
+    public static createDefaultQuantityColorAccessor(thresholds?: number[]): DataAccessor {
         // assigning to variable to prevent "Lambda not supported" error
-        const colorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
-            if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
-                return StandardGaugeColor.Critical;
-            }
-            if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
-                return StandardGaugeColor.Warning;
-            }
-            return StandardGaugeColor.Ok;
-        };
+        let colorAccessor: DataAccessor;
+
+        if (thresholds) {
+            colorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
+                if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
+                    return StandardGaugeColor.Critical;
+                }
+                if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
+                    return StandardGaugeColor.Warning;
+                }
+                return StandardGaugeColor.Ok;
+            };
+        } else {
+            colorAccessor = () => StandardGaugeColor.Ok;
+        }
 
         return colorAccessor;
     }
@@ -265,7 +270,7 @@ export class GaugeUtil {
      *
      * @returns {DataAccessor} An accessor for determining the color to use based on the series id and/or data value
      */
-    public static createReversedQuantityColorAccessor(thresholds: number[]): DataAccessor {
+    public static createReversedQuantityThresholdColorAccessor(thresholds: number[]): DataAccessor {
         // assigning to variable to prevent "Lambda not supported" error
         const colorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
@@ -304,7 +309,7 @@ export class GaugeUtil {
      * @returns {Partial<IDataSeries<IAccessors, IGaugeThreshold>>} Threshold data in the form needed by the gauge's thresholds visualization
      */
     public static generateThresholdData(gaugeConfig: IGaugeConfig): Partial<IDataSeries<IAccessors, IGaugeThreshold>> {
-        const markerValues = gaugeConfig.thresholds.map(threshold => ({
+        const markerValues = gaugeConfig.thresholds?.map(threshold => ({
             category: GaugeUtil.DATA_CATEGORY,
             value: threshold,
             hit: threshold <= gaugeConfig.value,
@@ -313,7 +318,7 @@ export class GaugeUtil {
         return {
             id: GAUGE_THRESHOLD_MARKERS_SERIES_ID,
             // tack the max value onto the end (used for donut arc calculation)
-            data: [...markerValues, { category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max, hit: false }],
+            data: [...(markerValues || []), { category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max, hit: false }],
         };
     }
 }

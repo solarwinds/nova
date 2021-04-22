@@ -136,7 +136,7 @@ describe("GaugeUtil >", () => {
 
     describe("createReversedColorAccessor", () => {
         it("should create a standard reversed color accessor", () => {
-            const colorAccessor = GaugeUtil.createReversedQuantityColorAccessor(gaugeConfig.thresholds);
+            const colorAccessor = GaugeUtil.createReversedQuantityThresholdColorAccessor(gaugeConfig.thresholds);
 
             gaugeConfig.enableThresholdMarkers = true;
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
