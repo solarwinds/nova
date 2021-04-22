@@ -56,7 +56,7 @@ describe("DonutGaugeThresholdsRenderer >", () => {
         });
 
         it("should render the correct number of threshold markers", () => {
-            expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds.length);
+            expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds?.length as number);
         });
 
         it("should position the threshold markers correctly", () => {

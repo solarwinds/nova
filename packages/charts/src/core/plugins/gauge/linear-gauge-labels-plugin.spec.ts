@@ -50,7 +50,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {
-        expect(labels.nodes().length).toEqual(gaugeConfig.thresholds.length);
+        expect(labels.nodes().length).toEqual(gaugeConfig.thresholds?.length as number);
     });
 
     describe("horizontal mode", () => {
@@ -188,7 +188,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
 
     it("should render the threshold values as text", () => {
         labels.nodes().forEach((node, index) => {
-            expect(node.textContent).toEqual(gaugeConfig.thresholds[index].toString());
+            expect(node.textContent).toEqual(gaugeConfig.thresholds?.[index].toString() as string);
         });
     });
 
