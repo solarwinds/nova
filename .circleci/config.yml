@@ -302,10 +302,6 @@ jobs:
                     name: Start Selenium docker image
                     command: docker-compose up -d --build selenium
             -   run:
-                    # Needed for daylight saving time tests
-                    name: Set Timezone
-                    command: docker-compose run --user="$UID" systemsetup -settimezone "America/Chicago"
-            -   run:
                     name: Visual tests
                     command: |
                       export PERCY_TOKEN=${CHARTS_PERCY_TOKEN}
