@@ -27,12 +27,13 @@
             </div>
         </div>
     </div>
-    <div class="nui-expander__body"
-         role="region"
-         [attr.aria-label]="header || null"
-         [class.hide-left-border]="hideLeftBorder"
-         [@expandedState]="state"
-         (@expandedState.done)="expandedStateDone()">
-        <ng-content *ngIf="renderBody"></ng-content>
+    <div class="nui-expander__body-wrapper"
+        role="region"
+        [attr.aria-label]="header || null">
+        <div class="nui-expander__body"
+            [class.hide-left-border]="hideLeftBorder"
+            *ngIf="open"
+            @expandContent>
+        <ng-content></ng-content>
     </div>
 </div>

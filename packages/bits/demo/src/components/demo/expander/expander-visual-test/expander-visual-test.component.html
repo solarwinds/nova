@@ -79,5 +79,15 @@
             </nui-expander>
             <hr />
         </div>
+        <div class="col">
+            <h3>Expander with Nested Expanders</h3>
+            <nui-expander id="nui-visual-test-expander-nested-expander" header="Parent" [open]="true">
+                <p i18n>Content goes here</p>
+                <nui-expander id="nui-visual-test-expander-nested-expander-child" header="Child" [open]="true">
+                    <p i18n>Content goes here</p>
+                </nui-expander>
+            </nui-expander>
+            <hr/>
+        </div>
     </div>
 </div>

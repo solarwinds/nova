@@ -8,7 +8,7 @@ export class ExpanderAtom extends Atom {
     public static animationDuration = 350;
 
     private root = this.getElement();
-    private body = this.root.all(by.css(".nui-expander__body")).first();
+    private body = this.root.all(by.css(".nui-expander__body-wrapper")).first();
 
     public isExpanded = async (): Promise<boolean> => (await this.body.getSize()).height > 0;
 
@@ -45,7 +45,7 @@ export class ExpanderAtom extends Atom {
     public getExpanderToggleIcon = (): IconAtom =>
         IconAtom.findIn(IconAtom, this.getElement().element(by.css(".nui-expander__header-icon")))
 
-    public getBodyLeftBorderWidth = async (): Promise<string> => this.body.getCssValue("border-left-width");
+    public getBodyLeftBorderWidth = async (): Promise<string> => this.root.all(by.css(".nui-expander__body")).first().getCssValue("border-left-width");
 
     public toggle = async (): Promise<void> => {
         await this.root.element(by.css(".nui-expander__header")).click();
