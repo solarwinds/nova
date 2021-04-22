@@ -18,7 +18,10 @@ describe("a11y: expander", () => {
     });
 
     it("should check a11y of expander", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${ExpanderAtom.CSS_CLASS}`).disableRules("color-contrast").analyze();
+        const accessibilityScanResults = await new AxeBuilder(browser.driver)
+        .include(`.${ExpanderAtom.CSS_CLASS}`)
+        .disableRules(["color-contrast", "aria-progressbar-name", "aria-required-children", "aria-dialog-name"])
+        .analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);
     });

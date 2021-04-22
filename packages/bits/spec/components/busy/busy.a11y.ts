@@ -11,14 +11,21 @@ describe("a11y: busy", () => {
         await Helpers.prepareBrowser("busy/busy-visual-test");
         switchBusyState = element(by.id("nui-busy-test-button"));
     });
+
     it("should check a11y of busy - on", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${BusyAtom.CSS_CLASS}`).disableRules("color-contrast").analyze();
+        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${BusyAtom.CSS_CLASS}`)
+        .disableRules(["color-contrast", "aria-progressbar-name", "duplicate-id"])
+        .analyze();
+
         expect(accessibilityScanResults.violations).toEqual([]);
     });
 
     it("should check a11y of busy - off", async () => {
         await switchBusyState.click();
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${BusyAtom.CSS_CLASS}`).disableRules("color-contrast").analyze();
+        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${BusyAtom.CSS_CLASS}`)
+        .disableRules(["color-contrast", "aria-progressbar-name", "duplicate-id"])
+        .analyze();
+
         expect(accessibilityScanResults.violations).toEqual([]);
     });
 });

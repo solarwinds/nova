@@ -11,7 +11,10 @@ describe("a11y: icon", () => {
     });
 
     it("should check a11y of icon", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${IconAtom.CSS_CLASS}`).disableRules("duplicate-id").analyze();
+        const accessibilityScanResults = await new AxeBuilder(browser.driver)
+            .include(`.${IconAtom.CSS_CLASS}`)
+            .disableRules("duplicate-id", "color-contrast")
+            .analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);
     });
