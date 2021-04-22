@@ -35,7 +35,7 @@ import { ButtonSizeType } from "./public-api";
     selector: "[nui-button]",
     templateUrl: "./button.component.html",
     host: {
-        "role": "button",
+        "[attr.aria-busy]": "isBusy || null",
         "class": "nui-button btn",
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -77,6 +77,10 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
      * the button has no inner content, the empty button styling will still be applied.
      */
     @Input() public isEmpty: boolean;
+
+    /** Sets aria-label for the component */
+    @Input() public ariaLabel: string = ""
+
     /**
      * Optionally, set whether to fire a "click" event repeatedly while the button is pressed.
      */
@@ -114,7 +118,7 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
             this.dispStyleActionClass || this.displayStyleDestructiveClass);
     }
 
-    @HostBinding("attr.aria-label") public get ariaIconLabel() { return this.icon; }
+    @HostBinding("attr.aria-label") public get ariaIconLabel() { return this.ariaLabel || this.getAriaLabel(); }
 
     @ViewChild("contentContainer", {static: true, read: ViewContainerRef }) private contentContainer: ViewContainerRef;
 
@@ -169,6 +173,11 @@ should be set explicitly: `, el.nativeElement);
             width: `${d}px`,
             height: `${d}px`,
         };
+    }
+
+    private getAriaLabel() {
+        const innerText: string = this.contentContainer.element.nativeElement.innerText;
+        return this._isContentEmpty ? this.icon : innerText.trim();
     }
 
     private setIsContentEmptyValue() {

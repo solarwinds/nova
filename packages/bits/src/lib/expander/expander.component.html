@@ -3,10 +3,12 @@
     <div class="nui-expander__header"
          role="button"
          [attr.aria-expanded]="state === 'expanded'"
+         [attr.aria-disabled]="disabled"
          [class.nui-expander__header--empty]="!header && isCustomHeaderContentEmpty"
          (click)="toggle()">
         <nui-icon class="nui-expander__header-icon"
                   [iconColor]="getIconColor()"
+                  aria-hidden="true"
                   icon="{{open ? 'triangle-down' : 'triangle-right'}}"></nui-icon>
         <div class="nui-expander__header-content-wrapper"
              [class.nui-expander__custom-header--empty]="isCustomHeaderContentEmpty">
@@ -26,6 +28,8 @@
         </div>
     </div>
     <div class="nui-expander__body"
+         role="region"
+         [attr.aria-label]="header || null"
          [class.hide-left-border]="hideLeftBorder"
          [@expandedState]="state"
          (@expandedState.done)="expandedStateDone()">
