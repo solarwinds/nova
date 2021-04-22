@@ -52,11 +52,11 @@ describe("DonutGaugeThresholdsRenderer >", () => {
             arcGenerator = arc()
                 .outerRadius(renderer.getOuterRadius(renderSeries.scales.r.range(), 0))
                 .innerRadius(innerRadius >= 0 ? innerRadius : 0);
-            markerData = DonutGaugeRenderingUtil.generateThresholdData(renderSeries.dataSeries.data);
+            markerData = DonutGaugeRenderingUtil.generateThresholdRenderingData(renderSeries.dataSeries.data);
         });
 
         it("should render the correct number of threshold markers", () => {
-            expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds.length);
+            expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds?.length as number);
         });
 
         it("should position the threshold markers correctly", () => {
