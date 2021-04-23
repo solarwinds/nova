@@ -528,6 +528,8 @@ jobs:
         environment:
             NOVA_DIR: ~/nova
         steps:
+            -   checkout:
+                    path: ~/nova
             -   run:
                     name: Docs Cleanup
                     command: yarn run clean-docs-ci
