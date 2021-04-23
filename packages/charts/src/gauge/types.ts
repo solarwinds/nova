@@ -9,8 +9,8 @@ export interface IGaugeConfig {
     value: number;
     /** The max value of the gauge */
     max: number;
-    /** An array of the gauge's threshold values */
-    thresholds: number[];
+    /** An optional array of the gauge's threshold values */
+    thresholds?: number[];
     /** Set to true to enable the threshold markers */
     enableThresholdMarkers?: boolean;
     /** Optional accessor for customizing the color to display for the quantity segment as each threshold is hit */

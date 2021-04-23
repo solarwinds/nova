@@ -102,9 +102,9 @@ export class Chart implements IChart {
         this.renderEngine = this.buildRenderEngine(this.grid.getLasagna(), this.dataManager);
 
         // Put the render engine at the front of the list since other plugins may be relying on renderers to be updated first
-        const renderEnginPlugin = new RenderEnginePlugin();
-        renderEnginPlugin.chart = this;
-        this.plugins.unshift(renderEnginPlugin);
+        const renderEnginePlugin = new RenderEnginePlugin();
+        renderEnginePlugin.chart = this;
+        this.plugins.unshift(renderEnginePlugin);
 
         for (const gridPlugin of this.getGrid().buildPlugins(this)) {
             this.addPlugin(gridPlugin);

@@ -151,20 +151,20 @@ describe("components >", () => {
             describe("when body content is specified", () => {
                 let usageFixture: ComponentFixture<ExpanderUsageWithContentComponent>;
                 let usageSubject: ExpanderUsageWithContentComponent;
-                const getBodyContentEl = () => usageFixture.debugElement.query(By.css(".nui-expander__body"));
+                const getBodyContentEl = () => usageFixture.debugElement.query(By.css(".nui-expander__body-wrapper"));
 
                 beforeEach(() => {
                     usageFixture = TestBed.createComponent(ExpanderUsageWithContentComponent);
                     usageSubject = usageFixture.componentInstance;
                 });
 
-                xit("project content when when open", () => {
+                it("should project content when open", () => {
                     usageSubject.open = true;
                     usageFixture.detectChanges();
-                    expect(getBodyContentEl().nativeElement.innerHTML).toContain(customBodyHtml);
+                    expect(getBodyContentEl()).not.toBeNull();
                 });
 
-                it("does not project content when when closed", () => {
+                it("should not project content when closed", () => {
                     usageSubject.open = false;
                     usageFixture.detectChanges();
                     expect(getBodyContentEl().nativeElement.innerHTML).not.toContain(customBodyHtml);

@@ -101,6 +101,8 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
     private futureStep?: WizardStepComponent;
 
     private arraySteps: any[];
+    private dynamicSubscriptions = new Map();
+    private dynamicRefs = new Map();
 
     constructor(private changeDetector: ChangeDetectorRef,
         private componentFactoryResolver: ComponentFactoryResolver,
@@ -156,11 +158,47 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WizardStepComponent);
         const componentRef = this.dynamicStep.createComponent(componentFactory);
         const instance: IWizardStepComponent = componentRef.instance;
-        instance.title = wizardStep.title;
-        instance.stepTemplate = wizardStep.stepTemplate;
+        const wizardStepInputs = this.getInputsAndOutputs(wizardStep);
+
+        wizardStepInputs.forEach(key => {
+            instance[key] =  wizardStep[key];
+        });
+        this.handleStepControl(componentRef.instance);
+
+        const subscription = instance.valid?.subscribe((event: any) => {
+            if (!_isUndefined(event)) {
+                instance.stepControl = wizardStep.stepControl;
+                this.handleStepControl(componentRef.instance);
+            }
+        });
+
+        this.dynamicRefs.set(instance, componentRef);
+        this.dynamicSubscriptions.set(instance, subscription);
         this.arraySteps.splice(indexToInsert, 0, componentRef.instance);
+        this.steps.reset([]);
         this.steps.reset(this.arraySteps);
         return componentRef.instance;
+    }
+
+    public removeStep(index: number): void {
+        const steps = this.steps.toArray();
+
+        if (index < 1 || index > steps.length - 1) {
+            return;
+        }
+
+        const stepToRemove = steps[index];
+
+        if (this.currentStep === stepToRemove) {
+            this.onBackClick();
+        }
+
+        this.onRemoveDynamic(stepToRemove);
+        this.arraySteps.splice(index, 1);
+        this.steps.reset([]);
+        this.steps.reset(this.arraySteps);
+        this.stepIndex = this.steps.toArray()
+            .findIndex((s) => s === this.currentStep);
     }
 
     public disableStep (step: WizardStepComponent) {
@@ -282,6 +320,12 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         });
     }
 
+    private getInputsAndOutputs(compType: IWizardStepComponent): string[] {
+        const inputs = compType.inputsList;
+        const outputs = Object.keys(compType).filter( key => compType[key] instanceof EventEmitter);
+        return [ ...inputs, ...outputs];
+    }
+
     private handleStepControl(step?: WizardStepComponent) {
         if (!_isUndefined(step?.stepControl)) {
             if (step?.stepControl) {
@@ -296,5 +340,18 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         const widths = this.stepTitles.map((title) => title.nativeElement.offsetWidth);
 
         return Math.round(Math.max(...widths));
+    }
+
+    private onRemoveDynamic(step: WizardStepComponent): void {
+        const dynamicSubscription = this.dynamicSubscriptions.get(step);
+        const ref = this.dynamicRefs.get(step);
+
+        if (ref) {
+            ref.destroy();
+        }
+
+        if (dynamicSubscription) {
+            dynamicSubscription.unsubscribe();
+        }
     }
 }

@@ -254,6 +254,9 @@ jobs:
         working_directory: ~/nova/packages/charts
         docker:
             -   image: circleci/node:12-browsers
+        environment:
+            # Needed for daylight saving time tests
+            TZ: "America/Chicago"
         steps:
             -   attach_workspace:
                     at: ~/nova

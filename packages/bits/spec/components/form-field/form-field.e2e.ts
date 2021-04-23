@@ -137,15 +137,15 @@ describe("USERCONTROL form-field >", () => {
         });
 
         it("should be set for date-picker", async () => {
-            expect(await elementAriaLabel(datepicker)).toEqual("Datepicker textbox");
+            expect(await elementAriaLabel(datepicker)).toEqual("Datepicker");
         });
 
         it("should be set for time-picker", async () => {
-            expect(await elementAriaLabel(timepicker)).toEqual("Timepicker textbox");
+            expect(await elementAriaLabel(timepicker)).toEqual("Timepicker");
         });
 
         it("should be set for date-time-picker", async () => {
-            expect(await elementAriaLabel(dateTimepicker)).toEqual("Date Time Picker date textbox");
+            expect(await elementAriaLabel(dateTimepicker)).toEqual("Date Time Picker date");
         });
 
         it("should be set for select-v2", async () => {

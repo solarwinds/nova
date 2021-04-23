@@ -88,6 +88,7 @@ export class WizardStepComponent implements IWizardStepComponent, OnInit, OnChan
     public complete = false;
     public icon = "step";
     public iconColor = "";
+    public inputsList: string[] = [];
 
     constructor() { }
 
@@ -96,6 +97,9 @@ export class WizardStepComponent implements IWizardStepComponent, OnInit, OnChan
     }
 
     public ngOnChanges(changes: SimpleChanges) {
+        if (this.inputsList.length === 0) {
+            this.inputsList = Object.keys(changes);
+        }
         if (changes["stepControl"]) {
             this.valid.emit(this.stepControl);
         }

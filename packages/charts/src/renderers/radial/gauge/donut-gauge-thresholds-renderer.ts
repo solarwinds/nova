@@ -47,7 +47,7 @@ export class DonutGaugeThresholdsRenderer extends RadialRenderer {
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
         const markerSelection = dataContainer.selectAll(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`)
-            .data(DonutGaugeRenderingUtil.generateThresholdData(data));
+            .data(DonutGaugeRenderingUtil.generateThresholdRenderingData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")

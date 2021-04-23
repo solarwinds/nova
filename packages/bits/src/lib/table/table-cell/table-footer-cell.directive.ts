@@ -9,7 +9,7 @@ import { Directive, ElementRef } from "@angular/core";
     selector: "nui-footer-cell, td[nuiFooterCell]",
     host: {
         "class": "mat-footer-cell",
-        "role": "cell",
+        "role": "gridcell",
     },
 })
 export class TableFooterCellDirective extends CdkFooterCell {
