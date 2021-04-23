@@ -70,6 +70,11 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
         return this.configuration.legendPlacement === LegendPlacement.Right;
     }
 
+    /** Checks if the series is interactive or if the dataSource has a link property */
+    public isSeriesInteractive(legendSeries: IChartAssistSeries<IAccessors>): boolean {
+        return !(legendSeries?.link === undefined) || !(this.seriesInteractive === undefined);
+    }
+
     public onLegendClick(legendSeries: IChartAssistSeries<IAccessors>, event: MouseEvent) {
         if (!this.seriesInteractive) {
             return;
@@ -85,8 +90,21 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
         }
     }
 
-    public onLegendDescriptionClick(legendSeries: IChartAssistSeries<IAccessors>) {
-        this.eventBus.getStream(INTERACTION).next({ payload: { data: legendSeries } });
+    public onInteraction(legendSeries: IChartAssistSeries<IAccessors>) {
+        if (!this.seriesInteractive) {
+            return;
+        }
+
+        if (legendSeries?.link) {
+            this.eventBus.getStream(INTERACTION).next({ payload: { data: legendSeries } });
+        } else {
+            this.eventBus.getStream(INTERACTION).next({
+                payload: {
+                    data: legendSeries,
+                    interactionType: TimeseriesInteractionType.Series,
+                },
+            });
+        }
     }
 
     /** Updates chart data. */
