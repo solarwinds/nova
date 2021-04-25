@@ -10,9 +10,15 @@ describe("a11y: badge", () => {
     });
 
     it("should check a11y of badge", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).
-        disableRules(["duplicate-id", "label", "landmark-one-main", "page-has-heading-one", "region"])
-        .analyze();
+        const accessibilityScanResults =
+            await new AxeBuilder(browser.driver).
+                disableRules([
+                    "label",
+                    "landmark-one-main",
+                    "page-has-heading-one",
+                    "region",
+                ])
+                .analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);
     });

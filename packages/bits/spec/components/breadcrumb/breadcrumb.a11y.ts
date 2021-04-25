@@ -12,6 +12,7 @@ describe("a11y: breadcrumb", () => {
         showSecondViewButton = element(by.id("nui-demo-breadcrumb-show-second-view"));
         showThirdViewButton = element(by.id("nui-demo-breadcrumb-show-third-view"));
         await Helpers.prepareBrowser("breadcrumb/breadcrumb-visual-test");
+
         await showSecondViewButton.click();
         await showThirdViewButton.click();
     });

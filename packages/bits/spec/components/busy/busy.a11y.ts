@@ -6,6 +6,7 @@ const AxeBuilder = require("@axe-core/webdriverjs");
 
 describe("a11y: busy", () => {
     let switchBusyState: ElementFinder;
+    let rulesToDisable: string[] = ["color-contrast", "aria-progressbar-name", "duplicate-id"];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("busy/busy-visual-test");
@@ -13,18 +14,22 @@ describe("a11y: busy", () => {
     });
 
     it("should check a11y of busy - on", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${BusyAtom.CSS_CLASS}`)
-        .disableRules(["color-contrast", "aria-progressbar-name", "duplicate-id"])
-        .analyze();
+        const accessibilityScanResults =
+            await new AxeBuilder(browser.driver)
+                .include(`.${BusyAtom.CSS_CLASS}`)
+                .disableRules(rulesToDisable)
+                .analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);
     });
 
     it("should check a11y of busy - off", async () => {
         await switchBusyState.click();
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${BusyAtom.CSS_CLASS}`)
-        .disableRules(["color-contrast", "aria-progressbar-name", "duplicate-id"])
-        .analyze();
+        const accessibilityScanResults =
+            await new AxeBuilder(browser.driver)
+                .include(`.${BusyAtom.CSS_CLASS}`)
+                .disableRules(rulesToDisable)
+                .analyze();
 
         expect(accessibilityScanResults.violations).toEqual([]);
     });
