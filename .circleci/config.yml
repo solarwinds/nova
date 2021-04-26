@@ -734,4 +734,6 @@ workflows:
                           only:
                               - main
         jobs:
-            - nova-docs-cleanup
+            - nova-docs-cleanup:
+                context:
+                    - common-build-creds
