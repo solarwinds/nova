@@ -21,7 +21,7 @@ Here's what you need to know to get started:
 5. Once you're done with the implementation, create a PR to merge the changes back to the main branch of the base repository. Link any issues that are being fixed with this PR, then email the Nova Team at <nova-ui@solarwinds.com> with a link to the created PR. A build should automatically be triggered in CircleCI upon creating the PR.
 6. Once the review is approved and all build checks have passed, we'll merge it back to the base repository.
 7. Any non-maintainer change requires review by 1 QA and 2 developers
-8. If you are making a medium-to-large change, please coordinate with a nova developer before starting work, so we can schedule time for code reviews.  If you fail to notify us before contributing, your change may be delayed.
+8. If you are making a medium-to-large change, please coordinate with a nova developer before starting work, so we can schedule time for code reviews.  If you don't notify us before contributing, your change may be delayed.
 
 ### When Can I Consume My Changes?
 
