@@ -180,11 +180,10 @@ Information about this can be found [here](../../README.md#Typescript-Compiler-O
 
 ## Schematics
 A [schematic](https://angular.io/guide/schematics) is a template-based code generator that supports complex logic. It is a set of instructions for transforming a software project by generating or modifying code. Schematics are part of the Angular ecosystem. 
-Nova Bits offers the following [schematics](http://apollo-docs.swdev.local/nova-bits/release_nova_v8.x/sdk/api-docs-ng2/additional-documentation/schematics
-.html):  
+Nova Bits offers the following [schematics](https://nova-ui.solarwinds.io/bits/release_v11.x/additional-documentation/schematics.html):  
 
 #### Filtered View
-[The Filtered View](http://apollo-docs.swdev.local/nova-bits/release_nova_v8.x/sdk/api-docs-ng2/additional-documentation/schematics/filtered-view.html) 
+[The Filtered View](https://nova-ui.solarwinds.io/bits/release_v11.x/additional-documentation/schematics/filtered-view.html) 
 schematic provides the ability to create a generic filtered view that can cover many use cases for filtering a set of data. Its main responsibility is to integrate a filter group panel with a list or table view that displays the filtered data. More details can be found [here](https://solarwinds.sharepoint.com/portals/hub/_layouts/15/PointPublishing.aspx?app=video&p=p&chid=8511af43-214a-435d-a605-dbe722ca04a0&vid=a5dbbef3-3582-49bf-b537-f789f946d09f)
 To add a filtered view to your project, run the following command: 
 ```
@@ -193,8 +192,8 @@ ng generate @nova-ui/bits:filtered-view --name=custom-name-for-filtered-view
 <br>
 
 #### Filtered Group
-[The Filtered Group](http://apollo-docs.swdev.local/nova-bits/release_nova_v8.x/sdk/api-docs-ng2/additional-documentation/schematics/filter-group.html) 
-schematic provides the ability to create a filtered group view. It depends heavily on the [LocalFilteringDataSource](http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/injectables/LocalFilteringDataSource.html) service, so first and foremost please check out the documentation for it.
+[The Filtered Group](https://nova-ui.solarwinds.io/bits/release_v11.x/additional-documentation/schematics/filter-group.html) 
+schematic provides the ability to create a filtered group view. It depends heavily on the [LocalFilteringDataSource](https://nova-ui.solarwinds.io/bits/release_v11.x/injectables/LocalFilteringDataSource.html) service, so first and foremost please check out the documentation for it.
 This code can be generated using the following command: 
 ```
 ng generate @nova-ui/bits:filter-group --name=basic-filter-group --p=app
@@ -202,8 +201,8 @@ ng generate @nova-ui/bits:filter-group --name=basic-filter-group --p=app
 <br>
 
 #### List
-[The List](http://apollo-docs.swdev.local/nova-bits/release_nova_v8.x/sdk/api-docs-ng2/additional-documentation/schematics/list.html) schematic provides the 
-ability to create a generic list that can cover a majority of use cases for a list. Its main responsibility is to integrate the functionality of the [nui-repeat](http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/components/RepeatComponent.html) component with other components commonly used with a list such as [nui-select](http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/components/SelectComponent.html), [nui-search](http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/components/SearchComponent.html), [nui-paginator](http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/components/PaginatorComponent.html) and [nui-sorter](http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/components/SorterComponent.html).
+[The List](https://nova-ui.solarwinds.io/bits/release_v11.x/additional-documentation/schematics/list.html) schematic provides the 
+ability to create a generic list that can cover a majority of use cases for a list. Its main responsibility is to integrate the functionality of the [nui-repeat](https://nova-ui.solarwinds.io/bits/release_v11.x/components/RepeatComponent.html) component with other components commonly used with a list such as [nui-select-v2](https://nova-ui.solarwinds.io/bits/release_v11.x/components/SelectV2Component.html), [nui-search](http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/components/SearchComponent.html), [nui-paginator](https://nova-ui.solarwinds.io/bits/release_v11.x/components/PaginatorComponent.html) and [nui-sorter](https://nova-ui.solarwinds.io/bits/release_v11.x/components/SorterComponent.html).
 This code can be generated using the following command: 
 ```
 ng g @nova-ui/bits:list --name=basic-list --p=app

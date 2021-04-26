@@ -12,7 +12,7 @@ import { IRandomUserResponse, IRandomUserResults, IRandomUserTableModel, UsersQu
 import { apiRoute, RANDOMUSER_API_URL, responseError } from "./constants";
 
 // This datasource extends LocalFilteringDataSource. Link to api docs below:
-// http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/injectables/LocalFilteringDataSource.html
+// https://nova-ui.solarwinds.io/bits/release_v11.x/injectables/LocalFilteringDataSource.html
 @Injectable()
 export class AcmeTableDataSource extends DataSourceService<IRandomUserTableModel> implements IDataSource {
     public static providerId = "AcmeTableDataSource";
