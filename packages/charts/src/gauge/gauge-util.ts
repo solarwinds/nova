@@ -1,4 +1,3 @@
-import { Directive, Injectable } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { LinearScale } from "../core/common/scales/linear-scale";
 
