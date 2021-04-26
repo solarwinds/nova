@@ -22,7 +22,7 @@ export class GaugeTestPageComponent {
     constructor() {
         // this.thresholds = new Array(200).fill(null).map((e, i) => i);
         // this.thresholds = [50, 75, 100, 125, 150, 175, 200];
-        this.reversedColorAccessor = GaugeUtil.createReversedQuantityColorAccessor(this.thresholds);
+        this.reversedColorAccessor = GaugeUtil.createReversedQuantityThresholdColorAccessor(this.thresholds);
 
         this.gaugeConfig = this.getGaugeConfig();
     }

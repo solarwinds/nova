@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule, NuiIconModule, NuiMessageModule } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiTextboxModule } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
@@ -11,6 +11,9 @@ import { GaugeVisualTestComponent } from "./visual-test/gauge-visual-test.compon
 import { HorizontalGaugeTesterComponent } from "./visual-test/horizontal/horizontal-gauge-tester.component";
 import { DonutGaugeTesterComponent } from "./visual-test/donut/donut-gauge-tester.component";
 import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
+import { DonutGaugeBasicExampleComponent } from "./donut-basic/donut-gauge-basic-example.component";
+import { DonutGaugeWithContentExampleComponent } from "./donut-with-content/donut-gauge-with-content-example.component";
+import { DonutGaugeWithThresholdMarkersExampleComponent } from "./donut-with-threshold-markers/donut-gauge-with-threshold-markers-example.component";
 
 const exampleRoutes: Routes = [
     {
@@ -29,6 +32,33 @@ const exampleRoutes: Routes = [
             },
         },
     },
+    {
+        path: "donut-basic",
+        component: DonutGaugeBasicExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "donut-with-threshold-markers",
+        component: DonutGaugeWithThresholdMarkersExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "donut-with-content",
+        component: DonutGaugeWithContentExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -37,6 +67,9 @@ const exampleRoutes: Routes = [
         GaugeVisualTestComponent,
         HorizontalGaugeTesterComponent,
         DonutGaugeTesterComponent,
+        DonutGaugeBasicExampleComponent,
+        DonutGaugeWithContentExampleComponent,
+        DonutGaugeWithThresholdMarkersExampleComponent,
         VerticalGaugeTesterComponent,
     ],
     imports: [
@@ -44,9 +77,11 @@ const exampleRoutes: Routes = [
         FormsModule,
         NuiChartsModule,
         NuiCommonModule,
+        NuiFormFieldModule,
         NuiIconModule,
         NuiDocsModule,
         NuiMessageModule,
+        NuiTextboxModule,
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
