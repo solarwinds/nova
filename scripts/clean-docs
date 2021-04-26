@@ -39,7 +39,7 @@ git diff --name-only > .git_diff_name-only
 # all git files
 git ls-tree -r --name-only HEAD	> .git_ls-tree_r_name-only_HEAD
 
-# minus https://stackoverflow.com/questions/1370996/minus-operation-on-two-files-using-linux-commands                                                                      
+# minus https://stackoverflow.com/questions/1370996/minus-operation-on-two-files-using-linux-commands
 # only restore files not modified
 comm -2 -3 .git_ls-tree_r_name-only_HEAD .git_diff_name-only | while read filename; do
     if [[ $filename != *"/release"* ]] && [[ $filename != *"/main/"* ]] && [[ $filename != *"/next/"* ]]; then
@@ -75,9 +75,9 @@ echo ""
 echo " Pushing changes to the docs repo"
 echo "-----------------------------------"
 echo ""
-git config user.email "circleci@circleci"
-git config user.name "${GITHUB_USER_NAME}"
-git remote set-url origin https://$GITHUB_USER_NAME:$GITHUB_TOKEN@github.com/solarwinds/nova-docs.git
+git config --global user.email circleci@circleci
+git config --global user.name $CIRCLE_PROJECT_USERNAME
+git remote set-url origin https://$CIRCLE_PROJECT_USERNAME:$GITHUB_TOKEN@github.com/solarwinds/nova-docs.git
 git add .
 git commit -m "docs cleaned up" --allow-empty
 git push
