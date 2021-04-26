@@ -202,7 +202,7 @@ ng generate @nova-ui/bits:filter-group --name=basic-filter-group --p=app
 
 #### List
 [The List](https://nova-ui.solarwinds.io/bits/release_v11.x/additional-documentation/schematics/list.html) schematic provides the 
-ability to create a generic list that can cover a majority of use cases for a list. Its main responsibility is to integrate the functionality of the [nui-repeat](https://nova-ui.solarwinds.io/bits/release_v11.x/components/RepeatComponent.html) component with other components commonly used with a list such as [nui-select-v2](https://nova-ui.solarwinds.io/bits/release_v11.x/components/SelectV2Component.html), [nui-search](http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/components/SearchComponent.html), [nui-paginator](https://nova-ui.solarwinds.io/bits/release_v11.x/components/PaginatorComponent.html) and [nui-sorter](https://nova-ui.solarwinds.io/bits/release_v11.x/components/SorterComponent.html).
+ability to create a generic list that can cover a majority of use cases for a list. Its main responsibility is to integrate the functionality of the [nui-repeat](https://nova-ui.solarwinds.io/bits/release_v11.x/components/RepeatComponent.html) component with other components commonly used with a list such as [nui-select-v2](https://nova-ui.solarwinds.io/bits/release_v11.x/components/SelectV2Component.html), [nui-search](https://nova-ui.solarwinds.io/bits/release_v11.x/components/SearchComponent.html), [nui-paginator](https://nova-ui.solarwinds.io/bits/release_v11.x/components/PaginatorComponent.html) and [nui-sorter](https://nova-ui.solarwinds.io/bits/release_v11.x/components/SorterComponent.html).
 This code can be generated using the following command: 
 ```
 ng g @nova-ui/bits:list --name=basic-list --p=app
