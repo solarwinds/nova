@@ -75,8 +75,8 @@ echo ""
 echo " Pushing changes to the docs repo"
 echo "-----------------------------------"
 echo ""
-git config --global user.email circleci@circleci
-git config --global user.name $CIRCLE_PROJECT_USERNAME
+git config --global user.email "circleci@circleci"
+git config --global user.name "${CIRCLE_PROJECT_USERNAME}"
 git remote set-url origin https://$CIRCLE_PROJECT_USERNAME:$GITHUB_TOKEN@github.com/solarwinds/nova-docs.git
 git add .
 git commit -m "docs cleaned up" --allow-empty
