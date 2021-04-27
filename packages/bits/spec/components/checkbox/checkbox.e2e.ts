@@ -9,7 +9,6 @@ describe("USERCONTROL Checkbox", () => {
     let atomBasic: CheckboxAtom;
     let atomDisabled: CheckboxAtom;
     let atomIndeterminate: CheckboxAtom;
-    let changeOutput: CheckboxAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("checkbox/checkbox-test");
@@ -17,7 +16,6 @@ describe("USERCONTROL Checkbox", () => {
         atomBasic = Atom.find(CheckboxAtom, "nui-demo-checkbox-basic");
         atomDisabled = Atom.find(CheckboxAtom, "nui-demo-checkbox-disabled");
         atomIndeterminate = Atom.find(CheckboxAtom, "nui-demo-checkbox-indeterminate");
-        changeOutput = Atom.find(CheckboxAtom, "nui-demo-checkbox-change");
     });
 
     describe("Value section:", () => {
