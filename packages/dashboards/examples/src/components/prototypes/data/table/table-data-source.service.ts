@@ -7,7 +7,7 @@ import { TABLE_DATA } from "../widget-data";
 import { BasicTableModel, ITableDataSourceOutput } from "./types";
 
 // This datasource extends LocalFilteringDataSource. Link to api docs below:
-// http://apollo-docs.swdev.local/bits/release_nova_v8.x/sdk/api-docs-ng2/injectables/LocalFilteringDataSource.html
+// https://nova-ui.solarwinds.io/bits/release_v11.x/injectables/LocalFilteringDataSource.html
 // If you need to work with back-end filtering, you need to extend DataSourceService instead of LocalFilteringDataSource
 @Injectable()
 export class TableWidgetDataSource extends LocalFilteringDataSource<BasicTableModel> {
