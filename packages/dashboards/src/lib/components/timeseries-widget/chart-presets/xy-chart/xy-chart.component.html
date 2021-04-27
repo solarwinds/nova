@@ -4,62 +4,78 @@
         <nui-chart class="w-100" [chart]="chartAssist.chart"></nui-chart>
     </div>
     <div class="d-flex" *ngIf="hasLegend()"
-         [ngClass]="[legendShouldBeAlignedRight() ? 'legend scrollable' : 'legend-bottom']">
+                [ngClass]="[legendShouldBeAlignedRight() ? 'legend scrollable' : 'legend-bottom']">
         <nui-legend class="m-auto"
                     [active]="chartAssist.isLegendActive"
                     [interactive]="true"
                     [orientation]="legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'">
             <nui-legend-series *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn"
-                            [descriptionPrimary]="(!isSeriesInteractive(legendSeries))? legendSeries.legendDescriptionPrimary : undefined"
-                            [descriptionSecondary]="(!isSeriesInteractive(legendSeries))? legendSeries.legendDescriptionSecondary : undefined"
-                               [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
-                               (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)"
-                               (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
-                               (mouseleave)="chartAssist.resetVisibleSeries()"
-                               [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
-                               (click)="onLegendClick(legendSeries, $event)">
+                        [descriptionPrimary]="undefined"
+                        [descriptionSecondary]="undefined"
+                        [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
+                        (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)"
+                        (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
+                        (mouseleave)="chartAssist.resetVisibleSeries()"
+                        [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
+                        (click)="onLegendClick(legendSeries, $event)">
                 <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(legendSeries, 'y', undefined, valueAccessorKey)"
-                                      [backgroundColor]="chartAssist.palette.standardColors.get(legendSeries.id)"
-                                      [color]="chartAssist.palette.textColors.get(legendSeries.id)">
+                            [backgroundColor]="chartAssist.palette.standardColors.get(legendSeries.id)"
+                            [color]="chartAssist.palette.textColors.get(legendSeries.id)">
                     <nui-chart-marker rightEdge
-                                      [marker]="chartAssist.markers.get(legendSeries.id)"
-                                      [color]="chartAssist.palette.standardColors.get(legendSeries.id)">
+                                [marker]="chartAssist.markers.get(legendSeries.id)"
+                                [color]="chartAssist.palette.standardColors.get(legendSeries.id)">
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
 
-                <div description class="d-flex align-items-center px-2">
-                    <div class="description-container d-flex flex-column justify-content-center">
-                        <div *ngIf="!legendSeries?.link else elseLinkHref">
-                            <div class= "nui-text-link-small"
-                                (click)="onInteraction(legendSeries)">
-                                <div class="description description-primary legend-description-primary" 
-                                    [title]="legendSeries.legendDescriptionPrimary">
-                                        {{legendSeries.legendDescriptionPrimary}}
-                                </div>
-                                <div class="description description-secondary" 
-                                    [title]="legendSeries.legendDescriptionSecondary">
-                                        {{legendSeries.legendDescriptionSecondary}}
-                                </div>
+                <div description
+                    class="legend-description-container nui-text-small d-flex flex-column justify-content-center px-2"
+                    [ngClass]="['state-' + chartAssist.renderStatesIndex[legendSeries.id]?.state]">
+
+                        State - {{chartAssist.renderStatesIndex[legendSeries.id]?.state}}
+                    <div *ngIf="isSeriesInteractive(legendSeries); else noLink"
+                        class="legend-description"
+                        (click)="$event.stopPropagation()">
+                        <div *ngIf="!legendSeries.link" 
+                            class="legend-description-primary link" 
+                            [title]="legendSeries.legendDescriptionPrimary"
+                            (click)="onInteraction(legendSeries, $event)">
+                                HANDLER - {{legendSeries.legendDescriptionPrimary}}
+                        </div>
+                        <a class="legend-description-primary link"
+                            *ngIf="legendSeries.link" 
+                            [href]="legendSeries.link" 
+                            rel="noopener noreferrer"
+                            [title]="legendSeries.legendDescriptionPrimary">
+                                HREF - {{legendSeries.legendDescriptionPrimary}}
+                        </a>
+                        <div (click)="onInteraction(legendSeries, $event)"
+                            class="legend-description-secondary"
+                            *ngIf="!legendSeries.secondaryLink" 
+                            [title]="legendSeries.legendDescriptionSecondary">
+                                {{legendSeries.legendDescriptionSecondary}}
+                        </div>
+                        <div *ngIf="legendSeries.secondaryLink">
+                            <a class="legend-description-secondary link"
+                            [href]="legendSeries.secondaryLink" 
+                            rel="noopener noreferrer"
+                            [title]="legendSeries.legendDescriptionSecondary">
+                            HREF - {{legendSeries.legendDescriptionSecondary}}
+                            </a>
+                        </div>
+                    </div>
+                    <ng-template #noLink>
+                        <div class="legend-description">
+                            <div *ngIf="!!legendSeries.legendDescriptionPrimary" 
+                                class="legend-description-primary" 
+                                [title]="legendSeries.legendDescriptionPrimary">{{ legendSeries.legendDescriptionPrimary }}
+
+                            </div>
+                            <div *ngIf="!!legendSeries.legendDescriptionSecondary" class="legend-description-secondary" [title]="legendSeries.legendDescriptionSecondary">{{ legendSeries.legendDescriptionSecondary }}
+
                             </div>
                         </div>
-                        <ng-template #elseLinkHref>
-                            <div (click)="$event.stopPropagation()">
-                                <a class="nui-text-link-small"
-                                        [href]="legendSeries.link">
-                                    <div class="description description-primary legend-description-primary" 
-                                        [title]="legendSeries.legendDescriptionPrimary">
-                                            {{legendSeries.legendDescriptionPrimary}}
-                                    </div>
-                                    <div class="description description-secondary"
-                                        [title]="legendSeries.legendDescriptionSecondary">
-                                            {{legendSeries.legendDescriptionSecondary}}
-                                    </div>
-                                </a>
-                            </div>
-                        </ng-template>
-                    </div>
+                    </ng-template>
                 </div>
-
             </nui-legend-series>
         </nui-legend>
     </div>

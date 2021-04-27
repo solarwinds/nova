@@ -1,5 +1,52 @@
 @import (reference) "node_modules/@nova-ui/bits/sdk/less/nui-framework-variables";
+@import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables.less";
+@import (reference) "@nova-ui/bits/sdk/less/mixins.less";
 
-.legend-description-primary {
-    font-weight: @nui-font-weight-semibold;
+@nui-legend-deemphasized-opacity: 0.3;
+@nui-legend-series-content-margin: 3px;
+
+.legend-description-container {
+    & .legend-description {
+        // line-height: @nui-line-height-default;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding-left: @nui-space-xs;
+        padding-right: @nui-space-xs;
+        min-width: 130px;
+
+        // &-container {
+        //     overflow: hidden;
+        // }
+
+        &-primary {
+            font-weight: @nui-font-weight-semibold;
+            .setCssVariable(color, nui-color-text-default);
+            &.link {
+                .setCssVariable(color, nui-color-text-link);
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        &-secondary {
+            .setCssVariable(color, nui-color-text-secondary);
+            margin-top: -1px;
+            &.link {
+                .setCssVariable(color, nui-color-text-link);
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+    &:not(:hover)&.state-hidden {
+        .legend-description {
+            opacity: @nui-legend-deemphasized-opacity;
+            .legend-description-primary {
+                color: @nui-color-text-default;
+            }
+        }
+    }
 }

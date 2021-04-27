@@ -120,6 +120,7 @@ export function getTimeseriesWidgetData(): ITimeseriesWidgetData[] {
             name: "Average CPU Load",
             description: "AII ESXi Hosts",
             link: "https://en.wikipedia.org/wiki/Nur-Sultan",
+            secondaryLink: "https://en.wikipedia.org/wiki",
             data: [
                 { x: moment(startOfToday).subtract(59, "day").toDate(), y: 35 },
                 { x: moment(startOfToday).subtract(58, "day").toDate(), y: 33 },

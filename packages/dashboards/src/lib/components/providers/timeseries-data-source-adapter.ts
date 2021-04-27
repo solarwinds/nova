@@ -50,6 +50,7 @@ export class TimeseriesDataSourceAdapter extends DataSourceAdapter {
                 id: series.id,
                 data: series.data,
                 link: series.link,
+                secondaryLink: series.secondaryLink,
                 legendDescriptionPrimary: this.seriesIndex.find(s => s.selectedSeriesId === series.id)?.label,
                 legendDescriptionSecondary: series.description,
             }));

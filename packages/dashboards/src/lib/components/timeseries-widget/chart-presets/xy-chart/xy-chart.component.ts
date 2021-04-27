@@ -72,7 +72,7 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
 
     /** Checks if the series is interactive or if the dataSource has a link property */
     public isSeriesInteractive(legendSeries: IChartAssistSeries<IAccessors>): boolean {
-        return !(legendSeries?.link === undefined) || !(this.seriesInteractive === undefined);
+        return !(legendSeries?.link === undefined) || !(legendSeries?.secondaryLink === undefined) || !(this.seriesInteractive === undefined);
     }
 
     public onLegendClick(legendSeries: IChartAssistSeries<IAccessors>, event: MouseEvent) {
@@ -90,20 +90,25 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
         }
     }
 
-    public onInteraction(legendSeries: IChartAssistSeries<IAccessors>) {
-        if (!this.seriesInteractive) {
-            return;
-        }
-
-        if (legendSeries?.link) {
-            this.eventBus.getStream(INTERACTION).next({ payload: { data: legendSeries } });
-        } else {
+    public onInteraction(legendSeries: IChartAssistSeries<IAccessors>, event: MouseEvent) {
+        let interactive = this.isSeriesInteractive(legendSeries);
+        if (!interactive) {
+            console.log("📘 xy-chart.component: 96# -> legendSeries:", legendSeries);
             this.eventBus.getStream(INTERACTION).next({
                 payload: {
                     data: legendSeries,
                     interactionType: TimeseriesInteractionType.Series,
                 },
             });
+            return;
+        }
+        const target = event.target as HTMLElement;
+        const secondaryDescription = target.classList.contains("legend-description-secondary");
+
+        if (legendSeries.link && !secondaryDescription) {
+            this.eventBus.getStream(INTERACTION).next({ payload: { data: legendSeries } });
+        } else if (secondaryDescription) {
+            this.chartAssist.toggleSeries(legendSeries.id, this.chartAssist.isSeriesHidden(legendSeries.id));
         }
     }
 
