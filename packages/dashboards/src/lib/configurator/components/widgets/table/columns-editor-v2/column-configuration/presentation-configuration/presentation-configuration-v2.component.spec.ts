@@ -62,8 +62,8 @@ describe("PresentationConfigurationV2Component", () => {
             component.onFormReady(formBuilder.group({
                 dataFieldIds: {value: "firstUrlLabel", link: "firstUrl"}
             }));
-            expect(component.propertiesForm.value.dataFieldIds.value).toEqual("firstUrlLabel")
-            expect(component.propertiesForm.value.dataFieldIds.link).toEqual("firstUrl")
+            expect(component.form.value.properties.dataFieldIds.value).toEqual("firstUrlLabel")
+            expect(component.form.value.properties.dataFieldIds.link).toEqual("firstUrl")
 
         });
     });
