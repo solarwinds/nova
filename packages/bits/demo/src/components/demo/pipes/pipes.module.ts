@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiSearchModule, NuiSelectModule } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN, NuiDocsModule, NuiSearchModule, NuiCommonModule } from "@nova-ui/bits";
 
 import { HighlightPipeDocsExampleComponent, HighlightPipeExampleComponent } from "./index";
 
@@ -25,7 +25,7 @@ const routes = [
     imports: [
         NuiDocsModule,
         NuiSearchModule,
-        NuiSelectModule,
+        NuiCommonModule,
         RouterModule.forChild(routes),
     ],
     declarations: [

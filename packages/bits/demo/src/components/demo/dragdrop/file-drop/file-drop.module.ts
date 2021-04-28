@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 
-import { NuiCommonModule } from "../../../../../../src/common/common.module";
+import { NuiCommonModule } from "@nova-ui/bits";
 
 import { FileDropExampleComponent } from "./file-drop.component";
 
