@@ -8,6 +8,8 @@ import { IBusyConfig, WizardComponent } from "@nova-ui/bits";
 export class WizardBusyExampleComponent  {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
 
+    public isBusy = false;
+
     public busyConfig: IBusyConfig = {
         busy: false,
         message: $localize `Step is busy`,
@@ -18,5 +20,9 @@ export class WizardBusyExampleComponent  {
     public toggleStepBusy() {
         this.busyConfig.busy = !this.busyConfig.busy;
         this.wizardComponent.navigationControl.next({ busyState: this.busyConfig, allowStepChange: !this.busyConfig.busy});
+    }
+
+    public toggleBusy(): void {
+        this.isBusy = !this.isBusy;
     }
 }
