@@ -1,7 +1,6 @@
 import { browser, Key } from "protractor";
-import { Animations } from "../../../dist/sdk/atoms/helpers";
 import { Atom } from "../../atom";
-import { assertA11y, Helpers } from "../../helpers";
+import { Animations, assertA11y, Helpers } from "../../helpers";
 import { SelectV2Atom } from "../public_api";
 
 describe("a11y: select-v2", () => {
