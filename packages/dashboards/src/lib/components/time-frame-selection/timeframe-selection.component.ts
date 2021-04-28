@@ -93,7 +93,7 @@ export class TimeframeSelectionComponent implements OnChanges, OnInit, IHasChang
 
         // replace undefined preset value with empty string to explicitly override any value on the pizzagna's config layer
         newTimeframe.selectedPresetId = newTimeframe.selectedPresetId || "";
-        
+
         if (!this.timeframeService.isEqual(newTimeframe, this.currentTimeframe)) {
             this.pizzagnaService.setProperty({
                 pizzagnaKey: PizzagnaLayer.Data,
