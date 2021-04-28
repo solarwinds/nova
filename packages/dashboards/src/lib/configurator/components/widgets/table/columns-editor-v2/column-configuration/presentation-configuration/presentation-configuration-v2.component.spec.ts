@@ -59,11 +59,19 @@ describe("PresentationConfigurationV2Component", () => {
         it("should patch form when formatters are changed", () => {
             component.formatters = [rawFormatter, linkFormatter];
             component.ngOnInit();
-            component.onFormReady(formBuilder.group({
+
+            component.form.get("properties")?.setValue({
                 dataFieldIds: {value: "firstUrlLabel", link: "firstUrl"},
-            }));
-            expect(component.form.value.properties.dataFieldIds.value).toEqual("firstUrlLabel")
-            expect(component.form.value.properties.dataFieldIds.link).toEqual("firstUrl")
+            });
+
+            const propertiesForm = formBuilder.group({
+                dataFieldIds: {value: "", link: ""},
+            });
+            component.onFormReady(propertiesForm);
+
+            expect(component.propertiesForm).toBe(propertiesForm);
+            expect(component.propertiesForm.value.dataFieldIds.value).toEqual("firstUrlLabel");
+            expect(component.propertiesForm.value.dataFieldIds.link).toEqual("firstUrl");
 
         });
     });
