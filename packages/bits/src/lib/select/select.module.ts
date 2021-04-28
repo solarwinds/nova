@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { NuiCommonModule } from "../../common/common.module";
-import { HighlightPipe } from "../../pipes/highlight.pipe";
 import { NuiButtonModule } from "../button/button.module";
 import { NuiIconModule } from "../icon/icon.module";
 import { NuiMenuModule } from "../menu/menu.module";
@@ -18,7 +17,6 @@ import { SelectComponent } from "./select.component";
     declarations: [
         ComboboxComponent,
         SelectComponent,
-        HighlightPipe,
     ],
     imports: [
         NuiCommonModule,
@@ -32,7 +30,6 @@ import { SelectComponent } from "./select.component";
     exports: [
         ComboboxComponent,
         SelectComponent,
-        HighlightPipe,
         ReactiveFormsModule,
     ],
     providers: [],
