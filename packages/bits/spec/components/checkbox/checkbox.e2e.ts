@@ -30,22 +30,7 @@ describe("USERCONTROL Checkbox", () => {
         });
     });
 
-    describe("Disable section:", () => {
-        it("should disable and enable when the model changes", async () => {
-            expect(await atomDisabled.isDisabled()).toBe(true);
-        });
-    });
-
     describe("Attribute section:", () => {
-        it("should have label", async () => {
-            const label = await atom.getContent();
-            expect(label).toEqual("Checkbox with help text");
-        });
-
-        it("should use help text based 'help-text' attribute", async () => {
-            expect(await atom.getHelpHintText()).toEqual("This is some help text");
-        });
-
         it("should be required", async () => {
             expect(await atom.isRequired()).toBe(true);
         });
