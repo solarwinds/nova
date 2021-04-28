@@ -4,7 +4,7 @@ import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 const name: string = "Badge";
 
-fdescribe(`Visual tests: ${name}`, () => {
+describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
 
     beforeAll(async () => {
