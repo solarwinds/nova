@@ -73,4 +73,18 @@
             </form>
         </div>
     </div>
+    <div class="d-flex flex-column mt-5">
+        <h3>Disabled checkboxes within the disabled form</h3>
+        <form [formGroup]="testForm">
+            <nui-checkbox-group id="nui-demo-checkbox-group-in-form"
+                            name="vegetable"
+                            formControlName="checkboxGroup">
+                <nui-checkbox *ngFor="let vegetable of vegetables"
+                            [value]="vegetable"
+                            [checked]="isChecked(vegetable)">
+                    {{vegetable}}
+                </nui-checkbox>
+            </nui-checkbox-group>
+        </form>
+    </div>
 </div>
