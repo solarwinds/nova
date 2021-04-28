@@ -56,12 +56,12 @@ describe("PresentationConfigurationV2Component", () => {
     });
 
     describe("propertiesForm >", () => {
-       it("should patch form when formatters are changed", () => {
-           component.formatters = [rawFormatter, linkFormatter];
+        it("should patch form when formatters are changed", () => {
+            component.formatters = [rawFormatter, linkFormatter];
+            component.ngOnInit();
+            component.onFormReady(component.form);
 
-           component.ngOnInit();
-
-           expect(component.form.value.componentType).toEqual(rawFormatter.componentType)
-       });
+            expect(component.propertiesForm.value.componentType).toEqual(rawFormatter.componentType)
+        });
     });
 });
