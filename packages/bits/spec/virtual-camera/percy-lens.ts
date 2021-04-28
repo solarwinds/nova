@@ -19,7 +19,9 @@ export class PercyLens implements ILens {
         await this.takeSnapshot(label);
     }
 
-    public async cameraON() {}
+    public async cameraON() {
+        // await this.browser.manage().window().maximize();
+    }
 
     public async cameraOFF() {}
 

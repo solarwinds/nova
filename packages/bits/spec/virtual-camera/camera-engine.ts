@@ -1,10 +1,13 @@
+import * as fs from "fs";
 import { ProtractorBrowser } from "protractor";
+import { Helpers } from "../helpers";
 import { EyesLens } from "./eyes-lens";
 import { PercyLens } from "./percy-lens";
 import { ICameraSettings, ILens, LENSES, LensType } from "./types";
 
 export class CameraEngine {
     public currentLensInstance: ILens;
+    private snapshotsFolderName: string = "_snapshots";
 
     constructor(
         private browser: ProtractorBrowser,
@@ -37,13 +40,21 @@ export class CameraEngine {
         return this;
     }
 
-    public async takePhoto(label: string) {
+    public async takePhoto(label: string): Promise<void> {
+        if (this.browser.params["snapshotsUpload"] === "manual") {
+            if (!fs.existsSync(this.snapshotsFolderName)) {
+                fs.mkdirSync(this.snapshotsFolderName);
+            }
+            Helpers.saveScreenShot(`${this.snapshotsFolderName}/${this.settings.currentTestName}_${label}.png`);
+            return;
+        }
+
         if (!this.settings.fullframe) {
-            await this.currentLensInstance.takeSnapshot(label);
+            return await this.currentLensInstance.takeSnapshot(label);
         }
 
         if (this.settings.fullframe) {
-            await this.currentLensInstance.takeFullScreenSnapshot(label);
+            return await this.currentLensInstance.takeFullScreenSnapshot(label);
         }
     }
 

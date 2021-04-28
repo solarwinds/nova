@@ -1,0 +1,17 @@
+version: 2
+snapshot:
+  # An array of numbers, in pixels, representing the widths you'd like to capture for each snapshot
+  widths:
+    - 1920
+  # A number specifying the minimum height in pixels each snapshot should be
+  minHeight: 1080
+  # A string containing Percy specific CSS that will be applied to each snapshot
+  # (per-snapshot Percy CSS is concatenated to the end of this value)
+  # Details: https://docs.percy.io/docs/percy-specific-css
+  percyCSS: |
+    input, textarea { 
+      caret-color: transparent;
+    }
+    * {
+      cursor: none !important;
+    }
