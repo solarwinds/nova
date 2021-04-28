@@ -2,6 +2,7 @@
      [class.nui-expander--expanded]="state === 'expanded'">
     <div class="nui-expander__header"
          role="button"
+         aria-label="Expander toggle"
          [attr.aria-expanded]="state === 'expanded'"
          [attr.aria-disabled]="disabled"
          [class.nui-expander__header--empty]="!header && isCustomHeaderContentEmpty"

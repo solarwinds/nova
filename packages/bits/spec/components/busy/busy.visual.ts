@@ -5,7 +5,7 @@ import { Camera } from "../../virtual-camera/Camera";
 
 const name: string = "Busy";
 
-fdescribe(`Visual tests: ${name}`, () => {
+describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let switchBusyState: ElementFinder;
 

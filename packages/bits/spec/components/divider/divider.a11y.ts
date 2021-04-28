@@ -1,8 +1,6 @@
 import { browser } from "protractor";
-import { Helpers } from "../../helpers";
+import { assertA11y, Helpers } from "../../helpers";
 import { DividerAtom } from "../public_api";
-
-const AxeBuilder = require("@axe-core/webdriverjs");
 
 describe("a11y: divider", () => {
 
@@ -11,8 +9,6 @@ describe("a11y: divider", () => {
     });
 
     it("should check a11y of divider", async () => {
-        const accessibilityScanResults = await new AxeBuilder(browser.driver).include(`.${DividerAtom.CSS_CLASS}`).analyze();
-
-        expect(accessibilityScanResults.violations).toEqual([]);
+        await assertA11y(browser, DividerAtom.CSS_CLASS);
     });
 });
