@@ -60,7 +60,7 @@ describe("PresentationConfigurationV2Component", () => {
             component.formatters = [rawFormatter, linkFormatter];
             component.ngOnInit();
             component.onFormReady(formBuilder.group({
-                dataFieldIds: {value: "firstUrlLabel", link: "firstUrl"}
+                dataFieldIds: {value: "firstUrlLabel", link: "firstUrl"},
             }));
             expect(component.form.value.properties.dataFieldIds.value).toEqual("firstUrlLabel")
             expect(component.form.value.properties.dataFieldIds.link).toEqual("firstUrl")
