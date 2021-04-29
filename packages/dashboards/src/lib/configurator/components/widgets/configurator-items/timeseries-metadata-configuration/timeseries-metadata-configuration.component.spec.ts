@@ -35,22 +35,22 @@ describe("TimeseriesMetadataConfigurationComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should set the default timeSpan if no value is set", ()=> {
+    it("should set the default timeSpan if no value is set", () => {
         component.ngOnInit();
 
         const timeSpanControl = component.form.controls["startingTimespan"];
         let emittedValue: any = undefined;
         timeSpanControl.setValue(null);
-        timeSpanControl.valueChanges.subscribe((value: any)=> {
+        timeSpanControl.valueChanges.subscribe((value: any) => {
             emittedValue = value;
         });
 
         const timeSpans: ITimeSpanOption[] = [
-            {id: "aaa", name: "AAA"},
-            {id: "bbb", name: "BBB"}
-            ];
+            { id: "aaa", name: "AAA" },
+            { id: "bbb", name: "BBB" }
+        ];
         component.timeSpans = timeSpans;
-        component.ngOnChanges({ timeSpans: new SimpleChange(null, timeSpans, true)});
+        component.ngOnChanges({ timeSpans: new SimpleChange(null, timeSpans, true) });
 
         expect(timeSpanControl.value).toEqual(timeSpans[0]);
         expect(emittedValue).toEqual(timeSpans[0]);
