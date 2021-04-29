@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { $, ProtractorBrowser } from "protractor";
+import { ProtractorBrowser } from "protractor";
 import { Helpers } from "../helpers";
 import { EyesLens } from "./eyes-lens";
 import { PercyLens } from "./percy-lens";
@@ -41,8 +41,6 @@ export class CameraEngine {
     }
 
     public async takePhoto(label: string): Promise<void> {
-        await this.setManualFullpage();
-
         if (this.browser.params["snapshotsUpload"] === "manual") {
             if (!fs.existsSync(this.snapshotsFolderName)) {
                 fs.mkdirSync(this.snapshotsFolderName);
@@ -67,11 +65,5 @@ export class CameraEngine {
     private cleanFileName(name: string) {
         // @ts-ignore
         return name.replace(/[\\\/\s]/g, function(m) { return {"\\":"_","\/":"_", " ": "_"}[m]; })
-    }
-
-    private async setManualFullpage(): Promise<void> {
-        const win: number = (await this.browser.manage().window().getSize()).height;
-        const body: number = (await $("body").getSize()).height;
-        await this.browser.manage().window().setSize(1920, body);
     }
 }
