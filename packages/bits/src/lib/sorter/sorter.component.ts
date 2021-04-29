@@ -43,7 +43,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     @Input() appendToBody: boolean = false;
     @Input() caption: string;
 
-     /**
+    /**
      * The string[] type for itemsSource is the legacy non-i18n-friendly type
      * and it should be removed as an option in scope of NUI-5801
      */
@@ -188,8 +188,8 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
     public getAriaLabelForSortingButton(): string {
         return this.sortDirection === SorterDirection.descending
-                    ? `${this.getSelectedItemTitle()}. Sorter direction - descending`
-                    : `${this.getSelectedItemTitle()}. Sorter direction - ascending`;
+            ? `${this.getSelectedItemTitle()}. Sorter direction - descending`
+            : `${this.getSelectedItemTitle()}. Sorter direction - ascending`;
     }
 
     public ngOnDestroy() {

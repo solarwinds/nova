@@ -9,8 +9,8 @@ export class CdkDropListAtom extends Atom {
 
     public async getItems(): Promise<CdkDraggableItemAtom[]> {
         return this.getElement()
-                   .all(by.className(CdkDraggableItemAtom.CSS_CLASS))
-                   .reduce((acc: CdkDraggableItemAtom[], item: ElementFinder) => acc.concat(new CdkDraggableItemAtom(item)), []);
+            .all(by.className(CdkDraggableItemAtom.CSS_CLASS))
+            .reduce((acc: CdkDraggableItemAtom[], item: ElementFinder) => acc.concat(new CdkDraggableItemAtom(item)), []);
     }
 
     public itemCount = async (): Promise<number> => (await this.getItems()).length;

@@ -55,7 +55,7 @@ export class PopoverModalService {
                 private edgeDetector: EdgeDetectionService) {}
 
     public setPosition (popoverModal: HTMLElement, popoverTrigger: HTMLElement, appendToBody: boolean,
-        contextPlacement: PopoverPlacement): IPopoverPosition {
+                        contextPlacement: PopoverPlacement): IPopoverPosition {
         // Element with dimensions
         const popoverElement = <HTMLElement>popoverModal.querySelector(".nui-popover-container");
         const edgeDetectionResult = this.edgeDetector.canBe(popoverTrigger, popoverElement);

@@ -107,7 +107,7 @@ export class Helpers {
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
             batchID ? eyes.setBatch(batchName, batchID)
-                    : eyes.setBatch(batchName);
+                : eyes.setBatch(batchName);
 
             eyes.setBranchName(branchName);
             if (branchName !== "main") {

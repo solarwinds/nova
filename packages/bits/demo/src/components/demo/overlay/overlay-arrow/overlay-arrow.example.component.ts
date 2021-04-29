@@ -47,10 +47,10 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
             const availablePositions = this.overlay.overlayPositionService.getPossiblePositionsForPlacement(this.positionSelectControl.value);
             // FlexibleConnectedPositionStrategy is default strategy of overlay component.
             const positionStrategy = this.overlay.getOverlayRef().getConfig().positionStrategy as FlexibleConnectedPositionStrategy;
-                positionStrategy
-                    // !!! using default '30' value breaks the edges, when displaying overlay from right, for the sake of the example, it's set to '0'.
-                    .withViewportMargin(0)
-                    .withPositions(availablePositions);
+            positionStrategy
+            // !!! using default '30' value breaks the edges, when displaying overlay from right, for the sake of the example, it's set to '0'.
+                .withViewportMargin(0)
+                .withPositions(availablePositions);
         });
     }
 

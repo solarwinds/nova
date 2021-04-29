@@ -17,7 +17,7 @@ export class TooltipDisabledExampleComponent {
     public onValueChanged(value: boolean) {
         this.isDisabled = value;
         this.message = value
-                        ? $localize `Tooltip is Disabled and hidden!`
-                        : $localize `Tooltip is Enabled and can be shown"`;
+            ? $localize `Tooltip is Disabled and hidden!`
+            : $localize `Tooltip is Enabled and can be shown"`;
     }
 }

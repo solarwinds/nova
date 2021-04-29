@@ -17,7 +17,7 @@ export class BasicSelectAtom extends Atom {
      */
     // Have to click (toggle the repeat) first because you can't interact with hidden elements
     public select = async (title: string): Promise<void> =>
-            this.toggleMenu().then(() => this.getMenu().getMenuItemByContainingText(title).clickItem())
+        this.toggleMenu().then(() => this.getMenu().getMenuItemByContainingText(title).clickItem())
 
     public getSelectedItem = (): ElementFinder => this.getElement().element(by.className("item-selected"));
 

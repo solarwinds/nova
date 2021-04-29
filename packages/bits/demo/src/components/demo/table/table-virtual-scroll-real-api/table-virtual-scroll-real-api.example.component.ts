@@ -76,18 +76,18 @@ export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit,
             .observeNextPage$({pageSize: this.range}).pipe(
             // Note: In case we know the total number of items we can stop the stream when dataset end is reached
             // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
-            filter(range => this.totalItems ? this.totalItems >= range.end : true),
-            tap(() => this.dataSource.applyFilters()),
-            // Note: Using the same stream to subscribe to the outputsSubject and update the items list
-            switchMap(() => this.dataSource.outputsSubject.pipe(
-                tap((outputs: IFilteringOutputs) => {
-                    this._totalItems = outputs.totalItems;
-                    this.users = outputs.repeat.itemsSource || [];
-                    this.cd.detectChanges();
-                })
-            )),
-            takeUntil(this.onDestroy$)
-        ).subscribe();
+                filter(range => this.totalItems ? this.totalItems >= range.end : true),
+                tap(() => this.dataSource.applyFilters()),
+                // Note: Using the same stream to subscribe to the outputsSubject and update the items list
+                switchMap(() => this.dataSource.outputsSubject.pipe(
+                    tap((outputs: IFilteringOutputs) => {
+                        this._totalItems = outputs.totalItems;
+                        this.users = outputs.repeat.itemsSource || [];
+                        this.cd.detectChanges();
+                    })
+                )),
+                takeUntil(this.onDestroy$)
+            ).subscribe();
     }
 
     public ngOnDestroy(): void {
@@ -147,8 +147,8 @@ export class RandomuserTableDataSource extends DataSourceService<IRandomUserTabl
         const delta: number = end - start;
         try {
             response = await
-                (await fetch(`${this.url}/?page=${end / delta}&results=${delta}&seed=${this.seed}`))
-                    .json();
+            (await fetch(`${this.url}/?page=${end / delta}&results=${delta}&seed=${this.seed}`))
+                .json();
             return {
                 users: response?.results.map((result: IRandomUserResults, i: number) => ({
                     no: this.cache.length + i + 1,

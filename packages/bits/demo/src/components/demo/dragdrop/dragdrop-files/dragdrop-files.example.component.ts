@@ -23,7 +23,7 @@ export class DragdropFilesExampleComponent {
         }
         this.files.push(
             ...this.extractFilesFromDropEventData(ev.dataTransfer)
-                    .filter((file: File) => this.validateDataType(file.type))
+                .filter((file: File) => this.validateDataType(file.type))
         );
 
         this.invalidateFiles();

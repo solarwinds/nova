@@ -32,7 +32,7 @@ export class SelectV2VirtualScrollExampleComponent implements OnInit, OnDestroy,
     }
 
     ngOnInit() {
-          this.selectControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
+        this.selectControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
             console.log("Value from Select", value);
         });
     }

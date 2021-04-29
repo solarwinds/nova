@@ -8,7 +8,7 @@ describe("services >", () => {
         const channel = "test";
 
         beforeEach(() => {
-             notificationService = new NotificationService();
+            notificationService = new NotificationService();
         });
 
         function expectOneCall(spy: jasmine.Spy, args: any): void {
@@ -32,11 +32,11 @@ describe("services >", () => {
             const spy2 = jasmine.createSpy("spy");
 
             notificationService.subscribe(channel, (args: any) => {
-               spy1(args);
+                spy1(args);
             });
 
             notificationService.subscribe(channel, (args: any) => {
-               spy2(args);
+                spy2(args);
             });
 
             notificationService.post(channel, countArgs);

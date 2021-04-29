@@ -5,9 +5,9 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 @Component({
-  selector: "nui-custom-confirmation-inside-dialog",
-  templateUrl: "./overlay-custom-confirmation-inside-dialog.component.html",
-  styleUrls: ["./overlay-custom-confirmation-inside-dialog.component.less"],
+    selector: "nui-custom-confirmation-inside-dialog",
+    templateUrl: "./overlay-custom-confirmation-inside-dialog.component.html",
+    styleUrls: ["./overlay-custom-confirmation-inside-dialog.component.less"],
 })
 export class CustomConfirmationInsideDialogComponent implements OnDestroy {
     public onDestroy$ = new Subject<void>();

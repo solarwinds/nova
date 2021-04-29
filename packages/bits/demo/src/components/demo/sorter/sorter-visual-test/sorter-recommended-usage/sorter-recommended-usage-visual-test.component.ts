@@ -55,6 +55,6 @@ export class SorterRecommendedUsageVisualTestComponent implements OnInit {
 
     private sortItems(sortBy: string, direction: SorterDirection) {
         this.items = _orderBy(this.items, [sortBy],
-            [direction as (SorterDirection.ascending | SorterDirection.descending)]) as IFilm[];
+                              [direction as (SorterDirection.ascending | SorterDirection.descending)]) as IFilm[];
     }
 }

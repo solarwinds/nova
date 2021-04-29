@@ -21,9 +21,9 @@ const CONTAINER_SIDE_PADDINGS_PX: number = 20;
 const BOX_WIDTH_PX: number = 30;
 
 @Component({
-  selector: "nui-select-v2-color-picker",
-  templateUrl: "./select-v2-color-picker.component.html",
-  styleUrls: ["./select-v2-color-picker.component.less"],
+    selector: "nui-select-v2-color-picker",
+    templateUrl: "./select-v2-color-picker.component.html",
+    styleUrls: ["./select-v2-color-picker.component.less"],
 })
 export class SelectV2ColorPickerComponent {
     // With this param one is able to configure how many columns wide should the color picker be
@@ -33,8 +33,8 @@ export class SelectV2ColorPickerComponent {
         // To automatically calculate the max-width use the approach below if you want to optionally change the amount of color boxes per row,
         // but for most cases just hardcoding the necessary value will be enough
         maxWidth: this.cols
-                    ? (this.cols * BOX_WIDTH_PX) + CONTAINER_SIDE_PADDINGS_PX + "px"
-                    : "150px", // defaults to 4 columns picker
+            ? (this.cols * BOX_WIDTH_PX) + CONTAINER_SIDE_PADDINGS_PX + "px"
+            : "150px", // defaults to 4 columns picker
     };
     public backgroundColors: string[] = CHART_PALETTE_CS1;
     public defaultColor = "var(--nui-color-bg-secondary)";

@@ -16,7 +16,7 @@ describe("OverlayItemComponent", () => {
             imports: [],
             schemas: [ NO_ERRORS_SCHEMA ],
         })
-        .compileComponents();
+            .compileComponents();
         TestBed.configureTestingModule({
             declarations: [OverlayItemComponent],
         }).compileComponents();

@@ -50,17 +50,17 @@ class TestAppComponent {
     public itemsSource = [
         { header: "Header", itemsSource: [
 
-        {
-            itemType: "link",
-            title: "Disabled link",
-            disabled: true,
-        },
-        {
-            itemType: "action",
-            title: "Action",
-            disabled: false,
-        }],
-    }] as IMenuGroup[];
+            {
+                itemType: "link",
+                title: "Disabled link",
+                disabled: true,
+            },
+            {
+                itemType: "action",
+                title: "Action",
+                disabled: false,
+            }],
+        }] as IMenuGroup[];
 
 }
 
@@ -75,22 +75,22 @@ describe("components >", () => {
             TestBed.configureTestingModule({
                 imports: [NuiOverlayModule],
                 declarations: [TestAppComponent,
-                    MenuComponent,
-                    MenuActionComponent,
-                    MenuLinkComponent,
-                    MenuOptionComponent,
-                    MenuPopupComponent,
-                    MenuSwitchComponent,
-                    MenuGroupComponent,
-                    MenuItemComponent,
-                    ButtonComponent,
-                    PopupComponent,
-                    PopupToggleDirective,
-                    CheckboxComponent,
-                    IconComponent,
-                    DividerComponent,
-                    SwitchComponent,
-                    ButtonComponent,
+                               MenuComponent,
+                               MenuActionComponent,
+                               MenuLinkComponent,
+                               MenuOptionComponent,
+                               MenuPopupComponent,
+                               MenuSwitchComponent,
+                               MenuGroupComponent,
+                               MenuItemComponent,
+                               ButtonComponent,
+                               PopupComponent,
+                               PopupToggleDirective,
+                               CheckboxComponent,
+                               IconComponent,
+                               DividerComponent,
+                               SwitchComponent,
+                               ButtonComponent,
                 ],
                 providers: [
                     IconService,

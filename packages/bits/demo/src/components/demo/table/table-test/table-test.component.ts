@@ -63,7 +63,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
                 public viewContainerRef: ViewContainerRef,
                 public applicationRef: ApplicationRef,
                 public dataSourceService: ClientSideDataSource<ITestTableModel>
-                ) {
+    ) {
         dataSourceService.setData(ELEMENT_DATA);
     }
 
@@ -169,7 +169,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
 
     public limitSearch(): void {
         if (this.searchProperties.length) {
-           this.searchProperties = [];
+            this.searchProperties = [];
         } else {
             this.searchProperties = ["outages"];
         }

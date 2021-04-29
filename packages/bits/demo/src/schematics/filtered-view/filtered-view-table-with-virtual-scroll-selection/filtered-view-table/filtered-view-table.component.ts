@@ -106,9 +106,9 @@ export class FilteredViewTableComponent implements OnInit, OnDestroy, AfterViewI
                         this.changeDetection.detectChanges();
                     })
                 )
-            ),
-            takeUntil(this.destroy$)
-        ).subscribe();
+                ),
+                takeUntil(this.destroy$)
+            ).subscribe();
     }
 
     public ngOnDestroy() {

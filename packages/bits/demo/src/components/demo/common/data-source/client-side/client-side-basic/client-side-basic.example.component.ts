@@ -75,8 +75,8 @@ export class DataSourceClientSideBasicExampleComponent implements AfterViewInit,
             },
         });
         this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-                this.state = data;
-                this.changeDetection.detectChanges();
+            this.state = data;
+            this.changeDetection.detectChanges();
         });
         await this.dataSourceService.applyFilters();
     }

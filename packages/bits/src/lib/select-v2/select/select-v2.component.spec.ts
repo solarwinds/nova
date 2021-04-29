@@ -56,9 +56,9 @@ class SelectV2WrapperAsyncComponent {
     public setItems() {
         setTimeout(() => {
             this.items = Array.from({ length : 10 }).map((_, i) => ({
-                        id: i,
-                        name: `Item ${i}`,
-                    }));
+                id: i,
+                name: `Item ${i}`,
+            }));
         }, 200);
     }
 }
@@ -105,33 +105,33 @@ describe("components >", () => {
             })
                 .compileComponents();
 
-                // component
-                fixture = TestBed.createComponent(SelectV2Component);
-                element = fixture.nativeElement;
-                component = fixture.componentInstance;
+            // component
+            fixture = TestBed.createComponent(SelectV2Component);
+            element = fixture.nativeElement;
+            component = fixture.componentInstance;
 
-                // options
-                const optionComponentMocks = Array.from({ length: 3 }).map(() => TestBed.createComponent(SelectV2OptionComponent));
-                selectedOptionsMock =  optionComponentMocks.map(c => c.componentInstance);
-                optionComponentMocks.forEach((c, i) => {
-                    c.componentInstance.value = selectedValuesMock[i];
-                    (<HTMLElement>c.elementRef.nativeElement).textContent = (<IOptionValueObject>selectedValuesMock[i]).name;
-                });
+            // options
+            const optionComponentMocks = Array.from({ length: 3 }).map(() => TestBed.createComponent(SelectV2OptionComponent));
+            selectedOptionsMock =  optionComponentMocks.map(c => c.componentInstance);
+            optionComponentMocks.forEach((c, i) => {
+                c.componentInstance.value = selectedValuesMock[i];
+                (<HTMLElement>c.elementRef.nativeElement).textContent = (<IOptionValueObject>selectedValuesMock[i]).name;
+            });
 
-                // wrapper with FormControl component
-                wrapperWithFormControlFixture = TestBed.createComponent(SelectV2WrapperWithFormControlComponent);
-                wrapperWithFormControlComponent = wrapperWithFormControlFixture.componentInstance;
-                wrapperWithFormControlFixture.detectChanges();
+            // wrapper with FormControl component
+            wrapperWithFormControlFixture = TestBed.createComponent(SelectV2WrapperWithFormControlComponent);
+            wrapperWithFormControlComponent = wrapperWithFormControlFixture.componentInstance;
+            wrapperWithFormControlFixture.detectChanges();
 
-                // wrapper with value component
-                wrapperWithValueFixture = TestBed.createComponent(SelectV2WrapperWithValueComponent);
-                wrapperWithValueComponent = wrapperWithValueFixture.componentInstance;
-                wrapperWithValueFixture.detectChanges();
+            // wrapper with value component
+            wrapperWithValueFixture = TestBed.createComponent(SelectV2WrapperWithValueComponent);
+            wrapperWithValueComponent = wrapperWithValueFixture.componentInstance;
+            wrapperWithValueFixture.detectChanges();
 
-                // wrapper async component
-                wrapperFixtureAsync = TestBed.createComponent(SelectV2WrapperAsyncComponent);
-                wrapperComponentAsync = wrapperFixtureAsync.componentInstance;
-                wrapperFixtureAsync.detectChanges();
+            // wrapper async component
+            wrapperFixtureAsync = TestBed.createComponent(SelectV2WrapperAsyncComponent);
+            wrapperComponentAsync = wrapperFixtureAsync.componentInstance;
+            wrapperFixtureAsync.detectChanges();
         }));
 
         it("should create an instance", () => {

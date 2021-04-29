@@ -10,8 +10,8 @@ export class CameraEngine {
         private browser: ProtractorBrowser,
         private settings: ICameraSettings) {
 
-            this.useLens();
-        }
+        this.useLens();
+    }
 
     private useLens() {
         if (!this.browser) {

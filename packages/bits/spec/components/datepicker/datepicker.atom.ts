@@ -10,9 +10,9 @@ export class DatepickerAtom extends Atom {
     public static EXPECTED_FORMAT = "DD MMM YYYY";
     public static CSS_CLASS = "nui-datepicker";
     public static MONTHNAMES_SHORT: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     public static MONTHNAMES_LONG: string[] = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
+                                               "July", "August", "September", "October", "November", "December"];
 
     public overlay = Atom.findIn(OverlayAtom, this.getElement());
     public textbox = Atom.findIn(TextboxAtom, this.getElement());

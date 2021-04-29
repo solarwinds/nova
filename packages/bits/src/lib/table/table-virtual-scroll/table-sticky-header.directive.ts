@@ -134,7 +134,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             this.origViewportHeight = this.origViewportHeight || this.viewportEl?.offsetHeight;
             const viewportComputedHeight: string = isEmpty(this.userProvidedHeight) ? this.origViewportHeight + "px" : this.userProvidedHeight;
             this.viewportEl.style.setProperty("height",
-                `calc(${viewportComputedHeight} - ${this.headRef?.rows.item(0)?.offsetHeight ?? 0}px)`, "important");
+                                              `calc(${viewportComputedHeight} - ${this.headRef?.rows.item(0)?.offsetHeight ?? 0}px)`, "important");
         }
     }
 

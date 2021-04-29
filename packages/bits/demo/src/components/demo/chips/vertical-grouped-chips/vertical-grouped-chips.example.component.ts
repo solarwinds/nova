@@ -6,17 +6,17 @@ import _pull from "lodash/pull";
 const groupedItems: IChipsGroup[] = [
     {
         id: "statusGroupId", label: "Status", items: [
-        {id: "statusGroupItem1", label: "Down"},
-        {id: "statusGroupItem2", label: "Critical"},
-        {id: "statusGroupItem3", label: "Warning"},
-        {id: "statusGroupItem4", label: "Unknown"},
-        {id: "statusGroupItem5", label: "Ok"}],
+            {id: "statusGroupItem1", label: "Down"},
+            {id: "statusGroupItem2", label: "Critical"},
+            {id: "statusGroupItem3", label: "Warning"},
+            {id: "statusGroupItem4", label: "Unknown"},
+            {id: "statusGroupItem5", label: "Ok"}],
     },
     {
         id: "vendorGroupId", label: "Vendor", items: [
-        {id: "vendorGroupItem1", label: "Cisco"},
-        {id: "vendorGroupItem2", label: "Hewlett Packard"},
-        {id: "vendorGroupItem3", label: "Uniper"}],
+            {id: "vendorGroupItem1", label: "Cisco"},
+            {id: "vendorGroupItem2", label: "Hewlett Packard"},
+            {id: "vendorGroupItem3", label: "Uniper"}],
     }];
 
 @Component({

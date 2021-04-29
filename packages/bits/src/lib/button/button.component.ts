@@ -90,9 +90,9 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
      */
     // TODO: Remove this setter/getter logic in scope of NUI-3475
     @Input() public get size(): ButtonSizeType { return this._size; }
-             public set size(value: ButtonSizeType) {
-                this._size = (value as string) === "small" ? ButtonSizeType.compact : value;
-             }
+    public set size(value: ButtonSizeType) {
+        this._size = (value as string) === "small" ? ButtonSizeType.compact : value;
+    }
 
     @HostBinding("class.btn-lg") public get sizeClassLarge() { return this.size === "large"; }
     @HostBinding("class.btn-xs") public get sizeClassCompact() {return this.size === "compact"; }

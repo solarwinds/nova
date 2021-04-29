@@ -92,8 +92,8 @@ public users: IRandomuserTableModel[] = [];
 public displayedColumns: string[] = ["no", "nameTitle", "nameFirst", "nameLast", "gender", "country", "city", "postcode", "email", "cell"];
 private dataSource: RandomuserTableDataSource;
 `,
-viewportManagerImport: `import { VirtualViewportManager } from "@nova-ui/bits";`,
-viewChildren:
+        viewportManagerImport: `import { VirtualViewportManager } from "@nova-ui/bits";`,
+        viewChildren:
 `
 @ViewChild(CdkVirtualScrollViewport, { static: false }) viewport: CdkVirtualScrollViewport;
 `,
@@ -104,7 +104,7 @@ viewChildren:
     providers: [VirtualViewportManager]
 })
 `,
-injectViewport:
+        injectViewport:
             `
 constructor(private viewportManager: VirtualViewportManager) {}
 `,
@@ -149,7 +149,7 @@ ngOnInit(): void {
 ).subscribe();
         `,
 
-};
+    };
 }
 
 @Component({

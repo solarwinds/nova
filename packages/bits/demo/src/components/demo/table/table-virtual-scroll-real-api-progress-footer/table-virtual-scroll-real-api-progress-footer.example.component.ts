@@ -130,5 +130,5 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent implements 
                 },
             },
         });
-     }
+    }
 }

@@ -96,7 +96,7 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
                 optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
                 cdRef: ChangeDetectorRef,
                 private selectedItemsKeyControlService: SelectedItemsKeyControlService
-                ) {
+    ) {
         super(optionKeyControlService, cdRef, elRef);
     }
 

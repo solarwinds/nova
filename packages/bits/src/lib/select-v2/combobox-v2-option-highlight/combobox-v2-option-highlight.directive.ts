@@ -28,7 +28,7 @@ export class ComboboxV2OptionHighlightDirective implements OnChanges, OnInit, On
     constructor(private el: ElementRef<HTMLElement>,
                 @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT) private combobox: ComboboxV2Component,
                 private highlightPipe: HighlightPipe
-                ) {}
+    ) {}
 
     public ngOnInit(): void {
         this.updateHTML(this.combobox.inputValue);

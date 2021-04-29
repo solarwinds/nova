@@ -43,7 +43,7 @@ import { DatePickerComponent } from "./date-picker.component";
 
 const eventMock = {};
 
- describe("components >", () => {
+describe("components >", () => {
     describe("date-picker >", () => {
         let fixture: ComponentFixture<DatePickerComponent>;
         let componentInstance: DatePickerComponent;

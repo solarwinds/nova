@@ -219,18 +219,18 @@ export class RepeatWithViewportManagerExampleComponent implements OnInit, OnDest
             // ViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
             .observeNextPage$({pageSize: RESULTS_PER_PAGE}).pipe(
-            tap(() => {
-                this.dataSource.applyFilters();
-            }),
-            // Note: Using the same stream to subscribe to the outputsSubject and update the items list
-            switchMap(() => this.dataSource.outputsSubject.pipe(
-                tap((outputs: IFilteringOutputs) => {
-                    this.books$.next(outputs.result.repeat.itemsSource || []);
-                    this.cd.detectChanges();
-                })
-            )),
-            takeUntil(this.destroy$)
-        ).subscribe();
+                tap(() => {
+                    this.dataSource.applyFilters();
+                }),
+                // Note: Using the same stream to subscribe to the outputsSubject and update the items list
+                switchMap(() => this.dataSource.outputsSubject.pipe(
+                    tap((outputs: IFilteringOutputs) => {
+                        this.books$.next(outputs.result.repeat.itemsSource || []);
+                        this.cd.detectChanges();
+                    })
+                )),
+                takeUntil(this.destroy$)
+            ).subscribe();
     }
 
     public ngOnDestroy(): void {

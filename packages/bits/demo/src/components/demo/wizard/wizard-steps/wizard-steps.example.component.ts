@@ -23,7 +23,7 @@ export class WizardStepsExampleComponent implements OnDestroy, OnInit {
     public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             name: this.formBuilder.control("",
-                Validators.required),
+                                           Validators.required),
             email: this.formBuilder.control("", [
                 Validators.required,
                 Validators.pattern("[^ @]*@[^ @]*"),

@@ -51,7 +51,7 @@ export class SelectV2OptionGroupComponent implements AfterContentInit, OnDestroy
                 .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
                     this.outfiltered = every(this.options.toArray(), (option: SelectV2OptionComponent) => option.outfiltered);
                 });
-            }
+        }
     }
 
     ngOnDestroy() {

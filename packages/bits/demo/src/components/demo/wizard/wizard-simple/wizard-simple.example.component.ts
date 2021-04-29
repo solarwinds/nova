@@ -38,7 +38,7 @@ export class WizardSimpleExampleComponent implements OnInit {
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
             name: this.formBuilder.control("",
-                Validators.required),
+                                           Validators.required),
             email: this.formBuilder.control("", [
                 Validators.required,
                 Validators.pattern("[^ @]*@[^ @]*"),
@@ -120,7 +120,7 @@ export class WizardSimpleExampleComponent implements OnInit {
     }
 
     public select(event: IWizardSelectionEvent) {
-       this.selectedIndex = event.selectedIndex;
+        this.selectedIndex = event.selectedIndex;
     }
     public onButtonClick(title: string) {
         title === "Leave" ? this.actionDone() : this.actionCanceled();

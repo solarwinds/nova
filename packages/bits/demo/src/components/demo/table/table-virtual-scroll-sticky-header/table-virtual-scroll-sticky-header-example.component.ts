@@ -55,18 +55,18 @@ export class TableVirtualScrollStickyHeaderExampleComponent implements AfterView
         // Note: Creating a stream of visible items to be bound to the table and increase the performance
         this.visibleItems$ = this.viewport.renderedRangeStream.pipe(startWith({ start: 0, end: 10 }),
             // Note: On range change applying filters
-            tap(() => this.dataSourceService.applyFilters()),
+                                                                    tap(() => this.dataSourceService.applyFilters()),
             // Subscribing to the filter results transforming and merging them into the stream
-            switchMap(() => this.dataSourceService.outputsSubject.pipe(
-                map((result: IFilteringOutputs) => {
-                    // Updating mock items list
-                    if (this.placeholderItems.length !== result.paginator.total) {
-                        this.placeholderItems = Array.from({ length: result.paginator.total });
-                    }
-                    // Mapping the values to array to be able to bind them to the table dataSource
-                    return result.repeat.itemsSource;
-                })
-            )));
+                                                                    switchMap(() => this.dataSourceService.outputsSubject.pipe(
+                                                                        map((result: IFilteringOutputs) => {
+                                                                            // Updating mock items list
+                                                                            if (this.placeholderItems.length !== result.paginator.total) {
+                                                                                this.placeholderItems = Array.from({ length: result.paginator.total });
+                                                                            }
+                                                                            // Mapping the values to array to be able to bind them to the table dataSource
+                                                                            return result.repeat.itemsSource;
+                                                                        })
+                                                                    )));
     }
 
     // Note: Used only for demo purposes

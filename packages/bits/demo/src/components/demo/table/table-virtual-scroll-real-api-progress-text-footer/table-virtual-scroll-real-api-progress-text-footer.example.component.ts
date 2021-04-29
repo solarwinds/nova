@@ -72,23 +72,23 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent impleme
             .observeNextPage$({pageSize: this.range}).pipe(
             // Note: In case we know the total number of items we can stop the stream when dataset end is reached
             // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
-            filter(range => this.totalItems ? this.totalItems >= range.end : true),
-            tap(range => {
+                filter(range => this.totalItems ? this.totalItems >= range.end : true),
+                tap(range => {
                 // Note: Keeping backward compatibility with RandomuserTableDataSource which requires page number to be set by consumer
                 // It also can be calculated directly on the Datasource level
-                this.dataSource.page = range.end / (range.end - range.start);
-                this.dataSource.applyFilters();
-            }),
-            // Note: Using the same stream to subscribe to the outputsSubject and update the items list
-            switchMap(() => this.dataSource.outputsSubject.pipe(
-                tap((outputs: IFilteringOutputs) => {
-                    this._totalItems = outputs.totalItems;
-                    this.users = outputs.repeat.itemsSource || [];
-                    this.cd.detectChanges();
-                })
-            )),
-            takeUntil(this.onDestroy$)
-        ).subscribe();
+                    this.dataSource.page = range.end / (range.end - range.start);
+                    this.dataSource.applyFilters();
+                }),
+                // Note: Using the same stream to subscribe to the outputsSubject and update the items list
+                switchMap(() => this.dataSource.outputsSubject.pipe(
+                    tap((outputs: IFilteringOutputs) => {
+                        this._totalItems = outputs.totalItems;
+                        this.users = outputs.repeat.itemsSource || [];
+                        this.cd.detectChanges();
+                    })
+                )),
+                takeUntil(this.onDestroy$)
+            ).subscribe();
     }
 
     public ngOnDestroy(): void {

@@ -130,5 +130,5 @@ export class TableVirtualScrollRealApiMinimalistExampleComponent implements Afte
                 },
             },
         });
-     }
+    }
 }

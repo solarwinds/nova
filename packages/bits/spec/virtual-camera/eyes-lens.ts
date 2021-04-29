@@ -50,7 +50,7 @@ export class EyesLens implements ILens {
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
             batchID ? this.eyes.setBatch(batchName, batchID)
-                    : this.eyes.setBatch(batchName);
+                : this.eyes.setBatch(batchName);
 
             this.eyes.setBranchName(branchName);
             if (branchName !== "main") {

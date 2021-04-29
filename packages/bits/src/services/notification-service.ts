@@ -21,16 +21,16 @@ export type NotificationHandler = (args: any) => void;
 export class NotificationService implements INotificationService {
     private channels: {[channelId: string]: Subject<any>} = {};
 
-   private ensureChannel(channelId: string): Subject<any> {
+    private ensureChannel(channelId: string): Subject<any> {
         return this.channels[channelId] || (this.channels[channelId] = new Subject<any>());
     }
 
-   public subscribe(channelId: string, action: NotificationHandler): Subscription {
+    public subscribe(channelId: string, action: NotificationHandler): Subscription {
         const channel = this.ensureChannel(channelId);
         return channel.subscribe(action);
     }
 
-   public post(channelId: string, args: any): void {
+    public post(channelId: string, args: any): void {
         const channel = this.channels[channelId];
         if (!channel) {
             console.warn(`post on nonexistent channel #${channelId}`);

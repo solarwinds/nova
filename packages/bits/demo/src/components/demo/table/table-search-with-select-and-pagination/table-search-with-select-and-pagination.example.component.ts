@@ -18,10 +18,10 @@ interface IExampleTableModel {
 }
 
 @Component({
-  selector: "nui-table-search-with-select-and-pagination",
-  providers: [ClientSideDataSource],
-  templateUrl: "./table-search-with-select-and-pagination.example.component.html",
-  styleUrls: ["./table-search-with-select-and-pagination.example.component.less"],
+    selector: "nui-table-search-with-select-and-pagination",
+    providers: [ClientSideDataSource],
+    templateUrl: "./table-search-with-select-and-pagination.example.component.html",
+    styleUrls: ["./table-search-with-select-and-pagination.example.component.less"],
 })
 export class TableSearchWithSelectAndPaginationComponent implements AfterViewInit, OnDestroy {
     public displayedColumns = ["position", "name", "features", "asset", "location", "status", "outages", "checks"];

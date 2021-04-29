@@ -16,10 +16,10 @@ import take from "lodash/take";
  *
  */
 @Pipe({
-  name: "limitTo",
+    name: "limitTo",
 })
 export class LimitToPipe implements PipeTransform {
-  transform(collection: any[], limitTo: number): any[] {
-    return take(collection, limitTo);
-  }
+    transform(collection: any[], limitTo: number): any[] {
+        return take(collection, limitTo);
+    }
 }
