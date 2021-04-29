@@ -7,7 +7,7 @@ import {
     OnDestroy,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import _each from "lodash/each";
 import _isNil from "lodash/isNil";

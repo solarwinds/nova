@@ -10,17 +10,17 @@ import {
     OnInit,
     ViewChild,
     ViewContainerRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import {
     fromEvent,
     merge,
     Subject,
-    timer
+    timer,
 } from "rxjs";
 import {
     filter,
-    takeUntil
+    takeUntil,
 } from "rxjs/operators";
 
 import { buttonConstants } from "../../constants/button.constants";

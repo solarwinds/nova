@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import {
     DEMO_PATH_TOKEN, NuiButtonModule, NuiCommonModule, NuiDatePickerModule, NuiDialogModule, NuiDocsModule, NuiIconModule, NuiMessageModule,
-    NuiPopoverModule, NuiTimeFrameBarModule, NuiTimeFramePickerModule, NuiTimePickerModule, NuiTooltipModule, SrlcStage
+    NuiPopoverModule, NuiTimeFrameBarModule, NuiTimeFramePickerModule, NuiTimePickerModule, NuiTooltipModule, SrlcStage,
 } from "@nova-ui/bits";
 
 import { TimeFrameBarBasicExampleComponent } from "./time-frame-bar-basic/time-frame-bar-basic.example.component";

@@ -18,7 +18,7 @@ import {
     TemplateRef,
     ViewChild,
     ViewContainerRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";

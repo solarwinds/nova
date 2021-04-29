@@ -1,7 +1,7 @@
 import {
     browser,
     by,
-    element, Key
+    element, Key,
 } from "protractor";
 
 import { Atom } from "../../atom";
@@ -10,7 +10,7 @@ import {
     BusyAtom,
     ButtonAtom,
     SelectAtom,
-    SpinnerAtom
+    SpinnerAtom,
 } from "../public_api";
 
 describe("USERCONTROL Busy", () => {

@@ -6,7 +6,7 @@ import {
     NuiDocsModule,
     NuiIconModule,
     NuiPopoverModule,
-    SrlcStage
+    SrlcStage,
 } from "@nova-ui/bits";
 
 import {

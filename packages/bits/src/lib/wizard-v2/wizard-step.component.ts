@@ -19,7 +19,7 @@ import {
     SkipSelf,
     TemplateRef,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import {FormControl, FormGroupDirective, NgForm} from "@angular/forms";
 import {Subject} from "rxjs";

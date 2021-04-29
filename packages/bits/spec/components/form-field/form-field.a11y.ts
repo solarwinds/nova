@@ -14,7 +14,7 @@ import {
     SwitchAtom,
     TextboxAtom,
     TextboxNumberAtom,
-    TimepickerAtom
+    TimepickerAtom,
 } from "../public_api";
 const AxeBuilder = require("@axe-core/webdriverjs");
 

@@ -1,7 +1,7 @@
 import { DOCUMENT } from "@angular/common";
 import {
     Inject,
-    Injectable
+    Injectable,
 } from "@angular/core";
 import _isNil from "lodash/isNil";
 

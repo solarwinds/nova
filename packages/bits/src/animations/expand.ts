@@ -6,7 +6,7 @@ import {
     trigger,
     stagger,
     query,
-    group
+    group,
 } from "@angular/animations";
 
 export const expand = trigger("expandedState", [

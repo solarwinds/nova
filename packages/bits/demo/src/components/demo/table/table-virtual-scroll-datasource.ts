@@ -6,7 +6,7 @@ import {
     IRandomUserResponse,
     IRandomUserResults,
     IRandomUserTableModel,
-    UsersQueryResponse
+    UsersQueryResponse,
 } from "./table-virtual-scroll-real-api/table-virtual-scroll-real-api.example.component";
 
 @Injectable()

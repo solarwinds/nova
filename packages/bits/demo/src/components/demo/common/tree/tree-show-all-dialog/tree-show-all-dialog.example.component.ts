@@ -12,7 +12,7 @@ import {
     IterableDiffer,
     IterableDiffers,
     OnDestroy,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import {
     DataSourceService,
@@ -29,7 +29,7 @@ import {
     NuiActiveDialog,
     NuiDialogRef,
     RepeatComponent,
-    VirtualViewportManager
+    VirtualViewportManager,
 } from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";

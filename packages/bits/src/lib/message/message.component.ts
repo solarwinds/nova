@@ -4,7 +4,7 @@ import {
     state,
     style,
     transition,
-    trigger
+    trigger,
 } from "@angular/animations";
 import {
     Component,
@@ -16,7 +16,7 @@ import {
     OnInit,
     Output,
     Renderer2,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { Subject, Subscription } from "rxjs";
 

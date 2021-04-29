@@ -6,7 +6,7 @@ import {
     Component,
     OnDestroy,
     OnInit,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import { IFilteringOutputs, SelectorService, VirtualViewportManager } from "@nova-ui/bits";
 import { Subject } from "rxjs";

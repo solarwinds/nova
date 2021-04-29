@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
-    DialogService, IBusyConfig, IWizardSelectionEvent, NuiDialogRef, WizardComponent, WizardStepComponent
+    DialogService, IBusyConfig, IWizardSelectionEvent, NuiDialogRef, WizardComponent, WizardStepComponent,
 } from "@nova-ui/bits";
 
 @Component({

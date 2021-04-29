@@ -6,7 +6,7 @@ import {
     EventEmitter, Inject,
     Input,
     OnChanges,
-    Output, SimpleChanges
+    Output, SimpleChanges,
 } from "@angular/core";
 
 /**

@@ -16,7 +16,7 @@ import {
     Optional,
     Output,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import {Subject, Subscription} from "rxjs";

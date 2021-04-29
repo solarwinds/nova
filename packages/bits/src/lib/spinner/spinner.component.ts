@@ -11,7 +11,7 @@ import {
     Output,
     SimpleChange,
     SimpleChanges,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 
 import { LoggerService } from "../../services/log-service";

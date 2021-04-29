@@ -7,7 +7,7 @@ import {
     Inject,
     OnDestroy,
     Optional,
-    QueryList
+    QueryList,
 } from "@angular/core";
 import every from "lodash/every";
 import { merge, Subject } from "rxjs";

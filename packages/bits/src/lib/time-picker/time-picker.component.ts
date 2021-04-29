@@ -12,7 +12,7 @@ import {
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _isEmpty from "lodash/isEmpty";

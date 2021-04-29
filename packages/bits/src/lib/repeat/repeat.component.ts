@@ -20,7 +20,7 @@ import {
     TemplateRef,
     ViewChild,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import {Subject} from "rxjs";
@@ -35,7 +35,7 @@ import {
     IRepeatItem,
     IRepeatItemConfig,
     PaddingOptions,
-    RepeatSelectionMode
+    RepeatSelectionMode,
 } from "./types";
 
 interface IDndItemDropped {

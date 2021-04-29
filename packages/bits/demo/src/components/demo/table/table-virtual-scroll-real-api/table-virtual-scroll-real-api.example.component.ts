@@ -7,7 +7,7 @@ import {
     Injectable,
     OnDestroy,
     OnInit,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import {
     DataSourceService,

@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
     ClientSideDataSource,
-    INovaFilteringOutputs, ISortedItem, SorterDirection, TableComponent
+    INovaFilteringOutputs, ISortedItem, SorterDirection, TableComponent,
 } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 

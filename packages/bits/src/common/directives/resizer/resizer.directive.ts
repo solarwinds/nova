@@ -9,7 +9,7 @@ import {
     OnDestroy,
     Output,
     Renderer2,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import debounce from "lodash/debounce";
 import isFunction from "lodash/isFunction";

@@ -9,7 +9,7 @@ import {
     OnChanges,
     Optional,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 
 import { MenuGroupComponent } from "../menu-group/menu-group.component";

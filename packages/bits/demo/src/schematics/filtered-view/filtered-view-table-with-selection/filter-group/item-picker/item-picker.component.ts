@@ -14,7 +14,7 @@ import {
     DataSourceService,
     ISelection,
     RepeatSelectionMode,
-    SorterDirection
+    SorterDirection,
 } from "@nova-ui/bits";
 
 import { IFilterGroupOption } from "../public-api";

@@ -12,7 +12,7 @@ import {
     LoggerService,
     RepeatComponent,
     SearchComponent,
-    VirtualViewportManager
+    VirtualViewportManager,
 } from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";

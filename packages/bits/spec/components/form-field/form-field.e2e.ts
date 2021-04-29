@@ -15,7 +15,7 @@ import {
     SwitchAtom,
     TextboxAtom,
     TextboxNumberAtom,
-    TimepickerAtom
+    TimepickerAtom,
 } from "../public_api";
 
 describe("USERCONTROL form-field >", () => {

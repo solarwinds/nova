@@ -7,7 +7,7 @@ import {
     Inject,
     Injectable,
     Injector,
-    TemplateRef
+    TemplateRef,
 } from "@angular/core";
 import isNil from "lodash/isNil";
 

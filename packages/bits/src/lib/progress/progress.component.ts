@@ -5,7 +5,7 @@ import {
     OnChanges,
     Output,
     TemplateRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 
 /**

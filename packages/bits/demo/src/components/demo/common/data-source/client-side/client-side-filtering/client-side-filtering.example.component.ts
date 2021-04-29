@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from "@angular/core";
 import {
     DataSourceService, IFilter, IMenuItem, IMultiFilterMetadata, INovaFilteringOutputs,
-    ISorterChanges, LocalFilteringDataSource, PaginatorComponent, RepeatComponent, SearchComponent, SorterComponent, SorterDirection
+    ISorterChanges, LocalFilteringDataSource, PaginatorComponent, RepeatComponent, SearchComponent, SorterComponent, SorterDirection,
 } from "@nova-ui/bits";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";

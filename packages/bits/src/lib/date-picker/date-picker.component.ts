@@ -14,7 +14,7 @@ import {
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _defaults from "lodash/defaults";

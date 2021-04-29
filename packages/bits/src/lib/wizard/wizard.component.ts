@@ -15,7 +15,7 @@ import {
     ViewChild,
     ViewChildren,
     ViewContainerRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _find from "lodash/find";
 import _findIndex from "lodash/findIndex";

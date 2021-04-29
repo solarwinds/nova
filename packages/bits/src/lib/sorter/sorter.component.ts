@@ -11,7 +11,7 @@ import {
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _assign from "lodash/assign";
 import _isEqual from "lodash/isEqual";

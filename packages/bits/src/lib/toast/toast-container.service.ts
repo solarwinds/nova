@@ -3,7 +3,7 @@ import {
     ComponentFactoryResolver,
     ComponentRef,
     EmbeddedViewRef,
-    Injectable
+    Injectable,
 } from "@angular/core";
 import isNil from "lodash/isNil";
 

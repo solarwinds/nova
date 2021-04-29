@@ -1,14 +1,14 @@
 import {
-    AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation
+    AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation,
 } from "@angular/core";
 import {
-    DataFilterService, IFilter, IFilterPub, INovaFilteringOutputs, IRange, ITimeframe, SearchComponent
+    DataFilterService, IFilter, IFilterPub, INovaFilteringOutputs, IRange, ITimeframe, SearchComponent,
 } from "@nova-ui/bits";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 
 import {
-    FilteringTimeFramePickerComponent, ListDatasource, TableDatasource
+    FilteringTimeFramePickerComponent, ListDatasource, TableDatasource,
 } from "../data-filter-basic/data-filter-basic.example.component";
 
 

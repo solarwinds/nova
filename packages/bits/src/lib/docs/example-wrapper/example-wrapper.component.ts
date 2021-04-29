@@ -3,7 +3,7 @@ import {
     Component,
     Inject,
     Input,
-    OnInit
+    OnInit,
 } from "@angular/core";
 
 import { SourcesService } from "../services/sources.service";

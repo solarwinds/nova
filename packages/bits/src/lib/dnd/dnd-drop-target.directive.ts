@@ -7,7 +7,7 @@ import {
     Input,
     OnDestroy,
     QueryList,
-    Renderer2
+    Renderer2,
 } from "@angular/core";
 import { combineLatest, fromEvent, merge, Observable, of, Subject } from "rxjs";
 import { distinctUntilChanged, map, mapTo, shareReplay, startWith, switchMap, takeUntil, tap } from "rxjs/operators";

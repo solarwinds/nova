@@ -1,5 +1,5 @@
 import {
-    ChangeDetectorRef, Component, ElementRef, forwardRef, Input, Optional, ViewChild, ViewEncapsulation
+    ChangeDetectorRef, Component, ElementRef, forwardRef, Input, Optional, ViewChild, ViewEncapsulation,
 } from "@angular/core";
 
 import { MenuActionType } from "../../public-api";

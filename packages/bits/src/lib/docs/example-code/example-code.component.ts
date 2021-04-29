@@ -6,7 +6,7 @@ import {
     ElementRef,
     Input,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 
 const hljs = require("highlight.js/lib/core");

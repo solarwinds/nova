@@ -8,7 +8,7 @@ import {
     forwardRef,
     OnDestroy,
     OnInit,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import {
     IFilter,

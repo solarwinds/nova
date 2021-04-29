@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
-    INovaFilteringOutputs, LocalFilteringDataSource, PaginatorComponent, SearchComponent
+    INovaFilteringOutputs, LocalFilteringDataSource, PaginatorComponent, SearchComponent,
 } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 

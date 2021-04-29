@@ -8,7 +8,7 @@ import {
     Input,
     OnDestroy,
     OnInit,
-    Output
+    Output,
 } from "@angular/core";
 import {
     DataSourceService,
@@ -16,7 +16,7 @@ import {
     ISelection,
     LocalFilteringDataSource,
     RepeatSelectionMode,
-    SorterDirection
+    SorterDirection,
 } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 

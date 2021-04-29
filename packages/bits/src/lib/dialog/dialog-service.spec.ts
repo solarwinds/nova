@@ -9,7 +9,7 @@ import {
     Injector,
     NgModule,
     OnDestroy,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import _noop from "lodash/noop";

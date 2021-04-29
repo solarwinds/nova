@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, TrackByFunction, Vie
 import {
     ClientSideDataSource,
     IFilteringOutputs,
-    TableStickyHeaderDirective
+    TableStickyHeaderDirective,
 } from "@nova-ui/bits";
 import sample from "lodash/sample";
 import { Observable } from "rxjs";

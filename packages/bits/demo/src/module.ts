@@ -4,7 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 import {
     NgModule,
     TRANSLATIONS,
-    TRANSLATIONS_FORMAT
+    TRANSLATIONS_FORMAT,
 } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";

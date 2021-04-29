@@ -8,7 +8,7 @@ import {
     Output,
     TemplateRef,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 
 import { IChipsItem } from "../public-api";

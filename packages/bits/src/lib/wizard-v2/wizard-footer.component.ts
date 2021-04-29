@@ -1,6 +1,6 @@
 import {FocusableOption, FocusMonitor} from "@angular/cdk/a11y";
 import {
-    AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation
+    AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation,
 } from "@angular/core";
 
 import {WizardStepFooterDirective} from "./wizard-step-footer.directive";
