@@ -8,12 +8,14 @@
                     i18n-hint
                     hint="This is some help text"
                     required="true"
+                    [disabled]="isBusy"
                     [value]="false"
                     i18n>Check box with help text
     </nui-checkbox>
     <nui-checkbox name="nui-demo-checkbox-plain"
                     [checked]="true"
                     [value]="false"
+                    [disabled]="isBusy"
                     i18n>Plain checkbox
     </nui-checkbox>
 </ng-template>
