@@ -19,7 +19,7 @@ import { NuiDashboardsModule } from "../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../services/provider-registry.service";
 import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
-import { ITimeseriesWidgetConfig, ITimeseriesWidgetData, TimeseriesInteractionType } from "../../types";
+import { ITimeseriesWidgetConfig, ITimeseriesWidgetData, TimeseriesInteractionType, ITimeseriesWidgetSeriesData } from "../../types";
 
 import { XYChartComponent } from "./xy-chart.component";
 
@@ -173,16 +173,54 @@ describe("XYChartComponent", () => {
             expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(true);
         });
 
-        it("should communitcate interaction on the EventBus when series is interactive", () => {
+        it("should return true if the dataSeries has 'link' populated", () => {
+            component.widgetData = { series: [{} as ITimeseriesWidgetData] };
+            component.widgetData.series[0] = {
+                id: "id",
+                name: "name",
+                description: "description",
+                link: "www.link.com",
+                data: {} as ITimeseriesWidgetSeriesData[],
+            }
+            component.ngOnChanges(initializationChanges);
+            expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(true);
+        });
+
+        it("should return true if the dataSeries has 'secondaryLink' populated", () => {
+            component.widgetData = { series: [{} as ITimeseriesWidgetData] };
+            component.widgetData.series[0] = {
+                id: "id",
+                name: "name",
+                description: "description",
+                secondaryLink: "www.link.com",
+                data: {} as ITimeseriesWidgetSeriesData[],
+            }
+            component.ngOnChanges(initializationChanges);
+            expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(true);
+        });
+
+        it("should communicate interaction on the EventBus when series is interactive", () => {
             const spy = spyOn(eventBus.getStream(INTERACTION), "next").and.callThrough();
             component.configuration = { interaction: "series" } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            component.onInteraction(component.chartAssist.legendSeriesSet[0]);
+            component.onPrimaryDescClick(component.chartAssist.legendSeriesSet[0]);
             const interactionData = {
                 payload: { data: component.chartAssist.legendSeriesSet[0], interactionType: TimeseriesInteractionType.Series },
                 id: "INTERACTION",
             };
             expect(spy).toHaveBeenCalledWith(interactionData);
+        });
+
+        it("should return false when no link property is set on the dataSource and the series is not interactive", () => {
+            component.widgetData = { series: [{} as ITimeseriesWidgetData] };
+            component.widgetData.series[0] = {
+                id: "id",
+                name: "name",
+                description: "description",
+                data: {} as ITimeseriesWidgetSeriesData[],
+            }
+            component.ngOnChanges(initializationChanges);
+            expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(false);
         });
     });
 });

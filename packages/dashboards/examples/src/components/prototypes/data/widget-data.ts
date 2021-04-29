@@ -119,8 +119,8 @@ export function getTimeseriesWidgetData(): ITimeseriesWidgetData[] {
             id: "series-1",
             name: "Average CPU Load",
             description: "AII ESXi Hosts",
-            link: "https://en.wikipedia.org/wiki/Nur-Sultan",
-            secondaryLink: "https://en.wikipedia.org/wiki",
+            // link: "https://en.wikipedia.org/wiki/Nur-Sultan",
+            // secondaryLink: "https://en.wikipedia.org/wiki",
             data: [
                 { x: moment(startOfToday).subtract(59, "day").toDate(), y: 35 },
                 { x: moment(startOfToday).subtract(58, "day").toDate(), y: 33 },
@@ -189,6 +189,7 @@ export function getTimeseriesWidgetData(): ITimeseriesWidgetData[] {
             name: "Average CPU Load",
             description: "test1234.demo.lab",
             link: "https://en.wikipedia.org/wiki/Brno",
+            secondaryLink: "https://en.wikipedia.org/wiki",
             data: [
                 { x: moment(startOfToday).subtract(59, "day").toDate(), y: 35 },
                 { x: moment(startOfToday).subtract(58, "day").toDate(), y: 33 },
@@ -257,6 +258,7 @@ export function getTimeseriesWidgetData(): ITimeseriesWidgetData[] {
             name: "Average CPU Load",
             description: "test2334.demo.lab",
             link: "https://en.wikipedia.org/wiki/Austin",
+            // secondaryLink: "https://en.wikipedia.org/wiki",
             data: [
                 { x: moment(startOfToday).subtract(59, "day").toDate(), y: 35 },
                 { x: moment(startOfToday).subtract(58, "day").toDate(), y: 33 },
