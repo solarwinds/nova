@@ -52,7 +52,7 @@
             <form [formGroup]="testForm">
                 <nui-checkbox-group id="nui-demo-checkbox-group-in-form-disabled-checkboxes"
                                 name="vegetable"
-                                formControlName="checkboxGroup2">
+                                formControlName="enabledCheckboxGroup">
                     <nui-checkbox [value]="vegetables[0]"
                                     [disabled]="true"
                                     [checked]="isChecked(vegetables[0])">
@@ -78,7 +78,7 @@
         <form [formGroup]="testForm">
             <nui-checkbox-group id="nui-demo-checkbox-group-in-form"
                             name="vegetable"
-                            formControlName="checkboxGroup">
+                            formControlName="disabledCheckboxGroup">
                 <nui-checkbox *ngFor="let vegetable of vegetables"
                             [value]="vegetable"
                             [checked]="isChecked(vegetable)">
