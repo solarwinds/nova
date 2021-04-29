@@ -45,10 +45,7 @@ export class CameraEngine {
             if (!fs.existsSync(this.snapshotsFolderName)) {
                 fs.mkdirSync(this.snapshotsFolderName);
             }
-            Helpers.saveScreenShot(`
-                    ${this.snapshotsFolderName}/
-                    ${this.cleanFileName(this.settings.currentTestName)}_
-                    ${this.cleanFileName(label)}.png`);
+            Helpers.saveScreenShot(`${this.snapshotsFolderName}/${this.cleanFileName(this.settings.currentTestName)}_${this.cleanFileName(label)}.png`);
             return;
         }
 
