@@ -74,19 +74,19 @@ export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetec
     ngOnChanges(changes: SimpleChanges): void {
         const startingTimespanControl = this.form.get("startingTimespan");
 
-        if (changes.leftAxisLabel && !changes.leftAxisLabel.isFirstChange()) {
+        if (changes.leftAxisLabel) {
             this.form.get("leftAxisLabel")?.setValue(this.leftAxisLabel, {emitEvent: false});
         }
 
-        if (changes.startingTimespan && !changes.startingTimespan.isFirstChange()) {
+        if (changes.startingTimespan) {
             startingTimespanControl?.setValue(this.startingTimespan, {emitEvent: false});
         }
 
-        if (changes.legendPlacement && !changes.legendPlacement.isFirstChange()) {
+        if (changes.legendPlacement) {
             this.form.get("legendPlacement")?.setValue(this.legendPlacement, {emitEvent: false});
         }
 
-        if (changes.preset && !changes.preset.isFirstChange()) {
+        if (changes.preset) {
             this.form.get("preset")?.setValue(this.preset, {emitEvent: false});
         }
 
