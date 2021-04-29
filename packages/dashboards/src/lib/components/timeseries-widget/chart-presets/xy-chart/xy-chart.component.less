@@ -2,6 +2,7 @@
 @import (reference) "@nova-ui/bits/sdk/less/mixins.less";
 
 @nui-legend-deemphasized-opacity: 0.3;
+@nui-legend-series-content-margin: 3px;
 
 .legend-container {
     .legend-description-container {
@@ -17,15 +18,22 @@
                 &:not(.nui-text-link-small) { 
                     .setCssVariable(color, nui-color-text-default);
                 }
+                &:not(:last-child) {
+                    margin-bottom: -@nui-legend-series-content-margin;
+                }
             }
+
             &-secondary {
-                width: fit-content;
                 &:not(.nui-text-link-small) { 
                     .setCssVariable(color, nui-color-text-secondary);
+                }
+                &:not(:first-child) {
+                    margin-top: -1px;
                 }
             }
         }
     }
+
     &:not(:hover)&.state-hidden {
         .legend-description-container {
             opacity: @nui-legend-deemphasized-opacity;
