@@ -1,4 +1,4 @@
-import { browser, by, element } from "protractor";
+import { by, element } from "protractor";
 
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";

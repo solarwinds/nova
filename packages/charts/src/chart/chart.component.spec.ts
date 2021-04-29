@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { CHART_VIEW_STATUS_EVENT } from "../constants";
 import { Chart } from "../core/chart";

@@ -1,9 +1,8 @@
-import { browser, by, element } from "protractor";
+import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { SwitchAtom } from "../switch/switch.atom";
 
 import { ToolbarAtom } from "./toolbar.atom";
 
@@ -14,7 +13,6 @@ describe(`Visual tests: ${name}`, () => {
     let toolbarBasic: ToolbarAtom;
     let toolbarSelected: ToolbarAtom;
     let toolbarNoMenuSelected: ToolbarAtom;
-    let themeSwitch: SwitchAtom;
 
     const id = {
         toolbarBasic: "nui-toolbar-test",
@@ -33,8 +31,6 @@ describe(`Visual tests: ${name}`, () => {
         toolbarBasic = Atom.find(ToolbarAtom, id.toolbarBasic);
         toolbarSelected = Atom.find(ToolbarAtom, id.toolbarSelected);
         toolbarNoMenuSelected = Atom.find(ToolbarAtom, id.toolbarNoMenuSelected);
-        themeSwitch = Atom.findIn(SwitchAtom, element(by.tagName("nui-theme-switcher")));
-        
         camera = new Camera().loadFilm(browser, name);
     });
 

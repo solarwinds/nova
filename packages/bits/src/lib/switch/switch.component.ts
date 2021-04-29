@@ -31,7 +31,6 @@ import { NuiFormFieldControl } from "../form-field/public-api";
     ],
     styleUrls: ["./switch.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
-    host: { "role": "switch" },
 })
 
 export class SwitchComponent implements OnInit, ControlValueAccessor {

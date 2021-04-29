@@ -12,7 +12,6 @@ import {
 import {
     DataSourceService,
     INovaFilteringOutputs,
-    nameof,
     TableComponent,
     VirtualViewportManager,
 } from "@nova-ui/bits";
@@ -27,7 +26,7 @@ import {
     RESULTS_PER_PAGE,
 } from "../filtered-view-table-with-custom-virtual-scroll-data";
 import { FilteredViewTableWithCustomVirtualScrollDataSource } from "../filtered-view-table-with-custom-virtual-scroll-data-source.service";
-import { IServer, IServerFilters } from "../types";
+import { IServer } from "../types";
 
 import { VirtualScrollCustomStrategyService } from "./virtual-scroll-custom-strategy.service";
 

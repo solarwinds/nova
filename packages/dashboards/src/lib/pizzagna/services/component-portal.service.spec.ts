@@ -1,5 +1,4 @@
 import { InjectFlags, InjectionToken, Injector, Type } from "@angular/core";
-import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { mockLoggerService } from "../../mocks";
 
@@ -19,12 +18,10 @@ class MockInjector implements Injector {
 
 describe("ComponentPortalService > ", () => {
     let service: ComponentPortalService;
-    let eventBus: EventBus<IEvent>;
     let componentRegistry: ComponentRegistryService;
 
     beforeEach(() => {
         componentRegistry = new ComponentRegistryService(mockLoggerService);
-        eventBus = new EventBus<IEvent>();
         service = new ComponentPortalService(componentRegistry, mockLoggerService);
     });
 

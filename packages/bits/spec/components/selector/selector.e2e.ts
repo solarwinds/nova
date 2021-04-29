@@ -24,7 +24,6 @@ describe("USERCONTROL Selector", () => {
     let subject: SelectorAtom;
     let selectionElement: ElementFinder;
     let indeterminateElement: ElementFinder;
-    let tempSelectionText: string;
 
     const isIndeterminate = async (): Promise<boolean> =>
         (await indeterminateElement.getText()) === "indeterminate";
@@ -46,15 +45,12 @@ describe("USERCONTROL Selector", () => {
     });
 
     it("should get appropriate 'SelectionType' state by clicking repeat item", async () => {
-        tempSelectionText = await selectionElement.getText();
         await subject.select(SelectionType.All);
         expect(await selectionElement.getText()).toEqual(SelectionType.All);
 
-        tempSelectionText = await selectionElement.getText();
         await subject.select(SelectionType.None);
         expect(await selectionElement.getText()).toEqual(SelectionType.None);
 
-        tempSelectionText = await selectionElement.getText();
         await subject.select(SelectionType.All);
         await subject.select(SelectionType.AllPages);
         expect(await selectionElement.getText()).toEqual(SelectionType.AllPages);
@@ -63,11 +59,9 @@ describe("USERCONTROL Selector", () => {
     it("should get 'SelectionType' (All, None) by changing checkbox state", async () => {
         const selectorCheckbox = subject.getCheckbox();
 
-        tempSelectionText = await selectionElement.getText();
         await selectorCheckbox.toggle();
         expect(await selectionElement.getText()).toEqual(SelectionType.All);
 
-        tempSelectionText = await selectionElement.getText();
         await selectorCheckbox.toggle();
         expect(await selectionElement.getText()).toEqual(SelectionType.UnselectAll);
     });
@@ -83,11 +77,9 @@ describe("USERCONTROL Selector", () => {
     it("should get 'SelectionType' (All, None) by clicking on selector button", async () => {
         const selectorButton = subject.getSelectorButton();
 
-        tempSelectionText = await selectionElement.getText();
         await selectorButton.click();
         expect(await selectionElement.getText()).toEqual(SelectionType.All);
 
-        tempSelectionText = await selectionElement.getText();
         await selectorButton.click();
         expect(await selectionElement.getText()).toEqual(SelectionType.UnselectAll);
     });

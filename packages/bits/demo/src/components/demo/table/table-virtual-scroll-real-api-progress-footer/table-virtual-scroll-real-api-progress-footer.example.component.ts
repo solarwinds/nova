@@ -13,7 +13,6 @@ import {
 import {
     IFilter,
     IFilteringOutputs,
-    SearchService,
     SelectorService,
     TableComponent,
     TableVirtualScrollDirective,

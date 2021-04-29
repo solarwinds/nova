@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostBinding, Input, OnChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, HostBinding, Input } from "@angular/core";
 
 import { IFormatterData } from "../types";
 

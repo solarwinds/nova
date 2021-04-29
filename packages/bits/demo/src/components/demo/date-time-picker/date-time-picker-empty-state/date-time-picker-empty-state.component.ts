@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { FormControl, Validators } from "@angular/forms";
-import moment, { Moment } from "moment/moment";
+import { Moment } from "moment/moment";
 
 
 @Component({

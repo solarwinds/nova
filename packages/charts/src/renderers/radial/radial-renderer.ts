@@ -1,6 +1,5 @@
 import { Arc, arc, DefaultArcObject } from "d3-shape";
 import defaultsDeep from "lodash/defaultsDeep";
-import each from "lodash/each";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 

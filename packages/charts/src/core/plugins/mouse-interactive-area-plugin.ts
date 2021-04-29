@@ -1,5 +1,5 @@
 import isEmpty from "lodash/isEmpty";
-import { Subject, Subscription } from "rxjs";
+import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { INTERACTION_COORDINATES_EVENT, INTERACTION_VALUES_ACTIVE_EVENT, INTERACTION_VALUES_EVENT, MOUSE_ACTIVE_EVENT } from "../../constants";

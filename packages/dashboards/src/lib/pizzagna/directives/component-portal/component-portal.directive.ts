@@ -159,6 +159,7 @@ export class ComponentPortalDirective implements OnInit, AfterViewInit, OnDestro
 
         // apply initial property values to the freshly (re)created component
         if (this.properties) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             for (const key of Object.keys(this.properties)) {
                 this.propertiesChanges.next(new SimpleChange(undefined, this.properties, true));
             }

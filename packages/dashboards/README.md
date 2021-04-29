@@ -20,9 +20,8 @@ absorb into your product's code base.
 $ ng add @nova-ui/bits
 ```
 If needed, further instructions for Bits installation can be found 
-<a href="http://apollo-docs.swdev.local/nova-bits/release_nova_v9.x/sdk/api-docs-ng2/" target="_blank">here</a>.
+<a href="https://nova-ui.solarwinds.io/bits/release_v11.x/" target="_blank">here</a>.
 
-[//]: # (TODO: Update bits link above with v10 -  NUI-5832)
 
 #### Installing NodeJS and npm
 To check your version of NodeJS, run node -v in a terminal/console window.
@@ -95,12 +94,11 @@ addition to the styles source paths:
 }
 ```
 
-[//]: # (TODO: Update links with v10 - NUI-5832)
 ## Start Implementing Your Dashboards
 An **overview** of Nova Dashboards is available 
-<a href="http://apollo-docs.swdev.local/nova-dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/overview.html">here</a>,
+<a href="https://nova-ui.solarwinds.io/dashboards/release_v11.x/additional-documentation/overview.html">here</a>,
 but if you'd prefer to dive right in, you can start with our **Hello, Dashboards!** tutorial 
-<a href="http://apollo-docs.swdev.local/nova-dashboards/release_nova_v9.x/sdk/api-docs-ng2/additional-documentation/tutorials/hello-dashboards.html">here</a>.
+<a href="https://nova-ui.solarwinds.io/dashboards/release_v11.x/additional-documentation/tutorials/hello-dashboards.html">here</a>.
 
 [//]: # (Line breaks leave breathing room when the user scrolls to the bottom)
 <br>

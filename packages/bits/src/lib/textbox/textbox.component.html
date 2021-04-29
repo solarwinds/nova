@@ -17,6 +17,8 @@
                [placeholder]="placeholder"
                [readonly]="readonly"
                [attr.aria-label]="ariaLabel"
+               [attr.aria-readonly]="readonly"
+               [attr.aria-invalid]="isInErrorState"
                #textboxInput/>
 
         <textarea *ngIf="rows > 1"
@@ -30,6 +32,8 @@
                   [placeholder]="placeholder"
                   [readonly]="readonly"
                   [attr.aria-label]="ariaLabel"
+                  [attr.aria-readonly]="readonly"
+                  [attr.aria-invalid]="isInErrorState"
                   #textboxInput></textarea>
 
         <div class="form-control-feedback nui-textbox__busy">

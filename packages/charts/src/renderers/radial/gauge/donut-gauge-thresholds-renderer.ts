@@ -1,4 +1,4 @@
-import { Arc, arc, DefaultArcObject, pie } from "d3-shape";
+import { Arc, arc, DefaultArcObject } from "d3-shape";
 import defaultsDeep from "lodash/defaultsDeep";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
@@ -47,7 +47,7 @@ export class DonutGaugeThresholdsRenderer extends RadialRenderer {
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
         const markerSelection = dataContainer.selectAll(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`)
-            .data(DonutGaugeRenderingUtil.generateThresholdData(data));
+            .data(DonutGaugeRenderingUtil.generateThresholdRenderingData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")

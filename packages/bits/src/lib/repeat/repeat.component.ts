@@ -62,6 +62,7 @@ interface IDndItemDropped {
     host: {
         "[class.virtual-scroll-viewport]": "virtualScroll",
         "[attr.role]": "role",
+        "[attr.aria-multiselectable]": "selectionMode === repeatSelectionMode.multi || null",
     },
 })
 export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {

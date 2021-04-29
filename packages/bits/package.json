@@ -1,7 +1,7 @@
 {
   "name": "@nova-ui/bits",
   "license": "Apache-2.0",
-  "version": "11.3.0-0",
+  "version": "11.4.0-0",
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "description": "SolarWinds Nova Framework",
   "contributors": [
@@ -89,25 +89,17 @@
   },
   "analyze": false,
   "peerDependencies": {
-    "@angular-devkit/schematics": "^11.1.4",
     "@angular/animations": "^11.1.2",
     "@angular/cdk": "^11.1.1",
-    "@angular/common": "^11.1.2",
-    "@angular/compiler": "^11.1.2",
     "@angular/core": "^11.1.2",
     "@angular/forms": "^11.1.2",
     "@angular/localize": "^11.1.2",
     "@angular/platform-browser": "^11.1.2",
-    "@angular/platform-browser-dynamic": "^11.1.2",
     "@angular/router": "^11.1.2",
-    "@schematics/angular": "^11.1.4",
-    "core-js": "^2.6.9",
     "highlight.js": "^10.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.25.3",
-    "moment-timezone": "^0.5.27",
-    "rxjs": "^6.5.3",
-    "zone.js": "^0.11.3"
+    "moment-timezone": "^0.5.27"
   },
   "dependencies": {
     "resize-observer-polyfill": "^1.5.0",

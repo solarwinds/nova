@@ -1,7 +1,6 @@
 import { BehaviorSubject } from "rxjs";
 
 import { ComparatorTypes, IProperties } from "../../types";
-import { IListWidgetConfiguration } from "../list-widget/types";
 import { ITimeseriesWidgetSeries } from "../timeseries-widget/types";
 import { IFormatter } from "../types";
 

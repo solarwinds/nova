@@ -45,6 +45,8 @@ import { CheckboxStatus, SelectionType } from "./public-api";
     selector: "nui-selector",
     host: {
         "class": "nui-selector",
+        "tabindex": "-1",
+        "[attr.aria-label]": "ariaLabel",
     },
     templateUrl: "./selector.component.html",
     styleUrls: ["./selector.component.less"],
@@ -63,6 +65,9 @@ export class SelectorComponent implements OnChanges, AfterViewInit, OnDestroy, I
 
     @Input()
     public appendToBody: boolean;
+
+    @Input()
+    public ariaLabel: string = "Selector";
 
     @Output()
     public selectionChange = new EventEmitter<SelectionType>();

@@ -4,6 +4,7 @@
 import { CommonModule, DatePipe } from "@angular/common";
 import { NgModule, Provider } from "@angular/core";
 // This is not technically used here, but it does pull in the type for $localize
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {LocalizeFn} from "@angular/localize/init";
 
 import { imagesData as IMAGES_PRESET } from "../constants/images";
@@ -13,6 +14,7 @@ import { NUI_ENV_PROVIDER } from "../environment";
 import { SelectorService } from "../lib/selector/selector.service";
 import { LimitToPipe } from "../pipes/limit-to.pipe";
 import { UnitConversionPipe } from "../pipes/unit-conversion.pipe";
+import { HighlightPipe } from "../pipes/highlight.pipe";
 import { DomUtilService } from "../services/dom-util.service";
 import { EdgeDetectionService } from "../services/edge-detection.service";
 import { EventBusService } from "../services/event-bus.service";
@@ -75,6 +77,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         ResizerDirective,
         SetFocusDirective,
         LimitToPipe,
+        HighlightPipe,
         UnitConversionPipe,
         ZoomContentDirective,
     ],
@@ -89,6 +92,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         ResizerDirective,
         SetFocusDirective,
         UnitConversionPipe,
+        HighlightPipe,
         ZoomContentDirective,
     ],
     entryComponents: [

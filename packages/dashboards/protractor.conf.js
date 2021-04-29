@@ -29,7 +29,7 @@ exports.config = {
     directConnect: !process.env.SELENIUM_ADDRESS,
     framework: 'jasmine',
     params: {
-        visual: "eyes"
+        visual: "percy"
     },
     jasmineNodeOpts: {
         showColors: true,

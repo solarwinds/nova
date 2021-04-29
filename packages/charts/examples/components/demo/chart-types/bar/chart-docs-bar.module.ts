@@ -12,6 +12,8 @@ import { BarChartTickLabelMaxWidthWithMarginTestComponent } from "./bar-chart-te
 import { BarChartTickLabelMaxWidthTestComponent } from "./bar-chart-test/bar-chart-tick-label-max-width/bar-chart-tick-label-max-width-test.component";
 import { BasicHorizontalBarChartTestComponent } from "./bar-chart-test/basic-horizontal/basic-horizontal-bar-chart-test.component";
 import { BasicVerticalBarChartTestComponent } from "./bar-chart-test/basic-vertical/basic-vertical-bar-chart-test.component";
+import { BarChartTimeIntervalDstTestComponent } from "./bar-chart-test/daylight-saving-time/bar-chart-time-interval/bar-chart-time-interval-dst-test.component";
+import { DstTimeIntervalTestPageComponent } from "./bar-chart-test/daylight-saving-time/dst-time-interval-test-page.component";
 import { HorizontalWithLegendBarChartTestComponent } from "./bar-chart-test/horizontal-with-legend/horizontal-with-legend-bar-chart-test.component";
 import { TimeIntervalTestComponent } from "./bar-chart-test/time-interval/time-interval.test.component";
 import { VerticalWithLegendBarChartTestComponent } from "./bar-chart-test/vertical-with-legend/vertical-with-legend-bar-chart-test.component";
@@ -58,6 +60,15 @@ const exampleRoutes: Routes = [
     {
         path: "test",
         component: BarChartTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "dst-time-interval-test",
+        component: DstTimeIntervalTestPageComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -124,6 +135,8 @@ const exampleRoutes: Routes = [
         BarChartTestComponent,
         BasicHorizontalBarChartTestComponent,
         BasicVerticalBarChartTestComponent,
+        DstTimeIntervalTestPageComponent,
+        BarChartTimeIntervalDstTestComponent,
         VerticalWithTimescaleBarChartTestComponent,
         VerticalWithLegendBarChartTestComponent,
         HorizontalWithLegendBarChartTestComponent,

@@ -1,5 +1,4 @@
 import { performance } from "perf_hooks";
-import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";

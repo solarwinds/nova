@@ -41,11 +41,10 @@ import {<%
     IFilterable,<% } %>
     IServer,
     ServerStatus,
-} from "./types";<%
-if (dataSource === "serverSide") { %>
+} from "./types";
 import {
     <%= classify(name) %>DataSource,
-} from "./<%= dasherize(name) %>-data-source.service";<% } %>
+} from "./<%= dasherize(name) %>-data-source.service";
 
 @Component({
     selector: "<%= selector %>",
@@ -55,8 +54,7 @@ import {
         VirtualViewportManager,<% } %>
         {
             provide: DataSourceService,
-            useClass: <% if(dataSource === "none" || dataSource === "clientSide") {%>LocalFilteringDataSource<%
-        } else {%><%= classify(name) %>DataSource<% } %>,
+            useClass: <%= classify(name) %>DataSource,
         },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,

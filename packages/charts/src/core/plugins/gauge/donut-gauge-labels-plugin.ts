@@ -113,7 +113,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
         }
 
         const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`)
-            .data(DonutGaugeRenderingUtil.generateThresholdData(data));
+            .data(DonutGaugeRenderingUtil.generateThresholdRenderingData(data));
         labelSelection.exit().remove();
         labelSelection.enter()
             .append("text")
