@@ -18,11 +18,15 @@ export class WizardBusyExampleComponent  {
     constructor() {}
 
     public toggleStepBusy() {
+        /* Switch off spinner of all content. Just to avoid two spinners */
+        this.isBusy = false;
         this.busyConfig.busy = !this.busyConfig.busy;
         this.wizardComponent.navigationControl.next({ busyState: this.busyConfig, allowStepChange: !this.busyConfig.busy});
     }
 
     public toggleBusy(): void {
+        /* Switch off spinner of step content. Just to avoid two spinners */
+        this.busyConfig.busy = false;
         this.isBusy = !this.isBusy;
     }
 }
