@@ -1,11 +1,10 @@
 
-import {$, browser} from "protractor";
+import { browser } from "protractor";
 
 import {Atom} from "../../atom";
 import {ButtonAtom} from "../../components/button/button.atom";
 import {Animations, Helpers} from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { TooltipAtom } from "./tooltip.atom";
 
 const name: string = "Tooltip";
 
@@ -33,24 +32,23 @@ describe(`Visual tests: ${name}`, () => {
         await camera.turn.on();
 
         await basicTooltipButton.hover();
-        await camera.say.cheese("Hover on button with basic tooltip");
+        await camera.say.cheese("Hover on button with basic tooltip", 200);
 
         await Helpers.clickOnEmptySpace();
         await leftTooltipButton.hover();
-        await camera.say.cheese("Hover on button with tooltip on the left");
+        await camera.say.cheese("Hover on button with tooltip on the left", 200);
 
         await Helpers.clickOnEmptySpace();
         await bottomTooltipButton.hover();
-        await camera.say.cheese("Hover on button with tooltip on the bottom");
+        await camera.say.cheese("Hover on button with tooltip on the bottom", 200);
 
         await Helpers.clickOnEmptySpace();
         await rightTooltipButton.hover();
-        await camera.say.cheese("Hover on button with tooltip on the right");
+        await camera.say.cheese("Hover on button with tooltip on the right", 200);
 
         await Helpers.clickOnEmptySpace();
         await manualTooltipButton.click();
-        new TooltipAtom($("body")).waitToBeDisplayed();
-        await camera.say.cheese("After tooltip triggered manually");
+        await camera.say.cheese("After tooltip triggered manually", 400);
 
         Helpers.switchDarkTheme("on");
         await camera.say.cheese("After tooltip triggered manually with dark theme mode on");
