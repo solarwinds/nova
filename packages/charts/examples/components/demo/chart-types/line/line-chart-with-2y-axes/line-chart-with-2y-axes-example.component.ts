@@ -11,7 +11,7 @@ import {
     LinearScale,
     LineRenderer,
     TimeScale,
-    XYGrid
+    XYGrid,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 import { Subject } from "rxjs";

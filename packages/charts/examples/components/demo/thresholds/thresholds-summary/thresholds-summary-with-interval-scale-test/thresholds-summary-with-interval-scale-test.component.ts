@@ -24,7 +24,7 @@ import {
     THRESHOLDS_SUMMARY_RENDERER_CONFIG,
     TimeIntervalScale,
     UtilityService,
-    XYGrid
+    XYGrid,
 } from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep";
 import moment, { duration } from "moment/moment";

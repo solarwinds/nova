@@ -3,7 +3,7 @@ import { IconService } from "@nova-ui/bits";
 import {
     BandScale, BarHighlightStrategy, BarRenderer, BarStatusGridConfig, BarTooltipsPlugin, Chart, CHART_PALETTE_CS_S, HIGHLIGHT_DATA_POINT_EVENT,
     InteractionLabelPlugin, InteractionLinePlugin, IValueProvider, IXYScales, MappedValueProvider, SELECT_DATA_POINT_EVENT, statusAccessors, StatusAccessors,
-    SvgMarker, TimeScale, XYGrid
+    SvgMarker, TimeScale, XYGrid,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 

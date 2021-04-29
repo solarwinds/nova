@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart, ChartAssist, IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid
+    Chart, ChartAssist, IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 

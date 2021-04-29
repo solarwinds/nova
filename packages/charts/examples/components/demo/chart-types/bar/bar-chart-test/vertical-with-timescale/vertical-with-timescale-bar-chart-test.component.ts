@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    barAccessors, barGrid, BarRenderer, barScales, Chart, IBarAccessors, IChartSeries, NoopAccessors, NoopRenderer, NoopScale, TimeScale, XYGrid
+    barAccessors, barGrid, BarRenderer, barScales, Chart, IBarAccessors, IChartSeries, NoopAccessors, NoopRenderer, NoopScale, TimeScale, XYGrid,
 } from "@nova-ui/charts";
 import moment, { Moment } from "moment/moment";
 

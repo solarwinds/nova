@@ -21,7 +21,7 @@ import {
     IInteractionDataPointsEvent,
     InteractionType,
     IRenderStateData,
-    IValueProvider
+    IValueProvider,
 } from "../common/types";
 
 import { ChartAssistEventType, ChartAssistRenderStateData, IChartAssist, IChartAssistEvent, IRenderStatesIndex } from "./types";

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     BandScale, BarRenderer, Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, getAutomaticDomainWithIncludedInterval, IAccessors, IChartAssistSeries,
     IChartSeries, ILineAccessors, IScale, ISimpleThresholdZone, IXYScales, LineAccessors, LinearScale, LineRenderer, MappedValueProvider, StatusAccessors,
-    ThresholdsService, thresholdsSummaryGridConfig, thresholdsTopGridConfig, THRESHOLDS_SUMMARY_RENDERER_CONFIG, TimeScale, XYGrid
+    ThresholdsService, thresholdsSummaryGridConfig, thresholdsTopGridConfig, THRESHOLDS_SUMMARY_RENDERER_CONFIG, TimeScale, XYGrid,
 } from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep";
 import moment from "moment/moment";

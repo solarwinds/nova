@@ -5,7 +5,7 @@ import {
     OverlayPositionBuilder,
     OverlayRef,
     PositionStrategy,
-    ScrollStrategyOptions
+    ScrollStrategyOptions,
 } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";
 import {
@@ -16,7 +16,7 @@ import {
     OnInit,
     TemplateRef,
     ViewChild,
-    ViewContainerRef
+    ViewContainerRef,
 } from "@angular/core";
 import {
     BandScale,
@@ -35,7 +35,7 @@ import {
     SET_DOMAIN_EVENT,
     XYGrid,
     XYGridConfig,
-    ZoomPlugin
+    ZoomPlugin,
 } from "@nova-ui/charts";
 
 /**

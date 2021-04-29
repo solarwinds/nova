@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    barAccessors, barGrid, BarRenderer, barScales, BarSeriesHighlightStrategy, BarTooltipsPlugin, Chart, ChartAssist, InteractionLabelPlugin
+    barAccessors, barGrid, BarRenderer, barScales, BarSeriesHighlightStrategy, BarTooltipsPlugin, Chart, ChartAssist, InteractionLabelPlugin,
 } from "@nova-ui/charts";
 
 @Component({

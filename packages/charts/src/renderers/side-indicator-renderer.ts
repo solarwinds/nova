@@ -11,7 +11,7 @@ import {
     IRendererConfig,
     IRendererEventPayload,
     ISeriesAccessors,
-    SeriesAccessor
+    SeriesAccessor,
 } from "../core/common/types";
 import { GRAYSCALE_FILTER } from "../core/types";
 

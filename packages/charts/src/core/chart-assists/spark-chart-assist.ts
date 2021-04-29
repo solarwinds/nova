@@ -9,7 +9,7 @@ import { ChartPalette } from "../common/palette/chart-palette";
 import { CHART_MARKERS, CHART_PALETTE_CS1 } from "../common/palette/palettes";
 import { SequentialChartMarkerProvider } from "../common/palette/sequential-chart-marker-provider";
 import {
-    IAccessors, IChartAssistSeries, IChartEvent, IChartMarker, IChartPalette, IChartSeries, IDataPointsPayload, InteractionType, IValueProvider
+    IAccessors, IChartAssistSeries, IChartEvent, IChartMarker, IChartPalette, IChartSeries, IDataPointsPayload, InteractionType, IValueProvider,
 } from "../common/types";
 import { UtilityService } from "../common/utility.service";
 import { sparkChartGridConfig } from "../grid/config/spark-chart-grid-config";

@@ -1,6 +1,6 @@
 import {
     AfterContentInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Host, HostBinding, HostListener, Input, Optional, Output, ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 

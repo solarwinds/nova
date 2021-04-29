@@ -8,7 +8,7 @@ import {
     Chart,
     ChartAssist,
     CHART_PALETTE_CS_S,
-    MappedValueProvider
+    MappedValueProvider,
 } from "@nova-ui/charts";
 
 enum Status {

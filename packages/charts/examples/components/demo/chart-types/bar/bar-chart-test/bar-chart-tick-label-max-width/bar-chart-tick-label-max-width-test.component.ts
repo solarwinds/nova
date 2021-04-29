@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     barAccessors, barGrid, BarHighlightStrategy, BarRenderer, barScales,
-    Chart, ChartAssist, IBarAccessors, IBarChartConfig, IChart, IChartSeries, XYGridConfig
+    Chart, ChartAssist, IBarAccessors, IBarChartConfig, IChart, IChartSeries, XYGridConfig,
 } from "@nova-ui/charts";
 
 @Component({

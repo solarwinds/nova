@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart, ChartAssist, CHART_PALETTE_CS_S, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales
+    Chart, ChartAssist, CHART_PALETTE_CS_S, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales,
 } from "@nova-ui/charts";
 import zipObject from "lodash/zipObject";
 

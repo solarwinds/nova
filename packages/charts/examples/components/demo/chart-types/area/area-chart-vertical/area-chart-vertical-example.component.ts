@@ -8,7 +8,7 @@ import {
     IXYScales,
     LinearScale,
     XYGrid,
-    XYGridConfig
+    XYGridConfig,
 } from "@nova-ui/charts";
 
 @Component({

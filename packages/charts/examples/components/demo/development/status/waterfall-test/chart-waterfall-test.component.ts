@@ -5,7 +5,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild, V
 import {
     BandScale, BarRenderer, BarStatusGridConfig, Chart, ChartPalette, CHART_PALETTE_CS1, HIGHLIGHT_DATA_POINT_EVENT, HorizontalBarAccessors,
     ISetDomainEventPayload, LinearScale, MappedValueProvider, NoopAccessors, NoopRenderer, SELECT_DATA_POINT_EVENT, SET_DOMAIN_EVENT, XYGrid, XYGridConfig,
-    ZoomPlugin
+    ZoomPlugin,
 } from "@nova-ui/charts";
 
 /**

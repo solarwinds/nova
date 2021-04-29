@@ -10,7 +10,7 @@ import {
     stackedAreaAccessors,
     TimeScale,
     XYGrid,
-    XYGridConfig
+    XYGridConfig,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 

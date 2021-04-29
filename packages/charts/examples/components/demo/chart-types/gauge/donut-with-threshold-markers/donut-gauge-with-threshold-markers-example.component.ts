@@ -10,7 +10,7 @@ import {
     IDataSeries,
     IGaugeConfig,
     radial,
-    radialGrid
+    radialGrid,
 } from "@nova-ui/charts";
 
 @Component({

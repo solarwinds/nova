@@ -10,7 +10,7 @@ import { RenderState } from "../../../renderers/types";
 import { ChartPlugin } from "../../common/chart-plugin";
 import {
     IAccessors, IChartEvent, IChartSeries, IChartViewStatusEventPayload, IDataPoint, IDataPointsPayload, InteractionType, IPosition,
-    IRenderStateData
+    IRenderStateData,
 } from "../../common/types";
 
 /** Position with extended information for positioning a tooltip */

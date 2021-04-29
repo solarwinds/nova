@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart, CHART_MARKERS, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, SequentialChartMarkerProvider, XYGrid
+    Chart, CHART_MARKERS, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, SequentialChartMarkerProvider, XYGrid,
 } from "@nova-ui/charts";
 
 @Component({
