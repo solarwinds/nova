@@ -45,7 +45,10 @@ export class CameraEngine {
             if (!fs.existsSync(this.snapshotsFolderName)) {
                 fs.mkdirSync(this.snapshotsFolderName);
             }
-            Helpers.saveScreenShot(`${this.snapshotsFolderName}/${this.settings.currentTestName}_${label}.png`);
+            Helpers.saveScreenShot(`
+                    ${this.snapshotsFolderName}/
+                    ${this.cleanFileName(this.settings.currentTestName)}_
+                    ${this.cleanFileName(label)}.png`);
             return;
         }
 
@@ -60,5 +63,10 @@ export class CameraEngine {
 
     public getToolConfig() {
         return this.currentLensInstance.toolConfig();
+    }
+
+    private cleanFileName(name: string) {
+        // @ts-ignore
+        return name.replace(/[\\\/\s]/g, function(m) { return {"\\":"_","\/":"_", " ": "_"}[m]; })
     }
 }
