@@ -113,7 +113,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
                     originY: "top",
                     overlayX: "start",
                     overlayY: "top",
-                    },
+                },
                 {
                     originX: "start",
                     originY: "top",

@@ -22,7 +22,7 @@ describe("components >", () => {
             de = fixture.debugElement;
             subject = de.children[0].componentInstance;
             fixture.detectChanges();
-    });
+        });
 
         describe("marker input >", () => {
             it("renders marker svg", () => {

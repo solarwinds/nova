@@ -107,11 +107,11 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject);
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject);
             markerTarget = container.select("g.marker");
 
             const spy = spyOn(dataPointSubject, "next");
@@ -130,11 +130,11 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject);
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject);
             markerTarget = container.select("g.marker");
 
             const spy = spyOn(dataPointSubject, "next");
@@ -156,11 +156,11 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject);
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject);
             markerTarget = container.select("g.marker");
 
             const spy = spyOn(dataPointSubject, "next");
@@ -179,11 +179,11 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject);
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject);
             markerTarget = container.select("g.marker");
 
             expect(markerTarget.classed("pointer-events")).toEqual(false);
@@ -193,13 +193,13 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject,
-                MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS,
-                { enabled: true });
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject,
+                                   MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS,
+                                   { enabled: true });
             markerTarget = container.select("g.marker");
 
             expect(markerTarget.classed("pointer-events")).toEqual(true);
@@ -209,11 +209,11 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject);
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject);
             markerTarget = container.select("g.marker");
 
             expect(markerTarget.classed("pointer-events-click")).toEqual(false);
@@ -223,13 +223,13 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject,
-                MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS,
-                { enabled: false, clickable: true });
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject,
+                                   MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS,
+                                   { enabled: false, clickable: true });
             markerTarget = container.select("g.marker");
 
             expect(markerTarget.classed("pointer-events-click")).toEqual(false);
@@ -239,13 +239,13 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject,
-                MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS,
-                { enabled: true, clickable: true });
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject,
+                                   MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS,
+                                   { enabled: true, clickable: true });
             markerTarget = container.select("g.marker");
 
             expect(markerTarget.classed("pointer-events-click")).toEqual(true);
@@ -255,11 +255,11 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject);
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject);
             expect((container.select("path").node() as HTMLElement).classList.contains(MarkerUtils.MARKER_PATH_CLASS)).toEqual(true);
         });
 
@@ -267,11 +267,11 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject);
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject);
             const pathElement = container.select("path").node() as HTMLElement;
             expect((<any>pathElement.attributes).x).toBeUndefined();
             expect((<any>pathElement.attributes).y).toBeUndefined();
@@ -281,13 +281,13 @@ describe("Marker Utils", () => {
             const container = containers[RenderLayerName.foreground];
             MarkerUtils.drawMarker(dataPoint,
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
+                                   dataSeries.accessors.series.marker(dataSeries.id, dataSeries),
                 // @ts-ignore - possibly undefined
-                dataSeries.accessors.series.color(dataSeries.id, dataSeries),
-                container,
-                dataPointSubject,
-                MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS,
-                { enabled: true });
+                                   dataSeries.accessors.series.color(dataSeries.id, dataSeries),
+                                   container,
+                                   dataPointSubject,
+                                   MarkerUtils.DEFAULT_MARKER_CONTAINER_CLASS,
+                                   { enabled: true });
             const pathElement = container.select("path").node() as HTMLElement;
             expect((<any>pathElement.attributes).x.value).toEqual(dataPoint.position?.x.toString());
             expect((<any>pathElement.attributes).y.value).toEqual(dataPoint.position?.y.toString());

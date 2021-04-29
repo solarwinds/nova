@@ -10,7 +10,7 @@ import {
 })
 export class DonutChartWithTooltipsExampleComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(radialGrid()), radial,
-        new ChartPalette(createStatusColorProvider()));
+                                         new ChartPalette(createStatusColorProvider()));
 
     // RadialTooltipsPlugin handles specific positioning requirements for tooltips on a donut chart
     public tooltipsPlugin = new RadialTooltipsPlugin();

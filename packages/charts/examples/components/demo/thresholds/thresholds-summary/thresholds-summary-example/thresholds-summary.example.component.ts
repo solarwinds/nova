@@ -182,7 +182,7 @@ export class ThresholdsSummaryExampleComponent implements OnInit {
             // and the predefined THRESHOLDS_SUMMARY_RENDERER_CONFIG.
             // The renderer config defines the behavior of series when they are emphasized, hidden, etc.
             return this.thresholdsService.getBackgrounds(s, zones, summaryScales, this.thresholdsPalette.standardColors,
-                thicknessMap, cloneDeep(THRESHOLDS_SUMMARY_RENDERER_CONFIG));
+                                                         thicknessMap, cloneDeep(THRESHOLDS_SUMMARY_RENDERER_CONFIG));
         });
 
         return summarySeriesSet;

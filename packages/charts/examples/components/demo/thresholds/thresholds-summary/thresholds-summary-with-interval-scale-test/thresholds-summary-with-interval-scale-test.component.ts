@@ -110,7 +110,8 @@ export class ThresholdsSummaryWithIntervalScaleTestComponent implements OnInit {
             const zones = this.thresholdsService.getThresholdZones(s, this.summaryZones, this.thresholdsPalette.standardColors);
             this.thresholdsService.injectThresholdsData(s, zones);
             return this.thresholdsService.getBackgrounds(s, zones, this.summaryScales,
-                this.thresholdsPalette.standardColors, this.thicknessMap, cloneDeep(THRESHOLDS_SUMMARY_RENDERER_CONFIG));
+                                                         this.thresholdsPalette.standardColors,
+                                                         this.thicknessMap, cloneDeep(THRESHOLDS_SUMMARY_RENDERER_CONFIG));
         });
         const thresholdSeriesSet: IChartAssistSeries<IAccessors>[] = [];
         for (const s of seriesSet) {

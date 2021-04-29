@@ -140,7 +140,7 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
     }
 
     private emitDataPointHighlight(renderSeries: IRenderSeries<IRadialAccessors>, data: any, i: number,
-        rendererSubject: Subject<IRendererEventPayload>) {
+                                   rendererSubject: Subject<IRendererEventPayload>) {
 
         const position: IPosition | undefined = this.getDataPointPosition(renderSeries.dataSeries, i, renderSeries.scales);
 
