@@ -43,7 +43,7 @@
     "e2e:watch": "npx watch \"npm run e2e:base\" src examples spec --watch=1",
     "e2e:debug": "npm run pree2e:base && node --inspect-brk ./node_modules/protractor/bin/protractor",
     "percy": "percy exec -- npm run visual",
-    "percy:ci": "percy exec -- npm run visual:ci",
+    "percy:ci": "npm run visual:ci && percy upload -v _snapshots",
     "visual:base": "npm run e2e:base -- --suite visual",
     "visual:ci": "npm run e2e:ci -- --suite visual",
     "visual": "npx start-server-and-test serve-examples:prod 4200 visual:base",
