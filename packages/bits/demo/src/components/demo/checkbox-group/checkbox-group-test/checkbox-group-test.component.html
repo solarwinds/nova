@@ -31,19 +31,6 @@
     </div>
     <div class="d-flex flex-column mt-5">
         <form [formGroup]="testForm">
-            <nui-checkbox-group id="nui-demo-checkbox-group-in-form"
-                            name="vegetable"
-                            formControlName="checkboxGroup">
-                <nui-checkbox *ngFor="let vegetable of vegetables"
-                            [value]="vegetable"
-                            [checked]="isChecked(vegetable)">
-                    {{vegetable}}
-                </nui-checkbox>
-            </nui-checkbox-group>
-        </form>
-    </div>
-    <div class="d-flex flex-column mt-5">
-        <form [formGroup]="testForm">
             <nui-checkbox-group id="nui-demo-checkbox-group-in-form-disabled-checkboxes"
                             name="vegetable"
                             formControlName="checkboxGroup2">
@@ -65,5 +52,8 @@
                     {{vegetables[3]}}</nui-checkbox>
             </nui-checkbox-group>
         </form>
+    </div>
+    <div class="d-flex flex-column mr-5">
+        <nui-checkbox-group-in-form-example id="nui-demo-checkbox-group-part-of-form"></nui-checkbox-group-in-form-example>
     </div>
 </div>
