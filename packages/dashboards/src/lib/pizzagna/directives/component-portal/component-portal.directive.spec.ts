@@ -631,8 +631,8 @@ describe("ComponentPortalDirective >", () => {
             componentPortalDirective.properties = changes.properties.currentValue;
             const componentChanges = {
                 testProp: new SimpleChange(changes.properties.previousValue.testProp,
-                    changes.properties.currentValue.testProp,
-                    changes.properties.isFirstChange()),
+                                           changes.properties.currentValue.testProp,
+                                           changes.properties.isFirstChange()),
             };
             const spy = spyOn(mockComponentInstance, "ngOnChanges");
             componentPortalDirective.ngOnChanges(changes);

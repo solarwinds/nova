@@ -76,7 +76,7 @@ export const embeddedContentConfigurator = {
             providers: {
                 // converter transforms the data between the widget and the form
                 [WellKnownProviders.Converter]: {
-                providerId: NOVA_GENERIC_CONVERTER,
+                    providerId: NOVA_GENERIC_CONVERTER,
                     properties: {
                         formParts: [
                             {

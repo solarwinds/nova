@@ -85,9 +85,9 @@ export class PizzagnaComponent implements OnChanges {
         return mergeChanges(pizza,
             // These are merged in reverse priority order so that values in higher priority layers
             // override the corresponding values in lower priority layers
-            this.getLayerChanges(previousPizzagna, currentPizzagna, PizzagnaLayer.Structure),
-            this.getLayerChanges(previousPizzagna, currentPizzagna, PizzagnaLayer.Configuration),
-            this.getLayerChanges(previousPizzagna, currentPizzagna, PizzagnaLayer.Data)
+                            this.getLayerChanges(previousPizzagna, currentPizzagna, PizzagnaLayer.Structure),
+                            this.getLayerChanges(previousPizzagna, currentPizzagna, PizzagnaLayer.Configuration),
+                            this.getLayerChanges(previousPizzagna, currentPizzagna, PizzagnaLayer.Data)
         ) as Record<string, IComponentConfiguration>;
     }
 

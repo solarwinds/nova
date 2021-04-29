@@ -267,7 +267,7 @@ export class CustomConfiguratorSectionComponent implements OnInit {
         // Note: This could also be done in the parent module's constructor to give
         // multiple dashboards access to the same custom configurator section.
         this.widgetTypesService.setNode(widgetTemplate, "configurator",
-            WellKnownPathKey.TileDescriptionConfigComponentType, CustomKpiDescriptionConfigurationComponent.lateLoadKey);
+                                        WellKnownPathKey.TileDescriptionConfigComponentType, CustomKpiDescriptionConfigurationComponent.lateLoadKey);
 
         // Register the custom configurator section with the component registry to make it available
         // for late loading by the dashboards framework.

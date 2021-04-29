@@ -33,7 +33,7 @@ export class AggregatorMetricSelectorConfigurationComponent implements OnInit, O
     constructor(public changeDetector: ChangeDetectorRef,
         protected formBuilder: FormBuilder,
         protected logger: LoggerService
-        ) { }
+    ) { }
 
     ngOnInit(): void {
         this.formReady.emit(this.form);

@@ -13,7 +13,7 @@ import {
     INovaFilteringOutputs,
     INovaFilters,
     LoggerService
- } from "@nova-ui/bits";
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,

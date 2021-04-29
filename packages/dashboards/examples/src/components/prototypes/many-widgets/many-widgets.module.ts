@@ -92,7 +92,7 @@ export class ManyWidgetsModule {
         delete widgetTemplate.widget.structure[DEFAULT_PIZZAGNA_ROOT].providers?.refresher;
 
         this.widgetTypesService.setNode(widgetTemplate, "configurator",
-            WellKnownPathKey.DataSourceConfigComponentType, AcmeProportionalDSConfigComponent.lateLoadKey);
+                                        WellKnownPathKey.DataSourceConfigComponentType, AcmeProportionalDSConfigComponent.lateLoadKey);
         this.componentRegistry.registerByLateLoadKey(AcmeProportionalDSConfigComponent);
     }
 

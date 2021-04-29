@@ -15,8 +15,8 @@ export class ProportionalWidgetChartOptionsConverterService extends BaseConverte
     private readonly PROPERTIES_PATH = `${PizzagnaLayer.Configuration}.chartOptionsEditor.properties`;
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                previewService: PreviewService,
-                pizzagnaService: PizzagnaService) {
+                                            previewService: PreviewService,
+                                            pizzagnaService: PizzagnaService) {
         super(eventBus, previewService, pizzagnaService);
     }
 
@@ -32,16 +32,17 @@ export class ProportionalWidgetChartOptionsConverterService extends BaseConverte
             editorPizzagna, `${this.PROPERTIES_PATH}.chartType`, chartOptions?.type ?? undefined);
 
         editorPizzagna = immutableSet(editorPizzagna,
-            `${this.PROPERTIES_PATH}.legendPlacement`, chartOptions?.legendPlacement ?? LegendPlacement.None);
+                                      `${this.PROPERTIES_PATH}.legendPlacement`, chartOptions?.legendPlacement ?? LegendPlacement.None);
 
         editorPizzagna = immutableSet(editorPizzagna,
-            `${this.PROPERTIES_PATH}.legendFormatterComponentType`, chartOptions?.legendFormatter?.componentType ?? "");
+                                      `${this.PROPERTIES_PATH}.legendFormatterComponentType`, chartOptions?.legendFormatter?.componentType ?? "");
 
         editorPizzagna = immutableSet(editorPizzagna,
-            `${this.PROPERTIES_PATH}.contentFormatterComponentType`, chartOptions?.contentFormatter?.componentType ?? "DonutContentRawFormatterComponent");
+                                      `${this.PROPERTIES_PATH}.contentFormatterComponentType`,
+                                      chartOptions?.contentFormatter?.componentType ?? "DonutContentRawFormatterComponent");
 
         editorPizzagna = immutableSet(editorPizzagna,
-            `${this.PROPERTIES_PATH}.contentFormatterProperties`, chartOptions?.contentFormatter?.properties ?? "");
+                                      `${this.PROPERTIES_PATH}.contentFormatterProperties`, chartOptions?.contentFormatter?.properties ?? "");
 
         this.updateFormPizzagna(editorPizzagna);
     }

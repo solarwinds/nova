@@ -95,7 +95,7 @@ export class AcmeTableDataSource2 extends DataSourceService<IRandomUserTableMode
         let response: IRandomUserResponse | null = null;
         try {
             response = await
-                (await fetch(`${corsProxy}${RANDOMUSER_API_URL}${apiRoute}/?page=${end / (end - start) || 0}&results=${end - start}&seed=${this.seed}`)).json();
+            (await fetch(`${corsProxy}${RANDOMUSER_API_URL}${apiRoute}/?page=${end / (end - start) || 0}&results=${end - start}&seed=${this.seed}`)).json();
             return {
                 result: {
                     users: response?.results.map((result: IRandomUserResults, i: number) => ({

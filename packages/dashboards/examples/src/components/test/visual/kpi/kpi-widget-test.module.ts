@@ -44,11 +44,11 @@ export class KpiWidgetTestModule {
         delete widgetTemplate.widget.structure[DEFAULT_PIZZAGNA_ROOT].providers?.refresher;
 
         widgetTypesService.setNode(widgetTemplate, "configurator", WellKnownPathKey.DataSourceProviders,
-            [
-                TestKpiDataSource.providerId,
-                TestKpiDataSource2.providerId,
-                TestKpiDataSourceBigNumber.providerId,
-                TestKpiDataSourceSmallNumber.providerId,
-            ]);
+                                   [
+                                       TestKpiDataSource.providerId,
+                                       TestKpiDataSource2.providerId,
+                                       TestKpiDataSourceBigNumber.providerId,
+                                       TestKpiDataSourceSmallNumber.providerId,
+                                   ]);
     }
 }

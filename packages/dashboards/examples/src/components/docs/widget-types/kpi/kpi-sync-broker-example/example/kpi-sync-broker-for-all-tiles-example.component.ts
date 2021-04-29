@@ -85,7 +85,7 @@ export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> imple
                 .pipe(
                     delay(2000),
                     finalize(() => this.busy.next(false))
-                    )
+                )
                 .subscribe({
                     next: (data: any) => {
                         resolve({
@@ -133,7 +133,7 @@ export class MockKpiDataSource extends DataSourceService<IKpiData> implements On
                     delay(5000),
                     take(1),
                     finalize(() => this.busy.next(false))
-                    )
+                )
                 .subscribe({
                     next: (data: any) => {
                         resolve({
@@ -189,15 +189,15 @@ export class KpiSyncBrokerForAllTilesExampleComponent implements OnInit {
         // To add the sync broker globally to all the kpi tiles you may start with setting up the broker config
         // Here you define which values to keep in sync
         const brokerConfig = {
-                    providerId: NOVA_KPI_SCALE_SYNC_BROKER,
-                    properties: {
-                        scaleSyncConfig: [
-                            { id: "value" },
-                            { id: "label" },
-                            { id: "units" },
-                        ],
-                    },
-                };
+            providerId: NOVA_KPI_SCALE_SYNC_BROKER,
+            properties: {
+                scaleSyncConfig: [
+                    { id: "value" },
+                    { id: "label" },
+                    { id: "units" },
+                ],
+            },
+        };
         const widgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);
 
         this.widgetTypesService.setNode(

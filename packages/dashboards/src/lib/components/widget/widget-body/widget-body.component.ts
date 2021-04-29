@@ -40,10 +40,10 @@ export class WidgetBodyComponent extends BaseLayout implements OnInit, OnDestroy
     public readonly defaultClasses = "d-flex h-100 w-100";
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-        changeDetector: ChangeDetectorRef,
-        pizzagnaService: PizzagnaService,
-        logger: LoggerService) {
-            super(changeDetector, pizzagnaService, logger);
+                changeDetector: ChangeDetectorRef,
+                pizzagnaService: PizzagnaService,
+                logger: LoggerService) {
+        super(changeDetector, pizzagnaService, logger);
     }
 
     public ngOnInit() {

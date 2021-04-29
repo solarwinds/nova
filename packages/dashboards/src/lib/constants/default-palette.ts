@@ -50,7 +50,8 @@ export const CHART_PALETTE_CS_S_EXTENDED_ALTERNATIVE_NAMES = [
 ];
 
 export const chartPaletteColorMap: Record<string, string> = zipObject([...CHART_PALETTE_CS3, ...CHART_PALETTE_CS_S_EXTENDED],
-                                                    [...CHART_PALETTE_CS3_ALTERNATIVE_NAMES, ...CHART_PALETTE_CS_S_EXTENDED_ALTERNATIVE_NAMES]);
+                                                                      [...CHART_PALETTE_CS3_ALTERNATIVE_NAMES,
+                                                                       ...CHART_PALETTE_CS_S_EXTENDED_ALTERNATIVE_NAMES]);
 
 export const DEFAULT_KPI_TILE_COLOR = "var(--nui-color-bg-secondary)";
 export const DEFAULT_KPI_BACKGROUND_COLORS = [...CHART_PALETTE_CS3, ...CHART_PALETTE_CS_S_EXTENDED].map(color =>

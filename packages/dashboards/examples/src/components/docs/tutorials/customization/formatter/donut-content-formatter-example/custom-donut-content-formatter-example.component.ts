@@ -120,18 +120,18 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
 
             case(Units.Weeks):
                 return this.emphasizedSeriesData
-                            ? this.convertoToWeeks(emphData)
-                            : this.convertoToWeeks(this.currentMetricData);
+                    ? this.convertoToWeeks(emphData)
+                    : this.convertoToWeeks(this.currentMetricData);
 
             case(Units.Hours):
                 return this.emphasizedSeriesData
-                            ? this.convertoToHours(emphData)
-                            : this.convertoToHours(this.currentMetricData);
+                    ? this.convertoToHours(emphData)
+                    : this.convertoToHours(this.currentMetricData);
 
             default:
                 return this.emphasizedSeriesData
-                            ? emphData
-                            : this.currentMetricData;
+                    ? emphData
+                    : this.currentMetricData;
         }
     }
 
@@ -149,14 +149,14 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
 
     private convertoToWeeks(days: number | undefined): number {
         return days
-                ? Number((days / 7).toFixed(2))
-                : 0;
+            ? Number((days / 7).toFixed(2))
+            : 0;
     }
 
     private convertoToHours(days: number | undefined): number {
         return days
-                ? Number((days * 24).toFixed(2))
-                : 0;
+            ? Number((days * 24).toFixed(2))
+            : 0;
     }
 }
 
@@ -202,7 +202,7 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
 })
 
 export class CustomDonutContentFormatterConfiguratorComponent extends DonutChartFormatterConfiguratorComponent
-                                                              implements OnChanges, OnInit, IHasChangeDetector {
+    implements OnChanges, OnInit, IHasChangeDetector {
     public static lateLoadKey = "CustomFormatterConfiguratorComponent";
 
     constructor(changeDetector: ChangeDetectorRef, formBuilder: FormBuilder, logger: LoggerService, public iconService: IconService) {
@@ -300,8 +300,8 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
         this.initializeDashboard();
     }
 
-     /** Used for restoring widgets state */
-     public reInitializeDashboard() {
+    /** Used for restoring widgets state */
+    public reInitializeDashboard() {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();
@@ -343,41 +343,41 @@ export interface IStatusesWidgetData {
 }
 
 export const randomStatusesWidgetData: IStatusesWidgetData[] = [
-        {
-            id: "Down",
-            name: "Down",
-            data: [Math.round(Math.random() * 100)],
-        },
-        {
-            id: "Critical",
-            name: "Critical",
-            data: [Math.round(Math.random() * 100)],
-        },
-        {
-            id: "Warning",
-            name: "Warning",
-            data: [Math.round(Math.random() * 100)],
-        },
-        {
-            id: "Unknown",
-            name: "Unknown",
-            data: [Math.round(Math.random() * 100)],
-        },
-        {
-            id: "Up",
-            name: "Up",
-            data: [Math.round(Math.random() * 100)],
-        },
-        {
-            id: "Unmanaged",
-            name: "Unmanaged",
-            data: [Math.round(Math.random() * 100)],
-        },
+    {
+        id: "Down",
+        name: "Down",
+        data: [Math.round(Math.random() * 100)],
+    },
+    {
+        id: "Critical",
+        name: "Critical",
+        data: [Math.round(Math.random() * 100)],
+    },
+    {
+        id: "Warning",
+        name: "Warning",
+        data: [Math.round(Math.random() * 100)],
+    },
+    {
+        id: "Unknown",
+        name: "Unknown",
+        data: [Math.round(Math.random() * 100)],
+    },
+    {
+        id: "Up",
+        name: "Up",
+        data: [Math.round(Math.random() * 100)],
+    },
+    {
+        id: "Unmanaged",
+        name: "Unmanaged",
+        data: [Math.round(Math.random() * 100)],
+    },
 ];
 
 @Injectable()
 export class StatusesExampleDatasource extends DataSourceService<IStatusesWidgetData>
-                                       implements IDataSource<IStatusesWidgetData>, OnDestroy {
+    implements IDataSource<IStatusesWidgetData>, OnDestroy {
     public static providerId = "StatusesExampleDatasource";
 
     public busy = new Subject<boolean>();

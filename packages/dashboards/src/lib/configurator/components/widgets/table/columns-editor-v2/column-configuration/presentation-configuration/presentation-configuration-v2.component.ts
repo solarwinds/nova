@@ -122,7 +122,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
         this.form = this.formBuilder.group({
             "componentType": this.formBuilder.control(this.providedFormatters?.[0]?.componentType, Validators.required),
             "properties": this.formBuilder.control({},
-                () => this.propertiesForm?.invalid ? { properties: true } : null
+                                                   () => this.propertiesForm?.invalid ? { properties: true } : null
             ),
         });
 

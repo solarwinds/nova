@@ -17,8 +17,8 @@ import { BaseConverter } from "../base-converter";
 export class TableColumnsConverterService extends BaseConverter implements AfterViewInit {
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                previewService: PreviewService,
-                pizzagnaService: PizzagnaService) {
+                                            previewService: PreviewService,
+                                            pizzagnaService: PizzagnaService) {
         super(eventBus, previewService, pizzagnaService);
     }
 
@@ -69,12 +69,12 @@ export class TableColumnsConverterService extends BaseConverter implements After
                     // this assigment resolves a race condition that sometimes occured when data fields received from the data source would be
                     // overwritten by an "older" formPizzagna value assigned above
                     formPizzagna = immutableSet(formPizzagna, `${PizzagnaLayer.Structure}.columns.properties.template`,
-                        this.pizzagnaService.pizzagna[PizzagnaLayer.Structure].columns.properties?.template);
+                                                this.pizzagnaService.pizzagna[PizzagnaLayer.Structure].columns.properties?.template);
 
                     formPizzagna = immutableSet(formPizzagna, `${PizzagnaLayer.Data}.filters.properties.columns`, columns);
                     // this triggers change detection on the "filters" component
                     formPizzagna = immutableSet(formPizzagna, `${PizzagnaLayer.Structure}.presentation.properties.nodes`,
-                        [...formPizzagna?.structure?.presentation?.properties?.nodes]);
+                                                [...formPizzagna?.structure?.presentation?.properties?.nodes]);
 
                     this.updateFormPizzagna(formPizzagna);
                 });

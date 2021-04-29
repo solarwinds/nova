@@ -39,7 +39,7 @@ export class EmbeddedContentComponent implements IHasChangeDetector, OnInit, OnC
     constructor(public changeDetector: ChangeDetectorRef,
         @Inject(DOCUMENT) private document: Document,
         private domSanitizer: DomSanitizer
-        ) { }
+    ) { }
 
 
     ngOnInit() {

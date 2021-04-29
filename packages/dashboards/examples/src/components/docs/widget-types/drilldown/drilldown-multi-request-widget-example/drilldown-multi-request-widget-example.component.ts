@@ -57,7 +57,7 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
         (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
 
         this.applyFilters$.pipe(switchMap(filters => this.getData(filters)))
-                          .subscribe(async res => { this.outputsSubject.next(await this.getFilteredData(res)); });
+            .subscribe(async res => { this.outputsSubject.next(await this.getFilteredData(res)); });
     }
 
     private groupedDataHistory: any[] = [];
@@ -66,27 +66,27 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     // provider definition in the widget configuration below to see how the interval is set)
     public async getFilteredData(data: any): Promise<any> {
         return of(data)
-        .pipe(
-            map(entries => {
-                let widgetInput, mapIconsToEntries;
+            .pipe(
+                map(entries => {
+                    let widgetInput, mapIconsToEntries;
 
-                if (this.isDrillDown()) {
-                    const activeDrillLvl = this.drillState.length;
-                    const group = this.groupBy[activeDrillLvl];
-                    const lastGroupedValue = this.getTransformedDataForGroup(entries, group, getLast(this.drillState));
+                    if (this.isDrillDown()) {
+                        const activeDrillLvl = this.drillState.length;
+                        const group = this.groupBy[activeDrillLvl];
+                        const lastGroupedValue = this.getTransformedDataForGroup(entries, group, getLast(this.drillState));
 
-                    this.groupedDataHistory.push(lastGroupedValue);
+                        this.groupedDataHistory.push(lastGroupedValue);
 
-                    return lastGroupedValue;
-                }
+                        return lastGroupedValue;
+                    }
 
-                mapIconsToEntries = entries.map((item: any) => ({...item, icon: "virtual-host", icon_status: IconStatus.Up }));
-                this.groupedDataHistory.push(mapIconsToEntries);
-                widgetInput = this.getOutput(entries);
+                    mapIconsToEntries = entries.map((item: any) => ({...item, icon: "virtual-host", icon_status: IconStatus.Up }));
+                    this.groupedDataHistory.push(mapIconsToEntries);
+                    widgetInput = this.getOutput(entries);
 
-                return widgetInput;
-            })
-        ).toPromise();
+                    return widgetInput;
+                })
+            ).toPromise();
     }
 
     public ngOnDestroy(): void {
@@ -126,11 +126,11 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
             return of(this.cache).pipe(map(data => data.data[group]), finalize(() => this.busy.next(false)));
         } else {
             return this.apollo.use(APOLLO_API_NAMESPACE.COUNTRIES).query<any>({query: this.getQuery(group || this.leafGroup, getLast(this.drillState))})
-                    .pipe(
-                        tap(data => this.cache = { data: {...this.cache?.data, ...data?.data} }),
-                        map(data => data.data[group || this.leafGroup]),
-                        finalize(() => this.busy.next(false))
-                    );
+                .pipe(
+                    tap(data => this.cache = { data: {...this.cache?.data, ...data?.data} }),
+                    map(data => data.data[group || this.leafGroup]),
+                    finalize(() => this.busy.next(false))
+                );
         }
     }
 

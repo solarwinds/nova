@@ -14,7 +14,7 @@ export class TimeseriesDataSourceAdapter extends DataSourceAdapter {
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
         @Inject(DATA_SOURCE) dataSource: IDataSource,
-        pizzagnaService: PizzagnaService) {
+                                            pizzagnaService: PizzagnaService) {
         super(eventBus, dataSource, pizzagnaService);
     }
 

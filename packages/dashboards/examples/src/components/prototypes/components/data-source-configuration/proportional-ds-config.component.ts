@@ -125,9 +125,9 @@ export class AcmeProportionalDSConfigComponent implements IHasChangeDetector, On
                     await dataSource.updateConfiguration({
                         ...this.properties,
                         ...value,
+                    });
+                    await dataSource.applyFilters();
                 });
-                await dataSource.applyFilters();
-        });
 
         } else {
             this.logger.warn("No provider found for id:", providerId);
