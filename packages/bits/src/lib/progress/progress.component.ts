@@ -28,7 +28,7 @@ export class ProgressComponent implements OnChanges {
     @Input() public helpText?: string;
     @Input() public stacked: boolean;
     @Input() public compactMode: boolean;
-    @Input() public ariaLabel: string = "";
+    @Input() public ariaLabel: string = "Progress bar";
 
     /**
      * Help template content displayed under the progress bar.

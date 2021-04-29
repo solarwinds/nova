@@ -65,7 +65,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     /** to apply error state styles */
     @Input() isInErrorState = false;
     /** Input to set aria label text */
-    @Input() public ariaLabel: string = "";
+    @Input() public ariaLabel: string = "Time Picker";
     /** to allow the empty values for init state */
     @Input() initEmpty: boolean;
     /** Allows popup box to be attached to document.body */
