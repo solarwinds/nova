@@ -8,6 +8,7 @@ import { IRegistryAddOptions } from "./types";
 type IRegistryMap<T> = Record<string, T>;
 
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class RegistryService<T = Object> implements OnDestroy {
     protected state$: BehaviorSubject<IRegistryMap<T>> =
         new BehaviorSubject<IRegistryMap<T>>({});
