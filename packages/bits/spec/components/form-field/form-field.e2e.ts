@@ -121,7 +121,7 @@ describe("USERCONTROL form-field >", () => {
         });
 
         it("should be set for textbox-number", async () => {
-            expect(await elementAriaLabel(textboxNumber)).toEqual("Textbox Number input");
+            expect(await elementAriaLabel(textboxNumber)).toEqual("Textbox number input");
         });
 
         it("should be set for switch", async () => {
