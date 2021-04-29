@@ -10,7 +10,7 @@ import {
     OnDestroy,
     OnInit,
     Optional,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import {
     AbstractControl,
@@ -23,7 +23,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR,
     ValidationErrors,
-    Validators
+    Validators,
 } from "@angular/forms";
 import { EventBus, IDataField, IEvent } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";

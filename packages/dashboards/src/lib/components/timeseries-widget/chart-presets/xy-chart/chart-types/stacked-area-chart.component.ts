@@ -9,7 +9,7 @@ import {
     IAccessors,
     IValueProvider,
     stackedArea,
-    stackedAreaAccessors
+    stackedAreaAccessors,
 } from "@nova-ui/charts";
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";

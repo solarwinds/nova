@@ -17,7 +17,7 @@ import {
     StatusAccessors,
     statusAccessors,
     TimeIntervalScale,
-    ZoomPlugin
+    ZoomPlugin,
 } from "@nova-ui/charts";
 import { merge, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";

@@ -6,7 +6,7 @@ import {
     IDashboard,
     IWidget,
     ProviderRegistryService,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 
@@ -14,7 +14,7 @@ import {
     TestTimeseriesDataSource,
     TestTimeseriesDataSource2,
     TestTimeseriesStatusDataSource,
-    TestTimeseriesStatusIntervalDataSource
+    TestTimeseriesStatusIntervalDataSource,
 } from "../../data/timeseries-data-sources";
 
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";

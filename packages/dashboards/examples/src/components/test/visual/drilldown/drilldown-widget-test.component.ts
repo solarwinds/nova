@@ -16,7 +16,7 @@ import {
     PizzagnaLayer,
     ProviderRegistryService,
     WellKnownProviders,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import groupBy from "lodash/groupBy";

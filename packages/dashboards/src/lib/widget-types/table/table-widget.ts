@@ -5,7 +5,7 @@ import {
     DEFAULT_PIZZAGNA_ROOT,
     NOVA_DASHBOARD_EVENT_PROXY,
     NOVA_TABLE_DATASOURCE_ADAPTER,
-    NOVA_VIRTUAL_VIEWPORT_MANAGER, WIDGET_RESIZE
+    NOVA_VIRTUAL_VIEWPORT_MANAGER, WIDGET_RESIZE,
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";

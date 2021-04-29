@@ -3,7 +3,7 @@ import {
     IWidget,
     NOVA_KPI_DATASOURCE_ADAPTER,
     PizzagnaLayer,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 

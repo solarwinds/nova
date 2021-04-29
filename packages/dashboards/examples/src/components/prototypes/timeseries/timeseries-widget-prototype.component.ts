@@ -13,7 +13,7 @@ import {
     AcmeTimeseriesDataSource,
     AcmeTimeseriesDataSource2,
     AcmeTimeseriesStatusDataSource,
-    AcmeTimeseriesStatusIntervalDataSource
+    AcmeTimeseriesStatusIntervalDataSource,
 } from "../data/timeseries-data-sources";
 
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";

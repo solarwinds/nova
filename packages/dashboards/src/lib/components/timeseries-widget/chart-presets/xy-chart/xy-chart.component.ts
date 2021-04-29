@@ -18,7 +18,7 @@ import {
     IXYScales, Renderer,
     SequentialColorProvider,
     SET_DOMAIN_EVENT,
-    ZoomPlugin
+    ZoomPlugin,
 } from "@nova-ui/charts";
 import { merge } from "rxjs";
 import { takeUntil } from "rxjs/operators";

@@ -6,7 +6,7 @@ import {
     OnChanges,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import { IBusyConfig, SpinnerSize } from "@nova-ui/bits";
 

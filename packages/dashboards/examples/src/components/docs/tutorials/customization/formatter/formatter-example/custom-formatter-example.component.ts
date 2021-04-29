@@ -20,7 +20,7 @@ import {
     TableFormatterRegistryService,
     WellKnownPathKey,
     WellKnownProviders,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import isEqual from "lodash/isEqual";

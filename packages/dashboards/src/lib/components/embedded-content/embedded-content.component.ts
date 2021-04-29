@@ -11,7 +11,7 @@ import {
     OnInit,
     SecurityContext,
     SimpleChanges,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 

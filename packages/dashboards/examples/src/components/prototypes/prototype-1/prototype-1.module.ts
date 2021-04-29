@@ -11,7 +11,7 @@ import {
     NuiImageModule,
     NuiRepeatModule,
     NuiSwitchModule,
-    NuiTextboxModule
+    NuiTextboxModule,
 } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
@@ -21,7 +21,7 @@ import {
     NuiDashboardsModule,
     ProviderRegistryService,
     WellKnownPathKey,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 
 import { AcmeProportionalDSConfigComponent } from "../components/data-source-configuration/proportional-ds-config.component";

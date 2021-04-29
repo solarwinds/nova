@@ -19,7 +19,7 @@ import {
     ProviderRegistryService,
     TEST_REGISTRY,
     WellKnownProviders,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import _cloneDeep from "lodash/cloneDeep";

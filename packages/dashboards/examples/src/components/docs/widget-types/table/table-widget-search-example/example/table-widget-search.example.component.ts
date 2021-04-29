@@ -12,7 +12,7 @@ import {
     IFilters,
     INovaFilteringOutputs,
     INovaFilters,
-    LoggerService
+    LoggerService,
 } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -23,7 +23,7 @@ import {
     ProviderRegistryService,
     WellKnownPathKey,
     WellKnownProviders,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { GBOOKS_API_URL } from "components/prototypes/data/table/constants";

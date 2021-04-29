@@ -10,7 +10,7 @@ import {
     ITimeseriesOutput,
     ITimeseriesScalesConfig,
     ITimeseriesWidgetConfig,
-    ITimeseriesWidgetSeriesData
+    ITimeseriesWidgetSeriesData,
 } from "../types";
 
 @Directive()

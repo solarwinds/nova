@@ -6,7 +6,7 @@ import {
     KpiComponent,
     NOVA_KPI_DATASOURCE_ADAPTER,
     PizzagnaLayer,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 
 import { HarryPotterAverageRatingDataSource, HarryPotterRatingsCountDataSource } from "../data/kpi-datasources";
