@@ -108,26 +108,28 @@ export class GaugeUtil {
     public static updateSeriesSet(seriesSet: IChartAssistSeries<IAccessors>[], gaugeConfig: IGaugeConfig): IChartAssistSeries<IAccessors>[] {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
+        const clampedConfig = GaugeUtil.clampValueToMax(gaugeConfig);
+
         const updatedSeriesSet = seriesSet.map((series: IChartAssistSeries<IAccessors<any>>) => {
 
             if (series.id === GAUGE_QUANTITY_SERIES_ID) {
                 if (series.accessors.data) {
-                    series.accessors.data.color = gaugeConfig.quantityColorAccessor || GaugeUtil.createDefaultQuantityColorAccessor(gaugeConfig.thresholds);
+                    series.accessors.data.color = clampedConfig.quantityColorAccessor || GaugeUtil.createDefaultQuantityColorAccessor(clampedConfig.thresholds);
                 }
 
-                return { ...series, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.value }] };
+                return { ...series, data: [{ category: GaugeUtil.DATA_CATEGORY, value: clampedConfig.value }] };
             }
 
             if (series.id === GAUGE_REMAINDER_SERIES_ID) {
                 if (series.accessors.data) {
-                    series.accessors.data.color = gaugeConfig.remainderColorAccessor || (() => (StandardGaugeColor.Remainder));
+                    series.accessors.data.color = clampedConfig.remainderColorAccessor || (() => (StandardGaugeColor.Remainder));
                 }
 
-                return { ...series, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max - gaugeConfig.value }] };
+                return { ...series, data: [{ category: GaugeUtil.DATA_CATEGORY, value: clampedConfig.max - clampedConfig.value }] };
             }
 
             if (series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID) {
-                return { ...series, ...GaugeUtil.generateThresholdData(gaugeConfig) };
+                return { ...series, ...GaugeUtil.generateThresholdData(clampedConfig) };
             }
 
             return series;
@@ -293,10 +295,12 @@ export class GaugeUtil {
      * @returns {Partial<IDataSeries<IAccessors>>[]} Data in the form needed by the gauge visualization
      */
     public static generateGaugeData(gaugeConfig: IGaugeConfig): Partial<IDataSeries<IAccessors>>[] {
+        const clampedConfig = GaugeUtil.clampValueToMax(gaugeConfig);
+
         return [
             // category property is used for unifying the linear-style gauge visualization into a single bar stack
-            { id: GAUGE_QUANTITY_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.value }] },
-            { id: GAUGE_REMAINDER_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max - gaugeConfig.value }] },
+            { id: GAUGE_QUANTITY_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: clampedConfig.value }] },
+            { id: GAUGE_REMAINDER_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: clampedConfig.max - clampedConfig.value }] },
         ];
     }
 
@@ -323,5 +327,15 @@ export class GaugeUtil {
             // tack the max value onto the end (used for donut arc calculation)
             data: [...markerValues, { category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max, hit: false }],
         };
+    }
+
+    private static clampValueToMax(gaugeConfig: IGaugeConfig): IGaugeConfig {
+        let value = gaugeConfig.value;
+        if (gaugeConfig.value > gaugeConfig.max) {
+            console.warn(`Configured gauge value ${gaugeConfig.value} is larger than configured max ${gaugeConfig.max}. Clamping value to ${gaugeConfig.max}.`);
+            value = gaugeConfig.max;
+        }
+
+        return { ...gaugeConfig, value };
     }
 }

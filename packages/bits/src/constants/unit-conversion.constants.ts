@@ -10,6 +10,15 @@ export interface IUnitConversionConstants {
     hertz: string[];
 }
 
+/** Standard base values used in unit conversion */
+export enum UnitBase {
+    Standard = 1000,
+    Bytes = 1024,
+}
+
+/**
+ * Unit display values used in unit conversion
+ */
 export const unitConversionConstants: IUnitConversionConstants = {
     generic: ["", "k", "M", "B", "Qa", "Qi", "Sx", "Sp", "Oc"],
     bytes: ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
@@ -18,4 +27,5 @@ export const unitConversionConstants: IUnitConversionConstants = {
     hertz: ["Hz", "kHz", "MHz", "GHz", "THz", "PHz", "EHz", "ZHz", "YHz"],
 };
 
+/** Available options for unit conversion */
 export type UnitOption = "generic" | "bytes" | "bytesPerSecond" | "bitsPerSecond" | "hertz";

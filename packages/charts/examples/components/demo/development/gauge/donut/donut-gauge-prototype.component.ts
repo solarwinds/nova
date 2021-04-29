@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { ComponentChanges } from "@nova-ui/bits";
+import { ComponentChanges, unitConversionConstants, UnitConversionService } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -31,6 +31,8 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
+    constructor(private unitConversionService: UnitConversionService) { }
+
     public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>) {
         if ((changes.size && !changes.size.firstChange) ||
             (changes.annularWidth && !changes.annularWidth.firstChange) ||
@@ -58,7 +60,10 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin(labelConfig));
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
-        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
+        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
+                const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
+                return this.unitConversionService.getFullDisplay(conversion, "generic");
+            }, this.seriesSet);
 
         this.updateDonutSize();
         this.updateAnnularAttributes();

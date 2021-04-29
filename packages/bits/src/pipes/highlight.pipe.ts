@@ -5,7 +5,7 @@ import escapeRegExp from "lodash/escapeRegExp";
 import isEmpty from "lodash/isEmpty";
 import isString from "lodash/isString";
 /**
- * <example-url>./../examples/index.html#/pipes/highlight-pipe</example-url>
+ * <example-url>./../examples/index.html#/pipes/highlight</example-url>
  */
 
 /**
