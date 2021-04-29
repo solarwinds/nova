@@ -32,19 +32,19 @@ describe(`Visual tests: ${name}`, () => {
         await camera.turn.on();
 
         await basicTooltipButton.hover();
-        await camera.say.cheese("Hover on button with basic tooltip", 200);
+        await camera.say.cheese("Hover on button with basic tooltip");
 
         await Helpers.clickOnEmptySpace();
         await leftTooltipButton.hover();
-        await camera.say.cheese("Hover on button with tooltip on the left", 200);
+        await camera.say.cheese("Hover on button with tooltip on the left");
 
         await Helpers.clickOnEmptySpace();
         await bottomTooltipButton.hover();
-        await camera.say.cheese("Hover on button with tooltip on the bottom", 200);
+        await camera.say.cheese("Hover on button with tooltip on the bottom");
 
         await Helpers.clickOnEmptySpace();
         await rightTooltipButton.hover();
-        await camera.say.cheese("Hover on button with tooltip on the right", 200);
+        await camera.say.cheese("Hover on button with tooltip on the right");
 
         await Helpers.clickOnEmptySpace();
         await manualTooltipButton.click();
