@@ -39,7 +39,7 @@ git diff --name-only > .git_diff_name-only
 # all git files
 git ls-tree -r --name-only HEAD	> .git_ls-tree_r_name-only_HEAD
 
-# minus https://stackoverflow.com/questions/1370996/minus-operation-on-two-files-using-linux-commands                                                                      
+# minus https://stackoverflow.com/questions/1370996/minus-operation-on-two-files-using-linux-commands
 # only restore files not modified
 comm -2 -3 .git_ls-tree_r_name-only_HEAD .git_diff_name-only | while read filename; do
     if [[ $filename != *"/release"* ]] && [[ $filename != *"/main/"* ]] && [[ $filename != *"/next/"* ]]; then

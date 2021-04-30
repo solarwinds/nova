@@ -14,6 +14,8 @@ import {
     NuiValidationMessageModule,
     NuiWizardModule,
     SrlcStage,
+    NuiBusyModule,
+    NuiSpinnerModule,
 } from "@nova-ui/bits";
 
 import {
@@ -79,6 +81,8 @@ const routes = [
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes),
+        NuiBusyModule,
+        NuiSpinnerModule,
     ],
     declarations: [
         WizardAdditionalButtonExampleComponent,

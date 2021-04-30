@@ -51,6 +51,7 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
     host: {
         "class": "nui-popup",
         "role": "dialog",
+        "[attr.aria-label]": "ariaLabel",
     },
     template: `
         <div class="nui-popup-container" [class.nui-popup--opened]="isOpen" nuiClickInterceptor>
@@ -102,6 +103,9 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
      */
     @Input()
     public baseElementSelector: string;
+
+    @Input()
+    public ariaLabel: string = "Popup";
 
     @Output()
     public opened = new EventEmitter<boolean>();

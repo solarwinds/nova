@@ -32,7 +32,8 @@ export class Camera {
         return this;
     }
 
-    private async cheese(label: string) {
+    private async cheese(label: string, timeout: number = 200) {
+        await this.currentBrowser.sleep(timeout);
         await this.engine.takePhoto(label);
     }
 

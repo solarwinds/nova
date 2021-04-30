@@ -44,6 +44,7 @@ const ADAPTER_OVERLAY_CONFIG: OverlayConfig = {
     host: {
         "class": "nui-popup",
         "role": "dialog",
+        "[attr.aria-label]": "ariaLabel",
     },
 })
 export class PopupComponent implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
@@ -65,6 +66,7 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
     @Input() public appendToBody: boolean = false;
     @Input() public baseElementSelector: string;
     @Input() public isHostToggleRef: boolean;
+    @Input() public ariaLabel: string = "Popup";
 
     @Input() set isOpen(open: boolean) {
         if (this.isContentInitialized) {
