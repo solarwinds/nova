@@ -4,13 +4,12 @@ import escape from "lodash/escape";
 import escapeRegExp from "lodash/escapeRegExp";
 import isEmpty from "lodash/isEmpty";
 import isString from "lodash/isString";
-/**
- * <example-url>./../examples/index.html#/pipes/highlight</example-url>
- */
 
 /**
- * Filter used for highlighting of part of plain text in case of search. Returns HTML.
- * Can only be used with `innerHTML` directive. Escapes all the characters by default and highlights every match in the string
+ * <example-url>./../examples/index.html#/pipes/highlight</example-url>
+ *
+ * The nuiHighlight pipe is used to mark a portion of text. It will search the provided text for the specified string and highlight it. Returns HTML.
+ * Can only be used with `innerHTML` directive. Escapes all the characters by default and highlights every match in the string.
  *
  * __Parameters :__
  *
@@ -19,15 +18,18 @@ import isString from "lodash/isString";
  *   search - The search term to be highlighted.
  *
  * __Usage :__
- *   highlight | nuiHighlight:search
+ *   "text" | nuiHighlight : "search"
  *
  * __Examples :__
+ *
  *   <code>{{ "hello world" | nuiHighlight:"world" }}</code>
- *   formats to: <code>hello < span class="nui-highlighted"> world </ span></code>
+ *
+ *   formats to: <code>hello &lt;span class="nui-highlighted"&gt;world&lt;/span&gt;</code>
  *
  *
- *   <code>{{ "hello < span class="x">FOO</ span> bar" | nuiHighlight:"bar" }}</code>
- *   formats to: <code>hello &lt; span class=&quot;x&quot;&gt;FOO&lt;/ span&gt; < span class="nui-highlighted">bar</ span> </ span></code>
+ *   <code>{{ "hello &lt;span class="x"&gt;FOO&lt;/span&gt; bar" | nuiHighlight:"bar" }}</code>
+ *
+ *   formats to: <code>hello &lt;span class=&quot;x&quot;&gt;FOO&lt;/span&gt;&lt;span class="nui-highlighted"&gt;bar&lt;/span&gt;;</code>
  */
 @Pipe({
     name: "nuiHighlight",
@@ -52,6 +54,7 @@ export class HighlightPipe implements PipeTransform {
         }
         return result;
     }
+
     public escapeItem(item: string): string {
         return escape(item);
     }

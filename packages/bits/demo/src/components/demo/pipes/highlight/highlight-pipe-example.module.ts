@@ -2,9 +2,9 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import {
     DEMO_PATH_TOKEN,
+    NuiCommonModule,
     NuiDocsModule,
     NuiSearchModule,
-    NuiSelectModule,
     SrlcStage,
 } from "@nova-ui/bits";
 
@@ -40,9 +40,9 @@ const routes = [
         HighlightPipeExampleComponent,
     ],
     imports: [
+        NuiCommonModule,
         NuiDocsModule,
         NuiSearchModule,
-        NuiSelectModule,
         RouterModule.forChild(routes),
     ],
     providers: [
