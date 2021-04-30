@@ -40,7 +40,7 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "";
+    @Input() public ariaLabel: string = "Switch";
 
     @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

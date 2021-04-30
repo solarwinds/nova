@@ -18,10 +18,8 @@
                (paste)="preventNonNumericalPaste($event)"
                [placeholder]="placeholder"
                [readonly]="readonly"
-               [attr.aria-valuemin]="minValue || null"
-               [attr.aria-valuemax]="maxValue || null"
-               [attr.aria-valuenow]="value || null"
-               [attr.aria-label]="ariaLabel"/>
+               aria-label="Textbox number input"
+               />
     </div>
     <span class="nui-textbox-number__buttons">
         <span class="nui-textbox-number__updown nui-textbox-number__up-button">

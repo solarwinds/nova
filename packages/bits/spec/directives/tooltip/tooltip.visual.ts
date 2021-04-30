@@ -1,11 +1,10 @@
 
-import {$, browser} from "protractor";
+import { browser } from "protractor";
 
 import {Atom} from "../../atom";
 import {ButtonAtom} from "../../components/button/button.atom";
 import {Animations, Helpers} from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
-import { TooltipAtom } from "./tooltip.atom";
 
 const name: string = "Tooltip";
 
@@ -49,8 +48,7 @@ describe(`Visual tests: ${name}`, () => {
 
         await Helpers.clickOnEmptySpace();
         await manualTooltipButton.click();
-        new TooltipAtom($("body")).waitToBeDisplayed();
-        await camera.say.cheese("After tooltip triggered manually");
+        await camera.say.cheese("After tooltip triggered manually", 400);
 
         Helpers.switchDarkTheme("on");
         await camera.say.cheese("After tooltip triggered manually with dark theme mode on");

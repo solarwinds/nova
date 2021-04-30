@@ -14,6 +14,7 @@ describe("USERCONTROL Button", () => {
     let defaultLargeBtn: ButtonAtom;
     let actionCompactBtn: ButtonAtom;
     let upBtn: ButtonAtom;
+    let unlimitedWidthBtn: ButtonAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("button/button-test");
@@ -26,10 +27,7 @@ describe("USERCONTROL Button", () => {
         defaultLargeBtn = Atom.find(ButtonAtom, "nui-default-large-btn");
         actionCompactBtn = Atom.find(ButtonAtom, "nui-demo-action-compact-btn");
         upBtn = Atom.find(ButtonAtom, "nui-demo-up-btn");
-    });
-
-    it("should be visible", async () => {
-        expect(await primaryCompactBtn.isVisible()).toBe(true, "nui-demo-primary-compact-btn");
+        unlimitedWidthBtn = Atom.find(ButtonAtom, "nui-demo-long-text-btn");
     });
 
     it("should always have .nui-button class", async () => {
@@ -40,18 +38,6 @@ describe("USERCONTROL Button", () => {
     it("should always have .btn class", async () => {
         expect(await primaryCompactBtn.hasClass("btn")).toBe(true);
         expect(await defaultLargeBtn.hasClass("btn")).toBe(true);
-    });
-
-    it("should have textColor depending on 'displayStyle' attribute", async () => {
-        expect(await primaryCompactBtn.getTextColor()).toBe("rgba(255, 255, 255, 1)", "nui-demo-primary-compact-btn");
-    });
-
-    it("should have background color depending on 'displayStyle' attribute", async () => {
-        expect(await primaryCompactBtn.getBackgroundColor()).toBe("rgba(0, 121, 170, 1)", "nui-demo-primary-compact-btn");
-    });
-
-    it("should have border style depending on 'displayStyle' attribute", async () => {
-        expect(await primaryCompactBtn.getBorderStyle()).toBe("rgba(0, 0, 0, 0)", "nui-demo-primary-compact-btn");
     });
 
     it("should have type class based on 'size' attribute", async () => {
@@ -73,25 +59,6 @@ describe("USERCONTROL Button", () => {
         expect(await defaultLargeBtn.hasClass("testClass")).toBe(true, ".testClass at nui-default-large-btn");
     });
 
-    it("should not display icon by default", async () => {
-        const icon = await primaryCompactBtn.getIcon();
-        expect(icon).toBeUndefined();
-    });
-
-    it("should display icon when configured", async () => {
-        expect(await primaryLargePlusIconBtn.isIconShown()).toBe(true, "nui-demo-primary-large-plus-icon-btn");
-        expect(await defaultBtnWithIcon.isIconShown()).toBe(true, "nui-demo-btn-with-icon");
-    });
-
-    it("should have appropriate icon size depending on button size", async () => {
-        let icon = await primaryLargePlusIconBtn.getIcon();
-        expect(await icon?.getSize()).toBe("default");
-        icon = await defaultBtnWithIcon.getIcon();
-        expect(await icon?.getSize()).toBe("default");
-        icon = await defaultCompactBtn.getIcon();
-        expect(await icon?.getSize()).toBe("sm");
-    });
-
     it("should be disabled with 'disabled' DOM property", async () => {
         expect(await primaryLargePlusIconDisabledBtn.isDisabled())
             .toBe(true, "nui-demo-primary-large-plus-icon-disabled-btn");
@@ -102,10 +69,6 @@ describe("USERCONTROL Button", () => {
             .toBe(true, "nui-demo-primary-large-plus-icon-btn");
         expect(await primaryLargePlusIconDisabledBtn.isIconShown())
             .toBe(true, "nui-demo-primary-large-plus-icon-disabled-btn false");
-    });
-
-    it("should not show icon when not configured 'icon' prop", async () => {
-        expect(await primaryCompactBtn.isIconShown()).toBe(false, "nui-demo-primary-compact-btn");
     });
 
     it("should be busy showed depending on 'isBusy' prop", async () => {
@@ -144,6 +107,14 @@ describe("USERCONTROL Button", () => {
         await upBtn.click();
         await upBtn.click();
         expect(await resultSpan.getText()).toBe(String(count + 2));
+    });
+
+    it("should remove width restriction with .unlimited-width class by click", async () => {
+        expect(await unlimitedWidthBtn.isVisible()).toBe(true, "nui-demo-long-text-bt");
+        await unlimitedWidthBtn.click();
+        expect(await unlimitedWidthBtn.hasClass("unlimited-width")).toEqual(false);
+        await unlimitedWidthBtn.click();
+        expect(await unlimitedWidthBtn.hasClass("unlimited-width")).toEqual(true);
     });
 
     // TODO: Fix with NUI-2612. With control flow disabled, this test became flaky.

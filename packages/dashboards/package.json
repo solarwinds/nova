@@ -1,7 +1,7 @@
 {
   "name": "@nova-ui/dashboards",
   "license": "Apache-2.0",
-  "version": "11.3.0-0",
+  "version": "11.4.0-0",
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "contributors": [
     {
@@ -45,7 +45,7 @@
     "e2e:debug": "npm run pree2e:base && node --inspect-brk ./node_modules/protractor/bin/protractor",
     "percy": "percy exec -- npm run visual",
     "percy:gui": "percy exec -- npm run visual:gui",
-    "percy:ci": "percy exec -- npm run visual:ci",
+    "percy:ci": "npm run visual:ci && percy upload -v _snapshots",
     "visual:base": "npm run e2e:base -- --suite visual",
     "visual:ci": "npm run e2e:ci -- --suite visual",
     "visual": "npx start-server-and-test serve-examples:prod 4200 visual:base",
@@ -64,8 +64,8 @@
   },
   "schematics": "./sdk/schematics/collection.json",
   "peerDependencies": {
-    "@nova-ui/bits": "~11.3.0-0",
-    "@nova-ui/charts": "~11.3.0-0",
+    "@nova-ui/bits": "~11.4.0-0",
+    "@nova-ui/charts": "~11.4.0-0",
     "@schematics/angular": "^11.1.4",
     "angular-gridster2": "^11.0.1",
     "d3": "^5.9.2",
@@ -95,8 +95,8 @@
     "@applitools/eyes-protractor": "1.9.1",
     "@compodoc/compodoc": "^1.1.11",
     "@locl/cli": "^1.0.0",
-    "@nova-ui/bits": "~11.3.0-0",
-    "@nova-ui/charts": "~11.3.0-0",
+    "@nova-ui/bits": "~11.4.0-0",
+    "@nova-ui/charts": "~11.4.0-0",
     "@percy/cli": "^1.0.0-beta.41",
     "@percy/protractor": "^2.0.0",
     "@schematics/angular": "^11.1.4",

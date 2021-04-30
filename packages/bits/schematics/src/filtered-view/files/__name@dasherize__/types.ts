@@ -14,9 +14,9 @@ export interface IServer {
 
 // implement custom filters
 export interface IServerFilters extends INovaFilters {
-    location?: IFilter<string>;
     name?: IFilter<string>;
-    status?: IFilter<ServerStatus>;
+    status?: IFilter<Record<string, number>>;
+    location?: IFilter<Record<string, number>>;
 }
 <% }
 

@@ -98,6 +98,8 @@ export class WizardDirective extends CdkStepper implements AfterContentInit {
 
     /** Steps that the stepper holds. */
     @ContentChildren(WizardStepV2Component, {descendants: true}) _steps: QueryList<WizardStepV2Component>;
+    /** Override CdkStepper 'steps' property to use WizardStepV2Component instead of CdkStep */
+    @ContentChildren(WizardStepV2Component, {descendants: true}) steps: QueryList<WizardStepV2Component>;
 
     /** The step that is selected. */
     @Input()
@@ -110,12 +112,8 @@ export class WizardDirective extends CdkStepper implements AfterContentInit {
     }
 
     ngAfterContentInit() {
-        // Mark the component for change detection whenever the content children query changes
-        this._steps.changes.pipe(takeUntil(this._destroyed)).subscribe(() => {
-            this.steps.reset(this._steps as any);
-            this._stateChanged();
-        });
-
+        this.steps.changes.pipe(takeUntil(this._destroyed))
+            .subscribe(() => this._stateChanged());
         this._animationDone.pipe(
             // This needs a `distinctUntilChanged` in order to avoid emitting the same event twice due
             // to a bug in animations where the `.done` callback gets invoked twice on some browsers.
