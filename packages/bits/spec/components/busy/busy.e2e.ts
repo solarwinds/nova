@@ -40,25 +40,13 @@ describe("USERCONTROL Busy", () => {
         expect(await busy.isDisplayed()).toBe(false);
     });
 
-    describe("Busy with Progress", () => {
-        it("container should be visible when active", async () => {
-            await busyBtn.click();
-            expect(await progressBusy.isDisplayed()).toBe(true);
-        });
-    });
-
-    describe("Busy with Spinner", () => {
+    describe("Busy overlaps and tab navigation", () => {
         beforeEach(async () => {
             await busyBtn.click();
         });
 
         afterEach(async () => {
             await busyBtn.click();
-        });
-
-        it("container should be visible when active", async () => {
-            await spinner.waitForDisplayed();
-            expect(await spinner.isDisplayed()).toBe(true);
         });
 
         it("any appended to body popup (select) should not be overlapped by busy", async () => {
