@@ -17,10 +17,10 @@ export class UnitConversionPipe implements PipeTransform {
 
     /**
      * Gets a string representation of the conversion of a large quantity of a small basic unit to a smaller quantity of a larger unit.
-     * For example, 1024 bytes is output as 1 KB
+     * For example, a quantity of 1024 in bytes is output as "1 KB".
      *
      * @param value The value to convert
-     * @param scale The number of significant digits to the right of the decimal to include in the resulting converted value
+     * @param scale The number of significant digits to the right of the decimal to include in the converted value
      * @param plusSign Specify whether to prefix positive values with a '+'
      * @param unit The basic unit to use for the conversion result's unit label
      *

@@ -79,18 +79,6 @@ export class UnitConversionService {
     }
 
     /**
-     * Gets the converted unit display string
-     *
-     * @param conversion The result of an invocation of this service's convert method
-     * @param unit The basic unit used in the conversion
-     *
-     * @returns {string} The converted unit display string
-     */
-    public getUnitDisplay(conversion: IUnitConversionResult, unit: UnitOption): string {
-        return unitConversionConstants[unit][conversion.order];
-    }
-
-    /**
      * Gets the converted value display string
      *
      * @param conversion The result of an invocation of this service's convert method
@@ -106,6 +94,18 @@ export class UnitConversionService {
 
         const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
         return `${prefix}${conversion.value}`
+    }
+
+    /**
+     * Gets the converted unit display string
+     *
+     * @param conversion The result of an invocation of this service's convert method
+     * @param unit The basic unit used in the conversion
+     *
+     * @returns {string} The converted unit display string
+     */
+    public getUnitDisplay(conversion: IUnitConversionResult, unit: UnitOption): string {
+        return unitConversionConstants[unit][conversion.order];
     }
 
     private isValidNumber(value: any): boolean {
