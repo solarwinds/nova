@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule, SrlcStage } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule } from "@nova-ui/bits";
 
 const routes = [
     {
