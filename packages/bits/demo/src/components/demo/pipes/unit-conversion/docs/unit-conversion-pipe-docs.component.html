@@ -1,7 +1,8 @@
 <p>
-    The unitConversion pipe can be used to convert a large value of a small base unit to a smaller value of a larger unit--for example, converting 1024 bytes to
-    1 kilobyte. The converted unit label is automatically appended to the output. Supported units are of type UnitOption and include the following:
-    "generic" (e.g. 1k for 1000), "bytes", "bytesPerSecond", "bitsPerSecond", and "hertz".
+    The <code><a href="../pipes/UnitConversionPipe.html#info" target="_parent">unitConversion</a></code> pipe can be used to convert a large value of a small basic unit to a smaller value of a larger unit--for example, converting
+    1024 bytes to 1 kilobyte. The converted unit label is automatically appended to the output. Supported units are of type
+    <code><a href="../miscellaneous/typealiases.html#UnitOption" target="_blank">UnitOption</a></code> and include the following:
+    <code>"generic"</code> (e.g. 1k for 1000), <code>"bytes"</code>, <code>"bytesPerSecond"</code>, <code>"bitsPerSecond"</code>, and <code>"hertz"</code>.
 </p>
 
 <h2>Required Modules</h2>
@@ -12,15 +13,18 @@
 </ul>
 
 <h2>Basic Usage</h2>
-<p>To get started using the pipe, take a look at the template source of the example below.</p>
+<p>To get started with using the pipe, take a look at the template source of the example below.</p>
 
 <h3>Parameters</h3>
 <p>The pipe accepts the following parameters:</p>
 <ul>
-    <li><strong>value</strong> - The number to be converted.</li>
-    <li><strong>precision</strong> - Precision of the formatted value. Extra trailing zeros are removed independently of the precision.</li>
-    <li><strong>plusSign</strong> - If true and the source value is greater than zero, the output is prefixed with a plus sign.</li>
-    <li><strong>unit</strong> - The base unit of the conversion. Accepts arguments of type UnitOption.</li>
+    <li><strong>value</strong> - The value to be converted.</li>
+    <li><strong>scale</strong> - The decimal scale of the formatted value--for specifying how many significant digits to display to the right of the decimal.</li>
+    <li><strong>plusSign</strong> - Boolean for specifying whether to prefix the output with a '+' when the source value is greater than zero. Defaults to false.</li>
+    <li>
+        <strong>unit</strong> - The basic unit to use for the conversion. Accepts arguments of type
+        <code><a href="../miscellaneous/typealiases.html#UnitOption" target="_blank">UnitOption</a></code>.
+    </li>
 </ul>
 
 <nui-example-wrapper filenamePrefix="unit-conversion-pipe-basic" exampleTitle="Basic Usage">

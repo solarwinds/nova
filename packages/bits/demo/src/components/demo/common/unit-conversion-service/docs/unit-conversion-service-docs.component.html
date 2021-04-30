@@ -1,11 +1,47 @@
 <p>
-
+    The <code><a href="../injectables/UnitConversionService.html#info" target="_parent">UnitConversionService</a></code> can be used to convert a large value of
+    a small basic unit to a smaller value of a larger unit--for example, converting 1024 B (bytes) to 1 KB.
 </p>
 
+<h2>Basic Usage</h2>
+<p>
+    To convert a value, use the service's
+    <code><a href="../injectables/UnitConversionService.html#info" target="_parent">convert</a></code> method which accepts three arguments:
+<ul>
+    <li><strong>value</strong> - The number to be converted</li>
+    <li>
+        <strong>base</strong> - An optional base value to use for the exponential expression when calculating the conversion result (defaults to
+        <code><a href="../miscellaneous/enumerations.html#UnitBase" target="_blank">UnitBase.Standard</a></code>, or 1000)
+    </li>
+    <li>
+        <strong>scale</strong> - An optional scale value for specifying how many significant digits to the right of the decimal to preserve in the output
+        (defaults to <code>1</code>).
+    </li>
+</ul>
+<p>
+    The result of the conversion is of type <code><a href="../interfaces/IUnitConversionResult.html" target="_blank">IUnitConversionResult</a></code>.
+</p>
+<nui-message type="warning" [allowDismiss]="false">
+    <strong>Note:</strong> For converting a value in bytes, be sure to specify
+    <code><a href="../miscellaneous/enumerations.html#UnitBase" target="_blank">UnitBase.Bytes</a></code>, or 1024, for the convert method's base parameter.
+</nui-message>
+<p>
+    Once the conversion has been calculated, the result can be converted to a display string that includes both the value and the unit. This can be done via the
+    <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getFullDisplay</a></code> method. Supported basic units are of type
+    <code><a href="../miscellaneous/typealiases.html#UnitOption" target="_blank">UnitOption</a></code> and include the following:
+    <code>"generic"</code> (e.g. 1k for 1000), <code>"bytes"</code>, <code>"bytesPerSecond"</code>, <code>"bitsPerSecond"</code>, and <code>"hertz"</code>.
+</p>
 <nui-example-wrapper filenamePrefix="unit-conversion-service-basic" exampleTitle="Basic Usage">
     <unit-conversion-service-basic-example></unit-conversion-service-basic-example>
 </nui-example-wrapper>
 
+<h2>Separating the Value and Unit for Display</h2>
+<p>
+    The display strings for value and unit can also be determined separately for situations in which you don't want display the conversion result as a single
+    string. To get just the converted value for display, use the
+    <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getValueDisplay</a></code> method, and to get just the converted unit for
+    display, use the <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getUnitDisplay</a></code> method.
+</p>
 <nui-example-wrapper filenamePrefix="unit-conversion-service-separate-unit-display" exampleTitle="Separating the Value and Unit for Display">
     <unit-conversion-service-separate-unit-display-example></unit-conversion-service-separate-unit-display-example>
 </nui-example-wrapper>

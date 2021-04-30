@@ -5,6 +5,7 @@ import {
     DEMO_PATH_TOKEN,
     NuiDocsModule,
     NuiFormFieldModule,
+    NuiMessageModule,
     NuiTextboxModule,
     SrlcStage,
 } from "@nova-ui/bits";
@@ -58,6 +59,7 @@ const routes = [
         FormsModule,
         NuiDocsModule,
         NuiFormFieldModule,
+        NuiMessageModule,
         NuiTextboxModule,
         RouterModule.forChild(routes),
     ],

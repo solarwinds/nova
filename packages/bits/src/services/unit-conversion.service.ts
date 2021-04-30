@@ -17,16 +17,15 @@ export class UnitConversionService {
     constructor(private logger: LoggerService) { }
 
     /**
-     * Converts a raw value to a larger unit approximation of the value. For example, 1024 B to 1 MB, 12345 Hz to 12.35 kHz, etc.
+     * Converts a raw value to a larger unit approximation of the value. For example, 1024 B to 1 KB, 12345 Hz to 12.35 kHz, etc.
      *
      * @param value The value to convert
-     * @param base The base for the conversion. For example, a base of 1000 will convert the specified value to the next larger unit when the value hits 1000,
-     *             then the next larger unit at 1000000, and so on.
-     * @param precision The number of decimals of precision to use for the resulting converted value
+     * @param base The base to use for the exponential expression when calculating the conversion result
+     * @param scale The number of significant digits to the right of the decimal to include in the resulting converted value
      *
      * @returns {IUnitConversionResult} The conversion result
      */
-    convert(value: number, base: number = UnitBase.Standard, precision: number = 1): IUnitConversionResult {
+    convert(value: number, base: number = UnitBase.Standard, scale: number = 1): IUnitConversionResult {
         let resultValue: number;
         let resultOrder: number;
         let strValue: string;
@@ -46,7 +45,7 @@ export class UnitConversionService {
                 resultOrder += 1;
             }
 
-            strValue = (resultValue).toFixed(precision);
+            strValue = (resultValue).toFixed(scale);
 
             // remove trailing zeros
             strValue = parseFloat(strValue).toString();
@@ -83,7 +82,7 @@ export class UnitConversionService {
      * Gets the converted unit display string
      *
      * @param conversion The result of an invocation of this service's convert method
-     * @param unit The base unit used in the conversion
+     * @param unit The basic unit used in the conversion
      *
      * @returns {string} The converted unit display string
      */
