@@ -1,7 +1,4 @@
 version: 2.1
-orbs:
-    snyk: snyk/snyk@0.0.12
-
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -584,25 +581,6 @@ jobs:
             -   run:
                     name: Trigger release branch
                     command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
-    snyk-test:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Install node_modules
-                    command: npm install -q
-            -   run:
-                    name: snyk auth
-                    command: npm run snyk-auth
-            -   run:
-                    name: snyk monitor
-                    command: npm run snyk-monitor
-            -   run:
-                    name: snyk test
-                    command: npm run snyk-test
 workflows:
     version: 2.1
     nova:
@@ -704,15 +682,6 @@ workflows:
                                 - main
                                 - /release\/.*/
                                 - next
-            # Waiting on dashboards build before running scan because it's currently the last package to be built.
-            -   snyk-test:
-                    requires:
-                        - dashboards-build
-                    filters:
-                        branches:
-                            ignore:
-                                - pull/*
-
     nova-release:
         jobs:
             -   release-approval:
