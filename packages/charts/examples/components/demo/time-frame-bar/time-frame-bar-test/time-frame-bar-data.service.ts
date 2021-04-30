@@ -26,7 +26,7 @@ export class TimeFrameBarDataService {
 
     public getChartData(from: Moment, to: Moment, delayInterval: number = 0): Observable<Record<string, { x: Moment, y: number }[]>> {
         const rules = this.seriesValueFunctions;
-        const results: Record<string, { x: moment.Moment; y: number }[]> = {};
+        const results: Record<string, { x: moment.Moment, y: number }[]> = {};
 
         const duration = moment.duration(to.diff(from));
         const dataInterval = duration.asHours() > 12 ? DataInterval.Hour : DataInterval.Poll;
@@ -43,7 +43,7 @@ export class TimeFrameBarDataService {
         end: Moment,
         valueFn: (fs: [number, number, number]) => number,
         interval: DataInterval = DataInterval.Poll
-    ): { x: moment.Moment; y: number }[] {
+    ): { x: moment.Moment, y: number }[] {
         const startCorrector = start.minutes() % interval;
         const currentDate = start.clone().subtract(startCorrector, "minutes").seconds(0); // rounds to pollInterval
         const endCorrector = interval - end.minutes() % interval;

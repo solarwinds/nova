@@ -192,37 +192,37 @@ export interface IRandomUserInfo {
 export interface IRandomUserResults {
     cell: string;
     dob: {
-        age: number,
-        date: string,
+        age: number;
+        date: string;
     };
     email: string;
     gender: string;
     id: any;
     location: IRandomUserLocation;
     login: {
-        md5: string,
-        password: string,
+        md5: string;
+        password: string;
         salt: string;
-        sha1: string,
+        sha1: string;
         sha256: string;
-        username: string,
-        uuid: string,
+        username: string;
+        uuid: string;
     };
     name: {
-        title: string,
-        first: string,
-        last: string,
+        title: string;
+        first: string;
+        last: string;
     };
     nat: string;
     phone: string;
     picture: {
         large: string;
         medium: string;
-        thumbnail: string,
+        thumbnail: string;
     };
     registered: {
-        date: string,
-        age: number,
+        date: string;
+        age: number;
     };
 }
 

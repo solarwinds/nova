@@ -37,7 +37,7 @@ export class ChipComponent implements AfterViewInit {
     @Input() public closeButtonTooltip: string;
 
     /** Custom css class to be added to the chip element */
-    @Input() public customClass: string | string[] | Set<string> | { [klass: string]: any; };
+    @Input() public customClass: string | string[] | Set<string> | { [klass: string]: any };
 
     /**
      * Event that is fired when single item is cleared (by clicking on remove icon).

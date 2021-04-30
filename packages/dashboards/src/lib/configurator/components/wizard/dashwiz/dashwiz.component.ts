@@ -162,7 +162,7 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
             });
         });
 
-        this.navigationControl.subscribe((value: { busyState: IBusyConfig; allowStepChange: any; }) => {
+        this.navigationControl.subscribe((value: { busyState: IBusyConfig, allowStepChange: any }) => {
             this.currentStep.busyConfig = value.busyState;
             if (value.allowStepChange && !isUndefined(this.futureStep) && this.currentStep !== this.futureStep) {
                 this.enterAnotherStep();

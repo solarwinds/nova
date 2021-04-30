@@ -4,8 +4,8 @@ export class DataSeries implements IDataSeries<IAccessors> {
 
     public id: string;
     public accessors: {
-        data?: Record<string, DataAccessor | undefined>,
-        series?: Record<string, SeriesAccessor | undefined>,
+        data?: Record<string, DataAccessor | undefined>;
+        series?: Record<string, SeriesAccessor | undefined>;
     };
     public data: any[];
     public name: string;

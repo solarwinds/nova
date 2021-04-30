@@ -37,7 +37,7 @@ interface IGBookBackendDTO {
         title: string;
         subtitle: string;
         authors: string[];
-        [key: string]: any
+        [key: string]: any;
     };
     accessInfo: { [key: string]: any };
     saleInfo: { [key: string]: any };

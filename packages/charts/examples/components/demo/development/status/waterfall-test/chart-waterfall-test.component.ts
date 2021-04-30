@@ -166,7 +166,7 @@ export class ChartWaterfallTestComponent implements AfterViewInit, OnInit {
             ],
         },
     ];
-    private scales: { x: LinearScale; y: BandScale };
+    private scales: { x: LinearScale, y: BandScale };
 
     @ViewChild("templatePortalGrid") public templatePortalGrid: TemplateRef<any>;
     @ViewChild("gridChartPlaceholder") public gridChartPlaceholder: ElementRef;

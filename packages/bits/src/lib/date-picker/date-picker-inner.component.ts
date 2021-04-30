@@ -290,7 +290,7 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
 
         if (this.disabledDates) {
             this.disabledDates.forEach(
-                (disabledDate: { date: Moment; mode: string }) => {
+                (disabledDate: { date: Moment, mode: string }) => {
                     if (this.compareDateDisabled(disabledDate, date) === 0) {
                         isDateDisabled = true;
                     }
@@ -312,7 +312,7 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
         return moment(date).clone().format(format);
     }
 
-    protected compareDateDisabled(date1Disabled: { date: Moment; mode: string }, date2: Moment): number | undefined {
+    protected compareDateDisabled(date1Disabled: { date: Moment, mode: string }, date2: Moment): number | undefined {
         if (_isNil(date1Disabled) || _isNil(date2)) {
             return undefined;
         }

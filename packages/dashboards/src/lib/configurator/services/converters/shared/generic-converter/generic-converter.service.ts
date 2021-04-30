@@ -21,7 +21,7 @@ export class GenericConverterService extends BaseConverter {
         super(eventBus, previewService, pizzagnaService);
     }
 
-    public updateConfiguration(properties: { formParts: IConverterFormPartsProperties[]; }) {
+    public updateConfiguration(properties: { formParts: IConverterFormPartsProperties[] }) {
         if (properties && properties.formParts) {
             this.formParts = properties.formParts;
         }

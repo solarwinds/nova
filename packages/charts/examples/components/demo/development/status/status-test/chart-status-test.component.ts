@@ -24,8 +24,8 @@ export class ChartStatusTestComponent implements AfterViewInit {
 
     public customMarkers: IValueProvider<SvgMarker>;
 
-    private thresholdScales: { x: TimeScale; y: BandScale };
-    private bandScales: { x: TimeIntervalScale; y: BandScale };
+    private thresholdScales: { x: TimeScale, y: BandScale };
+    private bandScales: { x: TimeIntervalScale, y: BandScale };
 
     constructor(private iconService: IconService) {
         const getStatusMarker = (status: string) => new SvgMarker(this.iconService.getStatusIcon(status));

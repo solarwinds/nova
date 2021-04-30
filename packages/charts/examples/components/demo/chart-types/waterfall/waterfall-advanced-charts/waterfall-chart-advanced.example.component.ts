@@ -71,7 +71,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
     public templatePortal: TemplatePortal<any>;
     public listItems = getData(this.seriesChartConfig);
 
-    private scales: { x: LinearScale; y: BandScale };
+    private scales: { x: LinearScale, y: BandScale };
     private overlayRef: OverlayRef;
 
     @ViewChild("templatePortalGrid") templatePortalGrid: TemplateRef<any>;
