@@ -28,7 +28,7 @@
                 "@angular-eslint/no-empty-lifecycle-method": "off",
                 "@angular-eslint/no-conflicting-lifecycle": "off",
                 "@angular-eslint/contextual-lifecycle": "off",
-                // TODO: resolve all the errors for the following rule in the scope of NUI-6044
+                // TODO: Remove errors in v12 in scope of NUI-6044
                 "@angular-eslint/component-selector": [
                     "off",
                     {
@@ -38,7 +38,7 @@
                     }
                 ],
                 "@angular-eslint/directive-class-suffix": "error",
-                // TODO: resolve all the errors for the following rule in the scope of NUI-6044
+                // TODO: Remove errors in v12 in scope of NUI-6044
                 "@angular-eslint/directive-selector": [
                     "off",
                     {
