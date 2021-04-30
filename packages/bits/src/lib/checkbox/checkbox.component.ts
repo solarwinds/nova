@@ -163,7 +163,7 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
     private rendererListener: Function;
     private sub: Subscription;
 
-    private _ariaLabel: string = "";
+    private _ariaLabel: string = "Checkbox";
 
     constructor(private changeDetector: ChangeDetectorRef,
                 private eventBusService: EventBusService,

@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { browser, by } from "protractor";
+import { browser, by, ProtractorBrowser } from "protractor";
 import { WebElementPromise } from "selenium-webdriver";
 
 export enum Animations {
@@ -30,6 +30,17 @@ export function getCurrentBranchName(potentialGitRoot = process.cwd()): string |
         ? fs.readFileSync(gitHeadPath, "utf-8").trim().split("/").slice(2).join("/")
         // Recursively looking for git folder
         : getCurrentBranchName(path.resolve(potentialGitRoot, ".."));
+}
+
+export async function assertA11y(browser: ProtractorBrowser, atomSelector: string, disabledRules?: string[]) {
+    const AxeBuilder = require("@axe-core/webdriverjs");
+    const accessibilityScanResults =
+            await new AxeBuilder(browser.driver)
+                .include(`.${atomSelector}`)
+                .disableRules(disabledRules || [])
+                .analyze();
+
+    await expect(accessibilityScanResults.violations).toEqual([]);
 }
 
 export class Helpers {
