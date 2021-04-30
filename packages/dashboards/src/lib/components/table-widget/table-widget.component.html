@@ -20,7 +20,7 @@
                                      style="height: calc(100% - 2px)"
                                      tableStickyHeader
                                      [itemSize]="rowHeight"
-                                     [ngClass]="{ 'virtual-scroll-disabled': !(mousePresent$ | async) && delayedMousePresenceDetectionEnabled }">
+                                     [ngClass]="{ 'virtual-scroll-disabled': (mousePresent$ | async) == false && delayedMousePresenceDetectionEnabled }">
             <table class="nui-table-widget__main"
                    nui-table
                    [reorderable]="configuration?.reorderable"
