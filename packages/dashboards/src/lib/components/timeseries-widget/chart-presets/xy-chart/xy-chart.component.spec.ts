@@ -166,6 +166,17 @@ describe("XYChartComponent", () => {
             });
             expect(spy).toHaveBeenCalledWith({ payload: timeframe });
         });
+    });
+
+    describe("isSeriesInteractive", () => {
+        let initializationChanges: SimpleChanges;
+
+        beforeEach(() => {
+            initializationChanges = {
+                widgetData: { isFirstChange: () => false } as SimpleChange,
+                configuration: { isFirstChange: () => false, currentValue: {} } as SimpleChange,
+            };
+        });
 
         it("should return true if the series is set to interactive", () => {
             component.configuration = { interaction: "series" } as ITimeseriesWidgetConfig;

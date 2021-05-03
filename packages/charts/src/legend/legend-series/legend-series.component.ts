@@ -16,8 +16,6 @@ export const LEGEND_SERIES_CLASS_NAME = "nui-legend-series";
     host: { "class": LEGEND_SERIES_CLASS_NAME },
     selector: "nui-legend-series",
     templateUrl: "./legend-series.component.html",
-    styleUrls: ["./legend-series.component.less"],
-    encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LegendSeriesComponent implements AfterContentInit {

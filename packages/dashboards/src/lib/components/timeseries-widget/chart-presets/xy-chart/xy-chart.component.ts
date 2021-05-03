@@ -71,8 +71,8 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
     }
 
     /** Checks if the series is interactive or if the dataSource has a link property */
-    public isSeriesInteractive(legendSeries: IChartAssistSeries<IAccessors>): boolean | undefined {
-        return !(legendSeries?.link === undefined) || !(legendSeries?.secondaryLink === undefined) || !!this.seriesInteractive;
+    public isSeriesInteractive(legendSeries: IChartAssistSeries<IAccessors>): boolean {
+        return !(legendSeries?.link === undefined) || !(legendSeries?.secondaryLink === undefined) || this.seriesInteractive;
     }
 
     public onLegendClick(legendSeries: IChartAssistSeries<IAccessors>, event: MouseEvent) {
@@ -91,6 +91,10 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
     }
 
     public onPrimaryDescClick(legendSeries: IChartAssistSeries<IAccessors>) {
+        if (!this.seriesInteractive) {
+            this.chartAssist.toggleSeries(legendSeries.id, this.chartAssist.isSeriesHidden(legendSeries.id));
+            return;
+        }
         this.eventBus.getStream(INTERACTION).next({
             payload: {
                 data: legendSeries,
