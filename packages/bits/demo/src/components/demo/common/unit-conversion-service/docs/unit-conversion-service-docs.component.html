@@ -1,7 +1,12 @@
 <p>
     The <code><a href="../injectables/UnitConversionService.html#info" target="_parent">UnitConversionService</a></code> can be used to convert a large value of
-    a small basic unit to a smaller value of a larger unit--for example, converting 1024 B (bytes) to 1 KB.
+    a small basic unit to a smaller value of a larger unit—for example, converting 1024 B (bytes) to 1 KB.
 </p>
+<nui-message type="info" [allowDismiss]="false">
+    There is also a <code><a href="../pipes/UnitConversionPipe.html" target="_blank">unitConversion</a></code> pipe that makes use of this service. If your use
+    case is a simple conversion of a value within the context of a template, the pipe may offer a more syntactically succinct method of conversion than using
+    the methods of this service directly.
+</nui-message>
 
 <h2>Basic Usage</h2>
 <p>
