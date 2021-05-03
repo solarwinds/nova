@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { ComponentChanges, unitConversionConstants, UnitConversionService } from "@nova-ui/bits";
+import { ComponentChanges, UnitConversionService } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
