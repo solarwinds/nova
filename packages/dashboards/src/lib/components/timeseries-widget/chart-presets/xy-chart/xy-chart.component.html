@@ -31,7 +31,7 @@
 
                         <div *ngIf="!legendSeries.link" 
                             class="description description-primary" 
-                            [ngClass]="{'nui-text-link-small link': isSeriesInteractive()}"
+                            [ngClass]="{'nui-text-link-small link': isSeriesInteractive(legendSeries.id)}"
                             [title]="legendSeries.legendDescriptionPrimary"
                             (click)="$event.stopPropagation(); onPrimaryDescClick(legendSeries)">
                                 {{legendSeries.legendDescriptionPrimary}}
