@@ -61,9 +61,9 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
-                const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
-                return this.unitConversionService.getFullDisplay(conversion, "generic");
-            }, this.seriesSet);
+            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
+            return this.unitConversionService.getFullDisplay(conversion, "generic");
+        }, this.seriesSet);
 
         this.updateDonutSize();
         this.updateAnnularAttributes();
