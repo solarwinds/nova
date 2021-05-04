@@ -178,7 +178,7 @@ describe("XYChartComponent", () => {
             const spy = spyOn(eventBus.getStream(INTERACTION), "next").and.callThrough();
             component.configuration = { interaction: "series" } as ITimeseriesWidgetConfig;
             component.ngOnChanges(initializationChanges);
-            component.onPrimaryDescClick({ stopPropagation: () => null }, component.chartAssist.legendSeriesSet[0]);
+            component.onPrimaryDescClick({ stopPropagation: () => null } as any, component.chartAssist.legendSeriesSet[0]);
             const interactionData = {
                 payload: { data: component.chartAssist.legendSeriesSet[0], interactionType: TimeseriesInteractionType.Series },
                 id: "INTERACTION",

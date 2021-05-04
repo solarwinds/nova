@@ -70,7 +70,7 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
         return this.configuration.legendPlacement === LegendPlacement.Right;
     }
 
-    public onPrimaryDescClick(event: any, legendSeries: IChartAssistSeries<IAccessors>) {
+    public onPrimaryDescClick(event: MouseEvent, legendSeries: IChartAssistSeries<IAccessors>) {
         if (!this.seriesInteractive) {
             return;
         }
