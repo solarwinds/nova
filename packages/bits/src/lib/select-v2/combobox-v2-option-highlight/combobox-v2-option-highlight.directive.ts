@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
 import escape from "lodash/escape";
-import isNil from "lodash/isNil";
+import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -56,7 +56,7 @@ export class ComboboxV2OptionHighlightDirective implements OnChanges, OnInit, On
     private updateHTML(highlighted?: InputValueTypes): void {
         const isHighlightNecessary = highlighted && this.combobox.getLastSelectedOption()?.viewValue !== highlighted;
 
-        this.el.nativeElement.innerHTML = (isHighlightNecessary && !isNil(highlighted)
+        this.el.nativeElement.innerHTML = (isHighlightNecessary && !isUndefined(highlighted)
             ? this.highlightPipe.transform(this.value, highlighted.toString())
             : escape(this.value)) as string;
     }

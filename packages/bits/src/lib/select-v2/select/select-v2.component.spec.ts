@@ -289,7 +289,7 @@ describe("components >", () => {
 
                 it("should return true, when does not have any selectedOptions", () => {
                     // @ts-ignore: Suppressing error for testing purposes
-                    component.selectedOptions[0] = null;
+                    component.selectedOptions[0] = undefined;
                     expect(component.isEmpty).toEqual(true);
                 });
 
@@ -456,6 +456,14 @@ describe("components >", () => {
                 });
 
                 it("should set active item", () => {
+                    component.ngAfterViewInit();
+                    component.toggleDropdown();
+                    expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(0);
+                });
+                it("should select the null option if value is null", () => {
+                    const nullOption = TestBed.createComponent(SelectV2OptionComponent).componentInstance
+                    component.selectedOptions = [nullOption];
+                    component.value = null;
                     component.ngAfterViewInit();
                     component.toggleDropdown();
                     expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(0);
