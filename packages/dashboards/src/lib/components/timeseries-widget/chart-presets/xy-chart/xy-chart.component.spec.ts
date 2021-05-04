@@ -168,61 +168,6 @@ describe("XYChartComponent", () => {
         });
     });
 
-    describe("isSeriesInteractive", () => {
-        let initializationChanges: SimpleChanges;
-
-        beforeEach(() => {
-            initializationChanges = {
-                widgetData: { isFirstChange: () => false } as SimpleChange,
-                configuration: { isFirstChange: () => false, currentValue: {} } as SimpleChange,
-            };
-        });
-
-        it("should return true if the series is set to interactive", () => {
-            component.configuration = { interaction: "series" } as ITimeseriesWidgetConfig;
-            component.ngOnChanges(initializationChanges);
-            expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(true);
-        });
-
-        it("should return true if the dataSeries has 'link' populated", () => {
-            component.widgetData = { series: [{} as ITimeseriesWidgetData] };
-            component.widgetData.series[0] = {
-                id: "id",
-                name: "name",
-                description: "description",
-                link: "www.link.com",
-                data: {} as ITimeseriesWidgetSeriesData[],
-            }
-            component.ngOnChanges(initializationChanges);
-            expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(true);
-        });
-
-        it("should return true if the dataSeries has 'secondaryLink' populated", () => {
-            component.widgetData = { series: [{} as ITimeseriesWidgetData] };
-            component.widgetData.series[0] = {
-                id: "id",
-                name: "name",
-                description: "description",
-                secondaryLink: "www.link.com",
-                data: {} as ITimeseriesWidgetSeriesData[],
-            }
-            component.ngOnChanges(initializationChanges);
-            expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(true);
-        });
-
-        it("should return false when no link property is set on the dataSource and the series is not interactive", () => {
-            component.widgetData = { series: [{} as ITimeseriesWidgetData] };
-            component.widgetData.series[0] = {
-                id: "id",
-                name: "name",
-                description: "description",
-                data: {} as ITimeseriesWidgetSeriesData[],
-            }
-            component.ngOnChanges(initializationChanges);
-            expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(false);
-        });
-    });
-
     describe("onPrimaryDescClick", () => {
         let initializationChanges = {
             widgetData: { isFirstChange: () => false } as SimpleChange,
