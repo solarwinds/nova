@@ -6,6 +6,7 @@ describe("a11y: checkbox-group", () => {
     // disabling the rule until NUI-6015 is addressed
     let rulesToDisable: string[] = [
         "aria-allowed-role",
+        "aria-toggle-field-name",
     ];
 
     beforeAll(async () => {
