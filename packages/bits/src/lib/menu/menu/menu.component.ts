@@ -35,7 +35,6 @@ import { IMenuItem } from "../public-api";
     selector: "nui-menu",
     host: {
         "class": "nui-menu",
-        "role": "menu",
         "[attr.aria-label]": "title || ariaLabel",
     },
     templateUrl: "./menu.component.html",

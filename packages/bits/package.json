@@ -54,7 +54,7 @@
     "e2e:watch": "npx watch \"npm run e2e:base\" src demo spec --watch=1",
     "e2e:debug": "npm run pree2e:base && node --inspect-brk ./node_modules/protractor/bin/protractor ./protractor-gui.conf.js",
     "percy": "percy exec -- npm run visual",
-    "percy:ci": "percy exec -- npm run visual:ci",
+    "percy:ci": "npm run visual:ci && percy upload -v _snapshots",
     "percy:gui": "percy exec -- npm run visual:gui",
     "visual:base": "npm run e2e:base -- --suite visual",
     "visual:ci": "npm run e2e:ci -- --suite visual",
