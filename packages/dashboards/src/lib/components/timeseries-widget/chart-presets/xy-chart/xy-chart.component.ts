@@ -75,7 +75,7 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
             return;
         }
 
-        event.stopPropagation(); 
+        event.stopPropagation();
         this.eventBus.getStream(INTERACTION).next({
             payload: {
                 data: legendSeries,
