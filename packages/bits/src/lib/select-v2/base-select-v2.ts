@@ -22,7 +22,7 @@ import {
 import { ControlValueAccessor } from "@angular/forms";
 import includes from "lodash/includes";
 import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
+import isUndefined from "lodash/isUndefined";
 import last from "lodash/last";
 import pull from "lodash/pull";
 import { Observable, Subject } from "rxjs";
@@ -322,7 +322,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     protected handleValueChange(value: OptionValueType | OptionValueType[] | null) {
-        if (isNil(value)) {
+        if (isUndefined(value)) {
             this.value = "";
             this._selectedOptions = [];
             this.setActiveItemOnDropdown();
@@ -338,7 +338,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
             this._selectedOptions.forEach(option => option.outfiltered = true);
 
         } else {
-            const modelValue: OptionValueType = value;
+            const modelValue: OptionValueType | null = value;
             const selectedValue = this.options?.find(option => isEqual(option.value, modelValue));
             this._selectedOptions = selectedValue ? [selectedValue] : [];
         }
@@ -374,7 +374,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     private scrollToOption() {
         // setTimeout is necessary because scrolling to the selected item should occur only when overlay rendered
-        if (this.value && !this.multiselect) {
+        if (!isUndefined(this.value) && !this.multiselect) {
             setTimeout(() => this.selectedOptions[0]?.scrollIntoView({ block: "center" }));
         }
     }
@@ -387,7 +387,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     private setActiveItemOnDropdown(): void {
-        this.value && !this.multiselect
+        !isUndefined(this.value) && !this.multiselect
             ? this.optionKeyControlService.setActiveItem(this.selectedOptions[0])
             : this.optionKeyControlService.setFirstItemActive();
     }
