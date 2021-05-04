@@ -318,7 +318,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     protected getValueFromOptions(options = this.selectedOptions): OptionValueType | OptionValueType[] | null {
-        return this.multiselect ? options.map(o => o.value) : options[0]?.value || null;
+        return this.multiselect ? options.map(o => o.value) : options[0]?.value || "";
     }
 
     protected handleValueChange(value: OptionValueType | OptionValueType[] | null) {
@@ -361,7 +361,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     private validateValueWithSelectedOptions() {
         const selectedOptionValues = this.selectedOptions.map(option => option.value);
-        const valuePropToCompare = this.value
+        const valuePropToCompare = !isUndefined(this.value)
             ? this.multiselect ? this.value : [this.value]
             : [];
 
@@ -387,7 +387,9 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     private setActiveItemOnDropdown(): void {
-        !isUndefined(this.value) && !this.multiselect
+        const selectedValue = this.options?.find(option => isEqual(option.value, this.value));
+
+        selectedValue && !this.multiselect
             ? this.optionKeyControlService.setActiveItem(this.selectedOptions[0])
             : this.optionKeyControlService.setFirstItemActive();
     }
