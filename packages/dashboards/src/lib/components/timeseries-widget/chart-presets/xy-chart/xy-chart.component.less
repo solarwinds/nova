@@ -1,18 +1,20 @@
 @import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables.less";
 @import (reference) "@nova-ui/bits/sdk/less/mixins.less";
 
-.legend-container {
-    & .link {
-        &.description-primary,
-        &.description-secondary  {
-            .setCssVariable(color, nui-color-text-link);
-        }
-    }
-    &:not(:hover)&.state-hidden {
-        & .link {
+.xy-chart {
+    &__legend-series {
+        .link {
             &.description-primary,
             &.description-secondary  {
-                .setCssVariable(color, nui-color-text-default);
+                .setCssVariable(color, nui-color-text-link);
+            }
+        }
+        &:not(:hover)&--state-hidden {
+            .link {
+                &.description-primary,
+                &.description-secondary  {
+                    .setCssVariable(color, nui-color-text-default);
+                }
             }
         }
     }

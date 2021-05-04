@@ -3,7 +3,7 @@
 @import (reference) "@nova-ui/bits/sdk/less/mixins.less";
 
 @nui-legend-series-max-width: 250px;
-@nui-legend-series-description-min-width: 130px; // 180px from mockups - 50px for 
+@nui-legend-series-description-min-width: 130px; // 180px from mockups - 50px for tile
 
 .nui-chart-layout {
     display: grid;
@@ -103,6 +103,12 @@
 
     &:empty {
         display: none;
+    }
+
+    .description-min-width--unset {
+        .description {
+            min-width: unset!important;
+        }
     }
 
     & .description {
@@ -217,11 +223,5 @@
 
     & &--state-deemphasized {
         opacity: @nui-legend-deemphasized-opacity;
-    }
-}
-
-.description-min-width--unset {
-    .description {
-        min-width: unset;
     }
 }

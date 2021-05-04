@@ -70,41 +70,18 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
         return this.configuration.legendPlacement === LegendPlacement.Right;
     }
 
-    /** Checks if the series is interactive or if the dataSource has a link property */
-    public isSeriesInteractive(legendSeries: IChartAssistSeries<IAccessors>): boolean {
-        return !(legendSeries?.link === undefined) || !(legendSeries?.secondaryLink === undefined) || this.seriesInteractive;
-    }
-
-    public onLegendClick(legendSeries: IChartAssistSeries<IAccessors>, event: MouseEvent) {
+    public onPrimaryDescClick(event: any, legendSeries: IChartAssistSeries<IAccessors>) {
         if (!this.seriesInteractive) {
             return;
         }
-        const target = event.target as HTMLElement;
-        if (target.classList.contains("description")) {
-            this.eventBus.getStream(INTERACTION).next({
-                payload: {
-                    data: legendSeries,
-                    interactionType: TimeseriesInteractionType.Series,
-                },
-            });
-        }
-    }
 
-    public onPrimaryDescClick(legendSeries: IChartAssistSeries<IAccessors>) {
-        if (!this.seriesInteractive) {
-            this.chartAssist.toggleSeries(legendSeries.id, this.chartAssist.isSeriesHidden(legendSeries.id));
-            return;
-        }
+        event.stopPropagation(); 
         this.eventBus.getStream(INTERACTION).next({
             payload: {
                 data: legendSeries,
                 interactionType: TimeseriesInteractionType.Series,
             },
         });
-    }
-
-    public onSecondaryDescClick(legendSeries: IChartAssistSeries<IAccessors>) {
-        this.chartAssist.toggleSeries(legendSeries.id, this.chartAssist.isSeriesHidden(legendSeries.id));
     }
 
     /** Updates chart data. */

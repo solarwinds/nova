@@ -10,14 +10,14 @@
                     [interactive]="true"
                     [orientation]="legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'">
             <nui-legend-series 
-                    [ngClass]="'legend-container '+ 'state-' + chartAssist.renderStatesIndex[legendSeries.id]?.state"
+                        class="xy-chart__legend-series"
+                        [ngClass]="'xy-chart__legend-series--state-' + chartAssist.renderStatesIndex[legendSeries.id]?.state"
                         *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn"
                         [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                         (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)"
                         (mouseenter)="chartAssist.emphasizeSeries(legendSeries.id)"
                         (mouseleave)="chartAssist.resetVisibleSeries()"
-                        [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
-                        (click)="onLegendClick(legendSeries, $event)">
+                        [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state">
                 <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(legendSeries, 'y', undefined, valueAccessorKey)"
                             [backgroundColor]="chartAssist.palette.standardColors.get(legendSeries.id)"
                             [color]="chartAssist.palette.textColors.get(legendSeries.id)">
@@ -26,14 +26,11 @@
                                 [color]="chartAssist.palette.standardColors.get(legendSeries.id)">
                     </nui-chart-marker>
                 </nui-rich-legend-tile>
-
                 <div description class="description-container d-flex flex-column nui-text-small justify-content-center">
-
                         <div *ngIf="!legendSeries.link" 
                             class="description description-primary" 
-                            [ngClass]="{'nui-text-link-small link': isSeriesInteractive(legendSeries.id)}"
-                            [title]="legendSeries.legendDescriptionPrimary"
-                            (click)="$event.stopPropagation(); onPrimaryDescClick(legendSeries)">
+                            [ngClass]="{'nui-text-link-small link': ((legendSeries?.link) || seriesInteractive) }"
+                            (click)="onPrimaryDescClick($event, legendSeries)">
                                 {{legendSeries.legendDescriptionPrimary}}
                         </div>
                         <a class="description description-primary nui-text-link-small link"
@@ -45,7 +42,6 @@
                                 {{legendSeries.legendDescriptionPrimary}}
                         </a>
                         <div class="description description-secondary"
-                            (click)="$event.stopPropagation(); onSecondaryDescClick(legendSeries)"
                             *ngIf="!legendSeries.secondaryLink" 
                             [title]="legendSeries.legendDescriptionSecondary">
                                 {{legendSeries.legendDescriptionSecondary}}

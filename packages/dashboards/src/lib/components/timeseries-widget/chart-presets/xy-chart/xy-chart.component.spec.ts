@@ -210,18 +210,6 @@ describe("XYChartComponent", () => {
             expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(true);
         });
 
-        it("should communicate interaction on the EventBus when series is interactive", () => {
-            const spy = spyOn(eventBus.getStream(INTERACTION), "next").and.callThrough();
-            component.configuration = { interaction: "series" } as ITimeseriesWidgetConfig;
-            component.ngOnChanges(initializationChanges);
-            component.onPrimaryDescClick(component.chartAssist.legendSeriesSet[0]);
-            const interactionData = {
-                payload: { data: component.chartAssist.legendSeriesSet[0], interactionType: TimeseriesInteractionType.Series },
-                id: "INTERACTION",
-            };
-            expect(spy).toHaveBeenCalledWith(interactionData);
-        });
-
         it("should return false when no link property is set on the dataSource and the series is not interactive", () => {
             component.widgetData = { series: [{} as ITimeseriesWidgetData] };
             component.widgetData.series[0] = {
@@ -232,6 +220,25 @@ describe("XYChartComponent", () => {
             }
             component.ngOnChanges(initializationChanges);
             expect(component.isSeriesInteractive(component.chartAssist.legendSeriesSet[0])).toBe(false);
+        });
+    });
+
+    describe("onPrimaryDescClick", () => {
+        let initializationChanges = {
+            widgetData: { isFirstChange: () => false } as SimpleChange,
+            configuration: { isFirstChange: () => false, currentValue: {} } as SimpleChange,
+        };
+
+        it("should communicate interaction on the EventBus when series is interactive", () => {
+            const spy = spyOn(eventBus.getStream(INTERACTION), "next").and.callThrough();
+            component.configuration = { interaction: "series" } as ITimeseriesWidgetConfig;
+            component.ngOnChanges(initializationChanges);
+            component.onPrimaryDescClick(null, component.chartAssist.legendSeriesSet[0]);
+            const interactionData = {
+                payload: { data: component.chartAssist.legendSeriesSet[0], interactionType: TimeseriesInteractionType.Series },
+                id: "INTERACTION",
+            };
+            expect(spy).toHaveBeenCalledWith(interactionData);
         });
     });
 });
