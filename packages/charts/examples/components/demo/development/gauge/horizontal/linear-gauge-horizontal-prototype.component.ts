@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { ComponentChanges } from "@nova-ui/bits";
+import { ComponentChanges, UnitConversionService } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -28,6 +28,8 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
     private labelsPlugin: LinearGaugeLabelsPlugin;
+
+    constructor(private unitConversionService: UnitConversionService) { }
 
     public ngOnChanges(changes: ComponentChanges<LinearGaugeHorizontalPrototypeComponent>) {
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
@@ -63,7 +65,10 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
         this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
-        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}ms`, this.seriesSet);
+        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
+            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
+            return this.unitConversionService.getFullDisplay(conversion, "generic");
+        }, this.seriesSet);
 
         this.chartAssist.update(this.seriesSet);
     }

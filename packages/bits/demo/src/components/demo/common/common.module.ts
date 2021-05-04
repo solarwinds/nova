@@ -151,6 +151,10 @@ const routes = [
     {
         path: "welcome", component: WelcomePageComponent,
     },
+    {
+        path: "unit-conversion-service",
+        loadChildren: () => import("./unit-conversion-service/unit-conversion-service-example.module").then(m => m.UnitConversionServiceExampleModule),
+    },
 ];
 
 @NgModule({

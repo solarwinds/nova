@@ -5,7 +5,7 @@
                              [plugin]="contentPlugin">
         <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center text-center">
             <div class="d-inline-block" nuiZoomContent [zoomRatio]="0.65">
-                {{gaugeConfig.value | number:'1.0-0'}}
+                {{gaugeConfig.value | unitConversion : 2 : false : "generic"}}
             </div>
             <div class="content-label">Network Latency</div>
             <div class="content-label">(ms)</div>
