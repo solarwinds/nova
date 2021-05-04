@@ -338,7 +338,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
             this._selectedOptions.forEach(option => option.outfiltered = true);
 
         } else {
-            const modelValue: OptionValueType | null = value;
+            const modelValue: OptionValueType = value;
             const selectedValue = this.options?.find(option => isEqual(option.value, modelValue));
             this._selectedOptions = selectedValue ? [selectedValue] : [];
         }
@@ -387,8 +387,10 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     private setActiveItemOnDropdown(): void {
-        const selectedValue = this.options?.find(option => isEqual(option.value, this.value));
-
+        let selectedValue;
+        if(!this.multiselect) {
+            selectedValue = this.options?.find(option => isEqual(option.value, this.value));
+        }
         selectedValue && !this.multiselect
             ? this.optionKeyControlService.setActiveItem(this.selectedOptions[0])
             : this.optionKeyControlService.setFirstItemActive();

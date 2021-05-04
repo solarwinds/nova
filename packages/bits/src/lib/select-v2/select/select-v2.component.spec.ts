@@ -460,6 +460,7 @@ describe("components >", () => {
                     component.toggleDropdown();
                     expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(0);
                 });
+
                 it("should select the null option if value is null", () => {
                     const nullOption = TestBed.createComponent(SelectV2OptionComponent).componentInstance
                     component.selectedOptions = [nullOption];
