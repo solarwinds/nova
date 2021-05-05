@@ -17,6 +17,7 @@
     &__tilebox {
         width: 100%;
         height: 100%;
+        padding: 0 @nui-space-xs;
         .setCssVariable(background-color, nui-color-bg-light);
     }
 
@@ -68,7 +69,8 @@
 
     &--has-point-marker {
         .nui-rich-legend-tile__tilebox {
-            padding-right: @nui-space-xs;
+            // point-marker plus 2px breathing room for tilebox content
+            padding-right: @nui-space-xs + @nui-space-xxs;
         }
     }
 }
