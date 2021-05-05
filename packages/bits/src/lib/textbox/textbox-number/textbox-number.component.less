@@ -7,6 +7,7 @@
 @textbox-padding-simple-updown: @textbox-updown-offset + @textbox-feedback-icon-margin;
 @textbox-feedback-icon-with-updown-margin: @textbox-feedback-icon-margin + @textbox-updown-offset;
 @textbox-busy-offset: 1px;
+@textbox-button-height: 28px;
 @textbox-busy-offset-with-updown: @textbox-updown-offset + @textbox-busy-offset;
 
 .nui .nui-textbox {
@@ -45,10 +46,12 @@
         height: (@nui-space-md * 2);
         top: 1px;
         text-align: center;
-        .nui & button.nui-button {
+        button.nui-button {
             padding-left: @nui-space-xs;
             width: (@nui-space-md * 2);
-            height: 28px;
+            height: @textbox-button-height;
+            min-height: @textbox-button-height;
+            padding-top: 7px;
             &:focus {
                 outline: none;
             }
