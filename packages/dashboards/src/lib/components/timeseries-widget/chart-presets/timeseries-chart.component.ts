@@ -14,6 +14,7 @@ import {
 } from "../types";
 
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData> implements OnChanges, OnDestroy {
 
     @Input() public widgetData: ITimeseriesOutput<T> = {} as ITimeseriesOutput<T>;
