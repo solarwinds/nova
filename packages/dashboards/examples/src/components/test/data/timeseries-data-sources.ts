@@ -12,7 +12,7 @@ import {
 import moment, { Moment } from "moment/moment";
 import { BehaviorSubject } from "rxjs";
 
-import { getTimeseriesStatusData, getTimeseriesStatusIntervalData, getTimeseriesWidgetData, getTimeseriesWidgetData2 } from "./widget-data";
+import { getTimeseriesStatusData, getTimeseriesStatusIntervalData, getTimeseriesWidgetData, getTimeseriesEventsData, getTimeseriesWidgetData2 } from "./widget-data";
 
 @Injectable()
 export class TestTimeseriesDataSource extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
@@ -53,6 +53,21 @@ export class TestTimeseriesDataSource2 extends DataSourceService<ITimeseriesWidg
 
     public async getFilteredData(filters: INovaFilters): Promise<ITimeseriesOutput> {
         return { series: filterData(filters, getTimeseriesWidgetData2()) };
+    }
+}
+
+@Injectable()
+export class TestTimeseriesEventsDataSource extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
+    public static providerId = "TestTimeseriesDataEventsSource";
+
+    public busy = new BehaviorSubject(false);
+
+    constructor() {
+        super();
+    }
+
+    public async getFilteredData(filters: INovaFilters): Promise<ITimeseriesOutput> {
+        return { series: filterData(filters, getTimeseriesEventsData()) };
     }
 }
 

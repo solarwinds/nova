@@ -23,7 +23,7 @@ export interface ITimeseriesWidgetSeries {
 
 export interface ITimeseriesWidgetData<T = ITimeseriesWidgetSeriesData> {
     id: string;
-    name: string;
+    name?: string; // unused
     description: string;
     data: T[];
 }

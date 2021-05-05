@@ -298,7 +298,6 @@ export const getTimeseriesWidgetData = () => (
     [
         {
             id: "series-1",
-            name: "Average CPU Load",
             description: "test1111.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 34 },
@@ -325,7 +324,6 @@ export const getTimeseriesWidgetData = () => (
         },
         {
             id: "series-2",
-            name: "Average CPU Load",
             description: "test2222.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 60 },
@@ -352,7 +350,6 @@ export const getTimeseriesWidgetData = () => (
         },
         {
             id: "series-3",
-            name: "Average CPU Load",
             description: "test3333.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 60 },
@@ -379,7 +376,6 @@ export const getTimeseriesWidgetData = () => (
         },
         {
             id: "series-4",
-            name: "Average CPU Load",
             description: "test4444.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 72 },
@@ -411,7 +407,6 @@ export const getTimeseriesWidgetData2 = () => (
     [
         {
             id: "series-a",
-            name: "Average CPU Load",
             description: "lastchance.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 10 },
@@ -438,7 +433,6 @@ export const getTimeseriesWidgetData2 = () => (
         },
         {
             id: "series-b",
-            name: "Average CPU Load",
             description: "newhope.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 80 },
@@ -465,7 +459,6 @@ export const getTimeseriesWidgetData2 = () => (
         },
         {
             id: "series-c",
-            name: "Average CPU Load",
             description: "empire.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 65 },
@@ -493,6 +486,89 @@ export const getTimeseriesWidgetData2 = () => (
     ]
 );
 
+export const getTimeseriesEventsData = () => (
+    [
+        {
+            id: "series-a",
+            description: "lastchance.demo.lab",
+            data: [
+                { x: frozenTime().subtract(20, "day").toDate(), y: 9049 },
+                { x: frozenTime().subtract(19, "day").toDate(), y: 9089 },
+                { x: frozenTime().subtract(18, "day").toDate(), y: 9149 },
+                { x: frozenTime().subtract(17, "day").toDate(), y: 9189 },
+                { x: frozenTime().subtract(16, "day").toDate(), y: 9249 },
+                { x: frozenTime().subtract(15, "day").toDate(), y: 9289 },
+                { x: frozenTime().subtract(14, "day").toDate(), y: 9349 },
+                { x: frozenTime().subtract(13, "day").toDate(), y: 9389  },
+                { x: frozenTime().subtract(12, "day").toDate(), y: 9449 },
+                { x: frozenTime().subtract(11, "day").toDate(), y: 9489 },
+                { x: frozenTime().subtract(10, "day").toDate(), y: 9549 },
+                { x: frozenTime().subtract(9, "day").toDate(), y:  9589 },
+                { x: frozenTime().subtract(8, "day").toDate(), y:  9649 },
+                { x: frozenTime().subtract(7, "day").toDate(), y:  9689 },
+                { x: frozenTime().subtract(6, "day").toDate(), y:  9749 },
+                { x: frozenTime().subtract(5, "day").toDate(), y:  9789 },
+                { x: frozenTime().subtract(4, "day").toDate(), y:  9849 },
+                { x: frozenTime().subtract(3, "day").toDate(), y:  9889 },
+                { x: frozenTime().subtract(2, "day").toDate(), y:  9949 },
+                { x: frozenTime().subtract(1, "day").toDate(), y:  10100 },
+            ],
+        },
+        {
+            id: "series-b",
+            description: "newhope.demo.lab",
+            data: [
+                { x: frozenTime().subtract(20, "day").toDate(), y: 904900 },
+                { x: frozenTime().subtract(19, "day").toDate(), y: 908900 },
+                { x: frozenTime().subtract(18, "day").toDate(), y: 914900 },
+                { x: frozenTime().subtract(17, "day").toDate(), y: 918900 },
+                { x: frozenTime().subtract(16, "day").toDate(), y: 924900 },
+                { x: frozenTime().subtract(15, "day").toDate(), y: 928900 },
+                { x: frozenTime().subtract(14, "day").toDate(), y: 934900 },
+                { x: frozenTime().subtract(13, "day").toDate(), y: 938900 },
+                { x: frozenTime().subtract(12, "day").toDate(), y: 944900 },
+                { x: frozenTime().subtract(11, "day").toDate(), y: 948900 },
+                { x: frozenTime().subtract(10, "day").toDate(), y: 954900 },
+                { x: frozenTime().subtract(9, "day").toDate(), y:  958900 },
+                { x: frozenTime().subtract(8, "day").toDate(), y:  964900 },
+                { x: frozenTime().subtract(7, "day").toDate(), y:  968900 },
+                { x: frozenTime().subtract(6, "day").toDate(), y:  974900 },
+                { x: frozenTime().subtract(5, "day").toDate(), y:  978900 },
+                { x: frozenTime().subtract(4, "day").toDate(), y:  984900 },
+                { x: frozenTime().subtract(3, "day").toDate(), y:  988900 },
+                { x: frozenTime().subtract(2, "day").toDate(), y:  994900 },
+                { x: frozenTime().subtract(1, "day").toDate(), y:  998900 },
+            ],
+        },
+        {
+            id: "series-c",
+            description: "empire.demo.lab",
+            data: [
+                { x: frozenTime().subtract(20, "day").toDate(), y: 904900000 },
+                { x: frozenTime().subtract(19, "day").toDate(), y: 908900000 },
+                { x: frozenTime().subtract(18, "day").toDate(), y: 914900000 },
+                { x: frozenTime().subtract(17, "day").toDate(), y: 918900000 },
+                { x: frozenTime().subtract(16, "day").toDate(), y: 924900000 },
+                { x: frozenTime().subtract(15, "day").toDate(), y: 928900000 },
+                { x: frozenTime().subtract(14, "day").toDate(), y: 934900000 },
+                { x: frozenTime().subtract(13, "day").toDate(), y: 938900000 },
+                { x: frozenTime().subtract(12, "day").toDate(), y: 944900000 },
+                { x: frozenTime().subtract(11, "day").toDate(), y: 948900000 },
+                { x: frozenTime().subtract(10, "day").toDate(), y: 954900000 },
+                { x: frozenTime().subtract(9, "day").toDate(), y:  958900000 },
+                { x: frozenTime().subtract(8, "day").toDate(), y:  964900000 },
+                { x: frozenTime().subtract(7, "day").toDate(), y:  968900000 },
+                { x: frozenTime().subtract(6, "day").toDate(), y:  974900000 },
+                { x: frozenTime().subtract(5, "day").toDate(), y:  978900000 },
+                { x: frozenTime().subtract(4, "day").toDate(), y:  984900000 },
+                { x: frozenTime().subtract(3, "day").toDate(), y:  988900000 },
+                { x: frozenTime().subtract(2, "day").toDate(), y:  994900000 },
+                { x: frozenTime().subtract(1, "day").toDate(), y:  998900000 },
+            ],
+        },
+    ]
+);
+
 enum Status {
     Unknown = "unknown",
     Up = "up",
@@ -513,7 +589,6 @@ export function getTimeseriesStatusData(): ITimeseriesWidgetData<ITimeseriesWidg
     const series: ITimeseriesWidgetData<any>[] = [
         {
             id: "series-1",
-            name: "Average CPU Load",
             description: "lastchance.demo.lab",
             data: [
                 { x: frozenTime().subtract(30, "day").toDate(), y: Status.Critical },
@@ -540,7 +615,6 @@ export function getTimeseriesStatusData(): ITimeseriesWidgetData<ITimeseriesWidg
         },
         {
             id: "series-2",
-            name: "Average CPU Load",
             description: "newhope.demo.lab",
             data: [
                 { x: frozenTime().subtract(30, "day").toDate(), y: Status.Up },
@@ -583,7 +657,6 @@ export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData<ITimese
     const series: ITimeseriesWidgetData<any>[] = [
         {
             id: "series-1",
-            name: "Average CPU Load",
             description: "lastchance.demo.lab",
             data: [
                 { x: frozenTime().subtract(19, "day").toDate(), y: Status.Critical },
@@ -610,7 +683,6 @@ export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData<ITimese
         },
         {
             id: "series-2",
-            name: "Average CPU Load",
             description: "newhope.demo.lab",
             data: [
                 { x: frozenTime().subtract(19, "day").toDate(), y: Status.Up },

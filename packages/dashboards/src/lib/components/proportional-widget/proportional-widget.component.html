@@ -67,7 +67,7 @@
                 </div>
 
                 <ng-template #legendDefaultTile>
-                    <nui-rich-legend-tile [value]="computeLegendTitle(legendSeries.data[0])"
+                    <nui-rich-legend-tile [value]="computeLegendTitle(legendSeries.data[0]) | nuiDashboardUnitConversion"
                                           [unitLabel]="legendUnitLabel"
                                           [color]="chartAssist.palette.textColors.get(legendSeries.id)"
                                           [backgroundColor]="chartAssist.palette.standardColors.get(legendSeries.id)">
