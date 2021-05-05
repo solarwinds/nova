@@ -13,7 +13,7 @@ import {
 import { UnitConversionServiceDocsComponent } from "./docs/unit-conversion-service-docs.component";
 import { UnitConversionServiceBasicExampleComponent } from "./unit-conversion-service-basic/unit-conversion-service-basic.example.component";
 import {
-    UnitConversionServiceSeparateUnitDisplayExampleComponent
+    UnitConversionServiceSeparateUnitDisplayExampleComponent,
 } from "./unit-conversion-service-separate-unit-display/unit-conversion-service-separate-unit-display.example.component";
 
 const routes = [
