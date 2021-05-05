@@ -9,7 +9,7 @@ import {LocalizeFn} from "@angular/localize/init";
 
 import { imagesData as IMAGES_PRESET } from "../constants/images";
 import { imagesPresetToken } from "../constants/images.constants";
-import { unitConversionConstants, unitConversionToken } from "../constants/unit-conversion.constant";
+import { unitConversionConstants, unitConversionToken } from "../constants/unit-conversion.constants";
 import { NUI_ENV_PROVIDER } from "../environment";
 import { SelectorService } from "../lib/selector/selector.service";
 import { LimitToPipe } from "../pipes/limit-to.pipe";

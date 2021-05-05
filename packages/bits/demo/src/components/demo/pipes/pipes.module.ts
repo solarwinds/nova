@@ -1,36 +1,22 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiSearchModule, NuiCommonModule } from "@nova-ui/bits";
-
-import { HighlightPipeDocsExampleComponent, HighlightPipeExampleComponent } from "./index";
+import { DEMO_PATH_TOKEN, NuiDocsModule } from "@nova-ui/bits";
 
 const routes = [
     {
-        path: "",
-        component: HighlightPipeDocsExampleComponent,
+        path: "highlight",
+        loadChildren: () => import("./highlight/highlight-pipe-example.module").then(m => m.HighlightPipeExampleModule),
     },
     {
-        path: "highlight-pipe",
-        component: HighlightPipeDocsExampleComponent,
-        data: {
-            "srlc": {
-                "hideIndicator": true,
-            },
-            showThemeSwitcher: true,
-        },
+        path: "unit-conversion",
+        loadChildren: () => import("./unit-conversion/unit-conversion-pipe-example.module").then(m => m.UnitConversionPipeExampleModule),
     },
 ];
 
 @NgModule({
     imports: [
         NuiDocsModule,
-        NuiSearchModule,
-        NuiCommonModule,
         RouterModule.forChild(routes),
-    ],
-    declarations: [
-        HighlightPipeExampleComponent,
-        HighlightPipeDocsExampleComponent,
     ],
     providers: [
         {

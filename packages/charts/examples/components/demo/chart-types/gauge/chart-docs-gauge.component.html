@@ -1,8 +1,8 @@
 <h1>Gauges</h1>
 <p>
-    Gauges can be an effective way to display a single metric value in visual form. And, Nova Charts provides the ability to create three types of gauges with
-    the assistance of a utility class called <a href="../classes/GaugeUtil.html" target="_blank"><code>GaugeUtil</code></a>. The primary functions provided
-    by the <code>GaugeUtil</code> that get you most of the way towards a functioning gauge are:
+    Gauges can be an effective way to display a single metric value in visual form. And, Nova Charts provides the ability to create two types of gauges
+    (donut and linear) with the assistance of a utility class called <a href="../classes/GaugeUtil.html" target="_blank"><code>GaugeUtil</code></a>. The main
+    set of static methods provided by the <code>GaugeUtil</code> that get you most of the way towards a functioning gauge are:
 </p>
 <ul>
     <li>
@@ -56,7 +56,10 @@
     default color accessor can be overridden to handle any number of thresholds by setting a custom
     <code><a href="../additional-documentation/advanced-usage/input-structure/data.html" target="_parent">DataAccessor</a></code> value for the
     <code>IGaugeConfig</code> object's <code><a href="../interfaces/IGaugeConfig.html#quantityColorAccessor" target="_blank">quantityColorAccessor</a></code>
-    property.
+    property. Additionally, if you need a color accessor that reverses the colors of the default color accessor so that high values are visualized as "good"
+    and low values are visualized as "bad", GaugeUtil has a convenience method for creating such a color accessor called
+    <code><a href="../classes/GaugeUtil.html#createReversedQuantityThresholdColorAccessor" target="_blank">createReversedQuantityThresholdColorAccessor</a></code>.
+    Similar to a custom color accessor, the return value of this method can be used on the <code>IGaugeConfig</code>'s <code>quantityColorAccessor</code> property.
 </p>
 <p>
     To enable the threshold marker dots, set the

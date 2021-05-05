@@ -228,12 +228,14 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
             this.onValueChange();
         };
 
-        updateParentForm();
         propertiesControl.markAsPristine();
 
         this.propertiesForm.valueChanges
             .pipe(takeUntil(this.propertiesFormReady))
             .subscribe(updateParentForm);
+
+        // initially, populate the formatter form with inputs from the widget
+        this.propertiesForm.patchValue(this.formatter.properties);
     }
 
     public onValueChange() {

@@ -25,13 +25,10 @@
                 /******************************
                 * Angular-specific rules
                 *******************************/
-                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/no-empty-lifecycle-method": "off",
-                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/no-conflicting-lifecycle": "off",
-                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/contextual-lifecycle": "off",
-                // TODO: Review the viability and impact of enabling this rule
+                // TODO: Remove errors in v12 in scope of NUI-6044
                 "@angular-eslint/component-selector": [
                     "off",
                     {
@@ -40,9 +37,8 @@
                         "style": "kebab-case"
                     }
                 ],
-                // TODO: Review the viability and impact of enabling this rule
-                "@angular-eslint/directive-class-suffix": "off",
-                // TODO: Review the viability and impact of enabling this rule
+                "@angular-eslint/directive-class-suffix": "error",
+                // TODO: Remove errors in v12 in scope of NUI-6044
                 "@angular-eslint/directive-selector": [
                     "off",
                     {
@@ -51,7 +47,6 @@
                         "style": "camelCase"
                     }
                 ],
-                // TODO: Review the viability and impact of enabling this rule
                 "@angular-eslint/no-host-metadata-property": "off",
 
                 /******************************

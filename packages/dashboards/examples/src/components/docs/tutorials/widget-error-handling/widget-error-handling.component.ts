@@ -86,11 +86,12 @@ export class ErrorUnknownDataSource extends DataSourceService<IKpiData> implemen
     // provider definition in the widget configuration below to see how the interval is set)
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return {
-            // @ts-ignore: Mock
+        const mockError = {
             result: null,
             error: { type: HttpStatusCode.Unknown },
         };
+        this.busy.next(false);
+        return mockError;
     }
 
     public ngOnDestroy(): void {

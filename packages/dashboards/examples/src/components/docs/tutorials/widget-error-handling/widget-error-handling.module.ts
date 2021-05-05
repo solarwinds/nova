@@ -3,7 +3,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSwitchModule, NuiTextboxModule } from "@nova-ui/bits";
+import { NuiButtonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSwitchModule, NuiTextboxModule } from "@nova-ui/bits";
 import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@nova-ui/dashboards";
 
 
@@ -37,6 +37,7 @@ const routes = [
         CommonModule,
         ReactiveFormsModule,
         HttpClientModule,
+        NuiButtonModule,
         NuiDashboardsModule,
         NuiDashboardConfiguratorModule,
         NuiDocsModule,

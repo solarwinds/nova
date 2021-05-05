@@ -7,12 +7,12 @@ import { DataAccessor, DEFAULT_RADIAL_RENDERER_CONFIG, GaugeUtil, IGaugeConfig, 
     styleUrls: ["./gauge-test-page.component.less"],
 })
 export class GaugeTestPageComponent {
-    public value = 95;
-    public maxValue = 200;
+    public value = 950;
+    public maxValue = 2000;
     public annularGrowth = DEFAULT_RADIAL_RENDERER_CONFIG.annularGrowth;
     public thickness = StandardLinearGaugeThickness.Large;
     public donutSize = 200;
-    public thresholds: number[] = [100, 150];
+    public thresholds: number[] = [1000, 1500];
     public reversed = false;
     public flipLabels = false;
     public gaugeConfig: IGaugeConfig;

@@ -15,6 +15,7 @@ import { ComponentRegistryService } from "../../services/component-registry.serv
 import { ComponentPortalDirective } from "./component-portal.directive";
 
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {
     public setComponent(component: any) {
     }
@@ -33,6 +34,7 @@ class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {
 }
 
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 class MockProviderWithProperties extends MockProvider {
     public properties: IProperties = {};
 }

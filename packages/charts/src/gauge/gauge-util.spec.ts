@@ -11,6 +11,18 @@ import { IGaugeConfig } from "./types";
 
 describe("GaugeUtil >", () => {
     let gaugeConfig: IGaugeConfig;
+    let consoleWarnFn: any;
+
+    beforeAll(() => {
+        // suppress console warning
+        consoleWarnFn = console.warn;
+        console.warn = () => null;
+    });
+
+    afterAll(() => {
+        // restore console warning
+        console.warn = consoleWarnFn;
+    });
 
     beforeEach(() => {
         gaugeConfig = {
@@ -21,6 +33,17 @@ describe("GaugeUtil >", () => {
     });
 
     describe("assembleSeriesSet", () => {
+        it("should clamp the value to the max if it's larger than the max", () => {
+            gaugeConfig.max = 10;
+            gaugeConfig.value = 15;
+
+            const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
+            let series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
+            expect(series?.data[0].value).toEqual(gaugeConfig.max);
+            series = seriesSet.find(s => s.id === GAUGE_REMAINDER_SERIES_ID);
+            expect(series?.data[0].value).toEqual(0);
+        });
+
         describe("for 'donut' mode", () => {
             it("should generate a series set", () => {
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
@@ -89,6 +112,18 @@ describe("GaugeUtil >", () => {
     });
 
     describe("updateSeriesSet", () => {
+        it("should clamp the value to the max if it's larger than the max", () => {
+            gaugeConfig.max = 10;
+            const updatedGaugeConfig = { ...gaugeConfig, value: 15 };
+
+            let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
+            seriesSet = GaugeUtil.updateSeriesSet(seriesSet, updatedGaugeConfig);
+            let series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
+            expect(series?.data[0].value).toEqual(gaugeConfig.max);
+            series = seriesSet.find(s => s.id === GAUGE_REMAINDER_SERIES_ID);
+            expect(series?.data[0].value).toEqual(0);
+        });
+
         it("should update the gauge's series set", () => {
             gaugeConfig.enableThresholdMarkers = true;
             const updatedGaugeConfig = { ...gaugeConfig, value: 5 };
