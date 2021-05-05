@@ -43,6 +43,7 @@ const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
 
 // Will be renamed in scope of the NUI-5797
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, ControlValueAccessor, IOptionedComponent, OnDestroy, OnChanges {
 
     /** Value used as a placeholder for the select. */
