@@ -106,7 +106,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Down",
         name: "Down",
-        data: [34],
+        data: [34000],
         icon: "status_down",
         link: "https://en.wikipedia.org/wiki/Brno",
         value: "Brno",
@@ -114,7 +114,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Critical",
         name: "Critical",
-        data: [34],
+        data: [34000],
         icon: "status_critical",
         link: "https://en.wikipedia.org/wiki/Kyiv",
         value: "Kyiv",
@@ -122,7 +122,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Warning",
         name: "Warning",
-        data: [34],
+        data: [34000],
         icon: "status_warning",
         link: "https://en.wikipedia.org/wiki/Austin",
         value: "Austin",
@@ -130,7 +130,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unknown",
         name: "Unknown",
-        data: [34],
+        data: [34000],
         icon: "status_unknown",
         link: "https://en.wikipedia.org/wiki/Lisbon",
         value: "Lisbon",
@@ -138,7 +138,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Up",
         name: "Up",
-        data: [34],
+        data: [34000],
         icon: "status_up",
         link: "https://en.wikipedia.org/wiki/Sydney",
         value: "Sydney",
@@ -146,7 +146,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unmanaged",
         name: "Unmanaged",
-        data: [34],
+        data: [34000],
         icon: "status_unmanaged",
         link: "https://en.wikipedia.org/wiki/Nur-Sultan",
         value: "Nur-Sultan",
@@ -154,7 +154,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Down2",
         name: "Down2",
-        data: [34],
+        data: [34000],
         icon: "status_down",
         link: "https://en.wikipedia.org/wiki/Brno",
         value: "Brno",
@@ -162,7 +162,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Critical2",
         name: "Critical2",
-        data: [34],
+        data: [34000],
         icon: "status_critical",
         link: "https://en.wikipedia.org/wiki/Kyiv",
         value: "Kyiv",
@@ -170,7 +170,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Warning2",
         name: "Warning2",
-        data: [34],
+        data: [34000],
         icon: "status_warning",
         link: "https://en.wikipedia.org/wiki/Austin",
         value: "Austin",
@@ -178,7 +178,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unknown2",
         name: "Unknown2",
-        data: [55],
+        data: [55000],
         icon: "status_unknown",
         link: "https://en.wikipedia.org/wiki/Lisbon",
         value: "Lisbon",
@@ -186,7 +186,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Up2",
         name: "Up2",
-        data: [89],
+        data: [89000],
         icon: "status_up",
         link: "https://en.wikipedia.org/wiki/Sydney",
         value: "Sydney",
@@ -194,7 +194,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unmanaged2",
         name: "Unmanaged2",
-        data: [144],
+        data: [144000],
         icon: "status_unmanaged",
         link: "https://en.wikipedia.org/wiki/Nur-Sultan",
         value: "Nur-Sultan",
@@ -202,7 +202,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Down3",
         name: "Down3",
-        data: [233],
+        data: [233000],
         icon: "status_down",
         link: "https://en.wikipedia.org/wiki/Brno",
         value: "Brno",
@@ -210,7 +210,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Critical3",
         name: "Critical3",
-        data: [377],
+        data: [377000],
         icon: "status_critical",
         link: "https://en.wikipedia.org/wiki/Kyiv",
         value: "Kyiv",
@@ -218,7 +218,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Warning3",
         name: "Warning3",
-        data: [610],
+        data: [610000],
         icon: "status_warning",
         link: "https://en.wikipedia.org/wiki/Austin",
         value: "Austin",
@@ -226,7 +226,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unknown3",
         name: "Unknown3",
-        data: [987],
+        data: [987000],
         icon: "status_unknown",
         link: "https://en.wikipedia.org/wiki/Lisbon",
         value: "Lisbon",
@@ -234,7 +234,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Up3",
         name: "Up3",
-        data: [1597],
+        data: [1597000],
         icon: "status_up",
         link: "https://en.wikipedia.org/wiki/Sydney",
         value: "Sydney",
