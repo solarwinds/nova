@@ -22,7 +22,7 @@ import {
 import { ControlValueAccessor } from "@angular/forms";
 import includes from "lodash/includes";
 import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
+import isUndefined from "lodash/isUndefined";
 import last from "lodash/last";
 import pull from "lodash/pull";
 import { Observable, Subject } from "rxjs";
@@ -319,11 +319,11 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     protected getValueFromOptions(options = this.selectedOptions): OptionValueType | OptionValueType[] | null {
-        return this.multiselect ? options.map(o => o.value) : options[0]?.value || null;
+        return this.multiselect ? options.map(o => o.value) : options[0]?.value || "";
     }
 
     protected handleValueChange(value: OptionValueType | OptionValueType[] | null) {
-        if (isNil(value)) {
+        if (isUndefined(value)) {
             this.value = "";
             this._selectedOptions = [];
             this.setActiveItemOnDropdown();
@@ -362,7 +362,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     private validateValueWithSelectedOptions() {
         const selectedOptionValues = this.selectedOptions.map(option => option.value);
-        const valuePropToCompare = this.value
+        const valuePropToCompare = !isUndefined(this.value)
             ? this.multiselect ? this.value : [this.value]
             : [];
 
@@ -375,7 +375,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     private scrollToOption() {
         // setTimeout is necessary because scrolling to the selected item should occur only when overlay rendered
-        if (this.value && !this.multiselect) {
+        if (!isUndefined(this.value) && !this.multiselect) {
             setTimeout(() => this.selectedOptions[0]?.scrollIntoView({ block: "center" }));
         }
     }
@@ -388,7 +388,11 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     private setActiveItemOnDropdown(): void {
-        this.value && !this.multiselect
+        let selectedValue;
+        if(!this.multiselect) {
+            selectedValue = this.options?.find(option => isEqual(option.value, this.value));
+        }
+        selectedValue && !this.multiselect
             ? this.optionKeyControlService.setActiveItem(this.selectedOptions[0])
             : this.optionKeyControlService.setFirstItemActive();
     }

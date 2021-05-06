@@ -1,5 +1,5 @@
 import { DOWN_ARROW, ESCAPE, PAGE_DOWN, PAGE_UP, TAB } from "@angular/cdk/keycodes";
-import { ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, SimpleChange, ViewChild } from "@angular/core";
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
@@ -289,7 +289,7 @@ describe("components >", () => {
 
                 it("should return true, when does not have any selectedOptions", () => {
                     // @ts-ignore: Suppressing error for testing purposes
-                    component.selectedOptions[0] = null;
+                    component.selectedOptions[0] = undefined;
                     expect(component.isEmpty).toEqual(true);
                 });
 
@@ -459,6 +459,17 @@ describe("components >", () => {
                     component.ngAfterViewInit();
                     component.toggleDropdown();
                     expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(0);
+                });
+
+                it("should select the null option if value is null", () => {
+                    const nullOption = TestBed.createComponent(SelectV2OptionComponent).componentInstance
+                    nullOption.value = null;
+                    component.options.reset([...selectedOptionsMock, nullOption, ...selectedOptionsMock]);
+                    component.value = null;
+                    component.ngOnChanges({ value: new SimpleChange(null, component.value, true) } );
+                    component.ngAfterViewInit();
+                    component.toggleDropdown();
+                    expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(3);
                 });
             });
         });

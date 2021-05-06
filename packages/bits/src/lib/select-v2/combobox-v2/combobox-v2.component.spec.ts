@@ -297,7 +297,7 @@ describe("components >", () => {
 
                 component.handleInput("");
                 expect(component["dropdown"].showing).toBeFalsy();
-                expect(component.value).toBeNull();
+                expect(component.value).toEqual("");
                 expect(component.selectedOptions).toEqual([]);
             });
 
