@@ -136,6 +136,7 @@ export const widgetConfigs: IWidget[] = [
                     },
                     "properties": {
                         "configuration": {
+                            "interaction": "series",
                             "legendPlacement": LegendPlacement.Bottom,
                             "enableZoom": true,
                             "leftAxisLabel": "Utilization (%)",

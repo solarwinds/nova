@@ -25,6 +25,8 @@ export interface ITimeseriesWidgetData<T = ITimeseriesWidgetSeriesData> {
     id: string;
     name: string;
     description: string;
+    link?: string;
+    secondaryLink?: string;
     data: T[];
 }
 
