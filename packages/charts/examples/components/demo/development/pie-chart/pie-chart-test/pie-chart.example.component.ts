@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { IToastService, ToastService } from "@nova-ui/bits";
 import {
     Chart, ChartAssist, ChartDonutContentPlugin, GridConfig, IAccessors, IChartAssistSeries, IChartEvent, IChartSeries, IRadialAccessors, LinearScale,
-    PieRenderer, RadialGrid, radialPreprocessor, RadialRenderer, Scales
+    PieRenderer, RadialGrid, radialPreprocessor, RadialRenderer, Scales,
 } from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";

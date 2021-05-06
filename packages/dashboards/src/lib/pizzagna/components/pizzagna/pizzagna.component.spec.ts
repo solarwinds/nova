@@ -12,7 +12,7 @@ import {
     NuiMessageModule,
     NuiPopupModule,
     NuiSpinnerModule,
-    NuiTableModule
+    NuiTableModule,
 } from "@nova-ui/bits";
 
 import { KpiComponent } from "../../../components/kpi-widget/kpi.component";
@@ -28,7 +28,7 @@ import {
     NOVA_DASHBOARD_EVENT_PROXY,
     NOVA_DATASOURCE_INTERVAL_REFRESHER,
     SET_PROPERTY_VALUE,
-    WIDGET_RESIZE
+    WIDGET_RESIZE,
 } from "../../../services/types";
 import { IPizzagna, WellKnownProviders } from "../../../types";
 import { ComponentPortalDirective } from "../../directives/component-portal/component-portal.directive";

@@ -7,7 +7,7 @@ import {
     NuiDocsModule,
     NuiFormFieldModule,
     NuiMessageModule,
-    NuiTextboxModule
+    NuiTextboxModule,
 } from "@nova-ui/bits";
 
 import { BadgeColorBlackComponent } from "./badge-color-black/badge-color-black.component";

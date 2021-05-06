@@ -5,7 +5,7 @@ import {
     EventEmitter,
     Input,
     Output,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 
 import { IQuickPickPresetDictionary } from "../public-api";

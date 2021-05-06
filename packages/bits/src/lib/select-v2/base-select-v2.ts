@@ -17,7 +17,7 @@ import {
     Output,
     QueryList,
     SimpleChanges,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import includes from "lodash/includes";

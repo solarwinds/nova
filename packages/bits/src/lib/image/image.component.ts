@@ -9,7 +9,7 @@ import {
     OnChanges,
     OnInit,
     SimpleChanges,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import _find from "lodash/find";

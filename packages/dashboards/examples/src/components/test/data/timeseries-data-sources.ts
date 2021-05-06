@@ -7,7 +7,7 @@ import {
     ITimeseriesOutput,
     ITimeseriesWidgetData,
     ITimeseriesWidgetSeriesData,
-    ITimeseriesWidgetStatusData
+    ITimeseriesWidgetStatusData,
 } from "@nova-ui/dashboards";
 import moment, { Moment } from "moment/moment";
 import { BehaviorSubject } from "rxjs";

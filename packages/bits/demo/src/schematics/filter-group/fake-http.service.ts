@@ -4,7 +4,7 @@ import {
     IFilteringOutputs,
     IFilters,
     LocalFilteringDataSource,
-    RepeatComponent
+    RepeatComponent,
 } from "@nova-ui/bits";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";

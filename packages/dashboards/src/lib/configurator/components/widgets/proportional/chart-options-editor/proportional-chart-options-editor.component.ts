@@ -12,7 +12,7 @@ const proportionalWidgetChartTypesNamesMap: ChartTypeNamesMap = {
     [ProportionalWidgetChartTypes.VerticalBarChart]: $localize`Vertical Bar`,
     [ProportionalWidgetChartTypes.HorizontalBarChart]: $localize`Horizontal Bar`,
 };
-interface IChartOptionViewModel { label: string; value: ProportionalWidgetChartTypes; }
+interface IChartOptionViewModel { label: string, value: ProportionalWidgetChartTypes }
 
 @Component({
     selector: "nui-proportional-chart-options-editor-component",

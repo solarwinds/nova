@@ -21,7 +21,7 @@ import {
     IPosition,
     IRenderContainers,
     IRendererEventPayload,
-    IRenderStateData
+    IRenderStateData,
 } from "./types";
 import { UtilityService } from "./utility.service";
 

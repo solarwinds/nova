@@ -2,7 +2,7 @@ import { DOCUMENT, isPlatformBrowser } from "@angular/common";
 import {
     Inject,
     Injectable,
-    PLATFORM_ID
+    PLATFORM_ID,
 } from "@angular/core";
 import forOwn from "lodash/forOwn";
 import includes from "lodash/includes";

@@ -5,7 +5,7 @@ import {
     ITimeseriesItemConfiguration,
     IWidget,
     LegendPlacement,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 import moment from "moment/moment";
 

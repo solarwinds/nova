@@ -15,8 +15,8 @@ export class DatePickerDisableDateExampleComponent {
 
     public dateDisabled: IDatePickerDisabledDate[] = [
         {
-             date: this.currentDate,
-             mode: "day",
+            date: this.currentDate,
+            mode: "day",
         },
         {
             date: this.yesterdayDate,

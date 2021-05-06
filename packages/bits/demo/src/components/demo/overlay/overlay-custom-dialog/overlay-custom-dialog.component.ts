@@ -3,10 +3,10 @@ import { Component, ViewChild, ViewEncapsulation } from "@angular/core";
 import { DialogService, NuiDialogRef, OverlayComponent } from "@nova-ui/bits";
 
 @Component({
-  selector: "nui-overlay-custom-dialog",
-  templateUrl: "./overlay-custom-dialog.component.html",
-  styleUrls: ["./overlay-custom-dialog.component.less"],
-  encapsulation: ViewEncapsulation.None,
+    selector: "nui-overlay-custom-dialog",
+    templateUrl: "./overlay-custom-dialog.component.html",
+    styleUrls: ["./overlay-custom-dialog.component.less"],
+    encapsulation: ViewEncapsulation.None,
 })
 export class OverlayCustomDialogComponent {
     private overlayRef: OverlayRef;

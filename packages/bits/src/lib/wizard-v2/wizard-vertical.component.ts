@@ -41,9 +41,9 @@ export class WizardVerticalComponent extends WizardDirective {
 
     constructor(
         @Optional() dir: Directionality,
-        changeDetectorRef: ChangeDetectorRef,
-        // @breaking-change 8.0.0 `elementRef` and `_document` parameters to become required.
-        elementRef?: ElementRef<HTMLElement>,
+                    changeDetectorRef: ChangeDetectorRef,
+            // @breaking-change 8.0.0 `elementRef` and `_document` parameters to become required.
+                    elementRef?: ElementRef<HTMLElement>,
         @Inject(DOCUMENT) _document?: any) {
         super(dir, changeDetectorRef, elementRef, _document);
         this._orientation = "vertical";

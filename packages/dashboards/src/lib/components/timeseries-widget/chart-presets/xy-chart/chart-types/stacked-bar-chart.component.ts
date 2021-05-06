@@ -14,7 +14,7 @@ import {
     IValueProvider,
     IXYScales,
     stack,
-    TimeIntervalScale
+    TimeIntervalScale,
 } from "@nova-ui/charts";
 
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../../types";
@@ -30,8 +30,8 @@ export class StackedBarChartComponent extends XYChartComponent {
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
                 @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
-                timeseriesScalesService: TimeseriesScalesService,
-                changeDetector: ChangeDetectorRef) {
+                                            timeseriesScalesService: TimeseriesScalesService,
+                                            changeDetector: ChangeDetectorRef) {
         super(eventBus, dataSource, timeseriesScalesService, changeDetector);
 
         this.valueAccessorKey = "value";

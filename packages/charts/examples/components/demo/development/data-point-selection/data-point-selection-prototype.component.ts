@@ -35,7 +35,7 @@ import {
     statusAccessors,
     TimeIntervalScale,
     UtilityService,
-    XYGrid
+    XYGrid,
 } from "@nova-ui/charts";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";

@@ -13,7 +13,7 @@ import {
     Renderer2,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";

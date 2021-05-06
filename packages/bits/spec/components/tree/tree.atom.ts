@@ -10,8 +10,8 @@ export class TreeAtom extends Atom {
 
     public async getNestedNodes(el: ElementFinder = this.root): Promise<ElementFinder[]> {
         return await this.getAllNestedNodes(el)
-                         .reduce(async (acc: ElementFinder[], item: ElementFinder) =>
-                                        await item.isDisplayed() ? acc.concat(item) : acc, []);
+            .reduce(async (acc: ElementFinder[], item: ElementFinder) =>
+                await item.isDisplayed() ? acc.concat(item) : acc, []);
     }
 
     public async isExpanded(el: ElementFinder): Promise<boolean> {
@@ -20,7 +20,7 @@ export class TreeAtom extends Atom {
 
     public async getNodesByName(name: string): Promise<ElementFinder[]> {
         return this.getAllNestedNodes()
-                   .filter(async item => (await item.getText()) === name);
+            .filter(async item => (await item.getText()) === name);
     }
 
     public async expandAll(el: ElementFinder = this.root) {

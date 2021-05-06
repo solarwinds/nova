@@ -4,8 +4,8 @@ import { Moment } from "moment/moment";
 
 
 @Component({
-  selector: "nui-date-time-picker-empty-state",
-  templateUrl: "./date-time-picker-empty-state.component.html",
+    selector: "nui-date-time-picker-empty-state",
+    templateUrl: "./date-time-picker-empty-state.component.html",
 })
 export class DateTimePickerEmptyStateComponent {
   public dt: Moment | undefined = undefined;
@@ -16,7 +16,7 @@ export class DateTimePickerEmptyStateComponent {
   constructor() {}
 
   onModelChanged(event: Moment) {
-    this.selectedDate = new Date(event.valueOf());
+      this.selectedDate = new Date(event.valueOf());
   }
 
 }

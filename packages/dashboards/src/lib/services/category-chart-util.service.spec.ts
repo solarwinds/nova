@@ -15,7 +15,7 @@ import {
     Renderer,
     Scales,
     VerticalBarAccessors,
-    XYGrid
+    XYGrid,
 } from "@nova-ui/charts";
 
 import { ProportionalWidgetChartTypes } from "../components/proportional-widget/types";

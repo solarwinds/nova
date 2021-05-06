@@ -12,7 +12,7 @@ import {
     IFilterGroup,
     IMultiFilterMetadata,
     INovaFilteringOutputs,
-    INovaFilters
+    INovaFilters,
 } from "./public-api";
 
 /**

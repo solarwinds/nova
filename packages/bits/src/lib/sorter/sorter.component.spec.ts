@@ -3,7 +3,7 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import {
     NO_ERRORS_SCHEMA,
     SimpleChange,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import _assign from "lodash/assign";

@@ -4,7 +4,7 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 
 import {
-    DATA_POINT_NOT_FOUND, HIGHLIGHT_DATA_POINT_EVENT, HIGHLIGHT_SERIES_EVENT, INTERACTION_DATA_POINTS_EVENT, SELECT_DATA_POINT_EVENT
+    DATA_POINT_NOT_FOUND, HIGHLIGHT_DATA_POINT_EVENT, HIGHLIGHT_SERIES_EVENT, INTERACTION_DATA_POINTS_EVENT, SELECT_DATA_POINT_EVENT,
 } from "../../constants";
 import { Renderer } from "../../core/common/renderer";
 import { Scales } from "../../core/common/scales/types";
@@ -140,7 +140,7 @@ export class RadialRenderer extends Renderer<IRadialAccessors> {
     }
 
     private emitDataPointHighlight(renderSeries: IRenderSeries<IRadialAccessors>, data: any, i: number,
-        rendererSubject: Subject<IRendererEventPayload>) {
+                                   rendererSubject: Subject<IRendererEventPayload>) {
 
         const position: IPosition | undefined = this.getDataPointPosition(renderSeries.dataSeries, i, renderSeries.scales);
 

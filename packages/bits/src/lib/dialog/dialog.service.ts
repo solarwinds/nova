@@ -32,7 +32,7 @@ export class DialogService {
         const component: ConfirmationDialogComponent = dialog.componentInstance;
 
         const optionsWithDefaults = defaults(options,
-            pick(component, ["title", "confirmText", "dismissText"]));
+                                             pick(component, ["title", "confirmText", "dismissText"]));
         assign(component, optionsWithDefaults);
 
         component.updateInputs();

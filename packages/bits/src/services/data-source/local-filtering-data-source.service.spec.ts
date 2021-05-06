@@ -10,7 +10,7 @@ import {
     IFilterGroup,
     IFilterItem,
     INovaFilteringOutputs,
-    INovaFilters
+    INovaFilters,
 } from "./public-api";
 import { CommonTestSuite } from "./spec-helpers/common-test-suite";
 import {

@@ -7,7 +7,7 @@ import {
     OnDestroy,
     OnInit,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import {
     DataSourceService,
@@ -122,9 +122,9 @@ export class TableWithVirtualScrollComponent implements OnInit, OnDestroy, After
                         this.changeDetection.detectChanges();
                     })
                 )
-            ),
-            takeUntil(this.destroy$)
-        ).subscribe();
+                ),
+                takeUntil(this.destroy$)
+            ).subscribe();
 
         // listen for input change in order to perform the search
         this.search.inputChange.pipe(

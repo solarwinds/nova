@@ -89,15 +89,15 @@ describe("WidgetClonerComponent", () => {
                 },
             ],
         }).overrideModule(BrowserDynamicTestingModule,
-            {
-                set: {
-                    entryComponents: [
-                        DashwizButtonsComponent,
-                        MockCloneSelectionComponent,
-                        TemplateLoadErrorComponent,
-                    ],
-                },
-            }
+                          {
+                              set: {
+                                  entryComponents: [
+                                      DashwizButtonsComponent,
+                                      MockCloneSelectionComponent,
+                                      TemplateLoadErrorComponent,
+                                  ],
+                              },
+                          }
         ).compileComponents();
     }));
 

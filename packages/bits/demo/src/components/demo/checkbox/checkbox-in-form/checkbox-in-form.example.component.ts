@@ -15,7 +15,7 @@ export class CheckboxInFormExampleComponent implements OnInit {
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
             checkbox: this.formBuilder.control(false,
-                Validators.requiredTrue),
+                                               Validators.requiredTrue),
         });
     }
 

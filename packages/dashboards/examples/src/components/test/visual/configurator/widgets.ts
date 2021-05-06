@@ -15,7 +15,7 @@ import {
     PizzagnaLayer,
     ProportionalWidgetChartTypes,
     RawFormatterComponent,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 

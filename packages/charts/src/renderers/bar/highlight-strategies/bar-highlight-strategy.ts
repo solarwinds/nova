@@ -43,25 +43,25 @@ export class BarHighlightStrategy implements IHighlightStrategy<IRectangleAccess
 
         if (typeof value === "string") {
             return findIndex(series.data,
-                (d, i) => value === startAccessor?.(d, i, series.data, series));
+                             (d, i) => value === startAccessor?.(d, i, series.data, series));
         } else if (isArray(value)) {
             return findIndex(series.data,
-                (d, i) => {
-                    const start = startAccessor?.(d, i, series.data, series);
-                    const lengthLimit = Math.min(this.levels, value.length, start.length);
-                    // diy efficient array comparison
-                    for (let j = 0; j < lengthLimit; j++) {
-                        if (value[j] !== start[j]) {
-                            return false;
-                        }
-                    }
-                    return true;
-                });
+                             (d, i) => {
+                                 const start = startAccessor?.(d, i, series.data, series);
+                                 const lengthLimit = Math.min(this.levels, value.length, start.length);
+                                 // diy efficient array comparison
+                                 for (let j = 0; j < lengthLimit; j++) {
+                                     if (value[j] !== start[j]) {
+                                         return false;
+                                     }
+                                 }
+                                 return true;
+                             });
         } else if (value.valueOf) {
             const valueOf = value.valueOf();
             if (scales && scales[scaleKey]?.isContinuous()) {
                 let index = findIndex(series.data,
-                    (d, i) => valueOf >= startAccessor?.(d, i, series.data, series).valueOf() &&
+                                      (d, i) => valueOf >= startAccessor?.(d, i, series.data, series).valueOf() &&
                         valueOf <= endAccessor?.(d, i, series.data, series).valueOf());
                 if (index === -1 && typeof endAccessor !== "undefined") {
                     if (isBandScale(scales[scaleKey])) {
@@ -77,7 +77,7 @@ export class BarHighlightStrategy implements IHighlightStrategy<IRectangleAccess
                 return index;
             }
             return findIndex(series.data,
-                (d, i) => valueOf >= startAccessor?.(d, i, series.data, series).valueOf() &&
+                             (d, i) => valueOf >= startAccessor?.(d, i, series.data, series).valueOf() &&
                     valueOf <= endAccessor?.(d, i, series.data, series).valueOf());
         }
 

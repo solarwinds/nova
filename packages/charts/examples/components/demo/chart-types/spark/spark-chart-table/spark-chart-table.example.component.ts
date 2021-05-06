@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    ChartPopoverPlugin, IChartAssistSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, SparkChartAssist, TimeScale
+    ChartPopoverPlugin, IChartAssistSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, SparkChartAssist, TimeScale,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 

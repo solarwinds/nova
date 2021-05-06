@@ -70,7 +70,7 @@ export class TimeframeService {
      * @param baseDatetime
      */
     public getTimeframe(startDatetimePattern: any,
-        endDatetimePattern: any, baseDatetime?: string): ITimeframe {
+                        endDatetimePattern: any, baseDatetime?: string): ITimeframe {
         // check input parameters
         if (isUndefined(startDatetimePattern)) {
             throw new Error("Parameter 'startDatetimePattern' is undefined");
@@ -121,8 +121,8 @@ export class TimeframeService {
      * @returns updated clone of timeframe with startDatetime and endDatetime reconciled with selectedPresetId
      */
     public reconcileTimeframe = (timeFrame: ITimeframe,
-        presets?: ITimeFramePresetDictionary,
-        baseDatetime?: Moment): ITimeframe => {
+                                 presets?: ITimeFramePresetDictionary,
+                                 baseDatetime?: Moment): ITimeframe => {
         if (!presets) {
             presets = this.currentPresets;
         }

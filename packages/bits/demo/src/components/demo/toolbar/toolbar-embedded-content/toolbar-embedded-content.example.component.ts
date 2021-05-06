@@ -9,16 +9,16 @@ import { IMenuGroup, LoggerService } from "@nova-ui/bits";
 export class ToolbarEmbeddedContentExampleComponent {
     public itemsSource: IMenuGroup[] = [
         {header: $localize `section title`, itemsSource: [
-                {title: $localize `Menu Item`, itemType: "action"},
-                {title: $localize `Hover me`, itemType: "action"},
-                {title: $localize `Selected menu item`, isSelected: true},
-                {title: $localize `Menu item`, itemType: "switch", checked: true},
-                {title: $localize `Menu disabled item`, itemType: "switch", checked: false, disabled: true},
-                {title: $localize `Menu item with checkbox`, itemType: "option", disabled: true},
-                {title: $localize `Menu item with icon`, itemType: "action", icon: "table"},
-                {title: $localize `Link menu item`, itemType: "link", url: "#button", disabled: true},
-                {title: $localize `Export PDF`, itemType: "link", icon: "export-pdf", url: "#button"},
-            ]},
+            {title: $localize `Menu Item`, itemType: "action"},
+            {title: $localize `Hover me`, itemType: "action"},
+            {title: $localize `Selected menu item`, isSelected: true},
+            {title: $localize `Menu item`, itemType: "switch", checked: true},
+            {title: $localize `Menu disabled item`, itemType: "switch", checked: false, disabled: true},
+            {title: $localize `Menu item with checkbox`, itemType: "option", disabled: true},
+            {title: $localize `Menu item with icon`, itemType: "action", icon: "table"},
+            {title: $localize `Link menu item`, itemType: "link", url: "#button", disabled: true},
+            {title: $localize `Export PDF`, itemType: "link", icon: "export-pdf", url: "#button"},
+        ]},
     ];
     public busy = false;
     public placeholder = $localize `Placeholder`;

@@ -11,7 +11,7 @@ import {
     LineRenderer,
     MissingDataLineRendererConfig,
     TimeScale,
-    XYGrid
+    XYGrid,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 

@@ -9,7 +9,7 @@ import {
     NgZone,
     OnDestroy,
     OnInit,
-    TemplateRef
+    TemplateRef,
 } from "@angular/core";
 import _isBoolean from "lodash/isBoolean";
 import { Subject, Subscription } from "rxjs";

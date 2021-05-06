@@ -12,7 +12,7 @@ import {
     LinearGaugeLabelsPlugin,
     stack,
     XYGrid,
-    XYGridConfig
+    XYGridConfig,
 } from "@nova-ui/charts";
 
 @Component({

@@ -5,7 +5,7 @@ import {
     Input,
     OnInit,
     Output,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 

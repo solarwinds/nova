@@ -12,7 +12,7 @@ import {
     IterableDiffer,
     IterableDiffers,
     OnDestroy,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import {
     DataSourceService,
@@ -29,7 +29,7 @@ import {
     NuiActiveDialog,
     NuiDialogRef,
     RepeatComponent,
-    VirtualViewportManager
+    VirtualViewportManager,
 } from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
@@ -125,10 +125,10 @@ export class VirtualScrollListDataSource<T = any> extends DataSourceService<T> i
         // Every new search request or filter change should
         // clear the cache in order to correctly display a new set of data
         const reset = this.filtersChanged(filters,
-            nameof<IServerFilters>("status"),
-            nameof<IServerFilters>("location"),
-            nameof<IServerFilters>("search"),
-            nameof<IServerFilters>("sorter")
+                                          nameof<IServerFilters>("status"),
+                                          nameof<IServerFilters>("location"),
+                                          nameof<IServerFilters>("search"),
+                                          nameof<IServerFilters>("sorter")
         );
 
         if (reset || filters.virtualScroll?.value.start === 0) {
@@ -402,7 +402,7 @@ export class TreeDialogContentExampleComponent implements AfterViewInit {
     constructor(public cdRef: ChangeDetectorRef,
         public viewPortManager: VirtualViewportManager,
         @Inject(NuiActiveDialog) public activeDialog: any
-        ) {}
+    ) {}
 
     ngAfterViewInit() {
         this.viewPortManager.setViewport(this.repeat.viewportRef);

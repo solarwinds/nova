@@ -1,7 +1,7 @@
 import {FocusMonitor} from "@angular/cdk/a11y";
 import {CdkStepHeader, StepState} from "@angular/cdk/stepper";
 import {
-    AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation
+    AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation,
 } from "@angular/core";
 
 import {WizardStepLabelDirective} from "./wizard-step-label.directive";

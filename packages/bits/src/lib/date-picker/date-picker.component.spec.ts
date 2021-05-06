@@ -3,12 +3,12 @@ import {
     ComponentFixture,
     fakeAsync,
     TestBed,
-    tick
+    tick,
 } from "@angular/core/testing";
 import {
     FormBuilder,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
 } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 import momentTz from "moment-timezone";
@@ -23,7 +23,7 @@ import {
     IconComponent,
     SpinnerComponent,
     TextboxComponent,
-    TooltipDirective
+    TooltipDirective,
 } from "../../public_api";
 import { DomUtilService } from "../../services/dom-util.service";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
@@ -43,7 +43,7 @@ import { DatePickerComponent } from "./date-picker.component";
 
 const eventMock = {};
 
- describe("components >", () => {
+describe("components >", () => {
     describe("date-picker >", () => {
         let fixture: ComponentFixture<DatePickerComponent>;
         let componentInstance: DatePickerComponent;

@@ -6,7 +6,7 @@ import {
     LegendPlacement,
     PizzagnaLayer,
     ProportionalWidgetChartTypes,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 
 import { BeerReviewCountsByCityMockDataSource } from "../data/proportional-datasources";

@@ -6,12 +6,12 @@ import { EventBusService, expand } from "@nova-ui/bits";
 import {FoodNode, HttpMock, IApiResponse, TREE_DATA_PAGINATOR} from "../data";
 
 @Component({
-  selector: "nui-tree-paginator-test",
-  templateUrl: "./tree-paginator-test.component.html",
-  styleUrls: ["./tree-paginator-test.component.less"],
-  host: { id: "nui-tree-paginator-example" },
-  animations: [expand],
-  providers: [HttpMock],
+    selector: "nui-tree-paginator-test",
+    templateUrl: "./tree-paginator-test.component.html",
+    styleUrls: ["./tree-paginator-test.component.less"],
+    host: { id: "nui-tree-paginator-example" },
+    animations: [expand],
+    providers: [HttpMock],
 })
 export class TreePaginatorTestComponent {
 

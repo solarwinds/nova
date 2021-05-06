@@ -143,7 +143,7 @@ export class MenuKeyControlService implements OnDestroy {
 
     // functions to scroll items into view for ActiveDescendantKeyManager
     private countGroupLabelsBeforeOption(optionIndex: number, options: QueryList<MenuItemBaseComponent>,
-                                               optionGroups: QueryList<MenuGroupComponent>): number {
+                                         optionGroups: QueryList<MenuGroupComponent>): number {
         if (optionGroups.length) {
             const optionsArray = options.toArray();
             const groups = optionGroups.toArray();
@@ -162,7 +162,7 @@ export class MenuKeyControlService implements OnDestroy {
 
 
     private getOptionScrollPosition(optionIndex: number, optionHeight: number,
-                                          currentScrollPosition: number, panelHeight: number): number {
+                                    currentScrollPosition: number, panelHeight: number): number {
         const optionOffset = optionIndex * optionHeight;
 
         if (optionOffset < currentScrollPosition) {

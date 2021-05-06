@@ -2,7 +2,7 @@ import { AfterContentInit, Component, OnDestroy } from "@angular/core";
 import { HistoryStorage, IFilter, IFilteringOutputs, ITimeframe, NoopDataSourceService } from "@nova-ui/bits";
 import {
     Chart, ChartAssist, getAutomaticDomainWithIncludedInterval, ISetDomainEventPayload, LineAccessors, LinearScale,
-    LineRenderer, SET_DOMAIN_EVENT, TimeScale, XYGrid, ZoomPlugin
+    LineRenderer, SET_DOMAIN_EVENT, TimeScale, XYGrid, ZoomPlugin,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 import { Subscription } from "rxjs";

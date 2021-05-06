@@ -8,9 +8,9 @@ interface IListItem extends IRepeatItem {
 }
 
 @Component({
-  selector: "dnd-drag-preview",
-  templateUrl: "./dnd-drag-preview.example.component.html",
-  styleUrls: ["./dnd-drag-preview.example.component.less"],
+    selector: "dnd-drag-preview",
+    templateUrl: "./dnd-drag-preview.example.component.html",
+    styleUrls: ["./dnd-drag-preview.example.component.less"],
 })
 export class DndDragPreviewExampleComponent {
     public listItems: IListItem[] = [

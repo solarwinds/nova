@@ -4,7 +4,7 @@ import each from "lodash/each";
 import { Subject } from "rxjs";
 
 import {
-    HIGHLIGHT_DATA_POINT_EVENT, HIGHLIGHT_SERIES_EVENT, INTERACTION_DATA_POINTS_EVENT, SELECT_DATA_POINT_EVENT, STANDARD_RENDER_LAYERS
+    HIGHLIGHT_DATA_POINT_EVENT, HIGHLIGHT_SERIES_EVENT, INTERACTION_DATA_POINTS_EVENT, SELECT_DATA_POINT_EVENT, STANDARD_RENDER_LAYERS,
 } from "../../constants";
 import { CHART_PALETTE_CS1 } from "../../core/common/palette/palettes";
 import { SequentialColorProvider } from "../../core/common/palette/sequential-color-provider";

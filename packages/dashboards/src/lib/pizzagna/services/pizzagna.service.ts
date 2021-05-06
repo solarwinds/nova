@@ -56,7 +56,7 @@ export class PizzagnaService {
         for (const component of components) {
             for (const childId of Object.keys(component.children)) {
                 updatedPizzagna = immutableSet(updatedPizzagna,
-                    `${PizzagnaLayer.Data}.${childId}.properties`, component.children[childId]);
+                                               `${PizzagnaLayer.Data}.${childId}.properties`, component.children[childId]);
             }
         }
 

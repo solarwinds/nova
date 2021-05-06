@@ -8,7 +8,7 @@ import {
     OnDestroy,
     OnInit,
     Renderer2,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 
 import {ResizerDirective} from "../../../common/directives";

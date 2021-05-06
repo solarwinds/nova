@@ -18,7 +18,7 @@ import {
     IFilterItem,
     IMultiFilterMetadata,
     INovaFilteringOutputs,
-    INovaFilters
+    INovaFilters,
 } from "./public-api";
 
 /** @ignore */

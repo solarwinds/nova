@@ -32,11 +32,11 @@ export class WidgetEditorComponent implements OnInit, OnDestroy, IHasChangeDetec
         value?.eventBus?.getStream(PREVIEW_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IEvent<IPreviewEventPayload>) => {
-            const payload = event.payload;
-            // TODO: Ensure that we have payload
-            // @ts-ignore
-            this.configurator?.previewPizzagnaComponent?.eventBus?.getStream(payload.id).next(payload.payload);
-        });
+                const payload = event.payload;
+                // TODO: Ensure that we have payload
+                // @ts-ignore
+                this.configurator?.previewPizzagnaComponent?.eventBus?.getStream(payload.id).next(payload.payload);
+            });
         this._formPizzagnaComponent = value;
     }
 

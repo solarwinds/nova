@@ -6,7 +6,7 @@ import {
     LinkFormatterComponent,
     PizzagnaLayer,
     RawFormatterComponent,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 

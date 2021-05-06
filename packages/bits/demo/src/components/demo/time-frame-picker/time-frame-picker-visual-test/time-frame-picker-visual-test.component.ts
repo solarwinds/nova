@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import {
-    IQuickPickPresetDictionary, ITimeframe, ITimeFramePresetDictionary, TimeframeService
+    IQuickPickPresetDictionary, ITimeframe, ITimeFramePresetDictionary, TimeframeService,
 } from "@nova-ui/bits";
 import _find from "lodash/find";
 import _isUndefined from "lodash/isUndefined";

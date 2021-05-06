@@ -35,7 +35,7 @@ export class BackgroundColorRulesConfigurationComponent implements IHasChangeDet
 
     constructor(public changeDetector: ChangeDetectorRef,
         private formBuilder: FormBuilder,
-        comparatorsRegistry: KpiColorComparatorsRegistryService
+                comparatorsRegistry: KpiColorComparatorsRegistryService
     ) {
         this.availableComparators = comparatorsRegistry.getComparators();
     }

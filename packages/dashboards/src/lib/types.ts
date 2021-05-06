@@ -135,8 +135,8 @@ export interface IWidgetTypeDefinition {
      * Paths to various important values in pizzagnas - this should be coupled with respective pizzagnas in v10 - NUI-5829
      */
     paths?: {
-        widget?: Record<string, string>,
-        configurator?: Record<string, string>,
+        widget?: Record<string, string>;
+        configurator?: Record<string, string>;
     };
 }
 

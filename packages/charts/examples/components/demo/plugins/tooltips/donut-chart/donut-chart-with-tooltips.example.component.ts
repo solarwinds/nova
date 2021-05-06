@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales,
-    RadialTooltipsPlugin
+    RadialTooltipsPlugin,
 } from "@nova-ui/charts";
 
 @Component({
@@ -10,7 +10,7 @@ import {
 })
 export class DonutChartWithTooltipsExampleComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(radialGrid()), radial,
-        new ChartPalette(createStatusColorProvider()));
+                                         new ChartPalette(createStatusColorProvider()));
 
     // RadialTooltipsPlugin handles specific positioning requirements for tooltips on a donut chart
     public tooltipsPlugin = new RadialTooltipsPlugin();

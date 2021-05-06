@@ -9,7 +9,7 @@ import {
     OnChanges,
     OnDestroy,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import moment, { Moment } from "moment/moment";
 import { Subject } from "rxjs";

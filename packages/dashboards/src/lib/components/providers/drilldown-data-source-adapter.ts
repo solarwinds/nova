@@ -19,7 +19,7 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
                 @Inject(DATA_SOURCE) public dataSource: IDataSourceDrilldown,
-                pizzagnaService: PizzagnaService) {
+                                            pizzagnaService: PizzagnaService) {
         super(eventBus, dataSource, pizzagnaService);
 
         this.eventBus.getStream(DRILLDOWN)

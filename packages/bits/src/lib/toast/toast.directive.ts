@@ -3,7 +3,7 @@ import {
     ElementRef,
     Input,
     OnDestroy,
-    OnInit
+    OnInit,
 } from "@angular/core";
 import find from "lodash/find";
 import isNil from "lodash/isNil";

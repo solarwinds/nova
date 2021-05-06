@@ -7,7 +7,7 @@ import {
     Input,
     Output,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { expandV2 } from "../../animations/expand";
 

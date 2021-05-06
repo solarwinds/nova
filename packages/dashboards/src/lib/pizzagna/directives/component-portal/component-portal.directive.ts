@@ -13,7 +13,7 @@ import {
     Renderer2,
     SimpleChange,
     SimpleChanges,
-    StaticProvider
+    StaticProvider,
 } from "@angular/core";
 import { IEvent, LoggerService } from "@nova-ui/bits";
 import isArray from "lodash/isArray";

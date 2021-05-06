@@ -50,7 +50,7 @@ export class EyesLens implements ILens {
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
             batchID ? this.eyes.setBatch(batchName, batchID)
-                    : this.eyes.setBatch(batchName);
+                : this.eyes.setBatch(batchName);
 
             this.eyes.setBranchName(branchName);
             if (branchName !== "main") {
@@ -64,7 +64,7 @@ export class EyesLens implements ILens {
     }
 
     private async snapshotEachWidth(label: string): Promise<void> {
-        for (let width of this.cameraSettings.responsiveWidths) {
+        for (const width of this.cameraSettings.responsiveWidths) {
             await this.browser.manage().window().setSize(width, 1080);
 
             if (this.cameraSettings.responsivityCallback) {
