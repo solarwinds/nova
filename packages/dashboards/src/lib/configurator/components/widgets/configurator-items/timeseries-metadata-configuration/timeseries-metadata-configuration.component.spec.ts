@@ -39,7 +39,7 @@ describe("TimeseriesMetadataConfigurationComponent", () => {
         component.ngOnInit();
 
         const timeSpanControl = component.form.controls["startingTimespan"];
-        let emittedValue: any = undefined;
+        let emittedValue: any;
         timeSpanControl.setValue(null);
         timeSpanControl.valueChanges.subscribe((value: any) => {
             emittedValue = value;
@@ -47,7 +47,7 @@ describe("TimeseriesMetadataConfigurationComponent", () => {
 
         const timeSpans: ITimeSpanOption[] = [
             { id: "aaa", name: "AAA" },
-            { id: "bbb", name: "BBB" }
+            { id: "bbb", name: "BBB" },
         ];
         component.timeSpans = timeSpans;
         component.ngOnChanges({ timeSpans: new SimpleChange(null, timeSpans, true) });
