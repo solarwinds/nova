@@ -501,7 +501,7 @@ jobs:
             # TODO: Change to false
             CREATE_RELEASE_BRANCH: true
             RELEASE_BRANCH: release/v11.2.x
-            INCREMENT_TYPE: hotfix
+            INCREMENT_TYPE: patch
         steps:
             -   checkout:
                     path: ~/nova
