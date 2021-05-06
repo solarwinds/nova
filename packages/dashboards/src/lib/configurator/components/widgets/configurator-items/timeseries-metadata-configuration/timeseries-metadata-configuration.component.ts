@@ -14,6 +14,11 @@ export interface ITimeseriesChartTypeOption {
     value: TimeseriesChartPreset;
 }
 
+export interface ITimeSpanOption {
+    id: string;
+    name: string;
+}
+
 @Component({
     selector: "nui-timeseries-metadata-configuration",
     templateUrl: "./timeseries-metadata-configuration.component.html",
@@ -23,7 +28,7 @@ export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetec
     static lateLoadKey = "TimeseriesMetadataConfigurationComponent";
 
     @Input() legendPlacements: LegendPlacement[] = [];
-    @Input() timeSpans: { id: string, name: string }[] = [];
+    @Input() timeSpans: ITimeSpanOption[] = [];
     @Input() startingTimespan: any;
     @Input() legendPlacement: LegendPlacement;
     @Input() leftAxisLabel: string;
@@ -45,16 +50,15 @@ export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetec
     constructor(public changeDetector: ChangeDetectorRef,
                 private formBuilder: FormBuilder,
                 @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
+        this.form = this.formBuilder.group({
+            leftAxisLabel: [""],
+            startingTimespan: [null, Validators.required],
+            legendPlacement: [LegendPlacement.None, [Validators.required]],
+            preset: [TimeseriesChartPreset.Line, [Validators.required]],
+        });
     }
 
     public ngOnInit(): void {
-        this.form = this.formBuilder.group({
-            leftAxisLabel: [this.leftAxisLabel || ""],
-            startingTimespan: [this.startingTimespan || null, Validators.required],
-            legendPlacement: [this.legendPlacement || LegendPlacement.None, [Validators.required]],
-            preset: [this.preset || TimeseriesChartPreset.Line, [Validators.required]],
-        });
-
         this.form.get("startingTimespan")?.valueChanges
             .pipe(takeUntil(this.destroy$))
             .subscribe((value) => {
@@ -68,20 +72,28 @@ export class TimeseriesMetadataConfigurationComponent implements IHasChangeDetec
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.leftAxisLabel && !changes.leftAxisLabel.isFirstChange()) {
+        const startingTimespanControl = this.form.get("startingTimespan");
+
+        if (changes.leftAxisLabel) {
             this.form.get("leftAxisLabel")?.setValue(this.leftAxisLabel, {emitEvent: false});
         }
 
-        if (changes.startingTimespan && !changes.startingTimespan.isFirstChange()) {
-            this.form.get("startingTimespan")?.setValue(this.startingTimespan, {emitEvent: false});
+        if (changes.startingTimespan) {
+            startingTimespanControl?.setValue(this.startingTimespan, {emitEvent: false});
         }
 
-        if (changes.legendPlacement && !changes.legendPlacement.isFirstChange()) {
+        if (changes.legendPlacement) {
             this.form.get("legendPlacement")?.setValue(this.legendPlacement, {emitEvent: false});
         }
 
-        if (changes.preset && !changes.preset.isFirstChange()) {
+        if (changes.preset) {
             this.form.get("preset")?.setValue(this.preset, {emitEvent: false});
+        }
+
+        if (changes.timeSpans) {
+            if (!startingTimespanControl?.value && this.timeSpans?.length > 0) {
+                startingTimespanControl?.setValue(this.timeSpans[0]);
+            }
         }
     }
 
