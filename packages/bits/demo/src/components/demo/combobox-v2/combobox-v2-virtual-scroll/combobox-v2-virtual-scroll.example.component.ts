@@ -32,6 +32,14 @@ export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, After
         }
     }
 
+    /**
+     To avoid double scroll on scrolling all page or scalable screens we need implicitly set
+     height for overlay little bit bigger than for container
+     * */
+    get overlayHeight(): number {
+        return this.containerHeight + 10;
+    }
+
     ngAfterViewInit(): void {
         this.combobox.valueSelected.pipe(takeUntil(this.destroy$)).subscribe(() => {
             this.scrollOffset = this.viewport.measureScrollOffset();
