@@ -12,7 +12,7 @@ import {
     ITimeseriesWidgetConfig,
     IWidget,
     KpiFormatterTypes,
-    LegendPlacement,
+    LegendPlacement, NOVA_DYNAMIC_HEADER_LINK_SERVICE,
     NOVA_KPI_COLOR_PRIORITIZER,
     NOVA_KPI_DATASOURCE_ADAPTER,
     NOVA_URL_INTERACTION_HANDLER,
@@ -314,9 +314,15 @@ export const widgets: IWidget[] = [
                     },
                 },
                 "header": {
+                    "providers": {
+                        "dynamicLinkProvider": {
+                            providerId: NOVA_DYNAMIC_HEADER_LINK_SERVICE,
+                        },
+                    },
                     "properties": {
                         "title": "Timeseries Widget!",
                         "subtitle": "Basic timeseries widget",
+                        "url": "a",
                     },
                 },
                 "chart": {

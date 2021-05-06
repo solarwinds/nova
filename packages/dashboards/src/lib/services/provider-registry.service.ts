@@ -17,6 +17,7 @@ import { RefresherSettingsService } from "../components/providers/refresher-sett
 import { StatusContentFallbackAdapter } from "../components/providers/status-content-fallback-adapter";
 import { TableDataSourceAdapter } from "../components/providers/table-data-source-adapter";
 import { TimeseriesDataSourceAdapter } from "../components/providers/timeseries-data-source-adapter";
+import { HeaderLinkProvider } from "../components/widget/widget-header/header-link-provider";
 import { DashwizService } from "../configurator/components/wizard/dashwiz/dashwiz.service";
 import { ConfiguratorDataSourceManagerService } from "../configurator/services/configurator-data-source-manager.service";
 import { KpiSectionConverterService } from "../configurator/services/converters/kpi/kpi-section-converter/kpi-section-converter.service";
@@ -50,7 +51,7 @@ import {
     NOVA_DASHBOARD_EVENT_PROXY,
     NOVA_DATASOURCE_ADAPTER,
     NOVA_DATASOURCE_INTERVAL_REFRESHER,
-    NOVA_DRILLDOWN_DATASOURCE_ADAPTER,
+    NOVA_DRILLDOWN_DATASOURCE_ADAPTER, NOVA_DYNAMIC_HEADER_LINK_SERVICE,
     NOVA_EVENT_BUS_DEBUGGER,
     NOVA_GENERIC_ARRAY_CONVERTER,
     NOVA_GENERIC_CONVERTER,
@@ -231,6 +232,11 @@ export class ProviderRegistryService {
             [NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER]: {
                 provide: ConfiguratorDataSourceManagerService,
                 deps: [PIZZAGNA_EVENT_BUS, [new Optional(), DashwizService]],
+            },
+            // this is just an example
+            [NOVA_DYNAMIC_HEADER_LINK_SERVICE]: {
+                provide: HeaderLinkProvider,
+                deps: [],
             },
         });
     }
