@@ -9,7 +9,6 @@ import { DashboardUnitConversionPipe } from "./pipes/dashboard-unit-conversion-p
 const commonComponents = [
     PreviewOverlayComponent,
     WidgetErrorComponent,
-    DashboardUnitConversionPipe,
 ];
 
 @NgModule({
@@ -17,9 +16,13 @@ const commonComponents = [
         CommonModule,
         NuiImageModule,
     ],
-    declarations: commonComponents,
+    declarations: [
+        DashboardUnitConversionPipe,
+        ...commonComponents,
+    ],
     exports: [
         CommonModule,
+        DashboardUnitConversionPipe,
         ...commonComponents,
     ],
     entryComponents: commonComponents,

@@ -56,7 +56,7 @@ export class DonutContentPercentageFormatterComponent implements OnChanges, OnIn
             .subscribe();
     }
 
-    public getProperSeriesData(): any {
+    public getProperSeriesData(): number {
         return this.emphasizedSeriesData ? this.emphasizedSeriesData?.data[0] : this.currentMetricData;
     }
 
