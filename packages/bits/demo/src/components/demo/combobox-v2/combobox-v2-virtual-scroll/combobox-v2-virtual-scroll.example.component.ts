@@ -29,7 +29,6 @@ export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, After
         if (this.viewport) {
             this.viewport.scrollToOffset(this.scrollOffset);
             this.viewport.checkViewportSize();
-            // this.viewport.scrollToIndex(this.combobox.selectedOption?.index);
         }
     }
 
@@ -40,9 +39,7 @@ export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, After
 
         this.combobox.valueChanged.pipe(
             tap(v => this.filteredItems = of(this.filterItems(v as string))),
-            // should recalculate container height after filtered items will be rendered
             delay(0),
-            tap(this.calculateContainerHeight),
             takeUntil(this.destroy$)
         ).subscribe();
     }
@@ -54,14 +51,6 @@ export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, After
         const filterValue = value?.toLowerCase();
 
         return this.items.filter(option => option.toLowerCase().includes(filterValue));
-    }
-
-    private calculateContainerHeight = (): void => {
-        if (this.combobox.inputValue && (this.viewport.measureRenderedContentSize() < defaultContainerHeight)) {
-            this.containerHeight = this.viewport.measureRenderedContentSize();
-            return;
-        }
-        this.containerHeight = defaultContainerHeight;
     }
 
     ngOnDestroy() {
