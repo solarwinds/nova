@@ -5,7 +5,7 @@ import { RawFormatterComponent } from "../raw-formatter/raw-formatter.component"
 @Component({
     template: `
         <ng-container>
-            {{data?.value}}%
+            {{localeString}}%
         </ng-container>`,
 })
 export class PercentageFormatterComponent extends RawFormatterComponent {

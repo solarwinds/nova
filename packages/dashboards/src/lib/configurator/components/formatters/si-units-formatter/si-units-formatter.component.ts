@@ -32,7 +32,7 @@ export class SiUnitsFormatterComponent implements OnChanges {
     constructor(public changeDetector: ChangeDetectorRef) {
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.data) {
             const { value } = changes.data.currentValue;
 
@@ -42,14 +42,14 @@ export class SiUnitsFormatterComponent implements OnChanges {
         }
     }
 
-    protected processSiUnitsValue(value: string) {
+    protected processSiUnitsValue(value: string): void {
         const prefix = this.getTransformPrefix(toNumber(value));
 
         this.value = this.getTransformedValue(value, prefix);
         this.modifier = prefix?.prefix;
     }
 
-    protected getTransformedValue(value: string, prefix: ISiUnitsPrefix | undefined) {
+    protected getTransformedValue(value: string, prefix: ISiUnitsPrefix | undefined): string {
         if (!prefix) { return value; }
 
         const transformed = prefix.power !== 1
@@ -57,7 +57,7 @@ export class SiUnitsFormatterComponent implements OnChanges {
             : +value;
         const rounded = Math.round(transformed * 10) / 10; // round to 1 decimal
 
-        return rounded.toString();
+        return rounded.toLocaleString();
     }
 
     protected getTransformPrefix(origin: number): ISiUnitsPrefix | undefined {

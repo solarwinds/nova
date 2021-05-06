@@ -46,10 +46,10 @@ export class UnitConversionService {
             strValue = (resultValue).toFixed(scale);
 
             // remove trailing zeros
-            strValue = parseFloat(strValue).toString();
+            strValue = parseFloat(strValue).toLocaleString();
         } else {
             resultOrder = 0;
-            strValue = value.toString();
+            strValue = value.toLocaleString();
         }
 
         return {
