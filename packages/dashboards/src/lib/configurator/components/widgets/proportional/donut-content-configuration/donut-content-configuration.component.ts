@@ -67,7 +67,7 @@ export class DonutContentConfigurationComponent implements OnInit, OnChanges, IH
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         private contentFormattersRegistry: ProportionalDonutContentFormattersRegistryService,
         private aggregatorRegistry: ProportionalContentAggregatorsRegistryService
-        ) { }
+    ) { }
 
     public ngOnInit(): void {
         this.watchFormChanges();

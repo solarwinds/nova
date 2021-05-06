@@ -4,7 +4,7 @@ import {
     IChipsItem,
     IChipsItemsSource,
     PopoverComponent,
-    PopoverOverlayPosition
+    PopoverOverlayPosition,
 } from "@nova-ui/bits";
 import _pull from "lodash/pull";
 

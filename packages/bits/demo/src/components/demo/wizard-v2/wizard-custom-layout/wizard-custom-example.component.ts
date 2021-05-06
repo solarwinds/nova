@@ -5,7 +5,7 @@ import {
     Component,
     OnInit,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { wizardAnimations, WizardDirective, WizardStepV2Component } from "@nova-ui/bits";

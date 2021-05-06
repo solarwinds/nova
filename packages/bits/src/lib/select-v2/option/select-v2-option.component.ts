@@ -43,8 +43,8 @@ export class SelectV2OptionComponent extends OverlayItemComponent implements Hig
     public get selected(): boolean | undefined {
         if (!this.select.multiselect && this.select?.selectedOptions[0]) {
             return !isNaN(this.index)
-                    ? this.select.selectedOptions[0]?.index === this.index
-                    : this.select.selectedOptions[0] === this;
+                ? this.select.selectedOptions[0]?.index === this.index
+                : this.select.selectedOptions[0] === this;
         }
     }
 

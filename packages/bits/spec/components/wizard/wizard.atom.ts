@@ -52,7 +52,7 @@ export class WizardAtom extends Atom {
 
     public async getContainerHeight(): Promise<number> {
         return this.root.element(by.className("nui-wizard__container"))
-                                 .getSize().then((elemSize: ISize) => elemSize.height);
+            .getSize().then((elemSize: ISize) => elemSize.height);
     }
 
     public async goToStep(index: number): Promise<void> {

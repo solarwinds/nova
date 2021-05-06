@@ -8,7 +8,7 @@ import {
     OnInit,
     Output,
     TemplateRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { IEvent, LoggerService } from "@nova-ui/bits";

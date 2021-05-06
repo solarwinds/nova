@@ -6,7 +6,7 @@ import {
     KpiComponent,
     NOVA_KPI_DATASOURCE_ADAPTER,
     PizzagnaLayer,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 
 import { HarryPotterAverageRatingDataSource, HarryPotterRatingsCountDataSource } from "../data/kpi-datasources";
@@ -46,7 +46,7 @@ export const kpiConfig: IWidget = {
                         "label": "Average Rating",
                         "backgroundColor": "var(--nui-color-chart-three)",
                         "units": "out of 5 Stars",
-                      },
+                    },
                 },
                 "providers": {
                     [WellKnownProviders.DataSource]: {
@@ -69,7 +69,7 @@ export const kpiConfig: IWidget = {
                     "widgetData": {
                         "label": "Reader Feedback",
                         "units": "Ratings",
-                      },
+                    },
                 },
                 "providers": {
                     [WellKnownProviders.DataSource]: {

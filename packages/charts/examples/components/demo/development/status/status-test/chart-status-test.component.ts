@@ -2,7 +2,7 @@ import { AfterViewInit, Component } from "@angular/core";
 import { IconService } from "@nova-ui/bits";
 import {
     BandScale, BarRenderer, BarStatusGridConfig, Chart, CHART_PALETTE_CS_S, IChartSeries, IStatusAccessors, IValueProvider, MappedValueProvider, RenderState,
-    statusAccessors, StatusAccessors, SvgMarker, TimeIntervalScale, TimeScale, XYGrid
+    statusAccessors, StatusAccessors, SvgMarker, TimeIntervalScale, TimeScale, XYGrid,
 } from "@nova-ui/charts";
 import range from "lodash/range";
 import moment from "moment/moment";
@@ -24,8 +24,8 @@ export class ChartStatusTestComponent implements AfterViewInit {
 
     public customMarkers: IValueProvider<SvgMarker>;
 
-    private thresholdScales: { x: TimeScale; y: BandScale };
-    private bandScales: { x: TimeIntervalScale; y: BandScale };
+    private thresholdScales: { x: TimeScale, y: BandScale };
+    private bandScales: { x: TimeIntervalScale, y: BandScale };
 
     constructor(private iconService: IconService) {
         const getStatusMarker = (status: string) => new SvgMarker(this.iconService.getStatusIcon(status));

@@ -9,7 +9,7 @@ import {
     IBarAccessors,
     IBarChartConfig,
     IChartSeries,
-    XYGridConfig
+    XYGridConfig,
 } from "@nova-ui/charts";
 
 @Component({

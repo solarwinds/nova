@@ -17,13 +17,13 @@ export class ColorService {
             b = (+rgbParts[2]).toString(16);
       
         if (r.length === 1) {
-          r = "0" + r;
+            r = "0" + r;
         }
         if (g.length === 1) {
-          g = "0" + g;
+            g = "0" + g;
         }
         if (b.length === 1) {
-          b = "0" + b;
+            b = "0" + b;
         }
       
         return "#" + r + g + b;

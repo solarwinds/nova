@@ -122,7 +122,7 @@ describe("USERCONTROL Dialog", () => {
 
     describe("Dismissal on route changes", async () => {
         afterAll(async ()=> {
-           await browser.navigate().back();
+            await browser.navigate().back();
         })
 
         it("should close dialog with router changed", async () => {
@@ -136,7 +136,7 @@ describe("USERCONTROL Dialog", () => {
     describe("Tab navigation inside the dialog", async () => {
         let initiallyFocusedCloseButtonElement: string;
         const assert = async () => expect(initiallyFocusedCloseButtonElement)
-                                        .toEqual(await (await browser.switchTo().activeElement()).getId());
+            .toEqual(await (await browser.switchTo().activeElement()).getId());
 
         beforeEach(async () => {
             await defaultDialogBtn.scrollTo({ block: "center" });

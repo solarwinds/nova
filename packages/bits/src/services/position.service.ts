@@ -33,7 +33,7 @@ export class PositionService {
      * coordinates for the top left corner of targetElement.
      */
     public getPosition(hostElement: HTMLElement, targetElement: HTMLElement,
-                            placementAndAlign: string, appendToBody?: boolean): { top: number, left: number } {
+                       placementAndAlign: string, appendToBody?: boolean): { top: number, left: number } {
         const placement = placementAndAlign.split("-")[0];
         const align = placementAndAlign.split("-")[1];
         let shiftByX: number;

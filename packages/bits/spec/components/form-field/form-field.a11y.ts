@@ -2,9 +2,7 @@ import { browser } from "protractor";
 
 import { Atom } from "../../atom";
 import { assertA11y, Helpers } from "../../helpers";
-import {
-    ButtonAtom,
-} from "../public_api";
+import { ButtonAtom } from "../public_api";
 
 describe("a11y: form-field", () => {
     let toggleButton: ButtonAtom;

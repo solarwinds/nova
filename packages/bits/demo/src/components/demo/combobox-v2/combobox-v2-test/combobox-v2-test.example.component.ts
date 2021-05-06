@@ -28,11 +28,11 @@ export class ComboboxV2TestExampleComponent implements OnInit {
     // Data
     public options = Array.from({ length: 3 }).map((_, i) => $localize `Item ${i}`);
     public optionsMulti: IExampleItem[] = Array.from({ length: 3 }).map((_, i) =>
-            ({
-                id: `value-${i}`,
-                name: $localize `Item ${i}`,
-                disabled: i % 2 ? true : false,
-            }));
+        ({
+            id: `value-${i}`,
+            name: $localize `Item ${i}`,
+            disabled: i % 2 ? true : false,
+        }));
     public optionsMultiDimensions = this.getOptions(50, false);
     public items = Array.from({ length: 100 }).map((_, i) => $localize `Item ${i}`);
     public selectedItem: IExampleItem;
@@ -120,11 +120,11 @@ export class ComboboxV2TestExampleComponent implements OnInit {
 
     public getOptions(amount: number, isDisabled?: boolean) {
         return Array.from({ length: amount }).map((_, i) =>
-                    ({
-                        id: `value-${i}`,
-                        name: $localize `Item ${i}`,
-                        disabled: isDisabled || i % 2 ? true : false,
-                    }));
+            ({
+                id: `value-${i}`,
+                name: $localize `Item ${i}`,
+                disabled: isDisabled || i % 2 ? true : false,
+            }));
     }
 
     public showList(event: Event): void {
@@ -151,7 +151,7 @@ export class ComboboxV2TestExampleComponent implements OnInit {
 
         this.comboboxControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => { this.selectedItem = value; });
         this.comboboxControlSingle.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => { this.selectedSingleItem = value; });
-      }
+    }
 
     public open(content: TemplateRef<string>) {
         this.activeDialog = this.dialogService.open(content, {size: "sm"});

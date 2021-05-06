@@ -67,11 +67,11 @@ export class HttpMock {
 
 
 @Component({
-  selector: "nui-tree-checkbox-lazy",
-  templateUrl: "./tree-checkbox-lazy.component.html",
-  styleUrls: ["./tree-checkbox-lazy.component.less"],
-  animations: [expand],
-  providers: [HttpMock],
+    selector: "nui-tree-checkbox-lazy",
+    templateUrl: "./tree-checkbox-lazy.component.html",
+    styleUrls: ["./tree-checkbox-lazy.component.less"],
+    animations: [expand],
+    providers: [HttpMock],
 })
 export class TreeCheckboxLazyComponent {
 
@@ -103,85 +103,85 @@ export class TreeCheckboxLazyComponent {
         });
     }
 
-        public descendantsAllSelected(node: ServerNode): boolean {
-            const descendants = this.treeControl.getDescendants(node);
-            return descendants.length > 0 && descendants.every(child => this.selectionModel.isSelected(child));
+    public descendantsAllSelected(node: ServerNode): boolean {
+        const descendants = this.treeControl.getDescendants(node);
+        return descendants.length > 0 && descendants.every(child => this.selectionModel.isSelected(child));
+    }
+
+    public descendantsPartiallySelected(node: ServerNode): boolean {
+        const descendants = this.treeControl.getDescendants(node);
+        const result = descendants.some(child => this.selectionModel.isSelected(child));
+        return result && !this.descendantsAllSelected(node);
+    }
+
+    public branchItemSelectionToggle(node: ServerNode): void {
+        this.selectionModel.toggle(node);
+        const descendants = this.treeControl.getDescendants(node);
+        this.selectionModel.isSelected(node)
+            ? this.selectionModel.select(...descendants)
+            : this.selectionModel.deselect(...descendants);
+
+        descendants.forEach(child => {
+            this.selectionModel.isSelected(child);
+        });
+        this.checkAllParentsSelection(node);
+    }
+
+    public leafItemSelectionToggle(node: ServerNode): void {
+        this.selectionModel.toggle(node);
+        this.checkAllParentsSelection(node);
+    }
+
+    public isParentNodeCheckedOn(node: ServerNode) {
+        if (this.selectionModel.isSelected(<ServerNode>this.getParentNode(node))) {
+            this.selectionModel.select(node);
+        }
+        return this.selectionModel.isSelected(node);
+    }
+
+    private checkAllParentsSelection(node: ServerNode): void {
+        let parent: ServerNode | undefined = this.getParentNode(node);
+        while (parent) {
+            this.checkRootNodeSelection(parent);
+            parent = this.getParentNode(parent);
+        }
+    }
+
+    private checkRootNodeSelection(node: ServerNode): void {
+        const nodeSelected = this.selectionModel.isSelected(node);
+        const descendants = this.treeControl.getDescendants(node);
+        const descAllSelected = descendants.length > 0 && descendants.every(child => this.selectionModel.isSelected(child));
+        if (nodeSelected && !descAllSelected) {
+            this.selectionModel.deselect(node);
+        } else if (!nodeSelected && descAllSelected) {
+            this.selectionModel.select(node);
+        }
+    }
+
+    private getParentNode(node: ServerNode): ServerNode | undefined {
+        let parent: ServerNode | undefined;
+
+        if (TREE_DATA.find(n => n === node)) {
+            return;
         }
 
-        public descendantsPartiallySelected(node: ServerNode): boolean {
-            const descendants = this.treeControl.getDescendants(node);
-            const result = descendants.some(child => this.selectionModel.isSelected(child));
-            return result && !this.descendantsAllSelected(node);
-        }
-
-        public branchItemSelectionToggle(node: ServerNode): void {
-            this.selectionModel.toggle(node);
-            const descendants = this.treeControl.getDescendants(node);
-            this.selectionModel.isSelected(node)
-                ? this.selectionModel.select(...descendants)
-                : this.selectionModel.deselect(...descendants);
-
-            descendants.forEach(child => {
-                this.selectionModel.isSelected(child);
-            });
-            this.checkAllParentsSelection(node);
-        }
-
-        public leafItemSelectionToggle(node: ServerNode): void {
-            this.selectionModel.toggle(node);
-            this.checkAllParentsSelection(node);
-        }
-
-        public isParentNodeCheckedOn(node: ServerNode) {
-            if (this.selectionModel.isSelected(<ServerNode>this.getParentNode(node))) {
-                this.selectionModel.select(node);
-            }
-            return this.selectionModel.isSelected(node);
-        }
-
-        private checkAllParentsSelection(node: ServerNode): void {
-            let parent: ServerNode | undefined = this.getParentNode(node);
-            while (parent) {
-                this.checkRootNodeSelection(parent);
-                parent = this.getParentNode(parent);
-            }
-        }
-
-        private checkRootNodeSelection(node: ServerNode): void {
-            const nodeSelected = this.selectionModel.isSelected(node);
-            const descendants = this.treeControl.getDescendants(node);
-            const descAllSelected = descendants.length > 0 && descendants.every(child => this.selectionModel.isSelected(child));
-            if (nodeSelected && !descAllSelected) {
-                this.selectionModel.deselect(node);
-            } else if (!nodeSelected && descAllSelected) {
-                this.selectionModel.select(node);
-            }
-        }
-
-        private getParentNode(node: ServerNode): ServerNode | undefined {
-            let parent: ServerNode | undefined;
-
-            if (TREE_DATA.find(n => n === node)) {
+        const search = (n: ServerNode): ServerNode | undefined => {
+            if (parent || !n.children) {
                 return;
             }
-
-            const search = (n: ServerNode): ServerNode | undefined => {
-                if (parent || !n.children) {
-                    return;
-                }
-                if (n.children.find(i => i === node)) {
-                    parent = n;
-                    return;
-                }
-                return n.children.find(search);
-            };
-
-            TREE_DATA.forEach(search);
-
-            if (!parent) {
-                throw new Error("Parent wasn't found");
+            if (n.children.find(i => i === node)) {
+                parent = n;
+                return;
             }
+            return n.children.find(search);
+        };
 
-            return parent;
+        TREE_DATA.forEach(search);
+
+        if (!parent) {
+            throw new Error("Parent wasn't found");
         }
+
+        return parent;
+    }
 }

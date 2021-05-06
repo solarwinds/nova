@@ -18,23 +18,23 @@ export class TabHeadingGroupResponsiveExampleComponent {
     public currentTabId: string;
     public tabsetContent: object[] = [];
 
-        constructor(private changeDetector: ChangeDetectorRef) {
-            this.setTabs();
-        }
+    constructor(private changeDetector: ChangeDetectorRef) {
+        this.setTabs();
+    }
 
-        public updateContent(tabId: string) {
-            this.currentTabId = tabId;
-            this.changeDetector.detectChanges();
-        }
+    public updateContent(tabId: string) {
+        this.currentTabId = tabId;
+        this.changeDetector.detectChanges();
+    }
 
-        public setTabs(tabsAmount: number = 20) {
-            for (let i = 1; i < tabsAmount; i++) {
-                this.tabsetContent.push(
-                    {
-                        id: i.toString(),
-                        title: $localize `Tab ${i.toString()}`,
-                    }
-                );
-            }
+    public setTabs(tabsAmount: number = 20) {
+        for (let i = 1; i < tabsAmount; i++) {
+            this.tabsetContent.push(
+                {
+                    id: i.toString(),
+                    title: $localize `Tab ${i.toString()}`,
+                }
+            );
         }
+    }
 }

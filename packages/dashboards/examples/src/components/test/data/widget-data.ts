@@ -299,6 +299,7 @@ export const getTimeseriesWidgetData = () => (
         {
             id: "series-1",
             description: "test1111.demo.lab",
+            link: "https://en.wikipedia.org/wiki/Nur-Sultan",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 34 },
                 { x: frozenTime().subtract(19, "day").toDate(), y: 33 },
@@ -325,6 +326,7 @@ export const getTimeseriesWidgetData = () => (
         {
             id: "series-2",
             description: "test2222.demo.lab",
+            secondaryLink: "https://en.wikipedia.org/wiki",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 60 },
                 { x: frozenTime().subtract(19, "day").toDate(), y: 64 },

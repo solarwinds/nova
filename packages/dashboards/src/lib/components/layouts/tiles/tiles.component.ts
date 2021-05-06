@@ -29,7 +29,7 @@ export class TilesComponent extends BaseLayout implements OnDestroy, AfterViewIn
         pizzagnaService: PizzagnaService,
         logger: LoggerService,
         private ngZone: NgZone
-        ) {
+    ) {
         super(changeDetector, pizzagnaService, logger);
     }
 

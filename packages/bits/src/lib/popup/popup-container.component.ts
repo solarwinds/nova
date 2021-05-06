@@ -3,7 +3,7 @@ import {
     Component,
     ElementRef,
     NgZone,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { take } from "rxjs/operators";
 

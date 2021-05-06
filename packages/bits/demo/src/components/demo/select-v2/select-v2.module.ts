@@ -14,7 +14,7 @@ import {
     NuiSelectV2Module,
     NuiSwitchModule,
     NuiValidationMessageModule,
-    SrlcStage
+    SrlcStage,
 } from "@nova-ui/bits";
 
 import {

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
-    DialogService, IBusyConfig, IWizardSelectionEvent, NuiDialogRef, ToastService, WizardComponent, WizardStepComponent
+    DialogService, IBusyConfig, IWizardSelectionEvent, NuiDialogRef, ToastService, WizardComponent, WizardStepComponent,
 } from "@nova-ui/bits";
 
 @Component({
@@ -38,7 +38,7 @@ export class WizardSimpleExampleComponent implements OnInit {
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
             name: this.formBuilder.control("",
-                Validators.required),
+                                           Validators.required),
             email: this.formBuilder.control("", [
                 Validators.required,
                 Validators.pattern("[^ @]*@[^ @]*"),
@@ -120,7 +120,7 @@ export class WizardSimpleExampleComponent implements OnInit {
     }
 
     public select(event: IWizardSelectionEvent) {
-       this.selectedIndex = event.selectedIndex;
+        this.selectedIndex = event.selectedIndex;
     }
     public onButtonClick(title: string) {
         title === "Leave" ? this.actionDone() : this.actionCanceled();

@@ -5,7 +5,7 @@ import {
     ElementRef,
     Input,
     OnDestroy,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 
 import { TabComponent } from "../tab/tab.component";

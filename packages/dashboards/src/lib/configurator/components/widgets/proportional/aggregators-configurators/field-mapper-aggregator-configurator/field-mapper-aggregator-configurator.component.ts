@@ -36,8 +36,8 @@ export class FieldMapperAggregatorConfiguratorComponent extends AggregatorMetric
     private destroy$ = new Subject();
 
     constructor(changeDetector: ChangeDetectorRef,
-        formBuilder: FormBuilder,
-        logger: LoggerService,
+                formBuilder: FormBuilder,
+                logger: LoggerService,
         @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>
     ) {
         super(changeDetector, formBuilder, logger);

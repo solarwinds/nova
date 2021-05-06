@@ -101,7 +101,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
                 @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
                 @Inject(DATA_SOURCE) private dataSource: IDataSource,
                 private logger: LoggerService
-                ) {
+    ) {
         this.differ = this.kvDiffers.find(this.prioritizedGridRows).create();
     }
 

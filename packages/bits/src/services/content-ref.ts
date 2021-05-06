@@ -1,6 +1,6 @@
 import {
     ComponentRef,
-    ViewRef
+    ViewRef,
 } from "@angular/core";
 /** @ignore */
 export class ContentRef {

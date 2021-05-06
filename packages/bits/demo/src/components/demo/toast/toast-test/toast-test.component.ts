@@ -5,7 +5,7 @@ import {
     IToastDeclaration,
     IToastService,
     ToastPositionClass,
-    ToastService
+    ToastService,
 } from "@nova-ui/bits";
 
 @Component({

@@ -106,12 +106,12 @@ export class WidgetToDashboardEventProxyService implements IConfigurable, OnDest
         }
 
         this.registerSubscriptions(upstreams, this.upstreamSubscriptions, this.pizzagnaBus,
-            (stream: IEventDefinition, event: IEvent) => {
-                // add widgetId to all events passed to the dashboard
-                const widgetId = this.widgetConfigurationService.getWidget().id;
+                                   (stream: IEventDefinition, event: IEvent) => {
+                                       // add widgetId to all events passed to the dashboard
+                                       const widgetId = this.widgetConfigurationService.getWidget().id;
 
-                this.dashboardBus.getStream(stream).next(<any>Object.assign({}, event, { widgetId }));
-            });
+                                       this.dashboardBus.getStream(stream).next(<any>Object.assign({}, event, { widgetId }));
+                                   });
     }
 
     private registerDownstreamSubscriptions(...downstreams: string[]) {
@@ -120,13 +120,13 @@ export class WidgetToDashboardEventProxyService implements IConfigurable, OnDest
         }
 
         this.registerSubscriptions(downstreams, this.downstreamSubscriptions, this.dashboardBus,
-            (stream: IEventDefinition, event: IWidgetEvent) => {
-                // pass only events that have matching widgetId or a widgetId that is not defined
-                const widgetId = this.widgetConfigurationService.getWidget().id;
-                if (typeof event.widgetId === "undefined" || widgetId === event.widgetId) {
-                    this.pizzagnaBus.getStream(stream).next(event);
-                }
-            });
+                                   (stream: IEventDefinition, event: IWidgetEvent) => {
+                                       // pass only events that have matching widgetId or a widgetId that is not defined
+                                       const widgetId = this.widgetConfigurationService.getWidget().id;
+                                       if (typeof event.widgetId === "undefined" || widgetId === event.widgetId) {
+                                           this.pizzagnaBus.getStream(stream).next(event);
+                                       }
+                                   });
     }
 
     private registerSubscriptions(streams: string[] = [], subscriptions: Record<string, Subscription>, sourceBus: EventBus<IEvent>,

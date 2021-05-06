@@ -108,7 +108,7 @@ export class ItemsDynamicComponent extends BaseLayout implements IHasChangeDetec
 
     public removeItem(item: IItemConfiguration | undefined, index: number): void {
         if (!item) {
-           throw new Error("Unable to remove undefined item from pizzagna");
+            throw new Error("Unable to remove undefined item from pizzagna");
         }
 
         // remove item configuration - this will cause the onFormDestroy to be called for related form after component disappears from the view

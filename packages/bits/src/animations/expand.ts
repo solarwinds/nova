@@ -6,7 +6,7 @@ import {
     trigger,
     stagger,
     query,
-    group
+    group,
 } from "@angular/animations";
 
 export const expand = trigger("expandedState", [
@@ -26,7 +26,7 @@ export const expandV2 = trigger("expandContent", [
         group([
             query(":self", [
                 style({ height: 0}),
-                    animate("350ms ease-in-out", style({ height: "*" })),
+                animate("350ms ease-in-out", style({ height: "*" })),
             ], {optional: true}),
             query("@*", [
                 style({ height: 0}),

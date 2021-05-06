@@ -48,7 +48,7 @@ export interface IOptionValueObject {
     [key: string]: any;
 }
 
-export type OptionValueType = IOptionValueObject | string;
+export type OptionValueType = IOptionValueObject | string | null;
 
 export interface IOption extends Highlightable {
     scrollIntoView: (options?: ScrollIntoViewOptions) => void;

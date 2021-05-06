@@ -2,7 +2,7 @@ import {
     Component,
     ContentChildren,
     Input,
-    QueryList
+    QueryList,
 } from "@angular/core";
 
 import { ToolbarItemComponent } from "./toolbar-item.component";

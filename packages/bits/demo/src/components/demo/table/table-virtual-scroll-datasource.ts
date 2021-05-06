@@ -6,7 +6,7 @@ import {
     IRandomUserResponse,
     IRandomUserResults,
     IRandomUserTableModel,
-    UsersQueryResponse
+    UsersQueryResponse,
 } from "./table-virtual-scroll-real-api/table-virtual-scroll-real-api.example.component";
 
 @Injectable()
@@ -52,24 +52,24 @@ export class RandomuserTableDataSource extends DataSourceService<IRandomUserTabl
         let response: IRandomUserResponse | undefined;
         try {
             response = await
-                        (await fetch(`${this.url}/?page=${this.page}&results=${end - start}&seed=${this.seed}`))
-                            .json();
-                                return {
-                                    users: response?.results.map((result: IRandomUserResults, i: number) => ({
-                                        no: this.cache.length + i + 1,
-                                        nameTitle: result.name.title,
-                                        nameFirst: result.name.first,
-                                        nameLast: result.name.last,
-                                        gender: result.gender,
-                                        country: result.location.country,
-                                        city: result.location.city,
-                                        postcode: result.location.postcode,
-                                        email: result.email,
-                                        cell: result.cell,
-                                    })),
-                                    total: response?.results.length,
-                                    start: start,
-                                } as UsersQueryResponse;
+            (await fetch(`${this.url}/?page=${this.page}&results=${end - start}&seed=${this.seed}`))
+                .json();
+            return {
+                users: response?.results.map((result: IRandomUserResults, i: number) => ({
+                    no: this.cache.length + i + 1,
+                    nameTitle: result.name.title,
+                    nameFirst: result.name.first,
+                    nameLast: result.name.last,
+                    gender: result.gender,
+                    country: result.location.country,
+                    city: result.location.city,
+                    postcode: result.location.postcode,
+                    email: result.email,
+                    cell: result.cell,
+                })),
+                total: response?.results.length,
+                start: start,
+            } as UsersQueryResponse;
         } catch (e) {
             console.error("Error responding from server. Please visit https://https://randomuser.me/ to see if it's available");
         }

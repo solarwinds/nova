@@ -120,8 +120,8 @@ export class LineRenderer extends XYRenderer<ILineAccessors> {
 
     /** See {@link Renderer#highlightDataPoint} */
     public highlightDataPoint(renderSeries: IRenderSeries<ILineAccessors>,
-        dataPointIndex: number,
-        rendererSubject: Subject<IRendererEventPayload>): void {
+                              dataPointIndex: number,
+                              rendererSubject: Subject<IRendererEventPayload>): void {
         if (!this.config.interactive) {
             return;
         }
@@ -132,7 +132,7 @@ export class LineRenderer extends XYRenderer<ILineAccessors> {
         }
 
         MarkerUtils.manageMarker(dataSeries, renderSeries.scales as IXYScales, dataPointIndex,
-            renderSeries.containers[RenderLayerName.foreground], rendererSubject, this.config.markerInteraction);
+                                 renderSeries.containers[RenderLayerName.foreground], rendererSubject, this.config.markerInteraction);
     }
 
     /** See {@link Renderer#getRequiredLayers} */

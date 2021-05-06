@@ -9,7 +9,7 @@ import {
     OnDestroy,
     Output,
     Renderer2,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import debounce from "lodash/debounce";
 import isFunction from "lodash/isFunction";
@@ -292,7 +292,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         const parentCoord = this.parentContainerNode.getBoundingClientRect()[this.resizePropObj.appendDirection];
         const elementCoord = this.targetElement.nativeElement.getBoundingClientRect()[this.resizePropObj.borderToCalculate];
         this.renderer.setStyle(this.resizeGutter, this.resizePropObj.appendDirection,
-            `${Math.abs(parentCoord - elementCoord) - this.offsetSize }px`);
+                               `${Math.abs(parentCoord - elementCoord) - this.offsetSize }px`);
     }
 
     private applyNewSize(event: MouseEvent) {

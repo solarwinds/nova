@@ -55,7 +55,7 @@ export class TabHeadingGroupVerticalExampleComponent {
             isDisabled: false,
         }];
 
-        constructor(private changeDetector: ChangeDetectorRef) {}
+    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public updateContent(tabId: string) {
         this.currentTabId = tabId;

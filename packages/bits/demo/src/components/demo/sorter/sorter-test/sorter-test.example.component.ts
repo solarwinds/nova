@@ -52,7 +52,7 @@ export class SorterTestExampleComponent implements OnInit {
     public updateSorterDirection() {
         const old = this.sortDirection;
         this.sortDirection = (old === SorterDirection.ascending) ?
-        SorterDirection.descending : SorterDirection.ascending;
+            SorterDirection.descending : SorterDirection.ascending;
     }
 
     public onSorterAction(changeEvent: ISorterChanges) {

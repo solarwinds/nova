@@ -16,7 +16,7 @@ import {
     PizzagnaLayer,
     ProviderRegistryService,
     WellKnownProviders,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import groupBy from "lodash/groupBy";
@@ -94,13 +94,13 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
         this.busy.next(true);
 
         return of(this.cache || GRAPH_DATA_MOCK)
-                .pipe(
-                    // delay(1000),
-                    tap(data => this.cache = data),
-                    map(data => data.data.countries),
-                    catchError(e => of([])),
-                    finalize(() => this.busy.next(false))
-                );
+            .pipe(
+                // delay(1000),
+                tap(data => this.cache = data),
+                map(data => data.data.countries),
+                catchError(e => of([])),
+                finalize(() => this.busy.next(false))
+            );
     }
 
     private getTransformedDataForGroup(data: any, groupName: string) {

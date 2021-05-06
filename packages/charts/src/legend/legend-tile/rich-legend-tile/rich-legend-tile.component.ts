@@ -6,7 +6,7 @@ import {
     Host,
     Input,
     Optional,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isNil from "lodash/isNil";
 

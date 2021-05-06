@@ -1,12 +1,12 @@
 import {
     Injectable,
-    Optional
+    Optional,
 } from "@angular/core";
 import noop from "lodash/noop";
 
 import {
     LogLevel,
-    NuiEnvironment
+    NuiEnvironment,
 } from "../environment";
 
 /**

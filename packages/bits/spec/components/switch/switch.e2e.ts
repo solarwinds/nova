@@ -26,7 +26,7 @@ describe("USERCONTROL switch", () => {
         expect(await switchComponent.isOn()).toBe(true);
     });
 
-     it("should be active by default ", async () => {
+    it("should be active by default ", async () => {
         expect(await switchComponent.disabled()).toBe(false);
     });
 

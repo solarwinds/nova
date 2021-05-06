@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import {
-    DataSourceService, IFilteringOutputs, INovaFilteringOutputs, IRepeatItemConfig, RepeatComponent, VirtualViewportManager
+    DataSourceService, IFilteringOutputs, INovaFilteringOutputs, IRepeatItemConfig, RepeatComponent, VirtualViewportManager,
 } from "@nova-ui/bits";
 import { BehaviorSubject, Subject } from "rxjs";
 import { filter, switchMap, takeUntil, tap } from "rxjs/operators";

@@ -29,8 +29,8 @@ export class TimeseriesSeriesConverterService extends BaseConverter implements A
     private shouldReadForm = false;
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-        previewService: PreviewService,
-        pizzagnaService: PizzagnaService) {
+                                            previewService: PreviewService,
+                                            pizzagnaService: PizzagnaService) {
         super(eventBus, previewService, pizzagnaService);
 
         this.subscribeToAvailableDataFieldsChange();

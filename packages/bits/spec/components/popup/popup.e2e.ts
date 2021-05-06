@@ -63,8 +63,8 @@ describe("USERCONTROL Popup", () => {
     it("should respect context class", async () => {
         await popupAppendToBody.getPopupToggle().click();
         expect(await popupAppendToBody.getPopupBoxDetached()
-                                      .getElement()
-                                      .getAttribute("class")).toMatch("additional-host-class");
+            .getElement()
+            .getAttribute("class")).toMatch("additional-host-class");
     });
 
     it("should remove the appended to body popup container on close", async () => {

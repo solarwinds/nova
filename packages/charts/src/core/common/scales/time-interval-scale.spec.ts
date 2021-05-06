@@ -4,7 +4,7 @@ import { TimeIntervalScale } from "./time-interval-scale";
 import { EMPTY_CONTINUOUS_DOMAIN, Formatter } from "./types";
 
 describe("TimeIntervalScale >", () => {
-    let localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const testedTimeZone = "America/Chicago";
 
     describe("domain", () => {

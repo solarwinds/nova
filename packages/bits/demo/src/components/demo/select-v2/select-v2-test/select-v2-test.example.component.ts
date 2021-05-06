@@ -40,25 +40,25 @@ export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDe
     // Datasources
     public items = Array.from({ length : 50 }).map((_, i) => $localize `Item ${i}`);
     public itemsDisplayValue: IExampleItem[] = Array.from({ length: 100 }).map((_, i) =>
-            ({
-                id: `value-${i}`,
-                name: $localize `Item ${i}`,
-                icon: "status_warning",
-                disabled: !!(i % 2),
-            }));
+        ({
+            id: `value-${i}`,
+            name: $localize `Item ${i}`,
+            icon: "status_warning",
+            disabled: !!(i % 2),
+        }));
 
     public itemsWithIconsOnly: IExampleItem[] = this.iconItems.map((icon, i) =>
-            ({
-                id: `value-${i}`,
-                icon: icon,
-            }));
+        ({
+            id: `value-${i}`,
+            icon: icon,
+        }));
 
     public groupedItems: ISelectGroup[] = Array.from({ length: 10 }).map((_, i) => ({
-                header: $localize `Header line ${i + 1}`,
-                items: Array.from({ length: 5 }).map((v, n) => ({
-                    id: `value-${i}`,
-                    name: $localize `Item ${n + 1}`,
-                })),
+        header: $localize `Header line ${i + 1}`,
+        items: Array.from({ length: 5 }).map((v, n) => ({
+            id: `value-${i}`,
+            name: $localize `Item ${n + 1}`,
+        })),
     }));
 
     // Form

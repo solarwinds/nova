@@ -18,10 +18,10 @@ export class RadialSeriesAtom extends SeriesAtom {
     public parseArcParams(path: string, matcher: RegExp): number[] {
         const result: number[] = [];
         const arcParams: number[][] = (path.match(matcher) || [])[0]
-                                            .slice(1)
-                                            .split("A")
-                                            .map(array => array.split(","))
-                                            .map(params => params.map(param => parseFloat(param)));
+            .slice(1)
+            .split("A")
+            .map(array => array.split(","))
+            .map(params => params.map(param => parseFloat(param)));
         arcParams.forEach(array => array.forEach(param => result.push(param)));
         return result;
     }

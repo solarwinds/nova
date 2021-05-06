@@ -7,7 +7,7 @@ import {
     Inject,
     Injectable,
     Injector,
-    TemplateRef
+    TemplateRef,
 } from "@angular/core";
 import isNil from "lodash/isNil";
 
@@ -34,8 +34,8 @@ export class DialogStackService {
 
     open(moduleCFR: ComponentFactoryResolver, contentInjector: Injector, content: any, options: any): NuiDialogRef {
         let containerEl: HTMLElement = options.container
-                                            ? this.document.querySelector(options.container)
-                                            : this.document.body;
+            ? this.document.querySelector(options.container)
+            : this.document.body;
 
         // This handles the case when the nui-dialog is being used within the nui-overlay based components
         if (options.useOverlay) {

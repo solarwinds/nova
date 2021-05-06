@@ -20,7 +20,7 @@ import {
     RadialRenderer,
     radialScales,
     Renderer,
-    Scales
+    Scales,
 } from "@nova-ui/charts";
 
 import { ProportionalWidgetChartTypes } from "../components/proportional-widget/types";

@@ -9,7 +9,7 @@ import {
     PizzagnaLayer,
     TimeseriesChartPreset,
     TimeseriesScaleType,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 
@@ -18,7 +18,7 @@ import {
     TestTimeseriesDataSource2,
     TestTimeseriesEventsDataSource,
     TestTimeseriesStatusDataSource,
-    TestTimeseriesStatusIntervalDataSource
+    TestTimeseriesStatusIntervalDataSource,
 } from "../../data/timeseries-data-sources";
 import { frozenTime } from "../../data/widget-data";
 
@@ -137,6 +137,7 @@ export const widgetConfigs: IWidget[] = [
                     },
                     "properties": {
                         "configuration": {
+                            "interaction": "series",
                             "legendPlacement": LegendPlacement.Bottom,
                             "enableZoom": true,
                             preset: TimeseriesChartPreset.Line,

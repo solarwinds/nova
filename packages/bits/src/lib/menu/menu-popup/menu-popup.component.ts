@@ -6,7 +6,7 @@ import {
     Output,
     QueryList,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isFunction from "lodash/isFunction";
 import moment from "moment/moment";

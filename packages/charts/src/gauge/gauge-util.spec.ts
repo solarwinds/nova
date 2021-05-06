@@ -60,7 +60,7 @@ describe("GaugeUtil >", () => {
             it("should include a thresholds series if configured", () => {
                 gaugeConfig.enableThresholdMarkers = true;
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-                let series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
+                const series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
                 expect(series?.data[0].value).toEqual(gaugeConfig.thresholds?.[0]);
                 expect(series?.renderer instanceof DonutGaugeThresholdsRenderer).toEqual(true);
             });
@@ -82,7 +82,7 @@ describe("GaugeUtil >", () => {
             it("should include a thresholds series if configured", () => {
                 gaugeConfig.enableThresholdMarkers = true;
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Horizontal);
-                let series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
+                const series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
                 expect(series?.data[0].value).toEqual(gaugeConfig.thresholds?.[0]);
                 expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
             });
@@ -104,7 +104,7 @@ describe("GaugeUtil >", () => {
             it("should include a thresholds series if configured", () => {
                 gaugeConfig.enableThresholdMarkers = true;
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Vertical);
-                let series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
+                const series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
                 expect(series?.data[0].value).toEqual(gaugeConfig.thresholds?.[0]);
                 expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
             });
@@ -160,7 +160,7 @@ describe("GaugeUtil >", () => {
             const colorAccessor = GaugeUtil.createDefaultQuantityColorAccessor(gaugeConfig.thresholds);
 
             gaugeConfig.enableThresholdMarkers = true;
-            let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
+            const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
             const quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
             expect(colorAccessor({ value: 1 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);
@@ -174,7 +174,7 @@ describe("GaugeUtil >", () => {
             const colorAccessor = GaugeUtil.createReversedQuantityThresholdColorAccessor(gaugeConfig.thresholds as number[]);
 
             gaugeConfig.enableThresholdMarkers = true;
-            let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
+            const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
             const quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
             expect(colorAccessor({ value: 1 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Critical);

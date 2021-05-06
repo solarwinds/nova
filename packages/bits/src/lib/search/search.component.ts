@@ -4,7 +4,7 @@ import {
     Input,
     OnDestroy,
     Output,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject } from "rxjs";

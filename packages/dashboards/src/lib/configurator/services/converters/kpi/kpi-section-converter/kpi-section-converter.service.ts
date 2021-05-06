@@ -20,12 +20,12 @@ export class KpiSectionConverterService extends BaseConverter {
     }
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-        previewService: PreviewService,
-        pizzagnaService: PizzagnaService) {
+                                            previewService: PreviewService,
+                                            pizzagnaService: PizzagnaService) {
         super(eventBus, previewService, pizzagnaService);
     }
 
-    public updateConfiguration(properties: { formParts: IConverterFormPartsProperties[]; }) {
+    public updateConfiguration(properties: { formParts: IConverterFormPartsProperties[] }) {
         if (properties && properties.formParts) {
             this.formParts = properties.formParts;
         }

@@ -8,7 +8,7 @@ import {
     Input,
     NgZone,
     OnDestroy,
-    ViewContainerRef
+    ViewContainerRef,
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";

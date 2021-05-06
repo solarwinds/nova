@@ -96,5 +96,5 @@ function getData(): IExampleTableModel[] {
                 num: 25,
             }],
         },
-   ];
+    ];
 }

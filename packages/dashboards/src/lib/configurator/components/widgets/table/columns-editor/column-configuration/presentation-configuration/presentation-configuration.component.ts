@@ -11,7 +11,7 @@ import {
     OnInit,
     Optional,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
 import { IDataField } from "@nova-ui/bits";

@@ -11,7 +11,7 @@ import {
     NuiImageModule,
     NuiMessageModule,
     NuiSelectV2Module,
-    NuiSwitchModule
+    NuiSwitchModule,
 } from "@nova-ui/bits";
 import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@nova-ui/dashboards";
 

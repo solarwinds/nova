@@ -5,7 +5,7 @@ import {
     forwardRef,
     Optional,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 
 import { MenuGroupComponent } from "../menu-group/menu-group.component";

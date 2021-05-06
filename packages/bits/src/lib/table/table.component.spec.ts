@@ -11,7 +11,7 @@ import {
     TableFooterCellDefDirective,
     TableFooterCellDirective,
     TableHeaderCellDefDirective,
-    UtilService
+    UtilService,
 } from "../../public_api";
 import { ISelection } from "../../services/public-api";
 import { SorterDirection } from "../sorter/public-api";
@@ -23,7 +23,7 @@ import {
     TableHeaderRowComponent,
     TableHeaderRowDefDirective,
     TableRowComponent,
-    TableRowDefDirective
+    TableRowDefDirective,
 } from "./table-row/table-row.component";
 import {
     DraggableTableComponent,

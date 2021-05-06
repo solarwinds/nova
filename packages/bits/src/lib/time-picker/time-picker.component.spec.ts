@@ -103,8 +103,8 @@ describe("components >", () => {
                 = debugElement.query(By.css(".nui-menu-item--selected")).nativeElement.innerText;
             const index
                 = _findIndex(componentInstance.times, time => moment(time)
-                .format(componentInstance.timeFormat)
-                .toUpperCase() === initialState);
+                    .format(componentInstance.timeFormat)
+                    .toUpperCase() === initialState);
             const movedTime = index < 2 ? componentInstance.times[index + 1] : componentInstance.times[index - 1];
             const movedTimeFormatted = moment(movedTime).format(componentInstance.timeFormat);
             expect(movedTimeFormatted).not.toBe(initialState);

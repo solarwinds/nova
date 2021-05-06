@@ -6,7 +6,7 @@ import {
     OnChanges,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 
 import {IBusyConfig} from "../busy/public-api";

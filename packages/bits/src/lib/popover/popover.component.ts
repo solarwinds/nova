@@ -18,7 +18,7 @@ import {
     TemplateRef,
     ViewChild,
     ViewContainerRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
@@ -331,7 +331,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         });
 
         if (!this.popover) {
-           throw new Error("PopoverModalComponent is undefined");
+            throw new Error("PopoverModalComponent is undefined");
         }
 
         this.popover.instance.context = this.getContext();
@@ -385,7 +385,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             }
         });
         this.popoverModalSubscriptions.push(popoverModalEventSubscription, popoverBeforeHiddenSubscription,
-            popoverAfterHiddenSubscription, closePopoverSubscription);
+                                            popoverAfterHiddenSubscription, closePopoverSubscription);
         this.popover.instance.displayChange = this.popoverDisplaySubject;
         this.popover.instance.backdrop = this.modal;
         this.popover.instance.hasPadding = _isUndefined(this.hasPadding) ? true : this.hasPadding;
@@ -454,7 +454,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     }
 
     private getIcon(): string {
-       return this.icon;
+        return this.icon;
     }
 
     private setPositionStrategy(position: PopoverPlacement): void {
