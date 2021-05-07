@@ -44,6 +44,8 @@ const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
 };
 
+const V_SCROLL_HEIGHT_BUFFER = 10;
+
 // Will be renamed in scope of the NUI-5797
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
@@ -456,13 +458,13 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
         const element = this.cdkVirtualScroll.elementRef.nativeElement;
         const height = parseInt(element.style.height, 10);
-        const minHeight = Number.isNaN(height) ? 0 : height + 10;
+        const minHeight = Number.isNaN(height) ? 0 : height + V_SCROLL_HEIGHT_BUFFER;
 
         this.dropdown.overlayConfig = { ...this.overlayConfig, ...{ minHeight }};
         this.virtualScrollResizeObserver = new ResizeObserver(entries => {
             for (const entry of entries) {
                 const content = entry.contentRect;
-                const minHeight = content.height ? content.height + 10 : 0;
+                const minHeight = content.height ? content.height + V_SCROLL_HEIGHT_BUFFER : 0;
 
                 this.dropdown.updateSize({ minHeight });
             }
