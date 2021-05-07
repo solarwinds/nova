@@ -4,6 +4,7 @@ import {
     AfterContentInit,
     AfterViewInit,
     ChangeDetectorRef,
+    ContentChild,
     ContentChildren,
     Directive,
     ElementRef,
@@ -36,6 +37,8 @@ import { IOption, OptionValueType, OverlayContainerType } from "../overlay/types
 import { OptionKeyControlService } from "./option-key-control.service";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { InputValueTypes, IOptionedComponent } from "./types";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import ResizeObserver from "resize-observer-polyfill";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
@@ -106,6 +109,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     @ViewChild("input", { static: false})
     inputElement: ElementRef;
 
+    @ContentChild(CdkVirtualScrollViewport) cdkVirtualScroll: CdkVirtualScrollViewport;
+
     /** Corresponds to the Options listed in the Dropdown */
     @ContentChildren(forwardRef(() => SelectV2OptionComponent), { descendants: true })
     public options: QueryList<SelectV2OptionComponent>;
@@ -138,6 +143,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     private _selectedOptions: SelectV2OptionComponent[] = [];
 
     private _ariaLabel: string = "";
+    private _virtualScrollResizeObserver: ResizeObserver;
 
     /** Emits value which has been selected */
     @Output() public valueSelected = new EventEmitter<OptionValueType | OptionValueType[] | null>();
@@ -175,6 +181,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         }
         this.initKeyboardManager();
         this.defineDropdownContainer();
+        this.detectVirtualScroll();
     }
 
     /** `View -> model callback called when value changes` */
@@ -316,6 +323,10 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         }
         this.destroy$.next();
         this.destroy$.complete();
+
+        if (this._virtualScrollResizeObserver) {
+            this._virtualScrollResizeObserver.unobserve(this.cdkVirtualScroll.elementRef.nativeElement);
+        }
     }
 
     protected getValueFromOptions(options = this.selectedOptions): OptionValueType | OptionValueType[] | null {
@@ -432,5 +443,30 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.dropdown.hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             resizeObserver.unobserve(this.elRef.nativeElement);
         });
+    }
+
+    /** This helps to dynamically set minHeight for overlay to avoid issues with double scroll
+     Overlay minHeight should be bigger than cdkVirtualScroll container
+     */
+    private detectVirtualScroll(): void {
+        if (!this.cdkVirtualScroll) {
+            return;
+        }
+
+        const element = this.cdkVirtualScroll.elementRef.nativeElement;
+        const height = parseInt(element.style.height, 10);
+        const minHeight = Number.isNaN(height) ? 0 : height + 10;
+
+        this.dropdown.overlayConfig = { ...this.overlayConfig, ...{ minHeight }};
+        this._virtualScrollResizeObserver = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                const content = entry.contentRect;
+                const minHeight = content.height ? content.height + 10 : 0;
+
+                this.dropdown.updateSize({ minHeight });
+            }
+        });
+
+        this._virtualScrollResizeObserver.observe(element);
     }
 }
