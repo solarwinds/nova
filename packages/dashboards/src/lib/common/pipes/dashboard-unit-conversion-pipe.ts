@@ -16,11 +16,11 @@ export class DashboardUnitConversionPipe implements PipeTransform {
      * @param value The value to convert
      * @returns The string representation of the converted value
      */
-    transform(value: string | number | undefined): string | number | undefined {
+    transform(value: string | number | undefined): string {
         const valueAsNumber = typeof value === "string" ? parseInt(value, 10) : value;
 
         if (valueAsNumber === undefined || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
-            return valueAsNumber?.toLocaleString();
+            return valueAsNumber?.toLocaleString() || "";
         }
 
         const conversion = this.unitConversionService.convert(valueAsNumber, UnitBase.Standard, 1);

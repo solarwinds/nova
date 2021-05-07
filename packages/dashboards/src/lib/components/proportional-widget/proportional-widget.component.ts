@@ -92,9 +92,9 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
 
     private chartTypeSubscription$: Subscription;
 
-    public get interactive(): boolean | undefined {
+    public get interactive(): boolean {
         return this.configuration?.interactive ||
-            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled;
+            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled || false;
     }
 
     constructor(public changeDetector: ChangeDetectorRef,
@@ -110,7 +110,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
 
     // Note: Using this helper method to be able to use
     // optional method chaining and prevent strict mode error
-    public computeLegendTitle(legendSeries: unknown): string | undefined {
+    public computeLegendTileValue(legendSeries: unknown): string | undefined {
         // @ts-ignore: Suppressing series null parameter value error to avoid breaking default flow
         return this.accessors.data?.value?.(legendSeries, 0, null, null);
     }

@@ -26,7 +26,7 @@ export class DonutContentRawFormatterComponent implements OnChanges {
     static lateLoadKey = "DonutContentRawFormatterComponent";
 
     public sum: number;
-    public convertedValue: string | number | undefined;
+    public convertedValue: string;
     public readonly conversionThreshold = DEFAULT_UNIT_CONVERSION_THRESHOLD;
 
     private unitConversionPipe: DashboardUnitConversionPipe;

@@ -4,7 +4,7 @@ import { IFormatterData } from "../types";
 
 @Component({
     template: `
-        <ng-container>{{localeString}}</ng-container>`,
+        <ng-container>{{displayValue}}</ng-container>`,
 })
 export class RawFormatterComponent {
     static lateLoadKey = "RawFormatterComponent";
@@ -18,11 +18,11 @@ export class RawFormatterComponent {
     @HostBinding("class")
     public elementClass: string;
 
-    public get localeString(): string {
+    public get displayValue(): string {
         const valueAsNumber = parseFloat(this.data.value);
-        if (typeof valueAsNumber === "number") {
-            return valueAsNumber.toLocaleString();
+        if (isNaN(valueAsNumber)) {
+            return this.data.value;
         }
-        return this.data.value;
+        return valueAsNumber.toLocaleString();
     }
 }
