@@ -1,4 +1,5 @@
 import noop from "lodash/noop";
+
 import { UnitBase, UnitOption } from "../constants";
 
 import { LoggerService } from "./log-service";
@@ -388,7 +389,7 @@ describe("services >", () => {
                     unit: "hertz",
                     expectedValue: "-1 kHz",
                 }, {
-                    name: "1000 Hz as 1 kHz with scale 4 and without tailing zeros",
+                    name: "1000 Hz as 1 kHz with scale 4 and without trailing zeros",
                     inputValue: 1000,
                     unit: "hertz",
                     scale: 4,

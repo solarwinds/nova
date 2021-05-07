@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { LoggerService, UnitConversionService } from "@nova-ui/bits";
+import { UnitConversionService } from "@nova-ui/bits";
 import { IScale, LinearScale, TimeIntervalScale, TimeScale } from "@nova-ui/charts";
 import { duration } from "moment/moment";
 import { DashboardUnitConversionPipe } from "../../common/pipes/dashboard-unit-conversion-pipe";
@@ -52,7 +52,7 @@ export class TimeseriesScalesService {
      * @param scale
      * @param scaleConfig
      */
-    public updateConfiguration(scale: IScale<any>, scaleConfig: ITimeseriesScaleConfig) {
+    public updateConfiguration(scale: IScale<any>, scaleConfig: ITimeseriesScaleConfig): void {
         if (scaleConfig.type === TimeseriesScaleType.TimeInterval && scale instanceof TimeIntervalScale) {
             const interval = scaleConfig.properties?.interval;
             if (typeof interval === "number") {

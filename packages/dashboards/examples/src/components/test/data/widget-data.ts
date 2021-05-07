@@ -28,7 +28,7 @@ export const PROPORTIONAL_WIDGET_DATA_SMALL: IProportionalWidgetData[] = [
     {
         id: "Down",
         name: "Down",
-        data: [1],
+        data: [12300],
         icon: "status_down",
         link: "https://en.wikipedia.org/wiki/London",
         value: "London",
@@ -36,7 +36,7 @@ export const PROPORTIONAL_WIDGET_DATA_SMALL: IProportionalWidgetData[] = [
     {
         id: "Critically long tick name",
         name: "Critically long tick name",
-        data: [2],
+        data: [23400],
         icon: "status_critical",
         link: "https://en.wikipedia.org/wiki/Paris",
         value: "Paris",
@@ -44,7 +44,7 @@ export const PROPORTIONAL_WIDGET_DATA_SMALL: IProportionalWidgetData[] = [
     {
         id: "Warning",
         name: "Warning",
-        data: [3],
+        data: [34500],
         icon: "status_warning",
         link: "https://en.wikipedia.org/wiki/Rio_de_Janeiro",
         value: "Rio",

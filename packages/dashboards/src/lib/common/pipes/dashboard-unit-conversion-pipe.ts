@@ -20,7 +20,7 @@ export class DashboardUnitConversionPipe implements PipeTransform {
         const valueAsNumber = typeof value === "string" ? parseInt(value, 10) : value;
 
         if (valueAsNumber === undefined || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
-            return value;
+            return valueAsNumber?.toLocaleString();
         }
 
         const conversion = this.unitConversionService.convert(valueAsNumber, UnitBase.Standard, 1);

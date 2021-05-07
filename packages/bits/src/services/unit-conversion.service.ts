@@ -36,17 +36,10 @@ export class UnitConversionService {
                 this.logger.warn("unit conversion service does not support conversion to negative order of magnitude");
             }
 
-            // fix the precision edge case
-            const valueCeiled = Math.ceil(resultValue);
-            if (valueCeiled % base === 0) {
-                resultValue = valueCeiled / base;
-                resultOrder += 1;
-            }
-
             strValue = (resultValue).toFixed(scale);
 
             // remove trailing zeros
-            strValue = parseFloat(strValue).toLocaleString();
+            strValue = parseFloat(strValue).toLocaleString(undefined, { maximumFractionDigits: scale });
         } else {
             resultOrder = 0;
             strValue = value.toLocaleString();
@@ -91,7 +84,7 @@ export class UnitConversionService {
         }
 
         const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
-        return `${prefix}${conversion.value}`
+        return `${prefix}${conversion.value}`;
     }
 
     /**
