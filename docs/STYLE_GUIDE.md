@@ -54,7 +54,7 @@ line as the last attribute:
 
 #### Field Names
 
-Private fields are written in `camelCase` and typically should not contain an underscore. If, however, a private field has an associated setter and/or getter, it should be prefixed with an underscore. For example, `_privateFieldWithAccessor`.
+Private fields are written in `camelCase` and typically do not contain an underscore. If, however, a private field has an associated setter and/or getter, it should be prefixed with an underscore. For example, `_privateFieldWithAccessor`.
 
 ## ngOnDestroy and Component Inheritance
 
