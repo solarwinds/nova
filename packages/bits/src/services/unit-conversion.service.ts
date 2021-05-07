@@ -36,6 +36,13 @@ export class UnitConversionService {
                 this.logger.warn("unit conversion service does not support conversion to negative order of magnitude");
             }
 
+            // fix the precision edge case
+            const valueCeiled = Math.ceil(resultValue);
+            if (valueCeiled % base === 0) {
+                resultValue = valueCeiled / base;
+                resultOrder += 1;
+            }
+
             strValue = (resultValue).toFixed(scale);
 
             // remove trailing zeros
