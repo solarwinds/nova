@@ -143,7 +143,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     private _selectedOptions: SelectV2OptionComponent[] = [];
 
     private _ariaLabel: string = "";
-    private _virtualScrollResizeObserver: ResizeObserver;
+    private virtualScrollResizeObserver: ResizeObserver;
 
     /** Emits value which has been selected */
     @Output() public valueSelected = new EventEmitter<OptionValueType | OptionValueType[] | null>();
@@ -181,7 +181,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         }
         this.initKeyboardManager();
         this.defineDropdownContainer();
-        this.detectVirtualScroll();
+        this.adjustDropdownOnVScrollResize();
     }
 
     /** `View -> model callback called when value changes` */
@@ -324,8 +324,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.destroy$.next();
         this.destroy$.complete();
 
-        if (this._virtualScrollResizeObserver) {
-            this._virtualScrollResizeObserver.unobserve(this.cdkVirtualScroll.elementRef.nativeElement);
+        if (this.virtualScrollResizeObserver) {
+            this.virtualScrollResizeObserver.unobserve(this.cdkVirtualScroll.elementRef.nativeElement);
         }
     }
 
@@ -449,7 +449,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
      * This helps to dynamically set minHeight for overlay to avoid issues with double
      * scroll. Overlay minHeight should be bigger than cdkVirtualScroll container.
      */
-    private detectVirtualScroll(): void {
+    private adjustDropdownOnVScrollResize(): void {
         if (!this.cdkVirtualScroll) {
             return;
         }
@@ -459,7 +459,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         const minHeight = Number.isNaN(height) ? 0 : height + 10;
 
         this.dropdown.overlayConfig = { ...this.overlayConfig, ...{ minHeight }};
-        this._virtualScrollResizeObserver = new ResizeObserver(entries => {
+        this.virtualScrollResizeObserver = new ResizeObserver(entries => {
             for (const entry of entries) {
                 const content = entry.contentRect;
                 const minHeight = content.height ? content.height + 10 : 0;
@@ -468,6 +468,6 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
             }
         });
 
-        this._virtualScrollResizeObserver.observe(element);
+        this.virtualScrollResizeObserver.observe(element);
     }
 }
