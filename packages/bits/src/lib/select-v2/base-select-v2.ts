@@ -445,8 +445,9 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         });
     }
 
-    /** This helps to dynamically set minHeight for overlay to avoid issues with double scroll
-     Overlay minHeight should be bigger than cdkVirtualScroll container
+    /**
+     * This helps to dynamically set minHeight for overlay to avoid issues with double
+     * scroll. Overlay minHeight should be bigger than cdkVirtualScroll container.
      */
     private detectVirtualScroll(): void {
         if (!this.cdkVirtualScroll) {
