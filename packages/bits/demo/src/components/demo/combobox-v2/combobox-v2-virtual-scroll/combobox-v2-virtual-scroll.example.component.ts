@@ -39,7 +39,7 @@ export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, After
 
         this.combobox.valueChanged.pipe(
             delay(0),
-            tap(v => this.calculateContainerHeight()),
+            tap(this.calculateContainerHeight),
             takeUntil(this.destroy$)
         ).subscribe();
     }
