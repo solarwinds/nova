@@ -1,9 +1,11 @@
-import { ChangeDetectorRef, Component, Input, OnChanges } from "@angular/core";
+import { ChangeDetectorRef, Component, Inject, Input, LOCALE_ID, OnChanges } from "@angular/core";
+import { UnitConversionService } from "@nova-ui/bits";
 import sumBy from "lodash/sumBy";
+import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../../../../common/constants";
+import { DashboardUnitConversionPipe } from "../../../../common/pipes/dashboard-unit-conversion-pipe";
 
 import { IProportionalWidgetConfig } from "../../../../components/public-api";
 import { IFormatterData } from "../types";
-
 
 @Component({
     template: `<ng-container>
@@ -11,7 +13,8 @@ import { IFormatterData } from "../types";
                               [icon]="config?.chartDonutContentIcon"
                               iconSize="medium"></nui-icon>
                     <div class="nui-text-page">
-                        {{sum | number:'1.0-3'}}
+                        <span *ngIf="sum < conversionThreshold; else convertedValueDisplay">{{sum | number:'1.0-3':locale}}</span>
+                        <ng-template #convertedValueDisplay>{{convertedValue}}</ng-template>
                     </div>
                     <div *ngIf="config?.chartDonutContentLabel" class="nui-text-secondary">
                         {{config?.chartDonutContentLabel}}
@@ -23,13 +26,21 @@ export class DonutContentRawFormatterComponent implements OnChanges {
     static lateLoadKey = "DonutContentRawFormatterComponent";
 
     public sum: number;
+    public convertedValue: string | number | undefined;
+    public readonly conversionThreshold = DEFAULT_UNIT_CONVERSION_THRESHOLD;
 
-    constructor(public changeDetector: ChangeDetectorRef) { }
+    private unitConversionPipe: DashboardUnitConversionPipe;
+    constructor(public changeDetector: ChangeDetectorRef,
+                unitConversionService: UnitConversionService,
+        @Inject(LOCALE_ID) public locale: string) {
+        this.unitConversionPipe = new DashboardUnitConversionPipe(unitConversionService);
+    }
 
     @Input() data: IFormatterData[];
     @Input() config: IProportionalWidgetConfig;
 
-    ngOnChanges() {
+    ngOnChanges(): void {
         this.sum = sumBy(this.data, s => s.data[0]);
+        this.convertedValue = this.unitConversionPipe.transform(this.sum);
     }
 }

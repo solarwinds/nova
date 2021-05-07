@@ -48,6 +48,14 @@ line as the last attribute:
 </div>
 ```
 
+## Typescript Conventions
+
+### Naming
+
+#### Field Names
+
+Private fields are written in `camelCase` and typically should not contain an underscore. If, however, a private field has an associated setter and/or getter, it should be prefixed with an underscore. For example, `_privateFieldWithAccessor`.
+
 ## ngOnDestroy and Component Inheritance
 
 A little known fact about Angular and component inheritance is that calls to ngOnDestroy do not automatically get propagated to base classes. This can lead to memory leaks if a derived class implements ngOnDestroy and its base class unsubscribes from one or more observables in its own ngOnDestroy implementation for example.

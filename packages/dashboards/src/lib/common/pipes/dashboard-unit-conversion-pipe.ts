@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from "@angular/core";
 import { UnitBase, UnitConversionService } from "@nova-ui/bits";
+import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../constants";
 
 /**
  * Pipe for transforming large values to their abbreviated counterparts.
@@ -7,14 +8,18 @@ import { UnitBase, UnitConversionService } from "@nova-ui/bits";
  */
 @Pipe({ name: "nuiDashboardUnitConversion" })
 export class DashboardUnitConversionPipe implements PipeTransform {
-    private readonly conversionThreshold = 10000;
-
     constructor(private unitConversionService: UnitConversionService) { }
 
+    /**
+     * Transforms a large value to its abbreviated counterpart
+     *
+     * @param value The value to convert
+     * @returns The string representation of the converted value
+     */
     transform(value: string | number | undefined): string | number | undefined {
         const valueAsNumber = typeof value === "string" ? parseInt(value, 10) : value;
 
-        if (valueAsNumber === undefined || valueAsNumber < this.conversionThreshold) {
+        if (valueAsNumber === undefined || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
             return value;
         }
 
