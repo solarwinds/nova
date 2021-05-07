@@ -31,14 +31,6 @@ export class SelectV2VirtualScrollExampleComponent implements OnInit, OnDestroy,
         }
     }
 
-    /**
-     To avoid double scroll on scrolling all page or scalable screens we need implicitly set
-     height for overlay little bit bigger than for container
-     * */
-    get overlayHeight(): number {
-        return this.containerHeight + 10;
-    }
-
     ngOnInit() {
         this.selectControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
             console.log("Value from Select", value);
