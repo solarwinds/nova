@@ -214,12 +214,11 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
 
-        const linearScaleTickFormatter = (value: string): string => this.unitConversionPipe.transform(value)?.toString() || "";
         if (this.configuration.chartOptions.type === ProportionalWidgetChartTypes.HorizontalBarChart) {
-            this.scales.x.formatters.tick = linearScaleTickFormatter;
+            this.scales.x.formatters.tick = this.unitConversionPipe.transform;
             this.applyTickLabelMaxWidths();
         } else if (this.configuration.chartOptions.type === ProportionalWidgetChartTypes.VerticalBarChart) {
-            this.scales.y.formatters.tick = linearScaleTickFormatter;
+            this.scales.y.formatters.tick = this.unitConversionPipe.transform;
         }
 
         this.chartTypeSubscription$?.unsubscribe();
