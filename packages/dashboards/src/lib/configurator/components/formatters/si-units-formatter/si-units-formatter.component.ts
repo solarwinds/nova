@@ -57,7 +57,7 @@ export class SiUnitsFormatterComponent implements OnChanges {
             : +value;
         const rounded = Math.round(transformed * 10) / 10; // round to 1 decimal
 
-        return rounded.toString();
+        return rounded.toLocaleString();
     }
 
     protected getTransformPrefix(origin: number): ISiUnitsPrefix | undefined {
