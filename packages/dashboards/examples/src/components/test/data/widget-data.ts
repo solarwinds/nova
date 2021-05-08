@@ -298,6 +298,7 @@ export const getTimeseriesWidgetData = () => (
     [
         {
             id: "series-1",
+            name: "Average CPU Load",
             description: "test1111.demo.lab",
             link: "https://en.wikipedia.org/wiki/Nur-Sultan",
             data: [
@@ -325,6 +326,7 @@ export const getTimeseriesWidgetData = () => (
         },
         {
             id: "series-2",
+            name: "Average CPU Load",
             description: "test2222.demo.lab",
             secondaryLink: "https://en.wikipedia.org/wiki",
             data: [
@@ -352,6 +354,7 @@ export const getTimeseriesWidgetData = () => (
         },
         {
             id: "series-3",
+            name: "Average CPU Load",
             description: "test3333.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 60 },
@@ -378,6 +381,7 @@ export const getTimeseriesWidgetData = () => (
         },
         {
             id: "series-4",
+            name: "Average CPU Load",
             description: "test4444.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 72 },
@@ -409,6 +413,7 @@ export const getTimeseriesWidgetData2 = () => (
     [
         {
             id: "series-a",
+            name: "Average CPU Load",
             description: "lastchance.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 10 },
@@ -435,6 +440,7 @@ export const getTimeseriesWidgetData2 = () => (
         },
         {
             id: "series-b",
+            name: "Average CPU Load",
             description: "newhope.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 80 },
@@ -461,6 +467,7 @@ export const getTimeseriesWidgetData2 = () => (
         },
         {
             id: "series-c",
+            name: "Average CPU Load",
             description: "empire.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 65 },
@@ -492,6 +499,7 @@ export const getTimeseriesEventsData = () => (
     [
         {
             id: "series-a",
+            name: "Events",
             description: "lastchance.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 9049 },
@@ -518,6 +526,7 @@ export const getTimeseriesEventsData = () => (
         },
         {
             id: "series-b",
+            name: "Events",
             description: "newhope.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 904900 },
@@ -544,6 +553,7 @@ export const getTimeseriesEventsData = () => (
         },
         {
             id: "series-c",
+            name: "Events",
             description: "empire.demo.lab",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 904900000 },
@@ -591,6 +601,7 @@ export function getTimeseriesStatusData(): ITimeseriesWidgetData<ITimeseriesWidg
     const series: ITimeseriesWidgetData<any>[] = [
         {
             id: "series-1",
+            name: "Average CPU Load",
             description: "lastchance.demo.lab",
             data: [
                 { x: frozenTime().subtract(30, "day").toDate(), y: Status.Critical },
@@ -617,6 +628,7 @@ export function getTimeseriesStatusData(): ITimeseriesWidgetData<ITimeseriesWidg
         },
         {
             id: "series-2",
+            name: "Average CPU Load",
             description: "newhope.demo.lab",
             data: [
                 { x: frozenTime().subtract(30, "day").toDate(), y: Status.Up },
@@ -659,6 +671,7 @@ export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData<ITimese
     const series: ITimeseriesWidgetData<any>[] = [
         {
             id: "series-1",
+            name: "Average CPU Load",
             description: "lastchance.demo.lab",
             data: [
                 { x: frozenTime().subtract(19, "day").toDate(), y: Status.Critical },
@@ -685,6 +698,7 @@ export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData<ITimese
         },
         {
             id: "series-2",
+            name: "Average CPU Load",
             description: "newhope.demo.lab",
             data: [
                 { x: frozenTime().subtract(19, "day").toDate(), y: Status.Up },
