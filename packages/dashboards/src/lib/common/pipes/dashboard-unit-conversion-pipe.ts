@@ -14,9 +14,10 @@ export class DashboardUnitConversionPipe implements PipeTransform {
      * Transforms a large number value to its abbreviated counterpart
      *
      * @param value The value to convert
+     *
      * @returns The string representation of the converted value
      */
-    transform(value: string | number | undefined): string {
+    public transform = (value: string | number | undefined): string => {
         const valueAsNumber = typeof value === "string" ? parseInt(value, 10) : value;
 
         if (valueAsNumber === undefined || isNaN(valueAsNumber) || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
