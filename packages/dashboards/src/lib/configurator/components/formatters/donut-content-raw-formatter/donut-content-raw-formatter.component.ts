@@ -27,7 +27,7 @@ export class DonutContentRawFormatterComponent implements OnChanges {
 
     public sum: number;
     public convertedValue: string;
-    public readonly conversionThreshold = DEFAULT_UNIT_CONVERSION_THRESHOLD;
+    public conversionThreshold = DEFAULT_UNIT_CONVERSION_THRESHOLD;
 
     private unitConversionPipe: DashboardUnitConversionPipe;
     constructor(public changeDetector: ChangeDetectorRef,
