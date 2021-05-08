@@ -78,10 +78,15 @@ describe("chart assist >", () => {
             expect(ca.getHighlightedValue(series, "z", "tick")).toBeNull();
         });
 
-        it("returns raw value for missing formatter", () => {
-            expect(ca.getHighlightedValue(series, "y", "nonexistent")).toBe(0.5);
+        it("returns raw string value for missing formatter", () => {
+            series.data[0].y = "test";
+            expect(ca.getHighlightedValue(series, "y", "nonexistent")).toBe("test");
         });
 
+        it("returns localized string value for missing formatter", () => {
+            series.data[0].y = 1000.01
+            expect(ca.getHighlightedValue(series, "y", "nonexistent")).toBe("1,000.01");
+        });
     });
 
     describe("update", () => {
