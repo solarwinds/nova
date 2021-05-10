@@ -87,7 +87,7 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
     // These are the current properties from pizzagna. Used to use data set at the configuration layer
     @Input() properties: IProperties;
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
 
         if (changes.properties || !this.properties) {
             // If current metric is not in the list of metrics any more we fall back to the very first one from the list we get from the datasource
@@ -97,36 +97,36 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
             this.units = this.properties?.units || this.units;
         }
 
-        this.setProperContentValue();
+        this.setContentValue();
     }
 
-    ngOnInit() {
+    public ngOnInit(): void {
         // Here 'chartAssistSubject' is the entity that emits events every time user interacts with either chart legend, or chart segments.
         // Subscribing to properly react on these kind of events
         this.chartAssist
             .chartAssistSubject
             .pipe(
                 tap((data: IChartAssistEvent) => this.emphasizedSeriesData = this.data.find(item => item.id === data.payload.seriesId)),
-                tap(() => this.setProperContentValue()),
-                tap(() => this.setProperMetricValue()),
+                tap(() => this.setContentValue()),
+                tap(() => this.setMetricValue()),
                 takeUntil(this.destroy$)
             )
             .subscribe();
     }
 
-    public getProperCovertedData(emphData: number) {
+    public getConvertedData(emphData: number): number {
         // Recalculating data depending on the units user selected from the configuration view
         switch (this.units) {
 
             case(Units.Weeks):
                 return this.emphasizedSeriesData
-                    ? this.convertoToWeeks(emphData)
-                    : this.convertoToWeeks(this.currentMetricData);
+                    ? this.convertToWeeks(emphData)
+                    : this.convertToWeeks(this.currentMetricData);
 
             case(Units.Hours):
                 return this.emphasizedSeriesData
-                    ? this.convertoToHours(emphData)
-                    : this.convertoToHours(this.currentMetricData);
+                    ? this.convertToHours(emphData)
+                    : this.convertToHours(this.currentMetricData);
 
             default:
                 return this.emphasizedSeriesData
@@ -135,28 +135,23 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
         }
     }
 
-    public setProperContentValue() {
-        this.chartContent = this.getProperCovertedData(this.emphasizedSeriesData?.data[0]);
+    public setContentValue(): void {
+        this.chartContent = this.getConvertedData(this.emphasizedSeriesData?.data[0]);
     }
 
-    public setProperMetricValue() {
-        return this.chartMetric =
-                this.emphasizedSeriesData
-                    ? this.data.find(item => this.getProperCovertedData(item.data[0]) === this.getProperCovertedData(this.emphasizedSeriesData?.data[0]))?.id
-                    // if not metric was initially selected we fall back to the very first one
-                    : (this.properties?.currentMetric || this.data[0].id);
+    public setMetricValue(): void {
+        this.chartMetric = this.emphasizedSeriesData ?
+            this.data.find(item => this.getConvertedData(item.data[0]) === this.getConvertedData(this.emphasizedSeriesData?.data[0]))?.id
+            // if metric was not initially selected we fall back to the very first one
+            : (this.properties?.currentMetric || this.data[0].id);
     }
 
-    private convertoToWeeks(days: number | undefined): number {
-        return days
-            ? Number((days / 7).toFixed(2))
-            : 0;
+    private convertToWeeks(days: number | undefined): number {
+        return days ? Number((days / 7).toFixed(2)) : 0;
     }
 
-    private convertoToHours(days: number | undefined): number {
-        return days
-            ? Number((days * 24).toFixed(2))
-            : 0;
+    private convertToHours(days: number | undefined): number {
+        return days ? Number((days * 24).toFixed(2)) : 0;
     }
 }
 
@@ -301,7 +296,7 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
     }
 
     /** Used for restoring widgets state */
-    public reInitializeDashboard() {
+    public reInitializeDashboard(): void {
         // destroys the components and their providers so the dashboard can re init data
         this.dashboard = undefined;
         this.changeDetectorRef.detectChanges();

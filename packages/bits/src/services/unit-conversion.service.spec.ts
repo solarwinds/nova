@@ -1,4 +1,5 @@
 import noop from "lodash/noop";
+
 import { UnitBase, UnitOption } from "../constants";
 
 import { LoggerService } from "./log-service";
@@ -388,11 +389,25 @@ describe("services >", () => {
                     unit: "hertz",
                     expectedValue: "-1 kHz",
                 }, {
-                    name: "1000 Hz as 1 kHz with scale 4 and without tailing zeros",
+                    name: "1000 Hz as 1 kHz with scale 4 and without trailing zeros",
                     inputValue: 1000,
                     unit: "hertz",
                     scale: 4,
                     expectedValue: "1 kHz",
+                },
+                // Uncomment in the scope of NUI-6056
+                /* {
+                    name: "999994 Hz as 1.99 kHz with scale 2",
+                    inputValue: 999994,
+                    unit: "hertz",
+                    scale: 2,
+                    expectedValue: "999.99 kHz",
+                }, */ {
+                    name: "999995 Hz as 1 MHz with scale 2",
+                    inputValue: 999995,
+                    unit: "hertz",
+                    scale: 2,
+                    expectedValue: "1 MHz",
                 },
             ];
 
