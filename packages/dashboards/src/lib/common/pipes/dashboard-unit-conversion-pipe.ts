@@ -18,7 +18,7 @@ export class DashboardUnitConversionPipe implements PipeTransform {
      * @returns The string representation of the converted value
      */
     public transform = (value: string | number | undefined): string => {
-        const valueAsNumber = typeof value === "string" ? parseInt(value, 10) : value;
+        const valueAsNumber = typeof value === "string" ? parseFloat(value) : value;
 
         if (valueAsNumber === undefined || isNaN(valueAsNumber)) {
             return value?.toString() || "";
@@ -28,7 +28,7 @@ export class DashboardUnitConversionPipe implements PipeTransform {
             return valueAsNumber?.toLocaleString() || "";
         }
 
-        const conversion = this.unitConversionService.convert(value as number, UnitBase.Standard, 1);
+        const conversion = this.unitConversionService.convert(valueAsNumber, UnitBase.Standard, 1);
         return this.unitConversionService.getFullDisplay(conversion, "generic");
     }
 }
