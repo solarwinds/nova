@@ -23,7 +23,7 @@ describe("pipes >", () => {
         });
 
         it(`should use UnitBase.Standard for units other than 'bytes'`, () => {
-            expect(pipe.transform(1024, 2, false, "generic")).toEqual("1.02k");
+            expect(pipe.transform(1024, 2, false, "generic")).toEqual("1.02K");
         });
     });
 });

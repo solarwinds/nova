@@ -148,10 +148,10 @@ describe("services >", () => {
                     unit: "generic",
                     expectedValue: "1",
                 }, {
-                    name: "1000 as 1k",
+                    name: "1000 as 1K",
                     inputValue: 1000,
                     unit: "generic",
-                    expectedValue: "1k",
+                    expectedValue: "1K",
                 }, {
                     name: "1000^2 as 1M",
                     inputValue: 1000 ** 2,
