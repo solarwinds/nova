@@ -19,9 +19,9 @@ export class RawFormatterComponent {
     public elementClass: string;
 
     public get displayValue(): string {
-        const valueAsNumber = parseFloat(this.data.value);
+        const valueAsNumber = parseFloat(this.data?.value);
         if (isNaN(valueAsNumber)) {
-            return this.data.value;
+            return this.data?.value;
         }
         return valueAsNumber.toLocaleString();
     }

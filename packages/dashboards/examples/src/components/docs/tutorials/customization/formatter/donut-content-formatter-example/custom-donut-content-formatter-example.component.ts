@@ -136,7 +136,7 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
     }
 
     public setContentValue(): void {
-        this.chartContent = this.getConvertedData(this.emphasizedSeriesData?.data[0]).toLocaleString();
+        this.chartContent = this.getConvertedData(this.emphasizedSeriesData?.data[0])?.toLocaleString();
     }
 
     public setMetricValue(): void {
