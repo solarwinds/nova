@@ -63,16 +63,14 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
         const data = chartSeries.data[adjustedIndex];
 
         const rawValue = valueAccessor(data, adjustedIndex, chartSeries.data, chartSeries);
-        const rawValueAsNumber = parseFloat(rawValue);
-        const localizedNumber = !isNaN(rawValueAsNumber) ? rawValueAsNumber.toLocaleString() : undefined;
         const scale = chartSeries.scales[scaleKey];
         if (!scale || !formatterName) {
-            return localizedNumber || rawValue;
+            return rawValue;
         }
 
         const formatter = scale.formatters[formatterName];
         if (!formatter) {
-            return localizedNumber || rawValue;
+            return rawValue;
         }
 
         return formatter(rawValue);

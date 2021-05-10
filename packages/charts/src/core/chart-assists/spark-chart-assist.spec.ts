@@ -223,7 +223,7 @@ describe("SparkChartAssist >", () => {
                     const chartSeries = testSeriesSet[index];
                     expect(chartAssist.getHighlightedValue(chartSeries, "y")).toBeNull();
                     chartAssist.sparks[index].chart?.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(payload);
-                    expect(chartAssist.getHighlightedValue(chartSeries, "y")).toEqual(payload.data.dataPoints[chartSeries.id].data.y.toString());
+                    expect(chartAssist.getHighlightedValue(chartSeries, "y")).toEqual(payload.data.dataPoints[chartSeries.id].data.y);
                 });
             });
         });
