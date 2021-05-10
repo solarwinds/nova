@@ -11,7 +11,7 @@ export class DashboardUnitConversionPipe implements PipeTransform {
     constructor(private unitConversionService: UnitConversionService) { }
 
     /**
-     * Transforms a large value to its abbreviated counterpart
+     * Transforms a large number value to its abbreviated counterpart
      *
      * @param value The value to convert
      *
@@ -20,11 +20,11 @@ export class DashboardUnitConversionPipe implements PipeTransform {
     public transform = (value: string | number | undefined): string => {
         const valueAsNumber = typeof value === "string" ? parseInt(value, 10) : value;
 
-        if (valueAsNumber === undefined || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
-            return valueAsNumber?.toLocaleString() || "";
+        if (isNaN(valueAsNumber) || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
+            return value?.toLocaleString() || "";
         }
 
-        const conversion = this.unitConversionService.convert(valueAsNumber, UnitBase.Standard, 1);
+        const conversion = this.unitConversionService.convert(value as number, UnitBase.Standard, 1);
         return this.unitConversionService.getFullDisplay(conversion, "generic");
     }
 }
