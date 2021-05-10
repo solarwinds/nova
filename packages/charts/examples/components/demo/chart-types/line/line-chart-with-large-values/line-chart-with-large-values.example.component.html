@@ -16,7 +16,7 @@
                                [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
                                [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                                (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)">
-                <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(legendSeries, 'y')"
+                <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(legendSeries, 'y', 'tick')"
                                       [backgroundColor]="chartAssist.palette.standardColors.get(legendSeries.id)"
                                       [color]="chartAssist.palette.textColors.get(legendSeries.id)">
                     <nui-chart-marker rightEdge
