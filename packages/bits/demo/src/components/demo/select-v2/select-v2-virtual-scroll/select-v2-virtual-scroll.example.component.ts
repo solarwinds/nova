@@ -27,7 +27,6 @@ export class SelectV2VirtualScrollExampleComponent implements OnInit, OnDestroy,
     public handleClick(event: MouseEvent) {
         if (this.viewport) {
             this.viewport.scrollToOffset(this.scrollOffset);
-            this.viewport.checkViewportSize();
         }
     }
 

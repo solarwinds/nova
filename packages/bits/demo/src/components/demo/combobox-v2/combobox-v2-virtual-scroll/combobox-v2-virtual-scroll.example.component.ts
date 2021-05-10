@@ -28,7 +28,6 @@ export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, After
     public handleClick() {
         if (this.viewport) {
             this.viewport.scrollToOffset(this.scrollOffset);
-            this.viewport.checkViewportSize();
         }
     }
 
