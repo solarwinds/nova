@@ -18,7 +18,7 @@ export class UnitConversionServiceBasicExampleComponent implements OnInit {
 
     public onNumberChange(num: number): void {
         this.num = num;
-        const conversionResult: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Bytes, 2, true);
+        const conversionResult: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Bytes, 2);
         this.conversionDisplay = this.unitConversionService.getFullDisplay(conversionResult, "bytes");
     }
 }

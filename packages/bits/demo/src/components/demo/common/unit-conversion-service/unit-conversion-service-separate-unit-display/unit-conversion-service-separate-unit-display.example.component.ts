@@ -19,7 +19,7 @@ export class UnitConversionServiceSeparateUnitDisplayExampleComponent implements
 
     public onNumberChange(num: number): void {
         this.num = num;
-        const conversion: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Standard, 2, true);
+        const conversion: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Standard, 2);
         this.valueDisplay = this.unitConversionService.getValueDisplay(conversion);
         this.unitDisplay = this.unitConversionService.getUnitDisplay(conversion, "hertz");
     }

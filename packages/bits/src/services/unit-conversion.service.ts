@@ -20,11 +20,10 @@ export class UnitConversionService {
      * @param value The value to convert
      * @param base The base to use for the exponential expression when calculating the conversion result
      * @param scale The number of significant digits to the right of the decimal to include in the resulting converted value
-     * @param localize Whether to localize the output string (defaults to false)
      *
      * @returns {IUnitConversionResult} The conversion result
      */
-    convert(value: number, base: number = UnitBase.Standard, scale: number = 1, localize = false): IUnitConversionResult {
+    convert(value: number, base: number = UnitBase.Standard, scale: number = 1): IUnitConversionResult {
         let resultValue: number;
         let resultOrder: number;
         let strValue: string;
@@ -47,16 +46,16 @@ export class UnitConversionService {
             strValue = (resultValue).toFixed(scale);
 
             // remove trailing zeros
-            const outputNumber = parseFloat(strValue);
-            strValue = localize ? outputNumber.toLocaleString(undefined, { maximumFractionDigits: scale }) : outputNumber.toString();
+            strValue = parseFloat(strValue).toString();
         } else {
             resultOrder = 0;
-            strValue = localize ? value.toLocaleString() : value.toString();
+            strValue = value.toString();
         }
 
         return {
             value: strValue,
             order: resultOrder,
+            scale,
         };
     }
 
@@ -92,8 +91,9 @@ export class UnitConversionService {
             return nanDisplay;
         }
 
-        const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
-        return `${prefix}${conversion.value}`;
+        const outputNumber = parseFloat(conversion.value);
+        const prefix = plusSign && outputNumber > 0 ? "+" : "";
+        return `${prefix}${outputNumber.toLocaleString(undefined, { maximumFractionDigits: conversion.scale })}`;
     }
 
     /**

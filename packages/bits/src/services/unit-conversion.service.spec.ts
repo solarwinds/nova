@@ -25,6 +25,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "1",
                         order: 1,
+                        scale: 1,
                     });
             });
             it("should handle UnitBase.Bytes properly", () => {
@@ -32,6 +33,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "1",
                         order: 1,
+                        scale: 1,
                     });
             });
             it("should handle default scale properly", () => {
@@ -39,6 +41,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "1.5",
                         order: 1,
+                        scale: 1,
                     });
             });
             it("should handle provided scale properly", () => {
@@ -46,6 +49,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "1.51",
                         order: 1,
+                        scale: 2,
                     });
             });
             it("should handle higher orders properly", () => {
@@ -53,6 +57,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "7.3",
                         order: 4,
+                        scale: 1,
                     });
             });
             it("should handle negative values properly", () => {
@@ -60,6 +65,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "-1",
                         order: 1,
+                        scale: 1,
                     });
             });
             it("should handle zero value, return order 0", () => {
@@ -67,6 +73,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "0",
                         order: 0,
+                        scale: 1,
                     });
             });
 
@@ -75,6 +82,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "-2.2",
                         order: 1,
+                        scale: 1,
                     });
             });
 
@@ -83,6 +91,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "-2.781",
                         order: 1,
+                        scale: 3,
                     });
             });
 
@@ -91,6 +100,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "314",
                         order: -1,
+                        scale: 1,
                     });
             });
 
@@ -102,25 +112,6 @@ describe("services >", () => {
 
             it("should remove trailing zeros", () => {
                 expect(subject.convert(998900, UnitBase.Standard, 2).value).toEqual("998.9");
-            });
-
-            it("should not localize the output by default", () => {
-                const spy = spyOn(Number.prototype, "toLocaleString");
-                subject.convert(1000);
-                expect(spy).not.toHaveBeenCalled();
-                spy.calls.reset();
-                subject.convert(0);
-                expect(spy).not.toHaveBeenCalled();
-            });
-
-            it("should localize the output", () => {
-                const scale = 3;
-                const spy = spyOn(Number.prototype, "toLocaleString");
-                subject.convert(1000, UnitBase.Standard, scale, true);
-                expect(spy).toHaveBeenCalledWith(undefined, { maximumFractionDigits: scale });
-                spy.calls.reset();
-                subject.convert(0, UnitBase.Standard, 0, true);
-                expect(spy).toHaveBeenCalledWith();
             });
         });
 
@@ -136,6 +127,14 @@ describe("services >", () => {
 
             it("should not prefix the output with a plus sign for negative values", () => {
                 expect(subject.getValueDisplay({ value: "-1", order: 1 }, true)).toEqual("-1");
+            });
+
+            it("should localize the output", () => {
+                const scale = 3;
+                const spy = spyOn(Number.prototype, "toLocaleString");
+                const conversion = subject.convert(1000, UnitBase.Standard, scale);
+                subject.getValueDisplay(conversion);
+                expect(spy).toHaveBeenCalledWith(undefined, { maximumFractionDigits: scale });
             });
         });
 

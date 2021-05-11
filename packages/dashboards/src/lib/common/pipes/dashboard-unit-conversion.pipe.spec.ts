@@ -16,7 +16,7 @@ describe("DashboardUnitConversionPipe >", () => {
     });
 
     it(`should abbreviate the value if it's greater than or equal to DEFAULT_UNIT_CONVERSION_THRESHOLD`, () => {
-        const conversion = unitConversionService.convert(DEFAULT_UNIT_CONVERSION_THRESHOLD, UnitBase.Standard, 1, true);
+        const conversion = unitConversionService.convert(DEFAULT_UNIT_CONVERSION_THRESHOLD, UnitBase.Standard, 1);
         const expectedDisplayValue = unitConversionService.getFullDisplay(conversion, "generic");
 
         expect(pipe.transform(DEFAULT_UNIT_CONVERSION_THRESHOLD)).toEqual(expectedDisplayValue);

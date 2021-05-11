@@ -28,7 +28,7 @@ export class DashboardUnitConversionPipe implements PipeTransform {
             return valueAsNumber?.toLocaleString() || "";
         }
 
-        const conversion = this.unitConversionService.convert(valueAsNumber, UnitBase.Standard, 1, true);
+        const conversion = this.unitConversionService.convert(valueAsNumber, UnitBase.Standard, 1);
         return this.unitConversionService.getFullDisplay(conversion, "generic");
     }
 }
