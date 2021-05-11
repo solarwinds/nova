@@ -3,7 +3,7 @@ import { AfterViewInit, Component, HostListener, OnDestroy, ViewChild } from "@a
 import { FormControl } from "@angular/forms";
 import { ComboboxV2Component } from "@nova-ui/bits";
 import { Observable, of, Subject } from "rxjs";
-import { delay, takeUntil, tap } from "rxjs/operators";
+import { delay, filter, takeUntil, tap } from "rxjs/operators";
 
 const defaultContainerHeight: number = 300;
 
@@ -37,10 +37,21 @@ export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, After
         });
 
         this.combobox.valueChanged.pipe(
+            filter(v => v !== undefined),
+            tap(v => this.filteredItems = of(this.filterItems(v as string))),
             delay(0),
             tap(this.calculateContainerHeight),
             takeUntil(this.destroy$)
         ).subscribe();
+    }
+
+    private filterItems(value: string): string[] {
+        if (!value) {
+            return this.items;
+        }
+        const filterValue = value?.toLowerCase();
+
+        return this.items.filter(option => option.toLowerCase().includes(filterValue));
     }
 
     private calculateContainerHeight = (): void => {
