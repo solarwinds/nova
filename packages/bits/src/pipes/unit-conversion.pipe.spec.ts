@@ -1,6 +1,5 @@
 import { TestBed } from "@angular/core/testing";
 
-import { UnitOption } from "../constants";
 import { LoggerService } from "../services/log-service";
 import { UnitConversionService } from "../services/unit-conversion.service";
 

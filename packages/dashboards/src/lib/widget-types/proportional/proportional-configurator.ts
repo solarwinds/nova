@@ -190,7 +190,7 @@ export const proportionalConfigurator = {
                             "label": $localize`Percentage`,
                             configurationComponent: "DonutContentPercentageConfigurationComponent",
                         },
-                    ]  as IFormatterDefinition[],
+                    ] as IFormatterDefinition[],
                     legendFormatters: [
                         {
                             componentType: StatusWithIconFormatterComponent.lateLoadKey,

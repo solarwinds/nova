@@ -26,9 +26,9 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData> 
     protected resetChart = false;
     protected chartBuilt = false;
 
-    public get seriesInteractive() {
+    public get seriesInteractive(): boolean {
         return this.configuration?.interaction === "series" ||
-            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled;
+            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled || false;
     }
 
     protected constructor(public timeseriesScalesService: TimeseriesScalesService,

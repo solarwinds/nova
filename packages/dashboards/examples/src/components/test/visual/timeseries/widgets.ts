@@ -16,6 +16,7 @@ import { GridsterItem } from "angular-gridster2";
 import {
     TestTimeseriesDataSource,
     TestTimeseriesDataSource2,
+    TestTimeseriesEventsDataSource,
     TestTimeseriesStatusDataSource,
     TestTimeseriesStatusIntervalDataSource,
 } from "../../data/timeseries-data-sources";
@@ -100,7 +101,7 @@ export const widgetConfigs: IWidget[] = [
                 [DEFAULT_PIZZAGNA_ROOT]: {
                     "providers": {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestTimeseriesDataSource2.providerId,
+                            "providerId": TestTimeseriesEventsDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
@@ -117,17 +118,17 @@ export const widgetConfigs: IWidget[] = [
                                 "series": [
                                     {
                                         id: "series-a",
-                                        label: "Average CPU Load",
+                                        label: "Events",
                                         selectedSeriesId: "series-a",
                                     },
                                     {
                                         id: "series-b",
-                                        label: "Average CPU Load",
+                                        label: "Events",
                                         selectedSeriesId: "series-b",
                                     },
                                     {
                                         id: "series-c",
-                                        label: "Average CPU Load",
+                                        label: "Events",
                                         selectedSeriesId: "series-c",
                                     },
                                 ],
@@ -136,9 +137,9 @@ export const widgetConfigs: IWidget[] = [
                     },
                     "properties": {
                         "configuration": {
+                            "interaction": "series",
                             "legendPlacement": LegendPlacement.Bottom,
                             "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
                             preset: TimeseriesChartPreset.Line,
                         } as ITimeseriesWidgetConfig,
                     },

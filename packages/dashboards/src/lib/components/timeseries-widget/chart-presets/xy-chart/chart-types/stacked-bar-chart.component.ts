@@ -24,6 +24,7 @@ import { XYChartComponent } from "../xy-chart.component";
 @Component({
     selector: "nui-stacked-bar-chart",
     templateUrl: "../xy-chart.component.html",
+    styleUrls: ["../xy-chart.component.less"],
 })
 export class StackedBarChartComponent extends XYChartComponent {
     public static lateLoadKey = "StackedBarChartComponent";

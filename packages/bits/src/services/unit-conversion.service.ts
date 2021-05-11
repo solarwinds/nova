@@ -7,9 +7,7 @@ import { IUnitConversionResult } from "./public-api";
 
 /**
  * <example-url>./../examples/index.html#/common/unit-conversion-service</example-url>
- */
-
-/**
+ *
  * Service for converting a raw value to a larger unit approximation of the value--for example, 1024 B to 1 MB, 12345 Hz to 12.35 kHz, etc.
  */
 @Injectable({ providedIn: "root" })
@@ -93,7 +91,7 @@ export class UnitConversionService {
         }
 
         const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
-        return `${prefix}${conversion.value}`
+        return `${prefix}${conversion.value}`;
     }
 
     /**

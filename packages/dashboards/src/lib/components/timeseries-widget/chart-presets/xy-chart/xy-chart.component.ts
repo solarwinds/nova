@@ -70,19 +70,18 @@ export abstract class XYChartComponent extends TimeseriesChartComponent
         return this.configuration.legendPlacement === LegendPlacement.Right;
     }
 
-    public onLegendClick(legendSeries: IChartAssistSeries<IAccessors>, event: MouseEvent) {
+    public onPrimaryDescClick(event: MouseEvent, legendSeries: IChartAssistSeries<IAccessors>) {
         if (!this.seriesInteractive) {
             return;
         }
-        const target = event.target as HTMLElement;
-        if (target.classList.contains("description")) {
-            this.eventBus.getStream(INTERACTION).next({
-                payload: {
-                    data: legendSeries,
-                    interactionType: TimeseriesInteractionType.Series,
-                },
-            });
-        }
+
+        event.stopPropagation();
+        this.eventBus.getStream(INTERACTION).next({
+            payload: {
+                data: legendSeries,
+                interactionType: TimeseriesInteractionType.Series,
+            },
+        });
     }
 
     /** Updates chart data. */
