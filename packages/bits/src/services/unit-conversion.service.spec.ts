@@ -102,7 +102,26 @@ describe("services >", () => {
 
             it("should remove trailing zeros", () => {
                 expect(subject.convert(998900, UnitBase.Standard, 2).value).toEqual("998.9");
-            })
+            });
+
+            it("should not localize the output by default", () => {
+                const spy = spyOn(Number.prototype, "toLocaleString");
+                subject.convert(1000);
+                expect(spy).not.toHaveBeenCalled();
+                spy.calls.reset();
+                subject.convert(0);
+                expect(spy).not.toHaveBeenCalled();
+            });
+
+            it("should localize the output", () => {
+                const scale = 3;
+                const spy = spyOn(Number.prototype, "toLocaleString");
+                subject.convert(1000, UnitBase.Standard, scale, true);
+                expect(spy).toHaveBeenCalledWith(undefined, { maximumFractionDigits: scale });
+                spy.calls.reset();
+                subject.convert(0, UnitBase.Standard, 0, true);
+                expect(spy).toHaveBeenCalledWith();
+            });
         });
 
         describe("getValueDisplay >", () => {

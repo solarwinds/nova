@@ -33,7 +33,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
 
     constructor(private unitConversionService: UnitConversionService) { }
 
-    public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>) {
+    public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>): void {
         if ((changes.size && !changes.size.firstChange) ||
             (changes.annularWidth && !changes.annularWidth.firstChange) ||
             (changes.annularGrowth && !changes.annularGrowth.firstChange)) {
@@ -47,7 +47,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         }
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const grid = radialGrid();
         grid.config().dimension.autoHeight = false;
         grid.config().dimension.autoWidth = false;
@@ -61,7 +61,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
-            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
+            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2, true);
             return this.unitConversionService.getFullDisplay(conversion, "generic");
         }, this.seriesSet);
 
@@ -70,13 +70,13 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         this.chartAssist.update(this.seriesSet);
     }
 
-    private updateDonutSize() {
+    private updateDonutSize(): void {
         const gridDimensions = this.chartAssist.chart.getGrid().config().dimension;
         gridDimensions.height(this.size);
         gridDimensions.width(this.size);
     }
 
-    private updateAnnularAttributes() {
+    private updateAnnularAttributes(): void {
         this.seriesSet.forEach(series => {
             const rendererConfig = (series.renderer.config as IRadialRendererConfig);
             // increase the max thickness from 30 for testing purposes

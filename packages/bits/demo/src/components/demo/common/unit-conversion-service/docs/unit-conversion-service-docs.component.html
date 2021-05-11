@@ -11,7 +11,7 @@
 <h2>Basic Usage</h2>
 <p>
     To convert a value, use the service's
-    <code><a href="../injectables/UnitConversionService.html#info" target="_parent">convert</a></code> method which accepts three arguments:
+    <code><a href="../injectables/UnitConversionService.html#info" target="_parent">convert</a></code> method which accepts four arguments:
 <ul>
     <li><strong>value</strong> - The number to be converted</li>
     <li>
@@ -21,6 +21,9 @@
     <li>
         <strong>scale</strong> - An optional scale value for specifying how many significant digits to the right of the decimal to preserve in the output
         (defaults to <code>1</code>).
+    </li>
+    <li>
+        <strong>localize</strong> - An optional boolean for specifying whether to localize the output value (defaults to <code>false</code>).
     </li>
 </ul>
 <p>

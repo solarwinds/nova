@@ -66,7 +66,7 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
-            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
+            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2, true);
             return this.unitConversionService.getFullDisplay(conversion, "generic");
         }, this.seriesSet);
 

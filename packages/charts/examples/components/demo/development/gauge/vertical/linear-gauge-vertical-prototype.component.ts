@@ -77,7 +77,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Vertical);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
-            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
+            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2, true);
             return this.unitConversionService.getFullDisplay(conversion, "generic");
         }, this.seriesSet);
 

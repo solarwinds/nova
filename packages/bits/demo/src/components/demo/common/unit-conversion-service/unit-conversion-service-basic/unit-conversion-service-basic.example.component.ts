@@ -12,13 +12,13 @@ export class UnitConversionServiceBasicExampleComponent implements OnInit {
     public num: number;
     public conversionDisplay: string;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.onNumberChange(110000);
     }
 
-    public onNumberChange(num: number) {
+    public onNumberChange(num: number): void {
         this.num = num;
-        const conversionResult: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Bytes, 2);
+        const conversionResult: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Bytes, 2, true);
         this.conversionDisplay = this.unitConversionService.getFullDisplay(conversionResult, "bytes");
     }
 }

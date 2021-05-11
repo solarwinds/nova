@@ -13,13 +13,13 @@ export class UnitConversionServiceSeparateUnitDisplayExampleComponent implements
     public valueDisplay: string;
     public unitDisplay: string;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.onNumberChange(1000);
     }
 
-    public onNumberChange(num: number) {
+    public onNumberChange(num: number): void {
         this.num = num;
-        const conversion: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Standard, 2);
+        const conversion: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Standard, 2, true);
         this.valueDisplay = this.unitConversionService.getValueDisplay(conversion);
         this.unitDisplay = this.unitConversionService.getUnitDisplay(conversion, "hertz");
     }
