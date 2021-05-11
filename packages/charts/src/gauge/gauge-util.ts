@@ -16,7 +16,7 @@ import { RadialRenderer } from "../renderers/radial/radial-renderer";
 import { radialScales } from "../renderers/radial/radial-scales";
 
 import { GaugeMode, GAUGE_QUANTITY_SERIES_ID, GAUGE_REMAINDER_SERIES_ID, GAUGE_THRESHOLD_MARKERS_SERIES_ID, StandardGaugeColor } from "./constants";
-import { IGaugeConfig, IGaugeThreshold } from "./types";
+import { IGaugeConfig, IGaugeThreshold, IGaugeThresholdConfig, IGaugeThresholdConfigs } from "./types";
 import { linearGaugeRendererConfig } from "../renderers/bar/linear-gauge-renderer-config";
 import { Renderer } from "../core/common/renderer";
 
@@ -248,12 +248,12 @@ export class GaugeUtil {
 
         if (thresholds) {
             colorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
-                if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {
+                if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
                     return StandardGaugeColor.Critical;
                 }
-                if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
-                    return StandardGaugeColor.Warning;
-                }
+                // if (!isUndefined(thresholds[0]) && thresholds[0] <= data.value) {
+                //     return StandardGaugeColor.Warning;
+                // }
                 return StandardGaugeColor.Ok;
             };
         } else {
@@ -271,7 +271,7 @@ export class GaugeUtil {
      *
      * @returns {DataAccessor} An accessor for determining the color to use based on the series id and/or data value
      */
-    public static createReversedQuantityThresholdColorAccessor(thresholds: number[]): DataAccessor {
+    public static createReversedQuantityThresholdColorAccessor(thresholds: IGaugeThresholdConfigs): DataAccessor {
         // assigning to variable to prevent "Lambda not supported" error
         const colorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
             if (!isUndefined(thresholds[1]) && thresholds[1] <= data.value) {

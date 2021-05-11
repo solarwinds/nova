@@ -1,5 +1,15 @@
 import { Component } from "@angular/core";
-import { DataAccessor, DEFAULT_RADIAL_RENDERER_CONFIG, GaugeUtil, IGaugeConfig, StandardLinearGaugeThickness } from "@nova-ui/charts";
+import {
+    DataAccessor,
+    DEFAULT_RADIAL_RENDERER_CONFIG,
+    GaugeUtil,
+    IGaugeConfig,
+    IGaugeThresholdConfig,
+    IGaugeThresholdConfigs,
+    StandardGaugeColor,
+    StandardGaugeThresholdId,
+    StandardLinearGaugeThickness,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-test-page",
@@ -12,7 +22,23 @@ export class GaugeTestPageComponent {
     public annularGrowth = DEFAULT_RADIAL_RENDERER_CONFIG.annularGrowth;
     public thickness = StandardLinearGaugeThickness.Large;
     public donutSize = 200;
-    public thresholds: number[] = [1000, 1500];
+    public thresholds: IGaugeThresholdConfigs = {
+        [StandardGaugeThresholdId.Warning]: {
+            id: StandardGaugeThresholdId.Warning,
+            bottom: 1000,
+            top: 1500,
+            enabled: true,
+            color: StandardGaugeColor.Warning,
+        },
+        [StandardGaugeThresholdId.Critical]: {
+            id: StandardGaugeThresholdId.Critical,
+            bottom: 1500,
+            top: this.maxValue,
+            enabled: true,
+            color: StandardGaugeColor.Critical,
+        },
+    };
+
     public reversed = false;
     public flipLabels = false;
     public gaugeConfig: IGaugeConfig;
@@ -27,12 +53,12 @@ export class GaugeTestPageComponent {
         this.gaugeConfig = this.getGaugeConfig();
     }
 
-    public onReverseChange(reversed: boolean) {
+    public onReverseChange(reversed: boolean): void {
         this.reversed = reversed;
         this.gaugeConfig = this.getGaugeConfig();
     }
 
-    public onValueChange(value: number) {
+    public onValueChange(value: number): void {
         this.value = value;
         this.gaugeConfig = this.getGaugeConfig();
     }
@@ -41,8 +67,8 @@ export class GaugeTestPageComponent {
         return {
             value: this.value,
             max: this.maxValue,
+            reversedThresholds: this.reversed,
             thresholds: this.thresholds,
-            quantityColorAccessor: this.reversed ? this.reversedColorAccessor : undefined,
             enableThresholdMarkers: true,
         };
     }

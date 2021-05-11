@@ -1,6 +1,6 @@
 export const GAUGE_QUANTITY_SERIES_ID = "quantity";
-export const  GAUGE_REMAINDER_SERIES_ID = "remainder";
-export const  GAUGE_THRESHOLD_MARKERS_SERIES_ID = "threshold-markers";
+export const GAUGE_REMAINDER_SERIES_ID = "remainder";
+export const GAUGE_THRESHOLD_MARKERS_SERIES_ID = "threshold-markers";
 
 /**
  * @ignore
@@ -31,13 +31,21 @@ export enum StandardGaugeThresholdMarkerRadius {
 }
 
 /**
+ * Standard values for gauge threshold marker radii
+ */
+export enum StandardGaugeThresholdId {
+    Warning = "warning",
+    Critical = "critical",
+}
+
+/**
  * Standard gauge colors
  */
 export enum StandardGaugeColor {
     /** Standard color for the part of the gauge that's not filled in */
     Remainder = "var(--nui-color-semantic-unknown-bg-hover)",
     /** Standard color for the value part of the gauge when the value represents an ok status */
-    Ok = "var(--nui-color-chart-one)",
+    Ok = "var(--nui-color-semantic-ok)",
     /** Standard color for the value part of the gauge when the value has a warning status */
     Warning = "var(--nui-color-semantic-warning)",
     /** Standard color for the value part of the gauge when the value has a critical status */
