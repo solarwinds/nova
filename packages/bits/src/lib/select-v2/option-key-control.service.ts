@@ -1,4 +1,4 @@
-import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
+import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
 import { DOWN_ARROW, ENTER, ESCAPE, PAGE_DOWN, PAGE_UP, TAB, UP_ARROW } from "@angular/cdk/keycodes";
 import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
@@ -11,6 +11,9 @@ export class OptionKeyControlService<T extends IOption> {
     public optionItems: QueryList<T>;
 
     private keyboardEventsManager: ActiveDescendantKeyManager<T>;
+
+    constructor(public liveAnnouncer: LiveAnnouncer) {
+    }
 
     public initKeyboardManager(): void {
         this.keyboardEventsManager = new ActiveDescendantKeyManager(this.optionItems).withVerticalOrientation();
@@ -52,6 +55,7 @@ export class OptionKeyControlService<T extends IOption> {
             case DOWN_ARROW:
             case UP_ARROW:
                 this.keyboardEventsManager.onKeydown(event);
+                this.announceNavigatedOption();
                 break;
             case PAGE_UP:
                 event.preventDefault();
@@ -109,6 +113,14 @@ export class OptionKeyControlService<T extends IOption> {
             setTimeout(() => {
                 this.keyboardEventsManager.activeItem?.scrollIntoView(options);
             });
+        }
+    }
+
+    private announceNavigatedOption(): void {
+        const activeItem = this.keyboardEventsManager.activeItem;
+
+        if (activeItem) {
+            this.liveAnnouncer.announce((activeItem as any).value);
         }
     }
 }

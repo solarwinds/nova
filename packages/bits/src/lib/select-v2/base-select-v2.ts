@@ -39,6 +39,7 @@ import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { InputValueTypes, IOptionedComponent } from "./types";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import ResizeObserver from "resize-observer-polyfill";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
@@ -158,7 +159,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     protected constructor(protected optionKeyControlService: OptionKeyControlService<IOption>,
                           protected cdRef: ChangeDetectorRef,
-                          public elRef: ElementRef<HTMLElement>) {
+                          public elRef: ElementRef<HTMLElement>,
+                          public liveAnnouncer: LiveAnnouncer) {
     }
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -243,6 +245,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.dropdown.show();
         this.setActiveItemOnDropdown();
         this.scrollToOption();
+        this.liveAnnouncer.announce(`${this.options.length} options available`);
     }
 
     /** Hides dropdown */
