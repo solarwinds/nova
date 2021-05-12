@@ -126,4 +126,9 @@ export class WizardDirective extends CdkStepper implements AfterContentInit {
             }
         });
     }
+
+    ngOnDestroy() {
+        this._destroyed.next();
+        this._destroyed.complete();
+    }
 }
