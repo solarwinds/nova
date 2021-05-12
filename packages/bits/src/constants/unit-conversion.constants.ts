@@ -20,7 +20,7 @@ export enum UnitBase {
  * Unit display values used in unit conversion
  */
 export const unitConversionConstants: IUnitConversionConstants = {
-    generic: ["", "k", "M", "B", "T", "Qa", "Qi", "Sx", "Sp"],
+    generic: ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp"],
     bytes: ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
     bytesPerSecond: ["Bps", "kBps", "MBps", "GBps", "TBps", "PBps", "EBps", "ZBps", "YBps"],
     bitsPerSecond: ["bps", "kbps", "Mbps", "Gpbs", "Tbps", "Pbps", "Ebps", "Zbps", "Ybps"],

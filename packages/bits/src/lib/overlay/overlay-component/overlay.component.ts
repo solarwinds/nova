@@ -1,4 +1,4 @@
-import { Overlay, OverlayConfig, OverlayContainer } from "@angular/cdk/overlay";
+import { Overlay, OverlayConfig, OverlayContainer, OverlaySizeConfig } from "@angular/cdk/overlay";
 import { CdkPortal } from "@angular/cdk/portal";
 import {
     AfterContentChecked,
@@ -149,6 +149,11 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
     public getOverlayRef() {
         return this.overlayService.getOverlayRef();
     }
+
+    public updateSize(size: OverlaySizeConfig): void {
+        this.overlayService.updateSize(size);
+    }
+
 
     /** Stream of clicks outside. */
     private overlayClickOutside(): Observable<MouseEvent> {

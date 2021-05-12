@@ -15,7 +15,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { EventBus, IDataSource, IEvent, LoggerService } from "@nova-ui/bits";
+import { EventBus, IDataSource, IEvent, LoggerService, UnitConversionService } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -37,6 +37,7 @@ import isEqual from "lodash/isEqual";
 import some from "lodash/some";
 import ResizeObserver from "resize-observer-polyfill";
 import { Subscription } from "rxjs";
+import { DashboardUnitConversionPipe } from "../../common/pipes/dashboard-unit-conversion-pipe";
 
 import { CategoryChartUtilService } from "../../services/category-chart-util.service";
 import { INTERACTION } from "../../services/types";
@@ -84,15 +85,16 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     private scales: Scales;
     private chartPalette: IChartPalette = new ChartPalette(defaultColorProvider());
     private proportionalWidgetResizeObserver: ResizeObserver;
+    private unitConversionPipe: DashboardUnitConversionPipe;
 
     @ViewChild("gridContainer", { static: true })
     private gridContainer: ElementRef;
 
     private chartTypeSubscription$: Subscription;
 
-    public get interactive() {
+    public get interactive(): boolean {
         return this.configuration?.interactive ||
-            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled;
+            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled || false;
     }
 
     constructor(public changeDetector: ChangeDetectorRef,
@@ -100,14 +102,15 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
                 private kvDiffers: KeyValueDiffers,
                 @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
                 @Inject(DATA_SOURCE) private dataSource: IDataSource,
-                private logger: LoggerService
-    ) {
+                private logger: LoggerService,
+                unitConversionService: UnitConversionService) {
         this.differ = this.kvDiffers.find(this.prioritizedGridRows).create();
+        this.unitConversionPipe = new DashboardUnitConversionPipe(unitConversionService);
     }
 
     // Note: Using this helper method to be able to use
     // optional method chaining and prevent strict mode error
-    public computeLegendTitle(legendSeries: unknown): string | undefined {
+    public computeLegendTileValue(legendSeries: unknown): string | undefined {
         // @ts-ignore: Suppressing series null parameter value error to avoid breaking default flow
         return this.accessors.data?.value?.(legendSeries, 0, null, null);
     }
@@ -151,16 +154,16 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.handleGridFlowOnResize();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.proportionalWidgetResizeObserver?.disconnect();
         this.chartTypeSubscription$?.unsubscribe();
     }
 
-    public getContentFormatterProperties() {
+    public getContentFormatterProperties(): void {
         this.contentFormatterProperties = {
             data: this.widgetData,
             config: this.configuration,
@@ -210,8 +213,12 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.donutContentPlugin = new ChartDonutContentPlugin();
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
+
         if (this.configuration.chartOptions.type === ProportionalWidgetChartTypes.HorizontalBarChart) {
+            this.scales.x.formatters.tick = this.unitConversionPipe.transform;
             this.applyTickLabelMaxWidths();
+        } else if (this.configuration.chartOptions.type === ProportionalWidgetChartTypes.VerticalBarChart) {
+            this.scales.y.formatters.tick = this.unitConversionPipe.transform;
         }
 
         this.chartTypeSubscription$?.unsubscribe();
@@ -233,9 +240,9 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     private applyTickLabelMaxWidths() {
         const gridConfigAxis = (this.chartAssist.chart.getGrid().config() as XYGridConfig).axis;
 
-        gridConfigAxis.left.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig ?.maxWidth?.left ??
+        gridConfigAxis.left.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig?.maxWidth?.left ??
             ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
-        gridConfigAxis.right.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig ?.maxWidth?.right ??
+        gridConfigAxis.right.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig?.maxWidth?.right ??
             ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
     }
 
@@ -325,7 +332,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         // remove data colors since nui-chart takes them into consideration no matter what
         if (this.configuration.prioritizeWidgetColors && this.widgetData) {
             this.widgetData = this.widgetData.map(origin => {
-                const series = {...origin};
+                const series = { ...origin };
                 if (series.color) {
                     delete series.color;
                 }

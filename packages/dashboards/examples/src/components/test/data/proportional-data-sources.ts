@@ -16,7 +16,7 @@ export class TestProportionalDataSource implements OnDestroy {
 
     public outputsSubject = new Subject<IProportionalWidgetData[]>();
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.outputsSubject.next(PROPORTIONAL_WIDGET_DATA_SMALL);
     }
 
@@ -32,7 +32,7 @@ export class TestProportionalDataSource2 implements OnDestroy {
 
     public outputsSubject = new Subject<IDataSourceOutput<IProportionalWidgetData[]>>();
 
-    public applyFilters() {
+    public applyFilters(): void {
         if (!TestProportionalDataSource2.mockError) {
             this.outputsSubject.next({ result: PROPORTIONAL_WIDGET_DATA_MEDIUM });
         } else {
@@ -55,7 +55,7 @@ export class TestProportionalDataSource3 implements OnDestroy {
 
     public outputsSubject = new Subject<IProportionalWidgetData[]>();
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.outputsSubject.next(PROPORTIONAL_WIDGET_DATA_LARGE);
     }
 
@@ -70,7 +70,7 @@ export class TestProportionalDataSource4 implements OnDestroy {
 
     public outputsSubject = new Subject<IProportionalWidgetData[]>();
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.outputsSubject.next(PROPORTIONAL_WIDGET_DATA_BIG_NUMBERS);
     }
 

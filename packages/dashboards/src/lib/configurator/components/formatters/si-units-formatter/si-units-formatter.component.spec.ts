@@ -50,7 +50,7 @@ const TEST_DATA: any[] = [
         },
         expected: {
             value: "11.2",
-            modifier: "k",
+            modifier: "K",
         },
     },
     {
@@ -118,7 +118,7 @@ const TEST_DATA: any[] = [
     },
 ];
 
-describe("TableWidgetComponent", () => {
+describe("SiUnitsFormatterComponent", () => {
     let component: SiUnitsFormatterComponent;
     let fixture: ComponentFixture<SiUnitsFormatterComponent>;
 

@@ -32,7 +32,7 @@ export class DonutContentPercentageFormatterComponent implements OnChanges, OnIn
     @Input() chartAssist: ChartAssist;
     @Input() properties: IProperties;
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.data) {
             this.sum = sumBy(this.data, s => s.data[0]);
         }
@@ -45,7 +45,7 @@ export class DonutContentPercentageFormatterComponent implements OnChanges, OnIn
         this.getProperContentValue();
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.chartAssist
             .chartAssistSubject
             .pipe(
@@ -56,11 +56,11 @@ export class DonutContentPercentageFormatterComponent implements OnChanges, OnIn
             .subscribe();
     }
 
-    public getProperSeriesData() {
+    public getProperSeriesData(): number {
         return this.emphasizedSeriesData ? this.emphasizedSeriesData?.data[0] : this.currentMetricData;
     }
 
-    public getProperContentValue() {
-        this.chartContent = (this.getProperSeriesData() / this.sum * 100).toFixed(2) + "%";
+    public getProperContentValue(): void {
+        this.chartContent = parseFloat((this.getProperSeriesData() / this.sum * 100).toFixed(2)).toLocaleString() + "%";
     }
 }

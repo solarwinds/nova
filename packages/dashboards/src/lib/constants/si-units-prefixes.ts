@@ -12,7 +12,7 @@ export const SI_UNITS_PREFIXES: ISiUnitsPrefix[] = [
     },
     {
         power: 3,
-        prefix: "k",
+        prefix: "K",
         label: "kilo",
     },
     {
