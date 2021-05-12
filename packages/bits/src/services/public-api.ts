@@ -77,6 +77,8 @@ export interface IUnitConversionResult {
     order: number;
     /** The converted value as a string */
     value: string;
+    /** The maximum number of significant digits to display to the right of the decimal */
+    scale?: number;
 }
 
 export interface ISelection {

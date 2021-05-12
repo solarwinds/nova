@@ -12,7 +12,7 @@ describe("DashboardUnitConversionPipe >", () => {
     });
 
     it(`should not abbreviate the value if it's less than DEFAULT_UNIT_CONVERSION_THRESHOLD`, () => {
-        expect(pipe.transform(DEFAULT_UNIT_CONVERSION_THRESHOLD - 1)).toEqual((DEFAULT_UNIT_CONVERSION_THRESHOLD - 1).toString());
+        expect(pipe.transform(DEFAULT_UNIT_CONVERSION_THRESHOLD - 1)).toEqual((DEFAULT_UNIT_CONVERSION_THRESHOLD - 1).toLocaleString());
     });
 
     it(`should abbreviate the value if it's greater than or equal to DEFAULT_UNIT_CONVERSION_THRESHOLD`, () => {

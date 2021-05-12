@@ -89,10 +89,8 @@ describe("merge changes", () => {
 
             const result2: any = mergeChanges(result1, { previousValue: c2, currentValue: c3 }, { previousValue: d2, currentValue: d3 });
 
-            expect(result1.merge === result2.merge);
-            expect(result1 !== result2);
-
-            // console.log(JSON.stringify(result2, null, 4));
+            expect(result1.merge).toEqual(result2.merge);
+            expect(result1).not.toEqual(result2);
         });
 
         it("handles real world example", () => {
