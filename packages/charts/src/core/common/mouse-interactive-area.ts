@@ -17,7 +17,7 @@ export class MouseInteractiveArea<TTarget extends D3Selection<SVGGElement> = D3S
     public readonly interaction = new BehaviorSubject<IInteractionEvent>({ type: InteractionType.Click, coordinates: { x: 0, y: 0 } });
     private isActive = false;
 
-    constructor(private target: TTarget, private interactiveArea: TInteractiveArea, cursor: string, private margin?: IAllAround<number>) {
+    constructor(private target: TTarget, private interactiveArea: TInteractiveArea, cursor: string, private gridMargin?: IAllAround<number>) {
         this.interactiveArea
             .style("cursor", cursor)
             .classed(MouseInteractiveArea.CONTAINER_CLASS, true);
@@ -46,13 +46,16 @@ export class MouseInteractiveArea<TTarget extends D3Selection<SVGGElement> = D3S
         if (isFirefox) {
             // this works in Firefox
 
-            // Note: Margins must be subtracted because of the transform that occurs in XYGrid.recalculateMargins
-            let calculatedX = x + event.offsetX - (this.margin?.left || 0);
+            // Note: Margin must be subtracted because of the transform that occurs in XYGrid.recalculateMargins
+            let calculatedX = x + event.offsetX - (this.gridMargin?.left || 0);
+
             // clamp output to right or left side of interactive area if necessary
             calculatedX = calculatedX > interactiveAreaWidth ? interactiveAreaWidth : calculatedX;
             x = calculatedX < 0 ? 0 : calculatedX;
 
-            let calculatedY = y + event.offsetY - (this.margin?.top || 0);
+            // Note: Margin must be subtracted because of the transform that occurs in XYGrid.recalculateMargins
+            let calculatedY = y + event.offsetY - (this.gridMargin?.top || 0);
+
             // clamp output to top or bottom side of interactive area if necessary
             calculatedY = calculatedY > interactiveAreaHeight ? interactiveAreaHeight : calculatedY;
             y = calculatedY < 0 ? 0 : calculatedY;
