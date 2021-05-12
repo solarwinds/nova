@@ -34,10 +34,8 @@ export type IGaugeThresholdConfigs = Record<string, IGaugeThresholdConfig>;
 export interface IGaugeThresholdConfig {
     /** The ID of the threshold level */
     id: string;
-    /** The lower bound (inclusive) of the threshold */
-    bottom: number;
-    /** The upper bound (exclusive) of the threshold */
-    top: number;
+    /** The value of the threshold */
+    value: number;
     /** Boolean indicating whether the threshold is enabled */
     enabled: boolean;
     /** String indicating the display color of the threshold */
@@ -50,7 +48,7 @@ export interface IGaugeThresholdConfig {
 */
 export interface IGaugeThreshold extends IGaugeThresholdConfig {
     /** Boolean indicating whether the threshold is hit */
-    hit: boolean;
+    isAtOrBelowQuantity: boolean;
     /** Additional metadata as needed */
     [key: string]: any;
 }

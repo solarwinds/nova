@@ -316,16 +316,16 @@ export class GaugeUtil {
             throw new Error("Thresholds are not defined in the gauge config. Unable to generate threshold data.")
         }
 
-        const markerValues = gaugeConfig.thresholds.map(threshold => ({
+        const markerValues: IGaugeThreshold[] = Object.values(gaugeConfig.thresholds).map((threshold: IGaugeThresholdConfig) => ({
             category: GaugeUtil.DATA_CATEGORY,
             value: threshold,
-            hit: threshold <= gaugeConfig.value,
+            hit: threshold.value <= gaugeConfig.value,
         }));
 
         return {
             id: GAUGE_THRESHOLD_MARKERS_SERIES_ID,
             // tack the max value onto the end (used for donut arc calculation)
-            data: [...markerValues, { category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max, hit: false }],
+            data: [...markerValues, { category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max, isAtOrBelowQuantity: false }],
         };
     }
 
