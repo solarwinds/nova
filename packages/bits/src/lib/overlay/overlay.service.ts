@@ -1,4 +1,4 @@
-import { Overlay, OverlayConfig, OverlayContainer, OverlayRef } from "@angular/cdk/overlay";
+import { Overlay, OverlayConfig, OverlayContainer, OverlayRef, OverlaySizeConfig } from "@angular/cdk/overlay";
 import { Portal } from "@angular/cdk/portal";
 import { DOCUMENT } from "@angular/common";
 import { Inject, Injectable, OnDestroy, Optional } from "@angular/core";
@@ -65,6 +65,10 @@ export class OverlayService implements OnDestroy {
 
     public getOverlayRef() {
         return this.overlayRef;
+    }
+
+    public updateSize(size: OverlaySizeConfig): void {
+        this.overlayRef.updateSize(size);
     }
 
     public ngOnDestroy() {
