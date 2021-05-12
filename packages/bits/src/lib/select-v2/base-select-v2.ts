@@ -215,7 +215,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
      */
     @HostListener("focusin")
     public onFocusIn() {
-        if (!this.mouseDown && !this.manualDropdownControl) {
+        if (this.isOpenOnFocus) {
             this.showDropdown();
         }
     }
@@ -482,5 +482,10 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         });
 
         this.virtualScrollResizeObserver.observe(element);
+    }
+
+    private get isOpenOnFocus(): boolean {
+        return !this.mouseDown && !this.manualDropdownControl
+            && document.activeElement === this.inputElement.nativeElement;
     }
 }

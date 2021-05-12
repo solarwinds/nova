@@ -71,6 +71,11 @@
             border-right: 1px solid;
             .setCssVariable(border-right-color, nui-color-line-default);
         }
+
+        &:focus {
+            border-radius: 6px;
+            .focus-outline-inset();
+        }
     }
 
     &__toggle.nui-button.action {
