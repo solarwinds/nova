@@ -1,7 +1,7 @@
-import {browser, by, element, ElementFinder} from "protractor";
+import { browser, by, element, ElementFinder } from "protractor";
 
-import {Atom} from "../../atom";
-import {Helpers} from "../../helpers";
+import { Atom } from "../../atom";
+import { Helpers } from "../../helpers";
 import {
     ButtonAtom,
     CheckboxAtom,
@@ -56,36 +56,10 @@ describe("USERCONTROL form-field >", () => {
         dateTimepickerModelElement = element(by.id("nui-form-field-test-datetimepicker-model"));
     });
 
-    it("should display caption", async () => {
-        expect(await atom.getCaptionText()).toBe("This caption is generic for all form fields");
-    });
-
-    it("should display (opt) for optional fields near caption", async () => {
-        expect(await atom.getStateText()).toBe("(optional)");
-    });
-
-    it("should display hint", async () => {
-        expect(await atom.getHintText()).toBe("Hint may be useful");
-    });
-
     it("should display hint template", async () => {
         expect(await hintWithTemplate.getHintText()).toBe("Hint template");
     });
 
-    it("should display info icon", async () => {
-        const iconAtom = atom.getInfoIcon();
-        const iconName = iconAtom.getName();
-        expect(iconName).toBe("severity_info");
-
-        const iconPopover = atom.getInfoPopover();
-        await iconPopover.openByHover();
-        const popoverAppendedToBody = iconPopover.getPopoverBody();
-        expect(await popoverAppendedToBody.getText()).toBe("Some info to show");
-
-        // Clean-up: Un-hovering icon to hide popover
-        await iconPopover.hover(undefined, { x: -1, y: -1 });
-        await iconPopover.waitForClosed();
-    });
     it("should display info from template", async () => {
         const iconAtom = atomWithTemplate.getInfoIcon();
         const iconName = await iconAtom.getName();
@@ -95,17 +69,6 @@ describe("USERCONTROL form-field >", () => {
         await iconPopover.openByHover();
         const popoverAppendedToBody = iconPopover.getPopoverBody();
         expect(await popoverAppendedToBody.getText()).toBe("Template with link");
-
-        // Clean-up: Un-hovering icon to hide popover
-        await iconPopover.hover(undefined, { x: -1, y: -1 });
-        await iconPopover.waitForClosed();
-    });
-
-    it("should display info icon with popover", async () => {
-        const iconPopover = atom.getInfoPopover();
-        await iconPopover.open();
-        const popoverAppendedToBody = iconPopover.getPopoverBody();
-        expect(await popoverAppendedToBody.getText()).toBe("Some info to show");
 
         // Clean-up: Un-hovering icon to hide popover
         await iconPopover.hover(undefined, { x: -1, y: -1 });
@@ -183,15 +146,18 @@ describe("USERCONTROL form-field >", () => {
         it("should dynamically enable texbox", async () => {
             expect(await textbox.disabled()).toBeFalsy();
         });
+
         it("should dynamically enable texbox-number", async () => {
             expect(await textboxNumber.isDisabled()).toBe(false);
         });
+
         it("should dynamically enable datepicker", async () => {
             expect(await datepicker.isDisabled()).toBeFalsy();
             await datepicker.toggle();
             expect(await datepicker.overlay.isOpened()).toBeTruthy();
             await datepicker.toggle();
         });
+
         it("should dynamically enable radioGroup", async () => {
             expect(await radioGroup.getNumberOfDisabledItems()).toBe(0);
         });
@@ -199,20 +165,23 @@ describe("USERCONTROL form-field >", () => {
         it("should dynamically enable checkbox", async () => {
             expect(await checkbox.isDisabled()).toBeFalsy();
         });
+
         it("should dynamically enable checkbox-group", async () => {
             expect(await checkboxGroup.isDisabled()).toBeFalsy();
         });
 
-
         it("should dynamically enable select", async () => {
             expect(await select.isSelectDisabled()).toBeFalsy();
         });
+
         it("should dynamically enable combobox", async () => {
             expect(await combobox.isSelectDisabled()).toBeFalsy();
         });
+
         it("should dynamically enable switch", async () => {
             expect(await switchElement.disabled()).toBeFalsy();
         });
+
         it("should dynamically enable timepicker", async () => {
             expect(await timepicker.textbox.disabled()).toBeFalsy();
             await timepicker.toggle();
@@ -227,21 +196,20 @@ describe("USERCONTROL form-field >", () => {
             await timepicker.icon.getElement().click();
             expect(await timepicker.textbox.input.getId())
                 .toEqual(await (await browser.switchTo().activeElement()).getId());
-
             await timepicker.icon.getElement().click();
         });
 
-        it("should change model for dateTimePicker", async () => {
+        xit("should change model for dateTimePicker", async () => { // review this test after NUI-6067 fixed
+            await dateTimepicker.getDatePicker().deleteTextManually();
             await dateTimepicker.getDatePicker().acceptText("01 Jan 2020");
-            const timeToSelect = TimepickerAtom.createTimeString(2, 0);
-            await dateTimepicker.getTimePicker().textbox.acceptText(timeToSelect);
-
-            expect(dateTimepickerModelElement.getText()).toBe("Wednesday, January 1, 2020 2:00 AM");
+            // const timeToSelect = TimepickerAtom.createTimeString(2, 0);
+            // await dateTimepicker.getTimePicker().textbox.acceptText(timeToSelect);
+            await dateTimepicker.getTimePicker().selectTime("2:00 AM");
+            expect(await dateTimepickerModelElement.getText()).toBe("Wednesday, January 1, 2020 2:00 AM");
         });
 
         it("should disable all components back", async () => {
             await toggleButton.click();
-
             expect(await textbox.disabled()).toBeTruthy();
             expect(await textboxNumber.isDisabled()).toBe(true);
             expect(await datepicker.isDisabled()).toBeTruthy();
