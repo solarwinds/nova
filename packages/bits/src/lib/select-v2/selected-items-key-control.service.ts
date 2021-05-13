@@ -34,12 +34,6 @@ export class SelectedItemsKeyControlService {
         const caretPosition = (event.target as HTMLInputElement).selectionStart;
         const isKeyAllowed = this.isBackspace(event) || this.isLeftOrRightArrow(event);
 
-        if(event.code === "Enter" && this.activeItem) {
-            this.removeChipsByEnter();
-
-            return;
-        }
-
         if ((caretPosition !== 0) || (!this.activeItem && this.isRightArrow(event))) {
             return;
         }
@@ -166,12 +160,8 @@ export class SelectedItemsKeyControlService {
         if (!isNil(this.selectedItemsKeyManager.activeItemIndex)) {
             this.calculateActiveSelectedItemIndex();
             this.combobox.deselectItem(this.selectedItemsKeyManager.activeItemIndex);
+            this.liveAnnouncer.announce(`${this.getActiveItemTitle} removed`);
         }
-    }
-
-    private removeChipsByEnter(): void {
-        this.deselectItem();
-        this.liveAnnouncer.announce(`${this.getActiveItemTitle} removed`);
     }
 
     private get getActiveItemTitle(): string {
