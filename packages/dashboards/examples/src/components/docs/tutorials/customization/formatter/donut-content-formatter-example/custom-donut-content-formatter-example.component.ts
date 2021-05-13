@@ -66,7 +66,7 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
     public currentMetricData: number;
 
     // Metric value rendered inside the template, when user selects a metric, and gets automatically recalculated depending on selected units
-    public chartContent: number;
+    public chartContent: string;
 
     // Metric value rendered inside the template, when user interacts with either chart legend, or chart segments
     public chartMetric: number;
@@ -136,7 +136,7 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
     }
 
     public setContentValue(): void {
-        this.chartContent = this.getConvertedData(this.emphasizedSeriesData?.data[0]);
+        this.chartContent = this.getConvertedData(this.emphasizedSeriesData?.data[0])?.toLocaleString();
     }
 
     public setMetricValue(): void {

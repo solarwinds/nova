@@ -18,13 +18,17 @@ export class DashboardUnitConversionPipe implements PipeTransform {
      * @returns The string representation of the converted value
      */
     public transform = (value: string | number | undefined): string => {
-        const valueAsNumber = typeof value === "string" ? parseInt(value, 10) : value;
+        const valueAsNumber = typeof value === "string" ? parseFloat(value) : value;
 
-        if (valueAsNumber === undefined || isNaN(valueAsNumber) || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
+        if (valueAsNumber === undefined || isNaN(valueAsNumber)) {
             return value?.toString() || "";
         }
 
-        const conversion = this.unitConversionService.convert(value as number, UnitBase.Standard, 1);
+        if (valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
+            return valueAsNumber?.toLocaleString() || "";
+        }
+
+        const conversion = this.unitConversionService.convert(valueAsNumber, UnitBase.Standard, 1);
         return this.unitConversionService.getFullDisplay(conversion, "generic");
     }
 }

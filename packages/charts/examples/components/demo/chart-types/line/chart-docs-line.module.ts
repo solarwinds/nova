@@ -16,6 +16,7 @@ import { LineChartTestComponent } from "./line-chart-test/line-chart-test.compon
 import { LineChartVisualTestComponent } from "./line-chart-visual-test/line-chart-visual-test.component";
 import { LineChartWith2YAxesExampleComponent } from "./line-chart-with-2y-axes/line-chart-with-2y-axes-example.component";
 import { LineChartWithAxisLabelsExampleComponent } from "./line-chart-with-axis-labels/line-chart-with-axis-labels.example.component";
+import { LineChartWithLargeValuesExampleComponent } from "./line-chart-with-large-values/line-chart-with-large-values.example.component";
 import { LineChartWithLegendExampleComponent } from "./line-chart-with-legend/line-chart-with-legend.example.component";
 import { LineChartWithRichTileLegendExampleComponent } from "./line-chart-with-rich-tile-legend/line-chart-with-rich-tile-legend.example.component";
 
@@ -112,6 +113,7 @@ const exampleRoutes: Routes = [
         LineChartInterruptedBasicExampleComponent,
         LineChartInterruptedPathTerminusExampleComponent,
         LineChartInterruptedCalculatedExampleComponent,
+        LineChartWithLargeValuesExampleComponent,
     ],
     imports: [
         DemoCommonModule,

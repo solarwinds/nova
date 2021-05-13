@@ -55,6 +55,7 @@ export class UnitConversionService {
         return {
             value: strValue,
             order: resultOrder,
+            scale,
         };
     }
 
@@ -90,8 +91,9 @@ export class UnitConversionService {
             return nanDisplay;
         }
 
-        const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
-        return `${prefix}${conversion.value}`;
+        const outputNumber = parseFloat(conversion.value);
+        const prefix = plusSign && outputNumber > 0 ? "+" : "";
+        return `${prefix}${outputNumber.toLocaleString(undefined, { maximumFractionDigits: conversion.scale })}`;
     }
 
     /**
