@@ -1,7 +1,7 @@
-import {browser, by, element, ElementFinder } from "protractor";
+import { browser, by, element, ElementFinder } from "protractor";
 
-import {Atom} from "../../atom";
-import {Helpers} from "../../helpers";
+import { Atom } from "../../atom";
+import { Helpers } from "../../helpers";
 import {
     ButtonAtom,
     CheckboxAtom,
@@ -120,7 +120,7 @@ describe("USERCONTROL form-field >", () => {
         });
     });
 
-    fit("should set initial disabled state to the fields of form", async () => {
+    it("should set initial disabled state to the fields of form", async () => {
         expect(await textbox.disabled()).toBeTruthy();
         expect(await textboxNumber.isDisabled()).toBe(true);
         expect(await datepicker.isDisabled()).toBeTruthy();
