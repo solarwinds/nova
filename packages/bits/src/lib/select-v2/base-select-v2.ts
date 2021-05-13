@@ -40,6 +40,7 @@ import { InputValueTypes, IOptionedComponent } from "./types";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import ResizeObserver from "resize-observer-polyfill";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE } from "./constants";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
@@ -217,6 +218,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     public onFocusIn() {
         if (this.isOpenOnFocus) {
             this.showDropdown();
+            this.announceDropdown(true);
         }
     }
 
@@ -245,13 +247,14 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.dropdown.show();
         this.setActiveItemOnDropdown();
         this.scrollToOption();
-        this.liveAnnouncer.announce(`${this.options.length} options available`);
+        this.announceDropdown(true);
     }
 
     /** Hides dropdown */
     public hideDropdown(): void {
         if (!this.isDisabled) {
             this.dropdown.hide();
+            this.announceDropdown(false);
         }
     }
 
@@ -262,6 +265,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         }
 
         this.dropdown.toggle();
+        this.announceDropdown(this.dropdown.showing);
 
         this.setActiveItemOnDropdown();
         this.scrollToOption();
@@ -487,5 +491,11 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     private get isOpenOnFocus(): boolean {
         return !this.mouseDown && !this.manualDropdownControl
             && document.activeElement === this.inputElement.nativeElement;
+    }
+
+    private announceDropdown(open: boolean) {
+        const message = open ? ANNOUNCER_OPEN_MESSAGE(this.options.length) : ANNOUNCER_CLOSE_MESSAGE;
+
+        this.liveAnnouncer.announce(message);
     }
 }

@@ -11,6 +11,7 @@ import { SelectV2OptionComponent } from "../option/select-v2-option.component";
 import { InputValueTypes } from "../types";
 
 import { SelectV2Component } from "./select-v2.component";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 
 @Component({
     template: `
@@ -95,6 +96,7 @@ describe("components >", () => {
                 providers: [
                     ChangeDetectorRef,
                     OptionKeyControlService,
+                    LiveAnnouncer,
                 ],
                 imports: [
                     FormsModule,

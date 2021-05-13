@@ -4,6 +4,7 @@ import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
 
 import { IOption, IOverlayComponent } from "../overlay/types";
+import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE } from "./constants";
 
 @Injectable()
 export class OptionKeyControlService<T extends IOption> {
@@ -88,6 +89,7 @@ export class OptionKeyControlService<T extends IOption> {
 
         if (event.keyCode === TAB || event.keyCode === ESCAPE) {
             this.popup.toggle();
+            this.announceDropdown(this.popup.showing);
         }
     }
 
@@ -122,5 +124,11 @@ export class OptionKeyControlService<T extends IOption> {
         if (activeItem) {
             this.liveAnnouncer.announce((activeItem as any).value);
         }
+    }
+
+    private announceDropdown(open: boolean) {
+        const message = open ? ANNOUNCER_OPEN_MESSAGE(this.optionItems.length) : ANNOUNCER_CLOSE_MESSAGE;
+
+        this.liveAnnouncer.announce(message);
     }
 }

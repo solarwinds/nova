@@ -10,6 +10,7 @@ import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
 
 import { ComboboxV2Component } from "./combobox-v2.component";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 
 const selectedValuesMock: OptionValueType[] = [
     {id: "item-0", name: "Item 0"},
@@ -57,6 +58,7 @@ describe("components >", () => {
                 providers: [
                     ChangeDetectorRef,
                     OptionKeyControlService,
+                    LiveAnnouncer,
                 ],
                 imports: [
                     NuiOverlayModule,
