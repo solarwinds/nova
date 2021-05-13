@@ -1,4 +1,4 @@
-import {browser, by, element, ElementFinder, ExpectedConditions } from "protractor";
+import {browser, by, element, ElementFinder } from "protractor";
 
 import {Atom} from "../../atom";
 import {Helpers} from "../../helpers";
@@ -15,7 +15,7 @@ import {
     SwitchAtom,
     TextboxAtom,
     TextboxNumberAtom,
-    TimepickerAtom
+    TimepickerAtom,
 } from "../public_api";
 
 describe("USERCONTROL form-field >", () => {
@@ -120,12 +120,11 @@ describe("USERCONTROL form-field >", () => {
         });
     });
 
-    it("should set initial disabled state to the fields of form", async () => {
+    fit("should set initial disabled state to the fields of form", async () => {
         expect(await textbox.disabled()).toBeTruthy();
         expect(await textboxNumber.isDisabled()).toBe(true);
         expect(await datepicker.isDisabled()).toBeTruthy();
         await datepicker.toggle();
-        await browser.wait(ExpectedConditions.presenceOf(datepicker.getElement()), 5000);
         expect(await datepicker.overlay.isOpened()).toBeFalsy();
         expect(await radioGroup.getNumberOfDisabledItems()).toBe(1);
         expect(await checkbox.isDisabled()).toBeTruthy();
@@ -205,7 +204,7 @@ describe("USERCONTROL form-field >", () => {
             await dateTimepicker.getDatePicker().acceptText("01 Jan 2020");
             // const timeToSelect = TimepickerAtom.createTimeString(2, 0);
             // await dateTimepicker.getTimePicker().textbox.acceptText(timeToSelect);
-            await dateTimepicker.getTimePicker().selectTime("2:00 AM");   
+            await dateTimepicker.getTimePicker().selectTime("2:00 AM");
             expect(await dateTimepickerModelElement.getText()).toBe("Wednesday, January 1, 2020 2:00 AM");
         });
 
