@@ -2,8 +2,7 @@ import { event, mouse } from "d3-selection";
 import { BehaviorSubject } from "rxjs";
 
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
-import { BarRenderer } from "../../renderers/bar/bar-renderer";
-import { MarkerUtils } from "../../renderers/marker-utils";
+import { IAllAround } from "../grid/types";
 
 import { D3Selection, IInteractionEvent, InteractionType } from "./types";
 
@@ -18,7 +17,7 @@ export class MouseInteractiveArea<TTarget extends D3Selection<SVGGElement> = D3S
     public readonly interaction = new BehaviorSubject<IInteractionEvent>({ type: InteractionType.Click, coordinates: { x: 0, y: 0 } });
     private isActive = false;
 
-    constructor(private target: TTarget, private interactiveArea: TInteractiveArea, cursor: string) {
+    constructor(private target: TTarget, private interactiveArea: TInteractiveArea, cursor: string, private gridMargin?: IAllAround<number>) {
         this.interactiveArea
             .style("cursor", cursor)
             .classed(MouseInteractiveArea.CONTAINER_CLASS, true);
@@ -31,7 +30,7 @@ export class MouseInteractiveArea<TTarget extends D3Selection<SVGGElement> = D3S
             .on(InteractionType.Click, () => this.onMouseInteraction(InteractionType.Click));
     }
 
-    public onMouseInteraction = (interactionType: InteractionType) => {
+    public onMouseInteraction = (interactionType: InteractionType): void => {
         if (event.target.classList.contains(IGNORE_INTERACTION_CLASS)) {
             return;
         }
@@ -47,24 +46,22 @@ export class MouseInteractiveArea<TTarget extends D3Selection<SVGGElement> = D3S
         if (isFirefox) {
             // this works in Firefox
 
-            // the only problem is offsetX and offsetY return coordinates relative to originalTarget, that can be a "bar"
-            const classList = event.originalTarget.classList;
-            if (classList.contains(BarRenderer.BAR_RECT_CLASS) || classList.contains(MarkerUtils.MARKER_PATH_CLASS)) {
-                x = parseFloat(event.originalTarget.attributes.x.value);
-                y = parseFloat(event.originalTarget.attributes.y.value);
-            }
+            // Note: Margin must be subtracted because of the transform that occurs in XYGrid.recalculateMargins
+            let calculatedX = x + event.offsetX - (this.gridMargin?.left || 0);
 
-            let calculatedX = x + event.offsetX;
             // clamp output to right or left side of interactive area if necessary
             calculatedX = calculatedX > interactiveAreaWidth ? interactiveAreaWidth : calculatedX;
             x = calculatedX < 0 ? 0 : calculatedX;
 
-            let calculatedY = y + event.offsetY;
+            // Note: Margin must be subtracted because of the transform that occurs in XYGrid.recalculateMargins
+            let calculatedY = y + event.offsetY - (this.gridMargin?.top || 0);
+
             // clamp output to top or bottom side of interactive area if necessary
             calculatedY = calculatedY > interactiveAreaHeight ? interactiveAreaHeight : calculatedY;
             y = calculatedY < 0 ? 0 : calculatedY;
         } else {
             // this works in Chrome
+
             const mouseOutput = mouse(event.currentTarget);
 
             // clamp output to right or left side of interactive area if necessary
@@ -81,7 +78,7 @@ export class MouseInteractiveArea<TTarget extends D3Selection<SVGGElement> = D3S
         });
     }
 
-    public onMouseOver = () => {
+    public onMouseOver = (): void => {
         if (this.isActive || event.target.classList.contains(IGNORE_INTERACTION_CLASS)) {
             return;
         }
@@ -90,7 +87,7 @@ export class MouseInteractiveArea<TTarget extends D3Selection<SVGGElement> = D3S
         this.active.next(true);
     }
 
-    public onMouseOut = () => {
+    public onMouseOut = (): void => {
         if (!this.isActive) {
             return;
         }
@@ -112,13 +109,13 @@ export class MouseInteractiveArea<TTarget extends D3Selection<SVGGElement> = D3S
 
     // Remove in v12 - NUI-5827
     /** @deprecated - Please use 'onMouseOver' instead */
-    public onMouseEnter = () => {
+    public onMouseEnter = (): void => {
         this.onMouseOver();
     }
 
     // Remove in v12 - NUI-5827
     /** @deprecated - Please use 'onMouseOut' instead */
-    public onMouseLeave = () => {
+    public onMouseLeave = (): void => {
         this.onMouseOut();
     }
 }

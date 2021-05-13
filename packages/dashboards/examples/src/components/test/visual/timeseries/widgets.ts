@@ -107,7 +107,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Line chart",
+                        "title": "Line Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -170,7 +170,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Line chart",
+                        "title": "Line Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -241,7 +241,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Area chart",
+                        "title": "Area Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -309,7 +309,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Area chart",
+                        "title": "Area Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -385,7 +385,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Stacked percentage area",
+                        "title": "Stacked Percentage Area Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -453,7 +453,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Stacked percentage area",
+                        "title": "Stacked Percentage Area Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -529,7 +529,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Bar chart",
+                        "title": "Bar Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -592,7 +592,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Bar chart",
+                        "title": "Bar Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -663,7 +663,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Status chart",
+                        "title": "Status Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -721,7 +721,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Status chart",
+                        "title": "Status Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
