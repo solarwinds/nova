@@ -35,7 +35,7 @@ export const POPUP_V2_VIEWPORT_MARGINS_DEFAULT = 30;
     selector: "nui-overlay",
     template: `
         <ng-template cdk-portal>
-            <div class="nui-overlay" [attr.role]="roleAttr || null" [ngClass]="{'empty': empty$ | async}">
+            <div id="nui-overlay" class="nui-overlay" [attr.role]="roleAttr || null" [ngClass]="{'empty': empty$ | async}">
                 <ng-content></ng-content>
             </div>
         </ng-template>`,
