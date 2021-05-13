@@ -20,12 +20,8 @@ export class DashboardUnitConversionPipe implements PipeTransform {
     public transform = (value: string | number | undefined): string => {
         const valueAsNumber = typeof value === "string" ? parseFloat(value) : value;
 
-        if (valueAsNumber === undefined || isNaN(valueAsNumber)) {
+        if (valueAsNumber === undefined || isNaN(valueAsNumber) || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
             return value?.toString() || "";
-        }
-
-        if (valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
-            return valueAsNumber?.toLocaleString() || "";
         }
 
         const conversion = this.unitConversionService.convert(valueAsNumber, UnitBase.Standard, 1);

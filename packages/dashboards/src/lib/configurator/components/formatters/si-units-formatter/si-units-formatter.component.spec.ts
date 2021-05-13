@@ -50,7 +50,7 @@ const TEST_DATA: any[] = [
         },
         expected: {
             value: "11.2",
-            modifier: "K",
+            modifier: "k",
         },
     },
     {

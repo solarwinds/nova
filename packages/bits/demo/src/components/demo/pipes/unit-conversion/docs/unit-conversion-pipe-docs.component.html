@@ -5,6 +5,10 @@
     include the following: <code>"generic"</code> (e.g. 1K for 1000), <code>"bytes"</code>, <code>"bytesPerSecond"</code>, <code>"bitsPerSecond"</code>, and
     <code>"hertz"</code>.
 </p>
+<nui-message type="warning" [allowDismiss]="false">
+    <strong>Note:</strong> The pipe will localize the output for all supported units except the "generic" unit. Localization for the "generic" unit is not
+    yet supported.
+</nui-message>
 <nui-message type="info" [allowDismiss]="false">
     Under the hood, this pipe uses the <code><a href="../injectables/UnitConversionService.html" target="_blank">UnitConversionService</a></code>. If the pipe
     doesn't offer something that you need, such as separating the value and unit out into separate outputs, or you need to convert a value outside the context
