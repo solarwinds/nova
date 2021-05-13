@@ -60,6 +60,8 @@ import { InputValueTypes } from "../types";
         "class": "nui-combobox-v2",
         "role": "combobox",
         "[attr.aria-expanded]": "isDropdownOpen || false",
+        "aria-haspopup": "listbox",
+        "aria-owns": "nui-overlay",
     },
 })
 
