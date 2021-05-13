@@ -388,7 +388,8 @@ describe("components >", () => {
             it("should make form control touched on focusout", () => {
                 expect(wrapperComponent.comboboxControl.touched).toBeFalsy();
 
-                wrapperComponent.combobox.elRef.nativeElement.dispatchEvent(new Event("focusin"));
+                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                input.nativeElement.focus();
                 document.body.click();
 
                 expect(wrapperComponent.comboboxControl.touched).toBeTruthy();
@@ -406,7 +407,8 @@ describe("components >", () => {
             it("should set the control to dirty when the value changes in DOM", () => {
                 expect(wrapperComponent.comboboxControl.dirty).toBeFalsy();
 
-                wrapperComponent.combobox.elRef.nativeElement.dispatchEvent(new Event("focusin"));
+                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                input.nativeElement.focus();
                 const option = wrapperFixture.debugElement.query(By.css("nui-select-v2-option"));
                 option.nativeElement.click();
 
