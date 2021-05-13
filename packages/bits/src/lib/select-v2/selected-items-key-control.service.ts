@@ -1,4 +1,4 @@
-import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
+import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
 import { BACKSPACE, LEFT_ARROW, RIGHT_ARROW } from "@angular/cdk/keycodes";
 import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
@@ -16,6 +16,8 @@ export class SelectedItemsKeyControlService {
     private combobox: ComboboxV2Component;
     private inputElement: HTMLInputElement;
 
+    constructor(public liveAnnouncer: LiveAnnouncer) {}
+
     public initSelectedItemsKeyManager(elems: QueryList<MarkAsSelectedItemDirective>, combobox: ComboboxV2Component): void {
         this.combobox = combobox;
         this.inputElement = combobox.inputElement?.nativeElement;
@@ -32,6 +34,12 @@ export class SelectedItemsKeyControlService {
         const caretPosition = (event.target as HTMLInputElement).selectionStart;
         const isKeyAllowed = this.isBackspace(event) || this.isLeftOrRightArrow(event);
 
+        if(event.code === "Enter" && this.activeItem) {
+            this.removeChipsByEnter();
+
+            return;
+        }
+
         if ((caretPosition !== 0) || (!this.activeItem && this.isRightArrow(event))) {
             return;
         }
@@ -47,6 +55,7 @@ export class SelectedItemsKeyControlService {
 
         if (this.isLeftArrow(event) && (this.activeItem !== this.selectedItems.first)) {
             this.selectedItemsKeyManager.onKeydown(event);
+            this.liveAnnouncer.announce(`${this.getActiveItemTitle} selected`);
             return;
         }
 
@@ -75,9 +84,8 @@ export class SelectedItemsKeyControlService {
     }
 
     private handleBackspace(): void {
-        if (this.activeItem && !isNil(this.selectedItemsKeyManager.activeItemIndex)) {
-            this.calculateActiveSelectedItemIndex();
-            this.combobox.deselectItem(this.selectedItemsKeyManager.activeItemIndex);
+        if (this.activeItem) {
+            this.deselectItem();
             return;
         }
 
@@ -102,6 +110,7 @@ export class SelectedItemsKeyControlService {
         }
 
         this.selectedItemsKeyManager.onKeydown(event);
+        this.liveAnnouncer.announce(`${this.getActiveItemTitle} selected`);
     }
 
     private calculateActiveSelectedItemIndex(): void {
@@ -121,7 +130,7 @@ export class SelectedItemsKeyControlService {
             this.activeSelectedItemIndex = 0;
             return;
         }
-        
+
         if (previousItemIndex === -1 && this.selectedItems.length) {
             this.activeSelectedItemIndex = undefined;
             return;
@@ -151,5 +160,21 @@ export class SelectedItemsKeyControlService {
 
     private get activeItem() {
         return this.selectedItemsKeyManager.activeItem;
+    }
+
+    private deselectItem(): void {
+        if (!isNil(this.selectedItemsKeyManager.activeItemIndex)) {
+            this.calculateActiveSelectedItemIndex();
+            this.combobox.deselectItem(this.selectedItemsKeyManager.activeItemIndex);
+        }
+    }
+
+    private removeChipsByEnter(): void {
+        this.deselectItem();
+        this.liveAnnouncer.announce(`${this.getActiveItemTitle} removed`);
+    }
+
+    private get getActiveItemTitle(): string {
+        return this.activeItem?.cdRef.context.item.label || "";
     }
 }
