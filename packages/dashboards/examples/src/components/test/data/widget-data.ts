@@ -548,7 +548,7 @@ export const getTimeseriesEventsData = () => (
                 { x: frozenTime().subtract(4, "day").toDate(), y:  984900 },
                 { x: frozenTime().subtract(3, "day").toDate(), y:  988900 },
                 { x: frozenTime().subtract(2, "day").toDate(), y:  994900 },
-                { x: frozenTime().subtract(1, "day").toDate(), y:  998900 },
+                { x: frozenTime().subtract(1, "day").toDate(), y:  999999 },
             ],
         },
         {

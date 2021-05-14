@@ -136,6 +136,14 @@ describe("services >", () => {
                 subject.getValueDisplay(conversion);
                 expect(spy).toHaveBeenCalledWith(undefined, { maximumFractionDigits: scale });
             });
+
+            it("should disable localization of the output", () => {
+                const scale = 3;
+                const spy = spyOn(Number.prototype, "toLocaleString");
+                const conversion = subject.convert(1000, UnitBase.Standard, scale);
+                subject.getValueDisplay(conversion, false, "---", false);
+                expect(spy).not.toHaveBeenCalled();
+            });
         });
 
         describe("getUnitDisplay >", () => {

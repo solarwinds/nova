@@ -74,7 +74,9 @@ export class UnitConversionService {
         const spacing = unit !== "generic" && isValidNumber ? " " : "";
         const unitDisplay = isValidNumber ? this.getUnitDisplay(conversion, unit) : "";
 
-        return `${this.getValueDisplay(conversion, plusSign, nanDisplay)}${spacing}${unitDisplay}`;
+        // The generic unit is not currently i18n friendly
+        const localizeValue = unit !== "generic";
+        return `${this.getValueDisplay(conversion, plusSign, nanDisplay, localizeValue)}${spacing}${unitDisplay}`;
     }
 
     /**
@@ -83,17 +85,19 @@ export class UnitConversionService {
      * @param conversion The result of an invocation of this service's convert method
      * @param plusSign Whether to prepend the display string with a '+'
      * @param nanDisplay The string to display in case the conversion result is NaN or Infinity
+     * @param localize Whether to localize the value for display. Note: It's not recommended to localize values for
+     *                 the "generic" unit, e.g. "1.1K" for 1100, as the "generic" unit is currently not i18n friendly
      *
      * @returns {string} The converted value display string
      */
-    public getValueDisplay(conversion: IUnitConversionResult, plusSign = false, nanDisplay = "---"): string {
+    public getValueDisplay(conversion: IUnitConversionResult, plusSign = false, nanDisplay = "---", localize = true): string {
         if (!this.isValidNumber(conversion.value)) {
             return nanDisplay;
         }
 
-        const outputNumber = parseFloat(conversion.value);
-        const prefix = plusSign && outputNumber > 0 ? "+" : "";
-        return `${prefix}${outputNumber.toLocaleString(undefined, { maximumFractionDigits: conversion.scale })}`;
+        const outputValue = localize ? parseFloat(conversion.value).toLocaleString(undefined, { maximumFractionDigits: conversion.scale }) : conversion.value;
+        const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
+        return `${prefix}${outputValue}`;
     }
 
     /**
