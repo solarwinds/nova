@@ -36,6 +36,7 @@ export abstract class BaseLayout implements IHasChangeDetector, OnChanges, DoChe
     public ngDoCheck(): void {
         if (this.checkNodeConfigs()) {
             this.updateNodeConfigs();
+            this.changeDetector.detectChanges();
         }
     }
 
