@@ -4,7 +4,7 @@ import {CdkStepper} from "@angular/cdk/stepper";
 import {DOCUMENT} from "@angular/common";
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, Input, Optional, ViewEncapsulation} from "@angular/core";
 
-import {wizardAnimations} from "../wizard-animations";
+import {wizardAnimations} from "../wizard-animations/wizard-animations";
 import { WizardDirective } from "../../../../dist";
 
 @Component({

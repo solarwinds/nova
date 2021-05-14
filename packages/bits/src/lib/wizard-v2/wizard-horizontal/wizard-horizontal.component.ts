@@ -2,7 +2,7 @@ import {BooleanInput} from "@angular/cdk/coercion";
 import {CdkStepper} from "@angular/cdk/stepper";
 import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from "@angular/core";
 
-import {wizardAnimations} from "../wizard-animations";
+import {wizardAnimations} from "../wizard-animations/wizard-animations";
 import { WizardDirective } from "../wizard.directive";
 
 @Component({

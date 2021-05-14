@@ -4,7 +4,7 @@ import {NuiCommonModule} from "../../common/common.module";
 import {NuiIconModule} from "../icon/icon.module";
 
 import {ErrorStateMatcher} from "./error-state-matcher.provider";
-import {WizardStepperNextDirective, WizardStepperPreviousDirective} from "./wizard-button";
+import {WizardStepperNextDirective, WizardStepperPreviousDirective} from "./wizard-button/wizard-button";
 import {WizardFooterComponent} from "./wizard-footer/wizard-footer.component";
 import {WizardHorizontalComponent} from "./wizard-horizontal/wizard-horizontal.component";
 import {WizardStepFooterDirective} from "./wizard-step-footer.directive";
