@@ -1,6 +1,13 @@
 import {AnimationEvent} from "@angular/animations";
 import {BooleanInput} from "@angular/cdk/coercion";
-import {CdkStep, CdkStepper, StepContentPositionState, StepperOptions, STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
+import {
+    CdkStep,
+    CdkStepper,
+    StepContentPositionState,
+    StepperOptions,
+    STEPPER_GLOBAL_OPTIONS,
+    StepperSelectionEvent,
+} from "@angular/cdk/stepper";
 import {
     AfterContentInit,
     ChangeDetectionStrategy,
@@ -91,6 +98,8 @@ export class WizardDirective extends CdkStepper implements AfterContentInit {
     @ViewChildren(WizardStepHeaderComponent) _stepHeader: QueryList<WizardStepHeaderComponent>;
     /** Event emitted when the current step is done transitioning in. */
     @Output() readonly animationDone: EventEmitter<void> = new EventEmitter<void>();
+    /** Event emitted when the selected step has changed. */
+    @Output() readonly selectionChange = new EventEmitter<StepperSelectionEvent>();
     /** Whether ripples should be disabled for the step headers. */
     @Input() disableRipple: boolean;
     /** Stream of animation `done` events when the body expands/collapses. */
