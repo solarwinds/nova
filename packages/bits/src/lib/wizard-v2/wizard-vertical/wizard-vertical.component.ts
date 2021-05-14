@@ -5,7 +5,7 @@ import {DOCUMENT} from "@angular/common";
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, Input, Optional, ViewEncapsulation} from "@angular/core";
 
 import {wizardAnimations} from "../wizard-animations/wizard-animations";
-import { WizardDirective } from "../../../../dist";
+import { WizardDirective } from "../wizard.directive";
 
 @Component({
     selector: "nui-wizard-vertical",
