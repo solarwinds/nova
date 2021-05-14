@@ -494,8 +494,14 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     private announceDropdown(open: boolean): void {
-        const message = open ? ANNOUNCER_OPEN_MESSAGE(this.options.length) : ANNOUNCER_CLOSE_MESSAGE;
+        if (open) {
+            this.liveAnnouncer.announce(ANNOUNCER_OPEN_MESSAGE(this.options.length));
 
-        this.liveAnnouncer.announce(message);
+            return;
+        }
+
+        const msg = this.value ? `${this.value} selected ${ANNOUNCER_CLOSE_MESSAGE}` : ANNOUNCER_CLOSE_MESSAGE;
+
+        this.liveAnnouncer.announce(msg);
     }
 }
