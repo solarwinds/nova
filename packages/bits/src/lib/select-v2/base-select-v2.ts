@@ -216,7 +216,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
      */
     @HostListener("focusin")
     public onFocusIn() {
-        if (this.isOpenOnFocus) {
+        if (this.isOpenOnFocus()) {
             this.showDropdown();
             this.announceDropdown(true);
         }
@@ -488,12 +488,12 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.virtualScrollResizeObserver.observe(element);
     }
 
-    private get isOpenOnFocus(): boolean {
+    private isOpenOnFocus(): boolean {
         return !this.mouseDown && !this.manualDropdownControl
             && document.activeElement === this.inputElement.nativeElement;
     }
 
-    private announceDropdown(open: boolean) {
+    private announceDropdown(open: boolean): void {
         const message = open ? ANNOUNCER_OPEN_MESSAGE(this.options.length) : ANNOUNCER_CLOSE_MESSAGE;
 
         this.liveAnnouncer.announce(message);

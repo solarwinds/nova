@@ -338,6 +338,7 @@ describe("components >", () => {
             });
 
             it("should show dropdown, when mouseDown is false", () => {
+                spyOn(component, "isOpenOnFocus" as never).and.returnValue(true as never);
                 component["mouseDown"] = false;
                 element.dispatchEvent(new Event("focusin"));
                 expect(component["dropdown"].showing).toEqual(true);
@@ -612,6 +613,7 @@ describe("components >", () => {
             });
 
             it("should make form control touched on focusout", () => {
+                spyOn(wrapperWithFormControlComponent.select, "isOpenOnFocus" as never).and.returnValue(true as never);
                 expect(wrapperWithFormControlComponent.selectControl.touched).toBeFalsy();
 
                 wrapperWithFormControlComponent.select.elRef.nativeElement.dispatchEvent(new Event("focusin"));
@@ -630,6 +632,7 @@ describe("components >", () => {
             });
 
             it("should set the control to dirty when the value changes in DOM", () => {
+                spyOn(wrapperWithFormControlComponent.select, "isOpenOnFocus" as never).and.returnValue(true as never);
                 expect(wrapperWithFormControlComponent.selectControl.dirty).toBeFalsy();
 
                 wrapperWithFormControlComponent.select.elRef.nativeElement.dispatchEvent(new Event("focusin"));
