@@ -56,16 +56,16 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
         super(_elementRef);
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this._focusMonitor.monitor(this._elementRef, true);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this._focusMonitor.stopMonitoring(this._elementRef);
     }
 
     /** Focuses the step header. */
-    focus() {
+    focus(): void {
         this._focusMonitor.focusVia(this._elementRef, "program");
     }
 

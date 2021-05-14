@@ -111,7 +111,7 @@ export class WizardDirective extends CdkStepper implements AfterContentInit {
         this.selectedIndex = this.steps ? this.steps.toArray().indexOf(step) : -1;
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit(): void {
         this.steps.changes.pipe(takeUntil(this._destroyed))
             .subscribe(() => this._stateChanged());
         this._animationDone.pipe(
