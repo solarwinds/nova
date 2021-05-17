@@ -41,7 +41,7 @@ export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
                 this.dataSourceError = err;
                 this.errorState.emit(!!this.dataSourceError);
                 this.changeDetector.markForCheck();
-        });
+            });
 
         this.dataSourceManager?.busy$
             .pipe(takeUntil(this.onDestroy$))
