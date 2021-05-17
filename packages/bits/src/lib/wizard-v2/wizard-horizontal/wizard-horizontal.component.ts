@@ -2,14 +2,14 @@ import {BooleanInput} from "@angular/cdk/coercion";
 import {CdkStepper} from "@angular/cdk/stepper";
 import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from "@angular/core";
 
-import {wizardAnimations} from "./wizard-animations";
-import {WizardDirective} from "./wizard-step.component";
+import {wizardAnimations} from "../wizard-animations/wizard-animations";
+import { WizardDirective } from "../wizard.directive";
 
 @Component({
     selector: "nui-wizard-horizontal",
     exportAs: "wizardHorizontal",
     templateUrl: "wizard-horizontal.component.html",
-    styleUrls: ["wizard.component.less"],
+    styleUrls: ["../wizard.component.less"],
     host: {
         "class": "nui-wizard-horizontal-layout",
         "[class.nui-wizard-label-position-end]": "labelPosition == 'end'",
