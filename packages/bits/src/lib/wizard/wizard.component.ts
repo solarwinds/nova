@@ -15,7 +15,7 @@ import {
     ViewChild,
     ViewChildren,
     ViewContainerRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _find from "lodash/find";
 import _findIndex from "lodash/findIndex";
@@ -124,11 +124,11 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
             this.changeDetector.detectChanges();
         }
         this.steps.toArray().forEach((step: WizardStepComponent) => {
-                step.valid.subscribe((event: any) => {
-                    if (!_isUndefined(event)) {
-                        this.handleStepControl(step);
-                    }
-                });
+            step.valid.subscribe((event: any) => {
+                if (!_isUndefined(event)) {
+                    this.handleStepControl(step);
+                }
+            });
         });
         this.navigationControl.subscribe(value => {
             if (this.currentStep) {
@@ -251,8 +251,8 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
             let previousStep = this.arraySteps[this.stepIndex - 1];
             if (previousStep.hidden || previousStep.disabled) {
                 previousStep = _find(this.arraySteps.slice(0).reverse(),
-                        step => !step.hidden,
-                    _findIndex(this.arraySteps.slice(0).reverse(), this.arraySteps[this.stepIndex]) + 1);
+                                     step => !step.hidden,
+                                     _findIndex(this.arraySteps.slice(0).reverse(), this.arraySteps[this.stepIndex]) + 1);
             }
             this.selectStep(previousStep);
             this.back.emit();

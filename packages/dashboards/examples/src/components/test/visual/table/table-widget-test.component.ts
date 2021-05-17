@@ -5,7 +5,7 @@ import {
     IDashboard,
     IWidget,
     ProviderRegistryService,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 

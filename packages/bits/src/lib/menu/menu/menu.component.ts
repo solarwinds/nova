@@ -13,7 +13,7 @@ import {
     Renderer2,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";
@@ -35,7 +35,6 @@ import { IMenuItem } from "../public-api";
     selector: "nui-menu",
     host: {
         "class": "nui-menu",
-        "role": "menu",
         "[attr.aria-label]": "title || ariaLabel",
     },
     templateUrl: "./menu.component.html",

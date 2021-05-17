@@ -1,5 +1,5 @@
 <div class="nui-table__container" id="nui-demo-basic-table">
-    <table nui-table [dataSource]="dataSource">
+    <table nui-table [dataSource]="dataSource" style="height: 100px">
         <ng-container nuiColumnDef="position">
             <th nui-header-cell *nuiHeaderCellDef i18n> No.</th>
             <td nui-cell *nuiCellDef="let element">{{element.position}}</td>

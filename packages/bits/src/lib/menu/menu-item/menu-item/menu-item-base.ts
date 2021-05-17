@@ -9,7 +9,7 @@ import {
     OnChanges,
     Optional,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 
 import { MenuGroupComponent } from "../menu-group/menu-group.component";
@@ -22,6 +22,7 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
  * Base class for menu items. Adds styles to host element
  */
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class MenuItemBaseComponent implements OnChanges, Highlightable {
     /**
      * Disables action, link and option components

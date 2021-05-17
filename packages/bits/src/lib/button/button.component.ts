@@ -10,17 +10,17 @@ import {
     OnInit,
     ViewChild,
     ViewContainerRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import {
     fromEvent,
     merge,
     Subject,
-    timer
+    timer,
 } from "rxjs";
 import {
     filter,
-    takeUntil
+    takeUntil,
 } from "rxjs/operators";
 
 import { buttonConstants } from "../../constants/button.constants";
@@ -90,9 +90,9 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
      */
     // TODO: Remove this setter/getter logic in scope of NUI-3475
     @Input() public get size(): ButtonSizeType { return this._size; }
-             public set size(value: ButtonSizeType) {
-                this._size = (value as string) === "small" ? ButtonSizeType.compact : value;
-             }
+    public set size(value: ButtonSizeType) {
+        this._size = (value as string) === "small" ? ButtonSizeType.compact : value;
+    }
 
     @HostBinding("class.btn-lg") public get sizeClassLarge() { return this.size === "large"; }
     @HostBinding("class.btn-xs") public get sizeClassCompact() {return this.size === "compact"; }
@@ -176,8 +176,8 @@ should be set explicitly: `, el.nativeElement);
     }
 
     private getAriaLabel() {
-        const innerText: string = this.contentContainer.element.nativeElement.innerText;
-        return this._isContentEmpty ? this.icon : innerText.trim();
+        // In chrome once innerText gets touched in a native element this caused issues in table-sticky-header NUI-6033
+        return this._isContentEmpty ? this.icon : this.contentContainer.element.nativeElement.textContent.trim();
     }
 
     private setIsContentEmptyValue() {

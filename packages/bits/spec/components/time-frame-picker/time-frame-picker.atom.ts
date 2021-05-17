@@ -8,11 +8,11 @@ export class TimeFramePickerAtom extends Atom {
 
     public getStartDatetimePicker(): DateTimepickerAtom {
         return Atom.findIn(DateTimepickerAtom,
-                this.getElement().element(by.className("nui-time-frame-picker__date-time_start")));
+                           this.getElement().element(by.className("nui-time-frame-picker__date-time_start")));
     }
 
     public getEndDatetimePicker(): DateTimepickerAtom {
         return Atom.findIn(DateTimepickerAtom,
-            this.getElement().element(by.className("nui-time-frame-picker__date-time_end")));
+                           this.getElement().element(by.className("nui-time-frame-picker__date-time_end")));
     }
 }

@@ -75,7 +75,7 @@ describe("services >", () => {
             }, 100);
         });
 
-         it("should call utilService to calculate cache size", () => {
+        it("should call utilService to calculate cache size", () => {
             const spy = spyOn(utilService, "sizeof");
 
             cache.put("key", getTestObj(), 3000);

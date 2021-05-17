@@ -47,7 +47,7 @@ export class TableTestModule {
                 "configurator",
                 WellKnownPathKey.DataSourceProviders,
                 [TestTableDataSource.providerId,
-                TestTableDataSource2.providerId]
+                 TestTableDataSource2.providerId]
             );
     }
 }

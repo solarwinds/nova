@@ -6,11 +6,11 @@ import { expand } from "@nova-ui/bits";
 import {FoodNode, TREE_DATA_CHECKBOX} from "../data";
 
 @Component({
-  selector: "nui-tree-checkbox-test",
-  templateUrl: "./tree-checkbox-test.component.html",
-  styleUrls: ["./tree-checkbox-test.component.less"],
-  host: { id: "nui-tree-checkbox-example" },
-  animations: [expand],
+    selector: "nui-tree-checkbox-test",
+    templateUrl: "./tree-checkbox-test.component.html",
+    styleUrls: ["./tree-checkbox-test.component.less"],
+    host: { id: "nui-tree-checkbox-example" },
+    animations: [expand],
 })
 
 export class TreeCheckboxTestComponent {

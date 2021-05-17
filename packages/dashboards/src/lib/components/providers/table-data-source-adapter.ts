@@ -16,7 +16,7 @@ export class TableDataSourceAdapter<T extends IFilteringOutputs> extends DataSou
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
                 @Inject(DATA_SOURCE) dataSource: IDataSource,
-                pizzagnaService: PizzagnaService,
+                                            pizzagnaService: PizzagnaService,
                 @Optional() protected virtualViewport: VirtualViewportManager) {
         super(eventBus, dataSource, pizzagnaService);
     }

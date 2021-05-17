@@ -4,7 +4,7 @@ import {
     EventEmitter,
     HostListener,
     Input,
-    Output
+    Output,
 } from "@angular/core";
 
 /** @ignore */

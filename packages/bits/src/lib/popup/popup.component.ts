@@ -16,7 +16,7 @@ import {
     Optional,
     Output,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
 import {Subject, Subscription} from "rxjs";
@@ -51,6 +51,7 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
     host: {
         "class": "nui-popup",
         "role": "dialog",
+        "[attr.aria-label]": "ariaLabel",
     },
     template: `
         <div class="nui-popup-container" [class.nui-popup--opened]="isOpen" nuiClickInterceptor>
@@ -103,6 +104,9 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
     @Input()
     public baseElementSelector: string;
 
+    @Input()
+    public ariaLabel: string = "Popup";
+
     @Output()
     public opened = new EventEmitter<boolean>();
 
@@ -140,7 +144,7 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
                 private logger: LoggerService,
                 @Optional() private popupContainer: PopupContainerService) {
 
-                    this.logger.warn("<nui-popup-deprecated> is deprecated as of Nova v11. Please use <nui-popup> instead.");
+        this.logger.warn("<nui-popup-deprecated> is deprecated as of Nova v11. Please use <nui-popup> instead.");
     }
     public ngOnInit() {
         if (this.manualOpenControl) {

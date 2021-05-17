@@ -14,7 +14,7 @@ export class ComboboxTypeaheadExampleComponent {
                 {label: "Item 111", value: "Value 1"},
                 {label: "Item 112", value: "Value 2"},
                 {label: "Item 123", value: "Value 3"},
-                ],
+            ],
         },
         {
             header: "Group 2 header",

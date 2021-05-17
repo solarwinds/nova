@@ -6,11 +6,11 @@ import { expand } from "@nova-ui/bits";
 import {FoodNode, TREE_DATA} from "../data";
 
 @Component({
-  selector: "nui-tree-basic-test",
-  templateUrl: "./tree-basic-test.component.html",
-  styleUrls: ["./tree-basic-test.component.less"],
-  host: { id: "nui-tree-basic-example" },
-  animations: [expand],
+    selector: "nui-tree-basic-test",
+    templateUrl: "./tree-basic-test.component.html",
+    styleUrls: ["./tree-basic-test.component.less"],
+    host: { id: "nui-tree-basic-example" },
+    animations: [expand],
 })
 
 export class TreeBasicTestComponent {

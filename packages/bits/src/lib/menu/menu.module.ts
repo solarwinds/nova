@@ -30,7 +30,7 @@ import { MenuComponent } from "./menu/menu.component";
         NuiDividerModule,
         NuiSwitchModule,
     ],
-  exports: [
+    exports: [
         MenuActionComponent,
         MenuComponent,
         MenuGroupComponent,
@@ -39,8 +39,8 @@ import { MenuComponent } from "./menu/menu.component";
         MenuOptionComponent,
         MenuPopupComponent,
         MenuSwitchComponent,
-  ],
-  declarations: [
+    ],
+    declarations: [
         MenuActionComponent,
         MenuComponent,
         MenuGroupComponent,
@@ -49,6 +49,6 @@ import { MenuComponent } from "./menu/menu.component";
         MenuOptionComponent,
         MenuPopupComponent,
         MenuSwitchComponent,
-  ],
+    ],
 })
 export class NuiMenuModule { }

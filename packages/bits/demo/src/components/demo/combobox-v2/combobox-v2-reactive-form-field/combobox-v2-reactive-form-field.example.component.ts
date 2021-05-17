@@ -17,5 +17,5 @@ export class ComboboxV2ReactiveFormFieldExampleComponent implements OnInit {
         this.fancyForm = this.formBuilder.group({
             combobox: this.formBuilder.control("", Validators.required),
         });
-      }
+    }
 }

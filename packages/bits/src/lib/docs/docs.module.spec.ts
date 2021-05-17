@@ -1,13 +1,13 @@
 import { NuiDocsModule } from "./docs.module";
 
 describe("DocsModule", () => {
-  let docsModule: NuiDocsModule;
+    let docsModule: NuiDocsModule;
 
-  beforeEach(() => {
-    docsModule = new NuiDocsModule();
-  });
+    beforeEach(() => {
+        docsModule = new NuiDocsModule();
+    });
 
-  it("should create an instance", () => {
-    expect(docsModule).toBeTruthy();
-  });
+    it("should create an instance", () => {
+        expect(docsModule).toBeTruthy();
+    });
 });

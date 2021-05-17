@@ -8,7 +8,7 @@ import {
     IChartAssistSeries,
     IGaugeConfig,
     radial,
-    radialGrid
+    radialGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -38,8 +38,13 @@ export class DonutGaugeBasicExampleComponent implements OnInit {
     }
 
     public onValueChange(value: number) {
+        // Updating the gauge config
         this.gaugeConfig = this.getGaugeConfig(value);
+
+        // Updating the series set with the new config
         this.seriesSet = GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig);
+
+        // Updating the chart with the updated series set
         this.chartAssist.update(this.seriesSet);
     }
 

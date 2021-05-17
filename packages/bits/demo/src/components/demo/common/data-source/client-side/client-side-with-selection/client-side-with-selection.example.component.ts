@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
     ClientSideDataSource,
-    INovaFilteringOutputs, ListService, PaginatorComponent, RepeatComponent, RepeatSelectionMode, SearchComponent, SelectionType
+    INovaFilteringOutputs, ListService, PaginatorComponent, RepeatComponent, RepeatSelectionMode, SearchComponent, SelectionType,
 } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 

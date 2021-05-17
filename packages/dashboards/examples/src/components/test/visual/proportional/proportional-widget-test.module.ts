@@ -44,10 +44,10 @@ export class ProportionalWidgetTestModule {
         delete widgetTemplate.widget.structure[DEFAULT_PIZZAGNA_ROOT].providers?.refresher;
 
         widgetTypesService.setNode(widgetTemplate, "configurator", WellKnownPathKey.DataSourceProviders,
-            [
-                TestProportionalDataSource.providerId,
-                TestProportionalDataSource2.providerId,
-                TestProportionalDataSource3.providerId,
-            ]);
+                                   [
+                                       TestProportionalDataSource.providerId,
+                                       TestProportionalDataSource2.providerId,
+                                       TestProportionalDataSource3.providerId,
+                                   ]);
     }
 }

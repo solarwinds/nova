@@ -69,9 +69,16 @@ export interface ITransientCache {
     size: () => number;
 }
 
+/**
+ * The result of a unit conversion returned by the UnitConversionService's convert method
+ */
 export interface IUnitConversionResult {
+    /** Serves as an index into the exported 'unitConversionConstants' for determining which unit string display value to use. */
     order: number;
+    /** The converted value as a string */
     value: string;
+    /** The maximum number of significant digits to display to the right of the decimal */
+    scale?: number;
 }
 
 export interface ISelection {

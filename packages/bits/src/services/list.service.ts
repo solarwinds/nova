@@ -99,7 +99,7 @@ export class ListService {
      */
     public applySelector(selectionType: SelectionType, state: INovaFilteringOutputs): INovaFilteringOutputs {
         if (!state.selector || !state.selector.selection) {
-           throw new Error("State must contain selector property");
+            throw new Error("State must contain selector property");
         }
 
         if (!state.repeat) {

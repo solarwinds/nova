@@ -53,7 +53,7 @@ export class DataGenerator {
      * @returns {IDataSeries[]}
      */
     public static generateMockOrdinalSeriesSet(groupNames: string[],
-        seriesCount: number = 1): IDataSeries<IAccessors>[] {
+                                               seriesCount: number = 1): IDataSeries<IAccessors>[] {
         return groupNames.map((el, index) => ({
             id: `series-${index + 1}`,
             name: el,

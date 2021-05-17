@@ -24,7 +24,7 @@ export class KpiScaleSyncBroker implements IConfigurable {
     constructor(
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         private pizzagnaService: PizzagnaService) {
-            this.valuesObject = this.builder.valuesObject;
+        this.valuesObject = this.builder.valuesObject;
     }
 
     public updateConfiguration(properties: IProperties): void {
@@ -88,29 +88,29 @@ export class KpiScaleSyncBroker implements IConfigurable {
         const targetObj = this.valuesObject[data.id].filter(obj => obj.targetID === data.targetID);
 
         targetObj.length
-                ? targetObj[0].targetValue = data.targetValue
-                : this.valuesObject[data.id].push({ targetID: data.targetID, targetValue: data.targetValue });
+            ? targetObj[0].targetValue = data.targetValue
+            : this.valuesObject[data.id].push({ targetID: data.targetID, targetValue: data.targetValue });
     }
 
     private createPropertiesAndSubscribeToBrokers() {
         this.tileNodes = this.pizzagnaService.getComponent(this.componentId).properties?.nodes;
-            const { scaleSyncConfig } = this.properties;
+        const { scaleSyncConfig } = this.properties;
 
-            if (this.tileNodes?.length) {
-                this.tileNodes.forEach((node, i) => {
-                    const property: IPizzagnaProperty = {
-                        componentId: node,
-                        pizzagnaKey: PizzagnaLayer.Data,
-                        propertyPath: [`syncValuesBroker`],
-                    };
-                    this.pizzagnaService.setProperty(property, this.getBrokers());
-                });
+        if (this.tileNodes?.length) {
+            this.tileNodes.forEach((node, i) => {
+                const property: IPizzagnaProperty = {
+                    componentId: node,
+                    pizzagnaKey: PizzagnaLayer.Data,
+                    propertyPath: [`syncValuesBroker`],
+                };
+                this.pizzagnaService.setProperty(property, this.getBrokers());
+            });
 
-                if (scaleSyncConfig && isArray(scaleSyncConfig)) {
-                    scaleSyncConfig.forEach((s: IBrokerUserConfig) => this.configure().addBroker({ id: s.id, type: s?.type }));
-                    this.subscribeToBrokers();
-                }
+            if (scaleSyncConfig && isArray(scaleSyncConfig)) {
+                scaleSyncConfig.forEach((s: IBrokerUserConfig) => this.configure().addBroker({ id: s.id, type: s?.type }));
+                this.subscribeToBrokers();
             }
+        }
     }
 
     private getMin = (n: number[]) => Math.min(...n);

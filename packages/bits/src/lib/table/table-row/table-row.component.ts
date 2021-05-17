@@ -16,7 +16,7 @@ import {
     SimpleChanges,
     TemplateRef,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _includes from "lodash/includes";
 import _toArray from "lodash/toArray";

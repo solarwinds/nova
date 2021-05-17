@@ -81,7 +81,6 @@ describe("chart assist >", () => {
         it("returns raw value for missing formatter", () => {
             expect(ca.getHighlightedValue(series, "y", "nonexistent")).toBe(0.5);
         });
-
     });
 
     describe("update", () => {

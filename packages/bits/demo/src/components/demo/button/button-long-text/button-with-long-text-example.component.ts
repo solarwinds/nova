@@ -8,6 +8,6 @@ export class ButtonWithLongTextExampleComponent {
     public disableWidthRestriction = true;
 
     public toggleWidthRestriction() {
-         this.disableWidthRestriction = !this.disableWidthRestriction;
+        this.disableWidthRestriction = !this.disableWidthRestriction;
     }
 }

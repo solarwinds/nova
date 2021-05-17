@@ -14,8 +14,8 @@ import { BaseConverter } from "../base-converter";
 export class TimeseriesMetadataConverterService extends BaseConverter implements AfterViewInit {
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                previewService: PreviewService,
-                pizzagnaService: PizzagnaService,
+                                            previewService: PreviewService,
+                                            pizzagnaService: PizzagnaService,
                 private timeframeService: TimeframeService) {
         super(eventBus, previewService, pizzagnaService);
     }

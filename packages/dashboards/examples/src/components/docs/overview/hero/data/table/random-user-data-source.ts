@@ -92,7 +92,7 @@ export class RandomUserDataSource extends DataSourceService<IRandomUserTableMode
         let response: IRandomUserResponse | null = null;
         try {
             response = await
-                (await fetch(`${corsProxy}/${RANDOMUSER_API_URL}/${apiRoute}/?page=${this.page}&results=${end - start}&seed=${this.seed}`)).json();
+            (await fetch(`${corsProxy}/${RANDOMUSER_API_URL}/${apiRoute}/?page=${this.page}&results=${end - start}&seed=${this.seed}`)).json();
             return {
                 users: response?.results.map((result: IRandomUserResults, i: number) => ({
                     no: this.cache.length + i + 1,

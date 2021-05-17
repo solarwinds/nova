@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
     ClientSideDataSource,
-    INovaFilteringOutputs, PaginatorComponent, SearchComponent
+    INovaFilteringOutputs, PaginatorComponent, SearchComponent,
 } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
@@ -75,8 +75,8 @@ export class DataSourceClientSideBasicExampleComponent implements AfterViewInit,
             },
         });
         this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-                this.state = data;
-                this.changeDetection.detectChanges();
+            this.state = data;
+            this.changeDetection.detectChanges();
         });
         await this.dataSourceService.applyFilters();
     }

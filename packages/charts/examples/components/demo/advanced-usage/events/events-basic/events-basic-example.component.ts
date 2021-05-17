@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import {
-    Chart, IChartEvent, IChartSeries, ILineAccessors, INTERACTION_VALUES_EVENT, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid
+    Chart, IChartEvent, IChartSeries, ILineAccessors, INTERACTION_VALUES_EVENT, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 

@@ -1,7 +1,7 @@
 import {
     Component,
     Inject,
-    Input
+    Input,
 } from "@angular/core";
 
 import { IToastService } from "../../toast/public-api";

@@ -18,4 +18,4 @@ export class GaugeVisualTestComponent {
             enableThresholdMarkers: true,
         };
     }
- }
+}

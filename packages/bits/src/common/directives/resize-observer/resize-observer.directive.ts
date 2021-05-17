@@ -5,7 +5,7 @@ import {
     EventEmitter,
     NgZone,
     OnDestroy,
-    Output
+    Output,
 } from "@angular/core";
 import debounce from "lodash/debounce";
 import ResizeObserver from "resize-observer-polyfill";

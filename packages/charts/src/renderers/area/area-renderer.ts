@@ -175,7 +175,7 @@ export class AreaRenderer extends XYRenderer<IAreaAccessors> {
 
         const container = renderSeries.containers[RenderLayerName.foreground];
         MarkerUtils.manageMarker(renderSeries.dataSeries, renderSeries.scales as IXYScales,
-            dataPointIndex, container, rendererSubject, this.config.markerInteraction);
+                                 dataPointIndex, container, rendererSubject, this.config.markerInteraction);
     }
 
     public safetyCheck(value: number) {

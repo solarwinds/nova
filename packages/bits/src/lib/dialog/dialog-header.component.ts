@@ -3,7 +3,7 @@ import {
     EventEmitter,
     Input,
     OnInit,
-    Output
+    Output,
 } from "@angular/core";
 
 import { SeverityLevels } from "./public-api";

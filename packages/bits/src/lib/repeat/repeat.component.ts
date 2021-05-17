@@ -20,7 +20,7 @@ import {
     TemplateRef,
     ViewChild,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import {Subject} from "rxjs";
@@ -35,7 +35,7 @@ import {
     IRepeatItem,
     IRepeatItemConfig,
     PaddingOptions,
-    RepeatSelectionMode
+    RepeatSelectionMode,
 } from "./types";
 
 interface IDndItemDropped {
@@ -451,9 +451,9 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
         } else {
             // moves the item from the source: event.container[computedPreviousIndex] to target: event.container.data[event.currentIndex]
             transferArrayItem(event.previousContainer.data,
-                event.container.data,
-                computedPreviousIndex,
-                event.currentIndex);
+                              event.container.data,
+                              computedPreviousIndex,
+                              event.currentIndex);
         }
 
         if (sortingOrderChanged) {

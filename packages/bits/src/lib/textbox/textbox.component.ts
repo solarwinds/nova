@@ -106,7 +106,7 @@ export class TextboxComponent implements ControlValueAccessor, NuiFormFieldContr
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "";
+    @Input() public ariaLabel: string = "Textbox input";
 
     /**
      * Input to apply busy state and show spinner

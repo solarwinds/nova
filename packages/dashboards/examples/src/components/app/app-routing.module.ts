@@ -1,7 +1,18 @@
+import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DeveloperQuickLinksComponent } from "./prototype-index.component";
 
 const appRoutes: Routes = [
+    {
+        path: "",
+        component: DeveloperQuickLinksComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
     {
         path: "test",
         loadChildren: () => import("../test/test.module").then(m => m.DashboardTestModule),
@@ -22,7 +33,11 @@ const appRoutes: Routes = [
 
 
 @NgModule({
+    declarations: [
+        DeveloperQuickLinksComponent,
+    ],
     imports: [
+        CommonModule,
         RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: "legacy" }),
     ],
     exports: [

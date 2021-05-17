@@ -15,7 +15,7 @@ import {
     SimpleChanges,
     ViewChild,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import _size from "lodash/size";
@@ -28,7 +28,7 @@ import {
     IChipRemoved,
     IChipsGroup,
     IChipsItem,
-    IChipsItemsSource
+    IChipsItemsSource,
 } from "./public-api";
 
 // <example-url>./../examples/index.html#/chips</example-url>

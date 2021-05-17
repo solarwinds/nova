@@ -29,10 +29,10 @@ describe("Components >", () => {
         beforeEach(() => {
             TestBed
                 .overrideModule(BrowserDynamicTestingModule, {
-                set: {
-                    entryComponents: [LayoutResizerComponent],
-                },
-            });
+                    set: {
+                        entryComponents: [LayoutResizerComponent],
+                    },
+                });
             TestBed
                 .configureTestingModule({
                     declarations: [LayoutResizerTestingComponent, LayoutResizerComponent],

@@ -29,7 +29,7 @@ import {
     TreeShowAllDialogExampleComponent,
     TreeStylingExampleComponent,
     TreeVisualTestComponent,
-    TreeWithAdditionalContentExampleComponent
+    TreeWithAdditionalContentExampleComponent,
 } from "./index";
 import { TreeCheckboxLazyComponent } from "./tree-checkbox-lazy/tree-checkbox-lazy.component";
 import { TreeBasicTestComponent } from "./tree-visual-test/tree-basic-test/tree-basic-test.component";

@@ -155,7 +155,7 @@ export abstract class Renderer<TA extends IAccessors> {
         }
 
         return extent<Numeric, Numeric>(data,
-            (datum, index, arr) => dataSeries.accessors.data?.[scaleName]?.(datum, index, Array.from(arr), dataSeries));
+                                        (datum, index, arr) => dataSeries.accessors.data?.[scaleName]?.(datum, index, Array.from(arr), dataSeries));
     }
 
     /**

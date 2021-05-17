@@ -5,7 +5,7 @@ import "zone.js/dist/zone-testing"; // this needs to be first
 import { getTestBed } from "@angular/core/testing";
 import {
     BrowserDynamicTestingModule,
-    platformBrowserDynamicTesting
+    platformBrowserDynamicTesting,
 } from "@angular/platform-browser-dynamic/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 

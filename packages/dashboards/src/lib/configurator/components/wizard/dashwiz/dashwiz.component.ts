@@ -162,7 +162,7 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
             });
         });
 
-        this.navigationControl.subscribe((value: { busyState: IBusyConfig; allowStepChange: any; }) => {
+        this.navigationControl.subscribe((value: { busyState: IBusyConfig, allowStepChange: any }) => {
             this.currentStep.busyConfig = value.busyState;
             if (value.allowStepChange && !isUndefined(this.futureStep) && this.currentStep !== this.futureStep) {
                 this.enterAnotherStep();
@@ -244,8 +244,8 @@ export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChec
             let previousStep = this.arraySteps[this.stepIndex - 1];
             if (previousStep.hidden || previousStep.disabled) {
                 previousStep = find(this.arraySteps.slice(0).reverse(),
-                    step => !step.hidden,
-                    findIndex(this.arraySteps.slice(0).reverse(), this.arraySteps[this.stepIndex]) + 1);
+                                    step => !step.hidden,
+                                    findIndex(this.arraySteps.slice(0).reverse(), this.arraySteps[this.stepIndex]) + 1);
             }
             this.selectStep(previousStep);
             this.back.emit();

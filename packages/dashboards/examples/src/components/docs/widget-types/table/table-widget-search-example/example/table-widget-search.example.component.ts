@@ -12,8 +12,8 @@ import {
     IFilters,
     INovaFilteringOutputs,
     INovaFilters,
-    LoggerService
- } from "@nova-ui/bits";
+    LoggerService,
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,
@@ -23,7 +23,7 @@ import {
     ProviderRegistryService,
     WellKnownPathKey,
     WellKnownProviders,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { GBOOKS_API_URL } from "components/prototypes/data/table/constants";
@@ -45,7 +45,7 @@ interface IGBooksItemModel {
         title: string;
         subtitle: string;
         authors: string[];
-        [key: string]: any
+        [key: string]: any;
     };
     accessInfo: { [key: string]: any };
     saleInfo: { [key: string]: any };

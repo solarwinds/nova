@@ -1,9 +1,9 @@
 import {
-    AfterViewInit, Component, EventEmitter, Injectable, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation
+    AfterViewInit, Component, EventEmitter, Injectable, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation,
 } from "@angular/core";
 import {
     DataFilterService, IFilter, IFilterPub, IMenuItem, INovaFilteringOutputs, IRange, ISorterChanges,
-    ITimeframe, LocalFilteringDataSource, SearchComponent, SearchService, SorterComponent, SorterDirection, TimeframeService
+    ITimeframe, LocalFilteringDataSource, SearchComponent, SearchService, SorterComponent, SorterDirection, TimeframeService,
 } from "@nova-ui/bits";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
@@ -68,7 +68,7 @@ export class TableDatasource extends LocalFilteringDataSource<TableModel> implem
         const timeFramePickerFilter = filters.timeFramePicker;
         const filteredData = await super.getFilteredData(filters);
         if (!filteredData.repeat) {
-           throw new Error("filteredData.repeat is not defined");
+            throw new Error("filteredData.repeat is not defined");
         }
         let nextChunk = filteredData.repeat.itemsSource;
         // TIME FRAME PICKER FILTERING

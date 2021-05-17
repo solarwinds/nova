@@ -20,7 +20,7 @@ import {
     OnDestroy,
     OnInit,
     Output,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
 import _keys from "lodash/keys";

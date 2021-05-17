@@ -13,7 +13,7 @@ import {
     OnInit,
     Output,
     Renderer2,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { take } from "rxjs/operators";

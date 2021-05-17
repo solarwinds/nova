@@ -8,7 +8,7 @@ import {
     OnChanges,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IMenuItem } from "@nova-ui/bits";

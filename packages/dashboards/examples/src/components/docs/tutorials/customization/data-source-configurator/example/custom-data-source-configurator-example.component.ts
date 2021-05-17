@@ -22,7 +22,7 @@ import {
     ProviderRegistryService,
     WellKnownPathKey,
     WellKnownProviders,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject } from "rxjs";
@@ -101,11 +101,11 @@ export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfig
 
     // These need to be injected because DataSourceConfigurationV2Component uses them
     constructor(changeDetector: ChangeDetectorRef,
-        formBuilder: FormBuilder,
-        providerRegistryService: ProviderRegistryService,
+                formBuilder: FormBuilder,
+                providerRegistryService: ProviderRegistryService,
         @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-        injector: Injector,
-        logger: LoggerService) {
+                injector: Injector,
+                logger: LoggerService) {
         super(changeDetector, formBuilder, providerRegistryService, eventBus, injector, logger);
     }
 

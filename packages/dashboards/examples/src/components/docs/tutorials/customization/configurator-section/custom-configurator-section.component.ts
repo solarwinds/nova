@@ -10,7 +10,7 @@ import {
     OnDestroy,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
@@ -32,7 +32,7 @@ import {
     ProviderRegistryService,
     WellKnownPathKey,
     WellKnownProviders,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import { BehaviorSubject, combineLatest, Observable } from "rxjs";
@@ -267,7 +267,7 @@ export class CustomConfiguratorSectionComponent implements OnInit {
         // Note: This could also be done in the parent module's constructor to give
         // multiple dashboards access to the same custom configurator section.
         this.widgetTypesService.setNode(widgetTemplate, "configurator",
-            WellKnownPathKey.TileDescriptionConfigComponentType, CustomKpiDescriptionConfigurationComponent.lateLoadKey);
+                                        WellKnownPathKey.TileDescriptionConfigComponentType, CustomKpiDescriptionConfigurationComponent.lateLoadKey);
 
         // Register the custom configurator section with the component registry to make it available
         // for late loading by the dashboards framework.

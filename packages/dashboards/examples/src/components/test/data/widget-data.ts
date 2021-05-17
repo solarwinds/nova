@@ -28,7 +28,7 @@ export const PROPORTIONAL_WIDGET_DATA_SMALL: IProportionalWidgetData[] = [
     {
         id: "Down",
         name: "Down",
-        data: [1],
+        data: [12300],
         icon: "status_down",
         link: "https://en.wikipedia.org/wiki/London",
         value: "London",
@@ -36,7 +36,7 @@ export const PROPORTIONAL_WIDGET_DATA_SMALL: IProportionalWidgetData[] = [
     {
         id: "Critically long tick name",
         name: "Critically long tick name",
-        data: [2],
+        data: [23400],
         icon: "status_critical",
         link: "https://en.wikipedia.org/wiki/Paris",
         value: "Paris",
@@ -44,7 +44,7 @@ export const PROPORTIONAL_WIDGET_DATA_SMALL: IProportionalWidgetData[] = [
     {
         id: "Warning",
         name: "Warning",
-        data: [3],
+        data: [34500],
         icon: "status_warning",
         link: "https://en.wikipedia.org/wiki/Rio_de_Janeiro",
         value: "Rio",
@@ -106,7 +106,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Down",
         name: "Down",
-        data: [34],
+        data: [34000],
         icon: "status_down",
         link: "https://en.wikipedia.org/wiki/Brno",
         value: "Brno",
@@ -114,7 +114,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Critical",
         name: "Critical",
-        data: [34],
+        data: [34000],
         icon: "status_critical",
         link: "https://en.wikipedia.org/wiki/Kyiv",
         value: "Kyiv",
@@ -122,7 +122,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Warning",
         name: "Warning",
-        data: [34],
+        data: [34000],
         icon: "status_warning",
         link: "https://en.wikipedia.org/wiki/Austin",
         value: "Austin",
@@ -130,7 +130,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unknown",
         name: "Unknown",
-        data: [34],
+        data: [34000],
         icon: "status_unknown",
         link: "https://en.wikipedia.org/wiki/Lisbon",
         value: "Lisbon",
@@ -138,7 +138,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Up",
         name: "Up",
-        data: [34],
+        data: [34000],
         icon: "status_up",
         link: "https://en.wikipedia.org/wiki/Sydney",
         value: "Sydney",
@@ -146,7 +146,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unmanaged",
         name: "Unmanaged",
-        data: [34],
+        data: [34000],
         icon: "status_unmanaged",
         link: "https://en.wikipedia.org/wiki/Nur-Sultan",
         value: "Nur-Sultan",
@@ -154,7 +154,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Down2",
         name: "Down2",
-        data: [34],
+        data: [34000],
         icon: "status_down",
         link: "https://en.wikipedia.org/wiki/Brno",
         value: "Brno",
@@ -162,7 +162,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Critical2",
         name: "Critical2",
-        data: [34],
+        data: [34000],
         icon: "status_critical",
         link: "https://en.wikipedia.org/wiki/Kyiv",
         value: "Kyiv",
@@ -170,7 +170,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Warning2",
         name: "Warning2",
-        data: [34],
+        data: [34000],
         icon: "status_warning",
         link: "https://en.wikipedia.org/wiki/Austin",
         value: "Austin",
@@ -178,7 +178,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unknown2",
         name: "Unknown2",
-        data: [55],
+        data: [55000],
         icon: "status_unknown",
         link: "https://en.wikipedia.org/wiki/Lisbon",
         value: "Lisbon",
@@ -186,7 +186,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Up2",
         name: "Up2",
-        data: [89],
+        data: [89000],
         icon: "status_up",
         link: "https://en.wikipedia.org/wiki/Sydney",
         value: "Sydney",
@@ -194,7 +194,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unmanaged2",
         name: "Unmanaged2",
-        data: [144],
+        data: [144000],
         icon: "status_unmanaged",
         link: "https://en.wikipedia.org/wiki/Nur-Sultan",
         value: "Nur-Sultan",
@@ -202,7 +202,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Down3",
         name: "Down3",
-        data: [233],
+        data: [233000],
         icon: "status_down",
         link: "https://en.wikipedia.org/wiki/Brno",
         value: "Brno",
@@ -210,7 +210,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Critical3",
         name: "Critical3",
-        data: [377],
+        data: [377000],
         icon: "status_critical",
         link: "https://en.wikipedia.org/wiki/Kyiv",
         value: "Kyiv",
@@ -218,7 +218,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Warning3",
         name: "Warning3",
-        data: [610],
+        data: [610000],
         icon: "status_warning",
         link: "https://en.wikipedia.org/wiki/Austin",
         value: "Austin",
@@ -226,7 +226,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Unknown3",
         name: "Unknown3",
-        data: [987],
+        data: [987000],
         icon: "status_unknown",
         link: "https://en.wikipedia.org/wiki/Lisbon",
         value: "Lisbon",
@@ -234,7 +234,7 @@ export const PROPORTIONAL_WIDGET_DATA_LARGE: IProportionalWidgetData[] = [
     {
         id: "Up3",
         name: "Up3",
-        data: [1597],
+        data: [1597000],
         icon: "status_up",
         link: "https://en.wikipedia.org/wiki/Sydney",
         value: "Sydney",
@@ -300,6 +300,7 @@ export const getTimeseriesWidgetData = () => (
             id: "series-1",
             name: "Average CPU Load",
             description: "test1111.demo.lab",
+            link: "https://en.wikipedia.org/wiki/Nur-Sultan",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 34 },
                 { x: frozenTime().subtract(19, "day").toDate(), y: 33 },
@@ -327,6 +328,7 @@ export const getTimeseriesWidgetData = () => (
             id: "series-2",
             name: "Average CPU Load",
             description: "test2222.demo.lab",
+            secondaryLink: "https://en.wikipedia.org/wiki",
             data: [
                 { x: frozenTime().subtract(20, "day").toDate(), y: 60 },
                 { x: frozenTime().subtract(19, "day").toDate(), y: 64 },
@@ -488,6 +490,92 @@ export const getTimeseriesWidgetData2 = () => (
                 { x: frozenTime().subtract(3, "day").toDate(), y: 62 },
                 { x: frozenTime().subtract(2, "day").toDate(), y: 61 },
                 { x: frozenTime().subtract(1, "day").toDate(), y: 69 },
+            ],
+        },
+    ]
+);
+
+export const getTimeseriesEventsData = () => (
+    [
+        {
+            id: "series-a",
+            name: "Events",
+            description: "lastchance.demo.lab",
+            data: [
+                { x: frozenTime().subtract(20, "day").toDate(), y: 9049 },
+                { x: frozenTime().subtract(19, "day").toDate(), y: 9089 },
+                { x: frozenTime().subtract(18, "day").toDate(), y: 9149 },
+                { x: frozenTime().subtract(17, "day").toDate(), y: 9189 },
+                { x: frozenTime().subtract(16, "day").toDate(), y: 9249 },
+                { x: frozenTime().subtract(15, "day").toDate(), y: 9289 },
+                { x: frozenTime().subtract(14, "day").toDate(), y: 9349 },
+                { x: frozenTime().subtract(13, "day").toDate(), y: 9389  },
+                { x: frozenTime().subtract(12, "day").toDate(), y: 9449 },
+                { x: frozenTime().subtract(11, "day").toDate(), y: 9489 },
+                { x: frozenTime().subtract(10, "day").toDate(), y: 9549 },
+                { x: frozenTime().subtract(9, "day").toDate(), y:  9589 },
+                { x: frozenTime().subtract(8, "day").toDate(), y:  9649 },
+                { x: frozenTime().subtract(7, "day").toDate(), y:  9689 },
+                { x: frozenTime().subtract(6, "day").toDate(), y:  9749 },
+                { x: frozenTime().subtract(5, "day").toDate(), y:  9789 },
+                { x: frozenTime().subtract(4, "day").toDate(), y:  9849 },
+                { x: frozenTime().subtract(3, "day").toDate(), y:  9889 },
+                { x: frozenTime().subtract(2, "day").toDate(), y:  9949 },
+                { x: frozenTime().subtract(1, "day").toDate(), y:  10100 },
+            ],
+        },
+        {
+            id: "series-b",
+            name: "Events",
+            description: "newhope.demo.lab",
+            data: [
+                { x: frozenTime().subtract(20, "day").toDate(), y: 904900 },
+                { x: frozenTime().subtract(19, "day").toDate(), y: 908900 },
+                { x: frozenTime().subtract(18, "day").toDate(), y: 914900 },
+                { x: frozenTime().subtract(17, "day").toDate(), y: 918900 },
+                { x: frozenTime().subtract(16, "day").toDate(), y: 924900 },
+                { x: frozenTime().subtract(15, "day").toDate(), y: 928900 },
+                { x: frozenTime().subtract(14, "day").toDate(), y: 934900 },
+                { x: frozenTime().subtract(13, "day").toDate(), y: 938900 },
+                { x: frozenTime().subtract(12, "day").toDate(), y: 944900 },
+                { x: frozenTime().subtract(11, "day").toDate(), y: 948900 },
+                { x: frozenTime().subtract(10, "day").toDate(), y: 954900 },
+                { x: frozenTime().subtract(9, "day").toDate(), y:  958900 },
+                { x: frozenTime().subtract(8, "day").toDate(), y:  964900 },
+                { x: frozenTime().subtract(7, "day").toDate(), y:  968900 },
+                { x: frozenTime().subtract(6, "day").toDate(), y:  974900 },
+                { x: frozenTime().subtract(5, "day").toDate(), y:  978900 },
+                { x: frozenTime().subtract(4, "day").toDate(), y:  984900 },
+                { x: frozenTime().subtract(3, "day").toDate(), y:  988900 },
+                { x: frozenTime().subtract(2, "day").toDate(), y:  994900 },
+                { x: frozenTime().subtract(1, "day").toDate(), y:  999999 },
+            ],
+        },
+        {
+            id: "series-c",
+            name: "Events",
+            description: "empire.demo.lab",
+            data: [
+                { x: frozenTime().subtract(20, "day").toDate(), y: 904900000 },
+                { x: frozenTime().subtract(19, "day").toDate(), y: 908900000 },
+                { x: frozenTime().subtract(18, "day").toDate(), y: 914900000 },
+                { x: frozenTime().subtract(17, "day").toDate(), y: 918900000 },
+                { x: frozenTime().subtract(16, "day").toDate(), y: 924900000 },
+                { x: frozenTime().subtract(15, "day").toDate(), y: 928900000 },
+                { x: frozenTime().subtract(14, "day").toDate(), y: 934900000 },
+                { x: frozenTime().subtract(13, "day").toDate(), y: 938900000 },
+                { x: frozenTime().subtract(12, "day").toDate(), y: 944900000 },
+                { x: frozenTime().subtract(11, "day").toDate(), y: 948900000 },
+                { x: frozenTime().subtract(10, "day").toDate(), y: 954900000 },
+                { x: frozenTime().subtract(9, "day").toDate(), y:  958900000 },
+                { x: frozenTime().subtract(8, "day").toDate(), y:  964900000 },
+                { x: frozenTime().subtract(7, "day").toDate(), y:  968900000 },
+                { x: frozenTime().subtract(6, "day").toDate(), y:  974900000 },
+                { x: frozenTime().subtract(5, "day").toDate(), y:  978900000 },
+                { x: frozenTime().subtract(4, "day").toDate(), y:  984900000 },
+                { x: frozenTime().subtract(3, "day").toDate(), y:  988900000 },
+                { x: frozenTime().subtract(2, "day").toDate(), y:  994900000 },
+                { x: frozenTime().subtract(1, "day").toDate(), y:  998900000 },
             ],
         },
     ]

@@ -14,7 +14,7 @@ import {
     SpinnerComponent,
     TextboxComponent,
     TimePickerComponent,
-    TooltipDirective
+    TooltipDirective,
 } from "../../public_api";
 import {DomUtilService} from "../../services/dom-util.service";
 import {EdgeDetectionService} from "../../services/edge-detection.service";

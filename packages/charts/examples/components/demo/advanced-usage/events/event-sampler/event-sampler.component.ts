@@ -38,7 +38,7 @@ import {
     SELECT_DATA_POINT_EVENT,
     SERIES_STATE_CHANGE_EVENT,
     stackedPreprocessor,
-    XYGrid
+    XYGrid,
 } from "@nova-ui/charts";
 import each from "lodash/each";
 import zipObject from "lodash/zipObject";

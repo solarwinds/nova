@@ -52,7 +52,7 @@ xdescribe("USERCONTROL Select >", () => {
                     expect(await selectBasic.getCurrentValue()).toEqual(target);
                 });
 
-               it("should mark the selected item in the select menu", async () => {
+                it("should mark the selected item in the select menu", async () => {
                     const target = "Item 2";
                     await selectBasic.select(target);
                     await selectBasic.toggleMenu();
@@ -76,7 +76,7 @@ xdescribe("USERCONTROL Select >", () => {
                     expect(await selectBasic.getCurrentValue()).toEqual("Item 2");
                 });
 
-               it("should correctly select items with PAGE UP and PAGE DOWN keys", async () => {
+                it("should correctly select items with PAGE UP and PAGE DOWN keys", async () => {
                     await selectBasic.toggleMenu();
                     await browser.actions().sendKeys(protractor.Key.PAGE_DOWN).perform();
                     await browser.actions().sendKeys(protractor.Key.ENTER).perform();

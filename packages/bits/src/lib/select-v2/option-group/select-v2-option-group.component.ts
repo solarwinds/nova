@@ -7,7 +7,7 @@ import {
     Inject,
     OnDestroy,
     Optional,
-    QueryList
+    QueryList,
 } from "@angular/core";
 import every from "lodash/every";
 import { merge, Subject } from "rxjs";
@@ -51,7 +51,7 @@ export class SelectV2OptionGroupComponent implements AfterContentInit, OnDestroy
                 .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
                     this.outfiltered = every(this.options.toArray(), (option: SelectV2OptionComponent) => option.outfiltered);
                 });
-            }
+        }
     }
 
     ngOnDestroy() {

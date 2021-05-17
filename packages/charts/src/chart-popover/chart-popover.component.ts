@@ -10,7 +10,7 @@ import {
     Output,
     SimpleChanges,
     TemplateRef,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import { PopoverComponent } from "@nova-ui/bits";
 import { Subject } from "rxjs";

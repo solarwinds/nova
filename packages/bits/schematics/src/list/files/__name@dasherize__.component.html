@@ -31,9 +31,7 @@
                     [repeatItemTemplateRef]="listRepeatItemTemplate"
                     [selection]="filteringState.repeat?.selectedItems"<%
                     if (pagingMode === 'virtualScroll') { %>
-                    [itemsSource]="<%
-                        if (dataSource === 'none' || dataSource === 'clientSide') {%>filteringState.repeat?.itemsSource<%}
-                        else if (dataSource === "serverSide") {%>listItems$ | async<% } %>"
+                    [itemsSource]="listItems$ | async"
                     [virtualScroll]="true"
                     [itemSize]="30"<%
                     } else { %>

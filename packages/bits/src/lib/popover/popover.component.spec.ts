@@ -88,7 +88,7 @@ describe("components >", () => {
 
         describe("when popover disabled", () => {
             beforeEach(() => {
-               spyOn(subject.shown, "emit").and.callThrough();
+                spyOn(subject.shown, "emit").and.callThrough();
             });
 
             it("should not show popover", () => {
@@ -200,11 +200,11 @@ describe("components >", () => {
         });
 
         describe("popover options >", () => {
-           it("should set the withGrowAfterOpen to true if the input is true", () => {
-               subject.withGrowAfterOpen = true;
-               subject.showPopover();
-               // @ts-ignore
-               expect(subject.overlayConfig.positionStrategy._growAfterOpen).toBeTrue();
+            it("should set the withGrowAfterOpen to true if the input is true", () => {
+                subject.withGrowAfterOpen = true;
+                subject.showPopover();
+                // @ts-ignore
+                expect(subject.overlayConfig.positionStrategy._growAfterOpen).toBeTrue();
             }) ;
         });
     });

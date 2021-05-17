@@ -1,7 +1,7 @@
 import { PortalModule } from "@angular/cdk/portal";
 import {
     AfterViewInit, ChangeDetectorRef, Component, ComponentRef, Directive, EventEmitter, Input, OnChanges,
-    OnDestroy, OnInit, Output, SimpleChange, SimpleChanges
+    OnDestroy, OnInit, Output, SimpleChange, SimpleChanges,
 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
@@ -15,6 +15,7 @@ import { ComponentRegistryService } from "../../services/component-registry.serv
 import { ComponentPortalDirective } from "./component-portal.directive";
 
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {
     public setComponent(component: any) {
     }
@@ -33,6 +34,7 @@ class MockProvider implements IConfigurable, OnInit, AfterViewInit, OnDestroy {
 }
 
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 class MockProviderWithProperties extends MockProvider {
     public properties: IProperties = {};
 }
@@ -631,8 +633,8 @@ describe("ComponentPortalDirective >", () => {
             componentPortalDirective.properties = changes.properties.currentValue;
             const componentChanges = {
                 testProp: new SimpleChange(changes.properties.previousValue.testProp,
-                    changes.properties.currentValue.testProp,
-                    changes.properties.isFirstChange()),
+                                           changes.properties.currentValue.testProp,
+                                           changes.properties.isFirstChange()),
             };
             const spy = spyOn(mockComponentInstance, "ngOnChanges");
             componentPortalDirective.ngOnChanges(changes);

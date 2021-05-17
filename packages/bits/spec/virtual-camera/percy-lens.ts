@@ -1,4 +1,4 @@
-import { ProtractorBrowser } from "protractor";
+import { $, ProtractorBrowser } from "protractor";
 import { ICameraSettings, ILens, PercyLensSnapshotOptions, PERCY_DEFAULT_CONFIG } from "./types";
 
 export class PercyLens implements ILens {
@@ -19,7 +19,11 @@ export class PercyLens implements ILens {
         await this.takeSnapshot(label);
     }
 
-    public async cameraON() {}
+    public async cameraON() {
+        if (this.browser.params["snapshotsUpload"] === "manual") {
+            await this.setManualFullpage();
+        }
+    }
 
     public async cameraOFF() {}
 
@@ -27,6 +31,12 @@ export class PercyLens implements ILens {
 
     private checkSettings() {
         this.percyConfig.widths = [...this.settings.responsiveWidths];
+    }
+
+    private async setManualFullpage(): Promise<void> {
+        const win: number = (await this.browser.manage().window().getSize()).height;
+        const body: number = (await $("body").getSize()).height;
+        await this.browser.manage().window().setSize(1920, body > win ? body : win);
     }
 
 }
