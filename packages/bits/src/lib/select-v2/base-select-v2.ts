@@ -40,7 +40,7 @@ import { InputValueTypes, IOptionedComponent } from "./types";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import ResizeObserver from "resize-observer-polyfill";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE } from "./constants";
+import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "./constants";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
@@ -495,7 +495,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     private announceDropdown(open: boolean): void {
         if (open) {
-            this.liveAnnouncer.announce(ANNOUNCER_OPEN_MESSAGE(this.options.length));
+            this.liveAnnouncer.announce(`${this.options.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`);
 
             return;
         }
