@@ -1,12 +1,12 @@
 import {
     AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild,
-    ViewContainerRef
+    ViewContainerRef,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
     ClientSideDataSource,
     DialogService, INovaFilteringOutputs, IToastService, PaginatorComponent, RowHeightOptions,
-    SearchComponent, TableAlignmentOptions, TableComponent, ToastService
+    SearchComponent, TableAlignmentOptions, TableComponent, ToastService,
 } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -63,7 +63,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
                 public viewContainerRef: ViewContainerRef,
                 public applicationRef: ApplicationRef,
                 public dataSourceService: ClientSideDataSource<ITestTableModel>
-                ) {
+    ) {
         dataSourceService.setData(ELEMENT_DATA);
     }
 
@@ -169,7 +169,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
 
     public limitSearch(): void {
         if (this.searchProperties.length) {
-           this.searchProperties = [];
+            this.searchProperties = [];
         } else {
             this.searchProperties = ["outages"];
         }

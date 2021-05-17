@@ -6,15 +6,16 @@ import {
     IDashboard,
     IWidget,
     ProviderRegistryService,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 
 import {
     TestTimeseriesDataSource,
     TestTimeseriesDataSource2,
+    TestTimeseriesEventsDataSource,
     TestTimeseriesStatusDataSource,
-    TestTimeseriesStatusIntervalDataSource
+    TestTimeseriesStatusIntervalDataSource,
 } from "../../data/timeseries-data-sources";
 
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
@@ -61,6 +62,11 @@ export class AcmeDashboardComponent implements OnInit {
             [TestTimeseriesDataSource2.providerId]: {
                 provide: DATA_SOURCE,
                 useClass: TestTimeseriesDataSource2,
+                deps: [],
+            },
+            [TestTimeseriesEventsDataSource.providerId]: {
+                provide: DATA_SOURCE,
+                useClass: TestTimeseriesEventsDataSource,
                 deps: [],
             },
             [TestTimeseriesStatusDataSource.providerId]: {

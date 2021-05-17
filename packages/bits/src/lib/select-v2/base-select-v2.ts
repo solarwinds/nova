@@ -4,6 +4,7 @@ import {
     AfterContentInit,
     AfterViewInit,
     ChangeDetectorRef,
+    ContentChild,
     ContentChildren,
     Directive,
     ElementRef,
@@ -17,12 +18,12 @@ import {
     Output,
     QueryList,
     SimpleChanges,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import includes from "lodash/includes";
 import isEqual from "lodash/isEqual";
-import isNil from "lodash/isNil";
+import isUndefined from "lodash/isUndefined";
 import last from "lodash/last";
 import pull from "lodash/pull";
 import { Observable, Subject } from "rxjs";
@@ -36,13 +37,18 @@ import { IOption, OptionValueType, OverlayContainerType } from "../overlay/types
 import { OptionKeyControlService } from "./option-key-control.service";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { InputValueTypes, IOptionedComponent } from "./types";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import ResizeObserver from "resize-observer-polyfill";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
 };
 
+const V_SCROLL_HEIGHT_BUFFER = 10;
+
 // Will be renamed in scope of the NUI-5797
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, ControlValueAccessor, IOptionedComponent, OnDestroy, OnChanges {
 
     /** Value used as a placeholder for the select. */
@@ -105,6 +111,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     @ViewChild("input", { static: false})
     inputElement: ElementRef;
 
+    @ContentChild(CdkVirtualScrollViewport) cdkVirtualScroll: CdkVirtualScrollViewport;
+
     /** Corresponds to the Options listed in the Dropdown */
     @ContentChildren(forwardRef(() => SelectV2OptionComponent), { descendants: true })
     public options: QueryList<SelectV2OptionComponent>;
@@ -137,6 +145,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     private _selectedOptions: SelectV2OptionComponent[] = [];
 
     private _ariaLabel: string = "";
+    private virtualScrollResizeObserver: ResizeObserver;
 
     /** Emits value which has been selected */
     @Output() public valueSelected = new EventEmitter<OptionValueType | OptionValueType[] | null>();
@@ -174,6 +183,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         }
         this.initKeyboardManager();
         this.defineDropdownContainer();
+        this.adjustDropdownOnVScrollResize();
     }
 
     /** `View -> model callback called when value changes` */
@@ -252,6 +262,10 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
         this.setActiveItemOnDropdown();
         this.scrollToOption();
+
+        if (this.cdkVirtualScroll) {
+            this.cdkVirtualScroll.checkViewportSize();
+        }
     }
 
     /** Selects specific option and set its value to the model */
@@ -315,14 +329,18 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         }
         this.destroy$.next();
         this.destroy$.complete();
+
+        if (this.virtualScrollResizeObserver) {
+            this.virtualScrollResizeObserver.unobserve(this.cdkVirtualScroll.elementRef.nativeElement);
+        }
     }
 
     protected getValueFromOptions(options = this.selectedOptions): OptionValueType | OptionValueType[] | null {
-        return this.multiselect ? options.map(o => o.value) : options[0]?.value || null;
+        return this.multiselect ? options.map(o => o.value) : options[0]?.value || "";
     }
 
     protected handleValueChange(value: OptionValueType | OptionValueType[] | null) {
-        if (isNil(value)) {
+        if (isUndefined(value)) {
             this.value = "";
             this._selectedOptions = [];
             this.setActiveItemOnDropdown();
@@ -361,7 +379,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     private validateValueWithSelectedOptions() {
         const selectedOptionValues = this.selectedOptions.map(option => option.value);
-        const valuePropToCompare = this.value
+        const valuePropToCompare = !isUndefined(this.value)
             ? this.multiselect ? this.value : [this.value]
             : [];
 
@@ -374,7 +392,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     private scrollToOption() {
         // setTimeout is necessary because scrolling to the selected item should occur only when overlay rendered
-        if (this.value && !this.multiselect) {
+        if (!isUndefined(this.value) && !this.multiselect) {
             setTimeout(() => this.selectedOptions[0]?.scrollIntoView({ block: "center" }));
         }
     }
@@ -387,7 +405,11 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     private setActiveItemOnDropdown(): void {
-        this.value && !this.multiselect
+        let selectedValue;
+        if(!this.multiselect) {
+            selectedValue = this.options?.find(option => isEqual(option.value, this.value));
+        }
+        selectedValue && !this.multiselect
             ? this.optionKeyControlService.setActiveItem(this.selectedOptions[0])
             : this.optionKeyControlService.setFirstItemActive();
     }
@@ -431,5 +453,31 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.dropdown.hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             resizeObserver.unobserve(this.elRef.nativeElement);
         });
+    }
+
+    /**
+     * This helps to dynamically set minHeight for overlay to avoid issues with double
+     * scroll. Overlay minHeight should be bigger than cdkVirtualScroll container.
+     */
+    private adjustDropdownOnVScrollResize(): void {
+        if (!this.cdkVirtualScroll) {
+            return;
+        }
+
+        const element = this.cdkVirtualScroll.elementRef.nativeElement;
+        const height = parseInt(element.style.height, 10);
+        const minHeight = Number.isNaN(height) ? 0 : height + V_SCROLL_HEIGHT_BUFFER;
+
+        this.dropdown.overlayConfig = { ...this.overlayConfig, ...{ minHeight }};
+        this.virtualScrollResizeObserver = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                const content = entry.contentRect;
+                const minHeight = content.height ? content.height + V_SCROLL_HEIGHT_BUFFER : 0;
+
+                this.dropdown.updateSize({ minHeight });
+            }
+        });
+
+        this.virtualScrollResizeObserver.observe(element);
     }
 }

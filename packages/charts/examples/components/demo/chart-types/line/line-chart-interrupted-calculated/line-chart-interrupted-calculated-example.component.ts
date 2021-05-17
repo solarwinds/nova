@@ -12,7 +12,7 @@ import {
     LineRenderer,
     MissingDataLineRendererConfig,
     TimeIntervalScale,
-    XYGrid
+    XYGrid,
 } from "@nova-ui/charts";
 import { duration } from "moment/moment";
 

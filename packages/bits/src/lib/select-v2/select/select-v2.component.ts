@@ -10,7 +10,7 @@ import {
     OnDestroy,
     SimpleChanges,
     TemplateRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { merge } from "rxjs";
@@ -61,7 +61,7 @@ export class SelectV2Component extends BaseSelectV2 implements AfterContentInit,
     constructor(elRef: ElementRef<HTMLElement>,
                 optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
                 cdRef: ChangeDetectorRef
-                ) {
+    ) {
         super(optionKeyControlService, cdRef, elRef);
     }
 

@@ -7,9 +7,10 @@ import {Component, EventEmitter, Output, ViewChild} from "@angular/core";
  * @ignore
  */
 @Component({
-  selector: "nui-droppable",
-  templateUrl: "./droppable.component.html",
-  styleUrls: ["./droppable.component.less"],
+    selector: "nui-droppable",
+    templateUrl: "./droppable.component.html",
+    styleUrls: ["./droppable.component.less"],
+    host: { "[attr.aria-dropeffect]": "move" },
 })
 export class DroppableComponent {
     // @Input() dragSource: DraggableComponent;
@@ -22,8 +23,8 @@ export class DroppableComponent {
   @ViewChild(CdkDropList, {static: true}) dropList: CdkDropList;
 
   onDrop(event: any) {
-    if (event.container !== event.previousContainer) {
-      this.dropSuccess.emit(event.item.data);
-    }
+      if (event.container !== event.previousContainer) {
+          this.dropSuccess.emit(event.item.data);
+      }
   }
 }

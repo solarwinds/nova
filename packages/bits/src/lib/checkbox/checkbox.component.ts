@@ -13,7 +13,7 @@ import {
     Renderer2,
     ViewChild,
     ViewContainerRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -44,7 +44,6 @@ import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
     // TODO: turn on the view envapsulation in the scope of NUI-5823
     encapsulation: ViewEncapsulation.None,
     host: {
-        "role": "checkbox",
         "[class.nui-checkbox--hovered]": "hovered",
         "[class.nui-checkbox--checked]": "checked",
     },
@@ -75,6 +74,12 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
             this.changeDetector.markForCheck();
         }
     }
+
+    /** Users ca specify the 'aria-labelledby' which will be set to the input element */
+    @Input() ariaLabelledby: string | null = null;
+
+    /** The 'aria-describedby' attribute is read after the element's label and field type. */
+    @Input() ariaDescribedby: string;
 
     /**
      * Sets "name" attribute for inner input element of nui-checkbox
@@ -158,7 +163,7 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
     private rendererListener: Function;
     private sub: Subscription;
 
-    private _ariaLabel: string = "";
+    private _ariaLabel: string = "Checkbox";
 
     constructor(private changeDetector: ChangeDetectorRef,
                 private eventBusService: EventBusService,
@@ -181,6 +186,14 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
             }
         });
     }
+    public getAriaChecked(): "true" | "false" | "mixed" {
+        if (this.checked) {
+            return "true";
+        }
+
+        return this.indeterminate ? "mixed" : "false";
+    }
+
     /**
      * Used for changing of css style when nui-checkbox is hovered
      */

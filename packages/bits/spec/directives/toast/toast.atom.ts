@@ -2,7 +2,7 @@ import {
     browser,
     by,
     ElementFinder,
-    ExpectedConditions
+    ExpectedConditions,
 } from "protractor";
 
 import { Atom } from "../../atom";

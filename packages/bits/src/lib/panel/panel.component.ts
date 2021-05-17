@@ -3,7 +3,7 @@ import {
     AnimationBuilder,
     AnimationFactory,
     AnimationPlayer,
-    style
+    style,
 } from "@angular/animations";
 import {
     AfterViewInit,
@@ -20,7 +20,7 @@ import {
     SimpleChanges,
     ViewChild,
     ViewContainerRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import isUndefined from "lodash/isUndefined";
 import { Subject, Subscription } from "rxjs";

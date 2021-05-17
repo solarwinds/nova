@@ -13,7 +13,7 @@ import {
     Renderer2,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";
@@ -35,7 +35,7 @@ import { IMenuItem } from "../public-api";
     selector: "nui-menu",
     host: {
         "class": "nui-menu",
-        "role": "menu",
+        "[attr.aria-label]": "title || ariaLabel",
     },
     templateUrl: "./menu.component.html",
     styleUrls: ["./menu.component.less"],
@@ -51,6 +51,10 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
      * Should dropdown be appended to body or not
      */
     @Input() public appendToBody: boolean;
+    /**
+     * sets aria-label for menu button
+     */
+    @Input() public ariaLabel: string;
     /**
      * sets title/name for menu button
      */

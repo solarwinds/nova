@@ -73,7 +73,7 @@ export {
     TableRowComponent,
     TableFooterRowDefDirective,
     TableRowDefDirective,
-    TableHeaderRowDefDirective
+    TableHeaderRowDefDirective,
 } from "./lib/table/table-row/table-row.component";
 export { CardComponent } from "./lib/layout/card/card.component";
 export { CardGroupComponent } from "./lib/layout/card-group/card-group.component";

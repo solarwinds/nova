@@ -6,8 +6,10 @@ import {
     ElementRef,
     Inject,
     Input,
+    OnChanges,
     OnInit,
-    ViewEncapsulation
+    SimpleChanges,
+    ViewEncapsulation,
 } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import _find from "lodash/find";
@@ -33,13 +35,21 @@ import { IImagesPresetItem } from "./public-api";
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./image.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "img" },
+    host: {
+        "role": "img",
+        "[attr.aria-label]": "hasAlt ? null : description || imageName",
+    },
 })
-export class ImageComponent implements OnInit, AfterViewInit {
+export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     /**
      * Image name from nui image preset or external source
      */
     @Input() public image: any;
+
+    /**
+     * Sets aria-label text or alt for image from external source
+     */
+    @Input() public description: string;
 
     /**
      * Available values are: 'left' and 'right'
@@ -66,6 +76,10 @@ export class ImageComponent implements OnInit, AfterViewInit {
      */
     @Input() public autoFill: boolean;
 
+    public imageTemplate: SafeHtml;
+    public imageName: string | null;
+    public hasAlt: boolean;
+
     constructor(private logger: LoggerService,
                 private utilService: UtilService,
                 private changeDetector: ChangeDetectorRef,
@@ -82,6 +96,13 @@ export class ImageComponent implements OnInit, AfterViewInit {
                 this.logger.error("Image size should be specified in 'px', '%', or 'auto");
             }
         });
+    }
+
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.image || changes.description) {
+            this.imageName = this.image.name || this.getImage(this.image)?.name || null;
+            this.imageTemplate = this.getImageTemplate();
+        }
     }
 
     public ngAfterViewInit() {
@@ -116,8 +137,10 @@ export class ImageComponent implements OnInit, AfterViewInit {
         let imageHtml: string = "";
         if (_has(image, "code") && _isString(image.code)) {
             imageHtml = image.code;
+            this.hasAlt = false;
         } else {
-            imageHtml = `<img src="${this.image}">`;
+            imageHtml = `<img src="${this.image}" alt="${this.description}">`;
+            this.hasAlt = true;
         }
 
         return this.domSanitizer.bypassSecurityTrustHtml(imageHtml);

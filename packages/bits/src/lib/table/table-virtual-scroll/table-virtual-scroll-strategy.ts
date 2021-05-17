@@ -91,7 +91,7 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
 
         // We have to recalculate the first visible index based on new data length and viewport size.
         firstVisibleIndex = Math.max(0,
-            Math.min(firstVisibleIndex, rowCount - maxVisibleItems));
+                                     Math.min(firstVisibleIndex, rowCount - maxVisibleItems));
         // We must update scroll offset to handle start/end buffers
         // Current range must also be adjusted to cover the new position (bottom of new list).
         newRange.start = Math.floor(firstVisibleIndex);

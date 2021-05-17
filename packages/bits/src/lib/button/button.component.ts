@@ -10,17 +10,17 @@ import {
     OnInit,
     ViewChild,
     ViewContainerRef,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import {
     fromEvent,
     merge,
     Subject,
-    timer
+    timer,
 } from "rxjs";
 import {
     filter,
-    takeUntil
+    takeUntil,
 } from "rxjs/operators";
 
 import { buttonConstants } from "../../constants/button.constants";
@@ -35,7 +35,7 @@ import { ButtonSizeType } from "./public-api";
     selector: "[nui-button]",
     templateUrl: "./button.component.html",
     host: {
-        "role": "button",
+        "[attr.aria-busy]": "isBusy || null",
         "class": "nui-button btn",
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -77,6 +77,10 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
      * the button has no inner content, the empty button styling will still be applied.
      */
     @Input() public isEmpty: boolean;
+
+    /** Sets aria-label for the component */
+    @Input() public ariaLabel: string = ""
+
     /**
      * Optionally, set whether to fire a "click" event repeatedly while the button is pressed.
      */
@@ -86,9 +90,9 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
      */
     // TODO: Remove this setter/getter logic in scope of NUI-3475
     @Input() public get size(): ButtonSizeType { return this._size; }
-             public set size(value: ButtonSizeType) {
-                this._size = (value as string) === "small" ? ButtonSizeType.compact : value;
-             }
+    public set size(value: ButtonSizeType) {
+        this._size = (value as string) === "small" ? ButtonSizeType.compact : value;
+    }
 
     @HostBinding("class.btn-lg") public get sizeClassLarge() { return this.size === "large"; }
     @HostBinding("class.btn-xs") public get sizeClassCompact() {return this.size === "compact"; }
@@ -114,7 +118,7 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
             this.dispStyleActionClass || this.displayStyleDestructiveClass);
     }
 
-    @HostBinding("attr.aria-label") public get ariaIconLabel() { return this.icon; }
+    @HostBinding("attr.aria-label") public get ariaIconLabel() { return this.ariaLabel || this.getAriaLabel(); }
 
     @ViewChild("contentContainer", {static: true, read: ViewContainerRef }) private contentContainer: ViewContainerRef;
 
@@ -169,6 +173,11 @@ should be set explicitly: `, el.nativeElement);
             width: `${d}px`,
             height: `${d}px`,
         };
+    }
+
+    private getAriaLabel() {
+        // In chrome once innerText gets touched in a native element this caused issues in table-sticky-header NUI-6033
+        return this._isContentEmpty ? this.icon : this.contentContainer.element.nativeElement.textContent.trim();
     }
 
     private setIsContentEmptyValue() {

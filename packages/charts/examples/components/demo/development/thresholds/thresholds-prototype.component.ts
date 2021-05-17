@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     BandScale, Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, IAccessors, IChartAssistSeries, IChartSeries, ILineAccessors, ISimpleThresholdZone,
-    IXYScales, LineAccessors, LinearScale, LineRenderer, MappedValueProvider, StatusAccessors, ThresholdsService, TimeIntervalScale, TimeScale, XYGrid
+    IXYScales, LineAccessors, LinearScale, LineRenderer, MappedValueProvider, StatusAccessors, ThresholdsService, TimeIntervalScale, TimeScale, XYGrid,
 } from "@nova-ui/charts";
 import moment, { duration } from "moment/moment";
 

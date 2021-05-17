@@ -5,7 +5,7 @@ import {
     Input,
     OnInit,
     Output,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -31,7 +31,6 @@ import { NuiFormFieldControl } from "../form-field/public-api";
     ],
     styleUrls: ["./switch.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
-    host: { "role": "switch" },
 })
 
 export class SwitchComponent implements OnInit, ControlValueAccessor {
@@ -41,7 +40,7 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
     /**
      * Input to set aria label text
      */
-    @Input() public ariaLabel: string = "";
+    @Input() public ariaLabel: string = "Switch";
 
     @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 

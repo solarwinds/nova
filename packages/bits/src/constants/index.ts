@@ -1,4 +1,4 @@
-export * from "./unit-conversion.constant";
+export * from "./unit-conversion.constants";
 export * from "./images.constants";
 export * from "./keycode.constants";
 export * from "./resize.constants";

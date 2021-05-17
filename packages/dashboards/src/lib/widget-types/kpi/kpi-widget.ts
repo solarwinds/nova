@@ -5,7 +5,7 @@ import {
     DEFAULT_PIZZAGNA_ROOT,
     NOVA_KPI_COLOR_PRIORITIZER,
     NOVA_KPI_DATASOURCE_ADAPTER,
-    NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER
+    NOVA_KPI_STATUS_CONTENT_FALLBACK_ADAPTER,
 } from "../../services/types";
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";

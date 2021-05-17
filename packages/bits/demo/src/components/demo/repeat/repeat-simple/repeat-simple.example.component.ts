@@ -7,13 +7,13 @@ import { Component } from "@angular/core";
 })
 export class RepeatSimpleExampleComponent {
 public colors = [
-        { color: $localize `blue` },
-        { color: $localize `green` },
-        { color: $localize `yellow` },
-        { color: $localize `cyan` },
-        { color: $localize `magenta` },
-        { color: $localize `black` },
-    ];
+    { color: $localize `blue` },
+    { color: $localize `green` },
+    { color: $localize `yellow` },
+    { color: $localize `cyan` },
+    { color: $localize `magenta` },
+    { color: $localize `black` },
+];
 
-    constructor() { }
+constructor() { }
 }

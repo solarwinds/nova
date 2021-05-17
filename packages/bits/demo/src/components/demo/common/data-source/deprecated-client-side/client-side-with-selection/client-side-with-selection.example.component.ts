@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
-    INovaFilteringOutputs, ListService, LocalFilteringDataSource, PaginatorComponent, RepeatComponent, RepeatSelectionMode, SearchComponent, SelectionType
+    INovaFilteringOutputs, ListService, LocalFilteringDataSource, PaginatorComponent, RepeatComponent, RepeatSelectionMode, SearchComponent, SelectionType,
 } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 import { Subscription } from "rxjs";

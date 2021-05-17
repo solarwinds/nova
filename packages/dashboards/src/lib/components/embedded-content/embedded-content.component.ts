@@ -11,7 +11,7 @@ import {
     OnInit,
     SecurityContext,
     SimpleChanges,
-    ViewChild
+    ViewChild,
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -39,7 +39,7 @@ export class EmbeddedContentComponent implements IHasChangeDetector, OnInit, OnC
     constructor(public changeDetector: ChangeDetectorRef,
         @Inject(DOCUMENT) private document: Document,
         private domSanitizer: DomSanitizer
-        ) { }
+    ) { }
 
 
     ngOnInit() {

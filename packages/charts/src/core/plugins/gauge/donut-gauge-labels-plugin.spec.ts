@@ -45,11 +45,11 @@ describe("DonutGaugeLabelsPlugin >", () => {
         const renderer = dataSeries.renderer as RadialRenderer;
         const labelRadius = renderer?.getOuterRadius(dataSeries.scales.r.range() ?? [0, 0], 0) + (plugin.config.padding as number);
         labelGenerator = arc().outerRadius(labelRadius).innerRadius(labelRadius);
-        labelData = DonutGaugeRenderingUtil.generateThresholdData(dataSeries.data);
+        labelData = DonutGaugeRenderingUtil.generateThresholdRenderingData(dataSeries.data);
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {
-        expect(labels.nodes().length).toEqual(gaugeConfig.thresholds.length);
+        expect(labels.nodes().length).toEqual(gaugeConfig.thresholds?.length as number);
     });
 
     it("should position the threshold labels correctly", () => {
@@ -60,7 +60,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
 
     it("should render the threshold values as text", () => {
         labels.nodes().forEach((node, index) => {
-            expect(node.textContent).toEqual(gaugeConfig.thresholds[index].toString());
+            expect(node.textContent).toEqual(gaugeConfig.thresholds?.[index].toString() as string);
         });
     });
 

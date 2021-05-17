@@ -14,7 +14,7 @@ import {
     Output,
     SimpleChanges,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from "@angular/forms";
 import _defaults from "lodash/defaults";
@@ -69,7 +69,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
     /** to apply error state styles */
     @Input() isInErrorState: boolean;
     /** Input to set aria label text */
-    @Input() public ariaLabel: string = "";
+    @Input() public ariaLabel: string = "Date Picker";
 
     // TODO: Consider injecting locale through LOCALE_ID Injection Token
     /** to date format locale */

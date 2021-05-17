@@ -1,7 +1,4 @@
 version: 2.1
-orbs:
-    snyk: snyk/snyk@0.0.12
-
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -139,7 +136,9 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/bits
+                    command: |
+                      export PERCY_TOKEN=${BITS_PERCY_TOKEN}
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -252,6 +251,9 @@ jobs:
         working_directory: ~/nova/packages/charts
         docker:
             -   image: circleci/node:12-browsers
+        environment:
+            # Needed for daylight saving time tests
+            TZ: "America/Chicago"
         steps:
             -   attach_workspace:
                     at: ~/nova
@@ -298,7 +300,9 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/charts
+                    command: |
+                      export PERCY_TOKEN=${CHARTS_PERCY_TOKEN}
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -462,7 +466,9 @@ jobs:
                     command: docker-compose up -d --build selenium
             -   run:
                     name: Visual tests
-                    command: docker-compose run --user="$UID" build npm run visual:ci --prefix ./packages/dashboards
+                    command: |
+                      export PERCY_TOKEN=${DASHBOARDS_PERCY_TOKEN}
+                      docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
             -   run:
                     name: Cleanup
                     command: docker-compose down -v --rmi="all"
@@ -519,6 +525,8 @@ jobs:
         environment:
             NOVA_DIR: ~/nova
         steps:
+            -   checkout:
+                    path: ~/nova
             -   run:
                     name: Docs Cleanup
                     command: yarn run clean-docs-ci
@@ -573,25 +581,6 @@ jobs:
             -   run:
                     name: Trigger release branch
                     command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
-    snyk-test:
-        working_directory: ~/nova
-        docker:
-            -   image: circleci/node:12-browsers
-        steps:
-            -   attach_workspace:
-                    at: ~/nova
-            -   run:
-                    name: Install node_modules
-                    command: npm install -q
-            -   run:
-                    name: snyk auth
-                    command: npm run snyk-auth
-            -   run:
-                    name: snyk monitor
-                    command: npm run snyk-monitor
-            -   run:
-                    name: snyk test
-                    command: npm run snyk-test
 workflows:
     version: 2.1
     nova:
@@ -609,10 +598,6 @@ workflows:
             -   bits-visual-test:
                     requires:
                         - bits-build
-                    filters:
-                        branches:
-                            only:
-                                - main
             -   bits-a11y-test:
                     requires:
                         - bits-build
@@ -645,11 +630,6 @@ workflows:
             -   charts-visual-test:
                     requires:
                         - charts-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
             -   charts-publish:
                     requires:
                         - bits-e2e-test
@@ -688,11 +668,6 @@ workflows:
             -   dashboards-visual-test:
                     requires:
                         - dashboards-build
-                    filters:
-                        branches:
-                            only:
-                                - main
-                                - next
             -   dashboards-publish:
                     requires:
                         - bits-e2e-test
@@ -707,15 +682,7 @@ workflows:
                                 - main
                                 - /release\/.*/
                                 - next
-            # Waiting on dashboards build before running scan because it's currently the last package to be built.
-            -   snyk-test:
-                    requires:
-                        - dashboards-build
-                    filters:
-                        branches:
-                            ignore:
-                                - pull/*
-
+                                
     nova-release:
         jobs:
             -   release-approval:
@@ -737,4 +704,6 @@ workflows:
                           only:
                               - main
         jobs:
-            - nova-docs-cleanup
+            - nova-docs-cleanup:
+                context:
+                    - common-build-creds

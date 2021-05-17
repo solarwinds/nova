@@ -9,14 +9,15 @@ import { XYChartComponent } from "../xy-chart.component";
 @Component({
     selector: "nui-line-chart",
     templateUrl: "../xy-chart.component.html",
+    styleUrls: ["../xy-chart.component.less"],
 })
 export class LineChartComponent extends XYChartComponent {
     public static lateLoadKey = "LineChartComponent";
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
                 @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
-                timeseriesScalesService: TimeseriesScalesService,
-                changeDetector: ChangeDetectorRef) {
+                                            timeseriesScalesService: TimeseriesScalesService,
+                                            changeDetector: ChangeDetectorRef) {
         super(eventBus, dataSource, timeseriesScalesService, changeDetector);
 
         this.renderer = new LineRenderer();

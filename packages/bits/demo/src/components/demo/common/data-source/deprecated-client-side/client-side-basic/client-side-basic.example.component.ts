@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
-    INovaFilteringOutputs, LocalFilteringDataSource, PaginatorComponent, SearchComponent
+    INovaFilteringOutputs, LocalFilteringDataSource, PaginatorComponent, SearchComponent,
 } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
@@ -78,11 +78,11 @@ export class DepreacatedDataSourceClientSideBasicExampleComponent implements Aft
             },
         });
         this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-                this.state = data;
-                if (data && data.paginator && data.paginator.reset) {
-                    this.filteringPaginator.page = 1;
-                }
-                this.changeDetection.detectChanges();
+            this.state = data;
+            if (data && data.paginator && data.paginator.reset) {
+                this.filteringPaginator.page = 1;
+            }
+            this.changeDetection.detectChanges();
         });
         await this.dataSourceService.applyFilters();
     }

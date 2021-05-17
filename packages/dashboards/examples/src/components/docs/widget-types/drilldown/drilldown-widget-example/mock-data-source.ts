@@ -79,13 +79,13 @@ export class DrilldownDataSource extends DataSourceService<any> implements IData
         this.busy.next(true);
 
         return of(this.cache || GRAPH_DATA_MOCK)
-                .pipe(
-                    delay(1000),
-                    tap(data => this.cache = data),
-                    map(data => data.data.countries),
-                    catchError(e => of([])),
-                    finalize(() => this.busy.next(false))
-                );
+            .pipe(
+                delay(1000),
+                tap(data => this.cache = data),
+                map(data => data.data.countries),
+                catchError(e => of([])),
+                finalize(() => this.busy.next(false))
+            );
     }
 
     private getTransformedDataForGroup(data: any, groupName: string) {

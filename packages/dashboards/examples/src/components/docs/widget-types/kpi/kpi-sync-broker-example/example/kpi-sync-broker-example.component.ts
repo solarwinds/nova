@@ -14,7 +14,7 @@ import {
     ProviderRegistryService,
     WellKnownPathKey,
     WellKnownProviders,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import keyBy from "lodash/keyBy";
@@ -85,7 +85,7 @@ export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> imple
                 .pipe(
                     delay(2000),
                     finalize(() => this.busy.next(false))
-                    )
+                )
                 .subscribe({
                     next: (data: any) => {
                         resolve({
@@ -132,7 +132,7 @@ export class MockKpiDataSource extends DataSourceService<IKpiData> implements On
                     delay(5000),
                     take(1),
                     finalize(() => this.busy.next(false))
-                    )
+                )
                 .subscribe({
                     next: (data: any) => {
                         resolve({

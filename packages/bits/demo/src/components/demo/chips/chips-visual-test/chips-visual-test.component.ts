@@ -4,11 +4,11 @@ import _cloneDeep from "lodash/cloneDeep";
 import _pull from "lodash/pull";
 
 const horizontalFlatItems: IChipsItem[] = [
-            {id: "flatId1", label: "Down"},
-            {id: "flatId2", label: "Critical"},
-            {id: "flatId3", label: "Warning"},
-            {id: "flatId4", label: "Unknown"},
-            {id: "flatId5", label: "Ok"},
+    {id: "flatId1", label: "Down"},
+    {id: "flatId2", label: "Critical"},
+    {id: "flatId3", label: "Warning"},
+    {id: "flatId4", label: "Unknown"},
+    {id: "flatId5", label: "Ok"},
 ];
 
 const groupedItems: IChipsGroup[] = [
@@ -29,11 +29,11 @@ const groupedItems: IChipsGroup[] = [
 ];
 
 const verticalFlatItemsVisual: IChipsItem[] = [
-            {id: "flatId1", label: "Down"},
-            {id: "flatId2", label: "Critical"},
-            {id: "flatId3", label: "Warning"},
-            {id: "flatId4", label: "Unknown"},
-            {id: "flatId5", label: "Ok"},
+    {id: "flatId1", label: "Down"},
+    {id: "flatId2", label: "Critical"},
+    {id: "flatId3", label: "Warning"},
+    {id: "flatId4", label: "Unknown"},
+    {id: "flatId5", label: "Ok"},
 ];
 
 @Component({

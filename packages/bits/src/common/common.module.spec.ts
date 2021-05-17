@@ -1,13 +1,13 @@
 import { NuiCommonModule } from "./common.module";
 
 describe("CommonModule", () => {
-  let commonModule: NuiCommonModule;
+    let commonModule: NuiCommonModule;
 
-  beforeEach(() => {
-    commonModule = new NuiCommonModule();
-  });
+    beforeEach(() => {
+        commonModule = new NuiCommonModule();
+    });
 
-  it("should create an instance", () => {
-    expect(commonModule).toBeTruthy();
-  });
+    it("should create an instance", () => {
+        expect(commonModule).toBeTruthy();
+    });
 });

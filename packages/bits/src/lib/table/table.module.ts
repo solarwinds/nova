@@ -21,13 +21,13 @@ import {
     TableHeaderRowComponent,
     TableHeaderRowDefDirective,
     TableRowComponent,
-    TableRowDefDirective
+    TableRowDefDirective,
 } from "./table-row/table-row.component";
 import { SliceRangePipe } from "./table-virtual-scroll/slice-range.pipe";
 import { TableStickyHeaderDirective } from "./table-virtual-scroll/table-sticky-header.directive";
 import {
     TableVirtualScrollDirective,
-    TableVirtualScrollLinearDirective
+    TableVirtualScrollLinearDirective,
 } from "./table-virtual-scroll/table-virtual-scroll.directive";
 import { TableComponent } from "./table.component";
 

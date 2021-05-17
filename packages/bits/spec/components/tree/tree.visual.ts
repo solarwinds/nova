@@ -35,7 +35,7 @@ describe(`Visual tests: ${name}`, () => {
 
         await paginatorTree.expandAll();
         await browser.wait(
-                EC.visibilityOf(paginator1.getElement()) &&
+            EC.visibilityOf(paginator1.getElement()) &&
                 EC.visibilityOf(paginator2.getElement()), 3000, "Paginators didn't load!");
         await paginator2.ellipsisLink(0).click();
         await camera.say.cheese("Default");
@@ -48,9 +48,9 @@ describe(`Visual tests: ${name}`, () => {
 
 
         await checkboxTree.getBranchCheckboxNodes().each(async (item: ElementFinder | undefined, index: number | undefined) => {
-           if (index) {
+            if (index) {
                 await item?.click();
-           }
+            }
         });
         await browser.wait(EC.visibilityOf(checkboxTree.getLeafCheckboxNodes().first()), 3000, "Can't see the first leaf checkbox node!");
         await checkboxTree.getLeafCheckboxNodes().first().click();

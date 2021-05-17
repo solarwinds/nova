@@ -23,7 +23,7 @@ export class BreadcrumbStateService {
         }];
 
         return routerState.firstChild ? this.getBreadcrumbState(routerState.firstChild, newUrl, newBreadcrumbs) :
-                                        newBreadcrumbs;
+            newBreadcrumbs;
     }
 
     public getNavigationSubscription(router: Router): Observable<Event> {

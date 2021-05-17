@@ -78,8 +78,8 @@ export abstract class BaseLayout implements IHasChangeDetector, OnChanges, DoChe
 
     private updateNodeConfigs(changes?: SimpleChanges) {
         this.nodeConfigs = mergeChanges(this.nodeConfigs,
-            this.getTemplateChangeForNodes(changes),
-            this.getNodeComponentsConfigs()
+                                        this.getTemplateChangeForNodes(changes),
+                                        this.getNodeComponentsConfigs()
         );
     }
 

@@ -24,8 +24,6 @@ describe("USERCONTROL Dialog", () => {
     let dialog: DialogAtom;
     let closeButton: ElementFinder;
     let header: ElementFinder;
-    let cancelButton: ElementFinder;
-    let actionButton: ElementFinder;
     let themeSwitcher: WebElement;
 
     beforeAll(async () => {
@@ -47,8 +45,6 @@ describe("USERCONTROL Dialog", () => {
         dialog = new DialogAtom(element(by.className("nui-dialog")));
         closeButton = dialog.getCloseButton();
         header = dialog.getHeader();
-        cancelButton = dialog.getCancelButton();
-        actionButton = dialog.getActionButton();
     });
 
     afterEach(async () => {
@@ -58,7 +54,7 @@ describe("USERCONTROL Dialog", () => {
         } catch (e) {}
     });
 
-    it("should show simple dialog", async () => {
+    it("should show simple dialog when click", async () => {
         await defaultDialogBtn.click();
         expect(await dialog.isDialogDisplayed()).toBe(true);
     });
@@ -88,21 +84,6 @@ describe("USERCONTROL Dialog", () => {
         });
     });
 
-    describe("buttons in dialog footer", async () => {
-        beforeEach(async () => {
-            await defaultDialogBtn.scrollTo({ block: "center" });
-            await defaultDialogBtn.click();
-        });
-        it("should cancel button is presented", async () => {
-            expect(await cancelButton.isPresent()).toBe(true);
-            expect(await cancelButton.getText()).toBe("Cancel");
-        });
-
-        it("should action button is presented", async () => {
-            expect(await actionButton.isPresent()).toBe(true);
-            expect(await actionButton.getText()).toBe("Action");
-        });
-    });
     describe("Dismissal on ESC keyboard input", async () => {
         it("should close closable with ESC", async () => {
             await closableDialogBtn.scrollTo({ block: "center" });
@@ -120,6 +101,7 @@ describe("USERCONTROL Dialog", () => {
             expect(await dialog.isDialogDisplayed()).toBe(true);
         });
     });
+
     describe("Dismissal in case of static backdrop", async () => {
         it("should stay opened on backdrop click if backdrop is static", async () => {
             await staticBackdropButton.scrollTo({ block: "center" });
@@ -129,6 +111,7 @@ describe("USERCONTROL Dialog", () => {
             await browser.actions().click().perform();
             expect(await dialog.isDialogDisplayed()).toBe(true);
         });
+
         it("should stay opened on ESC key press if backdrop is static", async () => {
             await staticBackdropESCButton.scrollTo({ block: "center" });
             await staticBackdropESCButton.click();
@@ -139,7 +122,7 @@ describe("USERCONTROL Dialog", () => {
 
     describe("Dismissal on route changes", async () => {
         afterAll(async ()=> {
-           await browser.navigate().back();
+            await browser.navigate().back();
         })
 
         it("should close dialog with router changed", async () => {
@@ -153,7 +136,7 @@ describe("USERCONTROL Dialog", () => {
     describe("Tab navigation inside the dialog", async () => {
         let initiallyFocusedCloseButtonElement: string;
         const assert = async () => expect(initiallyFocusedCloseButtonElement)
-                                        .toEqual(await (await browser.switchTo().activeElement()).getId());
+            .toEqual(await (await browser.switchTo().activeElement()).getId());
 
         beforeEach(async () => {
             await defaultDialogBtn.scrollTo({ block: "center" });

@@ -245,12 +245,13 @@ export class XYGrid extends Grid implements IGrid {
     public buildPlugins(chart: IChart): IChartPlugin[] {
         const plugins: IChartPlugin[] = [];
 
-        if (this.config().interactive) {
+        const config = this.config();
+        if (config.interactive) {
             plugins.push(new MouseInteractiveAreaPlugin(
-                new MouseInteractiveArea(this.getLasagna().getContainer(), this.getInteractiveArea(), this.config().cursor)));
+                new MouseInteractiveArea(this.getLasagna().getContainer(), this.getInteractiveArea(), config.cursor, config.dimension.margin)));
         }
 
-        if (this.config().interactionPlugins) {
+        if (config.interactionPlugins) {
             plugins.push(new InteractionLinePlugin());
             plugins.push(new InteractionLabelPlugin());
         }
@@ -741,6 +742,9 @@ export class XYGrid extends Grid implements IGrid {
 
         const tx = this.config().dimension.margin.left;
         const ty = this.config().dimension.margin.top;
+
+        // Note: This transform results in a firefox hack in MouseInteractiveArea in which
+        // the margins must be subtracted from the mouse event coordinates
         container.attr("transform", `translate(${tx}, ${ty})`);
     }
 

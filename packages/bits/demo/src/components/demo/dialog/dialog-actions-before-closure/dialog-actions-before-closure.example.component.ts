@@ -17,32 +17,32 @@ export class DialogActionBeforeClosureExampleComponent {
 
         // You can use the beforeDismissed$ event to execute actions right before the dialog gets closed
         this.activeDialog
-                .beforeDismissed$
-                    .pipe(
-                        // Be sure to unsubscribe on dialog closure
-                        takeUntil(this.activeDialog.closed$)
-                    )
-                    .subscribe(event => {
-                        // A dialog will typically close in response to the escape key
-                        if (event === NuiDialogEvent.EscapeKey) {
-                            console.log($localize`ESC CLOSED`);
-                        }
-                        // Covering the 'BACKDROP_CLICK' event in case of clearing the dialog by clicking the backdrop
-                        if (event === NuiDialogEvent.BackdropClick) {
-                            console.log($localize`BACKDROP CLICK CLOSED`);
-                            return;
-                        }
-                        // Here we cover the custom 'DONE' event which you can create and then capture within the 'beforeDismissed$' subscription
-                        // to run your custom logic in response to that event right before the dialog closure.  See 'actionDone' implementation below.
-                        if (event === "DONE") {
-                            console.log($localize`DONE`);
-                            return;
-                        }
-                        // Set of actions for all event origins before the dialog closes
-                        console.log($localize`BEFORE CLOSED`);
-                        // Manually close the dialog since the `beforeDismiss` implementation below short-circuits dismissal with its 'false' return value
-                        this.activeDialog.close();
-        });
+            .beforeDismissed$
+            .pipe(
+                // Be sure to unsubscribe on dialog closure
+                takeUntil(this.activeDialog.closed$)
+            )
+            .subscribe(event => {
+                // A dialog will typically close in response to the escape key
+                if (event === NuiDialogEvent.EscapeKey) {
+                    console.log($localize`ESC CLOSED`);
+                }
+                // Covering the 'BACKDROP_CLICK' event in case of clearing the dialog by clicking the backdrop
+                if (event === NuiDialogEvent.BackdropClick) {
+                    console.log($localize`BACKDROP CLICK CLOSED`);
+                    return;
+                }
+                // Here we cover the custom 'DONE' event which you can create and then capture within the 'beforeDismissed$' subscription
+                // to run your custom logic in response to that event right before the dialog closure.  See 'actionDone' implementation below.
+                if (event === "DONE") {
+                    console.log($localize`DONE`);
+                    return;
+                }
+                // Set of actions for all event origins before the dialog closes
+                console.log($localize`BEFORE CLOSED`);
+                // Manually close the dialog since the `beforeDismiss` implementation below short-circuits dismissal with its 'false' return value
+                this.activeDialog.close();
+            });
 
         // You can perform any required actions just after dialog closure here
         this.activeDialog.closed$.pipe(take(1)).subscribe(() => {

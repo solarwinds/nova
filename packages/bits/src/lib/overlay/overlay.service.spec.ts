@@ -23,7 +23,7 @@ describe("OverlayService >", () => {
             ],
             schemas: [ NO_ERRORS_SCHEMA ],
         })
-        .compileComponents();
+            .compileComponents();
 
         fixture = TestBed.createComponent(OverlayComponent);
         component = fixture.componentInstance;

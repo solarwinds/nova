@@ -43,16 +43,16 @@ export class ProportionalChartOptionsEditorV2Component implements OnInit, IHasCh
         public changeDetector: ChangeDetectorRef,
         private formBuilder: FormBuilder,
         legendFormattersRegistry: ProportionalLegendFormattersRegistryService
-        ) {
-            this.legendFormatters = legendFormattersRegistry.getItems();
+    ) {
+        this.legendFormatters = legendFormattersRegistry.getItems();
 
-            // broadcast chart type
-            this.form.controls["type"].valueChanges
-                .pipe(takeUntil(this.destroy$))
-                .subscribe((v) => this.chartTypeChanged$.next(v));
-        }
+        // broadcast chart type
+        this.form.controls["type"].valueChanges
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((v) => this.chartTypeChanged$.next(v));
+    }
 
-        public ngOnInit() {
+    public ngOnInit() {
         this.formReady.emit(this.form);
     }
 

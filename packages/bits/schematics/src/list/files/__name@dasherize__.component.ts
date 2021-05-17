@@ -41,13 +41,12 @@ import {
     if (pagingMode === "virtualScroll") { %>
     VirtualViewportManager,<% } %>
 } from "@nova-ui/bits";
-import {<%
-    if (dataSource === "serverSide") {%>
-    BehaviorSubject,<% } %>
+import {
+    BehaviorSubject,
     Subject,
 } from "rxjs";
-import {<%
-    if (pagingMode === "virtualScroll") {%>
+import {
+    <% if (pagingMode === "virtualScroll") { %>
     filter,
     switchMap,<% } %>
     takeUntil,
@@ -82,10 +81,9 @@ import { <%= classify(dataSourceName) %>DataSource } from "<% if (dataSourceName
         },<% } %>
     ],<% } %>
 })
-export class <%= classify(name) %>Component implements <% if (dataSource === "serverSide") {%>OnInit, <% } %>AfterViewInit, OnDestroy {<%
-    if (dataSource === "serverSide") {%>
-    public listItems$ = new BehaviorSubject<IServer[]>([]);<% }
-    if (enableSort) { %>
+export class <%= classify(name) %>Component implements <% if (dataSource === "serverSide") {%>OnInit, <% } %>AfterViewInit, OnDestroy {
+    public listItems$ = new BehaviorSubject<IServer[]>([]);
+    <% if (enableSort) { %>
     public readonly sorterItems: IMenuItem[] = [
         {
             title: $localize`Name`,
@@ -131,8 +129,8 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
     private destroy$ = new Subject();
 
     constructor(
-        @Inject(DataSourceService) private dataSource: <%
-        if (dataSource === "none" || dataSource === "clientSide") {%><% if (dataSourceName === name) {%>ClientSide<% } else {%>LocalFiltering<%}%><% } else {%><%= classify(dataSourceName) %><% } %>DataSource<IServer>,
+        @Inject(DataSourceService) private dataSource:
+        <%= classify(dataSourceName) %>DataSource<IServer>,
         private changeDetection: ChangeDetectorRef<%
         if (pagingMode === "virtualScroll") { %>,
         private viewportManager: VirtualViewportManager<% }
@@ -189,12 +187,9 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
                             const items = data.repeat?.itemsSource || [];
 
                             // after receiving data we need to append it to our previous fetched results
-                            this.listItems$.next(this.listItems$.getValue().concat(items));<%
-                            if (dataSource === "serverSide") { %>
-
+                            this.listItems$.next(this.listItems$.getValue().concat(items));
                             this.totalItems = data.paginator?.total || 0;
-
-                            this.changeDetection.detectChanges();<% } %>
+                            this.changeDetection.detectChanges();
                         })
                     )
                 ),
@@ -272,8 +267,8 @@ export class <%= classify(name) %>Component implements <% if (dataSource === "se
 
             if (pagingMode === "virtualScroll") {
             if (dataSource === "clientSide") {%>
-            if (filteringState.repeat) {
-                filteringState.repeat.itemsSource = [];
+            if (this.filteringState.repeat) {
+                this.filteringState.repeat.itemsSource = [];
             }<%
             } else if (dataSource === "serverSide") {%>
             this.listItems$.next([]);<% }

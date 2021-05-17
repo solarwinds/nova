@@ -9,7 +9,7 @@ import {
     OnDestroy,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { EventBus, IDataField, IDataSource, IEvent } from "@nova-ui/bits";

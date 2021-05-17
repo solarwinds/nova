@@ -16,7 +16,7 @@ import {
     NOVA_TIMESERIES_METADATA_CONVERTER,
     NOVA_TIMESERIES_SERIES_CONVERTER,
     NOVA_TIMESERIES_TILE_INDICATOR_DATA_CONVERTER,
-    NOVA_TITLE_AND_DESCRIPTION_CONVERTER
+    NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
 } from "../../services/types";
 import { IPizzagna, IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";

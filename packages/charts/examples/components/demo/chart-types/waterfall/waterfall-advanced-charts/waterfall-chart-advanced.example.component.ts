@@ -5,7 +5,7 @@ import {
     OverlayPositionBuilder,
     OverlayRef,
     PositionStrategy,
-    ScrollStrategyOptions
+    ScrollStrategyOptions,
 } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";
 import {
@@ -16,7 +16,7 @@ import {
     OnInit,
     TemplateRef,
     ViewChild,
-    ViewContainerRef
+    ViewContainerRef,
 } from "@angular/core";
 import {
     BandScale,
@@ -35,7 +35,7 @@ import {
     SET_DOMAIN_EVENT,
     XYGrid,
     XYGridConfig,
-    ZoomPlugin
+    ZoomPlugin,
 } from "@nova-ui/charts";
 
 /**
@@ -71,7 +71,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
     public templatePortal: TemplatePortal<any>;
     public listItems = getData(this.seriesChartConfig);
 
-    private scales: { x: LinearScale; y: BandScale };
+    private scales: { x: LinearScale, y: BandScale };
     private overlayRef: OverlayRef;
 
     @ViewChild("templatePortalGrid") templatePortalGrid: TemplateRef<any>;
@@ -113,7 +113,7 @@ export class WaterfallChartAdvancedComponent implements AfterViewInit, OnInit {
                     originY: "top",
                     overlayX: "start",
                     overlayY: "top",
-                    },
+                },
                 {
                     originX: "start",
                     originY: "top",

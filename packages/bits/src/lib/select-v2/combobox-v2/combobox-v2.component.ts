@@ -60,6 +60,8 @@ import { InputValueTypes } from "../types";
         "class": "nui-combobox-v2",
         "role": "combobox",
         "[attr.aria-expanded]": "isDropdownOpen || false",
+        "aria-haspopup": "listbox",
+        "aria-owns": "nui-overlay",
     },
 })
 
@@ -96,7 +98,7 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
                 optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
                 cdRef: ChangeDetectorRef,
                 private selectedItemsKeyControlService: SelectedItemsKeyControlService
-                ) {
+    ) {
         super(optionKeyControlService, cdRef, elRef);
     }
 

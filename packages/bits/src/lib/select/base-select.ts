@@ -18,6 +18,7 @@ import { ISelectChangedEvent, ISelectGroup } from "./public-api";
  * @deprecated in v11 - Use BaseSelectV2 instead - Removal: NUI-5796
  */
 @Directive()
+// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAccessor, NuiFormFieldControl {
     /**
      * The option to disable the select.

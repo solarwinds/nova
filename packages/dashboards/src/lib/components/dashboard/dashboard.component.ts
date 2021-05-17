@@ -11,7 +11,7 @@ import { AfterViewInit,
     SimpleChanges,
     ViewChild,
     ViewChildren,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import { EventBus, immutableSet } from "@nova-ui/bits";
 import { GridsterComponent, GridsterConfig, GridsterItem, GridsterItemComponent, GridsterItemComponentInterface } from "angular-gridster2";

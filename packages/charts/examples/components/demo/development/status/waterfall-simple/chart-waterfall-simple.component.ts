@@ -146,7 +146,7 @@ export class ChartWaterfallSimpleComponent implements AfterViewInit {
             ],
         },
     ];
-    private scales: { x: LinearScale; y: BandScale };
+    private scales: { x: LinearScale, y: BandScale };
 
     public ngAfterViewInit() {
         const bandScale = new BandScale();

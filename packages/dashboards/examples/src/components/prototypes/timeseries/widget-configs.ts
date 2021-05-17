@@ -6,10 +6,11 @@ import {
     ITimeseriesWidgetConfig,
     IWidget,
     LegendPlacement,
+    NOVA_URL_INTERACTION_HANDLER,
     PizzagnaLayer,
     TimeseriesChartPreset,
     TimeseriesScaleType,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";
@@ -90,6 +91,12 @@ export const widgetConfigs: IWidget[] = [
                         [WellKnownProviders.DataSource]: {
                             "providerId": AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
+                        [WellKnownProviders.InteractionHandler]: {
+                            providerId: NOVA_URL_INTERACTION_HANDLER,
+                            properties: {
+                                url: "${data.link}",
+                            },
+                        },
                     },
                 },
                 "header": {
@@ -114,6 +121,7 @@ export const widgetConfigs: IWidget[] = [
                     },
                     "properties": {
                         "configuration": {
+                            "interaction": "series",
                             "legendPlacement": LegendPlacement.Right,
                             "enableZoom": true,
                             "leftAxisLabel": "Utilization (%)",
@@ -142,6 +150,12 @@ export const widgetConfigs: IWidget[] = [
                         [WellKnownProviders.DataSource]: {
                             "providerId": AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
+                        [WellKnownProviders.InteractionHandler]: {
+                            providerId: NOVA_URL_INTERACTION_HANDLER,
+                            properties: {
+                                url: "${data.link}",
+                            },
+                        },
                     },
                 },
                 "header": {

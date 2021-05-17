@@ -26,7 +26,7 @@ import {
     NOVA_PIZZAGNA_BROADCASTER,
     NOVA_PROPORTIONAL_CONTENT_FORMATTERS_REGISTRY,
     NOVA_PROPORTIONAL_WIDGET_CHART_OPTIONS_CONVERTER,
-    NOVA_TITLE_AND_DESCRIPTION_CONVERTER
+    NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
 } from "../../services/types";
 import { PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
@@ -190,7 +190,7 @@ export const proportionalConfigurator = {
                             "label": $localize`Percentage`,
                             configurationComponent: "DonutContentPercentageConfigurationComponent",
                         },
-                    ]  as IFormatterDefinition[],
+                    ] as IFormatterDefinition[],
                     legendFormatters: [
                         {
                             componentType: StatusWithIconFormatterComponent.lateLoadKey,

@@ -17,7 +17,7 @@ import {
     NuiOverlayModule,
     NuiSearchModule,
     NuiSelectV2Module,
-    SrlcStage
+    SrlcStage,
 } from "@nova-ui/bits";
 
 import {

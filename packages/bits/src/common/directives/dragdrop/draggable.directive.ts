@@ -9,7 +9,7 @@ import {
     Input,
     NgZone,
     OnInit,
-    Output
+    Output,
 } from "@angular/core";
 import throttle from "lodash/throttle";
 

@@ -14,7 +14,7 @@ export class WaterfallChartSimpleComponent implements OnInit {
     private chartConfig: IBarChartConfig = { horizontal: true };
     public chart = new Chart(barGrid(this.chartConfig));
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const accessors = barAccessors(this.chartConfig);
         const scales = barScales(this.chartConfig);
 
@@ -31,7 +31,7 @@ export class WaterfallChartSimpleComponent implements OnInit {
         accessors.data.color = (d) => colorProvider.get(d.type);
 
         // Step 4 - Configure the format of the bottom label by setting custom scales.x.formatter function.
-        scales.x.formatters.tick = (value: number) => `${Number(value / 1000).toFixed(1)}s`;
+        scales.x.formatters.tick = (value: number) => `${parseFloat(Number(value / 1000).toFixed(1)).toLocaleString()}s`;
 
         // Step 5 - Configure the thickness of the bar using the BandScale.padding method on your scales.y.
         (<BandScale>scales.y).padding(0.5);

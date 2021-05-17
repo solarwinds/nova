@@ -69,9 +69,9 @@ export class DayPickerComponent implements OnInit {
             this.rows = picker
                 .split(days, 7)
                 .map(row => ({
-                        days: row,
-                        isRowVisible: !(picker.onlyCurrentMonth && row[0].secondary && row[6].secondary),
-                    })
+                    days: row,
+                    isRowVisible: !(picker.onlyCurrentMonth && row[0].secondary && row[6].secondary),
+                })
                 );
 
             if (picker.showWeeks) {

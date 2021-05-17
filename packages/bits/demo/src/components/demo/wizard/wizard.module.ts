@@ -14,6 +14,8 @@ import {
     NuiValidationMessageModule,
     NuiWizardModule,
     SrlcStage,
+    NuiBusyModule,
+    NuiSpinnerModule,
 } from "@nova-ui/bits";
 
 import {
@@ -28,8 +30,10 @@ import {
     WizardExampleComponent,
     WizardHiddenExampleComponent,
     WizardSimpleExampleComponent,
+    WizardStepsExampleComponent,
     WizardValidationExampleComponent,
     WizardVisualTestComponent,
+    WizardDynamicRemoveExampleComponent,
 } from "./index";
 
 const routes = [
@@ -56,6 +60,10 @@ const routes = [
             },
         },
     },
+    {
+        path: "wizard-steps",
+        component: WizardStepsExampleComponent,
+    },
 ];
 
 @NgModule({
@@ -73,6 +81,8 @@ const routes = [
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes),
+        NuiBusyModule,
+        NuiSpinnerModule,
     ],
     declarations: [
         WizardAdditionalButtonExampleComponent,
@@ -88,6 +98,8 @@ const routes = [
         WizardValidationExampleComponent,
         WizardVisualTestComponent,
         WizardCustomStepLineWidthComponent,
+        WizardDynamicRemoveExampleComponent,
+        WizardStepsExampleComponent,
     ],
     providers: [
         {

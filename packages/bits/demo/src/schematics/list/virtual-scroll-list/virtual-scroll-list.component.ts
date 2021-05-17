@@ -124,28 +124,28 @@ export class VirtualScrollListComponent implements OnInit, AfterViewInit, OnDest
             // ViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
             .observeNextPage$({pageSize: RESULTS_PER_PAGE})
-                .pipe(
-                    // Since we know the total number of items we can stop the stream when dataset end is reached
-                    // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
-                    filter(() => {
-                        const items = this.listItems$.getValue();
-                        return !items.length || items.length < this.totalItems;
-                    }),
-                    tap(() => this.applyFilters(false)),
-                    // Note: Using the same stream to subscribe to the outputsSubject and update the items list
-                    switchMap(() => this.dataSource.outputsSubject.pipe(
-                        tap((data: IFilteringOutputs) => {
-                            // update the list of items to be rendered
-                            const items = data.repeat?.itemsSource || [];
+            .pipe(
+                // Since we know the total number of items we can stop the stream when dataset end is reached
+                // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
+                filter(() => {
+                    const items = this.listItems$.getValue();
+                    return !items.length || items.length < this.totalItems;
+                }),
+                tap(() => this.applyFilters(false)),
+                // Note: Using the same stream to subscribe to the outputsSubject and update the items list
+                switchMap(() => this.dataSource.outputsSubject.pipe(
+                    tap((data: IFilteringOutputs) => {
+                        // update the list of items to be rendered
+                        const items = data.repeat?.itemsSource || [];
 
-                            // after receiving data we need to append it to our previous fetched results
-                            this.listItems$.next(this.listItems$.getValue().concat(items));
+                        // after receiving data we need to append it to our previous fetched results
+                        this.listItems$.next(this.listItems$.getValue().concat(items));
 
-                            this.totalItems = data.paginator?.total || 0;
+                        this.totalItems = data.paginator?.total || 0;
 
-                            this.changeDetection.detectChanges();
-                        })
-                    )
+                        this.changeDetection.detectChanges();
+                    })
+                )
                 ),
                 takeUntil(this.destroy$)
             ).subscribe();

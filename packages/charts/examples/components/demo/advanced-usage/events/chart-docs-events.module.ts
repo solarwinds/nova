@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import {
-    DEMO_PATH_TOKEN, NuiButtonModule, NuiCheckboxModule, NuiDocsModule, NuiMessageModule, NuiSelectModule, SrlcStage
+    DEMO_PATH_TOKEN, NuiButtonModule, NuiCheckboxModule, NuiDocsModule, NuiMessageModule, NuiSelectModule, SrlcStage,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 

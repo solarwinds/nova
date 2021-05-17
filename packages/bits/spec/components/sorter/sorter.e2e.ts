@@ -3,7 +3,7 @@ import { Helpers } from "../../helpers";
 import {
     ButtonAtom,
     IconAtom,
-    SorterAtom
+    SorterAtom,
 } from "../public_api";
 
 describe("USERCONTROL Sorter >", () => {

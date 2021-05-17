@@ -1,7 +1,7 @@
 {
   "name": "@nova-ui/bits",
   "license": "Apache-2.0",
-  "version": "11.3.0-0",
+  "version": "11.5.0-0",
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "description": "SolarWinds Nova Framework",
   "contributors": [
@@ -54,7 +54,7 @@
     "e2e:watch": "npx watch \"npm run e2e:base\" src demo spec --watch=1",
     "e2e:debug": "npm run pree2e:base && node --inspect-brk ./node_modules/protractor/bin/protractor ./protractor-gui.conf.js",
     "percy": "percy exec -- npm run visual",
-    "percy:ci": "percy exec -- npm run visual:ci",
+    "percy:ci": "npm run visual:ci && percy upload -v _snapshots",
     "percy:gui": "percy exec -- npm run visual:gui",
     "visual:base": "npm run e2e:base -- --suite visual",
     "visual:ci": "npm run e2e:ci -- --suite visual",
@@ -89,25 +89,17 @@
   },
   "analyze": false,
   "peerDependencies": {
-    "@angular-devkit/schematics": "^11.1.4",
     "@angular/animations": "^11.1.2",
     "@angular/cdk": "^11.1.1",
-    "@angular/common": "^11.1.2",
-    "@angular/compiler": "^11.1.2",
     "@angular/core": "^11.1.2",
     "@angular/forms": "^11.1.2",
     "@angular/localize": "^11.1.2",
     "@angular/platform-browser": "^11.1.2",
-    "@angular/platform-browser-dynamic": "^11.1.2",
     "@angular/router": "^11.1.2",
-    "@schematics/angular": "^11.1.4",
-    "core-js": "^2.6.9",
     "highlight.js": "^10.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.25.3",
-    "moment-timezone": "^0.5.27",
-    "rxjs": "^6.5.3",
-    "zone.js": "^0.11.3"
+    "moment-timezone": "^0.5.27"
   },
   "dependencies": {
     "resize-observer-polyfill": "^1.5.0",

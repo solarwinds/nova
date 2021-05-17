@@ -24,6 +24,6 @@ export interface IKpiConfiguration {
 }
 
 export interface IKpiFormattersConfiguration extends Partial<Record<KpiFormatterTypes | string, {
-    formatter: IFormatter,
+    formatter: IFormatter;
 }>> {}
 export interface IKpiFormatterProperties extends Partial<Record<KpiFormatterTypes | string, any>> {}

@@ -17,9 +17,9 @@ import {
 import { ISerializableTimeframe } from "../../../../configurator/services/types";
 import { NuiDashboardsModule } from "../../../../dashboards.module";
 import { ProviderRegistryService } from "../../../../services/provider-registry.service";
-import { SET_TIMEFRAME } from "../../../../services/types";
+import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
-import { ITimeseriesWidgetConfig, ITimeseriesWidgetData } from "../../types";
+import { ITimeseriesWidgetConfig, ITimeseriesWidgetData, TimeseriesInteractionType, ITimeseriesWidgetSeriesData } from "../../types";
 
 import { XYChartComponent } from "./xy-chart.component";
 
@@ -165,6 +165,25 @@ describe("XYChartComponent", () => {
                 },
             });
             expect(spy).toHaveBeenCalledWith({ payload: timeframe });
+        });
+    });
+
+    describe("onPrimaryDescClick", () => {
+        let initializationChanges = {
+            widgetData: { isFirstChange: () => false } as SimpleChange,
+            configuration: { isFirstChange: () => false, currentValue: {} } as SimpleChange,
+        };
+
+        it("should communicate interaction on the EventBus when series is interactive", () => {
+            const spy = spyOn(eventBus.getStream(INTERACTION), "next").and.callThrough();
+            component.configuration = { interaction: "series" } as ITimeseriesWidgetConfig;
+            component.ngOnChanges(initializationChanges);
+            component.onPrimaryDescClick({ stopPropagation: () => null } as any, component.chartAssist.legendSeriesSet[0]);
+            const interactionData = {
+                payload: { data: component.chartAssist.legendSeriesSet[0], interactionType: TimeseriesInteractionType.Series },
+                id: "INTERACTION",
+            };
+            expect(spy).toHaveBeenCalledWith(interactionData);
         });
     });
 });

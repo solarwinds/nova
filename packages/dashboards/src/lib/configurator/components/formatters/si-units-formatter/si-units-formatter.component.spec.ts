@@ -118,7 +118,7 @@ const TEST_DATA: any[] = [
     },
 ];
 
-describe("TableWidgetComponent", () => {
+describe("SiUnitsFormatterComponent", () => {
     let component: SiUnitsFormatterComponent;
     let fixture: ComponentFixture<SiUnitsFormatterComponent>;
 

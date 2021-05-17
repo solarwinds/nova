@@ -8,9 +8,9 @@ class IListItem {
 }
 
 @Component({
-  selector: "dnd-custom-handle",
-  templateUrl: "./dnd-custom-handle.example.component.html",
-  styleUrls: ["./dnd-custom-handle.example.component.less"],
+    selector: "dnd-custom-handle",
+    templateUrl: "./dnd-custom-handle.example.component.html",
+    styleUrls: ["./dnd-custom-handle.example.component.less"],
 })
 export class DndCustomHandleExampleComponent {
     public mousedOver: boolean[] = [];

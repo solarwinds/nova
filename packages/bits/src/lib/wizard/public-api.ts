@@ -34,4 +34,5 @@ export interface IWizardStepComponent {
     exit?: EventEmitter<IWizardSelectionEvent | void>;
     next?: EventEmitter<IWizardSelectionEvent | void>;
     valid?: EventEmitter<boolean>;
+    [key: string]: any;
 }

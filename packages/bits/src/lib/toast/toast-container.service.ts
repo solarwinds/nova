@@ -3,7 +3,7 @@ import {
     ComponentFactoryResolver,
     ComponentRef,
     EmbeddedViewRef,
-    Injectable
+    Injectable,
 } from "@angular/core";
 import isNil from "lodash/isNil";
 
@@ -56,7 +56,7 @@ export class ToastContainerService {
 
         if (newestOnTop) {
             this.containerElement.insertBefore(ToastContainerService.getComponentRootNode(componentRef),
-                this.containerElement.firstChild);
+                                               this.containerElement.firstChild);
         } else {
             this.containerElement.appendChild(ToastContainerService.getComponentRootNode(componentRef));
         }

@@ -82,8 +82,17 @@ describe("USERCONTROL expander", () => {
     });
 
     it("should not have dotted border left", async () => {
+        await withoutBorderExpander.toggle();
+        await browser.wait(async () => await withoutBorderExpander.isExpanded(), 1000);
         const expanderBodyLeftBorderWidth = await withoutBorderExpander.getBodyLeftBorderWidth();
         expect(expanderBodyLeftBorderWidth).toEqual("0px");
+    });
+
+    it("should have dotted border left", async () => {
+        await basicExpander.toggle();
+        await browser.wait(async () => await basicExpander.isExpanded(), 1000);
+        const expanderBodyLeftBorderWidth = await basicExpander.getBodyLeftBorderWidth();
+        expect(expanderBodyLeftBorderWidth).toEqual("2px");
     });
 
     it("menu items should be clickable", async () => {

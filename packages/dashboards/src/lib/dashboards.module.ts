@@ -78,7 +78,7 @@ import {
     WIDGET_POSITION_CHANGE,
     WIDGET_READY,
     WIDGET_REMOVE,
-    WIDGET_RESIZE
+    WIDGET_RESIZE,
 } from "./services/types";
 import { WidgetTypesService } from "./services/widget-types.service";
 import { drilldown } from "./widget-types/drilldown/drilldown";

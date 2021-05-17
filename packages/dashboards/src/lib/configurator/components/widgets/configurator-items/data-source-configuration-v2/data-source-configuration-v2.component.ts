@@ -10,7 +10,7 @@ import {
     OnChanges,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";

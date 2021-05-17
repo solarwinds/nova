@@ -1,6 +1,6 @@
 <div class="nui-paginator" *ngIf="showPaginator()">
     <div class="nui-paginator__items">
-        <ul class="nui-paginator__list" role="listbox">
+        <ul class="nui-paginator__list" role="listbox" aria-label="List of pages">
             <li role="option" title="{{item.title}}" [ngClass]="item.style" *ngFor="let item of itemsList" value="{{item.value}}">
                 <button nui-button
                         type="button"
@@ -28,6 +28,7 @@
                             displayStyle="action"
                             [ngClass]="item.imageClass"
                             [isEmpty]="false"
+                            aria-haspopup="true"
                             (click)="handleDotsClick()"
                             class="nui-paginator__dots">
                         {{item.value}}

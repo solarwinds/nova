@@ -9,7 +9,7 @@ import {
     Injector,
     Renderer2,
     RendererFactory2,
-    Type
+    Type,
 } from "@angular/core";
 import { ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";

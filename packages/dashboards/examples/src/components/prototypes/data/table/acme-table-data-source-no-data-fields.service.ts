@@ -52,7 +52,7 @@ export class AcmeTableDataSourceNoDataFields extends DataSourceService<any> impl
                     for (let i = 0; i < this.page; ++i) {
 
                         response = await
-                            (await fetch(`${BREW_API_URL}/?page=${totalPages - i || 1}&per_page=${itemsPerPage}`)).json();
+                        (await fetch(`${BREW_API_URL}/?page=${totalPages - i || 1}&per_page=${itemsPerPage}`)).json();
 
                         // since the last page contains only 5 items we need to fetch another page to give virtual scroll enough space to work
                         if (response && response.length < itemsPerPage) {
@@ -77,7 +77,7 @@ export class AcmeTableDataSourceNoDataFields extends DataSourceService<any> impl
                     this.cache = [];
                     for (let i = 0; i < this.page; i++) {
                         response = await
-                            (await fetch(`${BREW_API_URL}/?page=${i + 1}&per_page=${itemsPerPage}`)).json();
+                        (await fetch(`${BREW_API_URL}/?page=${i + 1}&per_page=${itemsPerPage}`)).json();
                         map = {
                             brewInfo: response?.map((result: IBrewInfo) => ({
                                 id: result.id,

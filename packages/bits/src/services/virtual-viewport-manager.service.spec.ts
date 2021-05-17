@@ -23,7 +23,7 @@ import { VirtualViewportManager } from "./virtual-viewport-manager.service";
         </nui-repeat>
     `,
     styles: [
-            `
+        `
             nui-repeat {
                 height: 300px;
             }

@@ -1,4 +1,11 @@
 # Style Guide
+
+In this guide, we try to point out conventions, pattern preferences, and other design choices that are 
+important to us. If you can't find a preference here regarding a question you may have about these types 
+of things, please refer to the Google style guides [here](https://google.github.io/styleguide/). If
+neither place has the answer or you just want to say "Hi", please feel free to email us at 
+nova-ui@solarwinds.com with any questions.
+
 ## Component development
   * Library components have to work in OnPush change detection mode
 Why? We have no control over user environment and change detection strategy is subject to consumer's freedom of choice. Therefore we need to make sure that components we provide work under both, where ChangeDetectionStrategy.OnPush is stricter than Default, so we need to support OnPush.
@@ -10,11 +17,44 @@ Why? setTimeout is tied to a wider context of executed code, which might not be 
     ```
 	But the following works in all major browsers:
     ```js
-    this.ngZone.runOutsideAngular(() => {​​​
+    this.ngZone.runOutsideAngular(() => {
         this.resizeObserver.observe(this.el.nativeElement);
-    }​​​​​​​​​​);
+    });
     ```
 The reason for this is that, since in Firefox ResizeObserver is not native (as of July 2019), it isn't "hacked" by ZoneJS, so it needs to be explicitly executed outside of Angular.
+
+## HTML Formatting
+
+### Line Wrapping
+
+When wrapping attributes please put the first attribute on the same line as the opening element tag, and put the closing bracket of the opening element on the same
+line as the last attribute:
+
+<em>Not Preferred</em>
+
+```html
+<div 
+     id="my-id"
+     class="my-class"
+>
+</div>
+```
+
+<em>Preferred</em>
+
+```html
+<div id="my-id"
+     class="my-class">
+</div>
+```
+
+## Typescript Conventions
+
+### Naming
+
+#### Field Names
+
+Private fields are written in `camelCase` and typically do not contain an underscore. If, however, a private field has an associated setter and/or getter, it should be prefixed with an underscore. For example, `_privateFieldWithAccessor`.
 
 ## ngOnDestroy and Component Inheritance
 

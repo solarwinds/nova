@@ -4,7 +4,7 @@ import {
     by,
     element,
     ElementFinder,
-    Key
+    Key,
 } from "protractor";
 
 import { ButtonAtom, CheckboxAtom } from "../..";

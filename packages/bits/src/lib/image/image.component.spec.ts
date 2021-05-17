@@ -61,9 +61,11 @@ describe("components >", () => {
 
             it("returns default image template if there is no image in the preset", () => {
                 const imageName = "unavailableImage";
-                const expectedImageTemplate = `<img src="${imageName}">`;
+                const description = "Unavailable image";
+                const expectedImageTemplate = `<img src="${imageName}" alt="${description}">`;
 
                 subject.image = imageName;
+                subject.description = description;
 
                 expect(subject.getImageTemplate()).toBe(expectedImageTemplate);
             });

@@ -43,7 +43,7 @@ describe("services >", () => {
                 );
 
                 expect(domEl.getAttribute("tabindex")).toBe("-1",
-                    `Element tag '${domEl.tagName}' should have tabindex="-1"`
+                                                            `Element tag '${domEl.tagName}' should have tabindex="-1"`
                 );
             });
         });

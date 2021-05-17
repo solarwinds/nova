@@ -9,7 +9,7 @@ import {
     NuiImageModule,
     NuiRepeatModule,
     NuiSelectV2Module,
-    NuiSwitchModule
+    NuiSwitchModule,
 } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
@@ -17,7 +17,7 @@ import {
     NuiDashboardsModule,
     ProviderRegistryService,
     WellKnownPathKey,
-    WidgetTypesService
+    WidgetTypesService,
 } from "@nova-ui/dashboards";
 
 import { AcmeProportionalDSConfigComponent } from "../components/data-source-configuration/proportional-ds-config.component";
@@ -77,7 +77,7 @@ export class TimeseriesWidgetPrototypeModule {
         delete widgetTemplate.widget.structure[DEFAULT_PIZZAGNA_ROOT].providers?.refresher;
 
         this.widgetTypesService.setNode(widgetTemplate, "configurator",
-            WellKnownPathKey.DataSourceConfigComponentType, AcmeProportionalDSConfigComponent.lateLoadKey);
+                                        WellKnownPathKey.DataSourceConfigComponentType, AcmeProportionalDSConfigComponent.lateLoadKey);
         this.componentRegistry.registerByLateLoadKey(AcmeProportionalDSConfigComponent);
     }
 

@@ -6,7 +6,7 @@ import {
     Input,
     OnDestroy,
     OnInit,
-    Output
+    Output,
 } from "@angular/core";
 import _isNil from "lodash/isNil";
 import throttle from "lodash/throttle";

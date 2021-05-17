@@ -7,9 +7,9 @@ class IListItem  {
 }
 
 @Component({
-  selector: "dnd-drag-disabled",
-  templateUrl: "./dnd-drag-disabled-example.component.html",
-  styleUrls: ["./dnd-drag-disabled-example.component.less"],
+    selector: "dnd-drag-disabled",
+    templateUrl: "./dnd-drag-disabled-example.component.html",
+    styleUrls: ["./dnd-drag-disabled-example.component.less"],
 })
 export class DndDragDisabledExampleComponent {
     public listItems: IListItem[] = [

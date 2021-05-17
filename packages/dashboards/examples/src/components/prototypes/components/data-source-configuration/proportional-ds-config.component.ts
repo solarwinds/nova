@@ -10,7 +10,7 @@ import {
     OnDestroy,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
@@ -21,7 +21,7 @@ import {
     IHasChangeDetector,
     IProperties,
     PIZZAGNA_EVENT_BUS,
-    ProviderRegistryService
+    ProviderRegistryService,
 } from "@nova-ui/dashboards";
 import { ReplaySubject, Subject } from "rxjs";
 import { take, takeUntil } from "rxjs/operators";
@@ -125,9 +125,9 @@ export class AcmeProportionalDSConfigComponent implements IHasChangeDetector, On
                     await dataSource.updateConfiguration({
                         ...this.properties,
                         ...value,
+                    });
+                    await dataSource.applyFilters();
                 });
-                await dataSource.applyFilters();
-        });
 
         } else {
             this.logger.warn("No provider found for id:", providerId);

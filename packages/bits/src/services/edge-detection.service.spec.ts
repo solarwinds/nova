@@ -24,13 +24,13 @@ describe("services >", () => {
             width: 20,
             height: 10,
         },
-        parentComponentDimension = {
-            width: 100,
-            height: 100,
-        };
+              parentComponentDimension = {
+                  width: 100,
+                  height: 100,
+              };
 
         const createBasicHtml = (depositWidth: number, depositHeight: number,
-                               addEdgeDefiner?: boolean) => {
+                                 addEdgeDefiner?: boolean) => {
             const edgeDefinerClass = addEdgeDefiner ? "nui-edge-definer" : "";
             const parentStyle = addEdgeDefiner ? `width: ${parentComponentDimension.width}px;
                                                        height: ${parentComponentDimension.height}px;
@@ -153,24 +153,24 @@ describe("services >", () => {
                 };
 
             it("should give expected result when no right direction is available",
-                testLeftRightPlacement(false, "right"));
+               testLeftRightPlacement(false, "right"));
             it("should give expected result when right direction is available",
-                testLeftRightPlacement(true, "right"));
+               testLeftRightPlacement(true, "right"));
 
             it("should give expected result when no top direction is available",
-                testTopBottomPlacement(false, "top"));
+               testTopBottomPlacement(false, "top"));
             it("should give expected result when top direction is available",
-                testTopBottomPlacement(true, "top"));
+               testTopBottomPlacement(true, "top"));
 
             it("should give expected result when no bottom direction is available",
-                testTopBottomPlacement(false, "bottom"));
+               testTopBottomPlacement(false, "bottom"));
             it("should give expected result when bottom direction is available",
-                testTopBottomPlacement(true, "bottom"));
+               testTopBottomPlacement(true, "bottom"));
 
             it("should give expected result when no left direction is available",
-                testLeftRightPlacement(false, "left"));
+               testLeftRightPlacement(false, "left"));
             it("should give expected result when left direction is available",
-                testLeftRightPlacement(true, "left"));
+               testLeftRightPlacement(true, "left"));
         });
 
         describe("placing in ", () => {
@@ -220,24 +220,24 @@ describe("services >", () => {
                     };
 
                 it("should give expected result when no right direction is available",
-                    testLeftRightPlacementInComponent(false, "right"));
+                   testLeftRightPlacementInComponent(false, "right"));
                 it("should give expected result when right direction is available",
-                    testLeftRightPlacementInComponent(true, "right"));
+                   testLeftRightPlacementInComponent(true, "right"));
 
                 it("should give expected result when no top direction is available",
-                    testTopBottomPlacementInComponent(false, "top"));
+                   testTopBottomPlacementInComponent(false, "top"));
                 it("should give expected result when top direction is available",
-                    testTopBottomPlacementInComponent(true, "top"));
+                   testTopBottomPlacementInComponent(true, "top"));
 
                 it("should give expected result when no bottom direction is available",
-                    testTopBottomPlacementInComponent(false, "bottom"));
+                   testTopBottomPlacementInComponent(false, "bottom"));
                 it("should give expected result when bottom direction is available",
-                    testTopBottomPlacementInComponent(true, "bottom"));
+                   testTopBottomPlacementInComponent(true, "bottom"));
 
                 it("should give expected result when no left direction is available",
-                    testLeftRightPlacementInComponent(false, "left"));
+                   testLeftRightPlacementInComponent(false, "left"));
                 it("should give expected result when left direction is available",
-                    testLeftRightPlacementInComponent(true, "left"));
+                   testLeftRightPlacementInComponent(true, "left"));
             });
 
             describe("multiple edge-definers on the same page > ", () => {
@@ -491,24 +491,24 @@ describe("services >", () => {
                 };
 
             it("should give expected result when no right direction is available",
-                testLeftRightAlignment(false, "right"));
+               testLeftRightAlignment(false, "right"));
             it("should give expected result when right direction is available",
-                testLeftRightAlignment(true, "right"));
+               testLeftRightAlignment(true, "right"));
 
             it("should give expected result when no top direction is available",
-                testTopBottomAlignment(false, "top"));
+               testTopBottomAlignment(false, "top"));
             it("should give expected result when top direction is available",
-                testTopBottomAlignment(true, "top"));
+               testTopBottomAlignment(true, "top"));
 
             it("should give expected result when no bottom direction is available",
-                testTopBottomAlignment(false, "bottom"));
+               testTopBottomAlignment(false, "bottom"));
             it("should give expected result when bottom direction is available",
-                testTopBottomAlignment(true, "bottom"));
+               testTopBottomAlignment(true, "bottom"));
 
             it("should give expected result when no left direction is available",
-                testLeftRightAlignment(false, "left"));
+               testLeftRightAlignment(false, "left"));
             it("should give expected result when left direction is available",
-                testLeftRightAlignment(true, "left"));
+               testLeftRightAlignment(true, "left"));
         });
 
         describe("aligning in edge-definer >", () => {
@@ -555,24 +555,24 @@ describe("services >", () => {
                 };
 
             it("should give expected result when no right direction is available",
-                testLeftRightAlignmentInComponent(false, "right"));
+               testLeftRightAlignmentInComponent(false, "right"));
             it("should give expected result when right direction is available",
-                testLeftRightAlignmentInComponent(true, "right"));
+               testLeftRightAlignmentInComponent(true, "right"));
 
             it("should give expected result when no top direction is available",
-                testTopBottomAlignmentInComponent(false, "top"));
+               testTopBottomAlignmentInComponent(false, "top"));
             it("should give expected result when top direction is available",
-                testTopBottomAlignmentInComponent(true, "top"));
+               testTopBottomAlignmentInComponent(true, "top"));
 
             it("should give expected result when no bottom direction is available",
-                testTopBottomAlignmentInComponent(false, "bottom"));
+               testTopBottomAlignmentInComponent(false, "bottom"));
             it("should give expected result when bottom direction is available",
-                testTopBottomAlignmentInComponent(true, "bottom"));
+               testTopBottomAlignmentInComponent(true, "bottom"));
 
             it("should give expected result when no left direction is available",
-                testLeftRightAlignmentInComponent(false, "left"));
+               testLeftRightAlignmentInComponent(false, "left"));
             it("should give expected result when left direction is available",
-                testLeftRightAlignmentInComponent(true, "left"));
+               testLeftRightAlignmentInComponent(true, "left"));
         });
     });
 });

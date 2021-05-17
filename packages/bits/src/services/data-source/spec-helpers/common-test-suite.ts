@@ -8,7 +8,7 @@ import {
     resultForBlue,
     resultForLightFirstPage,
     resultForLightSecondPage,
-    resultsForLightFirstPageDesc
+    resultsForLightFirstPageDesc,
 } from "./local-filtering-data-source.testdata";
 
 export class CommonTestSuite {

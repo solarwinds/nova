@@ -20,7 +20,7 @@ import {
     ProportionalWidgetChartTypes,
     RawFormatterComponent,
     SiUnitsFormatterComponent,
-    WellKnownProviders
+    WellKnownProviders,
 } from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";

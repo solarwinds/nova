@@ -9,7 +9,7 @@ import {
     NuiSearchModule,
     NuiTextboxModule,
     NuiToolbarModule,
-    SrlcStage
+    SrlcStage,
 } from "@nova-ui/bits";
 
 import {
@@ -19,7 +19,7 @@ import {
     ToolbarItemTypesExampleComponent,
     ToolbarSelectionExampleComponent,
     ToolbarTestExampleComponent,
-    ToolbarVisualTestExampleComponent
+    ToolbarVisualTestExampleComponent,
 } from "./index";
 
 const routes = [

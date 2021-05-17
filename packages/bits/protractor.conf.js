@@ -32,6 +32,7 @@ exports.config = {
     framework: 'jasmine',
     params: {
         visual: "percy",
+        snapshotsUpload: "manual",
     },
     jasmineNodeOpts: {
         showColors: true,

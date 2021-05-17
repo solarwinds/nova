@@ -4,7 +4,7 @@ import {
     Inject,
     OnDestroy,
     ViewChild,
-    ViewEncapsulation
+    ViewEncapsulation,
 } from "@angular/core";
 import {
     DataSourceService,
