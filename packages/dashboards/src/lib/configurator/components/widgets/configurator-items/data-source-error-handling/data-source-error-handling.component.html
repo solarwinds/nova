@@ -2,10 +2,9 @@
     <div>
         <nui-message
             *ngIf="dataSourceManager?.dataSource &&
-        !(dataSourceManager.dataSourceFields | async).length &&
-        ((dataSourceManager?.dataSource?.busy | async) === false ||
-            (dataSourceManager?.dataSource?.busy | async) === null ||
-            (dataSourceManager?.dataSource?.busy | async) === undefined)"
+                   !dataFields.length &&
+                   !dataSourceError &&
+                   !busy"
             class="m-4 d-block"
             type="info"
             [allowDismiss]="false">

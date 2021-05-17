@@ -12,6 +12,7 @@ import { ConfiguratorDataSourceManagerService } from "../../../../services/confi
 import { IDataSourceError } from "@nova-ui/dashboards";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
+import { IDataField } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-data-source-error-handling",
@@ -25,6 +26,7 @@ export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
     public static lateLoadKey = "DataSourceErrorHandlingComponent";
     public dataSourceError: IDataSourceError | null;
     public busy: boolean;
+    public dataFields: IDataField[];
     private onDestroy$: Subject<void> = new Subject<void>();
 
     constructor(
@@ -36,16 +38,23 @@ export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
         this.dataSourceManager?.error
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((err: IDataSourceError | null) => {
-            this.dataSourceError = err;
-            this.errorState.emit(!!this.dataSourceError);
-            this.changeDetector.markForCheck();
+                this.dataSourceError = err;
+                this.errorState.emit(!!this.dataSourceError);
+                this.changeDetector.markForCheck();
         });
 
         this.dataSourceManager?.busy$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((isBusy: boolean) => {
                 this.busy = isBusy;
+                this.changeDetector.markForCheck();
             });
+
+        this.dataSourceManager.dataSourceFields.subscribe((data: IDataField[]) => {
+            this.dataFields = data;
+            this.errorState.emit(!this.dataFields.length);
+            this.changeDetector.markForCheck();
+        });
     }
 
     ngOnDestroy() {
