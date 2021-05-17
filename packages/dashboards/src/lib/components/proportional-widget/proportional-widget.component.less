@@ -1,3 +1,6 @@
+@import (reference) "@nova-ui/bits/sdk/less/nui-framework-variables.less";
+@import (reference) "@nova-ui/bits/sdk/less/mixins.less";
+
 .nui-proportional-widget {
     &__chart-donut-content {
         position: absolute;
@@ -57,4 +60,14 @@
 .empty-grid {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
+}
+
+.proportional-chart {
+    &__legend-series {
+        .link {
+            &.description-primary {
+                .setCssVariable(color, nui-color-text-link);
+            }
+        }
+    }
 }

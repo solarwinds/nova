@@ -6,6 +6,7 @@ import {
     IDashboard,
     IProportionalWidgetChartOptions,
     IProportionalWidgetConfig,
+    IProportionalWidgetData,
     IProviderConfiguration,
     IRefresherProperties,
     IWidget,
@@ -204,13 +205,13 @@ const widgetConfig: IWidget = {
     },
 };
 
-export interface IProportionalWidgetData {
-    id: string;
-    name: string;
-    data: number[];
-    link: string;
-    value: string;
-}
+// export interface IProportionalWidgetData {
+//     id: string;
+//     name: string;
+//     data: number[];
+//     link: string;
+//     value: string;
+// }
 
 export function getMockBeerReviewCountsByCity() {
     return [

@@ -44,9 +44,9 @@
                     (mouseleave)="chartAssist.resetVisibleSeries()"
                     [orientation]="legendShouldBeAlignedRight() ? 'vertical' : 'horizontal'">
 
-            <nui-legend-series *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn; let i = index"
+            <nui-legend-series class="proportional-chart__legend-series"
+                               *ngFor="let legendSeries of chartAssist.legendSeriesSet; trackBy: chartAssist.seriesTrackByFn; let i = index"
                                [ngClass]="(prioritizedGridRows.right || prioritizedGridRows.bottom) && 'description-min-width--unset'"
-                               [descriptionPrimary]="!(legendFormatter && legendFormatter.componentType) ? legendSeries.name : undefined"
                                [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                                (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)"
                                [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
@@ -65,7 +65,6 @@
                         </ng-container>
                     </div>
                 </div>
-
                 <ng-template #legendDefaultTile>
                     <nui-rich-legend-tile [value]="computeLegendTitle(legendSeries.data[0])"
                                           [unitLabel]="legendUnitLabel"
@@ -75,6 +74,23 @@
 
                     <nui-icon legendTransclusion *ngIf="seriesToIconMap && seriesToIconMap[legendSeries.id]"
                                  class="align-items-center" [icon]="seriesToIconMap[legendSeries.id]"></nui-icon>
+                        
+                    <div description class="description-container d-flex flex-column nui-text-small justify-content-center">
+                        <div *ngIf="!legendSeries.link" 
+                            class="description description-primary" 
+                            [ngClass]="{'nui-text-link-small link': seriesInteractive}"
+                            (click)="onPrimaryDescClick($event, legendSeries)">
+                                {{legendSeries.name}}
+                        </div>
+                        <a class="description description-primary nui-text-link-small link"
+                            (click)="$event.stopPropagation()"
+                            *ngIf="legendSeries.link" 
+                            [href]="legendSeries.link" 
+                            rel="noopener noreferrer"
+                            [title]="legendSeries.name">
+                                {{legendSeries.name}}
+                        </a>
+                    </div>
                 </ng-template>
             </nui-legend-series>
         </nui-legend>
