@@ -17,7 +17,7 @@ import { IHasChangeDetector } from "../../../../types";
                 <div *ngIf="data.link; else noLink">
                         <a class="nui-text-link-small nui-text-ellipsis link"
                             (click)="$event.stopPropagation()"
-                            [href]="data?.link" 
+                            [href]="data?.link"
                             rel="noopener noreferrer"
                             [title]="data.name">
                                 {{ data.name }}Link
