@@ -76,16 +76,15 @@
                                  class="align-items-center" [icon]="seriesToIconMap[legendSeries.id]"></nui-icon>
                         
                     <div description class="description-container d-flex flex-column nui-text-small justify-content-center">
-                        <div *ngIf="!legendSeries.link" 
-                            class="description description-primary" 
-                            [ngClass]="{'nui-text-link-small link': seriesInteractive}"
-                            (click)="onPrimaryDescClick($event, legendSeries)">
+                        <div *ngIf="!legendSeries.link"
+                            class="description description-primary"
+                            [ngClass]="{'nui-text-link-small link': interactive}">
                                 {{legendSeries.name}}
                         </div>
                         <a class="description description-primary nui-text-link-small link"
                             (click)="$event.stopPropagation()"
-                            *ngIf="legendSeries.link" 
-                            [href]="legendSeries.link" 
+                            *ngIf="legendSeries.link"
+                            [href]="legendSeries.link"
                             rel="noopener noreferrer"
                             [title]="legendSeries.name">
                                 {{legendSeries.name}}

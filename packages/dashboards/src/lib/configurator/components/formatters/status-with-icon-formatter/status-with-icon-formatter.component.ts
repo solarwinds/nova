@@ -14,7 +14,7 @@ import { IHasChangeDetector } from "../../../../types";
                 
                 <span class="nui-text-ellipsis text-right pl-3">{{ data.data }}</span>
                 <nui-icon [icon]="data.icon" class="nui-icon nui-icon-line-height mx-2"></nui-icon>
-                <div *ngIf="data.link; else noLink">
+                <div *ngIf="data?.link; else noLink">
                         <a class="nui-text-link-small nui-text-ellipsis link"
                             (click)="$event.stopPropagation()"
                             [href]="data?.link"
