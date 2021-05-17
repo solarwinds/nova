@@ -21,9 +21,10 @@ import { IDataField } from "@nova-ui/bits";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
+    public static lateLoadKey = "DataSourceErrorHandlingComponent";
+
     @Output() public errorState = new EventEmitter<boolean>();
 
-    public static lateLoadKey = "DataSourceErrorHandlingComponent";
     public dataSourceError: IDataSourceError | null;
     public busy: boolean;
     public dataFields: IDataField[];
