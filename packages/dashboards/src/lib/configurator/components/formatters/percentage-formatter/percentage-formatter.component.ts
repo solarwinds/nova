@@ -5,12 +5,12 @@ import { RawFormatterComponent } from "../raw-formatter/raw-formatter.component"
 @Component({
     template: `
         <ng-container>
-            <div *ngIf="data.link; else noLink">
+            <div *ngIf="data?.link; else noLink">
                     <a class="nui-text-link-small nui-text-ellipsis link"
                         (click)="$event.stopPropagation()"
                         [href]="data?.link"
                         rel="noopener noreferrer"
-                        [title]="data.value">
+                        [title]="data?.value">
                             {{data?.value}}%
                     </a>
             </div>

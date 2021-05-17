@@ -9,13 +9,13 @@ import { IFormatterData } from "../types";
     template: `
         <ng-container>
             <div class="d-flex flex-nowrap">
-            <div *ngIf="data.link; else noLink">
+            <div *ngIf="data?.link; else noLink">
                     <a class="nui-text-link-small nui-text-ellipsis link"
                         (click)="$event.stopPropagation()"
                         [href]="data?.link"
                         rel="noopener noreferrer"
                         [title]="data.value">
-                            {{ data.value }}
+                            {{ value }}
                     </a>
                     <span> {{ modifier }}</span>
             </div>

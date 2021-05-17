@@ -20,7 +20,7 @@ import { IHasChangeDetector } from "../../../../types";
                             [href]="data?.link"
                             rel="noopener noreferrer"
                             [title]="data.name">
-                                {{ data.name }}Link
+                                {{ data.name }}
                         </a>
                 </div>
                 <ng-template #noLink>
@@ -37,7 +37,7 @@ export class StatusWithIconFormatterComponent implements OnChanges, IHasChangeDe
     constructor(public changeDetector: ChangeDetectorRef) { }
 
     public isValid: boolean = false;
-    @Input() data: {name: string, icon: string, data: number[]};
+    @Input() data: {name: string, icon: string, data: number[], link?: string};
 
     ngOnChanges() {
         this.isValid = !!(this.data
