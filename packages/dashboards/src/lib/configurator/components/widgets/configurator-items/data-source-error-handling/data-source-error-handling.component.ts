@@ -9,10 +9,10 @@ import {
     Output,
 } from "@angular/core";
 import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
-import { IDataSourceError } from "@nova-ui/dashboards";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 import { IDataField } from "@nova-ui/bits";
+import { IDataSourceError } from "../../../../../components/providers/types";
 
 @Component({
     selector: "nui-data-source-error-handling",
