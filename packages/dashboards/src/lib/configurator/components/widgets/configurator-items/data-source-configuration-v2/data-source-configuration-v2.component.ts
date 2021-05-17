@@ -48,6 +48,8 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
     @Output() formReady = new EventEmitter<FormGroup>();
 
     public form: FormGroup;
+    public hasDataSourceError: boolean = false;
+
     // used by the Broadcaster
     public dataFieldIds = new Subject<any>();
 
@@ -67,6 +69,7 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
             properties: [this.properties || {}],
             dataSource: [null, [Validators.required]],
         });
+        this.form.setValidators([() => this.hasDataSourceError ? { dataSourceError: true } : null])
 
         this.form.get("dataSource")?.valueChanges.subscribe((selectedDataSource) => {
             this.form.get("providerId")?.setValue(selectedDataSource?.providerId);
@@ -154,4 +157,10 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
         }
     }
 
+    public onErrorState(isError: boolean) {
+        this.hasDataSourceError = isError;
+        this.form.markAsTouched({onlySelf: true});
+        this.form.updateValueAndValidity({emitEvent: false});
+        this.changeDetector.detectChanges();
+    }
 }

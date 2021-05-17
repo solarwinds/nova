@@ -16,6 +16,7 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
     private dataSourceCreated: Subject<void> = new Subject<void>();
     public dataSource: IDataSource;
     public error: Subject<(IDataSourceError) | null> = new Subject<IDataSourceError | null>();
+    public busy$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public dataSourceFields: BehaviorSubject<(Array<IDataField>)> = new BehaviorSubject<Array<IDataField>>([]);
 
     constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>, private dashwizService: DashwizService) {
@@ -34,6 +35,8 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
                     },
                     allowStepChange: !isBusy,
                 });
+
+                this.busy$.next(isBusy)
             });
         });
 

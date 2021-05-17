@@ -47,6 +47,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
     @Output() formReady = new EventEmitter<FormGroup>();
 
     public form: FormGroup;
+    public hasDataSourceError: boolean = false;
 
     // used by the Broadcaster
     public dsOutput = new Subject<any>();
@@ -65,6 +66,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
             providerId: [this.providerId || "", [Validators.required]],
             properties: this.formBuilder.group(this.properties || {}),
         });
+        this.form.setValidators([() => this.hasDataSourceError ? { dataSourceError: true } : null])
 
         this.formReady.emit(this.form);
     }
@@ -117,4 +119,10 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
         }
     }
 
+    public onErrorState(isError: boolean) {
+        this.hasDataSourceError = isError;
+        this.form.markAsTouched({onlySelf: true});
+        this.form.updateValueAndValidity({emitEvent: false});
+        this.changeDetector.detectChanges();
+    }
 }

@@ -2,8 +2,11 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    EventEmitter,
     OnDestroy,
-    OnInit, Optional,
+    OnInit,
+    Optional,
+    Output,
 } from "@angular/core";
 import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
 import { IDataSourceError } from "@nova-ui/dashboards";
@@ -17,8 +20,11 @@ import { Subject } from "rxjs";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
+    @Output() public errorState = new EventEmitter<boolean>();
+
     public static lateLoadKey = "DataSourceErrorHandlingComponent";
     public dataSourceError: IDataSourceError | null;
+    public busy: boolean;
     private onDestroy$: Subject<void> = new Subject<void>();
 
     constructor(
@@ -31,8 +37,15 @@ export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((err: IDataSourceError | null) => {
             this.dataSourceError = err;
+            this.errorState.emit(!!this.dataSourceError);
             this.changeDetector.markForCheck();
         });
+
+        this.dataSourceManager?.busy$
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((isBusy: boolean) => {
+                this.busy = isBusy;
+            });
     }
 
     ngOnDestroy() {
