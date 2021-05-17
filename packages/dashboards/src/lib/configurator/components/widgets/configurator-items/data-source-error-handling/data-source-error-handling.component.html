@@ -5,16 +5,16 @@
                    !dataFields.length &&
                    !dataSourceError &&
                    !busy"
-            class="m-4 d-block"
+            class="mt-4 d-block"
             type="info"
             [allowDismiss]="false">
             <b i18n>Data source needs to be configured</b>
         </nui-message>
-        <nui-message class="m-4 d-block" *ngIf="!dataSourceManager?.dataSource" type="info"
+        <nui-message class="mt-4 d-block" *ngIf="!dataSourceManager?.dataSource" type="info"
                      [allowDismiss]="false">
             <b i18n>Select a data source</b>
         </nui-message>
-        <nui-message class="m-4 d-block" *ngIf="dataSourceError" type="critical"
+        <nui-message class="mt-4 d-block" *ngIf="dataSourceError" type="critical"
                      [allowDismiss]="false">
             <b i18n>Something went wrong with the data source: </b> {{dataSourceError.message || dataSourceError.type}}
         </nui-message>
