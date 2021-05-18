@@ -4,14 +4,14 @@ import {CdkStepper} from "@angular/cdk/stepper";
 import {DOCUMENT} from "@angular/common";
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, Input, Optional, ViewEncapsulation} from "@angular/core";
 
-import {wizardAnimations} from "./wizard-animations";
-import {WizardDirective} from "./wizard-step.component";
+import {wizardAnimations} from "../wizard-animations/wizard-animations";
+import { WizardDirective } from "../wizard.directive";
 
 @Component({
     selector: "nui-wizard-vertical",
     exportAs: "wizardVertical",
     templateUrl: "wizard-vertical.component.html",
-    styleUrls: ["wizard.component.less"],
+    styleUrls: ["../wizard.component.less"],
     host: {
         "class": "nui-wizard-vertical-layout",
         "aria-orientation": "vertical",

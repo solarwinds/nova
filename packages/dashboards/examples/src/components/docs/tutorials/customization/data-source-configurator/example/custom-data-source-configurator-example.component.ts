@@ -117,14 +117,16 @@ export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfig
         this.form.setControl(
             "properties",
             this.formBuilder.group({
-                bookId: [this.properties?.bookId, Validators.required],
-                metric: [this.properties?.metric, Validators.required],
+                bookId: [this.properties?.bookId ?? "", Validators.required],
+                metric: [this.properties?.metric ?? "", Validators.required],
             })
         );
         // The default data source control has a required validator we're removing that validator here since we aren't using it.
         this.form.setControl(
             "dataSource", this.formBuilder.control(null)
         );
+        // Here we set the providerId to our only data source so when a new tile gets created it will default to it.
+        this.form.get("providerId")?.setValue(AcmeKpiDataSource.providerId);
     }
 
 }
