@@ -132,8 +132,8 @@ export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfig
             if (!value.providerId) {
                 return;
             }
-            this.invokeDataSource(value)
-        })
+            this.invokeDataSource(value);
+        });
     }
 
 }
