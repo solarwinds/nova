@@ -45,8 +45,10 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
                 this.error.next(event.payload.error);
             } else {
                 this.error.next(undefined);
-                const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
-                this.dataSourceFields.next(dataFields);
+                const payload = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
+                if ( payload?.dataFields ) {
+                    this.dataSourceFields.next(payload.dataFields);
+                }
             }
         });
     }

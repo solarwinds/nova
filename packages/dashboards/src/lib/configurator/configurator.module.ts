@@ -105,6 +105,7 @@ import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
 import { DataSourceErrorHandlingComponent } from "./components/widgets/configurator-items/data-source-error-handling/data-source-error-handling.component";
+import { TableDataSourceErrorHandlingComponent } from "./components/widgets/configurator-items/data-source-error-handling/table/table-data-source-error-handling.component";
 /* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -125,6 +126,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     TableColumnsConfigurationComponent,
     TableColumnsConfigurationV2Component,
     TableColumnConfigurationComponent,
+    TableDataSourceErrorHandlingComponent,
     DonutContentPercentageFormatterComponent,
     DonutContentPercentageConfigurationComponent,
     DonutContentSumFormatterComponent,

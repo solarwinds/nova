@@ -17,7 +17,6 @@ import { IDataSourceError } from "../../../../../components/providers/types";
 @Component({
     selector: "nui-data-source-error-handling",
     templateUrl: "./data-source-error-handling.component.html",
-    styleUrls: ["./data-source-error-handling.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
@@ -27,11 +26,10 @@ export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
 
     public dataSourceError: IDataSourceError | null;
     public busy: boolean;
-    public dataFields: IDataField[];
-    private onDestroy$: Subject<void> = new Subject<void>();
+    public onDestroy$: Subject<void> = new Subject<void>();
 
     constructor(
-        private changeDetector: ChangeDetectorRef,
+        public changeDetector: ChangeDetectorRef,
         @Optional() public dataSourceManager: ConfiguratorDataSourceManagerService
     ) {}
 
@@ -50,12 +48,6 @@ export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit {
                 this.busy = isBusy;
                 this.changeDetector.markForCheck();
             });
-
-        this.dataSourceManager.dataSourceFields.subscribe((data: IDataField[]) => {
-            this.dataFields = data;
-            this.errorState.emit(!this.dataFields.length);
-            this.changeDetector.markForCheck();
-        });
     }
 
     ngOnDestroy() {
