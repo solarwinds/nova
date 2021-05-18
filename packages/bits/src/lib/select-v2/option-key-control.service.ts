@@ -5,6 +5,7 @@ import isNil from "lodash/isNil";
 
 import { IOption, IOverlayComponent } from "../overlay/types";
 import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "./constants";
+import { KEYBOARD_CODE } from "../../constants";
 
 @Injectable()
 export class OptionKeyControlService<T extends IOption> {
@@ -52,18 +53,18 @@ export class OptionKeyControlService<T extends IOption> {
     }
 
     private handleOpenKeyDown(event: KeyboardEvent): void {
-        switch (event.keyCode) {
-            case DOWN_ARROW:
-            case UP_ARROW:
+        switch (event.code) {
+            case KEYBOARD_CODE.ARROW_DOWN:
+            case KEYBOARD_CODE.ARROW_UP:
                 this.keyboardEventsManager.onKeydown(event);
                 this.announceNavigatedOption();
                 break;
-            case PAGE_UP:
+            case KEYBOARD_CODE.PAGE_UP:
                 event.preventDefault();
                 this.keyboardEventsManager.onKeydown(event);
                 this.keyboardEventsManager.setFirstItemActive();
                 break;
-            case PAGE_DOWN:
+            case KEYBOARD_CODE.PAGE_DOWN:
                 event.preventDefault();
                 this.keyboardEventsManager.onKeydown(event);
                 this.keyboardEventsManager.setLastItemActive();
@@ -73,11 +74,11 @@ export class OptionKeyControlService<T extends IOption> {
         this.scrollToOption({ block: "nearest" });
 
         // prevent closing on enter
-        if (!this.hasActiveItem() && event.keyCode === ENTER) {
+        if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
             event.preventDefault();
         }
 
-        if (this.hasActiveItem() && event.keyCode === ENTER) {
+        if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
 
             if (!this.keyboardEventsManager.activeItem) {
                 throw new Error("ActiveItem is not defined");
@@ -87,7 +88,7 @@ export class OptionKeyControlService<T extends IOption> {
             this.keyboardEventsManager.activeItem.element.nativeElement.click();
         }
 
-        if (event.keyCode === TAB || event.keyCode === ESCAPE) {
+        if (event.code === KEYBOARD_CODE.TAB || event.code === KEYBOARD_CODE.ESCAPE) {
             this.popup.toggle();
             this.announceDropdown(this.popup.showing);
         }
@@ -99,14 +100,15 @@ export class OptionKeyControlService<T extends IOption> {
             event.preventDefault();
         }
 
-        if (event.keyCode === DOWN_ARROW) {
+        if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
             this.popup.toggle();
             this.scrollToOption({ block: "center" });
         }
     }
 
     private shouldBePrevented(event: KeyboardEvent) {
-        return event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW || event.keyCode === ENTER;
+        return event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP
+            || event.code === KEYBOARD_CODE.ENTER;
     }
 
     private scrollToOption(options: ScrollIntoViewOptions): void {
