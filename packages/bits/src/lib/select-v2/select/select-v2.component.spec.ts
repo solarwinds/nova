@@ -12,6 +12,7 @@ import { InputValueTypes } from "../types";
 
 import { SelectV2Component } from "./select-v2.component";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { KEYBOARD_CODE } from '../../../constants';
 
 @Component({
     template: `
@@ -357,25 +358,25 @@ describe("components >", () => {
 
             describe("if dropdown is showing >", () => {
                 it("should be first item active, when we press PAGE_UP key", () => {
-                    const event = new KeyboardEvent("keydown", { keyCode: PAGE_UP } as KeyboardEventInit);
+                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.PAGE_UP } as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(0);
                 });
 
                 it("should be last item active, when we press PAGE_DOWN key", () => {
-                    const event = new KeyboardEvent("keydown", { keyCode: PAGE_DOWN } as KeyboardEventInit);
+                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.PAGE_DOWN } as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(selectedOptionsMock.length - 1);
                 });
 
                 it("should close dropdown, when we press TAB key", () => {
-                    const event = new KeyboardEvent("keydown", { keyCode: TAB } as KeyboardEventInit);
+                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.TAB } as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["dropdown"].showing).toEqual(false);
                 });
 
                 it("should close dropdown, when we press ESCAPE key", () => {
-                    const event = new KeyboardEvent("keydown", { keyCode: ESCAPE } as KeyboardEventInit);
+                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.ESCAPE} as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["dropdown"].showing).toEqual(false);
                 });
