@@ -205,14 +205,6 @@ const widgetConfig: IWidget = {
     },
 };
 
-// export interface IProportionalWidgetData {
-//     id: string;
-//     name: string;
-//     data: number[];
-//     link: string;
-//     value: string;
-// }
-
 export function getMockBeerReviewCountsByCity() {
     return [
         {
