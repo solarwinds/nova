@@ -216,7 +216,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
 
             this.overlay.show$.pipe(takeUntil(this.onDestroy$)).subscribe(_ => this._datePicker.refreshView());
             this.overlay.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(_ => {
-                const currentDateValid = moment(this.value).isValid();
+                const currentDateValid = this.value.isValid();
                 if (!currentDateValid) {
                     this._datePicker.value = undefined;
                     this._datePicker.datepickerMode = "day";
@@ -278,6 +278,11 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
 
     public setErrorState(isInErrorState: boolean): void {
         this.isInErrorState = isInErrorState;
+    }
+
+    public onSelectionDone(value: Moment) {
+        this.value = value;
+        this.overlay?.hide();
     }
 
     private updateTextboxValue(value: any = this._value) {
