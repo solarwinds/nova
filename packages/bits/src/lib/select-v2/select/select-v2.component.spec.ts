@@ -12,7 +12,7 @@ import { InputValueTypes } from "../types";
 
 import { SelectV2Component } from "./select-v2.component";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { KEYBOARD_CODE } from '../../../constants';
+import { KEYBOARD_CODE } from "../../../constants";
 
 @Component({
     template: `
