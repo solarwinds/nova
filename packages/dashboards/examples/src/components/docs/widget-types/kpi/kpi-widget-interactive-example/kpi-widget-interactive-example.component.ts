@@ -177,7 +177,7 @@ const widgetConfig: IWidget = {
             "tiles": {
                 providers: {
                     interaction: {
-                        // Configuring the UrlInteractionHandler for interactions on the titles
+                        // Configuring the UrlInteractionHandler for interactions on the tiles
                         providerId: NOVA_URL_INTERACTION_HANDLER,
                         properties: {
                             // the 'url' property tells the handler what link to use when interaction occurs on the series
