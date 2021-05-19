@@ -3,7 +3,7 @@ import {
     AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation,
 } from "@angular/core";
 
-import {WizardStepFooterDirective} from "./wizard-step-footer.directive";
+import {WizardStepFooterDirective} from "../wizard-step-footer.directive";
 
 @Component({
     selector: "wizard-footer",

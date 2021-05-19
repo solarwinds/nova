@@ -1,5 +1,5 @@
 import { IDataField, IDataFieldsConfig } from "@nova-ui/bits";
-import { IAllAround } from "@nova-ui/charts";
+import { IAllAround, IAccessors, IChartAssistSeries } from "@nova-ui/charts";
 import { BehaviorSubject } from "rxjs";
 
 import { IProportionalDonutContentAggregator } from "../../functions/proportional-aggregators/types";
@@ -63,4 +63,8 @@ export interface IDonutContentConfig {
 
 export interface IProportionalDataFieldsConfig extends IDataFieldsConfig {
     chartSeriesDataFields$: BehaviorSubject<IDataField[]>;
+}
+
+export interface IProportionalWidgetData extends IChartAssistSeries<IAccessors> {
+    link?: string;
 }

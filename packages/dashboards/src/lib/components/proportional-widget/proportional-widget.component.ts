@@ -44,7 +44,7 @@ import { INTERACTION } from "../../services/types";
 import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../types";
 import { IFormatter, LegendPlacement } from "../types";
 
-import { IProportionalWidgetConfig, ProportionalWidgetChartTypes } from "./types";
+import { IProportionalWidgetData, IProportionalWidgetConfig, ProportionalWidgetChartTypes } from "./types";
 
 /** @ignore */
 @Component({
@@ -61,7 +61,7 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     private static MAX_ROW_LAYOUT_SIZE = 360;
     private static TICK_LABEL_MAX_WIDTH = 75;
 
-    @Input() public widgetData: IChartAssistSeries<IAccessors>[];
+    @Input() public widgetData: IProportionalWidgetData[];
     @Input() public configuration: IProportionalWidgetConfig;
     @Input() @HostBinding("class") public elementClass: string;
     @Input() public seriesToIconMap: { [seriesId: string]: string }; // will be defined using dataSource
