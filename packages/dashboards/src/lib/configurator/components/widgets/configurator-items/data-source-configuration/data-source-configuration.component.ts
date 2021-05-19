@@ -20,6 +20,7 @@ import { IDataSourceOutput } from "../../../../../components/providers/types";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { IHasChangeDetector, IHasForm, IProperties, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
+import { DataSourceErrorHandlingComponent } from "../data-source-error-handling/data-source-error-handling.component";
 
 /**
  * This is a basic implementation of a data source configuration component. In the real world scenario, this component will most likely be replaced by a
@@ -38,6 +39,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
      * This component shows a dropdown with options for selecting a data source, this input represents these options.
      */
     @Input() dataSourceProviders: string[] = [];
+    @Input() errorHandlingComponent: string = DataSourceErrorHandlingComponent.lateLoadKey;
 
     @Input() properties: IProperties;
     @Input() providerId: string;
@@ -45,6 +47,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
     @Output() formReady = new EventEmitter<FormGroup>();
 
     public form: FormGroup;
+    public hasDataSourceError: boolean = false;
 
     // used by the Broadcaster
     public dsOutput = new Subject<any>();
@@ -63,6 +66,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
             providerId: [this.providerId || "", [Validators.required]],
             properties: this.formBuilder.group(this.properties || {}),
         });
+        this.form.setValidators([() => this.hasDataSourceError ? { dataSourceError: true } : null])
 
         this.formReady.emit(this.form);
     }
@@ -115,4 +119,10 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
         }
     }
 
+    public onErrorState(isError: boolean) {
+        this.hasDataSourceError = isError;
+        this.form.markAsTouched({onlySelf: true});
+        this.form.updateValueAndValidity({emitEvent: false});
+        this.changeDetector.detectChanges();
+    }
 }

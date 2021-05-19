@@ -22,5 +22,14 @@
                 </nui-select-v2-option>
             </nui-select-v2>
         </nui-form-field>
+        <ng-container nuiComponentPortal
+                      [componentId]="errorHandlingComponent"
+                      [componentType]="errorHandlingComponent"
+                      [outputs]="['errorState']"
+                      (output)="onErrorState($event.payload)"
+                      #componentPortal="nuiComponentPortal">
+            <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)">
+            </ng-template>
+        </ng-container>
     </div>
 </nui-widget-editor-accordion>
