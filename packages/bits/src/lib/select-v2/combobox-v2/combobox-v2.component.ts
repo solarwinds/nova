@@ -29,6 +29,7 @@ import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
 import { SelectedItemsKeyControlService } from "../selected-items-key-control.service";
 import { InputValueTypes } from "../types";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 
 // <example-url>./../examples/index.html#/combobox-v2</example-url>
 
@@ -97,9 +98,10 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     constructor(elRef: ElementRef,
                 optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
                 cdRef: ChangeDetectorRef,
-                private selectedItemsKeyControlService: SelectedItemsKeyControlService
+                private selectedItemsKeyControlService: SelectedItemsKeyControlService,
+                public liveAnnouncer: LiveAnnouncer
     ) {
-        super(optionKeyControlService, cdRef, elRef);
+        super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
     }
 
     public ngAfterContentInit() {

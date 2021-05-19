@@ -39,6 +39,8 @@ import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { InputValueTypes, IOptionedComponent } from "./types";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import ResizeObserver from "resize-observer-polyfill";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "./constants";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
@@ -158,7 +160,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     protected constructor(protected optionKeyControlService: OptionKeyControlService<IOption>,
                           protected cdRef: ChangeDetectorRef,
-                          public elRef: ElementRef<HTMLElement>) {
+                          public elRef: ElementRef<HTMLElement>,
+                          public liveAnnouncer: LiveAnnouncer) {
     }
 
     public ngOnChanges(changes: SimpleChanges) {
@@ -213,8 +216,9 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
      */
     @HostListener("focusin")
     public onFocusIn() {
-        if (!this.mouseDown && !this.manualDropdownControl) {
+        if (this.isOpenOnFocus()) {
             this.showDropdown();
+            this.announceDropdown(true);
         }
     }
 
@@ -243,12 +247,14 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.dropdown.show();
         this.setActiveItemOnDropdown();
         this.scrollToOption();
+        this.announceDropdown(true);
     }
 
     /** Hides dropdown */
     public hideDropdown(): void {
         if (!this.isDisabled) {
             this.dropdown.hide();
+            this.announceDropdown(false);
         }
     }
 
@@ -259,6 +265,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         }
 
         this.dropdown.toggle();
+        this.announceDropdown(this.dropdown.showing);
 
         this.setActiveItemOnDropdown();
         this.scrollToOption();
@@ -479,5 +486,22 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         });
 
         this.virtualScrollResizeObserver.observe(element);
+    }
+
+    private isOpenOnFocus(): boolean {
+        return !this.mouseDown && !this.manualDropdownControl
+            && document.activeElement === this.inputElement.nativeElement;
+    }
+
+    private announceDropdown(open: boolean): void {
+        if (open) {
+            this.liveAnnouncer.announce(`${this.options.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`);
+
+            return;
+        }
+
+        const msg = this.value ? `${this.value} selected ${ANNOUNCER_CLOSE_MESSAGE}` : ANNOUNCER_CLOSE_MESSAGE;
+
+        this.liveAnnouncer.announce(msg);
     }
 }
