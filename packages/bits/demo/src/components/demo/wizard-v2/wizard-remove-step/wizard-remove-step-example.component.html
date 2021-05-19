@@ -41,6 +41,7 @@
     <button class="ml-3 h-25 align-self-end"
             displayStyle="destructive"
             nui-button type="button"
+            [disabled]="+number.value < 1"
             (click)="removeStep(+number.value)"
             i18n>
         Remove step dynamically
