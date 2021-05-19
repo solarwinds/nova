@@ -325,8 +325,7 @@ const widgetConfigs: IWidget[] = [
 // using startOf("day") so that each band for the bar chart corresponds to a calendar day
 const startOfToday = moment().startOf("day").toDate();
 
-export const getData = (): ITimeseriesWidgetData[] =>
-[
+export const getData = (): ITimeseriesWidgetData[] => [
     {
         id: "series-1",
         name: "Nur-Sultan",
