@@ -14,7 +14,7 @@ import { BooleanInput } from "@angular/cdk/coercion";
 import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
 import { Subject } from "rxjs";
 import { AnimationEvent } from "@angular/animations";
-import {distinctUntilChanged, startWith, takeUntil} from "rxjs/operators";
+import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 
 @Directive({selector: "[nuiWizard]", providers: [{provide: CdkStepper, useExisting: WizardDirective}]})
