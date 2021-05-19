@@ -29,6 +29,7 @@ import {
     WizardDocsComponent,
     WizardDynamicExampleComponent,
     WizardHorizontalExampleComponent,
+    WizardRemoveStepExampleComponent,
     WizardVerticalExampleComponent,
 } from "./index";
 
@@ -75,6 +76,7 @@ const routes = [
         WizardBusyExampleComponent,
         WizardCustomFooterExampleComponent,
         WizardDynamicExampleComponent,
+        WizardRemoveStepExampleComponent,
     ],
     providers: [
         {

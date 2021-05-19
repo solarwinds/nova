@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
 
-interface IWizardStepConfig {
+export interface IWizardStepConfig {
     title: string;
     templateRef: TemplateRef<string>;
 }
