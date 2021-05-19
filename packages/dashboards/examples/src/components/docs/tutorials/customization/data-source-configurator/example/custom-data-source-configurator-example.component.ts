@@ -127,6 +127,13 @@ export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfig
         );
         // Here we set the providerId to our only data source so when a new tile gets created it will default to it.
         this.form.get("providerId")?.setValue(AcmeKpiDataSource.providerId);
+        // Here we subscribe to the form and if there are any changes we invoke the data source
+        this.form.valueChanges.subscribe(value => {
+            if (!value.providerId) {
+                return;
+            }
+            this.invokeDataSource(value);
+        });
     }
 
 }
