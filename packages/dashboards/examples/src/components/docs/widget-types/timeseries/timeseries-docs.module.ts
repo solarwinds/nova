@@ -6,6 +6,7 @@ import { NuiDashboardsModule } from "@nova-ui/dashboards";
 import { TimeseriesDocsComponent } from "./timeseries-docs.component";
 import { TimeseriesWidgetExampleComponent } from "./timeseries-widget-example/timeseries-widget-example.component";
 import { TimeseriesWidgetStatusBarExampleComponent } from "./timeseries-widget-status-bar-example/timeseries-widget-status-bar-example.component";
+import { TimeseriesWidgetInteractiveExampleComponent } from "./timeseries-widget-interactive-example/timeseries-widget-interactive-example.component";
 
 const routes: Routes = [
     {
@@ -41,6 +42,7 @@ const routes: Routes = [
     declarations: [
         TimeseriesDocsComponent,
         TimeseriesWidgetExampleComponent,
+        TimeseriesWidgetInteractiveExampleComponent,
         TimeseriesWidgetStatusBarExampleComponent,
     ],
 })
