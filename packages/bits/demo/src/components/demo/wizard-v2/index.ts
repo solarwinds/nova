@@ -6,3 +6,4 @@ export * from "./wizard-busy/wizard-busy.example.component";
 export * from "./wizard-dialog/wizard-dialog.example.component";
 export * from "./wizard-custom-footer/wizard-custom-footer-example.component";
 export * from "./wizard-dynamic/wizard-dynamic.example.component";
+export * from "./wizard-async-validation-form/wizard-async-form-validation.example.component";
