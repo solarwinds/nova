@@ -31,6 +31,7 @@ import {
     WizardHorizontalExampleComponent,
     WizardRemoveStepExampleComponent,
     WizardVerticalExampleComponent,
+    WizardAsyncFormValidationExampleComponent,
 } from "./index";
 
 const routes = [
@@ -77,6 +78,7 @@ const routes = [
         WizardCustomFooterExampleComponent,
         WizardDynamicExampleComponent,
         WizardRemoveStepExampleComponent,
+        WizardAsyncFormValidationExampleComponent,
     ],
     providers: [
         {
