@@ -175,7 +175,7 @@ const widgetConfigs: IWidget[] = [
                             providerId: NOVA_URL_INTERACTION_HANDLER,
                             properties: {
                                 // the 'url' property tells the handler what link to use when interaction occurs on the series
-                                url: "${data.link || 'https://en.wikipedia.org/wiki/'+data.id}",
+                                url: "${data.link || 'https://en.wikipedia.org/wiki/'+data.legendDescriptionPrimary}",
                                 // by default the link is opened in the current window, set 'newWindow' to true to open in a new tab instead
                                 // newWindow: true,
                             },

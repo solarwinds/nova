@@ -277,7 +277,7 @@ export const widgetConfig: IWidget = {
                             // the 'url' property tells the handler what link to use when interaction occurs on the series
                             url: "${'https://untappd.com/search?q='+data.name}",
                             // by default the link is opened in the current window, set 'newWindow' to true to open in a new tab instead
-                            // newWindow: true,
+                            newWindow: true,
                         },
                     },
 
