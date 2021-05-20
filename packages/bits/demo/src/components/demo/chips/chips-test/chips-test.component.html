@@ -1,5 +1,6 @@
 <div class="container">
-    <div><nui-chips id="nui-demo-chips-flat-horizontal"
+    <div>
+        <nui-chips id="nui-demo-chips-flat-horizontal"
                     [autoHide]="true"
                     [itemsSource]="horizontalFlatItemsSource"
                     (chipRemoved)="onClear($event)"
@@ -7,9 +8,10 @@
         </nui-chips>
     </div>
 
-    <div><nui-chips id="nui-demo-chips-flat-vertical"
+    <div>
+        <nui-chips id="nui-demo-chips-flat-vertical"
                    [autoHide]="true"
-                   title="Statuses" i18n-title
+                   title="Statuses"
                    [itemsSource]="verticalFlatItemsSource"
                    orientation="vertical"
                    (chipRemoved)="onClearVertical($event)"
@@ -17,7 +19,8 @@
         </nui-chips>
     </div>
 
-    <div><nui-chips id="nui-demo-chips-grouped-horizontal"
+    <div>
+        <nui-chips id="nui-demo-chips-grouped-horizontal"
                     [autoHide]="false"
                     [itemsSource]="horizontalGroupedItemsSource"
                     (chipRemoved)="onClearGroup($event)"
@@ -25,7 +28,8 @@
         </nui-chips>
     </div>
 
-    <div><nui-chips id="nui-demo-chips-vertical"
+    <div>
+        <nui-chips id="nui-demo-chips-vertical"
                     [autoHide]="false"
                     [itemsSource]="verticalFlatItemsSource"
                     orientation="vertical"
@@ -34,9 +38,10 @@
         </nui-chips>
     </div>
 
-    <div><nui-chips id="nui-demo-chips-grouped-vertical"
+    <div>
+        <nui-chips id="nui-demo-chips-grouped-vertical"
                     [autoHide]="true"
-                    title="Filters" i18n-title
+                    title="Filters"
                     [itemsSource]="verticalGroupedItemsSource"
                     orientation="vertical"
                     (chipRemoved)="onClearGroup($event)"
@@ -44,7 +49,8 @@
         </nui-chips>
     </div>
 
-    <div><nui-chips id="nui-demo-chips-autohide"
+    <div>
+        <nui-chips id="nui-demo-chips-autohide"
            [autoHide]="false"
            [itemsSource]="horizontalFlatItemsSource"
            (chipRemoved)="onClear($event)"
@@ -52,6 +58,7 @@
         </nui-chips>
     </div>
  
-    <div><nui-chips-overflow-example id="nui-demo-chips-overflow"></nui-chips-overflow-example>
+    <div>
+        <nui-chips-overflow-example id="nui-demo-chips-overflow"></nui-chips-overflow-example>
     </div>
 </div>
