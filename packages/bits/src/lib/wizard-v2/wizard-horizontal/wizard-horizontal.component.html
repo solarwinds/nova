@@ -37,6 +37,6 @@
         <ng-container [ngTemplateOutlet]="step.content"></ng-container>
     </div>
 </div>
-<div *ngIf="selected.stepFooter" class="nui-wizard-horizontal-footer-container">
-    <wizard-footer [footer]="selected.stepFooter"></wizard-footer>
+<div *ngIf="selected?.stepFooter" class="nui-wizard-horizontal-footer-container">
+    <wizard-footer [footer]="selected?.stepFooter"></wizard-footer>
 </div>

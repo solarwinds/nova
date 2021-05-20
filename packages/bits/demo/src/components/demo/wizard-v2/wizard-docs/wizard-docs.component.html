@@ -35,13 +35,14 @@
 
 <h3>Adding step dynamically</h3>
 <p>You are able to add wizard steps dynamically.</p>
-<p>To make it you should use wizard method 'addStepDynamic' and pass 2 arguments wizardStepComponent and index to insert it in correct place.</p>
-<p><strong>Note:</strong> Angular doesn't allow binding to outputs of dynamically created component from template. You can access outputs of
-    <code><a href="../components/WizardStepComponent.html" target="_blank">nui-wizard-step</a></code> directly.<code>addStepDynamic</code> method of Wizard
-    returns you instance of dynamically added step and you can manually subscribe to outputs like <code>enter</code>,<code>exit</code> etc.
-</p>
 <nui-example-wrapper filenamePrefix="wizard-dynamic" exampleTitle="wizard add dynamic step">
     <nui-wizard-dynamic-example></nui-wizard-dynamic-example>
+</nui-example-wrapper>
+
+<h3>Removing step</h3>
+<p>You are able to remove steps by index.</p>
+<nui-example-wrapper filenamePrefix="wizard-remove-step" exampleTitle="wizard remove step">
+    <nui-wizard-remove-step-example></nui-wizard-remove-step-example>
 </nui-example-wrapper>
 
 <h3>Custom Layout Wizard</h3>
