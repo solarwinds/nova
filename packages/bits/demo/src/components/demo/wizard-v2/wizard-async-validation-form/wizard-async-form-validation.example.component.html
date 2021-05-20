@@ -43,6 +43,10 @@
                                             i18n>
                         Invalid email
                     </nui-validation-message>
+
+                    <ng-template wizardStepFooter>
+                        <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+                    </ng-template>
                 </nui-form-field>
             </nui-wizard-step-v2>
 

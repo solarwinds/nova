@@ -39,11 +39,7 @@ export class WizardAsyncFormValidationExampleComponent implements OnInit {
         const { stepControl } = selected;
 
         if (stepControl.status !== "PENDING") {
-            Object.keys((stepControl as FormGroup)?.controls || {})
-                .forEach(key => {
-                    const field = this.wizard.selected.stepControl.get(key);
-                    field?.markAsTouched();
-                });
+            stepControl.markAllAsTouched();
 
             return;
         }
