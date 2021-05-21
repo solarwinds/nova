@@ -16,6 +16,7 @@ import {
     ChipsDocsExampleComponent,
     ChipsOverflowExampleComponent,
     ChipsVisualTestComponent,
+    ChipsTestComponent,
     GroupedChipsExampleComponent,
     VerticalFlatChipsExampleComponent,
     VerticalGroupedChipsExampleComponent,
@@ -52,6 +53,15 @@ const routes = [
         },
     },
     {
+        path: "chips-test",
+        component: ChipsTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
         path: "custom-css",
         component: ChipsCustomCssExampleComponent,
         data: {
@@ -75,6 +85,7 @@ const routes = [
         BasicChipsExampleComponent,
         ChipsDocsExampleComponent,
         ChipsVisualTestComponent,
+        ChipsTestComponent,
         GroupedChipsExampleComponent,
         VerticalFlatChipsExampleComponent,
         VerticalGroupedChipsExampleComponent,
