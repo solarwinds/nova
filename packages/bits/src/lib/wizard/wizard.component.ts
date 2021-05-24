@@ -227,6 +227,23 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         visibleStep.hidden = false;
     }
 
+    public resetStep(step: WizardStepComponent): void {
+        let index = this.arraySteps.findIndex((s) => s === step);
+        const length = this.arraySteps.length;
+
+        for (index; index < length; index++) {
+            const stepToReset = this.arraySteps[index];
+
+            stepToReset.visited = false;
+            stepToReset.complete = false;
+            stepToReset.icon = "step";
+        }
+
+        if (this.currentStep) {
+            this.currentStep.complete = false;
+        }
+    }
+
     public goToStep (stepIndex: number) {
         this.selectStep(this.arraySteps[stepIndex]);
     }
