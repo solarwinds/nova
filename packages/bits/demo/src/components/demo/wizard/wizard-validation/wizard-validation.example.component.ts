@@ -15,8 +15,7 @@ export class WizardValidationExampleComponent implements OnInit {
     constructor(private formBuilder: FormBuilder) {}
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
-            name: this.formBuilder.control("",
-                                           Validators.required),
+            name: this.formBuilder.control("", Validators.required),
             email: this.formBuilder.control("", [
                 Validators.required,
                 Validators.pattern("[^ @]*@[^ @]*"),
@@ -24,7 +23,6 @@ export class WizardValidationExampleComponent implements OnInit {
             ]),
             password: this.formBuilder.control("", [
                 Validators.required,
-                Validators.minLength(8),
             ]),
         });
         this.secondStepForm = this.formBuilder.group({
