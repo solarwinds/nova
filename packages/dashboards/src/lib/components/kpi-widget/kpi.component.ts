@@ -44,6 +44,8 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
     @Input()
     public busy = false;
 
+    public loading = true;
+
     @HostBinding("class")
     public elementClass = "";
 
@@ -58,7 +60,7 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
     constructor(public changeDetector: ChangeDetectorRef,
         @Optional() @Inject(DATA_SOURCE) public dataSource: IDataSource,
         @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>) {
-    }
+        }
 
     public onInteraction() {
         if (!this.interactive) {
@@ -83,6 +85,9 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
         }
 
         if (changes.widgetData) {
+            if (!changes.widgetData.isFirstChange()) {
+                this.loading = false;
+            }
             if (this.configuration?.formatters) {
                 this.formattersProperties = this.getFormatterProperties(this.configuration.formatters);
             }

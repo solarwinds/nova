@@ -1,15 +1,15 @@
 <div class="w-100 h-100" nui-busy [busy]="busy">
-    <ng-container *ngIf="widgetData?.link">
-        <a class="nui-kpi-indicator" [href]="widgetData.link">
+    <ng-container *ngIf="!loading && widgetData?.link; else noLink">
+        <a class="nui-kpi-indicator" [href]="widgetData.link">Link
             <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
         </a>
     </ng-container>
 
-    <ng-container *ngIf="!widgetData?.link">
+    <ng-template #noLink>
         <div class="nui-kpi-indicator" (click)="onInteraction()">
             <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
         </div>
-    </ng-container>
+    </ng-template>
 </div>
 
 <ng-template #kpiContent>
