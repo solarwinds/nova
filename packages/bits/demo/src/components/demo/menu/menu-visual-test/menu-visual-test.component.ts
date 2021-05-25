@@ -16,7 +16,7 @@ export class MenuVisualTestComponent {
                 { title: "Item 3", itemType: "action", action: this.actionWithParams.bind(this, 2) },
                 { title: "Item 4", itemType: "action", action: this.actionDone },
                 { title: "Item 5", itemType: "action", action: this.actionDone },
-                { title: "Item 6", itemType: "action", action: this.actionDone },]
+                { title: "Item 6", itemType: "action", action: this.actionDone },],
         },
         {
             itemsSource: [
@@ -27,7 +27,7 @@ export class MenuVisualTestComponent {
                 { title: "Item 11", itemType: "action", action: this.actionDone },
                 { title: "Item 12", itemType: "action", action: this.actionDone },
                 { title: "Item 13", itemType: "action", action: this.actionDone, disabled: true },
-                { title: "Item 14", itemType: "action", action: this.actionDone, itemClass: MenuActionType.destructive },]
+                { title: "Item 14", itemType: "action", action: this.actionDone, itemClass: MenuActionType.destructive },],
         },
     ];
 
@@ -43,7 +43,7 @@ export class MenuVisualTestComponent {
                 { title: "Menu item with checkbox", itemType: "option", disabled: true },
                 { title: "Menu item with icon", itemType: "action", icon: "table" },
                 { title: "Link menu item", itemType: "link", url: "#button", disabled: true },
-                { title: "Export PDF", itemType: "link", icon: "export-pdf", url: "#button" },]
+                { title: "Export PDF", itemType: "link", icon: "export-pdf", url: "#button" },],
         },
         {
             header: "section 2 title",
