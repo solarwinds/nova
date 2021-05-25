@@ -88,51 +88,51 @@ describe("USERCONTROL Menu", () => {
                 expect(await menu.isMenuOpened()).toBe(false);
             });
 
-        describe("arrow navigation and menu item types >", async() => {
-            beforeEach(async () => {
-                await menu.toggleMenu();
-            });
+            describe("arrow navigation and menu item types >", async() => {
+                beforeEach(async () => {
+                    await menu.toggleMenu();
+                });
 
-            it("should check and uncheck menu-switch using Enter", async () => {
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                expect(await menu.getSelectedSwitchesCount()).toEqual(1);
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                expect(await menu.getSelectedSwitchesCount()).toEqual(0);
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                expect(await menu.getSelectedSwitchesCount()).toEqual(2);
-            });
+                it("should check and uncheck menu-switch using Enter", async () => {
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    expect(await menu.getSelectedSwitchesCount()).toEqual(1);
+                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    expect(await menu.getSelectedSwitchesCount()).toEqual(0);
+                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    expect(await menu.getSelectedSwitchesCount()).toEqual(2);
+                });
 
-            it("should select and close menu when selecting menu action item", async () => {
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                expect(await menu.isMenuOpened()).toBe(false);
-            });
+                it("should select and close menu when selecting menu action item", async () => {
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    expect(await menu.isMenuOpened()).toBe(false);
+                });
 
-            it("should check and uncheck checkbox and properly handle disabled menu items", async () => {
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                expect(await menu.isMenuOpened()).toBe(true);
-                expect(await menu.getSelectedCheckboxesCount()).toBe(1);
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                expect(await menu.isMenuOpened()).toBe(true);
-                expect(await menu.getSelectedCheckboxesCount()).toBe(0);
-            });
+                it("should check and uncheck checkbox and properly handle disabled menu items", async () => {
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    expect(await menu.isMenuOpened()).toBe(true);
+                    expect(await menu.getSelectedCheckboxesCount()).toBe(1);
+                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    expect(await menu.isMenuOpened()).toBe(true);
+                    expect(await menu.getSelectedCheckboxesCount()).toBe(0);
+                });
 
-            it("should close menu when clicking TAB from active menu item", async () => {
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.TAB).perform();
-                expect(await menu.isMenuOpened()).toBe(false);
+                it("should close menu when clicking TAB from active menu item", async () => {
+                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await browser.actions().sendKeys(protractor.Key.TAB).perform();
+                    expect(await menu.isMenuOpened()).toBe(false);
+                });
             });
         });
-    });
 
         describe("> append-to-body", () => {
             it("should check and uncheck checkbox in menu item", async () => {
