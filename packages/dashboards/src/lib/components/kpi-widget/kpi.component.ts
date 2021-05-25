@@ -18,7 +18,7 @@ import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS, WellKnownDataSourc
 import { IBroker } from "../providers/types";
 
 import { IKpiConfiguration, IKpiData, IKpiFormatterProperties, IKpiFormattersConfiguration } from "./types";
-import { isNil } from "lodash";
+import _isNil from "lodash/isNil";
 
 @Component({
     selector: "nui-kpi",
@@ -53,7 +53,7 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
 
     public get interactive(): boolean {
         return (this.configuration?.interactive ||
-            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled) && !isNil(this.widgetData?.value) || false;
+            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled) && !_isNil(this.widgetData?.value) || false;
     }
 
     constructor(public changeDetector: ChangeDetectorRef,
