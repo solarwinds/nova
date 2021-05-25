@@ -25,7 +25,6 @@ export class WizardResetStepExampleComponent implements OnInit {
             ]),
             password: this.formBuilder.control("", [
                 Validators.required,
-                Validators.minLength(8),
             ]),
         });
         this.secondStepForm = this.formBuilder.group({
