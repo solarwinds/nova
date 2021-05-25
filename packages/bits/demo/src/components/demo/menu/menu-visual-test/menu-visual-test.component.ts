@@ -40,6 +40,13 @@ export class MenuVisualTestComponent {
             {title: "Link menu item", itemType: "link", url: "#button", disabled: true},
             {title: "Export PDF", itemType: "link", icon: "export-pdf", url: "#button"},
         ]},
+        {
+            header: "section 2 title", itemsSource: [
+                {title: "Menu Item1", itemType: "option", action: this.actionDone},
+                {title: "Menu Item2", itemType: "option", action: this.actionDone},
+                {title: "Menu Item3", itemType: "option", action: this.actionDone},
+            ],
+        },
     ];
 
     public actionDone(): void {
@@ -49,5 +56,4 @@ export class MenuVisualTestComponent {
     public actionWithParams(index: number) {
         console.log("action", this.itemsSource[0].itemsSource[index].title);
     }
-
 }
