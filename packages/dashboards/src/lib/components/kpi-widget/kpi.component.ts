@@ -45,8 +45,6 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
     @Input()
     public busy = false;
 
-    public loading = true;
-
     @HostBinding("class")
     public elementClass = "";
 
