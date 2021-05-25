@@ -18,10 +18,10 @@ export class NuiValidators {
      */
     static integer(unsigned: boolean = false): ValidatorFn {
         const res = (control: AbstractControl): ValidationErrors | null => {
-            let integerRegex: RegExp;
-            integerRegex = unsigned ? /^(0|[1-9]\d*)$/ : /^\-?(0|[1-9]\d*)$/;
+            const integerRegex: RegExp = unsigned ? /^(0|[1-9]\d*)$/ : /^\-?(0|[1-9]\d*)$/;
             const errorObject = {
                 value: control.value,
+                invalidInteger: "Invalid integer value",
             };
             const valid = integerRegex.test(control.value);
             return valid ? null : errorObject;
