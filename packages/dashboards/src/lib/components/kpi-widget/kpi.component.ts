@@ -61,7 +61,7 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
     constructor(public changeDetector: ChangeDetectorRef,
         @Optional() @Inject(DATA_SOURCE) public dataSource: IDataSource,
         @Inject(PIZZAGNA_EVENT_BUS) public eventBus: EventBus<IEvent>) {
-        }
+    }
 
     public onInteraction() {
         if (!this.interactive) {
