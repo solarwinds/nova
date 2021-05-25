@@ -1,5 +1,5 @@
 <div class="w-100 h-100" nui-busy [busy]="busy">
-    <ng-container *ngIf="!loading && widgetData?.link; else noLink">
+    <ng-container *ngIf="interactive && widgetData?.link; else noLink">
         <a class="nui-kpi-indicator" [href]="widgetData.link">
             <ng-container [ngTemplateOutlet]="kpiContent"></ng-container>
         </a>

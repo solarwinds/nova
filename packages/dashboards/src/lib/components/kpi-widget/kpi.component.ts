@@ -18,6 +18,7 @@ import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS, WellKnownDataSourc
 import { IBroker } from "../providers/types";
 
 import { IKpiConfiguration, IKpiData, IKpiFormatterProperties, IKpiFormattersConfiguration } from "./types";
+import { isNil } from "lodash";
 
 @Component({
     selector: "nui-kpi",
@@ -52,9 +53,9 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
     public formattersProperties: IKpiFormatterProperties;
     public defaultColor: string = "var(--nui-color-bg-secondary)";
 
-    public get interactive() {
-        return this.configuration?.interactive ||
-            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled;
+    public get interactive(): boolean {
+        return (this.configuration?.interactive ||
+            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled) && !isNil(this.widgetData?.value) || false;
     }
 
     constructor(public changeDetector: ChangeDetectorRef,
@@ -85,9 +86,6 @@ export class KpiComponent implements IHasChangeDetector, OnChanges {
         }
 
         if (changes.widgetData) {
-            if (!changes.widgetData.isFirstChange()) {
-                this.loading = false;
-            }
             if (this.configuration?.formatters) {
                 this.formattersProperties = this.getFormatterProperties(this.configuration.formatters);
             }
