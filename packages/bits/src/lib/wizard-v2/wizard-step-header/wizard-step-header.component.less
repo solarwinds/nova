@@ -10,6 +10,7 @@
     box-sizing: content-box;
     -webkit-tap-highlight-color: transparent;
     .setCssVariable(color, nui-color-text-default);
+    width: @wizard-label-header-width;
 }
 
 .nui-wizard-step-header-completed {
@@ -19,6 +20,11 @@
         border: 10px red solid !important;
         .setCssVariable(border-color, nui-color-text-link);
     }
+}
+
+.nui-wizard-step-header-disabled{
+    pointer-events: none;
+    cursor: default;
 }
 
 .nui-step-optional, .nui-step-sub-label-error {
@@ -62,6 +68,7 @@
     text-overflow: ellipsis;
     min-width: @wizard-label-min-width;
     vertical-align: middle;
+    color: @nui-color-text-secondary;
 }
 
 .nui-wizard-step-text-label {
