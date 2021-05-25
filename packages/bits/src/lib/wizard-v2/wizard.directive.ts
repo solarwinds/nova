@@ -9,7 +9,12 @@ import {
     QueryList,
     ViewChildren,
 } from "@angular/core";
-import { CdkStepper, StepContentPositionState, StepperSelectionEvent } from "@angular/cdk/stepper";
+import {
+    CdkStepper,
+    StepContentPositionState,
+    STEPPER_GLOBAL_OPTIONS,
+    StepperSelectionEvent,
+} from "@angular/cdk/stepper";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
 import { Subject } from "rxjs";
@@ -17,7 +22,13 @@ import { AnimationEvent } from "@angular/animations";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 
-@Directive({selector: "[nuiWizard]", providers: [{provide: CdkStepper, useExisting: WizardDirective}]})
+@Directive({
+    selector: "[nuiWizard]",
+    providers: [
+        {provide: CdkStepper, useExisting: WizardDirective},
+        {provide: STEPPER_GLOBAL_OPTIONS, useValue: {displayDefaultIndicatorType: false}},
+    ],
+})
 export class WizardDirective extends CdkStepper implements AfterContentInit, OnDestroy {
     static ngAcceptInputTypeEditable: BooleanInput = undefined;
     static ngAcceptInputTypeOptional: BooleanInput = undefined;
