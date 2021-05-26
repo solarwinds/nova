@@ -87,6 +87,7 @@
 
         &.cdk-table-sticky { // Border hack because position sticky collapses borders and they are not visible
             border: 0;
+            z-index: @zindex-active + 1 !important; 
 
             &::before {
                 content: '';
