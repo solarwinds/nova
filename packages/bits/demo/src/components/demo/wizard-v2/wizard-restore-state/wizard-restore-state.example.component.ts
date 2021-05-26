@@ -23,13 +23,15 @@ export class WizardRestoreStateExampleComponent implements OnInit {
                     "",
                     [Validators.required, Validators.minLength(3)],
                 ],
+                "privacy": ["", [Validators.required]],
             }),
             "organization": this.formBuilder.group({
                 "title": ["", [Validators.required]],
+                "date": ["", [Validators.required]],
             }),
             "contactDetails": this.formBuilder.group({
                 "email": ["", [Validators.required, Validators.email]],
-                "phone": [""],
+                "options": [""],
             }),
         });
     }

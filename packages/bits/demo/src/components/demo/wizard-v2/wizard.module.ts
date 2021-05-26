@@ -18,6 +18,7 @@ import {
     NuiValidationMessageModule,
     NuiWizardV2Module,
     SrlcStage,
+    NuiSelectV2Module,
 } from "@nova-ui/bits";
 
 import {
@@ -67,6 +68,7 @@ const routes = [
         NuiBusyModule,
         NuiProgressModule,
         NuiDatePickerModule,
+        NuiSelectV2Module,
     ],
     declarations: [
         WizardDocsComponent,

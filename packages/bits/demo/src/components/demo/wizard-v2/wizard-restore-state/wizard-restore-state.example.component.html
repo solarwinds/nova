@@ -23,12 +23,16 @@
                                             i18n>
                         This is required
                     </nui-validation-message>
+                </nui-form-field>
+
+                <nui-checkbox formControlName="privacy" required>
+                    Privacy Policy
+                </nui-checkbox>
 
                     <ng-template wizardStepFooter>
                         <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                     </ng-template>
-                </nui-form-field>
             </nui-wizard-step-v2>
 
             <nui-wizard-step-v2 label="Organization"
@@ -38,6 +42,9 @@
                                 i18n-caption
                                 caption="Organization">
                     <nui-textbox formControlName="title"></nui-textbox>
+                    <nui-form-field caption="Date" [control]="form.get(['organization','date'])">
+                        <nui-date-picker formControlName="date" i18n></nui-date-picker>
+                    </nui-form-field>
                     <ng-template wizardStepFooter>
                         <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
@@ -70,6 +77,15 @@
                                             i18n>
                         Invalid email
                     </nui-validation-message>
+                </nui-form-field>
+
+                <nui-form-field caption="Select"
+                    [control]="form.get(['contactDetails','options'])">
+                    <nui-select-v2 formControlName="options">
+                        <nui-select-v2-option value="Item 1">Item 1</nui-select-v2-option>
+                        <nui-select-v2-option value="Item 2">Item 2</nui-select-v2-option>
+                    </nui-select-v2>
+                </nui-form-field>
 
                     <ng-template wizardStepFooter>
                         <button nui-button
@@ -89,7 +105,6 @@
                             Finish
                         </button>
                     </ng-template>
-                </nui-form-field>
             </nui-wizard-step-v2>
 
             <ng-template #wizardPrevious>
