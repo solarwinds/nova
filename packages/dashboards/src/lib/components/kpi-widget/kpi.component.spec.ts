@@ -70,7 +70,7 @@ describe("KpiComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    fdescribe("interactive", () => {
+    describe("interactive", () => {
         it("is interactive when datasource is interactive with data", () => {
             expect(component.interactive).toBeFalsy();
 
