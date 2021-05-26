@@ -1,5 +1,6 @@
 import {
     AfterContentInit,
+    AfterViewInit,
     ContentChildren,
     Directive,
     EventEmitter,
@@ -18,7 +19,7 @@ import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 
 @Directive({selector: "[nuiWizard]", providers: [{provide: CdkStepper, useExisting: WizardDirective}]})
-export class WizardDirective extends CdkStepper implements AfterContentInit, OnDestroy {
+export class WizardDirective extends CdkStepper implements AfterContentInit, AfterViewInit, OnDestroy {
     static ngAcceptInputTypeEditable: BooleanInput = undefined;
     static ngAcceptInputTypeOptional: BooleanInput = undefined;
     static ngAcceptInputTypeCompleted: BooleanInput = undefined;
@@ -33,8 +34,12 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
     @Output() readonly animationDone: EventEmitter<void> = new EventEmitter<void>();
     /** Event emitted when the selected step has changed. */
     @Output() readonly selectionChange = new EventEmitter<StepperSelectionEvent>();
+    /** Emit steps for ability restore them status later */
+    @Output() readonly wizardStepsStatusChanges: EventEmitter<QueryList<WizardStepV2Component>> = new EventEmitter();
     /** Whether ripples should be disabled for the step headers. */
     @Input() disableRipple: boolean;
+    /** Steps used for restoring wizard state */
+    @Input() stepsToRestore: QueryList<WizardStepV2Component>;
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
 
@@ -73,7 +78,36 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
         });
     }
 
+    public ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (this.stepsToRestore) {
+            this.restoreStepsState();
+        }
+    }
+
     public ngOnDestroy(): void {
         super.ngOnDestroy();
+    }
+
+    public restoreStepsState(): void {
+        const completed: WizardStepV2Component[] = [];
+
+        this.stepsToRestore.forEach((step, index) => {
+            const stepToRestore = this.steps.get(index);
+
+            if (stepToRestore && step.completed) {
+                stepToRestore.completed = step.completed;
+                completed.push(stepToRestore);
+            }
+        });
+
+        const len = completed.length;
+
+        if (len) {
+            completed[len - 1].select();
+        }
+
+        this["_changeDetectorRef"].detectChanges();
     }
 }
