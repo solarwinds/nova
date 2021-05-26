@@ -87,6 +87,7 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, Aft
     }
 
     public ngOnDestroy(): void {
+        this.wizardStepsStatusChanges.emit(this.steps);
         super.ngOnDestroy();
     }
 
