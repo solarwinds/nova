@@ -13,13 +13,15 @@
             [attr.aria-label]="step.ariaLabel || null"
             [attr.aria-labelledby]="(!step.ariaLabel && step.ariaLabelledby) ? step.ariaLabelledby : null"
             [index]="i"
-            [state]="_getIndicatorType(i, step.state)"
+            [state]="_getStepState(i, step.state)"
             [label]="step.stepLabel || step.label"
             [selected]="selectedIndex === i"
-            [active]="step.completed"
+            [active]="step.completed || selectedIndex === i || !linear"
+            [completed]="step.completed"
             [optional]="step.optional"
             [errorMessage]="step.errorMessage"
-            [disableRipple]="disableRipple">
+            [disableRipple]="disableRipple"
+            [iconOverrides]="_iconOverrides">
         </wizard-step-header>
         <div *ngIf="!isLast" class="nui-wizard-horizontal-line" [ngClass]="{'nui-wizard-horizontal-line-completed': step.completed}"></div>
     </ng-container>

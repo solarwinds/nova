@@ -1,10 +1,18 @@
 import {FocusMonitor} from "@angular/cdk/a11y";
 import {CdkStepHeader, StepState} from "@angular/cdk/stepper";
 import {
-    AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    Input,
+    OnDestroy,
+    TemplateRef,
+    ViewEncapsulation,
 } from "@angular/core";
 
 import {WizardStepLabelDirective} from "../wizard-step-label.directive";
+import {NuiWizardIconContext} from "../wizard-icon.directive";
 
 @Component({
     selector: "wizard-step-header",
@@ -13,9 +21,9 @@ import {WizardStepLabelDirective} from "../wizard-step-label.directive";
     host: {
         "class": "nui-wizard-step-header mat-focus-indicator",
         "[class.nui-wizard-step-header-selected]": "selected",
-        "[class.nui-wizard-step-header-active]": "active",
         "[class.nui-wizard-step-header-optional]": "optional",
         "[class.nui-wizard-step-header-completed]": "state == 'done'",
+        "[class.nui-wizard-step-header-disabled]": "!completed",
         "role": "tab",
     },
     encapsulation: ViewEncapsulation.None,
@@ -40,11 +48,17 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     /** Whether the given step is selected. */
     @Input() selected: boolean;
 
+    /** Whether the given step is completed. */
+    @Input() completed: boolean;
+
     /** Whether the given step label is active. */
     @Input() active: boolean;
 
     /** Whether the given step is optional. */
     @Input() optional: boolean;
+
+    /** Sets custom icons. */
+    @Input() iconOverrides: {[key: string]: TemplateRef<NuiWizardIconContext>};
 
     /** Whether the ripple should be disabled. */
     @Input() disableRipple: boolean;
@@ -81,7 +95,6 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     _getDefaultTextForState(state: StepState): string {
         let returnedState: StepState = state;
-
         switch (state) {
             case "number":
                 returnedState = `${this.index + 1}`;
@@ -101,15 +114,22 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
         return returnedState;
     }
 
+    _getIconContext(): NuiWizardIconContext {
+        return {
+            index: this.index,
+            active: this.active,
+            optional: this.optional,
+        };
+    }
+
     _getDefaultIconForState(state: StepState): string {
         let returnedState: StepState = state;
-
         switch (state) {
-            case "number":
+            case "number": returnedState = "step"; break;
             case "done": returnedState = "step-complete"; break;
-            case "edit": returnedState = "edit"; break;
-            case "error": returnedState = "warning"; break;
-            default:
+            case "edit": returnedState = "step-active"; break;
+            case "error": returnedState = "severity_error"; break;
+            default: returnedState = state; break;
         }
 
         return returnedState;

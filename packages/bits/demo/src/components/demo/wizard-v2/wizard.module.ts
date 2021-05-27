@@ -10,6 +10,7 @@ import {
     NuiDialogModule,
     NuiDocsModule,
     NuiFormFieldModule,
+    NuiIconModule,
     NuiMessageModule,
     NuiProgressModule,
     NuiRadioModule,
@@ -32,6 +33,7 @@ import {
     WizardRemoveStepExampleComponent,
     WizardVerticalExampleComponent,
     WizardAsyncFormValidationExampleComponent,
+    WizardWithCustomIconsExampleComponent,
 } from "./index";
 
 const routes = [
@@ -66,6 +68,7 @@ const routes = [
         NuiBusyModule,
         NuiProgressModule,
         NuiDatePickerModule,
+        NuiIconModule,
     ],
     declarations: [
         WizardDocsComponent,
@@ -79,6 +82,7 @@ const routes = [
         WizardDynamicExampleComponent,
         WizardRemoveStepExampleComponent,
         WizardAsyncFormValidationExampleComponent,
+        WizardWithCustomIconsExampleComponent,
     ],
     providers: [
         {

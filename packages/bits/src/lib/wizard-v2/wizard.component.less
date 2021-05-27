@@ -41,11 +41,23 @@
 
     flex: auto;
     height: 0;
-    margin: 0 (@wizard-line-gap - @wizard-side-gap);
+    margin: 0 -((@wizard-label-header-width - @wizard-step-header-icon-size) / 2);
     min-width: (@wizard-line-gap + @wizard-side-gap);
+    max-width: (@wizard-label-header-width - @wizard-step-header-icon-size);
+
+    &.nui-wizard-horizontal-line-completed{
+        .setCssVariable(border-color, nui-color-text-link);
+    }
 
     .nui-label-position-bottom & {
         margin: 0;
+        min-width: 0;
+        position: relative;
+    }
+
+    .nui-wizard-label-position-top & {
+        top: (@wizard-label-header-height / 2);
+        margin:  -((@wizard-label-header-width - @wizard-step-header-icon-size) / 2);
         min-width: 0;
         position: relative;
     }
@@ -54,6 +66,7 @@
 .nui-header-horizontal-line-label-position-bottom {
     border-top-width: @wizard-line-width;
     border-top-style: solid;
+    border-top-color: @nui-color-line-default;
     content: '';
     display: inline-block;
     height: 0;
@@ -79,29 +92,12 @@
         }
     }
 
-    .nui-label-position-bottom & {
+    .nui-wizard-label-position-top & {
         box-sizing: border-box;
         flex-direction: column;
         // We use auto instead of fixed 104px (by spec) because when there is an optional step
         //  the height is greater than that
         height: auto;
-
-        &:not(:last-child)::after,
-        [dir='rtl'] &:not(:first-child)::after {
-            .nui-header-horizontal-line-label-position-bottom();
-            right: 0;
-        }
-
-        &:not(:first-child)::before,
-        [dir='rtl'] &:not(:last-child)::before {
-            .nui-header-horizontal-line-label-position-bottom();
-            left: 0;
-        }
-
-        [dir='rtl'] &:last-child::before,
-        [dir='rtl'] &:first-child::after {
-            display: none;
-        }
 
         & .nui-wizard-step-icon {
             // Cleans margin both for ltr and rtl direction
@@ -109,10 +105,16 @@
             margin-left: 0;
         }
 
-        & .nui-wizard-step-label {
-            padding: @wizard-label-position-bottom-top-gap 0 0 0;
-            color: red;
-            width: 100%;
+        .nui-wizard-step-label{
+            .setCssVariable(color, nui-color-text-secondary);
+
+            &.nui-wizard-step-label-active {
+                .setCssVariable(color, nui-color-text-link);
+            }
+
+            &.nui-wizard-step-label-selected {
+                .setCssVariable(color, nui-color-text-default);
+            }
         }
     }
 }
@@ -145,7 +147,7 @@
 
 .nui-wizard-horizontal-content-container {
     overflow: hidden;
-    padding: 0 @wizard-side-gap @wizard-side-gap @wizard-side-gap;
+    padding: @wizard-side-gap;
 }
 
 .nui-wizard-vertical-content-container {

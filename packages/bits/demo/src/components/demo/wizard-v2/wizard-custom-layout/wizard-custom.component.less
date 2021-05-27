@@ -10,11 +10,16 @@
     .nui-wizard-step-header {
         border: @nui-line-default solid;
         border-radius: 5px;
-
         .setCssVariable(border-color, nui-color-line-default);
         .setCssVariable(background, nui-color-bg-content);
-
+        flex-direction: row-reverse;
+        justify-content: flex-end;
         padding: 0 8px;
+
+        .nui-icon{
+            transform: translate(-70%, -55%);
+        }
+
     }
 
     .nui-wizard-step-header-selected {
@@ -23,7 +28,11 @@
         color: @nui-color-text-light;
         border-color: transparent;
 
-        svg path {
+        .nui-wizard-step-label{
+            color: @nui-color-text-inverse;
+        }
+
+        .nui-step-icon-selected svg circle, .nui-step-icon-selected svg path {
             fill: @nui-color-text-inverse;
         }
     }
