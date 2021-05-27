@@ -25,14 +25,16 @@
                     </nui-validation-message>
                 </nui-form-field>
 
-                <nui-checkbox formControlName="privacy" required>
-                    Privacy Policy
-                </nui-checkbox>
+                <nui-form-field [control]="form.get(['personDetails','privacy'])">
+                    <nui-checkbox formControlName="privacy">
+                        Privacy Policy
+                    </nui-checkbox>
+                </nui-form-field>
 
-                    <ng-template wizardStepFooter>
-                        <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
-                        <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
-                    </ng-template>
+                <ng-template wizardStepFooter>
+                    <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
+                    <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+                </ng-template>
             </nui-wizard-step-v2>
 
             <nui-wizard-step-v2 label="Organization"
