@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, QueryList, TemplateRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DialogService, NuiDialogRef, WizardStepV2Component } from "@nova-ui/bits";
+import { DialogService, IWizardState, NuiDialogRef, WizardStepV2Component } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-restore-state-example",
@@ -9,7 +9,7 @@ import { DialogService, NuiDialogRef, WizardStepV2Component } from "@nova-ui/bit
 export class WizardRestoreStateExampleComponent implements OnInit {
     public form: FormGroup;
     public activeDialog: NuiDialogRef;
-    public stepsToRestore: QueryList<WizardStepV2Component> | null;
+    public stateToRestore: IWizardState;
 
     constructor(private formBuilder: FormBuilder,
                 @Inject(DialogService) private dialogService: DialogService) {}
@@ -43,7 +43,7 @@ export class WizardRestoreStateExampleComponent implements OnInit {
     }
 
     public onWizardDestroy(steps: QueryList<WizardStepV2Component>): void {
-        this.stepsToRestore = steps;
+        this.stateToRestore = { steps };
     }
 
     public completeWizard(step: WizardStepV2Component): void {

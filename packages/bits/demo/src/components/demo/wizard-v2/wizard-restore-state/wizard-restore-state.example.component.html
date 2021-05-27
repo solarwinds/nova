@@ -8,13 +8,14 @@
           *ngIf="form">
         <nui-wizard-horizontal
             linear
-            [stepsToRestore]="stepsToRestore"
+            [state]="stateToRestore"
             (wizardStepsStatusChanges)="onWizardDestroy($event)"
         >
             <nui-wizard-step-v2 label="Person Details"
                                 formGroupName="personDetails"
                                 [stepControl]="form.get(['personDetails'])">
                 <nui-form-field [control]="form.get(['personDetails','name'])"
+                                class="d-block mb-4 mt-4"
                                 i18n-caption
                                 caption="Name">
                     <nui-textbox formControlName="name"></nui-textbox>
@@ -41,10 +42,13 @@
                                 formGroupName="organization"
                                 [stepControl]="form.get(['organization'])">
                 <nui-form-field [control]="form.get(['organization', 'title'])"
+                                class="d-block mb-4 mt-4"
                                 i18n-caption
                                 caption="Organization">
                     <nui-textbox formControlName="title"></nui-textbox>
-                    <nui-form-field caption="Date" [control]="form.get(['organization','date'])">
+                    <nui-form-field caption="Date"
+                                    class="d-block mt-4"
+                                    [control]="form.get(['organization','date'])">
                         <nui-date-picker formControlName="date" i18n></nui-date-picker>
                     </nui-form-field>
                     <ng-template wizardStepFooter>
@@ -65,6 +69,7 @@
                 </ng-template>
 
                 <nui-form-field [control]="form.get(['contactDetails','email'])"
+                                class="d-block mb-4 mt-4"
                                 i18n-caption
                                 caption="Email">
                     <nui-textbox type="email" formControlName="email"></nui-textbox>

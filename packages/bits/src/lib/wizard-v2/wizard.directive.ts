@@ -17,6 +17,7 @@ import { Subject } from "rxjs";
 import { AnimationEvent } from "@angular/animations";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
+import { IWizardState } from "./public-api";
 
 @Directive({selector: "[nuiWizard]", providers: [{provide: CdkStepper, useExisting: WizardDirective}]})
 export class WizardDirective extends CdkStepper implements AfterContentInit, AfterViewInit, OnDestroy {
@@ -38,8 +39,8 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, Aft
     @Output() readonly wizardStepsStatusChanges: EventEmitter<QueryList<WizardStepV2Component>> = new EventEmitter();
     /** Whether ripples should be disabled for the step headers. */
     @Input() disableRipple: boolean;
-    /** Steps used for restoring wizard state */
-    @Input() stepsToRestore: QueryList<WizardStepV2Component>;
+    /** State to restore wizard */
+    @Input() state: IWizardState;
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
 
@@ -81,7 +82,7 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, Aft
     public ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (this.stepsToRestore) {
+        if (this.state && this.state.steps) {
             this.restoreStepsState();
         }
     }
@@ -92,21 +93,24 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, Aft
     }
 
     public restoreStepsState(): void {
-        const completed: WizardStepV2Component[] = [];
+        let lastCompletedIndex = -1;
+        const { steps } = this.state;
 
-        this.stepsToRestore.forEach((step, index) => {
+        steps.forEach((step, index) => {
             const stepToRestore = this.steps.get(index);
+
+            if (step.stepControl && step.stepControl.invalid) {
+                return;
+            }
 
             if (stepToRestore && step.completed) {
                 stepToRestore.completed = step.completed;
-                completed.push(stepToRestore);
+                lastCompletedIndex++;
             }
         });
 
-        const len = completed.length;
-
-        if (len) {
-            completed[len - 1].select();
+        if (lastCompletedIndex > -1) {
+            this.steps.get(lastCompletedIndex)?.select();
         }
 
         this["_changeDetectorRef"].detectChanges();
