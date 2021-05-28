@@ -1,5 +1,6 @@
 export * from "./wizard.module";
 export * from "./wizard.directive";
+export * from "./wizard-icon.directive";
 export * from "./wizard-step-footer.directive";
 export * from "./wizard-step-label.directive";
 export * from "./error-state-matcher.provider";

@@ -19,6 +19,7 @@ export interface MatStepperIconContext {
 })
 export class NuiWizardIconDirective {
     /** Name of the icon to be overridden. */
+    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input("nuiWizardIcon") name: StepState;
 
     constructor(public templateRef: TemplateRef<NuiWizardIconContext>) {}

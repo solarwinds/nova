@@ -13,7 +13,7 @@
             [attr.aria-label]="step.ariaLabel || null"
             [attr.aria-labelledby]="(!step.ariaLabel && step.ariaLabelledby) ? step.ariaLabelledby : null"
             [index]="i"
-            [state]="_getStepState(i, step.state)"
+            [state]="getStepState(i, step.state)"
             [label]="step.stepLabel || step.label"
             [selected]="selectedIndex === i"
             [active]="step.completed || selectedIndex === i || !linear"

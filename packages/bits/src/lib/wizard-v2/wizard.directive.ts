@@ -93,7 +93,7 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
         super.ngOnDestroy();
     }
 
-    private _getStepState(i: number, state: StepState = STEP_STATE.NUMBER){
+    public getStepState(i: number, state: StepState = STEP_STATE.NUMBER){
         const steps = this.steps.toArray();
         const step = steps[i];
         const isSelected = steps.indexOf(this.selected) === i;
