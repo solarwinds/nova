@@ -54,4 +54,8 @@ export class WizardRestoreStateExampleComponent implements OnInit {
     public resetStep(step: WizardStepV2Component): void {
         step.reset();
     }
+
+    private validateStep(formGroup: string): void {
+        this.form.get(formGroup)?.markAllAsTouched();
+    }
 }

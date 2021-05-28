@@ -20,7 +20,7 @@
                                 caption="Name">
                     <nui-textbox formControlName="name"></nui-textbox>
                     <nui-validation-message for="required"
-                                            *ngIf="form.get(['user','name'])?.errors?.required"
+                                            *ngIf="form.get(['personDetails','name'])?.errors?.required"
                                             i18n>
                         This is required
                     </nui-validation-message>
@@ -30,11 +30,17 @@
                     <nui-checkbox formControlName="privacy" [value]="true">
                         Privacy Policy
                     </nui-checkbox>
+
+                    <nui-validation-message for="required"
+                                            *ngIf="form.get(['personDetails','privacy'])?.errors?.required"
+                                            i18n>
+                        This is required
+                    </nui-validation-message>
                 </nui-form-field>
 
                 <ng-template wizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
-                    <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+                    <ng-container *ngTemplateOutlet="wizardNext; context: { form: 'personDetails' }"></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
 
@@ -46,19 +52,28 @@
                                 i18n-caption
                                 caption="Organization">
                     <nui-textbox formControlName="title"></nui-textbox>
-                    <nui-form-field caption="Date"
-                                    class="d-block mt-4"
-                                    [control]="form.get(['organization','date'])">
-                        <nui-date-picker formControlName="date" i18n></nui-date-picker>
-                    </nui-form-field>
+                    <nui-validation-message for="required"
+                                            *ngIf="form.get(['organization','title'])?.errors?.required"
+                                            i18n>
+                        This is required
+                    </nui-validation-message>
+                </nui-form-field>
+                <nui-form-field caption="Date"
+                                class="d-block mt-4"
+                                [control]="form.get(['organization','date'])">
+                    <nui-date-picker formControlName="date" i18n></nui-date-picker>
+                    <nui-validation-message for="required"
+                                            *ngIf="form.get(['organization','date'])?.errors?.required"
+                                            i18n>
+                        This is required
+                    </nui-validation-message>
+                </nui-form-field>
                     <ng-template wizardStepFooter>
                         <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
-                        <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+                        <ng-container *ngTemplateOutlet="wizardNext; context: { form: 'organization' }"></ng-container>
                     </ng-template>
-                </nui-form-field>
             </nui-wizard-step-v2>
-
 
             <nui-wizard-step-v2 formGroupName="contactDetails"
                                 [stepControl]="form.get(['contactDetails'])"
@@ -120,13 +135,14 @@
                 </button>
             </ng-template>
 
-            <ng-template #wizardNext>
+            <ng-template #wizardNext let-form="form">
                 <button nuiWizardNext
                         type="button"
                         nui-button
                         displayStyle="primary"
                         icon="caret-right"
                         iconRight="true"
+                        (click)="validateStep(form)"
                 >Next</button>
             </ng-template>
 
