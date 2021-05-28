@@ -5,7 +5,7 @@ import { CheckboxAtom } from "../../components/checkbox/checkbox.atom";
 import { Helpers } from "../../helpers";
 import { MenuAtom } from "./menu.atom";
 
-fdescribe("USERCONTROL Menu", () => {
+describe("USERCONTROL Menu", () => {
     let menu: MenuAtom;
     let appendToBody: MenuAtom;
 
