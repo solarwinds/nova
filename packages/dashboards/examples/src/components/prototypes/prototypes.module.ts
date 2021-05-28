@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
+import { ConfiguratorHeadingService } from "../../../../src/public-api";
 
 import { AcmeComponentsModule } from "./components/components.module";
 
@@ -29,5 +30,6 @@ const routes = [
         AcmeComponentsModule,
         RouterModule.forChild(routes),
     ],
+    providers: [ConfiguratorHeadingService],
 })
 export class DashboardPrototypesModule { }

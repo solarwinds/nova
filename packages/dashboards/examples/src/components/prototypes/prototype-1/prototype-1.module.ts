@@ -105,6 +105,22 @@ export class Prototype1Module {
             AcmeTableMockDataSource.providerId,
             AcmeTableGBooksDataSource.providerId,
             AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
+            AcmeTableDataSourceNoDataFields.providerId,
         ]);
 
         const kpiWidgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);

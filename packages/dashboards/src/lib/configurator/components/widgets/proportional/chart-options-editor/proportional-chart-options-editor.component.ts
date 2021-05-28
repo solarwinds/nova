@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IProportionalWidgetChartEditorOptions, ProportionalWidgetChartTypes } from "../../../../../components/proportional-widget/types";
 import { IFormatterDefinition, LegendPlacement } from "../../../../../components/types";
 import { IHasChangeDetector, IHasForm, IProperties } from "../../../../../types";
+import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
 type ChartTypeNamesMap = { [key in ProportionalWidgetChartTypes]: string };
 const proportionalWidgetChartTypesNamesMap: ChartTypeNamesMap = {
@@ -55,7 +56,9 @@ export class ProportionalChartOptionsEditorComponent implements IHasChangeDetect
         },
     };
 
-    constructor(public changeDetector: ChangeDetectorRef, private formBuilder: FormBuilder) {}
+    constructor(public changeDetector: ChangeDetectorRef,
+                public configuratorHeading: ConfiguratorHeadingService,
+                private formBuilder: FormBuilder) {}
 
     public get chartTypeSelectViewModels(): IChartOptionViewModel[] {
         // Using simple caching helper to prevent triggering values map on every CD cycle
