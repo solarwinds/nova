@@ -7,6 +7,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injec
 import {wizardAnimations} from "../wizard-animations/wizard-animations";
 import { WizardDirective } from "../wizard.directive";
 
+/**  ignore should be removed in scope of the NUI-6099 */
 /** @ignore */
 @Component({
     selector: "nui-wizard-vertical",

@@ -13,14 +13,14 @@ export interface MatStepperIconContext {
     active: boolean;
     optional: boolean;
 }
-/** Template to be used to override the icons inside the step header. */
+
 @Directive({
     selector: "ng-template[nuiWizardIcon]",
 })
 export class NuiWizardIconDirective {
+
     /** Name of the icon to be overridden. */
-    // eslint-disable-next-line @angular-eslint/no-input-rename
-    @Input("nuiWizardIcon") name: StepState;
+    @Input() nuiWizardIcon: StepState;
 
     constructor(public templateRef: TemplateRef<NuiWizardIconContext>) {}
 }
