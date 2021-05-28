@@ -21,7 +21,7 @@ export class WizardRestoreStateExampleComponent implements OnInit {
                     "",
                     [Validators.required, Validators.minLength(3)],
                 ],
-                "privacy": ["", [Validators.required]],
+                "privacy": [false, [Validators.requiredTrue]],
             }),
             "organization": this.formBuilder.group({
                 "title": ["", [Validators.required]],
