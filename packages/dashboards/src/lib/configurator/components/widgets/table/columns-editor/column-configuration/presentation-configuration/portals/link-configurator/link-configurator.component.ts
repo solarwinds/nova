@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { LoggerService } from "@nova-ui/bits";
-import { ConfiguratorHeadingService } from "@nova-ui/dashboards";
+import { ConfiguratorHeadingService } from "../../../../../../../../services/configurator-heading.service";
 
 import { FormatterConfiguratorComponent } from "../formatter-configurator.component";
 
