@@ -1,4 +1,4 @@
-import { browser, by, protractor, ElementArrayFinder } from "protractor";
+import { browser, by, protractor } from "protractor";
 
 import { Atom } from "../../atom";
 import { CheckboxAtom } from "../../components/checkbox/checkbox.atom";
