@@ -93,6 +93,10 @@ export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy,
                 if (status === "INVALID") {
                     this.completed = false;
                 }
+
+                if (status === "VALID") {
+                    this.completed = true;
+                }
             });
         }
     }
