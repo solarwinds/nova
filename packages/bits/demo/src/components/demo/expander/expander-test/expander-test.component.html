@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <nui-expander id="nui-demo-expander-basic">
+                <p>Content is here</p>
+            </nui-expander>
+            <hr />
+        </div>
+        <div class="col">
+            <nui-expander id="nui-demo-expander-text-and-icon" header="Advanced Options" icon="orion-sitemaster">
+                <p>Content is here</p>
+            </nui-expander>
+            <hr />
+        </div>
+        <div class="col">
+            <nui-expander id="nui-demo-expander-custom-header">
+                <div nuiExpanderHeader>
+                    <span>Advanced options</span>
+                    <nui-menu id="nui-demo-expander-header-menu" icon="menu" displayStyle="action" nuiClickInterceptor
+                        [itemsSource]="itemsSource"></nui-menu>
+                </div>
+                <p>Content is here</p>
+            </nui-expander>
+            <hr />
+        </div>
+        <div class="col">
+            <nui-expander-initially-expanded-example>
+                <nui-expander id="nui-demo-expander-initially-expanded" header="Advanced Options"></nui-expander>
+            </nui-expander-initially-expanded-example>
+        </div>
+        <div class="col">
+            <nui-expander-open-change-example>
+                <nui-expander id="nui-demo-expander-open-change" header="Advanced options"></nui-expander>
+            </nui-expander-open-change-example>
+        </div>
+    </div>
+</div>
