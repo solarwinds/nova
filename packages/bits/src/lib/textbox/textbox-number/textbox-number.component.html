@@ -1,6 +1,6 @@
 <div class="nui-textbox nui-textbox-number"
      [class.nui-textbox--disabled]="disabled"
-     [class.has-error]="hasError()">
+     [class.has-error]="hasError() || isInErrorState">
     <div class="has-feedback" [ngStyle]="{'maxWidth': customBoxWidth, 'minWidth': customBoxWidth}">
         <input class="form-control input-control nui-textbox__input"
                #numberInput

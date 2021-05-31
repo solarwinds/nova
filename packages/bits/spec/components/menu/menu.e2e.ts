@@ -112,7 +112,6 @@ describe("USERCONTROL Menu", () => {
                 });
 
                 it("should select and close menu when selecting menu action item", async () => {
-                    await menu.toggleMenu();
                     await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
                     await browser.actions().sendKeys(protractor.Key.ENTER).perform();
                     expect(await menu.isMenuOpened()).toBe(false);
