@@ -1,8 +1,8 @@
-import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
-import { DOWN_ARROW, ENTER, ESCAPE, PAGE_DOWN, PAGE_UP, TAB, UP_ARROW } from "@angular/cdk/keycodes";
+import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
 import { ElementRef, Injectable, OnDestroy, QueryList } from "@angular/core";
 import isNull from "lodash/isNull";
 import { Subject, Subscription } from "rxjs";
+import { KEYBOARD_CODE } from "../../constants";
 
 import { MenuActionComponent } from "../menu/menu-item/menu-action/menu-action.component";
 import { MenuItemBaseComponent } from "../menu/menu-item/menu-item/menu-item-base";
@@ -33,6 +33,8 @@ export class MenuKeyControlService implements OnDestroy {
     private keyboardEventsSubscription: Subscription;
     private _scrollContainer: ElementRef;
 
+    constructor(private live: LiveAnnouncer) {}
+
     public initKeyboardManager(): void {
         this.keyboardEventsManager = this.keyControlItemsSource ?
             new ActiveDescendantKeyManager(this.menuPopup.menuItems).withVerticalOrientation() :
@@ -45,7 +47,10 @@ export class MenuKeyControlService implements OnDestroy {
         // when opening menu key 'focus' should disappear from items
         if (this.menuOpenListener) {
             this.menuOpenListenerSubscription = this.menuOpenListener.subscribe(() => {
-                this.keyboardEventsManager.setActiveItem(-1);
+                this.keyboardEventsManager.setFirstItemActive();
+                this.live.announce(`
+                    ${this.keyControlItemsSource ? this.menuPopup.menuItems.length : this.menuItems.length} menu items available.
+                    Active item ${this.keyboardEventsManager?.activeItem?.menuItem.nativeElement.innerText}.`);
             });
         }
     }
@@ -91,27 +96,35 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private handleOpenKeyDown(event: KeyboardEvent): void {
-        if (event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW) {
+        if (event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP) {
             // passing the event to key manager so we get a change fired
             this.keyboardEventsManager.onKeydown(event);
+            this.announceCurrentItem();
         }
-        if (event.keyCode === PAGE_UP) {
+        if (event.code === KEYBOARD_CODE.PAGE_UP || event.code === KEYBOARD_CODE.HOME  || (event.metaKey && event.code === KEYBOARD_CODE.ARROW_UP)) {
             event.preventDefault();
             this.keyboardEventsManager.onKeydown(event);
             this.keyboardEventsManager.setFirstItemActive();
+            this.announceCurrentItem();
         }
-        if (event.keyCode === PAGE_DOWN) {
+        if (event.code === KEYBOARD_CODE.PAGE_DOWN || event.code === KEYBOARD_CODE.END  || (event.metaKey && event.code === KEYBOARD_CODE.ARROW_DOWN)) {
             event.preventDefault();
             this.keyboardEventsManager.onKeydown(event);
             this.keyboardEventsManager.setLastItemActive();
+            this.announceCurrentItem();
         }
 
+        // This keeps the active item visible within the visible area of the menu popup. In case there are disabled items in the list,
+        // this scrolls down to the nearest enabled item. Otherwise, the active item will "jump over" the disabled items and remain
+        // outside of the visible edge of the list.
+        this.keyboardEventsManager.activeItem?.menuItem?.nativeElement?.scrollIntoView({block: "nearest"});
+
         // prevent closing on enter
-        if (!this.hasActiveItem() && event.keyCode === ENTER) {
+        if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
             event.preventDefault();
         }
 
-        if (this.hasActiveItem() && event.keyCode === ENTER) {
+        if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
             // perform action in menu item(select, switch, check etc).
             this.keyboardEventsManager.activeItem?.doAction(event);
             // closing items only if they are MenuAction or MenuItem, others should not close popup
@@ -121,7 +134,7 @@ export class MenuKeyControlService implements OnDestroy {
             }
             this.popup.toggleOpened(event);
         }
-        if (event.keyCode === TAB || event.keyCode === ESCAPE) {
+        if (event.code === KEYBOARD_CODE.TAB || event.code === KEYBOARD_CODE.ESCAPE) {
             this.popup.toggleOpened(event);
         }
     }
@@ -132,13 +145,13 @@ export class MenuKeyControlService implements OnDestroy {
             event.preventDefault();
         }
 
-        if (event.keyCode === DOWN_ARROW) {
+        if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
             this.popup.toggleOpened(event);
         }
     }
 
     private shouldBePrevented(event: KeyboardEvent) {
-        return event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW || event.keyCode === ENTER;
+        return event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP || event.code === KEYBOARD_CODE.ENTER;
     }
 
     // functions to scroll items into view for ActiveDescendantKeyManager
@@ -186,6 +199,10 @@ export class MenuKeyControlService implements OnDestroy {
             options.scrollContainer.nativeElement.scrollTop,
             300
         );
+    }
+
+    private announceCurrentItem() {
+        this.live.announce(`Active item ${this.keyboardEventsManager?.activeItem?.menuItem.nativeElement.innerText}.`);
     }
 
     ngOnDestroy(): void {
