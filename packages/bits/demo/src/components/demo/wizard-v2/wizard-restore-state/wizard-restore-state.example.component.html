@@ -48,7 +48,7 @@
                                 formGroupName="organization"
                                 [stepControl]="form.get(['organization'])">
                 <nui-form-field [control]="form.get(['organization', 'title'])"
-                                class="d-block mb-4 mt-4"
+                                class="d-block my-4"
                                 i18n-caption
                                 caption="Organization">
                     <nui-textbox formControlName="title"></nui-textbox>
@@ -59,7 +59,7 @@
                     </nui-validation-message>
                 </nui-form-field>
                 <nui-form-field caption="Date"
-                                class="d-block mt-4"
+                                class="d-block my-4"
                                 [control]="form.get(['organization','date'])">
                     <nui-date-picker formControlName="date" i18n></nui-date-picker>
                     <nui-validation-message for="required"
@@ -68,11 +68,30 @@
                         This is required
                     </nui-validation-message>
                 </nui-form-field>
+                <nui-form-field [control]="form.get(['organization','createDynamicStep1'])" class="d-block">
+                    <nui-checkbox formControlName="createDynamicStep1" [value]="true">
+                        Add first step dynamically
+                    </nui-checkbox>
+                </nui-form-field>
+                <nui-form-field [control]="form.get(['organization','createDynamicStep2'])" class="d-block">
+                    <nui-checkbox formControlName="createDynamicStep2" [value]="true">
+                        Add second step dynamically
+                    </nui-checkbox>
+                </nui-form-field>
                     <ng-template wizardStepFooter>
                         <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardNext; context: { form: 'organization' }"></ng-container>
                     </ng-template>
+            </nui-wizard-step-v2>
+
+            <nui-wizard-step-v2 *ngFor="let step of dynamicSteps">
+                <ng-template wizardStepLabel>{{step.title}}</ng-template>
+                <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
+                <ng-template wizardStepFooter>
+                    <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+                    <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+                </ng-template>
             </nui-wizard-step-v2>
 
             <nui-wizard-step-v2 formGroupName="contactDetails"
@@ -153,6 +172,16 @@
             </ng-template>
         </nui-wizard-horizontal>
     </form>
+</ng-template>
+
+<ng-template #dynamicTemplate1>
+    <p i18n>Hi! I was created dynamically, because you've checked the checkbox on the previous step! Check it off to hide me!</p>
+</ng-template>
+
+<ng-template #dynamicTemplate2>
+    <p i18n>This is another template rendered dynamically!</p>
+    <button type="button" nui-button class="mb-3" (click)="awesome = !awesome">Click if you're awesome</button>
+    <nui-message *ngIf="awesome" type="ok">You are awesome!</nui-message>
 </ng-template>
 
 <button nui-button type="button" (click)="openDialog(dialogWizard)" i18n> Open dialog wizard</button>
