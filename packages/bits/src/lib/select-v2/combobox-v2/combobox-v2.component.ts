@@ -122,6 +122,8 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
         // we check "selectedOptions" to be set per "value" again in "handleValueChange"
         this.optionsChanged().subscribe(() => {
             this.filterItems(this.inputValue.toString());
+            // We need the active option to always stay visible during the options filtering.
+            this.optionKeyControlService.scrollToOption({block: "start", behavior: "smooth"});
             this.cdRef.markForCheck();
         });
     }
