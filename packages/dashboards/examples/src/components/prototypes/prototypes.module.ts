@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { ConfiguratorHeadingService } from "../../../../src/public-api";
+import { ConfiguratorHeadingService } from "@nova-ui/dashboards";
 
 import { AcmeComponentsModule } from "./components/components.module";
 
