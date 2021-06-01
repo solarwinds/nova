@@ -1,6 +1,3 @@
-import { QueryList } from "@angular/core";
-import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
-
 export * from "./wizard.module";
 export * from "./wizard.directive";
 export * from "./wizard-step-footer.directive";
@@ -13,7 +10,3 @@ export * from "./wizard-horizontal/wizard-horizontal.component";
 export * from "./wizard-step/wizard-step.component";
 export * from "./wizard-step-header/wizard-step-header.component";
 export * from "./wizard-vertical/wizard-vertical.component";
-
-export interface IWizardState {
-    steps: QueryList<WizardStepV2Component>;
-}

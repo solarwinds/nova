@@ -17,9 +17,15 @@ import { Subject } from "rxjs";
 import { AnimationEvent } from "@angular/animations";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
-import { IWizardState } from "./public-api";
+import { IWizardState } from "./types";
 
-@Directive({selector: "[nuiWizard]", providers: [{provide: CdkStepper, useExisting: WizardDirective}]})
+@Directive({
+    selector: "[nuiWizard]",
+    providers: [
+        { provide: CdkStepper, useExisting: WizardDirective },
+    ],
+})
+
 export class WizardDirective extends CdkStepper implements AfterContentInit, AfterViewInit, OnDestroy {
     static ngAcceptInputTypeEditable: BooleanInput = undefined;
     static ngAcceptInputTypeOptional: BooleanInput = undefined;
@@ -29,18 +35,20 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, Aft
     /** Override CdkStepper 'steps' property to use WizardStepV2Component instead of CdkStep */
     readonly steps: QueryList<WizardStepV2Component> = new QueryList<WizardStepV2Component>();
 
-    /** The list of step headers of the steps in the stepper. */
-    @ViewChildren(WizardStepHeaderComponent) _stepHeader: QueryList<WizardStepHeaderComponent>;
     /** Event emitted when the current step is done transitioning in. */
     @Output() readonly animationDone: EventEmitter<void> = new EventEmitter<void>();
     /** Event emitted when the selected step has changed. */
     @Output() readonly selectionChange = new EventEmitter<StepperSelectionEvent>();
-    /** Emit steps for ability restore them status later */
-    @Output() readonly wizardStepsStatusChanges: EventEmitter<QueryList<WizardStepV2Component>> = new EventEmitter();
     /** Whether ripples should be disabled for the step headers. */
     @Input() disableRipple: boolean;
-    /** State to restore wizard */
+    /** The state of the wizard */
     @Input() state: IWizardState;
+    /** Emits the completed wizard state on component destroy */
+    @Output() readonly finished: EventEmitter<IWizardState> = new EventEmitter<IWizardState>();
+
+    /** The list of step headers of the steps in the stepper. */
+    @ViewChildren(WizardStepHeaderComponent) _stepHeader: QueryList<WizardStepHeaderComponent>;
+
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
 
@@ -59,13 +67,19 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, Aft
 
     public ngAfterContentInit(): void {
         this._steps.changes
-            .pipe(startWith(this._steps), takeUntil(this._destroyed))
+            .pipe(
+                startWith(this._steps),
+                takeUntil(this._destroyed)
+            )
             .subscribe((steps: QueryList<WizardStepV2Component>) => {
                 this.steps.reset(steps.filter(step => step._stepper === this));
                 this.steps.notifyOnChanges();
             });
-        this.steps.changes.pipe(takeUntil(this._destroyed))
+
+        this.steps.changes
+            .pipe(takeUntil(this._destroyed))
             .subscribe(() => this._stateChanged());
+
         this._animationDone.pipe(
             // This needs a `distinctUntilChanged` in order to avoid emitting the same event twice due
             // to a bug in animations where the `.done` callback gets invoked twice on some browsers.
@@ -82,37 +96,37 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, Aft
     public ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        if (this.state && this.state.steps) {
-            this.restoreStepsState();
+        // Making sure there is at least one listener for the output to track the wizard's finished state
+        // This prevents users from using the input without the corresponding output, which may result in
+        // broken validation of the steps
+        if (this.state?.finished && this.finished.observers.length) {
+            this.restore();
         }
     }
 
     public ngOnDestroy(): void {
-        this.wizardStepsStatusChanges.emit(this.steps);
+        this.finished.emit({
+            finished: this.allStepsCompleted,
+        });
         super.ngOnDestroy();
     }
 
-    public restoreStepsState(): void {
-        let lastCompletedIndex = -1;
-        const { steps } = this.state;
+    // Restores the completed wizard to the last step
+    private restore(): void {
+        this.steps.toArray().forEach(step => {
+            step.completed = true;
 
-        steps.forEach((step, index) => {
-            const stepToRestore = this.steps.get(index);
-
-            if (step.stepControl && step.stepControl.invalid) {
-                return;
+            if (step === this.steps.last) {
+                step.select();
             }
-
-            if (stepToRestore && step.completed) {
-                stepToRestore.completed = step.completed;
-                lastCompletedIndex++;
-            }
-        });
-
-        if (lastCompletedIndex > -1) {
-            this.steps.get(lastCompletedIndex)?.select();
-        }
+        })
 
         this["_changeDetectorRef"].detectChanges();
+    }
+
+    private get allStepsCompleted(): boolean {
+        const completed: boolean = this.steps.toArray().reduce((acc: boolean, step: WizardStepV2Component) => acc && step.completed, true);
+
+        return completed;
     }
 }

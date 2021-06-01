@@ -4,12 +4,12 @@
                        (closed)="closeDialog()">
     </nui-dialog-header>
     <form class="dialog-body compact-mode"
-        [formGroup]="form"
+          [formGroup]="form"
           *ngIf="form">
         <nui-wizard-horizontal
             linear
-            [state]="stateToRestore"
-            (wizardStepsStatusChanges)="onWizardDestroy($event)"
+            [state]="state"
+            (finished)="saveState($event)"
         >
             <nui-wizard-step-v2 label="Person Details"
                                 formGroupName="personDetails"
