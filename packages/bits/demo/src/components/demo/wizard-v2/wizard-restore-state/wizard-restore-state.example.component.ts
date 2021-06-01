@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, TemplateRef } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DialogService, NuiDialogRef, WizardStepV2Component } from "@nova-ui/bits";
-import { IWizardState } from "../../../../../../src/lib/wizard-v2/types";
+import { DialogService, NuiDialogRef, WizardStepV2Component, IWizardState } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-restore-state-example",
