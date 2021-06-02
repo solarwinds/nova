@@ -18,6 +18,7 @@ export const DASHBOARD_EVENT_BUS = new InjectionToken<EventBus<Event>>("DASHBOAR
 export const DATA_SOURCE = new InjectionToken<EventBus<Event>>("DATA_SOURCE");
 export const FORMATTERS_REGISTRY = new InjectionToken<EventBus<Event>>("FORMATTERS_REGISTRY");
 export const TEST_REGISTRY = new InjectionToken<EventBus<Event>>("TEST_REGISTRY");
+export const HEADER_LINK_PROVIDER = new InjectionToken<EventBus<Event>>("HEADER_LINK_PROVIDER");
 
 export type WidgetUpdateOperation = (widget: IWidget, source: IConfiguratorSource) => Observable<IWidget>;
 export type WidgetRemovalOperation = (widgetId: string, source: IConfiguratorSource) => Observable<string>;

@@ -18,7 +18,7 @@ export class HeaderLinkProviderService implements IHeaderLinkProvider {
 
         // use global filter values as query parameters for the string
         const queryParams = Object.keys(filters)
-            .map(f => encodeURIComponent(f) + "=" +  encodeURIComponent(filters[f].value.value))
+            .map(f => encodeURIComponent(f) + "=" +  encodeURIComponent(filters[f].data.value))
             .join("&");
 
         return template + "/search?" + queryParams;

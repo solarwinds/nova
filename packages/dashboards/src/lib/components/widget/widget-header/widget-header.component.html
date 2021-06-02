@@ -30,7 +30,7 @@
                     <a [href]="url" (click)="prepareLink($event)"
                        (mouseenter)="prepareLink($event)"
                        (mousedown)="$event.stopPropagation(); $event.preventDefault()"
-                       class="nui-text-widget nui-widget__header__content-title" #titleLink
+                       class="nui-text-widget nui-widget__header__content-title"
                        [nuiTooltip]="linkTooltip">{{title}}</a>
                 </div>
 
@@ -41,7 +41,6 @@
             </div>
             <div class="nui-widget__header__content-actions">
                 <a *ngIf="url && !editMode" nui-button
-                   #link
                    displayStyle="action"
                    [href]="url"
                    (click)="prepareLink($event)"

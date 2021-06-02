@@ -3,12 +3,12 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, I
 import { EventBus, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { HeaderLinkProviderService } from "../../../../../examples/src/components/prototypes/prototype-1/header-link-provider.service";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { DASHBOARD_EDIT_MODE, REFRESH, WIDGET_EDIT, WIDGET_REMOVE } from "../../../services/types";
 import { WidgetToDashboardEventProxyService } from "../../../services/widget-to-dashboard-event-proxy.service";
-import { PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../types";
+import { HEADER_LINK_PROVIDER, PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../types";
+import { IHeaderLinkProvider } from "./types";
 
 @Component({
     selector: "nui-widget-header",
@@ -56,7 +56,6 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     @ViewChild("widgetHeaderCustomElement") public widgetHeaderCustomElement: ElementRef;
-    @ViewChild("link") public linkElement: any;
 
     public withCustomElement: boolean;
     private onDestroy$: Subject<void> = new Subject<void>();
@@ -71,7 +70,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
                 public pizzagnaService: PizzagnaService,
                 public changeDetector: ChangeDetectorRef,
                 @Optional() private eventProxy: WidgetToDashboardEventProxyService,
-                @Optional() private linkProvider: HeaderLinkProviderService) {
+                @Inject(HEADER_LINK_PROVIDER) @Optional() private linkProvider: IHeaderLinkProvider) {
     }
 
     public ngOnInit(): void {

@@ -77,7 +77,7 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
             "q": {
                 componentInstance: {
                     getFilters: ()=> ({
-                        value: {
+                        data: {
                             type: "string",
                             value: this.searchQuery,
                         },
