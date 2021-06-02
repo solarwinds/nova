@@ -10,18 +10,12 @@ describe("USERCONTROL Menu", () => {
     let menu: MenuAtom;
     let appendToBody: MenuAtom;
 
-    beforeAll(() => {
+    beforeAll(async () => {
+        await Helpers.prepareBrowser("menu/menu-test");
+
         menu = Atom.find(MenuAtom, "nui-demo-e2e-menu-variants");
         appendToBody = Atom.find(MenuAtom, "nui-demo-e2e-menu-append-to-body");
         appendToBody.menuContentId = "nui-demo-e2e-menu-append-to-body-content";
-    });
-
-    beforeEach(async () => {
-        await Helpers.prepareBrowser("menu/menu-test");
-    });
-
-    afterEach(async () => {
-        await menu.toggleMenu();
     });
 
     describe("> menu group", () => {
@@ -30,10 +24,15 @@ describe("USERCONTROL Menu", () => {
             await menu.clickHeaderByIndex(0);
             await menu.clickDividerByIndex(0);
             expect(await menu.isMenuOpened()).toBe(true);
+            await menu.toggleMenu();
         });
     });
 
     describe("> multi-selection menu", () => {
+        afterEach(async () => {
+            await menu.toggleMenu();
+        });
+
         it("should select items", async () => {
             await menu.toggleMenu();
             const option1 = menu.getMenuItemByContainingText("Menu Item1");
@@ -44,6 +43,9 @@ describe("USERCONTROL Menu", () => {
             expect(await menu.getSelectedCheckboxesCount()).toEqual(2);
             await option2.clickItem();
             expect(await menu.getSelectedCheckboxesCount()).toEqual(1);
+            // Return to initial state
+            await option1.clickItem();
+            expect(await menu.getSelectedCheckboxesCount()).toEqual(0);
         });
     });
 
@@ -66,8 +68,6 @@ describe("USERCONTROL Menu", () => {
             });
 
             it("should NOT open and close menu by ENTER key if focused on toggle", async () => {
-                await menu.toggleMenu();
-                await menu.toggleMenu();
                 await browser.actions().sendKeys(protractor.Key.ENTER).perform();
                 expect(await menu.isMenuOpened()).toBe(false);
                 await browser.actions().sendKeys(protractor.Key.ENTER).perform();
@@ -75,7 +75,6 @@ describe("USERCONTROL Menu", () => {
             });
 
             it("should open and NOT close menu by Shift + DOWN-ARROW key if focused on toggle", async () => {
-                await menu.toggleMenu();
                 await menu.toggleMenu();
                 await browser.actions().sendKeys(protractor.Key.chord(protractor.Key.SHIFT, protractor.Key.ARROW_DOWN)).perform();
                 expect(await menu.isMenuOpened()).toBe(true);
@@ -118,6 +117,11 @@ describe("USERCONTROL Menu", () => {
                     await Helpers.pressKey(Key.ARROW_DOWN);
                     await Helpers.pressKey(Key.ENTER);
                     expect(await menu.getSelectedSwitchesCount()).toEqual(2);
+                    // Return to initial state
+                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    await browser.actions().sendKeys(protractor.Key.ARROW_UP).perform();
+                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    expect(await menu.getSelectedSwitchesCount()).toEqual(0);
                 });
 
                 it("should select and close menu when selecting menu action item", async () => {
@@ -159,6 +163,10 @@ describe("USERCONTROL Menu", () => {
                 expect(await checkbox.isChecked()).toBe(false);
                 await browser.actions().sendKeys(protractor.Key.ENTER).perform();
                 expect(await checkbox.isChecked()).toBe(true);
+                // Return to initial state
+                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                expect(await checkbox.isChecked()).toBe(false);
+                await appendToBody.toggleMenu();
             });
         });
     });
