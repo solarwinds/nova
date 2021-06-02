@@ -1,5 +1,4 @@
 import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
-import { DOWN_ARROW, ENTER, ESCAPE, PAGE_DOWN, PAGE_UP, TAB, UP_ARROW } from "@angular/cdk/keycodes";
 import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
 
@@ -41,11 +40,11 @@ export class OptionKeyControlService<T extends IOption> {
         return this.keyboardEventsManager.activeItemIndex;
     }
 
-    public setSkipPredicate(predicate: (option: T) => boolean) {
+    public setSkipPredicate(predicate: (option: T) => boolean): void {
         this.keyboardEventsManager.skipPredicate(predicate);
     }
 
-    public scrollToOption(options: ScrollIntoViewOptions): void {
+    public scrollToActiveItem(options: ScrollIntoViewOptions): void {
         if (this.keyboardEventsManager.activeItem) {
             // setTimeout is necessary because scrolling to the selected item should occur only when overlay rendered
             setTimeout(() => {
@@ -80,7 +79,7 @@ export class OptionKeyControlService<T extends IOption> {
                 break;
         }
 
-        this.scrollToOption({ block: "nearest" });
+        this.scrollToActiveItem({ block: "nearest" });
 
         // prevent closing on enter
         if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
@@ -111,7 +110,7 @@ export class OptionKeyControlService<T extends IOption> {
 
         if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
             this.popup.toggle();
-            this.scrollToOption({ block: "center" });
+            this.scrollToActiveItem({ block: "center" });
         }
     }
 
