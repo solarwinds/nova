@@ -48,7 +48,7 @@
                                 formGroupName="organization"
                                 [stepControl]="form.get(['organization'])">
                 <nui-form-field [control]="form.get(['organization', 'title'])"
-                                class="d-block my-4"
+                                class="d-block mb-4"
                                 i18n-caption
                                 caption="Organization">
                     <nui-textbox formControlName="title"></nui-textbox>
@@ -59,7 +59,7 @@
                     </nui-validation-message>
                 </nui-form-field>
                 <nui-form-field caption="Date"
-                                class="d-block my-4"
+                                class="d-block mb-4"
                                 [control]="form.get(['organization','date'])">
                     <nui-date-picker formControlName="date" i18n></nui-date-picker>
                     <nui-validation-message for="required"
