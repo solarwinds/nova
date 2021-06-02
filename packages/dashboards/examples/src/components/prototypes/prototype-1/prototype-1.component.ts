@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, V
 import { immutableSet, LoggerService, SearchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
-    DATA_SOURCE,
+    DATA_SOURCE, HEADER_LINK_PROVIDER,
     IDashboard,
     IWidget,
     IWidgetSelector,
@@ -153,7 +153,8 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 deps: [LoggerService, HttpClient],
             },
             [HeaderLinkProviderService.providerId]: {
-                provide: HeaderLinkProviderService,
+                provide: HEADER_LINK_PROVIDER,
+                useClass: HeaderLinkProviderService,
                 deps: [
                     [new Optional(), GlobalFilteringDataSource]
                 ],
