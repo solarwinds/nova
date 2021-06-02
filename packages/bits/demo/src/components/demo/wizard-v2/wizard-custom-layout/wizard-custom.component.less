@@ -22,18 +22,18 @@
 
     }
 
-    .nui-wizard-step-header-selected {
+    .nui-wizard-step-header--selected {
         .setCssVariable(background-color, nui-color-active);
 
         color: @nui-color-text-light;
         border-color: transparent;
 
         .nui-wizard-step-label{
-            color: @nui-color-text-inverse;
+            .setCssVariable(color, nui-color-text-inverse)
         }
 
-        .nui-step-icon-selected svg circle, .nui-step-icon-selected svg path {
-            fill: @nui-color-text-inverse;
+        .nui-wizard-step-header__icon--selected svg circle, .nui-wizard-step-header__icon--selected svg path {
+            .setCssVariable(fill, nui-color-text-inverse)
         }
     }
 

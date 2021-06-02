@@ -11,20 +11,25 @@
     -webkit-tap-highlight-color: transparent;
     .setCssVariable(color, nui-color-text-default);
     width: @wizard-label-header-width;
-}
 
-.nui-wizard-step-header-completed {
-    .setCssVariable(color, nui-color-text-link);
 
-    .nui-wizard-horizontal-line {
-        border: 10px red solid !important;
-        .setCssVariable(border-color, nui-color-text-link);
+    &.nui-wizard-step-header--completed {
+        .setCssVariable(color, nui-color-text-link);
+
+        .nui-wizard-horizontal-line {
+            border: 10px red solid !important;
+            .setCssVariable(border-color, nui-color-text-link);
+        }
+
+        svg circle, svg path {
+            .setCssVariable(fill, nui-color-text-link);
+        }
     }
-}
 
-.nui-wizard-step-header-disabled{
-    pointer-events: none;
-    cursor: default;
+    &.nui-wizard-step-header--disabled {
+        pointer-events: none;
+        cursor: default;
+    }
 }
 
 .nui-step-optional, .nui-step-sub-label-error {
@@ -53,32 +58,19 @@
         .setCssVariable(fill, nui-color-text-secondary);    }
 
 
-    &.nui-step-icon-selected {
+    &.nui-wizard-step-header__icon--selected {
         svg circle, svg path{
             .setCssVariable(fill, nui-color-text-default);
         }
     }
-
-    &.nui-step-icon-state-done {
-        svg circle, svg path{
-            .setCssVariable(fill, nui-color-text-link);
-        }
-    }
-
 }
 
 .nui-wizard-step-icon .nui-icon-container {
-    font-size: @wizard-step-header-icon-size;
-    height: @wizard-step-header-icon-size;
-    width: @wizard-step-header-icon-size;
+    font-size: @icon-size-default;
+    height: @icon-size-default;
+    width: @icon-size-default;
     position: relative;
     top: 11px;
-}
-
-.nui-step-icon-state-error .nui-icon {
-    font-size: @wizard-step-header-icon-size + 8;
-    height: @wizard-step-header-icon-size + 8;
-    width: @wizard-step-header-icon-size + 8;
 }
 
 .nui-wizard-step-label {
@@ -88,7 +80,7 @@
     text-overflow: ellipsis;
     min-width: @wizard-label-min-width;
     vertical-align: middle;
-    color: @nui-color-text-secondary;
+    .setCssVariable(color, nui-color-text-secondary)
 }
 
 .nui-wizard-step-text-label {

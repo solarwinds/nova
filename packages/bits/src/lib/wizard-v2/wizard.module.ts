@@ -13,7 +13,7 @@ import {WizardStepLabelDirective} from "./wizard-step-label.directive";
 import {WizardStepV2Component} from "./wizard-step/wizard-step.component";
 import {WizardVerticalComponent} from "./wizard-vertical/wizard-vertical.component";
 import { WizardDirective } from "./wizard.directive";
-import {NuiWizardIconDirective} from "./wizard-icon.directive";
+import {WizardIconDirective} from "./wizard-icon.directive";
 
 /**
  * @ignore
@@ -34,7 +34,7 @@ import {NuiWizardIconDirective} from "./wizard-icon.directive";
         WizardStepFooterDirective,
         WizardStepperNextDirective,
         WizardStepperPreviousDirective,
-        NuiWizardIconDirective,
+        WizardIconDirective,
     ],
     exports: [
         WizardHorizontalComponent,
@@ -45,7 +45,7 @@ import {NuiWizardIconDirective} from "./wizard-icon.directive";
         WizardStepV2Component,
         WizardDirective,
         WizardStepLabelDirective,
-        NuiWizardIconDirective,
+        WizardIconDirective,
 
         // next & previous directive to be applied on buttons in order to navigate
         // through the wizard steps

@@ -8,19 +8,13 @@ export interface NuiWizardIconContext {
     optional: boolean;
 }
 
-export interface MatStepperIconContext {
-    index: number;
-    active: boolean;
-    optional: boolean;
-}
-
 @Directive({
-    selector: "ng-template[nuiWizardIcon]",
+    selector: "ng-template[stepState]",
 })
-export class NuiWizardIconDirective {
+export class WizardIconDirective {
 
     /** Name of the icon to be overridden. */
-    @Input() nuiWizardIcon: StepState;
+    @Input() stepState: StepState;
 
     constructor(public templateRef: TemplateRef<NuiWizardIconContext>) {}
 }

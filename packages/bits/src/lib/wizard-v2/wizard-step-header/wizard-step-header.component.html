@@ -1,8 +1,8 @@
 <div class="nui-step-header-ripple"></div>
 <div class="nui-wizard-step-label"
-     [class.nui-wizard-step-label-active]="completed"
-     [class.nui-wizard-step-label-selected]="selected"
-     [class.nui-wizard-step-label-error]="state == 'error'">
+     [class.nui-wizard-step-header__label--active]="completed"
+     [class.nui-wizard-step-header__label--selected]="selected"
+     [class.nui-wizard-step-header__label--error]="state == 'error'">
 
     <!-- If there is a label template, use it. -->
     <ng-container *ngIf="_templateLabel()" [ngTemplateOutlet]="_templateLabel()!.template">
@@ -15,7 +15,9 @@
     <div class="nui-step-sub-label-error" *ngIf="state == 'error'">{{errorMessage}}</div>
 </div>
 
-<div class="nui-step-icon-state-{{state}} nui-wizard-step-icon" [class.nui-step-icon-selected]="selected">
+<div class="nui-step-icon-state-{{state}} nui-wizard-step-icon"
+     [class.nui-wizard-step-header__icon--selected]="selected"
+>
     <div class="nui-step-icon-content" [ngSwitch]="!!(iconOverrides && iconOverrides[state])">
         <span class="nui-icon-container">
             <ng-container

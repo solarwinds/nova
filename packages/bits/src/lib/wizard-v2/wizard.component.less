@@ -39,7 +39,7 @@
 }
 
 .nui-wizard-horizontal-line {
-    border-top-width: @wizard-line-width;
+    border-top-width: @nui-line-medium;
     border-top-style: solid;
     .setCssVariable(border-color, nui-color-line-default);
 
@@ -54,22 +54,22 @@
     }
 
     .nui-wizard-label-position-top & {
-        bottom: (@wizard-label-header-height / 2) - @wizard-line-width;
-        left:  ((@wizard-label-header-width + @wizard-step-header-icon-size)/ 2);
-        width: (@wizard-label-header-width - @wizard-step-header-icon-size);
+        bottom: (@wizard-label-header-height / 2) - @nui-line-medium;
+        left:  ((@wizard-label-header-width + @icon-size-default)/ 2);
+        width: (@wizard-label-header-width - @icon-size-default);
         position: relative;
     }
 }
 
 .nui-header-horizontal-line-label-position-top {
-    border-top-width: @wizard-line-width;
+    border-top-width: @nui-line-medium;
     border-top-style: solid;
     border-top-color: @nui-color-line-default;
     content: '';
     display: inline-block;
     height: 0;
     position: absolute;
-    width: calc(50% - @wizard-side-gap / 2 + @wizard-line-gap);
+    width: calc(50% - @nui-space-md / 2 + @wizard-line-gap);
 }
 
 .nui-wizard-horizontal-header {
@@ -78,7 +78,7 @@
     max-height: @wizard-header-max-height;
     overflow: hidden;
     align-items: center;
-    padding: 0 @wizard-side-gap;
+    padding: 0 @nui-space-md;
 
     .nui-wizard-step-icon {
         margin-right: @wizard-line-gap;
@@ -106,11 +106,11 @@
         .nui-wizard-step-label{
             .setCssVariable(color, nui-color-text-secondary);
 
-            &.nui-wizard-step-label-active {
+            &.nui-wizard-step-header__label--active {
                 .setCssVariable(color, nui-color-text-link);
             }
 
-            &.nui-wizard-step-label-selected {
+            &.nui-wizard-step-header__label--selected {
                 .setCssVariable(color, nui-color-text-default);
             }
         }
@@ -125,11 +125,11 @@
     height: @wizard-label-header-height;
 
     .nui-wizard-step-icon {
-        margin-right: @wizard-vertical-content-margin - @wizard-side-gap;
+        margin-right: @wizard-vertical-content-margin - @nui-space-md;
 
         [dir='rtl'] & {
             margin-right: 0;
-            margin-left: @wizard-vertical-content-margin - @wizard-side-gap;
+            margin-left: @wizard-vertical-content-margin - @nui-space-md;
         }
     }
 }
@@ -145,7 +145,7 @@
 
 .nui-wizard-horizontal-content-container {
     overflow: hidden;
-    padding: @wizard-side-gap;
+    padding: @nui-space-md;
 }
 
 .nui-wizard-vertical-content-container {
@@ -163,7 +163,7 @@
     content: '';
     position: absolute;
     left: 0;
-    border-left-width: @wizard-line-width;
+    border-left-width: @nui-line-medium;
     border-left-style: solid;
 
     [dir='rtl'] & {
@@ -178,7 +178,7 @@
 }
 
 .nui-vertical-content {
-    padding: 0 @wizard-side-gap @wizard-side-gap @wizard-side-gap;
+    padding: 0 @nui-space-md @nui-space-md @nui-space-md;
 }
 
 .nui-step:last-child {

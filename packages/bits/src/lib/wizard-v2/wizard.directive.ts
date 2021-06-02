@@ -23,7 +23,7 @@ import { Subject } from "rxjs";
 import { AnimationEvent } from "@angular/animations";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
-import { MatStepperIconContext, NuiWizardIconDirective } from "./wizard-icon.directive";
+import { WizardIconDirective, NuiWizardIconContext } from "./wizard-icon.directive";
 
 @Directive({
     selector: "[nuiWizard]",
@@ -50,11 +50,11 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
     @Input() disableRipple: boolean;
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
-    _iconOverrides: Record<string, TemplateRef<MatStepperIconContext>> = {};
+    _iconOverrides: Record<string, TemplateRef<NuiWizardIconContext>> = {};
 
     /** Steps that the stepper holds. */
     @ContentChildren(WizardStepV2Component, {descendants: true}) _steps: QueryList<WizardStepV2Component>;
-    @ContentChildren(NuiWizardIconDirective, {descendants: true}) _icons: QueryList<NuiWizardIconDirective>;
+    @ContentChildren(WizardIconDirective, {descendants: true}) _icons: QueryList<WizardIconDirective>;
 
     /** The step that is selected. */
     @Input()
@@ -67,7 +67,7 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
     }
 
     public ngAfterContentInit(): void {
-        this._icons.forEach(({nuiWizardIcon, templateRef}) => this._iconOverrides[nuiWizardIcon] = templateRef);
+        this._icons.forEach(({stepState, templateRef}) => this._iconOverrides[stepState] = templateRef);
         this._steps.changes
             .pipe(startWith(this._steps), takeUntil(this._destroyed))
             .subscribe((steps: QueryList<WizardStepV2Component>) => {
@@ -93,7 +93,7 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
         super.ngOnDestroy();
     }
 
-    public getStepState(i: number, state: StepState = STEP_STATE.NUMBER){
+    public getStepState(i: number, state: StepState = STEP_STATE.NUMBER): StepState{
         const steps = this.steps.toArray();
         const step = steps[i];
         const isSelected = steps.indexOf(this.selected) === i;
