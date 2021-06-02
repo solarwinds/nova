@@ -12,17 +12,12 @@
     .setCssVariable(color, nui-color-text-default);
     width: @wizard-label-header-width;
 
-
     &.nui-wizard-step-header--completed {
         .setCssVariable(color, nui-color-text-link);
 
         .nui-wizard-horizontal-line {
             border: 10px red solid !important;
             .setCssVariable(border-color, nui-color-text-link);
-        }
-
-        svg circle, svg path {
-            .setCssVariable(fill, nui-color-text-link);
         }
     }
 
@@ -52,16 +47,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-    }
-
-    svg circle, svg path{
-        .setCssVariable(fill, nui-color-text-secondary);    }
-
-
-    &.nui-wizard-step-header__icon--selected {
-        svg circle, svg path{
-            .setCssVariable(fill, nui-color-text-default);
-        }
     }
 }
 
