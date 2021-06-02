@@ -1,7 +1,6 @@
-import { browser, by, element, Key, protractor } from "protractor";
+import { browser, by, Key, protractor } from "protractor";
 
 import { Atom } from "../../atom";
-import { CheckboxAtom } from "../../components/checkbox/checkbox.atom";
 import { Helpers } from "../../helpers";
 import { MenuItemAtom } from "./menu-item.atom";
 import { MenuAtom } from "./menu.atom";
@@ -157,16 +156,18 @@ describe("USERCONTROL Menu", () => {
 
         describe("> append-to-body", () => {
             it("should check and uncheck checkbox in menu item", async () => {
-                await appendToBody.toggleMenu();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                const checkbox = Atom.findIn(CheckboxAtom, appendToBody.getAppendToBodyMenu(), 0);
-                expect(await checkbox.isChecked()).toBe(false);
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                expect(await checkbox.isChecked()).toBe(true);
+                await Helpers.pressKey(Key.TAB);
+
+                await Helpers.pressKey(Key.ARROW_DOWN);
+                const checkbox = appendToBody.getAppendToBodyMenu().all(by.tagName("nui-checkbox")).first();
+                expect(await Atom.hasClass(checkbox, "nui-checkbox--checked")).toBe(false);
+
+                await Helpers.pressKey(Key.ENTER);
+                expect(await Atom.hasClass(checkbox, "nui-checkbox--checked")).toBe(true);
+
                 // Return to initial state
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                expect(await checkbox.isChecked()).toBe(false);
-                await appendToBody.toggleMenu();
+                await Helpers.pressKey(Key.ENTER);
+                expect(await Atom.hasClass(checkbox, "nui-checkbox--checked")).toBe(false);
             });
         });
     });
