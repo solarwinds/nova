@@ -21,9 +21,7 @@ export class HeaderLinkProvider implements IHeaderLinkProvider {
             .map(f => encodeURIComponent(f) + "=" +  encodeURIComponent(filters[f].value.value))
             .join("&");
 
-        const url = template + "/search?" + queryParams;
-        console.log(url);
-        return url;
+        return template + "/search?" + queryParams;
     }
 
 }
