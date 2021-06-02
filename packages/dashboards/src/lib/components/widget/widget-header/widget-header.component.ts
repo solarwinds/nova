@@ -143,10 +143,13 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
         this.eventBus.getStream(REFRESH).next();
     }
 
-    public changeLink($event: MouseEvent) {
+    public prepareLink($event: MouseEvent) {
         const target: HTMLElement = $event.target as HTMLElement;
         if (target && this.linkProvider) {
-            target.setAttribute("href", this.linkProvider.getLink(this.url));
+            const link = this.linkProvider.getLink(this.url);
+            if (link) {
+                target.setAttribute("href", link);
+            }
             return true;
         }
         return false;
