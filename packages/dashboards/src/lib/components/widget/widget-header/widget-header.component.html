@@ -27,8 +27,8 @@
 
                 <!-- link version of the header -->
                 <div *ngIf="url && !editMode">
-                    <a [href]="url" (click)="changeLink($event, titleLink)" target="_blank"
-                       (mouseenter)="changeLink($event, titleLink)"
+                    <a [href]="url" (click)="changeLink($event)" target="_blank"
+                       (mouseenter)="changeLink($event)"
                        (mousedown)="$event.stopPropagation(); $event.preventDefault()"
                        class="nui-text-widget nui-widget__header__content-title" #titleLink
                        [nuiTooltip]="linkTooltip">{{title}}</a>
@@ -44,8 +44,8 @@
                    #link
                    displayStyle="action"
                    [href]="url"
-                   (click)="changeLink($event, linkElement.el.nativeElement)"
-                   (mouseenter)="changeLink($event, linkElement.el.nativeElement)"
+                   (click)="changeLink($event)"
+                   (mouseenter)="changeLink($event)"
                    target="_blank"
                    icon="external-link"
                    [nuiTooltip]="linkTooltip"
