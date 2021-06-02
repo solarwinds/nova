@@ -45,7 +45,7 @@ export class SelectV2OptionGroupComponent implements AfterContentInit, OnDestroy
     }
 
 
-    ngAfterContentInit() {
+    ngAfterContentInit(): void {
         if (this.select.isTypeaheadEnabled) {
             merge([this.select.valueChanged, this.select.valueSelected])
                 .pipe(takeUntil(this.onDestroy$)).subscribe(() => {
@@ -54,7 +54,7 @@ export class SelectV2OptionGroupComponent implements AfterContentInit, OnDestroy
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

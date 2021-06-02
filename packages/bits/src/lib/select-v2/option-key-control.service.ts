@@ -1,5 +1,4 @@
 import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
-import { DOWN_ARROW, ENTER, ESCAPE, PAGE_DOWN, PAGE_UP, TAB, UP_ARROW } from "@angular/cdk/keycodes";
 import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
 
@@ -41,7 +40,7 @@ export class OptionKeyControlService<T extends IOption> {
         return this.keyboardEventsManager.activeItemIndex;
     }
 
-    public setSkipPredicate(predicate: (option: T) => boolean) {
+    public setSkipPredicate(predicate: (option: T) => boolean): void {
         this.keyboardEventsManager.skipPredicate(predicate);
     }
 

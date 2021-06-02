@@ -104,7 +104,7 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
         super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
     }
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         this.clearValueButtonTooltip = this.multiselect ? $localize `Remove all` : $localize `Remove`;
         // applying changes to content immediately after it was initialized (checked)
         // causes "Expression has changed after it was checked" error
@@ -126,13 +126,13 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
         });
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         super.ngAfterViewInit();
         if (!this.multiselect) {
             this.dropdown.hide$.subscribe(() => {
                 const lastSelectedOption = this.getLastSelectedOption();
                 if (lastSelectedOption) {
-                    this.setInputValue(lastSelectedOption.viewValue);
+                    this.setInputValue(lastSelectedOption.value);
                     this.filterItems(this.inputValue.toString());
                     this.cdRef.markForCheck();
                 }
@@ -140,12 +140,12 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
         }
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         super.ngOnChanges(changes);
     }
 
     /** Handles behavior on mouseup event */
-    public onMouseUp(target: HTMLElement) {
+    public onMouseUp(target: HTMLElement): void {
         this.mouseDown = false;
         if (!this.manualDropdownControl) {
             if (target !== this.inputElement.nativeElement && !this.dropdown.showing) {
@@ -157,7 +157,7 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     }
 
     /** Handles behavior on keydown event */
-    public onKeyDown(event: KeyboardEvent) {
+    public onKeyDown(event: KeyboardEvent): void {
         super.onKeyDown(event);
         this.selectedItemsKeyControlService.onKeydown(event);
 
@@ -170,13 +170,13 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     }
 
     /** Toggles dropdown and removes focus from Selected Items */
-    public toggleDropdown() {
+    public toggleDropdown(): void {
         super.toggleDropdown();
         this.selectedItemsKeyControlService.deactivateSelectedItems();
     }
 
     /** Selects specific option and set its value to the model */
-    public selectOption(option: SelectV2OptionComponent) {
+    public selectOption(option: SelectV2OptionComponent): void {
         if (option.outfiltered || option.isDisabled) {
             return;
         }
@@ -198,7 +198,7 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
      * @param  {number} item            Deselect using index in multiselect values array
      * Deselects item from Selected Items by index or value
      */
-    public deselectItem(item: OptionValueType | number) {
+    public deselectItem(item: OptionValueType | number): void {
         let option: SelectV2OptionComponent | undefined;
 
         if (typeof item === "number" && this.multiselect) {
@@ -216,7 +216,7 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     }
 
     /** Handles behavior on Input value change */
-    public handleInput(inputValue: InputValueTypes) {
+    public handleInput(inputValue: InputValueTypes): void {
         if (!inputValue && !this.multiselect) {
             this.clearValue();
             return;
@@ -247,7 +247,7 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     }
 
     /** Clears up Combobox to the initial value */
-    public clearValue(event?: Event, keepDropdown?: boolean) {
+    public clearValue(event?: Event, keepDropdown?: boolean): void {
         if (!this.isDisabled) {
             this.selectedOptions = [];
             this.onTouched();
@@ -268,7 +268,7 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
      * This can lead to memory leaks.
      * This is a safe guard for preventing memory leaks in derived classes.
      */
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         super.ngOnDestroy();
     }
 
