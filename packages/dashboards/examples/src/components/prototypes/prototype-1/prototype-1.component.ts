@@ -81,9 +81,9 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                             type: "string",
                             value: this.searchQuery,
                         },
-                    })
+                    }),
                 },
-            }
+            },
         })
 
         this.providerRegistry.setProviders({
@@ -156,9 +156,9 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 provide: HEADER_LINK_PROVIDER,
                 useClass: HeaderLinkProviderService,
                 deps: [
-                    [new Optional(), GlobalFilteringDataSource]
+                    [new Optional(), GlobalFilteringDataSource],
                 ],
-            }
+            },
         });
     }
 
