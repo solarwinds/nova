@@ -7,7 +7,6 @@ import {
     OnDestroy,
     Output,
     QueryList,
-    TemplateRef,
     ViewChildren,
 } from "@angular/core";
 import {
@@ -23,7 +22,6 @@ import { Subject } from "rxjs";
 import { AnimationEvent } from "@angular/animations";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
-import { WizardIconDirective, NuiWizardIconContext } from "./wizard-icon.directive";
 
 @Directive({
     selector: "[nuiWizard]",
@@ -50,11 +48,9 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
     @Input() disableRipple: boolean;
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
-    _iconOverrides: Record<string, TemplateRef<NuiWizardIconContext>> = {};
 
     /** Steps that the stepper holds. */
     @ContentChildren(WizardStepV2Component, {descendants: true}) _steps: QueryList<WizardStepV2Component>;
-    @ContentChildren(WizardIconDirective, {descendants: true}) _icons: QueryList<WizardIconDirective>;
 
     /** The step that is selected. */
     @Input()
@@ -67,7 +63,6 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
     }
 
     public ngAfterContentInit(): void {
-        this._icons.forEach(({stepState, templateRef}) => this._iconOverrides[stepState] = templateRef);
         this._steps.changes
             .pipe(startWith(this._steps), takeUntil(this._destroyed))
             .subscribe((steps: QueryList<WizardStepV2Component>) => {

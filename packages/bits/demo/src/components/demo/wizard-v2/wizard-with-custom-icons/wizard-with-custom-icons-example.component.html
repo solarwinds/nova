@@ -1,14 +1,4 @@
 <nui-wizard-horizontal>
-    <!-- override icon with state email -->
-    <ng-template stepState="email">
-        <nui-icon icon="email"></nui-icon>
-    </ng-template>
-
-    <!-- override icon for selected step -->
-    <ng-template stepState="edit">
-        <nui-icon icon="edit"></nui-icon>
-    </ng-template>
-
 
     <nui-wizard-step-v2 i18n-label label="First step">
         <span i18n>This is the first step of our wizard</span>.
@@ -17,8 +7,7 @@
         </ng-template>
     </nui-wizard-step-v2>
 
-    <!-- Set state email for the step -->
-    <nui-wizard-step-v2 i18n-label label="Second step" state="email">
+    <nui-wizard-step-v2 i18n-label label="Second step">
         <span i18n>This is the second step of our wizard</span>.
         <ng-template wizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>

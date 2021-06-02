@@ -7,12 +7,10 @@ import {
     ElementRef,
     Input,
     OnDestroy,
-    TemplateRef,
     ViewEncapsulation,
 } from "@angular/core";
 
 import {WizardStepLabelDirective} from "../wizard-step-label.directive";
-import {NuiWizardIconContext} from "../wizard-icon.directive";
 
 @Component({
     selector: "wizard-step-header",
@@ -56,9 +54,6 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     /** Whether the given step is optional. */
     @Input() optional: boolean;
-
-    /** Sets custom icons. */
-    @Input() iconOverrides: {[key: string]: TemplateRef<NuiWizardIconContext>};
 
     /** Whether the ripple should be disabled. */
     @Input() disableRipple: boolean;
@@ -112,14 +107,6 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
         }
 
         return returnedState;
-    }
-
-    _getIconContext(): NuiWizardIconContext {
-        return {
-            index: this.index,
-            active: this.active,
-            optional: this.optional,
-        };
     }
 
     _getDefaultIconForState(state: StepState): string {

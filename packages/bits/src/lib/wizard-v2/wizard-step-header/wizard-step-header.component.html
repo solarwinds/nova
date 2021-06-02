@@ -16,17 +16,8 @@
 </div>
 
 <div class="nui-step-icon-state-{{state}} nui-wizard-step-icon"
-     [class.nui-wizard-step-header__icon--selected]="selected"
->
-    <div class="nui-step-icon-content" [ngSwitch]="!!(iconOverrides && iconOverrides[state])">
-        <span class="nui-icon-container">
-            <ng-container
-                *ngSwitchCase="true"
-                [ngTemplateOutlet]="iconOverrides[state]"
-                [ngTemplateOutletContext]="_getIconContext()"></ng-container>
-            <ng-container *ngSwitchDefault>
-                <nui-icon icon="{{_getDefaultIconForState(state)}}"></nui-icon>
-            </ng-container>
-        </span>
-    </div>
+     [class.nui-wizard-step-header__icon--selected]="selected">
+    <ng-container>
+        <nui-icon icon="{{_getDefaultIconForState(state)}}"></nui-icon>
+    </ng-container>
 </div>
