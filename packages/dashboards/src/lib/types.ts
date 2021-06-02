@@ -5,6 +5,7 @@ import { GridsterItem } from "angular-gridster2";
 import { Observable } from "rxjs";
 
 import { LegendPlacement } from "./components/types";
+import { IHeaderLinkProvider } from "./components/widget/widget-header/types";
 import { IConfiguratorSource } from "./configurator/services/types";
 
 /**

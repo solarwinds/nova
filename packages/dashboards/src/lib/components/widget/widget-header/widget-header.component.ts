@@ -3,11 +3,12 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, I
 import { EventBus, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { HeaderLinkProvider } from "../../../../../examples/src/components/prototypes/prototype-1/header-link-provider.service";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { DASHBOARD_EDIT_MODE, REFRESH, WIDGET_EDIT, WIDGET_REMOVE } from "../../../services/types";
 import { WidgetToDashboardEventProxyService } from "../../../services/widget-to-dashboard-event-proxy.service";
-import { PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../types";
+import { PIZZAGNA_EVENT_BUS, PizzagnaLayer } from "../../../types";
 
 @Component({
     selector: "nui-widget-header",
@@ -55,6 +56,8 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     @ViewChild("widgetHeaderCustomElement") public widgetHeaderCustomElement: ElementRef;
+    @ViewChild("link") public linkElement: any;
+
     public withCustomElement: boolean;
     private onDestroy$: Subject<void> = new Subject<void>();
 
@@ -67,7 +70,8 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
     constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
                 public pizzagnaService: PizzagnaService,
                 public changeDetector: ChangeDetectorRef,
-                @Optional() private eventProxy: WidgetToDashboardEventProxyService) {
+                @Optional() private eventProxy: WidgetToDashboardEventProxyService,
+                @Optional() private linkProvider: HeaderLinkProvider) {
     }
 
     public ngOnInit(): void {
@@ -137,6 +141,14 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
             throw new Error("The widget is not reloadable, so it can't be reloaded manually.");
         }
         this.eventBus.getStream(REFRESH).next();
+    }
+
+    public changeLink($event: MouseEvent, element?: HTMLElement) {
+        if (element && this.linkProvider) {
+            element.setAttribute("href", this.linkProvider.getLink(this.url));
+            return true;
+        }
+        return false;
     }
 
 }

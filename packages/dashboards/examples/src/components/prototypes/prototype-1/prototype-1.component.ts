@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { immutableSet, LoggerService, SearchService} from "@nova-ui/bits";
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, Optional } from "@angular/core";
+import { immutableSet, LoggerService, SearchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
     DATA_SOURCE,
@@ -10,9 +10,9 @@ import {
     PizzagnaLayer,
     ProviderRegistryService,
     RefresherSettingsService,
+    WIDGET_CREATE,
     WidgetClonerService,
     WidgetTypesService,
-    WIDGET_CREATE,
 } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
@@ -31,6 +31,8 @@ import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/tim
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
+import { GlobalFilteringDataSource } from "./global-filtering-data.source";
+import { HeaderLinkProvider } from "./header-link-provider.service";
 import { positions, widgets } from "./widgets";
 
 /**
@@ -42,7 +44,7 @@ import { positions, widgets } from "./widgets";
     styleUrls: ["./prototype-1.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
-    providers: [AcmeFormSubmitHandler],
+    providers: [AcmeFormSubmitHandler, GlobalFilteringDataSource],
 })
 export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(DashboardComponent, { static: true }) dashboardComponent: DashboardComponent;
@@ -60,6 +62,7 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
 
     public editMode = false;
     public systemRefreshInterval: number = 60;
+    public searchQuery = "solarwinds";
 
     private destroy$ = new Subject();
 
@@ -67,7 +70,22 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 public submitHandler: AcmeFormSubmitHandler,
                 private widgetTypesService: WidgetTypesService,
                 private widgetClonerService: WidgetClonerService,
-                private refreshSettings: RefresherSettingsService) {
+                private refreshSettings: RefresherSettingsService,
+                private globalFilters: GlobalFilteringDataSource) {
+
+        this.globalFilters.registerComponent({
+            "q": {
+                componentInstance: {
+                    getFilters: ()=> ({
+                        value: {
+                            type: "string",
+                            value: this.searchQuery,
+                        },
+                    })
+                },
+            }
+        })
+
         this.providerRegistry.setProviders({
             [AcmeKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -134,6 +152,12 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 useClass: AcmeTableGBooksDataSource,
                 deps: [LoggerService, HttpClient],
             },
+            [HeaderLinkProvider.providerId]: {
+                provide: HeaderLinkProvider,
+                deps: [
+                    [new Optional(), GlobalFilteringDataSource]
+                ],
+            }
         });
     }
 
