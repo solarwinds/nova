@@ -23,3 +23,4 @@ export * from "./table-virtual-scroll-real-api-progress-footer/table-virtual-scr
 export * from "./table-virtual-scroll-real-api-progress-text-footer/table-virtual-scroll-real-api-progress-text-footer.example.component";
 export * from "./table-virtual-scroll-real-api-minimalist/table-virtual-scroll-real-api-minimalist.example.component";
 export * from "./table-search-with-select-and-pagination/table-search-with-select-and-pagination.example.component";
+export * from "./table-select-pinned-header/table-select-pinned-header.example.component";

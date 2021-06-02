@@ -71,20 +71,38 @@ describe("KpiComponent", () => {
     });
 
     describe("interactive", () => {
-        it("is interactive when datasource is interactive", () => {
+        it("is interactive when datasource is interactive with data", () => {
             expect(component.interactive).toBeFalsy();
 
             dataSource.features = new DataSourceFeatures({ [WellKnownDataSourceFeatures.Interactivity]: { enabled: true } });
+            component.widgetData = {value: 0};
 
             expect(component.interactive).toBe(true);
         });
 
-        it("is interactive when configured as interactive", () => {
+        it("is interactive when configured as interactive with data", () => {
+            expect(component.interactive).toBeFalsy();
+
+            component.configuration = { interactive: true };
+            component.widgetData = {value: 0};
+
+            expect(component.interactive).toBe(true);
+        });
+
+        it("is not interactive when datasource is interactive with no data", () => {
+            expect(component.interactive).toBeFalsy();
+
+            dataSource.features = new DataSourceFeatures({ [WellKnownDataSourceFeatures.Interactivity]: { enabled: true } });
+
+            expect(component.interactive).toBe(false);
+        });
+
+        it("is not interactive when configured as interactive with no data", () => {
             expect(component.interactive).toBeFalsy();
 
             component.configuration = { interactive: true };
 
-            expect(component.interactive).toBe(true);
+            expect(component.interactive).toBe(false);
         });
     });
 

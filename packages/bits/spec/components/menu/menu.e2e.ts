@@ -28,7 +28,6 @@ describe("USERCONTROL Menu", () => {
     });
 
     describe("> multi-selection menu", () => {
-
         afterEach(async () => {
             await menu.toggleMenu();
         });
