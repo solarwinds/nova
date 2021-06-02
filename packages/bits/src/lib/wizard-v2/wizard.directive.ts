@@ -5,9 +5,11 @@ import {
     Directive,
     EventEmitter,
     Input,
+    OnChanges,
     OnDestroy,
     Output,
     QueryList,
+    SimpleChanges,
     ViewChildren,
 } from "@angular/core";
 import { CdkStepper, StepContentPositionState, StepperSelectionEvent } from "@angular/cdk/stepper";
@@ -26,7 +28,7 @@ import { IWizardState } from "./types";
     ],
 })
 
-export class WizardDirective extends CdkStepper implements AfterContentInit, AfterViewInit, OnDestroy {
+export class WizardDirective extends CdkStepper implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
     static ngAcceptInputTypeEditable: BooleanInput = undefined;
     static ngAcceptInputTypeOptional: BooleanInput = undefined;
     static ngAcceptInputTypeCompleted: BooleanInput = undefined;
@@ -65,6 +67,12 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, Aft
         this.selectedIndex = this.steps ? this.steps.toArray().indexOf(step) : -1;
     }
 
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.state && changes.state.currentValue) {
+            this.state = changes.state.currentValue;
+        }
+    }
+
     public ngAfterContentInit(): void {
         this._steps.changes
             .pipe(
@@ -96,10 +104,7 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, Aft
     public ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
-        // Making sure there is at least one listener for the output to track the wizard's finished state
-        // This prevents users from using the input without the corresponding output, which may result in
-        // broken validation of the steps
-        if (this.state?.finished && this.finished.observers.length) {
+        if (this.state?.finished) {
             this.restore();
         }
     }
