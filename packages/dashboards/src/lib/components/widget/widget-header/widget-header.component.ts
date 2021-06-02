@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, I
 import { EventBus, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { HeaderLinkProvider } from "../../../../../examples/src/components/prototypes/prototype-1/header-link-provider.service";
+import { HeaderLinkProviderService } from "../../../../../examples/src/components/prototypes/prototype-1/header-link-provider.service";
 
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { DASHBOARD_EDIT_MODE, REFRESH, WIDGET_EDIT, WIDGET_REMOVE } from "../../../services/types";
@@ -71,7 +71,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
                 public pizzagnaService: PizzagnaService,
                 public changeDetector: ChangeDetectorRef,
                 @Optional() private eventProxy: WidgetToDashboardEventProxyService,
-                @Optional() private linkProvider: HeaderLinkProvider) {
+                @Optional() private linkProvider: HeaderLinkProviderService) {
     }
 
     public ngOnInit(): void {

@@ -3,8 +3,8 @@ import { IHeaderLinkProvider } from "@nova-ui/dashboards";
 import { GlobalFilteringDataSource } from "./global-filtering-data.source";
 
 @Injectable()
-export class HeaderLinkProvider implements IHeaderLinkProvider {
-    public static providerId = "HeaderLinkProvider";
+export class HeaderLinkProviderService implements IHeaderLinkProvider {
+    public static providerId = "HeaderLinkProviderService";
 
     constructor(@Optional() private globalFilters: GlobalFilteringDataSource) {
     }

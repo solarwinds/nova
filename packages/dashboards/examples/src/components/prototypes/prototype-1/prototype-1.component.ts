@@ -32,7 +32,7 @@ import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-s
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
 import { GlobalFilteringDataSource } from "./global-filtering-data.source";
-import { HeaderLinkProvider } from "./header-link-provider.service";
+import { HeaderLinkProviderService } from "./header-link-provider.service";
 import { positions, widgets } from "./widgets";
 
 /**
@@ -152,8 +152,8 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 useClass: AcmeTableGBooksDataSource,
                 deps: [LoggerService, HttpClient],
             },
-            [HeaderLinkProvider.providerId]: {
-                provide: HeaderLinkProvider,
+            [HeaderLinkProviderService.providerId]: {
+                provide: HeaderLinkProviderService,
                 deps: [
                     [new Optional(), GlobalFilteringDataSource]
                 ],

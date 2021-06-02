@@ -29,7 +29,7 @@ import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../da
 import { AcmeProportionalDataSource2 } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
-import { HeaderLinkProvider } from "./header-link-provider.service";
+import { HeaderLinkProviderService } from "./header-link-provider.service";
 
 export const positions: Record<string, GridsterItem> = {
     "widget1": {
@@ -317,7 +317,7 @@ export const widgets: IWidget[] = [
                 "header": {
                     "providers": {
                         "dynamicLinkProvider": {
-                            providerId: HeaderLinkProvider.providerId,
+                            providerId: HeaderLinkProviderService.providerId,
                         },
                     },
                     "properties": {
