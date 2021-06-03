@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IMenuItem } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
+    ConfiguratorHeadingService,
     DEFAULT_PIZZAGNA_ROOT,
     EVENT_PROXY,
     FormStackComponent,
@@ -95,6 +96,7 @@ export class CustomWidgetBodyContentComponent implements IHasChangeDetector {
                     <!-- The dropdown for image source selection -->
                     <nui-select-v2 formControlName="imageSource"
                                     placeholder="No image selected" i18n-placeholder
+                                    [popupViewportMargin]="configuratorHeading.height$ | async"
                                     (valueSelected)="onChanged($event)">
                         <nui-select-v2-option *ngFor="let item of imageItems" [value]="item.url">
                             {{item.title}}
@@ -132,7 +134,7 @@ export class CustomConfiguratorSectionComponent implements OnInit, OnChanges, IH
     public form: FormGroup;
     public imageDisplayValue: string;
 
-    constructor(public changeDetector: ChangeDetectorRef, private formBuilder: FormBuilder) { }
+    constructor(public changeDetector: ChangeDetectorRef, private formBuilder: FormBuilder, public configuratorHeading: ConfiguratorHeadingService) { }
 
     public ngOnInit(): void {
         // Initializing the form

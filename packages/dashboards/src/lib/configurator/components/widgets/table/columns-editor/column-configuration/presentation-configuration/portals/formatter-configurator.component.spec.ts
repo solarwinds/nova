@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angul
 import { LoggerService, NuiFormFieldModule, NuiSelectV2Module, NuiValidationMessageModule } from "@nova-ui/bits";
 
 import { IFormatterDefinition } from "../../../../../../../../components/types";
+import { ConfiguratorHeadingService } from "../../../../../../../services/configurator-heading.service";
 
 import { FormatterConfiguratorComponent } from "./formatter-configurator.component";
 
@@ -12,8 +13,8 @@ import { FormatterConfiguratorComponent } from "./formatter-configurator.compone
     template: "",
 })
 class FormatterConfiguratorTestComponent extends FormatterConfiguratorComponent {
-    constructor(changeDetector: ChangeDetectorRef, formBuilder: FormBuilder, logger: LoggerService) {
-        super(changeDetector, formBuilder, logger);
+    constructor(changeDetector: ChangeDetectorRef, formBuilder: FormBuilder, logger: LoggerService, configuratoeHeading: ConfiguratorHeadingService) {
+        super(changeDetector, configuratoeHeading, formBuilder, logger);
     }
 }
 
@@ -51,6 +52,7 @@ describe("FormatterConfiguratorComponent", () => {
                 NuiSelectV2Module,
                 NuiValidationMessageModule,
             ],
+            providers: [ConfiguratorHeadingService],
         }).compileComponents();
     }));
 

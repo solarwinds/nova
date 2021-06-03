@@ -6,3 +6,4 @@ export * from "./widget-editor.service";
 export * from "./types";
 export * from "./converters/public-api";
 export * from "./preview.service";
+export * from "./configurator-heading.service";

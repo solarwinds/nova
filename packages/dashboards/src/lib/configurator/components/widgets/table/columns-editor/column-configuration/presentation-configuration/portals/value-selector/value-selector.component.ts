@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { LoggerService } from "@nova-ui/bits";
+import { ConfiguratorHeadingService } from "../../../../../../../../services/configurator-heading.service";
 
 import { FormatterConfiguratorComponent } from "../formatter-configurator.component";
 
@@ -12,7 +13,10 @@ import { FormatterConfiguratorComponent } from "../formatter-configurator.compon
 export class ValueSelectorComponent extends FormatterConfiguratorComponent {
     static lateLoadKey = "ValueSelectorComponent";
 
-    constructor(changeDetector: ChangeDetectorRef, formBuilder: FormBuilder, logger: LoggerService) {
-        super(changeDetector, formBuilder, logger);
+    constructor(changeDetector: ChangeDetectorRef,
+                configuratorHeading: ConfiguratorHeadingService,
+                formBuilder: FormBuilder,
+                logger: LoggerService) {
+        super(changeDetector, configuratorHeading, formBuilder, logger);
     }
 }

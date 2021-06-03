@@ -4,6 +4,7 @@ import { IDataField, LoggerService } from "@nova-ui/bits";
 
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../../components/types";
 import { IHasChangeDetector, IHasForm } from "../../../../../../../../types";
+import { ConfiguratorHeadingService } from "../../../../../../../services/configurator-heading.service";
 
 @Injectable()
 export abstract class FormatterConfiguratorComponent implements IFormatterConfigurator, IHasChangeDetector, IHasForm, OnChanges {
@@ -18,6 +19,7 @@ export abstract class FormatterConfiguratorComponent implements IFormatterConfig
     public dropdownItems: Record<string, IDataField[]> = {};
 
     constructor(public changeDetector: ChangeDetectorRef,
+                public configuratorHeading: ConfiguratorHeadingService,
                 protected formBuilder: FormBuilder,
                 public logger: LoggerService) {
     }

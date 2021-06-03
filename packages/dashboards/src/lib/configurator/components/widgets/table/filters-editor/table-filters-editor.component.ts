@@ -6,6 +6,7 @@ import { takeUntil } from "rxjs/operators";
 
 import { ITableWidgetColumnConfig, ITableWidgetConfig, ITableWidgetSorterConfig } from "../../../../../components/table-widget/types";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
+import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
 @Component({
     selector: "nui-table-filters-editor-component",
@@ -30,6 +31,7 @@ export class TableFiltersEditorComponent implements OnInit, OnChanges, OnDestroy
     private onDestroy$ = new Subject<void>();
 
     constructor(private formBuilder: FormBuilder,
+                public configuratorHeading: ConfiguratorHeadingService,
                 public changeDetector: ChangeDetectorRef) {
     }
 

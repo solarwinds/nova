@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { DataSourceService, EventBus, IEvent, IFilteringOutputs, LoggerService } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
+    ConfiguratorHeadingService,
     DataSourceConfigurationV2Component,
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -49,8 +50,10 @@ import { finalize } from "rxjs/operators";
     </div>
     <div class="datasource-configuration__accordion-content" formGroupName="properties">
         <nui-form-field caption="Books" [control]="form.get('properties')?.get('bookId')">
-                <nui-select-v2 placeholder="Select book" i18n-placeholder
-                           formControlName="bookId">
+                <nui-select-v2 placeholder="Select book"
+                               i18n-placeholder
+                               [popupViewportMargin]="configuratorHeading.height$ | async"
+                               formControlName="bookId">
                 <nui-select-v2-option *ngFor="let book of books" [value]="book.id" [displayValueContext]="book">
                     {{book.title}}
                 </nui-select-v2-option>
@@ -59,8 +62,10 @@ import { finalize } from "rxjs/operators";
     </div>
     <div class="datasource-configuration__accordion-content" formGroupName="properties">
         <nui-form-field caption="Metrics" [control]="form.get('properties')?.get('metric')">
-                <nui-select-v2 placeholder="Select metric" i18n-placeholder
-                           formControlName="metric">
+                <nui-select-v2 placeholder="Select metric"
+                               [popupViewportMargin]="configuratorHeading.height$ | async"
+                               i18n-placeholder
+                               formControlName="metric">
                 <nui-select-v2-option *ngFor="let metric of metrics" [value]="metric.id">
                     {{metric.label}}
                 </nui-select-v2-option>
@@ -101,12 +106,13 @@ export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfig
 
     // These need to be injected because DataSourceConfigurationV2Component uses them
     constructor(changeDetector: ChangeDetectorRef,
+                configuratorHeading: ConfiguratorHeadingService,
                 formBuilder: FormBuilder,
                 providerRegistryService: ProviderRegistryService,
         @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
                 injector: Injector,
                 logger: LoggerService) {
-        super(changeDetector, formBuilder, providerRegistryService, eventBus, injector, logger);
+        super(changeDetector, configuratorHeading, formBuilder, providerRegistryService, eventBus, injector, logger);
     }
 
     // Overriding 'ngOnInit' to add custom controls to the 'properties' form group
