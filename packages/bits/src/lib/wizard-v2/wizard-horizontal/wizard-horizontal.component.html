@@ -20,7 +20,9 @@
             [completed]="step.completed"
             [optional]="step.optional"
             [errorMessage]="step.errorMessage"
-            [disableRipple]="disableRipple">
+            [disableRipple]="disableRipple"
+            [stepIcon]="step.icon"
+            [customIcons]="customIcons">
         </wizard-step-header>
         <div *ngIf="!isLast" class="nui-wizard-horizontal-line" [ngClass]="{'nui-wizard-horizontal-line-completed': step.completed}"></div>
     </div>

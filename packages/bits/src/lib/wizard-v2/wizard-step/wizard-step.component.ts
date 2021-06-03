@@ -45,6 +45,9 @@ import {WizardStepLabelDirective} from "../wizard-step-label.directive";
 export class WizardStepV2Component extends CdkStep implements ErrorStateMatcher {
     @Input() template?: TemplateRef<any>;
 
+    /** Icon for the initial step state. */
+    @Input() icon: string;
+
     /** Content for step label given by `<ng-template wizardStepLabel>`. */
     @ContentChild(WizardStepLabelDirective) stepLabel: WizardStepLabelDirective;
 

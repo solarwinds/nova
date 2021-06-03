@@ -5,12 +5,17 @@ import {
     ChangeDetectionStrategy,
     Component,
     ElementRef,
+    Inject,
     Input,
+    OnChanges,
     OnDestroy,
+    SimpleChanges,
     ViewEncapsulation,
 } from "@angular/core";
 
 import {WizardStepLabelDirective} from "../wizard-step-label.directive";
+import {IWizardIcons} from "../wizard.directive";
+import {wizardIconsPresetToken} from "../../../constants";
 
 @Component({
     selector: "wizard-step-header",
@@ -27,9 +32,18 @@ import {WizardStepLabelDirective} from "../wizard-step-label.directive";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardStepHeaderComponent extends CdkStepHeader implements AfterViewInit, OnDestroy {
+export class WizardStepHeaderComponent extends CdkStepHeader implements AfterViewInit, OnDestroy, OnChanges {
+    public icons: IWizardIcons = {} as IWizardIcons;
+    public iconColor: string;
+
     /** State of the given step. */
     @Input() state: StepState;
+
+    /** Set custom initial icon for the given step. */
+    @Input() stepIcon: StepState;
+
+    /** Set custom icons for the given step. */
+    @Input() customIcons: Partial<IWizardIcons>;
 
     /** Label of the given step. */
     @Input() label: WizardStepLabelDirective | string;
@@ -54,15 +68,25 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     /** Whether the given step is optional. */
     @Input() optional: boolean;
-
     /** Whether the ripple should be disabled. */
     @Input() disableRipple: boolean;
 
     constructor(
         private _focusMonitor: FocusMonitor,
-        _elementRef: ElementRef<HTMLElement>
+        _elementRef: ElementRef<HTMLElement>,
+        @Inject(wizardIconsPresetToken) private injectedIcons: IWizardIcons
     ) {
         super(_elementRef);
+        if (injectedIcons) {
+            this.icons = this.getIconsForStates(this.icons, injectedIcons);
+        }
+
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes.customIcons) {
+            this.icons = this.getIconsForStates(this.icons, changes.customIcons.currentValue);
+        }
     }
 
     ngAfterViewInit(): void {
@@ -109,14 +133,32 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
         return returnedState;
     }
 
+    private getIconsForStates(icons: IWizardIcons, customIcons: IWizardIcons): IWizardIcons {
+        const stepIcons = icons;
+        if (customIcons) {
+            Object.keys(customIcons).forEach(icon => {
+                stepIcons[icon] = customIcons[icon];
+            });
+        }
+
+        return stepIcons
+    }
+
     _getDefaultIconForState(state: StepState): string {
         let returnedState: StepState = state;
-        switch (state) {
-            case "number": returnedState = "step"; break;
-            case "done": returnedState = "step-complete"; break;
-            case "edit": returnedState = "step-active"; break;
-            case "error": returnedState = "severity_error"; break;
-            default: returnedState = state; break;
+
+        if (state === "number") {
+            returnedState = this.stepIcon || this.icons.initial;
+            this.iconColor = "gray";
+        } else if (state === "done") {
+            returnedState = this.icons.visited;
+            this.iconColor = "primary-blue";
+        } else if (state === "edit") {
+            returnedState = this.icons.selected;
+            this.iconColor = "black";
+        } else if (state === "error") {
+            returnedState = this.icons.error;
+            this.iconColor = "red";
         }
 
         return returnedState;

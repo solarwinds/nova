@@ -10,6 +10,7 @@ import {LocalizeFn} from "@angular/localize/init";
 import { imagesData as IMAGES_PRESET } from "../constants/images";
 import { imagesPresetToken } from "../constants/images.constants";
 import { unitConversionConstants, unitConversionToken } from "../constants/unit-conversion.constants";
+import { WIZARD_ICONS_PRESET, wizardIconsPresetToken} from "../constants";
 import { NUI_ENV_PROVIDER } from "../environment";
 import { SelectorService } from "../lib/selector/selector.service";
 import { LimitToPipe } from "../pipes/limit-to.pipe";
@@ -26,8 +27,8 @@ import { PositionService } from "../services/position.service";
 import { SearchService } from "../services/search.service";
 import { TransientCacheService } from "../services/transient-cache.service";
 import { UnitConversionService } from "../services/unit-conversion.service";
-import { UtilService } from "../services/util.service";
 
+import { UtilService } from "../services/util.service";
 import { ClickInterceptorDirective } from "./directives/click-interceptor/click-interceptor.directive";
 import { ClipboardDirective } from "./directives/clipboard/clipboard.directive";
 import { DragAndDropService } from "./directives/dragdrop/drag-and-drop.service";
@@ -66,6 +67,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         {provide: "windowObject", useValue: window},
         {provide: unitConversionToken, useValue: unitConversionConstants} as Provider,
         {provide: imagesPresetToken, useValue: IMAGES_PRESET} as Provider,
+        {provide: wizardIconsPresetToken, useValue: WIZARD_ICONS_PRESET} as Provider,
     ],
     declarations: [
         ClickInterceptorDirective,

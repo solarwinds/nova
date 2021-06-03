@@ -16,12 +16,11 @@
 </div>
 
 <div class="nui-step-icon-state-{{state}} nui-wizard-step-icon"
-     [class.nui-wizard-step-header__icon--selected]="selected"
->
+     [class.nui-wizard-step-header__icon--selected]="selected">
     <div class="nui-step-icon-content">
         <span class="nui-icon-container">
             <ng-container>
-                <nui-icon icon="{{_getDefaultIconForState(state)}}"></nui-icon>
+                <nui-icon icon="{{_getDefaultIconForState(state)}}" [iconColor]="iconColor"></nui-icon>
             </ng-container>
         </span>
     </div>

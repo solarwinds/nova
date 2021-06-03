@@ -23,6 +23,14 @@ import { AnimationEvent } from "@angular/animations";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 
+export interface IWizardIcons {
+    "selected": string;
+    "visited": string;
+    "initial": string;
+    "error": string;
+    [key: string]: string;
+}
+
 @Directive({
     selector: "[nuiWizard]",
     providers: [
@@ -46,6 +54,10 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
     @Output() readonly selectionChange = new EventEmitter<StepperSelectionEvent>();
     /** Whether ripples should be disabled for the step headers. */
     @Input() disableRipple: boolean;
+
+    /** Custom icons for different wizard states. */
+    @Input() customIcons: Partial<IWizardIcons>;
+
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
 
