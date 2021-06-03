@@ -35,6 +35,13 @@ export class ComboboxV2TestExampleComponent implements OnInit {
         }));
     public optionsMultiDimensions = this.getOptions(50, false);
     public items = Array.from({ length: 100 }).map((_, i) => $localize `Item ${i}`);
+    public icons: any[] = ["check", "email", "execute"];
+    public customizedItems: IExampleItem[] = Array.from({ length: 100 }).map((_, i) =>
+        ({
+            id: `value-${i}`,
+            name: $localize `Item ${i}`,
+            icon: this.getRandomIcon(),
+        }));
     public selectedItem: IExampleItem;
     public selectedSingleItem: IExampleItem;
     public isComboboxDisabled = false;
@@ -182,5 +189,9 @@ export class ComboboxV2TestExampleComponent implements OnInit {
     public onButtonClick(title: string) {
         title === "Action" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
+    }
+
+    private getRandomIcon() {
+        return this.icons[Math.round(Math.random() * 2)];
     }
 }

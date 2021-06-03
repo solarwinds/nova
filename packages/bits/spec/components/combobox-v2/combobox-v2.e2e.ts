@@ -115,6 +115,21 @@ describe("USERCONTROL Combobox >", () => {
 
                 await expect(await comboboxError.getInputValue()).toEqual("Item 0");
             });
+            
+            it("should focus on the first item in dropdown, when removing item on backspace", async () => {
+                await comboboxError.click();
+                const option = await comboboxError.getOption(5);
+                await option.click();
+                
+                await expect(await comboboxError.getInputValue()).toEqual("Item 5");
+                await expect(await (await comboboxError.getOption(5)).isActive()).toBe(true);
+
+                browser.actions().doubleClick(comboboxError.input);
+                await Helpers.pressKey(Key.BACK_SPACE);
+
+                await expect(await comboboxError.getInputValue()).toEqual("");
+                await expect(await (await comboboxError.getOption(0)).isActive()).toBe(true);
+            });
         });
 
         describe("basic actions", () => {
