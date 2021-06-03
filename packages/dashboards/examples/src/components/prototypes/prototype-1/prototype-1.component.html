@@ -44,4 +44,10 @@
     </button>
 </div>
 
+<div class="mt-4">
+    <nui-form-field caption="Search query for Timeseries widget" i18n-caption>
+        <nui-textbox [value]="searchQuery" (textChange)="searchQuery = $event"></nui-textbox>
+    </nui-form-field>
+</div>
+
 <!--<pre><code>{{dashboard | json}}</code></pre>-->
