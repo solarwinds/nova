@@ -199,7 +199,8 @@ describe("USERCONTROL form-field >", () => {
             await timepicker.icon.getElement().click();
         });
 
-        it("should change model for dateTimePicker", async () => { // review this test after NUI-6067 fixed
+        it("should change model for dateTimePicker", async () => {
+            await Helpers.clickOnEmptySpace();
             await dateTimepicker.getDatePicker().deleteTextManually();
             await dateTimepicker.getDatePicker().acceptText("01 Jan 2020");
             const timeToSelect = TimepickerAtom.createTimeString(2, 0);
