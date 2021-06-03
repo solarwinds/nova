@@ -1,9 +1,10 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ComboboxV2Component, DialogService, NuiDialogRef, OVERLAY_WITH_POPUP_STYLES_CLASS, ToastService } from "@nova-ui/bits";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Observable, of, Subject } from "rxjs";
+import { delay, filter, takeUntil, tap } from "rxjs/operators";
 
 interface IExampleItem {
     id: string;
@@ -12,13 +13,19 @@ interface IExampleItem {
     disabled?: boolean;
 }
 
+const defaultContainerHeight: number = 300;
+
 @Component({
     selector: "nui-combobox-v2-test-example",
     templateUrl: "combobox-v2-test.example.component.html",
     styleUrls: ["combobox-v2-test.example.component.less"],
     host: { class: "combobox-container" },
 })
-export class ComboboxV2TestExampleComponent implements OnInit {
+export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
+    public virtualItems = Array.from({ length: 100000 }).map((_, i) => $localize `Item ${i}`);
+    public filteredItems: Observable<any[]> = of([...this.virtualItems]);
+    public containerHeight: number = defaultContainerHeight;
+
     private activeDialog: NuiDialogRef;
     // Testing only
     public overlayConfig: OverlayConfig = {
@@ -74,7 +81,10 @@ export class ComboboxV2TestExampleComponent implements OnInit {
     public closePopoverSubject: Subject<void> = new Subject<void>();
 
     private destroy$: Subject<any> = new Subject<any>();
+    private scrollOffset: number = 0;
 
+    @ViewChild(CdkVirtualScrollViewport) private viewport: CdkVirtualScrollViewport;
+    @ViewChild("virtual") private virtualCombobox: ComboboxV2Component;
     @ViewChild("comboboxSingle") public comboboxSingle: ComboboxV2Component;
     @ViewChild("comboboxMultiDimensions") public comboboxMultiDimensions: ComboboxV2Component;
 
@@ -153,6 +163,20 @@ export class ComboboxV2TestExampleComponent implements OnInit {
         this.comboboxControlSingle.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => { this.selectedSingleItem = value; });
     }
 
+    ngAfterViewInit() {
+        this.virtualCombobox.valueSelected.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            this.scrollOffset = this.viewport.measureScrollOffset();
+        });
+
+        this.virtualCombobox.valueChanged.pipe(
+            filter(v => v !== undefined),
+            tap(v => this.filteredItems = of(this.filterItems(v as string))),
+            delay(0),
+            tap(this.calculateContainerHeight),
+            takeUntil(this.destroy$)
+        ).subscribe();
+    }
+
     public open(content: TemplateRef<string>) {
         this.activeDialog = this.dialogService.open(content, {size: "sm"});
     }
@@ -182,5 +206,22 @@ export class ComboboxV2TestExampleComponent implements OnInit {
     public onButtonClick(title: string) {
         title === "Action" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
+    }
+
+    private filterItems(value: string): string[] {
+        if (!value) {
+            return this.virtualItems;
+        }
+        const filterValue = value?.toLowerCase();
+
+        return this.virtualItems.filter(option => option.toLowerCase().includes(filterValue));
+    }
+
+    private calculateContainerHeight = (): void => {
+        if (this.virtualCombobox.inputValue && (this.viewport.measureRenderedContentSize() < defaultContainerHeight)) {
+            this.containerHeight = this.viewport.measureRenderedContentSize();
+            return;
+        }
+        this.containerHeight = defaultContainerHeight;
     }
 }
