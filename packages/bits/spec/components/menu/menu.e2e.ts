@@ -1,8 +1,8 @@
-import { browser, by, protractor } from "protractor";
+import { browser, by, Key, protractor } from "protractor";
 
 import { Atom } from "../../atom";
-import { CheckboxAtom } from "../../components/checkbox/checkbox.atom";
 import { Helpers } from "../../helpers";
+import { MenuItemAtom } from "./menu-item.atom";
 import { MenuAtom } from "./menu.atom";
 
 describe("USERCONTROL Menu", () => {
@@ -87,21 +87,34 @@ describe("USERCONTROL Menu", () => {
                 expect(await menu.isMenuOpened()).toBe(false);
             });
 
-            describe("arrow navigation and menu item types >", async () => {
+            // Enable tests in the scope of NUI-6104.
+            xdescribe("arrow navigation and menu item types >", async() => {
+                const moveDownKeyboardInputs = [
+                    Key.PAGE_DOWN,
+                    Key.END,
+                    Key.chord(Key.META, Key.ARROW_DOWN),
+                ];
+
+                const moveUpKeyboardInputs = [
+                    Key.PAGE_UP,
+                    Key.HOME,
+                    Key.chord(Key.META, Key.ARROW_UP),
+                ];
+
                 beforeEach(async () => {
                     await menu.toggleMenu();
                 });
 
                 it("should check and uncheck menu-switch using Enter", async () => {
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                    await Helpers.pressKey(Key.ARROW_DOWN, 2);
                     expect(await menu.getSelectedSwitchesCount()).toEqual(1);
-                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+
+                    await Helpers.pressKey(Key.ENTER);
                     expect(await menu.getSelectedSwitchesCount()).toEqual(0);
-                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+
+                    await Helpers.pressKey(Key.ENTER);
+                    await Helpers.pressKey(Key.ARROW_DOWN);
+                    await Helpers.pressKey(Key.ENTER);
                     expect(await menu.getSelectedSwitchesCount()).toEqual(2);
                     // Return to initial state
                     await browser.actions().sendKeys(protractor.Key.ENTER).perform();
@@ -111,47 +124,69 @@ describe("USERCONTROL Menu", () => {
                 });
 
                 it("should select and close menu when selecting menu action item", async () => {
-                    await menu.toggleMenu();
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    await Helpers.pressKey(Key.ENTER);
                     expect(await menu.isMenuOpened()).toBe(false);
                 });
 
                 it("should check and uncheck checkbox and properly handle disabled menu items", async () => {
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    await Helpers.pressKey(Key.ARROW_DOWN, 4);
+                    await Helpers.pressKey(Key.ENTER);
                     expect(await menu.isMenuOpened()).toBe(true);
                     expect(await menu.getSelectedCheckboxesCount()).toBe(1);
-                    await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                    await Helpers.pressKey(Key.ENTER);
                     expect(await menu.isMenuOpened()).toBe(true);
                     expect(await menu.getSelectedCheckboxesCount()).toBe(0);
                 });
 
                 it("should close menu when clicking TAB from active menu item", async () => {
-                    await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                    await browser.actions().sendKeys(protractor.Key.TAB).perform();
+                    await Helpers.pressKey(Key.ARROW_DOWN);
+                    await Helpers.pressKey(Key.TAB);
                     expect(await menu.isMenuOpened()).toBe(false);
+                });
+
+                it("should jump to the last item on END, PAGE_DOWN, or Command + ARROW_DOWN key chords", async () => {
+                    await assertStartAndEndKeyboardShortcuts(moveDownKeyboardInputs, menu, "last");
+                });
+
+                it("should jump to the last item on HOME, PAGE_UP, or Command + ARROW_UP key chords", async () => {
+                    await assertStartAndEndKeyboardShortcuts(moveUpKeyboardInputs, menu, "first");
                 });
             });
         });
 
         describe("> append-to-body", () => {
             it("should check and uncheck checkbox in menu item", async () => {
-                await appendToBody.toggleMenu();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                const checkbox = Atom.findIn(CheckboxAtom, appendToBody.getAppendToBodyMenu(), 0);
-                expect(await checkbox.isChecked()).toBe(false);
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                expect(await checkbox.isChecked()).toBe(true);
+                await Helpers.pressKey(Key.TAB);
+
+                await Helpers.pressKey(Key.ARROW_DOWN);
+                const checkbox = appendToBody.getAppendToBodyMenu().all(by.tagName("nui-checkbox")).first();
+                expect(await Atom.hasClass(checkbox, "nui-checkbox--checked")).toBe(false);
+
+                await Helpers.pressKey(Key.ENTER);
+                expect(await Atom.hasClass(checkbox, "nui-checkbox--checked")).toBe(true);
+
                 // Return to initial state
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                expect(await checkbox.isChecked()).toBe(false);
-                await appendToBody.toggleMenu();
+                await Helpers.pressKey(Key.ENTER);
+                expect(await Atom.hasClass(checkbox, "nui-checkbox--checked")).toBe(false);
             });
         });
     });
 });
+
+async function assertStartAndEndKeyboardShortcuts(keys: Array<string>, menu: MenuAtom, position: "first" | "last") {
+    for(const key of keys) {
+        if (!(await menu.isMenuOpened())) {
+            await menu.toggleMenu();
+        }
+        const currentItem =
+            position === "first"
+                ? new MenuItemAtom(MenuAtom.getAllMenuItems().first())
+                : new MenuItemAtom(MenuAtom.getAllMenuItems().last());
+        await Helpers.pressKey(position === "first" ? Key.END : Key.HOME);
+        await Helpers.pressKey(key);
+
+        expect(await currentItem.isActiveItem()).toBe(true, `assertion failed for key ${key}`);
+
+        await menu.toggleMenu();
+    }
+}
