@@ -10,7 +10,6 @@ import {
     OnChanges,
     OnDestroy,
     Optional,
-    SkipSelf,
     SimpleChanges,
     ViewEncapsulation,
 } from "@angular/core";
