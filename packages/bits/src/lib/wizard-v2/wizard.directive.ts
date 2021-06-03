@@ -135,21 +135,21 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
         super.ngOnDestroy();
     }
 
-
-    public getStepState(i: number, state: StepState = STEP_STATE.NUMBER): StepState{
+    public getStepState(i: number, state: StepState = STEP_STATE.NUMBER): StepState {
         const steps = this.steps.toArray();
         const step = steps[i];
         const isSelected = steps.indexOf(this.selected) === i;
 
         if (step._showError && step.hasError && !isSelected) {
             return STEP_STATE.ERROR;
-        } else if(isSelected) {
+        } else if (isSelected) {
             return STEP_STATE.EDIT
-        } else if(steps[i].completed) {
+        } else if (steps[i].completed) {
             return STEP_STATE.DONE
         } else {
             return state;
         }
+    }
 
     // Restores the completed wizard to the last step
     private restore(): void {
