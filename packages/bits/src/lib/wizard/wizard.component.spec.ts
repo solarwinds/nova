@@ -246,5 +246,46 @@ describe("components >", () => {
                 expect(spy).toHaveBeenCalled();
             });
         })
+
+        describe("reset resetStep >", () => {
+            it("should reset step statuses", () => {
+                const firstStep = component.steps.get(0) as WizardStepComponent;
+                const stepToReset = component.steps.get(1) as WizardStepComponent;
+
+                component.selectStep(stepToReset);
+                component.selectStep(firstStep);
+                component.resetStep(stepToReset);
+
+                expect(stepToReset.visited).toBeFalse();
+                expect(stepToReset.complete).toBeFalse();
+                expect(stepToReset.icon).toEqual("step");
+            });
+
+            it("should reset 'complete' status for previous step", () => {
+                const firstStep = component.steps.get(0) as WizardStepComponent;
+                const stepToReset = component.steps.get(1) as WizardStepComponent;
+
+                component.selectStep(stepToReset);
+                component.selectStep(firstStep);
+                component.resetStep(stepToReset);
+
+                expect(firstStep.complete).toBeFalse();
+            });
+
+            it("should reset step statuses for next step", () => {
+                const firstStep = component.steps.get(0) as WizardStepComponent;
+                const stepToReset = component.steps.get(1) as WizardStepComponent;
+                const nextStep = component.steps.get(2) as WizardStepComponent;
+
+                component.selectStep(stepToReset);
+                component.selectStep(firstStep);
+                component.selectStep(nextStep);
+                component.resetStep(stepToReset);
+
+                expect(nextStep.visited).toBeFalse();
+                expect(nextStep.complete).toBeFalse();
+                expect(nextStep.icon).toEqual("step");
+            });
+        })
     });
 });

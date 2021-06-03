@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { ConfiguratorHeadingService } from "@nova-ui/dashboards";
 
 enum CustomizationModuleRoute {
     ConfiguratorSection = "configurator-section",
@@ -35,5 +36,6 @@ const routes: Routes = [
     imports: [
         RouterModule.forChild(routes),
     ],
+    providers: [ConfiguratorHeadingService],
 })
 export class CustomizationModule { }

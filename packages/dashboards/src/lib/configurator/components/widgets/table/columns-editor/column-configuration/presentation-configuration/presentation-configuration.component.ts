@@ -22,6 +22,7 @@ import { takeUntil, tap } from "rxjs/operators";
 import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
 import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
 import { FORMATTERS_REGISTRY, IHasChangeDetector } from "../../../../../../../types";
+import { ConfiguratorHeadingService } from "../../../../../../services/configurator-heading.service";
 
 @Component({
     selector: "nui-table-column-presentation-configuration",
@@ -79,6 +80,7 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     constructor(
         private formBuilder: FormBuilder,
         public changeDetector: ChangeDetectorRef,
+        public configuratorHeading: ConfiguratorHeadingService,
         @Optional() @Inject(FORMATTERS_REGISTRY) private formattersRegistryCommon: FormatterRegistryService,
         // used as a fallback, remove in vNext
         /**

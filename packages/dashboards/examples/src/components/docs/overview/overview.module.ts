@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { NuiBusyModule, NuiButtonModule, NuiDocsModule, NuiIconModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
-import { IFormatterDefinition, LinkFormatterComponent, NuiDashboardsModule, WellKnownPathKey, WidgetTypesService } from "@nova-ui/dashboards";
+import { ConfiguratorHeadingService, IFormatterDefinition, LinkFormatterComponent, NuiDashboardsModule, WellKnownPathKey, WidgetTypesService } from "@nova-ui/dashboards";
 
 import { HeroDashboardComponent } from "./hero/dashboard/hero-dashboard.component";
 import { HarryPotterAverageRatingDataSource, HarryPotterRatingsCountDataSource } from "./hero/data/kpi-datasources";
@@ -50,6 +50,7 @@ const routes = [
         OverviewDocsComponent,
         HeroDashboardComponent,
     ],
+    providers: [ConfiguratorHeadingService],
 })
 export class OverviewModule {
     constructor(private widgetTypesService: WidgetTypesService) {

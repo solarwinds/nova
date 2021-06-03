@@ -1,12 +1,15 @@
 import {
     AfterContentInit,
+    AfterViewInit,
     ContentChildren,
     Directive,
     EventEmitter,
     Input,
+    OnChanges,
     OnDestroy,
     Output,
     QueryList,
+    SimpleChanges,
     ViewChildren,
 } from "@angular/core";
 import {
@@ -22,6 +25,7 @@ import { Subject } from "rxjs";
 import { AnimationEvent } from "@angular/animations";
 import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
+import { IWizardState } from "./types";
 
 export interface IWizardIcons {
     "selected": string;
@@ -31,13 +35,15 @@ export interface IWizardIcons {
     [key: string]: string;
 }
 
+
 @Directive({
     selector: "[nuiWizard]",
     providers: [
-        {provide: CdkStepper, useExisting: WizardDirective},
+        { provide: CdkStepper, useExisting: WizardDirective },
     ],
 })
-export class WizardDirective extends CdkStepper implements AfterContentInit, OnDestroy {
+
+export class WizardDirective extends CdkStepper implements OnChanges, AfterContentInit, AfterViewInit, OnDestroy {
     static ngAcceptInputTypeEditable: BooleanInput = undefined;
     static ngAcceptInputTypeOptional: BooleanInput = undefined;
     static ngAcceptInputTypeCompleted: BooleanInput = undefined;
@@ -46,8 +52,6 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
     /** Override CdkStepper 'steps' property to use WizardStepV2Component instead of CdkStep */
     readonly steps: QueryList<WizardStepV2Component> = new QueryList<WizardStepV2Component>();
 
-    /** The list of step headers of the steps in the stepper. */
-    @ViewChildren(WizardStepHeaderComponent) _stepHeader: QueryList<WizardStepHeaderComponent>;
     /** Event emitted when the current step is done transitioning in. */
     @Output() readonly animationDone: EventEmitter<void> = new EventEmitter<void>();
     /** Event emitted when the selected step has changed. */
@@ -57,6 +61,14 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
 
     /** Custom icons for different wizard states. */
     @Input() customIcons: Partial<IWizardIcons>;
+
+    /** The state of the wizard */
+    @Input() state: IWizardState;
+    /** Emits the completed wizard state on component destroy */
+    @Output() readonly finished: EventEmitter<IWizardState> = new EventEmitter<IWizardState>();
+
+    /** The list of step headers of the steps in the stepper. */
+    @ViewChildren(WizardStepHeaderComponent) _stepHeader: QueryList<WizardStepHeaderComponent>;
 
     /** Stream of animation `done` events when the body expands/collapses. */
     _animationDone = new Subject<AnimationEvent>();
@@ -74,15 +86,27 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
         this.selectedIndex = this.steps ? this.steps.toArray().indexOf(step) : -1;
     }
 
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes.state && changes.state.currentValue) {
+            this.state = changes.state.currentValue;
+        }
+    }
+
     public ngAfterContentInit(): void {
         this._steps.changes
-            .pipe(startWith(this._steps), takeUntil(this._destroyed))
+            .pipe(
+                startWith(this._steps),
+                takeUntil(this._destroyed)
+            )
             .subscribe((steps: QueryList<WizardStepV2Component>) => {
                 this.steps.reset(steps.filter(step => step._stepper === this));
                 this.steps.notifyOnChanges();
             });
-        this.steps.changes.pipe(takeUntil(this._destroyed))
+
+        this.steps.changes
+            .pipe(takeUntil(this._destroyed))
             .subscribe(() => this._stateChanged());
+
         this._animationDone.pipe(
             // This needs a `distinctUntilChanged` in order to avoid emitting the same event twice due
             // to a bug in animations where the `.done` callback gets invoked twice on some browsers.
@@ -96,9 +120,21 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
         });
     }
 
+    public ngAfterViewInit(): void {
+        super.ngAfterViewInit();
+
+        if (this.state?.finished) {
+            this.restore();
+        }
+    }
+
     public ngOnDestroy(): void {
+        this.finished.emit({
+            finished: this.allStepsCompleted,
+        });
         super.ngOnDestroy();
     }
+
 
     public getStepState(i: number, state: StepState = STEP_STATE.NUMBER): StepState{
         const steps = this.steps.toArray();
@@ -114,5 +150,23 @@ export class WizardDirective extends CdkStepper implements AfterContentInit, OnD
         } else {
             return state;
         }
+
+    // Restores the completed wizard to the last step
+    private restore(): void {
+        this.steps.toArray().forEach(step => {
+            step.completed = true;
+
+            if (step === this.steps.last) {
+                step.select();
+            }
+        })
+
+        this["_changeDetectorRef"].detectChanges();
+    }
+
+    private get allStepsCompleted(): boolean {
+        const completed: boolean = this.steps.toArray().reduce((acc: boolean, step: WizardStepV2Component) => acc && step.completed, true);
+
+        return completed;
     }
 }

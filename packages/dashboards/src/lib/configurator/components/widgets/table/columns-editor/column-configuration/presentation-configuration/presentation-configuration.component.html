@@ -15,6 +15,7 @@
                 <nui-form-field caption="Format" i18n-caption
                                 [control]="formatterForm.controls['componentType']">
                     <nui-select-v2 placeholder="Select Format" i18n-placeholder
+                                [popupViewportMargin]="configuratorHeading.height$ | async"
                                 formControlName="componentType">
                         <nui-select-v2-option *ngFor="let formatter of formatters"
                                             [displayValueContext]="formatter.label"

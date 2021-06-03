@@ -7,3 +7,4 @@ export * from "./expander-initially-expanded/expander-initially-expanded.example
 export * from "./expander-open-change/expander-open-change.example.component";
 export * from "./expander-without-border/expander-without-border.example.component";
 export * from "./expander-visual-test/expander-visual-test.component";
+export * from "./expander-test/expander-test.component";

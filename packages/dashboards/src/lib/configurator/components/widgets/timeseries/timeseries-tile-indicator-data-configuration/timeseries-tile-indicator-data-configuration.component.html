@@ -14,6 +14,7 @@
             <nui-form-field caption="Series data" i18n-caption [control]="form.get('id')">
                 <nui-select-v2 placeholder="Series data" i18n-placeholder
                                 [value]="selectedSeries"
+                                [popupViewportMargin]="configuratorHeading.height$ | async"
                                 (valueSelected)="onSelect($event)">
                     <nui-select-v2-option *ngFor="let series of availableSeries | nuiAddData:selectedSeries" [value]="series">
                         {{series.description}}

@@ -9,3 +9,5 @@ export * from "./wizard-dynamic/wizard-dynamic.example.component";
 export * from "./wizard-remove-step/wizard-remove-step-example.component";
 export * from "./wizard-async-validation-form/wizard-async-form-validation.example.component";
 export * from "./wizard-with-custom-icons/wizard-with-custom-icons-example.component";
+export * from "./wizard-restore-state/wizard-restore-state.example.component";
+

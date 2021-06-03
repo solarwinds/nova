@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { NuiDocsModule } from "@nova-ui/bits";
-import { NuiDashboardsModule } from "@nova-ui/dashboards";
+import { ConfiguratorHeadingService, NuiDashboardsModule } from "@nova-ui/dashboards";
 
 const routes: Routes = [
     {
@@ -66,6 +66,7 @@ const routes: Routes = [
         NuiDocsModule,
         NuiDashboardsModule,
     ],
+    providers: [ConfiguratorHeadingService],
 })
 export class WidgetTypesModule {
 }
