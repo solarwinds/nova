@@ -12,6 +12,8 @@ import {
     forwardRef,
     Inject,
     Input,
+    OnDestroy,
+    OnInit,
     Optional,
     SkipSelf,
     TemplateRef,
@@ -22,6 +24,8 @@ import {FormControl, FormGroupDirective, NgForm} from "@angular/forms";
 import {ErrorStateMatcher} from "../error-state-matcher.provider";
 import {WizardStepFooterDirective} from "../wizard-step-footer.directive";
 import {WizardStepLabelDirective} from "../wizard-step-label.directive";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
     selector: "nui-wizard-step-v2",
@@ -42,7 +46,7 @@ import {WizardStepLabelDirective} from "../wizard-step-label.directive";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardStepV2Component extends CdkStep implements ErrorStateMatcher {
+export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy, ErrorStateMatcher {
     @Input() template?: TemplateRef<any>;
 
     /** Content for step label given by `<ng-template wizardStepLabel>`. */
@@ -51,6 +55,8 @@ export class WizardStepV2Component extends CdkStep implements ErrorStateMatcher 
     /** Content for footer given by `<ng-template wizardStepFooter>`. */
     @ContentChild(WizardStepFooterDirective) stepFooter: WizardStepFooterDirective;
 
+    private destroy$ = new Subject();
+
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
         @Inject(forwardRef(() => CdkStepper)) stepper: any,
@@ -58,6 +64,15 @@ export class WizardStepV2Component extends CdkStep implements ErrorStateMatcher 
         @Optional() @Inject(STEPPER_GLOBAL_OPTIONS) stepperOptions?: StepperOptions
     ) {
         super(stepper, stepperOptions);
+    }
+
+    ngOnInit(): void {
+        this.onControlStatusChanges();
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     /** Custom error state matcher that additionally checks for validity of interacted form. */
@@ -70,5 +85,19 @@ export class WizardStepV2Component extends CdkStep implements ErrorStateMatcher 
         const customErrorState = !!(control?.invalid && this.interacted);
 
         return originalErrorState || customErrorState;
+    }
+
+    private onControlStatusChanges(): void {
+        if (this.stepControl) {
+            this.stepControl.statusChanges.pipe(takeUntil(this.destroy$)).subscribe((status)  => {
+                if (status === "INVALID") {
+                    this.completed = false;
+                }
+
+                if (status === "VALID") {
+                    this.completed = true;
+                }
+            });
+        }
     }
 }

@@ -10,3 +10,4 @@ export * from "./wizard-horizontal/wizard-horizontal.component";
 export * from "./wizard-step/wizard-step.component";
 export * from "./wizard-step-header/wizard-step-header.component";
 export * from "./wizard-vertical/wizard-vertical.component";
+export * from "./types";
