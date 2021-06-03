@@ -9,6 +9,8 @@ import {
     Input,
     OnChanges,
     OnDestroy,
+    Optional,
+    SkipSelf,
     SimpleChanges,
     ViewEncapsulation,
 } from "@angular/core";
@@ -33,14 +35,19 @@ import {wizardIconsPresetToken} from "../../../constants";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardStepHeaderComponent extends CdkStepHeader implements AfterViewInit, OnDestroy, OnChanges {
-    public icons: IWizardIcons = {} as IWizardIcons;
+    public icons: IWizardIcons = {
+        initial: "step",
+        visited: "step-complete",
+        selected: "step-active",
+        error: "severity_error",
+    };
     public iconColor: string;
 
     /** State of the given step. */
     @Input() state: StepState;
 
     /** Set custom initial icon for the given step. */
-    @Input() stepIcon: StepState;
+    @Input() stepIcon: string;
 
     /** Set custom icons for the given step. */
     @Input() customIcons: Partial<IWizardIcons>;
@@ -74,7 +81,7 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     constructor(
         private _focusMonitor: FocusMonitor,
         _elementRef: ElementRef<HTMLElement>,
-        @Inject(wizardIconsPresetToken) private injectedIcons: IWizardIcons
+        @SkipSelf() @Optional() @Inject(wizardIconsPresetToken) private injectedIcons: IWizardIcons
     ) {
         super(_elementRef);
         if (injectedIcons) {

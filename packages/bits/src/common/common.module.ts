@@ -10,7 +10,6 @@ import {LocalizeFn} from "@angular/localize/init";
 import { imagesData as IMAGES_PRESET } from "../constants/images";
 import { imagesPresetToken } from "../constants/images.constants";
 import { unitConversionConstants, unitConversionToken } from "../constants/unit-conversion.constants";
-import { WIZARD_ICONS_PRESET, wizardIconsPresetToken} from "../constants";
 import { NUI_ENV_PROVIDER } from "../environment";
 import { SelectorService } from "../lib/selector/selector.service";
 import { LimitToPipe } from "../pipes/limit-to.pipe";
@@ -67,7 +66,6 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         {provide: "windowObject", useValue: window},
         {provide: unitConversionToken, useValue: unitConversionConstants} as Provider,
         {provide: imagesPresetToken, useValue: IMAGES_PRESET} as Provider,
-        {provide: wizardIconsPresetToken, useValue: WIZARD_ICONS_PRESET} as Provider,
     ],
     declarations: [
         ClickInterceptorDirective,
