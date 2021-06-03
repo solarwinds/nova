@@ -17,7 +17,7 @@ import {
 
 import {WizardStepLabelDirective} from "../wizard-step-label.directive";
 import {IWizardIcons} from "../wizard.directive";
-import {wizardIconsPresetToken} from "../../../constants";
+import {WIZARD_ICONS_PRESET, WIZARD_ICONS_PRESET_TOKEN} from "../../../constants";
 
 @Component({
     selector: "wizard-step-header",
@@ -35,12 +35,7 @@ import {wizardIconsPresetToken} from "../../../constants";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardStepHeaderComponent extends CdkStepHeader implements AfterViewInit, OnDestroy, OnChanges {
-    public icons: IWizardIcons = {
-        initial: "step",
-        visited: "step-complete",
-        selected: "step-active",
-        error: "severity_error",
-    };
+    public icons: IWizardIcons = {...WIZARD_ICONS_PRESET};
     public iconColor: string;
 
     /** State of the given step. */
@@ -81,11 +76,11 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     constructor(
         private _focusMonitor: FocusMonitor,
         _elementRef: ElementRef<HTMLElement>,
-        @SkipSelf() @Optional() @Inject(wizardIconsPresetToken) private injectedIcons: IWizardIcons
+        @Optional() @Inject(WIZARD_ICONS_PRESET_TOKEN) private injectedIcons: IWizardIcons
     ) {
         super(_elementRef);
-        if (injectedIcons) {
-            this.icons = this.getIconsForStates(this.icons, injectedIcons);
+        if (this.injectedIcons) {
+            this.icons = this.getIconsForStates(this.icons, this.injectedIcons);
         }
 
     }
