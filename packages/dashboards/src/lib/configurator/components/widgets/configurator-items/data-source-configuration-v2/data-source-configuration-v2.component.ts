@@ -21,6 +21,7 @@ import { take } from "rxjs/operators";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { IHasChangeDetector, IHasForm, IProperties, IProviderConfiguration, IProviderConfigurationForDisplay, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
+import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 import { DataSourceErrorHandlingComponent } from "../data-source-error-handling/data-source-error-handling.component";
 
 /**
@@ -54,6 +55,7 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
     public dataFieldIds = new Subject<any>();
 
     constructor(public changeDetector: ChangeDetectorRef,
+                public configuratorHeading: ConfiguratorHeadingService,
                 protected formBuilder: FormBuilder,
                 protected providerRegistryService: ProviderRegistryService,
                 @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,

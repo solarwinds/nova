@@ -44,6 +44,15 @@ export class OptionKeyControlService<T extends IOption> {
         this.keyboardEventsManager.skipPredicate(predicate);
     }
 
+    public scrollToActiveItem(options: ScrollIntoViewOptions): void {
+        if (this.keyboardEventsManager.activeItem) {
+            // setTimeout is necessary because scrolling to the selected item should occur only when overlay rendered
+            setTimeout(() => {
+                this.keyboardEventsManager.activeItem?.scrollIntoView(options);
+            });
+        }
+    }
+
     private hasActiveItem(): boolean {
         if (isNil(this.keyboardEventsManager.activeItemIndex)) {
             throw new Error("ActiveItemIndex is not defined");
@@ -70,7 +79,7 @@ export class OptionKeyControlService<T extends IOption> {
                 break;
         }
 
-        this.scrollToOption({ block: "nearest" });
+        this.scrollToActiveItem({ block: "nearest" });
 
         // prevent closing on enter
         if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
@@ -101,22 +110,13 @@ export class OptionKeyControlService<T extends IOption> {
 
         if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
             this.popup.toggle();
-            this.scrollToOption({ block: "center" });
+            this.scrollToActiveItem({ block: "center" });
         }
     }
 
     private shouldBePrevented(event: KeyboardEvent) {
         return event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP
             || event.code === KEYBOARD_CODE.ENTER;
-    }
-
-    private scrollToOption(options: ScrollIntoViewOptions): void {
-        if (this.keyboardEventsManager.activeItem) {
-            // setTimeout is necessary because scrolling to the selected item should occur only when overlay rendered
-            setTimeout(() => {
-                this.keyboardEventsManager.activeItem?.scrollIntoView(options);
-            });
-        }
     }
 
     private announceNavigatedOption(): void {

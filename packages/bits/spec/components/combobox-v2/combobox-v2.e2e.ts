@@ -1,4 +1,4 @@
-import { browser, by, element, ElementFinder, Key } from "protractor";
+import { browser, by, element, ElementFinder, ExpectedConditions, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
@@ -10,6 +10,7 @@ describe("USERCONTROL Combobox >", () => {
     let comboboxError: ComboboxV2Atom;
     let comboboxMulti: ComboboxV2Atom;
     let comboboxCustomControl: ComboboxV2Atom;
+    let virtualCombobox: ComboboxV2Atom;
     let showButton: ElementFinder;
     let hideButton: ElementFinder;
     let toggleButton: ElementFinder;
@@ -22,6 +23,7 @@ describe("USERCONTROL Combobox >", () => {
         comboboxError = Atom.find(ComboboxV2Atom, "error");
         comboboxMulti = Atom.find(ComboboxV2Atom, "multi");
         comboboxCustomControl = Atom.find(ComboboxV2Atom, "custom-control");
+        virtualCombobox = Atom.find(ComboboxV2Atom, "virtual-combobox");
         showButton = element(by.id("show"));
         hideButton = element(by.id("hide"));
         toggleButton = element(by.id("toggle"));
@@ -310,5 +312,18 @@ describe("USERCONTROL Combobox >", () => {
                 await expect(await (await comboboxMulti.getOption(1)).isActive()).toBe(true);
             });
         });
+
+        describe("> virtual scroll", () => {
+
+            it("should always scroll to the first item in the list on filtering", async () => {
+                await virtualCombobox.type("Item 2");
+                await browser.wait(async () =>
+                    await (await virtualCombobox.getFirstOption()).getText() === "Item 2",
+                                   2000,
+                                   // eslint-disable-next-line max-len
+                                   `Expected first item to be visible during filtering, but it did not appear within the virtual scroll viewport within the reasonable time interval!`);
+            });
+        });
+            
     });
 });

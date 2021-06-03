@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { TableAtom } from "../public_api";
 
 describe("a11y: table", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "duplicate-id", // we don't care for the testing pages
         "aria-allowed-role", // NUI-6015
     ];

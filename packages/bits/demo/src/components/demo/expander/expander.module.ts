@@ -20,6 +20,7 @@ import {
     ExpanderTextAndIconExampleComponent,
     ExpanderVisualTestComponent,
     ExpanderWithoutBorderExampleComponent,
+    ExpanderTestComponent,
 } from "./index";
 
 const routes = [
@@ -36,6 +37,15 @@ const routes = [
     {
         path: "expander-visual-test",
         component: ExpanderVisualTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "expander-test",
+        component: ExpanderTestComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -63,6 +73,7 @@ const routes = [
         ExpanderOpenChangeExampleComponent,
         ExpanderWithoutBorderExampleComponent,
         ExpanderVisualTestComponent,
+        ExpanderTestComponent,
     ],
     providers: [
         {

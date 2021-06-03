@@ -16,7 +16,7 @@ export class FormFieldTestComponent implements OnInit {
 
     public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dynamicForm = this.formBuilder.group({
             textbox: this.formBuilder.control("", Validators.required),
             textboxNumber: this.formBuilder.control("", Validators.required),
@@ -33,10 +33,10 @@ export class FormFieldTestComponent implements OnInit {
             ]),
         });
         this.dynamicForm.disable();
-        this.dynamicForm.valueChanges.subscribe(value => this.dateTimePickerModel =  value["dateTimePicker"].format("LLLL"));
+        this.dynamicForm.valueChanges.subscribe(value => this.dateTimePickerModel =  moment(value["dateTimePicker"]).format("LLLL"));
     }
 
-    public toggleDisabledState() {
+    public toggleDisabledState(): void {
         if (this.dynamicForm.disabled) {
             this.dynamicForm.enable();
         } else {
