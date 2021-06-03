@@ -174,6 +174,28 @@
     <button id="hide" class="ml-3" (click)="hideList($event)">Hide</button>
     <button id="toggle" class="ml-3" (click)="toggleList($event)">Toggle</button>
 </div>
+<div class="row m-auto">
+    <h4 class="w-100">Virtual scroll</h4>
+    <nui-combobox-v2 placeholder="Select Item" i18n-placeholder
+                    #virtual
+                    id="virtual-combobox"
+                    [formControl]="comboboxControl"
+                    [overlayConfig]="overlayConfig"
+                    [isTypeaheadEnabled]="false">
+
+        <cdk-virtual-scroll-viewport itemSize="30"
+                                    [minBufferPx]="300"
+                                    [maxBufferPx]="600"
+                                    [style.height.px]="containerHeight">
+
+            <div *cdkVirtualFor="let item of filteredItems | async; index as i">
+                <nui-select-v2-option [value]="item" class="d-flex align-items-center">
+                    <span [nuiComboboxV2OptionHighlight]="item"></span>
+                </nui-select-v2-option>
+            </div>
+        </cdk-virtual-scroll-viewport>
+    </nui-combobox-v2>
+</div>
 
 <div class="row mb-3" style="position: fixed; bottom: 0" tabindex="-1">
     <h4 class="w-100">Multiselect with manual dropdown control</h4>
