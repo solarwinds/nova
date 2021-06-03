@@ -37,7 +37,7 @@ describe("WidgetHeaderComponent", () => {
                 {
                     provide: HEADER_LINK_PROVIDER,
                     useClass: TestHeaderLinkProviderService,
-                }
+                },
             ],
         })
             .compileComponents();
