@@ -26,8 +26,8 @@ import { PositionService } from "../services/position.service";
 import { SearchService } from "../services/search.service";
 import { TransientCacheService } from "../services/transient-cache.service";
 import { UnitConversionService } from "../services/unit-conversion.service";
-
 import { UtilService } from "../services/util.service";
+
 import { ClickInterceptorDirective } from "./directives/click-interceptor/click-interceptor.directive";
 import { ClipboardDirective } from "./directives/clipboard/clipboard.directive";
 import { DragAndDropService } from "./directives/dragdrop/drag-and-drop.service";
