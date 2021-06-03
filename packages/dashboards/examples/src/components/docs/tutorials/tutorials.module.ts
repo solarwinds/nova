@@ -9,6 +9,7 @@ enum TutorialsModuleRoute {
     WidgetCreation = "widget-creation",
     Customization = "customization",
     WidgetErrorHandling = "widget-error-handling",
+    DynamicHeaderLinks = "dynamic-header-links",
  }
 
 const routes: Routes = [
@@ -43,6 +44,11 @@ const routes: Routes = [
         path: TutorialsModuleRoute.WidgetErrorHandling,
         loadChildren: async () => import("components/docs/tutorials/widget-error-handling/widget-error-handling.module")
             .then(m => m.WidgetErrorHandlingModule),
+    },
+    {
+        path: TutorialsModuleRoute.DynamicHeaderLinks,
+        loadChildren: async () => import("components/docs/tutorials/dynamic-header-links/dynamic-header-links-docs.module")
+            .then(m => m.DynamicHeaderLinksDocsModule),
     },
 ];
 
