@@ -7,6 +7,7 @@ import { IProportionalWidgetChartTypeConfiguration, ProportionalWidgetChartTypes
 import { IFormatter, IFormatterDefinition } from "../../../../../components/types";
 import { ProportionalLegendFormattersRegistryService } from "../../../../../services/table-formatter-registry.service";
 import { IHasChangeDetector, IHasForm, ILegendPlacementOption } from "../../../../../types";
+import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
 @Component({
     selector: "nui-proportional-chart-options-editor-v2-component",
@@ -41,6 +42,7 @@ export class ProportionalChartOptionsEditorV2Component implements OnInit, IHasCh
 
     constructor(
         public changeDetector: ChangeDetectorRef,
+        public configuratorHeading: ConfiguratorHeadingService,
         private formBuilder: FormBuilder,
         legendFormattersRegistry: ProportionalLegendFormattersRegistryService
     ) {

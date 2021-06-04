@@ -17,6 +17,7 @@ describe(`Visual tests: ${name}`, () => {
     let selectedRowsTable: TableAtom;
     let selector: SelectorAtom;
     let resizeTable: TableAtom;
+    let selectPinnedHeaderTable: TableAtom;
     let expanders: {[key: string]: ElementFinder};
 
     beforeAll(async () => {
@@ -26,6 +27,7 @@ describe(`Visual tests: ${name}`, () => {
         customActionTable = Atom.find(TableAtom, "table-custom-action");
         selectedRowsTable = Atom.find(TableAtom, "table-selected-row");
         resizeTable = Atom.find(TableAtom, "table-resizing");
+        selectPinnedHeaderTable = Atom.find(TableAtom, "table-select-pinned-header");
         actionsMenu = customActionTable.getElement().all(by.className("nui-menu")).get(0);
 
         expanders = {
@@ -38,6 +40,7 @@ describe(`Visual tests: ${name}`, () => {
             customActions: element(by.id("nui-visual-table-custom-action-summary")),
             columnResize: element(by.id("nui-visual-table-column-size-summary")),
             rowSelection: element(by.id("nui-visual-table-row-selection-summary")),
+            selectPinnedHeader: element(by.id("nui-visual-table-select-pinned-header-summary")),
         };
 
         const firstHeaderCell = selectedRowsTable.getCell(0, 0);
@@ -79,6 +82,12 @@ describe(`Visual tests: ${name}`, () => {
         await customActionTable.hover(customActionTable.getCell(2, 4));
         await camera.say.cheese("Edit columns");
         await expanders.customActions.click();
+
+        await expanders.selectPinnedHeader.click();
+        await selectPinnedHeaderTable.getCell(1, 0).click();
+        await browser.executeScript("document.getElementById('table-select-pinned-header').getElementsByClassName('nui-table__container')[0].scrollTop = '20'");
+        await camera.say.cheese("Active checkbox under pinned header");
+        await expanders.selectPinnedHeader.click();
 
         await camera.turn.off();
     }, 300000);

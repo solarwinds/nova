@@ -12,6 +12,7 @@ import { NuiPizzagnaModule } from "../../../pizzagna/pizzagna.module";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { IWidget, PizzagnaLayer } from "../../../types";
 import { PreviewService } from "../../services/preview.service";
+import { ConfiguratorHeadingService } from "../../services/public-api";
 import { ConfiguratorComponent } from "../configurator/configurator.component";
 import { ConfiguratorHeadingComponent } from "../heading/configurator-heading.component";
 import { DashwizStepComponent } from "../wizard/dashwiz-step/dashwiz-step.component";
@@ -66,6 +67,7 @@ describe("WidgetEditorComponent", () => {
             ],
             providers: [
                 ChangeDetectorRef,
+                ConfiguratorHeadingService,
                 ProviderRegistryService,
                 { provide: PreviewService, useValue: previewService },
                 { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },

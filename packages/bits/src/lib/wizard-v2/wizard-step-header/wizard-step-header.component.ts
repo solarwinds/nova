@@ -4,7 +4,7 @@ import {
     AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation,
 } from "@angular/core";
 
-import {WizardStepLabelDirective} from "./wizard-step-label.directive";
+import {WizardStepLabelDirective} from "../wizard-step-label.directive";
 
 @Component({
     selector: "wizard-step-header",
@@ -56,16 +56,16 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
         super(_elementRef);
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this._focusMonitor.monitor(this._elementRef, true);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this._focusMonitor.stopMonitoring(this._elementRef);
     }
 
     /** Focuses the step header. */
-    focus() {
+    focus(): void {
         this._focusMonitor.focusVia(this._elementRef, "program");
     }
 

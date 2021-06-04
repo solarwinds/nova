@@ -4,6 +4,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { Camera } from "../../virtual-camera/Camera";
 import { ExpanderAtom } from "../expander/expander.atom";
+import { MenuAtom } from "../menu/menu.atom";
 
 const name: string = "Expander";
 
@@ -15,6 +16,9 @@ describe(`Visual tests: ${name}`, () => {
     let stakedExpander: ExpanderAtom;
     let nestedParentExpander: ExpanderAtom;
     let nestedChildExpander: ExpanderAtom;
+    let expanderWithText: ExpanderAtom;
+    let expanderWithTextAndIcon: ExpanderAtom;
+    let menuOfCustomHeader: MenuAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("expander/expander-visual-test");
@@ -24,7 +28,10 @@ describe(`Visual tests: ${name}`, () => {
         stakedExpander = Atom.find(ExpanderAtom, "nui-visual-test-staked-expander-1");
         nestedParentExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-nested-expander");
         nestedChildExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-nested-expander-child");
-        
+        expanderWithText = Atom.find(ExpanderAtom, "nui-visual-test-expander-header-text");
+        expanderWithTextAndIcon = Atom.find(ExpanderAtom, "nui-visual-test-expander-text-and-icon");
+        menuOfCustomHeader = Atom.find(MenuAtom, "nui-demo-expander-header-menu");
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -39,12 +46,17 @@ describe(`Visual tests: ${name}`, () => {
 
         await basicExpander.toggle();
         await lineLessExpander.toggle();
-        await lineLessExpander.toggle();
+        await expanderWithText.toggle();
+        await expanderWithTextAndIcon.toggle();
         await stakedExpander.toggle();
         await nestedChildExpander.toggle();
         await nestedParentExpander.toggle();
         await customHeaderExpander.hover();
         await camera.say.cheese(`Some expanders are in expanded state`);
+
+        await customHeaderExpander.toggle();
+        await menuOfCustomHeader.toggleMenu();
+        await camera.say.cheese(`Expander with custom header and header menu in expanded state`);
 
         await nestedParentExpander.toggle();
         await Helpers.switchDarkTheme("on");

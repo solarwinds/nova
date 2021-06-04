@@ -16,6 +16,7 @@ import { GridsterItem } from "angular-gridster2";
 import {
     TestTimeseriesDataSource,
     TestTimeseriesDataSource2,
+    TestTimeseriesEventsDataSource,
     TestTimeseriesStatusDataSource,
     TestTimeseriesStatusIntervalDataSource,
 } from "../../data/timeseries-data-sources";
@@ -100,13 +101,13 @@ export const widgetConfigs: IWidget[] = [
                 [DEFAULT_PIZZAGNA_ROOT]: {
                     "providers": {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestTimeseriesDataSource2.providerId,
+                            "providerId": TestTimeseriesEventsDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
                 "header": {
                     "properties": {
-                        "title": "Line chart",
+                        "title": "Line Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -117,17 +118,17 @@ export const widgetConfigs: IWidget[] = [
                                 "series": [
                                     {
                                         id: "series-a",
-                                        label: "Average CPU Load",
+                                        label: "Events",
                                         selectedSeriesId: "series-a",
                                     },
                                     {
                                         id: "series-b",
-                                        label: "Average CPU Load",
+                                        label: "Events",
                                         selectedSeriesId: "series-b",
                                     },
                                     {
                                         id: "series-c",
-                                        label: "Average CPU Load",
+                                        label: "Events",
                                         selectedSeriesId: "series-c",
                                     },
                                 ],
@@ -139,7 +140,6 @@ export const widgetConfigs: IWidget[] = [
                             "interaction": "series",
                             "legendPlacement": LegendPlacement.Bottom,
                             "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
                             preset: TimeseriesChartPreset.Line,
                         } as ITimeseriesWidgetConfig,
                     },
@@ -170,7 +170,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Line chart",
+                        "title": "Line Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -241,7 +241,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Area chart",
+                        "title": "Area Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -309,7 +309,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Area chart",
+                        "title": "Area Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -385,7 +385,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Stacked percentage area",
+                        "title": "Stacked Percentage Area Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -453,7 +453,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Stacked percentage area",
+                        "title": "Stacked Percentage Area Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -529,7 +529,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Bar chart",
+                        "title": "Bar Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -592,7 +592,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Bar chart",
+                        "title": "Bar Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -663,7 +663,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Status chart",
+                        "title": "Status Chart with Standard Time Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },
@@ -721,7 +721,7 @@ export const widgetConfigs: IWidget[] = [
                 },
                 "header": {
                     "properties": {
-                        "title": "Status chart",
+                        "title": "Status Chart with Time Interval Scale",
                         "subtitle": "Basic timeseries widget",
                     },
                 },

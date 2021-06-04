@@ -10,6 +10,8 @@ import { OptionKeyControlService } from "../option-key-control.service";
 import { SelectV2OptionComponent } from "../option/select-v2-option.component";
 
 import { ComboboxV2Component } from "./combobox-v2.component";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "../constants";
 
 const selectedValuesMock: OptionValueType[] = [
     {id: "item-0", name: "Item 0"},
@@ -57,6 +59,7 @@ describe("components >", () => {
                 providers: [
                     ChangeDetectorRef,
                     OptionKeyControlService,
+                    LiveAnnouncer,
                 ],
                 imports: [
                     NuiOverlayModule,
@@ -386,7 +389,8 @@ describe("components >", () => {
             it("should make form control touched on focusout", () => {
                 expect(wrapperComponent.comboboxControl.touched).toBeFalsy();
 
-                wrapperComponent.combobox.elRef.nativeElement.dispatchEvent(new Event("focusin"));
+                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                input.nativeElement.focus();
                 document.body.click();
 
                 expect(wrapperComponent.comboboxControl.touched).toBeTruthy();
@@ -404,7 +408,8 @@ describe("components >", () => {
             it("should set the control to dirty when the value changes in DOM", () => {
                 expect(wrapperComponent.comboboxControl.dirty).toBeFalsy();
 
-                wrapperComponent.combobox.elRef.nativeElement.dispatchEvent(new Event("focusin"));
+                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                input.nativeElement.focus();
                 const option = wrapperFixture.debugElement.query(By.css("nui-select-v2-option"));
                 option.nativeElement.click();
 
@@ -462,6 +467,31 @@ describe("components >", () => {
                 tick(0);
                 expect(wrapperComponent.comboboxControl.value).toEqual(["Item 9"]);
             }));
+        });
+
+        describe("LiveAnnouncer >", () =>  {
+            it("should announce dropdown list on focusin", () => {
+                const spy = spyOn(wrapperComponent.combobox.liveAnnouncer, "announce");
+                expect(wrapperComponent.comboboxControl.touched).toBeFalsy();
+
+                const msg = `${wrapperComponent.combobox.options.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`;
+                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                input.nativeElement.focus();
+
+                expect(spy).toHaveBeenCalledWith(msg);
+            });
+
+            it("should announce dropdown is closed on focusout", () => {
+                const spy = spyOn(wrapperComponent.combobox.liveAnnouncer, "announce");
+                expect(wrapperComponent.comboboxControl.touched).toBeFalsy();
+
+                const msg = ANNOUNCER_CLOSE_MESSAGE;
+                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                input.nativeElement.focus();
+                document.body.click();
+
+                expect(spy).toHaveBeenCalledWith(msg);
+            });
         });
     });
 });

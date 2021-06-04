@@ -1,4 +1,4 @@
-import { Overlay, OverlayConfig, OverlayContainer } from "@angular/cdk/overlay";
+import { Overlay, OverlayConfig, OverlayContainer, OverlaySizeConfig } from "@angular/cdk/overlay";
 import { CdkPortal } from "@angular/cdk/portal";
 import {
     AfterContentChecked,
@@ -35,7 +35,7 @@ export const POPUP_V2_VIEWPORT_MARGINS_DEFAULT = 30;
     selector: "nui-overlay",
     template: `
         <ng-template cdk-portal>
-            <div class="nui-overlay" [attr.role]="roleAttr || null" [ngClass]="{'empty': empty$ | async}">
+            <div id="nui-overlay" class="nui-overlay" [attr.role]="roleAttr || null" [ngClass]="{'empty': empty$ | async}">
                 <ng-content></ng-content>
             </div>
         </ng-template>`,
@@ -149,6 +149,11 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
     public getOverlayRef() {
         return this.overlayService.getOverlayRef();
     }
+
+    public updateSize(size: OverlaySizeConfig): void {
+        this.overlayService.updateSize(size);
+    }
+
 
     /** Stream of clicks outside. */
     private overlayClickOutside(): Observable<MouseEvent> {

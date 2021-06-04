@@ -10,6 +10,7 @@ import { KpiSyncBrokerDocsComponent } from "./kpi-sync-broker-example/docs/kpi-s
 import { KpiSyncBrokerExampleComponent } from "./kpi-sync-broker-example/example/kpi-sync-broker-example.component";
 import { KpiSyncBrokerForAllTilesExampleComponent } from "./kpi-sync-broker-example/example/kpi-sync-broker-for-all-tiles-example.component";
 import { KpiWidgetExampleComponent } from "./kpi-widget-example/kpi-widget-example.component";
+import { KpiWidgetInteractiveExampleComponent } from "./kpi-widget-interactive-example/kpi-widget-interactive-example.component";
 
 const routes: Routes = [
     {
@@ -63,6 +64,7 @@ const routes: Routes = [
     declarations: [
         KpiDocsComponent,
         KpiWidgetExampleComponent,
+        KpiWidgetInteractiveExampleComponent,
         KpiBackgroundColorDocsComponent,
         KpiWidgetBackgroundColorExampleComponent,
         KpiSyncBrokerDocsComponent,

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     barAccessors,
     barGrid,
+    BarHighlightStrategy,
     BarRenderer,
     Chart,
     LinearScale,
@@ -17,12 +18,12 @@ import moment, { duration } from "moment/moment";
 export class BarChartTimeIntervalExampleComponent implements OnInit {
     public chart = new Chart(barGrid());
 
-    ngOnInit() {
+    ngOnInit(): void {
         const accessors = barAccessors();
         accessors.data.category = (d) => d.x;
         accessors.data.value = (d) => d.y;
 
-        const renderer = new BarRenderer();
+        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x") });
 
         const scales: Scales = {
             x: new TimeIntervalScale(duration(1, "days")),

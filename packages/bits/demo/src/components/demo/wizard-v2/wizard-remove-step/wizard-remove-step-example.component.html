@@ -1,0 +1,49 @@
+<nui-wizard-horizontal #wizard>
+    <nui-wizard-step-v2 *ngFor="let step of steps; let i = index; let isLast = last">
+        <ng-template wizardStepLabel>{{step.title}}</ng-template>
+        <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
+        <ng-template wizardStepFooter>
+            <ng-container *ngIf="i !== 0">
+                <button type="button" nuiWizardPrevious nui-button icon="caret-left">
+                    Previous
+                </button>
+            </ng-container>
+            <ng-container *ngIf="!isLast">
+                <button nuiWizardNext
+                        type="button"
+                        nui-button
+                        displayStyle="primary"
+                        icon="caret-right"
+                        iconRight="true"
+                >Next</button>
+            </ng-container>
+        </ng-template>
+    </nui-wizard-step-v2>
+
+    <ng-template #dynamicStep>
+        <p i18n>Hi! I'm a step added dynamically using a TemplateRef by clicking a button from the first step !</p>
+    </ng-template>
+
+    <ng-template #normalStep>
+        <p i18n>Hi! You can add next step dynamically</p>
+
+        <button nui-button type="button" (click)="addStep(dynamicStep)">
+            Add dynamic step w/template
+        </button>
+
+    </ng-template>
+</nui-wizard-horizontal>
+<div class="d-flex">
+    <div class="">
+        <span class="nui-textbox--bold" [ngStyle]="{ 'font-weight': 'bold' }">Step index to remove</span> <br>
+        <nui-textbox-number [minValue]="1" #number></nui-textbox-number>
+    </div>
+    <button class="ml-3 h-25 align-self-end"
+            displayStyle="destructive"
+            nui-button type="button"
+            [disabled]="+number.value < 1"
+            (click)="removeStep(+number.value)"
+            i18n>
+        Remove step dynamically
+    </button>
+</div>

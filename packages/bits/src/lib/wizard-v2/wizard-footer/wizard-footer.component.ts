@@ -3,7 +3,7 @@ import {
     AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation,
 } from "@angular/core";
 
-import {WizardStepFooterDirective} from "./wizard-step-footer.directive";
+import {WizardStepFooterDirective} from "../wizard-step-footer.directive";
 
 @Component({
     selector: "wizard-footer",
@@ -25,16 +25,16 @@ export class WizardFooterComponent implements FocusableOption, AfterViewInit, On
         private _elementRef: ElementRef<HTMLElement>
     ) {}
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this._focusMonitor.monitor(this._elementRef, true);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this._focusMonitor.stopMonitoring(this._elementRef);
     }
 
     /** Focuses the step footer. */
-    focus() {
+    focus(): void {
         this._focusMonitor.focusVia(this._elementRef, "program");
     }
 

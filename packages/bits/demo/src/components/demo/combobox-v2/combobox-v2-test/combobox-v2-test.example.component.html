@@ -10,12 +10,14 @@
         <h4>Error State</h4>
         <nui-combobox-v2 [isInErrorState]="!selectedItem"
                           placeholder="Select Item" i18n-placeholder
+                          [displayWith]="displayFn"
                           [formControl]="comboboxControl"
                           id="error"
                           [overlayConfig]="overlayConfig"
                           #comboboxError>
-            <nui-select-v2-option *ngFor="let item of items" [value]="item">
-                <span [nuiComboboxV2OptionHighlight]="item"></span>
+            <nui-select-v2-option *ngFor="let item of customizedItems" [value]="item">
+                <span class="mr-3" [nuiComboboxV2OptionHighlight]="item.name"></span>
+                <nui-icon [icon]="item.icon"></nui-icon>
             </nui-select-v2-option>
         </nui-combobox-v2>
     </div>
@@ -76,7 +78,6 @@
         <h4>Multiselect with create option</h4>
         <nui-combobox-v2 [placeholder]="combobox.selectedOptions.length ? '' : 'Select Items'"
                          [formControl]="comboboxControlMulti"
-                         [displayWith]="displayFn"
                          [multiselect]="true"
                          [overlayConfig]="overlayConfig"
                          id="multi"
@@ -110,7 +111,6 @@
         <div class="row m-auto">
             <nui-combobox-v2 [isDisabled]="isComboboxDisabled"
                              placeholder="Select Item" i18n-placeholder
-                             [displayWith]="displayFn"
                              id="disabled"
                              [overlayConfig]="overlayConfig"
                              class="flex-grow-1"
@@ -148,7 +148,6 @@
 <div class="row m-auto">
     <h4 class="w-100">Multiselect with manual dropdown control</h4>
         <nui-combobox-v2 [placeholder]="comboboxMultiDimensions.selectedOptions.length ? '' : 'Select Items'"
-                         [displayWith]="displayFn"
                          [multiselect]="true"
                          [manualDropdownControl]="true"
                          id="custom-control"
@@ -174,11 +173,32 @@
     <button id="hide" class="ml-3" (click)="hideList($event)">Hide</button>
     <button id="toggle" class="ml-3" (click)="toggleList($event)">Toggle</button>
 </div>
+<div class="row m-auto">
+    <h4 class="w-100">Virtual scroll</h4>
+    <nui-combobox-v2 placeholder="Select Item" i18n-placeholder
+                    #virtual
+                    id="virtual-combobox"
+                    [formControl]="comboboxControl"
+                    [overlayConfig]="overlayConfig"
+                    [isTypeaheadEnabled]="false">
+
+        <cdk-virtual-scroll-viewport itemSize="30"
+                                    [minBufferPx]="300"
+                                    [maxBufferPx]="600"
+                                    [style.height.px]="containerHeight">
+
+            <div *cdkVirtualFor="let item of filteredItems | async; index as i">
+                <nui-select-v2-option [value]="item" class="d-flex align-items-center">
+                    <span [nuiComboboxV2OptionHighlight]="item"></span>
+                </nui-select-v2-option>
+            </div>
+        </cdk-virtual-scroll-viewport>
+    </nui-combobox-v2>
+</div>
 
 <div class="row mb-3" style="position: fixed; bottom: 0" tabindex="-1">
     <h4 class="w-100">Multiselect with manual dropdown control</h4>
         <nui-combobox-v2 [placeholder]="comboboxWithDialog.selectedOptions.length ? '' : 'Select Items'"
-                         [displayWith]="displayFn"
                          [multiselect]="true"
                          [manualDropdownControl]="true"
                          [overlayConfig]="overlayConfig"

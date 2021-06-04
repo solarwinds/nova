@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
+import { UnitConversionService } from "@nova-ui/bits";
 import { IScale, LinearScale, TimeIntervalScale, TimeScale } from "@nova-ui/charts";
 import { duration } from "moment/moment";
+import { DashboardUnitConversionPipe } from "../../common/pipes/dashboard-unit-conversion-pipe";
 
 import { ITimeseriesScaleConfig, TimeseriesScaleType } from "./types";
 
@@ -9,6 +11,11 @@ import { ITimeseriesScaleConfig, TimeseriesScaleType } from "./types";
  */
 @Injectable()
 export class TimeseriesScalesService {
+    private unitConversionPipe: DashboardUnitConversionPipe;
+
+    constructor(private unitConversionService: UnitConversionService) {
+        this.unitConversionPipe = new DashboardUnitConversionPipe(this.unitConversionService);
+    }
 
     /**
      * Creates a scale based on given configuration
@@ -25,6 +32,7 @@ export class TimeseriesScalesService {
             }
             case TimeseriesScaleType.Linear: {
                 scale = new LinearScale();
+                scale.formatters.tick = this.unitConversionPipe.transform;
                 break;
             }
             case TimeseriesScaleType.TimeInterval: {
@@ -44,7 +52,7 @@ export class TimeseriesScalesService {
      * @param scale
      * @param scaleConfig
      */
-    public updateConfiguration(scale: IScale<any>, scaleConfig: ITimeseriesScaleConfig) {
+    public updateConfiguration(scale: IScale<any>, scaleConfig: ITimeseriesScaleConfig): void {
         if (scaleConfig.type === TimeseriesScaleType.TimeInterval && scale instanceof TimeIntervalScale) {
             const interval = scaleConfig.properties?.interval;
             if (typeof interval === "number") {

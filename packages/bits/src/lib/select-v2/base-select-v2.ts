@@ -4,6 +4,7 @@ import {
     AfterContentInit,
     AfterViewInit,
     ChangeDetectorRef,
+    ContentChild,
     ContentChildren,
     Directive,
     ElementRef,
@@ -36,10 +37,16 @@ import { IOption, OptionValueType, OverlayContainerType } from "../overlay/types
 import { OptionKeyControlService } from "./option-key-control.service";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { InputValueTypes, IOptionedComponent } from "./types";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import ResizeObserver from "resize-observer-polyfill";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "./constants";
 
 const DEFAULT_SELECT_OVERLAY_CONFIG: OverlayConfig = {
     panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
 };
+
+const V_SCROLL_HEIGHT_BUFFER = 10;
 
 // Will be renamed in scope of the NUI-5797
 @Directive()
@@ -106,6 +113,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     @ViewChild("input", { static: false})
     inputElement: ElementRef;
 
+    @ContentChild(CdkVirtualScrollViewport) cdkVirtualScroll: CdkVirtualScrollViewport;
+
     /** Corresponds to the Options listed in the Dropdown */
     @ContentChildren(forwardRef(() => SelectV2OptionComponent), { descendants: true })
     public options: QueryList<SelectV2OptionComponent>;
@@ -138,6 +147,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     private _selectedOptions: SelectV2OptionComponent[] = [];
 
     private _ariaLabel: string = "";
+    private virtualScrollResizeObserver: ResizeObserver;
 
     /** Emits value which has been selected */
     @Output() public valueSelected = new EventEmitter<OptionValueType | OptionValueType[] | null>();
@@ -150,10 +160,11 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
 
     protected constructor(protected optionKeyControlService: OptionKeyControlService<IOption>,
                           protected cdRef: ChangeDetectorRef,
-                          public elRef: ElementRef<HTMLElement>) {
+                          public elRef: ElementRef<HTMLElement>,
+                          public liveAnnouncer: LiveAnnouncer) {
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.value) {
             this.handleValueChange(changes.value?.currentValue);
         }
@@ -175,23 +186,24 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         }
         this.initKeyboardManager();
         this.defineDropdownContainer();
+        this.adjustDropdownOnVScrollResize();
     }
 
     /** `View -> model callback called when value changes` */
-    public onChange: (value: any) => void = () => { };
+    public onChange: (value: any) => void = (): void => { };
 
     /** `View -> model callback called when autocomplete has been touched` */
-    public onTouched = () => { };
+    public onTouched = (): void => { };
 
     /** Handles mousedown event */
     @HostListener("mousedown")
-    public onMouseDown() {
+    public onMouseDown(): void {
         this.mouseDown = true;
     }
 
     /** Handles mouseup event */
     @HostListener("mouseup", ["$event.target"])
-    public onMouseUp(target: HTMLElement) {
+    public onMouseUp(target: HTMLElement): void {
         this.mouseDown = false;
         if (!this.manualDropdownControl) {
             this.toggleDropdown();
@@ -203,19 +215,20 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
      * To avoid triggering showDropdown() on MouseClick. We need to open dropdown only on TAB (SHIFT + TAB) action.
      */
     @HostListener("focusin")
-    public onFocusIn() {
-        if (!this.mouseDown && !this.manualDropdownControl) {
+    public onFocusIn(): void {
+        if (this.isOpenOnFocus()) {
             this.showDropdown();
+            this.announceDropdown(true);
         }
     }
 
     @HostListener("window:resize")
-    public onWindowResize() {
+    public onWindowResize(): void {
         this.popupUtilities.syncWidth();
     }
 
     /** Handles keydown event */
-    public onKeyDown(event: KeyboardEvent) {
+    public onKeyDown(event: KeyboardEvent): void {
         if (!this.manualDropdownControl) {
             this.optionKeyControlService.handleKeydown(event);
         }
@@ -234,25 +247,32 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.dropdown.show();
         this.setActiveItemOnDropdown();
         this.scrollToOption();
+        this.announceDropdown(true);
     }
 
     /** Hides dropdown */
     public hideDropdown(): void {
         if (!this.isDisabled) {
             this.dropdown.hide();
+            this.announceDropdown(false);
         }
     }
 
     /** Toggles dropdown */
-    public toggleDropdown() {
+    public toggleDropdown(): void {
         if (this.isDisabled) {
             return;
         }
 
         this.dropdown.toggle();
+        this.announceDropdown(this.dropdown.showing);
 
         this.setActiveItemOnDropdown();
         this.scrollToOption();
+
+        if (this.cdkVirtualScroll) {
+            this.cdkVirtualScroll.checkViewportSize();
+        }
     }
 
     /** Selects specific option and set its value to the model */
@@ -271,7 +291,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     /** Removes selected options or passed option if multi-select mode enabled */
-    public removeSelected(option?: SelectV2OptionComponent) {
+    public removeSelected(option?: SelectV2OptionComponent): void {
         if (!this.multiselect) { return; }
 
         this.selectedOptions = option ? pull(this.selectedOptions, option) : [];
@@ -310,19 +330,23 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
      * This can lead to memory leaks.
      * This is a safe guard for preventing memory leaks in derived classes.
      */
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.dropdown?.showing) {
             this.dropdown.hide();
         }
         this.destroy$.next();
         this.destroy$.complete();
+
+        if (this.virtualScrollResizeObserver) {
+            this.virtualScrollResizeObserver.unobserve(this.cdkVirtualScroll.elementRef.nativeElement);
+        }
     }
 
     protected getValueFromOptions(options = this.selectedOptions): OptionValueType | OptionValueType[] | null {
         return this.multiselect ? options.map(o => o.value) : options[0]?.value || "";
     }
 
-    protected handleValueChange(value: OptionValueType | OptionValueType[] | null) {
+    protected handleValueChange(value: OptionValueType | OptionValueType[] | null): void {
         if (isUndefined(value)) {
             this.value = "";
             this._selectedOptions = [];
@@ -436,5 +460,48 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         this.dropdown.hide$.pipe(takeUntil(this.destroy$)).subscribe(() => {
             resizeObserver.unobserve(this.elRef.nativeElement);
         });
+    }
+
+    /**
+     * This helps to dynamically set minHeight for overlay to avoid issues with double
+     * scroll. Overlay minHeight should be bigger than cdkVirtualScroll container.
+     */
+    private adjustDropdownOnVScrollResize(): void {
+        if (!this.cdkVirtualScroll) {
+            return;
+        }
+
+        const element = this.cdkVirtualScroll.elementRef.nativeElement;
+        const height = parseInt(element.style.height, 10);
+        const minHeight = Number.isNaN(height) ? 0 : height + V_SCROLL_HEIGHT_BUFFER;
+
+        this.dropdown.overlayConfig = { ...this.overlayConfig, ...{ minHeight }};
+        this.virtualScrollResizeObserver = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                const content = entry.contentRect;
+                const minHeight = content.height ? content.height + V_SCROLL_HEIGHT_BUFFER : 0;
+
+                this.dropdown.updateSize({ minHeight });
+            }
+        });
+
+        this.virtualScrollResizeObserver.observe(element);
+    }
+
+    private isOpenOnFocus(): boolean {
+        return !this.mouseDown && !this.manualDropdownControl
+            && document.activeElement === this.inputElement.nativeElement;
+    }
+
+    private announceDropdown(open: boolean): void {
+        if (open) {
+            this.liveAnnouncer.announce(`${this.options.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`);
+
+            return;
+        }
+
+        const msg = this.value ? `${this.value} selected ${ANNOUNCER_CLOSE_MESSAGE}` : ANNOUNCER_CLOSE_MESSAGE;
+
+        this.liveAnnouncer.announce(msg);
     }
 }

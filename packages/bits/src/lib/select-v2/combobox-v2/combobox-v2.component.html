@@ -1,10 +1,11 @@
-<div class="w-100 d-flex flex-wrap align-items-center pt-2">
+<div class="w-100 d-flex flex-wrap align-items-center pt-2"
+    [attr.role]="(multiselect && selectedOptions.length) ? 'list' : null">
 
     <ng-content select="[selectedItems]"></ng-content>
 
     <input class="nui-combobox-v2__input pb-2"
         type="text"
-        [attr.aria-label]="ariaLabel"
+        [attr.aria-label]="ariaLabel || 'input'"
         [class.has-error]="isInErrorState"
         [disabled]="isDisabled"
         [(ngModel)]="inputValue"
@@ -14,7 +15,7 @@
         (click)="selectTextInInput()"
         #input />
 </div>
-<button tabindex="-1"
+<button tabindex="0"
     *ngIf="isRemoveValueEnabled && (selectedOptions[0] || inputValue)"
     nui-button
     class="nui-combobox-v2__remove-value action"

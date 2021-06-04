@@ -15,6 +15,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import {
+    ConfiguratorHeadingService,
     DATA_SOURCE_CHANGE,
     DATA_SOURCE_OUTPUT,
     IDataSourceOutput,
@@ -51,6 +52,7 @@ export class AcmeProportionalDSConfigComponent implements IHasChangeDetector, On
 
     constructor(public changeDetector: ChangeDetectorRef,
         private formBuilder: FormBuilder,
+        public configuratorHeading: ConfiguratorHeadingService,
         private providerRegistryService: ProviderRegistryService,
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         private injector: Injector,

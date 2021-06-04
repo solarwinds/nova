@@ -18,8 +18,6 @@ export function hasControlInErrorState(parent: AbstractControl): boolean {
                 return true;
             }
         }
-
-        return false;
     }
 
     if (parent instanceof FormArray) {
@@ -30,8 +28,6 @@ export function hasControlInErrorState(parent: AbstractControl): boolean {
                 return true;
             }
         }
-
-        return false;
     }
 
     return ((parent.touched || parent.dirty) && parent.invalid);

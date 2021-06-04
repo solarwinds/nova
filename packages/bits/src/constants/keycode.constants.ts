@@ -1,3 +1,4 @@
+/** @deprecated */
 export enum KEY_CODE {
     BACKSPACE = 8,
     TAB = 9,
@@ -18,4 +19,20 @@ export enum KEY_CODE {
     PLUS = 107,
     MINUS = 109,
     TILDE = 192,
+}
+
+export enum KEYBOARD_CODE {
+    ARROW_DOWN = "ArrowDown",
+    ARROW_UP = "ArrowUp",
+    BACKSPACE = "Backspace",
+    ENTER = "Enter",
+    END = "End",
+    ESCAPE = "Escape",
+    HOME = "Home",
+    PAGE_DOWN = "PageDown",
+    PAGE_UP = "PageUp",
+    SHIFT_LEFT = "ShiftLeft",
+    SHIFT_RIGHT = "ShiftRight",
+    SPACE = "Space",
+    TAB = "Tab",
 }

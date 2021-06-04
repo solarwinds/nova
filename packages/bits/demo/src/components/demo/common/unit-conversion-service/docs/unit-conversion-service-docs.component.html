@@ -34,8 +34,12 @@
     Once the conversion has been calculated, the result can be converted to a display string that includes both the value and the unit. This can be done via the
     <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getFullDisplay</a></code> method. Supported basic units are of type
     <code><a href="../miscellaneous/typealiases.html#UnitOption" target="_blank">UnitOption</a></code> and include the following:
-    <code>"generic"</code> (e.g. 1k for 1000), <code>"bytes"</code>, <code>"bytesPerSecond"</code>, <code>"bitsPerSecond"</code>, and <code>"hertz"</code>.
+    <code>"generic"</code> (e.g. 1K for 1000), <code>"bytes"</code>, <code>"bytesPerSecond"</code>, <code>"bitsPerSecond"</code>, and <code>"hertz"</code>.
 </p>
+<nui-message type="info" [allowDismiss]="false">
+    The <code>getFullDisplay</code> method will localize the output for all supported units except for the "generic" unit.
+    Localization for the "generic" unit is not yet supported.
+</nui-message>
 <nui-example-wrapper filenamePrefix="unit-conversion-service-basic" exampleTitle="Basic Usage">
     <unit-conversion-service-basic-example></unit-conversion-service-basic-example>
 </nui-example-wrapper>
@@ -47,6 +51,11 @@
     <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getValueDisplay</a></code> method, and to get just the converted unit for
     display, use the <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getUnitDisplay</a></code> method.
 </p>
+<nui-message type="warning" [allowDismiss]="false">
+    <strong>Note:</strong> The <code>getValueDisplay</code> method offers a <code>localize</code> parameter which defaults to <code>true</code>. However,
+    if you're using the "generic" unit type, it's recommended to set this argument to <code>false</code> as localization is not yet supported for
+    the "generic" unit.
+</nui-message>
 <nui-example-wrapper filenamePrefix="unit-conversion-service-separate-unit-display" exampleTitle="Separating the Value and Unit for Display">
     <unit-conversion-service-separate-unit-display-example></unit-conversion-service-separate-unit-display-example>
 </nui-example-wrapper>

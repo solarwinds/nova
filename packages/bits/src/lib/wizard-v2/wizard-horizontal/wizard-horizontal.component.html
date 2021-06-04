@@ -4,7 +4,7 @@
             class="nui-wizard-horizontal-header"
             (click)="step.select()"
             (keydown)="_onKeydown($event)"
-            [tabIndex]="_getFocusIndex() === i ? 0 : -1"
+            [tabIndex]="selectedIndex === i ? 0 : -1"
             [id]="_getStepLabelId(i)"
             [attr.aria-posinset]="i + 1"
             [attr.aria-setsize]="steps.length"
@@ -37,6 +37,6 @@
         <ng-container [ngTemplateOutlet]="step.content"></ng-container>
     </div>
 </div>
-<div *ngIf="selected.stepFooter" class="nui-wizard-horizontal-footer-container">
-    <wizard-footer [footer]="selected.stepFooter"></wizard-footer>
+<div *ngIf="selected?.stepFooter" class="nui-wizard-horizontal-footer-container">
+    <wizard-footer [footer]="selected?.stepFooter"></wizard-footer>
 </div>

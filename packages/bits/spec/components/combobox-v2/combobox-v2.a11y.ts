@@ -3,12 +3,8 @@ import { Atom } from "../../atom";
 import { assertA11y, Helpers } from "../../helpers";
 import { ComboboxV2Atom } from "../public_api";
 
-// Disabled until NUI-6030 is fixed
-xdescribe("a11y: combobox-v2", () => {
-    // disabling the rule until NUI-6015 is addressed
-    let rulesToDisable: string[] = [
-        // "aria-allowed-role",
-    ];
+describe("a11y: combobox-v2", () => {
+    const rulesToDisable: string[] = ["aria-required-children"];
 
     let comboboxBasic: ComboboxV2Atom;
     let comboboxError: ComboboxV2Atom;

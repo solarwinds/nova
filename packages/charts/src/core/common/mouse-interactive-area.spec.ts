@@ -1,6 +1,7 @@
 import { select } from "d3-selection";
 
 import { IGNORE_INTERACTION_CLASS } from "../../constants";
+import { IAllAround } from "../grid/types";
 
 import { MouseInteractiveArea } from "./mouse-interactive-area";
 import { D3Selection, InteractionType } from "./types";
@@ -10,7 +11,7 @@ describe("mouse-interactive-area >", () => {
     let target: D3Selection<SVGGElement> | any;
     let interactiveArea: D3Selection<SVGRectElement> | any;
     let mouseInteractiveArea: MouseInteractiveArea;
-    const interactiveAreaDimension = 10;
+    const interactiveAreaDimension = 50;
     const cursor = "crosshair";
 
     beforeEach(() => {
@@ -153,55 +154,22 @@ describe("mouse-interactive-area >", () => {
                 spyOnProperty(window.navigator, "userAgent").and.returnValue("firefox");
             });
 
-            describe("'x' value clamping", () => {
-                it("should clamp the 'x' interaction output to the width of the interactive area", () => {
+            describe("grid margin handling", () => {
+                it("should subtract the top margin from the interaction coordinates", () => {
+                    const testMargin = 22;
+                    const margin: IAllAround<number> = {
+                        top: testMargin,
+                        right: 0,
+                        left: 0,
+                        bottom: 0,
+                    };
+                    mouseInteractiveArea = new MouseInteractiveArea(target, interactiveArea, cursor, margin);
+
                     const spy = spyOn(mouseInteractiveArea.interaction, "next");
                     const event = new MouseEvent(InteractionType.MouseMove) as any;
                     spyOnProperty(event, "offsetX").and.returnValue(0);
-                    spyOnProperty(event, "offsetY").and.returnValue(0);
-                    event.originalTarget = {
-                        classList: {
-                            contains: () => true,
-                        },
-                        attributes: {
-                            x: {
-                                value: (interactiveAreaDimension + 1).toString(),
-                            },
-                            y: {
-                                value: (interactiveAreaDimension - 1).toString(),
-                            },
-                        },
-                    };
-                    target.node().dispatchEvent(event);
+                    spyOnProperty(event, "offsetY").and.returnValue(interactiveAreaDimension / 2);
 
-                    expect(spy).toHaveBeenCalledTimes(1);
-                    expect(spy).toHaveBeenCalledWith({
-                        type: InteractionType.MouseMove,
-                        coordinates: {
-                            x: interactiveAreaDimension,
-                            y: interactiveAreaDimension - 1,
-                        },
-                    });
-                });
-
-                it("should clamp the 'x' interaction output to the left side of the interactive area", () => {
-                    const spy = spyOn(mouseInteractiveArea.interaction, "next");
-                    const event = new MouseEvent(InteractionType.MouseMove) as any;
-                    spyOnProperty(event, "offsetX").and.returnValue(0);
-                    spyOnProperty(event, "offsetY").and.returnValue(0);
-                    event.originalTarget = {
-                        classList: {
-                            contains: () => true,
-                        },
-                        attributes: {
-                            x: {
-                                value: "-1",
-                            },
-                            y: {
-                                value: (interactiveAreaDimension - 1).toString(),
-                            },
-                        },
-                    };
                     target.node().dispatchEvent(event);
 
                     expect(spy).toHaveBeenCalledTimes(1);
@@ -209,7 +177,72 @@ describe("mouse-interactive-area >", () => {
                         type: InteractionType.MouseMove,
                         coordinates: {
                             x: 0,
-                            y: interactiveAreaDimension - 1,
+                            y: interactiveAreaDimension / 2 - testMargin,
+                        },
+                    });
+                });
+
+                it("should subtract the left margin from the interaction coordinates", () => {
+                    const testMargin = 22;
+                    const margin: IAllAround<number> = {
+                        top: 0,
+                        right: 0,
+                        left: testMargin,
+                        bottom: 0,
+                    };
+                    mouseInteractiveArea = new MouseInteractiveArea(target, interactiveArea, cursor, margin);
+
+                    const spy = spyOn(mouseInteractiveArea.interaction, "next");
+                    const event = new MouseEvent(InteractionType.MouseMove) as any;
+                    spyOnProperty(event, "offsetX").and.returnValue(interactiveAreaDimension / 2);
+                    spyOnProperty(event, "offsetY").and.returnValue(0);
+
+                    target.node().dispatchEvent(event);
+
+                    expect(spy).toHaveBeenCalledTimes(1);
+                    expect(spy).toHaveBeenCalledWith({
+                        type: InteractionType.MouseMove,
+                        coordinates: {
+                            x: interactiveAreaDimension / 2 - testMargin,
+                            y: 0,
+                        },
+                    });
+                });
+            });
+
+            describe("'x' value clamping", () => {
+                it("should clamp the 'x' interaction output to the width of the interactive area", () => {
+                    const spy = spyOn(mouseInteractiveArea.interaction, "next");
+                    const event = new MouseEvent(InteractionType.MouseMove) as any;
+                    spyOnProperty(event, "offsetX").and.returnValue(interactiveAreaDimension + 10);
+                    spyOnProperty(event, "offsetY").and.returnValue(0);
+
+                    target.node().dispatchEvent(event);
+
+                    expect(spy).toHaveBeenCalledTimes(1);
+                    expect(spy).toHaveBeenCalledWith({
+                        type: InteractionType.MouseMove,
+                        coordinates: {
+                            x: interactiveAreaDimension,
+                            y: 0,
+                        },
+                    });
+                });
+
+                it("should clamp the 'x' interaction output to the left side of the interactive area", () => {
+                    const spy = spyOn(mouseInteractiveArea.interaction, "next");
+                    const event = new MouseEvent(InteractionType.MouseMove) as any;
+                    spyOnProperty(event, "offsetX").and.returnValue(-1);
+                    spyOnProperty(event, "offsetY").and.returnValue(0);
+
+                    target.node().dispatchEvent(event);
+
+                    expect(spy).toHaveBeenCalledTimes(1);
+                    expect(spy).toHaveBeenCalledWith({
+                        type: InteractionType.MouseMove,
+                        coordinates: {
+                            x: 0,
+                            y: 0,
                         },
                     });
                 });
@@ -220,27 +253,15 @@ describe("mouse-interactive-area >", () => {
                     const spy = spyOn(mouseInteractiveArea.interaction, "next");
                     const event = new MouseEvent(InteractionType.MouseMove) as any;
                     spyOnProperty(event, "offsetX").and.returnValue(0);
-                    spyOnProperty(event, "offsetY").and.returnValue(0);
-                    event.originalTarget = {
-                        classList: {
-                            contains: () => true,
-                        },
-                        attributes: {
-                            x: {
-                                value: (interactiveAreaDimension - 1).toString(),
-                            },
-                            y: {
-                                value: (interactiveAreaDimension + 1).toString(),
-                            },
-                        },
-                    };
+                    spyOnProperty(event, "offsetY").and.returnValue(interactiveAreaDimension + 10);
+
                     target.node().dispatchEvent(event);
 
                     expect(spy).toHaveBeenCalledTimes(1);
                     expect(spy).toHaveBeenCalledWith({
                         type: InteractionType.MouseMove,
                         coordinates: {
-                            x: interactiveAreaDimension - 1,
+                            x: 0,
                             y: interactiveAreaDimension,
                         },
                     });
@@ -250,27 +271,15 @@ describe("mouse-interactive-area >", () => {
                     const spy = spyOn(mouseInteractiveArea.interaction, "next");
                     const event = new MouseEvent(InteractionType.MouseMove) as any;
                     spyOnProperty(event, "offsetX").and.returnValue(0);
-                    spyOnProperty(event, "offsetY").and.returnValue(0);
-                    event.originalTarget = {
-                        classList: {
-                            contains: () => true,
-                        },
-                        attributes: {
-                            x: {
-                                value: (interactiveAreaDimension - 1).toString(),
-                            },
-                            y: {
-                                value: "-1",
-                            },
-                        },
-                    };
+                    spyOnProperty(event, "offsetY").and.returnValue(-1);
+
                     target.node().dispatchEvent(event);
 
                     expect(spy).toHaveBeenCalledTimes(1);
                     expect(spy).toHaveBeenCalledWith({
                         type: InteractionType.MouseMove,
                         coordinates: {
-                            x: interactiveAreaDimension - 1,
+                            x: 0,
                             y: 0,
                         },
                     });
@@ -279,142 +288,44 @@ describe("mouse-interactive-area >", () => {
             });
 
             describe("offsets", () => {
-                it("should add the 'xOffset' value to the interaction output", () => {
+                it("should use the 'xOffset' value for the interaction output", () => {
                     const spy = spyOn(mouseInteractiveArea.interaction, "next");
                     const event = new MouseEvent(InteractionType.MouseMove) as any;
                     const testOffsetX = 2;
-                    const originalTargetX = 5;
-                    const originalTargetY = 5;
                     spyOnProperty(event, "offsetX").and.returnValue(testOffsetX);
                     spyOnProperty(event, "offsetY").and.returnValue(0);
-                    event.originalTarget = {
-                        classList: {
-                            contains: () => true,
-                        },
-                        attributes: {
-                            x: {
-                                value: originalTargetX.toString(),
-                            },
-                            y: {
-                                value: originalTargetY.toString(),
-                            },
-                        },
-                    };
+
                     target.node().dispatchEvent(event);
 
                     expect(spy).toHaveBeenCalledTimes(1);
                     expect(spy).toHaveBeenCalledWith({
                         type: InteractionType.MouseMove,
                         coordinates: {
-                            x: originalTargetX + testOffsetX,
-                            y: originalTargetY,
+                            x: testOffsetX,
+                            y: 0,
                         },
                     });
                 });
 
-                it("should add the 'yOffset' value to the interaction output", () => {
+                it("should use the 'yOffset' value for the interaction output", () => {
                     const spy = spyOn(mouseInteractiveArea.interaction, "next");
                     const event = new MouseEvent(InteractionType.MouseMove) as any;
                     const testOffsetY = 2;
-                    const originalTargetX = 5;
-                    const originalTargetY = 5;
                     spyOnProperty(event, "offsetX").and.returnValue(0);
                     spyOnProperty(event, "offsetY").and.returnValue(testOffsetY);
-                    event.originalTarget = {
-                        classList: {
-                            contains: () => true,
-                        },
-                        attributes: {
-                            x: {
-                                value: originalTargetX.toString(),
-                            },
-                            y: {
-                                value: originalTargetY.toString(),
-                            },
-                        },
-                    };
+
                     target.node().dispatchEvent(event);
 
                     expect(spy).toHaveBeenCalledTimes(1);
                     expect(spy).toHaveBeenCalledWith({
                         type: InteractionType.MouseMove,
                         coordinates: {
-                            x: originalTargetX,
-                            y: originalTargetY + testOffsetY,
+                            x: 0,
+                            y: testOffsetY,
                         },
                     });
                 });
-
-                it("should clamp the 'x' value in the interaction output if the offset overflows the interactive area", () => {
-                    const spy = spyOn(mouseInteractiveArea.interaction, "next");
-                    const event = new MouseEvent(InteractionType.MouseMove) as any;
-                    const originalTargetX = 5;
-                    const originalTargetY = 5;
-                    const testOffsetX = interactiveAreaDimension - originalTargetX + 1;
-                    spyOnProperty(event, "offsetX").and.returnValue(testOffsetX);
-                    spyOnProperty(event, "offsetY").and.returnValue(0);
-                    event.originalTarget = {
-                        classList: {
-                            contains: () => true,
-                        },
-                        attributes: {
-                            x: {
-                                value: originalTargetX.toString(),
-                            },
-                            y: {
-                                value: originalTargetY.toString(),
-                            },
-                        },
-                    };
-                    target.node().dispatchEvent(event);
-
-                    expect(spy).toHaveBeenCalledTimes(1);
-                    expect(spy).toHaveBeenCalledWith({
-                        type: InteractionType.MouseMove,
-                        coordinates: {
-                            x: interactiveAreaDimension,
-                            y: originalTargetY,
-                        },
-                    });
-                });
-
-                it("should clamp the 'y' value in the interaction output if the offset overflows the interactive area", () => {
-                    const spy = spyOn(mouseInteractiveArea.interaction, "next");
-                    const event = new MouseEvent(InteractionType.MouseMove) as any;
-                    const originalTargetX = 5;
-                    const originalTargetY = 5;
-                    const testOffsetY = interactiveAreaDimension - originalTargetY + 1;
-                    spyOnProperty(event, "offsetX").and.returnValue(0);
-                    spyOnProperty(event, "offsetY").and.returnValue(testOffsetY);
-                    event.originalTarget = {
-                        classList: {
-                            contains: () => true,
-                        },
-                        attributes: {
-                            x: {
-                                value: originalTargetX.toString(),
-                            },
-                            y: {
-                                value: originalTargetY.toString(),
-                            },
-                        },
-                    };
-                    target.node().dispatchEvent(event);
-
-                    expect(spy).toHaveBeenCalledTimes(1);
-                    expect(spy).toHaveBeenCalledWith({
-                        type: InteractionType.MouseMove,
-                        coordinates: {
-                            x: originalTargetX,
-                            y: interactiveAreaDimension,
-                        },
-                    });
-                });
-
-
             });
         });
-
     });
-
 });

@@ -189,6 +189,19 @@ describe("components >", () => {
 
         });
 
+        it("should react properly on selection change", () => {
+            const dateISOMoment = moment("2020-03-18T11:00:00.000+11:00");
+            const invalidMoment = moment.invalid();
+
+            componentInstance.ngAfterViewInit();
+            componentInstance.value = invalidMoment;
+            fixture.detectChanges();
+
+            componentInstance._datePicker.selectionDone.next(dateISOMoment);
+
+            expect(componentInstance.value.isValid()).toBeTruthy();
+        });
+
         describe("date validation", () => {
             const validDatesTestCases = DatePickerSpecHelpers.getValidDatesTestCases();
             const invalidDatesTestCases = DatePickerSpecHelpers.getInvalidDatesTestCases();

@@ -319,6 +319,26 @@ describe("USERCONTROL table >", () => {
 
             expect(headerHeight + viewPortHeight).toEqual(containerHeight);
         });
+
+        it("should populate the last table row with a new row on scroll", async () => {
+            const container = element(by.id("nui-demo-table-sticky-header"));
+
+            // Table with sticky header actually consists of two tables (one for the header and one for the table itself).
+            // Here we are getting the second one for access to the table.
+            const stickyTable: TableAtom = Atom.findIn(TableAtom, container, 1);
+            const rowsCount = await stickyTable.getRowsCount();
+            const rowElement = stickyTable.getRow(rowsCount - 1);
+            const rowContent = await stickyTable.getRowContent(rowsCount - 1);
+            const rowTd = rowContent[0];
+            expect(rowTd).toEqual("13");
+
+            await browser.executeScript("arguments[0].scrollIntoView(arguments[1])", rowElement);
+
+            const rowsCountScrolled = await stickyTable.getRowsCount();
+            const rowContentScrolled = await stickyTable.getRowContent(rowsCountScrolled - 1);
+            const rowTdScrolled = rowContentScrolled[0];
+            expect(rowTdScrolled).toEqual("26");
+        });
     });
 
     describe("Row selection >", () => {

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DataSourceService, IconService, IDataField, INovaFilteringOutputs, INovaFilters, ISorterFilter, LoggerService } from "@nova-ui/bits";
 import {
     ComponentRegistryService,
+    ConfiguratorHeadingService,
     DATA_SOURCE,
     FormatterConfiguratorComponent,
     IDashboard,
@@ -69,6 +70,7 @@ export class CustomFormatterComponent implements IHasChangeDetector {
                         [control]="dataFieldIds.controls['value']">
             <nui-select-v2 placeholder="Select value"
                            i18n-placeholder
+                           [popupViewportMargin]="configuratorHeading.height$ | async"
                            formControlName="value">
                 <nui-select-v2-option
                     *ngFor="let item of dropdownItems.value"
@@ -87,6 +89,7 @@ export class CustomFormatterComponent implements IHasChangeDetector {
                         [control]="form.controls['icon']">
             <nui-select-v2 placeholder="Select icon"
                            i18n-placeholder
+                           [popupViewportMargin]="configuratorHeading.height$ | async"
                            [displayValueTemplate]="iconSelectTemplate"
                            formControlName="icon"
                            [overlayConfig]="{width: 36}">
@@ -138,8 +141,12 @@ export class CustomFormatterComponent implements IHasChangeDetector {
 export class CustomFormatterConfiguratorComponent extends FormatterConfiguratorComponent implements OnInit, IHasChangeDetector {
     public static lateLoadKey = "CustomFormatterConfiguratorComponent";
 
-    constructor(changeDetector: ChangeDetectorRef, formBuilder: FormBuilder, logger: LoggerService, public iconService: IconService) {
-        super(changeDetector, formBuilder, logger);
+    constructor(changeDetector: ChangeDetectorRef,
+                configuratorHeading: ConfiguratorHeadingService,
+                formBuilder: FormBuilder,
+                logger: LoggerService,
+                public iconService: IconService) {
+        super(changeDetector, configuratorHeading, formBuilder, logger);
     }
 
     public formatterFormGroup: FormGroup;

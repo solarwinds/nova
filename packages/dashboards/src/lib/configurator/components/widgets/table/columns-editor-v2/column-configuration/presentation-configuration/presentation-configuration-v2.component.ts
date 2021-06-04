@@ -37,6 +37,7 @@ import { FormatterRegistryService, TableFormatterRegistryService } from "../../.
 import { FORMATTERS_REGISTRY, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../../../../types";
 import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../../widget-types/table/table-configurator";
 import { DATA_SOURCE_OUTPUT } from "../../../../../../types";
+import { ConfiguratorHeadingService } from "../../../../../../services/configurator-heading.service";
 
 @Component({
     selector: "nui-presentation-configuration-v2",
@@ -110,6 +111,7 @@ export class PresentationConfigurationV2Component implements IHasChangeDetector,
     constructor(
         private formBuilder: FormBuilder,
         public changeDetector: ChangeDetectorRef,
+        public configuratorHeading: ConfiguratorHeadingService,
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         @Optional() @Inject(FORMATTERS_REGISTRY) private formattersRegistryCommon: FormatterRegistryService,
         // used as a fallback, remove in vNext
