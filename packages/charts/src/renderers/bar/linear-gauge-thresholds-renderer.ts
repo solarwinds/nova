@@ -15,6 +15,7 @@ import { BarRenderer } from "./bar-renderer";
  */
 export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresholdsRendererConfig = {
     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
+    hideMarkers: false,
 };
 
 /**
@@ -53,7 +54,8 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
             .attr("cx", (d, i) => renderSeries.scales.x.convert(accessors?.data?.endX?.(d, i, dataSeries.data, dataSeries)))
             .attr("cy", (d, i) => renderSeries.scales.y.convert(accessors?.data?.endY?.(d, i, dataSeries.data, dataSeries)))
             .attr("r", this.config.markerRadius as number)
-            .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
+            .style("fill", (d, i) => `var(--nui-color-${data[i].isAtOrBelowQuantity ? "text-light" : "icon-default"})`)
+            .style("opacity", this.config.hideMarkers ? 0 : 1)
             .style("stroke-width", 0);
     }
 

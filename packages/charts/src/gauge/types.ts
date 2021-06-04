@@ -9,10 +9,14 @@ export interface IGaugeConfig {
     value: number;
     /** The max value of the gauge */
     max: number;
+    /** The color to display when no threshold is active */
+    defaultColor?: string;
     /** An optional array of the gauge's threshold values */
     thresholds?: IGaugeThresholdConfigs;
-    /** Set to true to enable the threshold markers */
-    enableThresholdMarkers?: boolean;
+    /** The ID of the active threshold */
+    activeThresholdId?: string | null;
+    /** Set to true to hide the threshold markers */
+    hideThresholdMarkers?: boolean;
     /** Boolean indicating whether the direction of the thresholds should be reversed */
     reversedThresholds?: boolean;
     /** Optional accessor for customizing the color to display for the quantity segment as each threshold is hit */
@@ -32,14 +36,14 @@ export type IGaugeThresholdConfigs = Record<string, IGaugeThresholdConfig>;
  * Configuration for a gauge threshold
  */
 export interface IGaugeThresholdConfig {
-    /** The ID of the threshold level */
+    /** The ID of the threshold */
     id: string;
     /** The value of the threshold */
     value: number;
     /** Boolean indicating whether the threshold is enabled */
     enabled: boolean;
     /** String indicating the display color of the threshold */
-    color: string;
+    color?: string;
 }
 
 /**

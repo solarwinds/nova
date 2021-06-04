@@ -45,7 +45,7 @@ export enum StandardGaugeColor {
     /** Standard color for the part of the gauge that's not filled in */
     Remainder = "var(--nui-color-semantic-unknown-bg-hover)",
     /** Standard color for the value part of the gauge when the value represents an ok status */
-    Ok = "var(--nui-color-semantic-ok)",
+    Ok = "var(--nui-color-chart-one)",
     /** Standard color for the value part of the gauge when the value has a warning status */
     Warning = "var(--nui-color-semantic-warning)",
     /** Standard color for the value part of the gauge when the value has a critical status */

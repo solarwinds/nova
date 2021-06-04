@@ -57,8 +57,7 @@ describe("GaugeUtil >", () => {
                 expect(series).toBeUndefined();
             });
 
-            it("should include a thresholds series if configured", () => {
-                gaugeConfig.enableThresholdMarkers = true;
+            it("should include a thresholds series", () => {
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
                 const series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
                 expect(series?.data[0].value).toEqual(gaugeConfig.thresholds?.[0]);
@@ -79,8 +78,7 @@ describe("GaugeUtil >", () => {
                 expect(series).toBeUndefined();
             });
 
-            it("should include a thresholds series if configured", () => {
-                gaugeConfig.enableThresholdMarkers = true;
+            it("should include a thresholds series", () => {
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Horizontal);
                 const series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
                 expect(series?.data[0].value).toEqual(gaugeConfig.thresholds?.[0]);
@@ -101,8 +99,7 @@ describe("GaugeUtil >", () => {
                 expect(series).toBeUndefined();
             });
 
-            it("should include a thresholds series if configured", () => {
-                gaugeConfig.enableThresholdMarkers = true;
+            it("should include a thresholds series", () => {
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Vertical);
                 const series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
                 expect(series?.data[0].value).toEqual(gaugeConfig.thresholds?.[0]);
@@ -125,7 +122,6 @@ describe("GaugeUtil >", () => {
         });
 
         it("should update the gauge's series set", () => {
-            gaugeConfig.enableThresholdMarkers = true;
             const updatedGaugeConfig = { ...gaugeConfig, value: 5 };
 
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
@@ -145,7 +141,6 @@ describe("GaugeUtil >", () => {
 
     describe("setThresholdLabelFormatter", () => {
         it("should update the formatter on the threshold series", () => {
-            gaugeConfig.enableThresholdMarkers = true;
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
             const formatter = () => "test";
             seriesSet = GaugeUtil.setThresholdLabelFormatter(formatter, seriesSet);
@@ -157,29 +152,14 @@ describe("GaugeUtil >", () => {
 
     describe("createDefaultColorAccessor", () => {
         it("should create a standard color accessor", () => {
-            const colorAccessor = GaugeUtil.createDefaultQuantityColorAccessor(gaugeConfig.thresholds);
+            const colorAccessor = GaugeUtil.createDefaultQuantityColorAccessor(gaugeConfig);
 
-            gaugeConfig.enableThresholdMarkers = true;
             const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
             const quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
             expect(colorAccessor({ value: 1 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);
             expect(colorAccessor({ value: 3 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Warning);
             expect(colorAccessor({ value: 4 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Critical);
-        });
-    });
-
-    describe("createReversedColorAccessor", () => {
-        it("should create a standard reversed color accessor", () => {
-            const colorAccessor = GaugeUtil.createReversedQuantityThresholdColorAccessor(gaugeConfig.thresholds as number[]);
-
-            gaugeConfig.enableThresholdMarkers = true;
-            const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-            const quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
-
-            expect(colorAccessor({ value: 1 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Critical);
-            expect(colorAccessor({ value: 3 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Warning);
-            expect(colorAccessor({ value: 4 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);
         });
     });
 

@@ -66,7 +66,13 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
         });
     }
 
-    public updateDimensions() {
+    public update(): void {
+        if (this.config.enableThresholdLabels) {
+            this.drawThresholdLabels();
+        }
+    }
+
+    public updateDimensions(): void {
         if (this.config.enableThresholdLabels) {
             this.drawThresholdLabels();
         }
@@ -107,13 +113,16 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
 
         const formatter = thresholdsSeries?.scales.r.formatters[this.config.formatterName as string] ?? (d => d);
 
-        const data = thresholdsSeries?.data;
+        const data = [...thresholdsSeries?.data];
         if (isUndefined(data)) {
             throw new Error("Gauge threshold series data is undefined");
         }
 
+        // ensure the data is sorted in ascending order by value since we're using it to calculate circle arcs
+        data.sort((a, b) => a.value - b.value);
+
         const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`)
-            .data(DonutGaugeRenderingUtil.generateThresholdRenderingData(data));
+            .data(DonutGaugeRenderingUtil.generateThresholdArcData(data));
         labelSelection.exit().remove();
         labelSelection.enter()
             .append("text")

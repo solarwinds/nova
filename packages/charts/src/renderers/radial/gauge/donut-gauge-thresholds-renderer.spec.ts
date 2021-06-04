@@ -52,7 +52,7 @@ describe("DonutGaugeThresholdsRenderer >", () => {
             arcGenerator = arc()
                 .outerRadius(renderer.getOuterRadius(renderSeries.scales.r.range(), 0))
                 .innerRadius(innerRadius >= 0 ? innerRadius : 0);
-            markerData = DonutGaugeRenderingUtil.generateThresholdRenderingData(renderSeries.dataSeries.data);
+            markerData = DonutGaugeRenderingUtil.generateThresholdArcData(renderSeries.dataSeries.data);
         });
 
         it("should render the correct number of threshold markers", () => {

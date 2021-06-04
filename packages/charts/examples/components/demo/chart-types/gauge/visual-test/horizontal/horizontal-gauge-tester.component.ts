@@ -25,7 +25,7 @@ export class HorizontalGaugeTesterComponent implements OnInit {
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal) as XYGridConfig);
         const chart = new Chart(grid);
 

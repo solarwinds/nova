@@ -61,12 +61,16 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
         });
     }
 
-    public updateDimensions() {
+    public update(): void {
         if (this.config.enableThresholdLabels) {
-            this.thresholdSeries = this.chart.getDataManager().chartSeriesSet.find(
-                (series: IChartSeries<IAccessors<any>>) => series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
-            );
-            this.isHorizontal = this.thresholdSeries?.scales.x instanceof LinearScale;
+            this.updateData();
+            this.drawThresholdLabels();
+        }
+    }
+
+    public updateDimensions(): void {
+        if (this.config.enableThresholdLabels) {
+            this.updateData();
             this.adjustGridMargin();
             this.drawThresholdLabels();
         }
@@ -77,6 +81,13 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
             this.destroy$.next();
             this.destroy$.complete();
         }
+    }
+
+    private updateData() {
+        this.thresholdSeries = this.chart.getDataManager().chartSeriesSet.find(
+            (series: IChartSeries<IAccessors<any>>) => series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
+        );
+        this.isHorizontal = this.thresholdSeries?.scales.x instanceof LinearScale;
     }
 
     private drawThresholdLabels() {
@@ -172,7 +183,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private getMarginToAdjust() {
-        if (this.isHorizontal ) {
+        if (this.isHorizontal) {
             return this.config.flipLabels ? "top" : "bottom";
         }
 
