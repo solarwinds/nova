@@ -4,13 +4,18 @@ import { Atom } from "../../atom";
 import { TooltipAtom } from "../../directives/public_api";
 import { Helpers } from "../../helpers";
 import { ProgressAtom } from "../public_api";
+import { ButtonAtom } from "../button/button.atom";
 
 describe("USERCONTROL progress", () => {
     let indeterminateProgress: ProgressAtom;
+    let compactProgress: ProgressAtom;
+    let compactProgressBtn: ButtonAtom;
 
-    beforeEach(async () => {
-        await Helpers.prepareBrowser("progress");
+    beforeAll(async () => {
+        await Helpers.prepareBrowser("progress/progress-test");
         indeterminateProgress = Atom.find(ProgressAtom, "nui-demo-indeterminate-progress");
+        compactProgress = Atom.find(ProgressAtom, "nui-demo-compact-progress");
+        compactProgressBtn = Atom.findIn(ButtonAtom, element(by.buttonText("Start/stop progress")));
     });
 
     describe("stacked header progress", () => {
@@ -20,13 +25,10 @@ describe("USERCONTROL progress", () => {
             await startBtn.click();
         });
 
-        it("bar should have value greater than 0", async () => {
-            expect(await indeterminateProgress.getWidth()).toBeGreaterThan(0);
-            await indeterminateProgress.cancelProgress();
-        });
-
-        it("should show cancel button when allow-cancel is true and hide when false", async () => {
+        it("should show cancel button when allow-cancel is true and progress run and hide when cancel button clicked", async () => {
             expect(await indeterminateProgress.canCancel()).toBe(true);
+            await indeterminateProgress.getCancelButton().click();
+            expect(await indeterminateProgress.canCancel()).toBe(false);
         });
 
         it("should be possible to display tooltip on close button", async () => {
@@ -35,6 +37,22 @@ describe("USERCONTROL progress", () => {
             await buttonTooltip.waitToBeDisplayed();
             expect(await buttonTooltip.isTooltipDisplayed()).toBeTruthy();
             expect(await buttonTooltip.getTooltipText()).toContain("Cancel");
+            // Return to initial state
+            await indeterminateProgress.getCancelButton().click();
+            expect(await indeterminateProgress.canCancel()).toBe(false);
+        });
+    });
+
+    describe("compact progress", () => {
+        beforeEach(async () => {
+            await compactProgressBtn.click();
+        });
+
+        it("should show and hide progress bar when click button in compact progress", async () => {
+            expect(await compactProgress.isProgressBarDisplayed()).toBe(true);
+            expect(await compactProgress.hasClass("nui-progress--shown"));
+            await compactProgressBtn.click();
+            expect(await compactProgress.isDisplayed()).toBe(false);
         });
     });
 });
