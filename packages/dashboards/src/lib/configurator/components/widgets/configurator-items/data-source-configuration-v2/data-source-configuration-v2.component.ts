@@ -158,7 +158,8 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
                     this.dataFieldIds.next(Object.keys(result.result || result));
                 });
             if ((this.dataSource as Partial<IConfigurable>).updateConfiguration) {
-                (this.dataSource as any).updateConfiguration(data.properties);
+                const configurableDataSource = (this.dataSource as unknown as IConfigurable);
+                configurableDataSource.updateConfiguration(data.properties ?? {});
             }
             this.dataSource.applyFilters();
         } else {
