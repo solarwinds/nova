@@ -6,7 +6,6 @@ import {
     Input,
     OnChanges,
     OnDestroy,
-    OnInit,
     Output,
     SimpleChanges,
 } from "@angular/core";
@@ -21,7 +20,7 @@ import isUndefined from "lodash/isUndefined";
     templateUrl: "./data-source-error.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataSourceErrorComponent implements OnDestroy, OnInit, OnChanges {
+export class DataSourceErrorComponent implements OnDestroy, OnChanges {
     public static lateLoadKey = "DataSourceErrorHandlingComponent";
 
     @Input() public dataSource: IDataSource;
@@ -32,19 +31,11 @@ export class DataSourceErrorComponent implements OnDestroy, OnInit, OnChanges {
     public onDestroy$: Subject<void> = new Subject<void>();
     public data: any;
 
-    private dataSourceChange$: Subject<void> = new Subject<void>();
+    private dataSourceClear$: Subject<void> = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef
     ) {}
-
-    ngOnInit() {
-        // This setTimeout is here so we wait for a tick otherwise the subscriptions does not happen
-        // since the dataSource input does not exist yet
-        setTimeout(() => {
-            this.onDataSourceChanged();
-        });
-    }
 
     ngOnChanges(changes: SimpleChanges) {
         if(changes.dataSource) {
@@ -53,15 +44,15 @@ export class DataSourceErrorComponent implements OnDestroy, OnInit, OnChanges {
     }
 
     onDataSourceChanged() {
-        this.dataSourceChange$.next();
+        this.dataSourceClear$.next();
 
-        this.dataSource?.busy?.pipe(takeUntil(this.dataSourceChange$))
+        this.dataSource?.busy?.pipe(takeUntil(this.dataSourceClear$))
             .subscribe((isBusy: boolean) => {
                 this.busy = isBusy;
                 this.changeDetector.markForCheck();
             });
 
-        this.dataSource?.outputsSubject.pipe(takeUntil(this.dataSourceChange$))
+        this.dataSource?.outputsSubject.pipe(takeUntil(this.dataSourceClear$))
             .subscribe((value) => {
                 this.data = isUndefined(value?.result) ? value : value?.result;
                 this.dataSourceError = value?.error;
@@ -73,5 +64,7 @@ export class DataSourceErrorComponent implements OnDestroy, OnInit, OnChanges {
     ngOnDestroy() {
         this.onDestroy$.next();
         this.onDestroy$.complete();
+        this.dataSourceClear$.next();
+        this.dataSourceClear$.complete();
     }
 }
