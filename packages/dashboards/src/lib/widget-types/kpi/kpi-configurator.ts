@@ -14,9 +14,18 @@ import { TitleAndDescriptionConfigurationComponent } from "../../configurator/co
 import { KpiTilesConfigurationComponent } from "../../configurator/components/widgets/kpi/kpi-tiles-configuration/kpi-tiles-configuration.component";
 import { PresentationConfigurationComponent } from "../../configurator/components/widgets/table/columns-editor/column-configuration/presentation-configuration/presentation-configuration.component";
 import { DEFAULT_KPI_BACKGROUND_COLORS } from "../../constants/default-palette";
-import { DEFAULT_PIZZAGNA_ROOT, NOVA_KPI_FORMATTERS_REGISTRY, NOVA_KPI_SECTION_CONVERTER, NOVA_KPI_TILES_CONVERTER, NOVA_PIZZAGNA_BROADCASTER, NOVA_TITLE_AND_DESCRIPTION_CONVERTER } from "../../services/types";
+import {
+    DEFAULT_PIZZAGNA_ROOT,
+    NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
+    NOVA_KPI_FORMATTERS_REGISTRY,
+    NOVA_KPI_SECTION_CONVERTER,
+    NOVA_KPI_TILES_CONVERTER,
+    NOVA_PIZZAGNA_BROADCASTER,
+    NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
+} from "../../services/types";
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
+import { DataSourceErrorHandlingComponent } from "../../configurator/components/widgets/configurator-items/data-source-error-handling/data-source-error-handling.component";
 
 /* eslint-enable max-len */
 
@@ -125,6 +134,7 @@ export const kpiConfigurator = {
                         properties: {
                             // for the DataSourceConfigurationComponent, this defines the list of data sources to pick from
                             dataSourceProviders: [] as string[],
+                            errorHandlingComponent: DataSourceErrorHandlingComponent.lateLoadKey,
                         },
                         providers: {
                             // converter transforms the data source metadata between the widget and the form

@@ -19,25 +19,15 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
     public busy$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public dataSourceFields: BehaviorSubject<(Array<IDataField>)> = new BehaviorSubject<Array<IDataField>>([]);
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>, private dashwizService: DashwizService) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
+        private dashwizService: DashwizService
+    ) {
         this.eventBus.subscribeUntil(DATA_SOURCE_CREATED, this.onDestroy$, (event: IEvent<IDataSource>) => {
             if (!event.payload) {
                 return;
             }
-
-            this.dataSource = event.payload;
-            this.dataSourceCreated.next();
-
-            this.dataSource.busy?.pipe(takeUntil(this.dataSourceCreated)).subscribe((isBusy: boolean) => {
-                dashwizService?.component?.navigationControl.next({
-                    busyState: {
-                        busy: isBusy,
-                    },
-                    allowStepChange: !isBusy,
-                });
-
-                this.busy$.next(isBusy)
-            });
+            this.onDataSourceCreated(event.payload);
         });
 
         this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent) => {
@@ -53,6 +43,22 @@ export class ConfiguratorDataSourceManagerService implements OnDestroy {
         });
     }
 
+    onDataSourceCreated(dataSource: IDataSource): void {
+
+        this.dataSource = dataSource
+        this.dataSourceCreated.next();
+
+        this.dataSource.busy?.pipe(takeUntil(this.dataSourceCreated)).subscribe((isBusy: boolean) => {
+            this.dashwizService?.component?.navigationControl.next({
+                busyState: {
+                    busy: isBusy,
+                },
+                allowStepChange: !isBusy,
+            });
+
+            this.busy$.next(isBusy)
+        });
+    }
     ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();

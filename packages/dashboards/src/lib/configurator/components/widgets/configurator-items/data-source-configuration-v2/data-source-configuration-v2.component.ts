@@ -13,13 +13,21 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
+import { EventBus, IDataSource, IEvent, LoggerService } from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import { Subject } from "rxjs/internal/Subject";
 import { take } from "rxjs/operators";
 
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
-import { IHasChangeDetector, IHasForm, IProperties, IProviderConfiguration, IProviderConfigurationForDisplay, PIZZAGNA_EVENT_BUS } from "../../../../../types";
+import {
+    IConfigurable,
+    IHasChangeDetector,
+    IHasForm,
+    IProperties,
+    IProviderConfiguration,
+    IProviderConfigurationForDisplay,
+    PIZZAGNA_EVENT_BUS,
+} from "../../../../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 import { DataSourceErrorHandlingComponent } from "../data-source-error-handling/data-source-error-handling.component";
 
@@ -49,6 +57,7 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
 
     public form: FormGroup;
     public hasDataSourceError: boolean = false;
+    public dataSource: IDataSource;
 
     // used by the Broadcaster
     public dataFieldIds = new Subject<any>();
@@ -138,20 +147,20 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
         }
         const provider = this.providerRegistryService.getProvider(data.providerId);
         if (provider) {
-            const dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
+            this.dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
 
-            this.eventBus.next(DATA_SOURCE_CREATED, { payload: dataSource });
+            this.eventBus.next(DATA_SOURCE_CREATED, { payload: this.dataSource });
 
-            dataSource.outputsSubject
+            this.dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
                     this.dataFieldIds.next(Object.keys(result.result || result));
                 });
-            if (dataSource.updateConfiguration) {
-                dataSource.updateConfiguration(data.properties);
+            if ((this.dataSource as Partial<IConfigurable>).updateConfiguration) {
+                (this.dataSource as any).updateConfiguration(data.properties);
             }
-            dataSource.applyFilters();
+            this.dataSource.applyFilters();
         } else {
             this.logger.warn("No provider found for id:", data.providerId);
         }

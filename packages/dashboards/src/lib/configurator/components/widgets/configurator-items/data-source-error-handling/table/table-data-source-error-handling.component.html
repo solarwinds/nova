@@ -1,22 +1,20 @@
-<ng-container *ngIf="dataSourceManager">
-    <div>
-        <nui-message
-            *ngIf="dataSourceManager?.dataSource &&
-                   !dataFields.length &&
-                   !dataSourceError &&
-                   !busy"
-            class="mt-4 d-block"
-            type="info"
-            [allowDismiss]="false">
-            <b i18n>Data source needs to be configured</b>
-        </nui-message>
-        <nui-message class="mt-4 d-block" *ngIf="!dataSourceManager?.dataSource" type="info"
-                     [allowDismiss]="false">
-            <b i18n>Select a data source</b>
-        </nui-message>
-        <nui-message class="mt-4 d-block" *ngIf="dataSourceError" type="critical"
-                     [allowDismiss]="false">
-            <b i18n>Something went wrong with the data source: </b> {{dataSourceError.message || dataSourceError.type}}
-        </nui-message>
-    </div>
-</ng-container>
+<div>
+    <nui-message
+        *ngIf="dataSource &&
+               !data?.dataFields.length &&
+               !dataSourceError &&
+               !busy"
+        class="mt-4 d-block"
+        type="info"
+        [allowDismiss]="false">
+        <b i18n>Data source needs to be configured</b>
+    </nui-message>
+    <nui-message class="mt-4 d-block" *ngIf="!dataSource" type="info"
+                 [allowDismiss]="false">
+        <b i18n>Select a data source</b>
+    </nui-message>
+    <nui-message class="mt-4 d-block" *ngIf="dataSourceError" type="critical"
+                 [allowDismiss]="false">
+        <b i18n>Something went wrong with the data source: </b> {{dataSourceError.message || dataSourceError.type}}
+    </nui-message>
+</div>

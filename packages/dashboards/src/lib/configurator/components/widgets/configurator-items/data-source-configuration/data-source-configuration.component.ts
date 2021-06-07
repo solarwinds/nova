@@ -12,7 +12,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
+import { EventBus, IDataSource, IEvent, LoggerService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
 
@@ -48,6 +48,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
 
     public form: FormGroup;
     public hasDataSourceError: boolean = false;
+    public dataSource: IDataSource;
 
     // used by the Broadcaster
     public dsOutput = new Subject<any>();
@@ -100,9 +101,9 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
         }
         const provider = this.providerRegistryService.getProvider(providerId);
         if (provider) {
-            const dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
-            this.eventBus.next(DATA_SOURCE_CREATED, {payload: dataSource});
-            dataSource.outputsSubject
+            this.dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
+            this.eventBus.next(DATA_SOURCE_CREATED, {payload: this.dataSource});
+            this.dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any | IDataSourceOutput<any>) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
@@ -113,7 +114,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
                     }
                 });
 
-            dataSource.applyFilters();
+            this.dataSource.applyFilters();
         } else {
             this.logger.warn("No provider found for id:", providerId);
         }

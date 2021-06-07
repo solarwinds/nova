@@ -26,6 +26,7 @@
                       [componentId]="errorHandlingComponent"
                       [componentType]="errorHandlingComponent"
                       [outputs]="['errorState']"
+                      [properties]="{ dataSource: dataSource }"
                       (output)="onErrorState($event.payload)"
                       #componentPortal="nuiComponentPortal">
             <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)">
