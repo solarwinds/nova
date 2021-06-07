@@ -21,7 +21,7 @@ import { ProviderRegistryService } from "../../../../../services/provider-regist
 import { IHasChangeDetector, IHasForm, IProperties, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
-import { DataSourceErrorHandlingComponent } from "../data-source-error-handling/data-source-error-handling.component";
+import { DataSourceErrorComponent } from "../data-source-error-handling/data-source-error.component";
 
 /**
  * This is a basic implementation of a data source configuration component. In the real world scenario, this component will most likely be replaced by a
@@ -40,7 +40,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
      * This component shows a dropdown with options for selecting a data source, this input represents these options.
      */
     @Input() dataSourceProviders: string[] = [];
-    @Input() errorHandlingComponent: string = DataSourceErrorHandlingComponent.lateLoadKey;
+    @Input() errorHandlingComponent: string = DataSourceErrorComponent.lateLoadKey;
 
     @Input() properties: IProperties;
     @Input() providerId: string;

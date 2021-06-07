@@ -104,8 +104,8 @@ import { ConfiguratorService } from "./services/configurator.service";
 import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
-import { DataSourceErrorHandlingComponent } from "./components/widgets/configurator-items/data-source-error-handling/data-source-error-handling.component";
-import { TableDataSourceErrorHandlingComponent } from "./components/widgets/configurator-items/data-source-error-handling/table/table-data-source-error-handling.component";
+import { DataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error-handling/data-source-error.component";
+import { TableDataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error-handling/table/table-data-source-error.component";
 import { ConfiguratorHeadingService } from "./services/public-api";
 /* eslint-enable max-len */
 
@@ -115,7 +115,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     DashwizButtonsComponent,
     DataSourceConfigurationComponent,
     DataSourceConfigurationV2Component,
-    DataSourceErrorHandlingComponent,
+    DataSourceErrorComponent,
     KpiTilesConfigurationComponent,
     EmbeddedContentConfigurationComponent,
     InfoMessageConfigurationComponent,
@@ -127,7 +127,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     TableColumnsConfigurationComponent,
     TableColumnsConfigurationV2Component,
     TableColumnConfigurationComponent,
-    TableDataSourceErrorHandlingComponent,
+    TableDataSourceErrorComponent,
     DonutContentPercentageFormatterComponent,
     DonutContentPercentageConfigurationComponent,
     DonutContentSumFormatterComponent,

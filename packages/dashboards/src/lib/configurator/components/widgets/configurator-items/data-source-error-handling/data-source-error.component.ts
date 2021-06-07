@@ -18,10 +18,10 @@ import isUndefined from "lodash/isUndefined";
 
 @Component({
     selector: "nui-data-source-error-handling",
-    templateUrl: "./data-source-error-handling.component.html",
+    templateUrl: "./data-source-error.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit, OnChanges {
+export class DataSourceErrorComponent implements OnDestroy, OnInit, OnChanges {
     public static lateLoadKey = "DataSourceErrorHandlingComponent";
 
     @Input() public dataSource: IDataSource;
@@ -29,9 +29,10 @@ export class DataSourceErrorHandlingComponent implements OnDestroy, OnInit, OnCh
 
     public dataSourceError: IDataSourceError | null;
     public busy: boolean;
-    private dataSourceChange$: Subject<void> = new Subject<void>();
     public onDestroy$: Subject<void> = new Subject<void>();
     public data: any;
+
+    private dataSourceChange$: Subject<void> = new Subject<void>();
 
     constructor(
         public changeDetector: ChangeDetectorRef

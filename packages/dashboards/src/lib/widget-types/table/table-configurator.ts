@@ -20,7 +20,7 @@ import {
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-import { TableDataSourceErrorHandlingComponent } from "../../configurator/components/widgets/configurator-items/data-source-error-handling/table/table-data-source-error-handling.component";
+import { TableDataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error-handling/table/table-data-source-error.component";
 /* eslint-enable max-len */
 
 export const DEFAULT_TABLE_FORMATTERS: IFormatterDefinition[] = [
@@ -116,7 +116,7 @@ export const tableConfigurator: IPizzagna = {
             componentType: DataSourceConfigurationComponent.lateLoadKey,
             properties: {
                 dataSourceProviders: [],
-                errorHandlingComponent: TableDataSourceErrorHandlingComponent.lateLoadKey,
+                errorHandlingComponent: TableDataSourceErrorComponent.lateLoadKey,
             },
             providers: {
                 [WellKnownProviders.Converter]: {

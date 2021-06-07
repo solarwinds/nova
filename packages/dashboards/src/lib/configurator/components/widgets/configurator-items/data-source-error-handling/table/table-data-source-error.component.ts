@@ -8,15 +8,15 @@ import {
     SimpleChanges,
 } from "@angular/core";
 
-import { DataSourceErrorHandlingComponent } from "../data-source-error-handling.component";
+import { DataSourceErrorComponent } from "../data-source-error.component";
 import { IDataField } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-table-data-source-error-handling",
-    templateUrl: "./table-data-source-error-handling.component.html",
+    templateUrl: "./table-data-source-error.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableDataSourceErrorHandlingComponent extends DataSourceErrorHandlingComponent implements OnDestroy, OnInit, OnChanges {
+export class TableDataSourceErrorComponent extends DataSourceErrorComponent implements OnDestroy, OnInit, OnChanges {
     public static lateLoadKey = "TableDataSourceErrorHandlingComponent";
 
     constructor(

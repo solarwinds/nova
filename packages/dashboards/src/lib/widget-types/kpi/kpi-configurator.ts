@@ -25,7 +25,7 @@ import {
 } from "../../services/types";
 import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-import { DataSourceErrorHandlingComponent } from "../../configurator/components/widgets/configurator-items/data-source-error-handling/data-source-error-handling.component";
+import { DataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error-handling/data-source-error.component";
 
 /* eslint-enable max-len */
 
@@ -134,7 +134,7 @@ export const kpiConfigurator = {
                         properties: {
                             // for the DataSourceConfigurationComponent, this defines the list of data sources to pick from
                             dataSourceProviders: [] as string[],
-                            errorHandlingComponent: DataSourceErrorHandlingComponent.lateLoadKey,
+                            errorHandlingComponent: DataSourceErrorComponent.lateLoadKey,
                         },
                         providers: {
                             // converter transforms the data source metadata between the widget and the form
