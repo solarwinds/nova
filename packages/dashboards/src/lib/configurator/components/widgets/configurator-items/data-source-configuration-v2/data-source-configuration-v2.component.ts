@@ -164,7 +164,10 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
             if (configurableDataSource?.updateConfiguration) {
                 configurableDataSource.updateConfiguration(data.properties ?? {});
             }
-            this.dataSource.applyFilters();
+            // This setTimeout is because the output of the data source might come faster than the data-source-error-component is initiated
+            setTimeout(() => {
+                this.dataSource.applyFilters();
+            });
         } else {
             this.logger.warn("No provider found for id:", data.providerId);
         }
