@@ -5,6 +5,7 @@
                         class="mb-3"
                         [control]="dataFieldIds.controls['value']">
             <nui-select-v2 formControlName="value"
+                           [popupViewportMargin]="configuratorHeading.height$ | async"
                            placeholder="Select Value" i18n-placeholder>
                 <nui-select-v2-option *ngFor="let itemValue of dropdownItems.value"
                                       [displayValueContext]="itemValue.label"

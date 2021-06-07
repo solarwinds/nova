@@ -5,6 +5,7 @@ import { Subject } from "rxjs";
 import { ITimeseriesWidgetData } from "../../../../../components/timeseries-widget/types";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { IHasChangeDetector, IHasForm, PizzagnaLayer } from "../../../../../types";
+import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
 @Component({
     selector: "nui-timeseries-tile-indicator-data-configuration",
@@ -41,6 +42,7 @@ export class TimeseriesTileIndicatorDataConfigurationComponent implements IHasCh
 
     constructor(
         public changeDetector: ChangeDetectorRef,
+        public configuratorHeading: ConfiguratorHeadingService,
         private formBuilder: FormBuilder,
         private pizzagnaService: PizzagnaService
     ) {}

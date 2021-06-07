@@ -5,6 +5,7 @@ import { DataSourceService, IconService, IDataSource, IFilteringOutputs, LoggerS
 import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@nova-ui/charts";
 import {
     ComponentRegistryService,
+    ConfiguratorHeadingService,
     DATA_SOURCE,
     DonutChartFormatterConfiguratorComponent,
     DonutContentPercentageConfigurationComponent,
@@ -165,7 +166,7 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
                         i18n-caption
                         class="mb-3"
                         [control]="currentMetric">
-            <nui-select-v2 formControlName="currentMetric" [formControl]="currentMetric">
+            <nui-select-v2 formControlName="currentMetric" [formControl]="currentMetric" [popupViewportMargin]="configuratorHeading.height$ | async">
                 <nui-select-v2-option *ngFor="let itemValue of dsOutput?.result"
                                       [value]="itemValue?.id">
                     {{itemValue?.name}}
@@ -181,7 +182,7 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
                         i18n-caption
                         class="mb-3"
                         [control]="form.controls['units']">
-            <nui-select-v2 formControlName="units" [formControl]="form.controls['units']">
+            <nui-select-v2 formControlName="units" [formControl]="form.controls['units']" [popupViewportMargin]="configuratorHeading.height$ | async">
                 <nui-select-v2-option *ngFor="let itemValue of availableUnits"
                                       [value]="itemValue">
                     {{itemValue}}
@@ -200,7 +201,7 @@ export class CustomDonutContentFormatterConfiguratorComponent extends DonutChart
     implements OnChanges, OnInit, IHasChangeDetector {
     public static lateLoadKey = "CustomFormatterConfiguratorComponent";
 
-    constructor(changeDetector: ChangeDetectorRef, formBuilder: FormBuilder, logger: LoggerService, public iconService: IconService) {
+    constructor(changeDetector: ChangeDetectorRef, formBuilder: FormBuilder, logger: LoggerService, public iconService: IconService, public configuratorHeading: ConfiguratorHeadingService) {
         super(changeDetector, formBuilder, logger);
     }
 

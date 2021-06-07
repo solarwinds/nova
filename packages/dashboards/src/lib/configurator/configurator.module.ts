@@ -106,6 +106,7 @@ import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
 import { DataSourceErrorHandlingComponent } from "./components/widgets/configurator-items/data-source-error-handling/data-source-error-handling.component";
 import { TableDataSourceErrorHandlingComponent } from "./components/widgets/configurator-items/data-source-error-handling/table/table-data-source-error-handling.component";
+import { ConfiguratorHeadingService } from "./services/public-api";
 /* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -217,6 +218,7 @@ const exportedDeclarations = [
     ],
     providers: [
         ConfiguratorService,
+        ConfiguratorHeadingService,
         WidgetConfiguratorSectionCoordinatorService,
         WidgetEditorService,
         WidgetClonerService,

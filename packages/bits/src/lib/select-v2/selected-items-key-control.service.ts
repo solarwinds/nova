@@ -30,7 +30,7 @@ export class SelectedItemsKeyControlService {
         }
     }
 
-    public onKeydown(event: KeyboardEvent) {
+    public onKeydown(event: KeyboardEvent): void {
         const caretPosition = (event.target as HTMLInputElement).selectionStart;
         const isKeyAllowed = this.isBackspace(event) || this.isLeftOrRightArrow(event);
 
@@ -68,11 +68,11 @@ export class SelectedItemsKeyControlService {
         this.selectedItemsKeyManager.setLastItemActive();
     }
 
-    public isSelectedItemsActive() {
+    public isSelectedItemsActive(): boolean {
         return Boolean(this.activeItem);
     }
 
-    public deactivateSelectedItems() {
+    public deactivateSelectedItems(): void {
         this.selectedItemsKeyManager.setActiveItem(-1);
         this.activeSelectedItemIndex = undefined;
     }

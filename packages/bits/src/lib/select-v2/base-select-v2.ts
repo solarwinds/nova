@@ -164,7 +164,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
                           public liveAnnouncer: LiveAnnouncer) {
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.value) {
             this.handleValueChange(changes.value?.currentValue);
         }
@@ -190,20 +190,20 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     /** `View -> model callback called when value changes` */
-    public onChange: (value: any) => void = () => { };
+    public onChange: (value: any) => void = (): void => { };
 
     /** `View -> model callback called when autocomplete has been touched` */
-    public onTouched = () => { };
+    public onTouched = (): void => { };
 
     /** Handles mousedown event */
     @HostListener("mousedown")
-    public onMouseDown() {
+    public onMouseDown(): void {
         this.mouseDown = true;
     }
 
     /** Handles mouseup event */
     @HostListener("mouseup", ["$event.target"])
-    public onMouseUp(target: HTMLElement) {
+    public onMouseUp(target: HTMLElement): void {
         this.mouseDown = false;
         if (!this.manualDropdownControl) {
             this.toggleDropdown();
@@ -215,7 +215,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
      * To avoid triggering showDropdown() on MouseClick. We need to open dropdown only on TAB (SHIFT + TAB) action.
      */
     @HostListener("focusin")
-    public onFocusIn() {
+    public onFocusIn(): void {
         if (this.isOpenOnFocus()) {
             this.showDropdown();
             this.announceDropdown(true);
@@ -223,12 +223,12 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     @HostListener("window:resize")
-    public onWindowResize() {
+    public onWindowResize(): void {
         this.popupUtilities.syncWidth();
     }
 
     /** Handles keydown event */
-    public onKeyDown(event: KeyboardEvent) {
+    public onKeyDown(event: KeyboardEvent): void {
         if (!this.manualDropdownControl) {
             this.optionKeyControlService.handleKeydown(event);
         }
@@ -259,7 +259,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     /** Toggles dropdown */
-    public toggleDropdown() {
+    public toggleDropdown(): void {
         if (this.isDisabled) {
             return;
         }
@@ -291,7 +291,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     /** Removes selected options or passed option if multi-select mode enabled */
-    public removeSelected(option?: SelectV2OptionComponent) {
+    public removeSelected(option?: SelectV2OptionComponent): void {
         if (!this.multiselect) { return; }
 
         this.selectedOptions = option ? pull(this.selectedOptions, option) : [];
@@ -330,7 +330,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
      * This can lead to memory leaks.
      * This is a safe guard for preventing memory leaks in derived classes.
      */
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.dropdown?.showing) {
             this.dropdown.hide();
         }
@@ -346,7 +346,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
         return this.multiselect ? options.map(o => o.value) : options[0]?.value || "";
     }
 
-    protected handleValueChange(value: OptionValueType | OptionValueType[] | null) {
+    protected handleValueChange(value: OptionValueType | OptionValueType[] | null): void {
         if (isUndefined(value)) {
             this.value = "";
             this._selectedOptions = [];

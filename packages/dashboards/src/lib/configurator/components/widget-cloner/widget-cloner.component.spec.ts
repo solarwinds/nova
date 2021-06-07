@@ -14,6 +14,7 @@ import { IWidget, PizzagnaLayer } from "../../../types";
 import { kpi } from "../../../widget-types/kpi/kpi";
 import { table } from "../../../widget-types/table/table";
 import { PreviewService } from "../../services/preview.service";
+import { ConfiguratorHeadingService } from "../../services/public-api";
 import { ConfiguratorComponent } from "../configurator/configurator.component";
 import { ConfiguratorHeadingComponent } from "../heading/configurator-heading.component";
 import { DashwizStepComponent } from "../wizard/dashwiz-step/dashwiz-step.component";
@@ -71,6 +72,7 @@ describe("WidgetClonerComponent", () => {
                 PreviewService,
                 ProviderRegistryService,
                 ConfiguratorComponent,
+                ConfiguratorHeadingService,
                 {
                     provide: PreviewService,
                     useValue: previewService,
