@@ -22,6 +22,9 @@ export class GaugeTestPageComponent implements OnDestroy {
     public donutSize = 200;
     public warningEnabled = true;
     public criticalEnabled = true;
+    public enableThresholdMarkers = true;
+    public reversed = false;
+    public flipLabels = false;
 
     private readonly lowThreshold = 1000;
     private readonly highThreshold = 1500;
@@ -36,8 +39,7 @@ export class GaugeTestPageComponent implements OnDestroy {
         // },
     };
 
-    public reversed = false;
-    public flipLabels = false;
+
     public gaugeConfig: IGaugeConfig;
 
     private originalWithRefreshRoute: boolean;
@@ -78,9 +80,20 @@ export class GaugeTestPageComponent implements OnDestroy {
         this.gaugeConfig = this.getGaugeConfig();
     }
 
+    public onEnableThresholdMarkersChange(enabled: boolean): void {
+        this.enableThresholdMarkers = enabled;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
     private getGaugeConfig(): IGaugeConfig {
-        this.thresholds[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
-        this.thresholds[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+        if (this.warningEnabled) {
+            this.thresholds[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
+        }
+
+        if (this.criticalEnabled) {
+            this.thresholds[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+        }
+
         this.thresholds[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
         this.thresholds[StandardGaugeThresholdId.Critical].enabled = this.criticalEnabled;
 
@@ -89,6 +102,7 @@ export class GaugeTestPageComponent implements OnDestroy {
             max: this.maxValue,
             reversedThresholds: this.reversed,
             thresholds: this.thresholds,
+            disableThresholdMarkers: !this.enableThresholdMarkers,
         };
     }
 }

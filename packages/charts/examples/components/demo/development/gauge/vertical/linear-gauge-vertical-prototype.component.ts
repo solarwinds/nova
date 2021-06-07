@@ -32,7 +32,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
 
     constructor(private unitConversionService: UnitConversionService) { }
 
-    public ngOnChanges(changes: ComponentChanges<LinearGaugeVerticalPrototypeComponent>) {
+    public ngOnChanges(changes: ComponentChanges<LinearGaugeVerticalPrototypeComponent>): void {
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             if (changes.thickness) {
@@ -52,11 +52,12 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.disableThresholdMarkers;
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Vertical, this.thickness) as XYGridConfig);
         const chart = new Chart(grid);
 

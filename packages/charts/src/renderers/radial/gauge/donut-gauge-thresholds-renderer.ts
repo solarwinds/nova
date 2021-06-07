@@ -11,13 +11,14 @@ import { IRadialAccessors } from "../accessors/radial-accessors";
 import { RadialRenderer } from "../radial-renderer";
 
 import { DonutGaugeRenderingUtil } from "./donut-gauge-rendering-util";
+import cloneDeep from "lodash/cloneDeep";
 
 /**
  * @ignore Default configuration for Radial Gauge Thresholds Renderer
  */
 export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IDonutGaugeThresholdsRendererConfig = {
     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
-    hideMarkers: false,
+    enabled: true,
 };
 
 /**
@@ -38,7 +39,8 @@ export class DonutGaugeThresholdsRenderer extends RadialRenderer {
     public draw(renderSeries: IRenderSeries<IRadialAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
         const dataContainer = renderSeries.containers[RenderLayerName.data];
 
-        const data = [...renderSeries.dataSeries.data];
+        const data = cloneDeep(this.config.enabled ? renderSeries.dataSeries.data : []);
+
         // ensure the data is sorted in ascending order by value since we're using it to calculate circle arcs
         data.sort((a, b) => a.value - b.value);
 
@@ -59,8 +61,7 @@ export class DonutGaugeThresholdsRenderer extends RadialRenderer {
             .attr("cx", d => markerGenerator.centroid(d)[0])
             .attr("cy", d => markerGenerator.centroid(d)[1])
             .attr("r", this.config.markerRadius as number)
-            .style("fill", (d, i) => `var(--nui-color-${data[i].isAtOrBelowQuantity ? "text-light" : "icon-default"})`)
-            .style("opacity", this.config.hideMarkers ? 0 : 1)
+            .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
             .style("stroke-width", 0);
     }
 

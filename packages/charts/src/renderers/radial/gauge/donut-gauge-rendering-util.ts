@@ -5,6 +5,10 @@ import { IGaugeThreshold } from "../../../gauge/types";
 
 export class DonutGaugeRenderingUtil {
     public static generateThresholdArcData(data: IGaugeThreshold[]): DefaultArcObject[] {
+        if (!data.length) {
+            return [];
+        }
+
         const arcData: number[] = DonutGaugeRenderingUtil.generateArcValues(data);
         const thresholdsData: any[] = [];
         const pieGenerator = pie().sort(null);

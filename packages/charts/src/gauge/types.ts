@@ -13,10 +13,8 @@ export interface IGaugeConfig {
     defaultColor?: string;
     /** An optional array of the gauge's threshold values */
     thresholds?: IGaugeThresholdConfigs;
-    /** The ID of the active threshold */
-    activeThresholdId?: string | null;
-    /** Set to true to hide the threshold markers */
-    hideThresholdMarkers?: boolean;
+    /** Set to true to disable the threshold markers */
+    disableThresholdMarkers?: boolean;
     /** Boolean indicating whether the direction of the thresholds should be reversed */
     reversedThresholds?: boolean;
     /** Optional accessor for customizing the color to display for the quantity segment as each threshold is hit */
@@ -52,7 +50,7 @@ export interface IGaugeThresholdConfig {
 */
 export interface IGaugeThreshold extends IGaugeThresholdConfig {
     /** Boolean indicating whether the threshold is hit */
-    isAtOrBelowQuantity: boolean;
+    hit?: boolean;
     /** Additional metadata as needed */
     [key: string]: any;
 }

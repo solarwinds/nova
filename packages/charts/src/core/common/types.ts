@@ -113,7 +113,7 @@ export interface IGaugeThresholdsRendererConfig {
     /** The radius of each threshold marker */
     markerRadius?: StandardGaugeThresholdMarkerRadius | number;
     /** Boolean indicating whether the renderer is enabled */
-    hideMarkers?: boolean;
+    enabled?: boolean;
 }
 
 /**

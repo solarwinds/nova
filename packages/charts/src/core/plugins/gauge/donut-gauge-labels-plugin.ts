@@ -1,4 +1,5 @@
 import { Arc, arc, DefaultArcObject } from "d3-shape";
+import cloneDeep from "lodash/cloneDeep";
 import defaultsDeep from "lodash/defaultsDeep";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
@@ -34,7 +35,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
         applyClearance: true,
         padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
-        enableThresholdLabels: true,
+        disableThresholdLabels: false,
     };
 
     private destroy$ = new Subject();
@@ -67,15 +68,11 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
     }
 
     public update(): void {
-        if (this.config.enableThresholdLabels) {
-            this.drawThresholdLabels();
-        }
+        this.drawThresholdLabels();
     }
 
     public updateDimensions(): void {
-        if (this.config.enableThresholdLabels) {
-            this.drawThresholdLabels();
-        }
+        this.drawThresholdLabels();
     }
 
     public destroy(): void {
@@ -113,7 +110,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
 
         const formatter = thresholdsSeries?.scales.r.formatters[this.config.formatterName as string] ?? (d => d);
 
-        const data = [...thresholdsSeries?.data];
+        const data = cloneDeep(this.config.disableThresholdLabels ? [] : thresholdsSeries?.data);
         if (isUndefined(data)) {
             throw new Error("Gauge threshold series data is undefined");
         }

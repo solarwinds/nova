@@ -81,6 +81,16 @@
         </div>
         <div class="ml-3">
             <div class="d-flex align-items-center">
+                <input class="mb-2"
+                       type="checkbox"
+                       id="enable-markers"
+                       [ngModel]="enableThresholdMarkers"
+                       (ngModelChange)="onEnableThresholdMarkersChange($event)" />
+                <label class="px-3" for="enable-markers">Enable Markers</label>
+            </div>
+        </div>
+        <div class="ml-3">
+            <div class="d-flex align-items-center">
                 <input id="reversed"
                        class="mb-2"
                        type="checkbox"

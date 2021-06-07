@@ -30,14 +30,14 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
         applyClearance: true,
         padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
-        enableThresholdLabels: true,
+        disableThresholdLabels: false,
         flipLabels: false,
     };
 
     private destroy$ = new Subject();
     private lasagnaLayer: D3Selection<SVGElement>;
     private isHorizontal = true;
-    private thresholdSeries: IChartSeries<IAccessors<any>> | undefined;
+    private thresholdsSeries: IChartSeries<IAccessors<any>> | undefined;
 
     constructor(public config: IGaugeLabelsPluginConfig = {}) {
         super();
@@ -62,18 +62,14 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     }
 
     public update(): void {
-        if (this.config.enableThresholdLabels) {
-            this.updateData();
-            this.drawThresholdLabels();
-        }
+        this.updateData();
+        this.drawThresholdLabels();
     }
 
     public updateDimensions(): void {
-        if (this.config.enableThresholdLabels) {
-            this.updateData();
-            this.adjustGridMargin();
-            this.drawThresholdLabels();
-        }
+        this.updateData();
+        this.adjustGridMargin();
+        this.drawThresholdLabels();
     }
 
     public destroy(): void {
@@ -84,14 +80,14 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
     }
 
     private updateData() {
-        this.thresholdSeries = this.chart.getDataManager().chartSeriesSet.find(
+        this.thresholdsSeries = this.chart.getDataManager().chartSeriesSet.find(
             (series: IChartSeries<IAccessors<any>>) => series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID
         );
-        this.isHorizontal = this.thresholdSeries?.scales.x instanceof LinearScale;
+        this.isHorizontal = this.thresholdsSeries?.scales.x instanceof LinearScale;
     }
 
     private drawThresholdLabels() {
-        if (isUndefined(this.thresholdSeries)) {
+        if (isUndefined(this.thresholdsSeries)) {
             console.warn("Threshold series is undefined. As a result, threshold labels for the linear gauge will not be rendered.");
             return;
         }
@@ -103,7 +99,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
                 .style("opacity", 0);
         }
 
-        const data = cloneDeep(this.thresholdSeries?.data);
+        const data = cloneDeep(this.config.disableThresholdLabels ? [] : this.thresholdsSeries?.data);
         if (isUndefined(data)) {
             throw new Error("Gauge threshold series data is undefined");
         }
@@ -112,7 +108,7 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
         // removing this value to avoid rendering a label for it
         data.pop();
 
-        const formatter = this.thresholdSeries?.scales[this.isHorizontal ? "x" : "y"].formatters[this.config.formatterName as string] ?? (d => d);
+        const formatter = this.thresholdsSeries?.scales[this.isHorizontal ? "x" : "y"].formatters[this.config.formatterName as string] ?? (d => d);
         const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`).data(data);
 
         labelSelection.exit().remove();
@@ -129,9 +125,9 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
 
     private xTranslate = (d: any, i: number) => {
         if (this.isHorizontal) {
-            const thresholdSeries = this.thresholdSeries as IDataSeries<IAccessors>;
-            const value = this.thresholdSeries?.accessors?.data?.value?.(d, i, thresholdSeries?.data as any[], thresholdSeries);
-            return this.thresholdSeries?.scales.x.convert(value);
+            const thresholdsSeries = this.thresholdsSeries as IDataSeries<IAccessors>;
+            const value = this.thresholdsSeries?.accessors?.data?.value?.(d, i, thresholdsSeries?.data as any[], thresholdsSeries);
+            return this.thresholdsSeries?.scales.x.convert(value);
         }
 
         return this.getLabelOffset();
@@ -142,9 +138,9 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
             return this.getLabelOffset();
         }
 
-        const thresholdSeries = this.thresholdSeries as IDataSeries<IAccessors>;
-        const value = this.thresholdSeries?.accessors?.data?.value?.(d, i, thresholdSeries?.data as any[], thresholdSeries);
-        return this.thresholdSeries?.scales.y.convert(value);
+        const thresholdsSeries = this.thresholdsSeries as IDataSeries<IAccessors>;
+        const value = this.thresholdsSeries?.accessors?.data?.value?.(d, i, thresholdsSeries?.data as any[], thresholdsSeries);
+        return this.thresholdsSeries?.scales.y.convert(value);
     }
 
     private getLabelOffset() {
