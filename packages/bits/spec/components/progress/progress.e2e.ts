@@ -50,7 +50,6 @@ describe("USERCONTROL progress", () => {
 
         it("should show and hide progress bar when click button in compact progress", async () => {
             expect(await compactProgress.isProgressBarDisplayed()).toBe(true);
-            expect(await compactProgress.hasClass("nui-progress--shown"));
             await compactProgressBtn.click();
             expect(await compactProgress.isDisplayed()).toBe(false);
         });
