@@ -15,6 +15,7 @@
             <nui-select-v2 placeholder="Data Sources" i18n-placeholder
                            [title]="form.get('providerId')?.value"
                            formControlName="providerId"
+                           [popupViewportMargin]="configuratorHeading.height$ | async"
                            (valueSelected)="onDataSourceChange($event)"
                            class="datasource-configuration__accordion-content__datasource-input">
                 <nui-select-v2-option *ngFor="let dataSourceProvider of dataSourceProviders" [title]="dataSourceProvider" [value]="dataSourceProvider">

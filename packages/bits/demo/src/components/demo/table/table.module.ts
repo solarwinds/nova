@@ -48,6 +48,7 @@ import {
     TableVirtualScrollSelectStickyHeaderExampleComponent,
     TableVirtualScrollStepsAndButtonExampleComponent,
     TableVirtualScrollStickyHeaderExampleComponent,
+    TableSelectPinnedHeaderComponent,
     TableVisualTestComponent,
 } from "./index";
 
@@ -269,6 +270,7 @@ const routes = [
         TableSearchExampleComponent,
         TableSelectableToggleExampleComponent,
         TableSelectExampleComponent,
+        TableSelectPinnedHeaderComponent,
         TableSortingExampleComponent,
         TableCellContentAlignComponent,
         TableTestComponent,

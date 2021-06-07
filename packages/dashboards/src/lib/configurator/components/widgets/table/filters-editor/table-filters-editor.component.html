@@ -15,6 +15,7 @@
                             [control]="form.controls['sortBy']"
                             class="w-50">
                  <nui-select-v2 placeholder="Select column" i18n-placeholder
+                                [popupViewportMargin]="configuratorHeading.height$ | async"
                                 formControlName="sortBy"
                                 class="table-filters-configuration__accordion-content__sort-by-input">
                     <nui-select-v2-option *ngFor="let column of sortableColumns" [value]="column.id">

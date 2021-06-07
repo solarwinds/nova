@@ -12,15 +12,15 @@ const COUNTRIES_API = "https://countries-274616.ew.r.appspot.com/";
 const exampleRoutes: Routes = [
     {
         path: "overview",
-        loadChildren: () => import("components/docs/overview/overview.module").then(m => m.OverviewModule),
+        loadChildren: async () => import("components/docs/overview/overview.module").then(m => m.OverviewModule),
     },
     {
         path: "tutorials",
-        loadChildren: () => import("components/docs/tutorials/tutorials.module").then(m => m.TutorialsModule),
+        loadChildren: async () => import("components/docs/tutorials/tutorials.module").then(m => m.TutorialsModule),
     },
     {
         path: "widget-types",
-        loadChildren: () => import("components/docs/widget-types/widget-types.module").then(m => m.WidgetTypesModule),
+        loadChildren: async () => import("components/docs/widget-types/widget-types.module").then(m => m.WidgetTypesModule),
     },
 ];
 

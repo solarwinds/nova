@@ -88,6 +88,10 @@
             {
                 "title": "Widget Error Handling",
                 "file": "../pages/tutorials/widget-error-handling.md"
+            },
+            {
+                "title": "Dynamic Header Links",
+                "file": "../pages/tutorials/dynamic-header-links.md"
             }
         ]
     },

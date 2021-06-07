@@ -7,6 +7,8 @@ import { ProportionalDocsComponent } from "./proportional-docs.component";
 import { ProportionalDonutContentDocsComponent } from "./proportional-donut-content-formatters/docs/proportional-donut-content-docs.component";
 import { ProportionalWidgetDonutContentFormattersExampleComponent } from "./proportional-donut-content-formatters/example/proportional-donut-content-formatters-example.component";
 import { ProportionalWidgetExampleComponent } from "./proportional-widget-example/proportional-widget-example.component";
+import { ProportionalWidgetInteractiveExampleComponent } from "./proportional-widget-interactive-example/proportional-widget-interactive-example.component";
+
 
 const routes: Routes = [
     {
@@ -46,6 +48,15 @@ const routes: Routes = [
             },
         },
     },
+    {
+        path: "proportional-widget-interactive-example",
+        component: ProportionalWidgetInteractiveExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -60,6 +71,7 @@ const routes: Routes = [
     declarations: [
         ProportionalDocsComponent,
         ProportionalWidgetExampleComponent,
+        ProportionalWidgetInteractiveExampleComponent,
         ProportionalWidgetDonutContentFormattersExampleComponent,
         ProportionalDonutContentDocsComponent,
     ],

@@ -58,7 +58,7 @@ export class SelectV2OptionComponent extends OverlayItemComponent implements Hig
 
     /** Handles Mouse click */
     @HostListener("click", ["$event"])
-    public onClick(event: UIEvent) {
+    public onClick(event: UIEvent): void {
         event.preventDefault();
         event.stopPropagation();
         if (this.isDisabled) {

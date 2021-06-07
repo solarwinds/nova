@@ -8,3 +8,4 @@ export * from "./chips-visual-test/chips-visual-test.component";
 export * from "./chips-overflow/chips-overflow.example.component";
 export * from "./chips-custom-css/chips-custom-css.example.component";
 export * from "./chips-custom-css/chips-custom-css.example.component";
+export * from "./chips-test/chips-test.component";

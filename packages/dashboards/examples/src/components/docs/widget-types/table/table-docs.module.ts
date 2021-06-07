@@ -7,6 +7,7 @@ import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../src/lib/widget-types
 
 import { TableDocsComponent } from "./table-docs.component";
 import { TableWidgetExampleComponent } from "./table-widget-example/table-widget-example.component";
+import { TableWidgetInteractiveExampleComponent } from "./table-widget-interactive-example/table-widget-interactive-example.component";
 import { TableSearchDocsComponent } from "./table-widget-search-example/docs/table-search-docs.component";
 import { TableWidgetSearchExampleComponent } from "./table-widget-search-example/example/table-widget-search.example.component";
 
@@ -54,6 +55,7 @@ const routes: Routes = [
     declarations: [
         TableDocsComponent,
         TableSearchDocsComponent,
+        TableWidgetInteractiveExampleComponent,
         TableWidgetExampleComponent,
         TableWidgetSearchExampleComponent,
     ],

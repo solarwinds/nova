@@ -13,3 +13,4 @@ export * from "./wizard-constant-height/wizard-constant-height.example.component
 export * from "./wizard-custom-step-line-width/wizard-custom-step-line-width.example.component";
 export * from "./wizard-steps/wizard-steps.example.component";
 export * from "./wizard-dynamic-remove/wizard-dynamic-remove.example.component";
+export * from "./wizard-reset-step/wizard-reset-step-example.component";

@@ -15,6 +15,7 @@
                             i18n-caption
                             [control]="form.controls['startingTimespan']">
                 <nui-select-v2 placeholder="Starting Timespan" i18n-placeholder
+                               [popupViewportMargin]="configuratorHeading.height$ | async"
                                formControlName="startingTimespan">
                     <nui-select-v2-option *ngFor="let timeSpan of timeSpans" [value]="timeSpan">
                         {{timeSpan.name}}
@@ -31,6 +32,7 @@
                             i18n-caption
                             [control]="form.controls['legendPlacement']">
                 <nui-select-v2 placeholder="Select Legend Orientation" i18n-placeholder
+                               [popupViewportMargin]="configuratorHeading.height$ | async"
                                formControlName="legendPlacement">
                     <nui-select-v2-option *ngFor="let legendPlacement of legendPlacements" [value]="legendPlacement.id">
                         {{legendPlacement.label}}
@@ -58,6 +60,7 @@
         <nui-form-field caption="Chart type" i18n-caption [control]="form.controls['preset']">
 
             <nui-select-v2 placeholder="Chart type" i18n-placeholder
+                           [popupViewportMargin]="configuratorHeading.height$ | async"
                            formControlName="preset">
                 <nui-select-v2-option *ngFor="let option of availableChartTypes"
                                       [value]="option.value">{{option.label}}</nui-select-v2-option>

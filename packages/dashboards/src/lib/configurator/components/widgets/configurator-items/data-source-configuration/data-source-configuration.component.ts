@@ -20,6 +20,7 @@ import { IDataSourceOutput } from "../../../../../components/providers/types";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
 import { IHasChangeDetector, IHasForm, IProperties, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
+import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 import { DataSourceErrorHandlingComponent } from "../data-source-error-handling/data-source-error-handling.component";
 
 /**
@@ -55,6 +56,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
     public dataFieldIds = new Subject<any>();
 
     constructor(public changeDetector: ChangeDetectorRef,
+                public configuratorHeading: ConfiguratorHeadingService,
                 private formBuilder: FormBuilder,
                 private providerRegistryService: ProviderRegistryService,
                 @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,

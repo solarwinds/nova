@@ -18,6 +18,7 @@ import {
     NuiValidationMessageModule,
     NuiWizardV2Module,
     SrlcStage,
+    NuiSelectV2Module,
 } from "@nova-ui/bits";
 
 import {
@@ -31,6 +32,8 @@ import {
     WizardHorizontalExampleComponent,
     WizardRemoveStepExampleComponent,
     WizardVerticalExampleComponent,
+    WizardAsyncFormValidationExampleComponent,
+    WizardRestoreStateExampleComponent,
 } from "./index";
 
 const routes = [
@@ -65,6 +68,7 @@ const routes = [
         NuiBusyModule,
         NuiProgressModule,
         NuiDatePickerModule,
+        NuiSelectV2Module,
     ],
     declarations: [
         WizardDocsComponent,
@@ -77,6 +81,8 @@ const routes = [
         WizardCustomFooterExampleComponent,
         WizardDynamicExampleComponent,
         WizardRemoveStepExampleComponent,
+        WizardAsyncFormValidationExampleComponent,
+        WizardRestoreStateExampleComponent,
     ],
     providers: [
         {

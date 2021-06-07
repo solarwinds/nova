@@ -45,9 +45,7 @@ describe("XYChartComponent", () => {
     let fixture: ComponentFixture<TestComponent>;
     const eventBus = new EventBus<IEvent>();
 
-    function getChart(): Chart {
-        return component.chartAssist.chart as Chart;
-    }
+    const getChart = (): Chart => component.chartAssist.chart as Chart;
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
@@ -169,7 +167,7 @@ describe("XYChartComponent", () => {
     });
 
     describe("onPrimaryDescClick", () => {
-        let initializationChanges = {
+        const initializationChanges = {
             widgetData: { isFirstChange: () => false } as SimpleChange,
             configuration: { isFirstChange: () => false, currentValue: {} } as SimpleChange,
         };

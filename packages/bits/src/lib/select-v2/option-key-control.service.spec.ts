@@ -45,8 +45,8 @@ describe("components > ", () => {
                 expect(spy).toHaveBeenCalledWith(keyBoardEventMock);
             });
 
-            it("should call 'scrollToOption' if popup showing = true", () => {
-                const spy = spyOn(service, "scrollToOption" as any);
+            it("should call 'scrollToActiveItem' if popup showing = true", () => {
+                const spy = spyOn(service, "scrollToActiveItem" as any);
                 const option = { block: "nearest" };
 
                 service.handleKeydown(keyBoardEventMock as any);
