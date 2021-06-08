@@ -1,6 +1,6 @@
 export * from "./unit-conversion.constants";
 export * from "./images.constants";
-export * from "./wizard.constans";
+export * from "./wizard.constants";
 export * from "./keycode.constants";
 export * from "./resize.constants";
 export * from "./path.constant";
