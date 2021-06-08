@@ -26,6 +26,7 @@ import {WizardStepFooterDirective} from "../wizard-step-footer.directive";
 import {WizardStepLabelDirective} from "../wizard-step-label.directive";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { IWizardStepStateIconConfig } from "../types";
 
 @Component({
     selector: "nui-wizard-step-v2",
@@ -49,8 +50,7 @@ import { takeUntil } from "rxjs/operators";
 export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy, ErrorStateMatcher {
     @Input() template?: TemplateRef<any>;
 
-    /** Icon for the initial step state. */
-    @Input() icon: string;
+    @Input() stepIconsConfig: Partial<IWizardStepStateIconConfig>;
 
     /** Content for step label given by `<ng-template wizardStepLabel>`. */
     @ContentChild(WizardStepLabelDirective) stepLabel: WizardStepLabelDirective;
@@ -69,17 +69,17 @@ export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy,
         super(stepper, stepperOptions);
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.onControlStatusChanges();
     }
 
-    ngOnDestroy(): void {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
     /** Custom error state matcher that additionally checks for validity of interacted form. */
-    isErrorState(control?: FormControl, form?: FormGroupDirective | NgForm): boolean {
+    public isErrorState(control?: FormControl, form?: FormGroupDirective | NgForm): boolean {
         const originalErrorState = this._errorStateMatcher.isErrorState(control, form);
 
         // Custom error state checks for the validity of form that is not submitted or touched

@@ -1,14 +1,22 @@
-<nui-wizard-horizontal [customIcons]="{selected: 'edit'}">
+<nui-wizard-horizontal>
 
     <nui-wizard-step-v2 i18n-label label="First step">
-        <span i18n>This is the first step of our wizard</span>.
+        <div class="p-5">
+            <span i18n>This is the first step of our wizard</span>.
+        </div>
         <ng-template wizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
         </ng-template>
     </nui-wizard-step-v2>
 
-    <nui-wizard-step-v2 i18n-label label="Second step" [icon]="'email'">
-        <span i18n>This is the second step of our wizard</span>.
+    <!--
+        See how we use the 'stepIconsConfig' input here to override the global icons configuration
+        for this particular wizard step
+    -->
+    <nui-wizard-step-v2 i18n-label label="Second step" [stepIconsConfig]="secondStepIconConfig">
+        <div class="p-5">
+            <span i18n>This is the second step of our wizard</span>.
+        </div>
         <ng-template wizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
@@ -16,14 +24,16 @@
     </nui-wizard-step-v2>
 
     <nui-wizard-step-v2 i18n-label label="Final step">
-        <span i18n>We finally reached our last step</span>
+        <div class="p-5">
+            <span i18n>We finally reached our last step</span>
+        </div>
         <ng-template wizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
         </ng-template>
     </nui-wizard-step-v2>
 
     <ng-template #wizardPrevious>
-        <button type="button" nuiWizardPrevious nui-button icon="caret-left">
+        <button type="button" nuiWizardPrevious nui-button icon="caret-left" i18n>
             Previous
         </button>
     </ng-template>
@@ -35,6 +45,7 @@
                 displayStyle="primary"
                 icon="caret-right"
                 iconRight="true"
+                i18n
         >Next</button>
     </ng-template>
 </nui-wizard-horizontal>

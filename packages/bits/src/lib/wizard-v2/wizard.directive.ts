@@ -27,15 +27,6 @@ import { distinctUntilChanged, startWith, takeUntil } from "rxjs/operators";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 import { IWizardState } from "./types";
 
-export interface IWizardIcons {
-    "selected": string;
-    "visited": string;
-    "initial": string;
-    "error": string;
-    [key: string]: string;
-}
-
-
 @Directive({
     selector: "[nuiWizard]",
     providers: [
@@ -59,11 +50,9 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
     /** Whether ripples should be disabled for the step headers. */
     @Input() disableRipple: boolean;
 
-    /** Custom icons for different wizard states. */
-    @Input() customIcons: Partial<IWizardIcons>;
-
     /** The state of the wizard */
     @Input() state: IWizardState;
+
     /** Emits the completed wizard state on component destroy */
     @Output() readonly finished: EventEmitter<IWizardState> = new EventEmitter<IWizardState>();
 
@@ -135,20 +124,25 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
         super.ngOnDestroy();
     }
 
-    public getStepState(i: number, state: StepState = STEP_STATE.NUMBER): StepState {
+    public getStepState(i: number, stepState: StepState = STEP_STATE.NUMBER): StepState {
         const steps = this.steps.toArray();
         const step = steps[i];
         const isSelected = steps.indexOf(this.selected) === i;
 
-        if (step._showError && step.hasError && !isSelected) {
+        // if (step._showError && step.hasError && !isSelected) {
+        if (step.hasError && isSelected) {
             return STEP_STATE.ERROR;
-        } else if (isSelected) {
-            return STEP_STATE.EDIT
-        } else if (steps[i].completed) {
-            return STEP_STATE.DONE
-        } else {
-            return state;
         }
+
+        if (isSelected) {
+            return STEP_STATE.EDIT
+        }
+
+        if (steps[i].completed) {
+            return STEP_STATE.DONE
+        }
+
+        return stepState;
     }
 
     // Restores the completed wizard to the last step

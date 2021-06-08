@@ -15,18 +15,23 @@ import {
 } from "@angular/core";
 
 import {WizardStepLabelDirective} from "../wizard-step-label.directive";
-import {IWizardIcons} from "../wizard.directive";
-import {WIZARD_ICONS_PRESET, WIZARD_ICONS_PRESET_TOKEN} from "../../../constants";
+import { WIZARD_CONFIG, WIZARD_CONFIG_DEFAULT } from "../../../constants";
+import { IWizardConfig, IWizardStepStateIconConfig } from "../types";
+
+interface IWizardCurrentStepStatusIconConfig {
+    icon: string | undefined;
+    color: string | undefined;
+}
 
 @Component({
-    selector: "wizard-step-header",
+    selector: "nui-wizard-step-header",
     templateUrl: "wizard-step-header.component.html",
     styleUrls: ["wizard-step-header.component.less"],
     host: {
         "class": "nui-wizard-step-header mat-focus-indicator",
         "[class.nui-wizard-step-header--selected]": "selected",
         "[class.nui-wizard-step-header--optional]": "optional",
-        "[class.nui-wizard-step-header--completed]": "state == 'done'",
+        "[class.nui-wizard-step-header--completed]": "stepState === 'done'",
         "[class.nui-wizard-step-header--disabled]": "!completed",
         "role": "tab",
     },
@@ -34,17 +39,11 @@ import {WIZARD_ICONS_PRESET, WIZARD_ICONS_PRESET_TOKEN} from "../../../constants
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardStepHeaderComponent extends CdkStepHeader implements AfterViewInit, OnDestroy, OnChanges {
-    public icons: IWizardIcons = {...WIZARD_ICONS_PRESET};
-    public iconColor: string;
-
     /** State of the given step. */
-    @Input() state: StepState;
+    @Input() stepState: StepState;
 
-    /** Set custom initial icon for the given step. */
-    @Input() stepIcon: string;
-
-    /** Set custom icons for the given step. */
-    @Input() customIcons: Partial<IWizardIcons>;
+    /** Custom icon config received from the wizard step. Allows to customize state icons for a particular wizard step */
+    @Input() stepIconsConfig: Partial<IWizardStepStateIconConfig>;
 
     /** Label of the given step. */
     @Input() label: WizardStepLabelDirective | string;
@@ -69,24 +68,27 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     /** Whether the given step is optional. */
     @Input() optional: boolean;
+
     /** Whether the ripple should be disabled. */
     @Input() disableRipple: boolean;
+
+    private wizardConfig: Partial<IWizardConfig> = {...WIZARD_CONFIG_DEFAULT};
 
     constructor(
         private _focusMonitor: FocusMonitor,
         _elementRef: ElementRef<HTMLElement>,
-        @Optional() @Inject(WIZARD_ICONS_PRESET_TOKEN) private injectedIcons: IWizardIcons
+        @Optional() @Inject(WIZARD_CONFIG) public readonly config?: IWizardConfig
     ) {
         super(_elementRef);
-        if (this.injectedIcons) {
-            this.icons = this.getIconsForStates(this.icons, this.injectedIcons);
-        }
 
+        if (this.config) {
+            this.updateIconsConfig(this.config.stepStateIcons);
+        }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.customIcons) {
-            this.icons = this.getIconsForStates(this.icons, changes.customIcons.currentValue);
+        if (changes?.stepIconsConfig?.currentValue) {
+            this.updateIconsConfig(changes?.stepIconsConfig?.currentValue);
         }
     }
 
@@ -99,70 +101,62 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     }
 
     /** Focuses the step header. */
-    focus(): void {
+    public focus(): void {
         this._focusMonitor.focusVia(this._elementRef, "program");
     }
 
     /** Returns string label of given step if it is a text label. */
-    _stringLabel(): string | null {
+    public get stringLabel(): string | null {
         return this.label instanceof WizardStepLabelDirective ? null : this.label;
     }
 
     /** Returns WizardStepLabel if the label of given step is a template label. */
-    _templateLabel(): WizardStepLabelDirective | null {
+    public get templateLabel(): WizardStepLabelDirective | null {
         return this.label instanceof WizardStepLabelDirective ? this.label : null;
     }
 
-    _getDefaultTextForState(state: StepState): string {
-        let returnedState: StepState = state;
-        switch (state) {
-            case "number":
-                returnedState = `${this.index + 1}`;
-                break;
+    public get currentStepStateIconConfig(): IWizardCurrentStepStatusIconConfig | undefined {
 
-            case "edit":
-                returnedState = "create";
-                break;
-
-            case "error":
-                returnedState = "warning";
-                break;
-
-            default:
+        if (this.stepState === "number") {
+            return {
+                icon: this.wizardConfig.stepStateIcons?.icons?.initial,
+                color: this.wizardConfig.stepStateIcons?.colors?.initial,
+            };
         }
-
-        return returnedState;
+        
+        if (this.stepState === "done") {
+            return {
+                icon: this.wizardConfig.stepStateIcons?.icons?.visited,
+                color: this.wizardConfig.stepStateIcons?.colors?.visited,
+            };
+        }
+        
+        if (this.stepState === "edit") {
+            return {
+                icon: this.wizardConfig.stepStateIcons?.icons?.active,
+                color: this.wizardConfig.stepStateIcons?.colors?.active,
+            };
+        }
+        
+        if (this.stepState === "error") {
+            return {
+                icon: this.wizardConfig.stepStateIcons?.icons?.error,
+                color: this.wizardConfig.stepStateIcons?.colors?.error,
+            };
+        }
     }
 
-    private getIconsForStates(icons: IWizardIcons, customIcons: IWizardIcons): IWizardIcons {
-        const stepIcons = icons;
-        if (customIcons) {
-            Object.keys(customIcons).forEach(icon => {
-                stepIcons[icon] = customIcons[icon];
-            });
+    private updateIconsConfig(iconConfig: Partial<IWizardStepStateIconConfig> ) {
+
+        this.wizardConfig.stepStateIcons = {
+            icons: {
+                ...this.wizardConfig.stepStateIcons?.icons,
+                ...iconConfig?.icons,
+            },
+            colors: {
+                ...this.wizardConfig.stepStateIcons?.colors,
+                ...iconConfig?.colors,
+            },
         }
-
-        return stepIcons
     }
-
-    _getDefaultIconForState(state: StepState): string {
-        let returnedState: StepState = state;
-
-        if (state === "number") {
-            returnedState = this.stepIcon || this.icons.initial;
-            this.iconColor = "gray";
-        } else if (state === "done") {
-            returnedState = this.icons.visited;
-            this.iconColor = "primary-blue";
-        } else if (state === "edit") {
-            returnedState = this.icons.selected;
-            this.iconColor = "black";
-        } else if (state === "error") {
-            returnedState = this.icons.error;
-            this.iconColor = "red";
-        }
-
-        return returnedState;
-    }
-
 }

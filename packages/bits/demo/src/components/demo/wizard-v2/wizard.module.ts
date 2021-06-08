@@ -20,6 +20,9 @@ import {
     NuiWizardV2Module,
     SrlcStage,
     NuiSelectV2Module,
+    WIZARD_CONFIG,
+    IWizardConfig,
+    WIZARD_CONFIG_DEFAULT,
 } from "@nova-ui/bits";
 
 import {

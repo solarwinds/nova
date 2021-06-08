@@ -5,14 +5,14 @@ import {
     ViewChild,
 } from "@angular/core";
 
-import {IWizardStepConfig } from "../wizard-dynamic/wizard-dynamic.example.component";
+import {IWizardStepV2Component } from "../wizard-dynamic/wizard-dynamic.example.component";
 
 @Component({
     selector: "nui-wizard-remove-step-example",
     templateUrl: "./wizard-remove-step-example.component.html",
 })
 export class WizardRemoveStepExampleComponent implements AfterViewInit {
-    public steps: IWizardStepConfig[] = [];
+    public steps: IWizardStepV2Component[] = [];
 
     @ViewChild("normalStep") normalStep: TemplateRef<string>;
 

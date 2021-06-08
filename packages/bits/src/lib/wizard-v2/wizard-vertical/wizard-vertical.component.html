@@ -1,5 +1,5 @@
 <div class="nui-step" *ngFor="let step of steps; let i = index; let isLast = last">
-    <wizard-step-header class="nui-wizard-vertical-header"
+    <nui-wizard-step-header class="nui-wizard-vertical-header"
                         (click)="step.select()"
                         (keydown)="_onKeydown($event)"
                         [tabIndex]="_getFocusIndex() == i ? 0 : -1"
@@ -18,7 +18,7 @@
                         [optional]="step.optional"
                         [errorMessage]="step.errorMessage"
                         [disableRipple]="disableRipple">
-    </wizard-step-header>
+    </nui-wizard-step-header>
 
     <div class="nui-wizard-vertical-content-container" [class.nui-wizard-vertical-line]="!isLast">
         <div class="nui-wizard-vertical-content" role="tabpanel"
