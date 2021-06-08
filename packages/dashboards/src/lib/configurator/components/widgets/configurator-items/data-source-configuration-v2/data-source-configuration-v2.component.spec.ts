@@ -50,7 +50,7 @@ class DataSource2 {
 
 }
 
-fdescribe("DataSourceConfigurationV2Component", () => {
+describe("DataSourceConfigurationV2Component", () => {
     let component: DataSourceConfigurationV2Component;
     let fixture: ComponentFixture<DataSourceConfigurationV2Component>;
     let providerRegistryService: ProviderRegistryService;
