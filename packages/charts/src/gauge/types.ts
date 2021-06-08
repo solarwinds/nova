@@ -46,11 +46,21 @@ export interface IGaugeThresholdConfig {
 
 /**
  * @ignore
- * Definition for gauge threshold data
+ * Definition for a gauge threshold datum
 */
 export interface IGaugeThreshold extends IGaugeThresholdConfig {
     /** Boolean indicating whether the threshold is hit */
     hit?: boolean;
     /** Additional metadata as needed */
     [key: string]: any;
+}
+
+/**
+ * Data used for visualizing thresholds on a gauge
+ */
+export interface IGaugeThresholdsData {
+    /** A collection of thresholds */
+    thresholds: IGaugeThreshold[];
+    /** The ID of the currently active threshold */
+    activeThresholdId?: string;
 }

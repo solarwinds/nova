@@ -57,7 +57,10 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
     }
 
     public ngOnInit(): void {
-        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal, this.thickness) as XYGridConfig);
+        const gridConfig = linearGaugeGridConfig(GaugeMode.Horizontal, this.thickness) as XYGridConfig;
+        gridConfig.dimension.margin.right = 15;
+        gridConfig.dimension.margin.left = 5;
+        const grid = new XYGrid(gridConfig);
         const chart = new Chart(grid);
 
         this.chartAssist = new ChartAssist(chart, stack);

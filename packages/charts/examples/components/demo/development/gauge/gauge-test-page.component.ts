@@ -26,8 +26,8 @@ export class GaugeTestPageComponent implements OnDestroy {
     public reversed = false;
     public flipLabels = false;
 
-    private readonly lowThreshold = 1000;
-    private readonly highThreshold = 1500;
+    public lowThreshold = 1000;
+    public highThreshold = 1500;
 
     public thresholds: IGaugeThresholdConfigs = {
         ...GaugeUtil.createStandardThresholdConfigs(this.lowThreshold, this.highThreshold),
@@ -67,6 +67,16 @@ export class GaugeTestPageComponent implements OnDestroy {
 
     public onValueChange(value: number): void {
         this.value = value;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
+    public onLowThresholdChange(value: number): void {
+        this.lowThreshold = value;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
+    public onHighThresholdChange(value: number): void {
+        this.highThreshold = value;
         this.gaugeConfig = this.getGaugeConfig();
     }
 
