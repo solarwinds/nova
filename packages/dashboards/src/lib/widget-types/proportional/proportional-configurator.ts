@@ -30,7 +30,7 @@ import {
 } from "../../services/types";
 import { PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
-import { DataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error-handling/data-source-error.component";
+import { DataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/data-source-error.component";
 /* eslint-enable max-len */
 
 export const DEFAULT_LEGEND_FORMATTERS: IFormatterDefinition[] = [
@@ -228,7 +228,7 @@ export const proportionalConfigurator = {
             properties: {
                 // for the DataSourceConfigurationComponent, this defines the list of data sources to pick from
                 dataSourceProviders: [] as string[],
-                errorHandlingComponent: DataSourceErrorComponent.lateLoadKey,
+                errorComponent: DataSourceErrorComponent.lateLoadKey,
             },
             providers: {
                 // converter transforms the data source metadata between the widget and the form

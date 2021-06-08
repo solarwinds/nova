@@ -16,12 +16,12 @@ import { IDataSource } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 
 @Component({
-    selector: "nui-data-source-error-handling",
+    selector: "nui-data-source-error",
     templateUrl: "./data-source-error.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DataSourceErrorComponent implements OnDestroy, OnChanges {
-    public static lateLoadKey = "DataSourceErrorHandlingComponent";
+    public static lateLoadKey = "DataSourceErrorComponent";
 
     @Input() public dataSource: IDataSource;
     @Output() public errorState = new EventEmitter<boolean>();

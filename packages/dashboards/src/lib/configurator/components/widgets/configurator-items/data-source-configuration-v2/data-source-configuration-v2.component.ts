@@ -30,7 +30,7 @@ import {
 } from "../../../../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
-import { DataSourceErrorComponent } from "../data-source-error-handling/data-source-error.component";
+import { DataSourceErrorComponent } from "../data-source-error/data-source-error.component";
 
 /**
  * This is a basic implementation of a data source configuration component. In the real world scenario, this component will most likely be replaced by a
@@ -52,7 +52,7 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
 
     @Input() properties: IProperties;
     @Input() providerId: string;
-    @Input() errorHandlingComponent: string = DataSourceErrorComponent.lateLoadKey;
+    @Input() errorComponent: string = DataSourceErrorComponent.lateLoadKey;
 
     @Output() formReady = new EventEmitter<FormGroup>();
 

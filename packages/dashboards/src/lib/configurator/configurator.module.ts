@@ -104,8 +104,8 @@ import { ConfiguratorService } from "./services/configurator.service";
 import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
-import { DataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error-handling/data-source-error.component";
-import { TableDataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error-handling/table/table-data-source-error.component";
+import { DataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/data-source-error.component";
+import { TableDataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/table/table-data-source-error.component";
 import { ConfiguratorHeadingService } from "./services/public-api";
 /* eslint-enable max-len */
 
