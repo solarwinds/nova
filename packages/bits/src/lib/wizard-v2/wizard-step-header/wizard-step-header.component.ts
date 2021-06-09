@@ -5,7 +5,6 @@ import {
     ChangeDetectionStrategy,
     Component,
     ElementRef,
-    forwardRef,
     Inject,
     Input,
     OnChanges,
@@ -16,7 +15,7 @@ import {
 } from "@angular/core";
 
 import {WizardStepLabelDirective} from "../wizard-step-label.directive";
-import { WIZARD_CONFIG, WIZARD_CONFIG_DEFAULT } from "../../../constants";
+import { WIZARD_CONFIG, WIZARD_CONFIG_DEFAULT } from "../../../constants/wizard.constants";
 import { IWizardConfig, IWizardStepStateIconConfig } from "../types";
 
 interface IWizardCurrentStepStatusIconConfig {
@@ -78,7 +77,7 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     constructor(
         private _focusMonitor: FocusMonitor,
         _elementRef: ElementRef<HTMLElement>,
-        @Optional() @Inject(forwardRef(() => WIZARD_CONFIG)) public readonly config: IWizardConfig
+        @Optional() @Inject(WIZARD_CONFIG) public readonly config?: IWizardConfig
     ) {
         super(_elementRef);
 
