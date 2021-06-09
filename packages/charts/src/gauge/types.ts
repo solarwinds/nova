@@ -9,8 +9,8 @@ export interface IGaugeConfig {
     value: number;
     /** The max value of the gauge */
     max: number;
-    /** The color to display when no threshold is active */
-    defaultColor?: string;
+    /** The color to display for the quantity when no threshold is active */
+    defaultQuantityColor?: string;
     /** An optional array of the gauge's threshold values */
     thresholds?: IGaugeThresholdConfigs;
     /** Set to true to disable the threshold markers */
@@ -61,6 +61,6 @@ export interface IGaugeThreshold extends IGaugeThresholdConfig {
 export interface IGaugeThresholdsData {
     /** A collection of thresholds */
     thresholds: IGaugeThreshold[];
-    /** The ID of the currently active threshold */
-    activeThresholdId?: string;
+    /** The currently active threshold */
+    activeThreshold?: IGaugeThreshold;
 }

@@ -70,7 +70,7 @@ export class GaugeUtil {
     public static readonly DATA_CATEGORY = "gauge";
 
     /**
-     * Assembles a gauge series set with all of the standard requisite scales, renderers, accessors, etc. needed for creating a gauge visualization
+     * Assembles a gauge series set with all of the standard scales, renderers, accessors, etc. needed for creating a gauge visualization
      *
      * @param gaugeConfig The configuration for the gauge
      * @param mode The mode of the gauge (Donut, Horizontal, or Vertical)
@@ -80,32 +80,20 @@ export class GaugeUtil {
     public static assembleSeriesSet(gaugeConfig: IGaugeConfig, mode: GaugeMode): IChartAssistSeries<IAccessors>[] {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
-        const renderingAttributes = GaugeUtil.generateRenderingAttributes(gaugeConfig, mode);
-        const { quantityAccessors, remainderAccessors, scales, mainRenderer } = renderingAttributes;
-        let thresholdsSeries: IChartAssistSeries<IAccessors<any>>;
+        const clampedConfig = GaugeUtil.clampConfigToRange(gaugeConfig);
+        const renderAttrs = GaugeUtil.generateRenderingAttributes(clampedConfig, mode);
+        let thresholdsSeries: IChartAssistSeries<IAccessors<any>> | undefined;
         let seriesSet: IChartAssistSeries<IAccessors>[] = [];
 
-        if (gaugeConfig.thresholds) {
-            thresholdsSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, renderingAttributes);
+        if (clampedConfig.thresholds) {
+            thresholdsSeries = GaugeUtil.generateThresholdSeries(clampedConfig, renderAttrs);
             seriesSet.push(thresholdsSeries);
         }
 
-        if (quantityAccessors.data) {
-            quantityAccessors.data.color = gaugeConfig.quantityColorAccessor || GaugeUtil.createDefaultQuantityColorAccessor(gaugeConfig);
-        }
-
-        if (remainderAccessors.data) {
-            remainderAccessors.data.color = gaugeConfig.remainderColorAccessor || (() => (StandardGaugeColor.Remainder));
-        }
+        const quantityAndRemainderSeriesSet = GaugeUtil.generateQuantityAndRemainderSeriesSet(clampedConfig, renderAttrs, thresholdsSeries?.activeThreshold);
 
         seriesSet = [
-            ...GaugeUtil.generateQuantityAndRemainderData(gaugeConfig).map((series: Partial<IDataSeries<IAccessors>>) => ({
-                ...series,
-                accessors: series.id === GAUGE_QUANTITY_SERIES_ID ? quantityAccessors : remainderAccessors,
-                scales,
-                renderer: mainRenderer,
-                activeThresholdId: thresholdsSeries?.activeThresholdId,
-            })),
+            ...quantityAndRemainderSeriesSet,
             ...seriesSet,
         ] as IChartAssistSeries<IAccessors>[];
 
@@ -131,20 +119,17 @@ export class GaugeUtil {
                 return {
                     ...series,
                     data: [{ category: GaugeUtil.DATA_CATEGORY, value: clampedConfig.value }],
-                    activeThresholdId: thresholdsData.activeThresholdId,
+                    activeThreshold: thresholdsData.activeThreshold,
+                    defaultColor: clampedConfig.defaultQuantityColor || StandardGaugeColor.Ok,
                 };
             }
 
             if (series.id === GAUGE_REMAINDER_SERIES_ID) {
-                if (series.accessors.data) {
-                    series.accessors.data.color = clampedConfig.remainderColorAccessor || (() => (StandardGaugeColor.Remainder));
-                }
-
                 return { ...series, data: [{ category: GaugeUtil.DATA_CATEGORY, value: clampedConfig.max - clampedConfig.value }] };
             }
 
             if (series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID) {
-                (series.renderer.config as IGaugeThresholdsRendererConfig).enabled = !gaugeConfig.disableThresholdMarkers;
+                (series.renderer.config as IGaugeThresholdsRendererConfig).enabled = !clampedConfig.disableThresholdMarkers;
                 return { ...series, ...thresholdsData };
             }
 
@@ -152,6 +137,45 @@ export class GaugeUtil {
         });
 
         return updatedSeriesSet;
+    }
+
+    /**
+     * Generates a set of chart series used for visualizing the gauge's quantity and remainder data
+     *
+     * @param gaugeConfig The configuration for the gauge
+     * @param renderingAttributes The attributes needed to visualized the thresholds
+     * @param activeThreshold The currently active threshold
+     *
+     * @returns {IChartAssistSeries<IAccessors<any>>[]} A set of chart series representing the quantity and remainder data
+     */
+    public static generateQuantityAndRemainderSeriesSet(
+        gaugeConfig: IGaugeConfig,
+        renderingAttributes: IGaugeRenderingAttributes,
+        activeThreshold?: IGaugeThreshold
+    ): IChartAssistSeries<IAccessors<any>>[] {
+        return GaugeUtil.generateQuantityAndRemainderData(gaugeConfig).map((series: Partial<IDataSeries<IAccessors>>) => {
+            const { quantityAccessors, remainderAccessors, scales, mainRenderer } = renderingAttributes;
+
+            if (quantityAccessors.data) {
+                quantityAccessors.data.color = gaugeConfig.quantityColorAccessor || GaugeUtil.createDefaultQuantityColorAccessor();
+            }
+
+            if (remainderAccessors.data) {
+                remainderAccessors.data.color = gaugeConfig.remainderColorAccessor || (() => (StandardGaugeColor.Remainder));
+            }
+
+            if (series.id === GAUGE_QUANTITY_SERIES_ID) {
+                series.activeThreshold = activeThreshold;
+                series.defaultColor = gaugeConfig.defaultQuantityColor || StandardGaugeColor.Ok;
+            }
+
+            return {
+                ...series,
+                accessors: series.id === GAUGE_QUANTITY_SERIES_ID ? quantityAccessors : remainderAccessors,
+                scales,
+                renderer: mainRenderer,
+            } as IChartAssistSeries<IAccessors<any>>;
+        });
     }
 
     /**
@@ -260,18 +284,11 @@ export class GaugeUtil {
     /**
      * Convenience function for creating a standard gauge quantity color accessor
      *
-     * @param gaugeConfig The gauge's configuration
-     *
      * @returns {DataAccessor} An accessor for determining the color to use for the quantity visualization
      */
-    public static createDefaultQuantityColorAccessor(gaugeConfig: IGaugeConfig): DataAccessor {
-        const defaultColor = gaugeConfig.defaultColor || StandardGaugeColor.Ok;
-        let colorAccessor: DataAccessor = () => defaultColor;
-
-        if (gaugeConfig.thresholds) {
-            colorAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) =>
-                dataSeries.activeThresholdId && gaugeConfig.thresholds ? gaugeConfig.thresholds[dataSeries.activeThresholdId].color : defaultColor;
-        }
+    public static createDefaultQuantityColorAccessor(): DataAccessor {
+        const colorAccessor: DataAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) =>
+            dataSeries.activeThreshold ? dataSeries.activeThreshold.color : dataSeries.defaultColor;
 
         return colorAccessor;
     }
@@ -332,7 +349,7 @@ export class GaugeUtil {
             throw new Error("Thresholds are not defined in the gauge config. Unable to generate threshold data.")
         }
 
-        const { thresholds, activeThresholdId } = GaugeUtil.prepareThresholdsData(gaugeConfig);
+        const { thresholds, activeThreshold } = GaugeUtil.prepareThresholdsData(gaugeConfig);
 
         return {
             id: GAUGE_THRESHOLD_MARKERS_SERIES_ID,
@@ -346,7 +363,7 @@ export class GaugeUtil {
                     value: gaugeConfig.max,
                 },
             ],
-            activeThresholdId,
+            activeThreshold,
         };
     }
 
@@ -367,20 +384,21 @@ export class GaugeUtil {
                 hit: gaugeConfig.reversedThresholds ? threshold.value < gaugeConfig.value : threshold.value <= gaugeConfig.value,
             })).sort((a, b) => a.value - b.value);
 
-        const activeThresholdId: string | undefined = gaugeConfig.reversedThresholds ?
-            thresholds?.find(threshold => !isUndefined(threshold.hit) && !threshold.hit)?.id :
-            thresholds?.slice().reverse().find(threshold => threshold.hit)?.id;
+        const activeThreshold: IGaugeThreshold | undefined = gaugeConfig.reversedThresholds ?
+            thresholds?.find(threshold => !isUndefined(threshold.hit) && !threshold.hit) :
+            thresholds?.slice().reverse().find(threshold => threshold.hit);
 
         return {
             thresholds,
-            activeThresholdId,
+            activeThreshold,
         }
     }
 
     private static clampConfigToRange(gaugeConfig: IGaugeConfig): IGaugeConfig {
         let value = gaugeConfig.value;
         if (gaugeConfig.value > gaugeConfig.max) {
-            console.warn(`Configured gauge value ${gaugeConfig.value} is larger than configured max ${gaugeConfig.max}. Clamping value to ${gaugeConfig.max}.`);
+            console.warn(`Configured gauge value ${gaugeConfig.value} is greater` +
+                `than configured max ${gaugeConfig.max}. Clamping value to ${gaugeConfig.max}.`);
             value = gaugeConfig.max;
         }
 
@@ -394,8 +412,8 @@ export class GaugeUtil {
             const threshold = thresholds[thresholdId];
             if (threshold) {
                 if (threshold.value > gaugeConfig.max) {
-                    console.warn(`Configured threshold value ${threshold.value} for threshold ${thresholdId} is larger
-                        than configured max ${gaugeConfig.max}. Clamping value to ${gaugeConfig.max}.`);
+                    console.warn(`Configured threshold value ${threshold.value} for threshold ${thresholdId} is greater` +
+                        `than configured max ${gaugeConfig.max}. Clamping value to ${gaugeConfig.max}.`);
                     threshold.value = gaugeConfig.max;
                 }
 
