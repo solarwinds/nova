@@ -5,9 +5,9 @@ import { Component } from "@angular/core";
     templateUrl: "./wizard-with-separate-step-headings-example.component.html",
 })
 export class WizardWithSeparateStepHeadingsExampleComponent {
-    public hint = $localize `example-hint`;
+    public textboxValue = "Example Textbox Value";
 
-    public onOptionChange(value: string) {
-        this.hint = value;
+    public onTextboxChange(value: string) {
+        this.textboxValue = value;
     }
 }

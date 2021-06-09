@@ -103,7 +103,7 @@ const routes = [
         WizardDynamicRemoveExampleComponent,
         WizardStepsExampleComponent,
         WizardResetStepExampleComponent,
-        WizardWithSeparateStepHeadingsExampleComponent
+        WizardWithSeparateStepHeadingsExampleComponent,
     ],
     providers: [
         {
