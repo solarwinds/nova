@@ -12,7 +12,7 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
+import { EventBus, IDataSource, IEvent, LoggerService } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { take } from "rxjs/operators";
 
@@ -21,7 +21,7 @@ import { ProviderRegistryService } from "../../../../../services/provider-regist
 import { IHasChangeDetector, IHasForm, IProperties, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
-import { DataSourceErrorHandlingComponent } from "../data-source-error-handling/data-source-error-handling.component";
+import { DataSourceErrorComponent } from "../data-source-error/data-source-error.component";
 
 /**
  * This is a basic implementation of a data source configuration component. In the real world scenario, this component will most likely be replaced by a
@@ -40,7 +40,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
      * This component shows a dropdown with options for selecting a data source, this input represents these options.
      */
     @Input() dataSourceProviders: string[] = [];
-    @Input() errorHandlingComponent: string = DataSourceErrorHandlingComponent.lateLoadKey;
+    @Input() errorComponent: string = DataSourceErrorComponent.lateLoadKey;
 
     @Input() properties: IProperties;
     @Input() providerId: string;
@@ -49,6 +49,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
 
     public form: FormGroup;
     public hasDataSourceError: boolean = false;
+    public dataSource: IDataSource;
 
     // used by the Broadcaster
     public dsOutput = new Subject<any>();
@@ -102,9 +103,9 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
         }
         const provider = this.providerRegistryService.getProvider(providerId);
         if (provider) {
-            const dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
-            this.eventBus.next(DATA_SOURCE_CREATED, {payload: dataSource});
-            dataSource.outputsSubject
+            this.dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
+            this.eventBus.next(DATA_SOURCE_CREATED, {payload: this.dataSource});
+            this.dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any | IDataSourceOutput<any>) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
@@ -114,8 +115,10 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
                         this.dataFieldIds.next(Object.keys(dataFieldIdsResult));
                     }
                 });
-
-            dataSource.applyFilters();
+            // This setTimeout is because the output of the data source might come faster than the data-source-error-component is initiated
+            setTimeout(() => {
+                this.dataSource.applyFilters();
+            });
         } else {
             this.logger.warn("No provider found for id:", providerId);
         }
