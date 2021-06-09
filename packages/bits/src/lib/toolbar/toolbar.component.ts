@@ -5,6 +5,7 @@ import {
     ContentChildren,
     ElementRef,
     HostBinding,
+    HostListener,
     Input,
     NgZone,
     OnDestroy,
@@ -26,6 +27,8 @@ import {
 } from "./public-api";
 import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
+import { KEYBOARD_CODE } from "../../constants";
+import { MenuComponent } from "../menu";
 
 /**
  * NUI wrapper for toolbar control. It groups toolbar items (nui-toolbar-item),
@@ -53,6 +56,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     @ContentChildren(ToolbarItemComponent, {descendants: true})
     public items: QueryList<ToolbarItemComponent>;
+
+    @ViewChild("menuComponent") menuComponent: MenuComponent;
 
     @Input()
     /**
@@ -86,6 +91,20 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 private changeDetector: ChangeDetectorRef,
                 private logger: LoggerService,
                 private ngZone: NgZone) {}
+
+    @HostListener("keydown", ["$event"])
+    onKeyDown(event: KeyboardEvent): void {
+        const { code } = event;
+
+        if (this.menuComponent && this.menuComponent.popup.isOpen) {
+            return;
+        }
+
+        if (code === KEYBOARD_CODE.ARROW_LEFT || code === KEYBOARD_CODE.ARROW_RIGHT) {
+            event.preventDefault();
+            this.navigateByArrow(code);
+        }
+    }
 
     ngAfterViewInit() {
         this.splitToolbarItems();
@@ -182,5 +201,53 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     public get destructiveIsLastItem() {
         return this.groups.last.items.last.displayStyle !== ToolbarItemDisplayStyle.destructive;
+    }
+
+    private navigateByArrow(code: string): void {
+        const node = this.toolbarContainer.nativeElement.querySelector(".nui-toolbar-content__dynamic");
+
+        if (!node) {
+            return;
+        }
+
+        const buttons = Array.from(node.childNodes).filter((node) => (node as any).tagName === "BUTTON");
+        const length = buttons.length;
+        const moreButton = node.querySelector(".nui-button.btn.menu-button");
+        const direction = code === KEYBOARD_CODE.ARROW_RIGHT ? 1 : -1;
+        let nextIndex = buttons.findIndex((button) => button === document.activeElement) + direction;
+
+        if (document.activeElement === moreButton) {
+            this.navigateFormMoreBtn(moreButton, buttons as HTMLButtonElement[], direction);
+
+            return;
+        }
+
+        if ((nextIndex >= length || nextIndex < 0) && moreButton) {
+            moreButton.focus();
+
+            return;
+        }
+
+        if (nextIndex < 0 && !moreButton) {
+            nextIndex = length - 1;
+        }
+
+        if (nextIndex >= length && !moreButton) {
+            nextIndex = 0;
+        }
+
+        const button: HTMLButtonElement = buttons[nextIndex] as HTMLButtonElement;
+
+        button.focus();
+    }
+
+    private navigateFormMoreBtn(button: HTMLButtonElement, buttons: HTMLButtonElement[], dir: number): void {
+        if (button && dir === 1) {
+            buttons[0].focus();
+
+            return;
+        }
+
+        buttons[buttons.length - 1].focus();
     }
 }
