@@ -26,7 +26,7 @@ class MockDataSource implements IDataSource {
     }
 }
 
-fdescribe("DataSourceErrorComponent", () => {
+describe("DataSourceErrorComponent", () => {
     let component: DataSourceErrorComponent;
     let fixture: ComponentFixture<DataSourceErrorComponent>;
     let dataSource: IDataSource;
