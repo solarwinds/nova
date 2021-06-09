@@ -26,7 +26,7 @@ class MockDataSource implements IDataSource {
     }
 }
 
-fdescribe("DataSourceErrorComponent", () => {
+describe("DataSourceErrorComponent", () => {
     let component: DataSourceErrorComponent;
     let fixture: ComponentFixture<DataSourceErrorComponent>;
     let dataSource: IDataSource;
@@ -42,23 +42,58 @@ fdescribe("DataSourceErrorComponent", () => {
         });
        fixture = TestBed.createComponent(DataSourceErrorComponent);
        component = fixture.componentInstance;
+
+        component.dataSource = dataSource;
+        const dataSourceChanged = {dataSource: new SimpleChange(null, dataSource, true)};
+        component.ngOnChanges(dataSourceChanged);
     });
 
     it("should create", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should call changeDetector if there's an output on the dataSource", async () => {
+    it("should call changeDetector if there's an output on the dataSource", () => {
         const markForCheckSpy = spyOn(component.changeDetector, "markForCheck");
 
-        component.dataSource = dataSource;
-        const dataSourceChanged = {dataSource: new SimpleChange(null, dataSource, true)};
-        component.ngOnChanges(dataSourceChanged);
+        component.dataSource.outputsSubject.next(null);
 
-        await component.dataSource.applyFilters();
+        expect(markForCheckSpy).toHaveBeenCalled();
+    });
 
-        component.dataSource.outputsSubject.subscribe(() => {
-            expect(markForCheckSpy).toHaveBeenCalled();
-        })
+    it("should emit an errorState positive if there's an error on the output of a dataSource", () => {
+       const errorState = spyOn(component.errorState, "emit");
+
+        component.dataSource.outputsSubject.next({
+            error: {
+                type: 404,
+                message: "Not Found",
+            }
+        });
+
+        expect(errorState).toHaveBeenCalledWith(true);
+
+        component.dataSource.outputsSubject.next({
+            result: {
+                hello: "world"
+            }
+        });
+
+        expect(errorState).toHaveBeenCalledWith(true);
+    });
+
+    it("should set data to the same value if there is a result key for legacy dataSources", () => {
+        component.dataSource.outputsSubject.next({
+            result: {
+                hello: "world"
+            }
+        });
+        const testCaseA = component.data;
+
+        component.dataSource.outputsSubject.next({
+            hello: "world"
+        });
+        const testCaseB = component.data;
+
+        expect(testCaseA).toEqual(testCaseB);
     });
 });
