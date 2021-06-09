@@ -66,7 +66,7 @@
 <p>
     The wizard step can be in four different states: <code>initial</code>, <code>selected</code>, <code>completed</code>, and <code>error</code>.
     For each of these steps there is a corresponding icon in the header for a certain step, which dynamically changes along with the step state change.
-    It is possible to override the default set of step state icons and their colors, and there are two way of doing that.
+    It is possible to override the default set of step state icons and their colors, and there are two ways of doing that.
 </p>
 
 <ol>
@@ -76,8 +76,8 @@
 
 <p><u>Global</u></p>
 <p>
-    Nova provides you with the <code>WIZARD_CONFIG</code> injection token, which allows to override the default wizard settings in a global context. For instance, 
-    set the necessary icons settings with this token on a module level to make all wizards within the module to receive the configuration you've set.
+    Nova provides you with the <code>WIZARD_CONFIG</code> injection token, which allows you to override the default wizard settings in a global context. For instance, 
+    set the necessary icons settings with this token on a module level to allow all wizards within a module to receive the same icon configuration.
 </p>
 <p><u>Step Specific</u></p>
 <p>

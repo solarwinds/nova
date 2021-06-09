@@ -1,5 +1,5 @@
 import {FocusMonitor} from "@angular/cdk/a11y";
-import {CdkStepHeader, StepState} from "@angular/cdk/stepper";
+import {CdkStepHeader, StepState, STEP_STATE} from "@angular/cdk/stepper";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -43,7 +43,7 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     @Input() stepState: StepState;
 
     /** Custom icon config received from the wizard step. Allows to customize state icons for a particular wizard step */
-    @Input() stepIconsConfig: Partial<IWizardStepStateIconConfig>;
+    @Input() stepStateIconsConfig: Partial<IWizardStepStateIconConfig>;
 
     /** Label of the given step. */
     @Input() label: WizardStepLabelDirective | string;
@@ -87,8 +87,8 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes?.stepIconsConfig?.currentValue) {
-            this.updateIconsConfig(changes?.stepIconsConfig?.currentValue);
+        if (changes?.stepStateIconsConfig?.currentValue) {
+            this.updateIconsConfig(changes?.stepStateIconsConfig?.currentValue);
         }
     }
 
@@ -117,28 +117,28 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     public get currentStepStateIconConfig(): IWizardCurrentStepStatusIconConfig | undefined {
 
-        if (this.stepState === "number") {
+        if (this.stepState === STEP_STATE.NUMBER) {
             return {
                 icon: this.wizardConfig.stepStateIcons?.icons?.initial,
                 color: this.wizardConfig.stepStateIcons?.colors?.initial,
             };
         }
         
-        if (this.stepState === "done") {
+        if (this.stepState === STEP_STATE.DONE) {
             return {
                 icon: this.wizardConfig.stepStateIcons?.icons?.visited,
                 color: this.wizardConfig.stepStateIcons?.colors?.visited,
             };
         }
         
-        if (this.stepState === "edit") {
+        if (this.stepState === STEP_STATE.EDIT) {
             return {
                 icon: this.wizardConfig.stepStateIcons?.icons?.active,
                 color: this.wizardConfig.stepStateIcons?.colors?.active,
             };
         }
         
-        if (this.stepState === "error") {
+        if (this.stepState === STEP_STATE.ERROR) {
             return {
                 icon: this.wizardConfig.stepStateIcons?.icons?.error,
                 color: this.wizardConfig.stepStateIcons?.colors?.error,

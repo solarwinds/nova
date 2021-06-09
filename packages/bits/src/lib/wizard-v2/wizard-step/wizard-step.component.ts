@@ -50,7 +50,7 @@ import { IWizardStepStateIconConfig } from "../types";
 export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy, ErrorStateMatcher {
     @Input() template?: TemplateRef<any>;
 
-    @Input() stepIconsConfig: Partial<IWizardStepStateIconConfig>;
+    @Input() stateIconsConfig: Partial<IWizardStepStateIconConfig>;
 
     /** Content for step label given by `<ng-template wizardStepLabel>`. */
     @ContentChild(WizardStepLabelDirective) stepLabel: WizardStepLabelDirective;

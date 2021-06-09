@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
 
-export interface IWizardStepV2Component {
+interface IWizardStepData {
     title: string;
     templateRef: TemplateRef<string>;
 }
@@ -11,7 +11,7 @@ export interface IWizardStepV2Component {
 })
 export class WizardDynamicExampleComponent implements AfterViewInit {
     public enableDynamicStepWithButton = false;
-    public steps: IWizardStepV2Component[] = [];
+    public steps: IWizardStepData[] = [];
 
     @ViewChild("dynamicTemplate1") dynamicTemplate1: TemplateRef<string>;
 

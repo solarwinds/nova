@@ -14,7 +14,7 @@
             [attr.aria-labelledby]="(!step.ariaLabel && step.ariaLabelledby) ? step.ariaLabelledby : null"
             [index]="i"
             [stepState]="getStepState(i, step.state)"
-            [stepIconsConfig]="step.stepIconsConfig"
+            [stepStateIconsConfig]="step.stateIconsConfig"
             [label]="step.stepLabel || step.label"
             [selected]="selectedIndex === i"
             [active]="step.completed || selectedIndex === i || !linear"
