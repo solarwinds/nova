@@ -179,15 +179,15 @@ describe("Grid >", () => {
         });
 
         it("should not allow the clip path and rendering area to have negative dimensions", () => {
-            const gridWidth = 1;
-            const gridHeight = 1;
+            const gridWidth = 0.5;
+            const gridHeight = 0.5;
             const expectedClipPathWidth = gridWidth;
             const expectedClipPathHeight = gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
             const expectedRenderAreaWidth = 0;
             const expectedRenderAreaHeight = gridHeight + Grid.RENDER_AREA_HEIGHT_CORRECTION;
             const config = new GridConfig();
-            config.dimension.width(1);
-            config.dimension.height(1);
+            config.dimension.width(gridWidth);
+            config.dimension.height(gridHeight);
             grid.config(config);
 
             grid.build();
