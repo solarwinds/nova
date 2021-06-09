@@ -1,6 +1,6 @@
 import { Atom, Camera } from "@nova-ui/bits/sdk/atoms";
 import { Helpers } from "@nova-ui/bits/sdk/atoms/helpers";
-import { browser } from "protractor";
+import { browser, by, element, ElementFinder } from "protractor";
 import { GAUGE_REMAINDER_SERIES_ID } from "../../src/gauge/constants";
 
 import { ChartAtom } from "./atoms/chart.atom";
@@ -14,6 +14,7 @@ describe(`Visual Tests: Charts - ${name}`, () => {
     let donutGauge: ChartAtom;
     let horizontalGauge: ChartAtom;
     let verticalGauge: ChartAtom;
+    let enableWarningCb: ElementFinder;
     const page = new TestPage();
 
     beforeAll(async () => {
@@ -21,6 +22,7 @@ describe(`Visual Tests: Charts - ${name}`, () => {
         donutGauge = Atom.find(ChartAtom, "visual-test-gauge-donut-high-value");
         horizontalGauge = Atom.find(ChartAtom, "visual-test-gauge-horizontal-medium-value");
         verticalGauge = Atom.find(ChartAtom, "visual-test-gauge-vertical-low-value");
+        enableWarningCb = element(by.id("enable-warning"));
 
         camera = new Camera().loadFilm(browser, name);
     });
@@ -44,6 +46,10 @@ describe(`Visual Tests: Charts - ${name}`, () => {
 
         await page.enableDarkTheme();
         await camera.say.cheese(`${name} - Dark theme`);
+        await page.disableDarkTheme();
+
+        await page.updateSelectable(enableWarningCb, false);
+        await camera.say.cheese(`${name} - Warning thresholds disabled`);
 
         await camera.turn.off();
     }, 100000);

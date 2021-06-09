@@ -1,4 +1,3 @@
-
 <div class="container">
     <charts-test-harness>
         <h3>Donut</h3>
@@ -10,7 +9,7 @@
         <h3>Horizontal</h3>
         <div class="d-flex justify-content-around">
             <horizontal-gauge-tester [gaugeConfig]="getGaugeConfig(lowValue)"></horizontal-gauge-tester>
-            <horizontal-gauge-tester id="visual-test-gauge-horizontal-medium-value"  [gaugeConfig]="getGaugeConfig(mediumValue)"></horizontal-gauge-tester>
+            <horizontal-gauge-tester id="visual-test-gauge-horizontal-medium-value" [gaugeConfig]="getGaugeConfig(mediumValue)"></horizontal-gauge-tester>
             <horizontal-gauge-tester [gaugeConfig]="getGaugeConfig(highValue)"></horizontal-gauge-tester>
         </div>
         <h3>Vertical</h3>
@@ -20,4 +19,22 @@
             <vertical-gauge-tester [gaugeConfig]="getGaugeConfig(highValue)"></vertical-gauge-tester>
         </div>
     </charts-test-harness>
+    <div class="column ml-3">
+        <div class="d-flex align-items-center">
+            <input id="enable-warning"
+                   class="mb-2"
+                   type="checkbox"
+                   [ngModel]="warningEnabled"
+                   (ngModelChange)="onWarningEnabledChange($event)" />
+            <label class="px-3" for="enable-warning">Enable Warning</label>
+        </div>
+        <div class="d-flex align-items-center">
+            <input id="enable-critical"
+                   class="mb-2"
+                   type="checkbox"
+                   [(ngModel)]="criticalEnabled"
+                   (ngModelChange)="onCriticalEnabledChange($event)" />
+            <label class="px-3" for="enable-critical">Enable Critical</label>
+        </div>
+    </div>
 </div>

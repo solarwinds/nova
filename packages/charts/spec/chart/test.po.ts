@@ -21,7 +21,7 @@ export class TestPage {
         return browser.actions().mouseMove({ x: 0, y: 0 }).perform();
     }
 
-    private async updateSelectable(input: ElementFinder, value: boolean): Promise<void> {
+    public async updateSelectable(input: ElementFinder, value: boolean): Promise<void> {
         const currentValue = await input.isSelected();
         if (currentValue === value) {
             return;
