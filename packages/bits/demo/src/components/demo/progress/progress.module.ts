@@ -15,6 +15,7 @@ import {
     ProgressCompactExampleComponent,
     ProgressExampleComponent,
     ProgressVisualTestComponent,
+    ProgressTestComponent,
     ProgressWithHelpTemplateExampleComponent,
     StackedHeaderProgressExampleComponent,
 } from "./index";
@@ -39,6 +40,15 @@ const routes = [
             },
         },
     },
+    {
+        path: "progress-test",
+        component: ProgressTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -55,6 +65,7 @@ const routes = [
         ProgressCompactExampleComponent,
         ProgressExampleComponent,
         ProgressVisualTestComponent,
+        ProgressTestComponent,
         ProgressWithHelpTemplateExampleComponent,
         StackedHeaderProgressExampleComponent,
     ],
