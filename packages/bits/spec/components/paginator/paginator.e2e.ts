@@ -2,7 +2,7 @@ import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { PaginatorAtom } from "../public_api";
 
-fdescribe("USERCONTROL paginator", () => {
+describe("USERCONTROL paginator", () => {
     let atom: PaginatorAtom;
     let adjacentPaginator: PaginatorAtom;
     let virtualScrollPaginator: PaginatorAtom;
