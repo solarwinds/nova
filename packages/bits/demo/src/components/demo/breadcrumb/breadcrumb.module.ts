@@ -14,8 +14,14 @@ import {
 } from "./index";
 
 const routes = [
+    // {
+    //     path: "",
+    //     pathMatch: "full",
+    //     redirectTo: "adm",
+    // },
     {
         path: "",
+        // path: "adm",
         component: BreadcrumbDocsExampleComponent,
         data: {
             breadcrumb: "Root",

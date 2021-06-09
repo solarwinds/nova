@@ -16,9 +16,9 @@ export class BreadcrumbVisualTestComponent implements OnInit, OnDestroy {
                 private breadcrumbStateService: BreadcrumbStateService) { }
 
     ngOnInit() {
-        this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.routerState);
+        this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.router, this.routerState);
         this.routerSubscription = this.breadcrumbStateService.getNavigationSubscription(this.router)
-            .subscribe(() => this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.routerState));
+            .subscribe(() => this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.router, this.routerState));
     }
 
     public onNavigation(routerState: string): void {

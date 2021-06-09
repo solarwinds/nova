@@ -16,9 +16,12 @@ export class BreadcrumbBasicExampleComponent implements OnInit, OnDestroy {
                 private breadcrumbStateService: BreadcrumbStateService) { }
 
     ngOnInit() {
-        this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.routerState, "/breadcrumb/");
+        this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.router, this.routerState);
+        // this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.routerState, "/breadcrumb/");
         this.routerSubscription = this.breadcrumbStateService.getNavigationSubscription(this.router)
-            .subscribe(() => this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.routerState, "/breadcrumb/"));
+            .subscribe(() => {
+                this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.router, this.routerState);
+            });
     }
 
     public onNavigation(routerState: string): void {

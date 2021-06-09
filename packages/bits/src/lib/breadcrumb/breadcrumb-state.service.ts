@@ -11,10 +11,10 @@ import { BreadcrumbItem } from "./public-api";
 @Injectable({providedIn: "root"})
 export class BreadcrumbStateService {
     // Recursively fill the state for breadcrumb component using data from routes
-    public getBreadcrumbState(routerState: ActivatedRoute, url: string = "",
+    public getBreadcrumbState(router: Router, routerState: ActivatedRoute, url: string = "",
                               breadcrumbs: BreadcrumbItem[] = []): BreadcrumbItem[] {
         const breadcrumb: string = routerState.snapshot.data["breadcrumb"];
-        const newUrl = `${url}${routerState.routeConfig?.path}/`;
+        const newUrl = router?.url.replace(router?.url.split("/").pop() || "", "");
         const externalUrl = routerState.snapshot.data["url"];
         const newBreadcrumbs = [...breadcrumbs, {
             title: breadcrumb,
@@ -22,7 +22,7 @@ export class BreadcrumbStateService {
             url: externalUrl,
         }];
 
-        return routerState.firstChild ? this.getBreadcrumbState(routerState.firstChild, newUrl, newBreadcrumbs) :
+        return routerState.firstChild ? this.getBreadcrumbState(router, routerState.firstChild, newUrl, newBreadcrumbs) :
             newBreadcrumbs;
     }
 
