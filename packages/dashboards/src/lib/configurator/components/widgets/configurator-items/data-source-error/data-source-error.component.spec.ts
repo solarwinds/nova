@@ -26,7 +26,7 @@ class MockDataSource implements IDataSource {
     }
 }
 
-describe("DataSourceErrorComponent", () => {
+fdescribe("DataSourceErrorComponent", () => {
     let component: DataSourceErrorComponent;
     let fixture: ComponentFixture<DataSourceErrorComponent>;
     let dataSource: IDataSource;
@@ -61,7 +61,7 @@ describe("DataSourceErrorComponent", () => {
     });
 
     it("should emit an errorState positive if there's an error on the output of a dataSource", () => {
-       const errorState = spyOn(component.errorState, "emit");
+       const errorStateSpy = spyOn(component.errorState, "emit");
 
         component.dataSource.outputsSubject.next({
             error: {
@@ -70,15 +70,14 @@ describe("DataSourceErrorComponent", () => {
             }
         });
 
-        expect(errorState).toHaveBeenCalledWith(true);
+        expect(errorStateSpy).toHaveBeenCalledWith(true);
 
         component.dataSource.outputsSubject.next({
             result: {
                 hello: "world"
             }
         });
-
-        expect(errorState).toHaveBeenCalledWith(true);
+        expect(errorStateSpy).toHaveBeenCalledWith(false);
     });
 
     it("should set data to the same value if there is a result key for legacy dataSources", () => {
