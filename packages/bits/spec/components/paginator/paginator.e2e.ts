@@ -1,20 +1,15 @@
-import { by, element } from "protractor";
-
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { PaginatorAtom } from "../public_api";
 
-describe("USERCONTROL paginator", () => {
+fdescribe("USERCONTROL paginator", () => {
     let atom: PaginatorAtom;
-    const adjacent = 1;
+    let adjacentPaginator: PaginatorAtom;
+    let virtualScrollPaginator: PaginatorAtom;
+    const adjacent = 2;
     const itemCount = 1012;
     const expectedItemsPerPage = "25";
     const pageTwenty = 20;
-
-    beforeEach(async () => {
-        atom = Atom.find(PaginatorAtom, "nui-demo-basic-paginator");
-        await Helpers.prepareBrowser("paginator");
-    });
 
     const getDisplayingText = (itemsPerPage: number, page: number, totalItems: number): string => {
         const endItem = Math.min(itemsPerPage * page, totalItems);
@@ -22,16 +17,19 @@ describe("USERCONTROL paginator", () => {
         return `${startItem}-${endItem} of ${totalItems}`;
     };
 
+    beforeAll(async () => {
+        await Helpers.prepareBrowser("paginator/paginator-test");
+        atom = Atom.find(PaginatorAtom, "nui-demo-basic-paginator");
+        adjacentPaginator = Atom.find(PaginatorAtom, "nui-demo-adjacent-paginator");
+        virtualScrollPaginator = Atom.find(PaginatorAtom, "nui-demo-custom-page-size-set-paginator");
+    });
+
     it("should be " + itemCount + " items in paginator component", async () => {
         expect(await atom.getStatusText()).toContain(itemCount.toString());
     });
 
     it("should correctly report items per page", async () => {
         expect(await atom.getItemsRange()).toBe(expectedItemsPerPage);
-    });
-
-    it("should display first page by default", async () => {
-        expect(await atom.activePage()).toEqual(1);
     });
 
     it("should activate the page clicked", async () => {
@@ -44,6 +42,8 @@ describe("USERCONTROL paginator", () => {
         expect(await atom.isActivePage(1)).toBe(false);
         expect(await atom.isActivePage(3)).toBe(false);
         expect(await atom.isActivePage(4)).toBe(true);
+        await atom.pageLinkClick(1);
+        expect(await atom.isActivePage(1)).toBe(true);
     });
 
     it("should honor 'Items per Page'", async () => {
@@ -66,6 +66,9 @@ describe("USERCONTROL paginator", () => {
         await atom.popup.open();
         await atom.pageLinkClick(5);
         expect(await atom.getStatusText()).toBe(getDisplayingText(25, 5, itemCount));
+
+        await atom.pageLinkClick(1);
+        expect(await atom.getStatusText()).toBe(getDisplayingText(25, 1, itemCount));
     });
 
     it("should display ellipsed page links on ellipsis click", async () => {
@@ -75,6 +78,8 @@ describe("USERCONTROL paginator", () => {
         await atom.ellipsedPageLinkClick(pageTwenty);
         expect(await atom.isActivePage(1)).toBe(false);
         expect(await atom.isActivePage(pageTwenty)).toBe(true);
+        await atom.pageLinkClick(1);
+        expect(await atom.activePage()).toBe(1);
     });
 
     it("should display 2 ellipsis links when active page is not an endpoint link", async () => {
@@ -86,29 +91,38 @@ describe("USERCONTROL paginator", () => {
         expect(await atom.isActivePage(pageTwenty)).toBe(true);
         expect(await atom.ellipsisLinkDisplayed(0)).toBe(true);
         expect(await atom.ellipsisLinkDisplayed(1)).toBe(true);
+        await atom.pageLinkClick(1);
+        expect(await atom.activePage()).toBe(1);
     });
 
     it("should display 'adjacent' page links on each side of the active page, " +
-        "when the active page is not an endpoint link", async () => {
+        "when the active page is not an endpoint link in adjacent paginator", async () => {
+            const pageCountAdjacent = await adjacentPaginator.pageCount();
 
-        expect(await atom.activePage()).toEqual(1);
-        await atom.ellipsisLink(0).click();
-        await atom.ellipsedPageLinkClick(pageTwenty);
+            expect(await adjacentPaginator.activePage()).toEqual(10);
+            await adjacentPaginator.ellipsisLink(1).click();
+            await adjacentPaginator.ellipsedPageLinkClick(pageTwenty);
 
-        expect(await atom.isActivePage(pageTwenty)).toBe(true);
-        expect(await atom.pageLinkVisible(pageTwenty)).toBe(true);
+            expect(await adjacentPaginator.isActivePage(pageTwenty)).toBe(true);
+            expect(await adjacentPaginator.pageLinkVisible(pageTwenty)).toBe(true);
 
-        // left adjacent
-        expect(await atom.pageLinkVisible(pageTwenty - adjacent - 1)).toBe(false);
-        for (let i = pageTwenty - adjacent; i < adjacent; ++i) {
-            expect(await atom.pageLinkVisible(i)).toBe(true);
-        }
-        // right adjacent
-        expect(await atom.pageLinkVisible(pageTwenty + adjacent + 1)).toBe(false);
-        for (let i = pageTwenty + 1; i <= pageTwenty + adjacent; ++i) {
-            expect(await atom.pageLinkVisible(i)).toBe(true);
-        }
-    });
+            // left adjacent
+            expect(await adjacentPaginator.pageLinkVisible(pageTwenty - adjacent)).toBe(true);
+            expect(await adjacentPaginator.pageLinkVisible(1)).toBe(true);
+            for (let i = pageTwenty - adjacent - 1; i > 1; --i) {
+                expect(await adjacentPaginator.pageLinkVisible(i)).toBe(false);
+            }
+            // right adjacent
+            expect(await adjacentPaginator.pageLinkVisible(pageTwenty + adjacent)).toBe(true);
+            expect(await adjacentPaginator.pageLinkVisible(pageCountAdjacent)).toBe(true);
+            for (let i = pageTwenty + adjacent + 1; i < pageCountAdjacent; ++i) {
+                expect(await adjacentPaginator.pageLinkVisible(i)).toBe(false);
+            }
+
+            await adjacentPaginator.ellipsisLink(0).click();
+            await adjacentPaginator.ellipsedPageLinkClick(10);
+            expect(await adjacentPaginator.isActivePage(10)).toBe(true);
+        });
 
     it(`should click page number 15 from popup dialog and pages
         ${getDisplayingText(10, 15, itemCount)} should be displayed`, async () => {
@@ -116,13 +130,9 @@ describe("USERCONTROL paginator", () => {
         await atom.ellipsisLink(0).click();
         await atom.ellipsedPageLinkClick(15);
         expect(await atom.getStatusText()).toBe(getDisplayingText(10, 15, itemCount));
-    });
 
-    it("should honor 'show-prev-next' and provide default", async () => {
-        expect(await atom.arePrevNextLinksDisplayed()).toBe(true);
-
-        const atom2 = Atom.findIn(PaginatorAtom, element(by.id("nui-demo-hide-prev-next")));
-        expect(await atom2.arePrevNextLinksDisplayed()).toBe(false);
+        await atom.setItemsPerPage(25);
+        expect(await atom.getStatusText()).toBe(getDisplayingText(25, 1, itemCount));
     });
 
     it("should set the correct page on prev/next click", async () => {
@@ -137,11 +147,8 @@ describe("USERCONTROL paginator", () => {
         expect(await atom.activePage()).toEqual(2);
         await atom.prevLink().click();
         expect(await atom.activePage()).toEqual(1);
-    });
 
-    it("should honor 'dots' and provide default", async () => {
-        expect(await atom.ellipsisLink(0).getText()).toBe("...");
-        const atom1 = Atom.find(PaginatorAtom, "nui-demo-paginator-styling");
-        expect(await atom1.ellipsisLink(0).getText()).toBe("°°°");
+        await atom.setItemsPerPage(25);
+        expect(await atom.getStatusText()).toBe(getDisplayingText(25, 1, itemCount));
     });
 });

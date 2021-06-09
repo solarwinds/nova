@@ -7,3 +7,4 @@ export * from "./paginator-styling/paginator-styling.example.component";
 export * from "./paginator-virtual-scroll/paginator-virtual-scroll.example.component";
 export * from "./paginator-visibility/paginator-visibility.example.component";
 export * from "./paginator-visual-test/paginator-visual-test.component";
+export * from "./paginator-test/paginator-test.component";
