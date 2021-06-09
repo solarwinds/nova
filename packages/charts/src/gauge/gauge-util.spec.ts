@@ -5,7 +5,14 @@ import { LinearGaugeThresholdsRenderer } from "../renderers/bar/linear-gauge-thr
 import { DonutGaugeThresholdsRenderer } from "../renderers/radial/gauge/donut-gauge-thresholds-renderer";
 import { RadialRenderer } from "../renderers/radial/radial-renderer";
 
-import { GaugeMode, GAUGE_QUANTITY_SERIES_ID, GAUGE_REMAINDER_SERIES_ID, GAUGE_THRESHOLD_MARKERS_SERIES_ID, StandardGaugeColor, StandardGaugeThresholdId } from "./constants";
+import {
+    GaugeMode,
+    GAUGE_QUANTITY_SERIES_ID,
+    GAUGE_REMAINDER_SERIES_ID,
+    GAUGE_THRESHOLD_MARKERS_SERIES_ID,
+    StandardGaugeColor,
+    StandardGaugeThresholdId,
+} from "./constants";
 import { GaugeUtil } from "./gauge-util";
 import { IGaugeConfig } from "./types";
 
