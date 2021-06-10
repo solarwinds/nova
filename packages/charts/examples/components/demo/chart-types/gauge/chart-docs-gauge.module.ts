@@ -1,7 +1,16 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiCommonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiTextboxModule } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiCheckboxModule,
+    NuiCommonModule,
+    NuiDocsModule,
+    NuiFormFieldModule,
+    NuiIconModule,
+    NuiMessageModule,
+    NuiTextboxModule,
+} from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
@@ -14,6 +23,8 @@ import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-ga
 import { DonutGaugeBasicExampleComponent } from "./donut-basic/donut-gauge-basic-example.component";
 import { DonutGaugeWithContentExampleComponent } from "./donut-with-content/donut-gauge-with-content-example.component";
 import { DonutGaugeWithThresholdMarkersExampleComponent } from "./donut-with-threshold-markers/donut-gauge-with-threshold-markers-example.component";
+import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut-with-threshold-toggling/donut-gauge-with-threshold-toggling-example.component";
+import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels-example.component";
 
 const exampleRoutes: Routes = [
     {
@@ -69,13 +80,16 @@ const exampleRoutes: Routes = [
         DonutGaugeTesterComponent,
         DonutGaugeBasicExampleComponent,
         DonutGaugeWithContentExampleComponent,
+        DonutGaugeWithCustomThresholdLabelsExampleComponent,
         DonutGaugeWithThresholdMarkersExampleComponent,
+        DonutGaugeWithThresholdTogglingExampleComponent,
         VerticalGaugeTesterComponent,
     ],
     imports: [
         DemoCommonModule,
         FormsModule,
         NuiChartsModule,
+        NuiCheckboxModule,
         NuiCommonModule,
         NuiFormFieldModule,
         NuiIconModule,

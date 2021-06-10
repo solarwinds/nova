@@ -10,26 +10,22 @@ import {
     IGaugeConfig,
     radial,
     radialGrid,
-    StandardGaugeThresholdId,
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "donut-gauge-with-threshold-markers-example",
-    templateUrl: "./donut-gauge-with-threshold-markers-example.component.html",
-    styleUrls: ["./donut-gauge-with-threshold-markers-example.component.less"],
+    selector: "donut-gauge-with-custom-threshold-labels-example",
+    templateUrl: "./donut-gauge-with-custom-threshold-labels-example.component.html",
+    styleUrls: ["./donut-gauge-with-custom-threshold-labels-example.component.less"],
 })
-export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
+export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
+    public value = 64;
     public gaugeConfig: IGaugeConfig;
-    public value = 178;
-    public reversed = false;
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
     // Generating a standard set of thresholds with warning and critical levels
-    private lowThreshold = 100;
-    private highThreshold = 158;
-    private thresholds = GaugeUtil.createStandardThresholdConfigs(this.lowThreshold, this.highThreshold);
+    private thresholds = GaugeUtil.createStandardThresholdConfigs(50, 79);
 
     public ngOnInit(): void {
         // Setting up the gauge config
@@ -44,21 +40,15 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
         // Assembling the series set
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
 
+        // Modify the threshold label formatter
+        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}%`, this.seriesSet);
+
         // Updating the chart
         this.chartAssist.update(this.seriesSet);
     }
 
     public onValueChange(value: number): void {
         this.value = value;
-        this.updateGauge();
-    }
-
-    public onReversedChange(reversed: boolean): void {
-        this.reversed = reversed;
-
-        // swap the values of the warning and critical thresholds
-        this.thresholds[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
-        this.thresholds[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
 
         this.updateGauge();
     }
@@ -77,13 +67,8 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
     private getGaugeConfig(): IGaugeConfig {
         return {
             value: this.value,
-            max: 200,
-
-            // Enabling the thresholds
+            max: 100,
             thresholds: this.thresholds,
-
-            // Optionally reverse the direction of the thresholds
-            reversedThresholds: this.reversed,
         };
     }
 }
