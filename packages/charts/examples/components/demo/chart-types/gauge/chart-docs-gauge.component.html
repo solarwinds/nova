@@ -12,8 +12,8 @@
         <code><a href="../miscellaneous/enumerations.html#GaugeMode" target="_blank">GaugeMode</a></code>.
     </li>
     <li>
-        <code><a href="../classes/GaugeUtil.html#updateSeriesSet" target="_blank">updateSeriesSet</a></code>: updates a gauge series set with the latest
-        <code><a href="../interfaces/IGaugeConfig.html" target="_blank">IGaugeConfig</a></code> property values.
+        <code><a href="../classes/GaugeUtil.html#updateSeriesSet" target="_blank">updateSeriesSet</a></code>: updates a gauge series set using
+        the provided <code><a href="../interfaces/IGaugeConfig.html" target="_blank">IGaugeConfig</a></code>.
     </li>
 </ul>
 
@@ -55,8 +55,7 @@
 </p>
 <p>
     By default, Nova gauges provide a <a href="../classes/GaugeUtil.html#createDefaultQuantityColorAccessor" target="_blank">standard color accessor</a> for
-    the thresholds which outputs the color of the active threshold according to the one specified on the <code>color</code> property of the corresponding
-    threshold configuration object. The default color accessor can be overridden if desired by setting a custom
+    the thresholds which outputs the configured color of the active threshold. The default color accessor can be overridden if desired by setting a custom
     <code><a href="../additional-documentation/advanced-usage/input-structure/data.html" target="_parent">DataAccessor</a></code> value for the
     <code>IGaugeConfig</code> object's <code><a href="../interfaces/IGaugeConfig.html#quantityColorAccessor" target="_blank">quantityColorAccessor</a></code>
     property.
@@ -64,11 +63,11 @@
 <h4>Reversed Thresholds</h4>
 <p>
     The default behavior of a Nova gauge is to treat quantity values that are greater than or equal to the threshold values as being triggered. If you want to
-    reverse that and consider values that are less than or equal to the threshold values as being triggered, set the <code>reversedThresholds</code> property
-    of the <code>IGaugeConfig</code> object to <code>true</code>.
+    reverse that and have the gauge consider values that are less than or equal to the threshold values as being triggered, set the
+    <code>reversedThresholds</code> property on the <code>IGaugeConfig</code> object to <code>true</code>.
 </p>
 <p>
-    Optionally, if you want to disable the threshold marker dots, set the
+    To display thresholds without the threshold marker dots, set the
     <code><a href="../interfaces/IGaugeConfig.html#enableThresholdMarkers" target="_blank">disableThresholdMarkers</a></code> property on the
     <code>IGaugeConfig</code> object to <code>true</code>.
 </p>

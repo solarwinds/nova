@@ -48,7 +48,7 @@ describe(`Visual Tests: Charts - ${name}`, () => {
         await camera.say.cheese(`${name} - Dark theme`);
         await page.disableDarkTheme();
 
-        await page.updateSelectable(enableWarningCb, false);
+        await enableWarningCb.click();
         await camera.say.cheese(`${name} - Warning thresholds disabled`);
 
         await camera.turn.off();
