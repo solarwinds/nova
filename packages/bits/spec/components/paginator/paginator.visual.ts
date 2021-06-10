@@ -18,7 +18,7 @@ describe(`Visual tests: ${name}`, () => {
     let virtualScrollPaginator: PaginatorAtom;
     let selectBasicPaginator: SelectV2Atom;
     let selectCustomPaginator: SelectV2Atom;
-    let selectVirtualScrollPaginator: SelectV2Atom;
+    let virtualScrollPaginatorSelect: SelectV2Atom;
     let dotsBasicButton: ButtonAtom;
     let dotsCustomStylingButton: ButtonAtom;
 
@@ -31,7 +31,7 @@ describe(`Visual tests: ${name}`, () => {
         virtualScrollPaginator = Atom.find(PaginatorAtom, "nui-demo-custom-page-size-set-paginator");
         selectBasicPaginator = Atom.findIn(SelectV2Atom, basicPaginator.getElement());
         selectCustomPaginator = Atom.findIn(SelectV2Atom, customPaginator.getElement());
-        selectVirtualScrollPaginator = Atom.findIn(SelectV2Atom, virtualScrollPaginator.getElement());
+        virtualScrollPaginatorSelect = Atom.findIn(SelectV2Atom, virtualScrollPaginator.getElement());
         dotsBasicButton = Atom.findIn(ButtonAtom, customPaginator.ellipsisLink(0));
         dotsCustomStylingButton = Atom.findIn(ButtonAtom, customStylingPaginator.ellipsisLink(1));
         
@@ -58,7 +58,7 @@ describe(`Visual tests: ${name}`, () => {
         
         await virtualScrollPaginator.ellipsisLink(1).click();
         await camera.say.cheese(`Paginator with virtual scroll is shown`);
-        await selectVirtualScrollPaginator.toggle();
+        await virtualScrollPaginatorSelect.toggle();
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);

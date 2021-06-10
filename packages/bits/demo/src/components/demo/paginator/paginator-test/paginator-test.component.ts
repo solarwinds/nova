@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./paginator-test.component.html",
 })
 export class PaginatorTestComponent {
-    public customPageSizeSet = [2, 10, 25, 50, 100];
 }
