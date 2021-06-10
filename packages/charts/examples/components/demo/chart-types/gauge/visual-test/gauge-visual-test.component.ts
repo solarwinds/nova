@@ -8,7 +8,7 @@ import cloneDeep from "lodash/cloneDeep"
 })
 export class GaugeVisualTestComponent {
     public warningEnabled = true;
-    public gaugeConfigs = [this.getGaugeConfig(42), this.getGaugeConfig(130), this.getGaugeConfig(178)]
+    public gaugeConfigs = [this.getGaugeConfig(42), this.getGaugeConfig(130), this.getGaugeConfig(178)];
 
     public getGaugeConfig(value: number): IGaugeConfig {
         return {
