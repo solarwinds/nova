@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { IWizardConfig, IWizardStepStateIconConfig, WIZARD_CONFIG } from "@nova-ui/bits";
+import { IWizardConfig, WizardStepStateConfig, WIZARD_CONFIG } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-with-custom-icons-example",
     templateUrl: "./wizard-with-custom-icons-example.component.html",
@@ -7,9 +7,11 @@ import { IWizardConfig, IWizardStepStateIconConfig, WIZARD_CONFIG } from "@nova-
         {
             provide: WIZARD_CONFIG,
             useValue: {
-                stepStateIcons: {
-                    icons: { active: "email" },
-                    colors: { active: "orange" },
+                stepState: {
+                    active: {
+                        icon: "email",
+                        color: "orange",
+                    },
                 },
             } as IWizardConfig,
         },
@@ -17,16 +19,18 @@ import { IWizardConfig, IWizardStepStateIconConfig, WIZARD_CONFIG } from "@nova-
 })
 export class WizardWithCustomIconsExampleComponent {
 
-    public secondStepIconConfig: Partial<IWizardStepStateIconConfig> = {
-        icons: {
-            initial: "execute",
-            active: "star-full",
-            visited: "star-full",
+    public secondStepIconConfig: Partial<WizardStepStateConfig> = {
+        initial: {
+            icon: "execute",
+            color: "primary-blue",
         },
-        colors: {
-            initial: "primary-blue",
-            active: "orange",
-            visited: "light-blue",
+        visited: {
+            icon: "star-full",
+            color: "light-blue",
+        },
+        active: {
+            icon: "star-full",
+            color: "orange",
         },
     };
 }

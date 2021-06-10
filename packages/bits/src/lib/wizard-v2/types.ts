@@ -1,22 +1,17 @@
 
+export type WizardIconStates = "active" | "visited" | "initial" | "error" | string;
+export type WizardStepStateConfig = Record<WizardIconStates, IWizardStepStateConfig>;
+
 export interface IWizardState {
     finished: boolean;
 }
 
 export interface IWizardConfig {
-    stepStateIcons: IWizardStepStateIconConfig;
+    stepState: WizardStepStateConfig;
     [key: string]: any;
 }
 
-export interface IWizardStepStateIconConfig {
-    icons?: Partial<IWizardIconStates>;
-    colors?: Partial<IWizardIconStates>;
-}
-
-export interface IWizardIconStates {
-    active: string;
-    visited: string;
-    initial: string;
-    error: string;
-    [key: string]: string;
+export interface IWizardStepStateConfig {
+    icon?: string;
+    color?: string;
 }

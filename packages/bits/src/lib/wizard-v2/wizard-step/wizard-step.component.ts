@@ -26,7 +26,7 @@ import {WizardStepFooterDirective} from "../wizard-step-footer.directive";
 import {WizardStepLabelDirective} from "../wizard-step-label.directive";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { IWizardStepStateIconConfig } from "../types";
+import { WizardStepStateConfig } from "../types";
 
 @Component({
     selector: "nui-wizard-step-v2",
@@ -50,7 +50,7 @@ import { IWizardStepStateIconConfig } from "../types";
 export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy, ErrorStateMatcher {
     @Input() template?: TemplateRef<any>;
 
-    @Input() stateIconsConfig: Partial<IWizardStepStateIconConfig>;
+    @Input() stepStateConfig: Partial<WizardStepStateConfig>;
 
     /** Content for step label given by `<ng-template wizardStepLabel>`. */
     @ContentChild(WizardStepLabelDirective) stepLabel: WizardStepLabelDirective;

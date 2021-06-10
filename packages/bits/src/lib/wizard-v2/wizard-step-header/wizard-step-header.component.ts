@@ -1,5 +1,5 @@
-import {FocusMonitor} from "@angular/cdk/a11y";
-import {CdkStepHeader, StepState, STEP_STATE} from "@angular/cdk/stepper";
+import { FocusMonitor } from "@angular/cdk/a11y";
+import { CdkStepHeader, StepState, STEP_STATE } from "@angular/cdk/stepper";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -14,14 +14,10 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
-import {WizardStepLabelDirective} from "../wizard-step-label.directive";
+import { WizardStepLabelDirective } from "../wizard-step-label.directive";
 import { WIZARD_CONFIG, WIZARD_CONFIG_DEFAULT } from "../../../constants/wizard.constants";
-import { IWizardConfig, IWizardStepStateIconConfig } from "../types";
-
-interface IWizardCurrentStepStatusIconConfig {
-    icon: string | undefined;
-    color: string | undefined;
-}
+import { IWizardConfig, WizardStepStateConfig } from "../types";
+import assign from "lodash/assign";
 
 @Component({
     selector: "nui-wizard-step-header",
@@ -43,7 +39,7 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     @Input() stepState: StepState;
 
     /** Custom icon config received from the wizard step. Allows to customize state icons for a particular wizard step */
-    @Input() stepStateIconsConfig: Partial<IWizardStepStateIconConfig>;
+    @Input() stepStateConfig: Partial<WizardStepStateConfig>;
 
     /** Label of the given step. */
     @Input() label: WizardStepLabelDirective | string;
@@ -72,7 +68,9 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     /** Whether the ripple should be disabled. */
     @Input() disableRipple: boolean;
 
-    private wizardConfig: Partial<IWizardConfig> = {...WIZARD_CONFIG_DEFAULT};
+    public stepStateConfigMap: WizardStepStateConfig;
+
+    private wizardConfig: IWizardConfig = {...WIZARD_CONFIG_DEFAULT};
 
     constructor(
         private _focusMonitor: FocusMonitor,
@@ -82,13 +80,16 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
         super(_elementRef);
 
         if (this.config) {
-            this.updateIconsConfig(this.config.stepStateIcons);
+            this.updateStepStateConfig(this.config.stepState);
         }
+
+        this.createStepStateConfigMap();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes?.stepStateIconsConfig?.currentValue) {
-            this.updateIconsConfig(changes?.stepStateIconsConfig?.currentValue);
+        if (changes?.stepStateConfig?.currentValue) {
+            this.updateStepStateConfig(changes?.stepStateConfig?.currentValue);
+            this.createStepStateConfigMap();
         }
     }
 
@@ -115,48 +116,16 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
         return this.label instanceof WizardStepLabelDirective ? this.label : null;
     }
 
-    public get currentStepStateIconConfig(): IWizardCurrentStepStatusIconConfig | undefined {
-
-        if (this.stepState === STEP_STATE.NUMBER) {
-            return {
-                icon: this.wizardConfig.stepStateIcons?.icons?.initial,
-                color: this.wizardConfig.stepStateIcons?.colors?.initial,
-            };
-        }
-        
-        if (this.stepState === STEP_STATE.DONE) {
-            return {
-                icon: this.wizardConfig.stepStateIcons?.icons?.visited,
-                color: this.wizardConfig.stepStateIcons?.colors?.visited,
-            };
-        }
-        
-        if (this.stepState === STEP_STATE.EDIT) {
-            return {
-                icon: this.wizardConfig.stepStateIcons?.icons?.active,
-                color: this.wizardConfig.stepStateIcons?.colors?.active,
-            };
-        }
-        
-        if (this.stepState === STEP_STATE.ERROR) {
-            return {
-                icon: this.wizardConfig.stepStateIcons?.icons?.error,
-                color: this.wizardConfig.stepStateIcons?.colors?.error,
-            };
-        }
+    private updateStepStateConfig(stepStateConfig: WizardStepStateConfig) {
+        this.wizardConfig.stepState = assign({...this.wizardConfig.stepState}, stepStateConfig);
     }
 
-    private updateIconsConfig(iconConfig: Partial<IWizardStepStateIconConfig> ) {
-
-        this.wizardConfig.stepStateIcons = {
-            icons: {
-                ...this.wizardConfig.stepStateIcons?.icons,
-                ...iconConfig?.icons,
-            },
-            colors: {
-                ...this.wizardConfig.stepStateIcons?.colors,
-                ...iconConfig?.colors,
-            },
+    private createStepStateConfigMap() {
+        this.stepStateConfigMap = {
+            [STEP_STATE.NUMBER]: this.wizardConfig.stepState?.initial,
+            [STEP_STATE.DONE]: this.wizardConfig.stepState?.visited,
+            [STEP_STATE.EDIT]: this.wizardConfig.stepState?.active,
+            [STEP_STATE.ERROR]: this.wizardConfig.stepState?.error,
         }
     }
 }

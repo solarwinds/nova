@@ -18,8 +18,8 @@
     <div class="nui-wizard-step-icon-container">
         <span class="nui-wizard-step-icon-content">
             <ng-container>
-                <nui-icon [icon]="currentStepStateIconConfig?.icon"
-                          [iconColor]="currentStepStateIconConfig?.color"></nui-icon>
+                <nui-icon [icon]="stepStateConfigMap[stepState].icon"
+                          [iconColor]="stepStateConfigMap[stepState].color"></nui-icon>
             </ng-container>
         </span>
     </div>
