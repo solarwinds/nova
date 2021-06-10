@@ -66,7 +66,7 @@
                                 [ngModel]="lowThreshold"
                                 (ngModelChange)="onLowThresholdChange($event)"
                                 [minValue]="0"
-                                [maxValue]="highThreshold"
+                                [maxValue]="highThreshold - 1"
                                 [step]="10"
                                 customBoxWidth="75px"
                                 name="lowThresholdInput"></nui-textbox-number>
@@ -79,7 +79,7 @@
             <nui-textbox-number type="number"
                                 [ngModel]="highThreshold"
                                 (ngModelChange)="onHighThresholdChange($event)"
-                                [minValue]="lowThreshold"
+                                [minValue]="lowThreshold + 1"
                                 [maxValue]="maxValue"
                                 [step]="10"
                                 customBoxWidth="75px"

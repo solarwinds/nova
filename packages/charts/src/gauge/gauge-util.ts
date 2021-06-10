@@ -153,7 +153,8 @@ export class GaugeUtil {
         renderingAttributes: IGaugeRenderingAttributes,
         activeThreshold?: IGaugeThreshold
     ): IChartAssistSeries<IAccessors<any>>[] {
-        return GaugeUtil.generateQuantityAndRemainderData(gaugeConfig).map((series: Partial<IDataSeries<IAccessors>>) => {
+        // assigning to variable to prevent "Lambda not supported" error
+        const seriesSet = GaugeUtil.generateQuantityAndRemainderData(gaugeConfig).map((series: Partial<IDataSeries<IAccessors>>) => {
             const { quantityAccessors, remainderAccessors, scales, mainRenderer } = renderingAttributes;
 
             if (quantityAccessors.data) {
@@ -176,6 +177,8 @@ export class GaugeUtil {
                 renderer: mainRenderer,
             } as IChartAssistSeries<IAccessors<any>>;
         });
+
+        return seriesSet;
     }
 
     /**
@@ -287,6 +290,7 @@ export class GaugeUtil {
      * @returns {DataAccessor} An accessor for determining the color to use for the quantity visualization
      */
     public static createDefaultQuantityColorAccessor(): DataAccessor {
+        // assigning to variable to prevent "Lambda not supported" error
         const colorAccessor: DataAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) =>
             dataSeries.activeThreshold ? dataSeries.activeThreshold.color : dataSeries.defaultColor;
 
@@ -327,12 +331,10 @@ export class GaugeUtil {
      * series needed by the gauge visualization
      */
     public static generateQuantityAndRemainderData(gaugeConfig: IGaugeConfig): Partial<IDataSeries<IAccessors>>[] {
-        const clampedConfig = GaugeUtil.clampConfigToRange(gaugeConfig);
-
         return [
             // category property is used for unifying the linear-style gauge visualization into a single bar stack
-            { id: GAUGE_QUANTITY_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: clampedConfig.value }] },
-            { id: GAUGE_REMAINDER_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: clampedConfig.max - clampedConfig.value }] },
+            { id: GAUGE_QUANTITY_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.value }] },
+            { id: GAUGE_REMAINDER_SERIES_ID, data: [{ category: GaugeUtil.DATA_CATEGORY, value: gaugeConfig.max - gaugeConfig.value }] },
         ];
     }
 
