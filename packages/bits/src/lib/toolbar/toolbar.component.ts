@@ -86,11 +86,27 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private lastChildBorder: number;
     private childrenSubscription: Subscription;
     private destructiveItems: any[];
+    private isFocusFromOutside = true;
 
     constructor(public element: ElementRef,
                 private changeDetector: ChangeDetectorRef,
                 private logger: LoggerService,
                 private ngZone: NgZone) {}
+
+    onFocus(): void {
+        const first = this.getButtons()[0];
+
+        if (first && this.isFocusFromOutside) {
+            first.focus();
+        }
+    }
+
+    @HostListener("focusout")
+    public onFocusOut(): void {
+        if (!this.dynamicContainer.contains(document.activeElement)) {
+            this.isFocusFromOutside = true;
+        }
+    }
 
     @HostListener("keydown", ["$event"])
     onKeyDown(event: KeyboardEvent): void {
@@ -101,6 +117,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         }
 
         if (code === KEYBOARD_CODE.ARROW_LEFT || code === KEYBOARD_CODE.ARROW_RIGHT) {
+            this.isFocusFromOutside = false;
             event.preventDefault();
             this.navigateByArrow(code);
         }
@@ -128,10 +145,17 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 }
             }
         });
+        this.disableFocusForMoreBtn();
     }
 
     ngOnDestroy() {
         this.childrenSubscription.unsubscribe();
+    }
+
+    public onClickToolbarBtn(event: MouseEvent, commandItem: any): void {
+        event.stopPropagation();
+        (event.target as HTMLButtonElement).focus();
+        commandItem.actionDone.emit();
     }
 
     public moveToolbarItems() {
@@ -204,19 +228,18 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     }
 
     private navigateByArrow(code: string): void {
-        const node = this.toolbarContainer.nativeElement.querySelector(".nui-toolbar-content__dynamic");
+        const buttons = this.getButtons();
+        const length = buttons.length;
 
-        if (!node) {
+        if (!length) {
             return;
         }
 
-        const buttons = Array.from(node.childNodes).filter((node) => (node as any).tagName === "BUTTON");
-        const length = buttons.length;
-        const moreButton = node.querySelector(".nui-button.btn.menu-button");
+        const moreButton = this.menuActivatorBtn;
         const direction = code === KEYBOARD_CODE.ARROW_RIGHT ? 1 : -1;
         let nextIndex = buttons.findIndex((button) => button === document.activeElement) + direction;
 
-        if (document.activeElement === moreButton) {
+        if (document.activeElement === moreButton && moreButton) {
             this.navigateFormMoreBtn(moreButton, buttons as HTMLButtonElement[], direction);
 
             return;
@@ -236,7 +259,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             nextIndex = 0;
         }
 
-        const button: HTMLButtonElement = buttons[nextIndex] as HTMLButtonElement;
+        const button: HTMLButtonElement = buttons[nextIndex];
 
         button.focus();
     }
@@ -249,5 +272,29 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         }
 
         buttons[buttons.length - 1].focus();
+    }
+
+    private getButtons(): HTMLButtonElement[] {
+        const node = this.dynamicContainer;
+
+        if (!node) {
+            return [];
+        }
+
+        return Array.from(node.childNodes).filter((node) => (node as any).tagName === "BUTTON") as HTMLButtonElement[];
+    }
+
+    private get dynamicContainer(): HTMLElement {
+        return this.toolbarContainer.nativeElement.querySelector(".nui-toolbar-content__dynamic");
+    }
+
+    private get menuActivatorBtn(): HTMLButtonElement | null {
+        return this.dynamicContainer.querySelector(".nui-button.btn.menu-button");
+    }
+
+    private disableFocusForMoreBtn(): void {
+        if (this.menuActivatorBtn) {
+            this.menuActivatorBtn.setAttribute("tabindex", "-1");
+        }
     }
 }
