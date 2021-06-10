@@ -109,6 +109,9 @@ export interface IRadialRendererConfig extends IRendererConfig {
     enableDataPointHighlighting?: boolean;
 }
 
+/**
+ * Standard configuration for gauge threshold renderers
+ */
 export interface IGaugeThresholdsRendererConfig {
     /** The radius of each threshold marker */
     markerRadius?: StandardGaugeThresholdMarkerRadius | number;

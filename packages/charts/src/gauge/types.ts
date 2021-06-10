@@ -25,7 +25,7 @@ export interface IGaugeConfig {
 
 /**
  * @ignore
- * Map of threshold IDs to IGaugeThresholdConfigs
+ * Map of threshold IDs to IGaugeThresholdConfig objects
  */
 export type IGaugeThresholdConfigs = Record<string, IGaugeThresholdConfig>;
 

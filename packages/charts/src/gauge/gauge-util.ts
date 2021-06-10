@@ -236,16 +236,16 @@ export class GaugeUtil {
      * @returns {IGaugeRenderingAttributes} The attributes required to instantiate a gauge
      */
     public static generateRenderingAttributes(gaugeConfig: IGaugeConfig, mode: GaugeMode): IGaugeRenderingAttributes {
-        const renderingTools = GaugeUtil.generateRenderingTools(gaugeConfig, mode);
-        const result: IGaugeRenderingAttributes = {
-            quantityAccessors: renderingTools.quantityAccessorFunction(),
-            remainderAccessors: renderingTools.remainderAccessorFunction(),
-            mainRenderer: renderingTools.mainRendererFunction(),
-            thresholdsRenderer: renderingTools.thresholdsRendererFunction(),
-            scales: renderingTools.scaleFunction(),
+        const renderTools = GaugeUtil.generateRenderingTools(gaugeConfig, mode);
+        const renderAttrs: IGaugeRenderingAttributes = {
+            quantityAccessors: renderTools.quantityAccessorFunction(),
+            remainderAccessors: renderTools.remainderAccessorFunction(),
+            mainRenderer: renderTools.mainRendererFunction(),
+            thresholdsRenderer: renderTools.thresholdsRendererFunction(),
+            scales: renderTools.scaleFunction(),
         };
 
-        return result;
+        return renderAttrs;
     }
 
     /**
