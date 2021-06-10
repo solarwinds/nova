@@ -28,7 +28,7 @@ import { AcmeProportionalDSConfigComponent } from "../components/data-source-con
 import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
-import { AcmeTableDataSource3 } from "../data/table/acme-table-data-source3.service";
+import { AcmeTableDataSourceNoColumnGeneration } from "../data/table/acme-table-data-source3.service";
 import { AcmeTableGBooksDataSource } from "../data/table/acme-table-gbooks-data-source.service";
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
 import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/timeseries-data-sources";
@@ -100,7 +100,7 @@ export class ManyWidgetsModule {
         this.setDataSourceProviders("table", [
             AcmeTableDataSource.providerId,
             AcmeTableDataSource2.providerId,
-            AcmeTableDataSource3.providerId,
+            AcmeTableDataSourceNoColumnGeneration.providerId,
             AcmeTableMockDataSource.providerId,
             AcmeTableGBooksDataSource.providerId,
         ]);
