@@ -13,6 +13,7 @@ import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
 import { ToolbarSplitterComponent } from "./toolbar-splitter.component";
 import { ToolbarComponent } from "./toolbar.component";
+import { KEYBOARD_CODE } from "../../constants";
 
 @Component({
     selector: "nui-test-cmp",
@@ -155,5 +156,38 @@ describe("components >", () => {
                 expect(component.handleSelectionState()).toBeUndefined();
             });
         });
+
+        describe("onKeyDown >", () => {
+            const keyboardEventMock: KeyboardEvent = {
+                code: KEYBOARD_CODE.ARROW_LEFT,
+                preventDefault: () => {},
+            } as KeyboardEvent;
+
+            beforeEach(() => {
+                component.menuComponent.popup = { isOpen: false } as any;
+            });
+
+            it("should not call preventDefault if popup is open", () => {
+                const spy = spyOn(keyboardEventMock, "preventDefault");
+                component.menuComponent.popup.isOpen = true;
+
+                component.onKeyDown(keyboardEventMock);
+                expect(spy).not.toHaveBeenCalled();
+            });
+
+            it("should call prevent default when user press arrows", () => {
+                const spy = spyOn(keyboardEventMock, "preventDefault");
+
+                component.onKeyDown(keyboardEventMock);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should call navigateByArrow method when user press arrows", () => {
+                const spy = spyOn(component, "navigateByArrow" as never);
+
+                component.onKeyDown(keyboardEventMock);
+                expect(spy).toHaveBeenCalledWith(keyboardEventMock.code as never);
+            });
+        })
     });
 });
