@@ -306,7 +306,8 @@ export class GaugeUtil {
      * @returns {IGaugeThresholdConfigs} The threshold configs
      */
     public static createStandardThresholdConfigs(warningVal: number, criticalVal: number): IGaugeThresholdConfigs {
-        return {
+        // assigning to variable to prevent "Expression form not supported" error
+        const configs = {
             [StandardGaugeThresholdId.Warning]: {
                 id: StandardGaugeThresholdId.Warning,
                 value: warningVal,
@@ -320,6 +321,8 @@ export class GaugeUtil {
                 color: StandardGaugeColor.Critical,
             },
         }
+
+        return configs;
     }
 
     /**
