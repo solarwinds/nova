@@ -24,9 +24,10 @@
             </nui-select-v2>
         </nui-form-field>
         <ng-container nuiComponentPortal
-                      [componentId]="errorHandlingComponent"
-                      [componentType]="errorHandlingComponent"
+                      [componentId]="errorComponent"
+                      [componentType]="errorComponent"
                       [outputs]="['errorState']"
+                      [properties]="{ dataSource: dataSource }"
                       (output)="onErrorState($event.payload)"
                       #componentPortal="nuiComponentPortal">
             <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)">

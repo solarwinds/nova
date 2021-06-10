@@ -115,7 +115,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
             }
             this.changeDetector.markForCheck();
         });
-        dataSourceManager.error
+        dataSourceManager.error$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((err: IDataSourceError | null) => {
                 this.dataSourceError = err;
