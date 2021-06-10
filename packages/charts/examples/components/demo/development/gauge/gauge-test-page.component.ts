@@ -31,12 +31,6 @@ export class GaugeTestPageComponent implements OnDestroy {
 
     public thresholds: IGaugeThresholdConfigs = {
         ...GaugeUtil.createStandardThresholdConfigs(this.lowThreshold, this.highThreshold),
-        // "hey": {
-        //     id: "hey",
-        //     value: 900,
-        //     enabled: true,
-        //     color: "green",
-        // },
     };
 
 
@@ -45,9 +39,6 @@ export class GaugeTestPageComponent implements OnDestroy {
     private originalWithRefreshRoute: boolean;
 
     constructor(public themeSwitcher: ThemeSwitchService) {
-        // this.thresholds = new Array(200).fill(null).map((e, i) => i);
-        // this.thresholds = [50, 75, 100, 125, 150, 175, 200];
-
         // disable route refreshing because the theme service currently always reverts to
         // the light theme on route refresh unless route.data.showThemeSwitcher is 'true'
         this.originalWithRefreshRoute = this.themeSwitcher.withRefreshRoute;
