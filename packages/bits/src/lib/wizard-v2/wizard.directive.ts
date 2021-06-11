@@ -12,7 +12,13 @@ import {
     SimpleChanges,
     ViewChildren,
 } from "@angular/core";
-import { CdkStepper, StepContentPositionState, StepperSelectionEvent } from "@angular/cdk/stepper";
+import {
+    CdkStepper,
+    STEP_STATE,
+    StepContentPositionState,
+    StepperSelectionEvent,
+    StepState,
+} from "@angular/cdk/stepper";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
 import { Subject } from "rxjs";
@@ -43,8 +49,10 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
     @Output() readonly selectionChange = new EventEmitter<StepperSelectionEvent>();
     /** Whether ripples should be disabled for the step headers. */
     @Input() disableRipple: boolean;
+
     /** The state of the wizard */
     @Input() state: IWizardState;
+
     /** Emits the completed wizard state on component destroy */
     @Output() readonly finished: EventEmitter<IWizardState> = new EventEmitter<IWizardState>();
 
@@ -114,6 +122,26 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
             finished: this.allStepsCompleted,
         });
         super.ngOnDestroy();
+    }
+
+    public getStepState(i: number): StepState {
+        const steps = this.steps.toArray();
+        const step = steps[i];
+        const isSelected = steps.indexOf(this.selected) === i;
+
+        if (step.hasError && isSelected) {
+            return STEP_STATE.ERROR;
+        }
+
+        if (isSelected) {
+            return STEP_STATE.EDIT
+        }
+
+        if (step.completed) {
+            return STEP_STATE.DONE
+        }
+
+        return STEP_STATE.NUMBER;
     }
 
     // Restores the completed wizard to the last step
