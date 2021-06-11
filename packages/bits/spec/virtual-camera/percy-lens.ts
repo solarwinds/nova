@@ -45,8 +45,6 @@ export class PercyLens implements ILens {
         await this.browser.executeScript(`
             const styles = document.createElement('style');
             styles.innerText = "input, textarea { caret-color: transparent;} * {cursor: none !important;}";
-            styles.setAttribute('id', 'percy-custom-id');
-
             document.head.appendChild(styles);
         `);
     }
