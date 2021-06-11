@@ -16,7 +16,7 @@
                         [attr.aria-label]="step.ariaLabel || null"
                         [attr.aria-labelledby]="(!step.ariaLabel && step.ariaLabelledby) ? step.ariaLabelledby : null"
                         [index]="i"
-                        [state]="_getIndicatorType(i, step.state)"
+                        [state]="getStepState(i, step.state)"
                         [label]="step.label || step.stepLabel"
                         [selected]="selectedIndex === i"
                         [active]="step.completed || selectedIndex === i || !linear"

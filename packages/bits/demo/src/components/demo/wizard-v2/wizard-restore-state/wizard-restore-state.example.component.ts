@@ -4,7 +4,11 @@ import { DialogService, NuiDialogRef, WizardStepV2Component, IWizardState } from
 import isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-import { IWizardStepConfig } from "../wizard-dynamic/wizard-dynamic.example.component";
+
+interface IWizardStepData {
+    title: string;
+    templateRef: TemplateRef<string>;
+}
 
 @Component({
     selector: "nui-wizard-restore-state-example",
@@ -14,7 +18,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     public form: FormGroup;
     public activeDialog: NuiDialogRef;
     public state: IWizardState;
-    public dynamicSteps: IWizardStepConfig[] = [];
+    public dynamicSteps: IWizardStepData[] = [];
     public awesome: boolean = false;
 
     private destroy$: Subject<any> = new Subject();
@@ -90,7 +94,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     }
 
     private handleDynamicSteps(title: string, template: TemplateRef<string>, controlValue: boolean) {
-        const newStep: IWizardStepConfig = { title: title, templateRef: template };
+        const newStep: IWizardStepData = { title: title, templateRef: template };
         const index = this.dynamicSteps.findIndex(step => isEqual(step, newStep));
 
         controlValue

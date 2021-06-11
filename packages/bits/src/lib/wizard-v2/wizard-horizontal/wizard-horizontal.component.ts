@@ -13,7 +13,7 @@ import { WizardDirective } from "../wizard.directive";
     host: {
         "class": "nui-wizard-horizontal-layout",
         "[class.nui-wizard-label-position-end]": "labelPosition == 'end'",
-        "[class.nui-wizard-label-position-bottom]": "labelPosition == 'bottom'",
+        "[class.nui-wizard-label-position-top]": "labelPosition == 'top'",
         "aria-orientation": "horizontal",
         "role": "tablist",
     },
@@ -40,5 +40,5 @@ export class WizardHorizontalComponent extends WizardDirective {
     }
 
     /** Whether the label should display in bottom or end position. */
-    @Input() labelPosition: "bottom" | "end" = "end";
+    @Input() labelPosition: "top" | "end" = "top";
 }
