@@ -19,15 +19,17 @@ export class PercyLens implements ILens {
         await this.takeSnapshot(label);
     }
 
-    public async cameraON() {
+    public async cameraON(): Promise<void> {
         if (this.browser.params["snapshotsUpload"] === "manual") {
             await this.setManualFullpage();
         }
+
+        await this.setCustomCSS();
     }
 
-    public async cameraOFF() {}
+    public async cameraOFF(): Promise<void> {}
 
-    public toolConfig() { console.warn("No config is available for Percy"); }
+    public toolConfig(): void { console.warn("No config is available for Percy"); }
 
     private checkSettings() {
         this.percyConfig.widths = [...this.settings.responsiveWidths];
@@ -39,4 +41,13 @@ export class PercyLens implements ILens {
         await this.browser.manage().window().setSize(1920, body > win ? body : win);
     }
 
+    private async setCustomCSS() {
+        await this.browser.executeScript(`
+            const styles = document.createElement('style');
+            styles.innerText = "input, textarea { caret-color: transparent;} * {cursor: none !important;}";
+            styles.setAttribute('id', 'percy-custom-id');
+
+            document.head.appendChild(styles);
+        `);
+    }
 }
