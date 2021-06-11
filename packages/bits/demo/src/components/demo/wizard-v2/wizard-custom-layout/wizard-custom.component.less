@@ -10,21 +10,21 @@
     .nui-wizard-step-header {
         border: @nui-line-default solid;
         border-radius: 5px;
-
         .setCssVariable(border-color, nui-color-line-default);
         .setCssVariable(background, nui-color-bg-content);
-
+        flex-direction: row-reverse;
+        justify-content: flex-end;
         padding: 0 8px;
     }
 
-    .nui-wizard-step-header-selected {
+    .nui-wizard-step-header--selected {
         .setCssVariable(background-color, nui-color-active);
 
         color: @nui-color-text-light;
         border-color: transparent;
 
-        svg path {
-            fill: @nui-color-text-inverse;
+        .nui-wizard-step-label{
+            .setCssVariable(color, nui-color-text-inverse)
         }
     }
 
