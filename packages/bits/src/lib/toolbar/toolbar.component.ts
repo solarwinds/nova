@@ -266,7 +266,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             return [];
         }
 
-        return Array.from(node.childNodes).filter((node) => (node as any).tagName === "BUTTON") as HTMLButtonElement[];
+        return Array.from(node.childNodes).filter((node) => (node as HTMLElement).tagName === "BUTTON") as HTMLButtonElement[];
     }
 
     private get dynamicContainer(): HTMLElement {
