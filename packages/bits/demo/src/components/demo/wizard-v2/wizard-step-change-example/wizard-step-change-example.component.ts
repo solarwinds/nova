@@ -5,9 +5,13 @@ import {
     ViewChild,
 } from "@angular/core";
 
-import { IWizardStepData } from "../wizard-dynamic/wizard-dynamic.example.component";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
 import {ToastService} from "@nova-ui/bits";
+
+interface IWizardStepData {
+    title: string;
+    templateRef: TemplateRef<string>;
+}
 
 @Component({
     selector: "nui-wizard-step-change-example",
