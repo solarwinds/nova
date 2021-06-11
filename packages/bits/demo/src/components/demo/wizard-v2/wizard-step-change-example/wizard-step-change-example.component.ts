@@ -5,7 +5,7 @@ import {
     ViewChild,
 } from "@angular/core";
 
-import {IWizardStepConfig } from "../wizard-dynamic/wizard-dynamic.example.component";
+import { IWizardStepData } from "../wizard-dynamic/wizard-dynamic.example.component";
 import {StepperSelectionEvent} from "@angular/cdk/stepper";
 import {ToastService} from "@nova-ui/bits";
 
@@ -14,7 +14,7 @@ import {ToastService} from "@nova-ui/bits";
     templateUrl: "./wizard-step-change-example.component.html",
 })
 export class WizardStepChangeExampleComponent implements AfterViewInit {
-    public steps: IWizardStepConfig[] = [];
+    public steps: IWizardStepData[] = [];
 
     @ViewChild("normalStep") normalStep: TemplateRef<string>;
 
