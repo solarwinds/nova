@@ -167,14 +167,6 @@ describe("components >", () => {
                 component.menuComponent.popup = { isOpen: false } as any;
             });
 
-            it("should not call preventDefault if popup is open", () => {
-                const spy = spyOn(keyboardEventMock, "preventDefault");
-                component.menuComponent.popup.isOpen = true;
-
-                component.onKeyDown(keyboardEventMock);
-                expect(spy).not.toHaveBeenCalled();
-            });
-
             it("should call prevent default when user press arrows", () => {
                 const spy = spyOn(keyboardEventMock, "preventDefault");
 

@@ -93,28 +93,13 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 private logger: LoggerService,
                 private ngZone: NgZone) {}
 
-    onFocus(): void {
-        const first = this.getButtons()[0];
-
-        if (first && this.isFocusFromOutside) {
-            first.focus();
-        }
-    }
-
-    @HostListener("focusout")
-    public onFocusOut(): void {
-        if (!this.dynamicContainer.contains(document.activeElement)) {
-            this.isFocusFromOutside = true;
-        }
-    }
-
     @HostListener("keydown", ["$event"])
     onKeyDown(event: KeyboardEvent): void {
         const { code } = event;
 
-        if (this.menuComponent && this.menuComponent.popup.isOpen) {
-            return;
-        }
+        // if (this.menuComponent && this.menuComponent.popup.isOpen) {
+        //     return;
+        // }
 
         if (code === KEYBOARD_CODE.ARROW_LEFT || code === KEYBOARD_CODE.ARROW_RIGHT) {
             this.isFocusFromOutside = false;
@@ -265,6 +250,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     }
 
     private navigateFormMoreBtn(button: HTMLButtonElement, buttons: HTMLButtonElement[], dir: number): void {
+        if (this.menuComponent && this.menuComponent.popup) {
+            this.menuComponent.popup.isOpen = false;
+        }
+
         if (button && dir === 1) {
             buttons[0].focus();
 

@@ -1,14 +1,12 @@
 <div class="nui-toolbar-content d-flex flex-row align-items-center justify-content-between"
-     tabindex="0"
      nuiResizeObserver
      (containerResize)="moveToolbarItems()"
-     (focus)="onFocus()"
      #toolbarContainer>
     <div class="nui-toolbar-content__dynamic d-flex flex-row flex-shrink-0">
-        <ng-template ngFor let-commandGroup let-last="last" [ngForOf]="commandGroups">
-            <ng-template ngFor let-commandItem [ngForOf]="commandGroup.items">
+        <ng-template ngFor let-i="index" let-commandGroup let-last="last" [ngForOf]="commandGroups">
+            <ng-template ngFor let-commandItem let-j="index" [ngForOf]="commandGroup.items">
                 <button nui-button type="button"
-                        tabindex="-1"
+                        [tabindex]="(i === 0 && j === 0) ? 0 : -1"
                         (click)="onClickToolbarBtn($event, commandItem)"
                         [displayStyle]="commandItem.displayStyle === 'main' ? 'primary' : commandItem.displayStyle"
                         [ngClass]="{'nui-toolbar-primary-item': commandItem.displayStyle === 'main'}"
