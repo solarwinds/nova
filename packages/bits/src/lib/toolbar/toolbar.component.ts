@@ -133,7 +133,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.childrenSubscription.unsubscribe();
     }
 
-    public onClickToolbarBtn(event: MouseEvent, commandItem: any): void {
+    public onClickToolbarBtn(event: MouseEvent, commandItem: ToolbarItemComponent): void {
         event.stopPropagation();
         (event.target as HTMLButtonElement).focus();
         commandItem.actionDone.emit();
