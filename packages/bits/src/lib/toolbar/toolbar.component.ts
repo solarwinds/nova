@@ -97,10 +97,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     onKeyDown(event: KeyboardEvent): void {
         const { code } = event;
 
-        // if (this.menuComponent && this.menuComponent.popup.isOpen) {
-        //     return;
-        // }
-
         if (code === KEYBOARD_CODE.ARROW_LEFT || code === KEYBOARD_CODE.ARROW_RIGHT) {
             this.isFocusFromOutside = false;
             event.preventDefault();
