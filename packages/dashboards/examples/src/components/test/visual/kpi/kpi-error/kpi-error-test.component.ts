@@ -22,7 +22,7 @@ import { TestKpiDataSource, TestKpiDataSource2, TestKpiDataSourceBigNumber, Test
  * A component that instantiates the dashboard
  */
 @Component({
-    selector: "widget-error-handling",
+    selector: "kpi-error-test",
     templateUrl: "./kpi-error-test.component.html",
     styleUrls: ["./kpi-error-test.component.less"],
 })
