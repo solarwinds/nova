@@ -1,7 +1,14 @@
 @import (reference) "../../styles/mixins/expander-base";
+@import (reference) "../../styles/mixins/focus.less";
 
 .nui-expander {
     .expander();
+
+    &__header {
+        &:focus {
+            .focus-outline();
+        }
+    }
 
     p {
         margin: 0;
