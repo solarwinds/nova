@@ -6,19 +6,19 @@ export const WIZARD_CONFIG = new InjectionToken<IWizardConfig>("wizard.conf");
 export const WIZARD_STEP_STATE_DEFAULT_CONFIG: WizardStepStateConfig = {
     initial: {
         icon: "step",
-        color: "gray",
+        iconColor: "gray",
     },
     visited: {
         icon: "step-complete",
-        color: "primary-blue",
+        iconColor: "primary-blue",
     },
     active: {
         icon: "step-active",
-        color: "black",
+        iconColor: "black",
     },
     error: {
         icon: "severity_error",
-        color: "red",
+        iconColor: "red",
     },
 }
 
