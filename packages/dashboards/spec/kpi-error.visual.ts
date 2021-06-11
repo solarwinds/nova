@@ -6,7 +6,7 @@ import { ConfiguratorAtom } from "./configurator/configurator.atom";
 
 const name: string = "Kpi Error";
 
-fdescribe(`Visual tests: Dashboards - ${name}`, () => {
+describe(`Visual tests: Dashboards - ${name}`, () => {
     let camera: Camera;
     let configurator: ConfiguratorAtom;
     const page = new TestPage();
@@ -21,7 +21,7 @@ fdescribe(`Visual tests: Dashboards - ${name}`, () => {
     it(`${name} - Default look`, async () => {
         await camera.turn.on();
 
-        // await camera.say.cheese(`${name} - Default`);
+        await camera.say.cheese(`${name} - Default`);
 
         await camera.turn.off();
     }, 100000);
