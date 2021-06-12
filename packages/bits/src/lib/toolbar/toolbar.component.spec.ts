@@ -181,6 +181,13 @@ describe("components >", () => {
                 expect(disableFocusForMoreBtnSpy).toHaveBeenCalled();
                 expect(initServiceSpy).toHaveBeenCalled();
             });
+
+            it("should call preventDefault", () => {
+                const spy = spyOn(keyboardEventMock, "preventDefault");
+
+                component.onKeyDown(keyboardEventMock);
+                expect(spy).toHaveBeenCalled();
+            });
         });
     });
 });

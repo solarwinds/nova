@@ -73,7 +73,7 @@ export class ToolbarKeyboardService {
         button.focus();
     }
 
-    private navigateFormMoreBtn(direction: number, buttons: any): void {
+    private navigateFormMoreBtn(direction: number, buttons: HTMLButtonElement[]): void {
         if (this.menuComponent && this.menuComponent.popup) {
             this.menuComponent.popup.isOpen = false;
         }
