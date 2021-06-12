@@ -62,7 +62,7 @@ export class DonutGaugeWithContentExampleComponent implements OnInit {
         return {
             value,
             max: 200,
-            thresholds: GaugeUtil.createStandardThresholdConfigs(100, 158),
+            thresholds: GaugeUtil.createStandardThresholdsConfig(100, 158),
         };
     }
 }

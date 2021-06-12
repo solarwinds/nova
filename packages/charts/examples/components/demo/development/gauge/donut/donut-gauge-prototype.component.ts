@@ -45,7 +45,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
-            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.disableThresholdMarkers;
+            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.thresholds?.disableMarkers;
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
@@ -65,10 +65,10 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
-        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
-            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
-            return this.unitConversionService.getFullDisplay(conversion, "generic");
-        }, this.seriesSet);
+        // this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
+        //     const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
+        //     return this.unitConversionService.getFullDisplay(conversion, "generic");
+        // }, this.seriesSet);
 
         this.updateDonutSize();
         this.updateAnnularAttributes();

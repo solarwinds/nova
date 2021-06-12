@@ -29,7 +29,7 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
     // Generating a standard set of thresholds with warning and critical levels
     private lowThreshold = 100;
     private highThreshold = 158;
-    private thresholds = GaugeUtil.createStandardThresholdConfigs(this.lowThreshold, this.highThreshold);
+    private thresholds = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
 
     public ngOnInit(): void {
         // Setting up the gauge config
@@ -55,10 +55,11 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
 
     public onReversedChange(reversed: boolean): void {
         this.reversed = reversed;
+        this.thresholds.reversed = reversed;
 
         // swap the values of the warning and critical thresholds
-        this.thresholds[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
-        this.thresholds[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+        this.thresholds.definitions[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
+        this.thresholds.definitions[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
 
         this.updateGauge();
     }
@@ -81,9 +82,6 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
 
             // Enabling the thresholds
             thresholds: this.thresholds,
-
-            // Optionally reverse the direction of the thresholds
-            reversedThresholds: this.reversed,
         };
     }
 }

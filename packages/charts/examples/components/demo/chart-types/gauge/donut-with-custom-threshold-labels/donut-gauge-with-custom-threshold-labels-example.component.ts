@@ -25,7 +25,12 @@ export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnIn
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
     // Generating a standard set of thresholds with warning and critical levels
-    private thresholds = GaugeUtil.createStandardThresholdConfigs(50, 79);
+    private thresholds = {
+        ...GaugeUtil.createStandardThresholdsConfig(50, 79),
+
+        // Setting a custom label formatter
+        labelFormatter: (d: string) => `${d}%`,
+    };
 
     public ngOnInit(): void {
         // Setting up the gauge config
@@ -41,7 +46,7 @@ export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnIn
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
 
         // Modify the threshold label formatter
-        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}%`, this.seriesSet);
+        // this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => `${d}%`, this.seriesSet);
 
         // Updating the chart
         this.chartAssist.update(this.seriesSet);

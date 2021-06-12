@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../../core/common/types";
 import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-import { IGaugeConfig, IGaugeThresholdConfigs } from "../../../gauge/types";
+import { IGaugeConfig, GaugeThresholdDefs } from "../../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import { RadialAccessors } from "../accessors/radial-accessors";
 
@@ -27,7 +27,7 @@ describe("DonutGaugeThresholdsRenderer >", () => {
             value: 5,
             max: 10,
             thresholds: {
-                ...GaugeUtil.createStandardThresholdConfigs(3, 7),
+                ...GaugeUtil.createStandardThresholdsConfig(3, 7),
                 "additionalThreshold": {
                     id: "additionalThreshold",
                     value: 9,
@@ -64,7 +64,7 @@ describe("DonutGaugeThresholdsRenderer >", () => {
         });
 
         it("should render the correct number of threshold markers", () => {
-            expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds as IGaugeThresholdConfigs).length);
+            expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds as GaugeThresholdDefs).length);
         });
 
         it("should position the threshold markers correctly", () => {

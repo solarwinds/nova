@@ -35,7 +35,7 @@ describe("GaugeUtil >", () => {
         gaugeConfig = {
             value: 3,
             max: 10,
-            thresholds: GaugeUtil.createStandardThresholdConfigs(2, 4),
+            thresholds: GaugeUtil.createStandardThresholdsConfig(2, 4),
         };
     });
 

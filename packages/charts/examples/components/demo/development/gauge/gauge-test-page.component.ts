@@ -4,9 +4,10 @@ import {
     DEFAULT_RADIAL_RENDERER_CONFIG,
     GaugeUtil,
     IGaugeConfig,
-    IGaugeThresholdConfigs,
+    GaugeThresholdDefs,
     StandardGaugeThresholdId,
     StandardLinearGaugeThickness,
+    IGaugeThresholdsConfig,
 } from "@nova-ui/charts";
 
 @Component({
@@ -29,8 +30,8 @@ export class GaugeTestPageComponent implements OnDestroy {
     public lowThreshold = 1000;
     public highThreshold = 1500;
 
-    public thresholds: IGaugeThresholdConfigs = {
-        ...GaugeUtil.createStandardThresholdConfigs(this.lowThreshold, this.highThreshold),
+    public thresholds: IGaugeThresholdsConfig = {
+        ...GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold),
     };
 
 
@@ -87,23 +88,27 @@ export class GaugeTestPageComponent implements OnDestroy {
     }
 
     private getGaugeConfig(): IGaugeConfig {
-        if (this.warningEnabled) {
-            this.thresholds[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
-        }
-
-        if (this.criticalEnabled) {
-            this.thresholds[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
-        }
-
-        this.thresholds[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
-        this.thresholds[StandardGaugeThresholdId.Critical].enabled = this.criticalEnabled;
+        this.updateThresholdsConfig();
 
         return {
             value: this.value,
             max: this.maxValue,
-            reversedThresholds: this.reversed,
             thresholds: this.thresholds,
-            disableThresholdMarkers: !this.enableThresholdMarkers,
         };
+    }
+
+    private updateThresholdsConfig() {
+        if (this.warningEnabled) {
+            this.thresholds.definitions[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
+        }
+
+        if (this.criticalEnabled) {
+            this.thresholds.definitions[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+        }
+
+        this.thresholds.definitions[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
+        this.thresholds.definitions[StandardGaugeThresholdId.Critical].enabled = this.criticalEnabled;
+        this.thresholds.reversed = this.reversed;
+        this.thresholds.disableMarkers = !this.enableThresholdMarkers;
     }
 }

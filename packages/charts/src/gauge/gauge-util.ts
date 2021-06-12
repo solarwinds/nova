@@ -22,10 +22,11 @@ import {
     StandardGaugeColor,
     StandardGaugeThresholdId,
 } from "./constants";
-import { IGaugeConfig, IGaugeThreshold, IGaugeThresholdConfig, IGaugeThresholdConfigs, IGaugeThresholdsData } from "./types";
+import { IGaugeConfig, IGaugeThreshold, IGaugeThresholdDef, GaugeThresholdDefs, IGaugeThresholdsData, IGaugeThresholdsConfig } from "./types";
 import { linearGaugeRendererConfig } from "../renderers/bar/linear-gauge-renderer-config";
 import { Renderer } from "../core/common/renderer";
 import isUndefined from "lodash/isUndefined";
+import cloneDeep from "lodash/cloneDeep";
 
 /**
  * @ignore
@@ -129,7 +130,7 @@ export class GaugeUtil {
             }
 
             if (series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID) {
-                (series.renderer.config as IGaugeThresholdsRendererConfig).enabled = !clampedConfig.disableThresholdMarkers;
+                (series.renderer.config as IGaugeThresholdsRendererConfig).enabled = !clampedConfig.thresholds?.disableMarkers;
                 return { ...series, ...thresholdsData };
             }
 
@@ -191,40 +192,25 @@ export class GaugeUtil {
      */
     public static generateThresholdSeries(gaugeConfig: IGaugeConfig, renderingAttributes: IGaugeRenderingAttributes): IChartAssistSeries<IAccessors> {
         const { quantityAccessors, scales, thresholdsRenderer } = renderingAttributes;
+        const thresholdScales = cloneDeep(scales);
+
+        if (gaugeConfig.thresholds?.labelFormatter) {
+            const linearScale = Object.values(thresholdScales).find(scale => scale instanceof LinearScale);
+            if (linearScale) {
+                linearScale.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.thresholds?.labelFormatter;
+            }
+        }
+
         return {
             ...GaugeUtil.generateThresholdsData(gaugeConfig),
             accessors: quantityAccessors,
-            scales,
+            scales: thresholdScales,
             renderer: thresholdsRenderer,
             // instruct the radial preprocessor to ignore the threshold series when calculating the donut arcs
             excludeFromArcCalculation: true,
             // instruct the stacked and radial preprocessors that the threshold data doesn't need to be mutated
             preprocess: false,
         } as IChartAssistSeries<IAccessors>;
-    }
-
-    /**
-     * Sets the formatter to use for the threshold labels
-     *
-     * @param formatter The formatter to use for the threshold labels
-     * @param seriesSet The series set to apply the formatter to
-     * @param formatterName Optional name for the formatter
-     *
-     * @returns {IChartAssistSeries<IAccessors>[]} The series set as modified to use the provided formatter
-     */
-    public static setThresholdLabelFormatter(
-        formatter: Formatter<string>,
-        seriesSet: IChartAssistSeries<IAccessors>[],
-        formatterName = GAUGE_LABEL_FORMATTER_NAME_DEFAULT
-    ): IChartAssistSeries<IAccessors>[] {
-        const thresholdsSeries = seriesSet.find((series: IChartSeries<IAccessors<any>>) => series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
-        if (thresholdsSeries) {
-            const linearScale = Object.values(thresholdsSeries.scales).find(scale => scale instanceof LinearScale);
-            if (linearScale) {
-                linearScale.formatters[formatterName] = formatter;
-            }
-        }
-        return seriesSet;
     }
 
     /**
@@ -260,21 +246,21 @@ export class GaugeUtil {
         const renderingTools: Record<GaugeMode, IGaugeRenderingTools> = {
             [GaugeMode.Donut]: {
                 mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer({ enabled: !gaugeConfig.disableThresholdMarkers }),
+                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
                 quantityAccessorFunction: () => new RadialAccessors(),
                 remainderAccessorFunction: () => new RadialAccessors(),
                 scaleFunction: () => radialScales(),
             },
             [GaugeMode.Horizontal]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.disableThresholdMarkers }),
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
                 quantityAccessorFunction: () => new HorizontalBarAccessors(),
                 remainderAccessorFunction: () => new HorizontalBarAccessors(),
                 scaleFunction: () => barScales({ horizontal: true }),
             },
             [GaugeMode.Vertical]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.disableThresholdMarkers }),
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
                 quantityAccessorFunction: () => new VerticalBarAccessors(),
                 remainderAccessorFunction: () => new VerticalBarAccessors(),
                 scaleFunction: () => barScales(),
@@ -303,26 +289,30 @@ export class GaugeUtil {
      * @param warningVal Value for the warning threshold
      * @param criticalVal Value for the critical threshold
      *
-     * @returns {IGaugeThresholdConfigs} The threshold configs
+     * @returns {GaugeThresholdDefs} The threshold configs
      */
-    public static createStandardThresholdConfigs(warningVal: number, criticalVal: number): IGaugeThresholdConfigs {
+    public static createStandardThresholdsConfig(warningVal: number, criticalVal: number): IGaugeThresholdsConfig {
         // assigning to variable to prevent "Expression form not supported" error
-        const configs = {
-            [StandardGaugeThresholdId.Warning]: {
-                id: StandardGaugeThresholdId.Warning,
-                value: warningVal,
-                enabled: true,
-                color: StandardGaugeColor.Warning,
+        const config = {
+            definitions: {
+                [StandardGaugeThresholdId.Warning]: {
+                    id: StandardGaugeThresholdId.Warning,
+                    value: warningVal,
+                    enabled: true,
+                    color: StandardGaugeColor.Warning,
+                },
+                [StandardGaugeThresholdId.Critical]: {
+                    id: StandardGaugeThresholdId.Critical,
+                    value: criticalVal,
+                    enabled: true,
+                    color: StandardGaugeColor.Critical,
+                },
             },
-            [StandardGaugeThresholdId.Critical]: {
-                id: StandardGaugeThresholdId.Critical,
-                value: criticalVal,
-                enabled: true,
-                color: StandardGaugeColor.Critical,
-            },
+            reversed: false,
+            disableMarkers: false,
         }
 
-        return configs;
+        return config;
     }
 
     /**
@@ -380,16 +370,16 @@ export class GaugeUtil {
      * @returns {IGaugeThresholdsData} Thresholds data modified for use by the gauge visualization
      */
     public static prepareThresholdsData(gaugeConfig: IGaugeConfig): IGaugeThresholdsData {
-        const thresholds: IGaugeThreshold[] = Object.values(gaugeConfig.thresholds || [])
-            .filter((threshold: IGaugeThresholdConfig) => threshold.enabled)
-            .map((threshold: IGaugeThresholdConfig) => ({
+        const thresholds: IGaugeThreshold[] = Object.values(gaugeConfig.thresholds?.definitions || [])
+            .filter((threshold: IGaugeThresholdDef) => threshold.enabled)
+            .map((threshold: IGaugeThresholdDef) => ({
                 ...threshold,
                 category: GaugeUtil.DATA_CATEGORY,
                 // threshold values are exclusive when in reversed mode, inclusive otherwise
-                hit: gaugeConfig.reversedThresholds ? threshold.value < gaugeConfig.value : threshold.value <= gaugeConfig.value,
+                hit: gaugeConfig.thresholds?.reversed ? threshold.value < gaugeConfig.value : threshold.value <= gaugeConfig.value,
             })).sort((a, b) => a.value - b.value);
 
-        const activeThreshold: IGaugeThreshold | undefined = gaugeConfig.reversedThresholds ?
+        const activeThreshold: IGaugeThreshold | undefined = gaugeConfig.thresholds?.reversed ?
             thresholds?.find(threshold => !isUndefined(threshold.hit) && !threshold.hit) :
             thresholds?.slice().reverse().find(threshold => threshold.hit);
 
@@ -412,9 +402,9 @@ export class GaugeUtil {
             value = 0;
         }
 
-        const thresholds = gaugeConfig.thresholds || {};
-        Object.keys(thresholds || {}).forEach(thresholdId => {
-            const threshold = thresholds[thresholdId];
+        const thresholdDefs = gaugeConfig.thresholds?.definitions || {};
+        Object.keys(thresholdDefs || {}).forEach(thresholdId => {
+            const threshold = thresholdDefs[thresholdId];
             if (threshold) {
                 if (threshold.value > gaugeConfig.max) {
                     console.warn(`Configured threshold value ${threshold.value} for threshold ${thresholdId} is greater` +
@@ -429,6 +419,12 @@ export class GaugeUtil {
             }
         });
 
-        return { ...gaugeConfig, thresholds, value };
+        return {
+            ...gaugeConfig,
+            thresholds: {
+                ...gaugeConfig.thresholds,
+                definitions: thresholdDefs,
+            }, value,
+        };
     }
 }

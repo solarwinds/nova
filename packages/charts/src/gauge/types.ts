@@ -1,4 +1,5 @@
 import { DataAccessor } from "../core/common/types";
+import { Formatter } from "../core/common/scales/types";
 
 /**
  * @ignore
@@ -11,12 +12,8 @@ export interface IGaugeConfig {
     max: number;
     /** The color to display for the quantity when no threshold is active */
     defaultQuantityColor?: string;
-    /** An optional array of the gauge's threshold values */
-    thresholds?: IGaugeThresholdConfigs;
-    /** Set to true to disable the threshold markers */
-    disableThresholdMarkers?: boolean;
-    /** Boolean indicating whether the direction of the thresholds should be reversed */
-    reversedThresholds?: boolean;
+    /** Optional threshold configuration */
+    thresholds?: IGaugeThresholdsConfig;
     /** Optional accessor for customizing the color to display for the quantity segment as each threshold is hit */
     quantityColorAccessor?: DataAccessor;
     /** Optional accessor for customizing the color to display for the remainder segment */
@@ -25,15 +22,29 @@ export interface IGaugeConfig {
 
 /**
  * @ignore
+ */
+export interface IGaugeThresholdsConfig {
+    /** An array of the gauge's threshold definitions */
+    definitions: GaugeThresholdDefs;
+    /** Set to true to disable the threshold markers */
+    disableMarkers?: boolean;
+    /** Boolean indicating whether the direction of the thresholds should be reversed */
+    reversed?: boolean;
+    /** Optional custom formatter for the threshold labels */
+    labelFormatter?: Formatter<string>;
+}
+
+/**
+ * @ignore
  * Map of threshold IDs to IGaugeThresholdConfig objects
  */
-export type IGaugeThresholdConfigs = Record<string, IGaugeThresholdConfig>;
+export type GaugeThresholdDefs = Record<string, IGaugeThresholdDef>;
 
 /**
  * @ignore
  * Configuration for a gauge threshold
  */
-export interface IGaugeThresholdConfig {
+export interface IGaugeThresholdDef {
     /** The ID of the threshold */
     id: string;
     /** The value of the threshold */
@@ -48,7 +59,7 @@ export interface IGaugeThresholdConfig {
  * @ignore
  * Definition for a gauge threshold datum
 */
-export interface IGaugeThreshold extends IGaugeThresholdConfig {
+export interface IGaugeThreshold extends IGaugeThresholdDef {
     /** Boolean indicating whether the threshold is hit */
     hit?: boolean;
     /** Additional metadata as needed */
