@@ -7,7 +7,6 @@ import {
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
-    IDataSeries,
     IGaugeConfig,
     radial,
     radialGrid,
@@ -24,7 +23,7 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // Setting up the gauge config
         const initialValue = 128;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
@@ -42,7 +41,7 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
         this.chartAssist.update(this.seriesSet);
     }
 
-    public onValueChange(value: number) {
+    public onValueChange(value: number): void {
         // Updating the gauge config
         this.gaugeConfig = this.getGaugeConfig(value);
 
@@ -59,10 +58,7 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
             max: 200,
 
             // Enabling the thresholds
-            thresholds: [100, 158],
-
-            // Enabling the threshold markers
-            enableThresholdMarkers: true,
+            thresholds: GaugeUtil.createStandardThresholdConfigs(100, 158),
 
             // ** Optional color accessor override **
             // quantityColorAccessor: (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {

@@ -1,4 +1,5 @@
 import { Arc, arc, DefaultArcObject } from "d3-shape";
+import cloneDeep from "lodash/cloneDeep";
 import defaultsDeep from "lodash/defaultsDeep";
 import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
@@ -34,7 +35,7 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
         applyClearance: true,
         padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
-        enableThresholdLabels: true,
+        disableThresholdLabels: false,
     };
 
     private destroy$ = new Subject();
@@ -66,10 +67,12 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
         });
     }
 
-    public updateDimensions() {
-        if (this.config.enableThresholdLabels) {
-            this.drawThresholdLabels();
-        }
+    public update(): void {
+        this.drawThresholdLabels();
+    }
+
+    public updateDimensions(): void {
+        this.drawThresholdLabels();
     }
 
     public destroy(): void {
@@ -107,13 +110,16 @@ export class DonutGaugeLabelsPlugin extends ChartPlugin {
 
         const formatter = thresholdsSeries?.scales.r.formatters[this.config.formatterName as string] ?? (d => d);
 
-        const data = thresholdsSeries?.data;
+        const data = cloneDeep(this.config.disableThresholdLabels ? [] : thresholdsSeries?.data);
         if (isUndefined(data)) {
             throw new Error("Gauge threshold series data is undefined");
         }
 
+        // ensure the data is sorted in ascending order by value since we're using it to calculate circle arcs
+        data.sort((a, b) => a.value - b.value);
+
         const labelSelection = gaugeThresholdsLabelsGroup.selectAll(`text.${GAUGE_THRESHOLD_LABEL_CLASS}`)
-            .data(DonutGaugeRenderingUtil.generateThresholdRenderingData(data));
+            .data(DonutGaugeRenderingUtil.generateThresholdArcData(data));
         labelSelection.exit().remove();
         labelSelection.enter()
             .append("text")

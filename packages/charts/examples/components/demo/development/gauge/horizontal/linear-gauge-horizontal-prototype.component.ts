@@ -31,7 +31,7 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
 
     constructor(private unitConversionService: UnitConversionService) { }
 
-    public ngOnChanges(changes: ComponentChanges<LinearGaugeHorizontalPrototypeComponent>) {
+    public ngOnChanges(changes: ComponentChanges<LinearGaugeHorizontalPrototypeComponent>): void {
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             if (changes.thickness) {
@@ -51,12 +51,16 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.disableThresholdMarkers;
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
 
-    public ngOnInit() {
-        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal, this.thickness) as XYGridConfig);
+    public ngOnInit(): void {
+        const gridConfig = linearGaugeGridConfig(GaugeMode.Horizontal, this.thickness) as XYGridConfig;
+        gridConfig.dimension.margin.right = 15;
+        gridConfig.dimension.margin.left = 5;
+        const grid = new XYGrid(gridConfig);
         const chart = new Chart(grid);
 
         this.chartAssist = new ChartAssist(chart, stack);
