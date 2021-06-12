@@ -11,8 +11,8 @@ import { IBrewDatasourceResponse, IBrewInfo } from "../../../types";
 import { BREW_API_URL } from "./constants";
 
 @Injectable()
-export class AcmeTableDataSource3 extends DataSourceService<IBrewInfo> implements IDataSource {
-    public static providerId = "AcmeTableDataSource3";
+export class AcmeTableDataSourceNoColumnGeneration extends DataSourceService<IBrewInfo> implements IDataSource {
+    public static providerId = "AcmeTableDataSourceNoColumnGeneration";
 
     private cache = Array.from<IBrewInfo>({ length: 0 });
     private lastSortValue?: ISorterFilter;
