@@ -80,7 +80,7 @@ export class DimensionConfig implements IDimensionConfig {
         if (value === undefined) {
             return this._height + marginsHeight;
         }
-        this._height = value - marginsHeight;
+        this._height = Math.max(value - marginsHeight, 0);
         return this;
     }
 }

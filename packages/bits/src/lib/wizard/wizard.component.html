@@ -17,7 +17,7 @@
                             <div class="nui-wizard__header-step-content">
                                 <span class="nui-wizard__header-step-link">
                                     <span class="nui-wizard__header-step-title" #stepTitle>
-                                        {{step.title}}</span>
+                                        {{step.shortTitle || step.title}}</span>
                                     <div class="nui-wizard__header-step-link-container">
                                         <div class="nui-wizard__header-step-col nui-wizard__header-step-col-right">
                                             <div class="nui-wizard__header-step-line" [ngStyle]="{'min-width.px': stepLineWidth}"></div>
