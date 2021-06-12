@@ -3,7 +3,7 @@
         <nui-form-field class="d-block mb-5" caption="Value"
                         [showOptionalText]="false">
             <nui-textbox-number type="number"
-                                [ngModel]="gaugeConfig.value"
+                                [ngModel]="value"
                                 (ngModelChange)="onValueChange($event)"
                                 [minValue]="0"
                                 [maxValue]="gaugeConfig.max"

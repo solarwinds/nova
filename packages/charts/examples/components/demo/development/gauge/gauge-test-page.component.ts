@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from "@angular/core";
-import { ThemeSwitchService } from "@nova-ui/bits";
+import { ThemeSwitchService, UnitConversionService } from "@nova-ui/bits";
 import {
     DEFAULT_RADIAL_RENDERER_CONFIG,
     GaugeUtil,
@@ -18,9 +18,13 @@ import {
 export class GaugeTestPageComponent implements OnDestroy {
     public value = 950;
     public maxValue = 2000;
+    public thresholds: IGaugeThresholdsConfig;
+    public gaugeConfig: IGaugeConfig;
+
     public annularGrowth = DEFAULT_RADIAL_RENDERER_CONFIG.annularGrowth;
     public thickness = StandardLinearGaugeThickness.Large;
     public donutSize = 200;
+    
     public warningEnabled = true;
     public criticalEnabled = true;
     public enableThresholdMarkers = true;
@@ -29,21 +33,23 @@ export class GaugeTestPageComponent implements OnDestroy {
 
     public lowThreshold = 1000;
     public highThreshold = 1500;
-
-    public thresholds: IGaugeThresholdsConfig = {
-        ...GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold),
-    };
-
-
-    public gaugeConfig: IGaugeConfig;
+    public valueStep = 10;
 
     private originalWithRefreshRoute: boolean;
 
-    constructor(public themeSwitcher: ThemeSwitchService) {
+    constructor(public themeSwitcher: ThemeSwitchService, private unitConversionSvc: UnitConversionService) {
         // disable route refreshing because the theme service currently always reverts to
         // the light theme on route refresh unless route.data.showThemeSwitcher is 'true'
         this.originalWithRefreshRoute = this.themeSwitcher.withRefreshRoute;
         this.themeSwitcher.withRefreshRoute = false;
+
+        this.thresholds = {
+            ...GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold),
+            labelFormatter: (d: string) => {
+                const conversion = this.unitConversionSvc.convert(parseInt(d, 10), 1000, 2);
+                return this.unitConversionSvc.getFullDisplay(conversion, "generic");
+            },
+        };
 
         this.gaugeConfig = this.getGaugeConfig();
     }

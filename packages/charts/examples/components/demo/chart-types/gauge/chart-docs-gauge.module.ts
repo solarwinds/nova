@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
@@ -25,6 +26,7 @@ import { DonutGaugeWithContentExampleComponent } from "./donut-with-content/donu
 import { DonutGaugeWithThresholdMarkersExampleComponent } from "./donut-with-threshold-markers/donut-gauge-with-threshold-markers-example.component";
 import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut-with-threshold-toggling/donut-gauge-with-threshold-toggling-example.component";
 import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels-example.component";
+import { DonutGaugeWithMarkerTogglingExampleComponent } from "./donut-with-marker-toggling/donut-gauge-with-marker-toggling-example.component";
 
 const exampleRoutes: Routes = [
     {
@@ -81,6 +83,7 @@ const exampleRoutes: Routes = [
         DonutGaugeBasicExampleComponent,
         DonutGaugeWithContentExampleComponent,
         DonutGaugeWithCustomThresholdLabelsExampleComponent,
+        DonutGaugeWithMarkerTogglingExampleComponent,
         DonutGaugeWithThresholdMarkersExampleComponent,
         DonutGaugeWithThresholdTogglingExampleComponent,
         VerticalGaugeTesterComponent,

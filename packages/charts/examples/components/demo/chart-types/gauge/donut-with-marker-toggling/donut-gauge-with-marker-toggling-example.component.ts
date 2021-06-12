@@ -11,34 +11,32 @@ import {
     IGaugeThresholdsConfig,
     radial,
     radialGrid,
-    StandardGaugeThresholdId,
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "donut-gauge-with-threshold-markers-example",
-    templateUrl: "./donut-gauge-with-threshold-markers-example.component.html",
-    styleUrls: ["./donut-gauge-with-threshold-markers-example.component.less"],
+    selector: "donut-gauge-with-marker-toggling-example",
+    templateUrl: "./donut-gauge-with-marker-toggling-example.component.html",
+    styleUrls: ["./donut-gauge-with-marker-toggling-example.component.less"],
 })
-export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
+export class DonutGaugeWithMarkerTogglingExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
+    public value = 128;
     public gaugeConfig: IGaugeConfig;
-    public value = 178;
-    public reversed = false;
+    public markersEnabled = true;
+    public labelsPlugin = new DonutGaugeLabelsPlugin();
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
-    private lowThreshold = 100;
-    private highThreshold = 158;
-
     // Generating a standard set of thresholds with warning and critical levels
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
+    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
 
     public ngOnInit(): void {
         this.gaugeConfig = this.getGaugeConfig();
         this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
 
         // Adding the labels plugin
-        this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());
+        // Note: This plugin can be completely omitted if labels aren't needed for your use case.
+        this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.chartAssist.update(this.seriesSet);
@@ -49,13 +47,16 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
         this.updateGauge();
     }
 
-    public onReversedChange(reversed: boolean): void {
-        this.reversed = reversed;
-        this.thresholds.reversed = reversed;
+    public onMarkersEnabledChange(enabled: boolean): void {
+        this.markersEnabled = enabled;
 
-        // swap the values of the warning and critical thresholds
-        this.thresholds.definitions[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
-        this.thresholds.definitions[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+        // Enabling or disabling the threshold markers
+        this.thresholds.disableMarkers = !this.markersEnabled;
+
+        // Enabling or disabling the threshold labels
+        // Note: In addition to toggling the label plugin's 'disableThresholdLabels' configuration property,
+        // the plugin can simply be omitted if labels aren't needed at all for your use case.
+        this.labelsPlugin.config.disableThresholdLabels = !this.markersEnabled;
 
         this.updateGauge();
     }
@@ -70,8 +71,6 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
         return {
             value: this.value,
             max: 200,
-
-            // Enabling the thresholds
             thresholds: this.thresholds,
         };
     }
