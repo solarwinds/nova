@@ -6,7 +6,7 @@
         <ng-template ngFor let-i="index" let-commandGroup let-last="last" [ngForOf]="commandGroups">
             <ng-template ngFor let-commandItem let-j="index" [ngForOf]="commandGroup.items">
                 <button nui-button type="button"
-                        [tabindex]="(i === 0 && j === 0) ? 0 : -1"
+                        [tabindex]="(!i && !j) ? 0 : -1"
                         (click)="onClickToolbarBtn($event, commandItem)"
                         [displayStyle]="commandItem.displayStyle === 'main' ? 'primary' : commandItem.displayStyle"
                         [ngClass]="{'nui-toolbar-primary-item': commandItem.displayStyle === 'main'}"

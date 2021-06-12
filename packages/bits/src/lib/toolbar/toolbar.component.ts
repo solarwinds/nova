@@ -27,8 +27,8 @@ import {
 } from "./public-api";
 import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
-import { KEYBOARD_CODE } from "../../constants";
 import { MenuComponent } from "../menu";
+import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
 
 /**
  * NUI wrapper for toolbar control. It groups toolbar items (nui-toolbar-item),
@@ -47,6 +47,7 @@ import { MenuComponent } from "../menu";
     },
     styleUrls: ["./toolbar.component.less"],
     encapsulation: ViewEncapsulation.None,
+    providers: [ToolbarKeyboardService],
 })
 
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
@@ -86,22 +87,16 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private lastChildBorder: number;
     private childrenSubscription: Subscription;
     private destructiveItems: any[];
-    private isFocusFromOutside = true;
 
     constructor(public element: ElementRef,
                 private changeDetector: ChangeDetectorRef,
                 private logger: LoggerService,
-                private ngZone: NgZone) {}
+                private ngZone: NgZone,
+                private keyboardService: ToolbarKeyboardService) {}
 
     @HostListener("keydown", ["$event"])
     onKeyDown(event: KeyboardEvent): void {
-        const { code } = event;
-
-        if (code === KEYBOARD_CODE.ARROW_LEFT || code === KEYBOARD_CODE.ARROW_RIGHT) {
-            this.isFocusFromOutside = false;
-            event.preventDefault();
-            this.navigateByArrow(code);
-        }
+        this.keyboardService.onKeyDown(event);
     }
 
     ngAfterViewInit() {
@@ -126,7 +121,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 }
             }
         });
-        this.disableFocusForMoreBtn();
+        this.keyboardService.initService(this.toolbarContainer.nativeElement, this.menuComponent);
+        this.keyboardService.disableFocusForMoreBtn();
     }
 
     ngOnDestroy() {
@@ -206,80 +202,5 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     public get destructiveIsLastItem() {
         return this.groups.last.items.last.displayStyle !== ToolbarItemDisplayStyle.destructive;
-    }
-
-    private navigateByArrow(code: string): void {
-        const buttons = this.getButtons();
-        const length = buttons.length;
-
-        if (!length) {
-            return;
-        }
-
-        const moreButton = this.menuActivatorBtn;
-        const direction = code === KEYBOARD_CODE.ARROW_RIGHT ? 1 : -1;
-        let nextIndex = buttons.findIndex((button) => button === document.activeElement) + direction;
-
-        if (document.activeElement === moreButton && moreButton) {
-            this.navigateFormMoreBtn(moreButton, buttons as HTMLButtonElement[], direction);
-
-            return;
-        }
-
-        if ((nextIndex >= length || nextIndex < 0) && moreButton) {
-            moreButton.focus();
-
-            return;
-        }
-
-        if (nextIndex < 0 && !moreButton) {
-            nextIndex = length - 1;
-        }
-
-        if (nextIndex >= length && !moreButton) {
-            nextIndex = 0;
-        }
-
-        const button: HTMLButtonElement = buttons[nextIndex];
-
-        button.focus();
-    }
-
-    private navigateFormMoreBtn(button: HTMLButtonElement, buttons: HTMLButtonElement[], dir: number): void {
-        if (this.menuComponent && this.menuComponent.popup) {
-            this.menuComponent.popup.isOpen = false;
-        }
-
-        if (button && dir === 1) {
-            buttons[0].focus();
-
-            return;
-        }
-
-        buttons[buttons.length - 1].focus();
-    }
-
-    private getButtons(): HTMLButtonElement[] {
-        const node = this.dynamicContainer;
-
-        if (!node) {
-            return [];
-        }
-
-        return Array.from(node.childNodes).filter((node) => (node as HTMLElement).tagName === "BUTTON") as HTMLButtonElement[];
-    }
-
-    private get dynamicContainer(): HTMLElement {
-        return this.toolbarContainer.nativeElement.querySelector(".nui-toolbar-content__dynamic");
-    }
-
-    private get menuActivatorBtn(): HTMLButtonElement | null {
-        return this.dynamicContainer.querySelector(".nui-button.btn.menu-button");
-    }
-
-    private disableFocusForMoreBtn(): void {
-        if (this.menuActivatorBtn) {
-            this.menuActivatorBtn.setAttribute("tabindex", "-1");
-        }
     }
 }

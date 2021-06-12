@@ -14,6 +14,7 @@ import { ToolbarItemComponent } from "./toolbar-item.component";
 import { ToolbarSplitterComponent } from "./toolbar-splitter.component";
 import { ToolbarComponent } from "./toolbar.component";
 import { KEYBOARD_CODE } from "../../constants";
+import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
 
 @Component({
     selector: "nui-test-cmp",
@@ -60,6 +61,7 @@ describe("components >", () => {
                     LoggerService,
                     { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
                     { provide: TRANSLATIONS, useValue: "" },
+                    ToolbarKeyboardService,
                 ],
             });
         });
@@ -157,29 +159,28 @@ describe("components >", () => {
             });
         });
 
-        describe("onKeyDown >", () => {
+        describe("toolbarKeyboardService >", () => {
             const keyboardEventMock: KeyboardEvent = {
                 code: KEYBOARD_CODE.ARROW_LEFT,
                 preventDefault: () => {},
             } as KeyboardEvent;
 
-            beforeEach(() => {
-                component.menuComponent.popup = { isOpen: false } as any;
-            });
-
-            it("should call prevent default when user press arrows", () => {
-                const spy = spyOn(keyboardEventMock, "preventDefault");
+            it("should call keyboardService 'onKeyDown' method", () => {
+                const spy = spyOn(component["keyboardService"], "onKeyDown");
 
                 component.onKeyDown(keyboardEventMock);
-                expect(spy).toHaveBeenCalled();
+
+                expect(spy).toHaveBeenCalledWith(keyboardEventMock);
             });
 
-            it("should call navigateByArrow method when user press arrows", () => {
-                const spy = spyOn(component, "navigateByArrow" as never);
+            it("should call keyboardService 'disableFocusForMoreBtn' and 'initService' on ngAfterViewInit hook", () => {
+                const disableFocusForMoreBtnSpy = spyOn(component["keyboardService"], "disableFocusForMoreBtn");
+                const initServiceSpy = spyOn(component["keyboardService"], "initService");
 
-                component.onKeyDown(keyboardEventMock);
-                expect(spy).toHaveBeenCalledWith(keyboardEventMock.code as never);
+                component.ngAfterViewInit();
+                expect(disableFocusForMoreBtnSpy).toHaveBeenCalled();
+                expect(initServiceSpy).toHaveBeenCalled();
             });
-        })
+        });
     });
 });
