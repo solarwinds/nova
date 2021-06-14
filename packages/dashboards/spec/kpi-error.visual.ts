@@ -18,16 +18,10 @@ describe(`Visual tests: Dashboards - ${name}`, () => {
         camera = new Camera().loadFilm(browser, name);
     });
 
-    it(`${name} - Default look`, async () => {
+    it(`${name} - Configurator error message types`, async () => {
         await camera.turn.on();
 
         await camera.say.cheese(`${name} - Default`);
-
-        await camera.turn.off();
-    }, 100000);
-
-    it(`${name} - Configurator error message types`, async () => {
-        await camera.turn.on();
 
         await page.enableEditMode();
         await page.editWidget("Error Widget");
