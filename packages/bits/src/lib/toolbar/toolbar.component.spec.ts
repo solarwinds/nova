@@ -174,7 +174,7 @@ describe("components >", () => {
             });
 
             it("should call keyboardService 'disableFocusForMoreBtn' and 'initService' on ngAfterViewInit hook", () => {
-                const disableFocusForMoreBtnSpy = spyOn(component["keyboardService"], "disableFocusForMoreBtn");
+                const disableFocusForMoreBtnSpy = spyOn(component["keyboardService"], "disableMoreBtnFocus");
                 const initServiceSpy = spyOn(component["keyboardService"], "initService");
 
                 component.ngAfterViewInit();

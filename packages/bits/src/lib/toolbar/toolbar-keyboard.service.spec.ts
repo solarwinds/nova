@@ -27,23 +27,24 @@ describe("Services > ", () => {
             it("should close menu if open", () => {
                 (service.menuComponent as MenuComponent).popup.isOpen = true;
 
-                service["navigateFormMoreBtn"](1, buttonsMock);
+                service["navigateFromMoreBtn"](1, buttonsMock);
                 expect(service.menuComponent?.popup.isOpen).toBeFalse();
             });
 
             it("should focus on first button if direction 1", () => {
                 const spy = spyOn(buttonsMock[0], "focus");
 
-                service["navigateFormMoreBtn"](1, buttonsMock);
+                service["navigateFromMoreBtn"](1, buttonsMock);
                 expect(spy).toHaveBeenCalled();
             });
 
             it("should focus on last button if direction 0", () => {
                 const spy = spyOn(buttonsMock[1], "focus");
 
-                service["navigateFormMoreBtn"](0, buttonsMock);
+                service["navigateFromMoreBtn"](0, buttonsMock);
                 expect(spy).toHaveBeenCalled();
             });
         })
     });
+
 });
