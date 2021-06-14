@@ -17,7 +17,7 @@ describe("merge domain >", () => {
     it("should skip domains that are equal to EMPTY_CONTINUOUS_DOMAIN", () => {
         const scale = new LinearScale();
 
-        const validDomain = [0, 3];
+        const validDomain = [2, 3];
         const domains = [validDomain, EMPTY_CONTINUOUS_DOMAIN];
         const mergedDomains = mergeDomains(domains, scale);
         expect(mergedDomains).toEqual(validDomain);
