@@ -427,7 +427,8 @@ export class GaugeUtil {
             thresholds: {
                 ...gaugeConfig.thresholds,
                 definitions: thresholdDefs,
-            }, value,
+            },
+            value,
         };
     }
 }
