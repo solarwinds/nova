@@ -8,6 +8,7 @@ import {
     StandardGaugeThresholdId,
     StandardLinearGaugeThickness,
     IGaugeThresholdsConfig,
+    Formatter,
 } from "@nova-ui/charts";
 
 @Component({
@@ -24,7 +25,7 @@ export class GaugeTestPageComponent implements OnDestroy {
     public annularGrowth = DEFAULT_RADIAL_RENDERER_CONFIG.annularGrowth;
     public thickness = StandardLinearGaugeThickness.Large;
     public donutSize = 200;
-    
+
     public warningEnabled = true;
     public criticalEnabled = true;
     public enableThresholdMarkers = true;
@@ -36,6 +37,7 @@ export class GaugeTestPageComponent implements OnDestroy {
     public valueStep = 10;
 
     private originalWithRefreshRoute: boolean;
+    private labelFormatter: Formatter<string>;
 
     constructor(public themeSwitcher: ThemeSwitchService, private unitConversionSvc: UnitConversionService) {
         // disable route refreshing because the theme service currently always reverts to
@@ -43,14 +45,12 @@ export class GaugeTestPageComponent implements OnDestroy {
         this.originalWithRefreshRoute = this.themeSwitcher.withRefreshRoute;
         this.themeSwitcher.withRefreshRoute = false;
 
-        this.thresholds = {
-            ...GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold),
-            labelFormatter: (d: string) => {
-                const conversion = this.unitConversionSvc.convert(parseInt(d, 10), 1000, 2);
-                return this.unitConversionSvc.getFullDisplay(conversion, "generic");
-            },
+        this.labelFormatter = (d: string) => {
+            const conversion = this.unitConversionSvc.convert(parseFloat(d), 1000, 2);
+            return this.unitConversionSvc.getFullDisplay(conversion, "generic");
         };
 
+        this.thresholds = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold)
         this.gaugeConfig = this.getGaugeConfig();
     }
 
@@ -100,6 +100,7 @@ export class GaugeTestPageComponent implements OnDestroy {
             value: this.value,
             max: this.maxValue,
             thresholds: this.thresholds,
+            labelFormatter: this.labelFormatter,
         };
     }
 

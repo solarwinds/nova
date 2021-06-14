@@ -24,12 +24,7 @@ export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnIn
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
-    private thresholds: IGaugeThresholdsConfig = {
-        ...GaugeUtil.createStandardThresholdsConfig(50, 80),
-
-        // Setting a custom label formatter
-        labelFormatter: (d: string) => `${d}%`,
-    };
+    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 80);
 
     public ngOnInit(): void {
         const initialValue = 64;
@@ -54,6 +49,9 @@ export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnIn
             value,
             max: 100,
             thresholds: this.thresholds,
+
+            // Setting a custom label formatter
+            labelFormatter: (d: string) => `${d}%`,
         };
     }
 }

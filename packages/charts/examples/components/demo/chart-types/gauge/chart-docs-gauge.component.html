@@ -59,7 +59,7 @@
 </p>
 <h4>Colors</h4>
 <p>
-    As mentioned above, the result of the <code>createStandardThresholdsConfig</code> function has a
+    As mentioned above, the return value of the <code>createStandardThresholdsConfig</code> function has a
     <code><a href="../interfaces/IGaugeThresholdsConfig.html#definitions" target="_blank">definitions</a></code> property which contains a standard set of
     threshold definitions. Each of these definitions has a
     <code><a href="../interfaces/IGaugeThresholdDef.html#color" target="_blank">color</a></code> property that's used as the threshold's display color when it's
@@ -72,6 +72,17 @@
     <code><a href="../classes/DonutGaugeLabelsPlugin.html" target="_blank">DonutGaugeLabelsPlugin</a></code> instance to the chart. If you'd like to customize
     the formatter for the labels, take a look at the label customization example on this page.
 </p>
+<nui-message type="info" [allowDismiss]="false">
+    <strong>Note:</strong> The <code>DonutGaugeLabelsPlugin</code> automatically applies a 25px margin to all sides of the gauge in order to provide a
+    reasonable default clearance for the labels. You can specify a custom clearance by setting the
+    <code><a href="../interfaces/IGaugeLabelsPluginConfig.html#clearance" target="_blank">clearance</a></code> property on the plugin constructor's
+    optional <code><a href="../interfaces/IGaugeLabelsPluginConfig.html" target="_blank">config</a></code> argument to a value of type
+    <code><a href="../interfaces/IAllAround.html" target="_blank">IAllAround&lt;number&gt;</a></code>. Alternately, if you'd prefer to set the margins on
+    the grid
+    <a href="../additional-documentation/advanced-usage/grid.html" target="_blank">manually</a> instead of having the labels plugin do it for you, you can set the
+    <code><a href="../interfaces/IGaugeLabelsPluginConfig.html#applyClearance" target="_blank">applyClearance</a></code> property on the plugin constructor's
+    <code>config</code> argument to <code>false</code>.
+</nui-message>
 <h4>Reversed Thresholds</h4>
 <p>
     The default behavior of a Nova gauge is to treat quantity values that are greater than or equal to the threshold values as being triggered. If you want to
@@ -110,7 +121,7 @@
 <p>
     To customize the thresholds label formatter, set the
     <code><a href="../interfaces/IGaugeThresholdsConfig.html#labelFormatter" target="_blank">labelFormatter</a></code> property on the
-    <code>IGaugeThresholdsConfig</code> object with a function of type
+    <code>IGaugeConfig</code> object with a function of type
     <code><a href="../miscellaneous/typealiases.html#Formatter" target="_blank">Formatter&lt;string&gt;</a></code> which takes a string as the raw data argument
     and returns a string with your customized formatting.
 </p>

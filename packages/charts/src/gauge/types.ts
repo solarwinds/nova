@@ -18,6 +18,8 @@ export interface IGaugeConfig {
     quantityColorAccessor?: DataAccessor;
     /** Optional accessor for customizing the color to display for the remainder segment */
     remainderColorAccessor?: DataAccessor;
+    /** Optional custom formatter for the value labels (currently only used for thresholds) */
+    labelFormatter?: Formatter<any>;
 }
 
 /**
@@ -30,8 +32,6 @@ export interface IGaugeThresholdsConfig {
     disableMarkers?: boolean;
     /** Boolean indicating whether the direction of the thresholds should be reversed */
     reversed?: boolean;
-    /** Optional custom formatter for the threshold labels */
-    labelFormatter?: Formatter<string>;
 }
 
 /**

@@ -192,19 +192,10 @@ export class GaugeUtil {
      */
     public static generateThresholdSeries(gaugeConfig: IGaugeConfig, renderingAttributes: IGaugeRenderingAttributes): IChartAssistSeries<IAccessors> {
         const { quantityAccessors, scales, thresholdsRenderer } = renderingAttributes;
-        const thresholdScales = cloneDeep(scales);
-
-        if (gaugeConfig.thresholds?.labelFormatter) {
-            const linearScale = Object.values(thresholdScales).find(scale => scale instanceof LinearScale);
-            if (linearScale) {
-                linearScale.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.thresholds?.labelFormatter;
-            }
-        }
-
         return {
             ...GaugeUtil.generateThresholdsData(gaugeConfig),
             accessors: quantityAccessors,
-            scales: thresholdScales,
+            scales,
             renderer: thresholdsRenderer,
             // instruct the radial preprocessor to ignore the threshold series when calculating the donut arcs
             excludeFromArcCalculation: true,
@@ -249,21 +240,33 @@ export class GaugeUtil {
                 thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
                 quantityAccessorFunction: () => new RadialAccessors(),
                 remainderAccessorFunction: () => new RadialAccessors(),
-                scaleFunction: () => radialScales(),
+                scaleFunction: () => {
+                    const scales = radialScales();
+                    scales.r.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.labelFormatter;
+                    return scales;
+                },
             },
             [GaugeMode.Horizontal]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
                 thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
                 quantityAccessorFunction: () => new HorizontalBarAccessors(),
                 remainderAccessorFunction: () => new HorizontalBarAccessors(),
-                scaleFunction: () => barScales({ horizontal: true }),
+                scaleFunction: () => {
+                    const scales = barScales({ horizontal: true });
+                    scales.x.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.labelFormatter;
+                    return scales;
+                },
             },
             [GaugeMode.Vertical]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
                 thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
                 quantityAccessorFunction: () => new VerticalBarAccessors(),
                 remainderAccessorFunction: () => new VerticalBarAccessors(),
-                scaleFunction: () => barScales(),
+                scaleFunction: () => {
+                    const scales = barScales();
+                    scales.y.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.labelFormatter;
+                    return scales;
+                },
             },
         }
 
