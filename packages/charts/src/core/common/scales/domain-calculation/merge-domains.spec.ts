@@ -17,10 +17,17 @@ describe("merge domain >", () => {
     it("should skip domains that are equal to EMPTY_CONTINUOUS_DOMAIN", () => {
         const scale = new LinearScale();
 
-        const emptyArr = [EMPTY_CONTINUOUS_DOMAIN, EMPTY_CONTINUOUS_DOMAIN];
+        const emptyArr = [EMPTY_CONTINUOUS_DOMAIN];
         const mergedDomains = mergeDomains(emptyArr, scale);
-        expect(mergedDomains[0]).toBeUndefined();
-        expect(mergedDomains[1]).toBeUndefined();
+        expect(mergedDomains[0]).toBeDefined();
+    });
+
+    it("should return continuous domain when the domains are undefined", () => {
+        const scale = new LinearScale();
+
+        const emptyArr:any[] = [];
+        const mergedDomains = mergeDomains(emptyArr, scale);
+        expect(mergedDomains).toBe(EMPTY_CONTINUOUS_DOMAIN);
     });
 
 });
