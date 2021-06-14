@@ -122,7 +122,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             }
         });
         this.keyboardService.initService(this.toolbarContainer.nativeElement, this.menuComponent);
-        this.keyboardService.disableFocusForMoreBtn();
+        this.keyboardService.disableMoreBtnFocus();
     }
 
     ngOnDestroy() {

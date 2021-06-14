@@ -2,6 +2,11 @@ import { Injectable } from "@angular/core";
 import { KEYBOARD_CODE } from "../../constants";
 import { MenuComponent } from "../menu";
 
+enum NavDirection {
+    LEFT = -1,
+    RIGHT = 1,
+}
+
 @Injectable()
 export class ToolbarKeyboardService {
     public dynamicContainer: HTMLElement | null;
@@ -22,7 +27,7 @@ export class ToolbarKeyboardService {
         }
     }
 
-    public disableFocusForMoreBtn(): void {
+    public disableMoreBtnFocus(): void {
         if (this.moreBtn) {
             this.moreBtn.setAttribute("tabindex", "-1");
         }
@@ -37,7 +42,7 @@ export class ToolbarKeyboardService {
         }
     }
 
-    private navigateByArrow(code: string): void {
+    private navigateByArrow(code: KEYBOARD_CODE): void {
         const buttons = this.getButtons();
         const length = buttons.length;
 
@@ -45,11 +50,11 @@ export class ToolbarKeyboardService {
             return;
         }
 
-        const direction = code === KEYBOARD_CODE.ARROW_RIGHT ? 1 : -1;
+        const direction = code === KEYBOARD_CODE.ARROW_RIGHT ? NavDirection.RIGHT : NavDirection.LEFT;
         let nextIndex = buttons.findIndex((button) => button === document.activeElement) + direction;
 
         if (this.moreBtn && document.activeElement === this.moreBtn) {
-            this.navigateFormMoreBtn(direction, buttons);
+            this.navigateFromMoreBtn(direction, buttons);
 
             return;
         }
@@ -73,7 +78,7 @@ export class ToolbarKeyboardService {
         button.focus();
     }
 
-    private navigateFormMoreBtn(direction: number, buttons: HTMLButtonElement[]): void {
+    private navigateFromMoreBtn(direction: NavDirection, buttons: HTMLButtonElement[]): void {
         if (this.menuComponent && this.menuComponent.popup) {
             this.menuComponent.popup.isOpen = false;
         }
