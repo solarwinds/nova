@@ -5,18 +5,23 @@ import {
     ContentChildren,
     ElementRef,
     HostBinding,
+    HostListener,
     Input,
     NgZone,
     OnDestroy,
     QueryList,
     ViewChild,
+    ViewChildren,
     ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
-import { merge, Subscription } from "rxjs";
-import { debounceTime, take } from "rxjs/operators";
+import { merge, Subject, Subscription } from "rxjs";
+import { debounceTime, take, takeUntil } from "rxjs/operators";
+import { KEYBOARD_CODE } from "../../constants";
 
 import { LoggerService } from "../../services/log-service";
+import { ButtonComponent } from "../button/button.component";
+import { MenuComponent } from "../menu";
 
 import {
     IToolbarGroupContent,
@@ -26,6 +31,7 @@ import {
 } from "./public-api";
 import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
+import { ToolbarNavigationService } from "./toolbar-navigation.service";
 
 /**
  * NUI wrapper for toolbar control. It groups toolbar items (nui-toolbar-item),
@@ -43,6 +49,7 @@ import { ToolbarItemComponent } from "./toolbar-item.component";
         "role": "toolbar",
     },
     styleUrls: ["./toolbar.component.less"],
+    providers: [ToolbarNavigationService],
     encapsulation: ViewEncapsulation.None,
 })
 
@@ -69,8 +76,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @HostBinding("class.nui-toolbar--shadowed")
     public boxShadow: boolean = true;
 
-    @ViewChild("toolbarContainer")
-    public toolbarContainer: ElementRef;
+    @ViewChild("toolbarContainer") public toolbarContainer: ElementRef;
+    @ViewChild("menu") public menu: MenuComponent;
+    @ViewChildren("button") public buttons: QueryList<ButtonComponent>;
+
     public commandGroups: IToolbarGroupContent[] = [];
     public menuGroups: IToolbarGroupContent[] = [];
     public showMenu = true;
@@ -79,16 +88,25 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     public moreTitle = $localize `More`;
 
     private lastChildBorder: number;
+    private toolbarItems: HTMLElement[] = [];
+    private embeddedContainer: HTMLElement | undefined;
     private childrenSubscription: Subscription;
     private destructiveItems: any[];
+    private destroy$: Subject<any> = new Subject<any>();
+
+    @HostListener("keydown", ["$event"]) onKeyDown(event: KeyboardEvent): void {
+        this.navigationService.onKeyDown(event);
+    }
 
     constructor(public element: ElementRef,
+                private navigationService: ToolbarNavigationService,
                 private changeDetector: ChangeDetectorRef,
                 private logger: LoggerService,
                 private ngZone: NgZone) {}
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.splitToolbarItems();
+        this.embeddedContainer = this.toolbarContainer.nativeElement.querySelector(".nui-toolbar-embedded");
         this.childrenSubscription = merge(this.groups.changes, this.items.changes).pipe(debounceTime(20)).subscribe(() => {
             // timeout is needed for updating actual querylist. without it splitToolbarItems won't get new element in groups' arrays
             setTimeout(() => {
@@ -109,10 +127,58 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 }
             }
         });
+
+        this.buttons.changes
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((buttons: QueryList<ButtonComponent>) => {
+                this.toolbarItems = buttons.toArray().slice().map(b => b["el"].nativeElement as HTMLElement);
+                if (this.menu) {
+                    if (!buttons.length) {
+                        // In case all buttons are hidden within the Commands menu we want this menu to receive the focus
+                        this.menu.menuToggle.nativeElement.setAttribute("tabindex", "0");
+                    } else {
+                        // If at least one button is visible in the toolbar it should receive the focus fist upon navigating onto the toolbar
+                        this.menu.menuToggle.nativeElement.setAttribute("tabindex", "-1");
+                    }
+                    this.toolbarItems.push(this.menu.menuToggle.nativeElement);
+                }
+                if (this.embeddedContainer) {
+                    this.embeddedContainer.setAttribute("tabindex", "-1");
+                    this.toolbarItems.push(this.embeddedContainer as HTMLElement);
+                }
+                this.navigationService.setToolbarItems(this.toolbarItems, this.embeddedContainer);
+            });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.childrenSubscription.unsubscribe();
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+    public manageKeyDown(event: KeyboardEvent): void {
+        const active = document.activeElement;
+        const activeIndex: number = this.toolbarItems.indexOf(active as any);
+        const menu = this.menu?.menuToggle?.nativeElement;
+        const first = this.toolbarItems[0];
+        const last = this.toolbarItems[this.toolbarItems.length - 1];
+
+        if (menu) {
+            this.menu.menuToggle.nativeElement.setAttribute("tabindex", "-1");
+        }
+
+        if (event.code === KEYBOARD_CODE.ARROW_LEFT) {
+            active === first
+                ? last.focus()
+                : this.toolbarItems[activeIndex - 1].focus();
+        }
+
+        if (event.code === KEYBOARD_CODE.ARROW_RIGHT) {
+            active === last
+                ? first.focus()
+                : this.toolbarItems[activeIndex + 1].focus();
+        }
+
     }
 
     public moveToolbarItems() {

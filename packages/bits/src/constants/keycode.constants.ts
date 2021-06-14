@@ -23,6 +23,8 @@ export enum KEY_CODE {
 
 export enum KEYBOARD_CODE {
     ARROW_DOWN = "ArrowDown",
+    ARROW_LEFT = "ArrowLeft",
+    ARROW_RIGHT = "ArrowRight",
     ARROW_UP = "ArrowUp",
     BACKSPACE = "Backspace",
     ENTER = "Enter",

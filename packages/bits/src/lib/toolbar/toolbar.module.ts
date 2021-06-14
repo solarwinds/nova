@@ -1,3 +1,4 @@
+import { A11yModule } from "@angular/cdk/a11y";
 import { NgModule } from "@angular/core";
 
 import { NuiCommonModule } from "../../common/common.module";
@@ -17,6 +18,7 @@ import { ToolbarComponent } from "./toolbar.component";
 @NgModule({
     imports: [
         NuiCommonModule,
+        A11yModule,
         NuiIconModule,
         NuiMenuModule,
         NuiDividerModule,
