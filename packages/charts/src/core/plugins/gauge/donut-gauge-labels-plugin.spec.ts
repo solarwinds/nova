@@ -49,7 +49,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {
-        expect(labels.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds as GaugeThresholdDefs).length);
+        expect(labels.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds?.definitions as GaugeThresholdDefs).length);
     });
 
     it("should position the threshold labels correctly", () => {

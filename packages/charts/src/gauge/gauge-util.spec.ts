@@ -65,6 +65,13 @@ describe("GaugeUtil >", () => {
                 expect(series?.data[0].value).toEqual(thresholds?.[0].value);
                 expect(series?.renderer instanceof DonutGaugeThresholdsRenderer).toEqual(true);
             });
+
+            it("should set a custom label formatter", () => {
+                gaugeConfig.labelFormatter = () => "test";
+                const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
+                const formattedValue = seriesSet[0]?.scales.r.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
+                expect(formattedValue).toEqual(gaugeConfig.labelFormatter(null));
+            });
         });
 
         describe("for 'horizontal' mode", () => {
@@ -81,6 +88,13 @@ describe("GaugeUtil >", () => {
                 expect(series?.data[0].value).toEqual(thresholds?.[0].value);
                 expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
             });
+
+            it("should set a custom label formatter", () => {
+                gaugeConfig.labelFormatter = () => "test";
+                const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Horizontal);
+                const formattedValue = seriesSet[0]?.scales.x.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
+                expect(formattedValue).toEqual(gaugeConfig.labelFormatter(null));
+            });
         });
 
         describe("for 'vertical' mode", () => {
@@ -96,6 +110,13 @@ describe("GaugeUtil >", () => {
                 const thresholds = GaugeUtil.prepareThresholdsData(gaugeConfig).thresholds;
                 expect(series?.data[0].value).toEqual(thresholds?.[0].value);
                 expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
+            });
+
+            it("should set a custom label formatter", () => {
+                gaugeConfig.labelFormatter = () => "test";
+                const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Vertical);
+                const formattedValue = seriesSet[0]?.scales.y.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
+                expect(formattedValue).toEqual(gaugeConfig.labelFormatter(null));
             });
         });
     });
@@ -132,40 +153,29 @@ describe("GaugeUtil >", () => {
         });
     });
 
-    describe("setThresholdLabelFormatter", () => {
-        it("should update the formatter on the threshold series", () => {
-            let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-            const formatter = () => "test";
-            seriesSet = GaugeUtil.setThresholdLabelFormatter(formatter, seriesSet);
-            const thresholdsSeries = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
-            const formattedValue = thresholdsSeries?.scales.r.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
-            expect(formattedValue).toEqual(formatter());
-        });
-    });
-
     describe("createDefaultColorAccessor", () => {
         it("should create a standard color accessor", () => {
             const colorAccessor = GaugeUtil.createDefaultQuantityColorAccessor();
 
-            gaugeConfig.value = gaugeConfig.thresholds?.[StandardGaugeThresholdId.Warning].value as number - 1;
+            gaugeConfig.value = gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Warning].value as number - 1;
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
             let quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
             expect(colorAccessor(quantitySeries.data[0], 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);
 
-            gaugeConfig.value = gaugeConfig.thresholds?.[StandardGaugeThresholdId.Warning].value as number;
+            gaugeConfig.value = gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Warning].value as number;
             seriesSet = GaugeUtil.updateSeriesSet(seriesSet, gaugeConfig);
             quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
             expect(colorAccessor(quantitySeries.data[0], 0, quantitySeries.data, quantitySeries)).toEqual(
-                gaugeConfig.thresholds?.[StandardGaugeThresholdId.Warning].color);
+                gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Warning].color);
 
-            gaugeConfig.value = gaugeConfig.thresholds?.[StandardGaugeThresholdId.Critical].value as number;
+            gaugeConfig.value = gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Critical].value as number;
             seriesSet = GaugeUtil.updateSeriesSet(seriesSet, gaugeConfig);
             quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
             expect(colorAccessor(quantitySeries.data[0], 0, quantitySeries.data, quantitySeries)).toEqual(
-                gaugeConfig.thresholds?.[StandardGaugeThresholdId.Critical].color);
+                gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Critical].color);
         });
     });
 
