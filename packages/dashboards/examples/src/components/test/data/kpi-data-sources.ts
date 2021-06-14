@@ -21,7 +21,7 @@ export class TestKpiDataSource implements OnDestroy {
             this.outputsSubject.next({
                 // @ts-ignore: Mock
                 result: null,
-                error: { type: HttpStatusCode.Unknown },
+                error: { type: HttpStatusCode.Unknown, message: "Http Status Code Unknown" },
             });
         }
     }

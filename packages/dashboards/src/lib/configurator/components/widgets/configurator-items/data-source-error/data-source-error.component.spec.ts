@@ -68,6 +68,7 @@ describe("DataSourceErrorComponent", () => {
                 message: "Not Found",
             },
         });
+        expect(component.dataSourceError).toBeTruthy();
 
         expect(errorStateSpy).toHaveBeenCalledWith(true);
 
@@ -76,6 +77,7 @@ describe("DataSourceErrorComponent", () => {
                 hello: "world",
             },
         });
+        expect(component.dataSourceError).toBeFalsy();
         expect(errorStateSpy).toHaveBeenCalledWith(false);
     });
 
@@ -85,13 +87,22 @@ describe("DataSourceErrorComponent", () => {
                 hello: "world",
             },
         });
-        const testCaseA = component.data;
+        expect(component.dataSourceError).toBeFalsy();
 
+        const testCaseA = component.data;
         component.dataSource.outputsSubject.next({
             hello: "world",
         });
-        const testCaseB = component.data;
+        expect(component.dataSourceError).toBeFalsy();
 
+        const testCaseB = component.data;
         expect(testCaseA).toEqual(testCaseB);
+
+        component.dataSource.outputsSubject.next({
+            hello: "new world",
+        });
+        const testCaseC = component.data;
+        expect(component.dataSourceError).toBeFalsy();
+        expect(testCaseC).not.toEqual(testCaseA);
     });
 });
