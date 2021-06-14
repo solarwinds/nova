@@ -24,13 +24,14 @@ export interface IGaugeConfig {
 
 /**
  * @ignore
+ * Gauge thresholds configuration
  */
 export interface IGaugeThresholdsConfig {
     /** An array of the gauge's threshold definitions */
     definitions: GaugeThresholdDefs;
     /** Set to true to disable the threshold markers */
     disableMarkers?: boolean;
-    /** Boolean indicating whether the direction of the thresholds should be reversed */
+    /** Boolean indicating whether the threshold trigger direction should be reversed */
     reversed?: boolean;
 }
 
@@ -67,6 +68,7 @@ export interface IGaugeThreshold extends IGaugeThresholdDef {
 }
 
 /**
+ * @ignore
  * Data used for visualizing thresholds on a gauge
  */
 export interface IGaugeThresholdsData {
