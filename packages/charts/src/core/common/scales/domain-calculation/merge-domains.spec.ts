@@ -26,9 +26,9 @@ describe("merge domain >", () => {
     it("should return continuous domain when the domains are undefined", () => {
         const scale = new LinearScale();
 
-        const emptyArr: any[] = [];
-        const mergedDomains = mergeDomains(emptyArr, scale);
-        expect(mergedDomains).toBe(EMPTY_CONTINUOUS_DOMAIN);
+        const domains = [EMPTY_CONTINUOUS_DOMAIN, EMPTY_CONTINUOUS_DOMAIN];
+        const mergedDomains = mergeDomains(domains, scale);
+        expect(mergedDomains).toEqual(EMPTY_CONTINUOUS_DOMAIN);
     });
 
 });
