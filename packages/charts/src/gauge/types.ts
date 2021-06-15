@@ -3,7 +3,7 @@ import { Formatter } from "../core/common/scales/types";
 
 /**
  * @ignore
- * Configuration for a gauge series
+ * Configuration for a gauge
 */
 export interface IGaugeConfig {
     /** The value of the gauge */
@@ -24,7 +24,7 @@ export interface IGaugeConfig {
 
 /**
  * @ignore
- * Gauge thresholds configuration
+ * Configuration for a gauge's thresholds
  */
 export interface IGaugeThresholdsConfig {
     /** An array of the gauge's threshold definitions */
@@ -37,13 +37,13 @@ export interface IGaugeThresholdsConfig {
 
 /**
  * @ignore
- * Map of threshold IDs to IGaugeThresholdConfig objects
+ * Map of threshold IDs to IGaugeThresholdDef objects
  */
 export type GaugeThresholdDefs = Record<string, IGaugeThresholdDef>;
 
 /**
  * @ignore
- * Configuration for a gauge threshold
+ * Configuration definition for a gauge threshold
  */
 export interface IGaugeThresholdDef {
     /** The ID of the threshold */
@@ -58,9 +58,9 @@ export interface IGaugeThresholdDef {
 
 /**
  * @ignore
- * Definition for a gauge threshold datum
+ * Interface for a gauge threshold datum
 */
-export interface IGaugeThreshold extends IGaugeThresholdDef {
+export interface IGaugeThresholdDatum extends IGaugeThresholdDef {
     /** Boolean indicating whether the threshold is hit */
     hit?: boolean;
     /** Additional metadata as needed */
@@ -73,7 +73,7 @@ export interface IGaugeThreshold extends IGaugeThresholdDef {
  */
 export interface IGaugeThresholdsData {
     /** A collection of thresholds */
-    thresholds: IGaugeThreshold[];
+    thresholds: IGaugeThresholdDatum[];
     /** The currently active threshold */
-    activeThreshold?: IGaugeThreshold;
+    activeThreshold?: IGaugeThresholdDatum;
 }

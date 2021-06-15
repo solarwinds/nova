@@ -22,7 +22,7 @@ import {
     StandardGaugeColor,
     StandardGaugeThresholdId,
 } from "./constants";
-import { IGaugeConfig, IGaugeThreshold, IGaugeThresholdDef, GaugeThresholdDefs, IGaugeThresholdsData, IGaugeThresholdsConfig } from "./types";
+import { IGaugeConfig, IGaugeThresholdDatum, IGaugeThresholdDef, GaugeThresholdDefs, IGaugeThresholdsData, IGaugeThresholdsConfig } from "./types";
 import { linearGaugeRendererConfig } from "../renderers/bar/linear-gauge-renderer-config";
 import { Renderer } from "../core/common/renderer";
 import isUndefined from "lodash/isUndefined";
@@ -152,7 +152,7 @@ export class GaugeUtil {
     public static generateQuantityAndRemainderSeriesSet(
         gaugeConfig: IGaugeConfig,
         renderingAttributes: IGaugeRenderingAttributes,
-        activeThreshold?: IGaugeThreshold
+        activeThreshold?: IGaugeThresholdDatum
     ): IChartAssistSeries<IAccessors<any>>[] {
         // assigning to variable to prevent "Lambda not supported" error
         const seriesSet = GaugeUtil.generateQuantityAndRemainderData(gaugeConfig).map((series: Partial<IDataSeries<IAccessors>>) => {
@@ -339,10 +339,10 @@ export class GaugeUtil {
      *
      * @param gaugeConfig The configuration for the gauge
      *
-     * @returns {Partial<IDataSeries<IAccessors, IGaugeThreshold>>} A partial IDataSeries object including the 'id' and 'data' properties of the thresholds
+     * @returns {Partial<IDataSeries<IAccessors, IGaugeThresholdDatum>>} A partial IDataSeries object including the 'id' and 'data' properties of the thresholds
      * series used for the the gauge's thresholds visualization
      */
-    public static generateThresholdsData(gaugeConfig: IGaugeConfig): Partial<IDataSeries<IAccessors, IGaugeThreshold>> {
+    public static generateThresholdsData(gaugeConfig: IGaugeConfig): Partial<IDataSeries<IAccessors, IGaugeThresholdDatum>> {
         if (!gaugeConfig.thresholds) {
             throw new Error("Thresholds are not defined in the gauge config. Unable to generate threshold data.")
         }
@@ -373,7 +373,7 @@ export class GaugeUtil {
      * @returns {IGaugeThresholdsData} Thresholds data modified for use by the gauge visualization
      */
     public static prepareThresholdsData(gaugeConfig: IGaugeConfig): IGaugeThresholdsData {
-        const thresholds: IGaugeThreshold[] = Object.values(gaugeConfig.thresholds?.definitions || [])
+        const thresholds: IGaugeThresholdDatum[] = Object.values(gaugeConfig.thresholds?.definitions || [])
             .filter((threshold: IGaugeThresholdDef) => threshold.enabled)
             .map((threshold: IGaugeThresholdDef) => ({
                 ...threshold,
@@ -382,7 +382,7 @@ export class GaugeUtil {
                 hit: gaugeConfig.thresholds?.reversed ? threshold.value < gaugeConfig.value : threshold.value <= gaugeConfig.value,
             })).sort((a, b) => a.value - b.value);
 
-        const activeThreshold: IGaugeThreshold | undefined = gaugeConfig.thresholds?.reversed ?
+        const activeThreshold: IGaugeThresholdDatum | undefined = gaugeConfig.thresholds?.reversed ?
             thresholds?.find(threshold => !isUndefined(threshold.hit) && !threshold.hit) :
             thresholds?.slice().reverse().find(threshold => threshold.hit);
 

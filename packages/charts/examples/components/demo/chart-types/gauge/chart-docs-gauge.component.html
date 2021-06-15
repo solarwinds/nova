@@ -33,7 +33,7 @@
     <code><a href="../interfaces/IGaugeConfig.html" target="_blank">IGaugeConfig</a></code> object as the first argument and a
     <code><a href="../miscellaneous/enumerations.html#GaugeMode" target="_blank">GaugeMode</a></code> value of <code>GaugeMode.Donut</code> for the second
     argument. Subsequently, you may optionally update the
-    gauge with a new value, max value, and optional thresholds using the <code>GaugeUtil</code>'s
+    gauge with a new value, max value, and other configuration changes using the <code>GaugeUtil</code>'s
     <code><a href="../classes/GaugeUtil.html#updateSeriesSet" target="_blank">updateSeriesSet</a></code> function.
 </p>
 <nui-example-wrapper filenamePrefix="donut-gauge-basic-example" exampleTitle="Basic Donut">
@@ -51,9 +51,9 @@
     automatically populated with a standard set of threshold definitions each of type
     <code><a href="../interfaces/IGaugeThresholdDef.html" target="_blank">IGaugeThresholdDef</a></code>, and they include thresholds for
     "warning" and "critical" levels. Each definition has an <code>id</code>, <code>value</code>, <code>color</code>, and <code>enabled</code> property. And, the
-    ID's are also used as the property names of the <code>definitions</code> object to create a mapping for easy access.
-    The ID's for typical thresholds are standardized in the <code>Warning</code> and <code>Critical</code> entries<code> of the
-    <a href="../miscellaneous/enumerations.html#StandardGaugeThresholdId" target="_blank">StandardGaugeThresholdId</a></code> enum. You
+    ID's are also used as the keys of the <code>definitions</code> object to create a mapping for easy access.
+    The ID's for typical thresholds are standardized in the <code>Warning</code> and <code>Critical</code> members of the
+    <code><a href="../miscellaneous/enumerations.html#StandardGaugeThresholdId" target="_blank">StandardGaugeThresholdId</a></code> enum. You
     can either use the <code>createStandardThresholdsConfig</code> convenience function or construct your own threshold configuration with as many or few
     thresholds as you need.
 </p>
@@ -69,8 +69,8 @@
 <h4>Labels</h4>
 <p>
     You can configure a gauge to show labels for the threshold markers on mouse hover. To incorporate the labels, add a
-    <code><a href="../classes/DonutGaugeLabelsPlugin.html" target="_blank">DonutGaugeLabelsPlugin</a></code> instance to the chart. If you'd like to customize
-    the formatter for the labels, take a look at the label customization example on this page.
+    <code><a href="../classes/DonutGaugeLabelsPlugin.html" target="_blank">DonutGaugeLabelsPlugin</a></code> instance to the chart. If want to provide a custom
+    formatter for the labels, take a look at the label customization example on this page.
 </p>
 <nui-message type="info" [allowDismiss]="false">
     <strong>Note:</strong> The <code>DonutGaugeLabelsPlugin</code> automatically applies a 25px margin to all sides of the gauge in order to provide a

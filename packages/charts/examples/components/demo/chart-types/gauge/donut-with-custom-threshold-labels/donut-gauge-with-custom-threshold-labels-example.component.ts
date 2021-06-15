@@ -23,7 +23,6 @@ export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnIn
     public gaugeConfig: IGaugeConfig;
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
-
     private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 80);
 
     public ngOnInit(): void {
