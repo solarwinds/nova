@@ -19,31 +19,31 @@ const appRoutes: Routes = [
     },
     {
         path: "advanced-usage",
-        loadChildren: () => import("components/demo/advanced-usage/chart-docs-advanced-usage.module").then(m => m.ChartDocsAdvancedUsageModule),
+        loadChildren: async () => import("components/demo/advanced-usage/chart-docs-advanced-usage.module").then(m => m.ChartDocsAdvancedUsageModule),
     },
     {
         path: "chart-types",
-        loadChildren: () => import("components/demo/chart-types/chart-docs-chart-types.module").then(m => m.ChartDocsChartTypesModule),
+        loadChildren: async () => import("components/demo/chart-types/chart-docs-chart-types.module").then(m => m.ChartDocsChartTypesModule),
     },
     {
         path: "time-frame-bar",
-        loadChildren: () => import("components/demo/time-frame-bar/chart-docs-time-frame-bar.module").then(m => m.ChartDocsTimeFrameBarModule),
+        loadChildren: async () => import("components/demo/time-frame-bar/chart-docs-time-frame-bar.module").then(m => m.ChartDocsTimeFrameBarModule),
     },
     {
         path: "development",
-        loadChildren: () => import("components/demo/development/charts-development.module").then(m => m.ChartsDevelopmentModule),
+        loadChildren: async () => import("components/demo/development/charts-development.module").then(m => m.ChartsDevelopmentModule),
     },
     {
         path: "layout",
-        loadChildren: () => import("components/demo/layout/chart-docs-layout.module").then(m => m.ChartDocsLayoutModule),
+        loadChildren: async () => import("components/demo/layout/chart-docs-layout.module").then(m => m.ChartDocsLayoutModule),
     },
     {
         path: "plugins",
-        loadChildren: () => import("components/demo/plugins/chart-docs-plugins.module").then(m => m.ChartDocsPluginsModule),
+        loadChildren: async () => import("components/demo/plugins/chart-docs-plugins.module").then(m => m.ChartDocsPluginsModule),
     },
     {
         path: "thresholds",
-        loadChildren: () => import("components/demo/thresholds/chart-docs-thresholds.module").then(m => m.ChartDocsThresholdsModule),
+        loadChildren: async () => import("components/demo/thresholds/chart-docs-thresholds.module").then(m => m.ChartDocsThresholdsModule),
     },
 ];
 

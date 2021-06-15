@@ -181,11 +181,12 @@ export interface IChartSeries<A extends IAccessors> extends IDataSeries<A> {
      * uses 'x' and 'y' as the keys for its scales.
      */
     scales: Scales;
+
+    renderState?: RenderState;
 }
 
 export interface IChartAssistSeries<A extends IAccessors> extends IChartSeries<A> {
     showInLegend?: boolean;
-    renderState?: RenderState;
     preprocess?: boolean;
 }
 

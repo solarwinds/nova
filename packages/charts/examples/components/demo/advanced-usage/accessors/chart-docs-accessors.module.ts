@@ -6,22 +6,22 @@ import { NuiChartsModule } from "@nova-ui/charts";
 const exampleRoutes: Routes = [
     {
         path: "overview",
-        loadChildren: () =>
+        loadChildren: async () =>
             import("components/demo/advanced-usage/accessors/overview/chart-docs-accessors-overview.module").then(m => m.ChartDocsAccessorsOverviewModule),
     },
     {
         path: "data",
-        loadChildren: () =>
+        loadChildren: async () =>
             import("components/demo/advanced-usage/accessors/data/chart-docs-accessors-data.module").then(m => m.ChartDocsAccessorsDataModule),
     },
     {
         path: "colors",
-        loadChildren: () =>
+        loadChildren: async () =>
             import("components/demo/advanced-usage/accessors/colors/chart-docs-accessors-colors.module").then(m => m.ChartDocsAccessorsColorsModule),
     },
     {
         path: "markers",
-        loadChildren: () =>
+        loadChildren: async () =>
             import("components/demo/advanced-usage/accessors/markers/chart-docs-accessors-markers.module").then(m => m.ChartDocsAccessorsMarkersModule),
     },
 ];

@@ -9,15 +9,17 @@ import { IAccessors, IChartSeries, IDataPoint } from "../common/types";
 import { XYGrid } from "../grid/xy-grid";
 
 import { ChartAssist } from "./chart-assist";
-import { ChartAssistEventType } from "./types";
+import { ChartAssistEventType, ChartAssistRenderStateData } from "./types";
 
 describe("chart assist >", () => {
     let ca: ChartAssist;
+    let chart: Chart;
     let series: IChartSeries<IAccessors>;
     let dataPoint: IDataPoint;
 
     beforeEach(() => {
-        ca = new ChartAssist(new Chart(new XYGrid()));
+        chart = new Chart(new XYGrid());
+        ca = new ChartAssist(chart);
         const seriesId = "series1";
 
         const yScale = new LinearScale();
@@ -132,6 +134,20 @@ describe("chart assist >", () => {
             seriesSet.forEach(s => s.data = null);
             ca.update(seriesSet);
             ca.inputSeriesSet.forEach(async s => expect(s.data).toBeNull());
+        });
+
+        it("sets the render status into the series", ()=> {
+            const seriesId = seriesSet[0].id;
+            ca.renderStatesIndex[seriesId] = new ChartAssistRenderStateData(seriesId, seriesSet[0], RenderState.default, false);
+
+            let capturedSeriesSet: IChartSeries<IAccessors>[] = [];
+            spyOn(chart, "update").and.callFake((series) => {
+                capturedSeriesSet = series;
+            });
+
+            ca.update(seriesSet);
+
+            expect(capturedSeriesSet[0].renderState).toBe(RenderState.hidden);
         });
 
         /**

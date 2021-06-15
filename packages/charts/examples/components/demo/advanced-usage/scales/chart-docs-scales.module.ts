@@ -17,11 +17,11 @@ const exampleRoutes: Routes = [
     },
     {
         path: "domains",
-        loadChildren: () => import("components/demo/advanced-usage/scales/domains/chart-docs-domains.module").then(m => m.ChartDocsDomainsModule),
+        loadChildren: async () => import("components/demo/advanced-usage/scales/domains/chart-docs-domains.module").then(m => m.ChartDocsDomainsModule),
     },
     {
         path: "formatters",
-        loadChildren: () => import("components/demo/advanced-usage/scales/formatters/chart-docs-formatters.module").then(m => m.ChartDocsFormattersModule),
+        loadChildren: async () => import("components/demo/advanced-usage/scales/formatters/chart-docs-formatters.module").then(m => m.ChartDocsFormattersModule),
     },
 ];
 

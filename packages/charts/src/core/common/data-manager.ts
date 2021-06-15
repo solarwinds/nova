@@ -6,8 +6,9 @@ import keyBy from "lodash/keyBy";
 import values from "lodash/values";
 
 import { domain } from "./scales/helpers/domain";
-import { IScale, ScalesIndex } from "./scales/types";
+import { EMPTY_CONTINUOUS_DOMAIN, IScale, ScalesIndex } from "./scales/types";
 import { IAccessors, IChartSeries } from "./types";
+import { RenderState } from "../../renderers/types";
 
 /**
  * @ignore
@@ -55,10 +56,14 @@ export class DataManager {
         }
 
         if (scale.domainCalculator) {
-            const chartSeriesSet = this.chartSeriesSet.filter(cs => cs.scales[scaleKey] === scale && !cs.renderer.config.ignoreForDomainCalculation);
+            const chartSeriesSet = this.chartSeriesSet
+                .filter(cs => cs.scales[scaleKey] === scale && !cs.renderer.config.ignoreForDomainCalculation)
+                .filter(c => c.renderState != RenderState.hidden);
             if (chartSeriesSet.length) {
                 const calculatedDomain = scale.domainCalculator(chartSeriesSet, scaleKey, scale);
                 domain(scale, calculatedDomain);
+            } else if (scale.isContinuous()) {
+                domain(scale, EMPTY_CONTINUOUS_DOMAIN);
             }
         }
     }
