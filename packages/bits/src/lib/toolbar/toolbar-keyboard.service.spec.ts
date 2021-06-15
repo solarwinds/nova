@@ -26,11 +26,19 @@ function createTestDomElements(): void {
     document.body.appendChild(fragment);
 }
 
-createTestDomElements();
-
 describe("Services > ", () => {
     describe("ToolbarKeyboardService", () => {
         const service = new ToolbarKeyboardService();
+
+        beforeAll(() => {
+            createTestDomElements();
+        });
+
+        afterAll(() => {
+            const container = document.getElementById("testContainer");
+
+            (container as HTMLElement).remove();
+        });
 
         beforeEach(() => {
             const buttons = document.querySelectorAll(".testButton");
