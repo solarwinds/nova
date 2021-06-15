@@ -11,11 +11,12 @@ import {
     OnDestroy,
     QueryList,
     ViewChild,
+    ViewChildren,
     ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
-import { merge, Subscription } from "rxjs";
-import { debounceTime, take } from "rxjs/operators";
+import { merge, Subject, Subscription } from "rxjs";
+import { debounceTime, take, takeUntil } from "rxjs/operators";
 
 import { LoggerService } from "../../services/log-service";
 
@@ -29,6 +30,7 @@ import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
 import { MenuComponent } from "../menu";
 import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
+import { ButtonComponent } from "../button/button.component";
 
 /**
  * NUI wrapper for toolbar control. It groups toolbar items (nui-toolbar-item),
@@ -77,6 +79,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("toolbarContainer")
     public toolbarContainer: ElementRef;
+    @ViewChild("menuComponent") public menu: MenuComponent;
+    @ViewChildren("toolbarButtons") public toolbarButtons: QueryList<ButtonComponent>;
     public commandGroups: IToolbarGroupContent[] = [];
     public menuGroups: IToolbarGroupContent[] = [];
     public showMenu = true;
@@ -85,8 +89,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     public moreTitle = $localize `More`;
 
     private lastChildBorder: number;
+    private toolbarItems: HTMLElement[] = [];
     private childrenSubscription: Subscription;
     private destructiveItems: any[];
+    private destroy$: Subject<void> = new Subject<void>();
 
     constructor(public element: ElementRef,
                 private changeDetector: ChangeDetectorRef,
@@ -121,8 +127,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 }
             }
         });
-        this.keyboardService.initService(this.toolbarContainer.nativeElement, this.menuComponent);
-        this.keyboardService.disableMoreBtnFocus();
+        this.subscribeToToolbarStepsChanges();
     }
 
     ngOnDestroy() {
@@ -202,5 +207,28 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     public get destructiveIsLastItem() {
         return this.groups.last.items.last.displayStyle !== ToolbarItemDisplayStyle.destructive;
+    }
+
+    private subscribeToToolbarStepsChanges() {
+        this.toolbarButtons.changes
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((buttons: QueryList<ButtonComponent>) => {
+                this.toolbarItems = buttons.toArray().slice().map(b => b["el"].nativeElement as HTMLElement);
+
+                if (this.menu && this.menu.menuToggle) {
+
+                    if (!buttons.length) {
+                        // In case all buttons are hidden within the Commands menu we want this menu to receive the focus
+                        this.menu.menuToggle.nativeElement.setAttribute("tabindex", "0");
+                    } else {
+                        // If at least one button is visible in the toolbar it should receive the focus fist upon navigating onto the toolbar
+                        this.menu.menuToggle.nativeElement.setAttribute("tabindex", "-1");
+                    }
+
+                    this.toolbarItems.push(this.menu.menuToggle.nativeElement);
+                }
+
+                this.keyboardService.setToolbarItems(this.toolbarItems);
+            });
     }
 }

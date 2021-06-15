@@ -1,50 +1,97 @@
 import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
-import { MenuComponent } from "../menu";
+import { KEYBOARD_CODE } from "../../constants";
 
-const buttonsMock = [
-    {
-        focus: () => {},
-    },
-    {
-        focus: () => {},
-    },
-] as HTMLButtonElement[];
+const keyboardEventMock: KeyboardEvent = {
+    code: KEYBOARD_CODE.ARROW_LEFT,
+    preventDefault: () => {},
+} as KeyboardEvent;
 
-const menuMock = {
-    popup: { isOpen: false },
-} as MenuComponent;
+function createTestDomElements(): void {
+    const fragment = document.createDocumentFragment();
+    const container = document.createElement("div");
+    const dynamicContainer = document.createElement("div");
 
-const moreBtnMock = {} as HTMLButtonElement;
+    container.id = "testContainer";
+    dynamicContainer.classList.add("nui-toolbar-content__dynamic");
+
+    for (let i = 1; i <= 3; i++) {
+        const btn = document.createElement("button");
+        btn.id = `button-${i}`;
+        btn.classList.add("testButton");
+        dynamicContainer.appendChild(btn);
+    }
+
+    container.appendChild(dynamicContainer);
+    fragment.appendChild(container);
+    document.body.appendChild(fragment);
+}
+
+createTestDomElements();
 
 describe("Services > ", () => {
     describe("ToolbarKeyboardService", () => {
         const service = new ToolbarKeyboardService();
 
-        service.menuComponent = menuMock;
-        service.moreBtn = moreBtnMock;
+        beforeEach(() => {
+            const buttons = document.querySelectorAll(".testButton");
 
-        describe("navigateFormMoreBtn", () => {
-            it("should close menu if open", () => {
-                (service.menuComponent as MenuComponent).popup.isOpen = true;
+            service.setToolbarItems(Array.from(buttons) as HTMLElement[]);
+        });
 
-                service["navigateFromMoreBtn"](1, buttonsMock);
-                expect(service.menuComponent?.popup.isOpen).toBeFalse();
-            });
+        describe("onKeyDown", () => {
+            const rightButtonPressEvent = { ...keyboardEventMock, ...{ code: KEYBOARD_CODE.ARROW_RIGHT } };
 
-            it("should focus on first button if direction 1", () => {
-                const spy = spyOn(buttonsMock[0], "focus");
+            it("should call preventDefault", () => {
+                const spy = spyOn(keyboardEventMock,"preventDefault");
 
-                service["navigateFromMoreBtn"](1, buttonsMock);
+                service.onKeyDown(keyboardEventMock);
                 expect(spy).toHaveBeenCalled();
             });
 
-            it("should focus on last button if direction 0", () => {
-                const spy = spyOn(buttonsMock[1], "focus");
+            it("should call navigateByArrow method", () => {
+                const spy = spyOn(service, "navigateByArrow" as never);
+                const { code } = keyboardEventMock;
 
-                service["navigateFromMoreBtn"](0, buttonsMock);
+                service.onKeyDown(keyboardEventMock);
+                expect(spy).toHaveBeenCalledWith(code as never);
+            });
+
+            it("should navigate to first if last element in focus on press right arrow button", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const last = items[items.length - 1];
+                const spy = spyOn(first, "focus");
+
+                last.focus();
+
+                service.onKeyDown(rightButtonPressEvent);
                 expect(spy).toHaveBeenCalled();
             });
-        })
+
+            it("should navigate to last if firs element in focus on press left arrow button", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const last = items[items.length - 1];
+                const spy = spyOn(last, "focus");
+
+                first.focus();
+
+                service.onKeyDown(keyboardEventMock);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should move right on pressing right arrow button", () => {
+                const items = service["toolbarItems"];
+                const first = items[0];
+                const next = items[1];
+                const spy = spyOn(next, "focus");
+
+                first.focus();
+
+                service.onKeyDown(rightButtonPressEvent);
+                expect(spy).toHaveBeenCalled();
+            });
+        });
     });
 
 });

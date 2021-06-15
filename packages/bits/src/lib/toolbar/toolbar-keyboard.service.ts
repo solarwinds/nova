@@ -1,36 +1,12 @@
 import { Injectable } from "@angular/core";
 import { KEYBOARD_CODE } from "../../constants";
-import { MenuComponent } from "../menu";
-
-enum NavDirection {
-    LEFT = -1,
-    RIGHT = 1,
-}
 
 @Injectable()
 export class ToolbarKeyboardService {
-    public dynamicContainer: HTMLElement | null;
+    private toolbarItems: HTMLElement[] = [];
 
-    public moreBtn: HTMLButtonElement | null;
-
-    public menuComponent: MenuComponent | null = null;
-
-    public initService(container: HTMLElement, menu: MenuComponent | null): void {
-        this.dynamicContainer = container.querySelector(".nui-toolbar-content__dynamic");
-
-        if (this.dynamicContainer) {
-            this.moreBtn = this.dynamicContainer.querySelector(".nui-button.btn.menu-button");
-        }
-
-        if (menu) {
-            this.menuComponent = menu;
-        }
-    }
-
-    public disableMoreBtnFocus(): void {
-        if (this.moreBtn) {
-            this.moreBtn.setAttribute("tabindex", "-1");
-        }
+    public setToolbarItems(items: HTMLElement[]): void {
+        this.toolbarItems = items;
     }
 
     public onKeyDown(event: KeyboardEvent): void {
@@ -43,63 +19,29 @@ export class ToolbarKeyboardService {
     }
 
     private navigateByArrow(code: KEYBOARD_CODE): void {
-        const buttons = this.getButtons();
-        const length = buttons.length;
+        const activeEl = document.activeElement;
+        const activeIndex = this.toolbarItems.indexOf(activeEl as HTMLElement);
+        const first = this.toolbarItems[0];
+        const last = this.toolbarItems[this.toolbarItems.length - 1];
 
-        if (!length) {
-            return;
+        if (code === KEYBOARD_CODE.ARROW_LEFT) {
+            activeEl === first ? this.focusLast() : this.focusLeft(activeIndex);
         }
 
-        const direction = code === KEYBOARD_CODE.ARROW_RIGHT ? NavDirection.RIGHT : NavDirection.LEFT;
-        let nextIndex = buttons.findIndex((button) => button === document.activeElement) + direction;
-
-        if (this.moreBtn && document.activeElement === this.moreBtn) {
-            this.navigateFromMoreBtn(direction, buttons);
-
-            return;
+        if (code === KEYBOARD_CODE.ARROW_RIGHT) {
+            activeEl === last ? first.focus() : this.focusRight(activeIndex);
         }
-
-        if ((nextIndex >= length || nextIndex < 0) && this.moreBtn) {
-            this.moreBtn.focus();
-
-            return;
-        }
-
-        if (nextIndex < 0 && !this.moreBtn) {
-            nextIndex = length - 1;
-        }
-
-        if (nextIndex >= length && !this.moreBtn) {
-            nextIndex = 0;
-        }
-
-        const button: HTMLButtonElement = buttons[nextIndex];
-
-        button.focus();
     }
 
-    private navigateFromMoreBtn(direction: NavDirection, buttons: HTMLButtonElement[]): void {
-        if (this.menuComponent && this.menuComponent.popup) {
-            this.menuComponent.popup.isOpen = false;
-        }
-
-        if (this.moreBtn && direction === 1) {
-            buttons[0].focus();
-
-            return;
-        }
-
-        buttons[buttons.length - 1].focus();
+    private focusLast(): void {
+        this.toolbarItems[this.toolbarItems.length - 1].focus();
     }
 
-    private getButtons(): HTMLButtonElement[] {
-        const node = this.dynamicContainer;
+    private focusRight(index: number) {
+        this.toolbarItems[index + 1]?.focus();
+    }
 
-        if (!node) {
-            return [];
-        }
-
-        return Array.from(node.childNodes)
-            .filter((node) => (node as HTMLElement).tagName === "BUTTON") as HTMLButtonElement[];
+    private focusLeft(index: number) {
+        this.toolbarItems[index - 1]?.focus();
     }
 }

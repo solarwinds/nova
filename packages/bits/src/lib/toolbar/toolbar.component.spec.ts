@@ -172,22 +172,6 @@ describe("components >", () => {
 
                 expect(spy).toHaveBeenCalledWith(keyboardEventMock);
             });
-
-            it("should call keyboardService 'disableFocusForMoreBtn' and 'initService' on ngAfterViewInit hook", () => {
-                const disableFocusForMoreBtnSpy = spyOn(component["keyboardService"], "disableMoreBtnFocus");
-                const initServiceSpy = spyOn(component["keyboardService"], "initService");
-
-                component.ngAfterViewInit();
-                expect(disableFocusForMoreBtnSpy).toHaveBeenCalled();
-                expect(initServiceSpy).toHaveBeenCalled();
-            });
-
-            it("should call preventDefault", () => {
-                const spy = spyOn(keyboardEventMock, "preventDefault");
-
-                component.onKeyDown(keyboardEventMock);
-                expect(spy).toHaveBeenCalled();
-            });
         });
     });
 });
