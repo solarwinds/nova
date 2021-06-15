@@ -17,17 +17,17 @@ export class EyesLens implements ILens {
         await this.snapshotEachWidth(label);
     }
 
-    public async cameraON() {
+    public async cameraON(): Promise<void> {
         this.eyes = await this.configure();
         await this.eyes.open(this.browser, this.cameraSettings.currentSuiteName, this.cameraSettings.currentTestName);
     }
 
-    public async cameraOFF() {
+    public async cameraOFF(): Promise<void> {
         await this.eyes.close();
         await this.eyes.abortIfNotClosed();
     }
 
-    public toolConfig() {
+    public toolConfig(): any {
         return this.eyes;
     }
 

@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../core/common/types";
 import { GaugeMode } from "../../gauge/constants";
 import { GaugeUtil, IGaugeRenderingAttributes } from "../../gauge/gauge-util";
-import { IGaugeConfig } from "../../gauge/types";
+import { IGaugeConfig, IGaugeThresholdConfigs } from "../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { BarAccessors } from "./accessors/bar-accessors";
@@ -25,7 +25,15 @@ describe("LinearGaugeThresholdsRenderer >", () => {
         gaugeConfig = {
             value: 5,
             max: 10,
-            thresholds: [3, 7, 9],
+            thresholds: {
+                ...GaugeUtil.createStandardThresholdConfigs(3, 7),
+                "additionalThreshold": {
+                    id: "additionalThreshold",
+                    value: 9,
+                    enabled: true,
+                    color: "green",
+                },
+            },
         };
     });
 
@@ -36,7 +44,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             let gaugeAttributes: IGaugeRenderingAttributes;
 
             beforeEach(() => {
-                gaugeAttributes = GaugeUtil.generateRenderingAttributes(GaugeMode.Vertical);
+                gaugeAttributes = GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Vertical);
                 gaugeAttributes.scales.x.domain(["gauge"]);
                 dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
 
@@ -51,7 +59,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             });
 
             it("should render the correct number of threshold markers", () => {
-                expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds?.length as number);
+                expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds as IGaugeThresholdConfigs).length);
             });
 
             it("should position the threshold markers correctly", () => {
@@ -75,7 +83,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             let gaugeAttributes: IGaugeRenderingAttributes;
 
             beforeEach(() => {
-                gaugeAttributes = GaugeUtil.generateRenderingAttributes(GaugeMode.Horizontal);
+                gaugeAttributes = GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Horizontal);
                 gaugeAttributes.scales.y.domain(["gauge"]);
 
                 dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
@@ -91,7 +99,7 @@ describe("LinearGaugeThresholdsRenderer >", () => {
             });
 
             it("should render the correct number of threshold markers", () => {
-                expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds?.length as number);
+                expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds as IGaugeThresholdConfigs).length);
             });
 
             it("should position the threshold markers correctly", () => {

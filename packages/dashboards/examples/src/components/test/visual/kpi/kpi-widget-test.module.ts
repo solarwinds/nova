@@ -7,11 +7,21 @@ import { TestCommonModule } from "../../common/common.module";
 import { TestKpiDataSource, TestKpiDataSource2, TestKpiDataSourceBigNumber, TestKpiDataSourceSmallNumber } from "../../data/kpi-data-sources";
 
 import { KpiDashboardComponent } from "./kpi-widget-test.component";
+import { KpiErrorTestComponent } from "./kpi-error/kpi-error-test.component";
 
 const routes = [
     {
         path: "",
         component: KpiDashboardComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "error",
+        component: KpiErrorTestComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -33,6 +43,7 @@ const routes = [
     ],
     declarations: [
         KpiDashboardComponent,
+        KpiErrorTestComponent,
     ],
     providers: [
         ProviderRegistryService,

@@ -22,7 +22,7 @@ export class DonutGaugeBasicExampleComponent implements OnInit {
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // Setting up the gauge config
         const initialValue = 128;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
@@ -37,7 +37,7 @@ export class DonutGaugeBasicExampleComponent implements OnInit {
         this.chartAssist.update(this.seriesSet);
     }
 
-    public onValueChange(value: number) {
+    public onValueChange(value: number): void {
         // Updating the gauge config
         this.gaugeConfig = this.getGaugeConfig(value);
 

@@ -31,6 +31,8 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
+    private labelsPlugin: DonutGaugeLabelsPlugin;
+
     constructor(private unitConversionService: UnitConversionService) { }
 
     public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>): void {
@@ -43,6 +45,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.disableThresholdMarkers;
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
@@ -57,7 +60,9 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         const labelConfig: IGaugeLabelsPluginConfig = {
             clearance: { top: 40, right: 40, bottom: 40, left: 40 },
         };
-        this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin(labelConfig));
+
+        this.labelsPlugin = new DonutGaugeLabelsPlugin(labelConfig);
+        this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {

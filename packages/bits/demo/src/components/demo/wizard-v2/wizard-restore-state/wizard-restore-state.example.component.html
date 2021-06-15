@@ -14,29 +14,32 @@
             <nui-wizard-step-v2 label="Person Details"
                                 formGroupName="personDetails"
                                 [stepControl]="form.get(['personDetails'])">
-                <nui-form-field [control]="form.get(['personDetails','name'])"
-                                class="d-block mb-4 mt-4"
-                                i18n-caption
-                                caption="Name">
-                    <nui-textbox formControlName="name"></nui-textbox>
-                    <nui-validation-message for="required"
-                                            *ngIf="form.get(['personDetails','name'])?.errors?.required"
-                                            i18n>
-                        This is required
-                    </nui-validation-message>
-                </nui-form-field>
 
-                <nui-form-field [control]="form.get(['personDetails','privacy'])">
-                    <nui-checkbox formControlName="privacy" [value]="true">
-                        Privacy Policy
-                    </nui-checkbox>
+                <div class="px-5 pb-5">
+                    <nui-form-field [control]="form.get(['personDetails','name'])"
+                                    class="d-block mb-4 mt-4"
+                                    i18n-caption
+                                    caption="Name">
+                        <nui-textbox formControlName="name"></nui-textbox>
+                        <nui-validation-message for="required"
+                                                *ngIf="form.get(['personDetails','name'])?.errors?.required"
+                                                i18n>
+                            This is required
+                        </nui-validation-message>
+                    </nui-form-field>
 
-                    <nui-validation-message for="required"
-                                            *ngIf="form.get(['personDetails','privacy'])?.errors?.required"
-                                            i18n>
-                        This is required
-                    </nui-validation-message>
-                </nui-form-field>
+                    <nui-form-field [control]="form.get(['personDetails','privacy'])">
+                        <nui-checkbox formControlName="privacy" [value]="true">
+                            Privacy Policy
+                        </nui-checkbox>
+
+                        <nui-validation-message for="required"
+                                                *ngIf="form.get(['personDetails','privacy'])?.errors?.required"
+                                                i18n>
+                            This is required
+                        </nui-validation-message>
+                    </nui-form-field>
+                </div>
 
                 <ng-template wizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
@@ -47,37 +50,41 @@
             <nui-wizard-step-v2 label="Organization"
                                 formGroupName="organization"
                                 [stepControl]="form.get(['organization'])">
-                <nui-form-field [control]="form.get(['organization', 'title'])"
-                                class="d-block mb-4"
-                                i18n-caption
-                                caption="Organization">
-                    <nui-textbox formControlName="title"></nui-textbox>
-                    <nui-validation-message for="required"
-                                            *ngIf="form.get(['organization','title'])?.errors?.required"
-                                            i18n>
-                        This is required
-                    </nui-validation-message>
-                </nui-form-field>
-                <nui-form-field caption="Date"
-                                class="d-block mb-4"
-                                [control]="form.get(['organization','date'])">
-                    <nui-date-picker formControlName="date" i18n></nui-date-picker>
-                    <nui-validation-message for="required"
-                                            *ngIf="form.get(['organization','date'])?.errors?.required"
-                                            i18n>
-                        This is required
-                    </nui-validation-message>
-                </nui-form-field>
-                <nui-form-field [control]="form.get(['organization','createDynamicStep1'])" class="d-block">
-                    <nui-checkbox formControlName="createDynamicStep1" [value]="true">
-                        Add first step dynamically
-                    </nui-checkbox>
-                </nui-form-field>
-                <nui-form-field [control]="form.get(['organization','createDynamicStep2'])" class="d-block">
-                    <nui-checkbox formControlName="createDynamicStep2" [value]="true">
-                        Add second step dynamically
-                    </nui-checkbox>
-                </nui-form-field>
+
+                <div class="p-5">
+                    <nui-form-field [control]="form.get(['organization', 'title'])"
+                                    class="d-block mb-4"
+                                    i18n-caption
+                                    caption="Organization">
+                        <nui-textbox formControlName="title"></nui-textbox>
+                        <nui-validation-message for="required"
+                                                *ngIf="form.get(['organization','title'])?.errors?.required"
+                                                i18n>
+                            This is required
+                        </nui-validation-message>
+                    </nui-form-field>
+                    <nui-form-field caption="Date"
+                                    class="d-block mb-4"
+                                    [control]="form.get(['organization','date'])">
+                        <nui-date-picker formControlName="date" i18n></nui-date-picker>
+                        <nui-validation-message for="required"
+                                                *ngIf="form.get(['organization','date'])?.errors?.required"
+                                                i18n>
+                            This is required
+                        </nui-validation-message>
+                    </nui-form-field>
+                    <nui-form-field [control]="form.get(['organization','createDynamicStep1'])" class="d-block">
+                        <nui-checkbox formControlName="createDynamicStep1" [value]="true">
+                            Add first step dynamically
+                        </nui-checkbox>
+                    </nui-form-field>
+                    <nui-form-field [control]="form.get(['organization','createDynamicStep2'])" class="d-block">
+                        <nui-checkbox formControlName="createDynamicStep2" [value]="true">
+                            Add second step dynamically
+                        </nui-checkbox>
+                    </nui-form-field>
+                </div>
+
                     <ng-template wizardStepFooter>
                         <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
@@ -87,7 +94,9 @@
 
             <nui-wizard-step-v2 *ngFor="let step of dynamicSteps">
                 <ng-template wizardStepLabel>{{step.title}}</ng-template>
-                <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
+                <div class="p-5">
+                    <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
+                </div>
                 <ng-template wizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
@@ -102,31 +111,33 @@
                     <span>Contact Details</span>
                 </ng-template>
 
-                <nui-form-field [control]="form.get(['contactDetails','email'])"
-                                class="d-block mb-4 mt-4"
-                                i18n-caption
-                                caption="Email">
-                    <nui-textbox type="email" formControlName="email"></nui-textbox>
-                    <nui-validation-message for="required"
-                                            *ngIf="form.get(['contactDetails','email'])?.errors?.required"
-                                            i18n>
-                        This is required
-                    </nui-validation-message>
-
-                    <nui-validation-message for="email"
-                                            *ngIf="form.get(['contactDetails','email'])?.errors?.email"
-                                            i18n>
-                        Invalid email
-                    </nui-validation-message>
-                </nui-form-field>
-
-                <nui-form-field caption="Select"
-                    [control]="form.get(['contactDetails','options'])">
-                    <nui-select-v2 formControlName="options">
-                        <nui-select-v2-option value="Item 1">Item 1</nui-select-v2-option>
-                        <nui-select-v2-option value="Item 2">Item 2</nui-select-v2-option>
-                    </nui-select-v2>
-                </nui-form-field>
+                <div class="px-5 pb-5">
+                    <nui-form-field [control]="form.get(['contactDetails','email'])"
+                                    class="d-block mb-4 mt-4"
+                                    i18n-caption
+                                    caption="Email">
+                        <nui-textbox type="email" formControlName="email"></nui-textbox>
+                        <nui-validation-message for="required"
+                                                *ngIf="form.get(['contactDetails','email'])?.errors?.required"
+                                                i18n>
+                            This is required
+                        </nui-validation-message>
+    
+                        <nui-validation-message for="email"
+                                                *ngIf="form.get(['contactDetails','email'])?.errors?.email"
+                                                i18n>
+                            Invalid email
+                        </nui-validation-message>
+                    </nui-form-field>
+    
+                    <nui-form-field caption="Select"
+                        [control]="form.get(['contactDetails','options'])">
+                        <nui-select-v2 formControlName="options">
+                            <nui-select-v2-option value="Item 1">Item 1</nui-select-v2-option>
+                            <nui-select-v2-option value="Item 2">Item 2</nui-select-v2-option>
+                        </nui-select-v2>
+                    </nui-form-field>
+                </div>
 
                     <ng-template wizardStepFooter>
                         <button nui-button
