@@ -103,10 +103,10 @@ describe("USERCONTROL toolbar: ", () => {
 
         it("should toolbar resized and hide all items in menu", async () => {
             const width = "100";
-            await toolbar.popup.open();
             const toolbarItems = await toolbar.getAllVisibleItemsCount();
             await resizableToolbarTextboxAtom.acceptText(width);
             await browser.wait( async () => toolbarItems !== 0, 500);
+            await toolbar.popup.open();
             expect((await toolbar.getToolbarMenu().getItemTextArray()).length).toBe(12);
         });
     });
