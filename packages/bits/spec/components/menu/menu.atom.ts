@@ -1,6 +1,7 @@
 import {
     browser,
     by,
+    element,
     ElementArrayFinder,
     ElementFinder,
 } from "protractor";
@@ -13,6 +14,9 @@ import { MenuItemAtom } from "./menu-item.atom";
 
 export class MenuAtom extends Atom {
     public static CSS_CLASS = "nui-menu";
+
+    public static getAllMenuItems = () => element.all(by.css(".nui-menu-item:not(.nui-menu-item--header"));
+
     public menuContentId: string;
 
     private getPopupBox = (): PopupAtom => Atom.findIn(PopupAtom, this.getElement());
@@ -36,6 +40,7 @@ export class MenuAtom extends Atom {
 
     public getMenuItemByIndex = (idx: number): MenuItemAtom => new MenuItemAtom(this.getItemElements().get(idx));
 
+    // DO NOT USE. The following method is broken and will be fixed in the scope of NUI-6105
     public getMenuItems = async (): Promise<MenuItemAtom[]> => this.getItemElements().map<MenuItemAtom>(((elementFinder?: ElementFinder) => {
         if (!elementFinder) {
             throw new Error("elementFinder is not defined");

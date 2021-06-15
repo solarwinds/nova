@@ -14,6 +14,7 @@
         <nui-form-field [control]="form.get('dataSource')">
             <nui-select-v2 placeholder="Select data source" i18n-placeholder
                            [title]="form.get('dataSource')?.value?.label"
+                           [popupViewportMargin]="configuratorHeading.height$ | async"
                            formControlName="dataSource"
                            (valueSelected)="onDataSourceSelected($event)"
                            class="datasource-configuration__accordion-content__datasource-input">
@@ -22,5 +23,15 @@
                 </nui-select-v2-option>
             </nui-select-v2>
         </nui-form-field>
+        <ng-container nuiComponentPortal
+                      [componentId]="errorComponent"
+                      [componentType]="errorComponent"
+                      [outputs]="['errorState']"
+                      [properties]="{ dataSource: dataSource }"
+                      (output)="onErrorState($event.payload)"
+                      #componentPortal="nuiComponentPortal">
+            <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)">
+            </ng-template>
+        </ng-container>
     </div>
 </nui-widget-editor-accordion>

@@ -10,6 +10,8 @@ import { SourcesService } from "../services/sources.service";
 
 import { PlunkerProjectService } from "./plunker-project.service";
 
+const hljs = require("highlight.js/lib/core");
+
 /**
  * @dynamic
  * @ignore
@@ -47,7 +49,13 @@ export class ExampleWrapperComponent implements OnInit {
         private sourcesService: SourcesService,
         @Inject(DOCUMENT) private document: Document,
         private plunkerProjectService: PlunkerProjectService
-    ) {}
+    ) {
+        hljs.registerLanguage("typescript", require("highlight.js/lib/languages/typescript"));
+        hljs.registerLanguage("javascript", require("highlight.js/lib/languages/javascript"));
+        hljs.registerLanguage("xml", require("highlight.js/lib/languages/xml"));
+        hljs.registerLanguage("json", require("highlight.js/lib/languages/json"));
+        hljs.registerLanguage("less", require("highlight.js/lib/languages/less"));
+    }
 
     ngOnInit() {
         this.componentSources = this.sourcesService.getSourcesByFilenamePrefix(this.filenamePrefix);

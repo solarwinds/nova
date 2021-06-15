@@ -11,13 +11,13 @@ export class DashboardWizardAtom extends Atom {
     public finishButton = new ButtonAtom(this.root.element(by.className("nui-dashwiz-buttons__finish-button")));
     public cancelButton = new ButtonAtom(this.root.element(by.className("nui-dashwiz-buttons__cancel-button")));
 
-    public back = (): Promise<void> => this.backButton.click();
+    public back = async (): Promise<void> => this.backButton.click();
 
-    public next = (): Promise<void> => this.nextButton.click();
+    public next = async (): Promise<void> => this.nextButton.click();
 
-    public cancel = (): Promise<void> => this.cancelButton.click();
+    public cancel = async (): Promise<void> => this.cancelButton.click();
 
-    public finish = (): Promise<void> => this.finishButton.click();
+    public finish = async (): Promise<void> => this.finishButton.click();
 
     public getHeader = (): ElementFinder => this.root.element(by.css(".nui-dashwiz__header"));
 

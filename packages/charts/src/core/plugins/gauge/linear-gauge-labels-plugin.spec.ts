@@ -5,7 +5,7 @@ import { XYGrid } from "../../grid/xy-grid";
 import { MOUSE_ACTIVE_EVENT } from "../../../constants";
 import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-import { IGaugeConfig } from "../../../gauge/types";
+import { IGaugeConfig, IGaugeThresholdConfigs } from "../../../gauge/types";
 import { Chart } from "../../chart";
 import { D3Selection, IAccessors, IChartAssistSeries } from "../../common/types";
 
@@ -22,7 +22,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     const gaugeConfig: IGaugeConfig = {
         value: 5,
         max: 10,
-        thresholds: [3, 7],
+        thresholds: GaugeUtil.createStandardThresholdConfigs(3, 7),
     };
     let dataSeries: IChartAssistSeries<IAccessors>;
 
@@ -37,7 +37,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
         document.body.appendChild(element);
         chart.build(element);
 
-        dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateRenderingAttributes(GaugeMode.Horizontal));
+        dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Horizontal));
         chart.update([dataSeries]);
         chart.updateDimensions();
 
@@ -50,7 +50,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {
-        expect(labels.nodes().length).toEqual(gaugeConfig.thresholds?.length as number);
+        expect(labels.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds as IGaugeThresholdConfigs).length);
     });
 
     describe("horizontal mode", () => {
@@ -120,7 +120,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
             element.setAttribute("style", "height: 200px");
             gridConfig = linearGaugeGridConfig(GaugeMode.Vertical);
             chart.getGrid().config(gridConfig);
-            dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateRenderingAttributes(GaugeMode.Vertical));
+            dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Vertical));
             chart.update([dataSeries]);
             chart.updateDimensions();
         });
@@ -187,8 +187,9 @@ describe("LinearGaugeLabelsPlugin >", () => {
     });
 
     it("should render the threshold values as text", () => {
+        const thresholds = GaugeUtil.prepareThresholdsData(gaugeConfig).thresholds;
         labels.nodes().forEach((node, index) => {
-            expect(node.textContent).toEqual(gaugeConfig.thresholds?.[index].toString() as string);
+            expect(node.textContent).toEqual(thresholds?.[index].value.toString() as string);
         });
     });
 

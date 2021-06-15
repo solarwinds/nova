@@ -106,7 +106,7 @@ describe(`Visual tests: ${name}`, () => {
          * 1. no available option menu appears and have correct styles
          * 2. combobox input hover effect styles are fine
          */
-        await Helpers.pressKey(Key.TAB);
+        await Helpers.pressKey(Key.TAB, 2);
         await comboboxValueRemoval.hover();
         await camera.say.cheese(`State 4`);
 

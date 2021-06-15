@@ -13,14 +13,24 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
+import { EventBus, IDataSource, IEvent, LoggerService } from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import { Subject } from "rxjs/internal/Subject";
 import { take } from "rxjs/operators";
 
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
-import { IHasChangeDetector, IHasForm, IProperties, IProviderConfiguration, IProviderConfigurationForDisplay, PIZZAGNA_EVENT_BUS } from "../../../../../types";
+import {
+    IConfigurable,
+    IHasChangeDetector,
+    IHasForm,
+    IProperties,
+    IProviderConfiguration,
+    IProviderConfigurationForDisplay,
+    PIZZAGNA_EVENT_BUS,
+} from "../../../../../types";
 import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
+import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
+import { DataSourceErrorComponent } from "../data-source-error/data-source-error.component";
 
 /**
  * This is a basic implementation of a data source configuration component. In the real world scenario, this component will most likely be replaced by a
@@ -42,14 +52,19 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
 
     @Input() properties: IProperties;
     @Input() providerId: string;
+    @Input() errorComponent: string = DataSourceErrorComponent.lateLoadKey;
 
     @Output() formReady = new EventEmitter<FormGroup>();
 
     public form: FormGroup;
+    public hasDataSourceError: boolean = false;
+    public dataSource: IDataSource;
+
     // used by the Broadcaster
     public dataFieldIds = new Subject<any>();
 
     constructor(public changeDetector: ChangeDetectorRef,
+                public configuratorHeading: ConfiguratorHeadingService,
                 protected formBuilder: FormBuilder,
                 protected providerRegistryService: ProviderRegistryService,
                 @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
@@ -65,6 +80,7 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
             properties: [this.properties || {}],
             dataSource: [null, [Validators.required]],
         });
+        this.form.setValidators([() => this.hasDataSourceError ? { dataSourceError: true } : null])
 
         this.form.get("dataSource")?.valueChanges.subscribe((selectedDataSource) => {
             this.form.get("providerId")?.setValue(selectedDataSource?.providerId);
@@ -133,23 +149,34 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
         }
         const provider = this.providerRegistryService.getProvider(data.providerId);
         if (provider) {
-            const dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
+            this.dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
 
-            this.eventBus.next(DATA_SOURCE_CREATED, { payload: dataSource });
+            this.eventBus.next(DATA_SOURCE_CREATED, { payload: this.dataSource });
 
-            dataSource.outputsSubject
+            this.dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
                     this.dataFieldIds.next(Object.keys(result.result || result));
                 });
-            if (dataSource.updateConfiguration) {
-                dataSource.updateConfiguration(data.properties);
+
+            const configurableDataSource = (this.dataSource as unknown as IConfigurable);
+            if (configurableDataSource?.updateConfiguration) {
+                configurableDataSource.updateConfiguration(data.properties ?? {});
             }
-            dataSource.applyFilters();
+            // This setTimeout is because the output of the data source might come faster than the data-source-error-component is initiated
+            setTimeout(() => {
+                this.dataSource.applyFilters();
+            });
         } else {
             this.logger.warn("No provider found for id:", data.providerId);
         }
     }
 
+    public onErrorState(isError: boolean) {
+        this.hasDataSourceError = isError;
+        this.form.markAsTouched({onlySelf: true});
+        this.form.updateValueAndValidity({emitEvent: false});
+        this.changeDetector.detectChanges();
+    }
 }

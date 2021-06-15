@@ -34,6 +34,8 @@ import {
     WizardValidationExampleComponent,
     WizardVisualTestComponent,
     WizardDynamicRemoveExampleComponent,
+    WizardResetStepExampleComponent,
+    WizardWithSeparateStepHeadingsExampleComponent,
 } from "./index";
 
 const routes = [
@@ -100,6 +102,8 @@ const routes = [
         WizardCustomStepLineWidthComponent,
         WizardDynamicRemoveExampleComponent,
         WizardStepsExampleComponent,
+        WizardResetStepExampleComponent,
+        WizardWithSeparateStepHeadingsExampleComponent,
     ],
     providers: [
         {

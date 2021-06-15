@@ -1,18 +1,18 @@
 import { HttpClient } from "@angular/common/http";
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { immutableSet, LoggerService, SearchService} from "@nova-ui/bits";
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation, Optional } from "@angular/core";
+import { immutableSet, LoggerService, SearchService } from "@nova-ui/bits";
 import {
     DashboardComponent,
-    DATA_SOURCE,
+    DATA_SOURCE, HEADER_LINK_PROVIDER,
     IDashboard,
     IWidget,
     IWidgetSelector,
     PizzagnaLayer,
     ProviderRegistryService,
     RefresherSettingsService,
+    WIDGET_CREATE,
     WidgetClonerService,
     WidgetTypesService,
-    WIDGET_CREATE,
 } from "@nova-ui/dashboards";
 import keyBy from "lodash/keyBy";
 import { Subject } from "rxjs";
@@ -23,7 +23,7 @@ import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data
 import { AcmeTableDataSourceNoDataFields } from "../data/table/acme-table-data-source-no-data-fields.service";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
-import { AcmeTableDataSource3 } from "../data/table/acme-table-data-source3.service";
+import { AcmeTableDataSourceNoColumnGeneration } from "../data/table/acme-table-data-source3.service";
 import { AcmeTableGBooksDataSource } from "../data/table/acme-table-gbooks-data-source.service";
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
 import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/timeseries-data-sources";
@@ -31,6 +31,8 @@ import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/tim
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
 import { AcmeFormSubmitHandler } from "./acme-form-submit-handler";
+import { GlobalFilteringDataSource } from "./global-filtering-data.source";
+import { HeaderLinkProviderService } from "./header-link-provider.service";
 import { positions, widgets } from "./widgets";
 
 /**
@@ -42,7 +44,7 @@ import { positions, widgets } from "./widgets";
     styleUrls: ["./prototype-1.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
     changeDetection: ChangeDetectionStrategy.Default,
-    providers: [AcmeFormSubmitHandler],
+    providers: [AcmeFormSubmitHandler, GlobalFilteringDataSource],
 })
 export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(DashboardComponent, { static: true }) dashboardComponent: DashboardComponent;
@@ -60,6 +62,7 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
 
     public editMode = false;
     public systemRefreshInterval: number = 60;
+    public searchQuery = "solarwinds";
 
     private destroy$ = new Subject();
 
@@ -67,7 +70,22 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 public submitHandler: AcmeFormSubmitHandler,
                 private widgetTypesService: WidgetTypesService,
                 private widgetClonerService: WidgetClonerService,
-                private refreshSettings: RefresherSettingsService) {
+                private refreshSettings: RefresherSettingsService,
+                private globalFilters: GlobalFilteringDataSource) {
+
+        this.globalFilters.registerComponent({
+            "q": {
+                componentInstance: {
+                    getFilters: ()=> ({
+                        data: {
+                            type: "string",
+                            value: this.searchQuery,
+                        },
+                    }),
+                },
+            },
+        })
+
         this.providerRegistry.setProviders({
             [AcmeKpiDataSource.providerId]: {
                 provide: DATA_SOURCE,
@@ -104,9 +122,9 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 useClass: AcmeTableDataSource2,
                 deps: [LoggerService],
             },
-            [AcmeTableDataSource3.providerId]: {
+            [AcmeTableDataSourceNoColumnGeneration.providerId]: {
                 provide: DATA_SOURCE,
-                useClass: AcmeTableDataSource3,
+                useClass: AcmeTableDataSourceNoColumnGeneration,
                 deps: [LoggerService],
             },
             [AcmeTableDataSourceNoDataFields.providerId]: {
@@ -133,6 +151,13 @@ export class AcmeDashboardComponent implements OnInit, AfterViewInit, OnDestroy 
                 provide: DATA_SOURCE,
                 useClass: AcmeTableGBooksDataSource,
                 deps: [LoggerService, HttpClient],
+            },
+            [HeaderLinkProviderService.providerId]: {
+                provide: HEADER_LINK_PROVIDER,
+                useClass: HeaderLinkProviderService,
+                deps: [
+                    [new Optional(), GlobalFilteringDataSource],
+                ],
             },
         });
     }

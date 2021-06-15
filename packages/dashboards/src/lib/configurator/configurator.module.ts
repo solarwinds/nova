@@ -104,6 +104,9 @@ import { ConfiguratorService } from "./services/configurator.service";
 import { KpiWidgetColorService } from "./services/kpi-widget-color.service";
 import { WidgetClonerService } from "./services/widget-cloner.service";
 import { WidgetEditorService } from "./services/widget-editor.service";
+import { DataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/data-source-error.component";
+import { TableDataSourceErrorComponent } from "./components/widgets/configurator-items/data-source-error/table/table-data-source-error.component";
+import { ConfiguratorHeadingService } from "./services/public-api";
 /* eslint-enable max-len */
 
 const entryComponents: IComponentWithLateLoadKey[] = [
@@ -112,6 +115,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     DashwizButtonsComponent,
     DataSourceConfigurationComponent,
     DataSourceConfigurationV2Component,
+    DataSourceErrorComponent,
     KpiTilesConfigurationComponent,
     EmbeddedContentConfigurationComponent,
     InfoMessageConfigurationComponent,
@@ -123,6 +127,7 @@ const entryComponents: IComponentWithLateLoadKey[] = [
     TableColumnsConfigurationComponent,
     TableColumnsConfigurationV2Component,
     TableColumnConfigurationComponent,
+    TableDataSourceErrorComponent,
     DonutContentPercentageFormatterComponent,
     DonutContentPercentageConfigurationComponent,
     DonutContentSumFormatterComponent,
@@ -159,33 +164,18 @@ const entryComponents: IComponentWithLateLoadKey[] = [
 
 const exportedDeclarations = [
     ...entryComponents,
-    DashwizButtonsComponent,
     DashwizComponent,
     DashwizStepComponent,
     WidgetEditorAccordionComponent,
-    WidgetConfiguratorSectionComponent,
-    DataSourceConfigurationComponent,
-    DataSourceConfigurationV2Component,
     ItemsDynamicComponent,
     ColorPickerComponent,
-    ConfiguratorComponent,
     ConfiguratorHeadingComponent,
-    WidgetConfiguratorSectionComponent,
-    WidgetEditorComponent,
-    WidgetClonerComponent,
     RefreshRateConfiguratorComponent,
     AddDataPipe,
     PizzagnaRootPipe,
     WidgetEditorAccordionFormStatePipe,
     WidgetConfiguratorSectionHeaderPipe,
     FormHeaderIconPipePipe,
-    GroupingConfigurationComponent,
-    EntityFormattingConfigurationComponent,
-    PercentageFormatterComponent,
-    ProportionalChartOptionsEditorV2Component,
-    DonutContentConfigurationComponent,
-    AggregatorMetricSelectorConfigurationComponent,
-    FieldMapperAggregatorConfiguratorComponent,
     DropAreaComponent,
 ];
 
@@ -228,6 +218,7 @@ const exportedDeclarations = [
     ],
     providers: [
         ConfiguratorService,
+        ConfiguratorHeadingService,
         WidgetConfiguratorSectionCoordinatorService,
         WidgetEditorService,
         WidgetClonerService,

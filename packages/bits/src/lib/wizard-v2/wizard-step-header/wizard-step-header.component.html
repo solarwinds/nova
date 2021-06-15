@@ -1,0 +1,26 @@
+<div class="nui-step-header-ripple"></div>
+<div class="nui-wizard-step-label"
+     [class.nui-wizard-step-header__label--active]="completed"
+     [class.nui-wizard-step-header__label--selected]="selected"
+     [class.nui-wizard-step-header__label--error]="stepState === 'error'">
+
+    <!-- If there is a label template, use it. -->
+    <ng-container *ngIf="templateLabel" [ngTemplateOutlet]="templateLabel?.template"></ng-container>
+
+    <!-- If there is no label template, fall back to the text label. -->
+    <div class="nui-wizard-step-text-label" *ngIf="stringLabel">{{label}}</div>
+
+    <div class="nui-step-optional" *ngIf="optional && stepState != 'error'">{{optionalLabel}}</div>
+    <div class="nui-step-sub-label-error" *ngIf="stepState == 'error'">{{errorMessage}}</div>
+</div>
+
+<div class="nui-wizard-step-icon nui-step-icon-state-{{stepState}}">
+    <div class="nui-wizard-step-icon-container">
+        <span class="nui-wizard-step-icon-content">
+            <ng-container>
+                <nui-icon [icon]="stepStateConfigMap[stepState].icon"
+                          [iconColor]="stepStateConfigMap[stepState].iconColor"></nui-icon>
+            </ng-container>
+        </span>
+    </div>
+</div>

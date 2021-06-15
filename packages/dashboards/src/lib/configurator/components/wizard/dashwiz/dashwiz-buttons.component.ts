@@ -26,6 +26,7 @@ import { IDashwizButtonsComponent } from "../types";
                     class="ml-3 nui-dashwiz-buttons__next-button"
                     nui-button
                     type="button"
+                    [displayStyle]="canFinish ? 'default' : 'primary'"
                     [disabled]="busy"
                     (click)="onNext()">
                 <span>{{nextText}}</span>

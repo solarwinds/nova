@@ -20,6 +20,7 @@ import {
 } from "../../services/types";
 import { IPizzagna, IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
+import { DataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/data-source-error.component";
 /* eslint-enable max-len */
 
 export const timeseriesConfigurator: IPizzagna = {
@@ -104,6 +105,7 @@ export const timeseriesConfigurator: IPizzagna = {
             properties: {
                 // for the DataSourceConfigurationComponent, this defines the list of data sources to pick from
                 dataSourceProviders: [] as string[],
+                errorComponent: DataSourceErrorComponent.lateLoadKey,
             },
             providers: {
                 // converter transforms the data source metadata between the widget and the form

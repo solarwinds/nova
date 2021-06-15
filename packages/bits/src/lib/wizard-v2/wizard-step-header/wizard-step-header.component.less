@@ -1,0 +1,78 @@
+@import "../wizard-vars";
+@import (reference) "../../../styles/nui-framework-variables.less";
+@import (reference) "../../../styles/mixins.less";
+
+.nui-wizard-step {
+
+    &-header {
+        overflow: hidden;
+        outline: none;
+        cursor: pointer;
+        position: relative;
+        box-sizing: content-box;
+        -webkit-tap-highlight-color: transparent;
+        .setCssVariable(color, nui-color-text-default);
+        width: @wizard-label-header-width;
+
+        &--completed {
+            .setCssVariable(color, nui-color-text-link);
+
+            .nui-wizard-horizontal-line {
+                border: 10px red solid !important;
+                .setCssVariable(border-color, nui-color-text-link);
+            }
+        }
+
+        &--disabled {
+            pointer-events: none;
+            cursor: default;
+        }
+
+        .nui-step-header-ripple {
+            pointer-events: none;
+        }
+    }
+
+    &-icon {
+        border-radius: 50%;
+        height: @wizard-label-header-height;
+        width: @wizard-label-header-height;
+        flex-shrink: 0;
+        position: relative;
+
+        &-content {
+            font-size: @icon-size-default;
+            height: @icon-size-default;
+            width: @icon-size-default;
+            position: relative;
+            top: 11px;
+        }
+
+        &-container {
+            .nui-icon {
+                // Use absolute positioning to center the content, because it works better with text.
+                position: relative;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    &-label {
+        display: inline-block;
+        min-width: @wizard-label-min-width;
+        max-width: (@wizard-label-header-width - @nui-space-md);
+        vertical-align: middle;
+        .text-overflow(ellipsis);
+        .setCssVariable(color, nui-color-text-secondary)
+    }
+
+    &-text-label {
+        .text-overflow(ellipsis);
+    }
+}
+
+.nui-step-optional, .nui-step-sub-label-error {
+    font-size: @wizard-step-sub-label-font-size;
+}

@@ -11,12 +11,14 @@ import { IRadialAccessors } from "../accessors/radial-accessors";
 import { RadialRenderer } from "../radial-renderer";
 
 import { DonutGaugeRenderingUtil } from "./donut-gauge-rendering-util";
+import cloneDeep from "lodash/cloneDeep";
 
 /**
  * @ignore Default configuration for Radial Gauge Thresholds Renderer
  */
 export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IDonutGaugeThresholdsRendererConfig = {
     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
+    enabled: true,
 };
 
 /**
@@ -37,7 +39,10 @@ export class DonutGaugeThresholdsRenderer extends RadialRenderer {
     public draw(renderSeries: IRenderSeries<IRadialAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
         const dataContainer = renderSeries.containers[RenderLayerName.data];
 
-        const data = renderSeries.dataSeries.data;
+        const data = cloneDeep(this.config.enabled ? renderSeries.dataSeries.data : []);
+
+        // ensure the data is sorted in ascending order by value since we're using it to calculate circle arcs
+        data.sort((a, b) => a.value - b.value);
 
         this.segmentWidth = this.getSegmentWidth(renderSeries);
 
@@ -46,13 +51,13 @@ export class DonutGaugeThresholdsRenderer extends RadialRenderer {
             .outerRadius(this.getOuterRadius(renderSeries.scales.r.range(), 0))
             .innerRadius(innerRadius >= 0 ? innerRadius : 0);
 
-        const markerSelection = dataContainer.selectAll(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`)
-            .data(DonutGaugeRenderingUtil.generateThresholdRenderingData(data));
+        const markerSelection = dataContainer.selectAll<SVGCircleElement, SVGCircleElement>(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`)
+            .data(DonutGaugeRenderingUtil.generateThresholdArcData(data));
         markerSelection.exit().remove();
         markerSelection.enter()
             .append("circle")
             .attr("class", GAUGE_THRESHOLD_MARKER_CLASS)
-            .merge(markerSelection as any)
+            .merge(markerSelection)
             .attr("cx", d => markerGenerator.centroid(d)[0])
             .attr("cy", d => markerGenerator.centroid(d)[1])
             .attr("r", this.config.markerRadius as number)

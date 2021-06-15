@@ -15,19 +15,19 @@ const appRoutes: Routes = [
     },
     {
         path: "test",
-        loadChildren: () => import("../test/test.module").then(m => m.DashboardTestModule),
+        loadChildren: async () => import("../test/test.module").then(m => m.DashboardTestModule),
     },
     {
         path: "prototypes",
-        loadChildren: () => import("../prototypes/prototypes.module").then(m => m.DashboardPrototypesModule),
+        loadChildren: async () => import("../prototypes/prototypes.module").then(m => m.DashboardPrototypesModule),
     },
     {
         path: "schematics",
-        loadChildren: () => import("../schematics/schematics-docs.module").then(m => m.SchematicsDocsModule),
+        loadChildren: async () => import("../schematics/schematics-docs.module").then(m => m.SchematicsDocsModule),
     },
     {
         path: "docs",
-        loadChildren: () => import("../docs/dashboard-docs.module").then(m => m.DashboardDocsModule),
+        loadChildren: async () => import("../docs/dashboard-docs.module").then(m => m.DashboardDocsModule),
     },
 ];
 

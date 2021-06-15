@@ -76,7 +76,7 @@ describe("USERCONTROL form-field >", () => {
     });
 
     describe("aria-label attribute >", () => {
-        const elementAriaLabel = (at: Atom) =>
+        const elementAriaLabel = async (at: Atom) =>
             at.getElement().all(by.css("*[aria-label]")).first().getAttribute("aria-label");
 
         it("should be set for textbox", async () => {
@@ -199,11 +199,12 @@ describe("USERCONTROL form-field >", () => {
             await timepicker.icon.getElement().click();
         });
 
-        xit("should change model for dateTimePicker", async () => { // review this test after NUI-6067 fixed
+        it("should change model for dateTimePicker", async () => {
+            await Helpers.clickOnEmptySpace();
             await dateTimepicker.getDatePicker().deleteTextManually();
             await dateTimepicker.getDatePicker().acceptText("01 Jan 2020");
-            // const timeToSelect = TimepickerAtom.createTimeString(2, 0);
-            // await dateTimepicker.getTimePicker().textbox.acceptText(timeToSelect);
+            const timeToSelect = TimepickerAtom.createTimeString(2, 0);
+            await dateTimepicker.getTimePicker().textbox.acceptText(timeToSelect);
             await dateTimepicker.getTimePicker().selectTime("2:00 AM");
             expect(await dateTimepickerModelElement.getText()).toBe("Wednesday, January 1, 2020 2:00 AM");
         });

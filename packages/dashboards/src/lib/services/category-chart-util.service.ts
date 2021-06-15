@@ -124,9 +124,7 @@ export class CategoryChartUtilService {
                 gridFunction() {
                     return barGrid(this.config);
                 },
-                rendererFunction() {
-                    return new BarRenderer({ highlightStrategy: new BarSeriesHighlightStrategy("y") });
-                },
+                rendererFunction: () => new BarRenderer({ highlightStrategy: new BarSeriesHighlightStrategy("y") }),
                 accessorFunction: barChartAccessors,
                 scaleFunction() {
                     return barScales(this.config);
@@ -137,9 +135,7 @@ export class CategoryChartUtilService {
                 gridFunction() {
                     return barGrid(this.config);
                 },
-                rendererFunction() {
-                    return new BarRenderer({ highlightStrategy: new BarSeriesHighlightStrategy("x") });
-                },
+                rendererFunction: () => new BarRenderer({ highlightStrategy: new BarSeriesHighlightStrategy("x") }),
                 accessorFunction: barChartAccessors,
                 scaleFunction() {
                     return barScales(this.config);

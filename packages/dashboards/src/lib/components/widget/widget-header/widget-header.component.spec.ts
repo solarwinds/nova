@@ -1,14 +1,21 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus } from "@nova-ui/bits";
+import { IHeaderLinkProvider } from "@nova-ui/dashboards";
 
 import { NuiDashboardsModule } from "../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { REFRESH, WIDGET_EDIT, WIDGET_REMOVE } from "../../../services/types";
 import { WidgetToDashboardEventProxyService } from "../../../services/widget-to-dashboard-event-proxy.service";
-import { PIZZAGNA_EVENT_BUS } from "../../../types";
+import { HEADER_LINK_PROVIDER, PIZZAGNA_EVENT_BUS } from "../../../types";
 
 import { WidgetHeaderComponent } from "./widget-header.component";
+
+class TestHeaderLinkProviderService implements IHeaderLinkProvider {
+    getLink(template: string): string {
+        return template + "toe";
+    }
+}
 
 describe("WidgetHeaderComponent", () => {
     let component: WidgetHeaderComponent;
@@ -26,6 +33,10 @@ describe("WidgetHeaderComponent", () => {
                 {
                     provide: PIZZAGNA_EVENT_BUS,
                     useClass: EventBus,
+                },
+                {
+                    provide: HEADER_LINK_PROVIDER,
+                    useClass: TestHeaderLinkProviderService,
                 },
             ],
         })
@@ -77,7 +88,6 @@ describe("WidgetHeaderComponent", () => {
             expect(pencilEl).toBeTruthy();
         });
     });
-
 
     describe("ngOnInit > ", () => {
         it("should not collapse the header if collapsible is false", () => {
@@ -154,5 +164,25 @@ describe("WidgetHeaderComponent", () => {
             }).toThrow();
             expect((<any>component).eventBus.getStream(REFRESH).next).not.toHaveBeenCalled();
         });
+    });
+
+    describe("prepareLink", () => {
+
+        it("updates the link", () => {
+            const element = document.createElement("div");
+
+            const event = {
+                target: element,
+            };
+
+            component.url = "mistle";
+            component.prepareLink(event as any);
+            expect(element.attributes.getNamedItem("href")?.value).toEqual("mistletoe");
+
+            component.url = "tictac";
+            component.prepareLink(event as any);
+            expect(element.attributes.getNamedItem("href")?.value).toEqual("tictactoe");
+        });
+
     });
 });

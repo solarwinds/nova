@@ -1,9 +1,10 @@
-import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
-import { DOWN_ARROW, ENTER, ESCAPE, PAGE_DOWN, PAGE_UP, TAB, UP_ARROW } from "@angular/cdk/keycodes";
+import { ActiveDescendantKeyManager, LiveAnnouncer } from "@angular/cdk/a11y";
 import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
 
 import { IOption, IOverlayComponent } from "../overlay/types";
+import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "./constants";
+import { KEYBOARD_CODE } from "../../constants";
 
 @Injectable()
 export class OptionKeyControlService<T extends IOption> {
@@ -11,6 +12,9 @@ export class OptionKeyControlService<T extends IOption> {
     public optionItems: QueryList<T>;
 
     private keyboardEventsManager: ActiveDescendantKeyManager<T>;
+
+    constructor(public liveAnnouncer: LiveAnnouncer) {
+    }
 
     public initKeyboardManager(): void {
         this.keyboardEventsManager = new ActiveDescendantKeyManager(this.optionItems).withVerticalOrientation();
@@ -36,8 +40,17 @@ export class OptionKeyControlService<T extends IOption> {
         return this.keyboardEventsManager.activeItemIndex;
     }
 
-    public setSkipPredicate(predicate: (option: T) => boolean) {
+    public setSkipPredicate(predicate: (option: T) => boolean): void {
         this.keyboardEventsManager.skipPredicate(predicate);
+    }
+
+    public scrollToActiveItem(options: ScrollIntoViewOptions): void {
+        if (this.keyboardEventsManager.activeItem) {
+            // setTimeout is necessary because scrolling to the selected item should occur only when overlay rendered
+            setTimeout(() => {
+                this.keyboardEventsManager.activeItem?.scrollIntoView(options);
+            });
+        }
     }
 
     private hasActiveItem(): boolean {
@@ -48,31 +61,32 @@ export class OptionKeyControlService<T extends IOption> {
     }
 
     private handleOpenKeyDown(event: KeyboardEvent): void {
-        switch (event.keyCode) {
-            case DOWN_ARROW:
-            case UP_ARROW:
+        switch (event.code) {
+            case KEYBOARD_CODE.ARROW_DOWN:
+            case KEYBOARD_CODE.ARROW_UP:
                 this.keyboardEventsManager.onKeydown(event);
+                this.announceNavigatedOption();
                 break;
-            case PAGE_UP:
+            case KEYBOARD_CODE.PAGE_UP:
                 event.preventDefault();
                 this.keyboardEventsManager.onKeydown(event);
                 this.keyboardEventsManager.setFirstItemActive();
                 break;
-            case PAGE_DOWN:
+            case KEYBOARD_CODE.PAGE_DOWN:
                 event.preventDefault();
                 this.keyboardEventsManager.onKeydown(event);
                 this.keyboardEventsManager.setLastItemActive();
                 break;
         }
 
-        this.scrollToOption({ block: "nearest" });
+        this.scrollToActiveItem({ block: "nearest" });
 
         // prevent closing on enter
-        if (!this.hasActiveItem() && event.keyCode === ENTER) {
+        if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
             event.preventDefault();
         }
 
-        if (this.hasActiveItem() && event.keyCode === ENTER) {
+        if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
 
             if (!this.keyboardEventsManager.activeItem) {
                 throw new Error("ActiveItem is not defined");
@@ -82,8 +96,9 @@ export class OptionKeyControlService<T extends IOption> {
             this.keyboardEventsManager.activeItem.element.nativeElement.click();
         }
 
-        if (event.keyCode === TAB || event.keyCode === ESCAPE) {
+        if (event.code === KEYBOARD_CODE.TAB || event.code === KEYBOARD_CODE.ESCAPE) {
             this.popup.toggle();
+            this.announceDropdown(this.popup.showing);
         }
     }
 
@@ -93,22 +108,28 @@ export class OptionKeyControlService<T extends IOption> {
             event.preventDefault();
         }
 
-        if (event.keyCode === DOWN_ARROW) {
+        if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
             this.popup.toggle();
-            this.scrollToOption({ block: "center" });
+            this.scrollToActiveItem({ block: "center" });
         }
     }
 
     private shouldBePrevented(event: KeyboardEvent) {
-        return event.keyCode === DOWN_ARROW || event.keyCode === UP_ARROW || event.keyCode === ENTER;
+        return event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP
+            || event.code === KEYBOARD_CODE.ENTER;
     }
 
-    private scrollToOption(options: ScrollIntoViewOptions): void {
-        if (this.keyboardEventsManager.activeItem) {
-            // setTimeout is necessary because scrolling to the selected item should occur only when overlay rendered
-            setTimeout(() => {
-                this.keyboardEventsManager.activeItem?.scrollIntoView(options);
-            });
+    private announceNavigatedOption(): void {
+        const activeItem = this.keyboardEventsManager.activeItem;
+
+        if (activeItem) {
+            this.liveAnnouncer.announce((activeItem as any).value);
         }
+    }
+
+    private announceDropdown(open: boolean) {
+        const message = open ? `${this.optionItems.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}` : ANNOUNCER_CLOSE_MESSAGE;
+
+        this.liveAnnouncer.announce(message);
     }
 }

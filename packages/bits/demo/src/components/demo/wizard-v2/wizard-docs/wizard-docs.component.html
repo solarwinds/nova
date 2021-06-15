@@ -9,10 +9,12 @@
     <nui-wizard-horizontal-example></nui-wizard-horizontal-example>
 </nui-example-wrapper>
 
-<h3>Vertical Layout Wizard</h3>
-<nui-example-wrapper filenamePrefix="wizard-vertical-layout" exampleTitle="Vertical Layout Wizard">
-    <nui-wizard-vertical-example></nui-wizard-vertical-example>
-</nui-example-wrapper>
+<!--Will be updated in scope of the NUI-6099-->
+
+<!--<h3>Vertical Layout Wizard</h3>-->
+<!--<nui-example-wrapper filenamePrefix="wizard-vertical-layout" exampleTitle="Vertical Layout Wizard">-->
+<!--    <nui-wizard-vertical-example></nui-wizard-vertical-example>-->
+<!--</nui-example-wrapper>-->
 
 <h3>Usage with a dialog</h3>
 <p>You can pass an existing wizard component as content of the dialog window. </p>
@@ -35,16 +37,69 @@
 
 <h3>Adding step dynamically</h3>
 <p>You are able to add wizard steps dynamically.</p>
-<p>To make it you should use wizard method 'addStepDynamic' and pass 2 arguments wizardStepComponent and index to insert it in correct place.</p>
-<p><strong>Note:</strong> Angular doesn't allow binding to outputs of dynamically created component from template. You can access outputs of
-    <code><a href="../components/WizardStepComponent.html" target="_blank">nui-wizard-step</a></code> directly.<code>addStepDynamic</code> method of Wizard
-    returns you instance of dynamically added step and you can manually subscribe to outputs like <code>enter</code>,<code>exit</code> etc.
-</p>
 <nui-example-wrapper filenamePrefix="wizard-dynamic" exampleTitle="wizard add dynamic step">
     <nui-wizard-dynamic-example></nui-wizard-dynamic-example>
 </nui-example-wrapper>
 
-<h3>Custom Layout Wizard</h3>
-<nui-example-wrapper filenamePrefix="wizard-custom-layout" exampleTitle="Custom Layout Wizard">
-    <nui-wizard-custom-example></nui-wizard-custom-example>
+<h3>Removing step</h3>
+<p>You are able to remove steps by index.</p>
+<nui-example-wrapper filenamePrefix="wizard-remove-step" exampleTitle="wizard remove step">
+    <nui-wizard-remove-step-example></nui-wizard-remove-step-example>
+</nui-example-wrapper>
+
+<!--TODO Fix Custom Layout Wizard in scope NUI-6112 -->
+<!--<h3>Custom Layout Wizard</h3>-->
+<!--<nui-example-wrapper filenamePrefix="wizard-custom-layout" exampleTitle="Custom Layout Wizard">-->
+<!--    <nui-wizard-custom-example></nui-wizard-custom-example>-->
+<!--</nui-example-wrapper>-->
+
+<h3>Async Form Validation</h3>
+<p>
+    To handle async validation check 'PENDING' status of WizardV2Step stepControl
+</p>
+<nui-example-wrapper filenamePrefix="wizard-async-form-validation" exampleTitle="Async Form Validation">
+    <nui-wizard-async-form-validation-example></nui-wizard-async-form-validation-example>
+</nui-example-wrapper>
+
+
+<h3>Wizard with custom step state icons</h3>
+<p>
+    The wizard step can be in four different states: <code>initial</code>, <code>selected</code>, <code>completed</code>, and <code>error</code>.
+    For each of these steps there is a corresponding icon in the header for a certain step, which dynamically changes along with the step state change.
+    It is possible to override the default set of step state icons and their colors, and there are two ways of doing that.
+</p>
+
+<ol>
+    <li>Global</li>
+    <li>Step Specific</li>
+</ol>
+
+<p><u>Global</u></p>
+<p>
+    Nova provides you with the <code>WIZARD_CONFIG</code> injection token, which allows you to override the default wizard settings in a global context. For instance, 
+    set the necessary icons settings with this token on a module level to allow all wizards within a module to receive the same icon configuration.
+</p>
+<p><u>Step Specific</u></p>
+<p>
+    Use the <code>stepIconsConfig</code> input of the <code>nui-wizard-step-v2</code> component to pass the step icons config specifically to this step. It will 
+    override the global settings for this particular step.
+</p>
+<nui-example-wrapper filenamePrefix="wizard-with-custom-icons-example" exampleTitle="Wizard with custom icons">
+    <nui-wizard-with-custom-icons-example></nui-wizard-with-custom-icons-example>
+</nui-example-wrapper>
+
+<h3>Restore Wizard State</h3>
+<p>
+    To restore wizard state you need to pass previous wizard steps as input
+</p>
+<nui-example-wrapper filenamePrefix="wizard-restore-state" exampleTitle="Restore Wizard State">
+    <nui-wizard-restore-state-example></nui-wizard-restore-state-example>
+</nui-example-wrapper>
+
+<h3>Wizard Step Change Event Example</h3>
+<p>
+    You are able to subscribe when the selected step has changed.
+</p>
+<nui-example-wrapper filenamePrefix="wizard-step-change-example" exampleTitle="Wizard Step Change">
+    <nui-wizard-step-change-example></nui-wizard-step-change-example>
 </nui-example-wrapper>

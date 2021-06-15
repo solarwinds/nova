@@ -11,6 +11,8 @@ import { SelectV2OptionComponent } from "../option/select-v2-option.component";
 import { InputValueTypes } from "../types";
 
 import { SelectV2Component } from "./select-v2.component";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { KEYBOARD_CODE } from "../../../constants";
 
 @Component({
     template: `
@@ -95,6 +97,7 @@ describe("components >", () => {
                 providers: [
                     ChangeDetectorRef,
                     OptionKeyControlService,
+                    LiveAnnouncer,
                 ],
                 imports: [
                     FormsModule,
@@ -336,6 +339,7 @@ describe("components >", () => {
             });
 
             it("should show dropdown, when mouseDown is false", () => {
+                spyOn(component, "isOpenOnFocus" as never).and.returnValue(true as never);
                 component["mouseDown"] = false;
                 element.dispatchEvent(new Event("focusin"));
                 expect(component["dropdown"].showing).toEqual(true);
@@ -354,25 +358,25 @@ describe("components >", () => {
 
             describe("if dropdown is showing >", () => {
                 it("should be first item active, when we press PAGE_UP key", () => {
-                    const event = new KeyboardEvent("keydown", { keyCode: PAGE_UP } as KeyboardEventInit);
+                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.PAGE_UP } as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(0);
                 });
 
                 it("should be last item active, when we press PAGE_DOWN key", () => {
-                    const event = new KeyboardEvent("keydown", { keyCode: PAGE_DOWN } as KeyboardEventInit);
+                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.PAGE_DOWN } as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(selectedOptionsMock.length - 1);
                 });
 
                 it("should close dropdown, when we press TAB key", () => {
-                    const event = new KeyboardEvent("keydown", { keyCode: TAB } as KeyboardEventInit);
+                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.TAB } as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["dropdown"].showing).toEqual(false);
                 });
 
                 it("should close dropdown, when we press ESCAPE key", () => {
-                    const event = new KeyboardEvent("keydown", { keyCode: ESCAPE } as KeyboardEventInit);
+                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.ESCAPE} as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["dropdown"].showing).toEqual(false);
                 });
@@ -610,6 +614,7 @@ describe("components >", () => {
             });
 
             it("should make form control touched on focusout", () => {
+                spyOn(wrapperWithFormControlComponent.select, "isOpenOnFocus" as never).and.returnValue(true as never);
                 expect(wrapperWithFormControlComponent.selectControl.touched).toBeFalsy();
 
                 wrapperWithFormControlComponent.select.elRef.nativeElement.dispatchEvent(new Event("focusin"));
@@ -628,6 +633,7 @@ describe("components >", () => {
             });
 
             it("should set the control to dirty when the value changes in DOM", () => {
+                spyOn(wrapperWithFormControlComponent.select, "isOpenOnFocus" as never).and.returnValue(true as never);
                 expect(wrapperWithFormControlComponent.selectControl.dirty).toBeFalsy();
 
                 wrapperWithFormControlComponent.select.elRef.nativeElement.dispatchEvent(new Event("focusin"));

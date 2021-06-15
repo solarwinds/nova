@@ -7,3 +7,4 @@ export * from "./refresher-configuration/public-api";
 export * from "./embedded-content-configuration/embedded-content-configuration.component";
 export * from "./info-message-configuration/info-message-configuration.component";
 export * from "./background-color-rules-configuration/background-color-rules-configuration.component";
+export * from "./data-source-error/public-api";

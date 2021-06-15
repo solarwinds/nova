@@ -31,7 +31,8 @@
     .nui-checkbox__label {
         width: 100%;
         border-radius: @nui-radius-default 0 0 @nui-radius-default;
-        border: @nui-line-default solid @nui-color-line-default;
+        border: @nui-line-default solid;
+        .setCssVariable(border-color, nui-color-line-default);
 
         .nui-checkbox__mark {
             margin: -(@nui-button-border-width) 0;

@@ -5,7 +5,14 @@ import { LinearGaugeThresholdsRenderer } from "../renderers/bar/linear-gauge-thr
 import { DonutGaugeThresholdsRenderer } from "../renderers/radial/gauge/donut-gauge-thresholds-renderer";
 import { RadialRenderer } from "../renderers/radial/radial-renderer";
 
-import { GaugeMode, GAUGE_QUANTITY_SERIES_ID, GAUGE_REMAINDER_SERIES_ID, GAUGE_THRESHOLD_MARKERS_SERIES_ID, StandardGaugeColor } from "./constants";
+import {
+    GaugeMode,
+    GAUGE_QUANTITY_SERIES_ID,
+    GAUGE_REMAINDER_SERIES_ID,
+    GAUGE_THRESHOLD_MARKERS_SERIES_ID,
+    StandardGaugeColor,
+    StandardGaugeThresholdId,
+} from "./constants";
 import { GaugeUtil } from "./gauge-util";
 import { IGaugeConfig } from "./types";
 
@@ -28,7 +35,7 @@ describe("GaugeUtil >", () => {
         gaugeConfig = {
             value: 3,
             max: 10,
-            thresholds: [2, 4],
+            thresholds: GaugeUtil.createStandardThresholdConfigs(2, 4),
         };
     });
 
@@ -54,14 +61,8 @@ describe("GaugeUtil >", () => {
                 expect(series?.data[0].value).toEqual(gaugeConfig.max - gaugeConfig.value);
                 expect(series?.renderer instanceof RadialRenderer).toEqual(true);
                 series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
-                expect(series).toBeUndefined();
-            });
-
-            it("should include a thresholds series if configured", () => {
-                gaugeConfig.enableThresholdMarkers = true;
-                const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-                const series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
-                expect(series?.data[0].value).toEqual(gaugeConfig.thresholds?.[0]);
+                const thresholds = GaugeUtil.prepareThresholdsData(gaugeConfig).thresholds;
+                expect(series?.data[0].value).toEqual(thresholds?.[0].value);
                 expect(series?.renderer instanceof DonutGaugeThresholdsRenderer).toEqual(true);
             });
         });
@@ -76,14 +77,8 @@ describe("GaugeUtil >", () => {
                 expect(series?.data[0].value).toEqual(gaugeConfig.max - gaugeConfig.value);
                 expect(series?.renderer instanceof BarRenderer).toEqual(true);
                 series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
-                expect(series).toBeUndefined();
-            });
-
-            it("should include a thresholds series if configured", () => {
-                gaugeConfig.enableThresholdMarkers = true;
-                const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Horizontal);
-                const series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
-                expect(series?.data[0].value).toEqual(gaugeConfig.thresholds?.[0]);
+                const thresholds = GaugeUtil.prepareThresholdsData(gaugeConfig).thresholds;
+                expect(series?.data[0].value).toEqual(thresholds?.[0].value);
                 expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
             });
         });
@@ -98,14 +93,8 @@ describe("GaugeUtil >", () => {
                 expect(series?.data[0].value).toEqual(gaugeConfig.max - gaugeConfig.value);
                 expect(series?.renderer instanceof BarRenderer).toEqual(true);
                 series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
-                expect(series).toBeUndefined();
-            });
-
-            it("should include a thresholds series if configured", () => {
-                gaugeConfig.enableThresholdMarkers = true;
-                const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Vertical);
-                const series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
-                expect(series?.data[0].value).toEqual(gaugeConfig.thresholds?.[0]);
+                const thresholds = GaugeUtil.prepareThresholdsData(gaugeConfig).thresholds;
+                expect(series?.data[0].value).toEqual(thresholds?.[0].value);
                 expect(series?.renderer instanceof LinearGaugeThresholdsRenderer).toEqual(true);
             });
         });
@@ -125,7 +114,6 @@ describe("GaugeUtil >", () => {
         });
 
         it("should update the gauge's series set", () => {
-            gaugeConfig.enableThresholdMarkers = true;
             const updatedGaugeConfig = { ...gaugeConfig, value: 5 };
 
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
@@ -138,14 +126,14 @@ describe("GaugeUtil >", () => {
             expect(series?.data[0].value).toEqual(updatedGaugeConfig.max - updatedGaugeConfig.value);
             expect(series?.renderer instanceof RadialRenderer).toEqual(true);
             series = seriesSet.find(s => s.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID);
-            expect(series?.data[0].value).toEqual(updatedGaugeConfig.thresholds?.[0]);
+            const thresholds = GaugeUtil.prepareThresholdsData(updatedGaugeConfig).thresholds;
+            expect(series?.data[0].value).toEqual(thresholds?.[0].value);
             expect(series?.renderer instanceof DonutGaugeThresholdsRenderer).toEqual(true);
         });
     });
 
     describe("setThresholdLabelFormatter", () => {
         it("should update the formatter on the threshold series", () => {
-            gaugeConfig.enableThresholdMarkers = true;
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
             const formatter = () => "test";
             seriesSet = GaugeUtil.setThresholdLabelFormatter(formatter, seriesSet);
@@ -157,29 +145,27 @@ describe("GaugeUtil >", () => {
 
     describe("createDefaultColorAccessor", () => {
         it("should create a standard color accessor", () => {
-            const colorAccessor = GaugeUtil.createDefaultQuantityColorAccessor(gaugeConfig.thresholds);
+            const colorAccessor = GaugeUtil.createDefaultQuantityColorAccessor();
 
-            gaugeConfig.enableThresholdMarkers = true;
-            const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-            const quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
+            gaugeConfig.value = gaugeConfig.thresholds?.[StandardGaugeThresholdId.Warning].value as number - 1;
+            let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
+            let quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
-            expect(colorAccessor({ value: 1 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);
-            expect(colorAccessor({ value: 3 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Warning);
-            expect(colorAccessor({ value: 4 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Critical);
-        });
-    });
+            expect(colorAccessor(quantitySeries.data[0], 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);
 
-    describe("createReversedColorAccessor", () => {
-        it("should create a standard reversed color accessor", () => {
-            const colorAccessor = GaugeUtil.createReversedQuantityThresholdColorAccessor(gaugeConfig.thresholds as number[]);
+            gaugeConfig.value = gaugeConfig.thresholds?.[StandardGaugeThresholdId.Warning].value as number;
+            seriesSet = GaugeUtil.updateSeriesSet(seriesSet, gaugeConfig);
+            quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
 
-            gaugeConfig.enableThresholdMarkers = true;
-            const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-            const quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
+            expect(colorAccessor(quantitySeries.data[0], 0, quantitySeries.data, quantitySeries)).toEqual(
+                gaugeConfig.thresholds?.[StandardGaugeThresholdId.Warning].color);
 
-            expect(colorAccessor({ value: 1 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Critical);
-            expect(colorAccessor({ value: 3 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Warning);
-            expect(colorAccessor({ value: 4 }, 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);
+            gaugeConfig.value = gaugeConfig.thresholds?.[StandardGaugeThresholdId.Critical].value as number;
+            seriesSet = GaugeUtil.updateSeriesSet(seriesSet, gaugeConfig);
+            quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
+
+            expect(colorAccessor(quantitySeries.data[0], 0, quantitySeries.data, quantitySeries)).toEqual(
+                gaugeConfig.thresholds?.[StandardGaugeThresholdId.Critical].color);
         });
     });
 
