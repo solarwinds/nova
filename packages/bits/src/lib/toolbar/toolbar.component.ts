@@ -60,8 +60,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @ContentChildren(ToolbarItemComponent, {descendants: true})
     public items: QueryList<ToolbarItemComponent>;
 
-    @ViewChild("menuComponent") menuComponent: MenuComponent;
-
     @Input()
     /**
      * selectionEnabled: boolean which allows to show selected section
@@ -132,6 +130,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     ngOnDestroy() {
         this.childrenSubscription.unsubscribe();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     public onClickToolbarBtn(event: MouseEvent, commandItem: ToolbarItemComponent): void {
@@ -209,7 +209,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         return this.groups.last.items.last.displayStyle !== ToolbarItemDisplayStyle.destructive;
     }
 
-    private subscribeToToolbarStepsChanges() {
+    private subscribeToToolbarStepsChanges(): void {
         this.toolbarButtons.changes
             .pipe(takeUntil(this.destroy$))
             .subscribe((buttons: QueryList<ButtonComponent>) => {
