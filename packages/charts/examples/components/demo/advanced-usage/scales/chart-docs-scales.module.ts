@@ -21,7 +21,8 @@ const exampleRoutes: Routes = [
     },
     {
         path: "formatters",
-        loadChildren: async () => import("components/demo/advanced-usage/scales/formatters/chart-docs-formatters.module").then(m => m.ChartDocsFormattersModule),
+        loadChildren: async () => import("components/demo/advanced-usage/scales/formatters/chart-docs-formatters.module")
+            .then(m => m.ChartDocsFormattersModule),
     },
 ];
 
