@@ -58,7 +58,7 @@ export class DataManager {
         if (scale.domainCalculator) {
             const chartSeriesSet = this.chartSeriesSet
                 .filter(cs => cs.scales[scaleKey] === scale && !cs.renderer.config.ignoreForDomainCalculation)
-                .filter(c => c.renderState != RenderState.hidden);
+                .filter(c => c.renderState !== RenderState.hidden);
             if (chartSeriesSet.length) {
                 const calculatedDomain = scale.domainCalculator(chartSeriesSet, scaleKey, scale);
                 domain(scale, calculatedDomain);
