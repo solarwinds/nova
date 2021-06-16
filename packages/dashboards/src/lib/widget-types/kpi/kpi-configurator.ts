@@ -16,7 +16,6 @@ import { PresentationConfigurationComponent } from "../../configurator/component
 import { DEFAULT_KPI_BACKGROUND_COLORS } from "../../constants/default-palette";
 import {
     DEFAULT_PIZZAGNA_ROOT,
-    NOVA_CONFIGURATOR_DATA_SOURCE_MANAGER,
     NOVA_KPI_FORMATTERS_REGISTRY,
     NOVA_KPI_SECTION_CONVERTER,
     NOVA_KPI_TILES_CONVERTER,

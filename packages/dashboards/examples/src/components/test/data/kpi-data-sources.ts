@@ -21,7 +21,7 @@ export class TestKpiDataSource implements OnDestroy {
             this.outputsSubject.next({
                 // @ts-ignore: Mock
                 result: null,
-                error: { type: HttpStatusCode.Unknown },
+                error: { type: HttpStatusCode.Unknown, message: "Http Status Code Unknown" },
             });
         }
     }
@@ -35,14 +35,23 @@ export class TestKpiDataSource implements OnDestroy {
 @Injectable()
 export class TestKpiDataSource2 implements OnDestroy {
     public static providerId = "TestKpiDataSource2";
+    public static mockError = false;
 
     public outputsSubject = new Subject<Partial<IKpiData>>();
 
     public applyFilters() {
-        this.outputsSubject.next({
-            value: 2,
-            units: "MB/S",
-        });
+        if (!TestKpiDataSource2.mockError) {
+            this.outputsSubject.next({
+                value: 2,
+                units: "MB/S",
+            });
+        } else {
+            this.outputsSubject.next({
+                // @ts-ignore: Mock
+                result: null,
+                error: { type: HttpStatusCode.Forbidden },
+            });
+        }
     }
 
     public ngOnDestroy(): void {
@@ -53,14 +62,23 @@ export class TestKpiDataSource2 implements OnDestroy {
 @Injectable()
 export class TestKpiDataSourceSmallNumber implements OnDestroy {
     public static providerId = "TestKpiDataSourceSmallNumber";
+    public static mockError = false;
 
     public outputsSubject = new Subject<Partial<IKpiData>>();
 
     public applyFilters() {
-        this.outputsSubject.next({
-            value: 0.000000000000432453453,
-            units: "Lack_of_white_spaces_often_break_the_markup",
-        });
+        if (!TestKpiDataSourceSmallNumber.mockError) {
+            this.outputsSubject.next({
+                value: 0.000000000000432453453,
+                units: "Lack_of_white_spaces_often_break_the_markup",
+            });
+        }  else {
+            this.outputsSubject.next({
+                // @ts-ignore: Mock
+                result: null,
+                error: { type: HttpStatusCode.NotFound },
+            });
+        }
     }
 
     public ngOnDestroy(): void {
@@ -71,14 +89,23 @@ export class TestKpiDataSourceSmallNumber implements OnDestroy {
 @Injectable()
 export class TestKpiDataSourceBigNumber implements OnDestroy {
     public static providerId = "TestKpiDataSourceBigNumber";
+    public static mockError = false;
 
     public outputsSubject = new Subject<Partial<IKpiData>>();
 
     public applyFilters() {
-        this.outputsSubject.next({
-            value: 32472894785734,
-            units: "Extremely Long Units Value Which Does Represent The Amount Of Bytes",
-        });
+        if (!TestKpiDataSourceBigNumber.mockError) {
+            this.outputsSubject.next({
+                value: 32472894785734,
+                units: "Extremely Long Units Value Which Does Represent The Amount Of Bytes",
+            });
+        } else {
+            this.outputsSubject.next({
+                // @ts-ignore: Mock
+                result: null,
+                error: { type: HttpStatusCode.NotFound },
+            });
+        }
     }
 
     public ngOnDestroy(): void {

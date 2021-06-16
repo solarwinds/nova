@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import { ComponentChanges } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -18,7 +19,7 @@ import {
     templateUrl: "./donut-gauge-tester.component.html",
     styleUrls: ["./donut-gauge-tester.component.less"],
 })
-export class DonutGaugeTesterComponent implements OnInit {
+export class DonutGaugeTesterComponent implements OnInit, OnChanges {
     @Input() public gaugeConfig: IGaugeConfig;
     @Input() public size = 250;
 
@@ -26,7 +27,13 @@ export class DonutGaugeTesterComponent implements OnInit {
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnInit() {
+    public ngOnChanges(changes: ComponentChanges<DonutGaugeTesterComponent>): void {
+        if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
+        }
+    }
+
+    public ngOnInit(): void {
         this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);

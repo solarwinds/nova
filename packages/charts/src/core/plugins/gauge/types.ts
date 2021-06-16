@@ -18,8 +18,8 @@ export interface IGaugeLabelsPluginConfig {
     padding?: number;
     /** The name of the label formatter */
     formatterName?: string;
-    /** Set whether labels should be displayed for the thresholds when the gauge is hovered. */
-    enableThresholdLabels?: boolean;
+    /** Set whether labels should be disabled for the thresholds when the gauge is hovered. */
+    disableThresholdLabels?: boolean;
     /**
      * Currently only supported on linear gauges. Set this to true to change the side
      * of the gauge that the labels appear on.

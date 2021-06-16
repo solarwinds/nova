@@ -39,6 +39,7 @@ import {
     WizardAsyncFormValidationExampleComponent,
     WizardWithCustomIconsExampleComponent,
     WizardRestoreStateExampleComponent,
+    WizardStepChangeExampleComponent,
 } from "./index";
 
 const routes = [
@@ -90,6 +91,7 @@ const routes = [
         WizardAsyncFormValidationExampleComponent,
         WizardWithCustomIconsExampleComponent,
         WizardRestoreStateExampleComponent,
+        WizardStepChangeExampleComponent,
     ],
     providers: [
         {
