@@ -59,7 +59,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
     @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
-    @ViewChild(MenuPopupComponent) public menuPopup: MenuPopupComponent;
+    @ViewChild(MenuPopupComponent, {static: true}) public menuPopup: MenuPopupComponent;
 
     // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
     // before any new search is performed
