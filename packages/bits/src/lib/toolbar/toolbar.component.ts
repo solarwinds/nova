@@ -215,7 +215,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             .subscribe((buttons: QueryList<ButtonComponent>) => {
                 this.toolbarItems = buttons.toArray().slice().map(b => b["el"].nativeElement as HTMLElement);
 
-                if (this.menu && this.menu.menuToggle) {
+                if (this.menu) {
                     // In case all buttons are hidden within the Commands menu we want this menu to receive the focus
                     // If at least one button is visible in the toolbar it should receive the focus first upon navigating onto the toolbar
                     const tabIndex = buttons.length ? "-1" : "0";

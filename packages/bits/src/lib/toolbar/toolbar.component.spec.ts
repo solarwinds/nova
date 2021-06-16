@@ -15,6 +15,7 @@ import { ToolbarSplitterComponent } from "./toolbar-splitter.component";
 import { ToolbarComponent } from "./toolbar.component";
 import { KEYBOARD_CODE } from "../../constants";
 import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
+import { MenuComponent } from "../menu";
 
 @Component({
     selector: "nui-test-cmp",
@@ -54,6 +55,7 @@ describe("components >", () => {
                     ToolbarGroupComponent,
                     ToolbarSplitterComponent,
                     IconComponent,
+                    MenuComponent,
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
@@ -81,7 +83,6 @@ describe("components >", () => {
                 expect(component.commandGroups.length).toBe(2);
                 expect(component.splitToolbarItems).toHaveBeenCalled();
                 expect(component.moveToolbarItems).toHaveBeenCalled();
-                console.log(component.menu.menuToggle);
             });
 
             it("should visible group contain 3 items", () => {
