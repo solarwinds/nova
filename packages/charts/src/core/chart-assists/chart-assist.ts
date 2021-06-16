@@ -8,7 +8,7 @@ import {
     DESTROY_EVENT,
     HIGHLIGHT_SERIES_EVENT,
     INTERACTION_DATA_POINTS_EVENT,
-    MOUSE_ACTIVE_EVENT
+    MOUSE_ACTIVE_EVENT,
 } from "../../constants";
 import {RenderState} from "../../renderers/types";
 import {EventBus} from "../common/event-bus";
@@ -34,7 +34,7 @@ import {
     ChartAssistRenderStateData,
     IChartAssist,
     IChartAssistEvent,
-    IRenderStatesIndex
+    IRenderStatesIndex,
 } from "./types";
 
 /** @ignore */
