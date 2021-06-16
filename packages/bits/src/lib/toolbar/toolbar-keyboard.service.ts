@@ -28,7 +28,7 @@ export class ToolbarKeyboardService {
             activeEl === first ? this.focusLast() : this.focusLeft(activeIndex);
         }
 
-        if (code === KEYBOARD_CODE.ARROW_RIGHT) {
+        if (code === KEYBOARD_CODE.ARROW_RIGHT && activeIndex !== -1) {
             activeEl === last ? first.focus() : this.focusRight(activeIndex);
         }
     }
