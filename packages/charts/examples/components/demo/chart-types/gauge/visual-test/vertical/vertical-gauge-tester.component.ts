@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import { ComponentChanges } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -19,13 +20,19 @@ import {
     templateUrl: "./vertical-gauge-tester.component.html",
     styleUrls: ["./vertical-gauge-tester.component.less"],
 })
-export class VerticalGaugeTesterComponent implements OnInit {
+export class VerticalGaugeTesterComponent implements OnInit, OnChanges {
     @Input() public gaugeConfig: IGaugeConfig;
 
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnInit() {
+    public ngOnChanges(changes: ComponentChanges<VerticalGaugeTesterComponent>): void {
+        if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
+        }
+    }
+
+    public ngOnInit(): void {
         const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Vertical) as XYGridConfig);
         const chart = new Chart(grid);
 

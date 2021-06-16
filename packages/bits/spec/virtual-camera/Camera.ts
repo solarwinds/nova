@@ -17,7 +17,7 @@ export class Camera {
 
     constructor() {}
 
-    public loadFilm(browser: ProtractorBrowser, testName: string, suiteName: string = "NUI") {
+    public loadFilm(browser: ProtractorBrowser, testName: string, suiteName: string = "NUI"): this {
         this.currentBrowser = browser;
 
         this.cameraSettings = new CameraSettings();
@@ -32,7 +32,7 @@ export class Camera {
         return this;
     }
 
-    private async cheese(label: string, timeout: number = 200) {
+    private async cheese(label: string, timeout: number = 500) {
         await this.currentBrowser.sleep(timeout);
         await this.engine.takePhoto(label);
     }

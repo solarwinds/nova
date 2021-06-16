@@ -7,7 +7,7 @@ import { ProviderRegistryService } from "../../../../../../../services/provider-
 import { PresentationConfigurationV2Component } from "./presentation-configuration-v2.component";
 import { PIZZAGNA_EVENT_BUS } from "@nova-ui/dashboards";
 import { EventBus } from "@nova-ui/bits";
-import { AbstractControl, FormBuilder } from "@angular/forms";
+import { FormBuilder } from "@angular/forms";
 
 describe("PresentationConfigurationV2Component", () => {
     let component: PresentationConfigurationV2Component;
