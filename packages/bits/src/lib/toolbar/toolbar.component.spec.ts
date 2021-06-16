@@ -81,6 +81,7 @@ describe("components >", () => {
                 expect(component.commandGroups.length).toBe(2);
                 expect(component.splitToolbarItems).toHaveBeenCalled();
                 expect(component.moveToolbarItems).toHaveBeenCalled();
+                console.log(component.menu.menuToggle);
             });
 
             it("should visible group contain 3 items", () => {
