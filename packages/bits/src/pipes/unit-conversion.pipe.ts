@@ -29,7 +29,6 @@ export class UnitConversionPipe implements PipeTransform {
     transform(value: any, scale: number = 0, plusSign: boolean = false, unit: UnitOption = "bytes"): string {
         const base = unit === "bytes" ? UnitBase.Bytes : UnitBase.Standard;
         const result = this.unitConversionService.convert(value as number, base, scale);
-        console.log(result);
         return this.unitConversionService.getFullDisplay(result, unit, plusSign);
     }
 }
