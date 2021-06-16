@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { GaugeUtil, IGaugeConfig, IGaugeThresholdConfigs, StandardGaugeThresholdId } from "@nova-ui/charts";
+import { GaugeUtil, IGaugeConfig, GaugeThresholdDefs, StandardGaugeThresholdId } from "@nova-ui/charts";
 import cloneDeep from "lodash/cloneDeep"
 
 @Component({
@@ -14,7 +14,7 @@ export class GaugeVisualTestComponent {
         return {
             value,
             max: 200,
-            thresholds: GaugeUtil.createStandardThresholdConfigs(100, 158),
+            thresholds: GaugeUtil.createStandardThresholdsConfig(100, 158),
         };
     }
 
@@ -22,7 +22,7 @@ export class GaugeVisualTestComponent {
         this.warningEnabled = enabled;
         this.gaugeConfigs = this.gaugeConfigs.map(c => {
             const config = cloneDeep(c);
-            (config.thresholds as IGaugeThresholdConfigs)[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
+            (config.thresholds?.definitions as GaugeThresholdDefs)[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
             return config;
         });
     }

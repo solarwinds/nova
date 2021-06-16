@@ -15,23 +15,21 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "donut-gauge-with-threshold-markers-example",
-    templateUrl: "./donut-gauge-with-threshold-markers-example.component.html",
-    styleUrls: ["./donut-gauge-with-threshold-markers-example.component.less"],
+    selector: "donut-gauge-with-threshold-toggling-example",
+    templateUrl: "./donut-gauge-with-threshold-toggling-example.component.html",
+    styleUrls: ["./donut-gauge-with-threshold-toggling-example.component.less"],
 })
-export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
+export class DonutGaugeWithThresholdTogglingExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
+    public value = 128;
     public gaugeConfig: IGaugeConfig;
-    public value = 178;
-    public reversed = false;
+    public warningEnabled = true;
+    public criticalEnabled = true;
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
-    private lowThreshold = 100;
-    private highThreshold = 158;
-
     // Generating a standard set of thresholds with warning and critical levels
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
+    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
 
     public ngOnInit(): void {
         this.gaugeConfig = this.getGaugeConfig();
@@ -49,13 +47,20 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
         this.updateGauge();
     }
 
-    public onReversedChange(reversed: boolean): void {
-        this.reversed = reversed;
-        this.thresholds.reversed = reversed;
+    public onWarningEnabledChange(enabled: boolean): void {
+        this.warningEnabled = enabled;
 
-        // swap the values of the warning and critical thresholds
-        this.thresholds.definitions[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
-        this.thresholds.definitions[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+        // Enabling or disabling the warning threshold
+        this.thresholds.definitions[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
+
+        this.updateGauge();
+    }
+
+    public onCriticalEnabledChange(enabled: boolean): void {
+        this.criticalEnabled = enabled;
+
+        // Enabling or disabling the critical threshold
+        this.thresholds.definitions[StandardGaugeThresholdId.Critical].enabled = this.criticalEnabled;
 
         this.updateGauge();
     }
@@ -70,8 +75,6 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
         return {
             value: this.value,
             max: 200,
-
-            // Enabling the thresholds
             thresholds: this.thresholds,
         };
     }

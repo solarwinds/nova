@@ -3,17 +3,12 @@
         <nui-form-field class="d-block mb-5" caption="Value"
                         [showOptionalText]="false">
             <nui-textbox-number type="number"
-                                [ngModel]="value"
+                                [ngModel]="gaugeConfig.value"
                                 (ngModelChange)="onValueChange($event)"
                                 [minValue]="0"
                                 [maxValue]="gaugeConfig.max"
                                 customBoxWidth="75px"></nui-textbox-number>
         </nui-form-field>
-        <nui-checkbox [ngModel]="reversed"
-                      (ngModelChange)="onReversedChange($event)"
-                      i18n>
-            Reversed Thresholds
-        </nui-checkbox>
     </div>
     <nui-chart class="chart" [chart]="chartAssist.chart"></nui-chart>
 </div>

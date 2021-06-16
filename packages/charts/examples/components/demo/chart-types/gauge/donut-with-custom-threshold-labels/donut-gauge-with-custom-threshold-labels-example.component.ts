@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import {
     Chart,
     ChartAssist,
-    ChartDonutContentPlugin,
     DonutGaugeLabelsPlugin,
     GaugeMode,
     GaugeUtil,
@@ -15,29 +14,25 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "donut-gauge-with-content-example",
-    templateUrl: "./donut-gauge-with-content-example.component.html",
-    styleUrls: ["./donut-gauge-with-content-example.component.less"],
+    selector: "donut-gauge-with-custom-threshold-labels-example",
+    templateUrl: "./donut-gauge-with-custom-threshold-labels-example.component.html",
+    styleUrls: ["./donut-gauge-with-custom-threshold-labels-example.component.less"],
 })
-export class DonutGaugeWithContentExampleComponent implements OnInit {
+export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
-    public contentPlugin: ChartDonutContentPlugin;
     public gaugeConfig: IGaugeConfig;
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
+    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 80);
 
     public ngOnInit(): void {
-        const initialValue = 178;
+        const initialValue = 64;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
-
         this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
 
-        // Adding the plugin for the donut inner content
-        this.contentPlugin = new ChartDonutContentPlugin();
-        this.chartAssist.chart.addPlugin(this.contentPlugin);
-
+        // Adding the labels plugin
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());
+
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.chartAssist.update(this.seriesSet);
     }
@@ -51,8 +46,11 @@ export class DonutGaugeWithContentExampleComponent implements OnInit {
     private getGaugeConfig(value: number): IGaugeConfig {
         return {
             value,
-            max: 200,
+            max: 100,
             thresholds: this.thresholds,
+
+            // Setting a custom label formatter
+            labelFormatter: (d: string) => `${d}%`,
         };
     }
 }
