@@ -262,7 +262,17 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
     }
 
     private isMetaKey(event: KeyboardEvent): boolean {
-        return event.ctrlKey || event.metaKey || event.code === "Backspace" || event.code === "Delete" || event.code === "Tab";
+        return (
+            event.ctrlKey ||
+            event.metaKey ||
+            event.code === "Backspace" ||
+            event.code === "Delete" ||
+            event.code === "Tab" ||
+            event.code === "ArrowRight" ||
+            event.code === "ArrowLeft" ||
+            event.code === "ArrowUp" ||
+            event.code === "ArrowDown"
+        );
     }
 
 }
