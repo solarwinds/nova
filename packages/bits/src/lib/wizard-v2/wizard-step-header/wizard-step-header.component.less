@@ -33,7 +33,9 @@
         }
 
         &:focus {
-            .focus-outline();
+            // TODO: switch back to mixin .focus-outline() when z-index is removed in the scope of NUI-6103
+            outline: none;            
+            box-shadow: inset 0 0 0 @nui-line-medium fade(@nui-color-selected-contrast, 50%);
             border-radius: @nui-radius-default;
         }
     }
