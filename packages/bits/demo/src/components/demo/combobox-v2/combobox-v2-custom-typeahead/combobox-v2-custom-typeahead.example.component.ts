@@ -41,7 +41,7 @@ export class ComboboxV2CustomTypeaheadExampleComponent {
     // For the sake of the example, the filtering is quite simple.
     // It filters out the combobox items depending on the user input.
     private filterItems(value: string): IExampleItem[] {
-        const filterValue = value.toLowerCase() || "";
+        const filterValue = value.toLowerCase();
 
         return this.items.filter(option => option.name.toLowerCase().includes(filterValue));
     }
