@@ -5,16 +5,18 @@ import {
     ContentChildren,
     ElementRef,
     HostBinding,
+    HostListener,
     Input,
     NgZone,
     OnDestroy,
     QueryList,
     ViewChild,
+    ViewChildren,
     ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
-import { merge, Subscription } from "rxjs";
-import { debounceTime, take } from "rxjs/operators";
+import { merge, Subject, Subscription } from "rxjs";
+import { debounceTime, take, takeUntil } from "rxjs/operators";
 
 import { LoggerService } from "../../services/log-service";
 
@@ -26,6 +28,9 @@ import {
 } from "./public-api";
 import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
+import { MenuComponent } from "../menu";
+import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
+import { ButtonComponent } from "../button/button.component";
 
 /**
  * NUI wrapper for toolbar control. It groups toolbar items (nui-toolbar-item),
@@ -44,6 +49,7 @@ import { ToolbarItemComponent } from "./toolbar-item.component";
     },
     styleUrls: ["./toolbar.component.less"],
     encapsulation: ViewEncapsulation.None,
+    providers: [ToolbarKeyboardService],
 })
 
 export class ToolbarComponent implements AfterViewInit, OnDestroy {
@@ -71,6 +77,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild("toolbarContainer")
     public toolbarContainer: ElementRef;
+    @ViewChild("menuComponent") public menu: MenuComponent;
+    @ViewChildren("toolbarButtons") public toolbarButtons: QueryList<ButtonComponent>;
     public commandGroups: IToolbarGroupContent[] = [];
     public menuGroups: IToolbarGroupContent[] = [];
     public showMenu = true;
@@ -79,13 +87,21 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     public moreTitle = $localize `More`;
 
     private lastChildBorder: number;
+    private toolbarItems: HTMLElement[] = [];
     private childrenSubscription: Subscription;
     private destructiveItems: any[];
+    private destroy$: Subject<void> = new Subject<void>();
 
     constructor(public element: ElementRef,
                 private changeDetector: ChangeDetectorRef,
                 private logger: LoggerService,
-                private ngZone: NgZone) {}
+                private ngZone: NgZone,
+                private keyboardService: ToolbarKeyboardService) {}
+
+    @HostListener("keydown", ["$event"])
+    onKeyDown(event: KeyboardEvent): void {
+        this.keyboardService.onKeyDown(event);
+    }
 
     ngAfterViewInit() {
         this.splitToolbarItems();
@@ -109,10 +125,19 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                 }
             }
         });
+        this.subscribeToToolbarStepsChanges();
     }
 
     ngOnDestroy() {
         this.childrenSubscription.unsubscribe();
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
+
+    public onClickToolbarBtn(event: MouseEvent, commandItem: ToolbarItemComponent): void {
+        event.stopPropagation();
+        (event.target as HTMLButtonElement).focus();
+        commandItem.actionDone.emit();
     }
 
     public moveToolbarItems() {
@@ -182,5 +207,24 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
 
     public get destructiveIsLastItem() {
         return this.groups.last.items.last.displayStyle !== ToolbarItemDisplayStyle.destructive;
+    }
+
+    private subscribeToToolbarStepsChanges(): void {
+        this.toolbarButtons.changes
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((buttons: QueryList<ButtonComponent>) => {
+                this.toolbarItems = buttons.toArray().slice().map(b => b["el"].nativeElement as HTMLElement);
+
+                if (this.menu) {
+                    // In case all buttons are hidden within the Commands menu we want this menu to receive the focus
+                    // If at least one button is visible in the toolbar it should receive the focus first upon navigating onto the toolbar
+                    const tabIndex = buttons.length ? "-1" : "0";
+
+                    this.menu.menuToggle.nativeElement.setAttribute("tabindex", tabIndex);
+                    this.toolbarItems.push(this.menu.menuToggle.nativeElement);
+                }
+
+                this.keyboardService.setToolbarItems(this.toolbarItems);
+            });
     }
 }

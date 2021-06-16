@@ -13,6 +13,9 @@ import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
 import { ToolbarSplitterComponent } from "./toolbar-splitter.component";
 import { ToolbarComponent } from "./toolbar.component";
+import { KEYBOARD_CODE } from "../../constants";
+import { ToolbarKeyboardService } from "./toolbar-keyboard.service";
+import { MenuComponent } from "../menu";
 
 @Component({
     selector: "nui-test-cmp",
@@ -52,6 +55,7 @@ describe("components >", () => {
                     ToolbarGroupComponent,
                     ToolbarSplitterComponent,
                     IconComponent,
+                    MenuComponent,
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
                 providers: [
@@ -59,6 +63,7 @@ describe("components >", () => {
                     LoggerService,
                     { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
                     { provide: TRANSLATIONS, useValue: "" },
+                    ToolbarKeyboardService,
                 ],
             });
         });
@@ -153,6 +158,21 @@ describe("components >", () => {
             it("should return nothing when selected 0 items", () => {
                 component.selectedItems = {} as IToolbarSelectionState;
                 expect(component.handleSelectionState()).toBeUndefined();
+            });
+        });
+
+        describe("toolbarKeyboardService >", () => {
+            const keyboardEventMock: KeyboardEvent = {
+                code: KEYBOARD_CODE.ARROW_LEFT,
+                preventDefault: () => {},
+            } as KeyboardEvent;
+
+            it("should call keyboardService 'onKeyDown' method", () => {
+                const spy = spyOn(component["keyboardService"], "onKeyDown");
+
+                component.onKeyDown(keyboardEventMock);
+
+                expect(spy).toHaveBeenCalledWith(keyboardEventMock);
             });
         });
     });
