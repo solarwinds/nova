@@ -126,6 +126,7 @@ export { SrlcIndicatorComponent } from "./lib/docs/srlc-indicator/srlc-indicator
 
 
 // Pipes
+export { GetStep } from "./pipes/get-step.pipe";
 export { HighlightPipe } from "./pipes/highlight.pipe";
 export { LimitToPipe } from "./pipes/limit-to.pipe";
 export { TimeFrameFormatPipe } from "./lib/time-frame-picker/time-frame-format.pipe";

@@ -15,6 +15,7 @@ import { SelectorService } from "../lib/selector/selector.service";
 import { LimitToPipe } from "../pipes/limit-to.pipe";
 import { UnitConversionPipe } from "../pipes/unit-conversion.pipe";
 import { HighlightPipe } from "../pipes/highlight.pipe";
+import { GetStep } from "../pipes/get-step.pipe";
 import { DomUtilService } from "../services/dom-util.service";
 import { EdgeDetectionService } from "../services/edge-detection.service";
 import { EventBusService } from "../services/event-bus.service";
@@ -78,6 +79,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         SetFocusDirective,
         LimitToPipe,
         HighlightPipe,
+        GetStep,
         UnitConversionPipe,
         ZoomContentDirective,
     ],
@@ -93,6 +95,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         SetFocusDirective,
         UnitConversionPipe,
         HighlightPipe,
+        GetStep,
         ZoomContentDirective,
     ],
     entryComponents: [
