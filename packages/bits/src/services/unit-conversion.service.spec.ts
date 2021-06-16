@@ -104,7 +104,7 @@ describe("services >", () => {
                     });
             });
 
-            it("should handle with decimal places", () => {
+            it("should handle a value with only decimals", () => {
                 expect(subject.convert(0.314))
                     .toEqual({
                         value: "0.3",
