@@ -62,8 +62,6 @@ export class DataManager {
             if (chartSeriesSet.length) {
                 const calculatedDomain = scale.domainCalculator(chartSeriesSet, scaleKey, scale);
                 domain(scale, calculatedDomain);
-            } else if (scale.isContinuous()) {
-                domain(scale, EMPTY_CONTINUOUS_DOMAIN);
             }
         }
     }
