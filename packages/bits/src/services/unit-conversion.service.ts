@@ -33,7 +33,13 @@ export class UnitConversionService {
             resultValue = value / Math.pow(base, Math.floor(resultOrder));
 
             if (value > 0 && value < 1) {
-                this.logger.warn("unit conversion service does not support conversion to negative order of magnitude");
+                // this.logger.warn("unit conversion service does not support conversion to negative order of magnitude");
+                return {
+                    value: value.toFixed(scale),
+                    scientificNotation: value.toExponential(scale),
+                    order: 0,
+                    scale,
+                }
             }
 
             // fix the precision edge case
@@ -55,6 +61,7 @@ export class UnitConversionService {
         return {
             value: strValue,
             order: resultOrder,
+            scientificNotation: value?.toExponential(scale),
             scale,
         };
     }
@@ -72,10 +79,21 @@ export class UnitConversionService {
     public getFullDisplay(conversion: IUnitConversionResult, unit: UnitOption, plusSign = false, nanDisplay = "---"): string {
         const isValidNumber = this.isValidNumber(conversion.value);
         const spacing = unit !== "generic" && isValidNumber ? " " : "";
-        const unitDisplay = isValidNumber ? this.getUnitDisplay(conversion, unit) : "";
+        let unitDisplay = isValidNumber ? this.getUnitDisplay(conversion, unit) : "";
 
         // The generic unit is not currently i18n friendly
         const localizeValue = unit !== "generic";
+
+        if (!unitDisplay && !(conversion.value === "NaN") && conversion.order ) {
+            const tempObj = {
+                ...conversion,
+            };
+            tempObj.order = 0;
+            unitDisplay = this.getUnitDisplay(tempObj, unit)
+            const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
+
+            return `${prefix}${conversion.scientificNotation}${spacing}${unitDisplay}`;
+        }
         return `${this.getValueDisplay(conversion, plusSign, nanDisplay, localizeValue)}${spacing}${unitDisplay}`;
     }
 
