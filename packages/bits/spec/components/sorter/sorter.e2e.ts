@@ -5,6 +5,7 @@ import {
     IconAtom,
     SorterAtom,
 } from "../public_api";
+import {browser, protractor} from "protractor";
 
 describe("USERCONTROL Sorter >", () => {
     let sorter: SorterAtom;
@@ -63,5 +64,39 @@ describe("USERCONTROL Sorter >", () => {
             });
         });
 
+        describe("key navigation >", () => {
+            it("should close sorter menu when navigating from it by TAB key", async () => {
+                await sorter.click();
+                expect(await sorter.isPopupDisplayed()).toBe(true);
+                await browser.actions().sendKeys(protractor.Key.TAB).perform();
+                expect(await sorter.isPopupDisplayed()).toBe(false);
+            });
+            // TODO Change this test in the scope of NUI-
+            it("should close sorter menu by ESCAPE key, open by ENTER, and select first item", async () => {
+                await sorter.click();
+                expect(await sorter.isPopupDisplayed()).toBe(true);
+                await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+                expect(await sorter.isPopupDisplayed()).toBe(false);
+                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                expect(await sorter.getCurrentValue()).toBe("Title");
+            });
+            // TODO Change this test in the scope of NUI-
+            it("should select sort items by keyboard", async () => {
+                await sorter.click();
+                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                expect(await sorter.getCurrentValue()).toBe("Director");
+                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
+                await browser.actions().sendKeys(protractor.Key.ARROW_UP).perform();
+                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                expect(await sorter.getCurrentValue()).toBe("Title");
+            });
+        });
     });
 });

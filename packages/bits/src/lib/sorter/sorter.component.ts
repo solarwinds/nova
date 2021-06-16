@@ -9,6 +9,7 @@ import {
     OnDestroy,
     OnInit,
     Output,
+    Renderer2,
     SimpleChanges,
     ViewChild,
     ViewEncapsulation,
@@ -24,8 +25,9 @@ import { LoggerService } from "../../services/log-service";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-
 import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
+import { SorterKeyControlService } from "./sorter-key-control.service";
+import { MenuPopupComponent } from "../menu";
 
 // <example-url>./../examples/index.html#/sorter</example-url>
 
@@ -37,6 +39,7 @@ import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
     templateUrl: "./sorter.component.html",
     styleUrls: ["./sorter.component.less"],
     encapsulation: ViewEncapsulation.None,
+    providers: [SorterKeyControlService],
 })
 
 export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit, IFilterPub {
@@ -56,6 +59,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
     @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    @ViewChild(MenuPopupComponent) public menuPopup: MenuPopupComponent;
 
     // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
     // before any new search is performed
@@ -76,9 +80,12 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         [SorterDirection.ascending]: "arrow-up",
         [SorterDirection.descending]: "arrow-down",
     };
+    private menuKeyControlListeners: Function[] = [];
 
     constructor(private logger: LoggerService,
-                private el: ElementRef) {}
+                private sorterKeyControlService: SorterKeyControlService,
+                private elRef: ElementRef,
+                private renderer: Renderer2) {}
 
     public ngOnInit() {
         this.onAppendToBodyChange(this.appendToBody);
@@ -133,6 +140,13 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
             .subscribe(_ => this.overlay.hide());
 
         this.updateOverlayWidth();
+        this.setKeyboardManagerServiceData();
+        this.initKeyboardManager();
+        this.menuKeyControlListeners.push(
+            this.renderer.listen(this.elRef.nativeElement, "keydown", (event: KeyboardEvent) => {
+                this.sorterKeyControlService.handleKeydown(event);
+            })
+        )
     }
 
     public select(item: IMenuItem) {
@@ -193,8 +207,16 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     }
 
     public ngOnDestroy() {
+        this.menuKeyControlListeners.forEach(listener => listener());
         this.onDestroy$.next();
         this.onDestroy$.complete();
+    }
+
+    public toggleSorterMenu(): void {
+        if (!this.overlay.showing) {
+            this.sorterKeyControlService.announceDropdown(true);
+        }
+        this.overlay.toggle();
     }
 
     private initSelectedItem() {
@@ -234,5 +256,14 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
     private onAppendToBodyChange(appendToBody: boolean): void {
         this.customContainer = appendToBody ? undefined : this.popupArea;
+    }
+
+    private setKeyboardManagerServiceData(): void {
+        this.sorterKeyControlService.menuItems = this.menuPopup.menuItems;
+        this.sorterKeyControlService.overlay = this.overlay;
+    }
+
+    private initKeyboardManager() {
+        this.sorterKeyControlService.initKeyboardManager();
     }
 }
