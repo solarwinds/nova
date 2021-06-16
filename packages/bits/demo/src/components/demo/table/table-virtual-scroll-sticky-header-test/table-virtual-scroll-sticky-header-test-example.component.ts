@@ -11,6 +11,7 @@ import { map, startWith, switchMap, tap } from "rxjs/operators";
 
 interface IRandomUserTableModel {
     no: number;
+    icon: string;
     nameFirst: string;
     nameLast: string;
     city: string;
@@ -18,12 +19,12 @@ interface IRandomUserTableModel {
 }
 
 @Component({
-    selector: "nui-table-virtual-scroll-sticky-header-example",
-    templateUrl: "./table-virtual-scroll-sticky-header-example.component.html",
+    selector: "nui-table-virtual-scroll-sticky-header-test-example",
+    templateUrl: "./table-virtual-scroll-sticky-header-test-example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ClientSideDataSource],
 })
-export class TableVirtualScrollStickyHeaderExampleComponent implements AfterViewInit {
+export class TableVirtualScrollStickyHeaderTestExampleComponent implements AfterViewInit {
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
     // Note: Used only for demo purposes
     @ViewChild(TableStickyHeaderDirective) public stickyHeaderDirective: TableStickyHeaderDirective;
@@ -33,7 +34,7 @@ export class TableVirtualScrollStickyHeaderExampleComponent implements AfterView
     public placeholderItems: undefined[] = [];
     public visibleItems$: Observable<IRandomUserTableModel[]>;
     // The dynamically changed array of items to render by the table
-    public displayedColumns: string[] = ["no", "nameFirst", "nameLast", "city", "postcode"];
+    public displayedColumns: string[] = ["no", "icon", "nameFirst", "nameLast", "city", "postcode"];
 
     public makeSticky: boolean = true;
     public itemSize: number = 40;
@@ -94,6 +95,7 @@ function generateUsers(length: number): IRandomUserTableModel[] {
             city: sample(CITIES) || CITIES[0],
             nameFirst: personName,
             nameLast: "UnknownLast",
+            icon: sample(["status_up", "status_unplugged"]) || "status_up",
         });
     });
 }
