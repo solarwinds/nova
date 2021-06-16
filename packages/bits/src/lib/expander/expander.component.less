@@ -6,7 +6,9 @@
 
     &__header {
         &:focus {
-            .focus-outline();
+            // TODO: once the NUI-6103 is fixed, please use the .focus-outline() instead of lines below
+            outline: none;
+            box-shadow: 0 0 0 @nui-line-medium fade(@nui-color-selected-contrast, 50%);
         }
     }
 
