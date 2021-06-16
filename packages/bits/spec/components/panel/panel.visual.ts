@@ -67,6 +67,8 @@ describe(`Visual tests: ${name}`, () => {
         await expanders.detailsBasicPanel.click();
         await expanders.detailsCustomSizes.click();
         await expanders.detailsHoverable.click();
+
+        await camera.say.cheese(`Expanded Closable Panel with embedded footer and header`);
         await expanders.detailsClosable.click();
 
         // Toggling outer panel, because its style previously overwritten styles of inner panel

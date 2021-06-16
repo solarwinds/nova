@@ -29,6 +29,7 @@ import {
     PanelResizeExampleComponent,
     PanelSizeExampleComponent,
     PanelVisualTestComponent,
+    PanelTestComponent,
 } from "./index";
 
 const routes = [
@@ -45,6 +46,15 @@ const routes = [
     {
         path: "panel-visual-test",
         component: PanelVisualTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "panel-test",
+        component: PanelTestComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -126,6 +136,7 @@ const routes = [
         PanelResizeExampleComponent,
         PanelCollapseTopOrientedExampleComponent,
         PanelVisualTestComponent,
+        PanelTestComponent,
     ],
     providers: [
         {

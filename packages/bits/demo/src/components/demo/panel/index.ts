@@ -14,3 +14,4 @@ export * from "./panel-nested/panel-nested.example.component";
 export * from "./panel-size/panel-size.example.component";
 export * from "./panel-collapse-top-oriented/panel-collapse-top-oriented.example.component";
 export * from "./panel-visual-test/panel-visual-test.component";
+export * from "./panel-test/panel-test.component";
