@@ -41,6 +41,7 @@ describe(`Visual tests: ${name}`, () => {
             columnResize: element(by.id("nui-visual-table-column-size-summary")),
             rowSelection: element(by.id("nui-visual-table-row-selection-summary")),
             selectPinnedHeader: element(by.id("nui-visual-table-select-pinned-header-summary")),
+            virtualScrollStickyHeader: element(by.id("nui-visual-table-virtual-scroll-sticky-header-summary")),
         };
 
         const firstHeaderCell = selectedRowsTable.getCell(0, 0);
@@ -88,6 +89,10 @@ describe(`Visual tests: ${name}`, () => {
         await browser.executeScript("document.getElementById('table-select-pinned-header').getElementsByClassName('nui-table__container')[0].scrollTop = '20'");
         await camera.say.cheese("Active checkbox under pinned header");
         await expanders.selectPinnedHeader.click();
+
+        await expanders.virtualScrollStickyHeader.click();
+        await camera.say.cheese("Virtual Scroll Table with Sticky Header");
+        await expanders.virtualScrollStickyHeader.click();
 
         await camera.turn.off();
     }, 300000);

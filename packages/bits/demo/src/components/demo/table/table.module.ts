@@ -39,6 +39,7 @@ import {
     TableSearchWithSelectAndPaginationComponent,
     TableSelectableToggleExampleComponent,
     TableSelectExampleComponent,
+    TableSelectPinnedHeaderComponent,
     TableSortingExampleComponent,
     TableTestComponent,
     TableVirtualScrollRealApiExampleComponent,
@@ -48,7 +49,6 @@ import {
     TableVirtualScrollSelectStickyHeaderExampleComponent,
     TableVirtualScrollStepsAndButtonExampleComponent,
     TableVirtualScrollStickyHeaderExampleComponent,
-    TableSelectPinnedHeaderComponent,
     TableVisualTestComponent,
 } from "./index";
 
