@@ -37,4 +37,5 @@ export enum KEYBOARD_CODE {
     SHIFT_RIGHT = "ShiftRight",
     SPACE = "Space",
     TAB = "Tab",
+    DELETE = "Delete",
 }
