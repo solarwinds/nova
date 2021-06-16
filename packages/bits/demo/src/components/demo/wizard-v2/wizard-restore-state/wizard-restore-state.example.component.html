@@ -7,7 +7,6 @@
           [formGroup]="form"
           *ngIf="form">
         <nui-wizard-horizontal
-            linear
             [state]="state"
             (finished)="saveState($event)"
         >

@@ -1,6 +1,6 @@
 <div nui-busy [busy]="busy">
     <form [formGroup]="form" *ngIf="form">
-        <nui-wizard-horizontal linear #wizard>
+        <nui-wizard-horizontal #wizard>
             <nui-wizard-step-v2 label="Person Details"
                                 formGroupName="personDetails"
                                 [stepControl]="form.get(['personDetails'])">
