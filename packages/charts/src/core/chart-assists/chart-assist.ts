@@ -1,13 +1,18 @@
 import each from "lodash/each";
 import keyBy from "lodash/keyBy";
 import values from "lodash/values";
-import { Observable, of, Subject, Subscription } from "rxjs";
-import { filter, map, switchMap, takeUntil } from "rxjs/operators";
+import {Observable, of, Subject, Subscription} from "rxjs";
+import {filter, map, switchMap, takeUntil} from "rxjs/operators";
 
-import { DESTROY_EVENT, HIGHLIGHT_SERIES_EVENT, INTERACTION_DATA_POINTS_EVENT, MOUSE_ACTIVE_EVENT } from "../../constants";
-import { RenderState } from "../../renderers/types";
-import { EventBus } from "../common/event-bus";
-import { defaultMarkerProvider, defaultPalette } from "../common/palette/default-providers";
+import {
+    DESTROY_EVENT,
+    HIGHLIGHT_SERIES_EVENT,
+    INTERACTION_DATA_POINTS_EVENT,
+    MOUSE_ACTIVE_EVENT
+} from "../../constants";
+import {RenderState} from "../../renderers/types";
+import {EventBus} from "../common/event-bus";
+import {defaultMarkerProvider, defaultPalette} from "../common/palette/default-providers";
 import {
     IAccessors,
     IChart,
@@ -24,7 +29,13 @@ import {
     IValueProvider,
 } from "../common/types";
 
-import { ChartAssistEventType, ChartAssistRenderStateData, IChartAssist, IChartAssistEvent, IRenderStatesIndex } from "./types";
+import {
+    ChartAssistEventType,
+    ChartAssistRenderStateData,
+    IChartAssist,
+    IChartAssistEvent,
+    IRenderStatesIndex
+} from "./types";
 
 /** @ignore */
 const chartAssistSeriesDefaults: Partial<IChartAssistSeries<IAccessors>> = {
@@ -158,7 +169,10 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
         if (updateLegend) {
             this.legendInteractionAssist.update(processedSeriesSet);
         }
-        const seriesSet = processedSeriesSet.map(s => this.populateProperties(s));
+        // add render states to the series for use in the chart
+        const seriesSet = processedSeriesSet.map(s => Object.assign(
+            {renderState: this.renderStatesIndex[s.id]?.state},
+            s));
 
         this.chart.update(seriesSet);
 
@@ -295,12 +309,6 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
 
     private publishRenderStates(): void {
         this.chart.setSeriesStates(this.legendInteractionAssist.getSeriesStates());
-    }
-
-    private populateProperties(chartSeries: IChartSeries<IAccessors>): IChartAssistSeries<IAccessors> {
-        return Object.assign(
-            { renderState: this.renderStatesIndex[chartSeries.id]?.state},
-            chartSeries);
     }
 }
 
