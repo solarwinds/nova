@@ -83,17 +83,20 @@ export class UnitConversionService {
         // The generic unit is not currently i18n friendly
         const localizeValue = unit !== "generic";
 
+        let displayValue: string;
+
         if (!unitDisplay && !(conversion.value === "NaN") && conversion.order ) {
             const tempObj = {
                 ...conversion,
             };
             tempObj.order = 0;
             unitDisplay = this.getUnitDisplay(tempObj, unit)
-            const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
 
-            return `${prefix}${conversion.scientificNotation}${spacing}${unitDisplay}`;
+            displayValue= this.getScientificDisplay(conversion, plusSign, nanDisplay);
+        } else {
+            displayValue = this.getValueDisplay(conversion, plusSign, nanDisplay, localizeValue)
         }
-        return `${this.getValueDisplay(conversion, plusSign, nanDisplay, localizeValue)}${spacing}${unitDisplay}`;
+        return `${displayValue}${spacing}${unitDisplay}`;
     }
 
     /**
@@ -131,5 +134,21 @@ export class UnitConversionService {
 
     private isValidNumber(value: any): boolean {
         return !isNaN(parseFloat(value)) && isFinite(parseInt(value, 10));
+    }
+    /**
+     * Gets the converted value display string in scientific notation
+     *
+     * @param conversion The result of an invocation of this service's convert method
+     * @param plusSign Whether to prepend the display string with a '+'
+     * @param nanDisplay The string to display in case the conversion result is NaN or Infinity
+     *
+     * @returns {string} The converted value display string in scientific notation
+     */
+    public getScientificDisplay(conversion: IUnitConversionResult, plusSign = false, nanDisplay = "---"): string {
+        if (!this.isValidNumber(conversion.value)) {
+            return nanDisplay;
+        }
+
+        return `${conversion.scientificNotation}`;
     }
 }
