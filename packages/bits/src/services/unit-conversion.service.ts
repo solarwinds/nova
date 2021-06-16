@@ -32,8 +32,7 @@ export class UnitConversionService {
             resultOrder = Math.floor(Math.log(Math.abs(value)) / Math.log(base));
             resultValue = value / Math.pow(base, Math.floor(resultOrder));
 
-            if (value > 0 && value < 1) {
-                // this.logger.warn("unit conversion service does not support conversion to negative order of magnitude");
+            if (Math.abs(value) > 0 && Math.abs(value) < 1) {
                 return {
                     value: value.toFixed(scale),
                     scientificNotation: value.toExponential(scale),
