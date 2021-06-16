@@ -60,7 +60,7 @@ export class UnitConversionService {
         return {
             value: strValue,
             order: resultOrder,
-            scientificNotation: value?.toExponential(scale),
+            scientificNotation: value?.toExponential(scale).toLocaleString(),
             scale,
         };
     }
