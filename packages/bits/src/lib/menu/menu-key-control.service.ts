@@ -156,7 +156,6 @@ export class MenuKeyControlService implements OnDestroy {
         }
 
         if (event.code === KEYBOARD_CODE.ARROW_DOWN) {
-            event.preventDefault();
             this.popup.toggleOpened(event);
         }
     }
