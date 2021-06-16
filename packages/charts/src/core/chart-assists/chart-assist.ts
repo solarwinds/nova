@@ -171,7 +171,7 @@ export class ChartAssist<T = IAccessors> implements IChartAssist {
         }
         // add render states to the series for use in the chart
         const seriesSet = processedSeriesSet.map(s => Object.assign(
-            {renderState: this.renderStatesIndex[s.id]?.state},
+            { renderState: this.renderStatesIndex[s.id]?.state },
             s));
 
         this.chart.update(seriesSet);
