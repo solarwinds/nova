@@ -44,7 +44,7 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
     
 
     ngOnInit(): void {
-        // we should be checked the validity of previous steps
+        // Checking the validity of previous steps by default.
         this.linear = true;
     }
 }
