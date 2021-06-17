@@ -1,4 +1,4 @@
-import { Injectable, QueryList } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { MenuItemBaseComponent, MenuPopupComponent } from "../menu";
 import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
@@ -10,20 +10,19 @@ const scrollOption = { block: "nearest" } as ScrollIntoViewOptions;
 export class TimePickerKeyboardService {
     public overlay: OverlayComponent;
     private popup: MenuPopupComponent;
-    private menuItems: QueryList<MenuItemBaseComponent>;
+    private menuItems: MenuItemBaseComponent[];
     private keyboardEventsManager: ActiveDescendantKeyManager<MenuItemBaseComponent>;
     private menuTrigger: HTMLElement;
 
     initService(
-        items: QueryList<MenuItemBaseComponent>,
         popup: MenuPopupComponent,
         overlay: OverlayComponent,
         trigger: HTMLElement
     ): void {
         this.overlay = overlay;
         this.popup = popup;
-        this.menuItems = items;
-        this.keyboardEventsManager = new ActiveDescendantKeyManager<MenuItemBaseComponent>(items);
+        this.menuItems = popup.menuItems.toArray();
+        this.keyboardEventsManager = new ActiveDescendantKeyManager<MenuItemBaseComponent>(this.menuItems);
         this.keyboardEventsManager.setActiveItem(this.getSelectedIndex());
         this.menuTrigger = trigger;
     }

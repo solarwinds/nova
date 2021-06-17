@@ -154,7 +154,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
             .subscribe(_ => this.overlay.hide());
 
         this.initPopupUtilities();
-        this.keyboardService.initService(this.popup.menuItems, this.popup, this.overlay, this.menuTrigger.nativeElement);
+        this.keyboardService.initService(this.popup, this.overlay, this.menuTrigger.nativeElement);
         this.cdr.detectChanges();
     }
 
