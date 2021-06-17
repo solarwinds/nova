@@ -53,7 +53,7 @@ export class SorterAtom extends Atom {
     /**
      * @returns {string} The value displayed in sorter.
      */
-    public getCurrentValue = async (): Promise<string> => this.getMainTitleElement().getText();
+    public getCurrentValue = async (): Promise<string> => await this.getMainTitleElement().getText();
 
     public getLabelElement(): ElementFinder { return super.getElement().element(by.className("nui-sorter__label")); }
 

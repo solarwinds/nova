@@ -25,12 +25,17 @@ import { RepeatComponent } from "../repeat/repeat.component";
 
 import { ISortedItem, SorterDirection } from "./public-api";
 import { SorterComponent } from "./sorter.component";
+import {SorterKeyboardService} from "./sorter-keyboard.service";
+import {MenuPopupComponent} from "../menu";
+
 
 describe("components >", () => {
     describe("sorter >", () => {
         let fixture: ComponentFixture<SorterComponent>;
         let component: SorterComponent;
         let itemsSource: IMenuItem[];
+        let spy: jasmine.Spy;
+        let sorterKeyboardService: SorterKeyboardService;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -52,6 +57,7 @@ describe("components >", () => {
                     DomUtilService,
                     LoggerService,
                     IconService,
+                    SorterKeyboardService,
                 ],
             });
             fixture = TestBed.createComponent(SorterComponent);
@@ -73,6 +79,9 @@ describe("components >", () => {
             component.sortDirection = SorterDirection.ascending;
             component.selectedItem = itemsSource[0].value;
             component.itemsSource = itemsSource;
+            component.menuPopup = TestBed.createComponent(MenuPopupComponent).componentInstance;
+            sorterKeyboardService = fixture.debugElement.injector.get(SorterKeyboardService);
+            spy = spyOn(sorterKeyboardService , "initKeyboardManager");
             component.ngOnChanges({ selectedItem: {} as SimpleChange, itemsSource: {} as SimpleChange });
             fixture.detectChanges();
         });
