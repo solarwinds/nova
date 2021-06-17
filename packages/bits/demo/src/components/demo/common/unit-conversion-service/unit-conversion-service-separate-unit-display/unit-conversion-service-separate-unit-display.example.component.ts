@@ -21,12 +21,13 @@ export class UnitConversionServiceSeparateUnitDisplayExampleComponent implements
         this.num = num;
         const conversion: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Standard, 2);
         this.unitDisplay = this.unitConversionService.getUnitDisplay(conversion, "hertz");
-        // An undefined getUnitDisplay return value indicates the input value was too large to be converted,
-        // so the base unit and scientific notation can be used as fallbacks.
+
         if(this.unitDisplay) {
-            this.unitDisplay = this.unitConversionService.getUnitDisplayBaseValue("hertz");
             this.valueDisplay = this.unitConversionService.getValueDisplay(conversion);
         } else {
+            // An undefined getUnitDisplay return value indicates the input value was too large to be converted,
+            // so the base unit and scientific notation can be used as fallbacks.
+            this.unitDisplay = this.unitConversionService.getUnitDisplayBaseValue("hertz");
             this.valueDisplay = this.unitConversionService.getScientificDisplay(conversion);
         }
     }
