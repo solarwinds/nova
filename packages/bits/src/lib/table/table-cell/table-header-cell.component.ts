@@ -57,9 +57,13 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         return this.columnDef.type === "icon";
     }
 
+    /**
+     * Conditionally applies a fixed-width marker class for letting external entities
+     * know whether manual updates to the cell's width are allowed.
+     */
     @HostBinding(`class.${FIXED_WIDTH_CLASS}`)
     get fixedWidth(): boolean {
-        return this.columnDef.type === "icon";
+        return this.isIconCell;
     }
 
     @HostBinding("class.nui-table__table-header-cell--sortable--dark")
