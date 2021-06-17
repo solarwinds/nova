@@ -1,0 +1,166 @@
+import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
+import { MenuItemBaseComponent, MenuPopupComponent } from "../menu";
+import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
+import { KEYBOARD_CODE } from "../../constants";
+
+const itemsMock = [
+
+] as MenuItemBaseComponent[];
+
+const popupMock = {
+    menuItems: {
+        toArray: () => [] as any,
+    },
+} as MenuPopupComponent;
+
+const overlayMock = {
+    showing: false,
+    show: () => {},
+} as OverlayComponent;
+
+const menuTriggerMock = {
+
+} as HTMLElement;
+
+const keyBoardEventFactory = (code: KEYBOARD_CODE): KeyboardEvent => (
+    {
+        preventDefault: () => {},
+        code,
+    } as KeyboardEvent
+);
+
+describe("Services >", () => {
+    describe("TimePickerKeyboardService", () => {
+        const service = new TimePickerKeyboardService();
+
+        beforeEach(() => {
+            service.initService(popupMock, overlayMock, menuTriggerMock);
+        });
+
+        describe("onKeyDown", () => {
+            afterAll(() => {
+                (overlayMock as any).showing = false;
+            });
+
+            it("should call 'handleClosedMenu' if overlay not showing", () => {
+                const spy = spyOn(service, "handleClosedMenu" as never);
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+
+                service.onKeyDown(event);
+                expect(spy).toHaveBeenCalledWith(event as never);
+            });
+
+            it("should call 'handleOpenedMenu' if overlay not showing", () => {
+                const spy = spyOn(service, "handleOpenedMenu" as never);
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                (overlayMock as any).showing = true;
+
+                service.onKeyDown(event);
+                expect(spy).toHaveBeenCalledWith(event as never);
+            });
+        });
+
+        describe("handleOpenedMenu", () => {
+            it("should call 'hideMenu' on ESCAPE button", () => {
+                const spy = spyOn(service, "hideMenu" as never);
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ESCAPE);
+
+                service["handleOpenedMenu"](event);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should call 'navigateByArrow' on DOWN and UP arrow buttons", () => {
+                const spy = spyOn(service, "navigateByArrow" as never);
+                const pressDown = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                const pressUp = keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP);
+
+                service["handleOpenedMenu"](pressDown);
+                expect(spy).toHaveBeenCalledWith(pressDown as never);
+
+                service["handleOpenedMenu"](pressUp);
+                expect(spy).toHaveBeenCalledWith(pressUp as never);
+            });
+
+            it("should call event.preventDefault on Enter button", () => {
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ENTER);
+                const spy = spyOn(event, "preventDefault" as never);
+
+                service["handleOpenedMenu"](event);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should call doAction on press ENTER button", () => {
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ENTER);
+                const activeItem = { doAction: (even: any) => {} };
+                const spy = spyOn(activeItem, "doAction");
+
+                spyOnProperty(service["keyboardEventsManager"], "activeItem").and.returnValue(activeItem);
+
+                service["handleOpenedMenu"](event);
+                expect(spy).toHaveBeenCalled();
+            });
+        });
+
+        describe("handleClosedMenu", () => {
+            it("should call 'event.PreventDefault on press arrowDown key", () => {
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                const spy = spyOn(event, "preventDefault");
+
+                service["handleClosedMenu"](event);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should call 'overlay.show() on press arrowDown key", () => {
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                const spy = spyOn(overlayMock, "show");
+
+                service["handleClosedMenu"](event);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should scrollIntoView on press arrowDown key", () => {
+                const activeItem = {
+                    menuItem: {
+                        nativeElement: {
+                            scrollIntoView: (event: any) => {},
+                        },
+                    },
+                };
+                const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                const spy = spyOn(activeItem.menuItem.nativeElement, "scrollIntoView");
+
+                spyOnProperty(service["keyboardEventsManager"], "activeItem").and.returnValue(activeItem);
+                service["handleClosedMenu"](event);
+                expect(spy).toHaveBeenCalledWith({ block: "center" });
+            });
+        });
+
+        describe("navigateByArrow", () => {
+            it("should call preventDefault", () => {
+                const pressDown = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                const spy = spyOn(pressDown, "preventDefault" as never);
+
+                service["navigateByArrow"](pressDown);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should call navigateOnLast on press arrowUp and if index = 0", () => {
+                const pressUp = keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP);
+                const spy = spyOn(service, "navigateOnLast" as never);
+                spyOnProperty(service["keyboardEventsManager"], "activeItemIndex").and.returnValue(0);
+
+                service["navigateByArrow"](pressUp);
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should call navigateOnFirst on press arrowDown if index on last item", () => {
+                const pressDown = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                const spy = spyOn(service, "navigateOnFirst" as never);
+                spyOnProperty(service["keyboardEventsManager"], "activeItemIndex").and.returnValue(0);
+
+                service["navigateByArrow"](pressDown);
+                expect(spy).toHaveBeenCalled();
+            });
+        });
+    });
+});
