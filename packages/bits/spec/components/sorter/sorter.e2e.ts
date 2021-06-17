@@ -85,14 +85,11 @@ describe("USERCONTROL Sorter >", () => {
             // TODO Change this test in the scope of NUI-6132
             it("should select sort items by keyboard", async () => {
                 await sorter.click();
-                await Helpers.pressKey(Key.ARROW_DOWN);
-                await Helpers.pressKey(Key.ARROW_DOWN);
-                await Helpers.pressKey(Key.ARROW_DOWN);
+                await Helpers.pressKey(Key.ARROW_DOWN, 3);
                 await Helpers.pressKey(Key.ENTER);
                 expect(await sorter.getCurrentValue()).toBe("Director");
                 await Helpers.pressKey(Key.ENTER);
-                await Helpers.pressKey(Key.ARROW_DOWN);
-                await Helpers.pressKey(Key.ARROW_DOWN);
+                await Helpers.pressKey(Key.ARROW_DOWN, 2);
                 await Helpers.pressKey(Key.ARROW_UP);
                 await Helpers.pressKey(Key.ENTER);
                 expect(await sorter.getCurrentValue()).toBe("Title");
