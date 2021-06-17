@@ -102,7 +102,6 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private handleOpenKeyDown(event: KeyboardEvent): void {
-        event.stopPropagation();
 
         if (event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP) {
             // passing the event to key manager so we get a change fired
