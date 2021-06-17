@@ -233,6 +233,11 @@ describe("services >", () => {
                     unit: "generic",
                     expectedValue: "1Sp",
                 }, {
+                    name: "1000^11 as 1Sp",
+                    inputValue: 1000 ** 11,
+                    unit: "generic",
+                    expectedValue: "1.0e+33",
+                }, {
                     name: "0 B as 0 B",
                     inputValue: 0,
                     unit: "bytes",
