@@ -257,7 +257,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     }
 
     private initKeyboardService (): void {
-        this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems;
+        this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems.toArray();
         this.sorterKeyboardService.overlay = this.overlay;
         this.sorterKeyboardService.initKeyboardManager();
     }

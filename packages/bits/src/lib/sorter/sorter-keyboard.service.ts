@@ -10,7 +10,7 @@ import { ANNOUNCER_CLOSE_SORTER_LIST_MESSAGE, ANNOUNCER_OPEN_SORTER_LIST_MESSAGE
 @Injectable()
 export class SorterKeyboardService {
     public overlay: OverlayComponent;
-    public menuItems: QueryList<MenuItemBaseComponent>;
+    public menuItems: Array<MenuItemBaseComponent>;
     private keyboardEventsManager: ListKeyManager<MenuItemBaseComponent>;
 
     constructor(private liveAnnouncer: LiveAnnouncer) {}
