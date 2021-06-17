@@ -14,7 +14,7 @@ export class TimePickerKeyboardService {
     private keyboardEventsManager: ActiveDescendantKeyManager<MenuItemBaseComponent>;
     private menuTrigger: HTMLElement;
 
-    initService(
+    public initService(
         popup: MenuPopupComponent,
         overlay: OverlayComponent,
         trigger: HTMLElement
@@ -27,7 +27,7 @@ export class TimePickerKeyboardService {
         this.menuTrigger = trigger;
     }
 
-    onKeyDown(event: KeyboardEvent): void {
+    public onKeyDown(event: KeyboardEvent): void {
         this.overlay.showing ? this.handleOpenedMenu(event) : this.handleClosedMenu(event);
     }
 

@@ -168,7 +168,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     }
 
     @HostListener("focusout")
-    onFocusOut(): void {
+    public onFocusOut(): void {
         if (!this.overlay.showing || !document.activeElement) {
             return;
         }
