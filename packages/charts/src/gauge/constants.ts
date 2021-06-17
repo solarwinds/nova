@@ -1,6 +1,6 @@
 export const GAUGE_QUANTITY_SERIES_ID = "quantity";
-export const  GAUGE_REMAINDER_SERIES_ID = "remainder";
-export const  GAUGE_THRESHOLD_MARKERS_SERIES_ID = "threshold-markers";
+export const GAUGE_REMAINDER_SERIES_ID = "remainder";
+export const GAUGE_THRESHOLD_MARKERS_SERIES_ID = "threshold-markers";
 
 /**
  * @ignore
@@ -28,6 +28,14 @@ export enum StandardLinearGaugeThickness {
 export enum StandardGaugeThresholdMarkerRadius {
     Small = 3,
     Large = 4,
+}
+
+/**
+ * Standard values for gauge threshold marker radii
+ */
+export enum StandardGaugeThresholdId {
+    Warning = "warning",
+    Critical = "critical",
 }
 
 /**

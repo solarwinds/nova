@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { ComponentChanges, UnitConversionService } from "@nova-ui/bits";
+import { ComponentChanges } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -31,7 +31,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    constructor(private unitConversionService: UnitConversionService) { }
+    private labelsPlugin: DonutGaugeLabelsPlugin;
 
     public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>): void {
         if ((changes.size && !changes.size.firstChange) ||
@@ -43,6 +43,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.thresholds?.disableMarkers;
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
@@ -57,13 +58,11 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         const labelConfig: IGaugeLabelsPluginConfig = {
             clearance: { top: 40, right: 40, bottom: 40, left: 40 },
         };
-        this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin(labelConfig));
+
+        this.labelsPlugin = new DonutGaugeLabelsPlugin(labelConfig);
+        this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
-        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
-            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
-            return this.unitConversionService.getFullDisplay(conversion, "generic");
-        }, this.seriesSet);
 
         this.updateDonutSize();
         this.updateAnnularAttributes();

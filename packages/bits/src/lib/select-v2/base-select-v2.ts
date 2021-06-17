@@ -367,6 +367,8 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
             const selectedValue = this.options?.find(option => isEqual(option.value, modelValue));
             this._selectedOptions = selectedValue ? [selectedValue] : [];
         }
+
+        // TODO: Change to the line below to emit the input value 'this.inputElement?.nativeElement?.value' in the scope of the NUI-6131
         this.valueChanged.emit();
         this.setActiveItemOnDropdown();
     }

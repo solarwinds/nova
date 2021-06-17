@@ -1,15 +1,19 @@
 import { GaugeMode, StandardLinearGaugeThickness } from "../../../gauge/constants";
+import { DimensionConfig } from "./dimension-config";
 
 import { XYGridConfig } from "./xy-grid-config";
 
 /**
  * @ignore
- * Applies gauge specific grid configuration
+ * Assembles a linear-gauge-specific grid configuration
  *
  * @param mode vertical or horizontal
  * @param thickness the thickness of the gauge
  */
-export function linearGaugeGridConfig(mode: GaugeMode.Vertical | GaugeMode.Horizontal, thickness = StandardLinearGaugeThickness.Large): XYGridConfig {
+export function linearGaugeGridConfig(
+    mode: GaugeMode.Vertical | GaugeMode.Horizontal,
+    thickness = StandardLinearGaugeThickness.Large
+): XYGridConfig {
     const gridConfig = new XYGridConfig();
     gridConfig.interactionPlugins = false;
     gridConfig.disableRenderAreaHeightCorrection = true;
@@ -23,15 +27,8 @@ export function linearGaugeGridConfig(mode: GaugeMode.Vertical | GaugeMode.Horiz
     gridConfig.borders.left.visible = false;
     gridConfig.borders.bottom.visible = false;
 
-    gridConfig.dimension.padding.top = 0;
-    gridConfig.dimension.padding.right = 0;
-    gridConfig.dimension.padding.bottom = 0;
-    gridConfig.dimension.padding.left = 0;
-
-    gridConfig.dimension.margin.top = 0;
-    gridConfig.dimension.margin.right = 0;
-    gridConfig.dimension.margin.bottom = 0;
-    gridConfig.dimension.margin.left = 0;
+    // reset the dimension config with zero margins and zero padding
+    gridConfig.dimension = new DimensionConfig();
 
     if (mode === GaugeMode.Vertical) {
         gridConfig.dimension.autoWidth = false;

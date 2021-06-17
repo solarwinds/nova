@@ -15,6 +15,7 @@ import { BarRenderer } from "./bar-renderer";
  */
 export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresholdsRendererConfig = {
     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
+    enabled: true,
 };
 
 /**
@@ -37,7 +38,7 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
         const dataSeries = renderSeries.dataSeries;
         const accessors = dataSeries.accessors;
 
-        const data = cloneDeep(dataSeries.data);
+        const data = cloneDeep(this.config.enabled ? dataSeries.data : []);
 
         // last value in the thresholds series is the max value of the gauge (needed by RadialGaugeThresholdsRenderer).
         // removing this value to avoid rendering a marker for it

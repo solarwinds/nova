@@ -13,172 +13,157 @@
     }
 }
 
-.nui-wizard-horizontal-header-container {
-    padding: @nui-space-sm @nui-space-md;
-    .setCssVariable(background-color, nui-color-bg-secondary);
-    border: @nui-line-default solid;
-    border-left: none;
-    border-right: none;
-    .setCssVariable(border-color, nui-color-line-default);
-    overflow: hidden;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    .no-select();
-
-    white-space: nowrap;
-    align-items: center;
-
-    .nui-label-position-bottom & {
-        align-items: flex-start;
-    }
-}
-
-.nui-wizard-horizontal-line {
-    border-top-width: @wizard-line-width;
-    border-top-style: solid;
-    .setCssVariable(border-color, nui-color-line-default);
-
-    flex: auto;
-    height: 0;
-    margin: 0 (@wizard-line-gap - @wizard-side-gap);
-    min-width: (@wizard-line-gap + @wizard-side-gap);
-
-    .nui-label-position-bottom & {
-        margin: 0;
-        min-width: 0;
-        position: relative;
-    }
-}
-
-.nui-header-horizontal-line-label-position-bottom {
-    border-top-width: @wizard-line-width;
-    border-top-style: solid;
-    content: '';
-    display: inline-block;
-    height: 0;
-    position: absolute;
-    width: calc(50% - @wizard-side-gap / 2 + @wizard-line-gap);
-}
-
-.nui-wizard-horizontal-header {
-    display: flex;
-    min-height: @wizard-header-min-height;
-    max-height: @wizard-header-max-height;
-    overflow: hidden;
-    align-items: center;
-    padding: 0 @wizard-side-gap;
-
-    .nui-wizard-step-icon {
-        margin-right: @wizard-line-gap;
-        flex: none;
-
-        [dir='rtl'] & {
-            margin-right: 0;
-            margin-left: @wizard-line-gap;
-        }
-    }
-
-    .nui-label-position-bottom & {
-        box-sizing: border-box;
-        flex-direction: column;
-        // We use auto instead of fixed 104px (by spec) because when there is an optional step
-        //  the height is greater than that
-        height: auto;
-
-        &:not(:last-child)::after,
-        [dir='rtl'] &:not(:first-child)::after {
-            .nui-header-horizontal-line-label-position-bottom();
-            right: 0;
-        }
-
-        &:not(:first-child)::before,
-        [dir='rtl'] &:not(:last-child)::before {
-            .nui-header-horizontal-line-label-position-bottom();
-            left: 0;
-        }
-
-        [dir='rtl'] &:last-child::before,
-        [dir='rtl'] &:first-child::after {
-            display: none;
-        }
-
-        & .nui-wizard-step-icon {
-            // Cleans margin both for ltr and rtl direction
-            margin-right: 0;
-            margin-left: 0;
-        }
-
-        & .nui-wizard-step-label {
-            padding: @wizard-label-position-bottom-top-gap 0 0 0;
-            color: red;
-            width: 100%;
-        }
-    }
-}
-
-.nui-wizard-vertical-header {
-    display: flex;
-    align-items: center;
-
-    // We can't use `max-height` here, because it breaks the flexbox centering in IE.
-    height: @wizard-label-header-height;
-
-    .nui-wizard-step-icon {
-        margin-right: @wizard-vertical-content-margin - @wizard-side-gap;
-
-        [dir='rtl'] & {
-            margin-right: 0;
-            margin-left: @wizard-vertical-content-margin - @wizard-side-gap;
-        }
-    }
-}
-
-.nui-wizard-horizontal-content {
-    outline: 0;
-
-    &[aria-expanded='false'] {
-        height: 0;
+.nui-wizard-horizontal {
+    &-header {
+        display: flex;
+        min-height: @wizard-header-min-height;
+        max-height: @wizard-header-max-height;
         overflow: hidden;
+        align-items: center;
+        padding: 0 @nui-space-md;
+
+        .nui-wizard-step-icon {
+            margin-right: @wizard-line-gap;
+            flex: none;
+
+            [dir='rtl'] & {
+                margin-right: 0;
+                margin-left: @wizard-line-gap;
+            }
+        }
+
+        .nui-wizard-label-position-top & {
+            box-sizing: border-box;
+            flex-direction: column;
+            // We use auto instead of fixed 104px (by spec) because when there is an optional step
+            //  the height is greater than that
+            height: auto;
+
+            & .nui-wizard-step-icon {
+                // Cleans margin both for ltr and rtl direction
+                margin-right: 0;
+                margin-left: 0;
+            }
+
+            .nui-wizard-step-label{
+                .setCssVariable(color, nui-color-text-secondary);
+
+                &.nui-wizard-step-header__label--active {
+                    .setCssVariable(color, nui-color-text-link);
+                }
+
+                &.nui-wizard-step-header__label--selected {
+                    .setCssVariable(color, nui-color-text-default);
+                }
+            }
+        }
+    }
+
+    &-header-container {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        padding: @nui-space-sm @nui-space-md;
+        border: @nui-line-default solid;
+        border-left: none;
+        border-right: none;
+        overflow: hidden;
+        .setCssVariable(background-color, nui-color-bg-secondary);
+        .setCssVariable(border-color, nui-color-line-default);
+        .no-select();
+
+        white-space: nowrap;
+        align-items: center;
+
+        .nui-label-position-bottom & {
+            align-items: flex-start;
+        }
+    }
+
+    &-line {
+        border-top-width: @nui-line-medium;
+        border-top-style: solid;
+        .setCssVariable(border-color, nui-color-line-default);
+
+        &.nui-wizard-horizontal-line-completed{
+            .setCssVariable(border-color, nui-color-text-link);
+        }
+
+        .nui-label-position-bottom & {
+            margin: 0;
+            min-width: 0;
+            position: relative;
+        }
+
+        .nui-wizard-label-position-top & {
+            bottom: (@wizard-label-header-height / 2) - @nui-line-medium;
+            left:  ((@wizard-label-header-width + @icon-size-default)/ 2);
+            width: (@wizard-label-header-width - @icon-size-default);
+            position: relative;
+        }
+
+        &-label-position-top {
+            border-top-width: @nui-line-medium;
+            border-top-style: solid;
+            border-top-color: @nui-color-line-default;
+            content: '';
+            display: inline-block;
+            height: 0;
+            position: absolute;
+            width: calc(50% - @nui-space-md / 2 + @wizard-line-gap);
+        }
+    }
+
+    &-content {
+        outline: 0;
+
+        &[aria-expanded='false'] {
+            height: 0;
+            overflow: hidden;
+        }
+
+        &-container {
+            overflow: hidden;
+        }
     }
 }
 
-.nui-wizard-horizontal-content-container {
-    overflow: hidden;
-    padding: 0 @wizard-side-gap @wizard-side-gap @wizard-side-gap;
+.nui-wizard-vertical {
+
+    &-content {
+        overflow: hidden;
+        outline: 0;
+
+        &-container {
+            margin-left: @wizard-vertical-content-margin;
+            border: 0;
+            position: relative;
+
+            [dir='rtl'] & {
+                margin-left: 0;
+                margin-right: @wizard-vertical-content-margin;
+            }
+        }
+    }
+
+    &-line {
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            border-left-width: @nui-line-medium;
+            border-left-style: solid;
+
+            [dir='rtl'] & {
+                left: auto;
+                right: 0;
+            }
+        }
+    }
 }
 
-.nui-wizard-vertical-content-container {
-    margin-left: @wizard-vertical-content-margin;
-    border: 0;
+.nui-step-header-wrapper{
     position: relative;
-
-    [dir='rtl'] & {
-        margin-left: 0;
-        margin-right: @wizard-vertical-content-margin;
-    }
-}
-
-.nui-wizard-vertical-line::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    border-left-width: @wizard-line-width;
-    border-left-style: solid;
-
-    [dir='rtl'] & {
-        left: auto;
-        right: 0;
-    }
-}
-
-.nui-wizard-vertical-content {
-    overflow: hidden;
-    outline: 0;
-}
-
-.nui-vertical-content {
-    padding: 0 @wizard-side-gap @wizard-side-gap @wizard-side-gap;
 }
 
 .nui-step:last-child {

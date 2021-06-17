@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { ComponentChanges, UnitConversionService } from "@nova-ui/bits";
+import { ComponentChanges } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -29,9 +29,7 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
     public seriesSet: IChartAssistSeries<IAccessors>[];
     private labelsPlugin: LinearGaugeLabelsPlugin;
 
-    constructor(private unitConversionService: UnitConversionService) { }
-
-    public ngOnChanges(changes: ComponentChanges<LinearGaugeHorizontalPrototypeComponent>) {
+    public ngOnChanges(changes: ComponentChanges<LinearGaugeHorizontalPrototypeComponent>): void {
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             if (changes.thickness) {
@@ -51,12 +49,16 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.thresholds?.disableMarkers;
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
 
-    public ngOnInit() {
-        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal, this.thickness) as XYGridConfig);
+    public ngOnInit(): void {
+        const gridConfig = linearGaugeGridConfig(GaugeMode.Horizontal, this.thickness) as XYGridConfig;
+        gridConfig.dimension.margin.right = 15;
+        gridConfig.dimension.margin.left = 5;
+        const grid = new XYGrid(gridConfig);
         const chart = new Chart(grid);
 
         this.chartAssist = new ChartAssist(chart, stack);
@@ -65,11 +67,6 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
         this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
-        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
-            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
-            return this.unitConversionService.getFullDisplay(conversion, "generic");
-        }, this.seriesSet);
-
         this.chartAssist.update(this.seriesSet);
     }
 }

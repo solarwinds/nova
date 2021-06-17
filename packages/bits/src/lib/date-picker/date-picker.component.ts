@@ -16,7 +16,7 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
 import _defaults from "lodash/defaults";
 import _isEqual from "lodash/isEqual";
 import _isNil from "lodash/isNil";
@@ -171,7 +171,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         private cd: ChangeDetectorRef
     ) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         _defaults(this, datePickerDefaults);
         this.selectedDate = this._value;
         this.initDate = this.value && this.value.clone();
@@ -195,13 +195,13 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         this.onAppendToBodyChange(this.appendToBody);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.appendToBody) {
             this.onAppendToBodyChange(changes.appendToBody.currentValue);
         }
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.calendarChanged = this._datePicker.calendarMoved.subscribe((value: Moment) => this.calendarNavigated.emit(value));
         this.updateTextboxValue();
         this.cd.detectChanges();
@@ -216,7 +216,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
 
             this.overlay.show$.pipe(takeUntil(this.onDestroy$)).subscribe(_ => this._datePicker.refreshView());
             this.overlay.hide$.pipe(takeUntil(this.onDestroy$)).subscribe(_ => {
-                const currentDateValid = this.value.isValid();
+                const currentDateValid = this.value?.isValid();
                 if (!currentDateValid) {
                     this._datePicker.value = undefined;
                     this._datePicker.datepickerMode = "day";
@@ -225,7 +225,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         }
     }
 
-    public updateTouchedState() {
+    public updateTouchedState(): void {
         setTimeout(() => this.inputBlurred.emit(), 100);
         this.onTouched();
     }
@@ -251,16 +251,16 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         return this.isDisabled ? "gray" : "primary-blue";
     }
 
-    public onChange(value: any) {}
+    public onChange(value: any): void {}
 
-    public onTouched() {}
+    public onTouched(): void {}
 
-    public validate(control: FormControl) {
+    public validate(control: FormControl): ValidationErrors | null {
         this.formControl = control;
         return NuiValidators.dateFormat(control.value);
     }
 
-    public writeValue(value: any) {
+    public writeValue(value: any): void {
         this.value = value;
     }
 
@@ -280,7 +280,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         this.isInErrorState = isInErrorState;
     }
 
-    public onSelectionDone(value: Moment) {
+    public onSelectionDone(value: Moment): void {
         this.value = value;
         this.overlay?.hide();
     }
@@ -300,7 +300,7 @@ export class DatePickerComponent implements OnChanges, OnInit, ControlValueAcces
         this.momentDateFormat = isCustomFormatValid ? this.dateFormat : datePickerDefaults.dateFormat;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         // The following resolves a known 'Error during cleanup of component:' error during unit tests
         // Details: https://github.com/angular/angular/issues/17013
         if (this.calendarChanged) {

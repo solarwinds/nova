@@ -7,7 +7,7 @@ import { AcmeKpiDataSource, AcmeKpiDataSource2 } from "../data/kpi-datasources";
 import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
-import { AcmeTableDataSource3 } from "../data/table/acme-table-data-source3.service";
+import { AcmeTableDataSourceNoColumnGeneration } from "../data/table/acme-table-data-source3.service";
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
 import {
     AcmeTimeseriesDataSource,
@@ -71,9 +71,9 @@ export class AcmeDashboardComponent implements OnInit {
                 useClass: AcmeTableDataSource2,
                 deps: [LoggerService],
             },
-            [AcmeTableDataSource3.providerId]: {
+            [AcmeTableDataSourceNoColumnGeneration.providerId]: {
                 provide: DATA_SOURCE,
-                useClass: AcmeTableDataSource3,
+                useClass: AcmeTableDataSourceNoColumnGeneration,
                 deps: [LoggerService],
             },
             [AcmeTableMockDataSource.providerId]: {

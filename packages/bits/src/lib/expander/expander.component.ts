@@ -10,6 +10,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { expandV2 } from "../../animations/expand";
+import { KEYBOARD_CODE } from "../../constants";
 
 /**
  * <example-url>./../examples/index.html#/expander</example-url>
@@ -78,5 +79,13 @@ export class ExpanderComponent implements AfterContentInit {
 
     public getIconColor(): string {
         return this.disabled ? "gray" : "primary-blue";
+    }
+
+    public onKeyDown(event: KeyboardEvent): void {
+        if (event.code === KEYBOARD_CODE.SPACE || event.code === KEYBOARD_CODE.ENTER) {
+            event.stopPropagation();
+            event.preventDefault();
+            this.toggle();
+        }
     }
 }

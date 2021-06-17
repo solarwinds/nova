@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../../core/common/types";
 import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-import { IGaugeConfig } from "../../../gauge/types";
+import { IGaugeConfig, GaugeThresholdDefs } from "../../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import { RadialAccessors } from "../accessors/radial-accessors";
 
@@ -18,6 +18,7 @@ describe("DonutGaugeThresholdsRenderer >", () => {
     let renderSeries: IRenderSeries<RadialAccessors>;
     let dataSeries: IDataSeries<IAccessors>;
     const containers: IRenderContainers = {};
+    const standardThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(3, 7);
 
     beforeEach(() => {
         renderer = new DonutGaugeThresholdsRenderer();
@@ -26,10 +27,21 @@ describe("DonutGaugeThresholdsRenderer >", () => {
         gaugeConfig = {
             value: 5,
             max: 10,
-            thresholds: [3, 7, 9],
+            thresholds: {
+                ...standardThresholdsConfig,
+                definitions: {
+                    ...standardThresholdsConfig.definitions,
+                    "additionalThreshold": {
+                        id: "additionalThreshold",
+                        value: 9,
+                        enabled: true,
+                        color: "green",
+                    },
+                },
+            },
         };
 
-        const gaugeAttributes = GaugeUtil.generateRenderingAttributes(GaugeMode.Donut);
+        const gaugeAttributes = GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Donut);
         dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
 
         renderSeries = {
@@ -52,11 +64,11 @@ describe("DonutGaugeThresholdsRenderer >", () => {
             arcGenerator = arc()
                 .outerRadius(renderer.getOuterRadius(renderSeries.scales.r.range(), 0))
                 .innerRadius(innerRadius >= 0 ? innerRadius : 0);
-            markerData = DonutGaugeRenderingUtil.generateThresholdRenderingData(renderSeries.dataSeries.data);
+            markerData = DonutGaugeRenderingUtil.generateThresholdArcData(renderSeries.dataSeries.data);
         });
 
         it("should render the correct number of threshold markers", () => {
-            expect(thresholdMarkers.nodes().length).toEqual(gaugeConfig.thresholds?.length as number);
+            expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds?.definitions as GaugeThresholdDefs).length);
         });
 
         it("should position the threshold markers correctly", () => {

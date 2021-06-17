@@ -1,49 +1,121 @@
-import { Component } from "@angular/core";
-import { DataAccessor, DEFAULT_RADIAL_RENDERER_CONFIG, GaugeUtil, IGaugeConfig, StandardLinearGaugeThickness } from "@nova-ui/charts";
+import { Component, OnDestroy } from "@angular/core";
+import { ThemeSwitchService, UnitConversionService } from "@nova-ui/bits";
+import {
+    DEFAULT_RADIAL_RENDERER_CONFIG,
+    GaugeUtil,
+    IGaugeConfig,
+    GaugeThresholdDefs,
+    StandardGaugeThresholdId,
+    StandardLinearGaugeThickness,
+    IGaugeThresholdsConfig,
+    Formatter,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "gauge-test-page",
     templateUrl: "./gauge-test-page.component.html",
     styleUrls: ["./gauge-test-page.component.less"],
 })
-export class GaugeTestPageComponent {
+export class GaugeTestPageComponent implements OnDestroy {
     public value = 950;
     public maxValue = 2000;
+    public thresholds: IGaugeThresholdsConfig;
+    public gaugeConfig: IGaugeConfig;
+
     public annularGrowth = DEFAULT_RADIAL_RENDERER_CONFIG.annularGrowth;
     public thickness = StandardLinearGaugeThickness.Large;
     public donutSize = 200;
-    public thresholds: number[] = [1000, 1500];
+
+    public warningEnabled = true;
+    public criticalEnabled = true;
+    public enableThresholdMarkers = true;
     public reversed = false;
     public flipLabels = false;
-    public gaugeConfig: IGaugeConfig;
 
-    private reversedColorAccessor: DataAccessor<any, any> | undefined;
+    public lowThreshold = 1000;
+    public highThreshold = 1500;
+    public valueStep = 10;
 
-    constructor() {
-        // this.thresholds = new Array(200).fill(null).map((e, i) => i);
-        // this.thresholds = [50, 75, 100, 125, 150, 175, 200];
-        this.reversedColorAccessor = GaugeUtil.createReversedQuantityThresholdColorAccessor(this.thresholds);
+    private originalWithRefreshRoute: boolean;
+    private labelFormatter: Formatter<string>;
 
+    constructor(public themeSwitcher: ThemeSwitchService, private unitConversionSvc: UnitConversionService) {
+        // disable route refreshing because the theme service currently always reverts to
+        // the light theme on route refresh unless route.data.showThemeSwitcher is 'true'
+        this.originalWithRefreshRoute = this.themeSwitcher.withRefreshRoute;
+        this.themeSwitcher.withRefreshRoute = false;
+
+        this.labelFormatter = (d: string) => {
+            const conversion = this.unitConversionSvc.convert(parseFloat(d), 1000, 2);
+            return this.unitConversionSvc.getFullDisplay(conversion, "generic");
+        };
+
+        this.thresholds = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold)
         this.gaugeConfig = this.getGaugeConfig();
     }
 
-    public onReverseChange(reversed: boolean) {
+    public ngOnDestroy(): void {
+        this.themeSwitcher.withRefreshRoute = this.originalWithRefreshRoute;
+    }
+
+    public onReversedChange(reversed: boolean): void {
         this.reversed = reversed;
         this.gaugeConfig = this.getGaugeConfig();
     }
 
-    public onValueChange(value: number) {
+    public onValueChange(value: number): void {
         this.value = value;
         this.gaugeConfig = this.getGaugeConfig();
     }
 
+    public onLowThresholdChange(value: number): void {
+        this.lowThreshold = value;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
+    public onHighThresholdChange(value: number): void {
+        this.highThreshold = value;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
+    public onWarningEnabledChange(enabled: boolean): void {
+        this.warningEnabled = enabled;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
+    public onCriticalEnabledChange(enabled: boolean): void {
+        this.criticalEnabled = enabled;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
+    public onEnableThresholdMarkersChange(enabled: boolean): void {
+        this.enableThresholdMarkers = enabled;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
     private getGaugeConfig(): IGaugeConfig {
+        this.updateThresholdsConfig();
+
         return {
             value: this.value,
             max: this.maxValue,
             thresholds: this.thresholds,
-            quantityColorAccessor: this.reversed ? this.reversedColorAccessor : undefined,
-            enableThresholdMarkers: true,
+            labelFormatter: this.labelFormatter,
         };
+    }
+
+    private updateThresholdsConfig() {
+        if (this.warningEnabled) {
+            this.thresholds.definitions[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
+        }
+
+        if (this.criticalEnabled) {
+            this.thresholds.definitions[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+        }
+
+        this.thresholds.definitions[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
+        this.thresholds.definitions[StandardGaugeThresholdId.Critical].enabled = this.criticalEnabled;
+        this.thresholds.reversed = this.reversed;
+        this.thresholds.disableMarkers = !this.enableThresholdMarkers;
     }
 }

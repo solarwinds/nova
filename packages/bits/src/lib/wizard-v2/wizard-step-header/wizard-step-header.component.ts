@@ -1,29 +1,45 @@
-import {FocusMonitor} from "@angular/cdk/a11y";
-import {CdkStepHeader, StepState} from "@angular/cdk/stepper";
+import { FocusMonitor } from "@angular/cdk/a11y";
+import { CdkStepHeader, StepState, STEP_STATE } from "@angular/cdk/stepper";
 import {
-    AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, ViewEncapsulation,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    Inject,
+    Input,
+    OnChanges,
+    OnDestroy,
+    Optional,
+    SimpleChanges,
+    ViewEncapsulation,
 } from "@angular/core";
 
-import {WizardStepLabelDirective} from "../wizard-step-label.directive";
+import { WizardStepLabelDirective } from "../wizard-step-label.directive";
+import { WIZARD_CONFIG, WIZARD_CONFIG_DEFAULT } from "../../../constants/wizard.constants";
+import { IWizardConfig, WizardStepStateConfig } from "../types";
+import assign from "lodash/assign";
 
 @Component({
-    selector: "wizard-step-header",
+    selector: "nui-wizard-step-header",
     templateUrl: "wizard-step-header.component.html",
     styleUrls: ["wizard-step-header.component.less"],
     host: {
         "class": "nui-wizard-step-header mat-focus-indicator",
-        "[class.nui-wizard-step-header-selected]": "selected",
-        "[class.nui-wizard-step-header-active]": "active",
-        "[class.nui-wizard-step-header-optional]": "optional",
-        "[class.nui-wizard-step-header-completed]": "state == 'done'",
+        "[class.nui-wizard-step-header--selected]": "selected",
+        "[class.nui-wizard-step-header--optional]": "optional",
+        "[class.nui-wizard-step-header--completed]": "stepState === 'done'",
+        "[class.nui-wizard-step-header--disabled]": "!completed",
         "role": "tab",
     },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardStepHeaderComponent extends CdkStepHeader implements AfterViewInit, OnDestroy {
+export class WizardStepHeaderComponent extends CdkStepHeader implements AfterViewInit, OnDestroy, OnChanges {
     /** State of the given step. */
-    @Input() state: StepState;
+    @Input() stepState: StepState;
+
+    /** Custom icon config received from the wizard step. Allows to customize state icons for a particular wizard step */
+    @Input() stepStateConfig: Partial<WizardStepStateConfig>;
 
     /** Label of the given step. */
     @Input() label: WizardStepLabelDirective | string;
@@ -40,6 +56,9 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     /** Whether the given step is selected. */
     @Input() selected: boolean;
 
+    /** Whether the given step is completed. */
+    @Input() completed: boolean;
+
     /** Whether the given step label is active. */
     @Input() active: boolean;
 
@@ -49,11 +68,29 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     /** Whether the ripple should be disabled. */
     @Input() disableRipple: boolean;
 
+    public stepStateConfigMap: WizardStepStateConfig;
+
+    private wizardConfig: IWizardConfig = {...WIZARD_CONFIG_DEFAULT};
+
     constructor(
         private _focusMonitor: FocusMonitor,
-        _elementRef: ElementRef<HTMLElement>
+        _elementRef: ElementRef<HTMLElement>,
+        @Optional() @Inject(WIZARD_CONFIG) public readonly config?: IWizardConfig
     ) {
         super(_elementRef);
+
+        if (this.config) {
+            this.updateStepStateConfig(this.config.stepState);
+        }
+
+        this.createStepStateConfigMap();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes?.stepStateConfig?.currentValue) {
+            this.updateStepStateConfig(changes?.stepStateConfig?.currentValue);
+            this.createStepStateConfigMap();
+        }
     }
 
     ngAfterViewInit(): void {
@@ -65,54 +102,30 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     }
 
     /** Focuses the step header. */
-    focus(): void {
+    public focus(): void {
         this._focusMonitor.focusVia(this._elementRef, "program");
     }
 
     /** Returns string label of given step if it is a text label. */
-    _stringLabel(): string | null {
+    public get stringLabel(): string | null {
         return this.label instanceof WizardStepLabelDirective ? null : this.label;
     }
 
     /** Returns WizardStepLabel if the label of given step is a template label. */
-    _templateLabel(): WizardStepLabelDirective | null {
+    public get templateLabel(): WizardStepLabelDirective | null {
         return this.label instanceof WizardStepLabelDirective ? this.label : null;
     }
 
-    _getDefaultTextForState(state: StepState): string {
-        let returnedState: StepState = state;
-
-        switch (state) {
-            case "number":
-                returnedState = `${this.index + 1}`;
-                break;
-
-            case "edit":
-                returnedState = "create";
-                break;
-
-            case "error":
-                returnedState = "warning";
-                break;
-
-            default:
-        }
-
-        return returnedState;
+    private updateStepStateConfig(stepStateConfig: WizardStepStateConfig) {
+        this.wizardConfig.stepState = assign({...this.wizardConfig.stepState}, stepStateConfig);
     }
 
-    _getDefaultIconForState(state: StepState): string {
-        let returnedState: StepState = state;
-
-        switch (state) {
-            case "number":
-            case "done": returnedState = "step-complete"; break;
-            case "edit": returnedState = "edit"; break;
-            case "error": returnedState = "warning"; break;
-            default:
+    private createStepStateConfigMap() {
+        this.stepStateConfigMap = {
+            [STEP_STATE.NUMBER]: this.wizardConfig.stepState?.initial,
+            [STEP_STATE.DONE]: this.wizardConfig.stepState?.visited,
+            [STEP_STATE.EDIT]: this.wizardConfig.stepState?.active,
+            [STEP_STATE.ERROR]: this.wizardConfig.stepState?.error,
         }
-
-        return returnedState;
     }
-
 }
