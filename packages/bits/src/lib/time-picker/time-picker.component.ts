@@ -60,7 +60,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
     @ViewChild("toggleRef", {static: true}) containerEl: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
-    @ViewChild(MenuPopupComponent) public popup: MenuPopupComponent;
+    @ViewChild("popup") public popup: MenuPopupComponent;
     @ViewChild("menuTrigger", { read: ElementRef }) public menuTrigger: ElementRef;
     /** sets a step (difference between item in picker) */
     @Input() timeStep =  30;
