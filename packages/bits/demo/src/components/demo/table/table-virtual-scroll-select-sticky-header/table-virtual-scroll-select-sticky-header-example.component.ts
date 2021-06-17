@@ -53,7 +53,7 @@ export class TableVirtualScrollSelectStickyHeaderExampleComponent implements Aft
         this.visibleItems$ = this.viewport.renderedRangeStream.pipe(
             startWith({ start: 0, end: 10 }),
             // Note: On range change applying filters
-            tap(() => this.dataSourceService.applyFilters()),
+            tap(async () => this.dataSourceService.applyFilters()),
             // Subscribing to the filter results transforming and merging them into the stream
             switchMap(() => this.dataSourceService.outputsSubject.pipe(
                 map((result: IFilteringOutputs) => {
