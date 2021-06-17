@@ -60,7 +60,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
     @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
-    @ViewChild(forwardRef(() => MenuPopupComponent)) public menuPopup: MenuPopupComponent;
+    @ViewChild("popup") public menuPopup: MenuPopupComponent;
 
     // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
     // before any new search is performed
@@ -257,7 +257,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     }
 
     private initKeyboardService (): void {
-        this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems.toArray();
+        this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems;
         this.sorterKeyboardService.overlay = this.overlay;
         this.sorterKeyboardService.initKeyboardManager();
     }

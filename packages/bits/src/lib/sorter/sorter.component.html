@@ -26,6 +26,6 @@
                  [toggleReference]="toggleRef"
                  [overlayConfig]="overlayConfig"
                  [customContainer]="customContainer">
-        <nui-menu-popup [itemsSource]="items" (menuItemClicked)="select($event)"></nui-menu-popup>
+        <nui-menu-popup #popup [itemsSource]="items" (menuItemClicked)="select($event)"></nui-menu-popup>
     </nui-overlay>
 </div>
