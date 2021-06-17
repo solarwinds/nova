@@ -38,6 +38,11 @@
             box-shadow: inset 0 0 0 @nui-line-medium fade(@nui-color-selected-contrast, 50%);
             border-radius: @nui-radius-default;
         }
+
+        &:focus:not(:focus-visible) {
+            box-shadow: unset;
+            border-radius: unset;
+        }
     }
 
     &-icon {
