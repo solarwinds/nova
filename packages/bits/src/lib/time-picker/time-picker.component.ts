@@ -167,17 +167,17 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         this.keyboardService.onKeyDown(event);
     }
 
-    @HostListener("focusout")
-    public onFocusOut(): void {
+    @HostListener("focusout", ["$event"])
+    public onFocusOut(event: FocusEvent): void {
         if (!this.overlay.showing || !document.activeElement) {
             return;
         }
 
-        setTimeout(() => {
-            if (!this.containerEl.nativeElement.contains(document.activeElement)) {
-                this.overlay.hide();
-            }
-        }, 100);
+        const target = event.relatedTarget as HTMLElement;
+
+        if (!this.containerEl.nativeElement.contains(target)) {
+            this.overlay.hide();
+        }
     }
 
     updateInnerModel(value: any) {
