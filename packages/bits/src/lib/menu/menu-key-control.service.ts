@@ -148,8 +148,6 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private handleClosedKeyDown(event: KeyboardEvent): void {
-        event.stopPropagation();
-
         // prevent opening on enter and prevent scrolling page on key down/key up when focused
         if (this.shouldBePrevented(event)) {
             event.preventDefault();

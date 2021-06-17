@@ -83,9 +83,10 @@ export class ExpanderComponent implements AfterContentInit {
 
     public onKeyDown(event: KeyboardEvent): void {
         if (event.code === KEYBOARD_CODE.SPACE || event.code === KEYBOARD_CODE.ENTER) {
-            event.stopPropagation();
-            event.preventDefault();
-            this.toggle();
+            if (event.target === event.currentTarget) {
+                event.preventDefault();
+                this.toggle();
+            }
         }
     }
 }
