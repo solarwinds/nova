@@ -20,7 +20,15 @@ export class UnitConversionServiceSeparateUnitDisplayExampleComponent implements
     public onNumberChange(num: number): void {
         this.num = num;
         const conversion: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Standard, 2);
-        this.valueDisplay = this.unitConversionService.getValueDisplay(conversion);
         this.unitDisplay = this.unitConversionService.getUnitDisplay(conversion, "hertz");
+
+        if(this.unitDisplay) {
+            this.valueDisplay = this.unitConversionService.getValueDisplay(conversion);
+        } else {
+            // An undefined getUnitDisplay return value indicates the input value was too large to be converted,
+            // so the base unit and scientific notation can be used as fallbacks.
+            this.unitDisplay = this.unitConversionService.getUnitDisplayBaseValue("hertz");
+            this.valueDisplay = this.unitConversionService.getScientificDisplay(conversion);
+        }
     }
 }

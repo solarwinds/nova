@@ -49,7 +49,9 @@
     The display strings for the value and unit can also be determined separately for situations in which you'd like to display the conversion data in
     separate elements on the page. To get just the converted value for display, use the
     <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getValueDisplay</a></code> method, and to get just the converted unit for
-    display, use the <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getUnitDisplay</a></code> method.
+    display, use the <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getUnitDisplay</a></code> method.  If you need to
+    convert the value into scientific notation use the
+    <code><a href="../injectables/UnitConversionService.html#info" target="_parent">getScientificDisplay</a></code> instead.
 </p>
 <nui-message type="warning" [allowDismiss]="false">
     <strong>Note:</strong> The <code>getValueDisplay</code> method offers a <code>localize</code> parameter which defaults to <code>true</code>. However,
