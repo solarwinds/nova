@@ -60,7 +60,7 @@ export class UnitConversionService {
         return {
             value: strValue,
             order: resultOrder,
-            scientificNotation: value?.toExponential(scale).toLocaleString(),
+            scientificNotation: value?.toExponential(scale),
             scale,
         };
     }
@@ -85,7 +85,7 @@ export class UnitConversionService {
 
         let displayValue: string;
 
-        if (!unitDisplay && !(conversion.value === "NaN") && conversion.order ) {
+        if (!unitDisplay && isValidNumber && conversion.order ) {
             const tempObj = {
                 ...conversion,
             };
@@ -148,7 +148,8 @@ export class UnitConversionService {
         if (!this.isValidNumber(conversion.value)) {
             return nanDisplay;
         }
+        const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
 
-        return `${conversion.scientificNotation}`;
+        return `${prefix}${conversion.scientificNotation}`;
     }
 }
