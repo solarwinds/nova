@@ -58,49 +58,50 @@ describe("USERCONTROL Panel", () => {
         const gutter = Atom.find(ResizerAtom, "nui-demo-resizable-panel");
 
         it("should make side panel bigger", async () => {
-            const originalSize = await browser.manage().window().getSize();
-            const movePanel = 300;
+            const origWinSize = await browser.manage().window().getSize();
+            const gutterMoveDistance = 300;
             browser.driver.manage().window().setSize(900, 890);
             const oldCenterPaneSize = await panelResize.getCenterPaneElementSize();
-            await gutter.moveRight(movePanel);
+            await gutter.moveRight(gutterMoveDistance);
             const newCenterPaneSize = await panelResize.getCenterPaneElementSize();
-            await expect(oldCenterPaneSize.width).toEqual(newCenterPaneSize.width + movePanel);
+            await expect(oldCenterPaneSize.width).toEqual(newCenterPaneSize.width + gutterMoveDistance);
             // Return to initial state
-            await gutter.moveLeft(movePanel);
-            await browser.manage().window().setSize(originalSize.width, originalSize.height);
+            await gutter.moveLeft(gutterMoveDistance);
+            await browser.manage().window().setSize(origWinSize.width, origWinSize.height);
         });
 
         it("should make side panel smaller", async () => {
-            const originalSize = await browser.manage().window().getSize();
-            const movePanel = 20;
+            const origWinSize = await browser.manage().window().getSize();
+            const gutterMoveDistance = 20;
             browser.driver.manage().window().setSize(1200, 880);
             const oldCenterPaneSize = await panelResize.getCenterPaneElementSize();
-            await gutter.moveLeft(movePanel);
+            await gutter.moveLeft(gutterMoveDistance);
             const newCenterPaneSize = await panelResize.getCenterPaneElementSize();
-            await expect(oldCenterPaneSize.width).toEqual(newCenterPaneSize.width - movePanel);
+            await expect(oldCenterPaneSize.width).toEqual(newCenterPaneSize.width - gutterMoveDistance);
             // Return to initial state
-            await gutter.moveRight(movePanel);
-            await browser.manage().window().setSize(originalSize.width, originalSize.height);
+            await gutter.moveRight(gutterMoveDistance);
+            await browser.manage().window().setSize(origWinSize.width, origWinSize.height);
         });
 
         it("should not resize when panel is collapsed", async () => {
+            const gutterMoveDistance = 300;
             await panelResize.toggleExpanded();
             await expect(await panelResize.isCollapsed()).toBe(true);
 
             await panelResize.toggleExpanded();
             await expect(await panelResize.isCollapsed()).toBe(false);
             const oldExpandedCenterPaneSize = await panelResize.getCenterPaneElementSize();
-            await gutter.moveRight(300);
+            await gutter.moveRight(gutterMoveDistance);
 
             const newExpandedCenterPaneSize = await panelResize.getCenterPaneElementSize();
             await expect(oldExpandedCenterPaneSize.width).toBeGreaterThan(newExpandedCenterPaneSize.width);
 
             // Return to initial state
-            await gutter.moveLeft(300);
+            await gutter.moveLeft(gutterMoveDistance);
         });
 
         it("should correctly resize panel when it's size was set in percents and window size was changed", async () => {
-            const originalSize = await browser.manage().window().getSize();
+            const origWinSize = await browser.manage().window().getSize();
 
             try {
                 await browser.manage().window().setSize(600, 880);
@@ -118,7 +119,7 @@ describe("USERCONTROL Panel", () => {
 
             } finally {
                 // Restoring the initial window size
-                await browser.manage().window().setSize(originalSize.width, originalSize.height);
+                await browser.manage().window().setSize(origWinSize.width, origWinSize.height);
             }
         });
     });
