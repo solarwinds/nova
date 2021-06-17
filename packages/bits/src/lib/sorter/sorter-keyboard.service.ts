@@ -8,7 +8,7 @@ import { KEYBOARD_CODE } from "../../constants";
 import { ANNOUNCER_CLOSE_SORTER_LIST_MESSAGE, ANNOUNCER_OPEN_SORTER_LIST_MESSAGE_SUFFIX } from "./constants";
 
 @Injectable()
-export class SorterKeyControlService {
+export class SorterKeyboardService {
     public overlay: OverlayComponent;
     public menuItems: QueryList<MenuItemBaseComponent>;
     private keyboardEventsManager: ListKeyManager<MenuItemBaseComponent>;
@@ -17,10 +17,10 @@ export class SorterKeyControlService {
 
     public initKeyboardManager(): void {
         this.keyboardEventsManager = new ListKeyManager(this.menuItems).withVerticalOrientation();
-        // TODO Uncomment in the scope of NUI-
+        // TODO Uncomment in the scope of NUI-6132
         // this.keyboardEventsManager.setFirstItemActive();
 
-        // TODO Remove this in the scope of NUI-
+        // TODO Remove this in the scope of NUI-6132
         this.keyboardEventsManager.setActiveItem(-1);
     }
 
@@ -32,9 +32,8 @@ export class SorterKeyControlService {
         return this.keyboardEventsManager.activeItemIndex;
     }
 
-    public announceDropdown(open: boolean): void {
-        const menuListLength = this.menuItems.toArray().length;
-        const message = open ? `${menuListLength} ${ANNOUNCER_OPEN_SORTER_LIST_MESSAGE_SUFFIX}` : ANNOUNCER_CLOSE_SORTER_LIST_MESSAGE;
+    public announceDropdown(): void {
+        const message = this.overlay.showing ? `${this.menuItems.length} ${ANNOUNCER_OPEN_SORTER_LIST_MESSAGE_SUFFIX}` : ANNOUNCER_CLOSE_SORTER_LIST_MESSAGE;
         this.liveAnnouncer.announce(message);
     }
 
@@ -45,7 +44,7 @@ export class SorterKeyControlService {
             this.announceCurrentItem();
         }
 
-        // TODO Remove this in the scope of NUI-
+        // TODO Remove this in the scope of NUI-6132
         // prevent closing on enter when item is not focused
         if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
             event.preventDefault();
@@ -53,23 +52,17 @@ export class SorterKeyControlService {
 
         if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
             event.preventDefault();
-            if (!this.keyboardEventsManager.activeItem) {
-                throw new Error("ActiveItem is not defined");
-            }
-
             this.keyboardEventsManager.activeItem?.menuItem.nativeElement.click();
 
-            this.announceDropdown(this.overlay.showing);
-
-            // TODO Remove this in the scope of NUI-
+            // TODO Remove this in the scope of NUI-6132
             this.keyboardEventsManager.setActiveItem(-1);
         }
 
         if (event.code === KEYBOARD_CODE.TAB || event.code === KEYBOARD_CODE.ESCAPE) {
             this.overlay.hide();
-            this.announceDropdown(this.overlay.showing);
+            this.announceDropdown();
 
-            // TODO Remove this in the scope of NUI-
+            // TODO Remove this in the scope of NUI-6132
             this.keyboardEventsManager.setActiveItem(-1);
         }
 
@@ -78,7 +71,7 @@ export class SorterKeyControlService {
 
     private handleClosedKeyDown(event: KeyboardEvent): void {
         // prevent scrolling page on key down/key up when sorter focused
-        if (this.shouldBePrevented(event)) {
+        if (this.shouldPreventDefault(event)) {
             event.preventDefault();
         }
     }
@@ -90,7 +83,7 @@ export class SorterKeyControlService {
         return this.keyboardEventsManager.activeItem && this.keyboardEventsManager.activeItemIndex >= 0;
     }
 
-    private shouldBePrevented(event: KeyboardEvent) {
+    private shouldPreventDefault(event: KeyboardEvent) {
         return event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP;
     }
 

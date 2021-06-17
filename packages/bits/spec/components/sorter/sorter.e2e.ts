@@ -5,7 +5,7 @@ import {
     IconAtom,
     SorterAtom,
 } from "../public_api";
-import {browser, protractor} from "protractor";
+import { Key } from "protractor";
 
 describe("USERCONTROL Sorter >", () => {
     let sorter: SorterAtom;
@@ -68,33 +68,33 @@ describe("USERCONTROL Sorter >", () => {
             it("should close sorter menu when navigating from it by TAB key", async () => {
                 await sorter.click();
                 expect(await sorter.isPopupDisplayed()).toBe(true);
-                await browser.actions().sendKeys(protractor.Key.TAB).perform();
+                await Helpers.pressKey(Key.TAB);
                 expect(await sorter.isPopupDisplayed()).toBe(false);
             });
-            // TODO Change this test in the scope of NUI-
+            // TODO Change this test in the scope of NUI-6132
             it("should close sorter menu by ESCAPE key, open by ENTER, and select first item", async () => {
                 await sorter.click();
                 expect(await sorter.isPopupDisplayed()).toBe(true);
-                await browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+                await Helpers.pressKey(Key.ESCAPE);
                 expect(await sorter.isPopupDisplayed()).toBe(false);
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                await Helpers.pressKey(Key.ENTER);
+                await Helpers.pressKey(Key.ARROW_DOWN);
+                await Helpers.pressKey(Key.ENTER);
                 expect(await sorter.getCurrentValue()).toBe("Title");
             });
-            // TODO Change this test in the scope of NUI-
+            // TODO Change this test in the scope of NUI-6132
             it("should select sort items by keyboard", async () => {
                 await sorter.click();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                await Helpers.pressKey(Key.ARROW_DOWN);
+                await Helpers.pressKey(Key.ARROW_DOWN);
+                await Helpers.pressKey(Key.ARROW_DOWN);
+                await Helpers.pressKey(Key.ENTER);
                 expect(await sorter.getCurrentValue()).toBe("Director");
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_DOWN).perform();
-                await browser.actions().sendKeys(protractor.Key.ARROW_UP).perform();
-                await browser.actions().sendKeys(protractor.Key.ENTER).perform();
+                await Helpers.pressKey(Key.ENTER);
+                await Helpers.pressKey(Key.ARROW_DOWN);
+                await Helpers.pressKey(Key.ARROW_DOWN);
+                await Helpers.pressKey(Key.ARROW_UP);
+                await Helpers.pressKey(Key.ENTER);
                 expect(await sorter.getCurrentValue()).toBe("Title");
             });
         });

@@ -26,7 +26,7 @@ import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
-import { SorterKeyControlService } from "./sorter-key-control.service";
+import { SorterKeyboardService } from "./sorter-keyboard.service";
 import { MenuPopupComponent } from "../menu";
 
 // <example-url>./../examples/index.html#/sorter</example-url>
@@ -39,7 +39,7 @@ import { MenuPopupComponent } from "../menu";
     templateUrl: "./sorter.component.html",
     styleUrls: ["./sorter.component.less"],
     encapsulation: ViewEncapsulation.None,
-    providers: [SorterKeyControlService],
+    providers: [SorterKeyboardService],
 })
 
 export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit, IFilterPub {
@@ -83,7 +83,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     private menuKeyControlListeners: Function[] = [];
 
     constructor(private logger: LoggerService,
-                private sorterKeyControlService: SorterKeyControlService,
+                private sorterKeyboardService: SorterKeyboardService,
                 private elRef: ElementRef,
                 private renderer: Renderer2) {}
 
@@ -140,11 +140,10 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
             .subscribe(_ => this.overlay.hide());
 
         this.updateOverlayWidth();
-        this.setKeyboardManagerServiceData();
-        this.initKeyboardManager();
+        this.initKeyboardService();
         this.menuKeyControlListeners.push(
             this.renderer.listen(this.elRef.nativeElement, "keydown", (event: KeyboardEvent) => {
-                this.sorterKeyControlService.handleKeydown(event);
+                this.sorterKeyboardService.handleKeydown(event);
             })
         )
     }
@@ -213,10 +212,8 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     }
 
     public toggleSorterMenu(): void {
-        if (!this.overlay.showing) {
-            this.sorterKeyControlService.announceDropdown(true);
-        }
         this.overlay.toggle();
+        this.sorterKeyboardService.announceDropdown();
     }
 
     private initSelectedItem() {
@@ -258,12 +255,10 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         this.customContainer = appendToBody ? undefined : this.popupArea;
     }
 
-    private setKeyboardManagerServiceData(): void {
-        this.sorterKeyControlService.menuItems = this.menuPopup.menuItems;
-        this.sorterKeyControlService.overlay = this.overlay;
+    private initKeyboardService (): void {
+        this.sorterKeyboardService.menuItems = this.menuPopup.menuItems;
+        this.sorterKeyboardService.overlay = this.overlay;
+        this.sorterKeyboardService.initKeyboardManager();
     }
 
-    private initKeyboardManager() {
-        this.sorterKeyControlService.initKeyboardManager();
-    }
 }
