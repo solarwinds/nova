@@ -86,12 +86,7 @@ export class UnitConversionService {
         let displayValue: string;
 
         if (!unitDisplay && isValidNumber && conversion.order ) {
-            const tempObj = {
-                ...conversion,
-            };
-            tempObj.order = 0;
-            unitDisplay = this.getUnitDisplay(tempObj, unit)
-
+            unitDisplay = this.getUnitDisplayBaseValue(unit);
             displayValue= this.getScientificDisplay(conversion, plusSign, nanDisplay);
         } else {
             displayValue = this.getValueDisplay(conversion, plusSign, nanDisplay, localizeValue)
@@ -132,8 +127,15 @@ export class UnitConversionService {
         return unitConversionConstants[unit][conversion.order];
     }
 
-    private isValidNumber(value: any): boolean {
-        return !isNaN(parseFloat(value)) && isFinite(parseInt(value, 10));
+    /**
+     * Gets the base value of the converted unit
+     *
+     * @param unit The basic unit used in the conversion
+     *
+     * @returns {string} The first unit in the unitConversionConstant array
+     */
+    public getUnitDisplayBaseValue(unit: UnitOption): string {
+        return unitConversionConstants[unit][0];
     }
     /**
      * Gets the converted value display string in scientific notation
@@ -151,5 +153,9 @@ export class UnitConversionService {
         const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
 
         return `${prefix}${conversion.scientificNotation}`;
+    }
+
+    private isValidNumber(value: any): boolean {
+        return !isNaN(parseFloat(value)) && isFinite(parseInt(value, 10));
     }
 }
