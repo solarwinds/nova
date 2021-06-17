@@ -150,6 +150,21 @@ describe("services >", () => {
             });
         });
 
+        describe("getScientificDisplay >", () => {
+            it("should use the 'nanDisplay' if the input is not a valid number", () => {
+                const nanDisplay = "000";
+                expect(subject.getScientificDisplay({ value: "NaN", order: -1, scientificNotation: "NaN" }, false, nanDisplay)).toEqual(nanDisplay);
+            });
+
+            it("should prefix the output with a plus sign for positive values", () => {
+                expect(subject.getScientificDisplay({ value: "1", order: 1, scientificNotation: "1.0e+0"}, true)).toEqual("+1.0e+0");
+            });
+
+            it("should not prefix the output with a plus sign for negative values", () => {
+                expect(subject.getScientificDisplay({ value: "-1", order: 1, scientificNotation: "-1.0e+0" }, true)).toEqual("-1.0e+0");
+            });
+        })
+
         describe("getUnitDisplay >", () => {
             it("should output the correct unit based on the conversion result", () => {
                 expect(subject.getUnitDisplay({ value: "1", order: 3, scientificNotation: "1.0e+9" }, "bitsPerSecond")).toEqual("Gpbs");
