@@ -43,6 +43,8 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
     /** Override CdkStepper 'steps' property to use WizardStepV2Component instead of CdkStep */
     readonly steps: QueryList<WizardStepV2Component> = new QueryList<WizardStepV2Component>();
 
+    stepsArray: Array<WizardStepV2Component> = [];
+
     /** Event emitted when the current step is done transitioning in. */
     @Output() readonly animationDone: EventEmitter<void> = new EventEmitter<void>();
     /** Event emitted when the selected step has changed. */
@@ -89,6 +91,7 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
             )
             .subscribe((steps: QueryList<WizardStepV2Component>) => {
                 this.steps.reset(steps.filter(step => step._stepper === this));
+                this.stepsArray = this.steps.toArray();
                 this.steps.notifyOnChanges();
             });
 

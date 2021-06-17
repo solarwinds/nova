@@ -16,7 +16,6 @@ import { WizardStepLabelDirective } from "./wizard-step-label.directive";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 import { WizardVerticalComponent } from "./wizard-vertical/wizard-vertical.component";
 import { WizardDirective } from "./wizard.directive";
-import { GetWizardStep } from "./get-step.pipe";
 
 /**
  * @ignore
@@ -37,7 +36,6 @@ import { GetWizardStep } from "./get-step.pipe";
         WizardStepFooterDirective,
         WizardStepperNextDirective,
         WizardStepperPreviousDirective,
-        GetWizardStep,
     ],
     exports: [
         WizardHorizontalComponent,
@@ -56,7 +54,6 @@ import { GetWizardStep } from "./get-step.pipe";
 
         WizardStepHeaderComponent,
         WizardStepFooterDirective,
-        GetWizardStep,
     ],
     providers: [ErrorStateMatcher],
 })
