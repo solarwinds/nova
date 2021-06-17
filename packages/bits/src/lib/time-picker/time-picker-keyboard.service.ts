@@ -12,11 +12,7 @@ export class TimePickerKeyboardService {
     private popup: MenuPopupComponent;
     private menuItems: QueryList<MenuItemBaseComponent>;
     private keyboardEventsManager: ActiveDescendantKeyManager<MenuItemBaseComponent>;
-    private iconTrigger: HTMLElement;
-
-    setItems(items: QueryList<MenuItemBaseComponent>): void {
-        this.menuItems = items;
-    }
+    private menuTrigger: HTMLElement;
 
     initService(
         items: QueryList<MenuItemBaseComponent>,
@@ -29,7 +25,7 @@ export class TimePickerKeyboardService {
         this.menuItems = items;
         this.keyboardEventsManager = new ActiveDescendantKeyManager<MenuItemBaseComponent>(items);
         this.keyboardEventsManager.setActiveItem(this.getSelectedIndex());
-        this.iconTrigger = trigger;
+        this.menuTrigger = trigger;
     }
 
     onKeyDown(event: KeyboardEvent): void {
@@ -55,7 +51,7 @@ export class TimePickerKeyboardService {
 
     private handleClosedMenu(event: KeyboardEvent): void {
         const { code } = event;
-        const isIconTrigger = document.activeElement === this.iconTrigger && this.isOpenMenuCode(code as KEYBOARD_CODE);
+        const isIconTrigger = document.activeElement === this.menuTrigger && this.isOpenMenuCode(code as KEYBOARD_CODE);
 
         if (code === KEYBOARD_CODE.ARROW_DOWN || isIconTrigger) {
             event.preventDefault();

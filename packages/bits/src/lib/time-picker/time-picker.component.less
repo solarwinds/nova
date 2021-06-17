@@ -12,11 +12,21 @@
         position: relative;
     }
 
-    &__icon {
+    &__trigger {
         cursor: pointer;
         position: absolute;
         top: @nui-space-xs + @nui-space-xxs;
         right: @nui-space-xs + @nui-space-xxs;
+        outline: none;
+
+        &:focus-within .nui-timepicker__icon {
+            outline: none;
+            border-radius: @nui-radius-default;
+            .focus-outline();
+        }
+    }
+
+    &__icon {
         z-index: (@zindex-active + 1);
     }
 
