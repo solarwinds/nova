@@ -132,7 +132,7 @@ export class UnitConversionService {
      *
      * @param unit The basic unit used in the conversion
      *
-     * @returns {string} The first unit in the unitConversionConstant array
+     * @returns {string} The abbreviation for the smallest unit of the provided UnitOption
      */
     public getUnitDisplayBaseValue(unit: UnitOption): string {
         return unitConversionConstants[unit][0];
