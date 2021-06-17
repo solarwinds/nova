@@ -10,10 +10,13 @@
                     [ariaLabel]="ariaLabel">
         </nui-textbox>
         <nui-icon
+            #menuTrigger
+            tabindex="0"
             class="nui-timepicker__icon"
             icon="clock"
             aria-hidden="true"
             [iconColor]="getIconColor()"
+            (focusout)="onFocusOut()"
             (click)="focusOnForm()"></nui-icon>
     </div>
 
@@ -23,7 +26,8 @@
                  [toggleReference]="toggleRef"
                  [overlayConfig]="overlayConfig"
                  [customContainer]="customContainer">
-                 <nui-menu-popup [itemsSource]="itemsSource" (menuItemClicked)="select($event)">
+                 <nui-menu-popup #popup
+                     [itemsSource]="itemsSource" (menuItemClicked)="select($event)">
                 </nui-menu-popup>
     </nui-overlay>
 </div>
