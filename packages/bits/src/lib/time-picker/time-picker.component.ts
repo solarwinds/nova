@@ -173,6 +173,10 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
             return;
         }
 
+        if (this.popupArea.nativeElement.contains(event.relatedTarget as HTMLElement)) {
+            return;
+        }
+
         if (!this.containerEl.nativeElement.contains(event.relatedTarget as HTMLElement)) {
             this.overlay.hide();
         }
