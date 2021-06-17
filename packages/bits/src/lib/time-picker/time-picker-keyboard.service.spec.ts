@@ -1,11 +1,7 @@
 import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
-import { MenuItemBaseComponent, MenuPopupComponent } from "../menu";
+import { MenuPopupComponent } from "../menu";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { KEYBOARD_CODE } from "../../constants";
-
-const itemsMock = [
-
-] as MenuItemBaseComponent[];
 
 const popupMock = {
     menuItems: {

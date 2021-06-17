@@ -46,13 +46,18 @@ export class TimePickerKeyboardService {
             event.preventDefault();
             this.keyboardEventsManager.activeItem?.doAction(event);
         }
+
+        if (code === KEYBOARD_CODE.SPACE) {
+            event.preventDefault();
+        }
     }
 
     private handleClosedMenu(event: KeyboardEvent): void {
         const { code } = event;
         const isIconTrigger = document.activeElement === this.menuTrigger && this.isOpenMenuCode(code as KEYBOARD_CODE);
+        const isInputTrigger = document.activeElement !== this.menuTrigger && code === KEYBOARD_CODE.ARROW_DOWN;
 
-        if (code === KEYBOARD_CODE.ARROW_DOWN || isIconTrigger) {
+        if (isInputTrigger || isIconTrigger) {
             event.preventDefault();
             this.overlay.show();
             this.keyboardEventsManager.activeItem?.menuItem?.nativeElement?.scrollIntoView({ block: "center" });
@@ -104,6 +109,6 @@ export class TimePickerKeyboardService {
     }
 
     private isOpenMenuCode(code: KEYBOARD_CODE): boolean {
-        return code === KEYBOARD_CODE.ENTER ||  code === KEYBOARD_CODE.SPACE || code === KEYBOARD_CODE.ARROW_DOWN;
+        return code === KEYBOARD_CODE.ENTER ||  code === KEYBOARD_CODE.SPACE;
     }
 }

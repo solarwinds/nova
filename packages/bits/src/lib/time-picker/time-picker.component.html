@@ -9,18 +9,14 @@
                     (blurred)="updateInnerModel($event)"
                     [ariaLabel]="ariaLabel">
         </nui-textbox>
-        <span #menuTrigger
-              class="nui-timepicker__trigger"
-              tabindex="0"
-              (focusout)="onFocusOut()"
-              (click)="focusOnForm()">
         <nui-icon
+            #menuTrigger
             class="nui-timepicker__icon"
             icon="clock"
-            aria-hidden="true"
+            tabindex="0"
+            (click)="focusOnForm()"
             [iconColor]="getIconColor()">
         </nui-icon>
-        </span>
     </div>
 
     <div #popupArea></div>
