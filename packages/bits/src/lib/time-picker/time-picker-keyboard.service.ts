@@ -23,7 +23,6 @@ export class TimePickerKeyboardService {
         this.popup = popup;
         this.menuItems = popup.menuItems.toArray();
         this.keyboardEventsManager = new ActiveDescendantKeyManager<MenuItemBaseComponent>(this.menuItems);
-        this.keyboardEventsManager.setActiveItem(this.getSelectedIndex());
         this.menuTrigger = trigger;
     }
 
@@ -47,8 +46,9 @@ export class TimePickerKeyboardService {
             this.keyboardEventsManager.activeItem?.doAction(event);
         }
 
-        if (code === KEYBOARD_CODE.SPACE) {
+        if (code === KEYBOARD_CODE.SPACE && document.activeElement === this.menuTrigger) {
             event.preventDefault();
+            this.overlay.toggle()
         }
     }
 
@@ -60,6 +60,7 @@ export class TimePickerKeyboardService {
         if (isInputTrigger || isIconTrigger) {
             event.preventDefault();
             this.overlay.show();
+            this.keyboardEventsManager.setActiveItem(this.getSelectedIndex());
             this.keyboardEventsManager.activeItem?.menuItem?.nativeElement?.scrollIntoView({ block: "center" });
         }
     }
@@ -101,7 +102,7 @@ export class TimePickerKeyboardService {
     }
 
     private getSelectedIndex(): number {
-        return this.popup.menuItems.toArray().findIndex((component) => {
+        return this.menuItems.findIndex((component) => {
             const parent = component.menuItem.nativeElement.parentElement;
 
             return parent.classList.contains("nui-menu-item--selected");

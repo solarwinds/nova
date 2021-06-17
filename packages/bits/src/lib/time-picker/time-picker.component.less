@@ -20,9 +20,9 @@
         z-index: (@zindex-active + 1);
 
         &:focus {
-            outline: none;
             border-radius: @nui-radius-default;
-            .focus-outline();
+            outline: none;
+            box-shadow: 0 0 0 @nui-line-medium fade(@nui-color-selected-contrast, 50%);
         }
     }
 
