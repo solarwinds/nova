@@ -39,6 +39,7 @@ import {
     TableSearchWithSelectAndPaginationComponent,
     TableSelectableToggleExampleComponent,
     TableSelectExampleComponent,
+    TableSelectPinnedHeaderComponent,
     TableSortingExampleComponent,
     TableTestComponent,
     TableVirtualScrollRealApiExampleComponent,
@@ -48,7 +49,7 @@ import {
     TableVirtualScrollSelectStickyHeaderExampleComponent,
     TableVirtualScrollStepsAndButtonExampleComponent,
     TableVirtualScrollStickyHeaderExampleComponent,
-    TableSelectPinnedHeaderComponent,
+    TableVirtualScrollStickyHeaderTestExampleComponent,
     TableVisualTestComponent,
 } from "./index";
 
@@ -226,6 +227,15 @@ const routes = [
         },
     },
     {
+        path: "sticky-test",
+        component: TableVirtualScrollStickyHeaderTestExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
         path: "select-sticky",
         component: TableVirtualScrollSelectStickyHeaderExampleComponent,
         data: {
@@ -282,6 +292,7 @@ const routes = [
         TableVirtualScrollRealApiMinimalistExampleComponent,
         TableSearchWithSelectAndPaginationComponent,
         TableVirtualScrollStickyHeaderExampleComponent,
+        TableVirtualScrollStickyHeaderTestExampleComponent,
         TableVirtualScrollSelectStickyHeaderExampleComponent,
         TableRowSelectInstructionsComponent,
     ],

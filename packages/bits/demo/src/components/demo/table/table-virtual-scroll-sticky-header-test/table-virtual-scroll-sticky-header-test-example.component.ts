@@ -1,12 +1,17 @@
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import { AfterViewInit, ChangeDetectionStrategy, Component, TrackByFunction, ViewChild } from "@angular/core";
-import { ClientSideDataSource, IFilteringOutputs, ISelection, SelectionModel } from "@nova-ui/bits";
+import {
+    ClientSideDataSource,
+    IFilteringOutputs,
+    TableStickyHeaderDirective,
+} from "@nova-ui/bits";
 import sample from "lodash/sample";
 import { Observable } from "rxjs";
 import { map, startWith, switchMap, tap } from "rxjs/operators";
 
 interface IRandomUserTableModel {
     no: number;
+    icon: string;
     nameFirst: string;
     nameLast: string;
     city: string;
@@ -14,21 +19,26 @@ interface IRandomUserTableModel {
 }
 
 @Component({
-    selector: "nui-table-virtual-scroll-select-sticky-header-example",
-    templateUrl: "./table-virtual-scroll-select-sticky-header-example.component.html",
+    selector: "nui-table-virtual-scroll-sticky-header-test-example",
+    templateUrl: "./table-virtual-scroll-sticky-header-test-example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ClientSideDataSource],
 })
-export class TableVirtualScrollSelectStickyHeaderExampleComponent implements AfterViewInit {
+export class TableVirtualScrollStickyHeaderTestExampleComponent implements AfterViewInit {
     @ViewChild(CdkVirtualScrollViewport) public viewport: CdkVirtualScrollViewport;
+    // Note: Used only for demo purposes
+    @ViewChild(TableStickyHeaderDirective) public stickyHeaderDirective: TableStickyHeaderDirective;
+
     // Note: Mock items list is used to fake that the data is already loaded
     // and let CDK Viewport perform the scrolling on a known number of items
     public placeholderItems: undefined[] = [];
     public visibleItems$: Observable<IRandomUserTableModel[]>;
     // The dynamically changed array of items to render by the table
-    public displayedColumns: string[] = ["no", "nameFirst", "nameLast", "city", "postcode"];
+    public displayedColumns: string[] = ["no", "icon", "nameFirst", "nameLast", "city", "postcode"];
+
+    public makeSticky: boolean = true;
     public itemSize: number = 40;
-    public selection: ISelection = new SelectionModel({ include: [1, 3, 5, 7, 9] });
+    public gridHeight = 400;
     // trackBy handler used to identify uniquely each item in the table
     public trackByNo: TrackByFunction<IRandomUserTableModel> = (index: number, item: IRandomUserTableModel): number => item?.no;
 
@@ -66,6 +76,12 @@ export class TableVirtualScrollSelectStickyHeaderExampleComponent implements Aft
                 })
             )));
     }
+
+    // Note: Used only for demo purposes
+    public updateStickyState(state: boolean): void {
+        this.stickyHeaderDirective.tableStickyHeader = state;
+        this.makeSticky = state;
+    }
 }
 
 const PEOPLE = ["Elena", "Madelyn", "Baggio", "Josh", "Lukas", "Blake", "Frantz", "Dima", "Serhii", "Vita", "Vlad", "Ivan", "Dumitru"];
@@ -79,6 +95,7 @@ function generateUsers(length: number): IRandomUserTableModel[] {
             city: sample(CITIES) || CITIES[0],
             nameFirst: personName,
             nameLast: "UnknownLast",
+            icon: sample(["status_up", "status_unplugged"]) || "status_up",
         });
     });
 }
