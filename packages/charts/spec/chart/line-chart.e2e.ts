@@ -14,9 +14,7 @@ describe("Line chart", () => {
     const data = [[60, 40, 70, 45, 90], [30, 95, 15, 60, 35]];
     const colors = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white"];
 
-    function getYCoordinate(value: number): number {
-        return 105 - value; // 105 = 100px of height + 5px of padding. Zero is at the top for y-axis.
-    }
+    const getYCoordinate = (value: number): number => 105 - value// 105 = 100px of height + 5px of padding. Zero is at the top for y-axis.;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/line/test");
