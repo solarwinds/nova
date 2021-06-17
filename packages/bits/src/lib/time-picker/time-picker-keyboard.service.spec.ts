@@ -125,6 +125,7 @@ describe("Services >", () => {
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
                 const spy = spyOn(activeItem.menuItem.nativeElement, "scrollIntoView");
 
+                spyOn(service["keyboardEventsManager"], "setActiveItem" as never);
                 spyOnProperty(service["keyboardEventsManager"], "activeItem").and.returnValue(activeItem);
                 service["handleClosedMenu"](event);
                 expect(spy).toHaveBeenCalledWith({ block: "center" });
