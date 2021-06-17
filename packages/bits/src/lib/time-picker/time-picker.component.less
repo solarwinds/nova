@@ -18,6 +18,12 @@
         top: @nui-space-xs + @nui-space-xxs;
         right: @nui-space-xs + @nui-space-xxs;
         z-index: (@zindex-active + 1);
+
+        &:focus {
+            border-radius: @nui-radius-default;
+            outline: none;
+            box-shadow: 0 0 0 @nui-line-medium fade(@nui-color-selected-contrast, 50%);
+        }
     }
 
     &__menu {

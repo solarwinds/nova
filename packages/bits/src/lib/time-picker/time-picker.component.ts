@@ -1,10 +1,12 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import {
     AfterViewInit,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     EventEmitter,
     forwardRef,
+    HostListener,
     Input,
     OnChanges,
     OnDestroy,
@@ -28,6 +30,8 @@ import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { OverlayUtilitiesService } from "../overlay/overlay-utilities.service";
 import { TextboxComponent } from "../textbox/textbox.component";
+import { MenuPopupComponent } from "../menu";
+import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
 
 // <example-url>./../examples/index.html#/time-picker</example-url><br />
 
@@ -45,6 +49,7 @@ import { TextboxComponent } from "../textbox/textbox.component";
             useExisting: forwardRef(() => TimePickerComponent),
             multi: true,
         },
+        TimePickerKeyboardService,
     ],
     styleUrls: ["./time-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
@@ -53,7 +58,10 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
 
     @ViewChild("date", {static: true}) textbox: TextboxComponent;
     @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+    @ViewChild("toggleRef", {static: true}) containerEl: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    @ViewChild("popup") public popup: MenuPopupComponent;
+    @ViewChild("menuTrigger", { read: ElementRef }) public menuTrigger: ElementRef;
     /** sets a step (difference between item in picker) */
     @Input() timeStep =  30;
     /** sets disable state of the timepicker */
@@ -103,11 +111,13 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     public onDestroy$ = new Subject<void>();
 
     protected popupUtilities: OverlayUtilitiesService = new OverlayUtilitiesService();
-    
+
     private itemToSelect: any;
     private inputChanged: Subject<string> = new Subject<string>();
 
-    constructor(private elementRef: ElementRef) {}
+    constructor(private elementRef: ElementRef,
+                private keyboardService: TimePickerKeyboardService,
+                private cdr: ChangeDetectorRef) {}
 
     public ngOnInit() {
         this.times = this.generateTimeItems(this.timeStep);
@@ -142,13 +152,35 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(_ => this.overlay.hide());
-        
+
         this.initPopupUtilities();
+        this.keyboardService.initService(this.popup, this.overlay, this.menuTrigger.nativeElement);
+        this.cdr.detectChanges();
     }
 
     onChange(value: any) {}
 
     onTouched() {}
+
+    @HostListener("keydown", ["$event"])
+    public onKeyDown(event: KeyboardEvent): void {
+        this.keyboardService.onKeyDown(event);
+    }
+
+    @HostListener("focusout", ["$event"])
+    public onFocusOut(event: FocusEvent): void {
+        if (!this.overlay.showing || !document.activeElement) {
+            return;
+        }
+
+        if (this.popupArea.nativeElement.contains(event.relatedTarget as HTMLElement)) {
+            return;
+        }
+
+        if (!this.containerEl.nativeElement.contains(event.relatedTarget as HTMLElement)) {
+            this.overlay.hide();
+        }
+    }
 
     updateInnerModel(value: any) {
         setTimeout(() => this.inputBlurred.emit(), 100);

@@ -39,6 +39,7 @@ import { ValidationMessageComponent } from "../validation-message/validation-mes
 
 import { TimePickerReactiveFormTestComponent } from "./spec-helpers/spec-components";
 import { TimePickerComponent } from "./time-picker.component";
+import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
 
 describe("components >", () => {
     describe("timepicker >", () => {
@@ -78,6 +79,7 @@ describe("components >", () => {
                     FormBuilder,
                     LoggerService,
                     IconService,
+                    TimePickerKeyboardService,
                 ],
             });
             fixture = TestBed.createComponent(TimePickerComponent);
