@@ -10,11 +10,11 @@
                                 [maxValue]="gaugeConfig.max"
                                 customBoxWidth="75px"></nui-textbox-number>
         </nui-form-field>
-        <nui-checkbox [ngModel]="markersEnabled"
-                      (ngModelChange)="onMarkersEnabledChange($event)"
+        <nui-checkbox [ngModel]="reversed"
+                      (ngModelChange)="onReversedChange($event)"
                       i18n>
-            Markers Enabled
+            Reversed Thresholds
         </nui-checkbox>
     </div>
-    <nui-chart class="chart" [chart]="chartAssist.chart"></nui-chart>
+    <nui-chart class="demo-chart" [chart]="chartAssist.chart"></nui-chart>
 </div>

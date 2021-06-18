@@ -20,7 +20,7 @@
 <h2>Donut Gauge</h2>
 <p>
     A donut gauge is well-suited for use cases that consist of a larger area to display a metric visualization such as a dashboard. For use cases, with a more
-    compact display area, consider the linear gauge type instead. (Documentation for linear gauges is coming soon!)
+    compact display area, consider the linear gauge type whose documentation is further down on this page.
 </p>
 
 <h3>Basic Usage</h3>
@@ -42,7 +42,8 @@
 
 <h3>Thresholds</h3>
 <p>
-    To add thresholds to a gauge, specify a value of type <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code>
+    To add thresholds to a gauge, specify a value of type
+    <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code>
     on the <code><a href="../interfaces/IGaugeConfig.html#thresholds" target="_blank">thresholds</a></code> property of the
     <code><a href="../interfaces/IGaugeConfig.html" target="_blank">IGaugeConfig</a></code>. For an easy way to assemble an <code>IGaugeThresholdsConfig</code>
     object, <code>GaugeUtil</code> provides a
@@ -79,7 +80,8 @@
     optional <code><a href="../interfaces/IGaugeLabelsPluginConfig.html" target="_blank">config</a></code> argument to a value of type
     <code><a href="../interfaces/IAllAround.html" target="_blank">IAllAround&lt;number&gt;</a></code>. Alternately, if you'd prefer to set the margins on
     the grid
-    <a href="../additional-documentation/advanced-usage/grid.html" target="_blank">manually</a> instead of having the labels plugin do it for you, you can set the
+    <a href="../additional-documentation/advanced-usage/grid.html" target="_blank">manually</a> instead of having the labels plugin do it for you, you can set
+    the
     <code><a href="../interfaces/IGaugeLabelsPluginConfig.html#applyClearance" target="_blank">applyClearance</a></code> property on the plugin constructor's
     <code>config</code> argument to <code>false</code>.
 </nui-message>
@@ -109,8 +111,8 @@
 
 <h4>Enabling/Disabling Thresholds</h4>
 <p>
-    To toggle a threshold on or off, use the ID of the threshold to access the corresponding threshold definition on the <code>definitions</code> property of the
-    <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code> object. Set the
+    To toggle a threshold on or off, use the ID of the threshold to access the corresponding threshold definition on the <code>definitions</code> property of
+    the <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code> object. Set the
     <code><a href="../interfaces/IGaugeThresholdDef.html#enabled" target="_blank">enabled</a></code> property on the threshold definition accordingly.
 </p>
 <nui-example-wrapper filenamePrefix="donut-gauge-with-threshold-toggling-example" exampleTitle="Donut with Threshold Toggling">
@@ -138,3 +140,16 @@
 <nui-example-wrapper filenamePrefix="donut-gauge-with-content-example" exampleTitle="Donut with Inner Content">
     <donut-gauge-with-content-example></donut-gauge-with-content-example>
 </nui-example-wrapper>
+
+<h2>Linear Gauges</h2>
+<h3>Basic Horizontal</h3>
+<nui-example-wrapper filenamePrefix="horizontal-gauge-basic-example" exampleTitle="Basic Horizontal Gauge">
+    <horizontal-gauge-basic-example></horizontal-gauge-basic-example>
+</nui-example-wrapper>
+
+<h3>Basic Vertical</h3>
+<nui-example-wrapper filenamePrefix="vertical-gauge-basic-example" exampleTitle="Basic Vertical Gauge">
+    <vertical-gauge-basic-example></vertical-gauge-basic-example>
+</nui-example-wrapper>
+
+<h3>Adjusting Thickness</h3>

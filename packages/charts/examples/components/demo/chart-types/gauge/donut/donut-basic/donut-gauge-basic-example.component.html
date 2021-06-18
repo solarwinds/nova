@@ -1,0 +1,13 @@
+<div class="d-flex align-items-center justify-content-center">
+    <nui-form-field class="d-block demo-value-input"
+                    caption="Value" i18n-caption
+                    [showOptionalText]="false">
+        <nui-textbox-number type="number"
+                            [ngModel]="gaugeConfig.value"
+                            (ngModelChange)="onValueChange($event)"
+                            [minValue]="0"
+                            [maxValue]="gaugeConfig.max"
+                            customBoxWidth="75px"></nui-textbox-number>
+    </nui-form-field>
+    <nui-chart class="demo-chart" [chart]="chartAssist.chart"></nui-chart>
+</div>
