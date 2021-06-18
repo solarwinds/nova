@@ -4,8 +4,8 @@ import _get from "lodash/get";
 import { Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
 
-import { TableAlignmentOptions } from "../public-api";
 import { DraggedOverCell, TableStateHandlerService } from "../table-state-handler.service";
+import { TableAlignmentOptions } from "../types";
 
 import { TableColumnDefDirective } from "./table-column-def.directive";
 

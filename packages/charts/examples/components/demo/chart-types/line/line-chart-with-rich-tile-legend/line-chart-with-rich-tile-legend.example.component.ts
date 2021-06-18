@@ -46,11 +46,11 @@ function getData() {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2016-12-25T15:14:29.909Z", format), y: 30 },
-                { x: moment("2016-12-27T15:14:29.909Z", format), y: 95 },
-                { x: moment("2016-12-29T15:14:29.909Z", format), y: 15 },
-                { x: moment("2016-12-31T15:14:29.909Z", format), y: 60 },
-                { x: moment("2017-01-03T15:14:29.909Z", format), y: 35 },
+                { x: moment("2016-12-25T15:14:29.909Z", format), y: 130 },
+                { x: moment("2016-12-27T15:14:29.909Z", format), y: 195 },
+                { x: moment("2016-12-29T15:14:29.909Z", format), y: 115 },
+                { x: moment("2016-12-31T15:14:29.909Z", format), y: 160 },
+                { x: moment("2017-01-03T15:14:29.909Z", format), y: 135 },
             ],
         },
         {

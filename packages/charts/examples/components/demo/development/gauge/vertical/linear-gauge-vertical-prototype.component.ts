@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import { ComponentChanges, UnitConversionService } from "@nova-ui/bits";
+import { ComponentChanges } from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -30,8 +30,6 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
     public seriesSet: IChartAssistSeries<IAccessors>[];
     private labelsPlugin: LinearGaugeLabelsPlugin;
 
-    constructor(private unitConversionService: UnitConversionService) { }
-
     public ngOnChanges(changes: ComponentChanges<LinearGaugeVerticalPrototypeComponent>): void {
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
@@ -52,7 +50,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
-            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.disableThresholdMarkers;
+            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.thresholds?.disableMarkers;
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
@@ -80,11 +78,6 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
         this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Vertical);
-        this.seriesSet = GaugeUtil.setThresholdLabelFormatter((d: string) => {
-            const conversion = this.unitConversionService.convert(parseInt(d, 10), 1000, 2);
-            return this.unitConversionService.getFullDisplay(conversion, "generic");
-        }, this.seriesSet);
-
         this.chartAssist.update(this.seriesSet);
     }
 }

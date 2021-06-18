@@ -26,7 +26,7 @@ import { takeUntil } from "rxjs/operators";
 import { DEFAULT_INTERACTIVE_ELEMENTS } from "../../../constants/interaction.constants";
 import { ISelectorState } from "../../../services/public-api";
 import { CheckboxStatus, SelectionType } from "../../selector/public-api";
-import { ClickableRowOptions, RowHeightOptions } from "../public-api";
+import { ClickableRowOptions, RowHeightOptions } from "../types";
 import { TableStateHandlerService } from "../table-state-handler.service";
 
 /* eslint-disable */

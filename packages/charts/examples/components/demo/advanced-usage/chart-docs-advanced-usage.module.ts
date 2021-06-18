@@ -6,27 +6,27 @@ import { NuiChartsModule } from "@nova-ui/charts";
 const exampleRoutes: Routes = [
     {
         path: "accessors",
-        loadChildren: () => import("components/demo/advanced-usage/accessors/chart-docs-accessors.module").then(m => m.ChartDocsAccessorsModule),
+        loadChildren: async () => import("components/demo/advanced-usage/accessors/chart-docs-accessors.module").then(m => m.ChartDocsAccessorsModule),
     },
     {
         path: "chart-setup",
-        loadChildren: () => import("components/demo/advanced-usage/chart-setup/chart-docs-chart-setup.module").then(m => m.ChartDocsChartSetupModule),
+        loadChildren: async () => import("components/demo/advanced-usage/chart-setup/chart-docs-chart-setup.module").then(m => m.ChartDocsChartSetupModule),
     },
     {
         path: "events",
-        loadChildren: () => import("components/demo/advanced-usage/events/chart-docs-events.module").then(m => m.ChartDocsEventsModule),
+        loadChildren: async () => import("components/demo/advanced-usage/events/chart-docs-events.module").then(m => m.ChartDocsEventsModule),
     },
     {
         path: "grid-config",
-        loadChildren: () => import("components/demo/advanced-usage/grid-config/chart-docs-grid-config.module").then(m => m.ChartDocsGridConfigModule),
+        loadChildren: async () => import("components/demo/advanced-usage/grid-config/chart-docs-grid-config.module").then(m => m.ChartDocsGridConfigModule),
     },
     {
         path: "legend",
-        loadChildren: () => import("components/demo/advanced-usage/legend/chart-docs-legend-example.module").then(m => m.ChartDocsLegendExampleModule),
+        loadChildren: async () => import("components/demo/advanced-usage/legend/chart-docs-legend-example.module").then(m => m.ChartDocsLegendExampleModule),
     },
     {
         path: "scales",
-        loadChildren: () => import("components/demo/advanced-usage/scales/chart-docs-scales.module").then(m => m.ChartDocsScalesModule),
+        loadChildren: async () => import("components/demo/advanced-usage/scales/chart-docs-scales.module").then(m => m.ChartDocsScalesModule),
     },
 ];
 

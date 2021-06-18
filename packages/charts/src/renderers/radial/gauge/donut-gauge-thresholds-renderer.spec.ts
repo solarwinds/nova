@@ -4,7 +4,7 @@ import { Subject } from "rxjs";
 import { D3Selection, IAccessors, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../../core/common/types";
 import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-import { IGaugeConfig, IGaugeThresholdConfigs } from "../../../gauge/types";
+import { IGaugeConfig, GaugeThresholdDefs } from "../../../gauge/types";
 import { IRenderSeries, RenderLayerName } from "../../types";
 import { RadialAccessors } from "../accessors/radial-accessors";
 
@@ -18,6 +18,7 @@ describe("DonutGaugeThresholdsRenderer >", () => {
     let renderSeries: IRenderSeries<RadialAccessors>;
     let dataSeries: IDataSeries<IAccessors>;
     const containers: IRenderContainers = {};
+    const standardThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(3, 7);
 
     beforeEach(() => {
         renderer = new DonutGaugeThresholdsRenderer();
@@ -27,12 +28,15 @@ describe("DonutGaugeThresholdsRenderer >", () => {
             value: 5,
             max: 10,
             thresholds: {
-                ...GaugeUtil.createStandardThresholdConfigs(3, 7),
-                "additionalThreshold": {
-                    id: "additionalThreshold",
-                    value: 9,
-                    enabled: true,
-                    color: "green",
+                ...standardThresholdsConfig,
+                definitions: {
+                    ...standardThresholdsConfig.definitions,
+                    "additionalThreshold": {
+                        id: "additionalThreshold",
+                        value: 9,
+                        enabled: true,
+                        color: "green",
+                    },
                 },
             },
         };
@@ -64,7 +68,7 @@ describe("DonutGaugeThresholdsRenderer >", () => {
         });
 
         it("should render the correct number of threshold markers", () => {
-            expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds as IGaugeThresholdConfigs).length);
+            expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds?.definitions as GaugeThresholdDefs).length);
         });
 
         it("should position the threshold markers correctly", () => {

@@ -25,6 +25,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "1",
                         order: 1,
+                        scientificNotation: "1.0e+3",
                         scale: 1,
                     });
             });
@@ -33,6 +34,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "1",
                         order: 1,
+                        scientificNotation: "1.0e+3",
                         scale: 1,
                     });
             });
@@ -41,6 +43,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "1.5",
                         order: 1,
+                        scientificNotation: "1.5e+3",
                         scale: 1,
                     });
             });
@@ -49,6 +52,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "1.51",
                         order: 1,
+                        scientificNotation: "1.51e+3",
                         scale: 2,
                     });
             });
@@ -57,6 +61,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "7.3",
                         order: 4,
+                        scientificNotation: "7.3e+12",
                         scale: 1,
                     });
             });
@@ -65,6 +70,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "-1",
                         order: 1,
+                        scientificNotation: "-1.0e+3",
                         scale: 1,
                     });
             });
@@ -73,6 +79,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "0",
                         order: 0,
+                        scientificNotation: "0.0e+0",
                         scale: 1,
                     });
             });
@@ -82,6 +89,7 @@ describe("services >", () => {
                     .toEqual({
                         value: "-2.2",
                         order: 1,
+                        scientificNotation: "-2.2e+3",
                         scale: 1,
                     });
             });
@@ -91,23 +99,19 @@ describe("services >", () => {
                     .toEqual({
                         value: "-2.781",
                         order: 1,
+                        scientificNotation: "-2.848e+3",
                         scale: 3,
                     });
             });
 
-            it("should handle with warning value from a restricted arrange (0; 1)", () => {
+            it("should handle a value with only decimals", () => {
                 expect(subject.convert(0.314))
                     .toEqual({
-                        value: "314",
-                        order: -1,
+                        value: "0.3",
+                        order: 0,
+                        scientificNotation: "3.1e-1",
                         scale: 1,
                     });
-            });
-
-            it("should send warning notification if value is NOT allowed (0; 1)", () => {
-                subject.convert(0.314);
-
-                expect(logWarnSpy).toHaveBeenCalled();
             });
 
             it("should remove trailing zeros", () => {
@@ -118,15 +122,15 @@ describe("services >", () => {
         describe("getValueDisplay >", () => {
             it("should use the 'nanDisplay' if the input is not a valid number", () => {
                 const nanDisplay = "000";
-                expect(subject.getValueDisplay({ value: "NaN", order: -1 }, false, nanDisplay)).toEqual(nanDisplay);
+                expect(subject.getValueDisplay({ value: "NaN", order: -1, scientificNotation: "NaN" }, false, nanDisplay)).toEqual(nanDisplay);
             });
 
             it("should prefix the output with a plus sign for positive values", () => {
-                expect(subject.getValueDisplay({ value: "1", order: 1 }, true)).toEqual("+1");
+                expect(subject.getValueDisplay({ value: "1", order: 1, scientificNotation: "1.0e+0"}, true)).toEqual("+1");
             });
 
             it("should not prefix the output with a plus sign for negative values", () => {
-                expect(subject.getValueDisplay({ value: "-1", order: 1 }, true)).toEqual("-1");
+                expect(subject.getValueDisplay({ value: "-1", order: 1, scientificNotation: "-1.0e+0" }, true)).toEqual("-1");
             });
 
             it("should localize the output", () => {
@@ -146,9 +150,24 @@ describe("services >", () => {
             });
         });
 
+        describe("getScientificDisplay >", () => {
+            it("should use the 'nanDisplay' if the input is not a valid number", () => {
+                const nanDisplay = "000";
+                expect(subject.getScientificDisplay({ value: "NaN", order: -1, scientificNotation: "NaN" }, false, nanDisplay)).toEqual(nanDisplay);
+            });
+
+            it("should prefix the output with a plus sign for positive values", () => {
+                expect(subject.getScientificDisplay({ value: "1", order: 1, scientificNotation: "1.0e+0"}, true)).toEqual("+1.0e+0");
+            });
+
+            it("should not prefix the output with a plus sign for negative values", () => {
+                expect(subject.getScientificDisplay({ value: "-1", order: 1, scientificNotation: "-1.0e+0" }, true)).toEqual("-1.0e+0");
+            });
+        })
+
         describe("getUnitDisplay >", () => {
             it("should output the correct unit based on the conversion result", () => {
-                expect(subject.getUnitDisplay({ value: "1", order: 3 }, "bitsPerSecond")).toEqual("Gpbs");
+                expect(subject.getUnitDisplay({ value: "1", order: 3, scientificNotation: "1.0e+9" }, "bitsPerSecond")).toEqual("Gpbs");
             });
         });
 
@@ -213,6 +232,11 @@ describe("services >", () => {
                     inputValue: 1000 ** 8,
                     unit: "generic",
                     expectedValue: "1Sp",
+                }, {
+                    name: "1000^11 as 1Sp",
+                    inputValue: 1000 ** 11,
+                    unit: "generic",
+                    expectedValue: "1.0e+33",
                 }, {
                     name: "0 B as 0 B",
                     inputValue: 0,

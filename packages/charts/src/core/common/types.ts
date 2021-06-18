@@ -185,11 +185,20 @@ export interface IChartSeries<A extends IAccessors> extends IDataSeries<A> {
      * uses 'x' and 'y' as the keys for its scales.
      */
     scales: Scales;
+    /**
+     * Represents an emphasis/visibility state of this series
+     */
+    renderState?: RenderState;
 }
 
 export interface IChartAssistSeries<A extends IAccessors> extends IChartSeries<A> {
+    /**
+     * Whether this series should be shown in the legend
+     */
     showInLegend?: boolean;
-    renderState?: RenderState;
+    /**
+     * Whether this series should be preprocessed in the chart assist
+     */
     preprocess?: boolean;
 }
 

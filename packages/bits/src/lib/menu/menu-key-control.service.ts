@@ -102,7 +102,6 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private handleOpenKeyDown(event: KeyboardEvent): void {
-        event.stopPropagation();
 
         if (event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP) {
             // passing the event to key manager so we get a change fired
@@ -148,8 +147,6 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     private handleClosedKeyDown(event: KeyboardEvent): void {
-        event.stopPropagation();
-
         // prevent opening on enter and prevent scrolling page on key down/key up when focused
         if (this.shouldBePrevented(event)) {
             event.preventDefault();

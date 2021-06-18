@@ -11,7 +11,7 @@
 
         <!-- IMPORTANT Bind only visible rows to the table, otherwise, the table will render all rows in the DOM -->
         <table nui-table [dataSource]="visibleItems$ | async" [trackBy]="trackByNo" [sortable]="true">
-            <!--         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  -->
+            <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
             <ng-container *ngFor="let column of displayedColumns" [nuiColumnDef]="column">
                 <th nui-header-cell *nuiHeaderCellDef> {{column}}</th>
                 <td nui-cell *nuiCellDef="let element">{{element[column]}}</td>
@@ -19,7 +19,7 @@
 
             <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
             <!-- IMPORTANT The actual difference between normal table and virtualized one-->
-            <!--∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨ -->
+            <!-- ∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨∨ -->
             <ng-template nuiRowDef cdkVirtualFor
                          let-context
                          [nuiRowDefColumns]="displayedColumns"

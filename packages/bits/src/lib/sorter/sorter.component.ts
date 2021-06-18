@@ -9,9 +9,11 @@ import {
     OnDestroy,
     OnInit,
     Output,
+    Renderer2,
     SimpleChanges,
     ViewChild,
     ViewEncapsulation,
+    forwardRef,
 } from "@angular/core";
 import _assign from "lodash/assign";
 import _isEqual from "lodash/isEqual";
@@ -24,8 +26,9 @@ import { LoggerService } from "../../services/log-service";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
-
 import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
+import { SorterKeyboardService } from "./sorter-keyboard.service";
+import { MenuPopupComponent } from "../menu";
 
 // <example-url>./../examples/index.html#/sorter</example-url>
 
@@ -37,6 +40,7 @@ import { ISortedItem, ISorterChanges, SorterDirection } from "./public-api";
     templateUrl: "./sorter.component.html",
     styleUrls: ["./sorter.component.less"],
     encapsulation: ViewEncapsulation.None,
+    providers: [SorterKeyboardService],
 })
 
 export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit, IFilterPub {
@@ -56,6 +60,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
     @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
+    @ViewChild("popup") public menuPopup: MenuPopupComponent;
 
     // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
     // before any new search is performed
@@ -76,9 +81,12 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         [SorterDirection.ascending]: "arrow-up",
         [SorterDirection.descending]: "arrow-down",
     };
+    private menuKeyControlListeners: Function[] = [];
 
     constructor(private logger: LoggerService,
-                private el: ElementRef) {}
+                private sorterKeyboardService: SorterKeyboardService,
+                private elRef: ElementRef,
+                private renderer: Renderer2) {}
 
     public ngOnInit() {
         this.onAppendToBodyChange(this.appendToBody);
@@ -133,6 +141,12 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
             .subscribe(_ => this.overlay.hide());
 
         this.updateOverlayWidth();
+        this.initKeyboardService();
+        this.menuKeyControlListeners.push(
+            this.renderer.listen(this.elRef.nativeElement, "keydown", (event: KeyboardEvent) => {
+                this.sorterKeyboardService.handleKeydown(event);
+            })
+        )
     }
 
     public select(item: IMenuItem) {
@@ -193,8 +207,14 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     }
 
     public ngOnDestroy() {
+        this.menuKeyControlListeners.forEach(listener => listener());
         this.onDestroy$.next();
         this.onDestroy$.complete();
+    }
+
+    public toggleSorterMenu(): void {
+        this.overlay.toggle();
+        this.sorterKeyboardService.announceDropdown();
     }
 
     private initSelectedItem() {
@@ -235,4 +255,11 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     private onAppendToBodyChange(appendToBody: boolean): void {
         this.customContainer = appendToBody ? undefined : this.popupArea;
     }
+
+    private initKeyboardService (): void {
+        this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems;
+        this.sorterKeyboardService.overlay = this.overlay;
+        this.sorterKeyboardService.initKeyboardManager();
+    }
+
 }
