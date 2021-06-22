@@ -25,7 +25,7 @@ import { NuiTooltipModule } from "../tooltip/tooltip.module";
     imports: [
         NuiCommonModule,
         NuiIconModule,
-        NuiTooltipModule
+        NuiTooltipModule,
     ],
     declarations: [
         WizardHorizontalComponent,
