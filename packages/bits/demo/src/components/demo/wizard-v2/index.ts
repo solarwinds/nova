@@ -11,3 +11,5 @@ export * from "./wizard-async-validation-form/wizard-async-form-validation.examp
 export * from "./wizard-with-custom-icons/wizard-with-custom-icons-example.component";
 export * from "./wizard-restore-state/wizard-restore-state.example.component";
 export * from "./wizard-step-change-example/wizard-step-change-example.component";
+export * from "./wizard-tooltip/wizard-tooltip.example.component";
+

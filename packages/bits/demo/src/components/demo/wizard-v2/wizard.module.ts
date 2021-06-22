@@ -40,6 +40,7 @@ import {
     WizardWithCustomIconsExampleComponent,
     WizardRestoreStateExampleComponent,
     WizardStepChangeExampleComponent,
+    WizardTooltipExampleComponent,
 } from "./index";
 
 const routes = [
@@ -92,6 +93,7 @@ const routes = [
         WizardWithCustomIconsExampleComponent,
         WizardRestoreStateExampleComponent,
         WizardStepChangeExampleComponent,
+        WizardTooltipExampleComponent,
     ],
     providers: [
         {

@@ -76,12 +76,12 @@
 
 <p><u>Global</u></p>
 <p>
-    Nova provides you with the <code>WIZARD_CONFIG</code> injection token, which allows you to override the default wizard settings in a global context. For instance, 
+    Nova provides you with the <code>WIZARD_CONFIG</code> injection token, which allows you to override the default wizard settings in a global context. For instance,
     set the necessary icons settings with this token on a module level to allow all wizards within a module to receive the same icon configuration.
 </p>
 <p><u>Step Specific</u></p>
 <p>
-    Use the <code>stepIconsConfig</code> input of the <code>nui-wizard-step-v2</code> component to pass the step icons config specifically to this step. It will 
+    Use the <code>stepIconsConfig</code> input of the <code>nui-wizard-step-v2</code> component to pass the step icons config specifically to this step. It will
     override the global settings for this particular step.
 </p>
 <nui-example-wrapper filenamePrefix="wizard-with-custom-icons-example" exampleTitle="Wizard with custom icons">
@@ -102,6 +102,15 @@
 </p>
 <nui-example-wrapper filenamePrefix="wizard-step-change-example" exampleTitle="Wizard Step Change">
     <nui-wizard-step-change-example></nui-wizard-step-change-example>
+</nui-example-wrapper>
+
+<h3>Wizard Tooltip</h3>
+<p>
+    You are able add tooltip to wizard. By default if label text overflow container we show tooltip.
+    Note that it doesn't work with label with custom template. In this case you should add tooltip explicitly
+</p>
+<nui-example-wrapper filenamePrefix="wizard-step-change-example" exampleTitle="Wizard Tooltip">
+    <nui-wizard-tooltip-example></nui-wizard-tooltip-example>
 </nui-example-wrapper>
 
 <h2>Keyboard interaction</h2>
