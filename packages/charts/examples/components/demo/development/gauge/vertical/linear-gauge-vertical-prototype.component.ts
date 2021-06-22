@@ -34,7 +34,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             if (changes.thickness) {
-                gridConfig.dimension.width(this.thickness);
+                gridConfig.dimension.width(this.thickness ?? 0);
             }
             if (changes.flipLabels) {
                 this.labelsPlugin.config.flipLabels = this.flipLabels;

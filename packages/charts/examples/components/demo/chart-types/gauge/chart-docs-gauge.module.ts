@@ -29,6 +29,8 @@ import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut/don
 import { DonutGaugeWithMarkerTogglingExampleComponent } from "./donut/donut-with-marker-toggling/donut-gauge-with-marker-toggling-example.component";
 import { HorizontalGaugeBasicExampleComponent } from "./linear/horizontal-gauge-basic-example.component";
 import { VerticalGaugeBasicExampleComponent } from "./linear/vertical-gauge-basic-example.component";
+import { HorizontalGaugeWithThresholdsExampleComponent } from "./linear/horizontal-gauge-with-thresholds-example.component";
+import { HorizontalGaugeThicknessAdjustmentExampleComponent } from "./linear/horizontal-gauge-thickness-adjustment-example.component";
 
 const exampleRoutes: Routes = [
     {
@@ -119,6 +121,24 @@ const exampleRoutes: Routes = [
             },
         },
     },
+    {
+        path: "linear-with-thresholds",
+        component: HorizontalGaugeWithThresholdsExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "linear-thickness",
+        component: HorizontalGaugeThicknessAdjustmentExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
 ];
 
 @NgModule({
@@ -126,6 +146,7 @@ const exampleRoutes: Routes = [
         ChartDocsGaugeComponent,
         GaugeVisualTestComponent,
         HorizontalGaugeBasicExampleComponent,
+        HorizontalGaugeWithThresholdsExampleComponent,
         HorizontalGaugeTesterComponent,
         DonutGaugeTesterComponent,
         DonutGaugeBasicExampleComponent,
@@ -135,6 +156,7 @@ const exampleRoutes: Routes = [
         DonutGaugeWithThresholdMarkersExampleComponent,
         DonutGaugeWithThresholdTogglingExampleComponent,
         VerticalGaugeBasicExampleComponent,
+        HorizontalGaugeThicknessAdjustmentExampleComponent,
         VerticalGaugeTesterComponent,
     ],
     imports: [

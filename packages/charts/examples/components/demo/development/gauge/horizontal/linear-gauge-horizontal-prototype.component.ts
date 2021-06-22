@@ -33,7 +33,7 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
         if ((changes.thickness && !changes.thickness.firstChange) || (changes.flipLabels && !changes.flipLabels.firstChange)) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             if (changes.thickness) {
-                gridConfig.dimension.height(this.thickness);
+                gridConfig.dimension.height(this.thickness ?? 0);
             }
             if (changes.flipLabels) {
                 this.labelsPlugin.config.flipLabels = this.flipLabels;

@@ -121,11 +121,11 @@
 
 <h4>Customizing the Threshold Label Formatter</h4>
 <p>
-    To customize the thresholds label formatter, set the
+    To customize the format of the labels shown when the mouse is hovered over the gauge, set the
     <code><a href="../interfaces/IGaugeThresholdsConfig.html#labelFormatter" target="_blank">labelFormatter</a></code> property on the
     <code>IGaugeConfig</code> object with a function of type
-    <code><a href="../miscellaneous/typealiases.html#Formatter" target="_blank">Formatter&lt;string&gt;</a></code> which takes a string as the raw data argument
-    and returns a string with your customized formatting.
+    <code><a href="../miscellaneous/typealiases.html#Formatter" target="_blank">Formatter&lt;string&gt;</a></code>. The function should take a string as the raw
+    data argument and return a string with your customized formatting.
 </p>
 <nui-example-wrapper filenamePrefix="donut-gauge-with-custom-threshold-labels-example" exampleTitle="Donut with Custom Threshold Labels">
     <donut-gauge-with-custom-threshold-labels-example></donut-gauge-with-custom-threshold-labels-example>
@@ -152,4 +152,13 @@
     <vertical-gauge-basic-example></vertical-gauge-basic-example>
 </nui-example-wrapper>
 
+<h3>Linear with Thresholds</h3>
+<nui-example-wrapper filenamePrefix="horizontal-gauge-with-thresholds-example" exampleTitle="Linear Gauge with Thresholds">
+    <horizontal-gauge-with-thresholds-example></horizontal-gauge-with-thresholds-example>
+</nui-example-wrapper>
+
 <h3>Adjusting Thickness</h3>
+<nui-example-wrapper filenamePrefix="horizontal-gauge-thickness-adjustment-example" exampleTitle="Adjusting Linear Gauge Thickness">
+    <horizontal-gauge-thickness-adjustment-example></horizontal-gauge-thickness-adjustment-example>
+</nui-example-wrapper>
+

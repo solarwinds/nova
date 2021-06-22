@@ -1,0 +1,20 @@
+<div class="d-flex justify-content-center align-items-center">
+    <div class="demo-inputs">
+        <nui-form-field class="d-block mb-5"
+                        caption="Value" i18n-caption
+                        [showOptionalText]="false">
+            <nui-textbox-number type="number"
+                                [ngModel]="value"
+                                (ngModelChange)="onValueChange($event)"
+                                [minValue]="0"
+                                [maxValue]="gaugeConfig.max"
+                                customBoxWidth="75px"></nui-textbox-number>
+        </nui-form-field>
+        <nui-checkbox [ngModel]="compact"
+                      (ngModelChange)="onCompactChange($event)"
+                      i18n>
+            Compact Thickness
+        </nui-checkbox>
+    </div>
+    <nui-chart class="demo-chart" [chart]="chartAssist.chart"></nui-chart>
+</div>

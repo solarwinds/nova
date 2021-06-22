@@ -1,6 +1,5 @@
-<div class="d-flex flex-column align-items-center">
-    <nui-chart class="demo-chart" [chart]="chartAssist.chart"></nui-chart>
-    <nui-form-field class="d-block mt-5"
+<div class="d-flex justify-content-center align-items-center">
+    <nui-form-field class="demo-value-input"
                     caption="Value" i18n-caption
                     [showOptionalText]="false">
         <nui-textbox-number type="number"
@@ -10,4 +9,5 @@
                             [maxValue]="gaugeConfig.max"
                             customBoxWidth="75px"></nui-textbox-number>
     </nui-form-field>
+    <nui-chart class="demo-chart" [chart]="chartAssist.chart"></nui-chart>
 </div>
