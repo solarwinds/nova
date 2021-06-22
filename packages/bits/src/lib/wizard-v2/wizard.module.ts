@@ -16,6 +16,7 @@ import { WizardStepLabelDirective } from "./wizard-step-label.directive";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 import { WizardVerticalComponent } from "./wizard-vertical/wizard-vertical.component";
 import { WizardDirective } from "./wizard.directive";
+import { NuiTooltipModule } from "../tooltip/tooltip.module";
 
 /**
  * @ignore
@@ -24,6 +25,7 @@ import { WizardDirective } from "./wizard.directive";
     imports: [
         NuiCommonModule,
         NuiIconModule,
+        NuiTooltipModule
     ],
     declarations: [
         WizardHorizontalComponent,

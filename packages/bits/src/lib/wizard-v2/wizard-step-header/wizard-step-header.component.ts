@@ -3,6 +3,7 @@ import { CdkStepHeader, StepState, STEP_STATE } from "@angular/cdk/stepper";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     Inject,
@@ -11,6 +12,7 @@ import {
     OnDestroy,
     Optional,
     SimpleChanges,
+    ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
 
@@ -68,12 +70,20 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     /** Whether the ripple should be disabled. */
     @Input() disableRipple: boolean;
 
+    /** Header tooltip */
+    @Input() tooltip: string;
+
+    @ViewChild("labelEl") labelEl: ElementRef;
+
     public stepStateConfigMap: WizardStepStateConfig;
 
     private wizardConfig: IWizardConfig = {...WIZARD_CONFIG_DEFAULT};
 
+    private isLabelOverflow = false;
+
     constructor(
         private _focusMonitor: FocusMonitor,
+        private cdr: ChangeDetectorRef,
         _elementRef: ElementRef<HTMLElement>,
         @Optional() @Inject(WIZARD_CONFIG) public readonly config?: IWizardConfig
     ) {
@@ -95,6 +105,7 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     ngAfterViewInit(): void {
         this._focusMonitor.monitor(this._elementRef, true);
+        this.detectLongLabel();
     }
 
     ngOnDestroy(): void {
@@ -116,6 +127,18 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
         return this.label instanceof WizardStepLabelDirective ? this.label : null;
     }
 
+    public get headerTooltip(): string {
+        if (this.tooltip) {
+            return this.tooltip;
+        }
+
+        if (this.stringLabel && this.isLabelOverflow) {
+            return this.stringLabel as string;
+        }
+
+        return "";
+    }
+
     private updateStepStateConfig(stepStateConfig: WizardStepStateConfig) {
         this.wizardConfig.stepState = assign({...this.wizardConfig.stepState}, stepStateConfig);
     }
@@ -126,6 +149,15 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
             [STEP_STATE.DONE]: this.wizardConfig.stepState?.visited,
             [STEP_STATE.EDIT]: this.wizardConfig.stepState?.active,
             [STEP_STATE.ERROR]: this.wizardConfig.stepState?.error,
+        }
+    }
+
+    private detectLongLabel(): void {
+        if (this.labelEl) {
+            const el: HTMLElement = this.labelEl.nativeElement;
+
+            this.isLabelOverflow = el.scrollWidth > el.offsetWidth;
+            this.cdr.detectChanges();
         }
     }
 }
