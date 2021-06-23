@@ -1,0 +1,34 @@
+<nui-wizard-horizontal>
+
+    <ng-container *ngFor="let step of steps; let i = index;">
+        <nui-wizard-step-v2 i18n-label [label]="'Step ' + (i+1)">
+            <div class="m-5">
+                <span i18n>This is the step #{{i + 1}}</span>.
+            </div>
+            <ng-template wizardStepFooter>
+                <ng-container *ngIf="i">
+                    <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+                </ng-container>
+                <ng-container *ngIf="i !== steps.length - 1">
+                    <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+                </ng-container>
+            </ng-template>
+        </nui-wizard-step-v2>
+    </ng-container>
+
+    <ng-template #wizardPrevious>
+        <button type="button" nuiWizardPrevious nui-button icon="caret-left">
+            Previous
+        </button>
+    </ng-template>
+
+    <ng-template #wizardNext>
+        <button nuiWizardNext
+                type="button"
+                nui-button
+                displayStyle="primary"
+                icon="caret-right"
+                iconRight="true"
+        >Next</button>
+    </ng-template>
+</nui-wizard-horizontal>

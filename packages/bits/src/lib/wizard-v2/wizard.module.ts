@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiIconModule } from "../icon/icon.module";
+import { NuiPopoverModule } from "../popover/popover.module";
 
 import { ErrorStateMatcher } from "./error-state-matcher.provider";
 import {
@@ -24,6 +25,7 @@ import { WizardDirective } from "./wizard.directive";
     imports: [
         NuiCommonModule,
         NuiIconModule,
+        NuiPopoverModule,
     ],
     declarations: [
         WizardHorizontalComponent,
