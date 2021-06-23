@@ -9,7 +9,7 @@
                     (mouseleave)="chartAssist.resetVisibleSeries()">
             <nui-legend-series [interactive]="false"
                                [descriptionPrimary]="avgSeries['name']">
-                <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(avgSeries, 'y', 'tick', 'y1')"
+                <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(avgSeries, 'y', undefined, 'y1')"
                                       backgroundColor="black"
                                       color="white">
                 </nui-rich-legend-tile>

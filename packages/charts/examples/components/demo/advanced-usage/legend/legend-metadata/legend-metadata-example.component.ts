@@ -15,7 +15,7 @@ import {
     LineRenderer,
     stackedArea,
     stackedAreaAccessors,
-    TimeScale,
+    TimeScale, XYAccessors, XYRenderer,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 
@@ -52,11 +52,9 @@ export class LegendMetadataExampleComponent implements OnInit {
 
         const averageData = getAverage(getData());
         // We are using a different renderer so the metadata does not effect the domain
-        const noopRenderer = new LineRenderer({ignoreForDomainCalculation: true});
+        const noopRenderer = new XYRenderer({ignoreForDomainCalculation: true});
         // Here we create an accessor for our average metadata
-        const avgAccessors = new LineAccessors();
-        // This is so the legend knows the value for the x
-        avgAccessors.data.x = (d) => d.x;
+        const avgAccessors = new XYAccessors();
         // This is so the legend knows the value for the y
         avgAccessors.data.y = (d) => d.value;
         // Same as above we are setting the numeric value we want to visualize
