@@ -41,7 +41,7 @@ import {
     WizardWithCustomIconsExampleComponent,
     WizardRestoreStateExampleComponent,
     WizardStepChangeExampleComponent,
-    WizardWithConfirmationDialogOnCancel,
+    WizardWithConfirmationDialogOnCancelComponent,
 } from "./index";
 
 const routes = [
@@ -95,7 +95,7 @@ const routes = [
         WizardWithCustomIconsExampleComponent,
         WizardRestoreStateExampleComponent,
         WizardStepChangeExampleComponent,
-        WizardWithConfirmationDialogOnCancel
+        WizardWithConfirmationDialogOnCancelComponent,
     ],
     providers: [
         {

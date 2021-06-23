@@ -1,4 +1,4 @@
-import {Component, Inject, TemplateRef, ViewChild} from "@angular/core";
+import {Component, Inject, OnDestroy, TemplateRef, ViewChild} from "@angular/core";
 import {DialogService, NuiDialogRef, OverlayComponent, ToastService, WizardComponent} from "@nova-ui/bits";
 import {FlexibleConnectedPositionStrategy, OverlayRef} from "@angular/cdk/overlay";
 import {takeUntil} from "rxjs/operators";
@@ -7,9 +7,9 @@ import {Subject} from "rxjs";
 @Component({
     selector: "nui-wizard-v2-dialog-example",
     templateUrl: "./wizard-dialog.example.component.html",
-    styleUrls: ["./wizard-dialog.example.component.less"]
+    styleUrls: ["./wizard-dialog.example.component.less"],
 })
-export class WizardDialogExampleComponent {
+export class WizardDialogExampleComponent implements OnDestroy{
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
