@@ -63,7 +63,7 @@
         <nui-wizard-step-v2 *ngIf="formGroup.get(['personDetails','symptoms'])?.value"
                             i18n-label label="Disease Details"
                             formGroupName="diseaseDetails" [stepControl]="formGroup.get(['diseaseDetails'])">
-            <ng-template wizardStepLabel i18n>Disease Details for your Symptoms</ng-template>
+            <ng-template nuiWizardStepLabel i18n>Disease Details for your Symptoms</ng-template>
             <nui-form-field [control]="formGroup.get(['diseaseDetails','date'])" i18n-caption
                             caption="When did you noticed your first symptoms ?">
                 <nui-date-picker formControlName="date" i18n></nui-date-picker>
