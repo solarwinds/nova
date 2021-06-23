@@ -2,7 +2,7 @@
     <nui-wizard-step-v2 *ngFor="let step of steps; let i = index; let isLast = last">
         <ng-template wizardStepLabel>{{step.title}}</ng-template>
         <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <ng-container *ngIf="i !== 0">
                 <button type="button" nuiWizardPrevious nui-button icon="caret-left">
                     Previous

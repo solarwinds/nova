@@ -14,7 +14,7 @@
                         <span i18n>This is the first step of our horizontal wizard</span>.
 
                         <!-- content of the footer -->
-                        <ng-template wizardStepFooter>
+                        <ng-template nuiWizardStepFooter>
                             <button type="button" nui-button (click)="toggleBusy()">
                                 Toggle busy
                             </button>
@@ -32,7 +32,7 @@
                         <span i18n>This is the second step of our horizontal wizard</span>.
 
                         <!-- content of the footer -->
-                        <ng-template wizardStepFooter>
+                        <ng-template nuiWizardStepFooter>
                             <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
@@ -48,7 +48,7 @@
                         <span i18n>This is the third step of our horizontal wizard</span>.
 
                         <!-- content of the footer -->
-                        <ng-template wizardStepFooter>
+                        <ng-template nuiWizardStepFooter>
                             <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
@@ -59,7 +59,7 @@
                     <nui-wizard-step-v2>
                         <ng-template wizardStepLabel>Summary</ng-template>
                         <span i18n>We finally reached our last step</span>!
-                        <ng-template wizardStepFooter>
+                        <ng-template nuiWizardStepFooter>
                             <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                         </ng-template>

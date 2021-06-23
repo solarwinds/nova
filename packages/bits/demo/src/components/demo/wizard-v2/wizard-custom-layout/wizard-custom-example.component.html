@@ -54,7 +54,7 @@
             </nui-form-field>
 
             <!-- content of the footer -->
-            <ng-template wizardStepFooter>
+            <ng-template nuiWizardStepFooter>
                 <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
             </ng-template>
         </nui-wizard-step-v2>
@@ -73,7 +73,7 @@
                     Date when disease manifested is required
                 </nui-validation-message>
             </nui-form-field>
-            <ng-template wizardStepFooter>
+            <ng-template nuiWizardStepFooter>
                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                 <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
             </ng-template>
@@ -104,7 +104,7 @@
             </nui-form-field>
 
             <!-- content of the footer -->
-            <ng-template wizardStepFooter>
+            <ng-template nuiWizardStepFooter>
                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                 <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
             </ng-template>
@@ -113,7 +113,7 @@
         <!--  content of the final step -->
         <nui-wizard-step-v2 i18n-label label="Final step">
             <span i18n>Thanks for your feedback and take care</span>!
-            <ng-template wizardStepFooter>
+            <ng-template nuiWizardStepFooter>
                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                 <button type="button" nui-button (click)="wizard.reset()">Reset</button>
             </ng-template>

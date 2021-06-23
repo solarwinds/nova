@@ -6,7 +6,7 @@
         <span i18n>Step with long header text</span>.
 
         <!-- content of the footer -->
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
         </ng-template>
     </nui-wizard-step-v2>
@@ -18,7 +18,7 @@
         </ng-template>
         <span i18n>We finally reached our last step</span>!
         <!-- Notice how both label and footer can be placed anywhere in the content of wizard step -->
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
         </ng-template>
     </nui-wizard-step-v2>

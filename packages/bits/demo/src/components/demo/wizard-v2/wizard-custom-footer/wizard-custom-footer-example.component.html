@@ -6,7 +6,7 @@
         <span i18n>This is the first step of our horizontal wizard</span>.
 
         <!-- content of the footer -->
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <div class="custom-footer step_1">
                 <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 <button nui-button type="button" icon="add" i18n>Custom button 1</button>
@@ -19,7 +19,7 @@
     <nui-wizard-step-v2 i18n-label label="Final step">
         <span i18n>We finally reached our last step</span>!
         <!-- Notice how both label and footer can be placed anywhere in the content of wizard step -->
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <div class="custom-footer step_2">
                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                 <button nui-button type="button" icon="remove" i18n>Custom button 2</button>
