@@ -23,6 +23,7 @@ import {
     WIZARD_CONFIG,
     IWizardConfig,
     WIZARD_CONFIG_DEFAULT,
+    NuiOverlayModule,
 } from "@nova-ui/bits";
 
 import {
@@ -77,6 +78,7 @@ const routes = [
         NuiDatePickerModule,
         NuiIconModule,
         NuiSelectV2Module,
+        NuiOverlayModule,
     ],
     declarations: [
         WizardDocsComponent,
