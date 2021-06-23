@@ -6,7 +6,8 @@ import { NuiChartsModule } from "@nova-ui/charts";
 const exampleRoutes: Routes = [
     {
         path: "base-grid",
-        loadChildren: () => import("components/demo/advanced-usage/grid-config/base-grid/chart-docs-base-grid.module").then(m => m.ChartDocsBaseGridModule),
+        loadChildren: async () => import("components/demo/advanced-usage/grid-config/base-grid/chart-docs-base-grid.module")
+            .then(m => m.ChartDocsBaseGridModule),
     },
 ];
 

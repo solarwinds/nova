@@ -8,7 +8,8 @@ import { filter, pluck } from "rxjs/operators";
 
 import { IDragEvent } from "../../../common/directives/public-api";
 import { UtilService } from "../../../services/util.service";
-import { NonResizableColumnTypes, TableAlignmentOptions } from "../public-api";
+import { FIXED_WIDTH_CLASS } from "../constants";
+import { NonResizableColumnTypes, TableAlignmentOptions } from "../types";
 import { TableResizePhase } from "../table-resizer/table-resizer.directive";
 import { ColumnType, DraggedOverCell, ITableSortingState, TableStateHandlerService } from "../table-state-handler.service";
 
@@ -50,40 +51,49 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
     public resizable = false;
     public sortingState: ITableSortingState;
 
-    // biding classes
+    // binding classes
     @HostBinding("class.nui-table__icon-cell")
-    get isIconCell() {
+    get isIconCell(): boolean {
         return this.columnDef.type === "icon";
     }
 
+    /**
+     * Conditionally applies a fixed-width marker class for letting external entities
+     * know whether manual updates to the cell's width are allowed.
+     */
+    @HostBinding(`class.${FIXED_WIDTH_CLASS}`)
+    get fixedWidth(): boolean {
+        return this.isIconCell;
+    }
+
     @HostBinding("class.nui-table__table-header-cell--sortable--dark")
-    get shouldBeDarkOnSorting() {
+    get shouldBeDarkOnSorting(): boolean {
         return this.sortingState.isColumnSorted;
     }
 
     @HostBinding("class.nui-table__table-header-cell--reorderable--dark")
-    get shouldBeDarkOnReorder() {
+    get shouldBeDarkOnReorder(): boolean {
         return this.leftEdgeActive || this.rightEdgeActive;
     }
 
     @HostBinding("class.nui-table__table-header-cell--sortable")
-    get isSortable() {
+    get isSortable(): boolean {
         return this.tableStateHandlerService.sortable && !this.isColumnSortingDisabled;
     }
 
     @HostBinding("class.nui-table__table-header-cell--sortable--text-black")
-    get isColumnSorted() {
+    get isColumnSorted(): boolean {
         return this.sortingState.isColumnSorted;
     }
 
     @HostBinding("attr.draggable")
     @HostBinding("class.nui-table__table-header-cell--reorderable")
-    get isReorderable() {
+    get isReorderable(): boolean {
         return this.tableStateHandlerService.reorderable;
     }
 
     @HostBinding("attr.title")
-    get tooltip() {
+    get tooltip(): string {
         return this.tooltipText;
     }
 
@@ -91,14 +101,14 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
     @HostBinding("class.nui-table__table-cell--right-edge-action") rightEdgeActive: boolean;
 
     @HostListener("mouseover")
-    mouseMovedOver() {
+    mouseMovedOver(): void {
         if (this.isColumnResizable() && !this.resizeInProgress) {
             this.rightEdgeActive = this.isCursorInCell = true;
         }
     }
 
     @HostListener("mouseleave")
-    mouseMovedOut() {
+    mouseMovedOut(): void {
         // There are some of edge cases of incorrect highlighting that is covered with these booleans
         this.isCursorInCell = false;
         if (this.isColumnResizable() && this.resizeEventPhase !== "start") {
@@ -107,7 +117,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
     }
 
     @HostListener("click")
-    clicked() {
+    clicked(): void {
         if (this.tableStateHandlerService.sortable && !this.isColumnSortingDisabled && this.resizeEventPhase !== TableResizePhase.start) {
             const cellIndex = this.tableStateHandlerService.tableColumns.indexOf(this.columnDef.name);
             this.tableStateHandlerService.sortColumn(cellIndex);
@@ -116,7 +126,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
 
     // listening for drag n drop events
     @HostListener("dragstart", ["$event"])
-    dragStarted(event: IDragEvent) {
+    dragStarted(event: IDragEvent): void {
         if (this.isReorderable) {
             const dragTarget = <Element>event.target;
             const dragCellIndex = this.tableStateHandlerService.getTargetElementCellIndex(event);
@@ -144,7 +154,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
     }
 
     @HostListener("drop", ["$event"])
-    dropped(event: IDragEvent) {
+    dropped(event: IDragEvent): void {
         const dragCellIndex = this.tableStateHandlerService.dragCellIndex;
         const dataTransferData = event.dataTransfer?.getData("text");
 
@@ -158,7 +168,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
     }
 
     @HostListener("dragend", ["$event"])
-    dragEnd(event: IDragEvent) {
+    dragEnd(event: IDragEvent): void {
         event.stopPropagation();
         this.tableStateHandlerService.draggedOverCell.next(undefined);
     }
@@ -176,7 +186,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         };
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         const alignment = this.alignment ? `align-${ this.alignment }` : this.tableStateHandlerService.getAlignment(this.columnDef.name);
 
         this.resizable = this.tableStateHandlerService.resizable;
@@ -228,8 +238,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         }
     }
 
-
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.alignment && !changes.alignment.firstChange) {
             const newAlignment = `align-${ changes.alignment.currentValue }`;
             const oldAlignment = `align-${ changes.alignment.previousValue }`;
@@ -238,7 +247,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         }
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.zone.runOutsideAngular(() => {
             this.subscriptions.push(fromEvent<DragEvent>(this.elementRef.nativeElement, "dragover").subscribe((event: DragEvent) => {
                 event.stopPropagation();
@@ -248,12 +257,12 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         });
     }
 
-    public isColumnResizable() {
+    public isColumnResizable(): boolean {
         const isColumnTypeResizable = _isUndefined(<NonResizableColumnTypes>(this.columnDef.type));
         return this.tableStateHandlerService.resizable && isColumnTypeResizable;
     }
 
-    public onColumnWidthChange(offset: number) {
+    public onColumnWidthChange(offset: number): void {
         const calculatedWidth = this.elementRef.nativeElement.getBoundingClientRect().width;
         const resultWidth = calculatedWidth + offset;
         // resultWidth must be more than 45 because minimum width of the column is 46px
@@ -263,7 +272,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.subscriptions.forEach((subscription) => subscription.unsubscribe());
     }
 }

@@ -23,9 +23,7 @@ describe("Spark chart", () => {
         "rgba(255, 255, 255, 1)",
     ];
 
-    function getYCoordinate(value: number): number {
-        return 31 - value; // 31 = 26px of height + 5px of top padding. Zero is at the top for y-axis.
-    }
+    const getYCoordinate = (value: number): number => 31 - value// 31 = 26px of height + 5px of top padding. Zero is at the top for y-axis.;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/spark/test");

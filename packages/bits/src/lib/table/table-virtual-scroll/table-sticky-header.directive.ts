@@ -5,6 +5,7 @@ import isEmpty from "lodash/isEmpty";
 import ResizeObserver from "resize-observer-polyfill";
 import { asyncScheduler, EMPTY, merge, Observable, Subject } from "rxjs";
 import { delay, exhaustMap, filter, finalize, map, take, takeUntil, tap, throttleTime } from "rxjs/operators";
+import { FIXED_WIDTH_CLASS } from "../constants";
 
 import { TableComponent } from "../table.component";
 
@@ -175,9 +176,12 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
 
         // TODO: Find a better way to pair placeholderHeader columns with header columns
         firstDataRowCells.forEach((cell: HTMLTableDataCellElement, index: number) => {
-            // Note: Assigning data cell width to the corresponding header column
-            // (using the style width if specified; otherwise, falling back to the offsetWidth)
-            headColumns[index].style.width = cell.style.width || `${cell.offsetWidth}px`;
+            const fixedWidth = headColumns[index].classList.contains(FIXED_WIDTH_CLASS);
+            if (!fixedWidth) {
+                // Note: Assigning data cell width to the corresponding header column
+                // (using the style width if specified; otherwise, falling back to the offsetWidth)
+                headColumns[index].style.width = cell.style.width || `${cell.offsetWidth}px`;
+            }
         });
 
         // update the header placeholder to match the updated column widths

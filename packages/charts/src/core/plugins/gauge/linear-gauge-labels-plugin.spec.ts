@@ -5,7 +5,7 @@ import { XYGrid } from "../../grid/xy-grid";
 import { MOUSE_ACTIVE_EVENT } from "../../../constants";
 import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-import { IGaugeConfig, IGaugeThresholdConfigs } from "../../../gauge/types";
+import { IGaugeConfig, GaugeThresholdDefs } from "../../../gauge/types";
 import { Chart } from "../../chart";
 import { D3Selection, IAccessors, IChartAssistSeries } from "../../common/types";
 
@@ -22,7 +22,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     const gaugeConfig: IGaugeConfig = {
         value: 5,
         max: 10,
-        thresholds: GaugeUtil.createStandardThresholdConfigs(3, 7),
+        thresholds: GaugeUtil.createStandardThresholdsConfig(3, 7),
     };
     let dataSeries: IChartAssistSeries<IAccessors>;
 
@@ -50,7 +50,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {
-        expect(labels.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds as IGaugeThresholdConfigs).length);
+        expect(labels.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds?.definitions as GaugeThresholdDefs).length);
     });
 
     describe("horizontal mode", () => {

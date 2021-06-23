@@ -4,6 +4,7 @@ import { LineRenderer } from "../../renderers/line/line-renderer";
 import { DataManager } from "./data-manager";
 import { LinearScale } from "./scales/linear-scale";
 import { IAccessors, IChartSeries } from "./types";
+import { EMPTY_CONTINUOUS_DOMAIN, RenderState } from "@nova-ui/charts";
 
 describe("data manager", () => {
     let dataManager: DataManager;
@@ -34,6 +35,20 @@ describe("data manager", () => {
                 renderer: new LineRenderer(),
                 accessors: new LineAccessors(),
             },
+            {
+                id: "2",
+                name: "2",
+                data: [
+                    { x: 6, y: 5 },
+                    { x: 7, y: 5 },
+                    { x: 8, y: 5 },
+                    { x: 9, y: 5 },
+                    { x: 10, y: 5 },
+                ],
+                scales: scales,
+                renderer: new LineRenderer(),
+                accessors: new LineAccessors(),
+            },
         ];
 
     });
@@ -52,7 +67,15 @@ describe("data manager", () => {
         dataManager.update(seriesSet);
         dataManager.updateScaleDomains();
 
-        expect(xScale.domain()).toEqual([1, 5]);
+        expect(xScale.domain()).toEqual([1, 10]);
+    });
+
+    it("doesn't include hidden series in the domain calculation", ()=> {
+        seriesSet[0].renderState = RenderState.hidden;
+        dataManager.update(seriesSet);
+        dataManager.updateScaleDomains();
+
+        expect(xScale.domain()).toEqual([6, 10]);
     });
 
 });

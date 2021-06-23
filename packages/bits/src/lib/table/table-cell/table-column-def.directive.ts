@@ -1,7 +1,7 @@
 import { CdkColumnDef } from "@angular/cdk/table";
 import { Directive, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 
-import { ColumnTypes } from "../public-api";
+import { ColumnTypes } from "../types";
 import { TableStateHandlerService } from "../table-state-handler.service";
 
 /**

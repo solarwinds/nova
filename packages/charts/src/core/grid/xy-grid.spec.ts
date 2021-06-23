@@ -43,12 +43,10 @@ describe("XYGrid >", () => {
         flush();
     }
 
-    function createScale(scale: IScale<any>) {
-        return {
-            index: { [scale.id]: scale },
-            list: [scale],
-        };
-    }
+    const createScale = (scale: IScale<any>) => ({
+        index: { [scale.id]: scale },
+        list: [scale],
+    });
 
     beforeAll(() => {
         // suppress "invalid scale domain" console warning in render-engine

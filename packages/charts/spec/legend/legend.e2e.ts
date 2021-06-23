@@ -11,9 +11,7 @@ describe("Legend", () => {
     let richLegendInteractive: LegendAtom;
     let richLegendWithProjectedDescription: LegendAtom;
 
-    async function pageRefresh() {
-        return await Helpers.prepareBrowser("advanced-usage/legend/test");
-    }
+    const pageRefresh = async () => await Helpers.prepareBrowser("advanced-usage/legend/test");
 
     beforeAll(async () => {
         await pageRefresh();

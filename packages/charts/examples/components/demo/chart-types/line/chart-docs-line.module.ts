@@ -54,6 +54,15 @@ const exampleRoutes: Routes = [
         },
     },
     {
+        path: "rich-legend-tile",
+        component: LineChartWithRichTileLegendExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
         path: "interrupted",
         component: LineChartInterruptedBasicExampleComponent,
         data: {

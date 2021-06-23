@@ -32,8 +32,13 @@ export class UnitConversionService {
             resultOrder = Math.floor(Math.log(Math.abs(value)) / Math.log(base));
             resultValue = value / Math.pow(base, Math.floor(resultOrder));
 
-            if (value > 0 && value < 1) {
-                this.logger.warn("unit conversion service does not support conversion to negative order of magnitude");
+            if (Math.abs(value) > 0 && Math.abs(value) < 1) {
+                return {
+                    value: value.toFixed(scale),
+                    scientificNotation: value.toExponential(scale),
+                    order: 0,
+                    scale,
+                }
             }
 
             // fix the precision edge case
@@ -55,6 +60,7 @@ export class UnitConversionService {
         return {
             value: strValue,
             order: resultOrder,
+            scientificNotation: value?.toExponential(scale),
             scale,
         };
     }
@@ -72,11 +78,20 @@ export class UnitConversionService {
     public getFullDisplay(conversion: IUnitConversionResult, unit: UnitOption, plusSign = false, nanDisplay = "---"): string {
         const isValidNumber = this.isValidNumber(conversion.value);
         const spacing = unit !== "generic" && isValidNumber ? " " : "";
-        const unitDisplay = isValidNumber ? this.getUnitDisplay(conversion, unit) : "";
+        let unitDisplay = isValidNumber ? this.getUnitDisplay(conversion, unit) : "";
 
         // The generic unit is not currently i18n friendly
         const localizeValue = unit !== "generic";
-        return `${this.getValueDisplay(conversion, plusSign, nanDisplay, localizeValue)}${spacing}${unitDisplay}`;
+
+        let displayValue: string;
+
+        if (!unitDisplay && isValidNumber && conversion.order ) {
+            unitDisplay = this.getUnitDisplayBaseValue(unit);
+            displayValue= this.getScientificDisplay(conversion, plusSign, nanDisplay);
+        } else {
+            displayValue = this.getValueDisplay(conversion, plusSign, nanDisplay, localizeValue)
+        }
+        return `${displayValue}${spacing}${unitDisplay}`;
     }
 
     /**
@@ -110,6 +125,34 @@ export class UnitConversionService {
      */
     public getUnitDisplay(conversion: IUnitConversionResult, unit: UnitOption): string {
         return unitConversionConstants[unit][conversion.order];
+    }
+
+    /**
+     * Gets the base value of the converted unit
+     *
+     * @param unit The basic unit used in the conversion
+     *
+     * @returns {string} The abbreviation for the smallest unit of the provided UnitOption
+     */
+    public getUnitDisplayBaseValue(unit: UnitOption): string {
+        return unitConversionConstants[unit][0];
+    }
+    /**
+     * Gets the converted value display string in scientific notation
+     *
+     * @param conversion The result of an invocation of this service's convert method
+     * @param plusSign Whether to prepend the display string with a '+'
+     * @param nanDisplay The string to display in case the conversion result is NaN or Infinity
+     *
+     * @returns {string} The converted value display string in scientific notation
+     */
+    public getScientificDisplay(conversion: IUnitConversionResult, plusSign = false, nanDisplay = "---"): string {
+        if (!this.isValidNumber(conversion.value)) {
+            return nanDisplay;
+        }
+        const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
+
+        return `${prefix}${conversion.scientificNotation}`;
     }
 
     private isValidNumber(value: any): boolean {

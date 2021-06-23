@@ -13,7 +13,7 @@
             <button nui-button
                     type="button"
                     class="nui-selector__toggle"
-                    (click)="overlay.toggle()"
+                    (click)="toggleSorterMenu()"
                     ariaLabel="Open Sorter Menu"
                     icon="caret-down">
             </button>
@@ -26,6 +26,6 @@
                  [toggleReference]="toggleRef"
                  [overlayConfig]="overlayConfig"
                  [customContainer]="customContainer">
-        <nui-menu-popup [itemsSource]="items" (menuItemClicked)="select($event)"></nui-menu-popup>
+        <nui-menu-popup #popup [itemsSource]="items" (menuItemClicked)="select($event)"></nui-menu-popup>
     </nui-overlay>
 </div>

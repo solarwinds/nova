@@ -8,8 +8,10 @@ import {
     IAccessors,
     IChartAssistSeries,
     IGaugeConfig,
+    IGaugeThresholdsConfig,
     radial,
     radialGrid,
+    StandardGaugeThresholdId,
 } from "@nova-ui/charts";
 
 @Component({
@@ -20,56 +22,57 @@ import {
 export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
     public gaugeConfig: IGaugeConfig;
+    public value = 178;
+    public reversed = false;
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnInit(): void {
-        // Setting up the gauge config
-        const initialValue = 128;
-        this.gaugeConfig = this.getGaugeConfig(initialValue);
+    private lowThreshold = 100;
+    private highThreshold = 158;
 
-        // Creating the chart
+    // Generating a standard set of thresholds with warning and critical levels
+    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
+
+    public ngOnInit(): void {
+        this.gaugeConfig = this.getGaugeConfig();
         this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
 
         // Adding the labels plugin
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());
 
-        // Assembling the series set
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
-
-        // Updating the chart
         this.chartAssist.update(this.seriesSet);
     }
 
     public onValueChange(value: number): void {
-        // Updating the gauge config
-        this.gaugeConfig = this.getGaugeConfig(value);
+        this.value = value;
+        this.updateGauge();
+    }
 
-        // Updating the series set with the new config
+    public onReversedChange(reversed: boolean): void {
+        this.reversed = reversed;
+        this.thresholds.reversed = reversed;
+
+        // swap the values of the warning and critical thresholds
+        this.thresholds.definitions[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
+        this.thresholds.definitions[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+
+        this.updateGauge();
+    }
+
+    private updateGauge() {
+        this.gaugeConfig = this.getGaugeConfig();
         this.seriesSet = GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig);
-
-        // Updating the chart with the updated series set
         this.chartAssist.update(this.seriesSet);
     }
 
-    private getGaugeConfig(value: number): IGaugeConfig {
+    private getGaugeConfig(): IGaugeConfig {
         return {
-            value,
+            value: this.value,
             max: 200,
 
             // Enabling the thresholds
-            thresholds: GaugeUtil.createStandardThresholdConfigs(100, 158),
-
-            // ** Optional color accessor override **
-            // quantityColorAccessor: (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) => {
-            //     if (this.gaugeConfig?.thresholds && this.gaugeConfig.thresholds[1] <= data.value) {
-            //         return "purple";
-            //     }
-            //     if (this.gaugeConfig?.thresholds && this.gaugeConfig.thresholds[0] <= data.value) {
-            //         return "pink";
-            //     }
-            //     return "green";
-            // },
+            thresholds: this.thresholds,
         };
     }
 }

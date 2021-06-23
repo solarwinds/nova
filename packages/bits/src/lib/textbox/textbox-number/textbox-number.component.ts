@@ -17,6 +17,7 @@ import round from "lodash/round";
 
 import { regexpValidation } from "../../../constants/regex.constants";
 import {NuiFormFieldControl} from "../../form-field/public-api";
+import { KEYBOARD_CODE } from "../../../constants";
 
 // <example-url>./../examples/index.html#/textbox/textbox-number</example-url>
 
@@ -262,7 +263,17 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
     }
 
     private isMetaKey(event: KeyboardEvent): boolean {
-        return event.ctrlKey || event.metaKey || event.code === "Backspace" || event.code === "Delete" || event.code === "Tab";
+        return (
+            event.ctrlKey ||
+            event.metaKey ||
+            event.code === KEYBOARD_CODE.BACKSPACE ||
+            event.code === KEYBOARD_CODE.DELETE ||
+            event.code === KEYBOARD_CODE.TAB ||
+            event.code === KEYBOARD_CODE.ARROW_DOWN ||
+            event.code === KEYBOARD_CODE.ARROW_LEFT ||
+            event.code === KEYBOARD_CODE.ARROW_RIGHT ||
+            event.code === KEYBOARD_CODE.ARROW_UP
+        );
     }
 
 }

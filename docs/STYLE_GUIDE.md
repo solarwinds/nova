@@ -54,7 +54,17 @@ line as the last attribute:
 
 #### Field Names
 
-Private fields are written in `camelCase` and typically do not contain an underscore. If, however, a private field has an associated setter and/or getter, it should be prefixed with an underscore. For example, `_privateFieldWithAccessor`.
+Private fields are written in `camelCase` and typically do not contain an underscore. If, however, a private field has an associated setter and/or getter, it should be prefixed with an underscore, and the associated accessor should use `camelCase`. For example, `_privateFieldWithAccessor` and `accessorForPrivateField` respectively.
+
+#### Enums
+
+Enum names and enum members both use `PascalCase`. And, the enum name should be singular.
+
+```ts
+enum TardisMode {
+    PoliceBox,
+}
+```
 
 ## ngOnDestroy and Component Inheritance
 
@@ -65,17 +75,17 @@ As a safe guard, if you find yourself extending a component from a base class, i
 Base:
 ```js
 public ngOnDestroy() {​​​​​​​​​​
-// Added as a safeguard. Inherited classes will invoke this
-// so that any observables added to this base class will
-// be unsubscribed.
+    // Added as a safeguard. Inherited classes will invoke this
+    // so that any observables added to this base class will
+    // be unsubscribed.
 }​​​​​​​​​​
 ```
 Derived:
 ```js
 public ngOnDestroy() {​​​​​​​​​​
-// Added as a safeguard. Invoking the base class ngOnDestroy
-// ensures that any base class observables are unsubscribed.
-super.ngOnDestroy();
+    // Added as a safeguard. Invoking the base class ngOnDestroy
+    // ensures that any base class observables are unsubscribed.
+    super.ngOnDestroy();
 }​​​​​​​​​​
 ```
 

@@ -1,11 +1,13 @@
 <div class="nui-expander"
      [class.nui-expander--expanded]="state === 'expanded'">
     <div class="nui-expander__header"
+         tabindex="0"
          role="button"
          aria-label="Expander toggle"
          [attr.aria-expanded]="state === 'expanded'"
          [attr.aria-disabled]="disabled"
          [class.nui-expander__header--empty]="!header && isCustomHeaderContentEmpty"
+         (keydown)="onKeyDown($event)"
          (click)="toggle()">
         <nui-icon class="nui-expander__header-icon"
                   [iconColor]="getIconColor()"

@@ -6,6 +6,7 @@ describe("a11y: table", () => {
     const rulesToDisable: string[] = [
         "duplicate-id", // we don't care for the testing pages
         "aria-allowed-role", // NUI-6015
+        "aria-required-parent", // NUI-6133
     ];
 
     beforeAll(async () => {

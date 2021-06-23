@@ -12,6 +12,7 @@ import {
     PaginatorVirtualScrollExampleComponent,
     PaginatorVisibilityExampleComponent,
     PaginatorVisualTestComponent,
+    PaginatorTestComponent,
 } from "./index";
 
 const routes = [
@@ -28,6 +29,15 @@ const routes = [
     {
         path: "paginator-visual-test",
         component: PaginatorVisualTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "paginator-test",
+        component: PaginatorTestComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -53,6 +63,7 @@ const routes = [
         PaginatorVirtualScrollExampleComponent,
         PaginatorVisibilityExampleComponent,
         PaginatorVisualTestComponent,
+        PaginatorTestComponent,
     ],
     providers: [
         {

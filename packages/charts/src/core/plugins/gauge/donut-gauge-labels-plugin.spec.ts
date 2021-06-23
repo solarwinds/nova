@@ -3,7 +3,7 @@ import { arc, Arc, DefaultArcObject } from "d3-shape";
 import { DATA_POINT_NOT_FOUND, INTERACTION_DATA_POINTS_EVENT } from "../../../constants";
 import { GaugeMode } from "../../../gauge/constants";
 import { GaugeUtil } from "../../../gauge/gauge-util";
-import { IGaugeConfig, IGaugeThresholdConfigs } from "../../../gauge/types";
+import { IGaugeConfig, GaugeThresholdDefs } from "../../../gauge/types";
 import { DonutGaugeRenderingUtil } from "../../../renderers/radial/gauge/donut-gauge-rendering-util";
 import { radialGrid } from "../../../renderers/radial/radial-grid-fn";
 import { RadialRenderer } from "../../../renderers/radial/radial-renderer";
@@ -22,7 +22,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
     const gaugeConfig: IGaugeConfig = {
         value: 5,
         max: 10,
-        thresholds: GaugeUtil.createStandardThresholdConfigs(3, 7),
+        thresholds: GaugeUtil.createStandardThresholdsConfig(3, 7),
     };
     let dataSeries: IChartAssistSeries<IAccessors>;
     let labelGenerator: Arc<any, DefaultArcObject>;
@@ -49,7 +49,7 @@ describe("DonutGaugeLabelsPlugin >", () => {
     });
 
     it("should render the same number of threshold labels as there are thresholds", () => {
-        expect(labels.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds as IGaugeThresholdConfigs).length);
+        expect(labels.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds?.definitions as GaugeThresholdDefs).length);
     });
 
     it("should position the threshold labels correctly", () => {
