@@ -107,10 +107,10 @@
 <h3>Wizard Tooltip</h3>
 <p>
     You are able add tooltip to wizard. By default if label text overflow container we show tooltip.
-    Note that it doesn't work with label with custom template. In this case you should add tooltip explicitly. For example:
+    Note that if you're using a custom template for the step label you need to specify the tooltip text explicitly.
+    For how to do this, take a look at the template source code of the example below.
     <br>
 </p>
-<pre>< nui-wizard-step-v2 tooltip="Custom Label Template" ></pre>
 <nui-example-wrapper filenamePrefix="wizard-tooltip-example" exampleTitle="Wizard Tooltip">
     <nui-wizard-tooltip-example></nui-wizard-tooltip-example>
 </nui-example-wrapper>

@@ -12,7 +12,7 @@
     </nui-wizard-step-v2>
 
     <!--  Step with custom label template -->
-    <nui-wizard-step-v2 i18n-label tooltip="Custom Label Template">
+    <nui-wizard-step-v2 i18n-tooltip tooltip="Custom Label Template">
         <ng-template wizardStepLabel>
             <span><i>Custom Label template</i></span>
         </ng-template>
@@ -24,18 +24,20 @@
     </nui-wizard-step-v2>
 
     <ng-template #wizardPrevious>
-        <button type="button" nuiWizardPrevious nui-button icon="caret-left">
+        <button i18n type="button" nuiWizardPrevious nui-button icon="caret-left">
             Previous
         </button>
     </ng-template>
 
     <ng-template #wizardNext>
         <button nuiWizardNext
+                i18n
                 type="button"
                 nui-button
                 displayStyle="primary"
                 icon="caret-right"
-                iconRight="true"
-        >Next</button>
+                iconRight="true">
+            Next
+        </button>
     </ng-template>
 </nui-wizard-horizontal>
