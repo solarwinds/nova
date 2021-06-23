@@ -1,60 +1,31 @@
 @import "./wizard-vars";
 @import (reference) "../../styles/mixins.less";
 
-.nui-wizard-vertical, .nui-wizard-horizontal {
-    display: block;
-
-    .nui-dialog & {
-        padding-top: 0;
-
-        .nui-wizard-horizontal-header-container {
-            border-top: none;
-        }
-    }
-}
-
 .nui-wizard-horizontal {
     &-header {
         display: flex;
         min-height: @wizard-header-min-height;
         max-height: @wizard-header-max-height;
-        overflow: hidden;
         align-items: center;
         padding: 0 @nui-space-md;
 
-        .nui-wizard-step-icon {
-            margin-right: @wizard-line-gap;
-            flex: none;
-
-            [dir='rtl'] & {
+        .nui-wizard-step-header-icon {
+            [dir="rtl"] & {
                 margin-right: 0;
-                margin-left: @wizard-line-gap;
+                margin-left: 0;
             }
         }
 
-        .nui-wizard-label-position-top & {
-            box-sizing: border-box;
+        .nui-wizard-step-header__label-position--top & {
             flex-direction: column;
             // We use auto instead of fixed 104px (by spec) because when there is an optional step
             //  the height is greater than that
             height: auto;
 
-            & .nui-wizard-step-icon {
+            & .nui-wizard-step-header-icon {
                 // Cleans margin both for ltr and rtl direction
                 margin-right: 0;
                 margin-left: 0;
-            }
-
-            .nui-wizard-step-label{
-                .setCssVariable(color, nui-color-text-secondary);
-
-                &.nui-wizard-step-header__label--active {
-                    .setCssVariable(color, nui-color-text-link);
-                }
-
-                &.nui-wizard-step-header__label--selected {
-                    .setCssVariable(color, nui-color-text-default);
-                }
             }
         }
     }
@@ -63,83 +34,60 @@
         display: flex;
         justify-content: center;
         text-align: center;
-        padding: @nui-space-sm @nui-space-md;
+        padding: @nui-space-sm;
         border: @nui-line-default solid;
         border-left: none;
         border-right: none;
         overflow: hidden;
-        .setCssVariable(background-color, nui-color-bg-secondary);
-        .setCssVariable(border-color, nui-color-line-default);
-        .no-select();
-
         white-space: nowrap;
         align-items: center;
-
-        .nui-label-position-bottom & {
-            align-items: flex-start;
-        }
+        .setCssVariable(background-color, nui-color-bg-secondary);
+        .setCssVariable(border-color, nui-color-line-default);
+        .no-select();        
     }
 
-    &-line {
+    &-header-wrapper {
+        position: relative;
+    }
+
+    &__step-connector-line {
         border-top-width: @nui-line-medium;
         border-top-style: solid;
         .setCssVariable(border-color, nui-color-line-default);
 
-        &.nui-wizard-horizontal-line-completed{
+        &--completed {
             .setCssVariable(border-color, nui-color-text-link);
         }
 
-        .nui-label-position-bottom & {
-            margin: 0;
-            min-width: 0;
-            position: relative;
-        }
-
-        .nui-wizard-label-position-top & {
-            bottom: (@wizard-label-header-height / 2) - @nui-line-medium;
-            right:  ((@wizard-label-header-width + @icon-size-default)/ 2);
+        .nui-wizard-step-header__label-position--top & {
+            bottom: 8px;
+            right: ((@wizard-label-header-width + @icon-size-default)/ 2);
             width: (@wizard-label-header-width - @icon-size-default);
             position: absolute;
-        }
-
-        &-label-position-top {
-            border-top-width: @nui-line-medium;
-            border-top-style: solid;
-            border-top-color: @nui-color-line-default;
-            content: '';
-            display: inline-block;
-            height: 0;
-            position: absolute;
-            width: calc(50% - @nui-space-md / 2 + @wizard-line-gap);
         }
     }
 
     &-content {
         outline: 0;
+        overflow: hidden;
 
-        &[aria-expanded='false'] {
+        &[aria-expanded="false"] {
             height: 0;
-            overflow: hidden;
-        }
-
-        &-container {
-            overflow: hidden;
         }
     }
 }
 
 .nui-wizard-vertical {
-
     &-content {
-        overflow: hidden;
         outline: 0;
+        overflow: hidden;
 
         &-container {
             margin-left: @wizard-vertical-content-margin;
             border: 0;
             position: relative;
 
-            [dir='rtl'] & {
+            [dir="rtl"] & {
                 margin-left: 0;
                 margin-right: @wizard-vertical-content-margin;
             }
@@ -148,22 +96,18 @@
 
     &-line {
         &::before {
-            content: '';
+            content: "";
             position: absolute;
             left: 0;
             border-left-width: @nui-line-medium;
             border-left-style: solid;
 
-            [dir='rtl'] & {
+            [dir="rtl"] & {
                 left: auto;
                 right: 0;
             }
         }
     }
-}
-
-.nui-step-header-wrapper{
-    position: relative;
 }
 
 .nui-step:last-child {
