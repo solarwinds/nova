@@ -38,6 +38,13 @@ export class LineAccessors extends XYAccessors implements ILineAccessors {
     public series: ILineSeriesAccessors;
 
     constructor(public colorProvider = defaultColorProvider(), public markerProvider = defaultMarkerProvider()) {
-        super(colorProvider, markerProvider);
+        super();
+
+        this.data.defined = (d: any, i) => d.hasOwnProperty("defined") ? d.defined : true;
+
+        this.series = {
+            color: this.colorProvider ? this.colorProvider.get : undefined,
+            marker: this.markerProvider ? this.markerProvider.get : undefined,
+        };
     }
 }

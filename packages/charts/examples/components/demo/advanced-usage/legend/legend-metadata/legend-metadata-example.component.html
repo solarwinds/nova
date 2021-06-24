@@ -13,8 +13,8 @@
                 <!-- Specify 'undefined' for the formatter key since we're not applying any special formatting to the data values shown in the legend -->
                 <!-- Specify the 'y1' data accessor to let the chart assist know how to access the data for the legend. -->
                 <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(avgSeries, 'y')"
-                                      backgroundColor="black"
-                                      color="white">
+                                      backgroundColor="var(--nui-color-bg-mid_dark)"
+                                      color="var(--nui-color-text-light)">
                 </nui-rich-legend-tile>
             </nui-legend-series>
             <!-- These are the series displayed on the chart -->

@@ -1,5 +1,6 @@
 import { DataAccessor, IAccessors, SeriesAccessor } from "../../core/common/types";
 import { defaultColorProvider, defaultMarkerProvider } from "../../core/common/palette/default-providers";
+import { Renderer } from "../../core/common/renderer";
 
 
 export interface IXYDataAccessors {
@@ -24,7 +25,7 @@ export interface IXYAccessors extends IAccessors {
     series: IXYSeriesAccessors;
 }
 
-export class XYAccessors implements IAccessors {
+export class XYAccessors implements IXYAccessors {
     /** The default data accessors for using with renderers deriving from XYRenderer */
     public data: IXYDataAccessors = {
         x: (d: any) => d.x,
@@ -32,13 +33,4 @@ export class XYAccessors implements IAccessors {
     };
     public series: IXYSeriesAccessors;
 
-    constructor(public colorProvider = defaultColorProvider(), public markerProvider = defaultMarkerProvider()) {
-
-        this.data.defined = (d: any, i) => d.hasOwnProperty("defined") ? d.defined : true;
-
-        this.series = {
-            color: this.colorProvider ? this.colorProvider.get : undefined,
-            marker: this.markerProvider ? this.markerProvider.get : undefined,
-        };
-    }
 }

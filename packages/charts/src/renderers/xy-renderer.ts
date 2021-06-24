@@ -6,14 +6,10 @@ import { Subject } from "rxjs";
 import isUndefined from "lodash/isUndefined";
 import { DATA_POINT_INTERACTION_RESET } from "../constants";
 import { UtilityService } from "../core/common/utility.service";
-import { IXYAccessors } from "./accessors/xy-accessors";
-
 
 export class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
-
-    public draw(renderSeries: IRenderSeries<TA>, rendererSubject: Subject<IRendererEventPayload>): void {
-
-    }
+    // This is empty to allow this renderer to be used for series that represent metadata that may be shown in the legend but not visualized on the chart.
+    public draw(renderSeries: IRenderSeries<TA>, rendererSubject: Subject<IRendererEventPayload>): void {}
 
     public getDataPointPosition(dataSeries: IDataSeries<TA>, index: number, scales: Scales): IPosition | undefined {
         if (index < 0 || index >= dataSeries.data.length) {
@@ -29,8 +25,9 @@ export class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
             y: scales.y.convert(dataSeries.accessors.data.y(point, index, dataSeries.data, dataSeries)),
         };
     }
+
     public getDataPointIndex(series: IDataSeries<TA>, values: { [p: string]: any }, scales: Scales): number {
-        if (isUndefined(values.x)) {
+        if (!this.config.interactive || isUndefined(values.x)) {
             return DATA_POINT_INTERACTION_RESET;
         }
 

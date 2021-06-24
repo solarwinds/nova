@@ -6,18 +6,17 @@ import {
     ChartAssist,
     IAccessors,
     IAreaAccessors,
-    IChartAssistSeries,
     IChartSeries,
-    ILineAccessors,
+    IDataSeries,
     IXYScales,
-    LineAccessors,
     LinearScale,
-    LineRenderer,
     stackedArea,
     stackedAreaAccessors,
-    TimeScale, XYAccessors, XYRenderer,
+    TimeScale,
+    XYAccessors,
+    XYRenderer,
 } from "@nova-ui/charts";
-import moment from "moment/moment";
+import moment, { Moment } from "moment/moment";
 
 @Component({
     selector: "area-chart-stack-example",
@@ -26,7 +25,7 @@ import moment from "moment/moment";
 export class LegendMetadataExampleComponent implements OnInit {
     public chart: Chart;
     public chartAssist: ChartAssist;
-    public avgSeries: IChartAssistSeries<ILineAccessors>
+    public avgSeries: Partial<IChartSeries<XYAccessors>>
 
     public ngOnInit() {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements.
@@ -35,7 +34,7 @@ export class LegendMetadataExampleComponent implements OnInit {
         this.chartAssist = new ChartAssist(this.chart, stackedArea);
 
         // Stacked Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
-        const accessors =  stackedAreaAccessors();
+        const accessors = stackedAreaAccessors();
         // 'y1' defines access to the numeric values we want to visualize.
         // The items in the data array of this example have a property named 'value',so we'll use that.
         accessors.data.y1 = (d) => d.value;
@@ -53,7 +52,7 @@ export class LegendMetadataExampleComponent implements OnInit {
         const averageData = calculateAverageSeries(getData());
         // We are using the base XYRenderer so the metadata does not get displayed on the chart.
         // Set `ignoreForDomainCalculation` to true to prevent the metadata from affecting the domain.
-        const metaDataRenderer = new XYRenderer({ignoreForDomainCalculation: true});
+        const metaDataRenderer = new XYRenderer({ ignoreForDomainCalculation: true });
         // Here we create an accessor for our average metadata
         const avgAccessors = new XYAccessors();
         // This is so the legend knows the value for the y
@@ -82,18 +81,25 @@ export class LegendMetadataExampleComponent implements OnInit {
     }
 }
 
-function calculateAverageSeries(dataArr: any) {
+function calculateAverageSeries(dataArr: Partial<IDataSeries<XYAccessors>>[]): Partial<IDataSeries<XYAccessors>> {
     let arrAverage = [];
-    const dataLength =  dataArr[0].data.length;
+    const dataLength =  dataArr[0].data?.length ?? 0;
     const numOfSeries = dataArr.length
+    if(!dataArr.length) {
+        return {
+            id: "average",
+            name: "Average Speed",
+            data: [],
+        }
+    }
     for (let n = 0; n < dataLength; n++) {
         let avg = 0;
         for (let i = 0; i < dataArr.length; i++) {
             const series = dataArr[i];
-            avg += series.data[n].value;
+            avg += series?.data?.[n].value ?? 0;
         }
         avg = avg/numOfSeries
-        arrAverage.push({ x: dataArr[0].data[n].x, value: avg });
+        arrAverage.push({ x: dataArr[0].data?.[n].x, value: avg });
     }
     return {
         id: "average",
@@ -103,7 +109,7 @@ function calculateAverageSeries(dataArr: any) {
 }
 
 /* Chart data */
-function getData() {
+function getData(): Partial<IDataSeries<XYAccessors>>[] {
     const format = "YYYY-MM-DDTHH:mm:ssZ";
 
     return [
