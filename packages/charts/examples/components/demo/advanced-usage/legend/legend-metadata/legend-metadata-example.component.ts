@@ -103,7 +103,7 @@ function getAverage(dataArr: any) {
     return {
         id: "average",
         name: "Average Speed",
-        data: arrAverage
+        data: arrAverage,
     };
 }
 
