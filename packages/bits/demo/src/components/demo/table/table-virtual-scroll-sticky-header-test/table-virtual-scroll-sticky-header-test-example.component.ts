@@ -101,12 +101,12 @@ function generateUsers(length: number): IRandomUserTableModel[] {
         citiesIndex = (citiesIndex + 1) % CITIES.length;
 
         return ({
-            city,
-            nameFirst,
             no,
-            postcode: 1000000,
-            nameLast: "UnknownLast",
             icon: ICONS[no % 2],
+            nameFirst,
+            nameLast: "UnknownLast",
+            city,
+            postcode: 1000000,
         });
     });
 }
