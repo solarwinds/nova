@@ -1,7 +1,6 @@
 import { IAllAround } from "../../grid/types";
 
 /**
- * @ignore
  * Configuration for the gauge labels plugins
  */
 export interface IGaugeLabelsPluginConfig {

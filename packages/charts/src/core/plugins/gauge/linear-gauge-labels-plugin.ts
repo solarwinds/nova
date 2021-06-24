@@ -15,7 +15,6 @@ import { LinearScale } from "../../common/scales/linear-scale";
 import { GAUGE_THRESHOLD_MARKERS_SERIES_ID } from "../../../gauge/constants";
 
 /**
- * @ignore
  * A chart plugin that handles the rendering of labels for a donut gauge
  */
 export class LinearGaugeLabelsPlugin extends ChartPlugin {

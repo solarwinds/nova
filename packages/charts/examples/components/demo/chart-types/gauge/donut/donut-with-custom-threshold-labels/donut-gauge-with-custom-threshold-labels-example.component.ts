@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart,
     ChartAssist,
     DonutGaugeLabelsPlugin,
     GaugeMode,
@@ -9,8 +8,6 @@ import {
     IChartAssistSeries,
     IGaugeConfig,
     IGaugeThresholdsConfig,
-    radial,
-    radialGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -26,9 +23,9 @@ export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnIn
     private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 80);
 
     public ngOnInit(): void {
-        const initialValue = 64;
+        const initialValue = 40;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
-        this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
+        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Donut);
 
         // Adding the labels plugin
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());

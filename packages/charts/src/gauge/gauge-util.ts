@@ -1,7 +1,5 @@
-import { LinearScale } from "../core/common/scales/linear-scale";
-
-import { Formatter, IRadialScales, Scales } from "../core/common/scales/types";
-import { DataAccessor, IAccessors, IChartAssistSeries, IChartSeries, IDataSeries, IGaugeThresholdsRendererConfig } from "../core/common/types";
+import { IRadialScales, Scales } from "../core/common/scales/types";
+import { DataAccessor, IAccessors, IChartAssistSeries, IDataSeries, IGaugeThresholdsRendererConfig } from "../core/common/types";
 import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
 import { VerticalBarAccessors } from "../renderers/bar/accessors/vertical-bar-accessors";
@@ -21,12 +19,19 @@ import {
     GAUGE_THRESHOLD_MARKERS_SERIES_ID,
     StandardGaugeColor,
     StandardGaugeThresholdId,
+    StandardGaugeThresholdMarkerRadius,
 } from "./constants";
-import { IGaugeConfig, IGaugeThresholdDatum, IGaugeThresholdDef, GaugeThresholdDefs, IGaugeThresholdsData, IGaugeThresholdsConfig } from "./types";
+import { IGaugeConfig, IGaugeThresholdDatum, IGaugeThresholdDef, IGaugeThresholdsData, IGaugeThresholdsConfig } from "./types";
 import { linearGaugeRendererConfig } from "../renderers/bar/linear-gauge-renderer-config";
 import { Renderer } from "../core/common/renderer";
 import isUndefined from "lodash/isUndefined";
-import cloneDeep from "lodash/cloneDeep";
+import { ChartAssist } from "../core/chart-assists/chart-assist";
+import { radialGrid } from "../renderers/radial/radial-grid-fn";
+import { radial } from "../renderers/radial/radial-preprocessor";
+import { stack } from "../renderers/bar/stacked-preprocessor";
+import { Chart } from "../core/chart";
+import { XYGrid } from "../core/grid/xy-grid";
+import { linearGaugeGridConfig } from "../core/grid/config/linear-gauge-grid-config";
 
 /**
  * @ignore
@@ -63,12 +68,24 @@ export interface IGaugeRenderingTools {
 }
 
 /**
- * @ignore
- * Convenience utility to simplify gauge usage
+ * Convenience utility for simplifying gauge usage
  */
 export class GaugeUtil {
     /** Value used for unifying the linear-style gauge visualization into a single bar stack */
     public static readonly DATA_CATEGORY = "gauge";
+
+    /**
+     * Creates a ChartAssist pre-configured based on the provided GaugeMode
+     *
+     * @param gaugeMode The gauge mode
+     *
+     * @returns {ChartAssist} A pre-configured chart assist
+     */
+    public static createChartAssist(gaugeMode: GaugeMode): ChartAssist {
+        const grid = (gaugeMode === GaugeMode.Horizontal || gaugeMode === GaugeMode.Vertical) ? new XYGrid(linearGaugeGridConfig(gaugeMode)) : radialGrid();
+        const chart = new Chart(grid);
+        return gaugeMode === GaugeMode.Donut ? new ChartAssist(chart, radial) : new ChartAssist(chart, stack);
+    }
 
     /**
      * Assembles a gauge series set with all of the standard scales, renderers, accessors, etc. needed for creating a gauge visualization
@@ -131,6 +148,8 @@ export class GaugeUtil {
 
             if (series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID) {
                 (series.renderer.config as IGaugeThresholdsRendererConfig).enabled = !clampedConfig.thresholds?.disableMarkers;
+                (series.renderer.config as IGaugeThresholdsRendererConfig).markerRadius =
+                    clampedConfig.thresholds?.markerRadius ?? StandardGaugeThresholdMarkerRadius.Large;
                 return { ...series, ...thresholdsData };
             }
 
@@ -234,10 +253,15 @@ export class GaugeUtil {
      * @returns {IGaugeRenderingTools} The rendering tools for standard gauge attributes
      */
     public static generateRenderingTools(gaugeConfig: IGaugeConfig, mode: GaugeMode): IGaugeRenderingTools {
+        const thresholdsRendererConfig: IGaugeThresholdsRendererConfig = {
+            enabled: !gaugeConfig.thresholds?.disableMarkers,
+            markerRadius: gaugeConfig.thresholds?.markerRadius,
+        };
+
         const renderingTools: Record<GaugeMode, IGaugeRenderingTools> = {
             [GaugeMode.Donut]: {
                 mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
+                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(thresholdsRendererConfig),
                 quantityAccessorFunction: () => new RadialAccessors(),
                 remainderAccessorFunction: () => new RadialAccessors(),
                 scaleFunction: () => {
@@ -248,7 +272,7 @@ export class GaugeUtil {
             },
             [GaugeMode.Horizontal]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(thresholdsRendererConfig),
                 quantityAccessorFunction: () => new HorizontalBarAccessors(),
                 remainderAccessorFunction: () => new HorizontalBarAccessors(),
                 scaleFunction: () => {
@@ -259,7 +283,7 @@ export class GaugeUtil {
             },
             [GaugeMode.Vertical]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(thresholdsRendererConfig),
                 quantityAccessorFunction: () => new VerticalBarAccessors(),
                 remainderAccessorFunction: () => new VerticalBarAccessors(),
                 scaleFunction: () => {
@@ -313,6 +337,7 @@ export class GaugeUtil {
             },
             reversed: false,
             disableMarkers: false,
+            markerRadius: StandardGaugeThresholdMarkerRadius.Large,
         }
 
         return config;

@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart,
     ChartAssist,
     GaugeMode,
     GaugeUtil,
@@ -8,11 +7,7 @@ import {
     IChartAssistSeries,
     IGaugeConfig,
     IGaugeThresholdsConfig,
-    linearGaugeGridConfig,
     LinearGaugeLabelsPlugin,
-    stack,
-    XYGrid,
-    XYGridConfig,
 } from "@nova-ui/charts";
 
 @Component({
@@ -34,10 +29,32 @@ export class HorizontalGaugeWithThresholdsExampleComponent implements OnInit {
     // Generating a standard set of thresholds with warning and critical levels
     private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 79);
 
+    /**
+     * Optionally, instead of using the 'createStandardThresholdsConfig' function as above, you can manually create a thresholds
+     * config object like the following with as many or as few thresholds as you need.
+     */
+    // private thresholds: IGaugeThresholdsConfig = {
+    //     definitions: {
+    //         [StandardGaugeThresholdId.Warning]: {
+    //             id: StandardGaugeThresholdId.Warning,
+    //             value: 50,
+    //             enabled: true,
+    //             color: StandardGaugeColor.Warning,
+    //         },
+    //         [StandardGaugeThresholdId.Critical]: {
+    //             id: StandardGaugeThresholdId.Critical,
+    //             value: 79,
+    //             enabled: true,
+    //             color: StandardGaugeColor.Critical,
+    //         },
+    //     },
+    //     reversed: false,
+    //     disableMarkers: false,
+    // };
+
     public ngOnInit(): void {
         this.gaugeConfig = this.getGaugeConfig();
-        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal) as XYGridConfig);
-        this.chartAssist = new ChartAssist(new Chart(grid), stack);
+        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Horizontal);
 
         // Adding the labels plugin
         // Note: This plugin can be completely omitted if labels aren't needed for your use case.

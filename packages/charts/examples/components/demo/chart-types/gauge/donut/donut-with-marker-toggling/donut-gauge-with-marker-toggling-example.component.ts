@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart,
     ChartAssist,
     DonutGaugeLabelsPlugin,
     GaugeMode,
@@ -9,8 +8,6 @@ import {
     IChartAssistSeries,
     IGaugeConfig,
     IGaugeThresholdsConfig,
-    radial,
-    radialGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -32,7 +29,7 @@ export class DonutGaugeWithMarkerTogglingExampleComponent implements OnInit {
 
     public ngOnInit(): void {
         this.gaugeConfig = this.getGaugeConfig();
-        this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
+        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Donut);
 
         // Adding the labels plugin
         // Note: This plugin can be completely omitted if labels aren't needed for your use case.

@@ -3,7 +3,6 @@ export const GAUGE_REMAINDER_SERIES_ID = "remainder";
 export const GAUGE_THRESHOLD_MARKERS_SERIES_ID = "threshold-markers";
 
 /**
- * @ignore
  * The visualization modes for a gauge
  */
 export enum GaugeMode {

@@ -28,10 +28,9 @@ export class DonutGaugeWithContentExampleComponent implements OnInit {
     private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
 
     public ngOnInit(): void {
-        const initialValue = 178;
+        const initialValue = 128;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
-
-        this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
+        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Donut);
 
         // Adding the plugin for the donut inner content
         this.contentPlugin = new ChartDonutContentPlugin();

@@ -2,7 +2,6 @@ import { DataAccessor } from "../core/common/types";
 import { Formatter } from "../core/common/scales/types";
 
 /**
- * @ignore
  * Configuration for a gauge
 */
 export interface IGaugeConfig {
@@ -23,7 +22,6 @@ export interface IGaugeConfig {
 }
 
 /**
- * @ignore
  * Configuration for a gauge's thresholds
  */
 export interface IGaugeThresholdsConfig {
@@ -31,18 +29,18 @@ export interface IGaugeThresholdsConfig {
     definitions: GaugeThresholdDefs;
     /** Set to true to disable the threshold markers */
     disableMarkers?: boolean;
+    /** The radius of the threshold marker dots */
+    markerRadius?: number;
     /** Boolean indicating whether the threshold trigger direction should be reversed */
     reversed?: boolean;
 }
 
 /**
- * @ignore
  * Map of threshold IDs to IGaugeThresholdDef objects
  */
 export type GaugeThresholdDefs = Record<string, IGaugeThresholdDef>;
 
 /**
- * @ignore
  * Configuration definition for a gauge threshold
  */
 export interface IGaugeThresholdDef {
@@ -57,7 +55,6 @@ export interface IGaugeThresholdDef {
 }
 
 /**
- * @ignore
  * Interface for a gauge threshold datum
 */
 export interface IGaugeThresholdDatum extends IGaugeThresholdDef {
@@ -68,7 +65,6 @@ export interface IGaugeThresholdDatum extends IGaugeThresholdDef {
 }
 
 /**
- * @ignore
  * Data used for visualizing thresholds on a gauge
  */
 export interface IGaugeThresholdsData {

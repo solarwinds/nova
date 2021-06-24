@@ -18,7 +18,6 @@ import { IGaugeLabelsPluginConfig } from "./types";
 
 
 /**
- * @ignore
  * A chart plugin that handles the rendering of labels for a donut gauge
  */
 export class DonutGaugeLabelsPlugin extends ChartPlugin {

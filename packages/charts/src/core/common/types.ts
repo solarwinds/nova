@@ -120,13 +120,11 @@ export interface IGaugeThresholdsRendererConfig {
 }
 
 /**
- * @ignore
  * Configuration for the DonutGaugeThresholdsRenderer
  */
 export interface IDonutGaugeThresholdsRendererConfig extends IRadialRendererConfig, IGaugeThresholdsRendererConfig {}
 
 /**
- * @ignore
  * Configuration for the LinearGaugeThresholdsRenderer
  */
 export interface ILinearGaugeThresholdsRendererConfig extends IRendererConfig, IGaugeThresholdsRendererConfig {}

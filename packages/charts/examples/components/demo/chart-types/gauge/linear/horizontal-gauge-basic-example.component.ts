@@ -1,16 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart,
     ChartAssist,
     GaugeMode,
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
     IGaugeConfig,
-    linearGaugeGridConfig,
-    stack,
-    XYGrid,
-    XYGridConfig,
 } from "@nova-ui/charts";
 
 @Component({
@@ -29,12 +24,8 @@ export class HorizontalGaugeBasicExampleComponent implements OnInit {
         const initialValue = 64;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
 
-        // Setting up the horizontal grid
-        const grid = new XYGrid(linearGaugeGridConfig(GaugeMode.Horizontal) as XYGridConfig);
-
-        // Creating the chart (Note the use of the stack preprocessor function. This handles the "stacking"
-        // of the quantity and remainder visualization's side-by-side on the gauge.)
-        this.chartAssist = new ChartAssist(new Chart(grid), stack);
+        // Creating the chart assist
+        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Horizontal);
 
         // Assembling the series
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);

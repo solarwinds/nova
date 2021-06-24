@@ -11,6 +11,7 @@ import {
     NuiIconModule,
     NuiMessageModule,
     NuiTextboxModule,
+    SrlcStage,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
@@ -38,6 +39,9 @@ const exampleRoutes: Routes = [
         component: ChartDocsGaugeComponent,
         data: {
             showThemeSwitcher: true,
+            "srlc": {
+                "stage": SrlcStage.ga,
+            },
         },
     },
     {

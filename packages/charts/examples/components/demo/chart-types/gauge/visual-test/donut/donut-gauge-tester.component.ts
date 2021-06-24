@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
 import { ComponentChanges } from "@nova-ui/bits";
 import {
-    Chart,
     ChartAssist,
     ChartDonutContentPlugin,
     DonutGaugeLabelsPlugin,
@@ -10,8 +9,6 @@ import {
     IAccessors,
     IChartAssistSeries,
     IGaugeConfig,
-    radial,
-    radialGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -34,7 +31,7 @@ export class DonutGaugeTesterComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit(): void {
-        this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
+        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Donut);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());

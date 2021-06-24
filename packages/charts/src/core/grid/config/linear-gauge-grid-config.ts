@@ -4,7 +4,6 @@ import { DimensionConfig } from "./dimension-config";
 import { XYGridConfig } from "./xy-grid-config";
 
 /**
- * @ignore
  * Assembles a linear-gauge-specific grid configuration
  *
  * @param mode vertical or horizontal

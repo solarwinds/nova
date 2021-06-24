@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart,
     ChartAssist,
     DonutGaugeLabelsPlugin,
     GaugeMode,
@@ -9,8 +8,6 @@ import {
     IChartAssistSeries,
     IGaugeConfig,
     IGaugeThresholdsConfig,
-    radial,
-    radialGrid,
     StandardGaugeThresholdId,
 } from "@nova-ui/charts";
 
@@ -33,9 +30,32 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
     // Generating a standard set of thresholds with warning and critical levels
     private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
 
+    /**
+     * Optionally, instead of using the 'createStandardThresholdsConfig' function as above, you can manually create a thresholds
+     * config object like the following with as many or as few thresholds as you need.
+     */
+    // private thresholds: IGaugeThresholdsConfig = {
+    //     definitions: {
+    //         [StandardGaugeThresholdId.Warning]: {
+    //             id: StandardGaugeThresholdId.Warning,
+    //             value: this.lowThreshold,
+    //             enabled: true,
+    //             color: StandardGaugeColor.Warning,
+    //         },
+    //         [StandardGaugeThresholdId.Critical]: {
+    //             id: StandardGaugeThresholdId.Critical,
+    //             value: this.highThreshold,
+    //             enabled: true,
+    //             color: StandardGaugeColor.Critical,
+    //         },
+    //     },
+    //     reversed: false,
+    //     disableMarkers: false,
+    // };
+
     public ngOnInit(): void {
         this.gaugeConfig = this.getGaugeConfig();
-        this.chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
+        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Donut);
 
         // Adding the labels plugin
         this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());
