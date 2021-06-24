@@ -6,15 +6,16 @@ import { Subject } from "rxjs";
 import isUndefined from "lodash/isUndefined";
 import { DATA_POINT_INTERACTION_RESET } from "../constants";
 import { UtilityService } from "../core/common/utility.service";
+import { IXYAccessors } from "./accessors/xy-accessors";
 
 
-export class XYRenderer<IXYAccessors> extends Renderer<IXYAccessors> {
+export class XYRenderer<TA extends IXYAccessors> extends Renderer<TA> {
 
-    public draw(renderSeries: IRenderSeries<IXYAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
+    public draw(renderSeries: IRenderSeries<TA>, rendererSubject: Subject<IRendererEventPayload>): void {
 
     }
 
-    public getDataPointPosition(dataSeries: IDataSeries<IAccessors>, index: number, scales: Scales): IPosition | undefined {
+    public getDataPointPosition(dataSeries: IDataSeries<TA>, index: number, scales: Scales): IPosition | undefined {
         if (index < 0 || index >= dataSeries.data.length) {
             return undefined;
         }
@@ -28,12 +29,11 @@ export class XYRenderer<IXYAccessors> extends Renderer<IXYAccessors> {
             y: scales.y.convert(dataSeries.accessors.data.y(point, index, dataSeries.data, dataSeries)),
         };
     }
-    public getDataPointIndex(series: IDataSeries<IXYAccessors>, values: { [p: string]: any }, scales: Scales): number {
+    public getDataPointIndex(series: IDataSeries<TA>, values: { [p: string]: any }, scales: Scales): number {
         if (isUndefined(values.x)) {
             return DATA_POINT_INTERACTION_RESET;
         }
 
-        // @ts-ignore
         const index = UtilityService.getClosestIndex(series.data, (d, i) => series.accessors.data.x(d, i, series.data, series), values.x);
 
         if (isUndefined(index)) {
