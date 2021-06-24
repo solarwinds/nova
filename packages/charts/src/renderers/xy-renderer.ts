@@ -12,7 +12,7 @@ export class XYRenderer<IXYAccessors> extends Renderer<IXYAccessors> {
 
     public draw(renderSeries: IRenderSeries<IXYAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
 
-    };
+    }
 
     public getDataPointPosition(dataSeries: IDataSeries<IAccessors>, index: number, scales: Scales): IPosition | undefined {
         if (index < 0 || index >= dataSeries.data.length) {
