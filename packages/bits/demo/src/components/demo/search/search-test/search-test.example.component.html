@@ -1,7 +1,6 @@
 <nui-search id="nui-demo-search"
             [name]="name"
             [value]="value"
-            [placeholder]="placeholder"
             [captureFocus]="captureFocus"
             (focusChange)="onFocusChange($event)"
             (inputChange)="onInputChange($event)"
@@ -16,11 +15,6 @@
 </div>
 <h4>Input parameters:</h4>
 <form>
-    <code> placeholder </code>
-    <nui-textbox [value]="placeholder"
-                 (textChange)="onPlaceholderValueChange($event)"
-                 customBoxWidth="150px">
-    </nui-textbox>
     <div>
         <div>
             <code> captureFocus </code>
