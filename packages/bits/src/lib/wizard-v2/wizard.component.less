@@ -1,6 +1,18 @@
 @import "./wizard-vars";
 @import (reference) "../../styles/mixins.less";
 
+.nui-wizard-vertical, .nui-wizard-horizontal {
+    display: block;
+
+    .nui-dialog & {
+        padding-top: 0;
+
+        .nui-wizard-horizontal-header-container {
+            border-top: none;
+        }
+    }
+}
+
 .nui-wizard-horizontal {
     &-header {
         display: flex;
@@ -69,10 +81,14 @@
 
     &-content {
         outline: 0;
-        overflow: hidden;
 
-        &[aria-expanded="false"] {
+        &[aria-expanded='false'] {
             height: 0;
+            overflow: hidden;
+        }
+
+        &-container {
+            overflow: hidden;
         }
     }
 }
