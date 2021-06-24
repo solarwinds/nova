@@ -1,11 +1,10 @@
-import {Component, Inject, OnDestroy, TemplateRef, ViewChild} from "@angular/core";
+import {Component, Inject, OnDestroy, TemplateRef} from "@angular/core";
 import {
     DialogService,
     NuiDialogRef,
     OverlayComponent,
     ToastService,
-    WizardComponent,
-    WizardHorizontalComponent
+    WizardHorizontalComponent,
 } from "@nova-ui/bits";
 import {FlexibleConnectedPositionStrategy, OverlayRef} from "@angular/cdk/overlay";
 import {takeUntil} from "rxjs/operators";
