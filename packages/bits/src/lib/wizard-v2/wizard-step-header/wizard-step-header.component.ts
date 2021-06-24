@@ -70,9 +70,6 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     /** Whether the ripple should be disabled. */
     @Input() disableRipple: boolean;
 
-    /** Header tooltip */
-    @Input() tooltip: string;
-
     @ViewChild("labelEl") labelEl: ElementRef;
 
     public stepStateConfigMap: WizardStepStateConfig;
@@ -128,10 +125,6 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     }
 
     public get headerTooltip(): string {
-        if (this.tooltip) {
-            return this.tooltip;
-        }
-
         if (this.stringLabel && this.isLabelOverflow) {
             return this.stringLabel as string;
         }

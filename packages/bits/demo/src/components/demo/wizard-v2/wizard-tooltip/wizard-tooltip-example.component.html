@@ -12,9 +12,11 @@
     </nui-wizard-step-v2>
 
     <!--  Step with custom label template -->
-    <nui-wizard-step-v2 i18n-tooltip tooltip="Custom Label Template">
-        <ng-template nuiWizardStepLabel>
-            <span><i>Custom Label template</i></span>
+    <nui-wizard-step-v2>
+        <ng-template nuiWizardStepLabel >
+            <span i18n-nuiTooltip nuiTooltip="Custom Label template">
+                <i>Custom Label template</i>
+            </span>
         </ng-template>
         <span i18n>We finally reached our last step</span>!
         <!-- Notice how both label and footer can be placed anywhere in the content of wizard step -->
