@@ -4,7 +4,7 @@
             <div class="busy-content">
                 <nui-dialog-header i18n-title title="Wizard dialog" (closed)="closeDialog()"></nui-dialog-header>
                 <div class="dialog-body compact-mode">
-                    <nui-wizard-horizontal>
+                    <nui-wizard-horizontal #wizard>
 
                         <!--  content of the 1st step -->
                         <nui-wizard-step-v2>
@@ -74,7 +74,7 @@
                         </nui-wizard-step-v2>
 
                         <ng-template #wizardCancel>
-                            <button type="button" displayStyle="action" nui-button (click)="triggerOverlay(overlay)">
+                            <button type="button" displayStyle="action" nui-button (click)="openConfirmationOverlay(overlay, wizard)">
                                 Cancel
                             </button>
                         </ng-template>
@@ -104,7 +104,7 @@
         <div class="overlay-class">
             <div class="overlay-content">
                 <div class="header">
-                    Really wat to leave?
+                    Really want to leave?
                 </div>
                 <div class="body">
                     <p i18n>

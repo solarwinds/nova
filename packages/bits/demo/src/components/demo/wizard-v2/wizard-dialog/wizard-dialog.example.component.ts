@@ -1,5 +1,12 @@
 import {Component, Inject, OnDestroy, TemplateRef, ViewChild} from "@angular/core";
-import {DialogService, NuiDialogRef, OverlayComponent, ToastService, WizardComponent} from "@nova-ui/bits";
+import {
+    DialogService,
+    NuiDialogRef,
+    OverlayComponent,
+    ToastService,
+    WizardComponent,
+    WizardHorizontalComponent
+} from "@nova-ui/bits";
 import {FlexibleConnectedPositionStrategy, OverlayRef} from "@angular/cdk/overlay";
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
@@ -10,7 +17,6 @@ import {Subject} from "rxjs";
     styleUrls: ["./wizard-dialog.example.component.less"],
 })
 export class WizardDialogExampleComponent implements OnDestroy{
-    @ViewChild("wizardComponent") wizardComponent: WizardComponent;
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
 
@@ -52,7 +58,13 @@ export class WizardDialogExampleComponent implements OnDestroy{
         }, 3000);
     }
 
-    public triggerOverlay(overlay: OverlayComponent) {
+    // Open confirmation overlay
+    public openConfirmationOverlay(overlay: OverlayComponent, wizard: WizardHorizontalComponent ) {
+        if (wizard.selectedIndex === 0) {
+            this.closeDialog();
+            return;
+        }
+
         this.overlayTriggered$.next();
 
         // Toggling the overlay to get an access to the 'overlayRef'

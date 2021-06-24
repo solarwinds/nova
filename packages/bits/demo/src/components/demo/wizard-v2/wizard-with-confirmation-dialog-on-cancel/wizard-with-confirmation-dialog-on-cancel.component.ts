@@ -27,7 +27,13 @@ export class WizardWithConfirmationDialogOnCancelComponent implements OnInit{
         this.initForm();
     }
 
+    // Open confirmation dialog
     public openConfirmationDialog(content: TemplateRef<string>): void {
+        if (this.wizard.selectedIndex === 0) {
+            this.resetWizard();
+            return;
+        }
+
         this.confirmationDialog = this.dialogService.open(content, {
             size: "sm",
             windowClass: "active-dialog",
@@ -38,6 +44,7 @@ export class WizardWithConfirmationDialogOnCancelComponent implements OnInit{
         this.wizard.reset();
     }
 
+    // Validate form before changing selected step
     public validate(formGroup: string): void {
         this.form.get(formGroup)?.markAllAsTouched();
     }
