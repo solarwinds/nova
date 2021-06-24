@@ -51,9 +51,16 @@
 
     .nui-tag {
         z-index: 1;
-        min-width: 35px;
+        width: 35px;
         justify-content: center;
         cursor: pointer;
+        .setCssVariable(border-color, nui-color-line-default);
+        .setCssVariable(color, nui-color-text-link);
+
+        &--completed {
+            .setCssVariable(border-color, nui-color-text-link);
+            .setCssVariable(color, nui-color-text-link);
+        }
     }
 }
 

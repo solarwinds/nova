@@ -18,6 +18,7 @@ import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 import { WizardVerticalComponent } from "./wizard-vertical/wizard-vertical.component";
 import { WizardDirective } from "./wizard.directive";
 import { WizardOverflowComponent } from "./wizard-overflow/wizard-overflow.component";
+import { NuiTooltipModule } from "../tooltip/public-api";
 
 /**
  * @ignore
@@ -27,6 +28,7 @@ import { WizardOverflowComponent } from "./wizard-overflow/wizard-overflow.compo
         NuiCommonModule,
         NuiIconModule,
         NuiPopoverModule,
+        NuiTooltipModule,
     ],
     declarations: [
         WizardHorizontalComponent,

@@ -2,8 +2,10 @@
 
     <ng-container *ngIf="hasOverflow && overflownStepsStart.length">
         <nui-wizard-overflow
+            #overflowComponent
             class="overflow-left"
             [template]="overflowStart"
+            [completed]="true"
             [value]="overflownStepsStart.length">
         </nui-wizard-overflow>
 
@@ -20,9 +22,11 @@
 
     <ng-container *ngIf="hasOverflow && overflownStepsEnd.length">
         <nui-wizard-overflow
+            #overflowComponent
             class="overflow-right"
             [class.overflow-right-completed]="allStepsCompleted"
             [template]="overflowEnd"
+            [completed]="allStepsCompleted"
             [value]="overflownStepsEnd.length">
         </nui-wizard-overflow>
 

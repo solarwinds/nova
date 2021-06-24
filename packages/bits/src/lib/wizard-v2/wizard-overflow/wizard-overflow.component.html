@@ -1,7 +1,10 @@
-<div class="nui-wizard-overflow">
+<div class="nui-wizard-overflow" [nuiTooltip]="'+' + value + tooltipText" i18n>
     <nui-popover trigger="focus"
                  tabindex="0"
                  [template]="template">
-            <div class="nui-tag nui-tag-with-border-info">{{ value }}</div>
+            <div class="nui-tag"
+                 [class.nui-tag--completed]="completed">
+                 {{ "+" + value }}
+            </div>
     </nui-popover>
 </div>
