@@ -50,27 +50,22 @@ export class LegendMetadataExampleComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        const averageData = getAverage(getData());
-        // We are using a different renderer so the metadata does not effect the domain
-        const noopRenderer = new XYRenderer({ignoreForDomainCalculation: true});
+        const averageData = calculateAverageSeries(getData());
+        // We are using the base XYRenderer so the metadata does not get displayed on the chart.
+        // Set `ignoreForDomainCalculation` to true to prevent the metadata from affecting the domain.
+        const metaDataRenderer = new XYRenderer({ignoreForDomainCalculation: true});
         // Here we create an accessor for our average metadata
         const avgAccessors = new XYAccessors();
         // This is so the legend knows the value for the y
         avgAccessors.data.y = (d) => d.value;
-        // Same as above we are setting the numeric value we want to visualize
-        avgAccessors.data.y1 = avgAccessors.data.y;
-        // Setting the color of the series to transparent so it doesn't render
-        avgAccessors.series.color = () => "var(--nui-color-bg-transparent)";
-        // Deleting the markers so it doesn't place a marker on the chart
-        delete avgAccessors.series.marker;
 
         this.avgSeries = {
             ...averageData,
             accessors: avgAccessors,
-            renderer: noopRenderer,
+            renderer: metaDataRenderer,
             scales: scales,
+            // showInLegend is false because we manually add our own series
             showInLegend: false,
-            preprocess: false,
         }
         // Here we assemble the complete chart series.
         let seriesSet: Partial<IChartSeries<IAccessors>>[] = getData().map(d => ({
@@ -87,7 +82,7 @@ export class LegendMetadataExampleComponent implements OnInit {
     }
 }
 
-function getAverage(dataArr: any) {
+function calculateAverageSeries(dataArr: any) {
     let arrAverage = [];
     const dataLength =  dataArr[0].data.length;
     const numOfSeries = dataArr.length

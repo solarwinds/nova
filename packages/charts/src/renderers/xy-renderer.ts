@@ -9,7 +9,7 @@ import { UtilityService } from "../core/common/utility.service";
 import { IXYAccessors } from "./accessors/xy-accessors";
 
 
-export class XYRenderer<TA extends IXYAccessors> extends Renderer<TA> {
+export class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
 
     public draw(renderSeries: IRenderSeries<TA>, rendererSubject: Subject<IRendererEventPayload>): void {
 
@@ -34,7 +34,7 @@ export class XYRenderer<TA extends IXYAccessors> extends Renderer<TA> {
             return DATA_POINT_INTERACTION_RESET;
         }
 
-        const index = UtilityService.getClosestIndex(series.data, (d, i) => series.accessors.data.x(d, i, series.data, series), values.x);
+        const index = UtilityService.getClosestIndex(series.data, (d, i) => series.accessors.data?.x?.(d, i, series.data, series), values.x);
 
         if (isUndefined(index)) {
             throw new Error("Unable to get data point index");
