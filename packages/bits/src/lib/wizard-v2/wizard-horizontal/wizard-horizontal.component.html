@@ -1,13 +1,12 @@
 <div class="nui-wizard-horizontal-header-container" #headerContainer>
 
     <ng-container *ngIf="hasOverflow && overflownStepsStart.length">
-        <div class="mt-auto nui-step-header-wrapper">
-            <nui-popover trigger="click"
-                         [template]="overflowStart">
-                    <div class="nui-tag nui-tag-with-border-info">{{ overflownStepsStart.length }}</div>
-            </nui-popover>
-            <div class="nui-wizard-horizontal-line badge-counter nui-wizard-horizontal-line-completed"></div>
-        </div>
+        <nui-wizard-overflow
+            class="overflow-left"
+            [template]="overflowStart"
+            [value]="overflownStepsStart.length">
+        </nui-wizard-overflow>
+
         <ng-template #overflowStart>
             <div class="nui-step-header-wrapper" *ngFor="let step of overflownStepsStart; let i = index; let isFirst = first">
                 <ng-template *ngTemplateOutlet="stepHeaderWithLines; context: { $implicit: steps, step: step, i: i, isFirst: isFirst }"></ng-template>
@@ -20,14 +19,13 @@
     </div>
 
     <ng-container *ngIf="hasOverflow && overflownStepsEnd.length">
-        <div class="mt-auto nui-step-header-wrapper">
-            <div class="nui-wizard-horizontal-line badge-counter"
-                 [ngClass]="{'nui-wizard-horizontal-line-completed': visibleSteps[visibleSteps.length-1]?.completed }"></div>
-            <nui-popover trigger="click"
-                         [template]="overflowEnd">
-                    <div class="nui-tag nui-tag-with-border-info">{{ overflownStepsEnd.length }}</div>
-            </nui-popover>
-        </div>
+        <nui-wizard-overflow
+            class="overflow-right"
+            [class.overflow-right-completed]="allStepsCompleted"
+            [template]="overflowEnd"
+            [value]="overflownStepsEnd.length">
+        </nui-wizard-overflow>
+
         <ng-template #overflowEnd>
             <div class="nui-step-header-wrapper" *ngFor="let step of overflownStepsEnd; let i = index; let isFirst = first">
                 <ng-template *ngTemplateOutlet="stepHeaderWithLines; context: {
