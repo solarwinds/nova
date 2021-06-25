@@ -10,11 +10,13 @@ const name: string = "Radio Group";
 
 describe(`Visual tests: ${name}`, () => {
     let camera: Camera,
-        fruitGroup: RadioGroupAtom;
+        fruitGroup: RadioGroupAtom,
+        disabledGroup: RadioGroupAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("radio-group/radio-group-visual-test");
         fruitGroup = Atom.find(RadioGroupAtom, "fruit-radio-group");
+        disabledGroup = Atom.find(RadioGroupAtom, "fruit-radio-group-disabled");
         
         camera = new Camera().loadFilm(browser, name);
     });
@@ -29,7 +31,8 @@ describe(`Visual tests: ${name}`, () => {
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);
-
+        await Helpers.switchDarkTheme("off");
+ 
         await camera.turn.off();
     }, 100000);
 });

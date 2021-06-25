@@ -3,7 +3,6 @@ import { CdkStepHeader, StepState, STEP_STATE } from "@angular/cdk/stepper";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     ElementRef,
     Inject,
@@ -12,7 +11,6 @@ import {
     OnDestroy,
     Optional,
     SimpleChanges,
-    ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
 
@@ -26,7 +24,7 @@ import assign from "lodash/assign";
     templateUrl: "wizard-step-header.component.html",
     styleUrls: ["wizard-step-header.component.less"],
     host: {
-        "class": "nui-wizard-step-header mat-focus-indicator",
+        "class": "nui-wizard-step-header",
         "[class.nui-wizard-step-header--selected]": "selected",
         "[class.nui-wizard-step-header--optional]": "optional",
         "[class.nui-wizard-step-header--completed]": "stepState === 'done'",
@@ -67,20 +65,12 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     /** Whether the given step is optional. */
     @Input() optional: boolean;
 
-    /** Whether the ripple should be disabled. */
-    @Input() disableRipple: boolean;
-
-    @ViewChild("labelEl") labelEl: ElementRef;
-
     public stepStateConfigMap: WizardStepStateConfig;
 
     private wizardConfig: IWizardConfig = {...WIZARD_CONFIG_DEFAULT};
 
-    private isLabelOverflow = false;
-
     constructor(
         private _focusMonitor: FocusMonitor,
-        private cdr: ChangeDetectorRef,
         _elementRef: ElementRef<HTMLElement>,
         @Optional() @Inject(WIZARD_CONFIG) public readonly config?: IWizardConfig
     ) {
@@ -133,15 +123,6 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
             [STEP_STATE.DONE]: this.wizardConfig.stepState?.visited,
             [STEP_STATE.EDIT]: this.wizardConfig.stepState?.active,
             [STEP_STATE.ERROR]: this.wizardConfig.stepState?.error,
-        }
-    }
-
-    private detectLongLabel(): void {
-        if (this.labelEl) {
-            const el: HTMLElement = this.labelEl.nativeElement;
-
-            this.isLabelOverflow = el.scrollWidth > el.offsetWidth;
-            this.cdr.detectChanges();
         }
     }
 }

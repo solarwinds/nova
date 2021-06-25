@@ -1,7 +1,7 @@
 <div class="nui-wizard-horizontal-header-container">
-    <div class="nui-step-header-wrapper" *ngFor="let step of steps; let i = index; let isFirst = first">
-        <div *ngIf="!isFirst" class="nui-wizard-horizontal-line"
-             [ngClass]="{'nui-wizard-horizontal-line-completed': stepsArray[i-1]?.completed && step.completed || selectedIndex === i}"></div>
+    <div class="nui-wizard-horizontal-header-wrapper" *ngFor="let step of steps; let i = index; let isFirst = first">
+        <div *ngIf="!isFirst" class="nui-wizard-horizontal__step-connector-line"
+             [ngClass]="{'nui-wizard-horizontal__step-connector-line--completed': stepsArray[i-1]?.completed && step.completed || selectedIndex === i}"></div>
         <nui-wizard-step-header
             class="nui-wizard-horizontal-header"
             (click)="step.select()"
@@ -22,8 +22,7 @@
             [active]="step.completed || selectedIndex === i || !linear"
             [completed]="step.completed"
             [optional]="step.optional"
-            [errorMessage]="step.errorMessage"
-            [disableRipple]="disableRipple">
+            [errorMessage]="step.errorMessage">
         </nui-wizard-step-header>
     </div>
 </div>

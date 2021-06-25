@@ -86,16 +86,27 @@ export class TableVirtualScrollStickyHeaderTestExampleComponent implements After
 
 const PEOPLE = ["Elena", "Madelyn", "Baggio", "Josh", "Lukas", "Blake", "Frantz", "Dima", "Serhii", "Vita", "Vlad", "Ivan", "Dumitru"];
 const CITIES = ["Bucharest", "Kiev", "Austin", "Brno", "Frankfurt pe Main", "Sutton-under-Whitestonecliffe", "Vila Bela da Santíssima Trindade"];
+const ICONS = ["status_up", "status_unplugged"];
+
 function generateUsers(length: number): IRandomUserTableModel[] {
-    return Array.from({ length }).map((obj: unknown, id: number) => {
-        const personName = sample(PEOPLE) || PEOPLE[0];
+    let peopleIndex = 0;
+    let citiesIndex = 0;
+
+    return Array.from({ length }).map((obj: unknown, no: number) => {
+        const nameFirst = PEOPLE[peopleIndex];
+        const city = CITIES[citiesIndex];
+
+        // wrap indexes when we reach the last one
+        peopleIndex = (peopleIndex + 1) % PEOPLE.length;
+        citiesIndex = (citiesIndex + 1) % CITIES.length;
+
         return ({
-            no: id,
-            postcode: id * 1000000 * id,
-            city: sample(CITIES) || CITIES[0],
-            nameFirst: personName,
+            no,
+            icon: ICONS[no % 2],
+            nameFirst,
             nameLast: "UnknownLast",
-            icon: sample(["status_up", "status_unplugged"]) || "status_up",
+            city,
+            postcode: 1000000,
         });
     });
 }

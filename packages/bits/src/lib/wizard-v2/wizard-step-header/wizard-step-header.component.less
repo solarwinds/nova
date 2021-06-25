@@ -1,50 +1,39 @@
 @import "../wizard-vars";
 @import (reference) "../../../styles/nui-framework-variables.less";
 @import (reference) "../../../styles/mixins.less";
+@import (reference) "../../../styles/nui-framework-typography.less";
 
-.nui-wizard-step {
+.nui-wizard-step-header {
+    overflow: hidden;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    .setCssVariable(color, nui-color-text-default);
+    width: @wizard-label-header-width;
 
-    &-header {
-        overflow: hidden;
+    &--completed {
+        .setCssVariable(color, nui-color-text-link);
+    }
+
+    &--disabled {
+        cursor: default;
+    }
+
+    &:focus {
+        // TODO: switch back to mixin .focus-outline() when z-index is removed in the scope of NUI-6103
         outline: none;
-        cursor: pointer;
-        position: relative;
-        box-sizing: content-box;
-        -webkit-tap-highlight-color: transparent;
-        .setCssVariable(color, nui-color-text-default);
-        width: @wizard-label-header-width;
+        box-shadow: inset 0 0 0 @nui-line-medium fade(@nui-color-selected-contrast, 50%);
+        border-radius: @nui-radius-default;
+    }
 
-        &--completed {
-            .setCssVariable(color, nui-color-text-link);
-
-            .nui-wizard-horizontal-line {
-                border: 10px red solid !important;
-                .setCssVariable(border-color, nui-color-text-link);
-            }
-        }
-
-        &--disabled {
-            cursor: default;
-        }
-
-        &:focus {
-            // TODO: switch back to mixin .focus-outline() when z-index is removed in the scope of NUI-6103
-            outline: none;
-            box-shadow: inset 0 0 0 @nui-line-medium fade(@nui-color-selected-contrast, 50%);
-            border-radius: @nui-radius-default;
-        }
-
-        &:focus:not(:focus-visible) {
-            box-shadow: unset;
-            border-radius: unset;
-        }
+    &:focus:not(:focus-visible) {
+        box-shadow: unset;
+        border-radius: unset;
     }
 
     &-icon {
-        border-radius: 50%;
-        height: @wizard-label-header-height;
-        width: @wizard-label-header-height;
-        flex-shrink: 0;
+        height: @icon-size-default;
+        width: @icon-size-default;
         position: relative;
 
         &-content {
@@ -52,7 +41,7 @@
             height: @icon-size-default;
             width: @icon-size-default;
             position: relative;
-            top: 11px;
+            top: 4px;
         }
 
         &-container {
@@ -66,20 +55,26 @@
         }
     }
 
-    &-label {
+    &__label {
         display: inline-block;
         min-width: @wizard-label-min-width;
         max-width: (@wizard-label-header-width - @nui-space-md);
         vertical-align: middle;
+        padding-bottom: @nui-space-xs;
+        .nui-text-size(small);
         .text-overflow(ellipsis);
-        .setCssVariable(color, nui-color-text-secondary)
+        .setCssVariable(color, nui-color-text-secondary);
+
+        &--active {
+            .setCssVariable(color, nui-color-text-link);
+        }
+
+        &--selected {
+            .setCssVariable(color, nui-color-text-default);
+        }
     }
 
-    &-text-label {
+    &__text-label {
         .text-overflow(ellipsis);
     }
-}
-
-.nui-step-optional, .nui-step-sub-label-error {
-    font-size: @wizard-step-sub-label-font-size;
 }

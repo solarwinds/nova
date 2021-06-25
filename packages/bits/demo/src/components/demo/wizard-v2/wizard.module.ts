@@ -23,6 +23,7 @@ import {
     WIZARD_CONFIG,
     IWizardConfig,
     WIZARD_CONFIG_DEFAULT,
+    NuiOverlayModule,
     NuiTooltipModule,
 } from "@nova-ui/bits";
 
@@ -41,6 +42,7 @@ import {
     WizardWithCustomIconsExampleComponent,
     WizardRestoreStateExampleComponent,
     WizardStepChangeExampleComponent,
+    WizardWithConfirmationDialogOnCancelComponent,
     WizardTooltipExampleComponent,
 } from "./index";
 
@@ -78,6 +80,7 @@ const routes = [
         NuiDatePickerModule,
         NuiIconModule,
         NuiSelectV2Module,
+        NuiOverlayModule,
         NuiTooltipModule,
     ],
     declarations: [
@@ -95,6 +98,7 @@ const routes = [
         WizardWithCustomIconsExampleComponent,
         WizardRestoreStateExampleComponent,
         WizardStepChangeExampleComponent,
+        WizardWithConfirmationDialogOnCancelComponent,
         WizardTooltipExampleComponent,
     ],
     providers: [
