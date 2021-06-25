@@ -86,7 +86,7 @@ export class HorizontalGaugeWithThresholdsExampleComponent implements OnInit {
         this.thresholds.disableMarkers = !this.markersEnabled;
 
         // Enabling or disabling the threshold labels
-        // Note: In addition to toggling the label plugin's 'disableThresholdLabels' configuration property,
+        // Note: As an alternative to toggling the label plugin's 'disableThresholdLabels' configuration property,
         // the plugin can simply be omitted if labels aren't needed at all for your use case.
         this.labelsPlugin.config.disableThresholdLabels = !this.markersEnabled;
 

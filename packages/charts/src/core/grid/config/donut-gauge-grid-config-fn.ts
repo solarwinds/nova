@@ -8,17 +8,7 @@ import isNil from "lodash/isNil";
 /**
  * Default donut gauge margin for label clearance
  */
-export const DONUT_GAUGE_LABEL_CLEARANCE_MARGIN_DEFAULT = 30;
-
-/**
- * Default clearance for donut gauge labels
- */
-export const DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT: IAllAround<number> = {
-    top: DONUT_GAUGE_LABEL_CLEARANCE_MARGIN_DEFAULT,
-    right: DONUT_GAUGE_LABEL_CLEARANCE_MARGIN_DEFAULT,
-    bottom: DONUT_GAUGE_LABEL_CLEARANCE_MARGIN_DEFAULT,
-    left: DONUT_GAUGE_LABEL_CLEARANCE_MARGIN_DEFAULT,
-};
+export const DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT = 30;
 
 /**
  * Assembles a donut-gauge-specific grid configuration
@@ -31,16 +21,14 @@ export function donutGaugeGridConfig(gaugeConfig: IGaugeConfig): GridConfig {
     const gridConfig = new GridConfig();
     gridConfig.interactive = false;
     if (!isEmpty(gaugeConfig.thresholds?.definitions) && !gaugeConfig.thresholds?.disableMarkers) {
-        const clearanceValue = gaugeConfig.labels?.clearance;
-        const clearance: IAllAround<number> = !isNil(clearanceValue) ?
-            {
-                top: clearanceValue,
-                right: clearanceValue,
-                bottom: clearanceValue,
-                left: clearanceValue,
-            } :
-            DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT;
-        gridConfig.dimension.margin = clearance;
+        const labelClearanceConfig = gaugeConfig.labels?.clearance;
+        const clearanceValue = !isNil(labelClearanceConfig) ? labelClearanceConfig : DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT;
+        gridConfig.dimension.margin = {
+            top: clearanceValue,
+            right: clearanceValue,
+            bottom: clearanceValue,
+            left: clearanceValue,
+        } as IAllAround<number>;
     }
     return gridConfig;
 }

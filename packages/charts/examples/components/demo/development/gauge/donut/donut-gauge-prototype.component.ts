@@ -33,7 +33,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
     private labelsPlugin: DonutGaugeLabelsPlugin;
-    private readonly labelClearance = { top: 40, right: 40, bottom: 40, left: 40 };
+    private readonly labelClearance = 40;
 
     public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>): void {
         if ((changes.size && !changes.size.firstChange) ||
@@ -49,16 +49,13 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
             this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.thresholds?.disableMarkers;
 
             const gridConfig = this.chartAssist.chart.getGrid().config();
+            const clearance = disableMarkers ? 0 : this.labelClearance;
             gridConfig.dimension.margin = {
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
+                top: clearance,
+                right: clearance,
+                bottom: clearance,
+                left: clearance,
             };
-
-            if (!disableMarkers) {
-                gridConfig.dimension.margin = this.labelClearance;
-            }
 
             this.chartAssist.chart.updateDimensions();
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
@@ -66,7 +63,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     }
 
     public ngOnInit(): void {
-        const gaugeConfigWithLabelClearance = { ...this.gaugeConfig, labels: { ...this.gaugeConfig.labels, clearance: 40 } };
+        const gaugeConfigWithLabelClearance = { ...this.gaugeConfig, labels: { ...this.gaugeConfig.labels, clearance: this.labelClearance } };
         const grid = gaugeGrid(gaugeConfigWithLabelClearance, GaugeMode.Donut);
         grid.config().dimension.autoHeight = false;
         grid.config().dimension.autoWidth = false;

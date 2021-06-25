@@ -50,6 +50,7 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
     //     },
     //     reversed: false,
     //     disableMarkers: false,
+    //     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
     // };
 
     public ngOnInit(): void {
