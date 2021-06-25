@@ -19,7 +19,7 @@ import {
 import moment from "moment/moment";
 
 @Component({
-    selector: "area-chart-stack-example",
+    selector: "nui-legend-metadata-example",
     templateUrl: "./legend-metadata-example.component.html",
 })
 export class LegendMetadataExampleComponent implements OnInit {
