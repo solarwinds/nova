@@ -102,7 +102,6 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     ngAfterViewInit(): void {
         this._focusMonitor.monitor(this._elementRef, true);
-        this.detectLongLabel();
     }
 
     ngOnDestroy(): void {
@@ -122,14 +121,6 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     /** Returns WizardStepLabel if the label of given step is a template label. */
     public get templateLabel(): WizardStepLabelDirective | null {
         return this.label instanceof WizardStepLabelDirective ? this.label : null;
-    }
-
-    public get headerTooltip(): string {
-        if (this.stringLabel && this.isLabelOverflow) {
-            return this.stringLabel as string;
-        }
-
-        return "";
     }
 
     private updateStepStateConfig(stepStateConfig: WizardStepStateConfig) {

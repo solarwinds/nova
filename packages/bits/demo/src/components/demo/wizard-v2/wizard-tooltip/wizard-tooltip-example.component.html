@@ -11,14 +11,26 @@
         </ng-template>
     </nui-wizard-step-v2>
 
-    <!--  Step with custom label template -->
+    <!--  step without tooltip -->
+    <nui-wizard-step-v2>
+        <ng-template nuiWizardStepLabel>
+            <span>Without tooltip</span>
+        </ng-template>
+
+        <!-- content of the footer -->
+        <ng-template nuiWizardStepFooter>
+            <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+        </ng-template>
+    </nui-wizard-step-v2>
+
+    <!--  Step with custom label template and tooltip-->
     <nui-wizard-step-v2>
         <ng-template nuiWizardStepLabel >
             <span i18n-nuiTooltip nuiTooltip="Custom Label template">
                 <i>Custom Label template</i>
             </span>
         </ng-template>
-        <span i18n>We finally reached our last step</span>!
+        <span i18n>We finally reached our last step!</span>
         <!-- Notice how both label and footer can be placed anywhere in the content of wizard step -->
         <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
