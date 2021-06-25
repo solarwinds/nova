@@ -1,4 +1,4 @@
-import { DataAccessor } from "../../core/common/types";
+import { DataAccessor, IAccessors } from "../../core/common/types";
 
 export interface IXYDataAccessors {
     /** Accessor for value plotted on the <code>x</code> coordinate */
@@ -9,7 +9,7 @@ export interface IXYDataAccessors {
     [key: string]: DataAccessor | undefined;
 }
 
-export class XYAccessors {
+export class XYAccessors implements IAccessors {
     /** The default data accessors for using with renderers deriving from XYRenderer */
     public data: IXYDataAccessors = {
         x: (d: any) => d.x,
