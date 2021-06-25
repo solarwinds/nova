@@ -31,7 +31,6 @@ import { WizardStepStateConfig } from "../types";
 @Component({
     selector: "nui-wizard-step-v2",
     exportAs: "nuiWizardStep",
-    styleUrls: ["wizard-step.component.less"],
     template: `
         <ng-template>
             <ng-content *ngIf="!template"></ng-content>
