@@ -3,7 +3,6 @@ import {
     DialogService,
     NuiDialogRef,
     OverlayComponent,
-    ToastService,
     WizardHorizontalComponent,
 } from "@nova-ui/bits";
 import {FlexibleConnectedPositionStrategy, OverlayRef} from "@angular/cdk/overlay";
@@ -23,10 +22,7 @@ export class WizardDialogExampleComponent implements OnDestroy{
     public busy: boolean = false;
     public activeDialog: NuiDialogRef;
 
-    constructor(
-        @Inject(DialogService) private dialogService: DialogService,
-        @Inject(ToastService) private toastService: ToastService
-    ) {}
+    constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
     public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
     public selectedVegetables = [$localize `Potato`, $localize `Tomato`];
@@ -35,22 +31,22 @@ export class WizardDialogExampleComponent implements OnDestroy{
         return this.selectedVegetables.indexOf(vegetable) > -1;
     }
 
-    public valuesChanged(values: any[]) {
+    public valuesChanged(values: any[]): void {
         this.selectedVegetables = [...values];
     }
 
-    public openDialog(content: TemplateRef<string>) {
+    public openDialog(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {
             size: "lg",
             windowClass: "active-dialog",
         });
     }
 
-    public closeDialog() {
+    public closeDialog(): void {
         this.activeDialog.close();
     }
 
-    public toggleBusy() {
+    public toggleBusy(): void {
         this.busy = !this.busy;
         setTimeout(() => {
             this.busy = false;
@@ -58,7 +54,7 @@ export class WizardDialogExampleComponent implements OnDestroy{
     }
 
     // Open confirmation overlay
-    public openConfirmationOverlay(overlay: OverlayComponent, wizard: WizardHorizontalComponent ) {
+    public openConfirmationOverlay(overlay: OverlayComponent, wizard: WizardHorizontalComponent): void {
         if (wizard.selectedIndex === 0) {
             this.closeDialog();
             return;
@@ -88,7 +84,7 @@ export class WizardDialogExampleComponent implements OnDestroy{
             takeUntil(this.onDestroy$)).subscribe(() => overlay.hide());
     }
 
-    public open(content: TemplateRef<string>) {
+    public open(content: TemplateRef<string>): void {
         this.activeDialog = this.dialogService.open(content, {size: "lg", backdrop: "static", useOverlay: true});
     }
 
@@ -96,17 +92,17 @@ export class WizardDialogExampleComponent implements OnDestroy{
         this.activeDialog.close();
     }
 
-    public onContainerResize(overlay: OverlayComponent) {
+    public onContainerResize(overlay: OverlayComponent): void {
         this.updateOverlayDimensions(overlay);
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
         this.overlayTriggered$.complete();
     }
 
-    private updateOverlayDimensions(overlay: OverlayComponent) {
+    private updateOverlayDimensions(overlay: OverlayComponent): void {
         this.overlayRef?.updateSize({
             width: overlay.toggleReference.getBoundingClientRect().width,
             height: overlay.toggleReference.getBoundingClientRect().height,
