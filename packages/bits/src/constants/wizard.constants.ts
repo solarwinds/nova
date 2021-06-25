@@ -17,8 +17,8 @@ export const WIZARD_STEP_STATE_DEFAULT_CONFIG: WizardStepStateConfig = {
         iconColor: "black",
     },
     error: {
-        icon: "severity_error",
-        iconColor: "red",
+        icon: "step-active",
+        iconColor: "black",
     },
 }
 
