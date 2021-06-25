@@ -16,8 +16,7 @@
                         [selected]="selectedIndex === i"
                         [active]="step.completed || selectedIndex === i || !linear"
                         [optional]="step.optional"
-                        [errorMessage]="step.errorMessage"
-                        [disableRipple]="disableRipple">
+                        [errorMessage]="step.errorMessage">
     </nui-wizard-step-header>
 
     <div class="nui-wizard-vertical-content-container" [class.nui-wizard-vertical-line]="!isLast">
