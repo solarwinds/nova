@@ -22,7 +22,8 @@ import {
     NuiSelectV2Module,
     WIZARD_CONFIG,
     IWizardConfig,
-    WIZARD_CONFIG_DEFAULT, NuiTooltipModule,
+    WIZARD_CONFIG_DEFAULT,
+    NuiTooltipModule,
 } from "@nova-ui/bits";
 
 import {
