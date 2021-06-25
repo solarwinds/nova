@@ -19,11 +19,6 @@ export interface IXYSeriesAccessors {
     /** Additional custom keys to match the base interface */
     [key: string]: SeriesAccessor | undefined;
 }
-export interface IXYAccessors extends IAccessors {
-    data: IXYDataAccessors;
-    /** Series level accessors - e.g. for colors, markers, etc. */
-    series: IXYSeriesAccessors;
-}
 
 export class XYAccessors {
     /** The default data accessors for using with renderers deriving from XYRenderer */
