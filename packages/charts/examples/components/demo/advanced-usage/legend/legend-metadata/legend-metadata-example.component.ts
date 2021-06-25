@@ -65,6 +65,8 @@ export class LegendMetadataExampleComponent implements OnInit {
             scales: scales,
             // showInLegend is false because we manually add our own series
             showInLegend: false,
+            // preprocess is false to let the area processor know it is already formatted properly
+            preprocess: false,
         }
         // Here we assemble the complete chart series.
         let seriesSet: Partial<IChartSeries<IAccessors>>[] = dataSeries.map(d => ({
