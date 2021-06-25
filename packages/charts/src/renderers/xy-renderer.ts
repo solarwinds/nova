@@ -9,6 +9,7 @@ import { UtilityService } from "../core/common/utility.service";
 
 export class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
     // This is empty to allow this renderer to be used for series that represent metadata that may be shown in the legend but not visualized on the chart.
+    /** See {@link Renderer#draw} */
     public draw(renderSeries: IRenderSeries<TA>, rendererSubject: Subject<IRendererEventPayload>): void {}
 
     /** See {@link Renderer#getDataPointPosition} */
@@ -27,6 +28,7 @@ export class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
         };
     }
 
+    /** See {@link Renderer#getDataPointIndex} */
     public getDataPointIndex(series: IDataSeries<TA>, values: { [p: string]: any }, scales: Scales): number {
         if (isUndefined(values.x)) {
             return DATA_POINT_INTERACTION_RESET;
