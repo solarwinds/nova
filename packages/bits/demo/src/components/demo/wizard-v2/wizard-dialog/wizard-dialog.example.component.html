@@ -25,16 +25,12 @@
                             </ng-template>
                         </nui-wizard-step-v2>
 
-                        <!--  content of the 2nd step -->
                         <nui-wizard-step-v2>
-                            <!-- define the label which is displayed on the header stepper -->
                             <ng-template wizardStepLabel>Active</ng-template>
 
-                            <!-- content of the current step -->
                             <div class="step-content-wrapper">
                                 <span i18n>This is the second step of our horizontal wizard</span>.
                             </div>
-                            <!-- content of the footer -->
                             <ng-template wizardStepFooter>
                                 <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
@@ -42,17 +38,13 @@
                             </ng-template>
                         </nui-wizard-step-v2>
 
-                        <!--  content of the 3rd step -->
                         <nui-wizard-step-v2>
-                            <!-- define the label which is displayed on the header stepper -->
                             <ng-template wizardStepLabel>Not visited</ng-template>
 
-                            <!-- content of the current step -->
                             <div class="step-content-wrapper">
                                 <span i18n>This is the third step of our horizontal wizard</span>
                             </div>
 
-                            <!-- content of the footer -->
                             <ng-template wizardStepFooter>
                                 <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
@@ -60,10 +52,8 @@
                             </ng-template>
                         </nui-wizard-step-v2>
 
-                        <!--  content of the final step -->
                         <nui-wizard-step-v2>
                             <ng-template wizardStepLabel>Summary</ng-template>
-
                             <div class="step-content-wrapper">
                                 <span i18n>We finally reached our last step</span>
                             </div>

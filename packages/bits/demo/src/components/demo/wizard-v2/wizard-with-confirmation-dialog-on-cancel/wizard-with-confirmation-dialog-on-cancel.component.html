@@ -1,9 +1,12 @@
 <form [formGroup]="form" *ngIf="form">
     <nui-wizard-horizontal #wizard>
+
+        <!--  This defines the first step of the wizard -->
         <nui-wizard-step-v2 i18n-label label="Person Details"
                             formGroupName="personDetails"
                             [stepControl]="form.get(['personDetails'])">
 
+            <!-- the current step content -->
             <div class="step-content-wrapper">
                 <h2>Person Details</h2>
                 <nui-form-field [control]="form.get(['personDetails','firstName'])"
@@ -39,7 +42,6 @@
                             formGroupName="contactDetails"
                             [stepControl]="form.get(['contactDetails'])">
 
-            <!-- content of the second step -->
             <div class="step-content-wrapper">
                 <h2>Contact Details</h2>
                 <nui-form-field [control]="form.get(['contactDetails','email'])"
@@ -69,7 +71,6 @@
                     </nui-validation-message>
                 </nui-form-field>
 
-                <!-- content of the footer -->
                 <ng-template wizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
@@ -100,7 +101,6 @@
                     </nui-validation-message>
                 </nui-form-field>
 
-                <!-- content of the footer -->
                 <ng-template wizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
