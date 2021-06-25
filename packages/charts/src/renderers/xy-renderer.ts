@@ -26,6 +26,7 @@ export class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
         };
     }
 
+    /** See {@link Renderer#getDataPointPosition} */
     public getDataPointIndex(series: IDataSeries<TA>, values: { [p: string]: any }, scales: Scales): number {
         if (isUndefined(values.x)) {
             return DATA_POINT_INTERACTION_RESET;
