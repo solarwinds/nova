@@ -10,8 +10,6 @@
             <!-- This is the metadata series -->
             <nui-legend-series [interactive]="false"
                                [descriptionPrimary]="avgSeries['name']">
-                <!-- Specify 'undefined' for the formatter key since we're not applying any special formatting to the data values shown in the legend -->
-                <!-- Specify the 'y1' data accessor to let the chart assist know how to access the data for the legend. -->
                 <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(avgSeries, 'y')"
                                       backgroundColor="var(--nui-color-bg-mid_dark)"
                                       color="var(--nui-color-text-light)">
@@ -24,6 +22,8 @@
                                [seriesRenderState]="chartAssist.renderStatesIndex[legendSeries.id]?.state"
                                [isSelected]="!chartAssist.isSeriesHidden(legendSeries.id)"
                                (isSelectedChange)="chartAssist.toggleSeries(legendSeries.id, $event)">
+                <!-- Specify 'undefined' for the formatter key since we're not applying any special formatting to the data values shown in the legend -->
+                <!-- Specify the 'y1' data accessor to let the chart assist know how to access the data for the legend. -->
                 <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(legendSeries, 'y', undefined, 'y1')"
                                       [backgroundColor]="chartAssist.palette.standardColors.get(legendSeries.id)"
                                       [color]="chartAssist.palette.textColors.get(legendSeries.id)">

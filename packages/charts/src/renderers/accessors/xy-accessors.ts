@@ -25,7 +25,7 @@ export interface IXYAccessors extends IAccessors {
     series: IXYSeriesAccessors;
 }
 
-export class XYAccessors implements IXYAccessors {
+export class XYAccessors {
     /** The default data accessors for using with renderers deriving from XYRenderer */
     public data: IXYDataAccessors = {
         x: (d: any) => d.x,

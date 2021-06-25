@@ -16,7 +16,7 @@ import {
     XYAccessors,
     XYRenderer,
 } from "@nova-ui/charts";
-import moment, { Moment } from "moment/moment";
+import moment from "moment/moment";
 
 @Component({
     selector: "area-chart-stack-example",
@@ -48,8 +48,8 @@ export class LegendMetadataExampleComponent implements OnInit {
             x: new TimeScale(),
             y: new LinearScale(),
         };
-
-        const averageData = calculateAverageSeries(getData());
+        const dataSeries = getData();
+        const averageData = calculateAverageSeries(dataSeries);
         // We are using the base XYRenderer so the metadata does not get displayed on the chart.
         // Set `ignoreForDomainCalculation` to true to prevent the metadata from affecting the domain.
         const metaDataRenderer = new XYRenderer({ ignoreForDomainCalculation: true });
@@ -67,7 +67,7 @@ export class LegendMetadataExampleComponent implements OnInit {
             showInLegend: false,
         }
         // Here we assemble the complete chart series.
-        let seriesSet: Partial<IChartSeries<IAccessors>>[] = getData().map(d => ({
+        let seriesSet: Partial<IChartSeries<IAccessors>>[] = dataSeries.map(d => ({
             ...d,
             accessors,
             renderer,
@@ -81,29 +81,29 @@ export class LegendMetadataExampleComponent implements OnInit {
     }
 }
 
-function calculateAverageSeries(dataArr: Partial<IDataSeries<XYAccessors>>[]): Partial<IDataSeries<XYAccessors>> {
+function calculateAverageSeries(seriesSet: Partial<IDataSeries<XYAccessors>>[]): Partial<IDataSeries<XYAccessors>> {
     let arrAverage = [];
-    const dataLength =  dataArr[0].data?.length ?? 0;
-    const numOfSeries = dataArr.length
-    if(!dataArr.length) {
-        return {
-            id: "average",
-            name: "Average Speed",
-            data: [],
-        }
+    const dataLength =  seriesSet[0].data?.length ?? 0;
+    const numOfSeries = seriesSet.length
+    const averageSeries = {
+        id: "average",
+        name: "Average Speed",
+        data: [],
+    }
+    if(!seriesSet.length) {
+        return averageSeries;
     }
     for (let n = 0; n < dataLength; n++) {
         let avg = 0;
-        for (let i = 0; i < dataArr.length; i++) {
-            const series = dataArr[i];
+        for (let i = 0; i < seriesSet.length; i++) {
+            const series = seriesSet[i];
             avg += series?.data?.[n].value ?? 0;
         }
         avg = avg/numOfSeries
-        arrAverage.push({ x: dataArr[0].data?.[n].x, value: avg });
+        arrAverage.push({ x: seriesSet[0].data?.[n].x, value: avg });
     }
     return {
-        id: "average",
-        name: "Average Speed",
+        ...averageSeries,
         data: arrAverage,
     };
 }
