@@ -1,8 +1,8 @@
 <div class="testing-region d-flex align-items-center justify-content-around">
     <donut-gauge-prototype [gaugeConfig]="gaugeConfig" [size]="donutSize" [annularGrowth]="annularGrowth" [annularWidth]="thickness">
     </donut-gauge-prototype>
-    <linear-gauge-vertical-prototype [gaugeConfig]="gaugeConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-vertical-prototype>
-    <linear-gauge-horizontal-prototype [gaugeConfig]="gaugeConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-horizontal-prototype>
+    <linear-gauge-vertical-prototype [gaugeConfig]="gaugeConfig"></linear-gauge-vertical-prototype>
+    <linear-gauge-horizontal-prototype [gaugeConfig]="gaugeConfig"></linear-gauge-horizontal-prototype>
 </div>
 
 <div class="d-flex justify-content-center">
@@ -52,7 +52,8 @@
             </label>
             <br />
             <nui-textbox-number type="number"
-                                [(ngModel)]="thickness"
+                                [ngModel]="thickness"
+                                (ngModelChange)="onThicknessChange($event)"
                                 [minValue]="0"
                                 customBoxWidth="75px"
                                 name="thicknessInput"></nui-textbox-number>
@@ -132,7 +133,8 @@
                 <input id="flip-labels"
                        class="mb-2"
                        type="checkbox"
-                       [(ngModel)]="flipLabels" />
+                       [ngModel]="flipLabels"
+                       (ngModelChange)="onFlippedChange($event)" />
                 <label class="px-3" for="flip-labels">Flip Labels</label>
             </div>
         </div>

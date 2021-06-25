@@ -1,17 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart,
     ChartAssist,
     ChartDonutContentPlugin,
-    DonutGaugeLabelsPlugin,
     GaugeMode,
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
     IGaugeConfig,
     IGaugeThresholdsConfig,
-    radial,
-    radialGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -30,13 +26,12 @@ export class DonutGaugeWithContentExampleComponent implements OnInit {
     public ngOnInit(): void {
         const initialValue = 128;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
-        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Donut);
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
 
         // Adding the plugin for the donut inner content
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 
-        this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.chartAssist.update(this.seriesSet);
     }

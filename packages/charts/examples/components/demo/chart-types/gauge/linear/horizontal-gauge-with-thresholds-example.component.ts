@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import {
+    Chart,
     ChartAssist,
+    gaugeGrid,
     GaugeMode,
     GaugeUtil,
     IAccessors,
@@ -8,6 +10,7 @@ import {
     IGaugeConfig,
     IGaugeThresholdsConfig,
     LinearGaugeLabelsPlugin,
+    stack,
 } from "@nova-ui/charts";
 
 @Component({
@@ -50,17 +53,24 @@ export class HorizontalGaugeWithThresholdsExampleComponent implements OnInit {
     //     },
     //     reversed: false,
     //     disableMarkers: false,
+    //     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
     // };
 
     public ngOnInit(): void {
+        // Setting up the gauge config
         this.gaugeConfig = this.getGaugeConfig();
-        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Horizontal);
+
+        // Setting up the chart assist
+        const grid = gaugeGrid(this.gaugeConfig, GaugeMode.Horizontal);
+        this.chartAssist = new ChartAssist(new Chart(grid), stack);
 
         // Adding the labels plugin
-        // Note: This plugin can be completely omitted if labels aren't needed for your use case.
-        this.chartAssist.chart.addPlugin(this.labelsPlugin);
+        this.chartAssist.chart.addPlugin(this.labelsPlugin)
 
+        // Assembling the series
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
+
+        // Updating the chart
         this.chartAssist.update(this.seriesSet);
     }
 

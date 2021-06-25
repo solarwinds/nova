@@ -26,12 +26,13 @@ import { linearGaugeRendererConfig } from "../renderers/bar/linear-gauge-rendere
 import { Renderer } from "../core/common/renderer";
 import isUndefined from "lodash/isUndefined";
 import { ChartAssist } from "../core/chart-assists/chart-assist";
-import { radialGrid } from "../renderers/radial/radial-grid-fn";
 import { radial } from "../renderers/radial/radial-preprocessor";
 import { stack } from "../renderers/bar/stacked-preprocessor";
 import { Chart } from "../core/chart";
-import { XYGrid } from "../core/grid/xy-grid";
-import { linearGaugeGridConfig } from "../core/grid/config/linear-gauge-grid-config";
+import { gaugeGrid } from "../core/grid/config/gauge-grid-fn";
+import isEmpty from "lodash/isEmpty";
+import { DonutGaugeLabelsPlugin } from "../core/plugins/gauge/donut-gauge-labels-plugin";
+import { LinearGaugeLabelsPlugin } from "../core/plugins/gauge/linear-gauge-labels-plugin";
 
 /**
  * @ignore
@@ -75,16 +76,24 @@ export class GaugeUtil {
     public static readonly DATA_CATEGORY = "gauge";
 
     /**
-     * Creates a ChartAssist pre-configured based on the provided GaugeMode
+     * Creates a ChartAssist pre-configured based on the provided IGaugeConfig and GaugeMode
      *
-     * @param gaugeMode The gauge mode
+     * @param gaugeConfig The gauge configuration
+     * @param mode The gauge mode
      *
      * @returns {ChartAssist} A pre-configured chart assist
      */
-    public static createChartAssist(gaugeMode: GaugeMode): ChartAssist {
-        const grid = (gaugeMode === GaugeMode.Horizontal || gaugeMode === GaugeMode.Vertical) ? new XYGrid(linearGaugeGridConfig(gaugeMode)) : radialGrid();
+    public static createChartAssist(gaugeConfig: IGaugeConfig, mode: GaugeMode): ChartAssist {
+        const grid = gaugeGrid(gaugeConfig, mode);
         const chart = new Chart(grid);
-        return gaugeMode === GaugeMode.Donut ? new ChartAssist(chart, radial) : new ChartAssist(chart, stack);
+        if (!isEmpty(gaugeConfig.thresholds?.definitions) && !gaugeConfig.thresholds?.disableMarkers) {
+            if (mode === GaugeMode.Donut) {
+                chart.addPlugin(new DonutGaugeLabelsPlugin())
+            } else {
+                chart.addPlugin(new LinearGaugeLabelsPlugin({ flippedLabels: gaugeConfig.labels?.flipped ?? false }));
+            }
+        }
+        return mode === GaugeMode.Donut ? new ChartAssist(chart, radial) : new ChartAssist(chart, stack);
     }
 
     /**
@@ -257,6 +266,7 @@ export class GaugeUtil {
             enabled: !gaugeConfig.thresholds?.disableMarkers,
             markerRadius: gaugeConfig.thresholds?.markerRadius,
         };
+        const labelFormatter = gaugeConfig.labels?.formatter;
 
         const renderingTools: Record<GaugeMode, IGaugeRenderingTools> = {
             [GaugeMode.Donut]: {
@@ -266,7 +276,7 @@ export class GaugeUtil {
                 remainderAccessorFunction: () => new RadialAccessors(),
                 scaleFunction: () => {
                     const scales = radialScales();
-                    scales.r.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.labelFormatter;
+                    scales.r.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = labelFormatter;
                     return scales;
                 },
             },
@@ -277,7 +287,7 @@ export class GaugeUtil {
                 remainderAccessorFunction: () => new HorizontalBarAccessors(),
                 scaleFunction: () => {
                     const scales = barScales({ horizontal: true });
-                    scales.x.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.labelFormatter;
+                    scales.x.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = labelFormatter;
                     return scales;
                 },
             },
@@ -288,7 +298,7 @@ export class GaugeUtil {
                 remainderAccessorFunction: () => new VerticalBarAccessors(),
                 scaleFunction: () => {
                     const scales = barScales();
-                    scales.y.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.labelFormatter;
+                    scales.y.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = labelFormatter;
                     return scales;
                 },
             },

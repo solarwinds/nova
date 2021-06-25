@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart,
     ChartAssist,
     GaugeMode,
     GaugeUtil,
@@ -8,12 +7,8 @@ import {
     IChartAssistSeries,
     IGaugeConfig,
     IGaugeThresholdsConfig,
-    linearGaugeGridConfig,
-    LinearGaugeLabelsPlugin,
-    stack,
     StandardGaugeThresholdMarkerRadius,
     StandardLinearGaugeThickness,
-    XYGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -26,7 +21,6 @@ export class HorizontalGaugeThicknessAdjustmentExampleComponent implements OnIni
     public gaugeConfig: IGaugeConfig;
     public value = 64;
     public compact = true;
-    public labelsPlugin = new LinearGaugeLabelsPlugin();
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
     private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 79);
@@ -35,18 +29,11 @@ export class HorizontalGaugeThicknessAdjustmentExampleComponent implements OnIni
         // Adjusting the threshold marker radius based on the thickness
         this.thresholds.markerRadius = this.compact ? StandardGaugeThresholdMarkerRadius.Small : StandardGaugeThresholdMarkerRadius.Large;
 
-        // Setting the optional thickness parameter on the 'linearGaugeGridConfig' function (default is StandardLinearGaugeThickness.Large)
-        const thickness = this.compact ? StandardLinearGaugeThickness.Medium : StandardLinearGaugeThickness.Large;
-        const gridConfig = linearGaugeGridConfig(GaugeMode.Horizontal, thickness);
-        const grid = new XYGrid(gridConfig);
-
-        // Creating the chart assist (Note the use of the stack preprocessor function. This handles the "stacking"
-        // of the quantity and remainder visualizations horizontally on the gauge.)
-        this.chartAssist = new ChartAssist(new Chart(grid), stack);
-        this.chartAssist.chart.addPlugin(this.labelsPlugin);
-
         // Setting up the gauge config
         this.gaugeConfig = this.getGaugeConfig();
+
+        // Creating the chart assist
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
 
         // Assembling the series
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
@@ -92,6 +79,7 @@ export class HorizontalGaugeThicknessAdjustmentExampleComponent implements OnIni
             value: this.value,
             max: 100,
             thresholds: this.thresholds,
+            linearThickness: this.compact ? StandardLinearGaugeThickness.Medium : StandardLinearGaugeThickness.Large,
         };
     }
 }

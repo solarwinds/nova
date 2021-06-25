@@ -25,7 +25,7 @@ export class HorizontalGaugeBasicExampleComponent implements OnInit {
         this.gaugeConfig = this.getGaugeConfig(initialValue);
 
         // Creating the chart assist
-        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Horizontal);
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
 
         // Assembling the series
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);

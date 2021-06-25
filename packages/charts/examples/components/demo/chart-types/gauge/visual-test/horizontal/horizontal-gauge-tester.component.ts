@@ -7,7 +7,6 @@ import {
     IAccessors,
     IChartAssistSeries,
     IGaugeConfig,
-    LinearGaugeLabelsPlugin,
 } from "@nova-ui/charts";
 
 @Component({
@@ -28,9 +27,7 @@ export class HorizontalGaugeTesterComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit(): void {
-        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Horizontal);
-        this.chartAssist.chart.addPlugin(new LinearGaugeLabelsPlugin());
-
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
         this.chartAssist.update(this.seriesSet);
     }

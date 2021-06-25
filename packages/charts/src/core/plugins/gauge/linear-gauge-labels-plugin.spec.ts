@@ -1,4 +1,4 @@
-import { linearGaugeGridConfig } from "../../grid/config/linear-gauge-grid-config";
+import { gaugeGridConfig } from "../../grid/config/linear-gauge-grid-config-fn";
 import { XYGridConfig } from "../../grid/config/xy-grid-config";
 import { XYGrid } from "../../grid/xy-grid";
 
@@ -27,7 +27,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     let dataSeries: IChartAssistSeries<IAccessors>;
 
     beforeEach(() => {
-        gridConfig = linearGaugeGridConfig(GaugeMode.Horizontal) as XYGridConfig;
+        gridConfig = gaugeGridConfig(GaugeMode.Horizontal) as XYGridConfig;
         chart = new Chart(new XYGrid(gridConfig));
         plugin = new LinearGaugeLabelsPlugin();
         chart.addPlugin(plugin);
@@ -79,7 +79,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
 
         describe("with flipped labels", () => {
             beforeEach(() => {
-                plugin.config.flipLabels = true;
+                plugin.config.flippedLabels = true;
                 // reset the margins to accommodate the label direction change
                 gridConfig.dimension.margin = {
                     top: 0,
@@ -118,7 +118,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     describe("vertical mode", () => {
         beforeEach(() => {
             element.setAttribute("style", "height: 200px");
-            gridConfig = linearGaugeGridConfig(GaugeMode.Vertical);
+            gridConfig = gaugeGridConfig(GaugeMode.Vertical);
             chart.getGrid().config(gridConfig);
             dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Vertical));
             chart.update([dataSeries]);
@@ -150,7 +150,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
 
         describe("with flipped labels", () => {
             beforeEach(() => {
-                plugin.config.flipLabels = true
+                plugin.config.flippedLabels = true
                 // reset the margins to accommodate the label direction change
                 gridConfig.dimension.margin = {
                     top: 0,

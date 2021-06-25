@@ -1,7 +1,8 @@
 export * from "./axis-config";
 export * from "./border-config";
 export * from "./dimension-config";
-export * from "./linear-gauge-grid-config";
+export * from "./linear-gauge-grid-config-fn";
+export * from "./donut-gauge-grid-config-fn";
 export * from "./grid-config";
 export * from "./area-grid-config";
 export * from "./bar-grid-config";
@@ -9,3 +10,4 @@ export * from "./bar-horizontal-grid-config";
 export * from "./bar-status-grid-config";
 export * from "./spark-chart-grid-config";
 export * from "./xy-grid-config";
+export * from "./gauge-grid-fn";

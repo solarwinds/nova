@@ -14,6 +14,7 @@ import {
     IRadialRendererConfig,
     radial,
     radialGrid,
+    gaugeGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -32,6 +33,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
     private labelsPlugin: DonutGaugeLabelsPlugin;
+    private readonly labelClearance = { top: 40, right: 40, bottom: 40, left: 40 };
 
     public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>): void {
         if ((changes.size && !changes.size.firstChange) ||
@@ -43,23 +45,37 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
+            const disableMarkers = this.gaugeConfig.thresholds?.disableMarkers ?? false;
             this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.thresholds?.disableMarkers;
+
+            const gridConfig = this.chartAssist.chart.getGrid().config();
+            gridConfig.dimension.margin = {
+                top: 0,
+                right: 0,
+                bottom: 0,
+                left: 0,
+            };
+
+            if (!disableMarkers) {
+                gridConfig.dimension.margin = this.labelClearance;
+            }
+
+            this.chartAssist.chart.updateDimensions();
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
 
     public ngOnInit(): void {
-        const grid = radialGrid();
+        const gaugeConfigWithLabelClearance = { ...this.gaugeConfig, labels: { ...this.gaugeConfig.labels, clearance: 40 } };
+        const grid = gaugeGrid(gaugeConfigWithLabelClearance, GaugeMode.Donut);
         grid.config().dimension.autoHeight = false;
         grid.config().dimension.autoWidth = false;
+
         this.chartAssist = new ChartAssist(new Chart(grid), radial);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
-        const labelConfig: IGaugeLabelsPluginConfig = {
-            clearance: { top: 40, right: 40, bottom: 40, left: 40 },
-        };
 
-        this.labelsPlugin = new DonutGaugeLabelsPlugin(labelConfig);
+        this.labelsPlugin = new DonutGaugeLabelsPlugin();
         this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);

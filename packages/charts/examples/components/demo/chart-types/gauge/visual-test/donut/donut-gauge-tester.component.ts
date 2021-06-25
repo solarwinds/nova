@@ -3,7 +3,6 @@ import { ComponentChanges } from "@nova-ui/bits";
 import {
     ChartAssist,
     ChartDonutContentPlugin,
-    DonutGaugeLabelsPlugin,
     GaugeMode,
     GaugeUtil,
     IAccessors,
@@ -31,10 +30,9 @@ export class DonutGaugeTesterComponent implements OnInit, OnChanges {
     }
 
     public ngOnInit(): void {
-        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Donut);
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
-        this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.chartAssist.update(this.seriesSet);

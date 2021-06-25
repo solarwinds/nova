@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
     ChartAssist,
-    DonutGaugeLabelsPlugin,
     GaugeMode,
     GaugeUtil,
     IAccessors,
@@ -55,10 +54,7 @@ export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
 
     public ngOnInit(): void {
         this.gaugeConfig = this.getGaugeConfig();
-        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Donut);
-
-        // Adding the labels plugin
-        this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.chartAssist.update(this.seriesSet);

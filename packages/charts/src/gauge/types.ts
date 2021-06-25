@@ -1,5 +1,6 @@
 import { DataAccessor } from "../core/common/types";
 import { Formatter } from "../core/common/scales/types";
+import { IAllAround } from "../core/grid/types";
 
 /**
  * Configuration for a gauge
@@ -13,12 +14,14 @@ export interface IGaugeConfig {
     defaultQuantityColor?: string;
     /** Optional threshold configuration */
     thresholds?: IGaugeThresholdsConfig;
+    /** Optional configuration for value labels (currently only used for thresholds) */
+    labels?: IGaugeLabelsConfig;
     /** Optional accessor for customizing the color to display for the quantity segment as each threshold is hit */
     quantityColorAccessor?: DataAccessor;
     /** Optional accessor for customizing the color to display for the remainder segment */
     remainderColorAccessor?: DataAccessor;
-    /** Optional custom formatter for the value labels (currently only used for thresholds) */
-    labelFormatter?: Formatter<any>;
+    /** Used for linear gauges; sets the thickness of the bar */
+    linearThickness?: number;
 }
 
 /**
@@ -33,6 +36,26 @@ export interface IGaugeThresholdsConfig {
     markerRadius?: number;
     /** Boolean indicating whether the threshold trigger direction should be reversed */
     reversed?: boolean;
+}
+
+/**
+ * Configuration for a gauge's value labels (currently only used for threshold markers)
+ */
+export interface IGaugeLabelsConfig {
+    /** Optional custom formatter for the value labels (currently only threshold labels are supported) */
+    formatter?: Formatter<any>;
+    /**
+     * Amount of space (in pixels) to reserve on the side of the grid for the labels.
+     * For the donut gauge, the clearance is applied to all sides; for the linear gauge
+     * the clearance is applied only to the side on which the labels appear.
+     */
+    clearance?: number;
+    /**
+     * Currently only supported on linear gauges. Set this to true to change the side of the gauge
+     * that the labels appear on. When false, the default sides are right for vertical gauge
+     * and bottom for horizontal gauge.
+     */
+    flipped?: boolean;
 }
 
 /**

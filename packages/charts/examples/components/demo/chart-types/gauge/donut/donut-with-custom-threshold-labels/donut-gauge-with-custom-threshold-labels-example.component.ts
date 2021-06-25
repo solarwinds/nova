@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {
     ChartAssist,
-    DonutGaugeLabelsPlugin,
     GaugeMode,
     GaugeUtil,
     IAccessors,
@@ -20,15 +19,12 @@ export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnIn
     public gaugeConfig: IGaugeConfig;
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 80);
+    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 75);
 
     public ngOnInit(): void {
         const initialValue = 40;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
-        this.chartAssist = GaugeUtil.createChartAssist(GaugeMode.Donut);
-
-        // Adding the labels plugin
-        this.chartAssist.chart.addPlugin(new DonutGaugeLabelsPlugin());
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.chartAssist.update(this.seriesSet);
@@ -47,7 +43,12 @@ export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnIn
             thresholds: this.thresholds,
 
             // Setting a custom label formatter
-            labelFormatter: (d: string) => `${d}%`,
+            labels: {
+                formatter: (d: string) => `${d}%`,
+                // Optionally specify a custom clearance in pixels for the labels if
+                // they're too long or short for the existing grid margins
+                // clearance: 35,
+            },
         };
     }
 }

@@ -20,17 +20,10 @@ import { GAUGE_THRESHOLD_MARKERS_SERIES_ID } from "../../../gauge/constants";
 export class LinearGaugeLabelsPlugin extends ChartPlugin {
     /** The default plugin configuration */
     public DEFAULT_CONFIG: IGaugeLabelsPluginConfig = {
-        clearance: {
-            top: 20,
-            right: 25,
-            bottom: 20,
-            left: 25,
-        },
-        applyClearance: true,
         padding: 5,
         formatterName: GAUGE_LABEL_FORMATTER_NAME_DEFAULT,
         disableThresholdLabels: false,
-        flipLabels: false,
+        flippedLabels: false,
     };
 
     private destroy$ = new Subject();
@@ -67,7 +60,6 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
 
     public updateDimensions(): void {
         this.updateData();
-        this.adjustGridMargin();
         this.drawThresholdLabels();
     }
 
@@ -144,12 +136,12 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
 
     private getLabelOffset() {
         let labelStart = 0;
-        if (!this.config.flipLabels) {
+        if (!this.config.flippedLabels) {
             const gridDimensions = this.chart.getGrid().config().dimension;
             labelStart = this.isHorizontal ? gridDimensions.height() : gridDimensions.width()
         }
         let padding = this.config.padding as number;
-        padding = this.config.flipLabels ? -(padding) : padding;
+        padding = this.config.flippedLabels ? -(padding) : padding;
         return labelStart + padding;
     }
 
@@ -158,30 +150,14 @@ export class LinearGaugeLabelsPlugin extends ChartPlugin {
             return "middle";
         }
 
-        return this.config.flipLabels ? "end" : "start";
+        return this.config.flippedLabels ? "end" : "start";
     }
 
     private getAlignmentBaseline(): string {
         if (this.isHorizontal) {
-            return this.config.flipLabels ? "text-after-edge" : "hanging";
+            return this.config.flippedLabels ? "text-after-edge" : "hanging";
         }
 
         return "central";
-    }
-
-    private adjustGridMargin() {
-        if (this.config.applyClearance) {
-            const gridConfig = this.chart.getGrid().config();
-            const marginToAdjust = this.getMarginToAdjust();
-            gridConfig.dimension.margin[marginToAdjust] = this.config.clearance?.[marginToAdjust] as number;
-        }
-    }
-
-    private getMarginToAdjust() {
-        if (this.isHorizontal) {
-            return this.config.flipLabels ? "top" : "bottom";
-        }
-
-        return this.config.flipLabels ? "left" : "right";
     }
 }
