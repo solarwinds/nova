@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {
     Chart,
     ChartAssist,
+    DonutGaugeLabelsPlugin,
     gaugeGrid,
     GaugeMode,
     GaugeUtil,
@@ -9,66 +10,39 @@ import {
     IChartAssistSeries,
     IGaugeConfig,
     IGaugeThresholdsConfig,
-    LinearGaugeLabelsPlugin,
-    stack,
+    radial,
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "horizontal-gauge-with-thresholds-example",
-    templateUrl: "./horizontal-gauge-with-thresholds-example.component.html",
-    styleUrls: ["./horizontal-gauge-with-thresholds-example.component.less"],
+    selector: "donut-gauge-with-threshold-marker-toggling-example",
+    templateUrl: "./donut-gauge-with-threshold-marker-toggling-example.component.html",
+    styleUrls: ["./donut-gauge-with-threshold-marker-toggling-example.component.less"],
 })
-export class HorizontalGaugeWithThresholdsExampleComponent implements OnInit {
+export class DonutGaugeWithThresholdMarkerTogglingExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
+    public value = 128;
     public gaugeConfig: IGaugeConfig;
-    public value = 64;
     public markersEnabled = true;
-
-    // Creating the linear gauge labels plugin
-    public labelsPlugin = new LinearGaugeLabelsPlugin();
+    public labelsPlugin = new DonutGaugeLabelsPlugin();
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
     // Generating a standard set of thresholds with warning and critical levels
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 79);
-
-    /**
-     * Optionally, instead of using the 'createStandardThresholdsConfig' function as above, you can manually create a thresholds
-     * config object like the following with as many or as few thresholds as you need.
-     */
-    // private thresholds: IGaugeThresholdsConfig = {
-    //     definitions: {
-    //         [StandardGaugeThresholdId.Warning]: {
-    //             id: StandardGaugeThresholdId.Warning,
-    //             value: 50,
-    //             enabled: true,
-    //             color: StandardGaugeColor.Warning,
-    //         },
-    //         [StandardGaugeThresholdId.Critical]: {
-    //             id: StandardGaugeThresholdId.Critical,
-    //             value: 79,
-    //             enabled: true,
-    //             color: StandardGaugeColor.Critical,
-    //         },
-    //     },
-    //     reversed: false,
-    //     disableMarkers: false,
-    //     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
-    // };
+    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
 
     public ngOnInit(): void {
         // Setting up the gauge config
         this.gaugeConfig = this.getGaugeConfig();
 
         // Setting up the chart assist
-        const grid = gaugeGrid(this.gaugeConfig, GaugeMode.Horizontal);
-        this.chartAssist = new ChartAssist(new Chart(grid), stack);
+        const grid = gaugeGrid(this.gaugeConfig, GaugeMode.Donut);
+        this.chartAssist = new ChartAssist(new Chart(grid), radial);
 
         // Adding the labels plugin
         this.chartAssist.chart.addPlugin(this.labelsPlugin)
 
         // Assembling the series
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
 
         // Updating the chart
         this.chartAssist.update(this.seriesSet);
@@ -102,7 +76,7 @@ export class HorizontalGaugeWithThresholdsExampleComponent implements OnInit {
     private getGaugeConfig(): IGaugeConfig {
         return {
             value: this.value,
-            max: 100,
+            max: 200,
             thresholds: this.thresholds,
         };
     }

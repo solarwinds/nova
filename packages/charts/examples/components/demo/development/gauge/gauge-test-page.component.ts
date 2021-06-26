@@ -28,7 +28,7 @@ export class GaugeTestPageComponent implements OnDestroy {
 
     public warningEnabled = true;
     public criticalEnabled = true;
-    public enableThresholdMarkers = true;
+    public thresholdMarkersEnabled = true;
     public reversed = false;
     public flipLabels = false;
 
@@ -99,7 +99,7 @@ export class GaugeTestPageComponent implements OnDestroy {
     }
 
     public onEnableThresholdMarkersChange(enabled: boolean): void {
-        this.enableThresholdMarkers = enabled;
+        this.thresholdMarkersEnabled = enabled;
         this.gaugeConfig = this.getGaugeConfig();
     }
 
@@ -130,6 +130,6 @@ export class GaugeTestPageComponent implements OnDestroy {
         this.thresholds.definitions[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
         this.thresholds.definitions[StandardGaugeThresholdId.Critical].enabled = this.criticalEnabled;
         this.thresholds.reversed = this.reversed;
-        this.thresholds.disableMarkers = !this.enableThresholdMarkers;
+        this.thresholds.disableMarkers = !this.thresholdMarkersEnabled;
     }
 }

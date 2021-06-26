@@ -1,6 +1,5 @@
 import { DataAccessor } from "../core/common/types";
 import { Formatter } from "../core/common/scales/types";
-import { IAllAround } from "../core/grid/types";
 
 /**
  * Configuration for a gauge
@@ -20,7 +19,7 @@ export interface IGaugeConfig {
     quantityColorAccessor?: DataAccessor;
     /** Optional accessor for customizing the color to display for the remainder segment */
     remainderColorAccessor?: DataAccessor;
-    /** Used for linear gauges; sets the thickness of the bar */
+    /** Used for linear gauges; sets the thickness of the bar. */
     linearThickness?: number;
 }
 
@@ -42,7 +41,9 @@ export interface IGaugeThresholdsConfig {
  * Configuration for a gauge's value labels (currently only used for threshold markers)
  */
 export interface IGaugeLabelsConfig {
-    /** Optional custom formatter for the value labels (currently only threshold labels are supported) */
+    /**
+     * Optional custom formatter for the value labels (currently only threshold labels are supported)
+     */
     formatter?: Formatter<any>;
     /**
      * Amount of space (in pixels) to reserve on the side of the grid for the labels.
@@ -74,7 +75,7 @@ export interface IGaugeThresholdDef {
     /** Boolean indicating whether the threshold is enabled */
     enabled: boolean;
     /** String indicating the display color of the threshold */
-    color?: string;
+    color: string;
 }
 
 /**

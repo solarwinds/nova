@@ -26,19 +26,13 @@ export class HorizontalGaugeThicknessAdjustmentExampleComponent implements OnIni
     private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(50, 79);
 
     public ngOnInit(): void {
-        // Adjusting the threshold marker radius based on the thickness
+        // Setting the initial threshold marker radius
         this.thresholds.markerRadius = this.compact ? StandardGaugeThresholdMarkerRadius.Small : StandardGaugeThresholdMarkerRadius.Large;
 
-        // Setting up the gauge config
         this.gaugeConfig = this.getGaugeConfig();
-
-        // Creating the chart assist
         this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
 
-        // Assembling the series
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
-
-        // Updating the chart
         this.chartAssist.update(this.seriesSet);
     }
 
@@ -50,7 +44,7 @@ export class HorizontalGaugeThicknessAdjustmentExampleComponent implements OnIni
     public onCompactChange(compact: boolean): void {
         this.compact = compact;
 
-        // Adjusting the threshold marker radius based on the thickness
+        // Adjusting the threshold marker radius
         this.thresholds.markerRadius = this.compact ? StandardGaugeThresholdMarkerRadius.Small : StandardGaugeThresholdMarkerRadius.Large;
         this.updateGauge();
 
@@ -60,7 +54,7 @@ export class HorizontalGaugeThicknessAdjustmentExampleComponent implements OnIni
 
     private updateThickness() {
         // Using standard thicknesses based on whether the gauge is in compact mode
-        const thickness = this.compact ? StandardLinearGaugeThickness.Medium : StandardLinearGaugeThickness.Large;
+        const thickness = this.compact ? StandardLinearGaugeThickness.Small : StandardLinearGaugeThickness.Large;
 
         // Updating the chart's height with the desired gauge thickness in pixels
         const gridConfig = this.chartAssist.chart.getGrid().config();
@@ -79,7 +73,10 @@ export class HorizontalGaugeThicknessAdjustmentExampleComponent implements OnIni
             value: this.value,
             max: 100,
             thresholds: this.thresholds,
-            linearThickness: this.compact ? StandardLinearGaugeThickness.Medium : StandardLinearGaugeThickness.Large,
+
+            // Setting the initial thickness based on whether the gauge is in compact mode
+            // The 'createChartAssist' function uses this to configure the grid's dimensions
+            linearThickness: this.compact ? StandardLinearGaugeThickness.Small : StandardLinearGaugeThickness.Large,
         };
     }
 }

@@ -15,9 +15,7 @@ export enum GaugeMode {
  * Standard thicknesses for the linear gauge
  */
 export enum StandardLinearGaugeThickness {
-    // Small may or may not be added as a standard thickness at some point
-    // Small = 5,
-    Medium = 10,
+    Small = 10,
     Large = 15,
 }
 

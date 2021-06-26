@@ -394,6 +394,7 @@ export class GaugeUtil {
                     enabled: true,
                     category: GaugeUtil.DATA_CATEGORY,
                     value: gaugeConfig.max,
+                    color: "",
                 },
             ],
             activeThreshold,

@@ -24,14 +24,15 @@ import { DonutGaugeTesterComponent } from "./visual-test/donut/donut-gauge-teste
 import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
 import { DonutGaugeBasicExampleComponent } from "./donut/donut-basic/donut-gauge-basic-example.component";
 import { DonutGaugeWithContentExampleComponent } from "./donut/donut-with-content/donut-gauge-with-content-example.component";
-import { DonutGaugeWithThresholdMarkersExampleComponent } from "./donut/donut-with-threshold-markers/donut-gauge-with-threshold-markers-example.component";
+import { DonutGaugeWithThresholdsExampleComponent } from "./donut/donut-with-thresholds/donut-gauge-with-thresholds-example.component";
 import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut/donut-with-threshold-toggling/donut-gauge-with-threshold-toggling-example.component";
 import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut/donut-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels-example.component";
-import { DonutGaugeWithMarkerTogglingExampleComponent } from "./donut/donut-with-marker-toggling/donut-gauge-with-marker-toggling-example.component";
-import { HorizontalGaugeBasicExampleComponent } from "./linear/horizontal-gauge-basic-example.component";
-import { VerticalGaugeBasicExampleComponent } from "./linear/vertical-gauge-basic-example.component";
-import { HorizontalGaugeWithThresholdsExampleComponent } from "./linear/horizontal-gauge-with-thresholds-example.component";
-import { HorizontalGaugeThicknessAdjustmentExampleComponent } from "./linear/horizontal-gauge-thickness-adjustment-example.component";
+import { DonutGaugeWithThresholdMarkerTogglingExampleComponent } from "./donut/donut-with-threshold-marker-toggling/donut-gauge-with-threshold-marker-toggling-example.component";
+import { HorizontalGaugeBasicExampleComponent } from "./linear/horizontal-basic/horizontal-gauge-basic-example.component";
+import { VerticalGaugeBasicExampleComponent } from "./linear/vertical-basic/vertical-gauge-basic-example.component";
+import { HorizontalGaugeWithThresholdsExampleComponent } from "./linear/horizontal-with-thresholds/horizontal-gauge-with-thresholds-example.component";
+import { HorizontalGaugeThicknessAdjustmentExampleComponent } from "./linear/horizontal-thickness-adjustment/horizontal-gauge-thickness-adjustment-example.component";
+import { DonutGaugeWithoutThresholdMarkersExampleComponent } from "./donut/donut-without-threshold-markers/donut-gauge-without-threshold-markers-example.component";
 
 const exampleRoutes: Routes = [
     {
@@ -81,8 +82,8 @@ const exampleRoutes: Routes = [
         },
     },
     {
-        path: "donut-with-marker-toggling",
-        component: DonutGaugeWithMarkerTogglingExampleComponent,
+        path: "donut-without-markers",
+        component: DonutGaugeWithoutThresholdMarkersExampleComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -90,8 +91,17 @@ const exampleRoutes: Routes = [
         },
     },
     {
-        path: "donut-with-threshold-markers",
-        component: DonutGaugeWithThresholdMarkersExampleComponent,
+        path: "donut-with-marker-toggling",
+        component: DonutGaugeWithThresholdMarkerTogglingExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "donut-with-thresholds",
+        component: DonutGaugeWithThresholdsExampleComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -156,8 +166,9 @@ const exampleRoutes: Routes = [
         DonutGaugeBasicExampleComponent,
         DonutGaugeWithContentExampleComponent,
         DonutGaugeWithCustomThresholdLabelsExampleComponent,
-        DonutGaugeWithMarkerTogglingExampleComponent,
-        DonutGaugeWithThresholdMarkersExampleComponent,
+        DonutGaugeWithThresholdMarkerTogglingExampleComponent,
+        DonutGaugeWithoutThresholdMarkersExampleComponent,
+        DonutGaugeWithThresholdsExampleComponent,
         DonutGaugeWithThresholdTogglingExampleComponent,
         VerticalGaugeBasicExampleComponent,
         HorizontalGaugeThicknessAdjustmentExampleComponent,

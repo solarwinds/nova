@@ -95,7 +95,7 @@
                        type="checkbox"
                        [ngModel]="warningEnabled"
                        (ngModelChange)="onWarningEnabledChange($event)" />
-                <label class="px-3" for="enable-warning">Enable Warning</label>
+                <label class="px-3" for="enable-warning">Warning Enabled</label>
             </div>
         </div>
         <div class="ml-3">
@@ -105,7 +105,7 @@
                        type="checkbox"
                        [(ngModel)]="criticalEnabled"
                        (ngModelChange)="onCriticalEnabledChange($event)" />
-                <label class="px-3" for="enable-critical">Enable Critical</label>
+                <label class="px-3" for="enable-critical">Critical Enabled</label>
             </div>
         </div>
         <div class="ml-3">
@@ -113,9 +113,9 @@
                 <input class="mb-2"
                        type="checkbox"
                        id="enable-markers"
-                       [ngModel]="enableThresholdMarkers"
+                       [ngModel]="thresholdMarkersEnabled"
                        (ngModelChange)="onEnableThresholdMarkersChange($event)" />
-                <label class="px-3" for="enable-markers">Enable Markers</label>
+                <label class="px-3" for="enable-markers">Markers Enabled</label>
             </div>
         </div>
         <div class="ml-3">

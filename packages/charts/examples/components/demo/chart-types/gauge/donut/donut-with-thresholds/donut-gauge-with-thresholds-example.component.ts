@@ -11,49 +11,50 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "donut-gauge-with-threshold-markers-example",
-    templateUrl: "./donut-gauge-with-threshold-markers-example.component.html",
-    styleUrls: ["./donut-gauge-with-threshold-markers-example.component.less"],
+    selector: "donut-gauge-with-thresholds-example",
+    templateUrl: "./donut-gauge-with-thresholds-example.component.html",
+    styleUrls: ["./donut-gauge-with-thresholds-example.component.less"],
 })
-export class DonutGaugeWithThresholdMarkersExampleComponent implements OnInit {
+export class DonutGaugeWithThresholdsExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
     public gaugeConfig: IGaugeConfig;
     public value = 178;
     public reversed = false;
 
+    private thresholds: IGaugeThresholdsConfig;
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
     private lowThreshold = 100;
     private highThreshold = 158;
 
-    // Generating a standard set of thresholds with warning and critical levels
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
-
-    /**
-     * Optionally, instead of using the 'createStandardThresholdsConfig' function as above, you can manually create a thresholds
-     * config object like the following with as many or as few thresholds as you need.
-     */
-    // private thresholds: IGaugeThresholdsConfig = {
-    //     definitions: {
-    //         [StandardGaugeThresholdId.Warning]: {
-    //             id: StandardGaugeThresholdId.Warning,
-    //             value: this.lowThreshold,
-    //             enabled: true,
-    //             color: StandardGaugeColor.Warning,
-    //         },
-    //         [StandardGaugeThresholdId.Critical]: {
-    //             id: StandardGaugeThresholdId.Critical,
-    //             value: this.highThreshold,
-    //             enabled: true,
-    //             color: StandardGaugeColor.Critical,
-    //         },
-    //     },
-    //     reversed: false,
-    //     disableMarkers: false,
-    //     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
-    // };
-
     public ngOnInit(): void {
+        // Generating a standard set of thresholds with warning and critical levels
+        this.thresholds = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
+
+        /**
+         * Optionally, instead of using the 'createStandardThresholdsConfig' function as above, you can manually create a thresholds
+         * config object like the following with as many or as few threshold definitions as you need.
+         */
+        // this.thresholds = {
+        //     definitions: {
+        //         [StandardGaugeThresholdId.Warning]: {
+        //             id: StandardGaugeThresholdId.Warning,
+        //             value: this.lowThreshold,
+        //             enabled: true,
+        //             color: StandardGaugeColor.Warning,
+        //         },
+        //         [StandardGaugeThresholdId.Critical]: {
+        //             id: StandardGaugeThresholdId.Critical,
+        //             value: this.highThreshold,
+        //             enabled: true,
+        //             color: StandardGaugeColor.Critical,
+        //         },
+        //     },
+        //     reversed: false,
+        //     disableMarkers: false,
+        //     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
+        // };
+
         this.gaugeConfig = this.getGaugeConfig();
         this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
 

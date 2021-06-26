@@ -39,6 +39,7 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
 
             // update the margins to accommodate the label direction change
             const disableMarkers = this.gaugeConfig.thresholds?.disableMarkers ?? false;
+            this.labelsPlugin.config.disableThresholdLabels = disableMarkers;
             gridConfig.dimension.margin = {
                 top: 0,
                 right: disableMarkers ? 0 : this.rightMargin,
@@ -51,8 +52,6 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
                 gridConfig.dimension.margin[marginToUpdate] = LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToUpdate];
             }
             this.chartAssist.chart.updateDimensions();
-
-            this.labelsPlugin.config.disableThresholdLabels = disableMarkers;
             this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
         }
     }
