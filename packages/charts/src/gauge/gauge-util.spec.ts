@@ -14,7 +14,7 @@ import {
     StandardGaugeThresholdId,
 } from "./constants";
 import { GaugeUtil } from "./gauge-util";
-import { IGaugeConfig } from "./types";
+import { IGaugeConfig, IGaugeLabelsConfig } from "./types";
 
 describe("GaugeUtil >", () => {
     let gaugeConfig: IGaugeConfig;
@@ -36,6 +36,7 @@ describe("GaugeUtil >", () => {
             value: 3,
             max: 10,
             thresholds: GaugeUtil.createStandardThresholdsConfig(2, 4),
+            labels: {},
         };
     });
 
@@ -67,10 +68,10 @@ describe("GaugeUtil >", () => {
             });
 
             it("should set a custom label formatter", () => {
-                gaugeConfig.labelFormatter = () => "test";
+                (gaugeConfig.labels as IGaugeLabelsConfig).formatter = () => "test";
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
                 const formattedValue = seriesSet[0]?.scales.r.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
-                expect(formattedValue).toEqual(gaugeConfig.labelFormatter(null));
+                expect(formattedValue).toEqual(gaugeConfig.labels?.formatter?.(null));
             });
         });
 
@@ -90,10 +91,10 @@ describe("GaugeUtil >", () => {
             });
 
             it("should set a custom label formatter", () => {
-                gaugeConfig.labelFormatter = () => "test";
+                (gaugeConfig.labels as IGaugeLabelsConfig).formatter = () => "test";
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Horizontal);
                 const formattedValue = seriesSet[0]?.scales.x.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
-                expect(formattedValue).toEqual(gaugeConfig.labelFormatter(null));
+                expect(formattedValue).toEqual(gaugeConfig.labels?.formatter?.(null));
             });
         });
 
@@ -113,10 +114,10 @@ describe("GaugeUtil >", () => {
             });
 
             it("should set a custom label formatter", () => {
-                gaugeConfig.labelFormatter = () => "test";
+                (gaugeConfig.labels as IGaugeLabelsConfig).formatter = () => "test";
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Vertical);
                 const formattedValue = seriesSet[0]?.scales.y.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
-                expect(formattedValue).toEqual(gaugeConfig.labelFormatter(null));
+                expect(formattedValue).toEqual(gaugeConfig.labels?.formatter?.(null));
             });
         });
     });

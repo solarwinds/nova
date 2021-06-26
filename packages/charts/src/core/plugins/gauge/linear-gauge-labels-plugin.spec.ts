@@ -1,4 +1,3 @@
-import { gaugeGridConfig } from "../../grid/config/linear-gauge-grid-config-fn";
 import { XYGridConfig } from "../../grid/config/xy-grid-config";
 import { XYGrid } from "../../grid/xy-grid";
 
@@ -11,6 +10,7 @@ import { D3Selection, IAccessors, IChartAssistSeries } from "../../common/types"
 
 import { GAUGE_LABELS_CONTAINER_CLASS } from "./constants";
 import { LinearGaugeLabelsPlugin } from "./linear-gauge-labels-plugin";
+import { linearGaugeGridConfig } from "../../../core/grid/config/linear-gauge-grid-config-fn";
 
 describe("LinearGaugeLabelsPlugin >", () => {
     let chart: Chart;
@@ -27,7 +27,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     let dataSeries: IChartAssistSeries<IAccessors>;
 
     beforeEach(() => {
-        gridConfig = gaugeGridConfig(GaugeMode.Horizontal) as XYGridConfig;
+        gridConfig = linearGaugeGridConfig(gaugeConfig, GaugeMode.Horizontal) as XYGridConfig;
         chart = new Chart(new XYGrid(gridConfig));
         plugin = new LinearGaugeLabelsPlugin();
         chart.addPlugin(plugin);
@@ -69,14 +69,6 @@ describe("LinearGaugeLabelsPlugin >", () => {
             });
         });
 
-        it("should auto-adjust the grid margins according to the configured clearance value", () => {
-            const margin = gridConfig.dimension.margin;
-            expect(margin.top).toEqual(0);
-            expect(margin.right).toEqual(0);
-            expect(margin.bottom).toEqual(plugin.config.clearance?.bottom as number);
-            expect(margin.left).toEqual(0);
-        });
-
         describe("with flipped labels", () => {
             beforeEach(() => {
                 plugin.config.flippedLabels = true;
@@ -104,21 +96,13 @@ describe("LinearGaugeLabelsPlugin >", () => {
                     expect(node.style.dominantBaseline).toEqual("text-after-edge");
                 });
             });
-
-            it("should auto-adjust the grid margins according to the configured clearance value", () => {
-                const margin = gridConfig.dimension.margin;
-                expect(margin.top).toEqual(plugin.config.clearance?.top as number);
-                expect(margin.right).toEqual(0);
-                expect(margin.bottom).toEqual(0);
-                expect(margin.left).toEqual(0);
-            });
         });
     });
 
     describe("vertical mode", () => {
         beforeEach(() => {
             element.setAttribute("style", "height: 200px");
-            gridConfig = gaugeGridConfig(GaugeMode.Vertical);
+            gridConfig = linearGaugeGridConfig(gaugeConfig, GaugeMode.Vertical);
             chart.getGrid().config(gridConfig);
             dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Vertical));
             chart.update([dataSeries]);
@@ -138,14 +122,6 @@ describe("LinearGaugeLabelsPlugin >", () => {
                 expect(node.style.textAnchor).toEqual("start");
                 expect(node.style.dominantBaseline).toEqual("central");
             });
-        });
-
-        it("should auto-adjust the grid margins according to the configured clearance value", () => {
-            const margin = gridConfig.dimension.margin;
-            expect(margin.top).toEqual(0);
-            expect(margin.right).toEqual(plugin.config.clearance?.right as number);
-            expect(margin.bottom).toEqual(0);
-            expect(margin.left).toEqual(0);
         });
 
         describe("with flipped labels", () => {
@@ -174,14 +150,6 @@ describe("LinearGaugeLabelsPlugin >", () => {
                     expect(node.style.textAnchor).toEqual("end");
                     expect(node.style.dominantBaseline).toEqual("central");
                 });
-            });
-
-            it("should auto-adjust the grid margins according to the configured clearance value", () => {
-                const margin = gridConfig.dimension.margin;
-                expect(margin.top).toEqual(0);
-                expect(margin.right).toEqual(0);
-                expect(margin.bottom).toEqual(0);
-                expect(margin.left).toEqual(plugin.config.clearance?.left as number);
             });
         });
     });
