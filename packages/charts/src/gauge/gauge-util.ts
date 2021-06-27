@@ -84,16 +84,20 @@ export class GaugeUtil {
      * @returns {ChartAssist} A pre-configured chart assist
      */
     public static createChartAssist(gaugeConfig: IGaugeConfig, mode: GaugeMode): ChartAssist {
-        const grid = gaugeGrid(gaugeConfig, mode);
-        const chart = new Chart(grid);
-        if (!isEmpty(gaugeConfig.thresholds?.definitions) && !gaugeConfig.thresholds?.disableMarkers) {
-            if (mode === GaugeMode.Donut) {
+        const chart = new Chart(gaugeGrid(gaugeConfig, mode));
+        const enableLabels = !isEmpty(gaugeConfig.thresholds?.definitions) && !gaugeConfig.thresholds?.disableMarkers;
+
+        if (mode === GaugeMode.Donut) {
+            if (enableLabels) {
                 chart.addPlugin(new DonutGaugeLabelsPlugin())
-            } else {
-                chart.addPlugin(new LinearGaugeLabelsPlugin({ flippedLabels: gaugeConfig.labels?.flipped ?? false }));
             }
+            return new ChartAssist(chart, radial);
         }
-        return mode === GaugeMode.Donut ? new ChartAssist(chart, radial) : new ChartAssist(chart, stack);
+
+        if (enableLabels) {
+            chart.addPlugin(new LinearGaugeLabelsPlugin({ flippedLabels: gaugeConfig.labels?.flipped ?? false }));
+        }
+        return new ChartAssist(chart, stack);
     }
 
     /**
@@ -135,7 +139,7 @@ export class GaugeUtil {
      *
      * @returns {IChartAssistSeries<IAccessors>[]} The updated series set
      */
-    public static updateSeriesSet(seriesSet: IChartAssistSeries<IAccessors>[], gaugeConfig: IGaugeConfig): IChartAssistSeries<IAccessors>[] {
+    public static update(seriesSet: IChartAssistSeries<IAccessors>[], gaugeConfig: IGaugeConfig): IChartAssistSeries<IAccessors>[] {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
         const clampedConfig = GaugeUtil.clampConfigToRange(gaugeConfig);
@@ -187,11 +191,12 @@ export class GaugeUtil {
             const { quantityAccessors, remainderAccessors, scales, mainRenderer } = renderingAttributes;
 
             if (quantityAccessors.data) {
-                quantityAccessors.data.color = gaugeConfig.quantityColorAccessor || GaugeUtil.createDefaultQuantityColorAccessor();
+                quantityAccessors.data.color = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) =>
+                    dataSeries.activeThreshold ? dataSeries.activeThreshold.color : dataSeries.defaultColor;
             }
 
             if (remainderAccessors.data) {
-                remainderAccessors.data.color = gaugeConfig.remainderColorAccessor || (() => (StandardGaugeColor.Remainder));
+                remainderAccessors.data.color = () => gaugeConfig.remainderColor || StandardGaugeColor.Remainder;
             }
 
             if (series.id === GAUGE_QUANTITY_SERIES_ID) {
@@ -305,19 +310,6 @@ export class GaugeUtil {
         }
 
         return renderingTools[mode];
-    }
-
-    /**
-     * Convenience function for creating a standard gauge quantity color accessor
-     *
-     * @returns {DataAccessor} An accessor for determining the color to use for the quantity visualization
-     */
-    public static createDefaultQuantityColorAccessor(): DataAccessor {
-        // assigning to variable to prevent "Lambda not supported" error
-        const colorAccessor: DataAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) =>
-            dataSeries.activeThreshold ? dataSeries.activeThreshold.color : dataSeries.defaultColor;
-
-        return colorAccessor;
     }
 
     /**

@@ -69,7 +69,7 @@ export class DonutGaugeWithThresholdMarkerTogglingExampleComponent implements On
 
     private updateGauge() {
         this.gaugeConfig = this.getGaugeConfig();
-        this.seriesSet = GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig);
+        this.seriesSet = GaugeUtil.update(this.seriesSet, this.gaugeConfig);
         this.chartAssist.update(this.seriesSet);
     }
 

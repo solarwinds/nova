@@ -58,7 +58,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
             };
 
             this.chartAssist.chart.updateDimensions();
-            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
+            this.chartAssist.update(GaugeUtil.update(this.seriesSet, this.gaugeConfig));
         }
     }
 

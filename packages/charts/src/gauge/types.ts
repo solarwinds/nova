@@ -1,4 +1,3 @@
-import { DataAccessor } from "../core/common/types";
 import { Formatter } from "../core/common/scales/types";
 
 /**
@@ -9,16 +8,14 @@ export interface IGaugeConfig {
     value: number;
     /** The max value of the gauge */
     max: number;
-    /** The color to display for the quantity when no threshold is active */
-    defaultQuantityColor?: string;
     /** Optional threshold configuration */
     thresholds?: IGaugeThresholdsConfig;
     /** Optional configuration for value labels (currently only used for thresholds) */
     labels?: IGaugeLabelsConfig;
-    /** Optional accessor for customizing the color to display for the quantity segment as each threshold is hit */
-    quantityColorAccessor?: DataAccessor;
-    /** Optional accessor for customizing the color to display for the remainder segment */
-    remainderColorAccessor?: DataAccessor;
+    /** The color to display for the quantity when no threshold is active */
+    defaultQuantityColor?: string;
+    /** The color to display for the unfilled segment */
+    remainderColor?: string;
     /** Used for linear gauges; sets the thickness of the bar. */
     linearThickness?: number;
 }

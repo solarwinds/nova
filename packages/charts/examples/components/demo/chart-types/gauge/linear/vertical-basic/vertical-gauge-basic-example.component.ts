@@ -39,7 +39,7 @@ export class VerticalGaugeBasicExampleComponent implements OnInit {
         this.gaugeConfig = this.getGaugeConfig(value);
 
         // Updating the series set with the new config
-        this.seriesSet = GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig);
+        this.seriesSet = GaugeUtil.update(this.seriesSet, this.gaugeConfig);
 
         // Updating the chart with the updated series set
         this.chartAssist.update(this.seriesSet);

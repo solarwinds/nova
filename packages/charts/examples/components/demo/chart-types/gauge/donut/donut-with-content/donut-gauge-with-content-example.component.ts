@@ -38,7 +38,7 @@ export class DonutGaugeWithContentExampleComponent implements OnInit {
 
     public onValueChange(value: number): void {
         this.gaugeConfig = this.getGaugeConfig(value);
-        this.seriesSet = GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig);
+        this.seriesSet = GaugeUtil.update(this.seriesSet, this.gaugeConfig);
         this.chartAssist.update(this.seriesSet);
     }
 

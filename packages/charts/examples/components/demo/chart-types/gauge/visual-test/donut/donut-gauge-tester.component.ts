@@ -25,7 +25,7 @@ export class DonutGaugeTesterComponent implements OnInit, OnChanges {
 
     public ngOnChanges(changes: ComponentChanges<DonutGaugeTesterComponent>): void {
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
-            this.chartAssist.update(GaugeUtil.updateSeriesSet(this.seriesSet, this.gaugeConfig));
+            this.chartAssist.update(GaugeUtil.update(this.seriesSet, this.gaugeConfig));
         }
     }
 
