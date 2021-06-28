@@ -17,6 +17,7 @@ import { LegendRichTileExampleComponent } from "./legend-rich-tile/legend-rich-t
 import { LegendTestExampleComponent } from "./legend-test/legend-test.component";
 import { LegendTextColorExampleComponent } from "./legend-text-color/legend-text-color.example.component";
 import { LegendVisualTestComponent } from "./legend-visual-test/legend-visual-test.component";
+import { LegendMetadataExampleComponent } from "./legend-metadata/legend-metadata-example.component";
 
 const legendRoutes: Routes = [
     {
@@ -46,6 +47,10 @@ const legendRoutes: Routes = [
         component: LegendRichTileContentProjectionExampleComponent,
     },
     {
+        path: "metadata",
+        component: LegendMetadataExampleComponent,
+    },
+    {
         path: "visual-test",
         component: LegendVisualTestComponent,
         data: {
@@ -70,6 +75,7 @@ const legendRoutes: Routes = [
         LegendVisualTestComponent,
         LegendDescriptionProjectionExampleComponent,
         LegendRichTileContentProjectionExampleComponent,
+        LegendMetadataExampleComponent,
     ],
     imports: [
         DemoCommonModule,
