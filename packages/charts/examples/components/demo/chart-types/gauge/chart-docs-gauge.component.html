@@ -47,7 +47,7 @@
     A <strong>donut gauge</strong> is a specialized <a href="../additional-documentation/chart-types/pie-and-donut.html" target="_parent">donut chart</a> with
     data formatted in a way that results in a gauge-like visualization. It's well-suited for use cases in which there's ample room to display a relatively large
     visualization. For use cases with a more compact display area, consider the <strong>linear gauge</strong> whose documentation can be found further down
-    this page.
+    on this page.
 </p>
 
 <h3>Basic Usage</h3>
@@ -118,7 +118,8 @@
     be toggled on later. The following example achieves this by setting the
     <code><a href="../interfaces/IGaugeThresholdsConfig.html#disableMarkers" target="_blank">disableMarkers</a></code> property on the
     <code>IGaugeThresholdsConfig</code> object to <code>true</code> before invoking the GaugeUtil's
-    <code><a href="../classes/GaugeUtil.html#createChartAssist" target="_blank">createChartAssist</a></code> function.
+    <code><a href="../classes/GaugeUtil.html#createChartAssist" target="_blank">createChartAssist</a></code> function. For toggling the markers on and off
+    dynamically, take a look at the <strong>Dynamic Marker Toggling</strong> example.
 </p>
 <nui-example-wrapper filenamePrefix="donut-gauge-without-threshold-markers-example" exampleTitle="Statically Omitted Threshold Markers">
     <donut-gauge-without-threshold-markers-example></donut-gauge-without-threshold-markers-example>
@@ -127,8 +128,9 @@
 <h5>Dynamic Marker Toggling</h5>
 <p>
     If you want to dynamically toggle the threshold marker dots and labels, take a look at the code in the source expander of the following example in which
-    the use of the <code>createChartAssist</code> function is forgone in favor of manually handling chart instantiation and plugin creation. This allows for
-    direct configuration and control of the <code><a href="../classes/DonutGaugeLabelsPlugin.html" target="_blank">DonutGaugeLabelsPlugin</a></code> instance.
+    a local instance of the <code><a href="../classes/DonutGaugeLabelsPlugin.html" target="_blank">DonutGaugeLabelsPlugin</a></code> is passed to
+    the optional labelsPlugin parameter of the <code><a href="../classes/GaugeUtil.html#createChartAssist" target="_blank">createChartAssist</a></code> function.
+    This allows for direct configuration and control of the <code>DonutGaugeLabelsPlugin</code> instance.
 </p>
 <p>
     Similar to the example above, the markers are toggled by updating the
@@ -143,8 +145,9 @@
 
 <h4>Enabling/Disabling Thresholds</h4>
 <p>
-    To toggle individual thresholds on or off, use the ID of a threshold to access the corresponding threshold definition on the <code>definitions</code>
-    property of the <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code> object. Set the
+    To toggle individual thresholds on or off, use the ID of a threshold to access the corresponding threshold definition on the
+    <code><a href="../interfaces/IGaugeThresholdsConfig.html#definitions" target="_blank">definitions</a></code>
+    property of the <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code> object, and set the
     <code><a href="../interfaces/IGaugeThresholdDef.html#enabled" target="_blank">enabled</a></code> property on the threshold definition accordingly.
 </p>
 <nui-example-wrapper filenamePrefix="donut-gauge-with-threshold-toggling-example" exampleTitle="Donut with Threshold Toggling">
@@ -155,7 +158,9 @@
 <p>
     To customize the format of the labels shown when the mouse is hovered over the gauge, set the
     <code><a href="../interfaces/IGaugeLabelsConfig.html#formatter" target="_blank">formatter</a></code> property on the
-    <code><a href="../interfaces/IGaugeConfig.html#labels" target="_blank">labels</a></code> property of the <code>IGaugeConfig</code> with a function of type
+    <code><a href="../interfaces/IGaugeConfig.html#labels" target="_blank">labels</a></code> property of the
+    <code><a href="../interfaces/IGaugeConfig.html" target="_blank">IGaugeConfig</a></code>
+    with a function of type
     <code><a href="../miscellaneous/typealiases.html#Formatter" target="_blank">Formatter&lt;string&gt;</a></code>. The function should take a string as the raw
     data argument and return a string with your customized formatting. The following example transforms the raw threshold values to a percentage format.
 </p>
@@ -203,7 +208,9 @@
     <code><a href="../classes/GaugeUtil.html#createChartAssist" target="_blank">createChartAssist</a></code>
     function which will add the labels plugin to the gauge automatically unless the
     <code><a href="../interfaces/IGaugeThresholdsConfig.html#disableMarkers" target="_blank">disableMarkers</a></code> property on the
-    <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code> is set to <code>true</code>.
+    <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code> is set to <code>true</code>. For instructions
+    on how to dynamically toggle the threshold markers and labels, take a look at the <strong>Dynamic Marker Toggling</strong> example in the
+    <strong>Donut Gauge</strong> section above.
 </p>
 <nui-example-wrapper filenamePrefix="horizontal-gauge-with-thresholds-example" exampleTitle="Linear Gauge with Thresholds">
     <linear-gauge-with-thresholds-example></linear-gauge-with-thresholds-example>
@@ -211,14 +218,15 @@
 
 <h3>Configuring Thickness</h3>
 <p>
-    The linear gauge supports any thickness, but Nova provides two standard sizes (<code>Small</code> and <code>Large</code>) via the
+    The linear gauge supports any thickness, but Nova provides two standard ones (<code>Small</code> and <code>Large</code>) via the
     <code><a href="../miscellaneous/enumerations.html#StandardLinearGaugeThickness" target="_blank">StandardLinearGaugeThickness</a></code> enum.
     The enum members or any number value can be assigned to the
-    <code><a href="../interfaces/IGaugeConfig.html#linearThickness" target="_blank">linearThickness</a></code> property on the <code>IGaugeConfig</code> in
-    order to set the initial thickness of the gauge. Additionally, the radius of the threshold markers can be specified on the
+    <code><a href="../interfaces/IGaugeConfig.html#linearThickness" target="_blank">linearThickness</a></code> property on the
+    <code><a href="../interfaces/IGaugeConfig.html" target="_blank">IGaugeConfig</a></code>
+    in order to set the thickness of the gauge. Additionally, the radius of the threshold markers can be specified on the
     <code><a href="../interfaces/IGaugeThresholdsConfig.html#markerRadius" target="_blank">markerRadius</a></code> property of the
-    <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code>. Though any number value can be used for the
-    marker radius, Nova provides two standard sizes (<code>Small</code> and <code>Large</code>) for this property as well via the
+    <code><a href="../interfaces/IGaugeThresholdsConfig.html" target="_blank">IGaugeThresholdsConfig</a></code>. Although any number value can be used for the
+    marker radius, Nova provides two standard sizes (<code>Small</code> and <code>Large</code>) for this property via the
     <code><a href="../miscellaneous/enumerations.html#StandardGaugeThresholdMarkerRadius" target="_blank">StandardGaugeThresholdMarkerRadius</a></code> enum.
 </p>
 <nui-example-wrapper filenamePrefix="horizontal-gauge-thickness-adjustment-example" exampleTitle="Configuring Linear Gauge Thickness">

@@ -1,10 +1,7 @@
-import { IGaugeConfig } from "../../../gauge/types";
 import { GaugeMode, StandardLinearGaugeThickness } from "../../../gauge/constants";
 import { DimensionConfig } from "./dimension-config";
 
 import { XYGridConfig } from "./xy-grid-config";
-import isEmpty from "lodash/isEmpty";
-import { IAllAround } from "../types";
 
 /**
  * Assembles a linear-gauge-specific grid configuration

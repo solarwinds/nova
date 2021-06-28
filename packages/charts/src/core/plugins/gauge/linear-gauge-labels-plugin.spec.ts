@@ -27,7 +27,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     let dataSeries: IChartAssistSeries<IAccessors>;
 
     beforeEach(() => {
-        gridConfig = linearGaugeGridConfig(gaugeConfig, GaugeMode.Horizontal) as XYGridConfig;
+        gridConfig = linearGaugeGridConfig(GaugeMode.Horizontal) as XYGridConfig;
         chart = new Chart(new XYGrid(gridConfig));
         plugin = new LinearGaugeLabelsPlugin();
         chart.addPlugin(plugin);
@@ -102,7 +102,7 @@ describe("LinearGaugeLabelsPlugin >", () => {
     describe("vertical mode", () => {
         beforeEach(() => {
             element.setAttribute("style", "height: 200px");
-            gridConfig = linearGaugeGridConfig(gaugeConfig, GaugeMode.Vertical);
+            gridConfig = linearGaugeGridConfig(GaugeMode.Vertical);
             chart.getGrid().config(gridConfig);
             dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Vertical));
             chart.update([dataSeries]);
