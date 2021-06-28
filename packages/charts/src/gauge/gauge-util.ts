@@ -13,10 +13,12 @@ import { RadialRenderer } from "../renderers/radial/radial-renderer";
 import { radialScales } from "../renderers/radial/radial-scales";
 
 import {
+    DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT,
     GaugeMode,
     GAUGE_QUANTITY_SERIES_ID,
     GAUGE_REMAINDER_SERIES_ID,
     GAUGE_THRESHOLD_MARKERS_SERIES_ID,
+    LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS,
     StandardGaugeColor,
     StandardGaugeThresholdId,
     StandardGaugeThresholdMarkerRadius,
@@ -29,10 +31,14 @@ import { ChartAssist } from "../core/chart-assists/chart-assist";
 import { radial } from "../renderers/radial/radial-preprocessor";
 import { stack } from "../renderers/bar/stacked-preprocessor";
 import { Chart } from "../core/chart";
-import { gaugeGrid } from "../core/grid/config/gauge-grid-fn";
 import isEmpty from "lodash/isEmpty";
 import { DonutGaugeLabelsPlugin } from "../core/plugins/gauge/donut-gauge-labels-plugin";
 import { LinearGaugeLabelsPlugin } from "../core/plugins/gauge/linear-gauge-labels-plugin";
+import isNil from "lodash/isNil";
+import { IAllAround } from "../core/grid/types";
+import { radialGrid } from "../renderers/radial/radial-grid-fn";
+import { XYGrid } from "../core/grid/xy-grid";
+import { linearGaugeGridConfig } from "../core/grid/config/linear-gauge-grid-config-fn";
 
 /**
  * @ignore
@@ -83,20 +89,49 @@ export class GaugeUtil {
      *
      * @returns {ChartAssist} A pre-configured chart assist
      */
-    public static createChartAssist(gaugeConfig: IGaugeConfig, mode: GaugeMode): ChartAssist {
-        const chart = new Chart(gaugeGrid(gaugeConfig, mode));
+    public static createChartAssist(
+        gaugeConfig: IGaugeConfig,
+        mode: GaugeMode,
+        labelsPlugin?: DonutGaugeLabelsPlugin | LinearGaugeLabelsPlugin
+    ): ChartAssist {
+        const grid = (mode === GaugeMode.Donut) ? radialGrid() : new XYGrid(linearGaugeGridConfig(mode, gaugeConfig.linearThickness));
+        const chart = new Chart(grid);
         const enableLabels = !isEmpty(gaugeConfig.thresholds?.definitions) && !gaugeConfig.thresholds?.disableMarkers;
 
         if (mode === GaugeMode.Donut) {
             if (enableLabels) {
-                chart.addPlugin(new DonutGaugeLabelsPlugin())
+                chart.addPlugin(labelsPlugin ?? new DonutGaugeLabelsPlugin());
+
+                // apply label clearances
+                const labelClearanceConfig = gaugeConfig.labels?.clearance;
+                const clearance = !isNil(labelClearanceConfig) ? labelClearanceConfig : DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT;
+                grid.config().dimension.margin = {
+                    top: clearance,
+                    right: clearance,
+                    bottom: clearance,
+                    left: clearance,
+                } as IAllAround<number>;
             }
+
             return new ChartAssist(chart, radial);
         }
 
         if (enableLabels) {
-            chart.addPlugin(new LinearGaugeLabelsPlugin({ flippedLabels: gaugeConfig.labels?.flipped ?? false }));
+            const flippedLabels = !!gaugeConfig.labels?.flipped;
+            chart.addPlugin(labelsPlugin ?? new LinearGaugeLabelsPlugin({ flippedLabels }));
+
+            // apply label clearance
+            let marginToAdjust: keyof IAllAround<number>;
+            if (mode === GaugeMode.Horizontal) {
+                marginToAdjust = flippedLabels ? "top" : "bottom";
+            } else {
+                marginToAdjust = flippedLabels ? "left" : "right";
+            }
+
+            const clearance = gaugeConfig.labels?.clearance ?? LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToAdjust];
+            grid.config().dimension.margin[marginToAdjust] = clearance;
         }
+
         return new ChartAssist(chart, stack);
     }
 

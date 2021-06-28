@@ -1,19 +1,14 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
 import { ComponentChanges } from "@nova-ui/bits";
 import {
-    Chart,
     ChartAssist,
     GaugeMode,
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
     IGaugeConfig,
-    linearGaugeGridConfig,
     LinearGaugeLabelsPlugin,
     LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS,
-    stack,
-    XYGrid,
-    XYGridConfig,
 } from "@nova-ui/charts";
 
 @Component({
@@ -47,26 +42,20 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
                 left: disableMarkers ? 0 : this.leftMargin,
             };
 
-            if (!disableMarkers) {
-                const marginToUpdate = flippedLabels ? "top" : "bottom";
-                gridConfig.dimension.margin[marginToUpdate] = LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToUpdate];
-            }
+            const marginToUpdate = flippedLabels ? "top" : "bottom";
+            gridConfig.dimension.margin[marginToUpdate] = LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToUpdate];
+
             this.chartAssist.chart.updateDimensions();
             this.chartAssist.update(GaugeUtil.update(this.seriesSet, this.gaugeConfig));
         }
     }
 
     public ngOnInit(): void {
-        const gridConfig = linearGaugeGridConfig(this.gaugeConfig, GaugeMode.Horizontal) as XYGridConfig;
+        this.labelsPlugin = new LinearGaugeLabelsPlugin({ flippedLabels: this.gaugeConfig.labels?.flipped });
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal, this.labelsPlugin);
+        const gridConfig = this.chartAssist.chart.getGrid().config();
         gridConfig.dimension.margin.right = this.rightMargin;
         gridConfig.dimension.margin.left = this.leftMargin;
-        const grid = new XYGrid(gridConfig);
-        const chart = new Chart(grid);
-
-        this.chartAssist = new ChartAssist(chart, stack);
-
-        this.labelsPlugin = new LinearGaugeLabelsPlugin({ flippedLabels: this.gaugeConfig.labels?.flipped });
-        this.chartAssist.chart.addPlugin(this.labelsPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
         this.chartAssist.update(this.seriesSet);

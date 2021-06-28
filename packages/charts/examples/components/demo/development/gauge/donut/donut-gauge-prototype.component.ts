@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
 import { ComponentChanges } from "@nova-ui/bits";
 import {
-    Chart,
     ChartAssist,
     ChartDonutContentPlugin,
     DonutGaugeLabelsPlugin,
@@ -9,12 +8,8 @@ import {
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
-    IGaugeLabelsPluginConfig,
     IGaugeConfig,
     IRadialRendererConfig,
-    radial,
-    radialGrid,
-    gaugeGrid,
 } from "@nova-ui/charts";
 
 @Component({
@@ -48,15 +43,6 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
             const disableMarkers = this.gaugeConfig.thresholds?.disableMarkers ?? false;
             this.labelsPlugin.config.disableThresholdLabels = disableMarkers;
 
-            const gridConfig = this.chartAssist.chart.getGrid().config();
-            const clearance = disableMarkers ? 0 : this.labelClearance;
-            gridConfig.dimension.margin = {
-                top: clearance,
-                right: clearance,
-                bottom: clearance,
-                left: clearance,
-            };
-
             this.chartAssist.chart.updateDimensions();
             this.chartAssist.update(GaugeUtil.update(this.seriesSet, this.gaugeConfig));
         }
@@ -64,18 +50,17 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
 
     public ngOnInit(): void {
         const gaugeConfigWithLabelClearance = { ...this.gaugeConfig, labels: { ...this.gaugeConfig.labels, clearance: this.labelClearance } };
-        const grid = gaugeGrid(gaugeConfigWithLabelClearance, GaugeMode.Donut);
-        grid.config().dimension.autoHeight = false;
-        grid.config().dimension.autoWidth = false;
 
-        this.chartAssist = new ChartAssist(new Chart(grid), radial);
+        this.labelsPlugin = new DonutGaugeLabelsPlugin();
+        this.chartAssist = GaugeUtil.createChartAssist(gaugeConfigWithLabelClearance, GaugeMode.Donut, this.labelsPlugin);
+        const gridConfig = this.chartAssist.chart.getGrid().config();
+        gridConfig.dimension.autoHeight = false;
+        gridConfig.dimension.autoWidth = false;
+
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 
-        this.labelsPlugin = new DonutGaugeLabelsPlugin();
-        this.chartAssist.chart.addPlugin(this.labelsPlugin);
-
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfigWithLabelClearance, GaugeMode.Donut);
 
         this.updateDonutSize();
         this.updateAnnularAttributes();

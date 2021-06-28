@@ -1,16 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart,
     ChartAssist,
     DonutGaugeLabelsPlugin,
-    gaugeGrid,
     GaugeMode,
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
     IGaugeConfig,
     IGaugeThresholdsConfig,
-    radial,
 } from "@nova-ui/charts";
 
 @Component({
@@ -34,12 +31,8 @@ export class DonutGaugeWithThresholdMarkerTogglingExampleComponent implements On
         // Setting up the gauge config
         this.gaugeConfig = this.getGaugeConfig();
 
-        // Setting up the chart assist
-        const grid = gaugeGrid(this.gaugeConfig, GaugeMode.Donut);
-        this.chartAssist = new ChartAssist(new Chart(grid), radial);
-
-        // Adding the labels plugin
-        this.chartAssist.chart.addPlugin(this.labelsPlugin)
+        // Setting up the chart assist with a local instance of the labels plugin for direct control of the label display
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut, this.labelsPlugin);
 
         // Assembling the series
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
@@ -60,8 +53,6 @@ export class DonutGaugeWithThresholdMarkerTogglingExampleComponent implements On
         this.thresholds.disableMarkers = !this.markersEnabled;
 
         // Enabling or disabling the threshold labels
-        // Note: As an alternative to toggling the label plugin's 'disableThresholdLabels' configuration property,
-        // the plugin can simply be omitted if labels aren't needed at all for your use case.
         this.labelsPlugin.config.disableThresholdLabels = !this.markersEnabled;
 
         this.updateGauge();

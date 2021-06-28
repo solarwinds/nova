@@ -7,24 +7,14 @@ import isEmpty from "lodash/isEmpty";
 import { IAllAround } from "../types";
 
 /**
- * Default clearance for linear gauge labels
- */
-export const LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS: IAllAround<number> = {
-    top: 20,
-    right: 25,
-    bottom: 20,
-    left: 25,
-};
-
-/**
  * Assembles a linear-gauge-specific grid configuration
  *
- * @param gaugeConfig The gauge configuration
  * @param mode vertical or horizontal
+ * @param thickness The thickness of the gauge
  *
  * @returns {XYGridConfig} A linear gauge grid configuration
  */
-export function linearGaugeGridConfig(gaugeConfig: IGaugeConfig, mode: GaugeMode.Vertical | GaugeMode.Horizontal): XYGridConfig {
+export function linearGaugeGridConfig(mode: GaugeMode.Vertical | GaugeMode.Horizontal, thickness = StandardLinearGaugeThickness.Large): XYGridConfig {
     const gridConfig = new XYGridConfig();
     gridConfig.interactionPlugins = false;
     gridConfig.disableRenderAreaHeightCorrection = true;
@@ -41,14 +31,7 @@ export function linearGaugeGridConfig(gaugeConfig: IGaugeConfig, mode: GaugeMode
     // reset the dimension config with zero margins and zero padding
     gridConfig.dimension = new DimensionConfig();
 
-    // make room for the labels if needed
-    if (!isEmpty(gaugeConfig.thresholds?.definitions) && !gaugeConfig.thresholds?.disableMarkers) {
-        const marginToAdjust = getMarginToAdjust(mode, gaugeConfig.labels?.flipped);
-        const clearance = gaugeConfig.labels?.clearance ?? LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToAdjust];
-        gridConfig.dimension.margin[marginToAdjust] = clearance;
-    }
-
-    const thickness = gaugeConfig.linearThickness ?? StandardLinearGaugeThickness.Large;
+    // set the gauge's thickness
     if (mode === GaugeMode.Vertical) {
         gridConfig.dimension.autoWidth = false;
         gridConfig.dimension.width(thickness);
@@ -58,12 +41,4 @@ export function linearGaugeGridConfig(gaugeConfig: IGaugeConfig, mode: GaugeMode
     }
 
     return gridConfig;
-}
-
-function getMarginToAdjust(mode: GaugeMode, flipLabels = false) {
-    if (mode === GaugeMode.Horizontal) {
-        return flipLabels ? "top" : "bottom";
-    }
-
-    return flipLabels ? "left" : "right";
 }
