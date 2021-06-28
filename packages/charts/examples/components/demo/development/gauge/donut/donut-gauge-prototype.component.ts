@@ -40,8 +40,7 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
-            const disableMarkers = this.gaugeConfig.thresholds?.disableMarkers ?? false;
-            this.labelsPlugin.config.disableThresholdLabels = disableMarkers;
+            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.thresholds?.disableMarkers ?? false;
 
             this.chartAssist.chart.updateDimensions();
             this.chartAssist.update(GaugeUtil.update(this.seriesSet, this.gaugeConfig));

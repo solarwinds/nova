@@ -57,7 +57,7 @@ export enum StandardGaugeColor {
 export const DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT = 30;
 
 /**
- * Default clearance for linear gauge labels
+ * Default linear gauge margins for label clearance
  */
 export const LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS: IAllAround<number> = {
     top: 20,

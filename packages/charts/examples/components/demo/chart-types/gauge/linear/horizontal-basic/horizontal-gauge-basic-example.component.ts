@@ -49,7 +49,11 @@ export class HorizontalGaugeBasicExampleComponent implements OnInit {
         return {
             value,
             max: 100,
-            // Optionally customize the default quantity color (defaults to StandardGaugeColor.Ok)
+
+            /**
+             * Optionally customize the default quantity color (defaults to StandardGaugeColor.Ok)
+             */
+
             // defaultQuantityColor: "var(--nui-color-semantic-ok)",
         };
     }

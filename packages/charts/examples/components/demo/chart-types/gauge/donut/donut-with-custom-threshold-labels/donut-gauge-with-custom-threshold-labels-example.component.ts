@@ -45,8 +45,12 @@ export class DonutGaugeWithCustomThresholdLabelsExampleComponent implements OnIn
             // Setting a custom label formatter
             labels: {
                 formatter: (d: string) => `${d}%`,
-                // Optionally specify a custom clearance in pixels for the labels if
-                // they're too long or short for the existing grid margins
+
+                /**
+                 * Optionally specify a custom clearance in pixels for the labels if
+                 * they're too long or short for the existing grid margins.
+                 */
+
                 // clearance: 35,
             },
         };
