@@ -34,7 +34,7 @@ export class TableVirtualScrollStickyHeaderTestExampleComponent implements After
     public placeholderItems: undefined[] = [];
     public visibleItems$: Observable<IRandomUserTableModel[]>;
     // The dynamically changed array of items to render by the table
-    public displayedColumns: string[] = ["no", "icon", "nameFirst", "nameLast", "email", "city", "postcode"];
+    public displayedColumns: string[] = ["no", "icon", "nameFirst", "nameLast", "city", "postcode"];
 
     public makeSticky: boolean = true;
     public itemSize: number = 40;
@@ -86,22 +86,27 @@ export class TableVirtualScrollStickyHeaderTestExampleComponent implements After
 
 const PEOPLE = ["Elena", "Madelyn", "Baggio", "Josh", "Lukas", "Blake", "Frantz", "Dima", "Serhii", "Vita", "Vlad", "Ivan", "Dumitru", "Hubert"];
 const CITIES = ["Bucharest", "Kiev", "Austin", "Brno", "Frankfurt pe Main", "Sutton-under-Whitestonecliffe", "Vila Bela da Santíssima Trindade"];
-function generateUsers(length: number): IRandomUserTableModel[] {
-    let index = 0;
-    return Array.from({ length }).map((obj: unknown, id: number) => {
-        let firstPage = (id >= 20) ? false : true;
+const ICONS = ["status_up", "status_unplugged"];
 
-        index = (index === PEOPLE.length -1 || id === 0) ? 0 : index+1;
-        
-        let personName = PEOPLE[index];
+function generateUsers(length: number): IRandomUserTableModel[] {
+    let peopleIndex = 0;
+    let citiesIndex = 0;
+
+    return Array.from({ length }).map((obj: unknown, no: number) => {
+        const nameFirst = PEOPLE[peopleIndex];
+        const city = CITIES[citiesIndex];
+
+        // wrap indexes when we reach the last one
+        peopleIndex = (peopleIndex + 1) % PEOPLE.length;
+        citiesIndex = (citiesIndex + 1) % CITIES.length;
+
         return ({
-            no : id,
-            postcode: id * 1000000 * id,
-            city: sample(CITIES) || CITIES[0],
-            nameFirst: personName,
-            nameLast: (personName === "Hubert" && !firstPage) ? "Wolfeschlegelsteinhausenbergerdorffwelchevoralternwarengewissenhaft... Sr." : "Unknown",
-            icon: sample(["status_up", "status_unplugged"]) || "status_up",
-            email: `${ personName.toLocaleLowerCase() }@@sw.com`,
+            no,
+            icon: ICONS[no % 2],
+            nameFirst,
+            nameLast: "UnknownLast",
+            city,
+            postcode: 1000000,
         });
     });
 }

@@ -103,20 +103,6 @@ export class AreaRenderer extends XYRenderer<IAreaAccessors> {
         path.attr("d", areaFunc(validatedData) ?? "");
     }
 
-    /** See {@link Renderer#getDataPointIndex} */
-    public getDataPointIndex(series: IDataSeries<IAreaAccessors>, values: { [p: string]: any }, scales: Scales) {
-        if (isUndefined(values.x)) {
-            return DATA_POINT_INTERACTION_RESET;
-        }
-        const index = UtilityService.getClosestIndex(series.data, (d, i) => series.accessors.data.x(d, i, series.data, series), values.x);
-
-        if (isUndefined(index)) {
-            throw new Error("Unable to get data point index");
-        }
-
-        return index;
-    }
-
     public getDomain(data: any[], dataSeries: IDataSeries<IAreaAccessors>, scaleName: string, scale: IScale<any>): any[] {
         if (!data || data.length === 0) {
             return EMPTY_CONTINUOUS_DOMAIN;

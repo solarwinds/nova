@@ -1,69 +1,32 @@
-<h1 i18n>Selected fruit: {{selectedFruit}}</h1>
-<nui-radio-group id="fruit-radio-group"
-                 name="fruit"
-                 [(value)]="selectedFruit">
-    <nui-radio *ngFor="let fruit of fruits"
-               [value]="fruit"
-               [checked]="fruit === 'Orange'"
-               [disabled]="fruit === 'Banana'">
+<div class="container">
+    <nui-radio-group id="basic-radio-group"
+                    name="fruit"
+                    [(value)]="selectedFruit">
+        <nui-radio *ngFor="let fruit of fruits"
+                    [value]="fruit"
+                    [checked]="fruit === 'Orange'"
+                    [disabled]="fruit === 'Banana'">
         {{fruit}}
-    </nui-radio>
-</nui-radio-group>
+        </nui-radio>
+    </nui-radio-group>
 
-<h1 i18n>Selected fruit: {{selectedFruitInline}}</h1>
-<nui-radio-group id="fruit-radio-group-inline"
-                 name="fruit-inline"
-                 class="nui-radio-group-inline"
-                 [(value)]="selectedFruitInline">
-    <nui-radio *ngFor="let fruit of fruits"
-                [value]="fruit"
-                [checked]="fruit === 'Orange'">
-        {{fruit}}
-    </nui-radio>
-</nui-radio-group>
 
-<h1 i18n>Selected color: {{selectedColor}}</h1>
-<nui-radio-group id="color-radio-group"
-                 name="color"
-                 [(value)]="selectedColor">
-    <nui-radio *ngFor="let color of colors"
-                [value]="color"
-                [checked]="color === 'Green'"
-                [hint]="colorHints[color]">
-        {{color}}
-    </nui-radio>
-</nui-radio-group>
-
-<form [formGroup]="fancyForm">
-    <nui-form-field caption="Radio Group"
-                    hint="Some pretty long text with hint"
-                    info="text"
-                    [control]="fancyForm.controls['radioGroup']">
-        <nui-radio-group id="vegetable-radio-group"
-                         formControlName="radioGroup"
-                         name="vegetable" required>
-            <nui-radio *ngFor="let vegetable of vegetables"
-                        [value]="vegetable">
-                {{vegetable}}
-            </nui-radio>
-        </nui-radio-group>
-        <nui-validation-message for="required">
-            This is required. C'mon
-        </nui-validation-message>
-    </nui-form-field>
-</form>
-
-<form [formGroup]="disabledForm">
-    <nui-form-field caption="Radio Group"
-                    [control]="disabledForm.controls['radioGroup']">
-        <nui-radio-group id="disabled-radio-group"
-                         formControlName="radioGroup"
-                         name="vegetable">
-            <nui-radio *ngFor="let vegetable of vegetables"
-                        [value]="vegetable">
-                {{vegetable}}
-            </nui-radio>
-        </nui-radio-group>
-    </nui-form-field>
-</form>
-<nui-checkbox id="toggle-disabled-group-checkbox" [checked]="true" (valueChange)="toggleDisabled($event)">Disabled</nui-checkbox>
+    <form [formGroup]="disabledForm">
+        <nui-form-field caption="Radio Group"
+                        [control]="disabledForm.controls['radioGroup']">
+            <nui-radio-group id="disabled-radio-group"
+                             formControlName="radioGroup"
+                             name="vegetable">
+                <nui-radio *ngFor="let vegetable of vegetables"
+                            [value]="vegetable">
+                    {{vegetable}}
+                </nui-radio>
+            </nui-radio-group>
+        </nui-form-field>
+    </form>
+    <nui-checkbox id="toggle-disabled-group-checkbox"
+                [checked]="true"
+                (valueChange)="toggleDisabled($event)">
+                Disabled
+    </nui-checkbox>
+</div>

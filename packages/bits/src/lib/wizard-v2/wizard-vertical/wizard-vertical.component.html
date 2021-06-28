@@ -1,4 +1,4 @@
-<div class="nui-step" *ngFor="let step of steps; let i = index; let isLast = last">
+<div class="nui-wizard-vertical-header-container" *ngFor="let step of steps; let i = index; let isLast = last">
     <nui-wizard-step-header class="nui-wizard-vertical-header"
                         (click)="step.select()"
                         (keydown)="_onKeydown($event)"
@@ -16,8 +16,7 @@
                         [selected]="selectedIndex === i"
                         [active]="step.completed || selectedIndex === i || !linear"
                         [optional]="step.optional"
-                        [errorMessage]="step.errorMessage"
-                        [disableRipple]="disableRipple">
+                        [errorMessage]="step.errorMessage">
     </nui-wizard-step-header>
 
     <div class="nui-wizard-vertical-content-container" [class.nui-wizard-vertical-line]="!isLast">
@@ -28,7 +27,7 @@
              [id]="_getStepContentId(i)"
              [attr.aria-labelledby]="_getStepLabelId(i)"
              [attr.aria-expanded]="selectedIndex === i">
-            <div class="nui-vertical-content">
+            <div class="nui-wizard-vertical-content">
                 <ng-container [ngTemplateOutlet]="step.content"></ng-container>
             </div>
         </div>

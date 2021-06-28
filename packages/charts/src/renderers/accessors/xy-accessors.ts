@@ -9,7 +9,7 @@ export interface IXYDataAccessors {
     [key: string]: DataAccessor | undefined;
 }
 
-export abstract class XYAccessors implements IAccessors {
+export class XYAccessors implements IAccessors {
     /** The default data accessors for using with renderers deriving from XYRenderer */
     public data: IXYDataAccessors = {
         x: (d: any) => d.x,
