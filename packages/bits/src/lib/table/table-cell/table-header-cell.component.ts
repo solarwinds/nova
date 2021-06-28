@@ -85,6 +85,8 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
     get isColumnSorted(): boolean {
         return this.sortingState.isColumnSorted;
     }
+    @HostBinding("class.nui-fixed-width")
+    public fixedWIdth: boolean;
 
     @HostBinding("attr.draggable")
     @HostBinding("class.nui-table__table-header-cell--reorderable")
@@ -188,9 +190,10 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
 
     ngOnInit(): void {
         const alignment = this.alignment ? `align-${ this.alignment }` : this.tableStateHandlerService.getAlignment(this.columnDef.name);
-
+        const elem = this.elementRef.nativeElement as HTMLElement;
+        
         this.resizable = this.tableStateHandlerService.resizable;
-        this.elementRef.nativeElement.classList.add(alignment);
+        elem.classList.add(alignment);
         this.currentCellIndex = this.tableStateHandlerService.tableColumns.indexOf(this.columnDef.name);
         this.sortingState = this.tableStateHandlerService.getSortingState(this.currentCellIndex);
 
@@ -198,7 +201,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
             // Get initial width
             const columnWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
 
-            this.elementRef.nativeElement.style.width = columnWidth + "px";
+            elem.style.width = columnWidth + "px";
             this.subscriptions.push(this.tableStateHandlerService.shouldHighlightEdge
                 .pipe(
                     filter(value => {
@@ -217,7 +220,13 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         this.subscriptions.push(this.tableStateHandlerService.columnWidthSubject.subscribe(() => {
             const columnWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
             if (columnWidth > 45) {
-                this.elementRef.nativeElement.style.width = columnWidth + "px";
+                if (this.tableStateHandlerService.getColumnWidthFixed(this.columnDef.name)) {
+                    this.fixedWIdth = true;
+                    elem.style.maxWidth = elem.style.minWidth = columnWidth + "px";
+                }
+            } else {
+                this.fixedWIdth = false;
+                elem.style.maxWidth = elem.style.minWidth= "";
             }
         }));
 

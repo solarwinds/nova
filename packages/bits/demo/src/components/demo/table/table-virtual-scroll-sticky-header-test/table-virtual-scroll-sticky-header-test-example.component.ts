@@ -34,7 +34,7 @@ export class TableVirtualScrollStickyHeaderTestExampleComponent implements After
     public placeholderItems: undefined[] = [];
     public visibleItems$: Observable<IRandomUserTableModel[]>;
     // The dynamically changed array of items to render by the table
-    public displayedColumns: string[] = ["no", "icon", "nameFirst", "nameLast", "city", "postcode"];
+    public displayedColumns: string[] = ["no", "icon", "nameFirst", "nameLast", "email", "city", "postcode"];
 
     public makeSticky: boolean = true;
     public itemSize: number = 40;
@@ -84,18 +84,24 @@ export class TableVirtualScrollStickyHeaderTestExampleComponent implements After
     }
 }
 
-const PEOPLE = ["Elena", "Madelyn", "Baggio", "Josh", "Lukas", "Blake", "Frantz", "Dima", "Serhii", "Vita", "Vlad", "Ivan", "Dumitru"];
+const PEOPLE = ["Elena", "Madelyn", "Baggio", "Josh", "Lukas", "Blake", "Frantz", "Dima", "Serhii", "Vita", "Vlad", "Ivan", "Dumitru", "Hubert"];
 const CITIES = ["Bucharest", "Kiev", "Austin", "Brno", "Frankfurt pe Main", "Sutton-under-Whitestonecliffe", "Vila Bela da Santíssima Trindade"];
 function generateUsers(length: number): IRandomUserTableModel[] {
+    let index = 0;
     return Array.from({ length }).map((obj: unknown, id: number) => {
-        const personName = sample(PEOPLE) || PEOPLE[0];
+        let firstPage = (id >= 20) ? false : true;
+
+        index = (index === PEOPLE.length -1 || id === 0) ? 0 : index+1;
+        
+        let personName = PEOPLE[index];
         return ({
-            no: id,
+            no : id,
             postcode: id * 1000000 * id,
             city: sample(CITIES) || CITIES[0],
             nameFirst: personName,
-            nameLast: "UnknownLast",
+            nameLast: (personName === "Hubert" && !firstPage) ? "Wolfeschlegelsteinhausenbergerdorffwelchevoralternwarengewissenhaft... Sr." : "Unknown",
             icon: sample(["status_up", "status_unplugged"]) || "status_up",
+            email: `${ personName.toLocaleLowerCase() }@@sw.com`,
         });
     });
 }

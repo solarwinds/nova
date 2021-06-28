@@ -124,8 +124,7 @@
         }
 
         &.virtual-sticky {
-            transition-property: width;
-            transition-duration: 0.2s;
+            transition: max-width 0.2s ease,min-width 0.2s ease, width 0.2s ease;
         }
 
         &--selectable {

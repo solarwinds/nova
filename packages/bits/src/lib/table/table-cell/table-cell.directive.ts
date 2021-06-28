@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Directive, ElementRef, HostBinding, HostListener, In
 import _get from "lodash/get";
 import { Subscription } from "rxjs";
 import { filter } from "rxjs/operators";
+import {FIXED_WIDTH_CLASS} from "../constants";
 
 import { DraggedOverCell, TableStateHandlerService } from "../table-state-handler.service";
 import { TableAlignmentOptions } from "../types";
@@ -56,8 +57,9 @@ export class TableCellDirective extends CdkCell implements OnInit, OnDestroy, On
         const alignment = this.alignment
             ? `align-${ this.alignment }`
             : this.tableStateHandlerService.getAlignment(this.columnDef.name);
+        const elem = this.elementRef.nativeElement as HTMLElement;
 
-        this.elementRef.nativeElement.classList.add(alignment);
+        elem.classList.add(alignment);
         this.currentCellIndex = this.tableStateHandlerService.tableColumns.indexOf(this.columnDef.name);
 
         if (this.tableStateHandlerService.reorderable) {
@@ -81,6 +83,16 @@ export class TableCellDirective extends CdkCell implements OnInit, OnDestroy, On
                     this.rightEdgeActive = !this.rightEdgeActive;
                 });
         }
+
+        this.tableStateHandlerService.columnWidthSubject.subscribe(() => {
+            const columnWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
+
+            if (columnWidth > 45) {
+                if (this.tableStateHandlerService.getColumnWidthFixed(this.columnDef.name)) {
+                    elem.style.width = elem.style.maxWidth = elem.style.minWidth = columnWidth + "px";
+                }
+            }
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
