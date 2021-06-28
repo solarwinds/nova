@@ -24,7 +24,7 @@ import assign from "lodash/assign";
     templateUrl: "wizard-step-header.component.html",
     styleUrls: ["wizard-step-header.component.less"],
     host: {
-        "class": "nui-wizard-step-header mat-focus-indicator",
+        "class": "nui-wizard-step-header",
         "[class.nui-wizard-step-header--selected]": "selected",
         "[class.nui-wizard-step-header--optional]": "optional",
         "[class.nui-wizard-step-header--completed]": "stepState === 'done'",
@@ -64,9 +64,6 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
 
     /** Whether the given step is optional. */
     @Input() optional: boolean;
-
-    /** Whether the ripple should be disabled. */
-    @Input() disableRipple: boolean;
 
     public stepStateConfigMap: WizardStepStateConfig;
 

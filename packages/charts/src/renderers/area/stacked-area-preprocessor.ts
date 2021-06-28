@@ -4,7 +4,7 @@ import { IStackMetadata } from "../bar/types";
 
 import { IAreaAccessors } from "./area-accessors";
 
-export function stackedAreaPreprocessor(chartSeriesSet: IChartSeries<IAreaAccessors>[],
+export function stackedAreaPreprocessor(chartSeriesSet: IChartAssistSeries<IAreaAccessors>[],
                                         isVisible: (chartSeries: IChartSeries<IAreaAccessors>) => boolean): IChartSeries<IAreaAccessors>[] {
     // No need to preprocess empty series.
     if (chartSeriesSet.length === 0) {
@@ -17,6 +17,9 @@ export function stackedAreaPreprocessor(chartSeriesSet: IChartSeries<IAreaAccess
     const valueAccessorKey = "y";
 
     for (const chartSeries of chartSeriesSet) {
+        if(chartSeries.preprocess === false) {
+            continue;
+        }
         const baseAccessor = chartSeries.accessors.data[baseAccessorKey];
         const accessor0 = chartSeries.accessors.data[valueAccessorKey + "0"];
         const accessor1 = chartSeries.accessors.data[valueAccessorKey + "1"];
