@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center align-items-center">
-    <div class="demo-inputs">
+    <div class="demo__inputs">
         <nui-form-field class="d-block mb-5"
                         caption="Value" i18n-caption
                         [showOptionalText]="false">
@@ -16,5 +16,8 @@
             Compact Thickness
         </nui-checkbox>
     </div>
-    <nui-chart class="demo-chart" [chart]="chartAssist.chart"></nui-chart>
+    <div class="demo__charts d-flex justify-content-between align-items-center">
+        <nui-chart class="demo__vertical-chart" [chart]="verticalChartAssist.chart"></nui-chart>
+        <nui-chart class="demo__horizontal-chart" [chart]="horizontalChartAssist.chart"></nui-chart>
+    </div>
 </div>

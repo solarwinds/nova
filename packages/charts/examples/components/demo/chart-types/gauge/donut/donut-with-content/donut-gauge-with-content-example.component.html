@@ -10,7 +10,7 @@
                             customBoxWidth="75px"></nui-textbox-number>
     </nui-form-field>
     <div class="d-flex">
-        <nui-chart class="demo-chart" [chart]="chartAssist.chart"></nui-chart>
+        <nui-chart class="demo__chart" [chart]="chartAssist.chart"></nui-chart>
 
         <!-- Inner content template -->
         <nui-chart-donut-content style="position: absolute;"
@@ -19,8 +19,8 @@
                 <div class="d-inline-block" nuiZoomContent [zoomRatio]="0.65">
                     {{gaugeConfig.value | number:'1.0-0'}}
                 </div>
-                <div class="demo-content-label" i18n>Network Latency</div>
-                <div class="demo-content-label" i18n>(ms)</div>
+                <div class="demo__content-label" i18n>Network Latency</div>
+                <div class="demo__content-label" i18n>(ms)</div>
             </div>
         </nui-chart-donut-content>
     </div>

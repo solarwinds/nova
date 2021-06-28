@@ -27,12 +27,12 @@ import { DonutGaugeWithContentExampleComponent } from "./donut/donut-with-conten
 import { DonutGaugeWithThresholdsExampleComponent } from "./donut/donut-with-thresholds/donut-gauge-with-thresholds-example.component";
 import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut/donut-with-threshold-toggling/donut-gauge-with-threshold-toggling-example.component";
 import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut/donut-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels-example.component";
-import { DonutGaugeWithThresholdMarkerTogglingExampleComponent } from "./donut/donut-with-threshold-marker-toggling/donut-gauge-with-threshold-marker-toggling-example.component";
 import { HorizontalGaugeBasicExampleComponent } from "./linear/horizontal-basic/horizontal-gauge-basic-example.component";
 import { VerticalGaugeBasicExampleComponent } from "./linear/vertical-basic/vertical-gauge-basic-example.component";
-import { HorizontalGaugeWithThresholdsExampleComponent } from "./linear/horizontal-with-thresholds/horizontal-gauge-with-thresholds-example.component";
-import { HorizontalGaugeThicknessAdjustmentExampleComponent } from "./linear/horizontal-thickness-adjustment/horizontal-gauge-thickness-adjustment-example.component";
 import { DonutGaugeWithoutThresholdMarkersExampleComponent } from "./donut/donut-without-threshold-markers/donut-gauge-without-threshold-markers-example.component";
+import { DonutGaugeWithThresholdMarkerTogglingExampleComponent } from "./donut/donut-with-threshold-marker-toggling/donut-gauge-with-threshold-marker-toggling-example.component";
+import { LinearGaugeWithThresholdsExampleComponent } from "./linear/linear-with-thresholds/linear-gauge-with-thresholds-example.component";
+import { LinearGaugeThicknessAdjustmentExampleComponent } from "./linear/linear-thickness-adjustment/linear-gauge-thickness-adjustment-example.component";
 
 const exampleRoutes: Routes = [
     {
@@ -137,7 +137,7 @@ const exampleRoutes: Routes = [
     },
     {
         path: "linear-with-thresholds",
-        component: HorizontalGaugeWithThresholdsExampleComponent,
+        component: LinearGaugeWithThresholdsExampleComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -146,7 +146,7 @@ const exampleRoutes: Routes = [
     },
     {
         path: "linear-thickness",
-        component: HorizontalGaugeThicknessAdjustmentExampleComponent,
+        component: LinearGaugeWithThresholdsExampleComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -160,7 +160,7 @@ const exampleRoutes: Routes = [
         ChartDocsGaugeComponent,
         GaugeVisualTestComponent,
         HorizontalGaugeBasicExampleComponent,
-        HorizontalGaugeWithThresholdsExampleComponent,
+        LinearGaugeWithThresholdsExampleComponent,
         HorizontalGaugeTesterComponent,
         DonutGaugeTesterComponent,
         DonutGaugeBasicExampleComponent,
@@ -171,7 +171,7 @@ const exampleRoutes: Routes = [
         DonutGaugeWithThresholdsExampleComponent,
         DonutGaugeWithThresholdTogglingExampleComponent,
         VerticalGaugeBasicExampleComponent,
-        HorizontalGaugeThicknessAdjustmentExampleComponent,
+        LinearGaugeThicknessAdjustmentExampleComponent,
         VerticalGaugeTesterComponent,
     ],
     imports: [

@@ -10,17 +10,19 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "horizontal-gauge-with-thresholds-example",
-    templateUrl: "./horizontal-gauge-with-thresholds-example.component.html",
-    styleUrls: ["./horizontal-gauge-with-thresholds-example.component.less"],
+    selector: "linear-gauge-with-thresholds-example",
+    templateUrl: "./linear-gauge-with-thresholds-example.component.html",
+    styleUrls: ["./linear-gauge-with-thresholds-example.component.less"],
 })
-export class HorizontalGaugeWithThresholdsExampleComponent implements OnInit {
-    public chartAssist: ChartAssist;
+export class LinearGaugeWithThresholdsExampleComponent implements OnInit {
+    public horizontalChartAssist: ChartAssist;
+    public verticalChartAssist: ChartAssist;
     public gaugeConfig: IGaugeConfig;
-    public value = 89;
+    public value = 64;
 
     private thresholds: IGaugeThresholdsConfig;
-    private seriesSet: IChartAssistSeries<IAccessors>[];
+    private horizontalSeriesSet: IChartAssistSeries<IAccessors>[];
+    private verticalSeriesSet: IChartAssistSeries<IAccessors>[];
 
     public ngOnInit(): void {
         // Generating a standard set of thresholds with warning and critical levels
@@ -51,20 +53,33 @@ export class HorizontalGaugeWithThresholdsExampleComponent implements OnInit {
         // };
 
         this.gaugeConfig = this.getGaugeConfig();
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
-        this.chartAssist.update(this.seriesSet);
+
+        // Creating the horizontal gauge
+        this.horizontalChartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
+        this.horizontalSeriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
+        this.horizontalChartAssist.update(this.horizontalSeriesSet);
+
+        // Creating the vertical gauge
+        this.verticalChartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Vertical);
+        this.verticalSeriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Vertical);
+        this.verticalChartAssist.update(this.verticalSeriesSet);
     }
 
     public onValueChange(value: number): void {
         this.value = value;
-        this.updateGauge();
+        this.updateGauges();
     }
 
-    private updateGauge() {
+    private updateGauges() {
         this.gaugeConfig = this.getGaugeConfig();
-        this.seriesSet = GaugeUtil.update(this.seriesSet, this.gaugeConfig);
-        this.chartAssist.update(this.seriesSet);
+
+        // Updating the horizontal gauge
+        this.horizontalSeriesSet = GaugeUtil.update(this.horizontalSeriesSet, this.gaugeConfig);
+        this.horizontalChartAssist.update(this.horizontalSeriesSet);
+
+        // Updating the vertical gauge
+        this.verticalSeriesSet = GaugeUtil.update(this.verticalSeriesSet, this.gaugeConfig);
+        this.verticalChartAssist.update(this.verticalSeriesSet);
     }
 
     private getGaugeConfig(): IGaugeConfig {
