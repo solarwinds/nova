@@ -9,7 +9,6 @@ export class SearchTestExampleComponent {
     public active = false;
     public captureFocus = true;
     public name = "example-name";
-    public placeholder = "Placeholder";
     public searchKey: string;
     public stringToSearch = `
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur rutrum lacus id vulputate.
@@ -38,10 +37,6 @@ export class SearchTestExampleComponent {
 
     public onInputChange(value: string) {
         this.value = value;
-    }
-
-    public onPlaceholderValueChange(event: string) {
-        this.placeholder = event;
     }
 
     public onSearch(value: string) {
