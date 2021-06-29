@@ -67,12 +67,12 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
         // This example demonstrates a scenario with time on the X scale and a numeric value on the Y scale.
         const scalesTop: IXYScales = {
             x: xScale,
-            y: new LinearScale().reverse(),
+            y: new LinearScale(),
         };
 
         const scalesBottom: IXYScales = {
             x: xScale,
-            y: new LinearScale(),
+            y: new LinearScale().reverse(),
         };
 
         // Here we assemble the complete chart series.
