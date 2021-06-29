@@ -40,7 +40,7 @@
                     </nui-form-field>
                 </div>
 
-                <ng-template wizardStepFooter>
+                <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext; context: { form: 'personDetails' }"></ng-container>
                 </ng-template>
@@ -84,7 +84,7 @@
                     </nui-form-field>
                 </div>
 
-                    <ng-template wizardStepFooter>
+                    <ng-template nuiWizardStepFooter>
                         <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardNext; context: { form: 'organization' }"></ng-container>
@@ -96,7 +96,7 @@
                 <div class="p-5">
                     <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
                 </div>
-                <ng-template wizardStepFooter>
+                <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 </ng-template>
@@ -138,7 +138,7 @@
                     </nui-form-field>
                 </div>
 
-                    <ng-template wizardStepFooter>
+                    <ng-template nuiWizardStepFooter>
                         <button nui-button
                                 type="button"
                                 displayStyle="destructive"

@@ -9,14 +9,14 @@
                         <!--  This defines the first step of the wizard -->
                         <nui-wizard-step-v2>
                             <!-- This defines the header label of this wizard step  -->
-                            <ng-template wizardStepLabel>Completed</ng-template>
+                            <ng-template nuiWizardStepLabel>Completed</ng-template>
 
                             <!-- the current step content -->
                             <div class="step-content-wrapper">
                                 <span i18n>This is the first step of our horizontal wizard</span>.
                             </div>
                             <!-- content of the footer -->
-                            <ng-template wizardStepFooter>
+                            <ng-template nuiWizardStepFooter>
                                 <button type="button" nui-button (click)="toggleBusy()">
                                     Toggle busy
                                 </button>
@@ -26,12 +26,12 @@
                         </nui-wizard-step-v2>
 
                         <nui-wizard-step-v2>
-                            <ng-template wizardStepLabel>Active</ng-template>
+                            <ng-template nuiWizardStepLabel>Active</ng-template>
 
                             <div class="step-content-wrapper">
                                 <span i18n>This is the second step of our horizontal wizard</span>.
                             </div>
-                            <ng-template wizardStepFooter>
+                            <ng-template nuiWizardStepFooter>
                                 <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                                 <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
@@ -39,13 +39,13 @@
                         </nui-wizard-step-v2>
 
                         <nui-wizard-step-v2>
-                            <ng-template wizardStepLabel>Not visited</ng-template>
+                            <ng-template nuiWizardStepLabel>Not visited</ng-template>
 
                             <div class="step-content-wrapper">
                                 <span i18n>This is the third step of our horizontal wizard</span>
                             </div>
 
-                            <ng-template wizardStepFooter>
+                            <ng-template nuiWizardStepFooter>
                                 <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                                 <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
@@ -53,11 +53,11 @@
                         </nui-wizard-step-v2>
 
                         <nui-wizard-step-v2>
-                            <ng-template wizardStepLabel>Summary</ng-template>
+                            <ng-template nuiWizardStepLabel>Summary</ng-template>
                             <div class="step-content-wrapper">
                                 <span i18n>We finally reached our last step</span>
                             </div>
-                            <ng-template wizardStepFooter>
+                            <ng-template nuiWizardStepFooter>
                                 <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                             </ng-template>
