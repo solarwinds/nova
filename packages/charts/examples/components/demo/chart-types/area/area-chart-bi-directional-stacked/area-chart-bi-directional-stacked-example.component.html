@@ -30,11 +30,11 @@
             <!-- Specify the 'tick' formatter to display positive values for both series in the legend. -->
             <!-- Specify the 'y1' data accessor to let the chart assist know how to access the data for the legend. -->
             <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(legendSeries, 'y', 'tick', 'y1')"
-                                  [backgroundColor]="chartAssistTop.palette.standardColors.get(legendSeries.id)"
-                                  [color]="chartAssistTop.palette.textColors.get(legendSeries.id)">
+                                  [backgroundColor]="chartAssist.palette.standardColors.get(legendSeries.id)"
+                                  [color]="chartAssist.palette.textColors.get(legendSeries.id)">
                 <nui-chart-marker rightEdge
-                                  [marker]="chartAssistTop.markers.get(legendSeries.id)"
-                                  [color]="chartAssistTop.palette.standardColors.get(legendSeries.id)">
+                                  [marker]="chartAssist.markers.get(legendSeries.id)"
+                                  [color]="chartAssist.palette.standardColors.get(legendSeries.id)">
                 </nui-chart-marker>
             </nui-rich-legend-tile>
         </nui-legend-series>

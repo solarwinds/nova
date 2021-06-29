@@ -2,10 +2,10 @@ import cloneDeep from "lodash/cloneDeep";
 import { IAxisConfig } from "../../../grid/types";
 import { IAccessors, IChartSeries } from "../../types";
 import { domain } from "../helpers/domain";
-import { DomainCalculator, DomainCalculatorWithTicks, IScale } from "../types";
+import { DomainCalculator, IDomainWithTicksCalculator, IScale } from "../types";
 
-export const getAutomaticDomainWithTicks = (config: IAxisConfig, axisGenerator: any, domainCalculator: DomainCalculator): DomainCalculator => {
-    const result: DomainCalculatorWithTicks = (chartSeriesSet: IChartSeries<IAccessors>[], scaleKey: string, scale: IScale<any>): any[] => {
+export const getAutomaticDomainWithTicks = (config: IAxisConfig, axisGenerator: any, domainCalculator: DomainCalculator): IDomainWithTicksCalculator  => {
+    const result: IDomainWithTicksCalculator = (chartSeriesSet: IChartSeries<IAccessors>[], scaleKey: string, scale: IScale<any>): any[] => {
         const mergedDomains = domainCalculator(chartSeriesSet, scaleKey, scale);
         const clonedScale = cloneDeep(scale);
         domain(clonedScale, mergedDomains);
@@ -23,6 +23,6 @@ export const getAutomaticDomainWithTicks = (config: IAxisConfig, axisGenerator: 
         }
         return mergedDomains;
     };
-    result.__domainWithTicks = true;
+    result.domainWithTicks = true;
     return result;
 }

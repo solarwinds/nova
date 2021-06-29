@@ -14,7 +14,7 @@ import { MouseInteractiveArea } from "../common/mouse-interactive-area";
 import { BandScale } from "../common/scales/band-scale";
 import { getAutomaticDomainWithTicks } from "../common/scales/domain-calculation/domain-with-ticks";
 import { LinearScale } from "../common/scales/linear-scale";
-import { IBandScale, IScale, isDomainCalculatorWithTicks, ScalesIndex } from "../common/scales/types";
+import { IBandScale, IScale, isDomainWithTicksCalculator, ScalesIndex } from "../common/scales/types";
 import { D3Selection, IAxesStyleChangeEventPayload, IChart, IChartEvent, IChartPlugin, IRenderStateData } from "../common/types";
 import { InteractionLabelPlugin } from "../plugins/interaction/interaction-label-plugin";
 import { InteractionLinePlugin } from "../plugins/interaction/interaction-line-plugin";
@@ -125,7 +125,7 @@ export class XYGrid extends Grid implements IGrid {
                         config = this.config().axis.bottom;
                         axisGenerator = axisBottom;
                     }
-                    if (scale.domainCalculator && !isDomainCalculatorWithTicks(scale.domainCalculator) && config.gridTicks) {
+                    if (scale.domainCalculator && !isDomainWithTicksCalculator(scale.domainCalculator) && config.gridTicks) {
                         scale.__domainCalculatedWithTicks = true;
                         scale.domainCalculator = getAutomaticDomainWithTicks(config, axisGenerator, scale.domainCalculator);
                     }

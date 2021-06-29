@@ -38,7 +38,7 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
         this.chartAssistTop = new ChartAssist(this.chartTop, stackedArea);
 
         this.chartBottom = new Chart(new XYGrid(bottomChartConfig()), { updateDomainForEmptySeries: true });
-        this.chartAssistBottom = new ChartAssist(this.chartBottom, stackedArea);
+        this.chartAssistBottom = new ChartAssist(this.chartBottom, stackedArea, this.chartAssistTop.palette, this.chartAssistTop.markers);
 
         // Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
         const accessors = new AreaAccessors();
@@ -90,15 +90,27 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
             scales: scalesBottom,
         }));
 
-        scalesTop.y.domainCalculator = scalesTop.x.domainCalculator =
-            domainWithAuxiliarySeries(() => seriesSetBottom, getAutomaticDomain);
-        scalesBottom.y.domainCalculator = scalesBottom.x.domainCalculator =
-            domainWithAuxiliarySeries(() => seriesSetTop, getAutomaticDomain);
+        // We need to replace domain calculators to reflect series on both charts
+        const topChartDomainCalculator = domainWithAuxiliarySeries(() => seriesSetBottom, getAutomaticDomain);
+        scalesTop.y.domainCalculator = topChartDomainCalculator;
+        scalesTop.x.domainCalculator = topChartDomainCalculator;
 
-        this.chartAssistTop.update(seriesSetTop as IChartSeries<IAreaAccessors>[]);
-        this.chartAssistBottom.update(seriesSetBottom as IChartSeries<IAreaAccessors>[]);
+        const bottomChartDomainCalculator = domainWithAuxiliarySeries(() => seriesSetTop, getAutomaticDomain);
+        scalesBottom.y.domainCalculator = bottomChartDomainCalculator;
+        scalesBottom.x.domainCalculator = bottomChartDomainCalculator;
+
+        this.chartAssistTop.update(seriesSetTop);
+        this.chartAssistBottom.update(seriesSetBottom);
     }
 
+    /**
+     * This function ensures the change in visibility of series is propagated to both charts. Chart that is directly associated with the series has to be
+     * invoked first.
+     *
+     * @param legendSeries
+     * @param value
+     * @param currentChartAssist
+     */
     public onSelectedChange(legendSeries: IChartAssistSeries<any>, value: boolean, currentChartAssist: ChartAssist) {
         let chartAssists = [this.chartAssistTop, this.chartAssistBottom];
         if (currentChartAssist === this.chartAssistBottom) {
