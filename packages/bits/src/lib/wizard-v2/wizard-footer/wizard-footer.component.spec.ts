@@ -25,7 +25,7 @@ describe("components >", () => {
         });
 
         describe("ngOnDestroy", () => {
-            it("should call focusMonitor 'monitor' method", () => {
+            it("should call focusMonitor 'stopMonitoring' method", () => {
                 const spy = spyOn(component["_focusMonitor"], "stopMonitoring");
 
                 component.ngOnDestroy();
@@ -34,7 +34,7 @@ describe("components >", () => {
         });
 
         describe("focus", () => {
-            it("should call focusMonitor 'monitor' method", () => {
+            it("should call focusMonitor 'focusVia' method", () => {
                 const spy = spyOn(component["_focusMonitor"], "focusVia");
 
                 component.focus();
