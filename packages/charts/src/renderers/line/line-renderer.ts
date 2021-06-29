@@ -103,21 +103,6 @@ export class LineRenderer extends XYRenderer<ILineAccessors> {
         }
     }
 
-    /** See {@link Renderer#getDataPointIndex} */
-    public getDataPointIndex(series: IDataSeries<ILineAccessors>, values: { [p: string]: any }, scales: Scales): number {
-        if (!this.config.interactive || isUndefined(values.x)) {
-            return DATA_POINT_INTERACTION_RESET;
-        }
-
-        const index = UtilityService.getClosestIndex(series.data, (d, i) => series.accessors.data.x(d, i, series.data, series), values.x);
-
-        if (isUndefined(index)) {
-            throw new Error("Unable to get data point index");
-        }
-
-        return index;
-    }
-
     /** See {@link Renderer#highlightDataPoint} */
     public highlightDataPoint(renderSeries: IRenderSeries<ILineAccessors>,
                               dataPointIndex: number,
