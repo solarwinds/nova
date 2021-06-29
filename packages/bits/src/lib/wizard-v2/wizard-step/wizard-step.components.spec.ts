@@ -36,7 +36,7 @@ describe("components >", () => {
             });
         });
 
-        describe("isErrorSep", () => {
+        describe("isErrorState", () => {
             const control = { invalid: false } as FormControl;
             const form = {} as NgForm;
 
