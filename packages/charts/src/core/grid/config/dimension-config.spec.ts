@@ -1,4 +1,4 @@
-import { DimensionConfig } from "@nova-ui/charts";
+import { DimensionConfig } from "./dimension-config";
 
 describe("dimension-config", ()=> {
 

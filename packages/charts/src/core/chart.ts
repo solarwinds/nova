@@ -10,7 +10,7 @@ import { DataManager } from "./common/data-manager";
 import { EventBus } from "./common/event-bus";
 import { Lasagna } from "./common/lasagna";
 import { RenderEngine } from "./common/render-engine";
-import { D3Selection, IAccessors, IChart, IChartEvent, IChartPlugin, IChartSeries, IRenderStateData } from "./common/types";
+import { D3Selection, IAccessors, IChart, IChartConfiguration, IChartEvent, IChartPlugin, IChartSeries, IRenderStateData } from "./common/types";
 import { IDimensionConfig, IDimensions, IGrid } from "./grid/types";
 import { RenderEnginePlugin } from "./plugins/render-engine-plugin";
 import { CssFilterId, GRAYSCALE_COLOR_MATRIX } from "./types";
@@ -30,7 +30,7 @@ export class Chart implements IChart {
 
     private plugins: IChartPlugin[] = [];
 
-    constructor(private grid: IGrid) {
+    constructor(private grid: IGrid, public configuration?: IChartConfiguration) {
         if (!grid) {
             throw new Error("Grid has to be defined!");
         }
@@ -133,7 +133,7 @@ export class Chart implements IChart {
     }
 
     protected buildDataManager(): DataManager {
-        return new DataManager();
+        return new DataManager(this);
     }
 
     protected buildGrid() {

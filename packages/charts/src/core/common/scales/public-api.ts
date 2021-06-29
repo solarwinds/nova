@@ -1,4 +1,7 @@
 export * from "./domain-calculation/automatic-domain";
+export * from "./domain-calculation/domain-with-ticks";
+export * from "./domain-calculation/domain-with-auxiliary-series";
+export * from "./domain-calculation/merge-domains";
 export * from "./band-scale";
 export * from "./point-scale";
 export * from "./linear-scale";

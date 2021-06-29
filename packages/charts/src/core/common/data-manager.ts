@@ -4,11 +4,11 @@ import flatten from "lodash/flatten";
 import includes from "lodash/includes";
 import keyBy from "lodash/keyBy";
 import values from "lodash/values";
+import { RenderState } from "../../renderers/types";
 
 import { domain } from "./scales/helpers/domain";
-import { EMPTY_CONTINUOUS_DOMAIN, IScale, ScalesIndex } from "./scales/types";
-import { IAccessors, IChartSeries } from "./types";
-import { RenderState } from "../../renderers/types";
+import { IScale, ScalesIndex } from "./scales/types";
+import { IAccessors, IChart, IChartSeries } from "./types";
 
 /**
  * @ignore
@@ -31,6 +31,9 @@ export class DataManager {
 
     public get scalesIndexById(): { [scaleId: string]: IScale<any> } {
         return this._scalesIndexById;
+    }
+
+    constructor(private chart?: IChart) {
     }
 
     public update(seriesSet: IChartSeries<IAccessors>[]) {
@@ -59,7 +62,7 @@ export class DataManager {
             const chartSeriesSet = this.chartSeriesSet
                 .filter(cs => cs.scales[scaleKey] === scale && !cs.renderer.config.ignoreForDomainCalculation)
                 .filter(c => c.renderState !== RenderState.hidden);
-            if (chartSeriesSet.length) {
+            if (chartSeriesSet.length || this.chart?.configuration?.updateDomainForEmptySeries) {
                 const calculatedDomain = scale.domainCalculator(chartSeriesSet, scaleKey, scale);
                 domain(scale, calculatedDomain);
             }

@@ -10,6 +10,16 @@ export const NORMALIZED_DOMAIN = [0, 1];
 /** Signature for domain calculator */
 export type DomainCalculator = (chartSeriesSet: IChartSeries<IAccessors>[], scaleId: string, scale: IScale<any>) => any[];
 
+/** Signature for a specific domain calculator that rounds domain to the closes tick */
+export interface DomainCalculatorWithTicks extends DomainCalculator {
+    __domainWithTicks?: true;
+}
+
+/** Type guard for the domain calculator with ticks */
+export function isDomainCalculatorWithTicks(obj: any): obj is DomainCalculatorWithTicks {
+    return !!obj.__domainWithTicks;
+}
+
 /** Interface for scale formatters */
 export interface IFormatters<T> {
     /** Formatter for tick labels */

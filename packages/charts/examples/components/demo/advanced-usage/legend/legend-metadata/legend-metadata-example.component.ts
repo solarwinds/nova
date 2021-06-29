@@ -84,7 +84,7 @@ export class LegendMetadataExampleComponent implements OnInit {
 }
 
 function calculateAverageSeries(seriesSet: Partial<IDataSeries<XYAccessors>>[]): Partial<IDataSeries<XYAccessors>> {
-    let arrAverage = [];
+    const arrAverage = [];
     const dataLength =  seriesSet[0].data?.length ?? 0;
     const numOfSeries = seriesSet.length
     const averageSeries = {

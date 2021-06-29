@@ -1,11 +1,13 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import {
     AreaAccessors,
-    areaGrid,
     AreaRenderer,
     Chart,
     ChartAssist,
+    domainWithAuxiliarySeries,
+    getAutomaticDomain,
     IAreaAccessors,
+    IChartAssistSeries,
     IChartSeries,
     IXYScales,
     LinearScale,
@@ -27,12 +29,15 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
     public chartBottom: Chart;
     public chartAssistBottom: ChartAssist;
 
+    constructor(public changeDetector: ChangeDetectorRef) {
+    }
+
     public ngOnInit() {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements.
-        this.chartTop = new Chart(new XYGrid(topChartConfig()));
+        this.chartTop = new Chart(new XYGrid(topChartConfig()), { updateDomainForEmptySeries: true });
         this.chartAssistTop = new ChartAssist(this.chartTop, stackedArea);
 
-        this.chartBottom = new Chart(new XYGrid(bottomChartConfig()));
+        this.chartBottom = new Chart(new XYGrid(bottomChartConfig()), { updateDomainForEmptySeries: true });
         this.chartAssistBottom = new ChartAssist(this.chartBottom, stackedArea);
 
         // Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
@@ -51,6 +56,7 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
         // accessor so that each series is assigned a different marker shape from the same marker sequence.
         // Take a look also at the marker assignment for the second accessors instance below.
         accessors.series.marker = this.chartAssistTop.markers.get;
+        accessors.series.color = this.chartAssistTop.palette.standardColors.get;
 
         // The area renderer will make the chart look like an area chart.
         const renderer = new AreaRenderer();
@@ -61,30 +67,46 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
         // This example demonstrates a scenario with time on the X scale and a numeric value on the Y scale.
         const scalesTop: IXYScales = {
             x: xScale,
-            y: new LinearScale(),
+            y: new LinearScale().reverse(),
         };
 
         const scalesBottom: IXYScales = {
             x: xScale,
-            y: new LinearScale().reverse(),
+            y: new LinearScale(),
         };
 
         // Here we assemble the complete chart series.
-        const seriesSetTop: Partial<IChartSeries<IAreaAccessors>>[] = getData().map(d => ({
+        const seriesSetTop: IChartSeries<IAreaAccessors>[] = getDataTop().map(d => ({
             ...d,
             renderer,
             accessors,
             scales: scalesTop,
         }));
-        this.chartAssistTop.update(seriesSetTop as IChartSeries<IAreaAccessors>[]);
 
-        const seriesSetBottom: Partial<IChartSeries<IAreaAccessors>>[] = getData().map(d => ({
+        const seriesSetBottom: IChartSeries<IAreaAccessors>[] = getDataBottom().map(d => ({
             ...d,
             renderer,
             accessors,
             scales: scalesBottom,
         }));
+
+        scalesTop.y.domainCalculator = scalesTop.x.domainCalculator =
+            domainWithAuxiliarySeries(() => seriesSetBottom, getAutomaticDomain);
+        scalesBottom.y.domainCalculator = scalesBottom.x.domainCalculator =
+            domainWithAuxiliarySeries(() => seriesSetTop, getAutomaticDomain);
+
+        this.chartAssistTop.update(seriesSetTop as IChartSeries<IAreaAccessors>[]);
         this.chartAssistBottom.update(seriesSetBottom as IChartSeries<IAreaAccessors>[]);
+    }
+
+    public onSelectedChange(legendSeries: IChartAssistSeries<any>, value: boolean, currentChartAssist: ChartAssist) {
+        let chartAssists = [this.chartAssistTop, this.chartAssistBottom];
+        if (currentChartAssist === this.chartAssistBottom) {
+            chartAssists = chartAssists.reverse();
+        }
+        for (const ca of chartAssists) {
+            ca.toggleSeries(legendSeries.id, value);
+        }
     }
 }
 
@@ -103,14 +125,13 @@ function bottomChartConfig(c: XYGridConfig = new XYGridConfig()): XYGridConfig {
     return c;
 }
 
-
 /* Chart data */
-function getData() {
+function getDataTop() {
     const format = "YYYY-MM-DDTHH:mm:ssZ";
 
     return [
         {
-            id: "up",
+            id: "up1",
             name: "Up Speed",
             data: [
                 { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 6 },
@@ -130,7 +151,7 @@ function getData() {
             ],
         },
         {
-            id: "down",
+            id: "down1",
             name: "Dn Speed",
             data: [
                 { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 12 },
@@ -141,6 +162,53 @@ function getData() {
                 { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 23 },
                 { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 12 },
                 { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 70 },
+                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 45 },
+                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 50 },
+                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 75 },
+                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 50 },
+                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 85 },
+                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 55 },
+            ],
+        },
+    ];
+}
+
+function getDataBottom() {
+    const format = "YYYY-MM-DDTHH:mm:ssZ";
+
+    return [
+        {
+            id: "up2",
+            name: "Up Speed",
+            data: [
+                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 6 },
+                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 33 },
+                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 15 },
+                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 20 },
+                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 30 },
+                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 12 },
+                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 6 },
+                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 35 },
+                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 23 },
+                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 95 },
+                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 38 },
+                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), value: 25 },
+                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), value: 43 },
+                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), value: 28 },
+            ],
+        },
+        {
+            id: "down2",
+            name: "Dn Speed",
+            data: [
+                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 12 },
+                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 65 },
+                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), value: 30 },
+                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), value: 40 },
+                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), value: 60 },
+                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), value: 23 },
+                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), value: 12 },
+                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), value: 250 },
                 { timeStamp: moment("2016-12-25T15:00:29.909Z", format), value: 45 },
                 { timeStamp: moment("2016-12-25T15:25:29.909Z", format), value: 50 },
                 { timeStamp: moment("2016-12-25T15:45:29.909Z", format), value: 75 },
