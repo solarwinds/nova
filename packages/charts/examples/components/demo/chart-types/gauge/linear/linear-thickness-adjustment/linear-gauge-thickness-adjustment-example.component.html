@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center align-items-center">
+<div class="d-flex justify-content-center align-items-center flex-wrap">
     <div class="demo__inputs">
         <nui-form-field class="d-block mb-5"
                         caption="Value" i18n-caption
@@ -10,7 +10,7 @@
                                 [maxValue]="gaugeConfig.max"
                                 customBoxWidth="75px"></nui-textbox-number>
         </nui-form-field>
-        <nui-checkbox [ngModel]="compact"
+        <nui-checkbox class="d-block mb-5" [ngModel]="compact"
                       (ngModelChange)="onCompactChange($event)"
                       i18n>
             Compact Thickness

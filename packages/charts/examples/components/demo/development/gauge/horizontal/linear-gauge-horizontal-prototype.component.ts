@@ -22,28 +22,17 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
     private labelsPlugin: LinearGaugeLabelsPlugin;
-    private readonly rightMargin = 15;
-    private readonly leftMargin = 5;
 
     public ngOnChanges(changes: ComponentChanges<LinearGaugeHorizontalPrototypeComponent>): void {
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
             const gridConfig = this.chartAssist.chart.getGrid().config();
             gridConfig.dimension.height(this.gaugeConfig.linearThickness ?? 0);
-            const flippedLabels = this.gaugeConfig.labels?.flipped ?? false;
-            this.labelsPlugin.config.flippedLabels = flippedLabels;
 
-            // update the margins to accommodate the label direction change
-            const disableMarkers = this.gaugeConfig.thresholds?.disableMarkers ?? false;
-            this.labelsPlugin.config.disableThresholdLabels = disableMarkers;
-            gridConfig.dimension.margin = {
-                top: 0,
-                right: disableMarkers ? 0 : this.rightMargin,
-                bottom: 0,
-                left: disableMarkers ? 0 : this.leftMargin,
-            };
+            this.labelsPlugin.config.flippedLabels = this.gaugeConfig.labels?.flipped ?? false;
+            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.thresholds?.disableMarkers ?? false;
 
-            const marginToUpdate = flippedLabels ? "top" : "bottom";
-            gridConfig.dimension.margin[marginToUpdate] = LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToUpdate];
+            // update the margins to accommodate label direction changes
+            this.configureMargins();
 
             this.chartAssist.chart.updateDimensions();
             this.chartAssist.update(GaugeUtil.update(this.seriesSet, this.gaugeConfig));
@@ -53,11 +42,25 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
     public ngOnInit(): void {
         this.labelsPlugin = new LinearGaugeLabelsPlugin({ flippedLabels: this.gaugeConfig.labels?.flipped });
         this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal, this.labelsPlugin);
-        const gridConfig = this.chartAssist.chart.getGrid().config();
-        gridConfig.dimension.margin.right = this.rightMargin;
-        gridConfig.dimension.margin.left = this.leftMargin;
+        this.configureMargins();
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
         this.chartAssist.update(this.seriesSet);
+    }
+
+    private configureMargins() {
+        const gridConfig = this.chartAssist.chart.getGrid().config();
+
+        // set baseline margins
+        gridConfig.dimension.margin = {
+            top: 5,
+            right: 15,
+            bottom: 5,
+            left: 5,
+        };
+
+        // set clearance margin for threshold labels
+        const marginToUpdate = this.gaugeConfig.labels?.flipped ? "top" : "bottom";
+        gridConfig.dimension.margin[marginToUpdate] = LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToUpdate];
     }
 }
