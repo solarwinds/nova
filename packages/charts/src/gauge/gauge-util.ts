@@ -97,22 +97,14 @@ export class GaugeUtil {
         labelsPlugin?: DonutGaugeLabelsPlugin | LinearGaugeLabelsPlugin
     ): ChartAssist {
         const grid = (mode === GaugeMode.Donut) ? radialGrid() : new XYGrid(linearGaugeGridConfig(mode, gaugeConfig.linearThickness));
+        const gridConfig = grid.config();
         const chart = new Chart(grid);
         const enableLabels = !isEmpty(gaugeConfig.thresholds?.definitions) && !gaugeConfig.thresholds?.disableMarkers;
 
         if (mode === GaugeMode.Donut) {
             if (enableLabels) {
                 chart.addPlugin(labelsPlugin ?? new DonutGaugeLabelsPlugin());
-
-                // apply label clearances
-                const labelClearanceConfig = gaugeConfig.labels?.clearance;
-                const clearance = !isNil(labelClearanceConfig) ? labelClearanceConfig : DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT;
-                grid.config().dimension.margin = {
-                    top: clearance,
-                    right: clearance,
-                    bottom: clearance,
-                    left: clearance,
-                } as IAllAround<number>;
+                gridConfig.dimension.margin = GaugeUtil.getMarginForLabelClearance(gaugeConfig, mode, gridConfig.dimension.margin);
             }
 
             return new ChartAssist(chart, radial);
@@ -121,17 +113,7 @@ export class GaugeUtil {
         if (enableLabels) {
             const flippedLabels = !!gaugeConfig.labels?.flipped;
             chart.addPlugin(labelsPlugin ?? new LinearGaugeLabelsPlugin({ flippedLabels }));
-
-            // apply label clearance
-            let marginToAdjust: keyof IAllAround<number>;
-            if (mode === GaugeMode.Horizontal) {
-                marginToAdjust = flippedLabels ? "top" : "bottom";
-            } else {
-                marginToAdjust = flippedLabels ? "left" : "right";
-            }
-
-            const clearance = gaugeConfig.labels?.clearance ?? LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToAdjust];
-            grid.config().dimension.margin[marginToAdjust] = clearance;
+            gridConfig.dimension.margin = GaugeUtil.getMarginForLabelClearance(gaugeConfig, mode, gridConfig.dimension.margin);
         }
 
         return new ChartAssist(chart, stack);
@@ -207,6 +189,79 @@ export class GaugeUtil {
         });
 
         return updatedSeriesSet;
+    }
+
+    /**
+     * Convenience function for creating a standard standard set of threshold configs. Includes configurations for warning and error thresholds.
+     *
+     * @param warningVal Value for the warning threshold
+     * @param criticalVal Value for the critical threshold
+     *
+     * @returns {IGaugeThresholdsConfig} The thresholds configuration
+     */
+    public static createStandardThresholdsConfig(warningVal: number, criticalVal: number): IGaugeThresholdsConfig {
+        // assigning to variable to prevent "Expression form not supported" error
+        const config = {
+            definitions: {
+                [StandardGaugeThresholdId.Warning]: {
+                    id: StandardGaugeThresholdId.Warning,
+                    value: warningVal,
+                    enabled: true,
+                    color: StandardGaugeColor.Warning,
+                },
+                [StandardGaugeThresholdId.Critical]: {
+                    id: StandardGaugeThresholdId.Critical,
+                    value: criticalVal,
+                    enabled: true,
+                    color: StandardGaugeColor.Critical,
+                },
+            },
+            reversed: false,
+            disableMarkers: false,
+            markerRadius: StandardGaugeThresholdMarkerRadius.Large,
+        }
+
+        return config;
+    }
+
+    /**
+     * Gets a new instance of the provided grid margin with updated values (if needed) to accommodate the label clearance specified
+     * in the provided gauge configuration
+     *
+     * @param gaugeConfig The gauge's configuration
+     * @param mode The mode of the gauge
+     * @param margin The margin to update
+     *
+     * @returns The updated margin
+     */
+    public static getMarginForLabelClearance(gaugeConfig: IGaugeConfig, mode: GaugeMode, margin: IAllAround<number>): IAllAround<number> {
+        if (mode === GaugeMode.Donut) {
+            const labelClearanceConfig = gaugeConfig.labels?.clearance;
+            const clearance = !isNil(labelClearanceConfig) ? labelClearanceConfig : DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT;
+
+            // on the radial grid the maximum margin value is used for all margins, so we use the max value here
+            const maxMargin = Math.max(...Object.values(margin));
+            const marginValue = maxMargin > clearance ? maxMargin : clearance;
+
+            return {
+                top: marginValue,
+                right: marginValue,
+                bottom: marginValue,
+                left: marginValue,
+            }
+        }
+
+        let marginToAdjust: keyof IAllAround<number>;
+        const flippedLabels = !!gaugeConfig.labels?.flipped;
+        if (mode === GaugeMode.Horizontal) {
+            marginToAdjust = flippedLabels ? "top" : "bottom";
+        } else {
+            marginToAdjust = flippedLabels ? "left" : "right";
+        }
+
+        const clearance = gaugeConfig.labels?.clearance ?? LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToAdjust];
+        const marginValue = Math.max(margin[marginToAdjust], clearance);
+        return { ...margin, [marginToAdjust]: marginValue }
     }
 
     /**
@@ -347,39 +402,6 @@ export class GaugeUtil {
         }
 
         return renderingTools[mode];
-    }
-
-    /**
-     * Convenience function for creating a standard standard set of threshold configs. Includes configurations for warning and error thresholds.
-     *
-     * @param warningVal Value for the warning threshold
-     * @param criticalVal Value for the critical threshold
-     *
-     * @returns {IGaugeThresholdsConfig} The thresholds configuration
-     */
-    public static createStandardThresholdsConfig(warningVal: number, criticalVal: number): IGaugeThresholdsConfig {
-        // assigning to variable to prevent "Expression form not supported" error
-        const config = {
-            definitions: {
-                [StandardGaugeThresholdId.Warning]: {
-                    id: StandardGaugeThresholdId.Warning,
-                    value: warningVal,
-                    enabled: true,
-                    color: StandardGaugeColor.Warning,
-                },
-                [StandardGaugeThresholdId.Critical]: {
-                    id: StandardGaugeThresholdId.Critical,
-                    value: criticalVal,
-                    enabled: true,
-                    color: StandardGaugeColor.Critical,
-                },
-            },
-            reversed: false,
-            disableMarkers: false,
-            markerRadius: StandardGaugeThresholdMarkerRadius.Large,
-        }
-
-        return config;
     }
 
     /**

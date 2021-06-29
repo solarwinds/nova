@@ -62,7 +62,7 @@ export class LinearGaugeVerticalPrototypeComponent implements OnChanges, OnInit 
         };
 
         // set clearance margin for threshold labels
-        const marginToUpdate = this.gaugeConfig.labels?.flipped ? "left" : "right";
-        gridConfig.dimension.margin[marginToUpdate] = this.labelClearance;
+        const gaugeConfigWithLabelClearance = { ...this.gaugeConfig, labels: { ...this.gaugeConfig.labels, clearance: this.labelClearance } };
+        gridConfig.dimension.margin = GaugeUtil.getMarginForLabelClearance(gaugeConfigWithLabelClearance, GaugeMode.Vertical, gridConfig.dimension.margin);
     }
 }
