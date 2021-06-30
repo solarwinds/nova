@@ -9,7 +9,8 @@
                     (mouseleave)="chartAssist.resetVisibleSeries()">
             <!-- This is the metadata series -->
             <nui-legend-series [interactive]="false"
-                               [descriptionPrimary]="avgSeries['name']">
+                               [descriptionPrimary]="avgSeries['name']"
+                               (mouseenter)="chartAssist.resetVisibleSeries()">
                 <nui-rich-legend-tile [value]="chartAssist.getHighlightedValue(avgSeries, 'y')"
                                       backgroundColor="var(--nui-color-bg-mid_dark)"
                                       color="var(--nui-color-text-light)">
