@@ -135,11 +135,11 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
         }
 
         if (isSelected) {
-            return STEP_STATE.EDIT
+            return STEP_STATE.EDIT;
         }
 
         if (step.completed) {
-            return STEP_STATE.DONE
+            return STEP_STATE.DONE;
         }
 
         return STEP_STATE.NUMBER;
@@ -153,7 +153,7 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
             if (step === this.steps.last) {
                 step.select();
             }
-        })
+        });
 
         this["_changeDetectorRef"].detectChanges();
     }
