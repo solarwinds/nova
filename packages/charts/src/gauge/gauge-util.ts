@@ -1,5 +1,5 @@
 import { IRadialScales, Scales } from "../core/common/scales/types";
-import { DataAccessor, IAccessors, IChartAssistSeries, IDataSeries, IGaugeThresholdsRendererConfig } from "../core/common/types";
+import { IAccessors, IChartAssistSeries, IDataSeries, IGaugeThresholdsRendererConfig } from "../core/common/types";
 import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
 import { VerticalBarAccessors } from "../renderers/bar/accessors/vertical-bar-accessors";
@@ -232,7 +232,7 @@ export class GaugeUtil {
      * @param mode The mode of the gauge
      * @param margin The margin to update
      *
-     * @returns The updated margin
+     * @returns {IAllAround<number>} The updated margin
      */
     public static getMarginForLabelClearance(gaugeConfig: IGaugeConfig, mode: GaugeMode, margin: IAllAround<number>): IAllAround<number> {
         if (mode === GaugeMode.Donut) {
