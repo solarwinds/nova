@@ -28,7 +28,6 @@ import assign from "lodash/assign";
         "[class.nui-wizard-step-header--selected]": "selected",
         "[class.nui-wizard-step-header--optional]": "optional",
         "[class.nui-wizard-step-header--completed]": "stepState === 'done'",
-        "[class.nui-wizard-step-header--disabled]": "!completed",
         "role": "tab",
     },
     encapsulation: ViewEncapsulation.None,
