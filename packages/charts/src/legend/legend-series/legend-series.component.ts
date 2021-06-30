@@ -1,6 +1,5 @@
 import {
     AfterContentInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Host, HostBinding, HostListener, Input, Optional, Output, ViewChild,
-    ViewEncapsulation,
 } from "@angular/core";
 import _isEmpty from "lodash/isEmpty";
 
@@ -93,20 +92,20 @@ export class LegendSeriesComponent implements AfterContentInit {
     @ViewChild("projectedDescription") private projectedDescription: ElementRef;
 
     @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--interactive`)
-    public get isInteractiveClassApplied() {
+    public get isInteractiveClassApplied(): boolean {
         return this._interactive;
     }
 
     @HostBinding(`class.${LEGEND_SERIES_CLASS_NAME}--horizontal`) public isHorizontalClassApplied = false;
 
     @HostBinding(`class.inverse`)
-    public get isActiveClassApplied() {
+    public get isActiveClassApplied(): boolean {
         return this._active && this.seriesRenderState !== RenderState.hidden;
     }
 
     private _seriesRenderState: RenderState;
     private _active = false;
-    private _interactive = false;
+    private _interactive: boolean;
 
     constructor(@Optional() @Host() private legend: LegendComponent) { }
 
@@ -116,7 +115,7 @@ export class LegendSeriesComponent implements AfterContentInit {
 
             this.icon = this.icon || this.legend.seriesIcon;
             this._active = this.legend.active;
-            this.interactive = this.legend.interactive;
+            this.interactive = this.interactive ?? this.legend.interactive;
             this.isHorizontalClassApplied = this.legend.orientation === LegendOrientation.horizontal;
         }
     }

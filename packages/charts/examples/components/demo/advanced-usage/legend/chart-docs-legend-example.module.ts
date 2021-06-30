@@ -49,6 +49,12 @@ const legendRoutes: Routes = [
     {
         path: "metadata",
         component: LegendMetadataExampleComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+            showThemeSwitcher: true,
+        },
     },
     {
         path: "visual-test",
