@@ -25,9 +25,9 @@ import moment from "moment/moment";
 export class LegendMetadataExampleComponent implements OnInit {
     public chart: Chart;
     public chartAssist: ChartAssist;
-    public avgSeries: Partial<IChartSeries<XYAccessors>>
+    public avgSeries: IChartSeries<XYAccessors>;
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements.
         this.chart = new Chart(areaGrid());
         // ChartAssist will use the preprocessor to stack the series' numeric values on the same progression domain
@@ -67,7 +67,8 @@ export class LegendMetadataExampleComponent implements OnInit {
             showInLegend: false,
             // preprocess is false to let the area processor know it is already formatted properly
             preprocess: false,
-        }
+        } as IChartSeries<XYAccessors>;
+
         // Here we assemble the complete chart series.
         let seriesSet: Partial<IChartSeries<IAccessors>>[] = dataSeries.map(d => ({
             ...d,
@@ -75,6 +76,7 @@ export class LegendMetadataExampleComponent implements OnInit {
             renderer,
             scales,
         }));
+
         // Combining both sets in an array of series
         seriesSet = [...seriesSet, this.avgSeries];
 
@@ -84,30 +86,30 @@ export class LegendMetadataExampleComponent implements OnInit {
 }
 
 function calculateAverageSeries(seriesSet: Partial<IDataSeries<XYAccessors>>[]): Partial<IDataSeries<XYAccessors>> {
-    let arrAverage = [];
-    const dataLength =  seriesSet[0].data?.length ?? 0;
-    const numOfSeries = seriesSet.length
-    const averageSeries = {
+    const averageSeries: Partial<IDataSeries<XYAccessors>> = {
         id: "average",
         name: "Average Speed",
         data: [],
     }
-    if(!seriesSet.length) {
+
+    const numSeries = seriesSet.length
+    if (numSeries === 0) {
         return averageSeries;
     }
+
+    const data: any[] = [];
+    const dataLength = seriesSet[0].data?.length ?? 0;
     for (let n = 0; n < dataLength; n++) {
         let avg = 0;
-        for (let i = 0; i < seriesSet.length; i++) {
+        for (let i = 0; i < numSeries; i++) {
             const series = seriesSet[i];
             avg += series?.data?.[n].value ?? 0;
         }
-        avg = avg/numOfSeries
-        arrAverage.push({ x: seriesSet[0].data?.[n].x, value: avg });
+        avg = avg / numSeries
+        data.push({ x: seriesSet[0].data?.[n].x, value: avg });
     }
-    return {
-        ...averageSeries,
-        data: arrAverage,
-    };
+
+    return { ...averageSeries, data };
 }
 
 /* Chart data */
