@@ -236,12 +236,10 @@ export class GaugeUtil {
      */
     public static getMarginForLabelClearance(gaugeConfig: IGaugeConfig, mode: GaugeMode, margin: IAllAround<number>): IAllAround<number> {
         if (mode === GaugeMode.Donut) {
-            const labelClearanceConfig = gaugeConfig.labels?.clearance;
-            const clearance = !isNil(labelClearanceConfig) ? labelClearanceConfig : DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT;
+            const clearance = gaugeConfig.labels?.clearance ?? DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT;
 
             // on the radial grid the maximum margin value is used for all margins, so we use the max value here
-            const maxMargin = Math.max(...Object.values(margin));
-            const marginValue = maxMargin > clearance ? maxMargin : clearance;
+            const marginValue = Math.max(...Object.values(margin), clearance);
 
             return {
                 top: marginValue,
