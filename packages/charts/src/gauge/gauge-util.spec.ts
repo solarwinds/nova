@@ -14,7 +14,7 @@ import {
     StandardGaugeThresholdId,
 } from "./constants";
 import { GaugeUtil } from "./gauge-util";
-import { IGaugeConfig } from "./types";
+import { IGaugeConfig, IGaugeLabelsConfig } from "./types";
 
 describe("GaugeUtil >", () => {
     let gaugeConfig: IGaugeConfig;
@@ -36,6 +36,7 @@ describe("GaugeUtil >", () => {
             value: 3,
             max: 10,
             thresholds: GaugeUtil.createStandardThresholdsConfig(2, 4),
+            labels: {},
         };
     });
 
@@ -67,10 +68,10 @@ describe("GaugeUtil >", () => {
             });
 
             it("should set a custom label formatter", () => {
-                gaugeConfig.labelFormatter = () => "test";
+                (gaugeConfig.labels as IGaugeLabelsConfig).formatter = () => "test";
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
                 const formattedValue = seriesSet[0]?.scales.r.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
-                expect(formattedValue).toEqual(gaugeConfig.labelFormatter(null));
+                expect(formattedValue).toEqual(gaugeConfig.labels?.formatter?.(null));
             });
         });
 
@@ -90,10 +91,10 @@ describe("GaugeUtil >", () => {
             });
 
             it("should set a custom label formatter", () => {
-                gaugeConfig.labelFormatter = () => "test";
+                (gaugeConfig.labels as IGaugeLabelsConfig).formatter = () => "test";
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Horizontal);
                 const formattedValue = seriesSet[0]?.scales.x.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
-                expect(formattedValue).toEqual(gaugeConfig.labelFormatter(null));
+                expect(formattedValue).toEqual(gaugeConfig.labels?.formatter?.(null));
             });
         });
 
@@ -113,21 +114,21 @@ describe("GaugeUtil >", () => {
             });
 
             it("should set a custom label formatter", () => {
-                gaugeConfig.labelFormatter = () => "test";
+                (gaugeConfig.labels as IGaugeLabelsConfig).formatter = () => "test";
                 const seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Vertical);
                 const formattedValue = seriesSet[0]?.scales.y.formatters?.[GAUGE_LABEL_FORMATTER_NAME_DEFAULT]?.("any old string");
-                expect(formattedValue).toEqual(gaugeConfig.labelFormatter(null));
+                expect(formattedValue).toEqual(gaugeConfig.labels?.formatter?.(null));
             });
         });
     });
 
-    describe("updateSeriesSet", () => {
+    describe("update", () => {
         it("should clamp the value to the max if it's larger than the max", () => {
             gaugeConfig.max = 10;
             const updatedGaugeConfig = { ...gaugeConfig, value: 15 };
 
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-            seriesSet = GaugeUtil.updateSeriesSet(seriesSet, updatedGaugeConfig);
+            seriesSet = GaugeUtil.update(seriesSet, updatedGaugeConfig);
             let series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
             expect(series?.data[0].value).toEqual(gaugeConfig.max);
             series = seriesSet.find(s => s.id === GAUGE_REMAINDER_SERIES_ID);
@@ -138,7 +139,7 @@ describe("GaugeUtil >", () => {
             const updatedGaugeConfig = { ...gaugeConfig, value: 5 };
 
             let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-            seriesSet = GaugeUtil.updateSeriesSet(seriesSet, updatedGaugeConfig);
+            seriesSet = GaugeUtil.update(seriesSet, updatedGaugeConfig);
             let series = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID);
 
             expect(series?.data[0].value).toEqual(updatedGaugeConfig.value);
@@ -152,31 +153,4 @@ describe("GaugeUtil >", () => {
             expect(series?.renderer instanceof DonutGaugeThresholdsRenderer).toEqual(true);
         });
     });
-
-    describe("createDefaultColorAccessor", () => {
-        it("should create a standard color accessor", () => {
-            const colorAccessor = GaugeUtil.createDefaultQuantityColorAccessor();
-
-            gaugeConfig.value = gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Warning].value as number - 1;
-            let seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfig, GaugeMode.Donut);
-            let quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
-
-            expect(colorAccessor(quantitySeries.data[0], 0, quantitySeries.data, quantitySeries)).toEqual(StandardGaugeColor.Ok);
-
-            gaugeConfig.value = gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Warning].value as number;
-            seriesSet = GaugeUtil.updateSeriesSet(seriesSet, gaugeConfig);
-            quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
-
-            expect(colorAccessor(quantitySeries.data[0], 0, quantitySeries.data, quantitySeries)).toEqual(
-                gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Warning].color);
-
-            gaugeConfig.value = gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Critical].value as number;
-            seriesSet = GaugeUtil.updateSeriesSet(seriesSet, gaugeConfig);
-            quantitySeries = seriesSet.find(s => s.id === GAUGE_QUANTITY_SERIES_ID) as IDataSeries<IAccessors<any>, any>;
-
-            expect(colorAccessor(quantitySeries.data[0], 0, quantitySeries.data, quantitySeries)).toEqual(
-                gaugeConfig.thresholds?.definitions[StandardGaugeThresholdId.Critical].color);
-        });
-    });
-
 });

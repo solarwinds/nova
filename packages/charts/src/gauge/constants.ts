@@ -1,9 +1,10 @@
+import { IAllAround } from "../core/grid/types";
+
 export const GAUGE_QUANTITY_SERIES_ID = "quantity";
 export const GAUGE_REMAINDER_SERIES_ID = "remainder";
 export const GAUGE_THRESHOLD_MARKERS_SERIES_ID = "threshold-markers";
 
 /**
- * @ignore
  * The visualization modes for a gauge
  */
 export enum GaugeMode {
@@ -16,9 +17,7 @@ export enum GaugeMode {
  * Standard thicknesses for the linear gauge
  */
 export enum StandardLinearGaugeThickness {
-    // Small may or may not be added as a standard thickness at some point
-    // Small = 5,
-    Medium = 10,
+    Small = 10,
     Large = 15,
 }
 
@@ -51,3 +50,18 @@ export enum StandardGaugeColor {
     /** Standard color for the value part of the gauge when the value has a critical status */
     Critical = "var(--nui-color-semantic-critical)",
 }
+
+/**
+ * Default donut gauge margin for label clearance
+ */
+export const DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT = 30;
+
+/**
+ * Default linear gauge margins for label clearance
+ */
+export const LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS: IAllAround<number> = {
+    top: 20,
+    right: 25,
+    bottom: 20,
+    left: 25,
+};

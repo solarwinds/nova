@@ -10,8 +10,9 @@ import { GAUGE_THRESHOLD_MARKER_CLASS } from "../constants";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { BarRenderer } from "./bar-renderer";
+
 /**
- * @ignore Default configuration for Linear Gauge Thresholds Renderer
+ * Default configuration for Linear Gauge Thresholds Renderer
  */
 export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresholdsRendererConfig = {
     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
@@ -19,7 +20,7 @@ export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresh
 };
 
 /**
- * @ignore Renderer for drawing threshold level indicators for gauges
+ * Renderer for drawing threshold level indicators for gauges
  */
 export class LinearGaugeThresholdsRenderer extends BarRenderer {
     /**

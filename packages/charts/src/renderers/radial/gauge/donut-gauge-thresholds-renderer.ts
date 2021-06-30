@@ -14,25 +14,25 @@ import { DonutGaugeRenderingUtil } from "./donut-gauge-rendering-util";
 import cloneDeep from "lodash/cloneDeep";
 
 /**
- * @ignore Default configuration for Radial Gauge Thresholds Renderer
+ * Default configuration for DonutGaugeThresholdsRenderer
  */
-export const DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG: IDonutGaugeThresholdsRendererConfig = {
+export const DEFAULT_DONUT_GAUGE_THRESHOLDS_RENDERER_CONFIG: IDonutGaugeThresholdsRendererConfig = {
     markerRadius: StandardGaugeThresholdMarkerRadius.Large,
     enabled: true,
 };
 
 /**
- * @ignore Renderer for drawing threshold level indicators for gauges
+ * Renderer for drawing threshold level markers for donut gauges
  */
 export class DonutGaugeThresholdsRenderer extends RadialRenderer {
     /**
      * Creates an instance of RadialGaugeThresholdsRenderer.
      * @param {IDonutGaugeThresholdsRendererConfig} [config]
-     * Renderer configuration object. Defaults to `DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG` constant value.
+     * Renderer configuration object. Defaults to `DEFAULT_DONUT_GAUGE_THRESHOLDS_RENDERER_CONFIG` constant value.
      */
     constructor(public config: IDonutGaugeThresholdsRendererConfig = {}) {
         super(config);
-        this.config = defaultsDeep(this.config, DEFAULT_RADIAL_GAUGE_THRESHOLDS_RENDERER_CONFIG);
+        this.config = defaultsDeep(this.config, DEFAULT_DONUT_GAUGE_THRESHOLDS_RENDERER_CONFIG);
     }
 
     /** See {@link Renderer#draw} */

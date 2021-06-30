@@ -1,7 +1,5 @@
-import { LinearScale } from "../core/common/scales/linear-scale";
-
-import { Formatter, IRadialScales, Scales } from "../core/common/scales/types";
-import { DataAccessor, IAccessors, IChartAssistSeries, IChartSeries, IDataSeries, IGaugeThresholdsRendererConfig } from "../core/common/types";
+import { IRadialScales, Scales } from "../core/common/scales/types";
+import { DataAccessor, IAccessors, IChartAssistSeries, IDataSeries, IGaugeThresholdsRendererConfig } from "../core/common/types";
 import { GAUGE_LABEL_FORMATTER_NAME_DEFAULT } from "../core/plugins/gauge/constants";
 import { HorizontalBarAccessors } from "../renderers/bar/accessors/horizontal-bar-accessors";
 import { VerticalBarAccessors } from "../renderers/bar/accessors/vertical-bar-accessors";
@@ -15,18 +13,32 @@ import { RadialRenderer } from "../renderers/radial/radial-renderer";
 import { radialScales } from "../renderers/radial/radial-scales";
 
 import {
+    DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT,
     GaugeMode,
     GAUGE_QUANTITY_SERIES_ID,
     GAUGE_REMAINDER_SERIES_ID,
     GAUGE_THRESHOLD_MARKERS_SERIES_ID,
+    LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS,
     StandardGaugeColor,
     StandardGaugeThresholdId,
+    StandardGaugeThresholdMarkerRadius,
 } from "./constants";
-import { IGaugeConfig, IGaugeThresholdDatum, IGaugeThresholdDef, GaugeThresholdDefs, IGaugeThresholdsData, IGaugeThresholdsConfig } from "./types";
+import { IGaugeConfig, IGaugeThresholdDatum, IGaugeThresholdDef, IGaugeThresholdsData, IGaugeThresholdsConfig } from "./types";
 import { linearGaugeRendererConfig } from "../renderers/bar/linear-gauge-renderer-config";
 import { Renderer } from "../core/common/renderer";
 import isUndefined from "lodash/isUndefined";
-import cloneDeep from "lodash/cloneDeep";
+import { ChartAssist } from "../core/chart-assists/chart-assist";
+import { radial } from "../renderers/radial/radial-preprocessor";
+import { stack } from "../renderers/bar/stacked-preprocessor";
+import { Chart } from "../core/chart";
+import isEmpty from "lodash/isEmpty";
+import { DonutGaugeLabelsPlugin } from "../core/plugins/gauge/donut-gauge-labels-plugin";
+import { LinearGaugeLabelsPlugin } from "../core/plugins/gauge/linear-gauge-labels-plugin";
+import isNil from "lodash/isNil";
+import { IAllAround } from "../core/grid/types";
+import { radialGrid } from "../renderers/radial/radial-grid-fn";
+import { XYGrid } from "../core/grid/xy-grid";
+import { linearGaugeGridConfig } from "../core/grid/config/linear-gauge-grid-config-fn";
 
 /**
  * @ignore
@@ -63,12 +75,67 @@ export interface IGaugeRenderingTools {
 }
 
 /**
- * @ignore
- * Convenience utility to simplify gauge usage
+ * Convenience utility for simplifying gauge usage
  */
 export class GaugeUtil {
     /** Value used for unifying the linear-style gauge visualization into a single bar stack */
     public static readonly DATA_CATEGORY = "gauge";
+
+    /**
+     * Creates a ChartAssist pre-configured based on the provided IGaugeConfig and GaugeMode
+     *
+     * @param gaugeConfig The gauge configuration
+     * @param mode The gauge mode
+     * @param labelsPlugin Optional labels plugin for direct control of label configuration. If not provided, a plugin will
+     *                     be generated automatically.
+     *
+     * @returns {ChartAssist} A pre-configured chart assist
+     */
+    public static createChartAssist(
+        gaugeConfig: IGaugeConfig,
+        mode: GaugeMode,
+        labelsPlugin?: DonutGaugeLabelsPlugin | LinearGaugeLabelsPlugin
+    ): ChartAssist {
+        const grid = (mode === GaugeMode.Donut) ? radialGrid() : new XYGrid(linearGaugeGridConfig(mode, gaugeConfig.linearThickness));
+        const chart = new Chart(grid);
+        const enableLabels = !isEmpty(gaugeConfig.thresholds?.definitions) && !gaugeConfig.thresholds?.disableMarkers;
+
+        if (mode === GaugeMode.Donut) {
+            if (enableLabels) {
+                chart.addPlugin(labelsPlugin ?? new DonutGaugeLabelsPlugin());
+
+                // apply label clearances
+                const labelClearanceConfig = gaugeConfig.labels?.clearance;
+                const clearance = !isNil(labelClearanceConfig) ? labelClearanceConfig : DONUT_GAUGE_LABEL_CLEARANCE_DEFAULT;
+                grid.config().dimension.margin = {
+                    top: clearance,
+                    right: clearance,
+                    bottom: clearance,
+                    left: clearance,
+                } as IAllAround<number>;
+            }
+
+            return new ChartAssist(chart, radial);
+        }
+
+        if (enableLabels) {
+            const flippedLabels = !!gaugeConfig.labels?.flipped;
+            chart.addPlugin(labelsPlugin ?? new LinearGaugeLabelsPlugin({ flippedLabels }));
+
+            // apply label clearance
+            let marginToAdjust: keyof IAllAround<number>;
+            if (mode === GaugeMode.Horizontal) {
+                marginToAdjust = flippedLabels ? "top" : "bottom";
+            } else {
+                marginToAdjust = flippedLabels ? "left" : "right";
+            }
+
+            const clearance = gaugeConfig.labels?.clearance ?? LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToAdjust];
+            grid.config().dimension.margin[marginToAdjust] = clearance;
+        }
+
+        return new ChartAssist(chart, stack);
+    }
 
     /**
      * Assembles a gauge series set with all of the standard scales, renderers, accessors, etc. needed for creating a gauge visualization
@@ -109,7 +176,7 @@ export class GaugeUtil {
      *
      * @returns {IChartAssistSeries<IAccessors>[]} The updated series set
      */
-    public static updateSeriesSet(seriesSet: IChartAssistSeries<IAccessors>[], gaugeConfig: IGaugeConfig): IChartAssistSeries<IAccessors>[] {
+    public static update(seriesSet: IChartAssistSeries<IAccessors>[], gaugeConfig: IGaugeConfig): IChartAssistSeries<IAccessors>[] {
         gaugeConfig.value = gaugeConfig.value ?? 0;
         gaugeConfig.max = gaugeConfig.max ?? 0;
         const clampedConfig = GaugeUtil.clampConfigToRange(gaugeConfig);
@@ -131,6 +198,8 @@ export class GaugeUtil {
 
             if (series.id === GAUGE_THRESHOLD_MARKERS_SERIES_ID) {
                 (series.renderer.config as IGaugeThresholdsRendererConfig).enabled = !clampedConfig.thresholds?.disableMarkers;
+                (series.renderer.config as IGaugeThresholdsRendererConfig).markerRadius =
+                    clampedConfig.thresholds?.markerRadius ?? StandardGaugeThresholdMarkerRadius.Large;
                 return { ...series, ...thresholdsData };
             }
 
@@ -159,11 +228,12 @@ export class GaugeUtil {
             const { quantityAccessors, remainderAccessors, scales, mainRenderer } = renderingAttributes;
 
             if (quantityAccessors.data) {
-                quantityAccessors.data.color = gaugeConfig.quantityColorAccessor || GaugeUtil.createDefaultQuantityColorAccessor();
+                quantityAccessors.data.color = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) =>
+                    dataSeries.activeThreshold ? dataSeries.activeThreshold.color : dataSeries.defaultColor;
             }
 
             if (remainderAccessors.data) {
-                remainderAccessors.data.color = gaugeConfig.remainderColorAccessor || (() => (StandardGaugeColor.Remainder));
+                remainderAccessors.data.color = () => gaugeConfig.remainderColor || StandardGaugeColor.Remainder;
             }
 
             if (series.id === GAUGE_QUANTITY_SERIES_ID) {
@@ -234,56 +304,49 @@ export class GaugeUtil {
      * @returns {IGaugeRenderingTools} The rendering tools for standard gauge attributes
      */
     public static generateRenderingTools(gaugeConfig: IGaugeConfig, mode: GaugeMode): IGaugeRenderingTools {
+        const thresholdsRendererConfig: IGaugeThresholdsRendererConfig = {
+            enabled: !gaugeConfig.thresholds?.disableMarkers,
+            markerRadius: gaugeConfig.thresholds?.markerRadius,
+        };
+        const labelFormatter = gaugeConfig.labels?.formatter;
+
         const renderingTools: Record<GaugeMode, IGaugeRenderingTools> = {
             [GaugeMode.Donut]: {
                 mainRendererFunction: () => new RadialRenderer(donutGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
+                thresholdsRendererFunction: () => new DonutGaugeThresholdsRenderer(thresholdsRendererConfig),
                 quantityAccessorFunction: () => new RadialAccessors(),
                 remainderAccessorFunction: () => new RadialAccessors(),
                 scaleFunction: () => {
                     const scales = radialScales();
-                    scales.r.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.labelFormatter;
+                    scales.r.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = labelFormatter;
                     return scales;
                 },
             },
             [GaugeMode.Horizontal]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(thresholdsRendererConfig),
                 quantityAccessorFunction: () => new HorizontalBarAccessors(),
                 remainderAccessorFunction: () => new HorizontalBarAccessors(),
                 scaleFunction: () => {
                     const scales = barScales({ horizontal: true });
-                    scales.x.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.labelFormatter;
+                    scales.x.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = labelFormatter;
                     return scales;
                 },
             },
             [GaugeMode.Vertical]: {
                 mainRendererFunction: () => new BarRenderer(linearGaugeRendererConfig()),
-                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer({ enabled: !gaugeConfig.thresholds?.disableMarkers }),
+                thresholdsRendererFunction: () => new LinearGaugeThresholdsRenderer(thresholdsRendererConfig),
                 quantityAccessorFunction: () => new VerticalBarAccessors(),
                 remainderAccessorFunction: () => new VerticalBarAccessors(),
                 scaleFunction: () => {
                     const scales = barScales();
-                    scales.y.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = gaugeConfig.labelFormatter;
+                    scales.y.formatters[GAUGE_LABEL_FORMATTER_NAME_DEFAULT] = labelFormatter;
                     return scales;
                 },
             },
         }
 
         return renderingTools[mode];
-    }
-
-    /**
-     * Convenience function for creating a standard gauge quantity color accessor
-     *
-     * @returns {DataAccessor} An accessor for determining the color to use for the quantity visualization
-     */
-    public static createDefaultQuantityColorAccessor(): DataAccessor {
-        // assigning to variable to prevent "Lambda not supported" error
-        const colorAccessor: DataAccessor = (data: any, i: number, series: number[], dataSeries: IDataSeries<IAccessors>) =>
-            dataSeries.activeThreshold ? dataSeries.activeThreshold.color : dataSeries.defaultColor;
-
-        return colorAccessor;
     }
 
     /**
@@ -313,6 +376,7 @@ export class GaugeUtil {
             },
             reversed: false,
             disableMarkers: false,
+            markerRadius: StandardGaugeThresholdMarkerRadius.Large,
         }
 
         return config;
@@ -359,6 +423,7 @@ export class GaugeUtil {
                     enabled: true,
                     category: GaugeUtil.DATA_CATEGORY,
                     value: gaugeConfig.max,
+                    color: "",
                 },
             ],
             activeThreshold,
