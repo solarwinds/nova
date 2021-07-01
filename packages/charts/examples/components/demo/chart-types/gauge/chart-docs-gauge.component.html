@@ -99,6 +99,14 @@
     displays labels for the threshold markers on mouse hover. If you'd like to provide a custom formatter for the labels, take a look at the
     <strong>label customization</strong> example on this page for details on how to do that.
 </p>
+<nui-message type="info" [allowDismiss]="false">
+    <strong>Note:</strong> If the display strings for your labels are too long to fit within the default grid margins, you can specify a custom clearance value
+    in pixels on the <code><a href="../interfaces/IGaugeLabelsConfig.html#clearance" target="_blank">clearance</a></code> property of the
+    <code><a href="../interfaces/IGaugeConfig.html" target="_blank">IGaugeConfig</a></code>'s
+    <code><a href="../interfaces/IGaugeConfig.html#labels" target="_blank">labels</a></code> property. This will ensure that the grid margins are at minimum
+    the clearance value specified. For the donut gauge, the clearance is applied to all margins; for the linear gauge, the clearance is applied only to the side
+    on which the labels appear.
+</nui-message>
 <h4>Reversed Thresholds</h4>
 <p>
     The default behavior of a Nova gauge is to treat quantity values that are greater than or equal to the threshold values as being triggered. If you want to

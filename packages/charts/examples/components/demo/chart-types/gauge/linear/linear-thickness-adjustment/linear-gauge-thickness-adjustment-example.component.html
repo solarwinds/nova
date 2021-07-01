@@ -10,7 +10,8 @@
                                 [maxValue]="gaugeConfig.max"
                                 customBoxWidth="75px"></nui-textbox-number>
         </nui-form-field>
-        <nui-checkbox class="d-block mb-5" [ngModel]="compact"
+        <nui-checkbox class="d-block mb-5"
+                      [ngModel]="compact"
                       (ngModelChange)="onCompactChange($event)"
                       i18n>
             Compact Thickness
@@ -18,6 +19,6 @@
     </div>
     <div class="demo__charts d-flex justify-content-between align-items-center">
         <nui-chart class="demo__vertical-chart" [chart]="verticalChartAssist.chart"></nui-chart>
-        <nui-chart class="demo__horizontal-chart" [chart]="horizontalChartAssist.chart"></nui-chart>
+        <nui-chart class="ml-5 demo__horizontal-chart" [chart]="horizontalChartAssist.chart"></nui-chart>
     </div>
 </div>

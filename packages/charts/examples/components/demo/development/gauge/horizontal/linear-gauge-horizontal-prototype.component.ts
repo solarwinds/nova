@@ -60,7 +60,6 @@ export class LinearGaugeHorizontalPrototypeComponent implements OnChanges, OnIni
         };
 
         // set clearance margin for threshold labels
-        const marginToUpdate = this.gaugeConfig.labels?.flipped ? "top" : "bottom";
-        gridConfig.dimension.margin[marginToUpdate] = LINEAR_GAUGE_LABEL_CLEARANCE_DEFAULTS[marginToUpdate];
+        gridConfig.dimension.margin = GaugeUtil.getMarginForLabelClearance(this.gaugeConfig, GaugeMode.Horizontal, gridConfig.dimension.margin);
     }
 }

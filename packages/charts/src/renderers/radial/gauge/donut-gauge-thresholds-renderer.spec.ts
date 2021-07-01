@@ -71,6 +71,22 @@ describe("DonutGaugeThresholdsRenderer >", () => {
             expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds?.definitions as GaugeThresholdDefs).length);
         });
 
+        it("should not render any threshold markers if disabled", () => {
+            renderer.config.enabled = false;
+            renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
+            thresholdMarkers = containers[RenderLayerName.data].selectAll("circle");
+            expect(thresholdMarkers.nodes().length).toEqual(0);
+        });
+
+        it("should use the configured marker radius", () => {
+            renderer.config.markerRadius = 123;
+            renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
+            thresholdMarkers = containers[RenderLayerName.data].selectAll("circle");
+            thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
+                expect(node.getAttribute("r")).toEqual("123");
+            });
+        });
+
         it("should position the threshold markers correctly", () => {
             thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
                 expect(node.getAttribute("cx")).toEqual(arcGenerator.centroid(markerData[i])[0].toString());
