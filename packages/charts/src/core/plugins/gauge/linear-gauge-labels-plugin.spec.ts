@@ -1,4 +1,3 @@
-import { linearGaugeGridConfig } from "../../grid/config/linear-gauge-grid-config";
 import { XYGridConfig } from "../../grid/config/xy-grid-config";
 import { XYGrid } from "../../grid/xy-grid";
 
@@ -11,6 +10,7 @@ import { D3Selection, IAccessors, IChartAssistSeries } from "../../common/types"
 
 import { GAUGE_LABELS_CONTAINER_CLASS } from "./constants";
 import { LinearGaugeLabelsPlugin } from "./linear-gauge-labels-plugin";
+import { linearGaugeGridConfig } from "../../../core/grid/config/linear-gauge-grid-config-fn";
 
 describe("LinearGaugeLabelsPlugin >", () => {
     let chart: Chart;
@@ -69,17 +69,9 @@ describe("LinearGaugeLabelsPlugin >", () => {
             });
         });
 
-        it("should auto-adjust the grid margins according to the configured clearance value", () => {
-            const margin = gridConfig.dimension.margin;
-            expect(margin.top).toEqual(0);
-            expect(margin.right).toEqual(0);
-            expect(margin.bottom).toEqual(plugin.config.clearance?.bottom as number);
-            expect(margin.left).toEqual(0);
-        });
-
         describe("with flipped labels", () => {
             beforeEach(() => {
-                plugin.config.flipLabels = true;
+                plugin.config.flippedLabels = true;
                 // reset the margins to accommodate the label direction change
                 gridConfig.dimension.margin = {
                     top: 0,
@@ -103,14 +95,6 @@ describe("LinearGaugeLabelsPlugin >", () => {
                     expect(node.style.textAnchor).toEqual("middle");
                     expect(node.style.dominantBaseline).toEqual("text-after-edge");
                 });
-            });
-
-            it("should auto-adjust the grid margins according to the configured clearance value", () => {
-                const margin = gridConfig.dimension.margin;
-                expect(margin.top).toEqual(plugin.config.clearance?.top as number);
-                expect(margin.right).toEqual(0);
-                expect(margin.bottom).toEqual(0);
-                expect(margin.left).toEqual(0);
             });
         });
     });
@@ -140,17 +124,9 @@ describe("LinearGaugeLabelsPlugin >", () => {
             });
         });
 
-        it("should auto-adjust the grid margins according to the configured clearance value", () => {
-            const margin = gridConfig.dimension.margin;
-            expect(margin.top).toEqual(0);
-            expect(margin.right).toEqual(plugin.config.clearance?.right as number);
-            expect(margin.bottom).toEqual(0);
-            expect(margin.left).toEqual(0);
-        });
-
         describe("with flipped labels", () => {
             beforeEach(() => {
-                plugin.config.flipLabels = true
+                plugin.config.flippedLabels = true
                 // reset the margins to accommodate the label direction change
                 gridConfig.dimension.margin = {
                     top: 0,
@@ -174,14 +150,6 @@ describe("LinearGaugeLabelsPlugin >", () => {
                     expect(node.style.textAnchor).toEqual("end");
                     expect(node.style.dominantBaseline).toEqual("central");
                 });
-            });
-
-            it("should auto-adjust the grid margins according to the configured clearance value", () => {
-                const margin = gridConfig.dimension.margin;
-                expect(margin.top).toEqual(0);
-                expect(margin.right).toEqual(0);
-                expect(margin.bottom).toEqual(0);
-                expect(margin.left).toEqual(plugin.config.clearance?.left as number);
             });
         });
     });

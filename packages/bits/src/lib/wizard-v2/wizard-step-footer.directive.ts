@@ -1,7 +1,7 @@
 import {Directive, TemplateRef} from "@angular/core";
 
 @Directive({
-    selector: "[wizardStepFooter]",
+    selector: "[nuiWizardStepFooter]",
 })
 export class WizardStepFooterDirective {
     constructor(public template: TemplateRef<any>) { }

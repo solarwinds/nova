@@ -107,6 +107,20 @@ describe("LegendSeries >", () => {
                 fixture.detectChanges();
                 expect(hostElement.classList).toContain(interactiveClass);
             });
+
+            it("should not be overridden when the legend is interactive", () => {
+                prepareComponent(new MockLegendComponent({ interactive: true }));
+                series.interactive = false;
+                fixture.detectChanges();
+                expect(hostElement.classList).not.toContain(interactiveClass);
+            });
+
+            it("should not be overridden when the legend is not interactive", () => {
+                prepareComponent(new MockLegendComponent({ interactive: false }));
+                series.interactive = true;
+                fixture.detectChanges();
+                expect(hostElement.classList).toContain(interactiveClass);
+            });
         });
 
         describe("horizontal class", () => {

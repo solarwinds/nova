@@ -11,6 +11,7 @@ import {
     NuiIconModule,
     NuiMessageModule,
     NuiTextboxModule,
+    SrlcStage,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
@@ -21,12 +22,17 @@ import { GaugeVisualTestComponent } from "./visual-test/gauge-visual-test.compon
 import { HorizontalGaugeTesterComponent } from "./visual-test/horizontal/horizontal-gauge-tester.component";
 import { DonutGaugeTesterComponent } from "./visual-test/donut/donut-gauge-tester.component";
 import { VerticalGaugeTesterComponent } from "./visual-test/vertical/vertical-gauge-tester.component";
-import { DonutGaugeBasicExampleComponent } from "./donut-basic/donut-gauge-basic-example.component";
-import { DonutGaugeWithContentExampleComponent } from "./donut-with-content/donut-gauge-with-content-example.component";
-import { DonutGaugeWithThresholdMarkersExampleComponent } from "./donut-with-threshold-markers/donut-gauge-with-threshold-markers-example.component";
-import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut-with-threshold-toggling/donut-gauge-with-threshold-toggling-example.component";
-import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels-example.component";
-import { DonutGaugeWithMarkerTogglingExampleComponent } from "./donut-with-marker-toggling/donut-gauge-with-marker-toggling-example.component";
+import { DonutGaugeBasicExampleComponent } from "./donut/donut-basic/donut-gauge-basic-example.component";
+import { DonutGaugeWithContentExampleComponent } from "./donut/donut-with-content/donut-gauge-with-content-example.component";
+import { DonutGaugeWithThresholdsExampleComponent } from "./donut/donut-with-thresholds/donut-gauge-with-thresholds-example.component";
+import { DonutGaugeWithThresholdTogglingExampleComponent } from "./donut/donut-with-threshold-toggling/donut-gauge-with-threshold-toggling-example.component";
+import { DonutGaugeWithCustomThresholdLabelsExampleComponent } from "./donut/donut-with-custom-threshold-labels/donut-gauge-with-custom-threshold-labels-example.component";
+import { HorizontalGaugeBasicExampleComponent } from "./linear/horizontal-basic/horizontal-gauge-basic-example.component";
+import { VerticalGaugeBasicExampleComponent } from "./linear/vertical-basic/vertical-gauge-basic-example.component";
+import { DonutGaugeWithoutThresholdMarkersExampleComponent } from "./donut/donut-without-threshold-markers/donut-gauge-without-threshold-markers-example.component";
+import { DonutGaugeWithThresholdMarkerTogglingExampleComponent } from "./donut/donut-with-threshold-marker-toggling/donut-gauge-with-threshold-marker-toggling-example.component";
+import { LinearGaugeWithThresholdsExampleComponent } from "./linear/linear-with-thresholds/linear-gauge-with-thresholds-example.component";
+import { LinearGaugeThicknessAdjustmentExampleComponent } from "./linear/linear-thickness-adjustment/linear-gauge-thickness-adjustment-example.component";
 
 const exampleRoutes: Routes = [
     {
@@ -34,6 +40,9 @@ const exampleRoutes: Routes = [
         component: ChartDocsGaugeComponent,
         data: {
             showThemeSwitcher: true,
+            "srlc": {
+                "stage": SrlcStage.ga,
+            },
         },
     },
     {
@@ -55,8 +64,8 @@ const exampleRoutes: Routes = [
         },
     },
     {
-        path: "donut-with-threshold-markers",
-        component: DonutGaugeWithThresholdMarkersExampleComponent,
+        path: "donut-with-content",
+        component: DonutGaugeWithContentExampleComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -64,8 +73,80 @@ const exampleRoutes: Routes = [
         },
     },
     {
-        path: "donut-with-content",
-        component: DonutGaugeWithContentExampleComponent,
+        path: "donut-with-custom-labels",
+        component: DonutGaugeWithCustomThresholdLabelsExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "donut-without-markers",
+        component: DonutGaugeWithoutThresholdMarkersExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "donut-with-marker-toggling",
+        component: DonutGaugeWithThresholdMarkerTogglingExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "donut-with-thresholds",
+        component: DonutGaugeWithThresholdsExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "donut-with-threshold-toggling",
+        component: DonutGaugeWithThresholdTogglingExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "horizontal-basic",
+        component: HorizontalGaugeBasicExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "vertical-basic",
+        component: VerticalGaugeBasicExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "linear-with-thresholds",
+        component: LinearGaugeWithThresholdsExampleComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "linear-thickness",
+        component: LinearGaugeWithThresholdsExampleComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -78,14 +159,19 @@ const exampleRoutes: Routes = [
     declarations: [
         ChartDocsGaugeComponent,
         GaugeVisualTestComponent,
+        HorizontalGaugeBasicExampleComponent,
+        LinearGaugeWithThresholdsExampleComponent,
         HorizontalGaugeTesterComponent,
         DonutGaugeTesterComponent,
         DonutGaugeBasicExampleComponent,
         DonutGaugeWithContentExampleComponent,
         DonutGaugeWithCustomThresholdLabelsExampleComponent,
-        DonutGaugeWithMarkerTogglingExampleComponent,
-        DonutGaugeWithThresholdMarkersExampleComponent,
+        DonutGaugeWithThresholdMarkerTogglingExampleComponent,
+        DonutGaugeWithoutThresholdMarkersExampleComponent,
+        DonutGaugeWithThresholdsExampleComponent,
         DonutGaugeWithThresholdTogglingExampleComponent,
+        VerticalGaugeBasicExampleComponent,
+        LinearGaugeThicknessAdjustmentExampleComponent,
         VerticalGaugeTesterComponent,
     ],
     imports: [

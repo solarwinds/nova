@@ -40,6 +40,10 @@
             {
                 "title": "Spark",
                 "file": "../chart-types/spark.md"
+            },
+            {
+                "title": "Gauge",
+                "file": "../chart-types/gauge.md"
             }
         ]
     },
