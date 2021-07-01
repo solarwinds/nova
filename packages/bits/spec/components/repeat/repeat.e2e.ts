@@ -1,5 +1,4 @@
-import {browser, by, element, ElementFinder, Key} from "protractor";
-
+import { by, element, ElementFinder, Key } from "protractor";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
 import { RepeatAtom, TabHeadingAtom } from "../public_api";
@@ -11,6 +10,9 @@ describe("USERCONTROL Repeat", () => {
     let radioSelectList: RepeatAtom;
     let radioSelectListNonRequiredSelection: RepeatAtom;
     let vScrollTabHeading: TabHeadingAtom;
+    let vScrollTabHeadingNoContent: TabHeadingAtom;
+
+    const colorSelection = element(by.id("nui-demo-multiselect-values"));
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("repeat/repeat-test");
@@ -19,6 +21,7 @@ describe("USERCONTROL Repeat", () => {
         singleSelectList = Atom.find(RepeatAtom, "nui-demo-single-repeat");
         radioSelectList = Atom.find(RepeatAtom, "nui-demo-radio-repeat");
         vScrollTabHeading = await Atom.find(TabHeadingGroupAtom, "repeat-test-tab-group").getTabByText("Repeat VScroll");
+        vScrollTabHeadingNoContent = await Atom.find(TabHeadingGroupAtom, "repeat-test-tab-group").getTabByText("No Content");
         radioSelectListNonRequiredSelection = Atom.find(RepeatAtom, "nui-demo-radio-non-required-selection-repeat");
     });
 
@@ -26,17 +29,8 @@ describe("USERCONTROL Repeat", () => {
         await vScrollTabHeading.click();
         const vScrollList = Atom.find(RepeatAtom, "repeat-test-vscroll");
         expect(parseInt(await vScrollList.getVScrollViewportHeight(), 10)).toBeLessThan(parseInt(await vScrollList.getVScrollViewportContentHeight(), 10));
-    });
-
-    it("should contain 6 items", async () => {
-        expect(await multiSelectList.itemCount()).toEqual(6);
-    });
-
-    it("should display given item in proper place", async () => {
-        expect(await multiSelectList.getItem(0).getText()).toEqual("blue");
-        expect(await multiSelectList.getItem(1).getText()).toEqual("green");
-        expect(await multiSelectList.getItem(2).getText()).toEqual("yellow");
-        expect(await multiSelectList.getItem(5).getText()).toEqual("black");
+        // Return to initial state
+        await vScrollTabHeadingNoContent.click();
     });
 
     it("should apply the specified padding", async () => {
@@ -45,68 +39,63 @@ describe("USERCONTROL Repeat", () => {
         expect(await singleSelectList.isCompact()).toEqual(true);
     });
 
-    it("should not be 'striped'", async () => {
-        expect(await multiSelectList.isStriped()).toEqual(false);
-    });
-
-    it("should have the correct header", async () => {
-        expect(await multiSelectList.getHeaderText()).toBe("repeat header from template");
-    });
-
-    it("should apply the correct template", async () => {
-        const blueColorItem = multiSelectList.getItem(0);
-        expect(await blueColorItem.getText()).toEqual("blue");
-    });
-
     it("should allow multi selection of items", async () => {
         await multiSelectList.selectCheckbox(2);
         await multiSelectList.selectCheckbox(5);
-        expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[]");
+        expect(await colorSelection.getText()).toBe("[]");
         await multiSelectList.selectCheckbox(0);
-        expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\": \"blue\" } ]");
-    });
+        expect(await colorSelection.getText()).toBe("[ { \"color\": \"blue\" } ]");
 
-    it("should not allow selection change for disabled items", async () => {
-        const multiSelectListDisabledItems = Atom.find(RepeatAtom, "nui-demo-multi-repeat-disabled-items");
-        expect(await multiSelectListDisabledItems.getCheckbox(0).isDisabled()).toBe(true);
-        expect(await multiSelectListDisabledItems.getCheckbox(4).isDisabled()).toBe(true);
+        // Return to initial state
+        await multiSelectList.selectCheckbox(2);
+        await multiSelectList.selectCheckbox(5);
+        await multiSelectList.selectCheckbox(0);
+        expect(await colorSelection.getText()).toBe("[ { \"color\": \"yellow\" }, { \"color\": \"black\" } ]");
+        await colorSelection.click();
     });
 
     describe("keyboard navigation", () => {
-        beforeEach(async () => {
-            await browser.refresh();
-            await Helpers.pressKey(Key.TAB);
-        });
-
         it("should allow check/uncheck items using ENTER", async () => {
+            await Helpers.pressKey(Key.TAB);
             await Helpers.pressKey(Key.ENTER);
             multiSelectList.getCheckbox(0);
-            expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
+            expect(await colorSelection.getText()).toBe("[ { \"color\":" +
                 " \"yellow\" }, { \"color\": \"black\" }, { \"color\": \"blue\" } ]");
 
             await Helpers.pressKey(Key.ENTER);
-            expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
+            expect(await colorSelection.getText()).toBe("[ { \"color\":" +
                 " \"yellow\" }, { \"color\": \"black\" } ]");
+
+            // Return to initial state
+            await colorSelection.click();
         });
 
         it("should allow check/uncheck items using SPACE", async () => {
+            await Helpers.pressKey(Key.TAB);
             await Helpers.pressKey(Key.SPACE);
             multiSelectList.getCheckbox(0);
-            expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
+            expect(await colorSelection.getText()).toBe("[ { \"color\":" +
                 " \"yellow\" }, { \"color\": \"black\" }, { \"color\": \"blue\" } ]");
-
             await Helpers.pressKey(Key.SPACE);
-            expect(await element(by.id("nui-demo-multiselect-values")).getText()).toBe("[ { \"color\":" +
+            expect(await colorSelection.getText()).toBe("[ { \"color\":" +
                 " \"yellow\" }, { \"color\": \"black\" } ]");
+
+            // Return to initial state
+            await colorSelection.click();
         });
     });
 
     it("should allow single selection of items", async () => {
-        expect(await element(by.id("nui-demo-singleselect-value")).getText()).toContain("Declan McGregor");
+        const rowSelection = element(by.id("nui-demo-singleselect-value"));
+        expect(await rowSelection.getText()).toContain("Declan McGregor");
         await singleSelectList.selectRow(0);
-        expect(await element(by.id("nui-demo-singleselect-value")).getText()).toContain("Jo Smith");
+        expect(await rowSelection.getText()).toContain("Jo Smith");
         await singleSelectList.selectRow(4);
-        expect(await element(by.id("nui-demo-singleselect-value")).getText()).toContain("Catriona Kildare");
+        expect(await rowSelection.getText()).toContain("Catriona Kildare");
+
+        // Return to initial state
+        await singleSelectList.selectRow(2);
+        expect(await rowSelection.getText()).toContain("Declan McGregor");
     });
 
     describe("should work properly with disabled items", async () => {
@@ -130,11 +119,16 @@ describe("USERCONTROL Repeat", () => {
     });
 
     it("should allow radio selection of items", async () => {
-        expect(await element(by.id("nui-demo-radioselect-value")).getText()).toContain("green");
+        const radioSelection = element(by.id("nui-demo-radioselect-value"));
+        expect(await radioSelection.getText()).toContain("green");
         await radioSelectList.selectRadioRow(3);
-        expect(await element(by.id("nui-demo-radioselect-value")).getText()).toContain("cyan");
+        expect(await radioSelection.getText()).toContain("cyan");
         await radioSelectList.selectRadioRow(5);
-        expect(await element(by.id("nui-demo-radioselect-value")).getText()).toContain("black");
+        expect(await radioSelection.getText()).toContain("black");
+
+        // Return to initial state
+        await radioSelectList.selectRadioRow(1);
+        expect(await radioSelection.getText()).toContain("green");
     });
 
     it("should detect itemSource change and display new items", async () => {
@@ -142,5 +136,4 @@ describe("USERCONTROL Repeat", () => {
         await element(by.id("add-color")).click();
         expect(await radioSelectList.getItems().last().getText()).toContain("new color");
     });
-
 });
