@@ -9,6 +9,7 @@ import { ISelection, ISelectorState } from "../../services/public-api";
 import { SelectionType } from "../selector/public-api";
 import { SelectorService } from "../selector/selector.service";
 import { ISortedItem, SorterDirection } from "../sorter/public-api";
+import { ICON_CELL_WIDTH_PX } from "./constants";
 
 import { TableResizePhase } from "./table-resizer/table-resizer.directive";
 
@@ -55,8 +56,6 @@ export interface ITableSortingState {
 
 /** @ignore */
 const MIN_COLUMN_WIDTH_PX = 46;
-/** @ignore */
-const ICON_CELL_WIDTH_PX = 40;
 /** @ignore */
 const SELECTABLE_CELL_WIDTH_PX = 75;
 
@@ -340,7 +339,7 @@ export class TableStateHandlerService {
                 return this.state.columnsTypes[columnIndex] === "icon";
             })
             .forEach(column => {
-                this.state.columnsWidths[column] = { width: ICON_CELL_WIDTH_PX };
+                this.state.columnsWidths[column] = { width: ICON_CELL_WIDTH_PX, fixed: true };
             });
 
         // "selectable" adding one more column with 75px width which is not in the "this.state.columns", so we need take it to the consideration

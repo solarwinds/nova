@@ -86,12 +86,10 @@ export class TableCellDirective extends CdkCell implements OnInit, OnDestroy, On
         this.tableStateHandlerService.columnWidthSubject.subscribe(() => {
             const columnWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
 
-            if (columnWidth > 45) {
-                if (this.tableStateHandlerService.getColumnWidthFixed(this.columnDef.name)) {
-                    elem.style.width =
-                        elem.style.maxWidth =
-                        elem.style.minWidth = columnWidth + "px";
-                }
+            if (this.tableStateHandlerService.getColumnWidthFixed(this.columnDef.name)) {
+                elem.style.width =
+                    elem.style.maxWidth =
+                    elem.style.minWidth = columnWidth + "px";
             }
         });
     }
