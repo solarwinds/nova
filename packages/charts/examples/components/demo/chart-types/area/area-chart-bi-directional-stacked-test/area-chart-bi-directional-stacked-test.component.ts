@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import {
     AreaAccessors,
     AreaRenderer,
@@ -19,10 +19,13 @@ import {
 import moment from "moment/moment";
 
 @Component({
-    selector: "area-chart-bi-directional-stacked-example",
-    templateUrl: "./area-chart-bi-directional-stacked-example.component.html",
+    selector: "area-chart-bi-directional-stacked-test",
+    templateUrl: "./area-chart-bi-directional-stacked-test.component.html",
 })
-export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
+export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
+    @Input()
+    public inverted = false; // cave mode!
+
     public chartTop: Chart;
     public chartAssistTop: ChartAssist;
 
@@ -64,15 +67,15 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
         const xScale = new TimeScale();
 
         // In case of an area chart, the scale definitions are flexible.
-        // This example demonstrates a scenario with time on the X scale and a numeric value on the Y scale.
+        // This test demonstrates a scenario with time on the X scale and a numeric value on the Y scale.
         const scalesTop: IXYScales = {
             x: xScale,
-            y: new LinearScale(),
+            y: this.inverted ? new LinearScale().reverse() : new LinearScale(),
         };
 
         const scalesBottom: IXYScales = {
             x: xScale,
-            y: new LinearScale().reverse(),
+            y: this.inverted ? new LinearScale() : new LinearScale().reverse(),
         };
 
         // Here we assemble the complete chart series.

@@ -12,7 +12,7 @@ import { BandScale } from "../common/scales/band-scale";
 import { domain } from "../common/scales/helpers/domain";
 import { LinearScale } from "../common/scales/linear-scale";
 import { TimeScale } from "../common/scales/time-scale";
-import { DomainCalculator, IScale, ScalesIndex } from "../common/scales/types";
+import { DomainCalculator, IScale, isDomainWithTicksCalculator, ScalesIndex } from "../common/scales/types";
 import { InteractionLabelPlugin } from "../plugins/interaction/interaction-label-plugin";
 import { InteractionLinePlugin } from "../plugins/interaction/interaction-line-plugin";
 import { MouseInteractiveAreaPlugin } from "../plugins/mouse-interactive-area-plugin";
@@ -659,7 +659,7 @@ describe("XYGrid >", () => {
             expect(grid?.scales?.y?.list[0]?.__domainCalculatedWithTicks).toBeFalsy();
         });
 
-        it("should not set the scales domain calculator to getAutomaticDomainWithTicks if the domain calculator is not getAutomaticDomain", () => {
+        it("should wrap the the scales domain calculator to getAutomaticDomainWithTicks if the domain calculator is not getAutomaticDomain", () => {
             config.axis.left.gridTicks = true;
             const yScale = new LinearScale();
             // @ts-ignore
@@ -671,7 +671,7 @@ describe("XYGrid >", () => {
                 },
 
             };
-            expect(grid?.scales?.y?.list[0]?.__domainCalculatedWithTicks).toBeFalsy();
+            expect(isDomainWithTicksCalculator(yScale.domainCalculator)).toBe(true);
         });
     });
 
