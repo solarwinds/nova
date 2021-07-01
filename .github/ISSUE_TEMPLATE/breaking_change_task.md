@@ -12,7 +12,7 @@ At what major version of Nova was this part of the API deprecated?
 **Description of the Change (required)**
 Describe the proposed breaking change.
 
-**Replacement (optional)**
+**Replacement (required)**
 What part of the existing API serves as a replacement for the deprecated API?
 
 **Additional context (optional)**
