@@ -1,6 +1,7 @@
 import { NgZone } from "@angular/core";
 
 import { SelectorService } from "../selector/selector.service";
+import { ICON_CELL_WIDTH_PX } from "./constants";
 
 import { TableSpecHelpers } from "./table-spec-helpers/table-spec-helpers";
 import { AlignmentClasses, TableStateHandlerService } from "./table-state-handler.service";
@@ -119,14 +120,13 @@ describe("services >", () => {
 
             it("should take in consideration non-resizable columns of type 'icon' when calculating columns widths", () => {
                 const expectedWidthConsideringBorder = 159;
-                const iconTypeColumnWidth = 40;
                 serviceInstance.tableColumns = ["first", "second"];
                 serviceInstance.columnType = {columnName: "first", columnType: "icon"};
                 serviceInstance.tableParentWidth = 200;
                 serviceInstance.calculateWidthsOfColumns();
                 const firstColumnWidth = serviceInstance.getColumnWidth("first");
                 const secondColumnWidth = serviceInstance.getColumnWidth("second");
-                expect(firstColumnWidth).toEqual(iconTypeColumnWidth);
+                expect(firstColumnWidth).toEqual(ICON_CELL_WIDTH_PX);
                 expect(secondColumnWidth).toEqual(expectedWidthConsideringBorder);
             });
         });
