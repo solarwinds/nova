@@ -2,7 +2,6 @@ import { forwardRef, Inject, Injectable, NgZone, TrackByFunction } from "@angula
 import _includes from "lodash/includes";
 import _isNil from "lodash/isNil";
 import _isNumber from "lodash/isNumber";
-import {ReplaySubject} from "rxjs";
 import { Subject } from "rxjs";
 
 import { ISelection, ISelectorState } from "../../services/public-api";
@@ -25,7 +24,7 @@ export const enum DropAlignment {
 
 export interface ITableState {
     columnAlignments: { [key: string]: string };
-    columnsWidths: { [key: string]: { width: number, fixed?: boolean } };
+    columnsWidths: { [key: string]: { width: number, autoCalculated?: boolean } };
     columns: string[];
     sortedColumn?: ISortedItem;
     widthCalculationPerformed: boolean;
@@ -73,7 +72,7 @@ export class TableStateHandlerService {
     public dataSourceChanged = new Subject<Array<any>>();
     public selectionChanged = new Subject<ISelection>();
     public selectableChanged = new Subject<boolean>();
-    public columnWidthSubject = new ReplaySubject<void>(1);
+    public columnWidthSubject = new Subject<void>();
     public stickyHeaderChangedSubject = new Subject<void>();
 
     private _reorderable: boolean;
@@ -252,10 +251,6 @@ export class TableStateHandlerService {
         return this._selection;
     }
 
-    public getColumnWidthFixed(column: string): boolean {
-        return this.state.columnsWidths[column].fixed || false;
-    }
-
     get trackBy(): TrackByFunction<any> {
         return this._trackBy || DEFAULT_TRACK_BY;
     }
@@ -286,9 +281,8 @@ export class TableStateHandlerService {
      * @param width The new width of the column
      *
      */
-    public setColumnWidth(column: string, width: number, fixed = false): void {
-        this.state.columnsWidths[column] = { width, fixed };
-
+    public setColumnWidth(column: string, width: number): void {
+        this.state.columnsWidths[column] = { width };
         this.columnWidthSubject.next();
     }
 
