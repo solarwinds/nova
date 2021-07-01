@@ -177,6 +177,7 @@
 </nui-example-wrapper>
 
 <h2>Bi-Directional</h2>
+<h3>Single Metric Per Direction</h3>
 <p>
     To display a progression of two correlated values on opposite sides of a baseline, you can implement
     a data accessor that flips the values of one series from positive to negative. In this example, the
@@ -189,8 +190,29 @@
     <area-chart-bi-directional-example></area-chart-bi-directional-example>
 </nui-example-wrapper>
 
-<!--<h2>Bi-Directional stacked</h2>-->
-<!--<nui-example-wrapper filenamePrefix="area-chart-bi-directional-stacked-example"-->
-<!--                     exampleTitle="Bi-Directional Stacked">-->
-<!--    <area-chart-bi-directional-stacked-example></area-chart-bi-directional-stacked-example>-->
-<!--</nui-example-wrapper>-->
+<h3>Stacked</h3>
+<p>
+    If you need to visualize more than one metric per direction, you can set up a bi-directional stacked chart.
+    The following example demonstrates this by creating two chart instances, each with its own data but acting
+    as a single visualization. The series on the bottom chart are stacked in a downward direction by invoking
+    the <code><a href="../classes/LinearScale.html#reverse" target="_blank">reverse</a></code> method on the chart's y-axis
+    <code><a href="../classes/LinearScale.html" target="_blank">LinearScale</a></code>. For additional details, take a look at
+    the code and comments in the example's source expander.
+</p>
+<nui-example-wrapper filenamePrefix="area-chart-bi-directional-stacked-example"
+                     exampleTitle="Bi-Directional Stacked">
+    <area-chart-bi-directional-stacked-example></area-chart-bi-directional-stacked-example>
+</nui-example-wrapper>
+
+<h3>Inverted Stacked</h3>
+<p>
+    To invert the direction of each stack, you can invoke the
+    <code><a href="../classes/LinearScale.html#reverse" target="_blank">reverse</a></code> method on the y-axis
+    <code><a href="../classes/LinearScale.html" target="_blank">LinearScale</a></code> of the top chart
+    instead of the one on the bottom chart. The following example demonstrates
+    how to do this. For details, take a look at the code and comments in the example's source expander.
+</p>
+<nui-example-wrapper filenamePrefix="area-chart-bi-directional-stacked-inverted-example"
+                     exampleTitle="Inverted Bi-Directional Stacked">
+    <area-chart-bi-directional-stacked-inverted-example></area-chart-bi-directional-stacked-inverted-example>
+</nui-example-wrapper>
