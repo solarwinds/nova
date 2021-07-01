@@ -30,18 +30,15 @@ export class TableColumnDefDirective extends CdkColumnDef implements OnInit, OnC
     }
 
     ngOnInit() {
-        if (this.columnWidth) {
-            this.tableStateHandlerService.setColumnWidth(this.name, this.columnWidth);
-        }
-
         if (this.type === "icon") {
             this.tableStateHandlerService.setAlignment(this.name, "align-center");
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.columnWidth && !changes.columnWidth.firstChange) {
-            this.tableStateHandlerService.setColumnWidth(this.name, changes.columnWidth.currentValue);
+        if (changes.columnWidth) {
+            this.tableStateHandlerService.setColumnWidth(this.name, changes.columnWidth.currentValue, !!this.columnWidth);
         }
+
     }
 }

@@ -14,3 +14,4 @@ export * from "./repeat-drag-preview/repeat-drag-preview.example.component";
 export * from "./repeat-reorder-item-config/repeat-reorder-item-config-example.component";
 export * from "./repeat-virtual-scroll/repeat-virtual-scroll.component";
 export * from "./repeat-test/repeat-test.component";
+export * from "./repeat-visual-test/repeat-visual-test.component";
