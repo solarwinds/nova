@@ -12,12 +12,13 @@ to ensure the smoothest possible transition between major Nova versions.
 
 ## Our Deprecation Guidelines
 
-1. Create a new [ticket in github](https://github.com/solarwinds/nova/issues/new?assignees=&labels=&template=deprecation_report.md&title=) and fill in all the required information.
-2. Inside a jsdoc style comment above the depreacted item
-    - use <code>@deprecated</code>
-    - state the version in which the deprecation occurred
-    - Include the recommended non-deprecated replacement
-    - and the github id for the ticket you just created.
+1. Create a new [breaking change](https://github.com/solarwinds/nova/issues/new?assignees=&labels=&template=breaking_change_task.md&title=) ticket in github and fill in all the required information.
+2. Inside a jsdoc style comment above the deprecated item
+    - Use the <code>@deprecated</code> tag
+    - State the major version in which the deprecation occurred
+    - Include the recommended non-deprecated replacement that consumers can use instead
+    - Include the github id for the ticket you just created
+    - If the entity being deprecated is a component or directive, add a console log warning about the deprecation in the entity's constructor along with the recommended alternative
     
     Example of jsdoc comment:
     <code>/** @deprecated As of Nova v11, use 'toggle' method instead. Removal: GH-1 */</code>
