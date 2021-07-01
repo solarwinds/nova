@@ -180,7 +180,8 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             if (!fixedWidth) {
                 // Note: Assigning data cell width to the corresponding header column
                 // (using the style width if specified; otherwise, falling back to the offsetWidth)
-                const cellWidth = (parseInt(cell.style.width, 10) || cell.offsetWidth) -1 + "px";
+                // Subtracting a magical 1 to account for the cell border
+                const cellWidth = (parseInt(cell.style.width, 10) || cell.offsetWidth) - 1 + "px";
                 const headStyle = headColumns[index].style;
 
                 headStyle.width =
