@@ -50,7 +50,7 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
         // This example demonstrates a scenario with time on the X scale and a numeric value on the Y scale.
         const scalesTop: IXYScales = {
             x: xScale,
-            // Use the standard scale orientation on the top chart to stack the chart's series in an upward direction starting at the bottom
+            // Use the standard y-axis scale orientation on the top chart to stack the chart's series in an upward direction starting at the bottom.
             y: new LinearScale(),
         };
 
@@ -60,7 +60,7 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
             y: new LinearScale().reverse(),
         };
 
-        // Here we assemble the complete chart series for both charts.
+        // Here we assemble a complete chart series set for each chart.
         const seriesSetTop: IChartSeries<IAreaAccessors>[] = getDataTop().map(d => ({
             ...d,
             renderer,
@@ -75,7 +75,8 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
             scales: scalesBottom,
         }));
 
-        // We need to replace the default domain calculators to take into account the series on both charts
+        // We need to replace the default domain calculators to have each chart take into account
+        // the series on the opposite chart when calculating the domains.
         const topChartDomainCalculator = domainWithAuxiliarySeries(() => seriesSetBottom, getAutomaticDomain);
         scalesTop.y.domainCalculator = topChartDomainCalculator;
         scalesTop.x.domainCalculator = topChartDomainCalculator;
