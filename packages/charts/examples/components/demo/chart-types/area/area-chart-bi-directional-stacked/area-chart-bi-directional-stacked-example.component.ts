@@ -75,8 +75,8 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
             scales: scalesBottom,
         }));
 
-        // We need to replace the default domain calculators to have each chart take into account
-        // the series on the opposite chart when calculating the domains.
+        // We need to replace the default domain calculators to have each chart take the series
+        // on the opposite chart into account when calculating the domains.
         const topChartDomainCalculator = domainWithAuxiliarySeries(() => seriesSetBottom, getAutomaticDomain);
         scalesTop.y.domainCalculator = topChartDomainCalculator;
         scalesTop.x.domainCalculator = topChartDomainCalculator;
