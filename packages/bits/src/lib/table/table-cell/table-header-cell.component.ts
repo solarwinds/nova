@@ -57,12 +57,12 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         return this.columnDef.type === "icon";
     }
 
-    /**
+    private _fixedWidth: boolean;
+
+        /**
      * Conditionally applies a fixed-width marker class for letting external entities
      * know whether manual updates to the cell's width are allowed.
      */
-    private _fixedWidth: boolean;
-
     @HostBinding(`class.${FIXED_WIDTH_CLASS}`)
     get fixedWidth(): boolean {
         return this.isIconCell || this._fixedWidth;
