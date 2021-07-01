@@ -37,7 +37,7 @@ export class TableColumnDefDirective extends CdkColumnDef implements OnInit, OnC
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.columnWidth) {
-            this.tableStateHandlerService.setColumnWidth(this.name, changes.columnWidth.currentValue, (this.columnWidth ? true : false));
+            this.tableStateHandlerService.setColumnWidth(this.name, changes.columnWidth.currentValue, !!this.columnWidth);
         }
 
     }

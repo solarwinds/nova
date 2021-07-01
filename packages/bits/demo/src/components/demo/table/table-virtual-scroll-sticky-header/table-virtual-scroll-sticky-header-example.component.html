@@ -13,7 +13,7 @@
         <table nui-table [dataSource]="visibleItems$ | async" [trackBy]="trackByNo" [sortable]="true">
             <!-- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ -->
             <!-- In order to have columns with a fixed width set 'columnWidth'-->
-            <ng-container *ngFor="let column of displayedColumns; let i = index" [nuiColumnDef]="column" [columnWidth]="i >= 3 ? 100 : undefined">
+            <ng-container *ngFor="let column of displayedColumns; let i = index" [nuiColumnDef]="column" [columnWidth]="i >= 2 ? 100 : undefined">
                 <th nui-header-cell *nuiHeaderCellDef> {{column}}</th>
                 <td nui-cell *nuiCellDef="let element">{{element[column]}}</td>
             </ng-container>

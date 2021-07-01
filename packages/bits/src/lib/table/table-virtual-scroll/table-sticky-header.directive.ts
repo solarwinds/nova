@@ -179,11 +179,13 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
             const fixedWidth = headColumns[index].classList.contains(FIXED_WIDTH_CLASS);
             if (!fixedWidth) {
                 // Note: Assigning data cell width to the corresponding header column
-                // (using the style width if specified; otherwise, falling back to the clientWidth)
-                const cellWidth = (parseInt(cell.style.width) || cell.clientWidth) -1 + "px";
+                // (using the style width if specified; otherwise, falling back to the offsetWidth)
+                const cellWidth = (parseInt(cell.style.width) || cell.offsetWidth) -1 + "px";
                 const headStyle = headColumns[index].style;
 
-                headStyle.width =  headStyle.minWidth = headStyle.maxWidth = cellWidth;
+                headStyle.width = 
+                    headStyle.minWidth = 
+                    headStyle.maxWidth = cellWidth;
             }
         });
 

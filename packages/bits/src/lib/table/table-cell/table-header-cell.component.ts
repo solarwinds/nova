@@ -85,8 +85,9 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
     get isColumnSorted(): boolean {
         return this.sortingState.isColumnSorted;
     }
-    @HostBinding("class.nui-fixed-width")
-    public fixedWIdth: boolean;
+
+    @HostBinding(`class.${FIXED_WIDTH_CLASS}`)
+    public widthFixed: boolean;
 
     @HostBinding("attr.draggable")
     @HostBinding("class.nui-table__table-header-cell--reorderable")
@@ -221,12 +222,14 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
             const columnWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
             if (columnWidth > 45) {
                 if (this.tableStateHandlerService.getColumnWidthFixed(this.columnDef.name)) {
-                    this.fixedWIdth = true;
-                    elem.style.maxWidth = elem.style.minWidth = columnWidth + "px";
+                    this.widthFixed = true;
+                    elem.style.maxWidth = 
+                        elem.style.minWidth = columnWidth + "px";
                 }
             } else {
-                this.fixedWIdth = false;
-                elem.style.maxWidth = elem.style.minWidth= "";
+                this.widthFixed = false;
+                elem.style.maxWidth =
+                    elem.style.minWidth= "";
             }
         }));
 
