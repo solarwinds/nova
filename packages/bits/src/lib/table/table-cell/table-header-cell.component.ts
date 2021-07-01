@@ -61,7 +61,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
      * Conditionally applies a fixed-width marker class for letting external entities
      * know whether manual updates to the cell's width are allowed.
      */
-    public _fixedWidth: boolean;
+    private _fixedWidth: boolean;
 
     @HostBinding(`class.${FIXED_WIDTH_CLASS}`)
     get fixedWidth(): boolean {
