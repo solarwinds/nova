@@ -6,8 +6,7 @@
     </div>
 </div>
 
-<div id="nui-demo-table-sticky-header-test" 
-        [style.height.px]="gridHeight" 
+<div [style.height.px]="gridHeight"
         [style.max-width.px]="1300">
     <cdk-virtual-scroll-viewport tableStickyHeader class="h-100" [itemSize]="itemSize">
         <!-- IMPORTANT Bind only visible rows to the table, otherwise, the table will render all rows in the DOM -->

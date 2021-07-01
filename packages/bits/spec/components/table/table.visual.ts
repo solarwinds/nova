@@ -93,7 +93,7 @@ describe(`Visual tests: ${name}`, () => {
         await expanders.virtualScrollStickyHeader.click();
         await camera.say.cheese("Virtual Scroll Table with Sticky Header");
         await browser.executeScript(
-            "document.getElementById('table-virtual-scroll-sticky-header-test').getElementsByClassName('nui-table__container')[0].scrollTop = '20'");
+            "document.getElementById('table-virtual-scroll-sticky-header-test').getElementsByClassName('h-100')[0].scrollTop = '20'");
         await camera.say.cheese("Virtual Scroll Table with Sticky Header - scrolled");
         await expanders.virtualScrollStickyHeader.click();
 
