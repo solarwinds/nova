@@ -57,13 +57,15 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         return this.columnDef.type === "icon";
     }
 
+    private _fixedWidth: boolean;
+
     /**
-     * Conditionally applies a fixed-width marker class for letting external entities
-     * know whether manual updates to the cell's width are allowed.
-     */
+    * Conditionally applies a fixed-width marker class for letting external entities
+    * know whether manual updates to the cell's width are allowed.
+    */
     @HostBinding(`class.${FIXED_WIDTH_CLASS}`)
     get fixedWidth(): boolean {
-        return this.isIconCell;
+        return this.isIconCell || this._fixedWidth;
     }
 
     @HostBinding("class.nui-table__table-header-cell--sortable--dark")
@@ -188,9 +190,10 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
 
     ngOnInit(): void {
         const alignment = this.alignment ? `align-${ this.alignment }` : this.tableStateHandlerService.getAlignment(this.columnDef.name);
-
+        const elem = this.elementRef.nativeElement as HTMLElement;
+        
         this.resizable = this.tableStateHandlerService.resizable;
-        this.elementRef.nativeElement.classList.add(alignment);
+        elem.classList.add(alignment);
         this.currentCellIndex = this.tableStateHandlerService.tableColumns.indexOf(this.columnDef.name);
         this.sortingState = this.tableStateHandlerService.getSortingState(this.currentCellIndex);
 
@@ -198,7 +201,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
             // Get initial width
             const columnWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
 
-            this.elementRef.nativeElement.style.width = columnWidth + "px";
+            elem.style.width = columnWidth + "px";
             this.subscriptions.push(this.tableStateHandlerService.shouldHighlightEdge
                 .pipe(
                     filter(value => {
@@ -217,7 +220,17 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         this.subscriptions.push(this.tableStateHandlerService.columnWidthSubject.subscribe(() => {
             const columnWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
             if (columnWidth > 45) {
-                this.elementRef.nativeElement.style.width = columnWidth + "px";
+                elem.style.width = columnWidth + "px";
+                
+                if (this.tableStateHandlerService.getColumnWidthFixed(this.columnDef.name)) {
+                    this._fixedWidth = true;
+                    elem.style.maxWidth =
+                        elem.style.minWidth = columnWidth + "px";
+                }
+            } else {
+                this._fixedWidth = false;
+                elem.style.maxWidth =
+                    elem.style.minWidth= "";
             }
         }));
 

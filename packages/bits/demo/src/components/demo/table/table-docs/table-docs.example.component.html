@@ -291,6 +291,9 @@ Consider the following in the example:
     <code>tableStickyHeader</code> directive supports runtime state switch by just binding a boolean value to it <code>[tableStickyHeader]="false"</code>
     or taking the <code>TableStickyHeaderDirective</code> reference via <code>ViewChild</code> decorator and updating the <code>tableStickyHeader</code> property.
 </nui-message>
+<nui-message [allowDismiss]="false" type="info">
+    To have columns with fixed width set the <code>columnWidth</code> input on the <code>nuiColumnDef</code> directive to the desired width in pixels.
+</nui-message>
 <nui-example-wrapper filenamePrefix="table-virtual-scroll-sticky-header" exampleTitle="Virtual Scroll with Sticky Header">
     <nui-table-virtual-scroll-sticky-header-example></nui-table-virtual-scroll-sticky-header-example>
 </nui-example-wrapper>
