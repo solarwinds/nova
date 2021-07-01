@@ -3,3 +3,4 @@ sdk/
 dist/
 **/coverage/
 .tmp
+_snapshots
