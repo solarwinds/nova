@@ -71,10 +71,6 @@ describe("components >",() => {
         });
 
         describe("stringLabel", () => {
-            afterEach(() => {
-                component.label = "";
-            });
-
             it("should return string if label is string", () => {
                 const label = "label";
 
