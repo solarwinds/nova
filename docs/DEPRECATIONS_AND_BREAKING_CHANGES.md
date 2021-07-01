@@ -10,7 +10,7 @@ to ensure the smoothest possible transition between major Nova versions.
 2. Everything that has had a `@deprecated` decorator for a full major version will likely to be removed with the next major version increase. This will be also reflected in a migration guide.
 3. If a deprecated entity has been in this status for less than a full major version, it will be carried over into the next major version, and it will be removed in the one after it.
 
-## Our Deprecation Guidelines
+## Steps for Introducing a Deprecation
 
 1. Create a new [breaking change](https://github.com/solarwinds/nova/issues/new?assignees=&labels=&template=breaking_change_task.md&title=) ticket in github and fill in all the required information.
 2. Inside a jsdoc style comment above the deprecated item
