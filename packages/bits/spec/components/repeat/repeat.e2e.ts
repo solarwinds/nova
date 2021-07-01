@@ -51,7 +51,7 @@ describe("USERCONTROL Repeat", () => {
         await multiSelectList.selectCheckbox(5);
         await multiSelectList.selectCheckbox(0);
         expect(await colorSelection.getText()).toBe("[ { \"color\": \"yellow\" }, { \"color\": \"black\" } ]");
-        await colorSelection.click();
+        await colorSelection.click(); // Focus out of checkbox
     });
 
     describe("keyboard navigation", () => {
@@ -65,9 +65,9 @@ describe("USERCONTROL Repeat", () => {
             await Helpers.pressKey(Key.ENTER);
             expect(await colorSelection.getText()).toBe("[ { \"color\":" +
                 " \"yellow\" }, { \"color\": \"black\" } ]");
-
+    
             // Return to initial state
-            await colorSelection.click();
+            await colorSelection.click(); // Focus out of checkbox
         });
 
         it("should allow check/uncheck items using SPACE", async () => {
@@ -81,7 +81,7 @@ describe("USERCONTROL Repeat", () => {
                 " \"yellow\" }, { \"color\": \"black\" } ]");
 
             // Return to initial state
-            await colorSelection.click();
+            await colorSelection.click(); // Focus out of checkbox
         });
     });
 

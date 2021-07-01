@@ -27,16 +27,16 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Default`);
 
         await singleSelectList.hover();
-        await camera.say.cheese(`Repeat in Single Selection Mode with Radio Buttons and Required Single Selection Mode`);
+        await camera.say.cheese(`Repeat in Required Single Selection Mode with Radio Buttons`);
 
         await singleSelectListRequired.hover();
         await camera.say.cheese(`Repeat in Single Selection Mode with Item Highlight`);
 
         await reorderSelectList.hover();
-        await camera.say.cheese(`Repeat Item Customization`);
+        await camera.say.cheese(`Item Drag/Drop Enabled`);
 
         await toggleDragging.click();
-        await camera.say.cheese(`Repeat Item Customization Turned off`);
+        await camera.say.cheese(`Item Drag/Drop Disabled`);
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);
