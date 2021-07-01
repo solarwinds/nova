@@ -183,8 +183,8 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
                 const cellWidth = (parseInt(cell.style.width) || cell.offsetWidth) -1 + "px";
                 const headStyle = headColumns[index].style;
 
-                headStyle.width = 
-                    headStyle.minWidth = 
+                headStyle.width =
+                    headStyle.minWidth =
                     headStyle.maxWidth = cellWidth;
             }
         });

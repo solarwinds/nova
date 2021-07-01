@@ -224,7 +224,7 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
                 
                 if (this.tableStateHandlerService.getColumnWidthFixed(this.columnDef.name)) {
                     this._fixedWidth = true;
-                    elem.style.maxWidth = 
+                    elem.style.maxWidth =
                         elem.style.minWidth = columnWidth + "px";
                 }
             } else {
