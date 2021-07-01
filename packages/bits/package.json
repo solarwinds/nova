@@ -185,6 +185,10 @@
     "typescript": "~4.1.5",
     "zone.js": "^0.11.3"
   },
+  "resolutions": {
+    "@compodoc/compodoc/live-server/http-auth": "^3.2.4",
+    "@compodoc/compodoc/i18next": "^19.8.5"
+  },
   "engines": {
     "node": ">=8.0"
   }

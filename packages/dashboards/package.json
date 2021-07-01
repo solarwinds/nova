@@ -154,5 +154,9 @@
   },
   "dependencies": {
     "resize-observer-polyfill": "^1.5.1"
+  },
+  "resolutions": {
+    "@compodoc/compodoc/live-server/http-auth": "^3.2.4",
+    "@compodoc/compodoc/i18next": "^19.8.5"
   }
 }
