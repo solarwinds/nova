@@ -10,13 +10,13 @@
         </nui-wizard-overflow>
 
         <ng-template #overflowStart>
-            <div class="nui-step-header-wrapper" *ngFor="let step of overflownStepsStart; let i = index; let isFirst = first">
+            <div class="nui-wizard-horizontal-header-wrapper" *ngFor="let step of overflownStepsStart; let i = index; let isFirst = first">
                 <ng-template *ngTemplateOutlet="stepHeaderWithLines; context: { $implicit: steps, step: step, i: i, isFirst: isFirst }"></ng-template>
             </div>
         </ng-template>
     </ng-container>
 
-    <div class="nui-step-header-wrapper" *ngFor="let step of (hasOverflow ? visibleSteps: steps); let i = index; let isFirst = first">
+    <div class="nui-wizard-horizontal-header-wrapper" *ngFor="let step of (hasOverflow ? visibleSteps: steps); let i = index; let isFirst = first">
         <ng-template *ngTemplateOutlet="stepHeaderWithLines; context: { $implicit: steps, step: step, i: overflownStepsStart.length + i, isFirst: isFirst }"></ng-template>
     </div>
 
@@ -31,7 +31,7 @@
         </nui-wizard-overflow>
 
         <ng-template #overflowEnd>
-            <div class="nui-step-header-wrapper" *ngFor="let step of overflownStepsEnd; let i = index; let isFirst = first">
+            <div class="nui-wizard-horizontal-header-wrapper" *ngFor="let step of overflownStepsEnd; let i = index; let isFirst = first">
                 <ng-template *ngTemplateOutlet="stepHeaderWithLines; context: {
                     $implicit: steps, step: step, i: overflownStepsStart.length + visibleSteps.length + i, isFirst: isFirst
                 }"></ng-template>
@@ -56,8 +56,8 @@
 </div>
 
 <ng-template #stepHeaderWithLines let-steps let-step="step" let-i="i" let-isFirst="isFirst">
-    <div *ngIf="!isFirst" class="nui-wizard-horizontal-line" 
-             [ngClass]="{'nui-wizard-horizontal-line-completed': stepsArray[i-1]?.completed && step.completed || selectedIndex === i}"></div>
+    <div *ngIf="!isFirst" class="nui-wizard-horizontal__step-connector-line" 
+             [ngClass]="{'nui-wizard-horizontal__step-connector-line--completed': stepsArray[i-1]?.completed && step.completed || selectedIndex === i}"></div>
         <nui-wizard-step-header
             #stepHeaders
             class="nui-wizard-horizontal-header"
@@ -79,7 +79,6 @@
             [active]="step.completed || selectedIndex === i || !linear"
             [completed]="step.completed"
             [optional]="step.optional"
-            [errorMessage]="step.errorMessage"
-            [disableRipple]="disableRipple">
+            [errorMessage]="step.errorMessage">
         </nui-wizard-step-header>
 </ng-template>

@@ -49,8 +49,6 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
     @Output() readonly animationDone: EventEmitter<void> = new EventEmitter<void>();
     /** Event emitted when the selected step has changed. */
     @Output() readonly selectionChange = new EventEmitter<StepperSelectionEvent>();
-    /** Whether ripples should be disabled for the step headers. */
-    @Input() disableRipple: boolean;
 
     /** The state of the wizard */
     @Input() state: IWizardState;
