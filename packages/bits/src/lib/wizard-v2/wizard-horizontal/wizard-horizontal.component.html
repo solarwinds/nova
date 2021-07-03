@@ -1,6 +1,6 @@
 <div class="nui-wizard-horizontal-header-container" #headerContainer>
 
-    <ng-container *ngIf="hasOverflow && overflownStepsStart.length">
+    <ng-container *ngIf="isInResponsiveMode && overflownStepsStart.length">
         <nui-wizard-overflow
             #overflowComponent
             class="overflow-left"
@@ -16,11 +16,11 @@
         </ng-template>
     </ng-container>
 
-    <div class="nui-wizard-horizontal-header-wrapper" *ngFor="let step of (hasOverflow ? visibleSteps: steps); let i = index; let isFirst = first">
+    <div class="nui-wizard-horizontal-header-wrapper" *ngFor="let step of (isInResponsiveMode ? visibleSteps: steps); let i = index; let isFirst = first">
         <ng-template *ngTemplateOutlet="stepHeaderWithLines; context: { $implicit: steps, step: step, i: overflownStepsStart.length + i, isFirst: isFirst }"></ng-template>
     </div>
 
-    <ng-container *ngIf="hasOverflow && overflownStepsEnd.length">
+    <ng-container *ngIf="isInResponsiveMode && overflownStepsEnd.length">
         <nui-wizard-overflow
             #overflowComponent
             class="overflow-right"

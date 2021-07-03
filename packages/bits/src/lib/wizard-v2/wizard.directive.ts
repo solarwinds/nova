@@ -130,7 +130,7 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
         const step = steps[i];
         const isSelected = steps.indexOf(this.selected) === i;
 
-        if (step.hasError && isSelected) {
+        if (step?.hasError && isSelected) {
             return STEP_STATE.ERROR;
         }
 
@@ -138,7 +138,7 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
             return STEP_STATE.EDIT
         }
 
-        if (step.completed) {
+        if (step?.completed) {
             return STEP_STATE.DONE
         }
 

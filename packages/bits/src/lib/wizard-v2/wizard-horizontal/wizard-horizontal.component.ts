@@ -18,6 +18,7 @@ import {
     ViewChildren,
     ViewEncapsulation,
 } from "@angular/core";
+import without from "lodash/without";
 import ResizeObserver from "resize-observer-polyfill";
 import { takeUntil } from "rxjs/operators";
 
@@ -53,10 +54,13 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
     static ngAcceptInputTypeCompleted: BooleanInput = undefined;
     static ngAcceptInputTypeHasError: BooleanInput = undefined;
 
-    private stepHeadersArray: HTMLElement[];
     private headerResizeObserver: ResizeObserver;
+    private dynamicSteps: WizardStepV2Component[] = [];
+    private stepsCachedArray: WizardStepV2Component[] = [];
+    private dynamicStepWidthAdjustment: number = 0;
 
     public hasOverflow = false;
+    public isInResponsiveMode = false;
     public headerContainerWidth: number = 0;
     public stepHeaderWidth: number = 0;
     public overflowComponentWidth: number = 0;
@@ -95,7 +99,9 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
 
     ngAfterViewInit() {
         super.ngAfterViewInit();
-        this.convertStepHeaders(this.stepHeaders);
+
+        this.stepsCachedArray = [...this.stepsArray];
+        this.stepHeaderWidth = this.stepHeaders.first._elementRef.nativeElement?.getBoundingClientRect().width;
         this.getWidthsForCalculations();
         this.handleOverflow();
         this.cdRef.detectChanges();
@@ -109,8 +115,24 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
                     this.handleOverflow();
                 }
                 this.onContainerResize(entry[0]);
+                this.checkResponsiveMode();
                 this.cdRef.markForCheck();
             });
+        });
+
+        this.steps.changes.pipe(takeUntil(this._destroyed)).subscribe((steps: QueryList<WizardStepV2Component>) => {
+            this.dynamicSteps =
+                this.stepsArray.length >= this.stepsCachedArray.length
+                    ? without(this.stepsArray, ...this.stepsCachedArray)
+                    : without(this.stepsCachedArray, ...this.stepsArray);
+
+            if (this.dynamicSteps.length) {
+                this.getWidthsForCalculations();
+                this.handleOverflow();
+            }
+
+            this.dynamicStepWidthAdjustment = this.stepsArray.includes(this.dynamicSteps[0]) ? this.stepHeaderWidth : 0;
+            this.stepsCachedArray = [...this.stepsArray];
         });
 
         this.selectionChange
@@ -143,42 +165,72 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         this.headerResizeObserver.disconnect();
     }
 
-    public handleOverflow() {
+    public handleOverflow(): void {
+        this.checkOverflow();
+        this.checkResponsiveMode();
 
-        if (this.allHeadersWidth > this.headerContainerWidth) {
-            this.hasOverflow = true;
-        }
-
-        if (this.hasOverflow) {
+        if (this.hasOverflow || this.isInResponsiveMode) {
             const headerPaddings: number = +getComputedStyle(this.headerContainer.nativeElement).paddingLeft.slice(0, -2);
             const numberOfVisibleItems = Math.ceil((this.headerContainerWidth - headerPaddings * 2) / this.stepHeaderWidth) - 1;
 
             if (!this.state?.finished) {
-                this.visibleSteps = this.stepsArray.slice(0, numberOfVisibleItems);
-                this.overflownStepsEnd = this.stepsArray.slice(numberOfVisibleItems);
+                if (!this.isInResponsiveMode) {
+                    this.visibleSteps = this.stepsArray.slice(0, numberOfVisibleItems);
+                    this.overflownStepsEnd = this.stepsArray.slice(numberOfVisibleItems);
+                } else {
+                    this.handleDynamicHeaderChanges(numberOfVisibleItems);
+                }
             } else {
-                this.visibleSteps = this.stepsArray.slice(-numberOfVisibleItems);
-                this.overflownStepsStart = this.stepsArray.slice(0, -numberOfVisibleItems);
+                if (!this.isInResponsiveMode) {
+                    this.visibleSteps = this.stepsArray.slice(-numberOfVisibleItems);
+                    this.overflownStepsStart = this.stepsArray.slice(0, -numberOfVisibleItems);
+                } else {
+                    this.handleDynamicHeaderChanges(numberOfVisibleItems);
+                }
             }
+        }
+
+        this.checkResponsiveMode();
+    }
+
+    private handleDynamicHeaderChanges(visibleItemsNUmber: number) {
+        const arr: WizardStepV2Component[] = [...this.stepsArray];
+        const overflowStartChunk = arr.slice(0, this.overflownStepsStart.length);
+
+        if (this.overflownStepsStart.length) {
+            overflowStartChunk.includes(this.dynamicSteps[0])
+                ? this.overflownStepsStart = [...arr.splice(0, this.overflownStepsStart.length + this.dynamicSteps.length)]
+                : this.overflownStepsStart = [...arr.splice(0, this.overflownStepsStart.length - this.dynamicSteps.length)];
+        }
+        this.visibleSteps = arr.slice(0, visibleItemsNUmber);
+        this.overflownStepsEnd = arr.slice(visibleItemsNUmber);
+
+        this.checkOverflow();
+        if (!this.hasOverflow && this.overflownStepsStart.length) {
+            this.visibleSteps.unshift(this.overflownStepsStart.splice(this.overflownStepsStart.length - 1, 1)[0]);
         }
     }
 
     private getWidthsForCalculations() {
         this.headerContainerWidth = this.headerContainer.nativeElement?.getBoundingClientRect().width;
-        this.stepHeaderWidth = this.stepHeadersArray[0]?.getBoundingClientRect().width;
-        this.allHeadersWidth = this.stepHeadersArray.reduce((acc, item) => acc + item.getBoundingClientRect().width, 0);
+        this.allHeadersWidth = this.stepHeaderWidth * this.steps.length;
     }
 
-    private convertStepHeaders(steps: QueryList<WizardStepHeaderComponent>) {
-        this.stepHeadersArray = steps.toArray().map(component => component._elementRef.nativeElement);
+    private checkOverflow(): void {
+        this.hasOverflow = this.allHeadersWidth > this.headerContainerWidth;
+    }
+
+    private checkResponsiveMode(): void {
+        this.isInResponsiveMode = !!this.overflownStepsStart.length || !!this.overflownStepsEnd.length;
     }
 
     private onContainerResize(entry: ResizeObserverEntry) {
+        this.checkOverflow();
+
         const newWidth = entry.contentRect.width;
         const visibleStepsWidth = this.visibleSteps.length * this.stepHeaderWidth;
 
-        if (newWidth < (visibleStepsWidth + this.overflowComponentWidth * 2)) {
-
+        if (newWidth < (visibleStepsWidth + this.overflowComponentWidth * 2 + this.dynamicStepWidthAdjustment)) {
             if (this.visibleSteps[0] !== this.stepsArray[this.selectedIndex]) {
                 return this.overflownStepsStart.push(this.visibleSteps.splice(0, 1)[0]);
             }
@@ -188,8 +240,7 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
             }
         }
 
-        if (newWidth > (visibleStepsWidth + this.stepHeaderWidth + this.overflowComponentWidth * 2)) {
-
+        if (newWidth > (visibleStepsWidth + this.stepHeaderWidth + this.overflowComponentWidth * 2 + this.dynamicStepWidthAdjustment)) {
             if (this.overflownStepsEnd.length) {
                 return this.visibleSteps.push(this.overflownStepsEnd.splice(0, 1)[0]);
             }
