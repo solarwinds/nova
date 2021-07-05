@@ -1,6 +1,8 @@
 <div class="nui-wizard-overflow" [nuiTooltip]="'+' + value + tooltipText" i18n>
-    <nui-popover trigger="focus"
+    <nui-popover trigger="click"
                  tabindex="0"
+                 placement="bottom"
+                 [unlimited]="true"
                  [template]="template">
             <div class="nui-tag"
                  [class.nui-tag--completed]="completed">

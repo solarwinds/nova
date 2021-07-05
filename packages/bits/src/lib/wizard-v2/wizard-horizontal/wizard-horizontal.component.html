@@ -10,6 +10,9 @@
         </nui-wizard-overflow>
 
         <ng-template #overflowStart>
+            <div *ngIf="overflownStepsStart.length" class="pb-3">
+                <strong>+{{overflownStepsStart.length}} more steps</strong>
+            </div>
             <div class="nui-wizard-horizontal-header-wrapper" *ngFor="let step of overflownStepsStart; let i = index; let isFirst = first">
                 <ng-template *ngTemplateOutlet="stepHeaderWithLines; context: { $implicit: steps, step: step, i: i, isFirst: isFirst }"></ng-template>
             </div>
@@ -31,6 +34,9 @@
         </nui-wizard-overflow>
 
         <ng-template #overflowEnd>
+            <div *ngIf="overflownStepsEnd.length" class="pb-3">
+                <strong>+{{overflownStepsEnd.length}} more steps</strong>
+            </div>
             <div class="nui-wizard-horizontal-header-wrapper" *ngFor="let step of overflownStepsEnd; let i = index; let isFirst = first">
                 <ng-template *ngTemplateOutlet="stepHeaderWithLines; context: {
                     $implicit: steps, step: step, i: overflownStepsStart.length + visibleSteps.length + i, isFirst: isFirst
