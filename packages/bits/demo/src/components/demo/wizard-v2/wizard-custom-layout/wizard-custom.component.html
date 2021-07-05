@@ -16,11 +16,10 @@
                         [attr.aria-label]="step.ariaLabel || null"
                         [attr.aria-labelledby]="(!step.ariaLabel && step.ariaLabelledby) ? step.ariaLabelledby : null"
                         [index]="i"
-                        [state]="getStepState(i, step.state)"
                         [label]="step.label || step.stepLabel"
                         [selected]="selectedIndex === i"
                         [active]="step.completed || selectedIndex === i || !linear"
-                        [optional]="step.optional"
+                        [step]="step"
                         [errorMessage]="step.errorMessage">
                     </wizard-step-header>
                     <div *ngIf="!isLast" class="nui-wizard-horizontal-line"></div>
