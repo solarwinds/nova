@@ -18,6 +18,8 @@ import {
     ViewChildren,
     ViewEncapsulation,
 } from "@angular/core";
+import last from "lodash/last";
+import pull from "lodash/pull";
 import without from "lodash/without";
 import ResizeObserver from "resize-observer-polyfill";
 import { takeUntil } from "rxjs/operators";
@@ -97,13 +99,12 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         this.linear = true;
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         super.ngAfterViewInit();
 
         this.stepsCachedArray = [...this.stepsArray];
-        this.stepHeaderWidth = this.stepHeaders.first._elementRef.nativeElement?.getBoundingClientRect().width;
-        this.getWidthsForCalculations();
-        this.handleOverflow();
+
+        this.checkHeadingsView();
         this.cdRef.detectChanges();
 
         this.overflowComponentWidth = this.overflowComponents?.first?.el?.nativeElement?.getBoundingClientRect()?.width || 0;
@@ -111,8 +112,7 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         this.headerResizeObserver = new ResizeObserver((entry: ResizeObserverEntry[]) => {
             this.zone.run(() => {
                 if (!this.hasOverflow) {
-                    this.getWidthsForCalculations();
-                    this.handleOverflow();
+                    this.checkHeadingsView();
                 }
                 this.onContainerResize(entry[0]);
                 this.checkResponsiveMode();
@@ -120,15 +120,11 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
             });
         });
 
-        this.steps.changes.pipe(takeUntil(this._destroyed)).subscribe((steps: QueryList<WizardStepV2Component>) => {
-            this.dynamicSteps =
-                this.stepsArray.length >= this.stepsCachedArray.length
-                    ? without(this.stepsArray, ...this.stepsCachedArray)
-                    : without(this.stepsCachedArray, ...this.stepsArray);
+        this.steps.changes.pipe(takeUntil(this._destroyed)).subscribe(() => {
+            this.checkDynamicSteps();
 
             if (this.dynamicSteps.length) {
-                this.getWidthsForCalculations();
-                this.handleOverflow();
+                this.checkHeadingsView();
             }
 
             this.dynamicStepWidthAdjustment = this.stepsArray.includes(this.dynamicSteps[0]) ? this.stepHeaderWidth : 0;
@@ -165,42 +161,53 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         this.headerResizeObserver.disconnect();
     }
 
-    public handleOverflow(): void {
+    private handleOverflow(): void {
         this.checkOverflow();
-        this.checkResponsiveMode();
 
         if (this.hasOverflow || this.isInResponsiveMode) {
-            const headerPaddings: number = +getComputedStyle(this.headerContainer.nativeElement).paddingLeft.slice(0, -2);
-            const numberOfVisibleItems = Math.ceil((this.headerContainerWidth - headerPaddings * 2) / this.stepHeaderWidth) - 1;
+            const numberOfVisibleItems = this.numberOfVisibleItems;
 
-            if (!this.state?.finished) {
-                if (!this.isInResponsiveMode) {
-                    this.visibleSteps = this.stepsArray.slice(0, numberOfVisibleItems);
-                    this.overflownStepsEnd = this.stepsArray.slice(numberOfVisibleItems);
-                } else {
-                    this.handleDynamicHeaderChanges(numberOfVisibleItems);
-                }
-            } else {
-                if (!this.isInResponsiveMode) {
+            if (!this.isInResponsiveMode) {
+                if (this.state?.finished) {
                     this.visibleSteps = this.stepsArray.slice(-numberOfVisibleItems);
                     this.overflownStepsStart = this.stepsArray.slice(0, -numberOfVisibleItems);
+
+                    if (this.overflownStepsStart.length && !this.isCurrentStepVisible) {
+                        do {
+                            this.takeLastAddFirst(this.overflownStepsStart, this.visibleSteps);
+                            this.takeLastAddFirst(this.visibleSteps, this.overflownStepsEnd);
+                        }
+                        while(!this.isCurrentStepVisible)
+                    }
                 } else {
-                    this.handleDynamicHeaderChanges(numberOfVisibleItems);
+                    this.visibleSteps = this.stepsArray.slice(0, numberOfVisibleItems);
+                    this.overflownStepsEnd = this.stepsArray.slice(numberOfVisibleItems);
                 }
+            } else {
+                this.handleDynamicHeaderChanges(numberOfVisibleItems);
             }
         }
 
         this.checkResponsiveMode();
     }
 
+    private get isCurrentStepVisible(): boolean {
+        return this.visibleSteps.includes(this.stepsArray[this.selectedIndex]);
+    }
+
+    private get numberOfVisibleItems(): number {
+        return Math.ceil((this.headerContainerWidth - this.headerPaddings * 2) / this.stepHeaderWidth) - 1;
+    }
+
+    private get headerPaddings(): number {
+        return +getComputedStyle(this.headerContainer.nativeElement).paddingLeft.slice(0, -2);
+    }
+
     private handleDynamicHeaderChanges(visibleItemsNUmber: number) {
         const arr: WizardStepV2Component[] = [...this.stepsArray];
-        const overflowStartChunk = arr.slice(0, this.overflownStepsStart.length);
 
         if (this.overflownStepsStart.length) {
-            overflowStartChunk.includes(this.dynamicSteps[0])
-                ? this.overflownStepsStart = [...arr.splice(0, this.overflownStepsStart.length + this.dynamicSteps.length)]
-                : this.overflownStepsStart = [...arr.splice(0, this.overflownStepsStart.length - this.dynamicSteps.length)];
+            arr.splice(0, this.overflownStepsStart.length)
         }
         this.visibleSteps = arr.slice(0, visibleItemsNUmber);
         this.overflownStepsEnd = arr.slice(visibleItemsNUmber);
@@ -208,6 +215,36 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         this.checkOverflow();
         if (!this.hasOverflow && this.overflownStepsStart.length) {
             this.visibleSteps.unshift(this.overflownStepsStart.splice(this.overflownStepsStart.length - 1, 1)[0]);
+        }
+    }
+
+    private checkDynamicSteps() {
+        if (this.stepsArray.length > this.stepsCachedArray.length) {
+            this.dynamicSteps = without(this.stepsArray, ...this.stepsCachedArray);
+        }
+
+        if (this.stepsArray.length < this.stepsCachedArray.length) {
+            this.dynamicSteps = without(this.stepsCachedArray, ...this.stepsArray);
+
+            if (!this.stepsArray.includes(this.dynamicSteps[0])) {
+                pull(this.visibleSteps, ...this.dynamicSteps);
+            }
+        }
+
+        if (this.stepsArray.length === this.stepsCachedArray.length) {
+            this.dynamicSteps = [];
+        }
+    }
+
+    private checkHeadingsView() {
+        this.checkHeaderWidth();
+        this.getWidthsForCalculations();
+        this.handleOverflow();
+    }
+
+    private checkHeaderWidth() {
+        if (!this.stepHeaderWidth) {
+            this.stepHeaderWidth = this.stepHeaders.first?._elementRef?.nativeElement?.getBoundingClientRect().width || 0;
         }
     }
 
@@ -224,6 +261,14 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         this.isInResponsiveMode = !!this.overflownStepsStart.length || !!this.overflownStepsEnd.length;
     }
 
+    private takeLastAddFirst(source: Array<any>, target: Array<any>) {
+        target.unshift(source.splice(-1, 1)[0]);
+    }
+
+    private takeFirstAddLast(source: Array<any>, target: Array<any>) {
+        target.push(source.splice(0, 1)[0]);
+    }
+
     private onContainerResize(entry: ResizeObserverEntry) {
         this.checkOverflow();
 
@@ -232,21 +277,21 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
 
         if (newWidth < (visibleStepsWidth + this.overflowComponentWidth * 2 + this.dynamicStepWidthAdjustment)) {
             if (this.visibleSteps[0] !== this.stepsArray[this.selectedIndex]) {
-                return this.overflownStepsStart.push(this.visibleSteps.splice(0, 1)[0]);
+                return this.takeFirstAddLast(this.visibleSteps, this.overflownStepsStart);
             }
 
-            if (this.visibleSteps[this.visibleSteps.length - 1] !== this.stepsArray[this.selectedIndex]) {
-                return  this.overflownStepsEnd.unshift(this.visibleSteps.splice(-1, 1)[0]);
+            if (last(this.visibleSteps) !== this.stepsArray[this.selectedIndex]) {
+                return  this.takeLastAddFirst(this.visibleSteps, this.overflownStepsEnd);
             }
         }
 
         if (newWidth > (visibleStepsWidth + this.stepHeaderWidth + this.overflowComponentWidth * 2 + this.dynamicStepWidthAdjustment)) {
             if (this.overflownStepsEnd.length) {
-                return this.visibleSteps.push(this.overflownStepsEnd.splice(0, 1)[0]);
+                return this.takeFirstAddLast(this.overflownStepsEnd, this.visibleSteps);
             }
 
             if (this.overflownStepsStart.length) {
-                return  this.visibleSteps.unshift(this.overflownStepsStart.splice(-1, 1)[0]);
+                return  this.takeLastAddFirst(this.overflownStepsStart, this.visibleSteps);
             }
         }
     }
