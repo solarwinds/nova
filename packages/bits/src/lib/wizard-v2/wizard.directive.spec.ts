@@ -71,52 +71,5 @@ describe("directives >", () => {
                 expect(component.state).toEqual(changes.state.currentValue);
             });
         });
-
-        describe("getStepState", () => {
-            it("should return error state if step invalid", () => {
-                const stepMock: WizardStepV2Component = { hasError: true } as WizardStepV2Component;
-
-                spyOn(component.steps, "toArray").and.returnValue([stepMock]);
-                spyOnProperty(component, "selected").and.returnValue(stepMock);
-
-                const state = component.getStepState(0);
-
-                expect(state).toEqual(STEP_STATE.ERROR);
-            });
-
-            it("should return edit state for current no completed step", () => {
-                const stepMock: WizardStepV2Component = {} as WizardStepV2Component;
-
-                spyOn(component.steps, "toArray").and.returnValue([stepMock]);
-
-                const state = component.getStepState(0);
-
-                expect(state).toEqual(STEP_STATE.EDIT);
-            });
-
-            it("should return complete state for completed step", () => {
-                const stepMock: WizardStepV2Component = { completed: true } as WizardStepV2Component;
-                const otherStep: WizardStepV2Component = {} as WizardStepV2Component;
-
-                spyOn(component.steps, "toArray").and.returnValue([stepMock, otherStep]);
-                spyOnProperty(component, "selected").and.returnValue(otherStep);
-
-                const state = component.getStepState(0);
-
-                expect(state).toEqual(STEP_STATE.DONE);
-            });
-
-            it("should return number state", () => {
-                const stepMock: WizardStepV2Component = {} as WizardStepV2Component;
-                const otherStep: WizardStepV2Component = {} as WizardStepV2Component;
-
-                spyOn(component.steps, "toArray").and.returnValue([stepMock, otherStep]);
-                spyOnProperty(component, "selected").and.returnValue(stepMock);
-
-                const state = component.getStepState(1);
-
-                expect(state).toEqual(STEP_STATE.NUMBER);
-            });
-        });
     });
 });
