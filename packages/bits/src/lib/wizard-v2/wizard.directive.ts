@@ -145,6 +145,12 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
         return STEP_STATE.NUMBER;
     }
 
+    public get allStepsCompleted(): boolean {
+        const completed: boolean = this.steps.toArray().reduce((acc: boolean, step: WizardStepV2Component) => acc && step.completed, true);
+
+        return completed;
+    }
+
     // Restores the completed wizard to the last step
     private restore(): void {
         this.steps.toArray().forEach(step => {
@@ -156,11 +162,5 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
         });
 
         this["_changeDetectorRef"].detectChanges();
-    }
-
-    private get allStepsCompleted(): boolean {
-        const completed: boolean = this.steps.toArray().reduce((acc: boolean, step: WizardStepV2Component) => acc && step.completed, true);
-
-        return completed;
     }
 }
