@@ -15,7 +15,7 @@ import {
 } from "@angular/core";
 
 import { WizardStepLabelDirective } from "../wizard-step-label.directive";
-import { WIZARD_CONFIG, WIZARD_CONFIG_DEFAULT } from "../../../constants";
+import { WIZARD_CONFIG, WIZARD_CONFIG_DEFAULT } from "../../../constants/wizard.constants";
 import { IWizardConfig, WizardStepStateConfig } from "../types";
 import assign from "lodash/assign";
 import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
