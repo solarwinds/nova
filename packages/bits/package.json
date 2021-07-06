@@ -192,6 +192,6 @@
     "@compodoc/compodoc/i18next": "^19.8.5",
     "@compodoc/compodoc/**/pdfkit/crypto-js": "^4.0.0",
     "@compodoc/compodoc/**/glob-parent": "^5.1.2",
-    "@compodoc/compodoc/marked": "^1.1.1"
+    "@compodoc/compodoc/marked": "^2.0.0"
   }
 }
