@@ -1,8 +1,8 @@
 <div class="testing-region d-flex align-items-center justify-content-around">
     <donut-gauge-prototype [gaugeConfig]="gaugeConfig" [size]="donutSize" [annularGrowth]="annularGrowth" [annularWidth]="thickness">
     </donut-gauge-prototype>
-    <linear-gauge-vertical-prototype [gaugeConfig]="gaugeConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-vertical-prototype>
-    <linear-gauge-horizontal-prototype [gaugeConfig]="gaugeConfig" [thickness]="thickness" [flipLabels]="flipLabels"></linear-gauge-horizontal-prototype>
+    <linear-gauge-vertical-prototype [gaugeConfig]="gaugeConfig"></linear-gauge-vertical-prototype>
+    <linear-gauge-horizontal-prototype [gaugeConfig]="gaugeConfig"></linear-gauge-horizontal-prototype>
 </div>
 
 <div class="d-flex justify-content-center">
@@ -52,7 +52,8 @@
             </label>
             <br />
             <nui-textbox-number type="number"
-                                [(ngModel)]="thickness"
+                                [ngModel]="thickness"
+                                (ngModelChange)="onThicknessChange($event)"
                                 [minValue]="0"
                                 customBoxWidth="75px"
                                 name="thicknessInput"></nui-textbox-number>
@@ -94,7 +95,7 @@
                        type="checkbox"
                        [ngModel]="warningEnabled"
                        (ngModelChange)="onWarningEnabledChange($event)" />
-                <label class="px-3" for="enable-warning">Enable Warning</label>
+                <label class="px-3" for="enable-warning">Warning Enabled</label>
             </div>
         </div>
         <div class="ml-3">
@@ -104,7 +105,7 @@
                        type="checkbox"
                        [(ngModel)]="criticalEnabled"
                        (ngModelChange)="onCriticalEnabledChange($event)" />
-                <label class="px-3" for="enable-critical">Enable Critical</label>
+                <label class="px-3" for="enable-critical">Critical Enabled</label>
             </div>
         </div>
         <div class="ml-3">
@@ -112,9 +113,9 @@
                 <input class="mb-2"
                        type="checkbox"
                        id="enable-markers"
-                       [ngModel]="enableThresholdMarkers"
+                       [ngModel]="thresholdMarkersEnabled"
                        (ngModelChange)="onEnableThresholdMarkersChange($event)" />
-                <label class="px-3" for="enable-markers">Enable Markers</label>
+                <label class="px-3" for="enable-markers">Markers Enabled</label>
             </div>
         </div>
         <div class="ml-3">
@@ -132,7 +133,8 @@
                 <input id="flip-labels"
                        class="mb-2"
                        type="checkbox"
-                       [(ngModel)]="flipLabels" />
+                       [ngModel]="flipLabels"
+                       (ngModelChange)="onFlippedChange($event)" />
                 <label class="px-3" for="flip-labels">Flip Labels</label>
             </div>
         </div>

@@ -1,0 +1,57 @@
+<nui-wizard-horizontal #wizardComponent>
+
+    <!--  content of the 1st step -->
+    <nui-wizard-step-v2 i18n-label label="Very long header text. Very long header text">
+        <!-- content of the current step -->
+        <span i18n>Step with long header text</span>.
+
+        <!-- content of the footer -->
+        <ng-template nuiWizardStepFooter>
+            <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+        </ng-template>
+    </nui-wizard-step-v2>
+
+    <!--  step without tooltip -->
+    <nui-wizard-step-v2>
+        <ng-template nuiWizardStepLabel>
+            <span>Without tooltip</span>
+        </ng-template>
+
+        <!-- content of the footer -->
+        <ng-template nuiWizardStepFooter>
+            <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+        </ng-template>
+    </nui-wizard-step-v2>
+
+    <!--  Step with custom label template and tooltip-->
+    <nui-wizard-step-v2>
+        <ng-template nuiWizardStepLabel >
+            <span i18n-nuiTooltip nuiTooltip="Custom Label template">
+                <i>Custom Label template</i>
+            </span>
+        </ng-template>
+        <span i18n>We finally reached our last step!</span>
+        <!-- Notice how both label and footer can be placed anywhere in the content of wizard step -->
+        <ng-template nuiWizardStepFooter>
+            <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+        </ng-template>
+    </nui-wizard-step-v2>
+
+    <ng-template #wizardPrevious>
+        <button i18n type="button" nuiWizardPrevious nui-button icon="caret-left">
+            Previous
+        </button>
+    </ng-template>
+
+    <ng-template #wizardNext>
+        <button nuiWizardNext
+                i18n
+                type="button"
+                nui-button
+                displayStyle="primary"
+                icon="caret-right"
+                iconRight="true">
+            Next
+        </button>
+    </ng-template>
+</nui-wizard-horizontal>

@@ -40,7 +40,7 @@
                     </nui-form-field>
                 </div>
 
-                <ng-template wizardStepFooter>
+                <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext; context: { form: 'personDetails' }"></ng-container>
                 </ng-template>
@@ -84,7 +84,7 @@
                     </nui-form-field>
                 </div>
 
-                    <ng-template wizardStepFooter>
+                    <ng-template nuiWizardStepFooter>
                         <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                         <ng-container *ngTemplateOutlet="wizardNext; context: { form: 'organization' }"></ng-container>
@@ -92,11 +92,11 @@
             </nui-wizard-step-v2>
 
             <nui-wizard-step-v2 *ngFor="let step of dynamicSteps">
-                <ng-template wizardStepLabel>{{step.title}}</ng-template>
+                <ng-template nuiWizardStepLabel>{{step.title}}</ng-template>
                 <div class="p-5">
                     <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
                 </div>
-                <ng-template wizardStepFooter>
+                <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 </ng-template>
@@ -106,7 +106,7 @@
                                 [stepControl]="form.get(['contactDetails'])"
                                 #finalStep>
 
-                <ng-template wizardStepLabel>
+                <ng-template nuiWizardStepLabel>
                     <span>Contact Details</span>
                 </ng-template>
 
@@ -121,14 +121,14 @@
                                                 i18n>
                             This is required
                         </nui-validation-message>
-    
+
                         <nui-validation-message for="email"
                                                 *ngIf="form.get(['contactDetails','email'])?.errors?.email"
                                                 i18n>
                             Invalid email
                         </nui-validation-message>
                     </nui-form-field>
-    
+
                     <nui-form-field caption="Select"
                         [control]="form.get(['contactDetails','options'])">
                         <nui-select-v2 formControlName="options">
@@ -138,7 +138,7 @@
                     </nui-form-field>
                 </div>
 
-                    <ng-template wizardStepFooter>
+                    <ng-template nuiWizardStepFooter>
                         <button nui-button
                                 type="button"
                                 displayStyle="destructive"

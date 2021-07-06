@@ -13,3 +13,5 @@ export * from "./wizard-restore-state/wizard-restore-state.example.component";
 export * from "./wizard-step-change-example/wizard-step-change-example.component";
 export * from "./wizard-responsive-header/wizard-responsive-header-example.component";
 export * from "./wizard-with-confirmation-dialog-on-cancel/wizard-with-confirmation-dialog-on-cancel.component";
+export * from "./wizard-tooltip/wizard-tooltip-example.component";
+

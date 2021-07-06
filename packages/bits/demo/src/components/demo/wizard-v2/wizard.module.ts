@@ -24,6 +24,7 @@ import {
     IWizardConfig,
     WIZARD_CONFIG_DEFAULT,
     NuiOverlayModule,
+    NuiTooltipModule,
 } from "@nova-ui/bits";
 
 import {
@@ -43,6 +44,7 @@ import {
     WizardStepChangeExampleComponent,
     WizardResponsiveHeaderExampleComponent,
     WizardWithConfirmationDialogOnCancelComponent,
+    WizardTooltipExampleComponent,
 } from "./index";
 
 const routes = [
@@ -80,6 +82,7 @@ const routes = [
         NuiIconModule,
         NuiSelectV2Module,
         NuiOverlayModule,
+        NuiTooltipModule,
     ],
     declarations: [
         WizardDocsComponent,
@@ -98,6 +101,7 @@ const routes = [
         WizardStepChangeExampleComponent,
         WizardResponsiveHeaderExampleComponent,
         WizardWithConfirmationDialogOnCancelComponent,
+        WizardTooltipExampleComponent,
     ],
     providers: [
         {

@@ -28,7 +28,7 @@ export class GaugeTestPageComponent implements OnDestroy {
 
     public warningEnabled = true;
     public criticalEnabled = true;
-    public enableThresholdMarkers = true;
+    public thresholdMarkersEnabled = true;
     public reversed = false;
     public flipLabels = false;
 
@@ -50,7 +50,7 @@ export class GaugeTestPageComponent implements OnDestroy {
             return this.unitConversionSvc.getFullDisplay(conversion, "generic");
         };
 
-        this.thresholds = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold)
+        this.thresholds = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
         this.gaugeConfig = this.getGaugeConfig();
     }
 
@@ -63,8 +63,18 @@ export class GaugeTestPageComponent implements OnDestroy {
         this.gaugeConfig = this.getGaugeConfig();
     }
 
+    public onFlippedChange(flipped: boolean): void {
+        this.flipLabels = flipped;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
     public onValueChange(value: number): void {
         this.value = value;
+        this.gaugeConfig = this.getGaugeConfig();
+    }
+
+    public onThicknessChange(thickness: number): void {
+        this.thickness = thickness;
         this.gaugeConfig = this.getGaugeConfig();
     }
 
@@ -89,7 +99,7 @@ export class GaugeTestPageComponent implements OnDestroy {
     }
 
     public onEnableThresholdMarkersChange(enabled: boolean): void {
-        this.enableThresholdMarkers = enabled;
+        this.thresholdMarkersEnabled = enabled;
         this.gaugeConfig = this.getGaugeConfig();
     }
 
@@ -100,7 +110,11 @@ export class GaugeTestPageComponent implements OnDestroy {
             value: this.value,
             max: this.maxValue,
             thresholds: this.thresholds,
-            labelFormatter: this.labelFormatter,
+            labels: {
+                formatter: this.labelFormatter,
+                flipped: this.flipLabels,
+            },
+            linearThickness: this.thickness,
         };
     }
 
@@ -116,6 +130,6 @@ export class GaugeTestPageComponent implements OnDestroy {
         this.thresholds.definitions[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
         this.thresholds.definitions[StandardGaugeThresholdId.Critical].enabled = this.criticalEnabled;
         this.thresholds.reversed = this.reversed;
-        this.thresholds.disableMarkers = !this.enableThresholdMarkers;
+        this.thresholds.disableMarkers = !this.thresholdMarkersEnabled;
     }
 }

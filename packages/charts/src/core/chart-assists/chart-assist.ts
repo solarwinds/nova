@@ -37,12 +37,6 @@ import {
     IRenderStatesIndex,
 } from "./types";
 
-/** @ignore */
-const chartAssistSeriesDefaults: Partial<IChartAssistSeries<IAccessors>> = {
-    showInLegend: true,
-    preprocess: true,
-};
-
 /**
  * Helper class that helps to bootstrap a chart with legend, using data pre-processor.
  * It will use the most common settings.

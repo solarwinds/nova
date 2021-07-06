@@ -4,7 +4,7 @@
         <div class="p-5">
             <span i18n>This is the first step of our wizard</span>.
         </div>
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
         </ng-template>
     </nui-wizard-step-v2>
@@ -17,7 +17,7 @@
         <div class="p-5">
             <span i18n>This is the second step of our wizard</span>.
         </div>
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
         </ng-template>
@@ -27,7 +27,7 @@
         <div class="p-5">
             <span i18n>We finally reached our last step</span>
         </div>
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
         </ng-template>
     </nui-wizard-step-v2>

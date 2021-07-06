@@ -1,4 +1,5 @@
 <div class="nui-wizard-step-header__label"
+     [nuiTooltip]="stringLabel ? stringLabel : ''"
      [class.nui-wizard-step-header__label--active]="completed"
      [class.nui-wizard-step-header__label--selected]="selected"
      [class.nui-wizard-step-header__label--error]="stepState === 'error'">

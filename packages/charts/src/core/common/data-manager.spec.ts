@@ -1,10 +1,10 @@
 import { LineAccessors } from "../../renderers/line/line-accessors";
 import { LineRenderer } from "../../renderers/line/line-renderer";
+import { RenderState } from "../../renderers/types";
 
 import { DataManager } from "./data-manager";
 import { LinearScale } from "./scales/linear-scale";
 import { IAccessors, IChartSeries } from "./types";
-import { EMPTY_CONTINUOUS_DOMAIN, RenderState } from "@nova-ui/charts";
 
 describe("data manager", () => {
     let dataManager: DataManager;
@@ -12,7 +12,7 @@ describe("data manager", () => {
     let xScale: LinearScale;
 
     beforeEach(() => {
-        dataManager = new DataManager();
+        dataManager = new DataManager({ } as any);
 
         xScale = new LinearScale();
 

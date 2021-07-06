@@ -42,30 +42,45 @@ describe("LinearGaugeThresholdsRenderer >", () => {
     });
 
     describe("draw", () => {
+        let gaugeAttributes: IGaugeRenderingAttributes;
         let thresholdMarkers: D3Selection;
 
+        beforeEach(() => {
+            gaugeAttributes = GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Vertical);
+            gaugeAttributes.scales.x.domain(["gauge"]);
+            dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
+
+            renderSeries = {
+                dataSeries: dataSeries as IDataSeries<BarAccessors, any>,
+                containers,
+                scales: gaugeAttributes.scales,
+            };
+
+            renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
+            thresholdMarkers = containers[RenderLayerName.unclippedData].selectAll("circle");
+        });
+
+        it("should render the correct number of threshold markers", () => {
+            expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds?.definitions as GaugeThresholdDefs).length);
+        });
+
+        it("should not render any threshold markers if disabled", () => {
+            renderer.config.enabled = false;
+            renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
+            thresholdMarkers = containers[RenderLayerName.unclippedData].selectAll("circle");
+            expect(thresholdMarkers.nodes().length).toEqual(0);
+        });
+
+        it("should use the configured marker radius", () => {
+            renderer.config.markerRadius = 123;
+            renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
+            thresholdMarkers = containers[RenderLayerName.unclippedData].selectAll("circle");
+            thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
+                expect(node.getAttribute("r")).toEqual("123");
+            });
+        });
+
         describe("vertical gauge", () => {
-            let gaugeAttributes: IGaugeRenderingAttributes;
-
-            beforeEach(() => {
-                gaugeAttributes = GaugeUtil.generateRenderingAttributes(gaugeConfig, GaugeMode.Vertical);
-                gaugeAttributes.scales.x.domain(["gauge"]);
-                dataSeries = GaugeUtil.generateThresholdSeries(gaugeConfig, gaugeAttributes);
-
-                renderSeries = {
-                    dataSeries: dataSeries as IDataSeries<BarAccessors, any>,
-                    containers,
-                    scales: gaugeAttributes.scales,
-                };
-
-                renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
-                thresholdMarkers = containers[RenderLayerName.unclippedData].selectAll("circle");
-            });
-
-            it("should render the correct number of threshold markers", () => {
-                expect(thresholdMarkers.nodes().length).toEqual(Object.keys(gaugeConfig.thresholds?.definitions as GaugeThresholdDefs).length);
-            });
-
             it("should position the threshold markers correctly", () => {
                 thresholdMarkers.nodes().forEach((node: SVGElement, i: number) => {
                     const endX = gaugeAttributes.quantityAccessors?.data?.endX?.(dataSeries.data[i], i, dataSeries.data, dataSeries);

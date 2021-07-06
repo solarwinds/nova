@@ -120,13 +120,11 @@ export interface IGaugeThresholdsRendererConfig {
 }
 
 /**
- * @ignore
  * Configuration for the DonutGaugeThresholdsRenderer
  */
 export interface IDonutGaugeThresholdsRendererConfig extends IRadialRendererConfig, IGaugeThresholdsRendererConfig {}
 
 /**
- * @ignore
  * Configuration for the LinearGaugeThresholdsRenderer
  */
 export interface ILinearGaugeThresholdsRendererConfig extends IRendererConfig, IGaugeThresholdsRendererConfig {}
@@ -209,6 +207,7 @@ export interface IChartMarker {
 
 export interface IChart {
     target?: D3Selection<SVGSVGElement>;
+    configuration?: IChartConfiguration;
     getEventBus(): EventBus<IChartEvent>;
     getDataManager(): DataManager;
     getRenderEngine(): RenderEngine;
@@ -220,6 +219,10 @@ export interface IChart {
     updateDimensions(): void;
     setSeriesStates(renderStateData: IRenderStateData[]): void;
     destroy(): void;
+}
+
+export interface IChartConfiguration {
+    updateDomainForEmptySeries?: boolean;
 }
 
 /** @ignore */

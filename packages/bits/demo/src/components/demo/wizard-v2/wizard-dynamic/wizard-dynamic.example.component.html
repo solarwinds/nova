@@ -7,16 +7,16 @@
             Add dynamic step w/template
         </button>
 
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
         </ng-template>
     </nui-wizard-step-v2>
 
     <nui-wizard-step-v2 *ngIf="enableDynamicStepWithButton" i18n-label label="Added dynamically">
-        <ng-template wizardStepLabel>Dynamic w/button</ng-template>
+        <ng-template nuiWizardStepLabel>Dynamic w/button</ng-template>
         <p i18n>Hi! I'm dynamic step that can be enabled/disabled programmatically via the toggle button under the wizard !</p>
 
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
         </ng-template>
@@ -25,10 +25,10 @@
     <ng-container *ngTemplateOutlet="dynamicStepWithTemplate" ngProjectAs="nui-wizard-step-v2"></ng-container>
     <ng-template #dynamicStepWithTemplate>
         <nui-wizard-step-v2>
-            <ng-template wizardStepLabel>Dynamic w/template</ng-template>
+            <ng-template nuiWizardStepLabel>Dynamic w/template</ng-template>
             <p i18n>Hi! I'm dynamic step added automatically !</p>
 
-            <ng-template wizardStepFooter>
+            <ng-template nuiWizardStepFooter>
                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                 <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
             </ng-template>
@@ -36,9 +36,9 @@
     </ng-template>
 
     <nui-wizard-step-v2 *ngFor="let step of steps">
-        <ng-template wizardStepLabel>{{step.title}}</ng-template>
+        <ng-template nuiWizardStepLabel>{{step.title}}</ng-template>
         <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
-        <ng-template wizardStepFooter>
+        <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
             <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
         </ng-template>

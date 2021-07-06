@@ -1,9 +1,18 @@
 import { Renderer } from "../core/common/renderer";
 import { Scales } from "../core/common/scales/types";
-import { IAccessors, IDataSeries, IPosition } from "../core/common/types";
+import { IAccessors, IDataSeries, IPosition, IRendererEventPayload } from "../core/common/types";
+import { IRenderSeries } from "./types";
+import { Subject } from "rxjs";
+import isUndefined from "lodash/isUndefined";
+import { DATA_POINT_INTERACTION_RESET } from "../constants";
+import { UtilityService } from "../core/common/utility.service";
 
-export abstract class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
+export class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
+    // This is empty to allow this renderer to be used for series that represent metadata that may be shown in the legend but not visualized on the chart.
+    /** See {@link Renderer#draw} */
+    public draw(renderSeries: IRenderSeries<TA>, rendererSubject: Subject<IRendererEventPayload>): void {}
 
+    /** See {@link Renderer#getDataPointPosition} */
     public getDataPointPosition(dataSeries: IDataSeries<TA>, index: number, scales: Scales): IPosition | undefined {
         if (index < 0 || index >= dataSeries.data.length) {
             return undefined;
@@ -19,4 +28,18 @@ export abstract class XYRenderer<TA extends IAccessors> extends Renderer<TA> {
         };
     }
 
+    /** See {@link Renderer#getDataPointIndex} */
+    public getDataPointIndex(series: IDataSeries<TA>, values: { [p: string]: any }, scales: Scales): number {
+        if (isUndefined(values.x)) {
+            return DATA_POINT_INTERACTION_RESET;
+        }
+
+        const index = UtilityService.getClosestIndex(series.data, (d, i) => series.accessors.data?.x?.(d, i, series.data, series), values.x);
+
+        if (isUndefined(index)) {
+            throw new Error("Unable to get data point index");
+        }
+
+        return index;
+    }
 }

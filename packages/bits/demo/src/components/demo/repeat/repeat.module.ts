@@ -6,7 +6,8 @@ import {
     NuiButtonModule,
     NuiDocsModule,
     NuiFormFieldModule,
-    NuiMessageModule, NuiProgressModule,
+    NuiMessageModule,
+    NuiProgressModule,
     NuiRepeatModule,
     NuiSearchModule,
     NuiSwitchModule,
@@ -30,6 +31,7 @@ import {
     RepeatSingleSelectionModeExampleComponent,
     RepeatSingleWithRequiredSelectionModeExampleComponent,
     RepeatTestComponent,
+    RepeatVisualTestComponent,
     RepeatVirtualScrollComponent,
 } from "./index";
 
@@ -51,6 +53,15 @@ const routes = [
     {
         path: "repeat-test",
         component: RepeatTestComponent,
+        data: {
+            "srlc": {
+                "hideIndicator": true,
+            },
+        },
+    },
+    {
+        path: "repeat-visual-test",
+        component: RepeatVisualTestComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -87,6 +98,7 @@ const routes = [
         RepeatSingleSelectionModeExampleComponent,
         RepeatSingleWithRequiredSelectionModeExampleComponent,
         RepeatTestComponent,
+        RepeatVisualTestComponent,
         RepeatReorderItemConfigExampleComponent,
         RepeatDragHandleExampleComponent,
         RepeatVirtualScrollComponent,

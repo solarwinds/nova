@@ -31,7 +31,7 @@
                     </nui-validation-message>
                 </nui-form-field>
                 <!-- content of the footer -->
-                <ng-template wizardStepFooter>
+                <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext; context: { form: 'personDetails' }"></ng-container>
                 </ng-template>
@@ -71,7 +71,7 @@
                     </nui-validation-message>
                 </nui-form-field>
 
-                <ng-template wizardStepFooter>
+                <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext; context: { form: 'contactDetails' }"></ng-container>
@@ -101,7 +101,7 @@
                     </nui-validation-message>
                 </nui-form-field>
 
-                <ng-template wizardStepFooter>
+                <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardSubmit"></ng-container>

@@ -5,13 +5,13 @@
             <!--  content of the 1st step -->
             <nui-wizard-step-v2>
                 <!-- define the label which is displayed on the header stepper -->
-                <ng-template wizardStepLabel>Make step busy</ng-template>
+                <ng-template nuiWizardStepLabel>Make step busy</ng-template>
 
                 <!-- content of the current step -->
                 <p i18n>Welcome!</p>
 
                 <!-- content of the footer -->
-                <ng-template wizardStepFooter>
+                <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
@@ -19,7 +19,7 @@
             <!--  content of the 2nd step -->
             <nui-wizard-step-v2>
                 <!-- define the label which is displayed on the header stepper -->
-                <ng-template wizardStepLabel>Final</ng-template>
+                <ng-template nuiWizardStepLabel>Final</ng-template>
 
                 <!-- content of the current step -->
                 <nui-checkbox name="nui-demo-checkbox"
@@ -38,7 +38,7 @@
                 </nui-checkbox>
 
                 <!-- content of the footer -->
-                <ng-template wizardStepFooter>
+                <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
