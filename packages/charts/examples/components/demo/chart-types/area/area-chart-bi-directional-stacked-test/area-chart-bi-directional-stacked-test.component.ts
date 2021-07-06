@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
 import {
     AreaAccessors,
     AreaRenderer,
@@ -19,48 +19,66 @@ import {
 import moment from "moment/moment";
 
 @Component({
-    selector: "area-chart-bi-directional-stacked-example",
-    templateUrl: "./area-chart-bi-directional-stacked-example.component.html",
+    selector: "area-chart-bi-directional-stacked-test",
+    templateUrl: "./area-chart-bi-directional-stacked-test.component.html",
 })
-export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
+export class AreaChartBiDirectionalStackedTestComponent implements OnInit {
+    @Input()
+    public inverted = false; // cave mode!
+
     public chartTop: Chart;
     public chartAssistTop: ChartAssist;
 
     public chartBottom: Chart;
     public chartAssistBottom: ChartAssist;
 
-    public ngOnInit(): void {
-        // The 'updateDomainForEmptySeries' property on each chart's configuration allows the domains for the chart
-        // to update even if it's empty. This keeps the empty chart's domains synchronized with the opposite chart
-        // in case the opposite chart's domain changes.
+    constructor(public changeDetector: ChangeDetectorRef) {
+    }
+
+    public ngOnInit() {
+        // areaGrid returns an XYGrid configured for displaying an area chart's axes and other grid elements.
         this.chartTop = new Chart(new XYGrid(topChartConfig()), { updateDomainForEmptySeries: true });
         this.chartAssistTop = new ChartAssist(this.chartTop, stackedArea);
 
         this.chartBottom = new Chart(new XYGrid(bottomChartConfig()), { updateDomainForEmptySeries: true });
         this.chartAssistBottom = new ChartAssist(this.chartBottom, stackedArea, this.chartAssistTop.palette, this.chartAssistTop.markers);
-        const accessors = this.createAccessors();
+
+        // Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
+        const accessors = new AreaAccessors();
+        // 'x' defines access for values in the data that correspond to the horizontal axis
+        accessors.data.x = (d) => d.timeStamp;
+        // 'y0' defines the baseline, in other words, where the area starts
+        accessors.data.y0 = () => 0;
+        // 'y1' defines access to the numeric values we want to visualize, in other words, where the area ends
+        accessors.data.y1 = (d) => d.value;
+        // 'x' and 'y' accessors define the position of the marker. 'x' was already defined, so now we need to define 'y' as well.
+        // Notice that the 'y' is assigned the 'absoluteY1' accessor which takes into account areas that may be stacked below
+        // the current area and retrieves the absolute distance from the baseline to the area's value line.
+        accessors.data.y = accessors.data.absoluteY1;
+        // Even though we're using different accessor instances for each series, we want to use the same marker
+        // accessor so that each series is assigned a different marker shape from the same marker sequence.
+        // Take a look also at the marker assignment for the second accessors instance below.
+        accessors.series.marker = this.chartAssistTop.markers.get;
+        accessors.series.color = this.chartAssistTop.palette.standardColors.get;
 
         // The area renderer will make the chart look like an area chart.
         const renderer = new AreaRenderer();
 
-        // We use the same xScale instance on both charts to keep the charts' X domains in sync with each other
         const xScale = new TimeScale();
 
         // In case of an area chart, the scale definitions are flexible.
-        // This example demonstrates a scenario with time on the X scale and a numeric value on the Y scale.
+        // This test demonstrates a scenario with time on the X scale and a numeric value on the Y scale.
         const scalesTop: IXYScales = {
             x: xScale,
-            // Use the standard y-axis scale orientation on the top chart to stack the chart's series in an upward direction starting at the bottom.
-            y: new LinearScale(),
+            y: this.inverted ? new LinearScale().reverse() : new LinearScale(),
         };
 
         const scalesBottom: IXYScales = {
             x: xScale,
-            // Invoke 'reverse' on the bottom y-axis scale to stack the chart's series in a downward direction starting at the top.
-            y: new LinearScale().reverse(),
+            y: this.inverted ? new LinearScale() : new LinearScale().reverse(),
         };
 
-        // Here we assemble a complete chart series set for each chart.
+        // Here we assemble the complete chart series.
         const seriesSetTop: IChartSeries<IAreaAccessors>[] = getDataTop().map(d => ({
             ...d,
             renderer,
@@ -75,8 +93,7 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
             scales: scalesBottom,
         }));
 
-        // We need to replace the default domain calculators to have each chart take the series
-        // on the opposite chart into account when calculating the domains.
+        // We need to replace domain calculators to reflect series on both charts
         const topChartDomainCalculator = domainWithAuxiliarySeries(() => seriesSetBottom, getAutomaticDomain);
         scalesTop.y.domainCalculator = topChartDomainCalculator;
         scalesTop.x.domainCalculator = topChartDomainCalculator;
@@ -90,10 +107,14 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
     }
 
     /**
-     * This function ensures the change in visibility of series is propagated to both charts. The chart that is directly
-     * associated with the series has to be invoked first.
+     * This function ensures the change in visibility of series is propagated to both charts. Chart that is directly associated with the series has to be
+     * invoked first.
+     *
+     * @param legendSeries
+     * @param value
+     * @param currentChartAssist
      */
-    public onSelectedChange(legendSeries: IChartAssistSeries<any>, value: boolean, currentChartAssist: ChartAssist): void {
+    public onSelectedChange(legendSeries: IChartAssistSeries<any>, value: boolean, currentChartAssist: ChartAssist) {
         let chartAssists = [this.chartAssistTop, this.chartAssistBottom];
         if (currentChartAssist === this.chartAssistBottom) {
             chartAssists = chartAssists.reverse();
@@ -101,27 +122,6 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
         for (const ca of chartAssists) {
             ca.toggleSeries(legendSeries.id, value);
         }
-    }
-
-    private createAccessors() {
-        // Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
-        const accessors = new AreaAccessors();
-
-        // 'x' defines access for values in the data that correspond to the horizontal axis
-        accessors.data.x = (d) => d.timeStamp;
-
-        // 'y0' defines the baseline, in other words, where the area starts
-        accessors.data.y0 = () => 0;
-
-        // 'y1' defines access to the numeric values we want to visualize, in other words, where the area ends
-        accessors.data.y1 = (d) => d.value;
-
-        // 'x' and 'y' accessors define the position of the marker. 'x' was already defined, so now we need to define 'y' as well.
-        // Notice that the 'y' is assigned the 'absoluteY1' accessor which takes into account areas that may be stacked below
-        // the current area and retrieves the absolute distance from the baseline to the area's value line.
-        accessors.data.y = accessors.data.absoluteY1;
-
-        return accessors;
     }
 }
 
@@ -146,8 +146,8 @@ function getDataTop() {
 
     return [
         {
-            id: "www-http-ingress",
-            name: "World Wide Web HTTP",
+            id: "up1",
+            name: "Up Speed",
             data: [
                 { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 6 },
                 { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 33 },
@@ -166,8 +166,8 @@ function getDataTop() {
             ],
         },
         {
-            id: "mssql-server-ingress",
-            name: "MSSQL-Server",
+            id: "down1",
+            name: "Dn Speed",
             data: [
                 { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 12 },
                 { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 65 },
@@ -193,8 +193,8 @@ function getDataBottom() {
 
     return [
         {
-            id: "www-http-egress",
-            name: "World Wide Web HTTP",
+            id: "up2",
+            name: "Up Speed",
             data: [
                 { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 6 },
                 { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 33 },
@@ -213,8 +213,8 @@ function getDataBottom() {
             ],
         },
         {
-            id: "mssql-server-egress",
-            name: "MSSQL-Server",
+            id: "down2",
+            name: "Dn Speed",
             data: [
                 { timeStamp: moment("2016-12-25T11:45:29.909Z", format), value: 12 },
                 { timeStamp: moment("2016-12-25T12:10:29.909Z", format), value: 65 },

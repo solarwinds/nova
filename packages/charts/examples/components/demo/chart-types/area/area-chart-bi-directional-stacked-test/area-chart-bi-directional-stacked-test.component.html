@@ -1,7 +1,5 @@
 <div class="nui-chart-layout">
-    <div class="axis-label-left" i18n>Ingress/Egress</div>
     <div class="chart">
-        <!-- Set the 'nuiChartCollectionId' directive to the same value on each chart for mirroring interaction events such as hover. -->
         <nui-chart class="w-100" [chart]="chartAssistTop.chart" nuiChartCollectionId="bi-di-stacked-area"></nui-chart>
     </div>
     <div class="legend">
@@ -10,7 +8,6 @@
 </div>
 <div class="nui-chart-layout">
     <div class="chart">
-        <!-- Set the 'nuiChartCollectionId' directive to the same value on each chart for mirroring interaction events such as hover. -->
         <nui-chart class="w-100" [chart]="chartAssistBottom.chart" nuiChartCollectionId="bi-di-stacked-area"></nui-chart>
     </div>
     <div class="legend">
@@ -19,7 +16,7 @@
 </div>
 
 <ng-template #legend let-chartAssist="chartAssist">
-    <nui-legend seriesUnitLabel="GB" i18n-seriesUnitLabel
+    <nui-legend seriesUnitLabel="Mbps" i18n-seriesUnitLabel
                 [active]="chartAssist.isLegendActive"
                 [interactive]="true"
                 (mouseleave)="chartAssist.resetVisibleSeries()">

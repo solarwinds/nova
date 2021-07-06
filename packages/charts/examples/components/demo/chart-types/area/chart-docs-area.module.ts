@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
@@ -7,6 +8,11 @@ import { NuiChartsModule } from "@nova-ui/charts";
 import { DemoCommonModule } from "../../common/demo-common.module";
 
 import { AreaChartBasicExampleComponent } from "./area-chart-basic/area-chart-basic-example.component";
+import { AreaChartBiDirectionalStackedInvertedExampleComponent } from "./area-chart-bi-directional-stacked-inverted/area-chart-bi-directional-stacked-inverted-example.component";
+import { AreaChartBiDirectionalStackedTestComponent } from "./area-chart-bi-directional-stacked-test/area-chart-bi-directional-stacked-test.component";
+import { AreaChartBiDirectionalStackedVisualTestComponent }
+    from "./area-chart-bi-directional-stacked-test/area-chart-bi-directional-stacked-visual-test.component";
+import { AreaChartBiDirectionalStackedExampleComponent } from "./area-chart-bi-directional-stacked/area-chart-bi-directional-stacked-example.component";
 import { AreaChartBiDirectionalExampleComponent } from "./area-chart-bi-directional/area-chart-bi-directional-example.component";
 import { AreaChartStackPercentageExampleComponent } from "./area-chart-stack-percentage/area-chart-stack-percentage-example.component";
 import { AreaChartStackExampleComponent } from "./area-chart-stack/area-chart-stack-example.component";
@@ -14,7 +20,7 @@ import { AreaChartVariableBaselineExampleComponent } from "./area-chart-variable
 import { AreaChartVerticalExampleComponent } from "./area-chart-vertical/area-chart-vertical-example.component";
 import { ChartDocsAreaComponent } from "./chart-docs-area.component";
 import { AreaChartTestComponent } from "./test/area-chart-test.component";
-import { AreaChartBiDirectionalStackedExampleComponent } from "./area-chart-bi-directional-stacked/area-chart-bi-directional-stacked-example.component";
+/* eslint-enable max-len */
 
 const exampleRoutes: Routes = [
     {
@@ -30,15 +36,6 @@ const exampleRoutes: Routes = [
     {
         path: "basic",
         component: AreaChartBasicExampleComponent,
-        data: {
-            srlc: {
-                hideIndicator: true,
-            },
-        },
-    },
-    {
-        path: "bi-directional",
-        component: AreaChartBiDirectionalExampleComponent,
         data: {
             srlc: {
                 hideIndicator: true,
@@ -82,8 +79,35 @@ const exampleRoutes: Routes = [
         },
     },
     {
+        path: "bi-directional",
+        component: AreaChartBiDirectionalExampleComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
         path: "bi-directional-stacked",
         component: AreaChartBiDirectionalStackedExampleComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
+        path: "bi-directional-stacked-inverted",
+        component: AreaChartBiDirectionalStackedInvertedExampleComponent,
+        data: {
+            srlc: {
+                hideIndicator: true,
+            },
+        },
+    },
+    {
+        path: "bi-directional-stacked-test",
+        component: AreaChartBiDirectionalStackedVisualTestComponent,
         data: {
             srlc: {
                 hideIndicator: true,
@@ -98,11 +122,14 @@ const exampleRoutes: Routes = [
         AreaChartBasicExampleComponent,
         AreaChartBiDirectionalExampleComponent,
         AreaChartBiDirectionalStackedExampleComponent,
+        AreaChartBiDirectionalStackedInvertedExampleComponent,
         AreaChartVariableBaselineExampleComponent,
         AreaChartVerticalExampleComponent,
         AreaChartStackExampleComponent,
         AreaChartStackPercentageExampleComponent,
         AreaChartTestComponent,
+        AreaChartBiDirectionalStackedTestComponent,
+        AreaChartBiDirectionalStackedVisualTestComponent,
     ],
     imports: [
         DemoCommonModule,

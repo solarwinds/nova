@@ -19,10 +19,10 @@ import {
 import moment from "moment/moment";
 
 @Component({
-    selector: "area-chart-bi-directional-stacked-example",
-    templateUrl: "./area-chart-bi-directional-stacked-example.component.html",
+    selector: "area-chart-bi-directional-stacked-inverted-example",
+    templateUrl: "./area-chart-bi-directional-stacked-inverted-example.component.html",
 })
-export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
+export class AreaChartBiDirectionalStackedInvertedExampleComponent implements OnInit {
     public chartTop: Chart;
     public chartAssistTop: ChartAssist;
 
@@ -30,34 +30,28 @@ export class AreaChartBiDirectionalStackedExampleComponent implements OnInit {
     public chartAssistBottom: ChartAssist;
 
     public ngOnInit(): void {
-        // The 'updateDomainForEmptySeries' property on each chart's configuration allows the domains for the chart
-        // to update even if it's empty. This keeps the empty chart's domains synchronized with the opposite chart
-        // in case the opposite chart's domain changes.
         this.chartTop = new Chart(new XYGrid(topChartConfig()), { updateDomainForEmptySeries: true });
         this.chartAssistTop = new ChartAssist(this.chartTop, stackedArea);
 
         this.chartBottom = new Chart(new XYGrid(bottomChartConfig()), { updateDomainForEmptySeries: true });
         this.chartAssistBottom = new ChartAssist(this.chartBottom, stackedArea, this.chartAssistTop.palette, this.chartAssistTop.markers);
         const accessors = this.createAccessors();
-
-        // The area renderer will make the chart look like an area chart.
         const renderer = new AreaRenderer();
-
-        // We use the same xScale instance on both charts to keep the charts' X domains in sync with each other
         const xScale = new TimeScale();
 
-        // In case of an area chart, the scale definitions are flexible.
-        // This example demonstrates a scenario with time on the X scale and a numeric value on the Y scale.
+        /**
+         * Scale Reversal for Inverted Stacks
+         */
         const scalesTop: IXYScales = {
             x: xScale,
-            // Use the standard y-axis scale orientation on the top chart to stack the chart's series in an upward direction starting at the bottom.
-            y: new LinearScale(),
+            // Invoke 'reverse' on the top chart's y-axis scale to stack the chart's series in a downward direction starting at the top.
+            y: new LinearScale().reverse(),
         };
 
         const scalesBottom: IXYScales = {
             x: xScale,
-            // Invoke 'reverse' on the bottom y-axis scale to stack the chart's series in a downward direction starting at the top.
-            y: new LinearScale().reverse(),
+            // Use the standard y-axis scale orientation on the bottom chart to stack the chart's series in an upward direction starting at the bottom.
+            y: new LinearScale(),
         };
 
         // Here we assemble a complete chart series set for each chart.
