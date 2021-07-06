@@ -37,6 +37,12 @@
         width: @icon-size-default;
         position: relative;
 
+        // When inside a popover, we should properly align the icon within its own container
+        .nui-popover-container__content & {
+            display: flex;
+            align-self: flex-end;
+        }
+
         &-content {
             font-size: @icon-size-default;
             height: @icon-size-default;
@@ -72,6 +78,11 @@
 
         &--selected {
             .setCssVariable(color, nui-color-text-default);
+        }
+
+        // If header is inside the popover we need to get rig of extra padding to properly center the item
+        .nui-popover-container__content & {
+            padding: 0;
         }
     }
 

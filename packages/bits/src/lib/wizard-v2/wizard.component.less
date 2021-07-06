@@ -20,6 +20,8 @@
         max-height: @wizard-header-max-height;
         align-items: center;
 
+        // When inside the popover, we change the markup for the headers to have the icon flowing ahead of the label,
+        // according to ux mockups
         .nui-popover-container__content & {
             flex-flow: row-reverse;
             justify-content: flex-end;
@@ -65,15 +67,20 @@
         align-items: center;
         .setCssVariable(background-color, nui-color-bg-secondary);
         .setCssVariable(border-color, nui-color-line-default);
-        .no-select();        
+        .no-select();
     }
 
     &-header-wrapper {
         position: relative;
 
+        // When inside the popover, we need to have a proper spacing between the headers
         .nui-popover-container__content & {
             &:not(:last-child) {
                 margin-bottom: @nui-space-xs;
+            }
+
+            &:hover {
+                .setCssVariable(background-color, nui-color-bg-secondary);
             }
         }
     }
@@ -94,11 +101,13 @@
             position: absolute;
         }
 
+        // When inside the popover, we should transform the horizontal connector line into a vertical one
+        // and position it properly with respect to sibling header elements
         .nui-popover-container__content & {
             position: absolute;
-            top: -8px;
+            top: -6px;
             left: 7px;
-            height: 8px;
+            height: 6px;
             border-left-width: @nui-line-default;
             border-left-style: solid;
             border-top: none;

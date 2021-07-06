@@ -56,20 +56,21 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
     static ngAcceptInputTypeCompleted: BooleanInput = undefined;
     static ngAcceptInputTypeHasError: BooleanInput = undefined;
 
-    private headerResizeObserver: ResizeObserver;
-    private dynamicSteps: WizardStepV2Component[] = [];
-    private stepsCachedArray: WizardStepV2Component[] = [];
-    private dynamicStepWidthAdjustment: number = 0;
-
     public hasOverflow = false;
     public isInResponsiveMode = false;
-    public headerContainerWidth: number = 0;
-    public stepHeaderWidth: number = 0;
-    public overflowComponentWidth: number = 0;
     public allHeadersWidth: number = 0;
     public visibleSteps: Array<WizardStepV2Component> = [];
     public overflownStepsStart: Array<WizardStepV2Component> = [];
     public overflownStepsEnd: Array<WizardStepV2Component> = [];
+
+    private headerResizeObserver: ResizeObserver;
+    private dynamicSteps: WizardStepV2Component[] = [];
+    private stepsCachedArray: WizardStepV2Component[] = [];
+    private dynamicStepWidthAdjustment: number = 0;
+    private headerPaddings: number = 0;
+    private stepHeaderWidth: number = 0;
+    private headerContainerWidth: number = 0;
+    private overflowComponentWidth: number = 0;
     
     public get selectedIndex(): number {
         return super.selectedIndex;
@@ -104,11 +105,13 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
 
         this.stepsCachedArray = [...this.stepsArray];
 
+        // Initial checking if there is an overflow and determining some values we'll use in calculations later
         this.checkHeadingsView();
         this.cdRef.detectChanges();
 
         this.overflowComponentWidth = this.overflowComponents?.first?.el?.nativeElement?.getBoundingClientRect()?.width || 0;
 
+        // This handles how headers are processed during the resize process
         this.headerResizeObserver = new ResizeObserver((entry: ResizeObserverEntry[]) => {
             this.zone.run(() => {
                 if (!this.hasOverflow) {
@@ -120,6 +123,11 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
             });
         });
 
+        // Steps change event is triggered every time we navigate through the steps AND when dynamic steps are being added/removed (or anything else
+        // happens in the scope of the current step's view). We only need to rebuild the headers view if there are any changes connected with dynamic steps.
+        // Otherwise, we don't do anything. We also have to track whether any of the dynamic steps were added or not on every event run, because we don't
+        // know when exactly user will attempt to add a dynamic step. If this happens, we need to also adjust the width of all the header items with respect
+        // to the added step to properly track the overflow, as it can happen when the dynamic step is added.
         this.steps.changes.pipe(takeUntil(this._destroyed)).subscribe(() => {
             this.checkDynamicSteps();
 
@@ -128,6 +136,10 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
             }
 
             this.dynamicStepWidthAdjustment = this.stepsArray.includes(this.dynamicSteps[0]) ? this.stepHeaderWidth : 0;
+
+            // We keep the cached array intact to properly tack when dynamic steps are added. Multiple dynamic steps may be added,
+            // but we're only interested in the latest one, because the rest will be hidden under the overflow elements, if there is
+            // no room for them among the visible items
             this.stepsCachedArray = [...this.stepsArray];
         });
 
@@ -135,6 +147,7 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
             .pipe(takeUntil(this._destroyed))
             .subscribe((event: StepperSelectionEvent) => {
 
+                // This describes the navigation between the headers in a visible and hidden areas in the responsive mode.
                 if (this.hasOverflow) {
                     if (event.previouslySelectedIndex < event.selectedIndex) {
                         if (this.overflownStepsEnd.length) {
@@ -172,6 +185,9 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
                     this.visibleSteps = this.stepsArray.slice(-numberOfVisibleItems);
                     this.overflownStepsStart = this.stepsArray.slice(0, -numberOfVisibleItems);
 
+                    // This covers an edge case with the saved wizard state. It can happen that the active element
+                    // appears inside the hidden list of items, when the dynamnic steps are re-added.
+                    // We make it visible again by retrieving it back to the visible items array
                     if (this.overflownStepsStart.length && !this.isCurrentStepVisible) {
                         do {
                             this.takeLastAddFirst(this.overflownStepsStart, this.visibleSteps);
@@ -197,10 +213,6 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
 
     private get numberOfVisibleItems(): number {
         return Math.ceil((this.headerContainerWidth - this.headerPaddings * 2) / this.stepHeaderWidth) - 1;
-    }
-
-    private get headerPaddings(): number {
-        return +getComputedStyle(this.headerContainer.nativeElement).paddingLeft.slice(0, -2);
     }
 
     private handleDynamicHeaderChanges(visibleItemsNUmber: number) {
@@ -238,8 +250,15 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
 
     private checkHeadingsView() {
         this.checkHeaderWidth();
+        this.checkHeaderPaddings();
         this.getWidthsForCalculations();
         this.handleOverflow();
+    }
+
+    private checkHeaderPaddings(): void {
+        if (!this.headerPaddings) {
+            this.headerPaddings = +getComputedStyle(this.headerContainer.nativeElement).paddingLeft.slice(0, -2);
+        }
     }
 
     private checkHeaderWidth() {
