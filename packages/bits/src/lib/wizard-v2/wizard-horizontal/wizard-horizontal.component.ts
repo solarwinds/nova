@@ -238,6 +238,7 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         if (this.stepsArray.length < this.stepsCachedArray.length) {
             this.dynamicSteps = without(this.stepsCachedArray, ...this.stepsArray);
 
+            // If there are no dynamic items left in the main array we need to clean up the visual items array
             if (!this.stepsArray.includes(this.dynamicSteps[0])) {
                 pull(this.visibleSteps, ...this.dynamicSteps);
             }
