@@ -1,5 +1,6 @@
 <div class="nui-wizard-horizontal-header-container" #headerContainer>
 
+    <!--  Left overflow container -->
     <ng-container *ngIf="isInResponsiveMode && overflownStepsStart.length">
         <nui-wizard-overflow
             #overflowComponent
@@ -19,10 +20,12 @@
         </ng-template>
     </ng-container>
 
+    <!--  Visible items container -->
     <div class="nui-wizard-horizontal-header-wrapper" *ngFor="let step of (isInResponsiveMode ? visibleSteps: steps); let i = index; let isFirst = first">
         <ng-template *ngTemplateOutlet="stepHeaderWithLines; context: { $implicit: steps, step: step, i: overflownStepsStart.length + i, isFirst: isFirst }"></ng-template>
     </div>
 
+    <!--  Right overflow container -->
     <ng-container *ngIf="isInResponsiveMode && overflownStepsEnd.length">
         <nui-wizard-overflow
             #overflowComponent
