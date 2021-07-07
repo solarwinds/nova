@@ -36,12 +36,43 @@ describe("components >", () => {
 
             fixture = TestBed.createComponent(TestWrapperComponent);
             component = fixture.debugElement.children[0].componentInstance;
+
+            fixture.detectChanges();
         });
 
         describe("ngOnInit", () => {
             it("should set linear true", () => {
                 component.ngOnInit();
                 expect(component["linear"]).toBeTrue();
+            });
+        });
+
+        describe("ngAfterViewInit", () => {
+            it("should cache the steps array", () => {
+                expect(component["stepsCachedArray"].length).toBe(2);
+            });
+
+            it("should call checkHeadingsView()", () => {
+                const spy = spyOn(component, "checkHeadingsView" as never);
+
+                component.ngAfterViewInit();
+                expect(spy).toHaveBeenCalled();
+            });
+
+            it("should add ResizeObserver subscription", () => {
+                const oldObservers = component.selectionChange.observers.length;
+
+                component.ngAfterViewInit();
+                expect(component.selectionChange.observers.length).toBeGreaterThan(oldObservers);
+            });
+        });
+
+        describe("ngOnDestroy", () => {
+            it("should unsubscribe from the resize observer", () => {
+                const spy = spyOn(component["headerResizeObserver"], "disconnect");
+
+                component.ngOnDestroy();
+                expect(spy).toHaveBeenCalled();
             });
         });
     });
