@@ -18,6 +18,7 @@ import { WizardStepLabelDirective } from "../wizard-step-label.directive";
 import { WIZARD_CONFIG, WIZARD_CONFIG_DEFAULT } from "../../../constants/wizard.constants";
 import { IWizardConfig, WizardStepStateConfig } from "../types";
 import assign from "lodash/assign";
+import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
 
 @Component({
     selector: "nui-wizard-step-header",
@@ -26,7 +27,7 @@ import assign from "lodash/assign";
     host: {
         "class": "nui-wizard-step-header",
         "[class.nui-wizard-step-header--selected]": "selected",
-        "[class.nui-wizard-step-header--optional]": "optional",
+        "[class.nui-wizard-step-header--optional]": "step.optional",
         "[class.nui-wizard-step-header--completed]": "stepState === 'done'",
         "role": "tab",
     },
@@ -35,7 +36,7 @@ import assign from "lodash/assign";
 })
 export class WizardStepHeaderComponent extends CdkStepHeader implements AfterViewInit, OnDestroy, OnChanges {
     /** State of the given step. */
-    @Input() stepState: StepState;
+    public stepState: StepState;
 
     /** Custom icon config received from the wizard step. Allows to customize state icons for a particular wizard step */
     @Input() stepStateConfig: Partial<WizardStepStateConfig>;
@@ -55,14 +56,10 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
     /** Whether the given step is selected. */
     @Input() selected: boolean;
 
-    /** Whether the given step is completed. */
-    @Input() completed: boolean;
-
     /** Whether the given step label is active. */
     @Input() active: boolean;
 
-    /** Whether the given step is optional. */
-    @Input() optional: boolean;
+    @Input() step: WizardStepV2Component;
 
     public stepStateConfigMap: WizardStepStateConfig;
 
@@ -87,6 +84,8 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
             this.updateStepStateConfig(changes?.stepStateConfig?.currentValue);
             this.createStepStateConfigMap();
         }
+
+        this.stepState = this.getStepState(this.step);
     }
 
     ngAfterViewInit(): void {
@@ -123,5 +122,23 @@ export class WizardStepHeaderComponent extends CdkStepHeader implements AfterVie
             [STEP_STATE.EDIT]: this.wizardConfig.stepState?.active,
             [STEP_STATE.ERROR]: this.wizardConfig.stepState?.error,
         }
+    }
+
+    private getStepState(step: WizardStepV2Component): StepState {
+        const isSelected = this.selected;
+
+        if (step.hasError && isSelected) {
+            return STEP_STATE.ERROR;
+        }
+
+        if (isSelected) {
+            return STEP_STATE.EDIT;
+        }
+
+        if (step.completed) {
+            return STEP_STATE.DONE;
+        }
+
+        return STEP_STATE.NUMBER;
     }
 }
