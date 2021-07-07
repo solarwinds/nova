@@ -4,6 +4,7 @@ import {
     TemplateRef,
     ViewChild,
 } from "@angular/core";
+import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
 
 interface IWizardStepData {
     title: string;
@@ -18,16 +19,34 @@ export class WizardRemoveStepExampleComponent implements AfterViewInit {
     public steps: IWizardStepData[] = [];
 
     @ViewChild("normalStep") normalStep: TemplateRef<string>;
+    @ViewChild("wizard") private wizard: WizardHorizontalComponent;
 
-    public ngAfterViewInit(): void {
-        this.addStep(this.normalStep, $localize `Normal step`);
+    constructor(private toastService: ToastService) {
     }
 
-    public addStep(templateRef: TemplateRef<string>, title?: string) {
-        this.steps.push({title: title ?? `Dynamic Step`, templateRef: templateRef});
+    public ngAfterViewInit(): void {
+        this.addStep(this.normalStep, $localize`Normal step`);
+    }
+
+    public addStep(templateRef: TemplateRef<string>, title?: string): void {
+        this.steps.push({ title: title ?? `Dynamic Step`, templateRef: templateRef });
     }
 
     public removeStep(index: number): void {
         this.steps.splice(index, 1);
+    }
+
+    public resetWizard(): void {
+        this.wizard.reset();
+    }
+
+    public finishWizard(): void {
+        this.toastService.success({
+            title: $localize`Success`,
+            message: $localize`Wizard has completed successfully`,
+            options: {
+                timeOut: 2000,
+            },
+        });
     }
 }

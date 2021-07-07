@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { of } from "rxjs";
 import { delay, take } from "rxjs/operators";
-import { WizardHorizontalComponent, WizardStepV2Component } from "@nova-ui/bits";
+import { ToastService, WizardHorizontalComponent, WizardStepV2Component } from "@nova-ui/bits";
 
 const fakeAsyncValidator = (c: FormControl) => of(null).pipe(delay(4000));
 
@@ -12,25 +12,27 @@ const fakeAsyncValidator = (c: FormControl) => of(null).pipe(delay(4000));
 })
 export class WizardAsyncFormValidationExampleComponent implements OnInit {
     public busy: boolean;
-
     public form: FormGroup;
 
     @ViewChild("wizard") wizard: WizardHorizontalComponent;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        private toastService: ToastService
+    ) { }
 
     ngOnInit(): void {
         this.form = new FormGroup({
-            "personDetails": this.formBuilder.group({
-                "name": [
+            personDetails: this.formBuilder.group({
+                name: [
                     "",
                     [Validators.required, Validators.minLength(3)],
                     [fakeAsyncValidator],
                 ],
             }),
-            "contactDetails": this.formBuilder.group({
-                "email": ["", [Validators.required, Validators.email]],
-                "phone": [""],
+            contactDetails: this.formBuilder.group({
+                email: ["", [Validators.required, Validators.email]],
+                phone: [""],
             }),
         });
     }
@@ -45,13 +47,25 @@ export class WizardAsyncFormValidationExampleComponent implements OnInit {
         }
 
         this.busy = true;
-        stepControl.statusChanges
-            .pipe(take(1))
-            .subscribe((status) => {
-                if (status === "VALID") {
-                    this.wizard.next();
-                    this.busy = false;
-                }
-            });
+        stepControl.statusChanges.pipe(take(1)).subscribe((status) => {
+            if (status === "VALID") {
+                this.wizard.next();
+                this.busy = false;
+            }
+        });
+    }
+
+    public finishWizard(): void {
+        this.toastService.success({
+            title: $localize`Success`,
+            message: $localize`Wizard has completed successfully`,
+            options: {
+                timeOut: 2000,
+            },
+        });
+    }
+
+    public resetWizard(): void {
+        this.wizard.reset();
     }
 }

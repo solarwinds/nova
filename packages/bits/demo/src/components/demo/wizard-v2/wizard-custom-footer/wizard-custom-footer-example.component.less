@@ -1,24 +1,29 @@
 .custom-footer {
     width: 100%;
     padding: 10px;
-    border: 5px transparent solid;
+    border: 1px transparent dashed;
     color: white;
+    display: flex;
 
     &.step_1 {
-        border-color: red;
-        button {
-            float: left;
+        border-color: orange;
+
+        .btn-custom {
+            margin-right: auto;
         }
     }
 
     &.step_2 {
         border-color: green;
-        button {
-            float: right;
-        }
+    }
+
+    span {
+        color: black;
+        line-height: 30px;
+        margin-right: auto;
     }
 
     button {
-        min-width: 100px;
+        margin-left: 15px;
     }
 }

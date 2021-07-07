@@ -8,7 +8,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { wizardAnimations, WizardDirective, WizardStepV2Component } from "@nova-ui/bits";
+import { WizardDirective, WizardStepV2Component } from "@nova-ui/bits";
 import { tap } from "rxjs/operators";
 
 @Component({
@@ -19,22 +19,21 @@ import { tap } from "rxjs/operators";
         "class": "nui-wizard-custom-layout",
         "aria-orientation": "horizontal",
     },
-    animations: [wizardAnimations.horizontalStepTransition],
     providers: [
-        {provide: WizardDirective, useExisting: WizardCustomComponent},
-        {provide: CdkStepper, useExisting: WizardCustomComponent},
+        { provide: WizardDirective, useExisting: WizardCustomComponent },
+        { provide: CdkStepper, useExisting: WizardCustomComponent },
     ],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardCustomComponent extends WizardDirective {}
+export class WizardCustomComponent extends WizardDirective { }
 
 @Component({
     selector: "nui-wizard-custom-example",
     templateUrl: "./wizard-custom-example.component.html",
     styleUrls: ["wizard-custom.component.less"],
     providers: [{
-        provide: STEPPER_GLOBAL_OPTIONS, useValue: {displayDefaultIndicatorType: false},
+        provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false },
     }],
 })
 export class WizardCustomExampleComponent implements OnInit, AfterViewInit {
@@ -45,9 +44,9 @@ export class WizardCustomExampleComponent implements OnInit, AfterViewInit {
 
     @ViewChild("wizard") wizard: WizardCustomComponent;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.formGroup = new FormGroup({
             "personDetails": this.formBuilder.group({
                 "name": ["", [Validators.required, Validators.minLength(3)]],
@@ -63,7 +62,7 @@ export class WizardCustomExampleComponent implements OnInit, AfterViewInit {
         });
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         const update = (selectedIndex?: number, steps?: number) => {
             setTimeout(() => {
                 if (steps) {
@@ -89,7 +88,7 @@ export class WizardCustomExampleComponent implements OnInit, AfterViewInit {
         ).subscribe();
     }
 
-    validate(step: WizardStepV2Component) {
+    validate(step: WizardStepV2Component): void {
         // mark all fields from current step as touched
         // in order to display the validation messages
         Object.keys((step.stepControl as FormGroup)?.controls || {})

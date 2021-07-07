@@ -2,7 +2,6 @@ import {BooleanInput} from "@angular/cdk/coercion";
 import {CdkStepper} from "@angular/cdk/stepper";
 import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from "@angular/core";
 
-import {wizardAnimations} from "../wizard-animations/wizard-animations";
 import { WizardDirective } from "../wizard.directive";
 
 @Component({
@@ -17,7 +16,6 @@ import { WizardDirective } from "../wizard.directive";
         "aria-orientation": "horizontal",
         "role": "tablist",
     },
-    animations: [wizardAnimations.horizontalStepTransition],
     providers: [
         {provide: WizardDirective, useExisting: WizardHorizontalComponent},
         {provide: CdkStepper, useExisting: WizardHorizontalComponent},

@@ -1,20 +1,21 @@
-import {Component, Inject, OnDestroy, TemplateRef} from "@angular/core";
+import { Component, Inject, OnDestroy, TemplateRef } from "@angular/core";
 import {
     DialogService,
     NuiDialogRef,
     OverlayComponent,
+    ToastService,
     WizardHorizontalComponent,
 } from "@nova-ui/bits";
-import {FlexibleConnectedPositionStrategy, OverlayRef} from "@angular/cdk/overlay";
-import {takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
+import { FlexibleConnectedPositionStrategy, OverlayRef } from "@angular/cdk/overlay";
+import { takeUntil } from "rxjs/operators";
+import { Subject } from "rxjs";
 
 @Component({
     selector: "nui-wizard-v2-dialog-example",
     templateUrl: "./wizard-dialog.example.component.html",
     styleUrls: ["./wizard-dialog.example.component.less"],
 })
-export class WizardDialogExampleComponent implements OnDestroy{
+export class WizardDialogExampleComponent implements OnDestroy {
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
 
@@ -22,10 +23,18 @@ export class WizardDialogExampleComponent implements OnDestroy{
     public busy: boolean = false;
     public activeDialog: NuiDialogRef;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        private toastService: ToastService
+    ) { }
 
-    public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
-    public selectedVegetables = [$localize `Potato`, $localize `Tomato`];
+    public vegetables = [
+        $localize`Cabbage`,
+        $localize`Potato`,
+        $localize`Tomato`,
+        $localize`Carrot`,
+    ];
+    public selectedVegetables = [$localize`Potato`, $localize`Tomato`];
 
     public isChecked(vegetable: string): boolean {
         return this.selectedVegetables.indexOf(vegetable) > -1;
@@ -85,7 +94,7 @@ export class WizardDialogExampleComponent implements OnDestroy{
     }
 
     public open(content: TemplateRef<string>): void {
-        this.activeDialog = this.dialogService.open(content, {size: "lg", backdrop: "static", useOverlay: true});
+        this.activeDialog = this.dialogService.open(content, { size: "lg", backdrop: "static", useOverlay: true });
     }
 
     public actionDone(): void {
@@ -94,6 +103,16 @@ export class WizardDialogExampleComponent implements OnDestroy{
 
     public onContainerResize(overlay: OverlayComponent): void {
         this.updateOverlayDimensions(overlay);
+    }
+
+    public finishWizard(): void {
+        this.toastService.success({
+            title: $localize`Success`,
+            message: $localize`Wizard has completed successfully`,
+            options: {
+                timeOut: 2000,
+            },
+        });
     }
 
     public ngOnDestroy(): void {

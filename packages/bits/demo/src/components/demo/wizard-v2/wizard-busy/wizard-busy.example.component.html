@@ -1,6 +1,6 @@
 <div nui-busy [busy]="busy" class="example-container">
     <div class="busy-content">
-        <nui-wizard-horizontal>
+        <nui-wizard-horizontal #wizard>
 
             <!--  content of the 1st step -->
             <nui-wizard-step-v2>
@@ -8,10 +8,11 @@
                 <ng-template nuiWizardStepLabel>Make step busy</ng-template>
 
                 <!-- content of the current step -->
-                <p i18n>Welcome!</p>
+                <p class="m-5" i18n>Welcome!</p>
 
                 <!-- content of the footer -->
                 <ng-template nuiWizardStepFooter>
+                    <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
                 </ng-template>
             </nui-wizard-step-v2>
@@ -22,26 +23,38 @@
                 <ng-template nuiWizardStepLabel>Final</ng-template>
 
                 <!-- content of the current step -->
-                <nui-checkbox name="nui-demo-checkbox"
-                              i18n-title
-                              title="Check box with help text"
-                              i18n-hint
-                              hint="This is some help text"
-                              required="true"
-                              [value]="false"
-                              i18n>Check box with help text
-                </nui-checkbox>
-                <nui-checkbox name="nui-demo-checkbox-plain"
-                              [checked]="true"
-                              [value]="false"
-                              i18n>Plain checkbox
-                </nui-checkbox>
+                <div class="p-5">
+                    <nui-checkbox name="nui-demo-checkbox"
+                                i18n-title
+                                title="Check box with help text"
+                                i18n-hint
+                                hint="This is some help text"
+                                required="true"
+                                [value]="false"
+                                i18n>Check box with help text
+                    </nui-checkbox>
+                    <nui-checkbox name="nui-demo-checkbox-plain"
+                                [checked]="true"
+                                [value]="false"
+                                i18n>Plain checkbox
+                    </nui-checkbox>
+                </div>
 
                 <!-- content of the footer -->
                 <ng-template nuiWizardStepFooter>
+                    <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+                    <button type="button" displayStyle="primary" nui-button (click)="finishWizard()" i18n>
+                        Finish
+                    </button>
                 </ng-template>
             </nui-wizard-step-v2>
+
+            <ng-template #wizardCancel>
+                <button type="button" displayStyle="action" nui-button (click)="resetWizard()" i18n>
+                    Cancel
+                </button>
+            </ng-template>
 
             <ng-template #wizardPrevious>
                 <button type="button" nuiWizardPrevious nui-button icon="caret-left">
