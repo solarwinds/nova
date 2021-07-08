@@ -66,8 +66,8 @@
   "peerDependencies": {
     "@nova-ui/bits": "~11.8.0-0",
     "@nova-ui/charts": "~11.8.0-0",
-    "@schematics/angular": "^11.1.4",
-    "angular-gridster2": "^11.0.1",
+    "@schematics/angular": "^11.1.4 || ^12.0.0",
+    "angular-gridster2": "^11.0.1 || ^12.0.0",
     "d3": "^5.9.2",
     "d3-selection-multi": "^1.0.1"
   },
