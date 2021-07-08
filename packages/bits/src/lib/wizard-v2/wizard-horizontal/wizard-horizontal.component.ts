@@ -226,7 +226,7 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         }
     }
 
-    private checkDynamicSteps() {
+    private checkDynamicSteps(): void {
         if (this.stepsArray.length > this.stepsCachedArray.length) {
             this.dynamicSteps = without(this.stepsArray, ...this.stepsCachedArray);
         }
@@ -245,7 +245,7 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         }
     }
 
-    private checkHeadingsView() {
+    private checkHeadingsView(): void {
         this.checkHeaderWidth();
         this.checkHeaderPaddings();
         this.getWidthsForCalculations();
@@ -258,13 +258,13 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         }
     }
 
-    private checkHeaderWidth() {
+    private checkHeaderWidth(): void {
         if (!this.stepHeaderWidth) {
             this.stepHeaderWidth = this.stepHeaders.first?._elementRef?.nativeElement?.getBoundingClientRect().width || 0;
         }
     }
 
-    private getWidthsForCalculations() {
+    private getWidthsForCalculations(): void {
         this.headerContainerWidth = this.headerContainer.nativeElement?.getBoundingClientRect().width;
         this.allHeadersWidth = this.stepHeaderWidth * this.steps.length;
     }
@@ -277,15 +277,15 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         this.isInResponsiveMode = !!this.overflownStepsStart.length || !!this.overflownStepsEnd.length;
     }
 
-    private takeLastAddFirst(source: Array<any>, target: Array<any>) {
+    private takeLastAddFirst(source: Array<any>, target: Array<any>): void {
         target.unshift(source.splice(-1, 1)[0]);
     }
 
-    private takeFirstAddLast(source: Array<any>, target: Array<any>) {
+    private takeFirstAddLast(source: Array<any>, target: Array<any>): void {
         target.push(source.splice(0, 1)[0]);
     }
 
-    private onContainerResize(entry: ResizeObserverEntry) {
+    private onContainerResize(entry: ResizeObserverEntry): void {
         this.checkOverflow();
 
         const newWidth = entry.contentRect.width;
