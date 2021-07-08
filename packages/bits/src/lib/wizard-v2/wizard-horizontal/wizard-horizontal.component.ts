@@ -185,12 +185,11 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
                     // This covers an edge case with the saved wizard state. It can happen that the active element
                     // appears inside the hidden list of items, when the dynamnic steps are re-added.
                     // We make it visible again by retrieving it back to the visible items array
-                    if (this.overflownStepsStart.length && !this.isCurrentStepVisible) {
-                        do {
+                    if (this.overflownStepsStart.length) {
+                        while(!this.isCurrentStepVisible) {
                             this.takeLastAddFirst(this.overflownStepsStart, this.visibleSteps);
                             this.takeLastAddFirst(this.visibleSteps, this.overflownStepsEnd);
                         }
-                        while(!this.isCurrentStepVisible)
                     }
                 } else {
                     this.visibleSteps = this.stepsArray.slice(0, numberOfVisibleItems);
@@ -212,7 +211,7 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
         return Math.ceil((this.headerContainerWidth - this.headerPaddings * 2) / this.stepHeaderWidth) - 1;
     }
 
-    private handleDynamicHeaderChanges(visibleItemsNUmber: number) {
+    private handleDynamicHeaderChanges(visibleItemsNUmber: number): void {
         const arr: WizardStepV2Component[] = [...this.stepsArray];
 
         if (this.overflownStepsStart.length) {

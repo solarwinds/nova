@@ -54,8 +54,8 @@
          class="nui-wizard-horizontal-content" role="tabpanel"
          [@stepTransition]="_getAnimationDirection(i)"
          (@stepTransition.done)="_animationDone.next($event)"
-         [id]="_getStepContentId(i)"
-         [attr.aria-labelledby]="_getStepLabelId(i)"
+         [id]="stepContentIds[i]"
+         [attr.aria-labelledby]="labelIds[i]"
          [attr.aria-expanded]="selectedIndex === i">
         <ng-container [ngTemplateOutlet]="step.content"></ng-container>
     </div>
