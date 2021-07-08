@@ -42,6 +42,7 @@ import {
     WizardWithCustomIconsExampleComponent,
     WizardRestoreStateExampleComponent,
     WizardStepChangeExampleComponent,
+    WizardResponsiveHeaderExampleComponent,
     WizardWithConfirmationDialogOnCancelComponent,
     WizardTooltipExampleComponent,
 } from "./index";
@@ -98,6 +99,7 @@ const routes = [
         WizardWithCustomIconsExampleComponent,
         WizardRestoreStateExampleComponent,
         WizardStepChangeExampleComponent,
+        WizardResponsiveHeaderExampleComponent,
         WizardWithConfirmationDialogOnCancelComponent,
         WizardTooltipExampleComponent,
     ],
