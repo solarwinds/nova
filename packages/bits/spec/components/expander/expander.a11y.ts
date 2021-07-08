@@ -11,6 +11,7 @@ describe("a11y: expander", () => {
         "aria-dialog-name",
         "landmark-unique",
         "aria-command-name",
+        "nested-interactive",
     ];
 
     beforeAll(async () => {

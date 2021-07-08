@@ -19,12 +19,24 @@
         min-height: @wizard-header-min-height;
         max-height: @wizard-header-max-height;
         align-items: center;
-        padding: 0 @nui-space-md;
+
+        // When inside the popover, we change the markup for the headers to have the icon flowing ahead of the label,
+        // according to ux mockups
+        .nui-popover-container__content & {
+            flex-flow: row-reverse;
+            justify-content: flex-end;
+            padding: 0;
+            min-height: 17px;
+        }
 
         .nui-wizard-step-header-icon {
             [dir="rtl"] & {
                 margin-right: 0;
                 margin-left: 0;
+            }
+
+            .nui-popover-container__content & {
+                margin-right: @nui-space-xs;
             }
         }
 
@@ -55,11 +67,22 @@
         align-items: center;
         .setCssVariable(background-color, nui-color-bg-secondary);
         .setCssVariable(border-color, nui-color-line-default);
-        .no-select();        
+        .no-select();
     }
 
     &-header-wrapper {
         position: relative;
+
+        // When inside the popover, we need to have a proper spacing between the headers
+        .nui-popover-container__content & {
+            &:not(:last-child) {
+                margin-bottom: @nui-space-xs;
+            }
+
+            &:hover {
+                .setCssVariable(background-color, nui-color-bg-secondary);
+            }
+        }
     }
 
     &__step-connector-line {
@@ -72,10 +95,24 @@
         }
 
         .nui-wizard-step-header__label-position--top & {
-            bottom: 8px;
+            bottom: @wizard-line-bottom;
             right: ((@wizard-label-header-width + @icon-size-default)/ 2);
             width: (@wizard-label-header-width - @icon-size-default);
             position: absolute;
+        }
+
+        // When inside the popover, we should transform the horizontal connector line into a vertical one
+        // and position it properly with respect to sibling header elements
+        .nui-popover-container__content & {
+            position: absolute;
+            top: -6px;
+            left: 7px;
+            height: 6px;
+            border-left-width: @nui-line-default;
+            border-left-style: solid;
+            border-top: none;
+            border-bottom: none;
+            border-right: none;
         }
     }
 

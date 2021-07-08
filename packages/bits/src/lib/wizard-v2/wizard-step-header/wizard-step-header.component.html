@@ -1,6 +1,6 @@
 <div class="nui-wizard-step-header__label"
      [nuiTooltip]="stringLabel ? stringLabel : ''"
-     [class.nui-wizard-step-header__label--active]="completed"
+     [class.nui-wizard-step-header__label--active]="step.completed"
      [class.nui-wizard-step-header__label--selected]="selected"
      [class.nui-wizard-step-header__label--error]="stepState === 'error'">
 
@@ -10,7 +10,7 @@
     <!-- If there is no label template, fall back to the text label. -->
     <div class="nui-wizard-step-header__text-label" *ngIf="stringLabel">{{label}}</div>
 
-    <div class="nui-wizard-step-header__label--optional" *ngIf="optional && stepState != 'error'">{{optionalLabel}}</div>
+    <div class="nui-wizard-step-header__label--optional" *ngIf="step.optional && stepState != 'error'">{{optionalLabel}}</div>
     <div class="nui-wizard-step-header__label--error" *ngIf="stepState == 'error'">{{errorMessage}}</div>
 </div>
 

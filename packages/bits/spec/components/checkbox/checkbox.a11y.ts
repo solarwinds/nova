@@ -6,6 +6,7 @@ describe("a11y: checkbox", () => {
     // disabling the rule until NUI-6015 is addressed
     let rulesToDisable: string[] = [
         "aria-allowed-role",
+        "nested-interactive",
     ];
 
     beforeAll(async () => {

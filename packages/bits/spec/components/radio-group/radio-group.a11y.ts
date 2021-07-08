@@ -3,7 +3,9 @@ import { assertA11y, Helpers } from "../../helpers";
 import { RadioGroupAtom } from "../public_api";
 
 describe("a11y: radio group", () => {
-    let rulesToDisable: string[] = [];
+    let rulesToDisable: string[] = [
+        "nested-interactive",
+    ];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("radio-group/radio-group-visual-test");

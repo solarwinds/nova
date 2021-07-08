@@ -3,7 +3,9 @@ import { assertA11y, Helpers } from "../../helpers";
 import { ProgressAtom, ButtonAtom } from "../public_api";
 
 describe("a11y: progress", () => {
-    let rulesToDisable: string[] = [];
+    let rulesToDisable: string[] = [
+        "nested-interactive",
+    ];
     let startProgressBasic: ButtonAtom;
 
     beforeAll(async () => {

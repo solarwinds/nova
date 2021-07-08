@@ -14,10 +14,8 @@ import {
 } from "@angular/core";
 import {
     CdkStepper,
-    STEP_STATE,
     StepContentPositionState,
     StepperSelectionEvent,
-    StepState,
 } from "@angular/cdk/stepper";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { WizardStepHeaderComponent } from "./wizard-step-header/wizard-step-header.component";
@@ -44,6 +42,12 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
     readonly steps: QueryList<WizardStepV2Component> = new QueryList<WizardStepV2Component>();
 
     stepsArray: Array<WizardStepV2Component> = [];
+
+    /** Uniq labels ids */
+    public labelIds: string[];
+
+    /** Uniq step content ids */
+    public stepContentIds: string[];
 
     /** Event emitted when the current step is done transitioning in. */
     @Output() readonly animationDone: EventEmitter<void> = new EventEmitter<void>();
@@ -91,6 +95,7 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
                 this.steps.reset(steps.filter(step => step._stepper === this));
                 this.stepsArray = this.steps.toArray();
                 this.steps.notifyOnChanges();
+                this.setIds();
             });
 
         this.steps.changes
@@ -125,24 +130,10 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
         super.ngOnDestroy();
     }
 
-    public getStepState(i: number): StepState {
-        const steps = this.steps.toArray();
-        const step = steps[i];
-        const isSelected = steps.indexOf(this.selected) === i;
+    public get allStepsCompleted(): boolean {
+        const completed: boolean = this.steps.toArray().reduce((acc: boolean, step: WizardStepV2Component) => acc && step.completed, true);
 
-        if (step.hasError && isSelected) {
-            return STEP_STATE.ERROR;
-        }
-
-        if (isSelected) {
-            return STEP_STATE.EDIT;
-        }
-
-        if (step.completed) {
-            return STEP_STATE.DONE;
-        }
-
-        return STEP_STATE.NUMBER;
+        return completed;
     }
 
     // Restores the completed wizard to the last step
@@ -158,9 +149,8 @@ export class WizardDirective extends CdkStepper implements OnChanges, AfterConte
         this["_changeDetectorRef"].detectChanges();
     }
 
-    private get allStepsCompleted(): boolean {
-        const completed: boolean = this.steps.toArray().reduce((acc: boolean, step: WizardStepV2Component) => acc && step.completed, true);
-
-        return completed;
+    private setIds(): void {
+        this.labelIds = this.stepsArray.map((step, index) => this._getStepLabelId(index));
+        this.stepContentIds = this.stepsArray.map((step, index) => this._getStepContentId(index));
     }
 }
