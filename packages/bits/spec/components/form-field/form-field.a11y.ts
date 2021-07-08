@@ -13,6 +13,7 @@ describe("a11y: form-field", () => {
         "landmark-one-main", // not applicable in the test context
         "region", // not applicable in the test context
         "page-has-heading-one", // not applicable for the tests
+        "nested-interactive",
     ];
 
     beforeAll(async () => {

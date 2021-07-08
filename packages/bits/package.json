@@ -130,7 +130,6 @@
     "@angular/platform-browser": "^11.1.2",
     "@angular/platform-browser-dynamic": "^11.1.2",
     "@angular/router": "^11.1.2",
-    "@applitools/eyes-protractor": "1.9.1",
     "@axe-core/webdriverjs": "^4.1.1",
     "@compodoc/compodoc": "^1.1.11",
     "@locl/cli": "^1.0.0",
@@ -187,5 +186,12 @@
   },
   "engines": {
     "node": ">=8.0"
+  },
+  "resolutions": {
+    "@compodoc/compodoc/live-server/http-auth": "^3.2.4",
+    "@compodoc/compodoc/i18next": "^19.8.5",
+    "@compodoc/compodoc/**/pdfkit/crypto-js": "^4.0.0",
+    "@compodoc/compodoc/**/glob-parent": "^5.1.2",
+    "@compodoc/compodoc/marked": "^2.0.0"
   }
 }

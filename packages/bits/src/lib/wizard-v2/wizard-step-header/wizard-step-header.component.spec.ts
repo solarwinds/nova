@@ -3,6 +3,10 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { IconComponent } from "../../icon/icon.component";
 import { WizardStepLabelDirective } from "../wizard-step-label.directive";
 import { TemplateRef } from "@angular/core";
+import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
+import { STEP_STATE } from "@angular/cdk/stepper";
+
+const fakeStep = {} as WizardStepV2Component;
 
 describe("components >",() => {
     describe("WizardStepHeader", () => {
@@ -19,6 +23,7 @@ describe("components >",() => {
 
             fixture = TestBed.createComponent(WizardStepHeaderComponent);
             component = fixture.componentInstance;
+            component.step = fakeStep;
         });
 
         describe("ngAfterViewInit", () => {
@@ -68,6 +73,16 @@ describe("components >",() => {
                 component.ngOnChanges(config);
                 expect(spy).toHaveBeenCalled();
             });
+
+            it("should update stepState", () => {
+                const mockStep = { hasError: true } as WizardStepV2Component;
+
+                component.selected = true;
+                component.step = mockStep;
+                component.ngOnChanges(config);
+
+                expect(component.stepState).toEqual(STEP_STATE.ERROR);
+            });
         });
 
         describe("stringLabel", () => {
@@ -103,6 +118,42 @@ describe("components >",() => {
 
                 component.label = label;
                 expect(component.templateLabel).toEqual(label);
+            });
+        });
+
+        describe("getStepState", () => {
+            it("should return error state if step invalid", () => {
+                const stepMock: WizardStepV2Component = { hasError: true } as WizardStepV2Component;
+
+                component.selected = true;
+                const state = component["getStepState"](stepMock);
+
+                expect(state).toEqual(STEP_STATE.ERROR);
+            });
+
+            it("should return edit state for current no completed step", () => {
+                const stepMock: WizardStepV2Component = {} as WizardStepV2Component;
+
+                component.selected = true;
+                const state = component["getStepState"](stepMock);
+
+                expect(state).toEqual(STEP_STATE.EDIT);
+            });
+
+            it("should return complete state for completed step", () => {
+                const stepMock: WizardStepV2Component = { completed: true } as WizardStepV2Component;
+
+                const state = component["getStepState"](stepMock);
+
+                expect(state).toEqual(STEP_STATE.DONE);
+            });
+
+            it("should return number state", () => {
+                const stepMock: WizardStepV2Component = {} as WizardStepV2Component;
+
+                const state = component["getStepState"](stepMock);
+
+                expect(state).toEqual(STEP_STATE.NUMBER);
             });
         });
     });
