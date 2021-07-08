@@ -122,7 +122,7 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
             viewRepeater, coalescedStyleScheduler, undefined, undefined
         );
 
-        // v12 is changing the order of the last two parameters compared to v11. They deprecated the optionality of the last parameter, but the one before
+        // Angular v12 is changing the order of the last two parameters compared to v11. They deprecated the optionality of the last parameter, but the one before
         // the last one is still optional, so they switched the order. Us trying to be compatible with both v11 and v12 had to take this path to make sure
         // both values are assigned properly. These fields are inaccessible / readonly, so that's why we had to perform the `any` cast.
         (this as any)._viewportRuler = viewportRuler;
