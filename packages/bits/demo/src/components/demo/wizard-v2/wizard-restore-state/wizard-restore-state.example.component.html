@@ -140,8 +140,9 @@
 
                     <ng-template nuiWizardStepFooter>
                         <button nui-button
+                                class="btn-reset"
                                 type="button"
-                                displayStyle="destructive"
+                                icon="reset"
                                 (click)="resetStep(finalStep)">
                             Reset step
                         </button>
@@ -150,8 +151,7 @@
                         <button type="button"
                                 nui-button
                                 displayStyle="primary"
-                                [disabled]="form.get(['contactDetails','email']).invalid"
-                                (click)="completeWizard(finalStep)"
+                                (click)="completeWizard('contactDetails', finalStep)"
                         >
                             Finish
                         </button>

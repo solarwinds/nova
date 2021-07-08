@@ -52,8 +52,6 @@
 <div class="nui-wizard-horizontal-content-container">
     <div *ngFor="let step of steps; let i = index"
          class="nui-wizard-horizontal-content" role="tabpanel"
-         [@stepTransition]="_getAnimationDirection(i)"
-         (@stepTransition.done)="_animationDone.next($event)"
          [id]="stepContentIds[i]"
          [attr.aria-labelledby]="labelIds[i]"
          [attr.aria-expanded]="selectedIndex === i">

@@ -25,8 +25,9 @@
 <!--</nui-example-wrapper>-->
 
 <h3>Usage with a dialog</h3>
-<p>You can pass an existing wizard component as content of the dialog window. </p>
-<p>You should insert wizard component in dialog body. </p>
+<p>
+    You can pass an existing wizard component as content of the dialog window. You should insert wizard component in dialog body.
+</p>
 <nui-example-wrapper filenamePrefix="wizard-dialog" exampleTitle="wizard in dialog">
     <nui-wizard-v2-dialog-example></nui-wizard-v2-dialog-example>
 </nui-example-wrapper>
@@ -37,14 +38,11 @@
     <nui-wizard-v2-busy-example></nui-wizard-v2-busy-example>
 </nui-example-wrapper>
 
-<h3>Custom footer</h3>
-<p>Customizing the footer layout content and style for each step is quite easy, as you can see in the example below:</p>
-<nui-example-wrapper filenamePrefix="wizard-custom-footer" exampleTitle="Wizard with Custom Footer">
-    <nui-wizard-custom-footer-example></nui-wizard-custom-footer-example>
-</nui-example-wrapper>
-
 <h3>Adding step dynamically</h3>
-<p>You are able to add wizard steps dynamically.</p>
+<p>
+    You are able to add wizard steps dynamically. The dynamic step can be enabled/disabled programmatically 
+    by clicking the "Enable/Disable step w/button" under the wizard.
+</p>
 <nui-example-wrapper filenamePrefix="wizard-dynamic" exampleTitle="wizard add dynamic step">
     <nui-wizard-dynamic-example></nui-wizard-dynamic-example>
 </nui-example-wrapper>
@@ -69,27 +67,16 @@
     <nui-wizard-async-form-validation-example></nui-wizard-async-form-validation-example>
 </nui-example-wrapper>
 
-<!--<h3>Async Form Validation</h3>-->
-<!--<p>-->
-<!--    To handle async validation check 'PENDING' status of WizardV2Step stepControl-->
-<!--</p>-->
-<!--<nui-example-wrapper filenamePrefix="wizard-async-form-validation" exampleTitle="Async Form Validation">-->
-<!--    <nui-wizard-async-form-validation-example></nui-wizard-async-form-validation-example>-->
-<!--</nui-example-wrapper>-->
-
-
 <h3>Wizard with custom step state icons</h3>
 <p>
     The wizard step can be in four different states: <code>initial</code>, <code>selected</code>, <code>completed</code>, and <code>error</code>.
     For each of these steps there is a corresponding icon in the header for a certain step, which dynamically changes along with the step state change.
     It is possible to override the default set of step state icons and their colors, and there are two ways of doing that.
 </p>
-
 <ol>
     <li>Global</li>
     <li>Step Specific</li>
 </ol>
-
 <p><u>Global</u></p>
 <p>
     Nova provides you with the <code>WIZARD_CONFIG</code> injection token, which allows you to override the default wizard settings in a global context. For instance,
@@ -104,9 +91,18 @@
     <nui-wizard-with-custom-icons-example></nui-wizard-with-custom-icons-example>
 </nui-example-wrapper>
 
+
+<h3>Custom footer</h3>
+<p>Customizing the footer layout content and style for each step is quite easy, as you can see in the example below:</p>
+<nui-example-wrapper filenamePrefix="wizard-custom-footer" exampleTitle="Wizard with Custom Footer">
+    <nui-wizard-custom-footer-example></nui-wizard-custom-footer-example>
+</nui-example-wrapper>
+
 <h3>Restore Wizard State</h3>
 <p>
-    To restore wizard state you need to pass previous wizard steps as input
+    To restore the wizard state you need to pass previous wizard steps as input. See the example below.
+    You can press the "Reset step" button on the last step in the wizard. After that close the dialog and open the wizard again. 
+    You will see that all steps except the last are restored.
 </p>
 <nui-example-wrapper filenamePrefix="wizard-restore-state" exampleTitle="Restore Wizard State">
     <nui-wizard-restore-state-example></nui-wizard-restore-state-example>

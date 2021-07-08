@@ -20,9 +20,6 @@ import {
     NuiWizardV2Module,
     SrlcStage,
     NuiSelectV2Module,
-    WIZARD_CONFIG,
-    IWizardConfig,
-    WIZARD_CONFIG_DEFAULT,
     NuiOverlayModule,
     NuiTooltipModule,
 } from "@nova-ui/bits";
@@ -53,7 +50,7 @@ const routes = [
         component: WizardDocsComponent,
         data: {
             "srlc": {
-                "stage": SrlcStage.alpha,
+                "stage": SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -113,4 +110,4 @@ const routes = [
         RouterModule,
     ],
 })
-export class WizardModule {}
+export class WizardModule { }

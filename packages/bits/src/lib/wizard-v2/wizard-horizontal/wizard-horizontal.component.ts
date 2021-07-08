@@ -22,7 +22,6 @@ import without from "lodash/without";
 import ResizeObserver from "resize-observer-polyfill";
 import { takeUntil } from "rxjs/operators";
 
-import { wizardAnimations } from "../wizard-animations/wizard-animations";
 import { WizardOverflowComponent } from "../wizard-overflow/wizard-overflow.component";
 import { WizardStepHeaderComponent } from "../wizard-step-header/wizard-step-header.component";
 import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
@@ -40,7 +39,6 @@ import { WizardDirective } from "../wizard.directive";
         "aria-orientation": "horizontal",
         "role": "tablist",
     },
-    animations: [wizardAnimations.horizontalStepTransition],
     providers: [
         {provide: WizardDirective, useExisting: WizardHorizontalComponent},
         {provide: CdkStepper, useExisting: WizardHorizontalComponent},

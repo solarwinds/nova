@@ -1,18 +1,19 @@
-import {Component, Inject, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import {
     DialogService,
     NuiDialogRef,
     ToastService,
     WizardHorizontalComponent,
 } from "@nova-ui/bits";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
     selector: "nui-wizard-with-confirmation-dialog-on-cancel-example",
     templateUrl: "./wizard-with-confirmation-dialog-on-cancel.component.html",
     styleUrls: ["./wizard-with-confirmation-dialog-on-cancel.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardWithConfirmationDialogOnCancelComponent implements OnInit{
+export class WizardWithConfirmationDialogOnCancelComponent implements OnInit {
     public confirmationDialog: NuiDialogRef;
     public form: FormGroup;
 
@@ -21,7 +22,8 @@ export class WizardWithConfirmationDialogOnCancelComponent implements OnInit{
     constructor(
         @Inject(DialogService) private dialogService: DialogService,
         private toastService: ToastService,
-        private formBuilder: FormBuilder) {}
+        private formBuilder: FormBuilder,
+        public cd: ChangeDetectorRef) { }
 
     public ngOnInit(): void {
         this.initForm();
@@ -49,9 +51,15 @@ export class WizardWithConfirmationDialogOnCancelComponent implements OnInit{
         this.form.get(formGroup)?.markAllAsTouched();
     }
 
-    public onSubmit(): void {
+    public onSubmit(formControlName: string): void {
+        this.validate(formControlName);
+
+        if (!this.form.valid) {
+            return;
+        }
+
         this.toastService.info({
-            title: $localize `Form was successfully submitted.`,
+            title: $localize`Form was successfully submitted.`,
             options: {
                 timeOut: 5000,
                 extendedTimeOut: 2000,
