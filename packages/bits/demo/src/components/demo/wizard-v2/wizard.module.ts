@@ -42,6 +42,7 @@ import {
     WizardResponsiveHeaderExampleComponent,
     WizardWithConfirmationDialogOnCancelComponent,
     WizardTooltipExampleComponent,
+    WizardTestComponent,
 } from "./index";
 
 const routes = [
@@ -54,6 +55,10 @@ const routes = [
             },
             showThemeSwitcher: true,
         },
+    },
+    {
+        path: "wizard-test",
+        component: WizardTestComponent,
     },
 ];
 
@@ -99,6 +104,7 @@ const routes = [
         WizardResponsiveHeaderExampleComponent,
         WizardWithConfirmationDialogOnCancelComponent,
         WizardTooltipExampleComponent,
+        WizardTestComponent,
     ],
     providers: [
         {
