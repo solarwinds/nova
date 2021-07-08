@@ -39,7 +39,7 @@ export class WizardDynamicExampleComponent implements AfterViewInit {
     public finishWizard(): void {
         this.toastService.success({
             title: $localize`Success`,
-            message: $localize`Wizard has completed successfully`,
+            message: $localize`Wizard was completed successfully`,
             options: {
                 timeOut: 2000,
             },

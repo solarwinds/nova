@@ -94,7 +94,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
         step.completed = true;
         this.toastService.success({
             title: $localize`Success`,
-            message: $localize`Wizard has completed successfully`,
+            message: $localize`Wizard was completed successfully`,
             options: {
                 timeOut: 2000,
             },
