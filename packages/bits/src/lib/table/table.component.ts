@@ -116,7 +116,7 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
                 viewportRuler: ViewportRuler,
                 @Optional() @SkipSelf() @Inject(STICKY_POSITIONING_LISTENER) stickyPositioningListener: StickyPositioningListener
     ) {
-        // the parameters that were added to the constructor were optional before v12
+        // The _ViewRepeater and _CoalescedStyleScheduler parameters were optional before Angular v12. They're included here for compatibility with Angular v12 and later.
         super(
             _differs, _changeDetectorRef, _elementRef, role, _dir, document, platform,
             viewRepeater, coalescedStyleScheduler, undefined, undefined
