@@ -49,7 +49,7 @@ const routes = [
         component: WizardDocsComponent,
         data: {
             "srlc": {
-                "stage": SrlcStage.alpha,
+                "stage": SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
