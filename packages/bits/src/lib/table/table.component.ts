@@ -8,7 +8,7 @@ import {
     CDK_TABLE_TEMPLATE,
     CdkTable,
     STICKY_POSITIONING_LISTENER,
-    StickyPositioningListener
+    StickyPositioningListener,
 } from "@angular/cdk/table";
 import { RenderRow, RowContext } from "@angular/cdk/table/table";
 import { DOCUMENT } from "@angular/common";
