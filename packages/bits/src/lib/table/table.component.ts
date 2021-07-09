@@ -116,15 +116,17 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
                 viewportRuler: ViewportRuler,
                 @Optional() @SkipSelf() @Inject(STICKY_POSITIONING_LISTENER) stickyPositioningListener: StickyPositioningListener
     ) {
-        // The _ViewRepeater and _CoalescedStyleScheduler parameters were optional before Angular v12. They're included here for compatibility with Angular v12 and later.
+        // The _ViewRepeater and _CoalescedStyleScheduler parameters were optional before Angular v12.
+        // They're included here for compatibility with Angular v12 and later.
         super(
             _differs, _changeDetectorRef, _elementRef, role, _dir, document, platform,
             viewRepeater, coalescedStyleScheduler, undefined, undefined
         );
 
-        // Angular v12 is changing the order of the last two parameters compared to v11. They deprecated the optionality of the last parameter, but the one before
-        // the last one is still optional, so they switched the order. Us trying to be compatible with both v11 and v12 had to take this path to make sure
-        // both values are assigned properly. These fields are inaccessible / readonly, so that's why we had to perform the `any` cast.
+        // Angular v12 is changing the order of the last two parameters compared to v11.
+        // They deprecated the optionality of the last parameter, but the one before the last one is still optional, so they switched the order.
+        // Us trying to be compatible with both v11 and v12 had to take this path to make sure both values are assigned properly.
+        // These fields are inaccessible / readonly, so that's why we had to perform the `any` cast.
         (this as any)._viewportRuler = viewportRuler;
         (this as any)._stickyPositioningListener = stickyPositioningListener;
     }
