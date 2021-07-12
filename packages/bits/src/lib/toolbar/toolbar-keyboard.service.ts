@@ -1,12 +1,16 @@
 import { Injectable } from "@angular/core";
 import { KEYBOARD_CODE } from "../../constants";
+import { MenuComponent } from "../menu";
 
 @Injectable()
 export class ToolbarKeyboardService {
     private toolbarItems: HTMLElement[] = [];
 
-    public setToolbarItems(items: HTMLElement[]): void {
+    private menu: MenuComponent | null;
+
+    public setToolbarItems(items: HTMLElement[], menu?: MenuComponent): void {
         this.toolbarItems = items;
+        this.menu = menu ? menu : null;
     }
 
     public onKeyDown(event: KeyboardEvent): void {
@@ -15,6 +19,10 @@ export class ToolbarKeyboardService {
         if (code === KEYBOARD_CODE.ARROW_LEFT || code === KEYBOARD_CODE.ARROW_RIGHT) {
             event.preventDefault();
             this.navigateByArrow(code);
+        }
+
+        if (code === KEYBOARD_CODE.TAB && (this.menu && this.menu.popup.isOpen)) {
+            this.menu.popup.isOpen = false;
         }
     }
 
@@ -29,7 +37,15 @@ export class ToolbarKeyboardService {
         }
 
         if (code === KEYBOARD_CODE.ARROW_RIGHT && activeIndex !== -1) {
-            activeEl === last ? first.focus() : this.focusRight(activeIndex);
+            activeEl === last ? this.focusFirst() : this.focusRight(activeIndex);
+        }
+    }
+
+    private focusFirst(): void {
+        this.toolbarItems[0].focus();
+
+        if (this.menu && this.menu.popup.isOpen) {
+            this.menu.popup.isOpen = false;
         }
     }
 

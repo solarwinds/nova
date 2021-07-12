@@ -209,17 +209,6 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         return this.groups.last.items.last.displayStyle !== ToolbarItemDisplayStyle.destructive;
     }
 
-    /* TODO: hotfix */
-    public onFocusFromMenuOut(event: FocusEvent): void {
-        const { relatedTarget } = event;
-        const isClickOnActionBtn = relatedTarget && (relatedTarget as HTMLElement).classList
-            && (relatedTarget as HTMLElement).classList.contains("nui-menu-item__action");
-
-        if (!isClickOnActionBtn) {
-            this.menu.popup.isOpen = false;
-        }
-    }
-
     private subscribeToToolbarStepsChanges(): void {
         this.toolbarButtons.changes
             .pipe(takeUntil(this.destroy$))
@@ -235,7 +224,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                     this.toolbarItems.push(this.menu.menuToggle.nativeElement);
                 }
 
-                this.keyboardService.setToolbarItems(this.toolbarItems);
+                this.keyboardService.setToolbarItems(this.toolbarItems, this.menu);
             });
     }
 }
