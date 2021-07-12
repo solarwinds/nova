@@ -51,7 +51,7 @@ export class MenuPopupComponent {
 
     @Output() public menuItemClicked ? = new EventEmitter<IMenuItem>();
 
-    public handleClick(event: FocusEvent, item: IMenuItem) {
+    public handleClick(item: IMenuItem) {
         if (!item.disabled) {
             this.menuItemClicked?.emit(item);
             if (_isFunction(item.action)) {
