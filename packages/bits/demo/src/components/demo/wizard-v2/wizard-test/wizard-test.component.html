@@ -1,11 +1,51 @@
 <nui-wizard-horizontal id="nui-wizard-v2-horizontal">
+
+    <!--Step 1-->
     <nui-wizard-step-v2 label="Step1">
         Step 1
+
+        <ng-template nuiWizardStepFooter>
+            <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+        </ng-template>
     </nui-wizard-step-v2>
+
+    <!--Step 2-->
     <nui-wizard-step-v2 label="Step2">
         Step 2
+
+        <ng-template nuiWizardStepFooter>
+            <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+            <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+        </ng-template>
     </nui-wizard-step-v2>
+
+    <!--Step 3-->
     <nui-wizard-step-v2 label="Step3">
         Step 3
+        <ng-template nuiWizardStepFooter>
+            <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+            <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+        </ng-template>
     </nui-wizard-step-v2>
+
+    <ng-template #wizardPrevious>
+        <button type="button"
+                class="previous"
+                nuiWizardPrevious
+                nui-button
+                icon="caret-left">
+            Back
+        </button>
+    </ng-template>
+
+    <ng-template #wizardNext>
+        <button nuiWizardNext
+                class="next"
+                type="button"
+                nui-button
+                displayStyle="primary"
+                icon="caret-right"
+                iconRight="true"
+        >Next</button>
+    </ng-template>
 </nui-wizard-horizontal>

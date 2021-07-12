@@ -30,5 +30,25 @@ describe("USERCONTROL WizardV2: ", () => {
 
             expect(title).toEqual("Step1");
         });
+
+        it("should next button be presented", async () => {
+            const footer = await wizard.getFooter();
+            const button = await footer.getNextBtn();
+
+            expect(button.isPresent()).toBeTruthy();
+        });
+
+        it("should select second step", async () => {
+            const footer = await wizard.getFooter();
+            const btn = await footer.getNextBtn();
+
+            await wizard.selectStep(0);
+            await btn.click();
+
+            const header = await wizard.getHeader(1);
+            const hasClass = await header.hasClass("nui-wizard-step-header--selected");
+
+            expect(hasClass).toEqual(true);
+        });
     });
 });

@@ -4,6 +4,7 @@ import { Atom } from "../../atom";
 import { ElementArrayFinder } from "protractor/built/element";
 import { WizardV2StepAtom } from "./wizard-v2-step.atom";
 import { WizardV2StepHeaderAtom } from "./wizard-v2-step-header.atom";
+import { WizardV2FooterAtom } from "./wizard-v2-footer.atom";
 
 export class WizardV2Atom extends Atom {
     public static CSS_CLASS = "nui-wizard-horizontal-layout";
@@ -26,13 +27,27 @@ export class WizardV2Atom extends Atom {
     }
 
     public async getHeader(index: number): Promise<WizardV2StepHeaderAtom> {
-        const headers = this.root.all(by.css(".nui-wizard-horizontal-header-wrapper"));
+        const headers = this.root.all(by.css(".nui-wizard-step-header"));
         const header = headers.get(index);
 
         return new WizardV2StepHeaderAtom(header);
     }
 
-    public getFirstStep(): void {}
+    public async getFooter(): Promise<WizardV2FooterAtom> {
+        const footer = this.root.element(by.className("nui-wizard-horizontal-footer-container"));
+
+        return new WizardV2FooterAtom(footer);
+    }
+
+    public async selectStep(index: number): Promise<void> {
+        const header = await this.getHeader(index);
+
+        await header.click();
+    }
+
+    public getFirstStep(): void {
+
+    }
 
     public getLastStep(): void {}
 }

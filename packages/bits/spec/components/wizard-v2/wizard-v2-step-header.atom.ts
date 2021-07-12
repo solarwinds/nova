@@ -7,6 +7,8 @@ export class WizardV2StepHeaderAtom extends Atom {
 
     private root = this.getElement();
 
+    public click = async (): Promise<void> => this.root.click();
+
     public async getLabelText(): Promise<any> {
         const label = this.root.element(by.className("nui-wizard-step-header__text-label"));
 
