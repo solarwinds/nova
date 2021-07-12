@@ -1,9 +1,10 @@
+/// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
+
 import { ElementRef } from "@angular/core";
 
 import { ExampleCodeComponent } from "./example-code.component";
 
-const hljs = require("highlight.js/lib/core");
-
+import hljs from "highlight.js/lib/core";
 
 describe("components >", () => {
     describe("code >", () => {

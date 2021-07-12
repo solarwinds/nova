@@ -229,7 +229,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
 
     /**
      * Reference to CDK DropList so that the user can also subscribe
-     * to its events in case he requires to
+     * to its events in case they need to
      * @see https://material.angular.io/cdk/drag-drop/api#DropListRef
      */
     public dropListRef: DropListRef;

@@ -54,7 +54,7 @@ export class AppModule {}
 
     getSystemjsConfigFile = (branchName: string) => `
 var ver = {
-    ng: '9.0.0'
+    ng: '11.0.0'
 };
 
 System.config({
@@ -101,6 +101,7 @@ System.config({
         '@angular/cdk/overlay': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-overlay.umd.js',
         '@angular/cdk/portal': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-portal.umd.js',
         '@angular/cdk/drag-drop': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-drag-drop.umd.js',
+        '@angular/cdk/stepper': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-stepper.umd.js',
         'resize-observer-polyfill': 'npm:resize-observer-polyfill@1.5.1/dist/ResizeObserver.js',
 
         'rxjs': 'npm:rxjs@6.5.2',
@@ -109,8 +110,7 @@ System.config({
         'moment': 'npm:moment@2.24.0/moment.js',
         'moment/moment': 'npm:moment@2.24.0/moment.js',
 
-
-        'highlight.js': 'npm:highlight.js@9.12.0/lib/index.js',
+        'highlight.js/lib': 'npm:highlight.js@^10.6.0/lib',
         'lodash': 'npm:lodash@4.17.11',
         "lodash/assign": "npm:lodash@4.17.11/assign.js",
         "lodash/capitalize": "npm:lodash@4.17.11/capitalize.js",
@@ -208,9 +208,9 @@ System.config({
         "d3-shape": "npm:d3@5.9.2",
         "d3-selection-multi": "npm:d3-selection-multi",
 
-        '@nova-ui/bits': 'http://apollo-docs.swdev.local/nova-bits/${branchName}/dist/bundles/nova-ui-bits.umd.js',
-        '@nova-ui/charts': 'http://apollo-docs.swdev.local/nova-charts/${branchName}/dist/bundles/nova-ui-charts.umd.js',
-        '@nova-ui/dashboards': 'http://apollo-docs.swdev.local/nova-dashboards/${branchName}/dist/bundles/nova-ui-dashboards.umd.js',
+        '@nova-ui/bits': 'npm:@nova-ui/bits@latest',
+        '@nova-ui/charts': 'npm:@nova-ui/charts@latest',
+        '@nova-ui/dashboards': 'npm:@nova-ui/dashboards@latest',
     },
     packages: {
         app: {
