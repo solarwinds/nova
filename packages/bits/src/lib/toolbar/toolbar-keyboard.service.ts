@@ -5,12 +5,11 @@ import { MenuComponent } from "../menu";
 @Injectable()
 export class ToolbarKeyboardService {
     private toolbarItems: HTMLElement[] = [];
-
-    private menu: MenuComponent | null;
+    private menu: MenuComponent | undefined;
 
     public setToolbarItems(items: HTMLElement[], menu?: MenuComponent): void {
         this.toolbarItems = items;
-        this.menu = menu ? menu : null;
+        this.menu = menu;
     }
 
     public onKeyDown(event: KeyboardEvent): void {
@@ -21,8 +20,8 @@ export class ToolbarKeyboardService {
             this.navigateByArrow(code);
         }
 
-        if (code === KEYBOARD_CODE.TAB && (this.menu && this.menu.popup.isOpen)) {
-            this.menu.popup.isOpen = false;
+        if (code === KEYBOARD_CODE.TAB) {
+            this.closeMenuIfOpened();
         }
     }
 
@@ -43,10 +42,7 @@ export class ToolbarKeyboardService {
 
     private focusFirst(): void {
         this.toolbarItems[0].focus();
-
-        if (this.menu && this.menu.popup.isOpen) {
-            this.menu.popup.isOpen = false;
-        }
+        this.closeMenuIfOpened();
     }
 
     private focusLast(): void {
@@ -59,8 +55,11 @@ export class ToolbarKeyboardService {
 
     private focusLeft(index: number) {
         this.toolbarItems[index - 1]?.focus();
+        this.closeMenuIfOpened();
+    }
 
-        if (this.menu && this.menu.popup.isOpen) {
+    private closeMenuIfOpened() {
+        if (this.menu && this.menu?.popup?.isOpen) {
             this.menu.popup.isOpen = false;
         }
     }
