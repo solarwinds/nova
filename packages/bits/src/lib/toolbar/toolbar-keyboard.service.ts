@@ -59,5 +59,9 @@ export class ToolbarKeyboardService {
 
     private focusLeft(index: number) {
         this.toolbarItems[index - 1]?.focus();
+
+        if (this.menu && this.menu.popup.isOpen) {
+            this.menu.popup.isOpen = false;
+        }
     }
 }

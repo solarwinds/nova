@@ -49,7 +49,7 @@
             </ng-container>
             <ng-container *ngSwitchDefault>
                 <nui-menu-item [ngClass]="{ 'nui-menu-item--selected': item.isSelected }"
-                                       (actionDone)="handleClick($event, item)">
+                                       (actionDone)="handleClick(item)">
                     {{getDisplayValue(item)}}
                 </nui-menu-item>
             </ng-container>

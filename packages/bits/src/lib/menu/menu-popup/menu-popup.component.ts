@@ -53,7 +53,6 @@ export class MenuPopupComponent {
 
     public handleClick(event: FocusEvent, item: IMenuItem) {
         if (!item.disabled) {
-            event.stopPropagation();
             this.menuItemClicked?.emit(item);
             if (_isFunction(item.action)) {
                 item.action();
