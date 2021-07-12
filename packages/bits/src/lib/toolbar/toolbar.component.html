@@ -22,7 +22,7 @@
                   #menuComponent
                   [title]="menuTitle"
                   *ngIf="showMenu"
-                  (focusout)="menuComponent.popup.isOpen = false">
+                  (focusout)="onFocusFromMenuOut($event)">
             <ng-template ngFor let-menuGroup [ngForOf]="menuGroups">
                 <nui-menu-group [header]="menuGroup.title">
                     <ng-template ngFor let-menuItem [ngForOf]="menuGroup.items">
