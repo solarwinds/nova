@@ -4,21 +4,22 @@
             <nui-wizard-step-v2 label="Person Details"
                                 formGroupName="personDetails"
                                 [stepControl]="form.get(['personDetails'])">
-                <nui-form-field [control]="form.get(['personDetails','name'])"
+                <nui-form-field class="p-5" 
+                                [control]="form.get(['personDetails','name'])"
                                 i18n-caption
                                 caption="Name">
                     <nui-textbox formControlName="name"></nui-textbox>
                     <nui-validation-message for="required"
-                                            *ngIf="form.get(['user','name'])?.errors?.required"
+                                            *ngIf="form.get(['personDetails','name'])?.errors?.required"
                                             i18n>
                         This is required
                     </nui-validation-message>
-
-                    <ng-template nuiWizardStepFooter>
-                        <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
-                    </ng-template>
                 </nui-form-field>
 
+                <ng-template nuiWizardStepFooter>
+                    <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
+                    <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+                </ng-template>
             </nui-wizard-step-v2>
 
             <nui-wizard-step-v2 formGroupName="contactDetails"
@@ -28,7 +29,8 @@
                     <span (click)="onNextClick(wizard.selected)">Contact Details</span>
                 </ng-template>
 
-                <nui-form-field [control]="form.get(['contactDetails','email'])"
+                <nui-form-field class="p-5"
+                                [control]="form.get(['contactDetails','email'])"
                                 i18n-caption
                                 caption="Email">
                     <nui-textbox type="email" formControlName="email"></nui-textbox>
@@ -43,12 +45,23 @@
                                             i18n>
                         Invalid email
                     </nui-validation-message>
-
-                    <ng-template nuiWizardStepFooter>
-                        <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
-                    </ng-template>
                 </nui-form-field>
+
+                <ng-template nuiWizardStepFooter>
+                    <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
+                    <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+                    <button type="button" displayStyle="primary" nui-button (click)="finishWizard()" i18n>
+                        Finish
+                    </button>
+                </ng-template>
+                
             </nui-wizard-step-v2>
+
+            <ng-template #wizardCancel>
+                <button type="button" displayStyle="action" nui-button (click)="resetWizard()" i18n>
+                    Cancel
+                </button>
+            </ng-template>
 
             <ng-template #wizardPrevious>
                 <button type="button" nuiWizardPrevious nui-button icon="caret-left">

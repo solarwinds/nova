@@ -1,0 +1,67 @@
+@import "../wizard-vars";
+@import (reference) "../../../styles/mixins.less";
+@import (reference) "../../../styles/nui-framework-spaces.less";
+
+.line() {
+    border-top-width: @nui-line-medium;
+    border-top-style: solid;
+    .setCssVariable(border-color, nui-color-line-default);
+    bottom: @wizard-line-bottom;
+    position: absolute;
+    content: "";
+}
+
+@wizard-overflow-line-indent: 35px;
+@wizard-overflow-line-width: 66px;
+
+:host {
+    margin-top: auto;
+}
+
+:host(.overflow-right) {
+    .nui-wizard-overflow {
+        &::before {
+            .line();
+            right:  @wizard-overflow-line-indent;
+            width: @wizard-overflow-line-width;
+        }
+    }
+}
+
+:host(.overflow-right-completed) {
+    .nui-wizard-overflow {
+        &::before {
+            .setCssVariable(border-color, nui-color-text-link);
+        }
+    }
+}
+
+:host(.overflow-left) {
+    .nui-wizard-overflow {
+        &::after {
+            .line();
+            left:  @wizard-overflow-line-indent;
+            width: @wizard-overflow-line-width;
+            .setCssVariable(border-color, nui-color-text-link);
+        }
+    }
+}
+
+.nui-wizard-overflow {
+    position: relative;
+
+    .nui-tag {
+        z-index: 1;
+        width: 35px;
+        justify-content: center;
+        cursor: pointer;
+        .setCssVariable(border-color, nui-color-line-default);
+        .setCssVariable(color, nui-color-text-link);
+
+        &--completed {
+            .setCssVariable(border-color, nui-color-text-link);
+            .setCssVariable(color, nui-color-text-link);
+        }
+    }
+}
+

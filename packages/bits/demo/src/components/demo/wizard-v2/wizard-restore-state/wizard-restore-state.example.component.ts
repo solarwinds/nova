@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DialogService, NuiDialogRef, WizardStepV2Component, IWizardState } from "@nova-ui/bits";
+import { DialogService, NuiDialogRef, WizardStepV2Component, IWizardState, ToastService } from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -13,6 +13,7 @@ interface IWizardStepData {
 @Component({
     selector: "nui-wizard-restore-state-example",
     templateUrl: "./wizard-restore-state.example.component.html",
+    styleUrls: ["wizard-restore-state.example.component.less"],
 })
 export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     public form: FormGroup;
@@ -26,8 +27,11 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     @ViewChild("dynamicTemplate1") public template1: TemplateRef<string>;
     @ViewChild("dynamicTemplate2") public template2: TemplateRef<string>;
 
-    constructor(private formBuilder: FormBuilder,
-                @Inject(DialogService) private dialogService: DialogService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(DialogService) private dialogService: DialogService,
+        private toastService: ToastService
+    ) { }
 
     ngOnInit(): void {
         this.form = new FormGroup({
@@ -69,7 +73,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
     }
 
     public openDialog(content: TemplateRef<string>): void {
-        this.activeDialog = this.dialogService.open(content, {size: "lg"});
+        this.activeDialog = this.dialogService.open(content, { size: "lg" });
     }
 
     public closeDialog(): void {
@@ -80,8 +84,21 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
         this.state = state;
     }
 
-    public completeWizard(step: WizardStepV2Component): void {
+    public completeWizard(formControlName: string, step: WizardStepV2Component): void {
+        this.validateStep(formControlName);
+
+        if (!this.form.valid) {
+            return;
+        }
+
         step.completed = true;
+        this.toastService.success({
+            title: $localize`Success`,
+            message: $localize`Wizard was completed successfully`,
+            options: {
+                timeOut: 2000,
+            },
+        });
         this.activeDialog.close();
     }
 
@@ -98,7 +115,7 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
         const index = this.dynamicSteps.findIndex(step => isEqual(step, newStep));
 
         controlValue
-            ? this.dynamicSteps.push({...newStep})
+            ? this.dynamicSteps.push({ ...newStep })
             : this.dynamicSteps.splice(index, 1);
     }
 }

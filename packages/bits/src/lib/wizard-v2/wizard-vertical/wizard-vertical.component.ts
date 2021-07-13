@@ -4,7 +4,6 @@ import {CdkStepper} from "@angular/cdk/stepper";
 import {DOCUMENT} from "@angular/common";
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, Input, Optional, ViewEncapsulation} from "@angular/core";
 
-import {wizardAnimations} from "../wizard-animations/wizard-animations";
 import { WizardDirective } from "../wizard.directive";
 
 /**  ignore should be removed in scope of the NUI-6099 */
@@ -19,7 +18,6 @@ import { WizardDirective } from "../wizard.directive";
         "aria-orientation": "vertical",
         "role": "tablist",
     },
-    animations: [wizardAnimations.verticalStepTransition],
     providers: [
         {provide: WizardDirective, useExisting: WizardVerticalComponent},
         {provide: CdkStepper, useExisting: WizardVerticalComponent},

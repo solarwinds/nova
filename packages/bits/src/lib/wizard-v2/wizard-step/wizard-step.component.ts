@@ -51,6 +51,8 @@ export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy,
 
     @Input() stepStateConfig: Partial<WizardStepStateConfig>;
 
+    @Input() stepIndex: number;
+
     /** Content for step label given by `<ng-template wizardStepLabel>`. */
     @ContentChild(WizardStepLabelDirective) stepLabel: WizardStepLabelDirective;
 

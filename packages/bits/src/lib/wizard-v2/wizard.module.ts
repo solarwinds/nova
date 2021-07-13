@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 
 import { NuiCommonModule } from "../../common/common.module";
 import { NuiIconModule } from "../icon/icon.module";
+import { NuiPopoverModule } from "../popover/popover.module";
 
 import { ErrorStateMatcher } from "./error-state-matcher.provider";
 import {
@@ -16,7 +17,8 @@ import { WizardStepLabelDirective } from "./wizard-step-label.directive";
 import { WizardStepV2Component } from "./wizard-step/wizard-step.component";
 import { WizardVerticalComponent } from "./wizard-vertical/wizard-vertical.component";
 import { WizardDirective } from "./wizard.directive";
-import { NuiTooltipModule } from "../tooltip/tooltip.module";
+import { WizardOverflowComponent } from "./wizard-overflow/wizard-overflow.component";
+import { NuiTooltipModule } from "../tooltip/public-api";
 
 /**
  * @ignore
@@ -25,6 +27,7 @@ import { NuiTooltipModule } from "../tooltip/tooltip.module";
     imports: [
         NuiCommonModule,
         NuiIconModule,
+        NuiPopoverModule,
         NuiTooltipModule,
     ],
     declarations: [
@@ -38,6 +41,7 @@ import { NuiTooltipModule } from "../tooltip/tooltip.module";
         WizardStepFooterDirective,
         WizardStepperNextDirective,
         WizardStepperPreviousDirective,
+        WizardOverflowComponent,
     ],
     exports: [
         WizardHorizontalComponent,

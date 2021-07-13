@@ -1,16 +1,17 @@
-import {Component, Inject, OnInit, TemplateRef, ViewChild} from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import {
     DialogService,
     NuiDialogRef,
     ToastService,
     WizardHorizontalComponent,
 } from "@nova-ui/bits";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
     selector: "nui-wizard-with-confirmation-dialog-on-cancel-example",
     templateUrl: "./wizard-with-confirmation-dialog-on-cancel.example.component.html",
     styleUrls: ["./wizard-with-confirmation-dialog-on-cancel.example.component.less"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardWithConfirmationDialogOnCancelExampleComponent implements OnInit{
     public confirmationDialog: NuiDialogRef;
@@ -21,7 +22,8 @@ export class WizardWithConfirmationDialogOnCancelExampleComponent implements OnI
     constructor(
         @Inject(DialogService) private dialogService: DialogService,
         private toastService: ToastService,
-        private formBuilder: FormBuilder) {}
+        private formBuilder: FormBuilder,
+        public cd: ChangeDetectorRef) { }
 
     public ngOnInit(): void {
         this.initForm();
@@ -49,9 +51,15 @@ export class WizardWithConfirmationDialogOnCancelExampleComponent implements OnI
         this.form.get(formGroup)?.markAllAsTouched();
     }
 
-    public onSubmit(): void {
+    public onSubmit(formControlName: string): void {
+        this.validate(formControlName);
+
+        if (!this.form.valid) {
+            return;
+        }
+
         this.toastService.info({
-            title: $localize `Form was successfully submitted.`,
+            title: $localize`Form was successfully submitted.`,
             options: {
                 timeOut: 5000,
                 extendedTimeOut: 2000,

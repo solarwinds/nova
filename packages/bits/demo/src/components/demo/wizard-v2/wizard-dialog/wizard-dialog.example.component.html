@@ -13,11 +13,11 @@
 
                             <!-- the current step content -->
                             <div class="step-content-wrapper">
-                                <span i18n>This is the first step of our horizontal wizard</span>.
+                                <span i18n>This is the first step of our horizontal wizard.</span>
                             </div>
                             <!-- content of the footer -->
                             <ng-template nuiWizardStepFooter>
-                                <button type="button" nui-button (click)="toggleBusy()">
+                                <button class="btn-busy" type="button" nui-button icon="reload" (click)="toggleBusy()">
                                     Toggle busy
                                 </button>
                                 <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
@@ -29,7 +29,7 @@
                             <ng-template nuiWizardStepLabel>Active</ng-template>
 
                             <div class="step-content-wrapper">
-                                <span i18n>This is the second step of our horizontal wizard</span>.
+                                <span i18n>This is the second step of our horizontal wizard.</span>
                             </div>
                             <ng-template nuiWizardStepFooter>
                                 <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
@@ -60,6 +60,9 @@
                             <ng-template nuiWizardStepFooter>
                                 <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                                 <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+                                <button type="button" displayStyle="primary" nui-button (click)="finishWizard(); overlay.hide(); closeDialog()" i18n>
+                                    Finish
+                                </button>
                             </ng-template>
                         </nui-wizard-step-v2>
 

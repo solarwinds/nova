@@ -14,7 +14,7 @@
                                 caption="First name">
                     <nui-textbox formControlName="firstName" customBoxWidth="150px"></nui-textbox>
                     <nui-validation-message for="required"
-                                            *ngIf="form.get(['user','firstName'])?.errors?.required"
+                                            *ngIf="form.get(['personDetails','firstName'])?.errors?.required"
                                             i18n>
                         First name is required
                     </nui-validation-message>
@@ -25,7 +25,7 @@
                                 caption="Last name">
                     <nui-textbox formControlName="lastName" customBoxWidth="150px"></nui-textbox>
                     <nui-validation-message for="required"
-                                            *ngIf="form.get(['user','lastName'])?.errors?.required"
+                                            *ngIf="form.get(['personDetails','lastName'])?.errors?.required"
                                             i18n>
                         Last name is required
                     </nui-validation-message>
@@ -91,12 +91,10 @@
                     <li *ngIf="form.get(['contactDetails','phone']).value">Phone: {{form.get(['contactDetails','phone']).value}}</li>
                 </ul>
                 <nui-form-field [control]="form.get(['confirm','confirmed'])">
-                    <nui-checkbox formControlName="confirmed" i18n>
+                    <nui-checkbox formControlName="confirmed" i18n required>
                         Confirm
                     </nui-checkbox>
-                    <nui-validation-message for="required"
-                                            *ngIf="form.get(['confirm','confirmed'])?.errors?.requiredTrue"
-                                            i18n>
+                    <nui-validation-message for="required" i18n>
                         Confirmation is required
                     </nui-validation-message>
                 </nui-form-field>
@@ -104,7 +102,7 @@
                 <ng-template nuiWizardStepFooter>
                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
-                    <ng-container *ngTemplateOutlet="wizardSubmit"></ng-container>
+                    <ng-container *ngTemplateOutlet="wizardSubmit; context: { formControlName: 'confirm' }"></ng-container>
                 </ng-template>
             </div>
         </nui-wizard-step-v2>
@@ -156,12 +154,11 @@
         </ng-template>
 
         <!-- content of the submit button -->
-        <ng-template #wizardSubmit>
+        <ng-template #wizardSubmit let-formControlName="formControlName">
             <button type="button"
-                    [disabled]="!form.valid"
                     nui-button
                     displayStyle="primary"
-                    (click)="onSubmit()"
+                    (click)="onSubmit(formControlName)"
                     i18n
             >Submit</button>
         </ng-template>

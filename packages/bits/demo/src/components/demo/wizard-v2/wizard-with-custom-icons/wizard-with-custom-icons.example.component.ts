@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
-import { IWizardConfig, WizardStepStateConfig, WIZARD_CONFIG } from "@nova-ui/bits";
+import { Component, ViewChild } from "@angular/core";
+import { IWizardConfig, ToastService, WizardHorizontalComponent, WizardStepStateConfig, WIZARD_CONFIG } from "@nova-ui/bits";
+
 @Component({
     selector: "nui-wizard-with-custom-icons-example",
     templateUrl: "./wizard-with-custom-icons.example.component.html",
@@ -18,6 +19,10 @@ import { IWizardConfig, WizardStepStateConfig, WIZARD_CONFIG } from "@nova-ui/bi
     ],
 })
 export class WizardWithCustomIconsExampleComponent {
+    @ViewChild("wizard") wizard: WizardHorizontalComponent;
+
+    constructor(private toastService: ToastService) {
+    }
 
     public secondStepIconConfig: Partial<WizardStepStateConfig> = {
         initial: {
@@ -33,4 +38,18 @@ export class WizardWithCustomIconsExampleComponent {
             iconColor: "orange",
         },
     };
+
+    public resetWizard(): void {
+        this.wizard.reset();
+    }
+
+    public finishWizard(): void {
+        this.toastService.success({
+            title: $localize`Success`,
+            message: $localize`Wizard was completed successfully`,
+            options: {
+                timeOut: 2000,
+            },
+        });
+    }
 }

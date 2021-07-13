@@ -1,7 +1,16 @@
 import { Directionality } from "@angular/cdk/bidi";
+import { _DisposeViewRepeaterStrategy, _VIEW_REPEATER_STRATEGY, _ViewRepeater } from "@angular/cdk/collections";
 import { Platform } from "@angular/cdk/platform";
-import { CdkVirtualForOf } from "@angular/cdk/scrolling";
-import { CdkTable, CDK_TABLE_TEMPLATE } from "@angular/cdk/table";
+import { CdkVirtualForOf, ViewportRuler } from "@angular/cdk/scrolling";
+import {
+    _COALESCED_STYLE_SCHEDULER,
+    _CoalescedStyleScheduler,
+    CDK_TABLE_TEMPLATE,
+    CdkTable,
+    STICKY_POSITIONING_LISTENER,
+    StickyPositioningListener,
+} from "@angular/cdk/table";
+import { RenderRow, RowContext } from "@angular/cdk/table/table";
 import { DOCUMENT } from "@angular/common";
 import {
     AfterContentInit,
@@ -9,7 +18,8 @@ import {
     Attribute,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component, ContentChild,
+    Component,
+    ContentChild,
     ElementRef,
     EventEmitter,
     HostBinding,
@@ -19,7 +29,9 @@ import {
     OnChanges,
     OnDestroy,
     OnInit,
+    Optional,
     Output,
+    SkipSelf,
     ViewEncapsulation,
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
@@ -50,7 +62,11 @@ interface TableRowData {
         "class": "nui-table__table",
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [TableStateHandlerService],
+    providers: [
+        TableStateHandlerService,
+        { provide: _VIEW_REPEATER_STRATEGY, useClass: _DisposeViewRepeaterStrategy },
+        { provide: _COALESCED_STYLE_SCHEDULER, useClass: _CoalescedStyleScheduler },
+    ],
     styleUrls: ["./table.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
@@ -66,6 +82,7 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
     get dataSource(): T[] {
         return super.dataSource as any;
     }
+
     set dataSource(value: T[]) {
         super.dataSource = value as any;
     }
@@ -93,8 +110,25 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
                 protected _dir: Directionality,
                 private tableStateHandlerService: TableStateHandlerService,
                 @Inject(DOCUMENT) private document: Document,
-                private platform: Platform) {
-        super(_differs, _changeDetectorRef, _elementRef, role, _dir, document, platform);
+                private platform: Platform,
+                @Inject(_VIEW_REPEATER_STRATEGY) viewRepeater: _ViewRepeater<T, RenderRow<T>, RowContext<T>>,
+                @Inject(_COALESCED_STYLE_SCHEDULER) coalescedStyleScheduler: _CoalescedStyleScheduler,
+                viewportRuler: ViewportRuler,
+                @Optional() @SkipSelf() @Inject(STICKY_POSITIONING_LISTENER) stickyPositioningListener: StickyPositioningListener
+    ) {
+        // The _ViewRepeater and _CoalescedStyleScheduler parameters were optional before Angular v12.
+        // They're included here for compatibility with Angular v12 and later.
+        super(
+            _differs, _changeDetectorRef, _elementRef, role, _dir, document, platform,
+            viewRepeater, coalescedStyleScheduler, undefined, undefined
+        );
+
+        // Angular v12 is changing the order of the last two parameters compared to v11.
+        // They deprecated the optionality of the last parameter, but the one before the last one is still optional, so they switched the order.
+        // Us trying to be compatible with both v11 and v12 had to take this path to make sure both values are assigned properly.
+        // These fields are inaccessible / readonly, so that's why we had to perform the `any` cast.
+        (this as any)._viewportRuler = viewportRuler;
+        (this as any)._stickyPositioningListener = stickyPositioningListener;
     }
 
     public getFilterComponents(): IFilteringParticipants {

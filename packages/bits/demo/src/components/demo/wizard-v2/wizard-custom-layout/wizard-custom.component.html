@@ -3,7 +3,7 @@
         <div class="col-9 p-0">
             <div class="nui-wizard-horizontal-header-container">
                 <ng-container *ngFor="let step of steps; let i = index; let isLast = last">
-                    <wizard-step-header
+                    <nui-wizard-step-header
                         class="nui-wizard-horizontal-header"
                         (click)="step.select()"
                         (keydown)="_onKeydown($event)"
@@ -16,13 +16,12 @@
                         [attr.aria-label]="step.ariaLabel || null"
                         [attr.aria-labelledby]="(!step.ariaLabel && step.ariaLabelledby) ? step.ariaLabelledby : null"
                         [index]="i"
-                        [state]="getStepState(i, step.state)"
                         [label]="step.label || step.stepLabel"
                         [selected]="selectedIndex === i"
                         [active]="step.completed || selectedIndex === i || !linear"
-                        [optional]="step.optional"
+                        [step]="step"
                         [errorMessage]="step.errorMessage">
-                    </wizard-step-header>
+                    </nui-wizard-step-header>
                     <div *ngIf="!isLast" class="nui-wizard-horizontal-line"></div>
                 </ng-container>
             </div>
@@ -34,8 +33,6 @@
                 <div *ngFor="let step of steps; let i = index"
                      [attr.tabindex]="selectedIndex === i ? 0 : null"
                      class="nui-wizard-horizontal-content" role="tabpanel"
-                     [@stepTransition]="_getAnimationDirection(i)"
-                     (@stepTransition.done)="_animationDone.next($event)"
                      [id]="_getStepContentId(i)"
                      [attr.aria-labelledby]="_getStepLabelId(i)"
                      [attr.aria-expanded]="selectedIndex === i">

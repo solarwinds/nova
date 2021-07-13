@@ -39,6 +39,7 @@ import {
     WizardWithCustomIconsExampleComponent,
     WizardRestoreStateExampleComponent,
     WizardStepChangeExampleComponent,
+    WizardResponsiveHeaderExampleComponent,
     WizardWithConfirmationDialogOnCancelExampleComponent,
     WizardTooltipExampleComponent,
 } from "./index";
@@ -49,7 +50,7 @@ const routes = [
         component: WizardDocsComponent,
         data: {
             "srlc": {
-                "stage": SrlcStage.alpha,
+                "stage": SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -105,6 +106,7 @@ const routes = [
         WizardWithCustomIconsExampleComponent,
         WizardRestoreStateExampleComponent,
         WizardStepChangeExampleComponent,
+        WizardResponsiveHeaderExampleComponent,
         WizardWithConfirmationDialogOnCancelExampleComponent,
         WizardTooltipExampleComponent,
     ],
@@ -118,4 +120,4 @@ const routes = [
         RouterModule,
     ],
 })
-export class WizardModule {}
+export class WizardModule { }
