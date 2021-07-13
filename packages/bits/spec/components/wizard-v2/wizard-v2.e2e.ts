@@ -5,7 +5,7 @@ import { Animations, Helpers } from "../../helpers";
 import { WizardV2Atom } from "./wizard-v2.atom";
 import { BusyAtom, ButtonAtom } from "../..";
 
-fdescribe("USERCONTROL WizardV2: ", () => {
+describe("USERCONTROL WizardV2: ", () => {
     let wizard: WizardV2Atom;
     let openWizardDialogBtn: ButtonAtom;
 
