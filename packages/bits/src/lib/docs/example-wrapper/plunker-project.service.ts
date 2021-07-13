@@ -13,7 +13,7 @@ export class PlunkerProjectService {
         private plunkerFiles: PlunkerFiles
     ) {}
 
-    public open(prefix: any, sources: any, translations?: any) {
+    public open(prefix: any, sources: any, translations?: any): void {
         const form: HTMLFormElement = this.document.createElement("form");
 
         const modifySources = (source: string) =>
@@ -50,20 +50,20 @@ export class PlunkerProjectService {
         form.remove();
     }
 
-    public getIndexHTMLInput() {
-        return this.formInput("index", "html", this.plunkerFiles.getIndexFile(this.getBranchName()));
+    public getIndexHTMLInput(): HTMLInputElement {
+        return this.formInput("index", "html", this.plunkerFiles.getIndexFile());
     }
 
-    public getMainTSInput() {
+    public getMainTSInput(): HTMLInputElement {
         return this.formInput("main", "ts", this.plunkerFiles.getMainFile());
     }
 
-    public getConfigJSInput() {
+    public getConfigJSInput(): HTMLInputElement {
 
-        return this.formInput("config", "js", this.plunkerFiles.getSystemjsConfigFile(this.getBranchName()));
+        return this.formInput("config", "js", this.plunkerFiles.getSystemJsConfigFile());
     }
 
-    public getAppComponentTSInput(filePrefix: string, fileContent: string) {
+    public getAppComponentTSInput(filePrefix: string, fileContent: string): HTMLInputElement {
         const className: string | undefined = this.getClassName(fileContent);
         const selectorName: string | undefined = this.getSelectorName(fileContent);
 
@@ -78,17 +78,13 @@ export class PlunkerProjectService {
         return this.formInput("app", "ts", this.plunkerFiles.getAppFile(filePrefix, className, selectorName));
     }
 
-    private getBranchName() {
-        return this.document.location.pathname.split("/")[2] || "develop";
-    }
+    private formInput(prefixName: string, extName: string, content: string): HTMLInputElement {
+        const inputEl: HTMLInputElement = this.document.createElement("input");
+        inputEl.setAttribute("type", "hidden");
+        inputEl.setAttribute("name", `files[${prefixName}.${extName}]`);
+        inputEl.setAttribute("value", `${content}`);
 
-    private formInput(prefixName: string, extName: string, content: string) {
-        const inputIndex: HTMLInputElement = this.document.createElement("input");
-        inputIndex.setAttribute("type", "hidden");
-        inputIndex.setAttribute("name", `files[${prefixName}.${extName}]`);
-        inputIndex.setAttribute("value", `${content}`);
-
-        return inputIndex;
+        return inputEl;
     }
 
     private getClassName(fileContent: string): string | undefined {

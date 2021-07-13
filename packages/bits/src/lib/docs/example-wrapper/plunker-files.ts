@@ -1,14 +1,9 @@
 import { Injectable } from "@angular/core";
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class PlunkerFiles {
-
-    private includeCharts = true;
-
-    getAppFile = (filePrefix: string, className: string, selector: string) => `
-import {
+    public getAppFile = (filePrefix: string, className: string, selector: string): string => `import {
     Component,
-    MissingTranslationStrategy,
     NgModule,
     TRANSLATIONS,
     TRANSLATIONS_FORMAT
@@ -19,8 +14,61 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import '@angular/localize';
 
-import { NuiModule } from '@nova-ui/bits';
-${ this.includeCharts ? "import { NuiChartsModule } from '@nova-ui/charts';" : ""}
+// Note: It's likely that most of these modules imported from Nova Bits aren't
+// necessary for your implementation. They're included here to allow Nova's
+// plunker usage to work with all of the existing Nova Bits components. If
+// you're copy/pasting this code, be sure to remove the ones you don't need in
+// order to avoid unnecessarily including them in your app's deployed package.
+import {
+    NuiButtonModule,
+    NuiCheckboxModule,
+    NuiCommonModule,
+    NuiDividerModule,
+    NuiIconModule,
+    NuiMessageModule,
+    NuiImageModule,
+    NuiMenuModule,
+    NuiPopupModule,
+    NuiSwitchModule,
+    NuiSelectModule,
+    NuiSelectV2Module,
+    NuiSpinnerModule,
+    NuiTabsModule,
+    NuiTextboxModule,
+    NuiTooltipModule,
+    NuiLayoutModule,
+    NuiOverlayModule,
+    NuiOverlayAdditionsModule,
+    NuiBreadcrumbModule,
+    NuiBusyModule,
+    NuiChipsModule,
+    NuiContentModule,
+    NuiDatePickerModule,
+    NuiDateTimePickerModule,
+    NuiDialogModule,
+    NuiExpanderModule,
+    NuiFormFieldModule,
+    NuiPaginatorModule,
+    NuiPanelModule,
+    NuiPopoverModule,
+    NuiProgressModule,
+    NuiRadioModule,
+    NuiRepeatModule,
+    NuiSearchModule,
+    NuiSelectorModule,
+    NuiSorterModule,
+    NuiTableModule,
+    NuiTimeFrameBarModule,
+    NuiTimeFramePickerModule,
+    NuiTimePickerModule,
+    NuiToastModule,
+    NuiToolbarModule,
+    NuiValidationMessageModule,
+    NuiWizardModule,
+    NuiWizardV2Module,
+} from '@nova-ui/bits';
+
+import { NuiChartsModule } from '@nova-ui/charts';
 
 import { ${className} } from './${filePrefix}.example.component';
 
@@ -40,8 +88,60 @@ export class App {
 }
 
 @NgModule({
-    imports: [BrowserModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, HttpClientModule,
-              NuiModule${ this.includeCharts ? ", NuiChartsModule" : ""}],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NuiChartsModule,
+        NuiButtonModule,
+        NuiCheckboxModule,
+        NuiCommonModule,
+        NuiDividerModule,
+        NuiIconModule,
+        NuiMessageModule,
+        NuiImageModule,
+        NuiMenuModule,
+        NuiPopupModule,
+        NuiSwitchModule,
+        NuiSelectModule,
+        NuiSelectV2Module,
+        NuiSpinnerModule,
+        NuiTabsModule,
+        NuiTextboxModule,
+        NuiTooltipModule,
+        NuiLayoutModule,
+        NuiOverlayModule,
+        NuiOverlayAdditionsModule,
+        NuiBreadcrumbModule,
+        NuiBusyModule,
+        NuiChipsModule,
+        NuiContentModule,
+        NuiDatePickerModule,
+        NuiDateTimePickerModule,
+        NuiDialogModule,
+        NuiExpanderModule,
+        NuiFormFieldModule,
+        NuiPaginatorModule,
+        NuiPanelModule,
+        NuiPopoverModule,
+        NuiProgressModule,
+        NuiRadioModule,
+        NuiRepeatModule,
+        NuiSearchModule,
+        NuiSelectorModule,
+        NuiSorterModule,
+        NuiTableModule,
+        NuiTimeFrameBarModule,
+        NuiTimeFramePickerModule,
+        NuiTimePickerModule,
+        NuiToastModule,
+        NuiToolbarModule,
+        NuiValidationMessageModule,
+        NuiWizardModule,
+        NuiWizardV2Module,
+    ],
     declarations: [App, ${className}],
     bootstrap: [App],
     providers: [
@@ -52,8 +152,7 @@ export class App {
 export class AppModule {}
 `
 
-    getSystemjsConfigFile = (branchName: string) => `
-var ver = {
+    public getSystemJsConfigFile = (): string => `var ver = {
     ng: '11.0.0'
 };
 
@@ -249,35 +348,38 @@ System.config({
 });
 `
 
-    getMainFile = () => `
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+    public getMainFile = (): string => `import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {AppModule} from './app';
 
 platformBrowserDynamic().bootstrapModule(AppModule);
 `
 
-    getIndexFile = (branchName: string) => `<!DOCTYPE html>
+    public getIndexFile = (): string => `<!DOCTYPE html>
 <html class="nui">
 
-<head>
-    <base href="." />
-    <title>Nova bits demo</title>
-    <link rel="stylesheet" href="http://apollo-docs.swdev.local/nova-bits/${branchName}/dist/bundles/css/styles.css" />
-    ${this.includeCharts ? `<link rel="stylesheet" href="http://apollo-docs.swdev.local/nova-charts/${branchName}/dist/bundles/css/styles.css" />` : ""}
-    <script src="https://unpkg.com/core-js@^2.4.1/client/shim.js"></script>
-    <script src="https://unpkg.com/zone.js@^0.8.25/dist/zone.js"></script>
-    <script src="https://unpkg.com/zone.js@^0.8.25/dist/long-stack-trace-zone.js"></script>
-    <script src="https://unpkg.com/reflect-metadata@^0.1.8/Reflect.js"></script>
-    <script src="https://unpkg.com/systemjs@^0.19.40/dist/system.js"></script>
-    <script src="config.js"></script>
-    <script>
-        System.import('app').catch(console.error.bind(console));
-    </script>
-</head>
+    <head>
+        <base href="." />
+        <title>Nova Demo</title>
+        <link rel="stylesheet"
+              href="https://unpkg.com/@nova-ui/bits@latest/bundles/css/styles.css"
+        />
+        <link rel="stylesheet"
+              href="https://unpkg.com/@nova-ui/charts@latest/bundles/css/styles.css"
+        />
+        <script src="https://unpkg.com/core-js@^2.4.1/client/shim.js"></script>
+        <script src="https://unpkg.com/zone.js@^0.8.25/dist/zone.js"></script>
+        <script src="https://unpkg.com/zone.js@^0.8.25/dist/long-stack-trace-zone.js"></script>
+        <script src="https://unpkg.com/reflect-metadata@^0.1.8/Reflect.js"></script>
+        <script src="https://unpkg.com/systemjs@^0.19.40/dist/system.js"></script>
+        <script src="config.js"></script>
+        <script>
+            System.import('app').catch(console.error.bind(console));
+        </script>
+    </head>
 
-<body>
-<my-app>loading...</my-app>
-</body>
+    <body>
+        <my-app>Loading...</my-app>
+    </body>
 
 </html>
 `

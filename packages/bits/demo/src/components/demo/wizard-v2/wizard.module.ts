@@ -20,9 +20,6 @@ import {
     NuiWizardV2Module,
     SrlcStage,
     NuiSelectV2Module,
-    WIZARD_CONFIG,
-    IWizardConfig,
-    WIZARD_CONFIG_DEFAULT,
     NuiOverlayModule,
     NuiTooltipModule,
 } from "@nova-ui/bits";
@@ -42,7 +39,7 @@ import {
     WizardWithCustomIconsExampleComponent,
     WizardRestoreStateExampleComponent,
     WizardStepChangeExampleComponent,
-    WizardWithConfirmationDialogOnCancelComponent,
+    WizardWithConfirmationDialogOnCancelExampleComponent,
     WizardTooltipExampleComponent,
 } from "./index";
 
@@ -55,6 +52,16 @@ const routes = [
                 "stage": SrlcStage.alpha,
             },
             showThemeSwitcher: true,
+        },
+    },
+    {
+        path: "confirm-on-cancel",
+        component: WizardWithConfirmationDialogOnCancelExampleComponent,
+        data: {
+            showThemeSwitcher: true,
+            srlc: {
+                hideIndicator: true,
+            },
         },
     },
 ];
@@ -98,7 +105,7 @@ const routes = [
         WizardWithCustomIconsExampleComponent,
         WizardRestoreStateExampleComponent,
         WizardStepChangeExampleComponent,
-        WizardWithConfirmationDialogOnCancelComponent,
+        WizardWithConfirmationDialogOnCancelExampleComponent,
         WizardTooltipExampleComponent,
     ],
     providers: [

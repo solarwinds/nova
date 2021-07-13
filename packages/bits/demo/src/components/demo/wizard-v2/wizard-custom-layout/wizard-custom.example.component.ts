@@ -31,7 +31,7 @@ export class WizardCustomComponent extends WizardDirective {}
 
 @Component({
     selector: "nui-wizard-custom-example",
-    templateUrl: "./wizard-custom-example.component.html",
+    templateUrl: "./wizard-custom.example.component.html",
     styleUrls: ["wizard-custom.component.less"],
     providers: [{
         provide: STEPPER_GLOBAL_OPTIONS, useValue: {displayDefaultIndicatorType: false},

@@ -12,7 +12,7 @@ interface IWizardStepData {
 
 @Component({
     selector: "nui-wizard-remove-step-example",
-    templateUrl: "./wizard-remove-step-example.component.html",
+    templateUrl: "./wizard-remove-step.example.component.html",
 })
 export class WizardRemoveStepExampleComponent implements AfterViewInit {
     public steps: IWizardStepData[] = [];

@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { IWizardConfig, WizardStepStateConfig, WIZARD_CONFIG } from "@nova-ui/bits";
 @Component({
     selector: "nui-wizard-with-custom-icons-example",
-    templateUrl: "./wizard-with-custom-icons-example.component.html",
+    templateUrl: "./wizard-with-custom-icons.example.component.html",
     providers: [
         {
             provide: WIZARD_CONFIG,

@@ -9,10 +9,10 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: "nui-wizard-with-confirmation-dialog-on-cancel-example",
-    templateUrl: "./wizard-with-confirmation-dialog-on-cancel.component.html",
-    styleUrls: ["./wizard-with-confirmation-dialog-on-cancel.component.less"],
+    templateUrl: "./wizard-with-confirmation-dialog-on-cancel.example.component.html",
+    styleUrls: ["./wizard-with-confirmation-dialog-on-cancel.example.component.less"],
 })
-export class WizardWithConfirmationDialogOnCancelComponent implements OnInit{
+export class WizardWithConfirmationDialogOnCancelExampleComponent implements OnInit{
     public confirmationDialog: NuiDialogRef;
     public form: FormGroup;
 
