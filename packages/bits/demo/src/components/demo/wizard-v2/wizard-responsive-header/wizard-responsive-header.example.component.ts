@@ -1,9 +1,9 @@
 import { Component, ViewChild } from "@angular/core";
-import { WizardHorizontalComponent } from "../../../../../../src/nui-api";
-import { ToastService } from "../../../../../../src/public_api";
+import { ToastService, WizardHorizontalComponent } from "@nova-ui/bits";
+
 @Component({
     selector: "nui-wizard-responsive-header-example",
-    templateUrl: "./wizard-responsive-header-example.component.html",
+    templateUrl: "./wizard-responsive-header.example.component.html",
 })
 export class WizardResponsiveHeaderExampleComponent {
     public steps: Array<any> = Array.from({length: 20});
