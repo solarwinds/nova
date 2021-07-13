@@ -20,6 +20,10 @@ export class WizardV2FooterAtom extends Atom {
         return this.getButtonAtom(".nui-button.busy-btn");
     }
 
+    public getFinishButton(): Promise<ButtonAtom> {
+        return this.getButtonAtom(".nui-button.complete");
+    }
+
     private getButtonAtom(query: string): Promise<ButtonAtom> {
         const button = this.root.element(by.css(query));
 

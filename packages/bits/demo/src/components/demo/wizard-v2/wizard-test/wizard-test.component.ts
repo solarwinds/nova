@@ -3,7 +3,14 @@ import {
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { FlexibleConnectedPositionStrategy, OverlayRef } from "@angular/cdk/overlay";
-import { DialogService, NuiDialogRef, OverlayComponent, WizardHorizontalComponent } from "@nova-ui/bits";
+import {
+    DialogService,
+    IWizardState,
+    NuiDialogRef,
+    OverlayComponent,
+    WizardHorizontalComponent,
+    WizardStepV2Component,
+} from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
 
 @Component({
@@ -23,6 +30,7 @@ export class WizardTestComponent {
 
     public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
     public selectedVegetables = [$localize `Potato`, $localize `Tomato`];
+    public state: IWizardState;
 
     public isChecked(vegetable: string): boolean {
         return this.selectedVegetables.indexOf(vegetable) > -1;
@@ -97,6 +105,15 @@ export class WizardTestComponent {
         this.onDestroy$.next();
         this.onDestroy$.complete();
         this.overlayTriggered$.complete();
+    }
+
+    public saveState(state: IWizardState): void {
+        this.state = state;
+    }
+
+    public completeWizard(step: WizardStepV2Component): void {
+        step.completed = true;
+        this.activeDialog.close();
     }
 
     private updateOverlayDimensions(overlay: OverlayComponent): void {

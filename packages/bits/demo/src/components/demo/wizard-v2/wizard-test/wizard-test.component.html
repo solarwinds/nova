@@ -61,7 +61,11 @@
                 <div class="busy-content">
                     <nui-dialog-header i18n-title title="Wizard dialog" (closed)="closeDialog()"></nui-dialog-header>
                     <div class="dialog-body compact-mode">
-                        <nui-wizard-horizontal #wizard id="nui-wizard-v2-horizontal-dialog">
+                        <nui-wizard-horizontal #wizard
+                                            id="nui-wizard-v2-horizontal-dialog"
+                                           [state]="state"
+                                           (finished)="saveState($event)"
+                        >
 
                             <!--  This defines the first step of the wizard -->
                             <nui-wizard-step-v2 label="Completed">
@@ -108,13 +112,21 @@
                                 </ng-template>
                             </nui-wizard-step-v2>
 
-                            <nui-wizard-step-v2 label="Summary">
+                            <nui-wizard-step-v2 label="Summary" #finalStep>
                                 <div class="step-content-wrapper">
                                     <span i18n>We finally reached our last step</span>
                                 </div>
                                 <ng-template nuiWizardStepFooter>
                                     <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
                                     <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+                                    <button class="complete"
+                                        type="button"
+                                        nui-button
+                                        displayStyle="primary"
+                                        (click)="completeWizard(finalStep)"
+                                    >
+                                        Finish
+                                    </button>
                                 </ng-template>
                             </nui-wizard-step-v2>
 
@@ -139,6 +151,7 @@
 
                             <ng-template #wizardNext>
                                 <button nuiWizardNext
+                                        class="next"
                                         type="button"
                                         nui-button
                                         displayStyle="primary"

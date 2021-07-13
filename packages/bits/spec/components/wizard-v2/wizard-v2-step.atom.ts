@@ -6,8 +6,4 @@ export class WizardV2StepAtom extends Atom {
     public static CSS_CLASS = "nui-wizard-horizontal-content";
 
     private root = this.getElement();
-
-    public getBody(): void {}
-
-    public getFooter(): void {}
 }

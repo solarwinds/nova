@@ -1,4 +1,4 @@
-import { by, ElementFinder } from "protractor";
+import { by } from "protractor";
 
 import { Atom } from "../../atom";
 import { ElementArrayFinder } from "protractor/built/element";
@@ -17,7 +17,7 @@ export class WizardV2Atom extends Atom {
 
     public async getSteps(): Promise<ElementArrayFinder> {
         return this.root.all(by.css(".nui-wizard-horizontal-content-container > .nui-wizard-horizontal-content"));
-}
+    }
 
     public async getStep(index: number): Promise<WizardV2StepAtom> {
         const steps = this.root.all(by.css(".nui-wizard-horizontal-header-container > .nui-wizard-horizontal-content"));
@@ -45,9 +45,16 @@ export class WizardV2Atom extends Atom {
         await header.click();
     }
 
-    public getFirstStep(): void {
+    public async moveToFinalStep(): Promise<void> {
+        const steps = await this.getSteps();
+        const footer = await this.getFooter();
 
+        for (const step of steps) {
+            const next = await footer.getNextBtn();
+
+            if (await next.isPresent()) {
+                await next.click();
+            }
+        }
     }
-
-    public getLastStep(): void {}
 }

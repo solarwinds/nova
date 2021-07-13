@@ -5,7 +5,7 @@ import { Animations, Helpers } from "../../helpers";
 import { WizardV2Atom } from "./wizard-v2.atom";
 import { BusyAtom, ButtonAtom } from "../..";
 
-describe("USERCONTROL WizardV2: ", () => {
+fdescribe("USERCONTROL WizardV2: ", () => {
     let wizard: WizardV2Atom;
     let openWizardDialogBtn: ButtonAtom;
 
@@ -86,6 +86,28 @@ describe("USERCONTROL WizardV2: ", () => {
             await cancelBtn.click();
 
             expect(await wizard.isPresent()).toEqual(false);
+        });
+    });
+
+    describe("restore state", () => {
+        it("should open dialog on last step", async () => {
+            await openWizardDialogBtn.click();
+
+            const wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
+            const firstStepHeader = await wizard.getHeader(0);
+
+            await firstStepHeader.click();
+            await wizard.moveToFinalStep();
+
+            const footer = await wizard.getFooter();
+            const finishButton = await footer.getFinishButton();
+
+            await finishButton.click();
+            await openWizardDialogBtn.click();
+
+            const lastHeader = await wizard.getHeader(3);
+
+            expect(await lastHeader.hasClass("nui-wizard-step-header--selected")).toEqual(true)
         });
     });
 });
