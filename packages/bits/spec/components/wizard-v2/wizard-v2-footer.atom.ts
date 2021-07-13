@@ -8,9 +8,21 @@ export class WizardV2FooterAtom extends Atom {
 
     private root = this.getElement();
 
-    public async getNextBtn(): Promise<ButtonAtom> {
-        const button = this.root.element(by.css(".nui-button.btn.next"));
+    public getNextBtn(): Promise<ButtonAtom> {
+        return this.getButtonAtom(".nui-button.btn.next");
+    }
 
-        return new ButtonAtom(button);
+    public getCancelBtn(): Promise<ButtonAtom> {
+        return this.getButtonAtom(".nui-button.cancel");
+    }
+
+    public getBusyBtn(): Promise<ButtonAtom> {
+        return this.getButtonAtom(".nui-button.busy-btn");
+    }
+
+    private getButtonAtom(query: string): Promise<ButtonAtom> {
+        const button = this.root.element(by.css(query));
+
+        return Promise.resolve(new ButtonAtom(button));
     }
 }

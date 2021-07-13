@@ -3,14 +3,18 @@ import { by, element } from "protractor";
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
 import { WizardV2Atom } from "./wizard-v2.atom";
+import { BusyAtom, ButtonAtom } from "../..";
 
 describe("USERCONTROL WizardV2: ", () => {
     let wizard: WizardV2Atom;
+    let openWizardDialogBtn: ButtonAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("wizard-v2/wizard-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
+
         wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal");
+        openWizardDialogBtn = Atom.find(ButtonAtom, "nui-wizard-dialog-trigger");
     });
 
     describe("by default",  () => {
@@ -49,6 +53,39 @@ describe("USERCONTROL WizardV2: ", () => {
             const hasClass = await header.hasClass("nui-wizard-step-header--selected");
 
             expect(hasClass).toEqual(true);
+        });
+    });
+
+    describe("wizard in dialog", () => {
+        beforeAll(async () => {
+            await openWizardDialogBtn.click();
+        });
+
+        it("should wizard be presented",  async () => {
+            const wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
+
+            expect(await wizard.isPresent()).toEqual(true);
+        });
+
+        it("should show busy",  async () => {
+            const wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
+            const footer = await wizard.getFooter();
+            const busyBtn = await footer.getBusyBtn();
+            const busy = Atom.find(BusyAtom, "nui-busy");
+
+            await busyBtn.click();
+
+            expect(await busy.isChildElementPresent(by.css(".nui-spinner"))).toEqual(true);
+        });
+
+        it("should not wizard be presented after cancel action",  async () => {
+            const wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
+            const footer = await wizard.getFooter();
+            const cancelBtn = await footer.getCancelBtn();
+
+            await cancelBtn.click();
+
+            expect(await wizard.isPresent()).toEqual(false);
         });
     });
 });
