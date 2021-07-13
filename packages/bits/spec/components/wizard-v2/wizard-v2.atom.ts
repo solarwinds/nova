@@ -15,25 +15,25 @@ export class WizardV2Atom extends Atom {
         return super.getElement().isPresent();
     }
 
-    public async getSteps(): Promise<ElementArrayFinder> {
+    public getSteps(): ElementArrayFinder {
         return this.root.all(by.css(".nui-wizard-horizontal-content-container > .nui-wizard-horizontal-content"));
     }
 
-    public async getStep(index: number): Promise<WizardV2StepAtom> {
+    public getStep(index: number): WizardV2StepAtom {
         const steps = this.root.all(by.css(".nui-wizard-horizontal-header-container > .nui-wizard-horizontal-content"));
         const step = steps.get(index);
 
         return new WizardV2StepAtom(step);
     }
 
-    public async getHeader(index: number): Promise<WizardV2StepHeaderAtom> {
+    public getHeader(index: number): WizardV2StepHeaderAtom {
         const headers = this.root.all(by.css(".nui-wizard-step-header"));
         const header = headers.get(index);
 
         return new WizardV2StepHeaderAtom(header);
     }
 
-    public async getFooter(): Promise<WizardV2FooterAtom> {
+    public getFooter(): WizardV2FooterAtom {
         const footer = this.root.element(by.className("nui-wizard-horizontal-footer-container"));
 
         return new WizardV2FooterAtom(footer);
@@ -47,10 +47,10 @@ export class WizardV2Atom extends Atom {
 
     public async moveToFinalStep(): Promise<void> {
         const steps = await this.getSteps();
-        const footer = await this.getFooter();
+        const footer = this.getFooter();
 
         for (const step of steps) {
-            const next = await footer.getNextBtn();
+            const next = footer.getNextBtn();
 
             if (await next.isPresent()) {
                 await next.click();
