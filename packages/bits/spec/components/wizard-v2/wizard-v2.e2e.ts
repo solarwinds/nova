@@ -1,4 +1,4 @@
-import { by, element } from "protractor";
+import { by, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Animations, Helpers } from "../../helpers";
@@ -88,6 +88,10 @@ fdescribe("USERCONTROL WizardV2: ", () => {
     });
 
     describe("restore state", () => {
+        afterEach(() => {
+            Helpers.pressKey(Key.ESCAPE);
+        });
+
         it("should open dialog on last step", async () => {
             await openWizardDialogBtn.click();
 
@@ -110,6 +114,19 @@ fdescribe("USERCONTROL WizardV2: ", () => {
     });
 
     describe("dynamic step", () => {
+        let wizard: WizardV2Atom;
 
+        beforeEach(() => {
+            wizard = Atom.find(WizardV2Atom, "nui-wizard-horizontal-dynamic");
+        });
+
+        it("should add step", async () => {
+            const stepLength = await wizard.getSteps().count();
+            const addButton = wizard.getStep(0).getAddButton();
+
+            await addButton.click();
+
+            expect(await wizard.getSteps().count()).toEqual(stepLength + 1);
+        });
     });
 });

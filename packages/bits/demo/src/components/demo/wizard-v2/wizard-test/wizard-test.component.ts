@@ -13,6 +13,11 @@ import {
 } from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
 
+interface IWizardStepData {
+    title: string;
+    templateRef: TemplateRef<string>;
+}
+
 @Component({
     selector: "nui-wizard-test",
     templateUrl: "./wizard-test.component.html",
@@ -31,6 +36,7 @@ export class WizardTestComponent {
     public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
     public selectedVegetables = [$localize `Potato`, $localize `Tomato`];
     public state: IWizardState;
+    public steps: IWizardStepData[] = [];
 
     public isChecked(vegetable: string): boolean {
         return this.selectedVegetables.indexOf(vegetable) > -1;
@@ -58,7 +64,7 @@ export class WizardTestComponent {
         }, 3000);
     }
 
-    // Open confirmation overlay
+
     public openConfirmationOverlay(overlay: OverlayComponent, wizard: WizardHorizontalComponent): void {
         if (wizard.selectedIndex === 0) {
             this.closeDialog();
@@ -66,24 +72,16 @@ export class WizardTestComponent {
         }
 
         this.overlayTriggered$.next();
-
-        // Toggling the overlay to get an access to the 'overlayRef'
         overlay.toggle();
 
         this.overlayRef = overlay.getOverlayRef();
-        // Here we update the positions for the overlay. By default, the overlay service connects the overlay to the bottom-left
-        // corner of the toggle reference element. We change this behavior here by setting new positions, since we want overlay to
-        // stick to the upper-top corner of the parent container
         (this.overlayRef.getConfig().positionStrategy as FlexibleConnectedPositionStrategy).withPositions([{
             originX: "start",
             originY: "top",
             overlayX: "start",
             overlayY: "top",
         }]);
-        // We update the size of the overlay container to follow the dimensions of the new 'toggle reference' container we set in the very first step
         this.updateOverlayDimensions(overlay);
-
-        // Handling ESC events inside overlay
         this.activeDialog?.closed$.pipe(
             takeUntil(this.overlayTriggered$),
             takeUntil(this.onDestroy$)).subscribe(() => overlay.hide());
@@ -114,6 +112,10 @@ export class WizardTestComponent {
     public completeWizard(step: WizardStepV2Component): void {
         step.completed = true;
         this.activeDialog.close();
+    }
+
+    public addStep(templateRef: TemplateRef<string>, title?: string): void {
+        this.steps.push({ title: title ?? `Dynamic Step ${this.steps.length + 1}`, templateRef: templateRef });
     }
 
     private updateOverlayDimensions(overlay: OverlayComponent): void {

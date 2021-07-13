@@ -82,8 +82,8 @@
                                         (click)="toggleBusy()">
                                             Toggle busy
                                     </button>
-                                    <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
-                                    <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardCancelDialog"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardNextDialog"></ng-container>
                                 </ng-template>
                             </nui-wizard-step-v2>
 
@@ -93,9 +93,9 @@
                                     <span i18n>This is the second step of our horizontal wizard</span>.
                                 </div>
                                 <ng-template nuiWizardStepFooter>
-                                    <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
-                                    <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
-                                    <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardCancelDialog"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardPreviousDialog"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardNextDialog"></ng-container>
                                 </ng-template>
                             </nui-wizard-step-v2>
 
@@ -106,9 +106,9 @@
                                 </div>
 
                                 <ng-template nuiWizardStepFooter>
-                                    <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
-                                    <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
-                                    <ng-container *ngTemplateOutlet="wizardNext"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardCancelDialog"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardPreviousDialog"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardNextDialog"></ng-container>
                                 </ng-template>
                             </nui-wizard-step-v2>
 
@@ -117,8 +117,8 @@
                                     <span i18n>We finally reached our last step</span>
                                 </div>
                                 <ng-template nuiWizardStepFooter>
-                                    <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
-                                    <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardCancelDialog"></ng-container>
+                                    <ng-container *ngTemplateOutlet="wizardPreviousDialog"></ng-container>
                                     <button class="complete"
                                         type="button"
                                         nui-button
@@ -130,7 +130,7 @@
                                 </ng-template>
                             </nui-wizard-step-v2>
 
-                            <ng-template #wizardCancel>
+                            <ng-template #wizardCancelDialog>
                                 <button class="cancel"
                                         type="button"
                                         displayStyle="action"
@@ -140,7 +140,7 @@
                                 </button>
                             </ng-template>
 
-                            <ng-template #wizardPrevious>
+                            <ng-template #wizardPreviousDialog>
                                 <button type="button"
                                     nuiWizardPrevious
                                     nui-button
@@ -149,7 +149,7 @@
                                 </button>
                             </ng-template>
 
-                            <ng-template #wizardNext>
+                            <ng-template #wizardNextDialog>
                                 <button nuiWizardNext
                                         class="next"
                                         type="button"
@@ -193,4 +193,70 @@
         i18n>
         Open dialog wizard
     </button>
+</div>
+
+<!--Wizard Dynamic Step-->
+<div class="container">
+    <nui-wizard-horizontal id="nui-wizard-horizontal-dynamic">
+        <!--Static step-->
+        <nui-wizard-step-v2 i18n-label label="Normal step">
+            <div class="p-5">
+                <p i18n>Hi! You can add next step dynamically</p>
+
+                <button (click)="addStep(dynamicTemplate2)" class="add" nui-button type="button">
+                    Add dynamic step w/template
+                </button>
+            </div>
+
+            <ng-template nuiWizardStepFooter>
+                <ng-container *ngTemplateOutlet="wizardNextDynamic"></ng-container>
+            </ng-template>
+        </nui-wizard-step-v2>
+
+        <ng-container *ngTemplateOutlet="dynamicStepWithTemplate" ngProjectAs="nui-wizard-step-v2"></ng-container>
+        <ng-template #dynamicStepWithTemplate>
+            <nui-wizard-step-v2>
+                <ng-template nuiWizardStepLabel>Dynamic w/template</ng-template>
+                <p class="m-5" i18n>Hi! I'm dynamic step added automatically!</p>
+
+                <ng-template nuiWizardStepFooter>
+                    <ng-container *ngTemplateOutlet="wizardPreviousDynamic"></ng-container>
+                    <ng-container *ngTemplateOutlet="wizardNextDynamic"></ng-container>
+                </ng-template>
+            </nui-wizard-step-v2>
+        </ng-template>
+
+        <nui-wizard-step-v2 *ngFor="let step of steps; let isLast = last">
+            <ng-template nuiWizardStepLabel>{{step.title}}</ng-template>
+            <ng-container *ngTemplateOutlet="step.templateRef"></ng-container>
+            <ng-template nuiWizardStepFooter>
+                <ng-container *ngTemplateOutlet="wizardPreviousDynamic"></ng-container>
+                <ng-container *ngTemplateOutlet="!isLast && wizardNextDynamic"></ng-container>
+            </ng-template>
+        </nui-wizard-step-v2>
+
+        <ng-template #dynamicTemplate1>
+            <p class="m-5" i18n>Hi! I'm dynamic step added automatically during ngAfterViewInit of this wizard using a TemplateRef!</p>
+        </ng-template>
+
+        <ng-template #dynamicTemplate2>
+            <p class="m-5" i18n>Hi! I'm a step added dynamically using a TemplateRef by clicking a button from the first step !</p>
+        </ng-template>
+
+        <ng-template #wizardPreviousDynamic>
+            <button icon="caret-left" nui-button nuiWizardPrevious type="button">
+                Back
+            </button>
+        </ng-template>
+
+        <ng-template #wizardNextDynamic>
+            <button displayStyle="primary"
+                    icon="caret-right"
+                    iconRight="true"
+                    nui-button
+                    nuiWizardNext
+                    type="button"
+            >Next</button>
+        </ng-template>
+    </nui-wizard-horizontal>
 </div>
