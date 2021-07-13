@@ -40,7 +40,7 @@ export class WizardV2Atom extends Atom {
     }
 
     public async selectStep(index: number): Promise<void> {
-        const header = await this.getHeader(index);
+        const header = this.getHeader(index);
 
         await header.click();
     }
