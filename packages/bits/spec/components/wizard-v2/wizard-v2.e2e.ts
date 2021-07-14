@@ -8,6 +8,7 @@ import { BusyAtom, ButtonAtom } from "../..";
 describe("USERCONTROL WizardV2: ", () => {
     let wizard: WizardV2Atom;
     let openWizardDialogBtn: ButtonAtom;
+    let removeStepBtn: ButtonAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("wizard-v2/wizard-test");
@@ -15,6 +16,7 @@ describe("USERCONTROL WizardV2: ", () => {
 
         wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal");
         openWizardDialogBtn = Atom.find(ButtonAtom, "nui-wizard-dialog-trigger");
+        removeStepBtn = Atom.find(ButtonAtom, "nui-remove-wizard-step-button");
     });
 
     describe("by default",  () => {
@@ -88,14 +90,14 @@ describe("USERCONTROL WizardV2: ", () => {
     });
 
     describe("restore state", () => {
-        afterEach(() => {
-            Helpers.pressKey(Key.ESCAPE);
+        let wizard: WizardV2Atom;
+
+        beforeEach(async () => {
+            await openWizardDialogBtn.click();
+            wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
         });
 
         it("should open dialog on last step", async () => {
-            await openWizardDialogBtn.click();
-
-            const wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
             const firstStepHeader = wizard.getHeader(0);
 
             await firstStepHeader.click();
@@ -110,13 +112,14 @@ describe("USERCONTROL WizardV2: ", () => {
             const lastHeader = wizard.getHeader(3);
 
             expect(lastHeader.hasClass("nui-wizard-step-header--selected")).toEqual(true)
+            await Helpers.pressKey(Key.ESCAPE);
         });
     });
 
     describe("dynamic step", () => {
         let wizard: WizardV2Atom;
 
-        beforeEach(() => {
+        beforeEach(async () => {
             wizard = Atom.find(WizardV2Atom, "nui-wizard-horizontal-dynamic");
         });
 
@@ -127,6 +130,19 @@ describe("USERCONTROL WizardV2: ", () => {
             await addButton.click();
 
             expect(await wizard.getSteps().count()).toEqual(stepLength + 1);
+        });
+
+        it("should remove step", async () => {
+            const stepLength = await wizard.getSteps().count();
+            const addButton = wizard.getStep(0).getAddButton();
+
+            await addButton.click();
+
+            expect(await wizard.getSteps().count()).toEqual(stepLength + 1);
+
+            await removeStepBtn.click();
+
+            expect(await wizard.getSteps().count()).toEqual(stepLength);
         });
     });
 });

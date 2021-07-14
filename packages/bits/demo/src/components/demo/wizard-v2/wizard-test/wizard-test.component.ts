@@ -1,5 +1,9 @@
 import {
-    Component, Inject, TemplateRef,
+    AfterViewInit,
+    Component,
+    Inject,
+    TemplateRef,
+    ViewChild,
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { FlexibleConnectedPositionStrategy, OverlayRef } from "@angular/cdk/overlay";
@@ -23,7 +27,7 @@ interface IWizardStepData {
     templateUrl: "./wizard-test.component.html",
     styleUrls: ["./wizard-test.less"],
 })
-export class WizardTestComponent {
+export class WizardTestComponent implements AfterViewInit{
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
 
@@ -37,6 +41,12 @@ export class WizardTestComponent {
     public selectedVegetables = [$localize `Potato`, $localize `Tomato`];
     public state: IWizardState;
     public steps: IWizardStepData[] = [];
+
+    @ViewChild("normalStep") normalStep: TemplateRef<string>;
+
+    ngAfterViewInit(): void {
+        this.addStep(this.normalStep);
+    }
 
     public isChecked(vegetable: string): boolean {
         return this.selectedVegetables.indexOf(vegetable) > -1;
@@ -116,6 +126,10 @@ export class WizardTestComponent {
 
     public addStep(templateRef: TemplateRef<string>, title?: string): void {
         this.steps.push({ title: title ?? `Dynamic Step ${this.steps.length + 1}`, templateRef: templateRef });
+    }
+
+    public removeStep(index = 1): void {
+        this.steps.splice(index, 1);
     }
 
     private updateOverlayDimensions(overlay: OverlayComponent): void {
