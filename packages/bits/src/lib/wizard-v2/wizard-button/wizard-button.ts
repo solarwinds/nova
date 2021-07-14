@@ -1,7 +1,7 @@
 import {CdkStepperNext, CdkStepperPrevious} from "@angular/cdk/stepper";
 import {Directive, Input} from "@angular/core";
 
-/** Button that moves to the next step in a stepper workflow. 
+/** Button that moves to the next step in a stepper workflow.
  * @ignore
 */
 @Directive({
@@ -12,7 +12,7 @@ export class WizardStepperNextDirective extends CdkStepperNext {
     @Input() type: string;
 }
 
-/** Button that moves to the previous step in a stepper workflow. 
+/** Button that moves to the previous step in a stepper workflow.
  * @ignore
 */
 @Directive({
