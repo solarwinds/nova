@@ -11,8 +11,8 @@ import {
 
 @Component({
     selector: "linear-gauge-with-thresholds-example",
-    templateUrl: "./linear-gauge-with-thresholds-example.component.html",
-    styleUrls: ["./linear-gauge-with-thresholds-example.component.less"],
+    templateUrl: "./linear-gauge-with-thresholds.example.component.html",
+    styleUrls: ["./linear-gauge-with-thresholds.example.component.less"],
 })
 export class LinearGaugeWithThresholdsExampleComponent implements OnInit {
     public horizontalChartAssist: ChartAssist;

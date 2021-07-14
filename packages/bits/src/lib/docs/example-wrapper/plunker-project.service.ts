@@ -13,18 +13,27 @@ export class PlunkerProjectService {
         private plunkerFiles: PlunkerFiles
     ) {}
 
-    public open(prefix: any, sources: any, translations?: any): void {
+    public open(prefix: string, sources: any, translations?: any): void {
         const form: HTMLFormElement = this.document.createElement("form");
 
         const modifySources = (source: string) =>
             // Handle non-existent less references that are just killing plunker
             source.replace(/^.*@import \(reference\).*$/mg, "// NUI LESS VARIABLES ARE NOT SUPPORTED YET");
 
+        // HACK FOR FILENAME VARIATION: We're only appending '.example' to the prefix if the component doesn't already
+        // have '-example' in its prefix. The presence of '-example' in the prefix indicates that the component doesn't
+        // follow the convention of having a '.example' substring in its filenames. The '.example' substring is normally
+        // used in determining the filename prefix to use for the example wrapper's code sources.
+        const hyphenExampleSubstr = "-example";
+        const hyphenExampleSubstrFound = (prefix.indexOf(hyphenExampleSubstr) + hyphenExampleSubstr.length) === prefix.length;
+        const modifiedPrefix = `${prefix}${hyphenExampleSubstrFound ? "" : ".example"}`
+        // END HACK
+
         // example files
         Object.keys(sources).forEach( key => {
             form.append(
                 this.formInput(
-                    `${prefix}.example.component`,
+                    `${modifiedPrefix}.component`,
                     key,
                     modifySources(sources[key])
                 )
@@ -38,7 +47,7 @@ export class PlunkerProjectService {
         form.append(this.getMainTSInput());
         form.append(this.getConfigJSInput());
         form.append(this.getIndexHTMLInput());
-        form.append(this.getAppComponentTSInput(prefix, sources.ts));
+        form.append(this.getAppComponentTSInput(modifiedPrefix, sources.ts));
 
         form.style.display = "none";
         form.setAttribute("method", "post");

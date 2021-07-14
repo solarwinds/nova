@@ -9,11 +9,11 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "vertical-gauge-basic-example",
-    templateUrl: "./vertical-gauge-basic-example.component.html",
-    styleUrls: ["./vertical-gauge-basic-example.component.less"],
+    selector: "horizontal-gauge-basic-example",
+    templateUrl: "./horizontal-gauge-basic.example.component.html",
+    styleUrls: ["./horizontal-gauge-basic.example.component.less"],
 })
-export class VerticalGaugeBasicExampleComponent implements OnInit {
+export class HorizontalGaugeBasicExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
     public gaugeConfig: IGaugeConfig;
 
@@ -25,10 +25,10 @@ export class VerticalGaugeBasicExampleComponent implements OnInit {
         this.gaugeConfig = this.getGaugeConfig(initialValue);
 
         // Creating the chart assist
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Vertical);
+        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
 
         // Assembling the series
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Vertical);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
 
         // Updating the chart
         this.chartAssist.update(this.seriesSet);

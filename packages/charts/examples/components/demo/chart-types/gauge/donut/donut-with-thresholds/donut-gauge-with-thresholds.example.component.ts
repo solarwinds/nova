@@ -12,8 +12,8 @@ import {
 
 @Component({
     selector: "donut-gauge-with-thresholds-example",
-    templateUrl: "./donut-gauge-with-thresholds-example.component.html",
-    styleUrls: ["./donut-gauge-with-thresholds-example.component.less"],
+    templateUrl: "./donut-gauge-with-thresholds.example.component.html",
+    styleUrls: ["./donut-gauge-with-thresholds.example.component.less"],
 })
 export class DonutGaugeWithThresholdsExampleComponent implements OnInit {
     public chartAssist: ChartAssist;

@@ -70,7 +70,7 @@ import {
 
 import { NuiChartsModule } from '@nova-ui/charts';
 
-import { ${className} } from './${filePrefix}.example.component';
+import { ${className} } from './${filePrefix}.component';
 
 import { translations } from './translations';
 

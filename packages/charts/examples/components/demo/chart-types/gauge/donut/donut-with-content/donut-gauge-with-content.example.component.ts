@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {
     ChartAssist,
+    ChartDonutContentPlugin,
     GaugeMode,
     GaugeUtil,
     IAccessors,
@@ -10,46 +11,40 @@ import {
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "donut-gauge-without-threshold-markers-example",
-    templateUrl: "./donut-gauge-without-threshold-markers-example.component.html",
-    styleUrls: ["./donut-gauge-without-threshold-markers-example.component.less"],
+    selector: "donut-gauge-with-content-example",
+    templateUrl: "./donut-gauge-with-content.example.component.html",
+    styleUrls: ["./donut-gauge-with-content.example.component.less"],
 })
-export class DonutGaugeWithoutThresholdMarkersExampleComponent implements OnInit {
+export class DonutGaugeWithContentExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
-    public value = 128;
+    public contentPlugin: ChartDonutContentPlugin;
     public gaugeConfig: IGaugeConfig;
 
-    private thresholds: IGaugeThresholdsConfig;
     private seriesSet: IChartAssistSeries<IAccessors>[];
+    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
 
     public ngOnInit(): void {
-        // Generating a standard set of thresholds with warning and critical levels
-        this.thresholds= GaugeUtil.createStandardThresholdsConfig(100, 158);
-
-        // Turning off the markers
-        this.thresholds.disableMarkers = true;
-
-        this.gaugeConfig = this.getGaugeConfig();
+        const initialValue = 128;
+        this.gaugeConfig = this.getGaugeConfig(initialValue);
         this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
+
+        // Adding the plugin for the donut inner content
+        this.contentPlugin = new ChartDonutContentPlugin();
+        this.chartAssist.chart.addPlugin(this.contentPlugin);
 
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
         this.chartAssist.update(this.seriesSet);
     }
 
     public onValueChange(value: number): void {
-        this.value = value;
-        this.updateGauge();
-    }
-
-    private updateGauge() {
-        this.gaugeConfig = this.getGaugeConfig();
+        this.gaugeConfig = this.getGaugeConfig(value);
         this.seriesSet = GaugeUtil.update(this.seriesSet, this.gaugeConfig);
         this.chartAssist.update(this.seriesSet);
     }
 
-    private getGaugeConfig(): IGaugeConfig {
+    private getGaugeConfig(value: number): IGaugeConfig {
         return {
-            value: this.value,
+            value,
             max: 200,
             thresholds: this.thresholds,
         };

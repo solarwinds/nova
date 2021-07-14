@@ -1,44 +1,47 @@
 import { Component, OnInit } from "@angular/core";
 import {
     ChartAssist,
-    ChartDonutContentPlugin,
     GaugeMode,
     GaugeUtil,
     IAccessors,
     IChartAssistSeries,
     IGaugeConfig,
-    IGaugeThresholdsConfig,
 } from "@nova-ui/charts";
 
 @Component({
-    selector: "donut-gauge-with-content-example",
-    templateUrl: "./donut-gauge-with-content-example.component.html",
-    styleUrls: ["./donut-gauge-with-content-example.component.less"],
+    selector: "donut-gauge-basic-example",
+    templateUrl: "./donut-gauge-basic.example.component.html",
+    styleUrls: ["./donut-gauge-basic.example.component.less"],
 })
-export class DonutGaugeWithContentExampleComponent implements OnInit {
+export class DonutGaugeBasicExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
-    public contentPlugin: ChartDonutContentPlugin;
     public gaugeConfig: IGaugeConfig;
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
 
     public ngOnInit(): void {
+        // Setting up the gauge config
         const initialValue = 128;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
+
+        // Creating the chart assist
         this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
 
-        // Adding the plugin for the donut inner content
-        this.contentPlugin = new ChartDonutContentPlugin();
-        this.chartAssist.chart.addPlugin(this.contentPlugin);
-
+        // Assembling the series
         this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+
+        // Updating the chart
         this.chartAssist.update(this.seriesSet);
     }
 
     public onValueChange(value: number): void {
+        // Updating the gauge config
         this.gaugeConfig = this.getGaugeConfig(value);
+
+        // Updating the series set with the new config
         this.seriesSet = GaugeUtil.update(this.seriesSet, this.gaugeConfig);
+
+        // Updating the chart with the updated series set
         this.chartAssist.update(this.seriesSet);
     }
 
@@ -46,7 +49,12 @@ export class DonutGaugeWithContentExampleComponent implements OnInit {
         return {
             value,
             max: 200,
-            thresholds: this.thresholds,
+
+            /**
+             * Optionally customize the default quantity color (defaults to StandardGaugeColor.Ok)
+             */
+
+            // defaultQuantityColor: "var(--nui-color-semantic-ok)",
         };
     }
 }
