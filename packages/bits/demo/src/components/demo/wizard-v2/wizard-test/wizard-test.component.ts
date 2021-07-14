@@ -27,9 +27,10 @@ interface IWizardStepData {
     templateUrl: "./wizard-test.component.html",
     styleUrls: ["./wizard-test.less"],
 })
-export class WizardTestComponent implements AfterViewInit{
+export class WizardV2TestComponent implements AfterViewInit{
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
+    public responsiveSteps: Array<any> = Array.from({length: 20});
 
     private overlayRef: OverlayRef;
     public busy: boolean = false;

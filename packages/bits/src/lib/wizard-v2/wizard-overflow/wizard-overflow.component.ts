@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, TemplateRef } from "@angular/core";
 
+/** @ignore */
 @Component({
     selector: "nui-wizard-overflow",
     templateUrl: "./wizard-overflow.component.html",

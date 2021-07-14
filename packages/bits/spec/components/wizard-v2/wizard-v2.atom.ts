@@ -15,7 +15,7 @@ export class WizardV2Atom extends Atom {
         return super.getElement().isPresent();
     }
 
-    public getSteps(): ElementArrayFinder {
+    public get steps(): ElementArrayFinder {
         return this.root.all(by.css(".nui-wizard-horizontal-content-container > .nui-wizard-horizontal-content"));
     }
 
@@ -33,10 +33,18 @@ export class WizardV2Atom extends Atom {
         return new WizardV2StepHeaderAtom(header);
     }
 
-    public getFooter(): WizardV2FooterAtom {
+    public get footer(): WizardV2FooterAtom {
         const footer = this.root.element(by.className("nui-wizard-horizontal-footer-container"));
 
         return new WizardV2FooterAtom(footer);
+    }
+
+    public get leftOverflowElement() {
+        return this.root.element(by.css(".overflow-left"));
+    }
+
+    public get rightOverflowElement() {
+        return this.root.element(by.css(".overflow-right"));
     }
 
     public async selectStep(index: number): Promise<void> {
@@ -46,14 +54,11 @@ export class WizardV2Atom extends Atom {
     }
 
     public async moveToFinalStep(): Promise<void> {
-        const steps = await this.getSteps();
-        const footer = this.getFooter();
+        const steps = await this.steps;
 
         for (const step of steps) {
-            const next = footer.getNextBtn();
-
-            if (await next.isPresent()) {
-                await next.click();
+            if (await this.footer.nextButton.isPresent()) {
+                await this.footer.nextButton.click();
             }
         }
     }
