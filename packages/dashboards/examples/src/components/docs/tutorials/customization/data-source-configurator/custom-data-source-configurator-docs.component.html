@@ -67,8 +67,8 @@
     <li>
         In case you have custom content, like formatters etc., and you use <code>nui-select-v2</code> and <code>nui-combobox-v2</code> components,
         it is possible that in case of large lists the component overlay may go beyond the configurator heading due to its high z-index. To fix this,
-        use the <code>nui-select-v2</code> and <code>nui-combobox-v2</code> components input <code>popupViewportMargin</code> and pass the height of 
-        the configurator heading into it. You can get the height of the configurator heading by simply injecting the 
+        use the <code>nui-select-v2</code> and <code>nui-combobox-v2</code> components input <code>popupViewportMargin</code> and pass the height of
+        the configurator heading into it. You can get the height of the configurator heading by simply injecting the
         <code><a href="../injectables/ConfiguratorHeadingService.html" target="_blank">ConfiguratorHeadingService</a></code>
         and use its <code>height$</code> observable and async pipe to instantly get the current height of the configurator heading.
     </li>
@@ -96,7 +96,7 @@
     source expander of the following example.
 </nui-message>
 
-<nui-example-wrapper filenamePrefix="custom-data-source-configurator-example.component" exampleTitle="Custom Data Source Configurator">
-    <custom-data-source-configurator></custom-data-source-configurator>
+<nui-example-wrapper filenamePrefix="custom-data-source-configurator-example" exampleTitle="Custom Data Source Configurator">
+    <custom-data-source-configurator-example></custom-data-source-configurator-example>
 </nui-example-wrapper>
 

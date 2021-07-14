@@ -6,12 +6,12 @@ import { GridsterConfig, GridsterItem } from "angular-gridster2";
  * A component that instantiates the dashboard
  */
 @Component({
-    selector: "hello-dashboards",
-    templateUrl: "./hello-dashboards.component.html",
-    styleUrls: ["./hello-dashboards.component.less"],
+    selector: "hello-dashboards-example",
+    templateUrl: "./hello-dashboards.example.component.html",
+    styleUrls: ["./hello-dashboards.example.component.less"],
 })
 
-export class HelloDashboardsComponent implements OnInit {
+export class HelloDashboardsExampleComponent implements OnInit {
     // This variable will have all the data needed to render the widgets widgets.
     // Pass this to the dashboard component's dashboard input.
     public dashboard: IDashboard;

@@ -82,7 +82,7 @@ import { finalize, map, startWith } from "rxjs/operators";
             </div>
         </nui-widget-editor-accordion>
     `,
-    styleUrls: ["./custom-configurator-section.component.less"],
+    styleUrls: ["./custom-configurator-section.example.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // Remember to declare this class in the parent module
@@ -230,11 +230,11 @@ export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> imple
  * A component that instantiates the dashboard
  */
 @Component({
-    selector: "custom-configurator-section",
-    templateUrl: "./custom-configurator-section.component.html",
-    styleUrls: ["./custom-configurator-section.component.less"],
+    selector: "custom-configurator-section-example",
+    templateUrl: "./custom-configurator-section.example.component.html",
+    styleUrls: ["./custom-configurator-section.example.component.less"],
 })
-export class CustomConfiguratorSectionComponent implements OnInit {
+export class CustomConfiguratorSectionExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
     public dashboard: IDashboard | undefined;

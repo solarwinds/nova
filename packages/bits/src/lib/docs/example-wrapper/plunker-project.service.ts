@@ -18,9 +18,9 @@ export class PlunkerProjectService {
 
         const modifySources = (source: string) =>
             // Handle non-existent less references that are just killing plunker
-            source.replace(/^.*@import \(reference\).*$/mg, "// NUI LESS VARIABLES ARE NOT SUPPORTED YET");
+            source.replace(/^.*@import \(reference\).*$/mg, "/* NUI LESS VARIABLES ARE NOT SUPPORTED YET */");
 
-        // HACK FOR FILENAME VARIATION: We're only appending '.example' to the prefix if the component doesn't already
+        // HACK FOR HANDLING FILENAME VARIATION: We're only appending '.example' to the prefix if the component doesn't already
         // have '-example' in its prefix. The presence of '-example' in the prefix indicates that the component doesn't
         // follow the convention of having a '.example' substring in its filenames. The '.example' substring is normally
         // used in determining the filename prefix to use for the example wrapper's code sources.

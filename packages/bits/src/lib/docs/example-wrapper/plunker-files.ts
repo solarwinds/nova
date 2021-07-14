@@ -69,6 +69,7 @@ import {
 } from '@nova-ui/bits';
 
 import { NuiChartsModule } from '@nova-ui/charts';
+import { NuiDashboardsModule, NuiDashboardConfiguratorModule } from '@nova-ui/dashboards';
 
 import { ${className} } from './${filePrefix}.component';
 
@@ -95,6 +96,8 @@ export class App {
         ReactiveFormsModule,
         HttpClientModule,
         NuiChartsModule,
+        NuiDashboardsModule,
+        NuiDashboardConfiguratorModule,
         NuiButtonModule,
         NuiCheckboxModule,
         NuiCommonModule,
@@ -201,6 +204,7 @@ System.config({
         '@angular/cdk/portal': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-portal.umd.js',
         '@angular/cdk/drag-drop': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-drag-drop.umd.js',
         '@angular/cdk/stepper': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-stepper.umd.js',
+        'angular-gridster2': 'npm:angular-gridster2@^' + ver.ng,
         'resize-observer-polyfill': 'npm:resize-observer-polyfill@1.5.1/dist/ResizeObserver.js',
 
         'rxjs': 'npm:rxjs@6.5.2',

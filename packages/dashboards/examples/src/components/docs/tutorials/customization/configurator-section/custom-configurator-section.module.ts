@@ -3,11 +3,11 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-import { NuiButtonModule,  NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSwitchModule, NuiTextboxModule } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSwitchModule, NuiTextboxModule } from "@nova-ui/bits";
 import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { CustomConfiguratorSectionDocsComponent } from "./custom-configurator-section-docs.component";
-import { CustomConfiguratorSectionComponent, CustomKpiDescriptionConfigurationComponent } from "./custom-configurator-section.component";
+import { CustomConfiguratorSectionExampleComponent, CustomKpiDescriptionConfigurationComponent } from "./custom-configurator-section.example.component";
 
 const routes = [
     {
@@ -22,7 +22,7 @@ const routes = [
     },
     {
         path: "example",
-        component: CustomConfiguratorSectionComponent,
+        component: CustomConfiguratorSectionExampleComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -50,7 +50,10 @@ const routes = [
     declarations: [
         CustomConfiguratorSectionDocsComponent,
         CustomKpiDescriptionConfigurationComponent,
-        CustomConfiguratorSectionComponent,
+        CustomConfiguratorSectionExampleComponent,
+    ],
+    providers: [
+        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
     ],
 })
 export class CustomConfiguratorSectionModule { }

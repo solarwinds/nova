@@ -1,11 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN, NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { HelloDashboardsDocsComponent } from "./hello-dashboards-docs.component";
-import { HelloDashboardsComponent } from "./hello-dashboards.component";
+import { HelloDashboardsExampleComponent } from "./hello-dashboards.example.component";
 
 const routes = [
     {
@@ -20,7 +20,7 @@ const routes = [
     },
     {
         path: "example",
-        component: HelloDashboardsComponent,
+        component: HelloDashboardsExampleComponent,
         data: {
             "srlc": {
                 "hideIndicator": true,
@@ -39,9 +39,10 @@ const routes = [
     ],
     declarations: [
         HelloDashboardsDocsComponent,
-        HelloDashboardsComponent,
+        HelloDashboardsExampleComponent,
     ],
-    entryComponents: [
+    providers: [
+        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
     ],
 })
 export class HelloDashboardsModule { }

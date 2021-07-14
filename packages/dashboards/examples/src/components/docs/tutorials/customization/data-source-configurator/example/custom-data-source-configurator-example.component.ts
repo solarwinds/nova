@@ -116,7 +116,7 @@ export class HarryPotterDataSourceConfiguratorComponent extends DataSourceConfig
     }
 
     // Overriding 'ngOnInit' to add custom controls to the 'properties' form group
-    ngOnInit() {
+    ngOnInit(): void {
         super.ngOnInit();
 
         // Overriding the 'properties' control on the form to create a form group that accommodates our custom properties
@@ -162,7 +162,7 @@ export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements On
     }
 
     // This function MUST be implemented in order to receive property updates from our configurator
-    public updateConfiguration(properties: IProperties) {
+    public updateConfiguration(properties: IProperties): void {
         // Saving the properties because we will need it for this data source.
         this.properties = properties;
     }
@@ -206,11 +206,11 @@ export class AcmeKpiDataSource extends DataSourceService<IKpiData> implements On
  * A component that instantiates the dashboard
  */
 @Component({
-    selector: "custom-data-source-configurator",
+    selector: "custom-data-source-configurator-example",
     templateUrl: "./custom-data-source-configurator-example.component.html",
     styleUrls: ["./custom-data-source-configurator-example.component.less"],
 })
-export class CustomDataSourceConfiguratorComponent implements OnInit {
+export class CustomDataSourceConfiguratorExampleComponent implements OnInit {
     // This variable will hold all the data needed to define the layout and behavior of the widgets.
     // Pass this to the dashboard component's dashboard input in the template.
     public dashboard: IDashboard;
