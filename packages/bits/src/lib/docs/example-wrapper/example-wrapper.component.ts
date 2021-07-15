@@ -1,3 +1,5 @@
+/// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
+
 import { DOCUMENT } from "@angular/common";
 import {
     Component,
@@ -10,7 +12,12 @@ import { SourcesService } from "../services/sources.service";
 
 import { PlunkerProjectService } from "./plunker-project.service";
 
-const hljs = require("highlight.js/lib/core");
+import * as hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import less from "highlight.js/lib/languages/less";
+import json from "highlight.js/lib/languages/json";
+import xml from "highlight.js/lib/languages/xml";
+import typescript from "highlight.js/lib/languages/typescript";
 
 /**
  * @dynamic
@@ -50,11 +57,11 @@ export class ExampleWrapperComponent implements OnInit {
         @Inject(DOCUMENT) private document: Document,
         private plunkerProjectService: PlunkerProjectService
     ) {
-        hljs.registerLanguage("typescript", require("highlight.js/lib/languages/typescript"));
-        hljs.registerLanguage("javascript", require("highlight.js/lib/languages/javascript"));
-        hljs.registerLanguage("xml", require("highlight.js/lib/languages/xml"));
-        hljs.registerLanguage("json", require("highlight.js/lib/languages/json"));
-        hljs.registerLanguage("less", require("highlight.js/lib/languages/less"));
+        hljs.registerLanguage("typescript", typescript);
+        hljs.registerLanguage("javascript", javascript);
+        hljs.registerLanguage("xml", xml);
+        hljs.registerLanguage("json", json);
+        hljs.registerLanguage("less", less);
     }
 
     ngOnInit() {

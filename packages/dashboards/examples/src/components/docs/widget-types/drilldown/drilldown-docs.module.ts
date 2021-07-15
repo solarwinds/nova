@@ -6,7 +6,7 @@ import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { DrilldownDocsComponent } from "./drilldown-docs.component";
 import { DrilldownMultiRequestWidgetExampleComponent } from "./drilldown-multi-request-widget-example/drilldown-multi-request-widget-example.component";
-import { DrilldownWidgetExampleComponent } from "./drilldown-widget-example/drilldown-widget-example.component";
+import { DrilldownWidgetExampleComponent } from "./drilldown-widget/drilldown-widget-example.component";
 
 const routes: Routes = [
     {

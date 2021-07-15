@@ -1,3 +1,5 @@
+/// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
+
 /** @ignore */
 declare let require: any;
 import {
@@ -9,7 +11,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 
-const hljs = require("highlight.js/lib/core");
+import * as hljs from "highlight.js/lib/core";
 
 /**
  * <example-url>./../examples/index.html#/code</example-url><br />

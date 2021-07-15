@@ -1,14 +1,14 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
+import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
 import { KpiColorComparatorsRegistryService, NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { KpiBackgroundColorDocsComponent } from "./kpi-background-color/docs/kpi-background-color-docs.component";
 import { KpiWidgetBackgroundColorExampleComponent } from "./kpi-background-color/example/kpi-widget-background-color-example.component";
 import { KpiDocsComponent } from "./kpi-docs.component";
-import { KpiSyncBrokerDocsComponent } from "./kpi-sync-broker-example/docs/kpi-sync-broker-docs.component";
-import { KpiSyncBrokerExampleComponent } from "./kpi-sync-broker-example/example/kpi-sync-broker-example.component";
-import { KpiSyncBrokerForAllTilesExampleComponent } from "./kpi-sync-broker-example/example/kpi-sync-broker-for-all-tiles-example.component";
+import { KpiSyncBrokerDocsComponent } from "./kpi-sync-broker/docs/kpi-sync-broker-docs.component";
+import { KpiSyncBrokerExampleComponent } from "./kpi-sync-broker/example/kpi-sync-broker-example.component";
+import { KpiSyncBrokerForAllTilesExampleComponent } from "./kpi-sync-broker/example/kpi-sync-broker-for-all-tiles-example.component";
 import { KpiWidgetExampleComponent } from "./kpi-widget-example/kpi-widget-example.component";
 import { KpiWidgetInteractiveExampleComponent } from "./kpi-widget-interactive-example/kpi-widget-interactive-example.component";
 

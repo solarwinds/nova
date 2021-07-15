@@ -136,5 +136,5 @@ ngZone.runOutsideAngular(() => {​​​​
   6. Remember your root element. No need to call getElement() function every time.
   7. Return promises from atom methods. Avoid return await doSomething(); . Tester should await it himself.
   8. Do not return childElements as array of Atoms. To build it you will need to iterate through entire set of elements. Tester will need to do it too.
-  9. Return childElementsCount():Promise<number> and getChildElement(id or index):Atom. If tester will need to iterate through all of them he will retrieve every DOM element just once. Also consider methods like getChildTexts():Promise<string[]> , getChildValues():Promise<number[]> etc.
+  9. Return childElementsCount():Promise<number> and getChildElement(id or index):Atom. If tester will need to iterate through all of them, they will retrieve every DOM element just once. Also consider methods like getChildTexts():Promise<string[]> , getChildValues():Promise<number[]> etc.
   10. Test your atoms. Don't hesitate to write a test that will check that atom works when it should and doesn't work when it shouldn't.

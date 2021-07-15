@@ -13,18 +13,27 @@ export class PlunkerProjectService {
         private plunkerFiles: PlunkerFiles
     ) {}
 
-    public open(prefix: any, sources: any, translations?: any) {
+    public open(prefix: string, sources: any, translations?: any): void {
         const form: HTMLFormElement = this.document.createElement("form");
 
         const modifySources = (source: string) =>
             // Handle non-existent less references that are just killing plunker
-            source.replace(/^.*@import \(reference\).*$/mg, "// NUI LESS VARIABLES ARE NOT SUPPORTED YET");
+            source.replace(/^.*@import \(reference\).*$/mg, "/* NUI LESS VARIABLES ARE NOT SUPPORTED YET */");
+
+        // HACK FOR HANDLING FILENAME VARIATION: We're only appending '.example' to the prefix if the component doesn't already
+        // have '-example' in its prefix. The presence of '-example' in the prefix indicates that the component doesn't
+        // follow the convention of having a '.example' substring in its filenames. The '.example' substring is normally
+        // used in determining the filename prefix to use for the example wrapper's code sources.
+        const hyphenExampleSubstr = "-example";
+        const hyphenExampleSubstrFound = (prefix.indexOf(hyphenExampleSubstr) + hyphenExampleSubstr.length) === prefix.length;
+        const modifiedPrefix = `${prefix}${hyphenExampleSubstrFound ? "" : ".example"}`
+        // END HACK
 
         // example files
         Object.keys(sources).forEach( key => {
             form.append(
                 this.formInput(
-                    `${prefix}.example.component`,
+                    `${modifiedPrefix}.component`,
                     key,
                     modifySources(sources[key])
                 )
@@ -38,7 +47,7 @@ export class PlunkerProjectService {
         form.append(this.getMainTSInput());
         form.append(this.getConfigJSInput());
         form.append(this.getIndexHTMLInput());
-        form.append(this.getAppComponentTSInput(prefix, sources.ts));
+        form.append(this.getAppComponentTSInput(modifiedPrefix, sources.ts));
 
         form.style.display = "none";
         form.setAttribute("method", "post");
@@ -50,20 +59,20 @@ export class PlunkerProjectService {
         form.remove();
     }
 
-    public getIndexHTMLInput() {
-        return this.formInput("index", "html", this.plunkerFiles.getIndexFile(this.getBranchName()));
+    public getIndexHTMLInput(): HTMLInputElement {
+        return this.formInput("index", "html", this.plunkerFiles.getIndexFile());
     }
 
-    public getMainTSInput() {
+    public getMainTSInput(): HTMLInputElement {
         return this.formInput("main", "ts", this.plunkerFiles.getMainFile());
     }
 
-    public getConfigJSInput() {
+    public getConfigJSInput(): HTMLInputElement {
 
-        return this.formInput("config", "js", this.plunkerFiles.getSystemjsConfigFile(this.getBranchName()));
+        return this.formInput("config", "js", this.plunkerFiles.getSystemJsConfigFile());
     }
 
-    public getAppComponentTSInput(filePrefix: string, fileContent: string) {
+    public getAppComponentTSInput(filePrefix: string, fileContent: string): HTMLInputElement {
         const className: string | undefined = this.getClassName(fileContent);
         const selectorName: string | undefined = this.getSelectorName(fileContent);
 
@@ -78,17 +87,13 @@ export class PlunkerProjectService {
         return this.formInput("app", "ts", this.plunkerFiles.getAppFile(filePrefix, className, selectorName));
     }
 
-    private getBranchName() {
-        return this.document.location.pathname.split("/")[2] || "develop";
-    }
+    private formInput(prefixName: string, extName: string, content: string): HTMLInputElement {
+        const inputEl: HTMLInputElement = this.document.createElement("input");
+        inputEl.setAttribute("type", "hidden");
+        inputEl.setAttribute("name", `files[${prefixName}.${extName}]`);
+        inputEl.setAttribute("value", `${content}`);
 
-    private formInput(prefixName: string, extName: string, content: string) {
-        const inputIndex: HTMLInputElement = this.document.createElement("input");
-        inputIndex.setAttribute("type", "hidden");
-        inputIndex.setAttribute("name", `files[${prefixName}.${extName}]`);
-        inputIndex.setAttribute("value", `${content}`);
-
-        return inputIndex;
+        return inputEl;
     }
 
     private getClassName(fileContent: string): string | undefined {

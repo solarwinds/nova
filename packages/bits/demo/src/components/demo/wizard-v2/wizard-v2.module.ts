@@ -40,7 +40,7 @@ import {
     WizardRestoreStateExampleComponent,
     WizardStepChangeExampleComponent,
     WizardResponsiveHeaderExampleComponent,
-    WizardWithConfirmationDialogOnCancelComponent,
+    WizardWithConfirmationDialogOnCancelExampleComponent,
     WizardTooltipExampleComponent,
     WizardV2TestComponent,
 } from "./index";
@@ -54,6 +54,16 @@ const routes = [
                 "stage": SrlcStage.beta,
             },
             showThemeSwitcher: true,
+        },
+    },
+    {
+        path: "confirm-on-cancel",
+        component: WizardWithConfirmationDialogOnCancelExampleComponent,
+        data: {
+            showThemeSwitcher: true,
+            srlc: {
+                hideIndicator: true,
+            },
         },
     },
     {
@@ -108,7 +118,7 @@ const routes = [
         WizardRestoreStateExampleComponent,
         WizardStepChangeExampleComponent,
         WizardResponsiveHeaderExampleComponent,
-        WizardWithConfirmationDialogOnCancelComponent,
+        WizardWithConfirmationDialogOnCancelExampleComponent,
         WizardTooltipExampleComponent,
         WizardV2TestComponent,
     ],

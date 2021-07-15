@@ -20,7 +20,7 @@
         <code><a href="../classes/DonutChartFormatterConfiguratorComponent.html" target="_blank">DonutChartFormatterConfiguratorComponent</a></code>.
         This component will serve as the custom configurator section. If you have any custom
         form controls make sure to override <code>DonutChartFormatterConfiguratorComponent</code>'s
-        <code>addCustomFormControls</code> method and add the custom form controls using the form group 
+        <code>addCustomFormControls</code> method and add the custom form controls using the form group
         argument. The controls in this form group will be available under the <code>properties</code> input on the formatter.
     </li>
     <li>
@@ -50,10 +50,10 @@
             </li>
             <nui-message type="info" [allowDismiss]="false">
                 <strong>Note:</strong> In this tutorial, the above two steps are performed in the
-                component's <code>constructor</code>. But, in a real-world app, widget type modifications 
-                and component registrations like this might make more sense in a parent module's 
-                constructor. Moving framework initialization procedures such as these to a higher level 
-                in an app's hierarchy ensures that multiple dashboard instances within a common parent 
+                component's <code>constructor</code>. But, in a real-world app, widget type modifications
+                and component registrations like this might make more sense in a parent module's
+                constructor. Moving framework initialization procedures such as these to a higher level
+                in an app's hierarchy ensures that multiple dashboard instances within a common parent
                 module have access to the same modifications.
             </nui-message>
         </ol>
@@ -75,8 +75,8 @@
     <li>
         In case you you use <code>nui-select-v2</code> and <code>nui-combobox-v2</code> components,
         it is possible that in case of large lists the component overlay may go beyond the configurator heading due to its high z-index. To fix this,
-        use the <code>nui-select-v2</code> and <code>nui-combobox-v2</code> components input <code>popupViewportMargin</code> and pass the height of 
-        the configurator heading into it. You can get the height of the configurator heading by simply injecting the 
+        use the <code>nui-select-v2</code> and <code>nui-combobox-v2</code> components input <code>popupViewportMargin</code> and pass the height of
+        the configurator heading into it. You can get the height of the configurator heading by simply injecting the
         <code><a href="../injectables/ConfiguratorHeadingService.html" target="_blank">ConfiguratorHeadingService</a></code>
         and use its <code>height$</code> observable and async pipe to instantly get the current height of the configurator heading.
     </li>
@@ -87,7 +87,7 @@
     source expander of the following example.
 </nui-message>
 
-<nui-example-wrapper filenamePrefix="custom-donut-content-formatter-example.component" exampleTitle="Custom Formatter">
+<nui-example-wrapper filenamePrefix="custom-donut-content-formatter-example" exampleTitle="Custom Formatter">
     <custom-donut-content-formatter-example></custom-donut-content-formatter-example>
 </nui-example-wrapper>
 
