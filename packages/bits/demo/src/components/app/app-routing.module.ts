@@ -233,7 +233,7 @@ const appRoutes: Routes = [
     },
     {
         path: "wizard-v2",
-        loadChildren: () => import("../demo/wizard-v2/wizard.module").then(m => m.WizardModule),
+        loadChildren: () => import("../demo/wizard-v2/wizard-v2.module").then(m => m.WizardV2Module),
     },
     {
         path: "", redirectTo: "common", pathMatch: "full",

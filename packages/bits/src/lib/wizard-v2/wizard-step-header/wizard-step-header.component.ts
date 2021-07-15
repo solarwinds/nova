@@ -20,6 +20,7 @@ import { IWizardConfig, WizardStepStateConfig } from "../types";
 import assign from "lodash/assign";
 import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
 
+/** @ignore */
 @Component({
     selector: "nui-wizard-step-header",
     templateUrl: "wizard-step-header.component.html",

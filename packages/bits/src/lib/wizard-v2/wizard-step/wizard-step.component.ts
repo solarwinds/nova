@@ -28,6 +28,7 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { WizardStepStateConfig } from "../types";
 
+/** @ignore */
 @Component({
     selector: "nui-wizard-step-v2",
     exportAs: "nuiWizardStep",
