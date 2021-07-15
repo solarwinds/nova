@@ -8,7 +8,7 @@ import { WizardV2Atom } from "./wizard-v2.atom";
 
 const name: string = "Wizard V2";
 
-fdescribe(`Visual tests: ${name}`, () => {
+describe(`Visual tests: ${name}`, () => {
     let camera: Camera;
     let wizard: WizardV2Atom;
     let wizardInDialog: WizardV2Atom;
