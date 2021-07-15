@@ -61,15 +61,6 @@ describe("USERCONTROL Wizard V2: ", () => {
             expect(await wizardDialog.isDisplayed()).toEqual(true);
         });
 
-        it("should show busy",  async () => {
-            const spinner = Atom.findIn(SpinnerAtom, element(by.css(".dialog-content")));
-            const busyTrigger = wizardDialog.getElement().element(by.id("nui-wizard-busy-btn"));
-
-            await busyTrigger.click();
-
-            expect(await spinner.isDisplayed()).toEqual(true);
-        });
-
         it("should wizard disappear when CANCEL button is pressed",  async () => {
             const cancelBtn = wizardDialog.footer.getElement().element(by.className("cancel"));
 
