@@ -1,9 +1,10 @@
-import { by, Key } from "protractor";
+import { by, element, Key } from "protractor";
 
 import { Atom } from "../../atom";
-import { Animations, Helpers } from "../../helpers";
+import { Helpers } from "../../helpers";
 import { WizardV2Atom } from "./wizard-v2.atom";
-import { BusyAtom, ButtonAtom } from "../..";
+import { SpinnerAtom } from "../spinner/spinner.atom";
+import { ButtonAtom } from "../button/button.atom";
 
 describe("USERCONTROL Wizard V2: ", () => {
     let wizard: WizardV2Atom;
@@ -14,7 +15,7 @@ describe("USERCONTROL Wizard V2: ", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("wizard-v2/test");
-        await Helpers.disableCSSAnimations(Animations.ALL);
+        // await Helpers.disableCSSAnimations(Animations.ALL);
 
         wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal");
         wizardDialog = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
@@ -62,12 +63,12 @@ describe("USERCONTROL Wizard V2: ", () => {
         });
 
         it("should show busy",  async () => {
-            const busy = Atom.find(BusyAtom, "nui-busy");
+            const spinner = Atom.findIn(SpinnerAtom, element(by.css(".dialog-content")));
             const busyTrigger = wizardDialog.getElement().element(by.id("nui-wizard-busy-btn"));
 
             await busyTrigger.click();
 
-            expect(await busy.isChildElementPresent(by.css(".nui-spinner"))).toEqual(true);
+            expect(await spinner.isDisplayed()).toEqual(true);
         });
 
         it("should wizard disappear when CANCEL button is pressed",  async () => {
