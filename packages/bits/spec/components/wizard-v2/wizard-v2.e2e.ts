@@ -15,7 +15,6 @@ describe("USERCONTROL Wizard V2: ", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("wizard-v2/test");
-        // await Helpers.disableCSSAnimations(Animations.ALL);
 
         wizard = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal");
         wizardDialog = Atom.find(WizardV2Atom, "nui-wizard-v2-horizontal-dialog");
