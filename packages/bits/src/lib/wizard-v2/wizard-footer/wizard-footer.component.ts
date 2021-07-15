@@ -5,6 +5,7 @@ import {
 
 import {WizardStepFooterDirective} from "../wizard-step-footer.directive";
 
+/** @ignore */
 @Component({
     selector: "wizard-footer",
     templateUrl: "wizard-footer.component.html",

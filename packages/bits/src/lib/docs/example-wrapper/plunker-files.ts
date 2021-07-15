@@ -14,9 +14,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import '@angular/localize';
 
-// Note: It's likely that most of these modules imported from Nova Bits aren't
+// Note: It's likely that most of these modules imported from Nova aren't
 // necessary for your implementation. They're included here to allow Nova's
-// plunker usage to work with all of the existing Nova Bits components. If
+// plunker usage to work with all of the existing Nova components. If
 // you're copy/pasting this code, be sure to remove the ones you don't need in
 // order to avoid unnecessarily including them in your app's deployed package.
 import {

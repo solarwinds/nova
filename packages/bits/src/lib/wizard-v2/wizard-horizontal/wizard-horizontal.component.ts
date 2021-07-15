@@ -27,6 +27,7 @@ import { WizardStepHeaderComponent } from "../wizard-step-header/wizard-step-hea
 import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
 import { WizardDirective } from "../wizard.directive";
 
+// <example-url>./../examples/index.html#/wizard-v2</example-url>
 @Component({
     selector: "nui-wizard-horizontal",
     exportAs: "wizardHorizontal",

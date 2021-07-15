@@ -224,7 +224,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
                     this.toolbarItems.push(this.menu.menuToggle.nativeElement);
                 }
 
-                this.keyboardService.setToolbarItems(this.toolbarItems);
+                this.keyboardService.setToolbarItems(this.toolbarItems, this.menu);
             });
     }
 }
