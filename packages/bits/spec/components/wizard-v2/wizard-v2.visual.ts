@@ -1,4 +1,4 @@
-import { browser, Key } from "protractor";
+import { browser, by, Key } from "protractor";
 import { Atom } from "../../atom";
 
 import { Helpers } from "../../helpers";
@@ -42,11 +42,11 @@ fdescribe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Wizard inside dialog`);
 
         await wizardInDialog.moveToFinalStep();
-        await wizardInDialog.footer.finishButton.click();
+        await wizardInDialog.footer.getElement().element(by.className("complete")).click();
         await openWizardDialogBtn.click();
         await camera.say.cheese(`Restored wizard`);
 
-        await wizardInDialog.footer.cancelButton.click();
+        await wizardInDialog.footer.getElement().element(by.className("cancel")).click();
         await camera.say.cheese(`Confirmation dialog`);
 
         Helpers.pressKey(Key.ESCAPE);
