@@ -41,8 +41,7 @@ and feature requests.
 
 ## Found a bug? Have an idea for a feature?
 
-Please let us know! But...before submitting a feature request or issue report, please make sure it hasn't already been reported on our [issues page](https://github.com/solarwinds/nova/issues). If you can't find an existing issue
-corresponding to your feedback, please create one using the GitHub [issue portal](https://github.com/solarwinds/nova/issues/new/choose).
+Please let us know! But...before submitting a feature request or issue report, please make sure it hasn't already been reported on our [issues page](https://github.com/solarwinds/nova/issues). If you can't find an existing issue corresponding to your feedback, please create one using the GitHub [issue portal](https://github.com/solarwinds/nova/issues/new/choose).
 
 ## Troubleshooting
 
