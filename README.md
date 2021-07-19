@@ -26,8 +26,7 @@ We encourage [contributions to Nova](./docs/CONTRIBUTION.md#contributing-to-nova
 ### If You're Just Getting Started...
 
 For package-specific
-information about getting started with development, please visit the corresponding README for each of the
-Nova UI packages:
+information about getting started with development, please visit the corresponding README for each of the Nova UI packages:
 [Bits](./packages/bits/README.md#bits-overview), [Charts](./packages/charts/README.md#charts-overview), and [Dashboards](./packages/dashboards/README.md#dashboards-overview).
 
 For additional instructions about Nova development in general, take a look at our [How To](./docs/HOW_TO.md#how-to) page. 
