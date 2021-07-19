@@ -156,7 +156,7 @@ export class AppModule {}
 `
 
     public getSystemJsConfigFile = (): string => `var ver = {
-    ng: '11.0.0'
+    ng: '^11.0.0'
 };
 
 System.config({
@@ -204,7 +204,7 @@ System.config({
         '@angular/cdk/portal': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-portal.umd.js',
         '@angular/cdk/drag-drop': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-drag-drop.umd.js',
         '@angular/cdk/stepper': 'npm:@angular/cdk@' + ver.ng + '/bundles/cdk-stepper.umd.js',
-        'angular-gridster2': 'npm:angular-gridster2@^' + ver.ng,
+        'angular-gridster2': 'npm:angular-gridster2@' + ver.ng,
         'resize-observer-polyfill': 'npm:resize-observer-polyfill@1.5.1/dist/ResizeObserver.js',
 
         'rxjs': 'npm:rxjs@6.5.2',
