@@ -535,11 +535,11 @@ jobs:
         docker:
             -   image: circleci/node:12
         environment:
-            SOURCE_BRANCH: main
+            SOURCE_BRANCH: hotfix/v11.8.x
             # TODO: Change to false
             CREATE_RELEASE_BRANCH: true
-            RELEASE_BRANCH: release/v11.x
-            INCREMENT_TYPE: minor
+            RELEASE_BRANCH: release/v11.8.x
+            INCREMENT_TYPE: patch
         steps:
             -   checkout:
                     path: ~/nova
@@ -682,7 +682,7 @@ workflows:
                                 - main
                                 - /release\/.*/
                                 - next
-                                
+
     nova-release:
         jobs:
             -   release-approval:
@@ -691,6 +691,7 @@ workflows:
                         branches:
                             only:
                                 - main
+                                - /hotfix\/.*/
             -   release-prep:
                     requires:
                         - release-approval
