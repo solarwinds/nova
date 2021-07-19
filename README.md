@@ -11,8 +11,7 @@ The Nova UI coding Style Guide can be found [here](./docs/STYLE_GUIDE.md#style-g
 Nova UI consists of three packages within a single monorepo:
 
 * [Bits](./packages/bits/README.md#bits-overview) - A set of atomic components to be used as building blocks for applications and more complex 
-components. Exception - **convenience components** - prototypes of composite components, that are meant 
-to accommodate a wide breadth of use cases.
+components. Exception - **convenience components** - prototypes of composite components, that are meant to accommodate a wide breadth of use cases.
 * [Charts](./packages/charts/README.md#charts-overview) - A visualization library built on top of [d3](https://d3js.org/).
 * [Dashboards](./packages/dashboards/README.md#dashboards-overview) - A framework designed to provide developers a solution 
 for presenting data coming from various sources within a single view.
