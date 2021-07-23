@@ -13,6 +13,11 @@
         flex-direction: row;
     }
 }
+
+:host(.nopadding) {
+    padding: 0;
+}
+
 :host-context(nui-sheet.sheet-direction-column :not(nui-card-group)) {
     &:not(:last-of-type) {
         .setCssVariable(border-bottom-color, nui-color-line-default);
