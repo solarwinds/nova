@@ -25,4 +25,4 @@ Here's what you need to know to get started:
 
 ### When Can I Consume My Changes?
 
-At the moment, we release the Nova packages every 2 weeks to [NPM](https://www.npmjs.com/settings/nova-ui/packages), and your changes (if merged) will be available in the very next release.
+We release the Nova packages on an as-needed basis to NPM. If there's a bugfix or feature you're considering providing a contribution for, contact the Nova Team at nova-ui@solarwinds.com so we can coordinate with you.
