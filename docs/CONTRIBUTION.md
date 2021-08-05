@@ -25,4 +25,4 @@ Here's what you need to know to get started:
 
 ### When Can I Consume My Changes?
 
-We release the Nova packages on an as-needed basis to NPM. If there's a bugfix or feature you're considering providing a contribution for, contact the Nova Team at nova-ui@solarwinds.com so we can coordinate with you.
+We release the Nova packages on an as-needed basis to [NPM](https://www.npmjs.com/settings/nova-ui/packages). If there's a bugfix or feature you're considering providing a contribution for, contact the Nova Team at nova-ui@solarwinds.com so we can coordinate with you.
