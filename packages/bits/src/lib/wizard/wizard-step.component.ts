@@ -20,8 +20,7 @@ import { IWizardSelectionEvent, IWizardStepComponent } from "./public-api";
     selector: "nui-wizard-step",
     templateUrl: "./wizard-step.component.html",
 })
-export class WizardStepComponent
-    implements IWizardStepComponent, OnInit, OnChanges
+export class WizardStepComponent implements IWizardStepComponent, OnInit, OnChanges
 {
     /**
      * Template for step.
