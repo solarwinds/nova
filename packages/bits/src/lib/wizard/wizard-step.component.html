@@ -5,8 +5,8 @@
         <h2 class="nui-wizard__step-title">{{title}}</h2>
         <ng-container *ngTemplateOutlet="stepTemplate"></ng-container>
     </div>
-    <nui-spinner [percent]="busyConfig.percent"
-                 [allowCancel]="busyConfig.allowCancel"
-                 [message]="busyConfig.message">
+    <nui-spinner [percent]="busyConfig.percent || 0"
+                 [allowCancel]="busyConfig.allowCancel || false"
+                 [message]="busyConfig.message || ''">
     </nui-spinner>
 </div>

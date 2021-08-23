@@ -1,4 +1,4 @@
-import {ElementRef, EventEmitter} from "@angular/core";
+import {EventEmitter, TemplateRef} from "@angular/core";
 
 import {IBusyConfig} from "../busy/public-api";
 
@@ -21,9 +21,9 @@ export interface IWizardWaitEvent {
     allowStepChange: boolean;
 }
 
-export interface IWizardStepComponent {
+export interface IWizardStepComponent extends Record<string, any> {
     title: string;
-    stepTemplate: ElementRef;
+    stepTemplate: TemplateRef<any>;
     stepControl?: boolean;
     shortTitle?: string;
     description?: string;
@@ -34,5 +34,4 @@ export interface IWizardStepComponent {
     exit?: EventEmitter<IWizardSelectionEvent | void>;
     next?: EventEmitter<IWizardSelectionEvent | void>;
     valid?: EventEmitter<boolean>;
-    [key: string]: any;
 }
