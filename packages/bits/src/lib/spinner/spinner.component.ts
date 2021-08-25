@@ -55,12 +55,12 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
 
     @HostBinding("attr.aria-valuenow") ariaValueNow: string | undefined;
 
-    @Input() public percent: number;
+    @Input() public percent?: number;
     @Input() public show = false;
     @Input() public delay = 250;
-    @Input() public allowCancel: boolean;
-    @Input() public message: string;
-    @Input() public helpText: string;
+    @Input() public allowCancel?: boolean;
+    @Input() public message?: string;
+    @Input() public helpText?: string;
 
     /**
      * Input to set aria label text
@@ -71,18 +71,18 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
 
 
     @Input() public set size(val: SpinnerSize) {
-        const sizes: string[] = Object.keys(SpinnerSize).map((key: string) => SpinnerSize[<keyof typeof SpinnerSize>key]);
-        const index = sizes.indexOf(val);
+        const sizes = Object.values(SpinnerSize);
 
-        if (index < 0) {
-            this.logger.warn(
-                `Allowed sizes for nui-spinner are ${sizes.join(", ")}. ` +
-                `Default is ${SpinnerComponent.defaultSize}.`);
-
-            this._size = SpinnerComponent.defaultSize;
-        } else {
+        if (sizes.includes(val)) {
             this._size = val;
+            return;
         }
+
+        this.logger.warn(
+            `Allowed sizes for nui-spinner are ${sizes.join(", ")}. ` +
+            `Default is ${SpinnerComponent.defaultSize}.`);
+
+        this._size = SpinnerComponent.defaultSize;
     }
 
     public get size() {

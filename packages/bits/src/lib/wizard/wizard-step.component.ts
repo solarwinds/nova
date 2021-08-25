@@ -1,17 +1,17 @@
 import {
     Component,
-    ElementRef,
     EventEmitter,
     Input,
     OnChanges,
     OnInit,
     Output,
     SimpleChanges,
+    TemplateRef,
 } from "@angular/core";
 
-import {IBusyConfig} from "../busy/public-api";
+import { IBusyConfig } from "../busy/public-api";
 
-import {IWizardSelectionEvent, IWizardStepComponent} from "./public-api";
+import { IWizardSelectionEvent, IWizardStepComponent } from "./public-api";
 
 /**
  * Component that provides wizard step functionality.
@@ -24,7 +24,7 @@ export class WizardStepComponent implements IWizardStepComponent, OnInit, OnChan
     /**
      * Template for step.
      */
-    @Input() public stepTemplate: ElementRef;
+    @Input() public stepTemplate: TemplateRef<any>;
     /**
      * Check is form inside step valid.
      */
@@ -90,13 +90,13 @@ export class WizardStepComponent implements IWizardStepComponent, OnInit, OnChan
     public iconColor = "";
     public inputsList: string[] = [];
 
-    constructor() { }
+    constructor() {}
 
-    ngOnInit() {
-        this.nextText = this.nextText || $localize `Next`;
+    ngOnInit(): void {
+        this.nextText = this.nextText || $localize`Next`;
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (this.inputsList.length === 0) {
             this.inputsList = Object.keys(changes);
         }
@@ -123,13 +123,13 @@ export class WizardStepComponent implements IWizardStepComponent, OnInit, OnChan
         this.next.emit(event);
     }
 
-    public applyEnteringStep = () => {
+    public applyEnteringStep = (): void => {
         this.active = true;
         this.icon = "step-active";
         this.iconColor = "black";
     }
 
-    public applyExitingStep = () => {
+    public applyExitingStep = (): void => {
         this.active = false;
         this.visited = true;
         this.icon = "step-complete";
