@@ -1,12 +1,12 @@
 import {
     Component,
-    ElementRef,
     EventEmitter,
     Input,
     OnChanges,
     OnInit,
     Output,
     SimpleChanges,
+    TemplateRef,
 } from "@angular/core";
 import { IBusyConfig, SpinnerSize } from "@nova-ui/bits";
 
@@ -24,7 +24,7 @@ export class DashwizStepComponent implements IDashwizStepComponent, OnInit, OnCh
     /**
      * Template for step.
      */
-    @Input() public stepTemplate: ElementRef;
+    @Input() public stepTemplate?: TemplateRef<any>;
     /**
      * Check is form inside step valid.
      */
@@ -82,11 +82,11 @@ export class DashwizStepComponent implements IDashwizStepComponent, OnInit, OnCh
 
     constructor() { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.nextText = this.nextText || $localize `Next`;
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes["stepControl"]) {
             this.valid.emit(this.stepControl);
         }
@@ -110,13 +110,13 @@ export class DashwizStepComponent implements IDashwizStepComponent, OnInit, OnCh
         this.next.emit(event);
     }
 
-    public applyEnteringStep = () => {
+    public applyEnteringStep = (): void => {
         this.active = true;
         this.icon = "step-active";
         this.iconColor = "black";
     }
 
-    public applyExitingStep = () => {
+    public applyExitingStep = (): void => {
         this.active = false;
         this.visited = true;
         this.icon = "step-complete";

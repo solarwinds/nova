@@ -1,4 +1,4 @@
-import {ElementRef, EventEmitter} from "@angular/core";
+import { EventEmitter, TemplateRef } from "@angular/core";
 import { IBusyConfig } from "@nova-ui/bits";
 
 export interface IDashwizStepNavigatedEvent {
@@ -21,7 +21,7 @@ export interface IDashwizWaitEvent {
 }
 
 export interface IDashwizStepComponent {
-    stepTemplate: ElementRef;
+    stepTemplate?: TemplateRef<any>;
     stepControl?: boolean;
     nextText?: string;
     disabled?: boolean;
