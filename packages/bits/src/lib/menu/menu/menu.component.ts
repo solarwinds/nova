@@ -81,7 +81,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     /**
      *Value to be used as menu items data.
      */
-    @Input() public itemsSource?: IMenuItem[];
+    @Input() public itemsSource?: IMenuGroup[];
     /**
      * Event emitted when menu is blurred.
      */
