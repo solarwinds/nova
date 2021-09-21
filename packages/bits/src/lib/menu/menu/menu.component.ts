@@ -24,7 +24,7 @@ import { MenuGroupComponent } from "../menu-item/menu-group/menu-group.component
 import { MenuItemBaseComponent } from "../menu-item/menu-item/menu-item-base";
 import { MenuKeyControlService } from "../menu-key-control.service";
 import { MenuPopupComponent } from "../menu-popup/menu-popup.component";
-import { IMenuItem } from "../public-api";
+import { IMenuGroup } from "../public-api";
 
 /**
  * Examples: <example-url>./../examples/index.html#/menu</example-url><br />
@@ -81,7 +81,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     /**
      *Value to be used as menu items data.
      */
-    @Input() public itemsSource?: IMenuItem[];
+    @Input() public itemsSource?: IMenuGroup[];
     /**
      * Event emitted when menu is blurred.
      */
