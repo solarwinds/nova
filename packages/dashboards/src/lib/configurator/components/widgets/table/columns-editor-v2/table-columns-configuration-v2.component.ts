@@ -153,6 +153,16 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
         cols.controls = columns.map(c => {
             const fc = new FormControl(c);
             fc.setParent(cols);
+
+            // Nova's markAsTouched function gets attached to formControl during init of TableColumnConfigurationComponent,
+            // must be pass to newly created formControl here otherwise gets lost and column validation doesn't get triggered.
+            const colControl = cols.controls.find(
+                (cControl: FormControl) => cControl.value.id === c.id
+            );
+            if (colControl) {
+                fc.markAsTouched = colControl.markAsTouched;
+            }
+
             return fc;
         });
         cols.updateValueAndValidity({ emitEvent });
