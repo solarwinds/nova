@@ -13,7 +13,7 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from "@angular/core";
-import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { DialogService, EventBus, IDataField, IDataSource, IEvent, uuid } from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 import values from "lodash/values";
@@ -157,7 +157,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
             // Nova's markAsTouched function gets attached to formControl during init of TableColumnConfigurationComponent,
             // must be pass to newly created formControl here otherwise gets lost and column validation doesn't get triggered.
             const colControl = cols.controls.find(
-                (cControl: FormControl) => cControl.value.id === c.id
+                (cControl: AbstractControl) => cControl.value.id === c.id
             );
             if (colControl) {
                 fc.markAsTouched = colControl.markAsTouched;
