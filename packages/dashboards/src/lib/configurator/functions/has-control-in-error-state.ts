@@ -11,7 +11,7 @@ export function hasControlInErrorState(parent: AbstractControl): boolean {
     if (parent.valid || parent.untouched) {
         return false;
     }
-    
+
     if (parent instanceof FormGroup) {
         for (const key of Object.keys(parent.controls)) {
             const control = parent.controls[key];
