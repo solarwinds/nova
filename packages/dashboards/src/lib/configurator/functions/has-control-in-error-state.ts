@@ -4,7 +4,7 @@ import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
  * Checks whether given form has a field that should be visually marked as invalid.
  * Form is not in an error state if it's untouched even if it's invalid at that moment,
  * a user must first interact with the form before it can be considered as invalid.
- * 'invalid' form property should not be used for the purpose of this function, 
+ * 'invalid' form property should not be used for the purpose of this function,
  * it can be affected by its children form statuses, which can be considered as valid (untouched).
  *
  * @param parent
