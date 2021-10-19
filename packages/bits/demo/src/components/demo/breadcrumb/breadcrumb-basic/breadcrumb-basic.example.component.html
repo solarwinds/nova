@@ -15,24 +15,31 @@
         eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat
         voluptatem.
     </div>
-    <button
-        id="nui-demo-breadcrumb-show-countries"
-        nui-button
-        type="button"
-        (click)="relativeNavigation('countries')"
-        i18n
-    >
-        Show countries
-    </button>
-    <button
-        id="nui-demo-breadcrumb-show-offices"
-        nui-button
-        class="ml-1"
-        type="button"
-        (click)="relativeNavigation('offices')"
-        i18n
-    >
-        Show offices
-    </button>
+    <div>
+        <button
+            id="nui-demo-breadcrumb-show-countries"
+            nui-button
+            type="button"
+            (click)="relativeNavigation('countries')"
+            i18n
+        >
+            Show countries
+        </button>
+        <button
+            id="nui-demo-breadcrumb-show-offices"
+            nui-button
+            class="ml-1"
+            type="button"
+            (click)="relativeNavigation('offices')"
+            i18n
+        >
+            Show offices
+        </button>
+    </div>
+    <div>
+        Breadcrumbs should work with routerLink too.
+        <a routerLink="countries">countries</a> |
+        <a routerLink="offices">offices</a>
+    </div>
     <router-outlet></router-outlet>
 </div>
