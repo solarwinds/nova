@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { MessageAtom } from "../public_api";
 
 describe("a11y: message", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "color-contrast",
         "duplicate-id",
     ];

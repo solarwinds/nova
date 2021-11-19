@@ -31,7 +31,7 @@ export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDe
     public totalItems: number = 0;
 
     public itemConfig: IRepeatItemConfig<IServer> = {
-        trackBy: (index, item) => item?.name,
+        trackBy: (index: number, item: IServer): string | undefined => item?.name,
     };
 
     @ViewChild(RepeatComponent) repeat: RepeatComponent;
@@ -44,7 +44,7 @@ export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDe
         private viewportManager: VirtualViewportManager
     ) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -54,7 +54,7 @@ export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDe
         ).subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSource.registerComponent({
             virtualScroll: { componentInstance: this.viewportManager },
             repeat: { componentInstance: this.repeat },
@@ -75,7 +75,7 @@ export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDe
                     const items = this.listItems$.getValue();
                     return !items.length || items.length < this.totalItems;
                 }),
-                tap(() => this.applyFilters(false)),
+                tap(async () => this.applyFilters(false)),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
                 switchMap(() => this.dataSource.outputsSubject.pipe(
                     tap((data: IFilteringOutputs) => {
@@ -93,12 +93,12 @@ export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDe
             ).subscribe();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async applyFilters(resetVirtualScroll: boolean = true) {
+    public async applyFilters(resetVirtualScroll: boolean = true): Promise<void> {
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the data source performs the search with 1st page

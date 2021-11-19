@@ -38,7 +38,7 @@ export class BusyComponent implements AfterContentInit, OnChanges {
         private elRef: ElementRef
     ) {}
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         this.setBusyStateForContentComponents();
 
         this.isSpinnerTemplate = Boolean(this.spinnerComponent);
@@ -52,8 +52,8 @@ export class BusyComponent implements AfterContentInit, OnChanges {
             this.isDefaultTemplate = true;
         }
     }
- 
-    public ngOnChanges(changes: SimpleChanges) {
+
+    public ngOnChanges(changes: SimpleChanges): void {
         if (this.disableTabNavigation && changes.busy?.currentValue !== undefined) {
             if (this.busy) {
                 this.tabNavigationService.disableTabNavigation(this.elRef);

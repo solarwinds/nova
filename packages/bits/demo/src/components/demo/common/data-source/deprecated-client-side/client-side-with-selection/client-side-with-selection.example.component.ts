@@ -31,13 +31,15 @@ export class DepreacatedDataSourceWithSelectionExampleComponent implements After
 
     private outputsSubscription: Subscription;
 
-    constructor(public dataSourceService: LocalFilteringDataSource<IExampleItem>,
+    constructor(
+        public dataSourceService: LocalFilteringDataSource<IExampleItem>,
         public changeDetection: ChangeDetectorRef,
-        private listService: ListService) {
+        private listService: ListService
+    ) {
         dataSourceService.setData(getData());
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.registerComponent({
             search: {
                 componentInstance: this.search,
@@ -69,19 +71,19 @@ export class DepreacatedDataSourceWithSelectionExampleComponent implements After
         this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSourceService.applyFilters();
     }
 
-    public onSelectorOutput(selectionType: SelectionType) {
+    public onSelectorOutput(selectionType: SelectionType): void {
         this.state = this.listService.applySelector(selectionType, this.state);
     }
 
-    public onRepeatOutput(selectedItems: IExampleItem[]) {
+    public onRepeatOutput(selectedItems: IExampleItem[]): void {
         this.state = this.listService.selectItems(selectedItems, RepeatSelectionMode.multi, this.state);
     }
 }

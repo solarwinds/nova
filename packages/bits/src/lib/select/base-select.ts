@@ -86,7 +86,7 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
      */
     @Output() changed = new EventEmitter<ISelectChangedEvent<any>>();
 
-    @Output() valueChange = this.changed.pipe(map(({newValue}) => newValue));
+    @Output() valueChange = this.changed.pipe(map(({ newValue }) => newValue));
 
     public name: string;
     public selectedItem: any;
@@ -94,14 +94,14 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
     public itemToSelect: any;
     public inputValue: string;
 
-    protected constructor(protected utilService: UtilService) {}
+    protected constructor(protected utilService: UtilService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.selectedItem = this.value;
         this.inputValue = this.value ? this.value : "";
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes["value"] && !changes["value"].firstChange) {
             const value = changes["value"].currentValue;
             const isInArray = this.displayValue ? _some(this.itemsSource, value) : _includes(this.itemsSource, value);
@@ -163,7 +163,7 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
         return this.getItemDisplay(item);
     }
 
-    public getIconColor() {
+    public getIconColor(): string {
         return this.isDisabled ? "gray" : "primary-blue";
     }
 
@@ -197,14 +197,14 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
         }
     }
 
-    public getItemModel(item: any) {
+    public getItemModel(item: any): any {
         return item && this.modelValue ? item[this.modelValue] : item;
     }
 
-    public onChange(value: any) {
+    public onChange(value: any): void {
     }
 
-    public onTouched() {
+    public onTouched(): void {
     }
 
     public writeValue(value: any): void {
@@ -219,7 +219,7 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
         this.inputValue = _isObject(selectedItem) ? this.getItemDisplay(selectedItem) : selectedItem;
     }
 
-    public registerOnChange(fn: () => void) {
+    public registerOnChange(fn: () => void): void {
         this.onChange = fn;
     }
 
@@ -227,7 +227,7 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
         this.onTouched = fn;
     }
 
-    public changeValue(value: any) {
+    public changeValue(value: any): void {
         this.writeValue(value);
         this.onChange(value);
         this.onTouched();

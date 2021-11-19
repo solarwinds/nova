@@ -9,15 +9,17 @@ export class MarkAsSelectedItemDirective implements Highlightable {
 
     @HostBinding("class.active") private isActive: boolean = false;
 
-    constructor(public elRef: ElementRef,
-                private cdRef: ChangeDetectorRef) { }
+    constructor(
+        public elRef: ElementRef,
+        private cdRef: ChangeDetectorRef
+    ) { }
 
-    public setActiveStyles() {
+    public setActiveStyles(): void {
         this.isActive = true;
         this.cdRef.markForCheck();
     }
 
-    public setInactiveStyles() {
+    public setInactiveStyles(): void {
         this.isActive = false;
         this.cdRef.markForCheck();
     }

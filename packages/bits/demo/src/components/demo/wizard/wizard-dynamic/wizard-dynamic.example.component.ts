@@ -14,11 +14,11 @@ export class WizardDynamicExampleComponent implements OnDestroy {
 
     private dynamicStepsSubscriptions: Subscription[] = [];
 
-    public select(event: IWizardSelectionEvent) {
+    public select(event: IWizardSelectionEvent): void {
         this.selectedIndex = event.selectedIndex;
     }
 
-    public addStep() {
+    public addStep(): void {
         // addStepDynamic returns an instance of WizardStepComponent that was dynamically added
         const step: WizardStepComponent = this.wizardComponent.addStepDynamic(this.dynamicStep, this.selectedIndex + 1);
         // subscribe to entering the dynamic step and push it to subscriptions array

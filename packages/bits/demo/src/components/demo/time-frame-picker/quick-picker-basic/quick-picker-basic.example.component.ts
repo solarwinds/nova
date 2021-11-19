@@ -21,13 +21,15 @@ export class QuickPickerBasicExampleComponent {
     public presetKeysOrder = ["95", "99", "80"];
     public selectedPresetKey?: string = "95";
     public selectedValue: number = +(this.selectedPresetKey || "");
-    public handlePresetSelection(presetKey: string) {
+
+    public handlePresetSelection(presetKey: string): void {
         this.selectedPresetKey = presetKey;
         if (presetKey) {
             this.selectedValue = +this.selectedPresetKey;
         }
     }
-    public handleCustomSelection(num: number) {
+
+    public handleCustomSelection(num: number): void {
         if (Object.keys(this.presets).indexOf(num.toString()) !== -1) {
             this.selectedPresetKey = num.toString();
         } else {
@@ -36,7 +38,7 @@ export class QuickPickerBasicExampleComponent {
         this.selectedValue = num;
     }
 
-    public getTextboxValue() {
+    public getTextboxValue(): number {
         return +(this.selectedPresetKey || "") || this.selectedValue;
     }
 }

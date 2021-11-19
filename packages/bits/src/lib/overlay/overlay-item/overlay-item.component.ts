@@ -27,7 +27,7 @@ export class OverlayItemComponent implements Highlightable, IOption {
     @HostBinding("class.disabled")
     public isDisabled: boolean = false;
 
-    constructor(public element: ElementRef<HTMLElement>) {}
+    constructor(public element: ElementRef<HTMLElement>) { }
 
     /** Applies active class */
     public setActiveStyles(): void {
@@ -40,7 +40,7 @@ export class OverlayItemComponent implements Highlightable, IOption {
     }
 
     /** Scrolls to the Item inside scrollable container  */
-    public scrollIntoView(options?: ScrollIntoViewOptions) {
+    public scrollIntoView(options?: ScrollIntoViewOptions): void {
         this.element.nativeElement.scrollIntoView(options || true);
     }
 }

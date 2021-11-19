@@ -1,7 +1,9 @@
 /// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
 
 /** @ignore */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare let require: any;
+
 import {
     AfterViewInit,
     Component,
@@ -61,7 +63,7 @@ export class ExampleCodeComponent implements  AfterViewInit {
 
     @ViewChild("code") public codeElement: ElementRef;
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // remove wrapping spaces. They might appear due to passing content via ng-content into element
         this.codeElement.nativeElement.innerHTML = this.codeElement.nativeElement.innerHTML.trim();
         hljs.highlightBlock(this.codeElement.nativeElement);

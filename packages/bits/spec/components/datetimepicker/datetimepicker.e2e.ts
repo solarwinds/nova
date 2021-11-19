@@ -8,9 +8,7 @@ import { DateTimepickerAtom } from "./datetimepicker.atom";
 describe("USERCONTROL date-time-picker", () => {
     let dateTimePicker: DateTimepickerAtom;
 
-    async function getModelValue(): Promise<string> {
-        return browser.element(by.id("model-value")).getText();
-    }
+    const getModelValue = async (): Promise<string> => browser.element(by.id("model-value")).getText();
 
     beforeEach(async () => {
         await Helpers.prepareBrowser("date-time-picker/date-time-picker-test");

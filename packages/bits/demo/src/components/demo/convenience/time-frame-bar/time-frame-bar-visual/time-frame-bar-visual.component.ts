@@ -4,7 +4,7 @@ import moment from "moment/moment";
 
 class TestBar {
     private _baseDate = moment([2018, 5, 1, 15, 0, 0]);
-    public get baseDate() {
+    public get baseDate(): moment.Moment {
         return this._baseDate;
     }
     public timeFrame: ITimeframe = this.getDefaultTF();
@@ -14,9 +14,9 @@ class TestBar {
         this.history.restart(this.timeFrame);
     }
 
-    public zoomIn = (value: ITimeframe) => this.timeFrame = this.history.save(value);
-    public undo = () => this.timeFrame = this.history.undo();
-    public change = (value?: ITimeframe) => this.timeFrame = this.history.restart(value);
+    public zoomIn = (value: ITimeframe): ITimeframe => this.timeFrame = this.history.save(value);
+    public undo = (): ITimeframe => this.timeFrame = this.history.undo();
+    public change = (value?: ITimeframe): ITimeframe => this.timeFrame = this.history.restart(value);
 
     private getDefaultTF(): ITimeframe {
         return {
@@ -46,7 +46,7 @@ export class TimeFrameBarVisualTestComponent implements OnInit {
         });
     }
 
-    public zoomBar(bar: TestBar) {
+    public zoomBar(bar: TestBar): void {
         bar.zoomIn(this.zoomTF(bar.timeFrame));
     }
 
@@ -57,9 +57,8 @@ export class TimeFrameBarVisualTestComponent implements OnInit {
         };
     }
 
-    public changeTimeFrame(value: ITimeframe, bar: TestBar) {
+    public changeTimeFrame(value: ITimeframe, bar: TestBar): void {
         const tf = this.timeframeService.reconcileTimeframe(value, undefined, bar.baseDate);
         bar.change(tf);
     }
-
 }

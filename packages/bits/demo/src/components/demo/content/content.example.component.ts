@@ -37,7 +37,7 @@ export class ContentExampleComponent {
         Sed ultricies eu diam quis imperdiet. Maecenas tincidunt luctus nisl condimentum mollis.
     `;
 
-    changeButtonText(event: any) {
+    changeButtonText(event: any): void {
         event.target.textContent = "Clicked!";
     }
 }

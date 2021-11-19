@@ -80,16 +80,17 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
     public imageName: string | null;
     public hasAlt: boolean;
 
-    constructor(private logger: LoggerService,
-                private utilService: UtilService,
-                private changeDetector: ChangeDetectorRef,
-                @Inject(imagesPresetToken) private images: Array<IImagesPresetItem>,
-                private domSanitizer: DomSanitizer,
-                private el: ElementRef) {
-    }
+    constructor(
+        private logger: LoggerService,
+        private utilService: UtilService,
+        private changeDetector: ChangeDetectorRef,
+        @Inject(imagesPresetToken) private images: Array<IImagesPresetItem>,
+        private domSanitizer: DomSanitizer,
+        private el: ElementRef
+    ) { }
 
     public ngOnInit(): void {
-        const dimensionImputs: string[] = [ this.height, this.width ];
+        const dimensionImputs: string[] = [this.height, this.width];
 
         dimensionImputs.forEach(item => {
             if (!_isUndefined(item) && !this.isImageSizeValid(item)) {
@@ -105,7 +106,7 @@ export class ImageComponent implements OnInit, AfterViewInit, OnChanges {
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         if (this.autoFill) {
             try {
                 const svg = this.el.nativeElement.querySelector("svg");

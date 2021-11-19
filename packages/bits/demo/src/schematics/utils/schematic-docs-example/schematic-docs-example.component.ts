@@ -11,16 +11,16 @@ import { DEMO_PATH_TOKEN } from "../../../../../src/constants/path.constant";
 })
 export class SchematicDocsExampleComponent implements OnInit {
     @Input() exampleFolderName: string;
-    public componentSources: string[];
+    public componentSources: Record<string, string>;
     public shouldCodeRender: boolean;
 
     private fileExtensionsRegex = /.*\.(ts|html|less)$/;
-    private rawData: any = {};
+    private rawData: Record<string, string> = {};
 
     private _selectedFile: string;
     private selectedFileOpen: boolean;
 
-    get selectedFile() {
+    get selectedFile(): string {
         return this._selectedFile;
     }
 
@@ -33,17 +33,17 @@ export class SchematicDocsExampleComponent implements OnInit {
         }, 100);
     }
 
-    constructor(@SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: any) {}
+    constructor(@SkipSelf() @Optional() @Inject(DEMO_PATH_TOKEN) private context: any) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.componentSources = this.getSourcesByFilenamePrefix(this.exampleFolderName);
     }
 
-    public getSource(fileName: string) {
+    public getSource(fileName: string): any {
         return this.rawData[fileName];
     }
 
-    public selectFile(name: string) {
+    public selectFile(name: string): void {
         this.selectedFile = name;
         this.selectedFileOpen = true;
     }
@@ -52,33 +52,33 @@ export class SchematicDocsExampleComponent implements OnInit {
         return this.selectedFileOpen;
     }
 
-    public onSelectedFileOpenChange(event: boolean) {
+    public onSelectedFileOpenChange(event: boolean): void {
         this.selectedFileOpen = event;
     }
 
-    private getSourcesByFilenamePrefix(prefix: string) {
-        const matchingFilePaths = this.context.keys().filter((filePath: string) => {
+    private getSourcesByFilenamePrefix(prefix: string): Record<string, string> {
+        const matchingFilePaths: string[] = this.context.keys().filter((filePath: string) => {
             const prefixIndex = filePath.indexOf(prefix);
             const nextChar = prefixIndex !== -1 ? filePath[prefixIndex + prefix.length] : undefined;
             return prefixIndex !== -1 && (nextChar === "." || nextChar === "/");
         });
 
-        return matchingFilePaths.reduce((dataset: any, fileName: any) => {
+        return matchingFilePaths.reduce((dataset: Record<string, string>, fileName: string) => {
             const fileObj = this.getFileData(fileName);
             const splitPath = fileName.substr(fileName.indexOf(prefix)).split("/");
-            const pathToSourceCode = [];
+            const pathToSourceCode: string[] = [];
 
             this.rawData[splitPath[splitPath.length - 1]] = fileObj;
 
             for (let i = splitPath.length; i > 0; i--) {
-                const shifted = splitPath.shift();
+                const shifted = splitPath.shift() ?? "";
                 pathToSourceCode.push(shifted);
             }
             return _set(dataset, pathToSourceCode, fileObj);
         }, {});
     }
 
-    private getFileData(fileName: string) {
+    private getFileData(fileName: string): string {
         let fileContent = "";
         const regExResultArray = this.fileExtensionsRegex.exec(fileName);
         if (regExResultArray) {

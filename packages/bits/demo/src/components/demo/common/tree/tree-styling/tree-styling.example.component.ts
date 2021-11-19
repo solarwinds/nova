@@ -65,5 +65,5 @@ export class TreeStylingExampleComponent {
     dataSource = new ArrayDataSource(TREE_DATA);
     textStyles: typeof TextStyle = TextStyle;
 
-    hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    hasChild = (_: number, node: FoodNode): boolean => !!node?.children?.length;
 }

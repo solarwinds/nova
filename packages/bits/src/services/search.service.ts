@@ -27,7 +27,7 @@ import { ISearchService } from "./public-api";
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class SearchService implements ISearchService {
     /**
      *  __Description :__
@@ -50,7 +50,7 @@ export class SearchService implements ISearchService {
      *
      */
     constructor(private logger: LoggerService,
-                private datePipe: DatePipe) {}
+        private datePipe: DatePipe) { }
 
     public search = (items: any[], properties: string[], searchValue: any, dateFormat?: string): any[] => {
         // TODO: in case of interest, create options as object, put dateFormat in, put caseSensitive in
@@ -72,7 +72,7 @@ export class SearchService implements ISearchService {
         return this.filterResults(items, properties, searchValue, dateFormat);
     }
 
-    protected filterResults(items: any[], properties: string[], searchValue: any, dateFormat?: string) {
+    protected filterResults(items: any[], properties: string[], searchValue: any, dateFormat?: string): any[] {
         return items.filter((item) => {
             if (isString(item) || isNumber(item)) {
                 return this.filterPredicate(item, searchValue);
@@ -97,12 +97,12 @@ export class SearchService implements ISearchService {
         return this.datePipe.transform(value, dateFormat);
     }
 
-    protected filterPredicate(item: any, searchValue: any) {
+    protected filterPredicate(item: any, searchValue: any): boolean {
         return item.toString().toLowerCase().indexOf(searchValue.toString().toLowerCase()) !== -1;
     }
 
     protected getSearchableColumns = (items: any[]): string[] => {
-        const props: {[key: string]: boolean} = {};
+        const props: { [key: string]: boolean } = {};
         for (const item of items) {
             keys(item).map((key: any) => {
                 if (!startsWith(key, "$")) {

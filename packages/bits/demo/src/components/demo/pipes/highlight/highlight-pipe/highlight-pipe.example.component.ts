@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "nui-demo-highlight-pipe",
@@ -7,7 +7,7 @@ import {Component} from "@angular/core";
 export class HighlightPipeExampleComponent {
     term: string = "bar";
     searchString: string = `hello <span class="x">FOO</span> bar`;
-    changeSearchValue(value: string) {
+    changeSearchValue(value: string): void {
         this.term = value;
     }
 }

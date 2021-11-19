@@ -20,15 +20,15 @@ import { InputValueTypes } from "../types";
 export class ComboboxV2OptionHighlightDirective implements OnChanges, OnInit, OnDestroy {
 
     /** Part of the text to be highlighted */
-    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input("nuiComboboxV2OptionHighlight") public value: string;
 
     private destroy$ = new Subject();
 
-    constructor(private el: ElementRef<HTMLElement>,
-                @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT) private combobox: ComboboxV2Component,
-                private highlightPipe: HighlightPipe
-    ) {}
+    constructor(
+        private el: ElementRef<HTMLElement>,
+        @Inject(NUI_SELECT_V2_OPTION_PARENT_COMPONENT) private combobox: ComboboxV2Component,
+        private highlightPipe: HighlightPipe
+    ) { }
 
     public ngOnInit(): void {
         this.updateHTML(this.combobox.inputValue);
@@ -42,13 +42,13 @@ export class ComboboxV2OptionHighlightDirective implements OnChanges, OnInit, On
             .subscribe(() => this.updateHTML());
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.value) {
             this.updateHTML(this.combobox.inputValue);
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

@@ -3,7 +3,7 @@ import { CdkNestedTreeNode, CdkTree, NestedTreeControl } from "@angular/cdk/tree
 import { Component, IterableDiffer, IterableDiffers, ViewChild } from "@angular/core";
 import { EventBusService, expand } from "@nova-ui/bits";
 
-import {FoodNode, HttpMock, IApiResponse, TREE_DATA_PAGINATOR} from "../data";
+import { FoodNode, HttpMock, IApiResponse, TREE_DATA_PAGINATOR } from "../data";
 
 @Component({
     selector: "nui-tree-paginator-test",
@@ -23,16 +23,17 @@ export class TreePaginatorTestComponent {
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
 
-    hasChild = (_: number, node: FoodNode) => node.children;
+    hasChild = (_: number, node: FoodNode): boolean => !!node.children?.length;
 
-    constructor(private http: HttpMock,
-                private differ: IterableDiffers,
-                private eventBusService: EventBusService) {
-    }
+    constructor(
+        private http: HttpMock,
+        private differ: IterableDiffers,
+        private eventBusService: EventBusService
+    ) { }
 
     /** Load first page on first open */
-    public onToggleClick(node: FoodNode, nestedNode: CdkNestedTreeNode<any>) {
-        this.eventBusService.getStream({id: "document-click"}).next();
+    public onToggleClick(node: FoodNode, nestedNode: CdkNestedTreeNode<any>): void {
+        this.eventBusService.getStream({ id: "document-click" }).next();
 
         if (node.hasPagination && node.children && !node.children.length) {
             const paginatorOptions = {
@@ -56,11 +57,11 @@ export class TreePaginatorTestComponent {
         });
     }
 
-    private handleNodeTotalItems(nodeId: string, totalItems: number) {
+    private handleNodeTotalItems(nodeId: string, totalItems: number): void {
         this.nodesTotalItems[nodeId] = totalItems;
     }
 
-    private handleNodeContent(node: FoodNode, nestedNodeDirective: CdkNestedTreeNode<any>, items: FoodNode[]) {
+    private handleNodeContent(node: FoodNode, nestedNodeDirective: CdkNestedTreeNode<any>, items: FoodNode[]): void {
         node.children = [];
         const differ: IterableDiffer<FoodNode> = this.differ.find(node.children).create();
         node.children = items;

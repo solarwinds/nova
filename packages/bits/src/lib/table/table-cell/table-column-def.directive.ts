@@ -29,7 +29,7 @@ export class TableColumnDefDirective extends CdkColumnDef implements OnInit, OnC
         super();
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (this.columnWidth) {
             this.tableStateHandlerService.setColumnWidth(this.name, this.columnWidth);
         }
@@ -39,7 +39,7 @@ export class TableColumnDefDirective extends CdkColumnDef implements OnInit, OnC
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.columnWidth && !changes.columnWidth.firstChange) {
             this.tableStateHandlerService.setColumnWidth(this.name, changes.columnWidth.currentValue);
         }

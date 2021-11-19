@@ -4,6 +4,7 @@ import {
     ChangeDetectorRef,
     Component,
     ComponentFactoryResolver,
+    ComponentRef,
     ContentChildren,
     ElementRef,
     EventEmitter,
@@ -92,7 +93,7 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
     public currentStep?: WizardStepComponent;
     public stepLineWidth: number = 65;
     public navigationControl: BehaviorSubject<IWizardWaitEvent> = new BehaviorSubject<IWizardWaitEvent>({
-        busyState: {busy: false},
+        busyState: { busy: false },
         allowStepChange: true,
     });
     private selectionEvent: IWizardSelectionEvent;
@@ -104,18 +105,20 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
     private dynamicSubscriptions = new Map();
     private dynamicRefs = new Map();
 
-    constructor(private changeDetector: ChangeDetectorRef,
+    constructor(
+        private changeDetector: ChangeDetectorRef,
         private componentFactoryResolver: ComponentFactoryResolver,
-        private logger: LoggerService) { }
+        private logger: LoggerService
+    ) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (this.finishText === WizardComponent.placeholderFinishText) {
             this.logger.warn(`WizardComponent input "finishText" is using placeholder text
 "${WizardComponent.placeholderFinishText}". A value should be specified.`);
         }
     }
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         const activeTabs = this.steps.filter((item) => item.active);
         this.arraySteps = this.steps.toArray();
         if (activeTabs.length === 0) {
@@ -142,26 +145,26 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
 
     }
 
-    public ngAfterViewChecked() {
+    public ngAfterViewChecked(): void {
         if (this.stretchStepLines) {
             this.stepLineWidth = Math.round(this.getLargestLabelWidth() / 2);
             this.changeDetector.detectChanges();
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.steps.toArray().forEach((step: WizardStepComponent) => step.valid.unsubscribe());
         this.navigationControl.unsubscribe();
     }
 
-    public addStepDynamic (wizardStep: IWizardStepComponent, indexToInsert: number) {
+    public addStepDynamic(wizardStep: IWizardStepComponent, indexToInsert: number): WizardStepComponent {
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(WizardStepComponent);
-        const componentRef = this.dynamicStep.createComponent(componentFactory);
+        const componentRef: ComponentRef<WizardStepComponent> = this.dynamicStep.createComponent(componentFactory);
         const instance: IWizardStepComponent = componentRef.instance;
         const wizardStepInputs = this.getInputsAndOutputs(wizardStep);
 
         wizardStepInputs.forEach(key => {
-            instance[key] =  wizardStep[key];
+            instance[key] = wizardStep[key];
         });
         this.handleStepControl(componentRef.instance);
 
@@ -201,27 +204,27 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
             .findIndex((s) => s === this.currentStep);
     }
 
-    public disableStep (step: WizardStepComponent) {
+    public disableStep(step: WizardStepComponent): void {
         const indexOfStep = this.arraySteps.indexOf(step);
         const toDisable = this.arraySteps[indexOfStep];
         toDisable.disabled = true;
         this.changeDetector.detectChanges();
     }
 
-    public enableStep (step: WizardStepComponent) {
+    public enableStep(step: WizardStepComponent): void {
         const indexOfStep = this.arraySteps.indexOf(step);
         const toDisable = this.arraySteps[indexOfStep];
         toDisable.disabled = false;
         this.changeDetector.detectChanges();
     }
 
-    public hideStep (step: WizardStepComponent) {
+    public hideStep(step: WizardStepComponent): void {
         const indexOfStep = this.arraySteps.indexOf(step);
         const toHide = this.arraySteps[indexOfStep];
         toHide.hidden = true;
     }
 
-    public showStep (step: WizardStepComponent) {
+    public showStep(step: WizardStepComponent): void {
         const indexOfStep = this.arraySteps.indexOf(step);
         const visibleStep = this.arraySteps[indexOfStep];
         visibleStep.hidden = false;
@@ -244,11 +247,11 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         }
     }
 
-    public goToStep (stepIndex: number) {
+    public goToStep(stepIndex: number): void {
         this.selectStep(this.arraySteps[stepIndex]);
     }
 
-    public selectStep(step: WizardStepComponent) {
+    public selectStep(step: WizardStepComponent): void {
         if (!step.disabled) {
             this.futureStep = step;
             this.currentStep?.exitStep({
@@ -263,20 +266,22 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         }
     }
 
-    public onBackClick() {
+    public onBackClick(): void {
         if (!_isUndefined(this.stepIndex)) {
             let previousStep = this.arraySteps[this.stepIndex - 1];
             if (previousStep.hidden || previousStep.disabled) {
-                previousStep = _find(this.arraySteps.slice(0).reverse(),
-                                     step => !step.hidden,
-                                     _findIndex(this.arraySteps.slice(0).reverse(), this.arraySteps[this.stepIndex]) + 1);
+                previousStep = _find(
+                    this.arraySteps.slice(0).reverse(),
+                    step => !step.hidden,
+                    _findIndex(this.arraySteps.slice(0).reverse(), this.arraySteps[this.stepIndex]) + 1
+                );
             }
             this.selectStep(previousStep);
             this.back.emit();
         }
     }
 
-    public onNextClick() {
+    public onNextClick(): void {
         let nextStep = this.arraySteps[this.stepIndex + 1];
         this.handleStepControl(this.currentStep);
         this.currentStep?.nextStep({
@@ -301,15 +306,15 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         this.next.emit();
     }
 
-    public onFinishClick() {
+    public onFinishClick(): void {
         this.finish.emit();
     }
 
-    public onCancelClick() {
+    public onCancelClick(): void {
         this.cancel.emit(this.steps.toArray().filter(step => step.complete).length !== 0);
     }
 
-    public enterAnotherStep() {
+    public enterAnotherStep(): void {
         this.currentStep?.applyExitingStep();
         this.futureStep?.enterStep();
         this.currentStep = this.futureStep;
@@ -339,11 +344,11 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
 
     private getInputsAndOutputs(compType: IWizardStepComponent): string[] {
         const inputs = compType.inputsList;
-        const outputs = Object.keys(compType).filter( key => compType[key] instanceof EventEmitter);
-        return [ ...inputs, ...outputs];
+        const outputs = Object.keys(compType).filter(key => compType[key] instanceof EventEmitter);
+        return [...inputs, ...outputs];
     }
 
-    private handleStepControl(step?: WizardStepComponent) {
+    private handleStepControl(step?: WizardStepComponent): void {
         if (!_isUndefined(step?.stepControl)) {
             if (step?.stepControl) {
                 this.enableFollowingSteps();
@@ -353,7 +358,7 @@ export class WizardComponent implements OnInit, AfterContentInit, AfterViewCheck
         }
     }
 
-    private getLargestLabelWidth() {
+    private getLargestLabelWidth(): number {
         const widths = this.stepTitles.map((title) => title.nativeElement.offsetWidth);
 
         return Math.round(Math.max(...widths));

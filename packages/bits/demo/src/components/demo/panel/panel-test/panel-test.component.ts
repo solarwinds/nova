@@ -1,5 +1,4 @@
-import { Component, Input } from "@angular/core";
-import { IMenuGroup, PanelBackgroundColor } from "@nova-ui/bits";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "nui-panel-test",

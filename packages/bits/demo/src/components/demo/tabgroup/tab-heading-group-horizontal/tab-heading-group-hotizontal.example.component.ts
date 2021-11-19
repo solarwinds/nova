@@ -13,28 +13,28 @@ export class TabHeadingGroupHorizontalExampleComponent {
     public tabsetContent = [
         {
             id: "1",
-            title: $localize `Tab with really long content`,
+            title: $localize`Tab with really long content`,
             isDisabled: false,
         },
         {
             id: "2",
-            title: $localize `Tab 2`,
+            title: $localize`Tab 2`,
             isDisabled: false,
         },
         {
             id: "3",
-            title: $localize `Tab 3`,
+            title: $localize`Tab 3`,
             isDisabled: true,
         },
         {
             id: "4",
-            title: $localize `Tab 4`,
+            title: $localize`Tab 4`,
             isDisabled: false,
         }];
 
-    constructor(private changeDetector: ChangeDetectorRef) {}
+    constructor(private changeDetector: ChangeDetectorRef) { }
 
-    public updateContent(tabId: string) {
+    public updateContent(tabId: string): void {
         this.currentTabId = tabId;
         this.changeDetector.detectChanges();
     }

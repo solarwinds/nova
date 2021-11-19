@@ -35,29 +35,29 @@ export class HttpMock {
                 {
                     name: "Apache Tomcat",
                     children: [
-                        {name: "Version 1"},
+                        { name: "Version 1" },
                         {
                             name: "Version 2",
                             children: [],
                             load: "apache-version-2",
                             length: 3,
                         },
-                        {name: "Version 3"},
+                        { name: "Version 3" },
                     ],
                     length: 3,
                     isLoading: false,
                 },
-                {name: "nginx"},
+                { name: "nginx" },
             ],
             "apache-version-2": [
-                {name: "1.0.5"},
-                {name: "2.1.4"},
-                {name: "8.9.0"},
+                { name: "1.0.5" },
+                { name: "2.1.4" },
+                { name: "8.9.0" },
             ],
             "ms-servers": [
-                {name: "2019"},
-                {name: "2017"},
-                {name: "2013"},
+                { name: "2019" },
+                { name: "2017" },
+                { name: "2013" },
             ],
 
         };
@@ -81,11 +81,12 @@ export class TreeCheckboxLazyComponent {
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<ServerNode>;
 
-    hasChild = (_: number, node: ServerNode) => node.length;
+    hasChild = (_: number, node: ServerNode): boolean => !!node.length;
 
-    constructor(private http: HttpMock,
-                private differ: IterableDiffers) {
-    }
+    constructor(
+        private http: HttpMock,
+        private differ: IterableDiffers
+    ) { }
 
     loadMore(node: any, nestedNode: CdkNestedTreeNode<any>): void {
         const differ: IterableDiffer<ServerNode> = this.differ.find(node.children).create();
@@ -132,7 +133,7 @@ export class TreeCheckboxLazyComponent {
         this.checkAllParentsSelection(node);
     }
 
-    public isParentNodeCheckedOn(node: ServerNode) {
+    public isParentNodeCheckedOn(node: ServerNode): boolean {
         if (this.selectionModel.isSelected(<ServerNode>this.getParentNode(node))) {
             this.selectionModel.select(node);
         }

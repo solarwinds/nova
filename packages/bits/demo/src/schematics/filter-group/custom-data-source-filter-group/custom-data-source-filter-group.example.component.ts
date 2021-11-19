@@ -48,7 +48,7 @@ export class CustomDataSourceFilterGroupExampleComponent implements AfterViewIni
         this.filterGroupCustomDataSourceService.applyFilters();
     }
 
-    public changeFilters(event: IFilterGroupItem) {
+    public changeFilters(event: IFilterGroupItem): void {
         this.filterGroupCustomDataSourceService.applyFilters();
     }
 
@@ -58,12 +58,12 @@ export class CustomDataSourceFilterGroupExampleComponent implements AfterViewIni
 
     private getFilterComponents(): IFilteringParticipants {
         return this.filterGroups.reduce((obj: IFilteringParticipants, item: CustomDataSourceFilterGroupCompositeComponent) => {
-            obj[item.filterGroupItem.id] = {componentInstance: item};
+            obj[item.filterGroupItem.id] = { componentInstance: item };
             return obj;
         }, {});
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.filterGroupSubscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }

@@ -33,7 +33,7 @@ import { BaseSelect } from "./base-select";
  */
 @Component({
     selector: "nui-select",
-    host: {"class": "nui-select"},
+    host: { "class": "nui-select" },
     templateUrl: "./select.component.html",
     providers: [
         {
@@ -71,25 +71,30 @@ export class SelectComponent extends BaseSelect implements OnInit, OnChanges, On
     }, 300);
 
     @HostBinding("class.nui-select--justified")
-    get isJustified() {
+    get isJustified(): boolean {
         return this.justified;
     }
 
     @HostBinding("class.nui-select--inline")
-    get isInline() {
+    get isInline(): boolean {
         return this.inline;
     }
 
     @ViewChild("menu") public menu: MenuComponent;
 
-    constructor(utilService: UtilService, private renderer: Renderer2, public elRef: ElementRef, private logger: LoggerService) {
+    constructor(
+        utilService: UtilService,
+        private renderer: Renderer2,
+        public elRef: ElementRef,
+        private logger: LoggerService
+    ) {
         super(utilService);
         this.logger.warn("<nui-select> is deprecated as of Nova v11. Please use <nui-select-v2> instead.");
     }
 
     private unsubscriber: () => void;
 
-    ngOnInit() {
+    ngOnInit(): void {
         super.ngOnInit();
         this.unsubscriber = this.renderer.listen(this.elRef.nativeElement, "focusout", () => {
             // Blur is debounced cause when you click on menu item blur is triggered twice: from textbox and when popup is closed.
@@ -97,7 +102,7 @@ export class SelectComponent extends BaseSelect implements OnInit, OnChanges, On
         });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         super.ngOnChanges(changes);
     }
 
@@ -110,7 +115,7 @@ export class SelectComponent extends BaseSelect implements OnInit, OnChanges, On
             _toString(this.getDisplayValueFormatted(this.getSelectedItem()));
     }
 
-    public handleBlur() {
+    public handleBlur(): void {
         this.select(this.selectedItem);
     }
 

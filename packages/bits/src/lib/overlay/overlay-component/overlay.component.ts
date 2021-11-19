@@ -1,4 +1,4 @@
-import { Overlay, OverlayConfig, OverlayContainer, OverlaySizeConfig } from "@angular/cdk/overlay";
+import { Overlay, OverlayConfig, OverlayContainer, OverlayRef, OverlaySizeConfig } from "@angular/cdk/overlay";
 import { CdkPortal } from "@angular/cdk/portal";
 import {
     AfterContentChecked,
@@ -99,7 +99,7 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
         this.hide$ = this.overlayService.hide$;
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         const overlayPropsToMap = [
             "toggleReference",
             "customContainer",
@@ -114,11 +114,11 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.overlayService.contentTemplate = this.contentTemplate;
     }
 
-    public ngAfterContentChecked() {
+    public ngAfterContentChecked(): void {
         this.empty$.next(this.isPopupContentEmpty());
     }
 
@@ -127,7 +127,7 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
     }
 
     /** Shows Popup */
-    public show() {
+    public show(): void {
         this.setOverlayConfig();
         this.overlayService.show();
         this.handleOutsideClicks();
@@ -136,17 +136,17 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
     }
 
     /** Hides Popup */
-    public hide() {
+    public hide(): void {
         this.overlayService.hide();
         this.positionStrategySubscription?.unsubscribe();
     }
 
     /** Toggles Popup */
-    public toggle() {
+    public toggle(): void {
         this.overlayService.showing ? this.hide() : this.show();
     }
 
-    public getOverlayRef() {
+    public getOverlayRef(): OverlayRef {
         return this.overlayService.getOverlayRef();
     }
 
@@ -157,7 +157,7 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
 
     /** Stream of clicks outside. */
     private overlayClickOutside(): Observable<MouseEvent> {
-        return this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
+        return this.eventBusService.getStream({ id: DOCUMENT_CLICK_EVENT })
             .pipe(
                 filter(event => {
                     const clickTarget = event.target as HTMLElement;
@@ -168,7 +168,7 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
                 }));
     }
 
-    private handleOutsideClicks() {
+    private handleOutsideClicks(): void {
         const clicksOutsideStream$ = this.overlayConfig?.hasBackdrop
             ? this.overlayService.getOverlayRef().backdropClick()
             : this.overlayClickOutside();

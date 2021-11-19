@@ -13,22 +13,22 @@ export class WizardDialogExampleComponent {
     constructor(@Inject(DialogService) private dialogService: DialogService,
         @Inject(ToastService) private toastService: ToastService) { }
 
-    public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
-    public selectedVegetables = [$localize `Potato`, $localize `Tomato`];
+    public vegetables = [$localize`Cabbage`, $localize`Potato`, $localize`Tomato`, $localize`Carrot`];
+    public selectedVegetables = [$localize`Potato`, $localize`Tomato`];
 
     public isChecked(vegetable: string): boolean {
         return this.selectedVegetables.indexOf(vegetable) > -1;
     }
 
-    public valuesChanged(values: any[]) {
+    public valuesChanged(values: any[]): void {
         this.selectedVegetables = [...values];
     }
 
-    public openDialog(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "lg"});
+    public openDialog(content: TemplateRef<string>): void {
+        this.activeDialog = this.dialogService.open(content, { size: "lg" });
     }
 
-    public closeDialog() {
+    public closeDialog(): void {
         this.activeDialog.close();
     }
 }

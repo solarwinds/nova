@@ -14,22 +14,22 @@ export class PopupWithCustomContentComponent implements OnInit {
     public icon = "caret-down";
     public width = "200px";
     public itemsSource: string[] = [
-        $localize `Item 1`,
-        $localize `Item 2`,
-        $localize `Item 3`,
-        $localize `Item 4`,
+        $localize`Item 1`,
+        $localize`Item 2`,
+        $localize`Item 3`,
+        $localize`Item 4`,
     ];
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.demoFormGroup = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control([this.itemsSource[0], this.itemsSource[1], this.itemsSource[2]], [
                 Validators.required, Validators.minLength(3)]),
         });
     }
 
-    public handleClick(event: MouseEvent) {
+    public handleClick(event: MouseEvent): void {
         event.stopPropagation();
     }
 

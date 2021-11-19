@@ -18,7 +18,7 @@ export class TimeFramePickerInlineExampleComponent {
     public minDate = moment("04/07/2018", "L"); // "L" is "MM/DD/YYY" in moment.js
     public maxDate = moment();
 
-    public updateTf(value: any) {
+    public updateTf(value: any): void {
         this.tf = value;
     }
 }

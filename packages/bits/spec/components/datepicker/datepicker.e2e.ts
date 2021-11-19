@@ -156,13 +156,9 @@ describe("USERCONTROL datepicker", () => {
     });
 
     describe("when minDate, maxDate or dateDisabled is set", () => {
-        async function getMinDate() {
-            return browser.element(by.id("nui-demo-datepicker-min-date")).getText();
-        }
+        const getMinDate = async (): Promise<string> => browser.element(by.id("nui-demo-datepicker-min-date")).getText();
 
-        async function getMaxDate(): Promise<string> {
-            return browser.element(by.id("nui-demo-datepicker-max-date")).getText();
-        }
+        const getMaxDate = async (): Promise<string> => browser.element(by.id("nui-demo-datepicker-max-date")).getText();
 
         it("should forbid selection of date via text input, less than minDate", async () => {
             const minDate: Moment = moment(await getMinDate());
@@ -242,7 +238,7 @@ describe("USERCONTROL datepicker", () => {
 
         it("should disable Today button if today date is disabled", async () => {
             await datepickerDisabledTodayButton.toggle();
-            expect (await datepickerDisabledTodayButton.isTodayButtonEnabled()).toEqual(false);
+            expect(await datepickerDisabledTodayButton.isTodayButtonEnabled()).toEqual(false);
         });
     });
 
@@ -301,7 +297,7 @@ describe("USERCONTROL datepicker", () => {
             expect(moment(newValue).hour()).toBe(0);
         });
 
-        it("should save hour correctly when triggered at 23:00 - 0:00", async() => {
+        it("should save hour correctly when triggered at 23:00 - 0:00", async () => {
             await datepickerWithInitAndPreserve.clickInput();
             await datepickerWithInitAndPreserve.selectDate(5);
             const oldValue = await browser.element(by.id(initDateValueIdPreserved)).getText();

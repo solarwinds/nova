@@ -12,16 +12,15 @@ export class DateTimePickerDialogExampleComponent {
     public selectedDate: Date;
 
     constructor(@Inject(DialogService) private dialogService: DialogService) {
-
         this.dt = moment();
         this.selectedDate = new Date(this.dt.valueOf());
     }
 
-    public open(content: TemplateRef<string>) {
-        this.dialogService.open(content, {size: "sm"});
+    public open(content: TemplateRef<string>): void {
+        this.dialogService.open(content, { size: "sm" });
     }
 
-    onModelChanged(event: any) {
+    onModelChanged(event: any): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

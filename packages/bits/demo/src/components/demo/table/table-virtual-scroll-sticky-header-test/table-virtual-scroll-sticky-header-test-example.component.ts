@@ -5,7 +5,6 @@ import {
     IFilteringOutputs,
     TableStickyHeaderDirective,
 } from "@nova-ui/bits";
-import sample from "lodash/sample";
 import { Observable } from "rxjs";
 import { map, startWith, switchMap, tap } from "rxjs/operators";
 

@@ -8,10 +8,10 @@ import { DialogContentExampleComponent } from "./dialog-content.example.componen
     templateUrl: "./component-as-content.example.component.html",
 })
 export class ComponentAsContentExampleComponent {
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
+    constructor(@Inject(DialogService) private dialogService: DialogService) { }
 
-    public openWithComponent() {
+    public openWithComponent(): void {
         const dialogRef = this.dialogService.open(DialogContentExampleComponent, { size: "sm" });
-        dialogRef.componentInstance.name = $localize `Dialog title`;
+        dialogRef.componentInstance.name = $localize`Dialog title`;
     }
 }

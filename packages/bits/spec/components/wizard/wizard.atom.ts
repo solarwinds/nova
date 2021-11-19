@@ -15,17 +15,17 @@ export class WizardAtom extends Atom {
     public finishButton = new ButtonAtom(this.root.element(by.className("nui-wizard__finish-button")));
     public cancelButton = new ButtonAtom(this.root.element(by.className("nui-wizard__cancel-button")));
 
-    public back = (): Promise<void> => this.backButton.click();
+    public back = async (): Promise<void> => this.backButton.click();
 
-    public cancel = (): Promise<void> => this.cancelButton.click();
+    public cancel = async (): Promise<void> => this.cancelButton.click();
 
-    public finish = (): Promise<void> => this.finishButton.click();
+    public finish = async (): Promise<void> => this.finishButton.click();
 
     public getHeader = (): ElementFinder => this.root.element(by.css(".nui-wizard__header"));
 
     public getActiveStep = (): ElementFinder => this.root.element(by.css(".nui-wizard__header-step--active"));
 
-    public next = (): Promise<void> => this.nextButton.click();
+    public next = async (): Promise<void> => this.nextButton.click();
 
     public async getHeaderSteps(): Promise<{}[]> {
         const stepsEl = this.root.element(by.className("nui-wizard__header-steps"));
@@ -38,7 +38,7 @@ export class WizardAtom extends Atom {
         });
     }
 
-    public async getSteps() {
+    public async getSteps(): Promise<void> {
         const stepsEl = this.root.element(by.className("nui-wizard__header"));
 
         // this should really be a map operation.  However, map has a bug- if you put an element finder

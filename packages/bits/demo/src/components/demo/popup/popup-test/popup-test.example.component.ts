@@ -18,7 +18,7 @@ export class PopupTestComponent {
         "Item 5",
     ];
 
-    public handleClick(event: MouseEvent) {
+    public handleClick(event: MouseEvent): void {
         event.stopPropagation();
     }
 

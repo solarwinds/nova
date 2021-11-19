@@ -22,7 +22,7 @@ interface IExampleItem {
 export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(@Inject(DialogService) private dialogService: DialogService,
-                                       private formBuilder: FormBuilder) {}
+        private formBuilder: FormBuilder) { }
     public selectedItem: IExampleItem;
     public handleClicksOutside: boolean = false;
     public iconItems = [
@@ -38,26 +38,24 @@ export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDe
     ];
 
     // Datasources
-    public items = Array.from({ length : 50 }).map((_, i) => $localize `Item ${i}`);
-    public itemsDisplayValue: IExampleItem[] = Array.from({ length: 100 }).map((_, i) =>
-        ({
-            id: `value-${i}`,
-            name: $localize `Item ${i}`,
-            icon: "status_warning",
-            disabled: !!(i % 2),
-        }));
+    public items = Array.from({ length: 50 }).map((_, i) => $localize`Item ${i}`);
+    public itemsDisplayValue: IExampleItem[] = Array.from({ length: 100 }).map((_, i) => ({
+        id: `value-${i}`,
+        name: $localize`Item ${i}`,
+        icon: "status_warning",
+        disabled: !!(i % 2),
+    }));
 
-    public itemsWithIconsOnly: IExampleItem[] = this.iconItems.map((icon, i) =>
-        ({
-            id: `value-${i}`,
-            icon: icon,
-        }));
+    public itemsWithIconsOnly: IExampleItem[] = this.iconItems.map((icon, i) => ({
+        id: `value-${i}`,
+        icon: icon,
+    }));
 
     public groupedItems: ISelectGroup[] = Array.from({ length: 10 }).map((_, i) => ({
-        header: $localize `Header line ${i + 1}`,
+        header: $localize`Header line ${i + 1}`,
         items: Array.from({ length: 5 }).map((v, n) => ({
             id: `value-${i}`,
-            name: $localize `Item ${n + 1}`,
+            name: $localize`Item ${n + 1}`,
         })),
     }));
 
@@ -77,11 +75,11 @@ export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDe
     @ViewChild("custom_control") private select: SelectV2Component;
 
     // Dialog
-    public open(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm"});
+    public open(content: TemplateRef<string>): void {
+        this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
-    public isInErrorState() {
+    public isInErrorState(): boolean {
         return !this.selectedItem;
     }
 
@@ -116,13 +114,13 @@ export class SelectV2TestExampleComponent implements OnInit, AfterViewInit, OnDe
             });
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.select.clickOutsideDropdown.subscribe(() => {
             if (this.handleClicksOutside) { this.select.hideDropdown(); }
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

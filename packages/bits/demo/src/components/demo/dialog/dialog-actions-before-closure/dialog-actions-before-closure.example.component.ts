@@ -9,11 +9,11 @@ import { take, takeUntil } from "rxjs/operators";
 export class DialogActionBeforeClosureExampleComponent {
     private activeDialog: NuiDialogRef;
 
-    constructor(private dialogService: DialogService) {}
+    constructor(private dialogService: DialogService) { }
 
-    public open(content: TemplateRef<string>) {
+    public open(content: TemplateRef<string>): void {
         // You can return 'false' from the optional beforeDismiss function anytime you want to prevent the dialog from closing.
-        this.activeDialog = this.dialogService.open(content, {size: "sm", beforeDismiss: this.beforeDismiss});
+        this.activeDialog = this.dialogService.open(content, { size: "sm", beforeDismiss: this.beforeDismiss });
 
         // You can use the beforeDismissed$ event to execute actions right before the dialog gets closed
         this.activeDialog
@@ -60,11 +60,11 @@ export class DialogActionBeforeClosureExampleComponent {
         this.activeDialog.dismiss();
     }
 
-    public beforeDismiss() {
+    public beforeDismiss(): boolean {
         return false;
     }
 
-    public closeFromHeader() {
+    public closeFromHeader(): void {
         console.log($localize`CLOSE BUTTON CLICKED`);
         this.activeDialog.dismiss();
     }

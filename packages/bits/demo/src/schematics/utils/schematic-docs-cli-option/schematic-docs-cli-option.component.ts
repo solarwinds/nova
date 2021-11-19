@@ -164,13 +164,13 @@ ngOnInit(): void {
 
     public constructor(
         @Optional() @Inject(SchematicsDocsComponentType) public forComponent?: SchematicsDocsComponentType
-    ) {}
+    ) { }
 
     public getRepeatPropKey(key: keyof RepeatComponent): string {
         return key;
     }
 
-    public for(forComponent: SchematicsDocsComponentType) {
+    public for(forComponent: SchematicsDocsComponentType): boolean {
         return this.forComponent === forComponent || !this.forComponent;
     }
 }

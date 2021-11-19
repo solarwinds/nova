@@ -11,7 +11,7 @@ export class StackedHeaderProgressExampleComponent implements OnDestroy {
     public isCanceled = false;
     private stop: any = undefined;
 
-    public startProgress() {
+    public startProgress(): void {
         this.clearInterval();
 
         this.show = true;
@@ -24,7 +24,7 @@ export class StackedHeaderProgressExampleComponent implements OnDestroy {
         }, 1000);
     }
 
-    public onCancel() {
+    public onCancel(): void {
         this.clearInterval();
         this.isCanceled = true;
         this.show = false;
@@ -32,7 +32,7 @@ export class StackedHeaderProgressExampleComponent implements OnDestroy {
         this.percent = 0;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.clearInterval();
     }
 

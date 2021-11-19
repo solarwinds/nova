@@ -9,26 +9,26 @@ import { ToastService } from "@nova-ui/bits";
 })
 export class SelectV2CustomContentExampleComponent {
     public items = [{
-        headerName: $localize `Saved Data Filters`,
+        headerName: $localize`Saved Data Filters`,
         options: [
             {
                 id: 1,
-                name: $localize `All Services`,
+                name: $localize`All Services`,
                 icon: "check",
             },
             {
                 id: 2,
-                name: $localize `Unified Communication Apps`,
+                name: $localize`Unified Communication Apps`,
                 icon: "execute",
             },
         ],
     }];
 
-    constructor(@Inject(ToastService) private toastService: ToastService) {}
+    constructor(@Inject(ToastService) private toastService: ToastService) { }
 
-    public actionSimulation(event: Event) {
+    public actionSimulation(event: Event): void {
         this.toastService.info({
-            message: $localize `Action Occurred!`,
+            message: $localize`Action Occurred!`,
         });
         event?.stopPropagation();
     }

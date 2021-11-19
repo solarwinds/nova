@@ -20,7 +20,7 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
 export class MenuGroupComponent {
     @Input() header?: string;
 
-    public stopClickPropagation(event: MouseEvent) {
+    public stopClickPropagation(event: MouseEvent): void {
         event.stopPropagation();
     }
 }

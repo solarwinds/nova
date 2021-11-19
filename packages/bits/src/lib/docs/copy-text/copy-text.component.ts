@@ -22,7 +22,7 @@ export class CopyTextComponent {
 
     constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    public onSnippetCopied() {
+    public onSnippetCopied(): void {
         this.toastService.info({
             message: $localize `Code snippet copied to clipboard`,
             options: {

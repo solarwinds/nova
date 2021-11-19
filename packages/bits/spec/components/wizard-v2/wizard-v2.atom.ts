@@ -1,7 +1,7 @@
 import { by } from "protractor";
 
 import { Atom } from "../../atom";
-import { ElementArrayFinder } from "protractor/built/element";
+import { ElementFinder, ElementArrayFinder } from "protractor/built/element";
 import { WizardV2StepAtom } from "./wizard-v2-step.atom";
 import { WizardV2StepHeaderAtom } from "./wizard-v2-step-header.atom";
 import { WizardV2FooterAtom } from "./wizard-v2-footer.atom";
@@ -39,11 +39,11 @@ export class WizardV2Atom extends Atom {
         return new WizardV2FooterAtom(footer);
     }
 
-    public get leftOverflowElement() {
+    public get leftOverflowElement(): ElementFinder {
         return this.root.element(by.css(".overflow-left"));
     }
 
-    public get rightOverflowElement() {
+    public get rightOverflowElement(): ElementFinder {
         return this.root.element(by.css(".overflow-right"));
     }
 
@@ -56,6 +56,7 @@ export class WizardV2Atom extends Atom {
     public async moveToFinalStep(): Promise<void> {
         const steps = await this.steps;
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         for (const step of steps) {
             if (await this.footer.nextButton.isPresent()) {
                 await this.footer.nextButton.click();

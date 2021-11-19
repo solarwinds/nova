@@ -12,7 +12,7 @@ export class TabHeadingGroupVerticalExampleComponent {
     public tabsetContent = [
         {
             id: "1",
-            title: $localize `Tab 1`,
+            title: $localize`Tab 1`,
             icon: {
                 name: "gear",
                 disabledColor: "disabled-gray",
@@ -23,7 +23,7 @@ export class TabHeadingGroupVerticalExampleComponent {
         },
         {
             id: "2",
-            title: $localize `Tab 2`,
+            title: $localize`Tab 2`,
             icon: {
                 name: "check",
                 disabledColor: "disabled-gray",
@@ -34,7 +34,7 @@ export class TabHeadingGroupVerticalExampleComponent {
         },
         {
             id: "3",
-            title: $localize `Tab 3`,
+            title: $localize`Tab 3`,
             icon: {
                 name: "acknowledge",
                 disabledColor: "disabled-gray",
@@ -45,7 +45,7 @@ export class TabHeadingGroupVerticalExampleComponent {
         },
         {
             id: "4",
-            title: $localize `Tab 4`,
+            title: $localize`Tab 4`,
             icon: {
                 name: "add",
                 disabledColor: "disabled-gray",
@@ -55,9 +55,9 @@ export class TabHeadingGroupVerticalExampleComponent {
             isDisabled: false,
         }];
 
-    constructor(private changeDetector: ChangeDetectorRef) {}
+    constructor(private changeDetector: ChangeDetectorRef) { }
 
-    public updateContent(tabId: string) {
+    public updateContent(tabId: string): void {
         this.currentTabId = tabId;
         this.changeDetector.detectChanges();
     }

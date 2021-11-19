@@ -7,14 +7,12 @@ import { CheckboxAtom } from "../public_api";
 describe("USERCONTROL Checkbox", () => {
     let atom: CheckboxAtom;
     let atomBasic: CheckboxAtom;
-    let atomDisabled: CheckboxAtom;
     let atomIndeterminate: CheckboxAtom;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("checkbox/checkbox-test");
         atom = Atom.find(CheckboxAtom, "nui-demo-checkbox");
         atomBasic = Atom.find(CheckboxAtom, "nui-demo-checkbox-basic");
-        atomDisabled = Atom.find(CheckboxAtom, "nui-demo-checkbox-disabled");
         atomIndeterminate = Atom.find(CheckboxAtom, "nui-demo-checkbox-indeterminate");
     });
 

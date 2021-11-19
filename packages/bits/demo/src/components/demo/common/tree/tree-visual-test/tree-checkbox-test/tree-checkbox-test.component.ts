@@ -3,7 +3,7 @@ import { NestedTreeControl } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
 import { expand } from "@nova-ui/bits";
 
-import {FoodNode, TREE_DATA_CHECKBOX} from "../data";
+import { FoodNode, TREE_DATA_CHECKBOX } from "../data";
 
 @Component({
     selector: "nui-tree-checkbox-test",
@@ -18,7 +18,7 @@ export class TreeCheckboxTestComponent {
     public dataSource = new ArrayDataSource(TREE_DATA_CHECKBOX);
     public selectionModel = new SelectionModel<FoodNode>(true);
 
-    public hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    public hasChild = (_: number, node: FoodNode): boolean => !!node.children && node.children.length > 0;
 
     /** Whether all the descendants of the node are selected. */
     public descendantsAllSelected(node: FoodNode): boolean {

@@ -7,7 +7,7 @@ import { Component } from "@angular/core";
 export class WizardWithSeparateStepHeadingsExampleComponent {
     public textboxValue = "Example Textbox Value";
 
-    public onTextboxChange(value: string) {
+    public onTextboxChange(value: string): void {
         this.textboxValue = value;
     }
 }

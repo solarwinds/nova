@@ -114,7 +114,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
                 private eventBusService: EventBusService) {
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes["resizerDirection"] && this.resizeGutter) {
             this.appendResizeElement();
         }
@@ -141,7 +141,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         this.refreshStyle();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.resizeObserver) {
             this.resizeObserver.unobserve(<Element>(this.targetElement.nativeElement.parentElement));
         }
@@ -151,7 +151,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         this.unlistenEvents();
     }
 
-    protected addResizeObserver() {
+    protected addResizeObserver(): void {
         const resizeHandler = debounce(entry => this.refreshStyle(), RESIZE_DEBOUNCE_TIME);
         this.resizeObserver = new ResizeObserver(entries => {
             entries.forEach((entry: ResizeObserverEntry) => {
@@ -167,13 +167,13 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         });
     }
 
-    protected addSubscription() {
+    protected addSubscription(): void {
         this.resizeSubscription = this.eventBusService.getStream({id: "complete-resize"})
             .subscribe(resize =>
                 this.refreshStyle());
     }
 
-    protected onSizeChanged(newSize: string) {
+    protected onSizeChanged(newSize: string): void {
         this.resizerSizeChanged.emit(newSize);
     }
 
@@ -188,7 +188,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         }
     }
 
-    protected unlistenEvents() {
+    protected unlistenEvents(): void {
         this.eventSubscriptions.forEach(unlistenFn => {
             if (isFunction(unlistenFn)) {
                 unlistenFn();
@@ -196,7 +196,7 @@ export class ResizerDirective implements AfterViewInit, OnChanges, OnDestroy {
         });
     }
 
-    protected appendEvents() {
+    protected appendEvents(): void {
         this.eventSubscriptions.push(this.renderer.listen(this.resizeGutter, "mouseenter", ($event: MouseEvent) => this.onMouseEnter($event)));
         this.eventSubscriptions.push(this.renderer.listen(this.resizeGutter, "mouseleave", () => this.onMouseLeave()));
         this.eventSubscriptions.push(this.renderer.listen(this.resizeGutter, "mousedown", ($event: MouseEvent) => this.onMouseDown($event)));

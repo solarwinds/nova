@@ -27,18 +27,18 @@ import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
     providers: [VirtualViewportManager],
 })
 export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit, OnDestroy, OnInit {
-    @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
+    @ViewChild(CdkVirtualScrollViewport, { static: false }) viewport: CdkVirtualScrollViewport;
     // This value is obtained from the server and used to evaluate the total number of pages to display
     private _totalItems: number = 0;
     private _isBusy: boolean = false;
     private dataSource: RandomuserTableDataSource;
     private onDestroy$: Subject<void> = new Subject<void>();
 
-    get totalItems() {
+    get totalItems(): number {
         return this._totalItems;
     }
 
-    get isBusy() {
+    get isBusy(): boolean {
         return this._isBusy;
     }
 
@@ -57,7 +57,7 @@ export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit,
         this.dataSource = new RandomuserTableDataSource();
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.dataSource.busy
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(busy => {
@@ -73,11 +73,11 @@ export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit,
             // Note: Initializing the stream with the desired page size, based on which
             // VirtualViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
-            .observeNextPage$({pageSize: this.range}).pipe(
-            // Note: In case we know the total number of items we can stop the stream when dataset end is reached
-            // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
+            .observeNextPage$({ pageSize: this.range }).pipe(
+                // Note: In case we know the total number of items we can stop the stream when dataset end is reached
+                // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
                 filter(range => this.totalItems ? this.totalItems >= range.end : true),
-                tap(() => this.dataSource.applyFilters()),
+                tap(async () => this.dataSource.applyFilters()),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
                 switchMap(() => this.dataSource.outputsSubject.pipe(
                     tap((outputs: IFilteringOutputs) => {
@@ -97,7 +97,7 @@ export class TableVirtualScrollRealApiExampleComponent implements AfterViewInit,
 
     private registerVirtualScroll() {
         this.dataSource.registerComponent({
-            virtualScroll: {componentInstance: this.viewportManager},
+            virtualScroll: { componentInstance: this.viewportManager },
         });
     }
 }
@@ -107,7 +107,7 @@ export class RandomuserTableDataSource extends DataSourceService<IRandomUserTabl
     private readonly url = "https://randomuser.me/api";
     private readonly seed = "sw";
 
-    private cache = Array.from<IRandomUserTableModel>({length: 0});
+    private cache = Array.from<IRandomUserTableModel>({ length: 0 });
     public busy = new BehaviorSubject(false);
 
     public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
@@ -146,9 +146,7 @@ export class RandomuserTableDataSource extends DataSourceService<IRandomUserTabl
         let response: IRandomUserResponse | undefined;
         const delta: number = end - start;
         try {
-            response = await
-            (await fetch(`${this.url}/?page=${end / delta}&results=${delta}&seed=${this.seed}`))
-                .json();
+            response = await (await fetch(`${this.url}/?page=${end / delta}&results=${delta}&seed=${this.seed}`)).json();
             return {
                 users: response?.results.map((result: IRandomUserResults, i: number) => ({
                     no: this.cache.length + i + 1,

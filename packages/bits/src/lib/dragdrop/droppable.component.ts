@@ -22,7 +22,7 @@ export class DroppableComponent {
 
   @ViewChild(CdkDropList, {static: true}) dropList: CdkDropList;
 
-  onDrop(event: any) {
+  onDrop(event: any): void {
       if (event.container !== event.previousContainer) {
           this.dropSuccess.emit(event.item.data);
       }

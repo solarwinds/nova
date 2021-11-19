@@ -9,13 +9,13 @@ export class ResizerAtom extends Atom {
     private root = this.getElement();
     private resizeSplitElement = this.root.element(by.className("nui-resize-gutter__split"));
 
-    public moveRight = async (pixelValue: number) => this.resizeElement({ x: pixelValue, y: 0 });
+    public moveRight = async (pixelValue: number): Promise<void> => this.resizeElement({ x: pixelValue, y: 0 });
 
-    public moveLeft = async (pixelValue: number) => this.resizeElement({ x: -pixelValue, y: 0 });
+    public moveLeft = async (pixelValue: number): Promise<void> => this.resizeElement({ x: -pixelValue, y: 0 });
 
-    public moveUp = async (pixelValue: number) => this.resizeElement({ x: 0, y: pixelValue });
+    public moveUp = async (pixelValue: number): Promise<void> => this.resizeElement({ x: 0, y: pixelValue });
 
-    public moveDown = async (pixelValue: number) => this.resizeElement({ x: 0, y: -pixelValue });
+    public moveDown = async (pixelValue: number): Promise<void> => this.resizeElement({ x: 0, y: -pixelValue });
 
     public getResizeDirection = async (): Promise<"horizontal" | "vertical"> => {
         const className = await this.resizeSplitElement.getAttribute("class");

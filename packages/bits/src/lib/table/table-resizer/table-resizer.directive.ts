@@ -34,7 +34,7 @@ export class TableResizerDirective {
     }
 
     @HostListener("mousedown", ["$event"])
-    onMouseDown(ev: MouseEvent) {
+    onMouseDown(ev: MouseEvent): void {
         // Event should be emitted to highlight all cells
         this.tableStateHandlerService.emitResizeEvent(this.columnIndex, TableResizePhase.start);
         ev.preventDefault();

@@ -76,7 +76,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
     public pageSize: number = RESULTS_PER_PAGE;
 
     public itemConfig: IRepeatItemConfig<IServer> = {
-        trackBy: (index, item) => item?.name,
+        trackBy: (index, item): string | undefined => item?.name,
     };
 
     @ViewChild(RepeatComponent) repeat: RepeatComponent;
@@ -92,7 +92,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
     ) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -102,7 +102,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
         ).subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSource.registerComponent({
             paginator: { componentInstance: this.paginator },
             search: { componentInstance: this.search },
@@ -111,7 +111,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
         });
 
         this.search.focusChange.pipe(
-            tap(async(focused: boolean) => {
+            tap(async (focused: boolean) => {
                 // we want to perform a new search on blur event
                 // only if the search filter changed
                 if (!focused && this.dataSource.filterChanged(nameof<IServerFilters>("search"))) {
@@ -136,27 +136,27 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
         ).subscribe();
 
         // make 1st call to retrieve initial results
-        await this.applyFilters();
+        this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onCancelSearch() {
+    public async onCancelSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 
-    public async onSorterAction(changes: ISorterChanges) {
+    public async onSorterAction(changes: ISorterChanges): Promise<void> {
         this.sortBy = changes.newValue.sortBy;
         await this.applyFilters();
     }

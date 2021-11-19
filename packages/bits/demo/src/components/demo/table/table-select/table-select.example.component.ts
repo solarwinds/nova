@@ -35,7 +35,7 @@ export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
         public selectorService: SelectorService) {
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             paginator: {
                 componentInstance: this.filteringPaginator,
@@ -48,20 +48,20 @@ export class TableSelectExampleComponent implements AfterViewInit, OnDestroy {
         this.applyFilters();
     }
 
-    public changePagination($event: any) {
+    public async changePagination($event: any): Promise<void> {
         this.applyFilters();
     }
 
-    public applyFilters() {
+    public async applyFilters(): Promise<void> {
         this.dataSourceService.setData(getData());
         this.dataSourceService.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public trackBy(index: number, item: IExampleTableModel) {
+    public trackBy(index: number, item: IExampleTableModel): number {
         return item.position;
     }
 }

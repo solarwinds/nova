@@ -9,10 +9,10 @@ import moment, { Moment } from "moment/moment";
 export class DatePickerValueChangeExampleComponent {
     public selectedDate: Date = new Date(moment().valueOf());
 
-    constructor(@Inject(ToastService) private toastService: IToastService) {}
+    constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    public dateChanged(event: Moment) {
+    public dateChanged(event: Moment): void {
         this.selectedDate = new Date(event.valueOf());
-        this.toastService.info({message: $localize `Selected date: ${event.toString()}`});
+        this.toastService.info({ message: $localize`Selected date: ${event.toString()}` });
     }
 }

@@ -19,7 +19,7 @@ import {
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class LoggerService {
     private logLevel: LogLevel = LogLevel.warn;
 
@@ -35,7 +35,7 @@ export class LoggerService {
      * __Description:__ Log to debug
      * @param ...msgs multiple arguments to be logged.
      */
-    get debug() {
+    get debug(): Function {
         if (this.logLevel === LogLevel.debug) {
             // eslint-disable-next-line no-console
             return console.debug.bind(console);
@@ -48,7 +48,7 @@ export class LoggerService {
      * __Description:__ Log to info
      * @param ...msgs multiple arguments to be logged.
      */
-    get info() {
+    get info(): Function {
         if (this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info) {
             // eslint-disable-next-line no-console
@@ -62,7 +62,7 @@ export class LoggerService {
      * __Description:__ Log without specifying log level
      * @param ...msgs multiple arguments to be logged.
      */
-    get log() {
+    get log(): Function {
         if (this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info ||
             this.logLevel === LogLevel.log) {
@@ -76,7 +76,7 @@ export class LoggerService {
      * __Description:__ Log to warn
      * @param ...msgs multiple arguments to be logged.
      */
-    get warn() {
+    get warn(): Function {
         if (this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info ||
             this.logLevel === LogLevel.log ||
@@ -91,7 +91,7 @@ export class LoggerService {
      * __Description:__ Log to error
      * @param ...msgs multiple arguments to be logged.
      */
-    get error() {
+    get error(): Function {
         if (this.logLevel === LogLevel.debug ||
             this.logLevel === LogLevel.info ||
             this.logLevel === LogLevel.log ||

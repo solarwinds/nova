@@ -20,16 +20,16 @@ export class CameraEngine {
         if (!this.browser) {
             throw new Error("Protractor's 'browser' instance is required! Please pass one as an argument to the 'loadFilm()' method");
         }
-        
+
         this.settings.globalLens = this.browser.params["visual"];
 
         if (this.settings.globalLens && LENSES.includes(this.settings.globalLens)) {
 
             switch (this.settings.globalLens) {
-                case(LensType.Percy):
+                case (LensType.Percy):
                     this.currentLensInstance = new PercyLens(this.browser, this.settings);
                     break;
-                case(LensType.Eyes):
+                case (LensType.Eyes):
                     this.currentLensInstance = new EyesLens(this.browser, this.settings);
                     break;
             }
@@ -58,12 +58,12 @@ export class CameraEngine {
         }
     }
 
-    public getToolConfig() {
+    public getToolConfig(): void {
         return this.currentLensInstance.toolConfig();
     }
 
     private cleanFileName(name: string) {
         // @ts-ignore
-        return name.replace(/[\\\/\s]/g, function(m) { return {"\\":"_","\/":"_", " ": "_"}[m]; })
+        return name.replace(/[\\\/\s]/g, (m) => ({ "\\": "_", "\/": "_", " ": "_" }[m]));
     }
 }

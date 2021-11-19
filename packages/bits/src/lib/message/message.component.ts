@@ -61,40 +61,47 @@ export class MessageComponent implements OnInit, OnDestroy {
 
     get role(): string { return this.type === "ok" || this.type === "info" ? "status" : "alert"; }
 
-    constructor(private element: ElementRef,
-                private renderer: Renderer2) { }
+    constructor(
+        private element: ElementRef,
+        private renderer: Renderer2
+    ) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         if (this.manualControl) {
-            this.dismissSubscription = this.manualControl.subscribe((shown: boolean) => {
-                this.dismissState = shown ? "initial" : "dismissed";
-            });
+            this.dismissSubscription = this.manualControl.subscribe(
+                (shown: boolean) => {
+                    this.dismissState = shown ? "initial" : "dismissed";
+                }
+            );
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.dismiss.complete();
         if (this.dismissSubscription) {
             this.dismissSubscription.unsubscribe();
         }
     }
 
-    public dismissMessage() {
+    public dismissMessage(): void {
         this.dismissState = "dismissed";
         this.dismiss.emit();
     }
 
-    public animationFinished(event: AnimationEvent) {
+    public animationFinished(event: AnimationEvent): void {
         if (event.toState === "dismissed") {
             if (this.manualControl) {
                 this.isHidden = true;
             } else {
-                this.renderer.removeChild(this.element.nativeElement.parentNode, this.element.nativeElement);
+                this.renderer.removeChild(
+                    this.element.nativeElement.parentNode,
+                    this.element.nativeElement
+                );
             }
         }
     }
 
-    public animationStart(event: AnimationEvent) {
+    public animationStart(event: AnimationEvent): void {
         if (event.fromState === "dismissed") {
             this.isHidden = false;
         }
@@ -104,9 +111,10 @@ export class MessageComponent implements OnInit, OnDestroy {
         return this.type ? `nui-message-${this.type.toLowerCase()}` : "";
     }
 
-    public get icon() {
-        // @ts-ignore: Type 'null' cannot be used as an index type.
-        const icon = MessageComponent.ICON_MAP[this.type];
-        return icon ? icon : MessageComponent.UNKNOWN_ICON;
+    public get icon(): string {
+        return (
+            MessageComponent.ICON_MAP[this.type ?? ""] ||
+            MessageComponent.UNKNOWN_ICON
+        );
     }
 }

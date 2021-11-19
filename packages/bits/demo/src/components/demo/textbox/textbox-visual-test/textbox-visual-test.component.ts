@@ -9,11 +9,11 @@ export class TextboxVisualTestComponent {
     public isRequired = true;
     public value = "";
 
-    public isInErrorState() {
+    public isInErrorState(): boolean {
         return this.isRequired && !this.value;
     }
 
-    public textChanged($event: string) {
+    public textChanged($event: string): void {
         this.value = $event;
     }
 }

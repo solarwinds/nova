@@ -24,7 +24,7 @@ export class SrlcIndicatorComponent implements OnInit {
 
     public componentSrlc: ISrlcDetails;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.router.events.pipe(
             filter((event) => event instanceof RoutesRecognized),
             map((event) => {
@@ -41,7 +41,7 @@ export class SrlcIndicatorComponent implements OnInit {
             });
     }
 
-    public getMessageType = () => {
+    public getMessageType = (): string => {
         switch (this.componentSrlc.stage) {
             case SrlcStage.preAlpha: return "critical";
             case SrlcStage.alpha: return "warning";
@@ -53,7 +53,7 @@ export class SrlcIndicatorComponent implements OnInit {
         }
     }
 
-    public getMessageText = () => {
+    public getMessageText = (): string => {
         switch (this.componentSrlc.stage) {
             case SrlcStage.preAlpha:
                 return `<strong>Under Development</strong> DO NOT USE. This component is under active development and significant,

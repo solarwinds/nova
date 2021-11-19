@@ -9,34 +9,34 @@ import { ISelectChangedEvent, ToastService } from "@nova-ui/bits";
 export class SelectReactiveFormExampleComponent implements OnInit {
     public myForm: FormGroup;
     public dataset = {
-        items: [$localize `Item 1`, $localize `Item 2`, $localize `Item 3`, $localize `Item 4`, $localize `Item 5`],
+        items: [$localize`Item 1`, $localize`Item 2`, $localize`Item 3`, $localize`Item 4`, $localize`Item 5`],
         selectedItem: "",
     };
 
     constructor(private formBuilder: FormBuilder,
         @Inject(ToastService) private toastService: ToastService) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            item: this.formBuilder.control( this.dataset.selectedItem, [Validators.required]),
+            item: this.formBuilder.control(this.dataset.selectedItem, [Validators.required]),
         });
         this.myForm.controls["item"].valueChanges.subscribe(value => console.log("Value changed to", value));
     }
 
-    public valueChange(changedEvent: ISelectChangedEvent<string>) {
+    public valueChange(changedEvent: ISelectChangedEvent<string>): void {
         this.dataset.selectedItem = changedEvent.newValue;
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         if (this.myForm.valid) {
-            this.toastService.success({message: $localize `Your form is valid!`});
+            this.toastService.success({ message: $localize`Your form is valid!` });
         } else {
             // if form is invalid mark all controls as touched to trigger isInErrorState
             Object.keys(this.myForm.controls).forEach(field => {
                 const control = this.myForm.get(field);
-                control?.markAsTouched({onlySelf: true});
+                control?.markAsTouched({ onlySelf: true });
             });
-            this.toastService.error({message: $localize `Your form is invalid!`});
+            this.toastService.error({ message: $localize`Your form is invalid!` });
         }
     }
 }

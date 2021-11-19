@@ -10,7 +10,7 @@ export class SetFocusExampleComponent {
     public onionFocused = false;
     private interval = 2000;
 
-    public updateChoiceState(event: any) {
+    public updateChoiceState(event: any): void {
         this.choiceState = event;
     }
 

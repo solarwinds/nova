@@ -20,7 +20,7 @@ export class ComboboxAtom extends BasicSelectAtom {
     public toggleButton = Atom.findIn(ButtonAtom, this.containerFinder.all(by.className("nui-combobox__toggle")).first());
     public popup = Atom.findIn(PopupAtom, browser.element(by.className("nui-combobox-popup-host")));
 
-    public getIconName = (): Promise<string> => this.iconAtom.getName();
+    public getIconName = async (): Promise<string> => this.iconAtom.getName();
 
     public getContainer = (): ElementFinder => this.containerFinder;
 
@@ -39,11 +39,11 @@ export class ComboboxAtom extends BasicSelectAtom {
 
     public clearText = async (): Promise<void> => this.textbox.clearText();
 
-    public acceptInput = (input: string) => this.textbox.acceptText(input);
+    public acceptInput = async (input: string): Promise<void> => this.textbox.acceptText(input);
 
     public getLayoutBlock = (): ElementFinder => this.getElementByClass("nui-combobox__layout-block");
 
-    public isRequiredStyleDisplayed = (): Promise<boolean> => this.elementHasClass("nui-combobox__container", "has-error");
+    public isRequiredStyleDisplayed = async (): Promise<boolean> => this.elementHasClass("nui-combobox__container", "has-error");
 
     public getHighlightedItemsCount = async (): Promise<number> => this.root.all(by.className("nui-highlighted")).count();
 

@@ -70,7 +70,7 @@ export class TableWithSortComponent implements OnInit, OnDestroy, AfterViewInit 
     ) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -80,7 +80,7 @@ export class TableWithSortComponent implements OnInit, OnDestroy, AfterViewInit 
         ).subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // register filter to be able to sort
         this.dataSource.registerComponent(this.table.getFilterComponents());
         this.dataSource.registerComponent({
@@ -96,24 +96,24 @@ export class TableWithSortComponent implements OnInit, OnDestroy, AfterViewInit 
             takeUntil(this.destroy$)
         ).subscribe();
 
-        await this.applyFilters();
+        this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async sortData(sortedColumn: ISortedItem) {
+    public async sortData(sortedColumn: ISortedItem): Promise<void> {
         this.sortedColumn = sortedColumn;
         await this.applyFilters();
     }
 
-    public async changePagination($event: any) {
+    public async changePagination($event: any): Promise<void> {
         await this.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 }

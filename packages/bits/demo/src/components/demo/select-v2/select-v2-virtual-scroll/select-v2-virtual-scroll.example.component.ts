@@ -12,7 +12,7 @@ import { takeUntil } from "rxjs/operators";
 })
 export class SelectV2VirtualScrollExampleComponent implements OnInit, OnDestroy, AfterViewInit {
     public icons: any[] = ["check", "email", "execute"];
-    public items = Array.from({ length: 100000 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 100000 }).map((_, i) => $localize`Item ${i}`);
 
     public selectControl = new FormControl();
     public containerHeight: number = 300;
@@ -24,13 +24,13 @@ export class SelectV2VirtualScrollExampleComponent implements OnInit, OnDestroy,
     @ViewChild(SelectV2Component) private select: SelectV2Component;
 
     @HostListener("click", ["$event"])
-    public handleClick(event: MouseEvent) {
+    public handleClick(event: MouseEvent): void {
         if (this.viewport) {
             this.viewport.scrollToOffset(this.scrollOffset);
         }
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.selectControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
             console.log("Value from Select", value);
         });
@@ -42,7 +42,7 @@ export class SelectV2VirtualScrollExampleComponent implements OnInit, OnDestroy,
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

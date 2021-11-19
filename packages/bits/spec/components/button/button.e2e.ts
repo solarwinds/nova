@@ -9,7 +9,6 @@ describe("USERCONTROL Button", () => {
     let primaryLargePlusIconBtn: ButtonAtom;
     let primaryLargePlusIconDisabledBtn: ButtonAtom;
     let primaryLargePlusIconBusyBtn: ButtonAtom;
-    let defaultCompactBtn: ButtonAtom;
     let defaultBtnWithIcon: ButtonAtom;
     let defaultLargeBtn: ButtonAtom;
     let actionCompactBtn: ButtonAtom;
@@ -22,7 +21,6 @@ describe("USERCONTROL Button", () => {
         primaryLargePlusIconBtn = Atom.find(ButtonAtom, "nui-demo-primary-large-plus-icon-btn");
         primaryLargePlusIconDisabledBtn = Atom.find(ButtonAtom, "nui-demo-primary-large-plus-icon-disabled-btn");
         primaryLargePlusIconBusyBtn = Atom.find(ButtonAtom, "nui-demo-primary-large-plus-icon-busy-btn");
-        defaultCompactBtn = Atom.find(ButtonAtom, "nui-demo-default-compact-btn");
         defaultBtnWithIcon = Atom.find(ButtonAtom, "nui-demo-btn-with-icon");
         defaultLargeBtn = Atom.find(ButtonAtom, "nui-default-large-btn");
         actionCompactBtn = Atom.find(ButtonAtom, "nui-demo-action-compact-btn");

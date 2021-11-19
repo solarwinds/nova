@@ -6,9 +6,10 @@ import { ToastService } from "@nova-ui/bits";
     templateUrl: "./checkbox-link.example.component.html",
 })
 export class CheckboxLinkExampleComponent {
-    public action() {
-        this.toastService.warning({message: $localize `Link clicked!`});
+    public action(): boolean {
+        this.toastService.warning({ message: $localize`Link clicked!` });
         return false;
     }
-    constructor(private toastService: ToastService) {}
+
+    constructor(private toastService: ToastService) { }
 }

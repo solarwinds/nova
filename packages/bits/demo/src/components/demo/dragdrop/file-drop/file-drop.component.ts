@@ -27,25 +27,25 @@ export class FileDropExampleComponent {
     // Drop is handled as regular JS event in parent component.
     // enter and leave can't be since dragenter and dragleave for parent component are different
 
-    @HostBinding("class.nui-file-drop--active") get hasActiveClass() { return this.state === FileDropState.active; }
-    @HostBinding("class.nui-file-drop--error") get hasErrorClass() { return this.state === FileDropState.error; }
+    @HostBinding("class.nui-file-drop--active") get hasActiveClass(): boolean { return this.state === FileDropState.active; }
+    @HostBinding("class.nui-file-drop--error") get hasErrorClass(): boolean { return this.state === FileDropState.error; }
 
     // this solves problem with opening the file since browser fires dragover by default
     @HostListener("window:dragover", ["$event"])
-    dragOverHandler(ev: DragEvent) {
+    dragOverHandler(ev: DragEvent): void {
         // Prevent default behavior (Prevent file from being opened)
         ev.preventDefault();
     }
 
     @HostListener("drop", ["$event"])
-    dropHandler(ev: DragEvent) {
+    dropHandler(ev: DragEvent): void {
         // Prevent default behavior (Prevent file from being opened)
         ev.preventDefault();
         this.counterToHackDragLeave = 0; // important not to break mouseleave hack
     }
 
     @HostListener("dragenter", ["$event"])
-    dragEnterHandler(ev: DragEvent) {
+    dragEnterHandler(ev: DragEvent): void {
         // Prevent default behavior (Prevent file from being opened)
         ev.preventDefault();
         this.counterToHackDragLeave++;
@@ -55,7 +55,7 @@ export class FileDropExampleComponent {
     }
 
     @HostListener("dragleave", ["$event"])
-    dragLeaveHandler(ev: DragEvent) {
+    dragLeaveHandler(ev: DragEvent): void {
         // Prevent default behavior (Prevent file from being opened)
         ev.preventDefault();
 

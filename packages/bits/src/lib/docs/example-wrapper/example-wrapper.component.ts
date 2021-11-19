@@ -8,7 +8,7 @@ import {
     OnInit,
 } from "@angular/core";
 
-import { SourcesService } from "../services/sources.service";
+import { FileData, SourcesService } from "../services/sources.service";
 
 import { PlunkerProjectService } from "./plunker-project.service";
 
@@ -42,13 +42,13 @@ export class ExampleWrapperComponent implements OnInit {
     public availableThemes = ["light theme", "dark theme"];
     public selectedTheme = this.availableThemes[0];
 
-    public componentSources: { ts: string, html: string, less?: string, [key: string]: any };
+    public componentSources: Record<string, FileData>;
 
-    public getTooltip() {
+    public getTooltip(): string {
         return this.showSource ? "Hide source code" : "Show source code";
     }
 
-    public openPlunker() {
+    public openPlunker(): void {
         this.plunkerProjectService.open(this.filenamePrefix, this.componentSources, this.sourcesService.getTranslations());
     }
 
@@ -64,7 +64,7 @@ export class ExampleWrapperComponent implements OnInit {
         hljs.registerLanguage("less", less);
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.componentSources = this.sourcesService.getSourcesByFilenamePrefix(this.filenamePrefix);
     }
 }

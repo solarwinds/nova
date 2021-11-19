@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { TabHeadingAtom, TabHeadingGroupAtom } from "../public_api";
 
 describe("a11y: tab-heading-group", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
     ];
 

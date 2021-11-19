@@ -292,9 +292,7 @@ describe("components >", () => {
                         previousValue: TableSpecHelpers.getTableInitialData(),
                         currentValue: null,
                         firstChange: false,
-                        isFirstChange(): boolean {
-                            return false;
-                        },
+                        isFirstChange: (): boolean => false,
                     },
                 };
                 component.tableComponent.ngOnChanges(changes);
@@ -308,9 +306,7 @@ describe("components >", () => {
                         previousValue: TableSpecHelpers.getTableInitialData(),
                         currentValue: undefined,
                         firstChange: false,
-                        isFirstChange(): boolean {
-                            return false;
-                        },
+                        isFirstChange: (): boolean => false,
                     },
                 };
                 component.tableComponent.ngOnChanges(changes);

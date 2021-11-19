@@ -9,13 +9,13 @@ import { Component } from "@angular/core";
 export class ExpanderOpenChangeExampleComponent {
     public bindingExampleOpen: boolean = false;
 
-    constructor() {}
+    constructor() { }
 
-    public getButtonLabel() {
-        return this.bindingExampleOpen ? $localize `Close` : $localize `Open`;
+    public getButtonLabel(): string {
+        return this.bindingExampleOpen ? $localize`Close` : $localize`Open`;
     }
 
-    public onOpenChange(event: boolean) {
+    public onOpenChange(event: boolean): void {
         this.bindingExampleOpen = event;
     }
 }

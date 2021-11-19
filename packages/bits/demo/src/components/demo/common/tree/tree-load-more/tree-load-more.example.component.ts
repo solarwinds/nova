@@ -57,16 +57,17 @@ export class TreeLoadMoreExampleComponent {
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
 
-    hasChild = (_: number, node: FoodNode) => node.children;
+    hasChild = (_: number, node: FoodNode): boolean => !!node?.children?.length;
 
-    constructor(private http: HttpMockService,
-                private differ: IterableDiffers,
-                private eventBusService: EventBusService) {
-    }
+    constructor(
+        private http: HttpMockService,
+        private differ: IterableDiffers,
+        private eventBusService: EventBusService
+    ) { }
 
     /** Load first page on first open */
-    public onToggleClick(node: FoodNode, nestedNode: CdkNestedTreeNode<any>) {
-        this.eventBusService.getStream({id: "document-click"}).next(new MouseEvent("click"));
+    public onToggleClick(node: FoodNode, nestedNode: CdkNestedTreeNode<any>): void {
+        this.eventBusService.getStream({ id: "document-click" }).next(new MouseEvent("click"));
 
         if (node.hasPagination && node.children && !node.children.length) {
             node.page = 1;
@@ -88,11 +89,11 @@ export class TreeLoadMoreExampleComponent {
         });
     }
 
-    private setRemainingItemsCount(node: FoodNode, totalItems: number) {
+    private setRemainingItemsCount(node: FoodNode, totalItems: number): void {
         this.remainingItemsCount[node.name] = node.children ? totalItems - node.children?.length : totalItems;
     }
 
-    private handleNodeContent(node: FoodNode, nestedNodeDirective: CdkNestedTreeNode<any>, items: FoodNode[]) {
+    private handleNodeContent(node: FoodNode, nestedNodeDirective: CdkNestedTreeNode<any>, items: FoodNode[]): void {
         const differ: IterableDiffer<FoodNode> = this.differ.find(node.children).create();
         node.children?.push(...items);
 

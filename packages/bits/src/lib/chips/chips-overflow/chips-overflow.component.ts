@@ -16,7 +16,7 @@ export class ChipsOverflowComponent {
 
     @Output() public chipRemoved = new EventEmitter<{ item: IChipsItem, group?: IChipsGroup }>();
 
-    public onClear(data: { item: IChipsItem, group?: IChipsGroup }) {
+    public onClear(data: { item: IChipsItem, group?: IChipsGroup }): void {
         if (data.group) {
             data.group = this.itemsSource.groupedItems?.find(g => g.items.find(item => item === data.item));
         }

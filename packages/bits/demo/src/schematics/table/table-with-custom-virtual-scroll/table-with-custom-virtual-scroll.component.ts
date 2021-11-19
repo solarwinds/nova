@@ -88,7 +88,7 @@ export class TableWithCustomVirtualScrollComponent implements OnInit, OnDestroy,
     ) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -98,12 +98,12 @@ export class TableWithCustomVirtualScrollComponent implements OnInit, OnDestroy,
         ).subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // register filter to be able to sort
         this.dataSource.registerComponent(this.table.getFilterComponents());
         this.dataSource.registerComponent({
             search: { componentInstance: this.search },
-            virtualScroll: {componentInstance: this.customVirtualScrollStrategyService },
+            virtualScroll: { componentInstance: this.customVirtualScrollStrategyService },
         });
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
@@ -141,36 +141,36 @@ export class TableWithCustomVirtualScrollComponent implements OnInit, OnDestroy,
         this.search.inputChange.pipe(
             debounceTime(500),
             // perform actual search
-            tap(() => this.onSearch()),
+            tap(async () => this.onSearch()),
             takeUntil(this.destroy$)
         ).subscribe();
 
-        await this.applyFilters();
+        this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onSearchCancel() {
+    public async onSearchCancel(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async sortData(sortedColumn: ISortedItem) {
+    public async sortData(sortedColumn: ISortedItem): Promise<void> {
         this.sortedColumn = sortedColumn;
         await this.applyFilters();
     }
 
-    public async applyFilters(resetVirtualScroll: boolean = true) {
+    public async applyFilters(resetVirtualScroll: boolean = true): Promise<void> {
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the datasource performs the search with 1st page
-            this.viewportManager.reset({emitFirstPage: false});
+            this.viewportManager.reset({ emitFirstPage: false });
         }
 
         // Every new search request or filter change should

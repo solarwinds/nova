@@ -1,4 +1,4 @@
-import { DOWN_ARROW, ESCAPE, PAGE_DOWN, PAGE_UP, TAB } from "@angular/cdk/keycodes";
+import { DOWN_ARROW } from "@angular/cdk/keycodes";
 import { ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, SimpleChange, ViewChild } from "@angular/core";
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -22,7 +22,7 @@ import { KEYBOARD_CODE } from "../../../constants";
     `,
 })
 class SelectV2WrapperWithFormControlComponent {
-    public items = Array.from({ length : 10 }).map((_, i) => `Item ${i}`);
+    public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
     public selectControl = new FormControl();
     @ViewChild(SelectV2Component) select: SelectV2Component;
     constructor(public elRef: ElementRef<HTMLElement>) { }
@@ -36,7 +36,7 @@ class SelectV2WrapperWithFormControlComponent {
     `,
 })
 class SelectV2WrapperWithValueComponent {
-    public items = Array.from({ length : 10 }).map((_, i) => `Item ${i}`);
+    public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
     public value: InputValueTypes = this.items[0];
     @ViewChild(SelectV2Component) select: SelectV2Component;
     constructor(public elRef: ElementRef<HTMLElement>) { }
@@ -55,9 +55,9 @@ class SelectV2WrapperAsyncComponent {
     @ViewChild(SelectV2Component) select: SelectV2Component;
     constructor(public elRef: ElementRef<HTMLElement>) { }
 
-    public setItems() {
+    public setItems(): void {
         setTimeout(() => {
-            this.items = Array.from({ length : 10 }).map((_, i) => ({
+            this.items = Array.from({ length: 10 }).map((_, i) => ({
                 id: i,
                 name: `Item ${i}`,
             }));
@@ -66,9 +66,9 @@ class SelectV2WrapperAsyncComponent {
 }
 
 const selectedValuesMock: OptionValueType[] = [
-    {id: "item-0", name: "Item 0", icon: "email"},
-    {id: "item-1", name: "Item 1", icon: "email"},
-    {id: "item-2", name: "Item 2", icon: "email"},
+    { id: "item-0", name: "Item 0", icon: "email" },
+    { id: "item-1", name: "Item 1", icon: "email" },
+    { id: "item-2", name: "Item 2", icon: "email" },
 ];
 
 describe("components >", () => {
@@ -115,7 +115,7 @@ describe("components >", () => {
 
             // options
             const optionComponentMocks = Array.from({ length: 3 }).map(() => TestBed.createComponent(SelectV2OptionComponent));
-            selectedOptionsMock =  optionComponentMocks.map(c => c.componentInstance);
+            selectedOptionsMock = optionComponentMocks.map(c => c.componentInstance);
             optionComponentMocks.forEach((c, i) => {
                 c.componentInstance.value = selectedValuesMock[i];
                 (<HTMLElement>c.elementRef.nativeElement).textContent = (<IOptionValueObject>selectedValuesMock[i]).name;
@@ -376,7 +376,7 @@ describe("components >", () => {
                 });
 
                 it("should close dropdown, when we press ESCAPE key", () => {
-                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.ESCAPE} as KeyboardEventInit);
+                    const event = new KeyboardEvent("keydown", { code: KEYBOARD_CODE.ESCAPE } as KeyboardEventInit);
                     component.onKeyDown(event);
                     expect(component["dropdown"].showing).toEqual(false);
                 });
@@ -470,7 +470,7 @@ describe("components >", () => {
                     nullOption.value = null;
                     component.options.reset([...selectedOptionsMock, nullOption, ...selectedOptionsMock]);
                     component.value = null;
-                    component.ngOnChanges({ value: new SimpleChange(null, component.value, true) } );
+                    component.ngOnChanges({ value: new SimpleChange(null, component.value, true) });
                     component.ngAfterViewInit();
                     component.toggleDropdown();
                     expect(component["optionKeyControlService"].getActiveItemIndex()).toEqual(3);
@@ -580,7 +580,7 @@ describe("components >", () => {
             });
 
             it("should select item with 'value' as a string", () => {
-                const itemName =  "Item 2";
+                const itemName = "Item 2";
 
                 component.writeValue(itemName);
 
@@ -667,7 +667,7 @@ describe("components >", () => {
                 const itemToSet = wrapperWithFormControlComponent.items[9];
                 wrapperWithFormControlComponent.selectControl.setValue(itemToSet);
                 expect(wrapperWithFormControlComponent.selectControl.value).toEqual(itemToSet);
-                wrapperWithFormControlComponent.items = Array.from({ length : 10 }).map((_, i) => `Item ${i + 5}`);
+                wrapperWithFormControlComponent.items = Array.from({ length: 10 }).map((_, i) => `Item ${i + 5}`);
                 wrapperWithFormControlFixture.detectChanges();
                 tick(0);
                 expect(wrapperWithFormControlComponent.selectControl.value).toEqual(itemToSet);
@@ -677,7 +677,7 @@ describe("components >", () => {
                 const itemToSet = wrapperWithFormControlComponent.items[3];
                 wrapperWithFormControlComponent.selectControl.setValue(itemToSet);
                 expect(wrapperWithFormControlComponent.selectControl.value).toEqual(itemToSet);
-                wrapperWithFormControlComponent.items = Array.from({ length : 10 }).map((_, i) => `Item ${i + 5}`);
+                wrapperWithFormControlComponent.items = Array.from({ length: 10 }).map((_, i) => `Item ${i + 5}`);
                 wrapperWithFormControlFixture.detectChanges();
                 tick(0);
                 expect(wrapperWithFormControlComponent.selectControl.value).toEqual(undefined);

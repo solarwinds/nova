@@ -30,7 +30,7 @@ export class TablePaginationExampleComponent implements AfterViewInit, OnDestroy
         dataSourceService.setData(getData());
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             paginator: {
                 componentInstance: this.filteringPaginator,
@@ -44,11 +44,11 @@ export class TablePaginationExampleComponent implements AfterViewInit, OnDestroy
         this.dataSourceService.applyFilters();
     }
 
-    public changePagination() {
-        this.dataSourceService.applyFilters();
+    public async changePagination(): Promise<void> {
+        await this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }

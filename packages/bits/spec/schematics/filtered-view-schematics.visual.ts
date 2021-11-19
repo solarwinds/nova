@@ -65,8 +65,6 @@ xdescribe("Visual Tests: Filtered View Schematics", () => {
         await eyes.close();
     }, 200000);
 
-    async function filterByFirstOption(): Promise<void> {
-        return checkboxJustified.getFirst().setChecked(true);
-    }
+    const filterByFirstOption = async (): Promise<void> => checkboxJustified.getFirst().setChecked(true);
 
 });

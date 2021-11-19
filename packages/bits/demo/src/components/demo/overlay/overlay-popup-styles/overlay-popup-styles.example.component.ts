@@ -20,7 +20,7 @@ export class OverlayPopupStylesExampleComponent implements AfterViewInit, OnDest
     @ViewChild("overlayWithStyles") public overlayWithStyles: OverlayComponent;
     @ViewChild("overlayNoStyles") public overlayNoStyles: OverlayComponent;
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.overlayWithStyles.clickOutside
             .pipe(takeUntil(this.destroy$))
             .subscribe(_ => this.overlayWithStyles.hide());

@@ -61,7 +61,7 @@ export class SorterAtom extends Atom {
 
     public getSelectedItems = (): ElementArrayFinder => this.menuPopup.getSelectedItems();
 
-    public isPopupDisplayed = () => Atom.findIn(OverlayAtom, this.getElement()).isOpened();
+    public isPopupDisplayed = async (): Promise<boolean> => Atom.findIn(OverlayAtom, this.getElement()).isOpened();
 
     // private helpers
     private getToggleElement(): ElementFinder { return super.getElement().element(by.className("nui-selector__toggle")); }

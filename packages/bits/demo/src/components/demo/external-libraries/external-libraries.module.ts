@@ -19,7 +19,7 @@ const routes = [
     },
     {
         path: "drag-and-drop",
-        loadChildren: () => import("./drag-and-drop/dnd.module").then(m => m.DndModule),
+        loadChildren: async (): Promise<unknown> => import("./drag-and-drop/dnd.module").then(m => m.DndModule),
         data: {
             "srlc": {
                 "stage": SrlcStage.beta,

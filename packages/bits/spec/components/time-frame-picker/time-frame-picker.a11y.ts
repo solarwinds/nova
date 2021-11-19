@@ -1,10 +1,10 @@
 import { browser } from "protractor";
 import { Atom } from "../../atom";
 import { assertA11y, Helpers } from "../../helpers";
-import { TimeFramePickerAtom, PopoverAtom} from "../public_api";
+import { TimeFramePickerAtom, PopoverAtom } from "../public_api";
 
 describe("a11y: time-frame-picker", () => {
-    let rulesToDisable: string[] = [];
+    const rulesToDisable: string[] = [];
     let popoverWithTimeframePicker: PopoverAtom;
     let popoverWithDatePicker: PopoverAtom;
 

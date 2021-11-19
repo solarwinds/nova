@@ -4,7 +4,7 @@ import { CheckboxGroupAtom } from "../public_api";
 
 describe("a11y: checkbox-group", () => {
     // disabling the rule until NUI-6015 is addressed
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "aria-allowed-role",
         "aria-toggle-field-name",
     ];

@@ -84,7 +84,7 @@ export class TimeFrameBarComponent implements AfterContentInit, OnChanges, OnDes
         private changeDetectorRef: ChangeDetectorRef
     ) {}
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         if (!this.timeFramePicker) {
             throw new Error("TimeFramePickerComponent must be present in 'timeFrameSelection' slot");
         }
@@ -116,7 +116,7 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         }
     }
 
-    public onPopoverShown() {
+    public onPopoverShown(): void {
         this.timeFramePicker.model = this.pickerTimeframe;
         this.timeFramePicker.changeDetector.markForCheck();
 
@@ -126,21 +126,21 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         }
     }
 
-    public onUndo() {
+    public onUndo(): void {
         this.undo.emit();
     }
 
-    public onClear() {
+    public onClear(): void {
         this.clear.emit();
     }
 
-    public updatePickerTf(value: ITimeframe) {
+    public updatePickerTf(value: ITimeframe): void {
         this.pickerTimeframe = value;
         this.changed = !this.timeframeService.isEqual(this.pickerTimeframe, this.timeFrame);
         this.changeDetectorRef.markForCheck();
     }
 
-    public handlePresetSelection(presetKey: string) {
+    public handlePresetSelection(presetKey: string): void {
         this.pickerTimeframe = this.timeframeService.getTimeframeByPresetId(presetKey);
 
         this.quickPicker.selectedPreset = presetKey;
@@ -149,7 +149,7 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         this.closePopover(true);
     }
 
-    public closePopover(confirmed = false) {
+    public closePopover(confirmed = false): void {
         if (confirmed) {
             this.changeTimeFrame(TimeframeService.cloneTimeFrame(this.pickerTimeframe));
         }
@@ -157,13 +157,13 @@ maxDate, and timeFrame inputs on the TimeFrameBarComponent instead.`);
         this.changed = false;
     }
 
-    public shiftRange(factor: number) {
+    public shiftRange(factor: number): void {
         const tf = this.timeFrame;
         const shiftDuration = moment.duration(factor * tf.endDatetime.diff(tf.startDatetime));
         this.changeTimeFrame(this.timeframeService.shiftTimeFrame(tf, shiftDuration));
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next(true);
     }
 

@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { ButtonAtom } from "../public_api";
 
 describe("a11y: button", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "duplicate-id-active",
     ];
 

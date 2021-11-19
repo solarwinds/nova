@@ -58,7 +58,7 @@ describe("USERCONTROL tab heading group", () => {
     it("should the last item in responsive tabs be clickable", async () => {
         await tabGroupResponsive.clickCaretRight(10);
         await (await tabGroupResponsive.getLastTab()).click();
-        expect(await tabGroupResponsive.getLastTab().then(tab => tab.isActive())).toBe(true);
+        expect(await tabGroupResponsive.getLastTab().then(async tab => tab.isActive())).toBe(true);
     });
 
 });

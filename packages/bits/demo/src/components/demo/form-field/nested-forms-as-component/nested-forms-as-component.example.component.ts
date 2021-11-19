@@ -10,19 +10,19 @@ export class NestedFormsAsComponentExampleComponent implements OnInit {
     public fancyForm: FormGroup;
 
     constructor(private fb: FormBuilder,
-                @Inject(ToastService) private toastService: ToastService) {}
+        @Inject(ToastService) private toastService: ToastService) { }
 
-    ngOnInit() {
-
+    ngOnInit(): void {
         this.fancyForm = this.fb.group({
-            nickname: this.fb.control ("", [Validators.required, Validators.min(3)]),
+            nickname: this.fb.control("", [Validators.required, Validators.min(3)]),
         });
     }
 
-    formInitialized(name: string, form: FormGroup) {
+    formInitialized(name: string, form: FormGroup): void {
         this.fancyForm.setControl(name, form);
     }
-    public onSubmit(value: FormGroup) {
+
+    public onSubmit(value: FormGroup): void {
         this.toastService.success({
             message: `Form is valid: ${value.valid}`,
             title: "Submit",
@@ -58,16 +58,16 @@ export class FirstCustomFormExampleComponent implements OnInit {
     @Output() formReady = new EventEmitter<FormGroup>();
     public firstForm: FormGroup;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.firstForm = this.fb.group({
-            firstName: this.fb.control ("", Validators.required),
-            lastName: this.fb.control ("", Validators.required),
+            firstName: this.fb.control("", Validators.required),
+            lastName: this.fb.control("", Validators.required),
         });
 
         this.formReady.emit(this.firstForm);
     }
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder) { }
 }
 
 /**
@@ -99,7 +99,7 @@ export class SecondCustomFormExampleComponent implements OnInit {
     @Output() formReady = new EventEmitter<FormGroup>();
     public secondForm: FormGroup;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.secondForm = this.fb.group({
             city: null,
             address: null,
@@ -108,5 +108,5 @@ export class SecondCustomFormExampleComponent implements OnInit {
         this.formReady.emit(this.secondForm);
     }
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder) { }
 }

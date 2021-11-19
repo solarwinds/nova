@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, Optional, SkipSelf } from "@angular/core";
 import _forEach from "lodash/forEach";
 import _omit from "lodash/omit";
-import { Subject, Subscription} from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { INovaFilters } from "./data-source/public-api";
@@ -26,7 +26,7 @@ export class DataFilterService implements IFilterPub, OnDestroy {
         }
     }
 
-    public registerFilter(filter: IFilteringParticipants) {
+    public registerFilter(filter: IFilteringParticipants): void {
         this._filters = {
             ...this._filters,
             ...filter,
@@ -43,7 +43,7 @@ export class DataFilterService implements IFilterPub, OnDestroy {
         this.filteringSubject.next();
     }
 
-    public unregisterFilters(filtersToUnregister: string[]) {
+    public unregisterFilters(filtersToUnregister: string[]): void {
         this._filters = _omit(this._filters, filtersToUnregister);
         this.filteringSubject.next();
     }
@@ -65,7 +65,7 @@ export class DataFilterService implements IFilterPub, OnDestroy {
         return filters;
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filteringSubject.next();
     }
 

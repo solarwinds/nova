@@ -45,11 +45,11 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         super();
     }
 
-    public setData(initialData: T[] = []) {
+    public setData(initialData: T[] = []): void {
         this._allData = initialData;
     }
 
-    public setSearchProperties(properties: string[]) {
+    public setSearchProperties(properties: string[]): void {
         this._searchProps = properties;
     }
 
@@ -106,15 +106,15 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         };
     }
 
-    protected prepareData() {
+    protected prepareData(): T[] {
         return this._allData;
     }
 
-    protected searchHandler(searchTerm: any) {
+    protected searchHandler(searchTerm: any): any[] {
         return this.searchService.search(this._allData, this._searchProps, searchTerm);
     }
 
-    protected multiFilterHandler(nextChunk: any, multiFiltersArr: any) {
+    protected multiFilterHandler(nextChunk: any, multiFiltersArr: any): any {
         const allCategoriesArr: IFilterItem<string[]>[] = multiFiltersArr
             .map((el: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>) => this.getAllCategories(el));
         if (multiFiltersArr.length) {
@@ -130,7 +130,7 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         return nextChunk;
     }
 
-    protected sortingHandler(filters: any, nextChunk: any) {
+    protected sortingHandler(filters: any, nextChunk: any): any {
         if (_get(filters, "sorter.value.sortBy") && _get(filters, "sorter.value.direction")) {
             // Original direction means that sorting is not needed
             if (filters.sorter.value.direction !== SorterDirection.original) {
@@ -140,7 +140,7 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         return nextChunk;
     }
 
-    protected paginationHandler(filters: any, nextChunk: any) {
+    protected paginationHandler(filters: any, nextChunk: any): any {
         if (filters?.paginator) {
             return nextChunk.slice(
                 filters.paginator.value.start,
@@ -150,7 +150,7 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         return nextChunk;
     }
 
-    protected virtualScrollHandler(filters: any, nextChunk: any) {
+    protected virtualScrollHandler(filters: any, nextChunk: any): any {
         let data = nextChunk;
         if (filters?.virtualScroll) {
             data = nextChunk.slice(
@@ -168,11 +168,11 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
     /**
      * @deprecated in v11 - Use filtersChanged instead - Removal: NUI-5796
      */
-    protected paginationReset(filters: any, itemsToCompare: any) {
+    protected paginationReset(filters: any, itemsToCompare: any): boolean {
         return this.filtersChanged(filters, itemsToCompare);
     }
 
-    public filtersChanged(filters: any, itemsToCompare: any) {
+    public filtersChanged(filters: any, itemsToCompare: any): boolean {
         if (this._previousFilters) {
             if (this.isValueChanged(itemsToCompare)) {
                 return true;
@@ -181,10 +181,12 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         return false;
     }
 
-    protected setItemsToCompare(filters: F,
-                                nextChunk: T[],
-                                searchTerm: string | undefined,
-                                multiFiltersArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[]) {
+    protected setItemsToCompare(
+        filters: F,
+        nextChunk: T[],
+        searchTerm: string | undefined,
+        multiFiltersArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[]
+    ): ComparisonItems[] {
         // GET FILTERS from previous filtering
         const previousSortBy = _get(this._previousFilters, "sorter.value.sortBy");
         const previousDirection = _get(this._previousFilters, "sorter.value.direction");
@@ -207,7 +209,7 @@ export class LocalFilteringDataSource<T, F extends INovaFilters = INovaFilters> 
         _forEach(filters, (value, key) => {
             if (value?.type === "string[]") {
                 multiFilterArr
-                    .push({[key]: value} as any);
+                    .push({ [key]: value } as any);
             }
         });
         return multiFilterArr;

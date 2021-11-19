@@ -33,7 +33,7 @@ export class DataFilterIsolatedExampleComponent implements AfterViewInit {
         this.filterService.applyFilters();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filterService.applyFilters();
     }
 }
@@ -80,7 +80,7 @@ export class NuiDataFilterIsolatedTableComponent implements AfterViewInit, OnDes
     constructor(private dataFilter: DataFilterService, private dataSourceService: TableDatasource) {
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataFilter.registerFilter({
             search: {
                 componentInstance: this.search,
@@ -92,11 +92,11 @@ export class NuiDataFilterIsolatedTableComponent implements AfterViewInit, OnDes
         });
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataFilter.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }
@@ -137,7 +137,7 @@ export class NuiDataFilterIsolatedListComponent implements AfterViewInit, OnDest
     constructor(private filterService: DataFilterService, private dataSourceService: ListDatasource) {
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.filterService.registerFilter({
             search: {
                 componentInstance: this.search,
@@ -149,11 +149,11 @@ export class NuiDataFilterIsolatedListComponent implements AfterViewInit, OnDest
         });
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filterService.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }
@@ -215,21 +215,21 @@ export class FilteringIsolatedTimeFramePickerComponent implements IFilterPub, On
     public closePopoverSubject = new Subject();
     public openPopoverSubject = new Subject();
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.acceptedTimeframe = this.tf;
     }
 
-    public updateTf(value: any) {
+    public updateTf(value: any): void {
         this.tf = value;
     }
 
-    public confirmPopover() {
+    public confirmPopover(): void {
         this.closePopoverSubject.next();
         this.acceptedTimeframe = this.tf;
         this.timeFrameChanged.emit(this.acceptedTimeframe);
     }
 
-    public cancelPopover() {
+    public cancelPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
     }

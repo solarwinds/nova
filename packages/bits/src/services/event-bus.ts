@@ -30,7 +30,7 @@ export class EventBus<T> implements OnDestroy {
         return this.streams[event.id];
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         each(Object.keys(this.streams), (key: string) => {
             this.streams[key].complete();
         });
@@ -40,15 +40,17 @@ export class EventBus<T> implements OnDestroy {
         return this.getStream(event).subscribe(next, error, complete);
     }
 
-    public subscribeUntil(event: IEventDefinition<T>,
-                          until: Observable<any>,
-                          next: (value: T) => void, error?: (error: any) => void, complete?: () => void): Subscription {
+    public subscribeUntil(
+        event: IEventDefinition<T>,
+        until: Observable<any>,
+        next: (value: T) => void, error?: (error: any) => void, complete?: () => void
+    ): Subscription {
         return this.getStream(event)
             .pipe(takeUntil(until))
             .subscribe(next, error, complete);
     }
 
-    public next(event: IEventDefinition<T>, value?: T) {
+    public next(event: IEventDefinition<T>, value?: T): void {
         return this.getStream(event).next(value);
     }
 

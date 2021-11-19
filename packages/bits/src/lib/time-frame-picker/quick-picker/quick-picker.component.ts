@@ -21,7 +21,7 @@ export class QuickPickerComponent {
 
     @Input() presets: IQuickPickPresetDictionary;
     @Input() pickerTitle: string;
-    @Input() presetsTitle: string = $localize `Quick picks`;
+    @Input() presetsTitle: string = $localize`Quick picks`;
 
     @Input() selectedPreset?: string;
 
@@ -38,13 +38,13 @@ export class QuickPickerComponent {
         return this.presetKeysOrder || Object.keys(this.presets);
     }
 
-    constructor(public changeDetector: ChangeDetectorRef) {}
+    constructor(public changeDetector: ChangeDetectorRef) { }
 
-    public selectPreset(key: string) {
+    public selectPreset(key: string): void {
         this.presetSelected.emit(key);
     }
 
-    public isPresetSelected(key: string) {
+    public isPresetSelected(key: string): boolean {
         return this.selectedPreset === key;
     }
 }

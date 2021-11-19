@@ -161,7 +161,7 @@ export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilter
      * Redraw component when 'total' or 'page' propery was changed
      * @param changes Changed properties
      */
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes["total"]
             || changes["page"]
             || changes["adjacent"]) {
@@ -172,7 +172,7 @@ export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilter
     /**
      * Initialize set of pages
      */
-    public initPageSizeSet() {
+    public initPageSizeSet(): void {
         if (!_get(this.pageSizeSet, "length")) {
             this.pageSizeSet = _clone(defaultPageSizeSet);
         }
@@ -196,7 +196,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         };
     }
 
-    public resetFilter() {
+    public resetFilter(): void {
         this.page = 1;
         this.pageChange.emit(this.page);
     }
@@ -205,7 +205,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
      * Change page number
      * @param page Page number
      */
-    public goToPage(page: number) {
+    public goToPage(page: number): void {
         this.page = page;
         this.pageChange.emit(this.page);
 
@@ -238,7 +238,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
      * Set items per page that should displayed
      * @param changedEvent select change event
      */
-    public setItemsPerPage(changedEvent: ISelectChangedEvent<number>) {
+    public setItemsPerPage(changedEvent: ISelectChangedEvent<number>): void {
         if (changedEvent?.newValue === changedEvent?.oldValue) {
             return;
         }
@@ -259,7 +259,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     /**
      * Get number of pages
      */
-    public getPageCount() {
+    public getPageCount(): number {
         if (this.total <= 0) {
             return 1;
         }
@@ -269,7 +269,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     /**
      * Display paginator component
      */
-    public showPaginator() {
+    public showPaginator(): boolean {
         const count: number = this.getPageCount();
         return isFinite(count) && (this.hideIfEmpty === false || count > 1);
     }
@@ -298,7 +298,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     /**
      * Re-renders the virtual scroll viewport to properly display items within the virtual scroll viewport
      */
-    public handleDotsClick() {
+    public handleDotsClick(): void {
         if (this.virtualScrollViewport) {
             this.virtualScrollViewport.checkViewportSize();
         }

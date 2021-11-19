@@ -30,9 +30,9 @@ import {
     SrlcStage,
 } from "@nova-ui/bits";
 
-import {DataSourceClientSideFilteringExampleComponent} from "./data-source/client-side/client-side-filtering/client-side-filtering.example.component";
-import {DataSourceWithSelectionExampleComponent} from "./data-source/client-side/client-side-with-selection/client-side-with-selection.example.component";
-import {DataSourceModule} from "./data-source/data-source.module";
+import { DataSourceClientSideFilteringExampleComponent } from "./data-source/client-side/client-side-filtering/client-side-filtering.example.component";
+import { DataSourceWithSelectionExampleComponent } from "./data-source/client-side/client-side-with-selection/client-side-with-selection.example.component";
+import { DataSourceModule } from "./data-source/data-source.module";
 import {
     ClipboardExampleComponent,
     DataFilterBasicExampleComponent,
@@ -98,7 +98,7 @@ const routes = [
     },
     {
         path: "data-source-service",
-        loadChildren: () => import("./data-source/data-source.module").then(m => m.DataSourceModule),
+        loadChildren: async () => import("./data-source/data-source.module").then(m => m.DataSourceModule),
         data: {
             "srlc": {
                 "stage": SrlcStage.ga,
@@ -128,7 +128,7 @@ const routes = [
     },
     {
         path: "badge",
-        loadChildren: () => import("./badge/badge.module").then(m => m.BadgeModule),
+        loadChildren: async () => import("./badge/badge.module").then(m => m.BadgeModule),
         data: {
             "srlc": {
                 "stage": SrlcStage.ga,
@@ -137,7 +137,7 @@ const routes = [
     },
     {
         path: "tag",
-        loadChildren: () => import("./tag/tag.module").then(m => m.TagModule),
+        loadChildren: async () => import("./tag/tag.module").then(m => m.TagModule),
         data: {
             "srlc": {
                 "stage": SrlcStage.ga,
@@ -146,14 +146,14 @@ const routes = [
     },
     {
         path: "tree",
-        loadChildren: () => import("./tree/tree.module").then(m => m.TreeModule),
+        loadChildren: async () => import("./tree/tree.module").then(m => m.TreeModule),
     },
     {
         path: "welcome", component: WelcomePageComponent,
     },
     {
         path: "unit-conversion-service",
-        loadChildren: () => import("./unit-conversion-service/unit-conversion-service-example.module").then(m => m.UnitConversionServiceExampleModule),
+        loadChildren: async () => import("./unit-conversion-service/unit-conversion-service-example.module").then(m => m.UnitConversionServiceExampleModule),
     },
 ];
 

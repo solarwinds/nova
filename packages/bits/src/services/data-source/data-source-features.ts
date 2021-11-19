@@ -1,6 +1,5 @@
 import { Subject } from "rxjs";
-
-import { IDataSourceFeatures, IDataSourceFeaturesConfiguration } from "./public-api";
+import { IDataSourceFeature, IDataSourceFeatures, IDataSourceFeaturesConfiguration } from "./public-api";
 
 export class DataSourceFeatures implements IDataSourceFeaturesConfiguration {
     public featuresChanged = new Subject<IDataSourceFeatures>();
@@ -15,12 +14,12 @@ export class DataSourceFeatures implements IDataSourceFeaturesConfiguration {
         return this.supportedFeatures;
     }
 
-    public setSupportedFeatures(features: IDataSourceFeatures) {
+    public setSupportedFeatures(features: IDataSourceFeatures): void {
         this.supportedFeatures = features;
         this.featuresChanged.next(features);
     }
 
-    public getFeatureConfig(key: string) {
+    public getFeatureConfig(key: string): IDataSourceFeature | undefined {
         return this.supportedFeatures?.[key];
     }
 }

@@ -75,7 +75,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
     public totalItems: number = 0;
 
     public itemConfig: IRepeatItemConfig<IServer> = {
-        trackBy: (index, item) => item?.name,
+        trackBy: (index, item): string | undefined => item?.name,
     };
 
     @ViewChild(RepeatComponent) repeat: RepeatComponent;
@@ -91,7 +91,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
     ) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -101,7 +101,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
         ).subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSource.registerComponent({
             virtualScroll: { componentInstance: this.viewportManager },
             search: { componentInstance: this.search },
@@ -116,7 +116,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
             // Note: Initializing the stream with the desired page size, based on which
             // ViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
-            .observeNextPage$({pageSize: RESULTS_PER_PAGE})
+            .observeNextPage$({ pageSize: RESULTS_PER_PAGE })
             .pipe(
                 // Since we know the total number of items we can stop the stream when dataset end is reached
                 // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
@@ -124,7 +124,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
                     const items = this.listItems$.getValue();
                     return !items.length || items.length < this.totalItems;
                 }),
-                tap(() => this.applyFilters(false)),
+                tap(async () => this.applyFilters(false)),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
                 switchMap(() => this.dataSource.outputsSubject.pipe(
                     tap((data: IFilteringOutputs) => {
@@ -144,7 +144,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
             ).subscribe();
 
         this.search.focusChange.pipe(
-            tap(async(focused: boolean) => {
+            tap(async (focused: boolean) => {
                 // we want to perform a new search on blur event
                 // only if the search filter changed
                 if (!focused && this.dataSource.filterChanged(nameof<IServerFilters>("search"))) {
@@ -155,24 +155,24 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
         ).subscribe();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onCancelSearch() {
+    public async onCancelSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async applyFilters(resetVirtualScroll: boolean = true) {
+    public async applyFilters(resetVirtualScroll: boolean = true): Promise<void> {
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the datasource performs the search with 1st page
-            this.viewportManager.reset({emitFirstPage: false});
+            this.viewportManager.reset({ emitFirstPage: false });
         }
 
         // Every new search request or filter change should
@@ -187,7 +187,7 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
         await this.dataSource.applyFilters();
     }
 
-    public async onSorterAction(changes: ISorterChanges) {
+    public async onSorterAction(changes: ISorterChanges): Promise<void> {
         this.sortBy = changes.newValue.sortBy;
         await this.applyFilters();
     }

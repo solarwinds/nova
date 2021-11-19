@@ -30,16 +30,16 @@ interface CustomTemplateFilterGroupItem extends IFilterGroupItem {
 }
 
 const RANDOM_ARRAY = [
-    {color: "regular-azure", status: "Critical"},
-    {color: "regular-black", status: "Warning"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-yellow", status: "Critical"},
-    {color: "regular-yellow", status: "Warning"},
-    {color: "regular-black", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Critical"},
+    { color: "regular-azure", status: "Critical" },
+    { color: "regular-black", status: "Warning" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-yellow", status: "Critical" },
+    { color: "regular-yellow", status: "Warning" },
+    { color: "regular-black", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Critical" },
 ];
 
 @Component({
@@ -123,7 +123,7 @@ export class CustomTemplateFilterGroupExampleComponent implements AfterViewInit,
         this.dataSourceService.applyFilters();
     }
 
-    public changeFilters(event: IFilterGroupItem) {
+    public changeFilters(event: IFilterGroupItem): void {
         this.dataSourceService.applyFilters();
     }
 
@@ -140,7 +140,7 @@ export class CustomTemplateFilterGroupExampleComponent implements AfterViewInit,
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.outputsSubscription) {
             this.outputsSubscription.unsubscribe();
         }

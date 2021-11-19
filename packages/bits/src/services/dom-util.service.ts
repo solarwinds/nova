@@ -8,7 +8,7 @@ import { Inject, Injectable } from "@angular/core";
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class DomUtilService {
 
     constructor(@Inject(DOCUMENT) private document: any) {
@@ -20,7 +20,7 @@ export class DomUtilService {
      * @param selector the selector to match
      * @returns the matching element
      */
-    public getClosest = (elem: HTMLElement | undefined, selector: string) => {
+    public getClosest = (elem: HTMLElement | undefined, selector: string): HTMLElement | null => {
         // Element.matches() polyfill
         if (!Element.prototype.matches) {
             Element.prototype.matches =
@@ -46,6 +46,7 @@ export class DomUtilService {
                 return elem;
             }
         }
+
         return null;
     }
 }

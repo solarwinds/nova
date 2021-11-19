@@ -118,17 +118,15 @@ describe("services >", () => {
             let initialTimeFrame: ITimeframe;
             let updatedTimeFrame: ITimeframe;
 
-            function timeFrameFactory(startDatetime: Moment, endDatetime: Moment, selectedPresetId: string, title?: string): ITimeframe {
-                return { startDatetime, endDatetime, selectedPresetId, title };
-            }
+            const timeFrameFactory = (startDatetime: Moment, endDatetime: Moment, selectedPresetId: string, title?: string): ITimeframe =>
+                ({ startDatetime, endDatetime, selectedPresetId, title });
 
-            function easyPreset(value: string): ITimeFramePreset {
-                return {
-                    name: "Last ${value}",
-                    startDatetimePattern: { [value]: -1 },
-                    endDatetimePattern: {},
-                };
-            }
+            const easyPreset = (value: string): ITimeFramePreset => ({
+                name: "Last ${value}",
+                startDatetimePattern: { [value]: -1 },
+                endDatetimePattern: {},
+            });
+
             const presetStrings: string[] = ["day", "week"];
             const testPresets: ITimeFramePresetDictionary = mapValues(keyBy(presetStrings), easyPreset);
             const baseDate = moment([2000]);

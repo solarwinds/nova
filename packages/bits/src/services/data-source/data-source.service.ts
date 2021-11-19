@@ -32,14 +32,14 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
         this._components = components;
     }
 
-    public registerComponent(components: IFilteringParticipants) {
+    public registerComponent(components: IFilteringParticipants): void {
         this._components = {
             ...this._components,
             ...components,
         };
     }
 
-    public deregisterComponent(componentKey: string) {
+    public deregisterComponent(componentKey: string): void {
         delete this._components?.[componentKey];
     }
 
@@ -53,7 +53,7 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
         this.dataSubject.complete();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         // store a copy of the filters to avoid altering the stored values by reference
         const filters = _cloneDeep(this.getFilters());
 
@@ -102,7 +102,7 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
     }
 
     // checks if any of the filters specified by name have changed from the previous evaluation
-    public filtersChanged(filters: F, ...filterNames: (keyof IFilteringParticipants)[]) {
+    public filtersChanged(filters: F, ...filterNames: (keyof IFilteringParticipants)[]): boolean {
         for (let i = 0; i < filterNames.length; i++) {
             const filterName = filterNames[i];
             if (this.filterChanged(filterName, filters[filterName])) {
@@ -120,9 +120,9 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
         );
     }
 
-    protected beforeApplyFilters(filters: F) {}
+    protected beforeApplyFilters(filters: F): void { }
 
-    protected async afterApplyFilters(filters: F) {
+    protected async afterApplyFilters(filters: F): Promise<void> {
         this.outputsSubject.next(await this.getFilteredData(filters));
 
         this._previousFilters = this.getFilters();
@@ -137,7 +137,7 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
         return filtersChanged;
     }
 
-    protected resetFilters(filters: F) {
+    protected resetFilters(filters: F): void {
         _forEach(filters, (node, key) => {
             const filter = this._components[key].componentInstance;
             if (filter?.resetFilter) {

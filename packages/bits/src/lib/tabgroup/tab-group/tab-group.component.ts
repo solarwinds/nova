@@ -43,9 +43,9 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
     protected isDestroyed: boolean;
     protected _vertical: boolean;
 
-    constructor (private el: ElementRef, private changeDetectorRef: ChangeDetectorRef) {}
+    constructor(private el: ElementRef, private changeDetectorRef: ChangeDetectorRef) { }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.checkTraverse();
     }
 
@@ -79,7 +79,7 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
         if (this.vertical) {
             return false;
         }
-        return holderSize +  this.traverseButtonsWidth <= contentSize;
+        return holderSize + this.traverseButtonsWidth <= contentSize;
     }
 
     public traverseRight(): void {
@@ -118,7 +118,7 @@ export class TabGroupComponent implements OnDestroy, AfterViewInit {
         return margin < maxAllowedMargin;
     }
 
-    private isTraverseRightAllowed (margin: string): boolean {
+    private isTraverseRightAllowed(margin: string): boolean {
         return this.getNumberFromPixels(margin) < 0;
     }
 

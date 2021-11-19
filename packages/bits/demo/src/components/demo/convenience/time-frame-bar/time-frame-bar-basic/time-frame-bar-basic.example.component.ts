@@ -13,7 +13,7 @@ export class TimeFrameBarBasicExampleComponent implements OnInit {
 
     private baseDate = moment([2018, 5, 1, 15, 0, 0]);
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         // Set the minimum and maximum selectable dates (optional)
         this.minDate = this.baseDate.clone().subtract(1, "months");
         this.maxDate = moment();

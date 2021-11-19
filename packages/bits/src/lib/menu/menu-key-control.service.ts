@@ -23,7 +23,7 @@ export class MenuKeyControlService implements OnDestroy {
     public set scrollContainer(container: ElementRef) {
         this._scrollContainer = container;
     }
-    public get scrollContainer() {
+    public get scrollContainer(): ElementRef {
         return this._scrollContainer || this.popup?.popupAreaContainer;
     }
     public menuOpenListener: Subject<boolean>;
@@ -33,7 +33,7 @@ export class MenuKeyControlService implements OnDestroy {
     private keyboardEventsSubscription: Subscription;
     private _scrollContainer: ElementRef;
 
-    constructor(private live: LiveAnnouncer) {}
+    constructor(private live: LiveAnnouncer) { }
 
     public initKeyboardManager(): void {
         this.keyboardEventsManager = this.keyControlItemsSource ?
@@ -108,13 +108,13 @@ export class MenuKeyControlService implements OnDestroy {
             this.keyboardEventsManager.onKeydown(event);
             this.announceCurrentItem();
         }
-        if (event.code === KEYBOARD_CODE.PAGE_UP || event.code === KEYBOARD_CODE.HOME  || (event.metaKey && event.code === KEYBOARD_CODE.ARROW_UP)) {
+        if (event.code === KEYBOARD_CODE.PAGE_UP || event.code === KEYBOARD_CODE.HOME || (event.metaKey && event.code === KEYBOARD_CODE.ARROW_UP)) {
             event.preventDefault();
             this.keyboardEventsManager.onKeydown(event);
             this.keyboardEventsManager.setFirstItemActive();
             this.announceCurrentItem();
         }
-        if (event.code === KEYBOARD_CODE.PAGE_DOWN || event.code === KEYBOARD_CODE.END  || (event.metaKey && event.code === KEYBOARD_CODE.ARROW_DOWN)) {
+        if (event.code === KEYBOARD_CODE.PAGE_DOWN || event.code === KEYBOARD_CODE.END || (event.metaKey && event.code === KEYBOARD_CODE.ARROW_DOWN)) {
             event.preventDefault();
             this.keyboardEventsManager.onKeydown(event);
             this.keyboardEventsManager.setLastItemActive();
@@ -124,7 +124,7 @@ export class MenuKeyControlService implements OnDestroy {
         // This keeps the active item visible within the visible area of the menu popup. In case there are disabled items in the list,
         // this scrolls down to the nearest enabled item. Otherwise, the active item will "jump over" the disabled items and remain
         // outside of the visible edge of the list.
-        this.keyboardEventsManager.activeItem?.menuItem?.nativeElement?.scrollIntoView({block: "nearest"});
+        this.keyboardEventsManager.activeItem?.menuItem?.nativeElement?.scrollIntoView({ block: "nearest" });
 
         // prevent closing on enter
         if (!this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
@@ -162,8 +162,11 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
     // functions to scroll items into view for ActiveDescendantKeyManager
-    private countGroupLabelsBeforeOption(optionIndex: number, options: QueryList<MenuItemBaseComponent>,
-                                         optionGroups: QueryList<MenuGroupComponent>): number {
+    private countGroupLabelsBeforeOption(
+        optionIndex: number,
+        options: QueryList<MenuItemBaseComponent>,
+        optionGroups: QueryList<MenuGroupComponent>
+    ): number {
         if (optionGroups.length) {
             const optionsArray = options.toArray();
             const groups = optionGroups.toArray();
@@ -181,8 +184,12 @@ export class MenuKeyControlService implements OnDestroy {
     }
 
 
-    private getOptionScrollPosition(optionIndex: number, optionHeight: number,
-                                    currentScrollPosition: number, panelHeight: number): number {
+    private getOptionScrollPosition(
+        optionIndex: number,
+        optionHeight: number,
+        currentScrollPosition: number,
+        panelHeight: number
+    ): number {
         const optionOffset = optionIndex * optionHeight;
 
         if (optionOffset < currentScrollPosition) {
@@ -208,7 +215,7 @@ export class MenuKeyControlService implements OnDestroy {
         );
     }
 
-    private announceCurrentItem() {
+    private announceCurrentItem(): void {
         this.live.announce(`Active item ${this.keyboardEventsManager?.activeItem?.menuItem.nativeElement.innerText}.`);
     }
 

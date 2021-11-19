@@ -1,4 +1,4 @@
-export function traverse(obj: { [x: string]: any }, fn: (obj: any, path: string[]) => any, path: string[] = []) {
+export function traverse(obj: { [x: string]: any }, fn: (obj: any, path: string[]) => any, path: string[] = []): void {
     // eslint-disable-next-line
     for (const k in obj) {
         const newPath = [...path, k];

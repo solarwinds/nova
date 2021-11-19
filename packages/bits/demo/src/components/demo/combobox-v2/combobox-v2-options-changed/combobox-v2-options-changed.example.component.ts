@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import { IChipsItem } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-combobox-v2-options-changed-example",
@@ -11,35 +12,35 @@ export class ComboboxV2OpitionsChangedExampleComponent implements OnInit {
     public multiselectItems: string[] = [];
     private itemSet = [
         [
-            $localize `Item 1`,
-            $localize `Item 2`,
-            $localize `Item 3`,
-            $localize `Item 4`,
+            $localize`Item 1`,
+            $localize`Item 2`,
+            $localize`Item 3`,
+            $localize`Item 4`,
         ],
         [
-            $localize `Item 3`,
-            $localize `Item 4`,
-            $localize `Item 5`,
-            $localize `Item 6`,
+            $localize`Item 3`,
+            $localize`Item 4`,
+            $localize`Item 5`,
+            $localize`Item 6`,
         ],
     ];
     public comboboxControl = new FormControl();
     public multiselectControl = new FormControl();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.items = this.itemSet[0];
         this.multiselectItems = this.itemSet[0];
     }
 
-    public setItems(i: number) {
+    public setItems(i: number): void {
         this.items = this.itemSet[i];
     }
 
-    public setMultiselectItems(i: number) {
+    public setMultiselectItems(i: number): void {
         this.items = this.itemSet[i];
     }
 
-    public convertToChip(value: string) {
+    public convertToChip(value: string): IChipsItem {
         return ({ label: value });
     }
 }

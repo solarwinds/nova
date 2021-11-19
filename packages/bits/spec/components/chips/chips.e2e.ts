@@ -37,7 +37,7 @@ describe("USERCONTROL chips", () => {
             browser.driver.manage().window().setSize(900, 890);
             const allChips = overflowChips.getChipElements();
             const allChipsCount = await allChips.count();
-            const visibleChipsCount = await allChips.filter((elem) => elem.isDisplayed()).count();
+            const visibleChipsCount = await allChips.filter(async (elem) => elem.isDisplayed()).count();
             const hiddenChips = allChipsCount - visibleChipsCount;
             expect(hiddenChips).toEqual(11);
         });

@@ -33,9 +33,9 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
 
     public onDestroy$ = new Subject<void>();
 
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
+    constructor(@Inject(DialogService) private dialogService: DialogService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.filterGroupItem.allFilterOptions = _orderBy(this.filterGroupItem.allFilterOptions, "value", "asc");
     }
 
@@ -63,11 +63,11 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
         };
     }
 
-    public showFilterDialog() {
+    public showFilterDialog(): void {
         this.showAllButtonClicked.emit();
     }
 
-    public getDisplayedFiltersCount() {
+    public getDisplayedFiltersCount(): number {
         return this.filterGroupItem.itemsToDisplay ? this.filterGroupItem.itemsToDisplay : 10;
     }
 
@@ -75,14 +75,14 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
         return this.filterGroupItem.allFilterOptions.length > 0;
     }
 
-    public deselectFilterItemByValue(value: any) {
+    public deselectFilterItemByValue(value: any): void {
         const checkbox = this.filterItems.find(i => i.value === value);
         if (checkbox) {
             this.deselectFilterItem(checkbox);
         }
     }
 
-    public deselectAllFilterItems() {
+    public deselectAllFilterItems(): void {
         this.filterItems.filter(i => i.checked).forEach(i => this.deselectFilterItem(i));
     }
 
@@ -95,7 +95,7 @@ export class FilterGroupComponent implements IFilterPub, OnInit, OnDestroy {
         return filterGroupItems.map((item) => item.value);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

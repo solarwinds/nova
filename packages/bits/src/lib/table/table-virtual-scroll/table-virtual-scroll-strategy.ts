@@ -62,7 +62,7 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
      * Sets scroll height.
      * @param rowHeight
      */
-    public setRowHeight(rowHeight: number) {
+    public setRowHeight(rowHeight: number): void {
         this.rowHeight = rowHeight;
         if (this.viewport) {
             this.updateContent(this.viewport);
@@ -80,7 +80,7 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
 
         const rowCount = this.rowCount || 0;
         const renderedRange = viewport.getRenderedRange();
-        const newRange = {...renderedRange};
+        const newRange = { ...renderedRange };
         const viewportSize = viewport.getViewportSize();
         const scrollOffset = viewport.measureScrollOffset() || 0;
         let firstVisibleIndex = scrollOffset / this.rowHeight || 0;
@@ -90,8 +90,7 @@ export class TableVirtualScrollLinearStrategy implements VirtualScrollStrategy {
         const maxVisibleItems = Math.ceil(viewportSize / this.rowHeight);
 
         // We have to recalculate the first visible index based on new data length and viewport size.
-        firstVisibleIndex = Math.max(0,
-                                     Math.min(firstVisibleIndex, rowCount - maxVisibleItems));
+        firstVisibleIndex = Math.max(0, Math.min(firstVisibleIndex, rowCount - maxVisibleItems));
         // We must update scroll offset to handle start/end buffers
         // Current range must also be adjusted to cover the new position (bottom of new list).
         newRange.start = Math.floor(firstVisibleIndex);
@@ -137,7 +136,7 @@ export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
         this._maxItems = isNaN(maxItems) ? 10 : +maxItems;
     }
 
-    public get maxItems() {
+    public get maxItems(): number {
         return this._maxItems;
     }
 
@@ -190,7 +189,7 @@ export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
      * @param rowHeight
      * @param headerOffset
      */
-    public setScrollHeight(rowHeight: number, headerOffset: number) {
+    public setScrollHeight(rowHeight: number, headerOffset: number): void {
         this.rowHeight = rowHeight;
         this.headerOffset = headerOffset;
         this.updateContent(this.viewport);
@@ -208,7 +207,7 @@ export class TableVirtualScrollStrategy implements VirtualScrollStrategy {
             const start = newIndex;
             const end = newIndex + this.maxItems;
 
-            viewport.setRenderedRange({start, end});
+            viewport.setRenderedRange({ start, end });
 
             this.indexChange.next(newIndex);
         }

@@ -18,7 +18,7 @@ export class DragAndDropService {
         return this.onDragStateSubject.asObservable();
     }
 
-    public setDragPayload(payload: any, event: DragEvent) {
+    public setDragPayload(payload: any, event: DragEvent): void {
         this.dragPayload = payload;
         const stringifiedPayload = _isObject(payload) ? JSON.stringify(payload) : <string>payload;
         event.dataTransfer?.setData("Text", stringifiedPayload);
@@ -33,7 +33,7 @@ export class DragAndDropService {
         return { data: this.dragPayload, isExternal: false };
     }
 
-    public resetPayload() {
+    public resetPayload(): void {
         this.onDragStateSubject.next({ payload: this.dragPayload, isInProgress: false });
         this.dragPayload = undefined;
     }

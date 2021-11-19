@@ -1,4 +1,4 @@
-import { SorterDirection } from "../../sorter/public-api";
+import { ISortedItem, SorterDirection } from "../../sorter/public-api";
 
 interface TestTableModel {
     position: string;
@@ -28,12 +28,20 @@ const ELEMENT_DATA: TestTableModel[] = [
     },
 ];
 
+interface TestCase {
+    dragCellIndex?: number;
+    dropCellIndex?: number;
+    offsetX: number;
+    clientWidth: number;
+    expectedResult: unknown[];
+}
+
 export class TableSpecHelpers {
-    public static getTableInitialData() {
+    public static getTableInitialData(): TestTableModel[] {
         return ELEMENT_DATA;
     }
 
-    public static basicTableCase() {
+    public static basicTableCase(): TestCase {
         return {
             dropCellIndex: 1,
             offsetX: 15,
@@ -47,7 +55,7 @@ export class TableSpecHelpers {
         };
     }
 
-    public static getColumnReorderTestCases() {
+    public static getColumnReorderTestCases(): TestCase[] {
         return [
             {
                 dragCellIndex: 0,
@@ -124,7 +132,7 @@ export class TableSpecHelpers {
         ];
     }
 
-    public static getColumnSortTestStates() {
+    public static getColumnSortTestStates(): ISortedItem[] {
         return [
             {
                 sortBy: "first",
@@ -145,7 +153,7 @@ export class TableSpecHelpers {
         ];
     }
 
-    public static dropElement(droppedElement: Element, offsetX: number, clientWidth: number, dragCellIndex: number, dropCellIndex: number) {
+    public static dropElement(droppedElement: Element, offsetX: number, clientWidth: number, dragCellIndex: number, dropCellIndex: number): void {
         const dragover = new DragEvent("dragover");
         const drop = new DragEvent("drop");
 
@@ -181,7 +189,7 @@ export class TableSpecHelpers {
         droppedElement.dispatchEvent(drop);
     }
 
-    public static dragElement(draggedElement: Element, dragCellIndex: number) {
+    public static dragElement(draggedElement: Element, dragCellIndex: number): void {
         const drag = new DragEvent("dragstart");
 
         Object.defineProperty(drag, "dataTransfer", {
@@ -192,7 +200,7 @@ export class TableSpecHelpers {
                 types: ["text"],
                 items: dragCellIndex.toString(),
                 effectAllowed: "move",
-                setData: () => {},
+                setData: () => { },
             },
         });
 
@@ -258,11 +266,11 @@ export class TableSpecHelpers {
         return actualTableContent.map(row => row.map(cell => cell.textContent!.trim()));
     }
 
-    public static expectTableToMatchContent(tableElement: Element, expected: any[]) {
+    public static expectTableToMatchContent(tableElement: Element, expected: any[]): void {
         const actual = TableSpecHelpers.getActualTableContent(tableElement);
         const missedExpectations: string[] = [];
 
-        function checkCellContent(actualCell: string, expectedCell: string) {
+        function checkCellContent(actualCell: string, expectedCell: string): void {
             if (actualCell !== expectedCell) {
                 missedExpectations.push(`Expected cell contents to be ${expectedCell} but was ${actualCell}`);
             }

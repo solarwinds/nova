@@ -1,6 +1,6 @@
-import {Component, HostBinding, Input, OnInit} from "@angular/core";
+import { Component, HostBinding, Input, OnInit } from "@angular/core";
 
-import {ILayoutElementDirection} from "../public-api";
+import { ILayoutElementDirection } from "../public-api";
 
 // <example-url>./../examples/index.html#/layout</example-url>
 @Component({
@@ -13,7 +13,7 @@ export class CardComponent implements OnInit {
     @HostBinding("class.card-direction-column") directionColumn: boolean;
     @HostBinding("class.card-direction-row") directionRow: boolean;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.directionColumn = (this.directionColumn && !this.directionRow) || this.direction === "column";
         this.directionRow = (!this.directionColumn && this.directionRow) || this.direction === "row";
     }

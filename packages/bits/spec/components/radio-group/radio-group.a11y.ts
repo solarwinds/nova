@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { RadioGroupAtom } from "../public_api";
 
 describe("a11y: radio group", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "nested-interactive",
     ];
 

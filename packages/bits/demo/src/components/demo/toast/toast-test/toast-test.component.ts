@@ -33,15 +33,15 @@ export class ToastTestComponent implements OnInit {
     };
     // Using intersection type to avoid adding optional chaining operator (?) multiple times in template
     // because options property is optional.
-    public toast: IToastDeclaration & {options: IToastConfig};
+    public toast: IToastDeclaration & { options: IToastConfig };
     public count: number;
     public type: string;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.reset();
     }
 
-    public fireToast() {
+    public fireToast(): void {
         const funcs: Record<string, (toast: IToastDeclaration) => IActiveToast> = {
             "error": (toast) => this.toastService.error(toast),
             "info": (toast) => this.toastService.info(toast),
@@ -54,7 +54,7 @@ export class ToastTestComponent implements OnInit {
         }
     }
 
-    public reset() {
+    public reset(): void {
         this.count = 1;
         this.type = "info";
         this.toast = { ...this.defaults, options: { ...this.defaults.options } };

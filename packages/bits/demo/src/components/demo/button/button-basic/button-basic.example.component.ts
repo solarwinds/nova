@@ -9,10 +9,10 @@ export class ButtonBasicExampleComponent {
     constructor(@Inject(ToastService) private toastService: ToastService) {
     }
 
-    onClick() {
+    onClick(): void {
         this.toastService.info({
-            message: $localize `Button clicked!`,
-            title: $localize `Event`,
+            message: $localize`Button clicked!`,
+            title: $localize`Event`,
         });
     }
 }

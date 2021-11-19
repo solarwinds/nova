@@ -5,15 +5,15 @@ import { WizardComponent, WizardStepComponent } from "@nova-ui/bits";
     selector: "nui-wizard-hide-example",
     templateUrl: "./wizard-hide.example.component.html",
 })
-export class WizardHiddenExampleComponent  {
+export class WizardHiddenExampleComponent {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
     @ViewChild("wizardStepHidden") wizardStepHiddenComponent: WizardStepComponent;
 
-    public hideStep() {
+    public hideStep(): void {
         this.wizardComponent.hideStep(this.wizardStepHiddenComponent);
     }
 
-    public showStep() {
+    public showStep(): void {
         this.wizardComponent.showStep(this.wizardStepHiddenComponent);
     }
 }

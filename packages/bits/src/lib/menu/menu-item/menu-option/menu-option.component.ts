@@ -63,7 +63,7 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
     @ViewChild("menuOption") menuItem: ElementRef;
 
     @HostListener("click", ["$event"])
-    public stopPropagationOfClick(event: MouseEvent) {
+    public stopPropagationOfClick(event: MouseEvent): void {
         event.stopPropagation();
         if (!this.disabled) {
             event.preventDefault();
@@ -73,7 +73,7 @@ export class MenuOptionComponent extends MenuItemBaseComponent {
     }
 
     @HostBinding("class.checked")
-    public get checkedClass() {
+    public get checkedClass(): boolean {
         return this.checked;
     }
 

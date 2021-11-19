@@ -53,12 +53,12 @@ export class TreeWithAdditionalContentExampleComponent {
 
     public items = ["Item 1", "Item 2", "Item 3"];
 
-    public hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    public hasChild = (_: number, node: FoodNode): boolean => !!node.children && node.children.length > 0;
 
     constructor(private eventBusService: EventBusService) {
     }
 
-    public onToggleClick() {
-        this.eventBusService.getStream({id: "document-click"}).next(new MouseEvent("click"));
+    public onToggleClick(): void {
+        this.eventBusService.getStream({ id: "document-click" }).next(new MouseEvent("click"));
     }
 }

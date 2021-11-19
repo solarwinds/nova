@@ -9,24 +9,24 @@ import {
 import { Subscription } from "rxjs";
 
 const RANDOM_ARRAY = [
-    {color: "regular-blue"},
-    {color: "regular-green"},
-    {color: "regular-yellow"},
-    {color: "regular-cyan "},
-    {color: "regular-magenta"},
-    {color: "regular-black"},
-    {color: "dark-blue"},
-    {color: "dark-green"},
-    {color: "dark-yellow"},
-    {color: "dark-cyan "},
-    {color: "dark-magenta"},
-    {color: "dark-black"},
-    {color: "light-blue"},
-    {color: "light-green"},
-    {color: "light-yellow"},
-    {color: "light-cyan "},
-    {color: "light-magenta"},
-    {color: "light-black"},
+    { color: "regular-blue" },
+    { color: "regular-green" },
+    { color: "regular-yellow" },
+    { color: "regular-cyan " },
+    { color: "regular-magenta" },
+    { color: "regular-black" },
+    { color: "dark-blue" },
+    { color: "dark-green" },
+    { color: "dark-yellow" },
+    { color: "dark-cyan " },
+    { color: "dark-magenta" },
+    { color: "dark-black" },
+    { color: "light-blue" },
+    { color: "light-green" },
+    { color: "light-yellow" },
+    { color: "light-cyan " },
+    { color: "light-magenta" },
+    { color: "light-black" },
 ];
 
 interface ExampleItem {
@@ -43,7 +43,7 @@ export class ClientSideCustomSearchService extends SearchService {
 @Component({
     selector: "nui-client-side-custom-search-example",
     templateUrl: "./client-side-custom-search.example.component.html",
-    providers: [ClientSideDataSource, {provide: SearchService, useClass: ClientSideCustomSearchService}],
+    providers: [ClientSideDataSource, { provide: SearchService, useClass: ClientSideCustomSearchService }],
 })
 export class DataSourceClientSideCustomSearchExampleComponent implements AfterViewInit, OnDestroy {
     public searchTerm = "";
@@ -68,14 +68,14 @@ export class DataSourceClientSideCustomSearchExampleComponent implements AfterVi
     private outputsSubscription: Subscription;
 
     constructor(public dataSourceService: ClientSideDataSource<ExampleItem>,
-                public changeDetection: ChangeDetectorRef) {
+        public changeDetection: ChangeDetectorRef) {
         dataSourceService.setData(RANDOM_ARRAY);
 
         this.filters = ["regular", "dark", "light"];
         this.selectedFilters = [];
     }
 
-    async ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
                 componentInstance: this.filteringSearch,
@@ -88,22 +88,22 @@ export class DataSourceClientSideCustomSearchExampleComponent implements AfterVi
             this.state = data;
             this.changeDetection.detectChanges();
         });
-        await this.dataSourceService.applyFilters();
+        this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public async onSearch(value: string) {
+    public async onSearch(value: string): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public async changePagination() {
+    public async changePagination(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 }

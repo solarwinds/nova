@@ -33,7 +33,7 @@ export class ResizeObserverDirective implements OnDestroy, AfterViewInit {
         this._debounceTime = debounceTime;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.resizeHandler = debounce(entry => this.containerResize.emit(entry), this._debounceTime);
         this.resizeObserver = new ResizeObserver(entries => {
             entries.forEach((entry: ResizeObserverEntry) => {
@@ -47,7 +47,7 @@ export class ResizeObserverDirective implements OnDestroy, AfterViewInit {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.resizeObserver) {
             this.resizeObserver.unobserve(<Element>(this._element.nativeElement));
         }

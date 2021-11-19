@@ -7,12 +7,12 @@ import { Component } from "@angular/core";
 })
 export class RepeatDisabledMultiSelectionExampleComponent {
     public colorsWithIsDisabledProperty = [
-        { color: $localize `blue`, disabled: true },
-        { color: $localize `green`, disabled: false },
-        { color: $localize `yellow` },
-        { color: $localize `cyan` },
-        { color: $localize `magenta`, disabled: true },
-        { color: $localize `black` },
+        { color: $localize`blue`, disabled: true },
+        { color: $localize`green`, disabled: false },
+        { color: $localize`yellow` },
+        { color: $localize`cyan` },
+        { color: $localize`magenta`, disabled: true },
+        { color: $localize`black` },
     ];
 
     public selectedColorsWithIsDisabledProperty = [
@@ -20,7 +20,7 @@ export class RepeatDisabledMultiSelectionExampleComponent {
         this.colorsWithIsDisabledProperty[5],
     ];
 
-    public handleClick(event: any) {
+    public handleClick(event: any): void {
         event.stopPropagation();
     }
 

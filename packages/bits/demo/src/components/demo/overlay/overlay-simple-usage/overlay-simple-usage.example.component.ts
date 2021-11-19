@@ -13,7 +13,7 @@ export class OverlaySimpleExampleComponent implements AfterViewInit {
 
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.overlay.clickOutside
             .pipe(takeUntil(this.destroy$))
             .subscribe(_ => this.overlay.hide());

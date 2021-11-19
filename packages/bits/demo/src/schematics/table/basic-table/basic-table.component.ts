@@ -60,7 +60,7 @@ export class BasicTableComponent implements OnDestroy, AfterViewInit {
         this.dataSource.setData(LOCAL_DATA);
     }
 
-    public async ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSource.registerComponent({
             paginator: { componentInstance: this.paginator },
         });
@@ -74,19 +74,19 @@ export class BasicTableComponent implements OnDestroy, AfterViewInit {
             takeUntil(this.destroy$)
         ).subscribe();
 
-        await this.applyFilters();
+        this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async changePagination($event: any) {
+    public async changePagination($event: any): Promise<void> {
         await this.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 }

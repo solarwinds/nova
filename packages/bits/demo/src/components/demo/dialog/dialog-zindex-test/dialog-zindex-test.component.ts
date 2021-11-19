@@ -1,7 +1,7 @@
-import {Overlay, OverlayRef} from "@angular/cdk/overlay";
-import {TemplatePortal} from "@angular/cdk/portal";
-import {Component, OnInit, TemplateRef, ViewContainerRef, ViewEncapsulation} from "@angular/core";
-import {DialogService, ITimeframe, NuiDialogRef, ToastService} from "@nova-ui/bits";
+import { Overlay, OverlayRef } from "@angular/cdk/overlay";
+import { TemplatePortal } from "@angular/cdk/portal";
+import { Component, OnInit, TemplateRef, ViewContainerRef, ViewEncapsulation } from "@angular/core";
+import { DialogService, ITimeframe, NuiDialogRef, ToastService } from "@nova-ui/bits";
 import moment from "moment/moment";
 
 @Component({
@@ -33,10 +33,10 @@ export class DialogZIndexTestComponent implements OnInit {
     private baseDate = moment([2018, 5, 1, 15, 0, 0]);
 
     constructor(private dialogService: DialogService,
-                private toastService: ToastService,
-                private overlay: Overlay,
-                private viewContainerRef: ViewContainerRef
-    ) {}
+        private toastService: ToastService,
+        private overlay: Overlay,
+        private viewContainerRef: ViewContainerRef
+    ) { }
 
     public ngOnInit(): void {
         this.timeFrame = {
@@ -45,15 +45,15 @@ export class DialogZIndexTestComponent implements OnInit {
         };
     }
 
-    public toggleBusy() {
+    public toggleBusy(): void {
         this.busy = !this.busy;
     }
 
-    public toggleAppendToBody() {
+    public toggleAppendToBody(): void {
         this.appendToBody = !this.appendToBody;
     }
 
-    public openOverlay(templateRef: TemplateRef<string>, width: string, height: string) {
+    public openOverlay(templateRef: TemplateRef<string>, width: string, height: string): void {
         const positionStrategy = this.overlay.position().global()
             .centerHorizontally()
             .centerVertically();
@@ -71,19 +71,19 @@ export class DialogZIndexTestComponent implements OnInit {
         this.overlayRef.attach(portal);
     }
 
-    public closeOverlay() {
+    public closeOverlay(): void {
         this.overlayRef.detach();
     }
 
-    public openInnerDialog(templateRef: TemplateRef<string>) {
-        this.activeDialogs.push(this.dialogService.open(templateRef, {windowClass: "inner-dialog"}));
+    public openInnerDialog(templateRef: TemplateRef<string>): void {
+        this.activeDialogs.push(this.dialogService.open(templateRef, { windowClass: "inner-dialog" }));
     }
 
-    public closeDialog() {
+    public closeDialog(): void {
         this.activeDialogs.pop()?.close();
     }
 
     public showToast(): void {
-        this.toastService.success({message: $localize`Sample toast displayed!`, title: $localize`Event`});
+        this.toastService.success({ message: $localize`Sample toast displayed!`, title: $localize`Event` });
     }
 }

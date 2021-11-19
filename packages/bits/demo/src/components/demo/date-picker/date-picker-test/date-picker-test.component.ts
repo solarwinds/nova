@@ -34,30 +34,30 @@ export class DatePickerTestComponent implements OnInit {
         this.localActiveDateDisabledDates = this.dt;
         this.month = this.dt.month() + 1;
         this.year = this.dt.year();
-        this.minDate = moment({year: this.year, month: this.month - 1, date: 5});
-        this.maxDate = moment({year: this.year, month: this.month - 1, date: 25});
+        this.minDate = moment({ year: this.year, month: this.month - 1, date: 5 });
+        this.maxDate = moment({ year: this.year, month: this.month - 1, date: 25 });
         this.caption = "Custom caption for date-picker";
         this.initDate = moment().utcOffset(0).hour(23).minute(15).add(1, "day");
         this.initDatePreserve = this.initDate;
         this.dateDisabled = [
             {
-                date: moment({year: this.year, month: this.month - 1, date: 10}),
+                date: moment({ year: this.year, month: this.month - 1, date: 10 }),
                 mode: "day",
             },
             {
-                date: moment({year: this.year, month: this.month - 1, date: 11}),
+                date: moment({ year: this.year, month: this.month - 1, date: 11 }),
                 mode: "day",
             },
             {
-                date: moment({year: this.year, month: this.month - 1, date: 12}),
+                date: moment({ year: this.year, month: this.month - 1, date: 12 }),
                 mode: "day",
             },
             {
-                date: moment({year: this.year, month: this.month, date: 12}),
+                date: moment({ year: this.year, month: this.month, date: 12 }),
                 mode: "month",
             },
             {
-                date: moment({year: this.year + 1, month: this.month - 1, date: 12}),
+                date: moment({ year: this.year + 1, month: this.month - 1, date: 12 }),
                 mode: "year",
             },
         ];
@@ -69,29 +69,29 @@ export class DatePickerTestComponent implements OnInit {
         ];
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.reactiveDatepickerForm = this.formBuilder.group({
             datePicker: this.formBuilder.control(moment()),
         });
     }
 
-    public dateChanged(event: any) {
+    public dateChanged(event: any): void {
         this.localActiveDate = event;
     }
 
-    public dateChangedPreserved(event: any) {
+    public dateChangedPreserved(event: any): void {
         this.localActiveDatePreserve = event;
     }
 
-    public dateChangedMinMax(event: any) {
+    public dateChangedMinMax(event: any): void {
         this.localActiveDateMinMax = event;
     }
 
-    public dateChangedDisabledDates(event: any) {
+    public dateChangedDisabledDates(event: any): void {
         this.localActiveDateDisabledDates = event;
     }
 
-    public initDateChangedPreserved(event: any) {
+    public initDateChangedPreserved(event: any): void {
         this.initDatePreserve = event;
     }
 }

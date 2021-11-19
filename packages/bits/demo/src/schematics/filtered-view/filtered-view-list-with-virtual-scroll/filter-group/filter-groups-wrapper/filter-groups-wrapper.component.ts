@@ -12,11 +12,11 @@ import { FilterGroupComponent } from "../filter-group.component";
 export class FilterGroupsWrapperComponent implements AfterViewInit {
     @ContentChildren(FilterGroupComponent) filterGroups: QueryList<FilterGroupComponent>;
 
-    public i18nHiddenFiltersMapping: { [k: string]: string } = {"=1": $localize `1 hidden filter.`, "other": $localize `# hidden filters.`};
+    public i18nHiddenFiltersMapping: { [k: string]: string } = { "=1": $localize`1 hidden filter.`, "other": $localize`# hidden filters.` };
 
     constructor(@Inject(DataSourceService) public dataSourceService: DataSourceService<any>) { }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.registerComponent(this.getFilterComponents());
         this.filterGroups.changes.subscribe(() => {
             this.dataSourceService.registerComponent(this.getFilterComponents());
@@ -40,7 +40,7 @@ export class FilterGroupsWrapperComponent implements AfterViewInit {
 
     private getFilterComponents(): IFilteringParticipants {
         return this.filterGroups.reduce((obj: IFilteringParticipants, item: FilterGroupComponent) => {
-            obj[item.filterGroupItem.id] = {componentInstance: item};
+            obj[item.filterGroupItem.id] = { componentInstance: item };
             return obj;
         }, {});
     }

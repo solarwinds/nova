@@ -13,7 +13,7 @@ const defaultContainerHeight: number = 300;
     host: { class: "combobox-container" },
 })
 export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, AfterViewInit {
-    public items = Array.from({ length: 100000 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 100000 }).map((_, i) => $localize`Item ${i}`);
     public comboboxControl = new FormControl();
     public filteredItems: Observable<any[]> = of([...this.items]);
     public containerHeight: number = defaultContainerHeight;
@@ -25,7 +25,7 @@ export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, After
     @ViewChild(ComboboxV2Component) private combobox: ComboboxV2Component;
 
     @HostListener("click")
-    public handleClick() {
+    public handleClick(): void {
         if (this.viewport) {
             this.viewport.scrollToOffset(this.scrollOffset);
         }
@@ -62,7 +62,7 @@ export class ComboboxV2VirtualScrollExampleComponent implements OnDestroy, After
         this.containerHeight = defaultContainerHeight;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }

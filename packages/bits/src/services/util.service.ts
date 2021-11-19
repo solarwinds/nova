@@ -40,7 +40,7 @@ export enum BrowserName {
 @Injectable({ providedIn: "root" })
 export class UtilService {
 
-    public static getSvgFromString(s: string) {
+    public static getSvgFromString(s: string): DocumentFragment {
         const div = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
         div.innerHTML = `<svg xmlns='http://www.w3.org/2000/svg'>${s}</svg>`;
         const frag = document.createDocumentFragment();
@@ -50,7 +50,7 @@ export class UtilService {
         return frag;
     }
 
-    public static getEventPath(event: MouseEvent) {
+    public static getEventPath(event: MouseEvent): EventTarget[] | undefined {
         if (isFunction(event.composedPath)) {
             return event.composedPath();
         }
@@ -75,14 +75,14 @@ export class UtilService {
     private nextUniqueId = ["0", "0", "0"];
     private browserName?: string;
 
-    public isBrowser() {
+    public isBrowser(): boolean {
         return isPlatformBrowser(this.platformId);
     }
 
     /**
      * Object for getting information about the browser
      */
-    public get browser() {
+    public get browser(): any {
         if (this.isBrowser()) {
             return {
                 name: () => this.browserName,
@@ -101,11 +101,12 @@ export class UtilService {
                         this.document.defaultView?.navigator.userAgent.match(/iPhone|iPad|iPod/i) !== null,
                     isOpera: () =>
                         this.document.defaultView?.navigator.userAgent.match(/Opera Mini/i) !== null,
-                    isAny: () =>
-                        (this.browser?.mobileDevice.isIOS() ||
-                            this.browser?.mobileDevice.isAndroid() ||
-                            this.browser?.mobileDevice.isBlackberry() ||
-                            this.browser?.mobileDevice.isOpera()),
+                    isAny: () => (
+                        this.browser?.mobileDevice.isIOS() ||
+                        this.browser?.mobileDevice.isAndroid() ||
+                        this.browser?.mobileDevice.isBlackberry() ||
+                        this.browser?.mobileDevice.isOpera()
+                    ),
                 },
             };
         }
@@ -170,7 +171,7 @@ export class UtilService {
         return target;
     }
 
-    private getBrowser() {
+    private getBrowser(): string | undefined {
         if (isPlatformBrowser(this.platformId)) {
             const ua = this.document.defaultView?.navigator.userAgent;
 
@@ -200,7 +201,7 @@ export class UtilService {
         }
     }
 
-    private getBrowserVersion() {
+    private getBrowserVersion(): string | undefined {
         if (isPlatformBrowser(this.platformId)) {
             const ua = this.document.defaultView?.navigator.userAgent;
 

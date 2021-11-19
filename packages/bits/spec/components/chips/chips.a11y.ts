@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { ChipsAtom } from "../public_api";
 
 describe("a11y: chips", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "color-contrast",
     ];
 

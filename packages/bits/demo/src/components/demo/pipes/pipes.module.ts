@@ -5,11 +5,12 @@ import { DEMO_PATH_TOKEN, NuiDocsModule } from "@nova-ui/bits";
 const routes = [
     {
         path: "highlight",
-        loadChildren: () => import("./highlight/highlight-pipe-example.module").then(m => m.HighlightPipeExampleModule),
+        loadChildren: async (): Promise<unknown> => import("./highlight/highlight-pipe-example.module").then(m => m.HighlightPipeExampleModule),
     },
     {
         path: "unit-conversion",
-        loadChildren: () => import("./unit-conversion/unit-conversion-pipe-example.module").then(m => m.UnitConversionPipeExampleModule),
+        loadChildren: async (): Promise<unknown> =>
+            import("./unit-conversion/unit-conversion-pipe-example.module").then(m => m.UnitConversionPipeExampleModule),
     },
 ];
 

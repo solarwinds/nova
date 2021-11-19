@@ -46,7 +46,7 @@ export class HistoryStorage<T> {
     /**
      * Clears the storage
      */
-    public reset() {
+    public reset(): void {
         this.index = -1;
         this.stack = [];
     }
@@ -65,21 +65,21 @@ export class HistoryStorage<T> {
     /**
      * Returns the currently valid stored element
      */
-    public current() {
+    public current(): T {
         return this.stack[this.index];
     }
 
     /**
      * Returns the current history step (starts from 0 when there are no items, 1 for one item)
      */
-    public get step() {
+    public get step(): number {
         return this.index + 1;
     }
 
     /**
      * Number of total saved steps in the history
      */
-    public get length() {
+    public get length(): number {
         return this.stack.length;
     }
 }

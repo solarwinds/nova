@@ -12,9 +12,9 @@ export class DatePickerReactiveFormExampleComponent {
     public selectedDate: Date = new Date(this.dt.valueOf());
     public control = new FormControl(this.dt, Validators.required);
 
-    constructor() {}
+    constructor() { }
 
-    onValueChange(event: Moment) {
+    onValueChange(event: Moment): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

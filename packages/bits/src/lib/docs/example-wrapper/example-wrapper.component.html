@@ -7,6 +7,7 @@
                     displayStyle="action"
                     icon="{{showSource ? 'double-caret-up' : 'double-caret-down'}}"
                     [nuiTooltip]="getTooltip()"
+                    title="{{getTooltip()}}"
                     tooltipPlacement="bottom"
                     (click)="showSource = !showSource">
             </button>
@@ -15,6 +16,7 @@
                     displayStyle="action"
                     icon="external-link"
                     nuiTooltip="Open in Plunker (only self-contained examples are opened properly)"
+                    title="Open in Plunker (only self-contained examples are opened properly)"
                     tooltipPlacement="bottom"
                     (click)="openPlunker()">
             </button>

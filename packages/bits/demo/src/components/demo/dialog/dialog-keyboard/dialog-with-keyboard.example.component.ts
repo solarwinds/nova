@@ -8,24 +8,25 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 export class DialogWithKeyboardExampleComponent {
     private activeDialog: NuiDialogRef;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-                @Inject(ToastService) private toastService: ToastService) {
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(ToastService) private toastService: ToastService
+    ) { }
+
+    public openWith(content: TemplateRef<string>): void {
+        this.activeDialog = this.dialogService.open(content, { size: "sm" });
+    }
+    public openWithout(content: TemplateRef<string>): void {
+        this.activeDialog = this.dialogService.open(content, { size: "sm", keyboard: false });
     }
 
-    public openWith(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm"});
-    }
-    public openWithout(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm", keyboard: false});
-    }
-
-    private actionDone(): void {
-        this.toastService.success({message: $localize `Action Done!`, title: $localize `Event`});
+    public actionDone(): void {
+        this.toastService.success({ message: $localize`Action Done!`, title: $localize`Event` });
         this.activeDialog.close();
     }
 
-    private actionCanceled(): void {
-        this.toastService.info({message: $localize `Action Cancelled!`, title: $localize `Event`});
+    public actionCanceled(): void {
+        this.toastService.info({ message: $localize`Action Cancelled!`, title: $localize`Event` });
         this.activeDialog.close();
     }
 }

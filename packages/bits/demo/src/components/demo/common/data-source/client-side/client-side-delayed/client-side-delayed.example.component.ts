@@ -8,22 +8,22 @@ import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
 const INITIAL_ARRAY = [
-    {color: "regular-blue"},
-    {color: "regular-green"},
-    {color: "regular-yellow"},
-    {color: "regular-cyan"},
-    {color: "regular-magenta"},
-    {color: "regular-black"},
-    {color: "dark-blue"},
-    {color: "dark-green"},
-    {color: "dark-yellow"},
-    {color: "dark-cyan"},
-    {color: "dark-magenta"},
-    {color: "light-blue"},
-    {color: "light-green"},
-    {color: "light-yellow"},
-    {color: "light-cyan"},
-    {color: "light-magenta"},
+    { color: "regular-blue" },
+    { color: "regular-green" },
+    { color: "regular-yellow" },
+    { color: "regular-cyan" },
+    { color: "regular-magenta" },
+    { color: "regular-black" },
+    { color: "dark-blue" },
+    { color: "dark-green" },
+    { color: "dark-yellow" },
+    { color: "dark-cyan" },
+    { color: "dark-magenta" },
+    { color: "light-blue" },
+    { color: "light-green" },
+    { color: "light-yellow" },
+    { color: "light-cyan" },
+    { color: "light-magenta" },
 ];
 
 @Component({
@@ -61,14 +61,14 @@ export class DataSourceClientSideDelayedExampleComponent implements AfterViewIni
     @ViewChild("filteringSorter") filteringSorter: SorterComponent;
 
     constructor(public dataSourceService: ClientSideDataSource<any>,
-                public changeDetection: ChangeDetectorRef) {
+        public changeDetection: ChangeDetectorRef) {
         dataSourceService.setData(INITIAL_ARRAY);
 
         this.filters = ["regular", "dark", "light"];
         this.selectedFilters = [];
     }
 
-    async ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
                 componentInstance: this.filteringSearch,
@@ -85,18 +85,18 @@ export class DataSourceClientSideDelayedExampleComponent implements AfterViewIni
             this.dataSourceService.applyFilters();
         });
 
-        await this.dataSourceService.applyFilters();
+        this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public onSearch() {
+    public onSearch(): void {
         this.delayActionSubject.next();
     }
 
-    public async changePagination() {
+    public async changePagination(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 

@@ -8,14 +8,14 @@ import { IToastConfig, IToastService, ToastService } from "@nova-ui/bits";
 export class ToastBasicExampleComponent implements OnInit {
     constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.toastService.setConfig({}, "id");
     }
 
     public onShowToast(highlightMode: boolean): void {
         this.toastService.info({
-            title: $localize `Simple Toast.`,
-            message: $localize `Hi there! I'm a simple toast message`,
+            title: $localize`Simple Toast.`,
+            message: $localize`Hi there! I'm a simple toast message`,
             options: this.getOptions(),
         });
     }

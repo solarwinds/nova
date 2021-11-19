@@ -116,7 +116,7 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
     dismiss(reason: any): void { this.dismissEvent.emit(reason); }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.elWithFocus = this.document.activeElement;
         this.renderer.addClass(this.document.body, "dialog-open");
         this.scrollableElement = new CdkScrollable(this.elRef, this.scrollDispatcher, this.ngZone);
@@ -126,13 +126,13 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         if (!this.elRef.nativeElement.contains(document.activeElement)) {
             this.elRef.nativeElement["focus"].apply(this.elRef.nativeElement, []);
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         const body = this.document.body;
         const elWithFocus = this.elWithFocus;
 

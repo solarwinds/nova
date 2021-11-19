@@ -60,7 +60,7 @@ export class FilteredViewTableComponent implements OnInit, OnDestroy, AfterViewI
     ) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -70,9 +70,9 @@ export class FilteredViewTableComponent implements OnInit, OnDestroy, AfterViewI
         ).subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSource.registerComponent({
-            virtualScroll: {componentInstance: this.viewportManager},
+            virtualScroll: { componentInstance: this.viewportManager },
         });
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
@@ -84,7 +84,7 @@ export class FilteredViewTableComponent implements OnInit, OnDestroy, AfterViewI
                 // Since we know the total number of items we can stop the stream when dataset end is reached
                 // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
                 filter(() => !this.items.length || this.items.length < this.totalItems),
-                tap(() => this.applyFilters(false)),
+                tap(async () => this.applyFilters(false)),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
                 switchMap(() => this.dataSource.outputsSubject.pipe(
                     tap((data: IFilteringOutputs) => {
@@ -102,16 +102,16 @@ export class FilteredViewTableComponent implements OnInit, OnDestroy, AfterViewI
             ).subscribe();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async applyFilters(resetVirtualScroll: boolean = true) {
+    public async applyFilters(resetVirtualScroll: boolean = true): Promise<void> {
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the datasource performs the search with 1st page
-            this.viewportManager.reset({emitFirstPage: false});
+            this.viewportManager.reset({ emitFirstPage: false });
         }
 
         // Every new search request or filter change should

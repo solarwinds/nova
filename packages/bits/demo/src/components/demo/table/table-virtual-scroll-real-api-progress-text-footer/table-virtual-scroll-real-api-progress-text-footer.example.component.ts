@@ -31,11 +31,11 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent impleme
     private _isBusy: boolean = false;
     private onDestroy$: Subject<void> = new Subject<void>();
 
-    get totalItems() {
+    get totalItems(): number {
         return this._totalItems;
     }
 
-    get isBusy() {
+    get isBusy(): boolean {
         return this._isBusy;
     }
 
@@ -53,9 +53,9 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent impleme
         this.dataSource = new RandomuserTableDataSource();
     }
 
-    @ViewChild(CdkVirtualScrollViewport, {static: false}) viewport: CdkVirtualScrollViewport;
+    @ViewChild(CdkVirtualScrollViewport, { static: false }) viewport: CdkVirtualScrollViewport;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.dataSource.busy.pipe(takeUntil(this.onDestroy$)).subscribe(busy => {
             this._isBusy = busy;
         });
@@ -69,13 +69,13 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent impleme
             // Note: Initializing the stream with the desired page size, based on which
             // VirtualViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
-            .observeNextPage$({pageSize: this.range}).pipe(
-            // Note: In case we know the total number of items we can stop the stream when dataset end is reached
-            // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
+            .observeNextPage$({ pageSize: this.range }).pipe(
+                // Note: In case we know the total number of items we can stop the stream when dataset end is reached
+                // Otherwise we can let VirtualViewportManager to stop when last received page range will not match requested range
                 filter(range => this.totalItems ? this.totalItems >= range.end : true),
                 tap(range => {
-                // Note: Keeping backward compatibility with RandomuserTableDataSource which requires page number to be set by consumer
-                // It also can be calculated directly on the Datasource level
+                    // Note: Keeping backward compatibility with RandomuserTableDataSource which requires page number to be set by consumer
+                    // It also can be calculated directly on the Datasource level
                     this.dataSource.page = range.end / (range.end - range.start);
                     this.dataSource.applyFilters();
                 }),
@@ -98,7 +98,7 @@ export class TableVirtualScrollRealApiProgressTextFooterExampleComponent impleme
 
     private registerVirtualScroll() {
         this.dataSource.registerComponent({
-            virtualScroll: {componentInstance: this.viewportManager},
+            virtualScroll: { componentInstance: this.viewportManager },
         });
     }
 }

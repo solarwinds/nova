@@ -33,16 +33,16 @@ export class SorterBasicExampleComponent implements OnInit {
     public sortBy = this.columns[1].value;
     public items: IFilm[] = getData();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.sortItems(this.sortBy, this.initialSortDirection);
     }
 
-    public onSorterAction(changeEvent: ISorterChanges) {
+    public onSorterAction(changeEvent: ISorterChanges): void {
         this.sortBy = changeEvent.newValue.sortBy;
         this.sortItems(changeEvent.newValue.sortBy, changeEvent.newValue.direction);
     }
 
-    private sortItems(sortBy: string, direction: SorterDirection) {
+    private sortItems(sortBy: string, direction: SorterDirection): void {
         this.items = _orderBy(this.items, [sortBy], [direction as (SorterDirection.ascending | SorterDirection.descending)]) as IFilm[];
     }
 }

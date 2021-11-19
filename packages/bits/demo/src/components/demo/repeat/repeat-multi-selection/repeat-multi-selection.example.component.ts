@@ -7,12 +7,12 @@ import { Component } from "@angular/core";
 })
 export class RepeatMultiSelectionExampleComponent {
     public colors = [
-        { color: $localize `blue` },
-        { color: $localize `green` },
-        { color: $localize `yellow` },
-        { color: $localize `cyan` },
-        { color: $localize `magenta` },
-        { color: $localize `black` },
+        { color: $localize`blue` },
+        { color: $localize`green` },
+        { color: $localize`yellow` },
+        { color: $localize`cyan` },
+        { color: $localize`magenta` },
+        { color: $localize`black` },
     ];
 
     public narrowRowSelectedColors = [
@@ -22,7 +22,7 @@ export class RepeatMultiSelectionExampleComponent {
 
     constructor() { }
 
-    public onNarrowRowSelectionChange(selection: any) {
+    public onNarrowRowSelectionChange(selection: any): void {
         this.narrowRowSelectedColors = selection;
     }
 }

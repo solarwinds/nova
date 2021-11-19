@@ -9,17 +9,18 @@ import { ToastService } from "@nova-ui/bits";
 export class CheckboxInFormExampleComponent implements OnInit {
     public myForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder,
-                private toastService: ToastService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        private toastService: ToastService
+    ) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            checkbox: this.formBuilder.control(false,
-                                               Validators.requiredTrue),
+            checkbox: this.formBuilder.control(false, Validators.requiredTrue),
         });
     }
 
-    public onSubmit() {
-        this.toastService.success({message: $localize `Your form is valid!`});
+    public onSubmit(): void {
+        this.toastService.success({ message: $localize`Your form is valid!` });
     }
 }

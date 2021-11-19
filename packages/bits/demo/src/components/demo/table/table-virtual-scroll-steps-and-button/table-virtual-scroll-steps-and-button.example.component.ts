@@ -26,8 +26,8 @@ export class TableVirtualScrollStepsAndButtonExampleComponent implements OnDestr
     private _loadedItems: number = 0;
     private _isBusy: boolean = false;
 
-    get loadedItems() { return this._loadedItems; }
-    get isBusy() { return this._isBusy; }
+    get loadedItems(): number { return this._loadedItems; }
+    get isBusy(): boolean { return this._isBusy; }
 
     // The dynamically changed array of items to render by the table
     public users: BehaviorSubject<IRandomUserTableModel[]> = new BehaviorSubject<IRandomUserTableModel[]>([]);
@@ -40,15 +40,17 @@ export class TableVirtualScrollStepsAndButtonExampleComponent implements OnDestr
 
     private dataSource: RandomuserTableDataSource1;
 
-    constructor(public selectorService: SelectorService,
-                private cd: ChangeDetectorRef,
-                private searchService: SearchService) {
+    constructor(
+        public selectorService: SelectorService,
+        private cd: ChangeDetectorRef,
+        private searchService: SearchService
+    ) {
         this.dataSource = new RandomuserTableDataSource1(searchService);
         this.dataSource.step.next(this.step);
         this.dataSource.itemsToLoad.next(this.itemsToLoad);
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.dataSource.outputsSubject.subscribe((outputs: IFilteringOutputs) => {
             if (outputs) {
                 this.users.next(outputs.repeat.itemsSource);
@@ -95,7 +97,7 @@ export class TableVirtualScrollStepsAndButtonExampleComponent implements OnDestr
         this.users.complete();
     }
 
-    public loadAll() {
+    public loadAll(): void {
         const delta = this.totalItems - this.users.value.length;
 
         if (this.step > delta) {
@@ -104,7 +106,7 @@ export class TableVirtualScrollStepsAndButtonExampleComponent implements OnDestr
         this.dataSource.applyFilters();
     }
 
-    public loadMore() {
+    public loadMore(): void {
         const toLoad = (this.totalItems - this.loadedItems) < this.itemsToLoad ? this.totalItems - this.loadedItems : this.itemsToLoad;
         if (toLoad < this.itemsToLoad) {
             this.dataSource.step.next(toLoad);
@@ -113,7 +115,11 @@ export class TableVirtualScrollStepsAndButtonExampleComponent implements OnDestr
         this.dataSource.applyFilters();
     }
 
-    public isAllLoaded() { return (this.users.value.length === this.totalItems) && (this.users.value.length !== 0); }
+    public isAllLoaded(): boolean {
+        return (this.users.value.length === this.totalItems) && (this.users.value.length !== 0);
+    }
 
-    public isChunkLoaded() { return (this.users.value.length === this.loadedItems) && (this.users.value.length !== 0); }
+    public isChunkLoaded(): boolean {
+        return (this.users.value.length === this.loadedItems) && (this.users.value.length !== 0);
+    }
 }

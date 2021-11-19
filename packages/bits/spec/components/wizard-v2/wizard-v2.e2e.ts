@@ -1,10 +1,9 @@
-import { by, element, Key } from "protractor";
+import { by, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import { WizardV2Atom } from "./wizard-v2.atom";
-import { SpinnerAtom } from "../spinner/spinner.atom";
 import { ButtonAtom } from "../button/button.atom";
+import { WizardV2Atom } from "./wizard-v2.atom";
 
 describe("USERCONTROL Wizard V2: ", () => {
     let wizard: WizardV2Atom;
@@ -23,7 +22,7 @@ describe("USERCONTROL Wizard V2: ", () => {
         removeStepBtn = Atom.find(ButtonAtom, "nui-remove-wizard-step-button");
     });
 
-    describe("wizard v2 > ",  () => {
+    describe("wizard v2 > ", () => {
         it("should have 3 steps", async () => {
             const steps = await wizard.steps;
 
@@ -57,11 +56,11 @@ describe("USERCONTROL Wizard V2: ", () => {
             Helpers.pressKey(Key.ESCAPE);
         });
 
-        it("should wizard be displayed",  async () => {
+        it("should wizard be displayed", async () => {
             expect(await wizardDialog.isDisplayed()).toEqual(true);
         });
 
-        it("should wizard disappear when CANCEL button is pressed",  async () => {
+        it("should wizard disappear when CANCEL button is pressed", async () => {
             const cancelBtn = wizardDialog.footer.getElement().element(by.className("cancel"));
 
             await cancelBtn.click();

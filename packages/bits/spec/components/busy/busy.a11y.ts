@@ -4,7 +4,7 @@ import { BusyAtom } from "../public_api";
 
 describe("a11y: busy", () => {
     let switchBusyState: ElementFinder;
-    let rulesToDisable: string[] = ["color-contrast", "aria-progressbar-name", "duplicate-id"];
+    const rulesToDisable: string[] = ["color-contrast", "aria-progressbar-name", "duplicate-id"];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("busy/busy-visual-test");

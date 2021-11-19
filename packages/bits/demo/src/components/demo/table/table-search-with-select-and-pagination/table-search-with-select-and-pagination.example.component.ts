@@ -31,7 +31,8 @@ export class TableSearchWithSelectAndPaginationComponent implements AfterViewIni
     public selection: ISelection = {
         isAllPages: false,
         include: [],
-        exclude: []};
+        exclude: [],
+    };
     @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
     @ViewChild("filteringSearch") filteringSearch: SearchComponent;
     @ViewChild("filteringTable") filteringTable: TableComponent<IExampleTableModel>;
@@ -43,7 +44,7 @@ export class TableSearchWithSelectAndPaginationComponent implements AfterViewIni
         dataSourceService.setData(getData());
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
                 componentInstance: this.filteringSearch,
@@ -64,23 +65,23 @@ export class TableSearchWithSelectAndPaginationComponent implements AfterViewIni
         this.dataSourceService.applyFilters();
     }
 
-    public onSearch(value?: string) {
-        this.dataSourceService.applyFilters();
+    public async onSearch(value?: string): Promise<void> {
+        await this.dataSourceService.applyFilters();
     }
 
-    public onSearchCancel() {
-        this.dataSourceService.applyFilters();
+    public async onSearchCancel(): Promise<void> {
+        await this.dataSourceService.applyFilters();
     }
 
-    public changePagination($event: any) {
-        this.dataSourceService.applyFilters();
+    public async changePagination($event: any): Promise<void> {
+        await this.dataSourceService.applyFilters();
     }
 
-    public trackBy(index: number, item: IExampleTableModel) {
+    public trackBy(index: number, item: IExampleTableModel): number {
         return item.position;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.searchSubscription.unsubscribe();
         this.outputsSubscription.unsubscribe();
     }

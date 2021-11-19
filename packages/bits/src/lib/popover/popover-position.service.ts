@@ -32,7 +32,7 @@ export class PopoverPositionService {
         this.popoverPositions = getPopoverPositions();
     }
 
-    public setPopoverOffset(panelClass: string | string[], elRefHeight: number, overlayRefElement: HTMLElement) {
+    public setPopoverOffset(panelClass: string | string[], elRefHeight: number, overlayRefElement: HTMLElement): void {
         const ARROW_SIZE = OVERLAY_ARROW_SIZE;
         const popoverOffsetY = this.calculateOffsetY(elRefHeight);
 

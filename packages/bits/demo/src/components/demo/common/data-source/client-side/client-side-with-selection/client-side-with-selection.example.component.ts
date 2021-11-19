@@ -33,7 +33,7 @@ export class DataSourceWithSelectionExampleComponent implements AfterViewInit, O
         dataSourceService.setData(getData());
     }
 
-    async ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.registerComponent({
             search: {
                 componentInstance: this.search,
@@ -53,22 +53,22 @@ export class DataSourceWithSelectionExampleComponent implements AfterViewInit, O
             this.changeDetection.detectChanges();
         });
 
-        await this.applyFilters();
+        this.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public onSelectorOutput(selectionType: SelectionType) {
+    public onSelectorOutput(selectionType: SelectionType): void {
         this.state = this.listService.applySelector(selectionType, this.state);
     }
 
-    public onRepeatOutput(selectedItems: IExampleItem[]) {
+    public onRepeatOutput(selectedItems: IExampleItem[]): void {
         this.state = this.listService.selectItems(selectedItems, RepeatSelectionMode.multi, this.state);
     }
 }

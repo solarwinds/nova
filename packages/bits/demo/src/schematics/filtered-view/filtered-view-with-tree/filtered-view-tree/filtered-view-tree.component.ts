@@ -60,7 +60,7 @@ export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
     ) {
     }
 
-    async ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSource.outputsSubject.pipe(
             tap((data: any) => {
                 // update the list of items to be rendered
@@ -70,17 +70,17 @@ export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
             takeUntil(this.destroy$)
         ).subscribe();
 
-        await this.applyFilters();
+        this.applyFilters();
     }
 
-    hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
+    hasChild = (_: number, node: any): boolean => !!node.children && node.children.length > 0;
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 }

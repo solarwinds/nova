@@ -15,7 +15,7 @@ export class TextboxGettingValueExampleComponent implements AfterViewInit {
 
     @ViewChild("textboxValueChangedExample") textbox: TextboxComponent;
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.textbox.textChange.pipe(
             tap(value => this.textboxValueChangedValue = value as string),
             takeUntil(this.destroy$)

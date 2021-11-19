@@ -41,15 +41,15 @@ export class ConfirmationDialogComponent {
                 private changeDetector: ChangeDetectorRef) {
     }
 
-    public updateInputs() {
+    public updateInputs(): void {
         this.changeDetector.detectChanges();
     }
 
-    public close(result: boolean) {
+    public close(result: boolean): void {
         this.activeDialog.close(result);
     }
 
-    public dismiss() {
+    public dismiss(): void {
         this.activeDialog.dismiss();
     }
 
@@ -57,7 +57,7 @@ export class ConfirmationDialogComponent {
         return this.setFocus === buttonType ? true : false;
     }
 
-    public getAriaLabel() {
+    public getAriaLabel(): string {
         return (this.severity ? `${this.severity} ${this.title}` : this.title) || this.ariaLabel;
     }
 

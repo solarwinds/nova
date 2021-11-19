@@ -17,9 +17,9 @@ export class CheckboxGroupTestComponent implements OnInit {
     public hints = [this.cabbage, this.tomato];
     public selectedVegetables = [this.potato, this.tomato, this.disabledOne];
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.testForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control({
                 value: this.selectedVegetables, disabled: true,

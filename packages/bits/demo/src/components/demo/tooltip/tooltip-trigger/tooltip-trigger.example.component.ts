@@ -10,16 +10,16 @@ export class TooltipTriggerExampleComponent {
     public tooltipText = "I am a Tooltip!";
     public isDisabled = false;
 
-    constructor() {}
+    constructor() { }
 
-    public disableTooltip(state: boolean) {
+    public disableTooltip(state: boolean): void {
         this.isDisabled = state;
         // We only set the tooltip to a disabled state above to hide the tooltip.
         // Now we want to enable it back, so it works with the click event.
         setTimeout(() => this.isDisabled = !state, 0);
     }
 
-    public handleClick(event: MouseEvent, tooltip: TooltipDirective) {
+    public handleClick(event: MouseEvent, tooltip: TooltipDirective): void {
         event.stopPropagation();
         tooltip.show();
     }

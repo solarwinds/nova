@@ -10,13 +10,14 @@ import { DialogContentExampleComponent } from "../component-as-content/dialog-co
     templateUrl: "./dialog-after-opened.example.component.html",
 })
 export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-                @Inject(ToastService) private toastService: ToastService) {
-    }
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(ToastService) private toastService: ToastService
+    ) { }
 
     public destroy$$: Subject<void> = new Subject<void>();
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dialogService.afterOpened$.pipe(
             takeUntil(this.destroy$$)
         ).subscribe((dialog: NuiDialogRef) => {
@@ -26,12 +27,12 @@ export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
         });
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$$.next();
         this.destroy$$.complete();
     }
 
-    public openConfirmationDialog() {
+    public openConfirmationDialog(): void {
         this.dialogService.confirm({
             message: $localize`Are you sure you want to do it?`,
             severity: "info",
@@ -40,8 +41,8 @@ export class DialogAfterOpenedExampleComponent implements OnInit, OnDestroy {
         });
     }
 
-    public openWithComponent() {
+    public openWithComponent(): void {
         const dialogRef = this.dialogService.open(DialogContentExampleComponent, { size: "sm" });
-        dialogRef.componentInstance.name = $localize `Dialog title`;
+        dialogRef.componentInstance.name = $localize`Dialog title`;
     }
 }

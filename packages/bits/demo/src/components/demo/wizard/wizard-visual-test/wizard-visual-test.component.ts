@@ -27,13 +27,16 @@ export class WizardVisualTestComponent implements OnInit {
 
     private activeDialog: NuiDialogRef;
 
-    constructor(private formBuilder: FormBuilder,
-                @Inject(DialogService) private dialogService: DialogService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(DialogService) private dialogService: DialogService
+    ) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            name: this.formBuilder.control("",
-                                           Validators.required),
+            name: this.formBuilder.control("", [
+                Validators.required,
+            ]),
             email: this.formBuilder.control("", [
                 Validators.required,
                 Validators.pattern("[^ @]*@[^ @]*"),
@@ -45,48 +48,48 @@ export class WizardVisualTestComponent implements OnInit {
         });
     }
 
-    public onOptionChange(value: string) {
+    public onOptionChange(value: string): void {
         this.hint = value;
     }
 
-    public makeSecondStepBusy() {
+    public makeSecondStepBusy(): void {
         this.secondStepBusyConfig.busy = true;
-        this.wizardComponent.navigationControl.next({ busyState: this.secondStepBusyConfig, allowStepChange: false});
+        this.wizardComponent.navigationControl.next({ busyState: this.secondStepBusyConfig, allowStepChange: false });
         setTimeout(() => {
             this.secondStepBusyConfig.busy = false;
-            this.wizardComponent.navigationControl.next({ busyState: this.secondStepBusyConfig, allowStepChange: true});
+            this.wizardComponent.navigationControl.next({ busyState: this.secondStepBusyConfig, allowStepChange: true });
         }, 1000);
     }
 
-    public onCancelClick(content: TemplateRef<string>) {
+    public onCancelClick(content: TemplateRef<string>): void {
         if (this.wizardComponent.steps.toArray().filter((step: WizardStepComponent) => step.complete).length !== 0) {
-            this.activeDialog = this.dialogService.open(content, {size: "sm"});
+            this.activeDialog = this.dialogService.open(content, { size: "sm" });
         }
     }
 
-    public select(event: IWizardSelectionEvent) {
+    public select(event: IWizardSelectionEvent): void {
         this.selectedIndex = event.selectedIndex;
     }
 
-    public preventGoingNext() {
+    public preventGoingNext(): void {
         this.busyConfig.busy = true;
-        this.wizardComponent.navigationControl.next({ busyState: this.busyConfig, allowStepChange: false});
+        this.wizardComponent.navigationControl.next({ busyState: this.busyConfig, allowStepChange: false });
         setTimeout(() => {
             this.busyConfig.busy = false;
-            this.wizardComponent.navigationControl.next({ busyState: this.busyConfig, allowStepChange: true});
+            this.wizardComponent.navigationControl.next({ busyState: this.busyConfig, allowStepChange: true });
         }, 1000);
     }
 
-    public openDialog(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "lg"});
+    public openDialog(content: TemplateRef<string>): void {
+        this.activeDialog = this.dialogService.open(content, { size: "lg" });
     }
 
-    public closeDialog() {
+    public closeDialog(): void {
         this.activeDialog.close();
     }
 
-    public makeStepBusy() {
+    public makeStepBusy(): void {
         this.busyConfig.busy = true;
-        this.dialogWizardBusy.navigationControl.next({ busyState: this.busyConfig, allowStepChange: false});
+        this.dialogWizardBusy.navigationControl.next({ busyState: this.busyConfig, allowStepChange: false });
     }
 }

@@ -53,10 +53,10 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
     };
 
     constructor(@Inject(DataSourceService) public dataSource: DataSourceService<IFilterGroupOption>,
-                public changeDetection: ChangeDetectorRef) {
+        public changeDetection: ChangeDetectorRef) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         (this.dataSource as ClientSideDataSource<IFilterGroupOption>).setData(this.itemPickerOptions);
         this.selection = {
             isAllPages: false,
@@ -71,11 +71,11 @@ export class ItemPickerComponent implements OnInit, AfterViewInit {
         this.dataSource.applyFilters();
     }
 
-    public applyFilters() {
+    public async applyFilters(): Promise<void> {
         this.dataSource.applyFilters();
     }
 
-    public onSelection(selection: ISelection) {
+    public onSelection(selection: ISelection): void {
         this.selection = selection;
         this.selectionChanged.emit(this.selection);
     }

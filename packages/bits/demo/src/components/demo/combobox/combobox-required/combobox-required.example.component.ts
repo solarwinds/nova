@@ -13,16 +13,16 @@ export class ComboboxRequiredExampleComponent implements OnInit {
         selectedItem: "",
     };
 
-    ngOnInit() {
-        this.isInErrorState();
+    ngOnInit(): void {
+        this.checkErrorState();
     }
 
     public valueChange(changedEvent: ISelectChangedEvent<string>): void {
         this.dataset.selectedItem = changedEvent.newValue;
-        this.isInErrorState();
+        this.checkErrorState();
     }
 
-    public isInErrorState(): void {
+    public checkErrorState(): void {
         this.errorState = this.isRequired &&
             (!this.dataset.selectedItem || !(this.dataset.items.indexOf(this.dataset.selectedItem) !== -1));
     }

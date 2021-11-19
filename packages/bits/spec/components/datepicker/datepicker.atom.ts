@@ -9,10 +9,12 @@ import { TextboxAtom } from "../textbox/textbox.atom";
 export class DatepickerAtom extends Atom {
     public static EXPECTED_FORMAT = "DD MMM YYYY";
     public static CSS_CLASS = "nui-datepicker";
-    public static MONTHNAMES_SHORT: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                                                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    public static MONTHNAMES_LONG: string[] = ["January", "February", "March", "April", "May", "June",
-                                               "July", "August", "September", "October", "November", "December"];
+
+    public static MONTHNAMES_SHORT: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    public static MONTHNAMES_LONG: string[] = [
+        "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
+    ];
 
     public overlay = Atom.findIn(OverlayAtom, this.getElement());
     public textbox = Atom.findIn(TextboxAtom, this.getElement());
@@ -93,9 +95,9 @@ export class DatepickerAtom extends Atom {
 
     public async getTitleText(): Promise<string> { return super.getElement().element(by.css("button[id*='title']")).getText(); }
 
-    public async goNext() { return super.getElement().element(by.css("button[icon='caret-right']")).click(); }
+    public async goNext(): Promise<void> { await super.getElement().element(by.css("button[icon='caret-right']")).click(); }
 
-    public async goBack(): Promise<void> { return super.getElement().element(by.css("button[icon='caret-left']")).click(); }
+    public async goBack(): Promise<void> { await super.getElement().element(by.css("button[icon='caret-left']")).click(); }
 
     public clickInput = async (): Promise<void> => this.getInput().click();
 

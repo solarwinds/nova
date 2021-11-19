@@ -30,11 +30,11 @@ export class TimePickerReactiveFormTestComponent implements OnInit {
     public myForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder,
-                @Inject(ToastService) public toastService: ToastService) {}
+        @Inject(ToastService) public toastService: ToastService) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            testTimePicker: this.formBuilder.control( this.time, [Validators.required]),
+            testTimePicker: this.formBuilder.control(this.time, [Validators.required]),
         });
     }
 
@@ -42,8 +42,8 @@ export class TimePickerReactiveFormTestComponent implements OnInit {
         this.time = time;
     }
 
-    public onSubmit() {
-        this.myForm.valid ? this.toastService.success({message: "Your form is valid!"}) :
-            this.toastService.error({message: "Your form is invalid!"});
+    public onSubmit(): void {
+        this.myForm.valid ? this.toastService.success({ message: "Your form is valid!" }) :
+            this.toastService.error({ message: "Your form is invalid!" });
     }
 }

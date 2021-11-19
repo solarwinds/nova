@@ -11,31 +11,31 @@ export class ComboboxTypeaheadExampleComponent {
         {
             header: "Group 1 header",
             items: [
-                {label: "Item 111", value: "Value 1"},
-                {label: "Item 112", value: "Value 2"},
-                {label: "Item 123", value: "Value 3"},
+                { label: "Item 111", value: "Value 1" },
+                { label: "Item 112", value: "Value 2" },
+                { label: "Item 123", value: "Value 3" },
             ],
         },
         {
             header: "Group 2 header",
             items: [
-                {label: "Item 111", value: "Value 5"},
-                {label: "Item 212", value: "Value 6"},
-                {label: "Item 312", value: "Value 7"},
+                { label: "Item 111", value: "Value 5" },
+                { label: "Item 212", value: "Value 6" },
+                { label: "Item 312", value: "Value 7" },
             ],
         },
         {
             header: "Group 3 header",
             items: [
-                {label: "Item 456", value: "Value 7"},
-                {label: "Item 345", value: "Value 8"},
-                {label: "Item 414", value: "Value 9"},
+                { label: "Item 456", value: "Value 7" },
+                { label: "Item 345", value: "Value 8" },
+                { label: "Item 414", value: "Value 9" },
             ],
         },
     ];
     public displayedItems = this.dataset;
 
-    public textboxChanged(searchQuery: ISelectChangedEvent<any>) {
+    public textboxChanged(searchQuery: ISelectChangedEvent<any>): void {
         this.displayedItems = _cloneDeep(this.dataset);
         this.displayedItems.forEach(group => {
             group.items = group.items.filter(item => {
@@ -45,7 +45,7 @@ export class ComboboxTypeaheadExampleComponent {
                 const itemLabel = item.label.toLowerCase();
                 const val = searchQuery.newValue;
                 return itemLabel.includes(val.toLowerCase())
-                || itemLabel.includes(val.label && val.label.toLowerCase());
+                    || itemLabel.includes(val.label && val.label.toLowerCase());
             });
         });
     }

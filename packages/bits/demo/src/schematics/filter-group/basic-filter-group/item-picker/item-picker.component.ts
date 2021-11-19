@@ -72,10 +72,10 @@ export class ItemPickerCompositeComponent implements AfterViewInit, OnInit, OnDe
     private outputsSubscription: Subscription;
 
     constructor(@Inject(DataSourceService) public dataSource: DataSourceService<IFilterGroupOption>,
-                public changeDetection: ChangeDetectorRef) {
+        public changeDetection: ChangeDetectorRef) {
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         (this.dataSource as LocalFilteringDataSource<IFilterGroupOption>).setData(this.itemPickerOptions);
         this.selection = {
             isAllPages: false,
@@ -84,7 +84,7 @@ export class ItemPickerCompositeComponent implements AfterViewInit, OnInit, OnDe
         };
     }
 
-    async ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.changeDetection.markForCheck();
 
         // this.dataSource.registerComponent(this.listComposite.getFilterComponents());
@@ -93,20 +93,20 @@ export class ItemPickerCompositeComponent implements AfterViewInit, OnInit, OnDe
             this.filteringState = data;
         });
 
-        await this.dataSource.applyFilters();
+        this.dataSource.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.outputsSubscription) {
             this.outputsSubscription.unsubscribe();
         }
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSource.applyFilters();
     }
 
-    public onSelection(selection: ISelection) {
+    public onSelection(selection: ISelection): void {
         this.selection = selection;
         this.selectionChanged.emit(this.selection);
     }

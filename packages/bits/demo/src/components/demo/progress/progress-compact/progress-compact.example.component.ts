@@ -7,7 +7,7 @@ import { Component } from "@angular/core";
 export class ProgressCompactExampleComponent {
     public show = false;
 
-    public toggleProgress() {
+    public toggleProgress(): void {
         this.show = !this.show;
     }
 }

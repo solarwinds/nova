@@ -1,4 +1,4 @@
-import {by, ElementArrayFinder, ElementFinder} from "protractor";
+import { by, ElementArrayFinder, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 
@@ -23,7 +23,7 @@ export class TreeAtom extends Atom {
             .filter(async item => (await item.getText()) === name);
     }
 
-    public async expandAll(el: ElementFinder = this.root) {
+    public async expandAll(el: ElementFinder = this.root): Promise<void> {
         for (const expander of (await this.getNestedNodes(el))) {
             const expanded = await this.isExpanded(expander);
             if (!expanded) {
@@ -36,7 +36,7 @@ export class TreeAtom extends Atom {
         }
     }
 
-    public expandLevel = async () => {
+    public expandLevel = async (): Promise<void> => {
         this.getCollapsedExpanders().each(async (i: ElementFinder | undefined) => {
             const displayed = await i?.isDisplayed();
             if (displayed) {

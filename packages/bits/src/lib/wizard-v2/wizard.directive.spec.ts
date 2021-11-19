@@ -7,7 +7,7 @@ import { WizardFooterComponent } from "./wizard-footer/wizard-footer.component";
 import { WizardStepLabelDirective } from "./wizard-step-label.directive";
 import { WizardStepFooterDirective } from "./wizard-step-footer.directive";
 import { WizardStepperNextDirective, WizardStepperPreviousDirective } from "./wizard-button/wizard-button";
-import { CdkStepper, STEP_STATE } from "@angular/cdk/stepper";
+import { CdkStepper } from "@angular/cdk/stepper";
 
 @Component({
     selector: "nui-test-cmp",
@@ -18,7 +18,7 @@ import { CdkStepper, STEP_STATE } from "@angular/cdk/stepper";
             <nui-wizard-step-v2 label="step3"></nui-wizard-step-v2>
         </div>`,
 })
-class TestWrapperComponent extends WizardDirective {}
+class TestWrapperComponent extends WizardDirective { }
 
 describe("directives >", () => {
     describe("WizardDirective", () => {

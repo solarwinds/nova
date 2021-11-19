@@ -11,10 +11,10 @@ import {
     ViewChild,
 } from "@angular/core";
 
-import {ResizerDirective} from "../../../common/directives";
-import {ResizeDirection, resizeDirectionHelpers, ResizeUnit} from "../../../common/directives/resizer/public-api";
-import {EventBusService} from "../../../services/event-bus.service";
-import {UtilService} from "../../../services/util.service";
+import { ResizerDirective } from "../../../common/directives";
+import { ResizeDirection, resizeDirectionHelpers, ResizeUnit } from "../../../common/directives/resizer/public-api";
+import { EventBusService } from "../../../services/event-bus.service";
+import { UtilService } from "../../../services/util.service";
 
 /**
  * @ignore
@@ -37,12 +37,14 @@ export class LayoutResizerComponent extends ResizerDirective implements OnInit, 
     @Input() enableSeparateOffsetSize: boolean;
     @ViewChild("resizerSplit") resizerSplitEl: ElementRef;
 
-    constructor(private _elRef: ElementRef,
-                private _renderer: Renderer2,
-                private _utilService: UtilService,
-                private _targetElement: ElementRef,
-                private _ngZone: NgZone,
-                private _eventBusService: EventBusService) {
+    constructor(
+        private _elRef: ElementRef,
+        private _renderer: Renderer2,
+        private _utilService: UtilService,
+        private _targetElement: ElementRef,
+        private _ngZone: NgZone,
+        private _eventBusService: EventBusService
+    ) {
         super(_elRef, _renderer, _utilService, _targetElement, _ngZone, _eventBusService);
     }
 
@@ -57,7 +59,7 @@ export class LayoutResizerComponent extends ResizerDirective implements OnInit, 
         return super.isResizeHorizontal();
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.resizerDirection = this.resizeDirection;
         this.resizerDisabled = this.disabled;
         this.resizerValue = this.resizeUnit;
@@ -65,7 +67,7 @@ export class LayoutResizerComponent extends ResizerDirective implements OnInit, 
         this.offsetSize = this.enableSeparateOffsetSize ? 0 : this._size / 2;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // This Overrides ResizerDirective's ngAfterViewInit
         this.resizePropObj = resizeDirectionHelpers[this.resizeDirection];
         this.targetElement = this.resizeElement.elRef;
@@ -78,7 +80,7 @@ export class LayoutResizerComponent extends ResizerDirective implements OnInit, 
         this.refreshStyle();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.unlistenEvents();
     }
 }

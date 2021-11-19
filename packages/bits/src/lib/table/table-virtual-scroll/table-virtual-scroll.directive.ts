@@ -1,14 +1,15 @@
-import { VIRTUAL_SCROLL_STRATEGY } from "@angular/cdk/scrolling";
+import { VirtualScrollStrategy, VIRTUAL_SCROLL_STRATEGY } from "@angular/cdk/scrolling";
 import { Directive, forwardRef, Input, OnChanges } from "@angular/core";
 
 import { ComponentChanges } from "../../../types";
 
+// eslint-disable-next-line import/no-deprecated
 import { TableVirtualScrollLinearStrategy, TableVirtualScrollStrategy } from "./table-virtual-scroll-strategy";
 
 export const DEFAULT_TABLE_HEADER_OFFSET = 40;
 export const TABLE_ROW_HEIGHT = 24;
 
-export function complexScrollStrategyFactory(scroll: TableVirtualScrollDirective | TableVirtualScrollLinearDirective) {
+export function complexScrollStrategyFactory(scroll: TableVirtualScrollDirective | TableVirtualScrollLinearDirective): VirtualScrollStrategy {
     return scroll.scrollStrategy;
 }
 
@@ -32,7 +33,7 @@ export class TableVirtualScrollLinearDirective implements OnChanges {
     // without square brackets in the template
     public scrollStrategy = new TableVirtualScrollLinearStrategy(+this.rowHeight);
 
-    public ngOnChanges(changes: ComponentChanges<TableVirtualScrollLinearDirective>) {
+    public ngOnChanges(changes: ComponentChanges<TableVirtualScrollLinearDirective>): void {
         this.scrollStrategy.setRowHeight(+this.rowHeight);
 
         if (changes.rowCount) {
@@ -44,7 +45,7 @@ export class TableVirtualScrollLinearDirective implements OnChanges {
      * Updates the size of the items in the virtually scrolling list.
      * @param length
      */
-    public updateDataLength(length: number) {
+    public updateDataLength(length: number): void {
         this.scrollStrategy.setDataLength(length);
     }
 }
@@ -73,7 +74,7 @@ export class TableVirtualScrollDirective implements OnChanges {
     // without square brackets in the template
     public scrollStrategy = new TableVirtualScrollStrategy(+this.rowHeight, +this.offset);
 
-    public ngOnChanges() {
+    public ngOnChanges(): void {
         this.scrollStrategy.setScrollHeight(+this.rowHeight, +this.offset);
     }
 
@@ -81,11 +82,11 @@ export class TableVirtualScrollDirective implements OnChanges {
      * Updates the size of the items in the virtually scrolling list.
      * @param length
      */
-    public updateDataLength(length: number) {
+    public updateDataLength(length: number): void {
         this.scrollStrategy.setDataLength(length);
     }
 
-    public setMaxItems(maxItems: number) {
+    public setMaxItems(maxItems: number): void {
         this.scrollStrategy.maxItems = maxItems;
     }
 }

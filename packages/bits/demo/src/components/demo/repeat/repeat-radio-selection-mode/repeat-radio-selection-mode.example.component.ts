@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: "nui-repeat-radio-selection-mode-example",
@@ -6,19 +6,19 @@ import {Component, Input} from "@angular/core";
 })
 export class RepeatRadioSelectionModeExampleComponent {
     @Input() public colors = [
-        { color: $localize `blue` },
-        { color: $localize `green` },
-        { color: $localize `yellow` },
-        { color: $localize `cyan` },
-        { color: $localize `magenta` },
-        { color: $localize `black` },
+        { color: $localize`blue` },
+        { color: $localize`green` },
+        { color: $localize`yellow` },
+        { color: $localize`cyan` },
+        { color: $localize`magenta` },
+        { color: $localize`black` },
     ];
 
     public selectedColors = [this.colors[1]];
 
     constructor() { }
 
-    public onColorSelectionChange(selection: any) {
+    public onColorSelectionChange(selection: any): void {
         this.selectedColors = selection;
     }
 }

@@ -42,12 +42,12 @@ export class SelectorAtom extends Atom {
         return Atom.findIn(ButtonAtom, buttonContainer);
     }
 
-    public async clickItemByText(title: string) {
-        return Atom.findIn(MenuPopupAtom, this.getElement().element(by.className("nui-menu-popup"))).clickItemByText(title);
+    public async clickItemByText(title: string): Promise<void> {
+        await Atom.findIn(MenuPopupAtom, this.getElement().element(by.className("nui-menu-popup"))).clickItemByText(title);
     }
 
-    public async clickAppendedToBodyItemByText(title: string) {
-        return Atom.findIn(MenuPopupAtom, browser.element(by.css("body .nui-overlay .nui-menu-popup"))).clickItemByText(title);
+    public async clickAppendedToBodyItemByText(title: string): Promise<void> {
+        await Atom.findIn(MenuPopupAtom, browser.element(by.css("body .nui-overlay .nui-menu-popup"))).clickItemByText(title);
     }
 
     private getToggle(): ElementFinder {

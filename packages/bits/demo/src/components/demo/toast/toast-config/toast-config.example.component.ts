@@ -10,14 +10,14 @@ export class ToastConfigExampleComponent implements OnInit {
 
     constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.toastService.setConfig({}, "id");
     }
 
     public onShowToast(highlightMode: boolean): void {
         this.toastService.info({
-            title: $localize `Toast Configuration`,
-            message: $localize `I'm pretty easy to configure`,
+            title: $localize`Toast Configuration`,
+            message: $localize`I'm pretty easy to configure`,
             options: this.getOptions(),
         });
     }

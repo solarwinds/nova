@@ -26,14 +26,14 @@ const TREE_DATA: FoodNode[] = [
 class HttpMock {
     get(): Observable<FoodNode[]> {
         const res: FoodNode[] = [
-            {name: "Banana"},
+            { name: "Banana" },
             {
                 name: "Fruit",
                 children: [],
                 length: 3,
                 isLoading: false,
             },
-            {name: "Fruit loops"},
+            { name: "Fruit loops" },
         ];
         return of(res).pipe(delay(3000));
     }
@@ -53,11 +53,12 @@ export class TreeLazyExampleComponent {
 
     @ViewChild(CdkTree) private cdkTree: CdkTree<FoodNode>;
 
-    hasChild = (_: number, node: FoodNode) => node.length;
+    hasChild = (_: number, node: FoodNode): boolean => !!node.length;
 
-    constructor(private http: HttpMock,
-                private differ: IterableDiffers) {
-    }
+    constructor(
+        private http: HttpMock,
+        private differ: IterableDiffers
+    ) { }
 
     loadMore(node: FoodNode, nestedNode: CdkNestedTreeNode<any>): void {
         const differ: IterableDiffer<FoodNode> = this.differ.find(node.children).create();
@@ -68,7 +69,7 @@ export class TreeLazyExampleComponent {
 
         node.isLoading = true;
 
-        this.http.get().subscribe((res: FoodNode[]) => {
+        this.http.get().subscribe((res: FoodNode[]): void => {
             node.isLoading = false;
             node.children = res;
             this.cdkTree.renderNodeChanges(node.children, differ, nestedNode.nodeOutlet.first.viewContainer, node);

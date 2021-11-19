@@ -86,7 +86,7 @@ export class TableWithSelectionComponent implements OnInit, OnDestroy, AfterView
     ) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -96,7 +96,7 @@ export class TableWithSelectionComponent implements OnInit, OnDestroy, AfterView
         ).subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // register filter to be able to sort
         this.dataSource.registerComponent(this.table.getFilterComponents());
         this.dataSource.registerComponent({
@@ -117,36 +117,36 @@ export class TableWithSelectionComponent implements OnInit, OnDestroy, AfterView
         this.search.inputChange.pipe(
             debounceTime(500),
             // perform actual search
-            tap(() => this.onSearch()),
+            tap(async () => this.onSearch()),
             takeUntil(this.destroy$)
         ).subscribe();
 
-        await this.applyFilters();
+        this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async onSearch() {
+    public async onSearch(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async onSearchCancel() {
+    public async onSearchCancel(): Promise<void> {
         await this.applyFilters();
     }
 
-    public async sortData(sortedColumn: ISortedItem) {
+    public async sortData(sortedColumn: ISortedItem): Promise<void> {
         this.sortedColumn = sortedColumn;
         await this.applyFilters();
     }
 
-    public async changePagination($event: any) {
+    public async changePagination($event: any): Promise<void> {
         await this.applyFilters();
     }
 
-    public onSelectionChanged(selection: ISelection) {
+    public onSelectionChanged(selection: ISelection): void {
         // do something with the selection
 
         // make component aware of the new selection value
@@ -155,11 +155,11 @@ export class TableWithSelectionComponent implements OnInit, OnDestroy, AfterView
     }
 
     // trackBy handler used to identify uniquely each item in the table
-    public trackBy(index: number, item: IServer) {
+    public trackBy(index: number, item: IServer): string {
         return item.name;
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSource.applyFilters();
     }
 }

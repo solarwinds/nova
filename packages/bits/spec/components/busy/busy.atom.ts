@@ -16,7 +16,7 @@ export class BusyAtom extends Atom {
 
     public isBusy = async (): Promise<boolean> => this.root.element(by.css(".nui-nova-busy__overlay")).isPresent();
 
-    public getProgress = () => Atom.findIn(ProgressAtom, this.root);
+    public getProgress = (): ProgressAtom => Atom.findIn(ProgressAtom, this.root);
 
-    public getSpinner = () => Atom.findIn(SpinnerAtom, this.root);
+    public getSpinner = (): SpinnerAtom => Atom.findIn(SpinnerAtom, this.root);
 }

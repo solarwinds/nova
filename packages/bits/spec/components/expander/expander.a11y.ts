@@ -6,7 +6,7 @@ import { ExpanderAtom } from "../public_api";
 describe("a11y: expander", () => {
     let basicExpander: ExpanderAtom;
     let lineLessExpander: ExpanderAtom;
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "aria-required-children",
         "aria-dialog-name",
         "landmark-unique",

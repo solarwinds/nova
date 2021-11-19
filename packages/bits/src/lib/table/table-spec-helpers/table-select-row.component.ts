@@ -104,7 +104,7 @@ export class TableSelectTestComponent {
     constructor(public changeDetection: ChangeDetectorRef) {
     }
 
-    public onSelectorChange(selection: ISelection) {
+    public onSelectorChange(selection: ISelection): void {
         this.selectedItems = selection;
     }
 }

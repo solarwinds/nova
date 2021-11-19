@@ -24,21 +24,21 @@ interface ExampleItem {
 }
 
 const RANDOM_ARRAY = [
-    {color: "yellow", name: "banana"},
-    {color: "orange", name: "orange"},
-    {color: "violet", name: "plum"},
-    {color: "blue", name: "blueberry"},
-    {color: "brown", name: "potato"},
-    {color: "red", name: "apple"},
-    {color: "green", name: "pear"},
-    {color: "black", name: "blackcurrant"},
-    {color: "white", name: "coconut"},
-    {color: "magenta", name: "mulberry"},
-    {color: "apricot", name: "peach"},
-    {color: "olive", name: "olive"},
-    {color: "carmine", name: "grapefruit"},
-    {color: "coral", name: "pomegranate"},
-    {color: "corn", name: "corn"},
+    { color: "yellow", name: "banana" },
+    { color: "orange", name: "orange" },
+    { color: "violet", name: "plum" },
+    { color: "blue", name: "blueberry" },
+    { color: "brown", name: "potato" },
+    { color: "red", name: "apple" },
+    { color: "green", name: "pear" },
+    { color: "black", name: "blackcurrant" },
+    { color: "white", name: "coconut" },
+    { color: "magenta", name: "mulberry" },
+    { color: "apricot", name: "peach" },
+    { color: "olive", name: "olive" },
+    { color: "carmine", name: "grapefruit" },
+    { color: "coral", name: "pomegranate" },
+    { color: "corn", name: "corn" },
 ];
 
 @Component({
@@ -204,8 +204,8 @@ export class DialogFilterGroupExampleComponent implements AfterViewInit, OnDestr
     private dialogSubscription: Subscription;
 
     constructor(@Inject(DataSourceService) public dataSourceService: DataSourceService<ExampleItem>,
-                @Inject(DialogService) private dialogService: DialogService,
-                private filterGroupService: FilterGroupService) {
+        @Inject(DialogService) private dialogService: DialogService,
+        private filterGroupService: FilterGroupService) {
         (this.dataSourceService as LocalFilteringDataSource<ExampleItem>).setData(RANDOM_ARRAY);
     }
 
@@ -218,7 +218,7 @@ export class DialogFilterGroupExampleComponent implements AfterViewInit, OnDestr
         this.dataSourceService.applyFilters();
     }
 
-    public changeFilters(event: IFilterGroupItem) {
+    public changeFilters(event: IFilterGroupItem): void {
         this.dataSourceService.applyFilters();
     }
 
@@ -226,7 +226,7 @@ export class DialogFilterGroupExampleComponent implements AfterViewInit, OnDestr
         return !_isEmpty(_get(this, "filteringState.repeat.itemsSource"));
     }
 
-    public handleFilterDialog(filterGroupItem: IFilterGroupItem) {
+    public handleFilterDialog(filterGroupItem: IFilterGroupItem): void {
         const dialogRef = this.dialogService.open(FilterGroupCompositeDialogComponent);
         dialogRef.componentInstance.title = "Filter dialog";
         dialogRef.componentInstance.itemPickerOptions = filterGroupItem.allFilterOptions;
@@ -247,7 +247,7 @@ export class DialogFilterGroupExampleComponent implements AfterViewInit, OnDestr
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.outputsSubscription) {
             this.outputsSubscription.unsubscribe();
         }

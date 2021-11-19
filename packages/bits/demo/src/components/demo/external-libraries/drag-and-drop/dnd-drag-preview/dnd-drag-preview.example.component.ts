@@ -1,6 +1,6 @@
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {Component} from "@angular/core";
-import {IRepeatItem} from "@nova-ui/bits";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Component } from "@angular/core";
+import { IRepeatItem } from "@nova-ui/bits";
 
 interface IListItem extends IRepeatItem {
     title: string;
@@ -28,7 +28,7 @@ export class DndDragPreviewExampleComponent {
         },
     ];
 
-    public onItemDropped(event: CdkDragDrop<IListItem[]>) {
+    public onItemDropped(event: CdkDragDrop<IListItem[]>): void {
         moveItemInArray(this.listItems, event.previousIndex, event.currentIndex);
     }
 }

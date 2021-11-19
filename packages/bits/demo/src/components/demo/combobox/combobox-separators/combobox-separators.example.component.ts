@@ -27,7 +27,7 @@ export class ComboboxSeparatorsExampleComponent {
 
     constructor() { }
 
-    public textboxChanged(searchQuery: ISelectChangedEvent<string>) {
+    public textboxChanged(searchQuery: ISelectChangedEvent<string>): void {
         this.displayedItems = _cloneDeep(this.dataset.itemsInGroups);
         this.displayedItems.forEach(items => {
             items.items = items.items.filter(item => item.includes(searchQuery.newValue));

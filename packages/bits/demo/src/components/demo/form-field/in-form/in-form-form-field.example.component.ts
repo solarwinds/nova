@@ -9,11 +9,11 @@ import moment from "moment/moment";
 export class FormFieldInFormExampleComponent implements OnInit {
     public fancyForm: FormGroup;
 
-    public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
+    public vegetables = [$localize`Cabbage`, $localize`Potato`, $localize`Tomato`, $localize`Carrot`];
 
     constructor(private formBuilder: FormBuilder,
-                private changeDetector: ChangeDetectorRef) {}
-    public ngOnInit() {
+        private changeDetector: ChangeDetectorRef) { }
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({
             textbox: this.formBuilder.control("", [
                 Validators.required,
@@ -24,13 +24,13 @@ export class FormFieldInFormExampleComponent implements OnInit {
             checkbox: this.formBuilder.control(true, [
                 Validators.requiredTrue,
             ]),
-            checkboxGroup: this.formBuilder.control(["Cabbage", "Potato"] , [
+            checkboxGroup: this.formBuilder.control(["Cabbage", "Potato"], [
                 Validators.required,
             ]),
             radioGroup: this.formBuilder.control(this.vegetables[1], [
                 Validators.required,
             ]),
-            switch: this.formBuilder.control(false, [ Validators.requiredTrue,
+            switch: this.formBuilder.control(false, [Validators.requiredTrue,
             ]),
             select: this.formBuilder.control("", [
                 Validators.required,

@@ -332,7 +332,7 @@ export class DatePickerInnerComponent implements AfterContentInit, OnInit, OnCha
         return undefined;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.calendarMoved.complete();
     }
 }

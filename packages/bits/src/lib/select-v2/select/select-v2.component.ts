@@ -59,15 +59,16 @@ export class SelectV2Component extends BaseSelectV2 implements AfterContentInit,
     /** Value of the selected Option that derives in the Select */
     public displayText: string;
 
-    constructor(elRef: ElementRef<HTMLElement>,
-                optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
-                cdRef: ChangeDetectorRef,
-                public liveAnnouncer: LiveAnnouncer
+    constructor(
+        elRef: ElementRef<HTMLElement>,
+        optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
+        cdRef: ChangeDetectorRef,
+        public liveAnnouncer: LiveAnnouncer
     ) {
         super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         super.ngOnChanges(changes);
     }
 
@@ -86,7 +87,7 @@ export class SelectV2Component extends BaseSelectV2 implements AfterContentInit,
 
         // options may be received after value changes, that's why
         // we check "selectedOptions" and "valueChanged" to be set per "value" again in "handleValueChange"
-        merge (this.optionsChanged(), this.valueChanged.pipe(takeUntil(this.destroy$)))
+        merge(this.optionsChanged(), this.valueChanged.pipe(takeUntil(this.destroy$)))
             .subscribe(() => {
                 if (!this.multiselect) {
                     this.defineDisplayText();
@@ -96,7 +97,7 @@ export class SelectV2Component extends BaseSelectV2 implements AfterContentInit,
     }
 
     /** Selects specific Option and set its value to the model */
-    public selectOption(option: SelectV2OptionComponent) {
+    public selectOption(option: SelectV2OptionComponent): void {
         if (option.outfiltered || option.isDisabled) {
             return;
         }
@@ -125,11 +126,11 @@ export class SelectV2Component extends BaseSelectV2 implements AfterContentInit,
      * This can lead to memory leaks.
      * This is a safe guard for preventing memory leaks in derived classes.
      */
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         super.ngOnDestroy();
     }
 
-    private defineDisplayText() {
+    private defineDisplayText(): void {
         this.displayText = this.selectedOptions[0]?.viewValue || "";
     }
 }

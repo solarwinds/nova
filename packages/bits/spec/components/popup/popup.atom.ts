@@ -28,7 +28,7 @@ export class PopupAtom extends Atom {
         return browser.wait(ExpectedConditions.visibilityOf(this.popupBox.getElement()), 500);
     }
 
-    public getPopupBox = () => this.popupBox.getElement();
-    public getPopupBoxDetached = () => this.popupBoxDetached;
-    public getPopupBoxDetachedArea = () => this.popupBoxDetached.getElement().element(by.css(".nui-popup__area"));
+    public getPopupBox = (): ElementFinder => this.popupBox.getElement();
+    public getPopupBoxDetached = (): OverlayContentAtom => this.popupBoxDetached;
+    public getPopupBoxDetachedArea = (): ElementFinder => this.popupBoxDetached.getElement().element(by.css(".nui-popup__area"));
 }

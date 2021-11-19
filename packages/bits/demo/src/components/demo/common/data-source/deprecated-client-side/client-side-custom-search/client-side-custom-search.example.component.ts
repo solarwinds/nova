@@ -9,24 +9,24 @@ import {
 import { Subscription } from "rxjs";
 
 const RANDOM_ARRAY = [
-    {color: "regular-blue"},
-    {color: "regular-green"},
-    {color: "regular-yellow"},
-    {color: "regular-cyan "},
-    {color: "regular-magenta"},
-    {color: "regular-black"},
-    {color: "dark-blue"},
-    {color: "dark-green"},
-    {color: "dark-yellow"},
-    {color: "dark-cyan "},
-    {color: "dark-magenta"},
-    {color: "dark-black"},
-    {color: "light-blue"},
-    {color: "light-green"},
-    {color: "light-yellow"},
-    {color: "light-cyan "},
-    {color: "light-magenta"},
-    {color: "light-black"},
+    { color: "regular-blue" },
+    { color: "regular-green" },
+    { color: "regular-yellow" },
+    { color: "regular-cyan " },
+    { color: "regular-magenta" },
+    { color: "regular-black" },
+    { color: "dark-blue" },
+    { color: "dark-green" },
+    { color: "dark-yellow" },
+    { color: "dark-cyan " },
+    { color: "dark-magenta" },
+    { color: "dark-black" },
+    { color: "light-blue" },
+    { color: "light-green" },
+    { color: "light-yellow" },
+    { color: "light-cyan " },
+    { color: "light-magenta" },
+    { color: "light-black" },
 ];
 
 interface ExampleItem {
@@ -47,7 +47,7 @@ export class ClientSideCustomSearchService extends SearchService {
 @Component({
     selector: "nui-deprecated-client-side-custom-search-example",
     templateUrl: "./client-side-custom-search.example.component.html",
-    providers: [LocalFilteringDataSource, {provide: SearchService, useClass: ClientSideCustomSearchService}],
+    providers: [LocalFilteringDataSource, { provide: SearchService, useClass: ClientSideCustomSearchService }],
 })
 export class DepreacatedDataSourceClientSideCustomSearchExampleComponent implements AfterViewInit, OnDestroy {
     public searchTerm = "";
@@ -71,15 +71,17 @@ export class DepreacatedDataSourceClientSideCustomSearchExampleComponent impleme
 
     private outputsSubscription: Subscription;
 
-    constructor(public dataSourceService: LocalFilteringDataSource<ExampleItem>,
-                public changeDetection: ChangeDetectorRef) {
+    constructor(
+        public dataSourceService: LocalFilteringDataSource<ExampleItem>,
+        public changeDetection: ChangeDetectorRef
+    ) {
         dataSourceService.setData(RANDOM_ARRAY);
 
         this.filters = ["regular", "dark", "light"];
         this.selectedFilters = [];
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             search: {
                 componentInstance: this.filteringSearch,
@@ -98,19 +100,19 @@ export class DepreacatedDataSourceClientSideCustomSearchExampleComponent impleme
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public onSearch(value: string) {
+    public onSearch(value: string): void {
         this.dataSourceService.applyFilters();
     }
 
-    public changePagination() {
+    public changePagination(): void {
         this.dataSourceService.applyFilters();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSourceService.applyFilters();
     }
 }

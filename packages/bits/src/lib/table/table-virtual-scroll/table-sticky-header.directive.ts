@@ -134,8 +134,11 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         if (this._sticky) {
             this.origViewportHeight = this.origViewportHeight || this.viewportEl?.offsetHeight;
             const viewportComputedHeight: string = isEmpty(this.userProvidedHeight) ? this.origViewportHeight + "px" : this.userProvidedHeight;
-            this.viewportEl.style.setProperty("height",
-                                              `calc(${viewportComputedHeight} - ${this.headRef?.rows.item(0)?.offsetHeight ?? 0}px)`, "important");
+            this.viewportEl.style.setProperty(
+                "height",
+                `calc(${viewportComputedHeight} - ${this.headRef?.rows.item(0)?.offsetHeight ?? 0}px)`,
+                "important"
+            );
         }
     }
 
@@ -161,7 +164,7 @@ export class TableStickyHeaderDirective implements AfterViewInit, OnDestroy {
         }
     }
 
-    public handleColumnsUpdate$: () => Observable<unknown> = () => {
+    public handleColumnsUpdate$: () => Observable<unknown> = (): Observable<unknown> => {
         // TODO: Perform a dirty check before starting assigning new values
         // Note: Setting the width of stickyHeadContainer container to be able to simulate horizontal scroll of the sticky header
         this.renderer.setStyle(this.stickyHeadContainer, "width", `${this.viewport._contentWrapper.nativeElement.scrollWidth}px`);

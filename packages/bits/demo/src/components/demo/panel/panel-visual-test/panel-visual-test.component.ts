@@ -16,26 +16,28 @@ export class PanelVisualTestComponent {
     public panelColor: PanelBackgroundColor = PanelBackgroundColor.colorBgSecondary;
     public heading = "No Padding Header";
     public itemsSource: IMenuGroup[] = [
-        {header: "section title", itemsSource: [
-            {title: "Menu Item", itemType: "action"},
-            {title: "Hover me", itemType: "action"},
-            {title: "Selected menu item", isSelected: true},
-            {title: "Menu item", itemType: "switch", checked: true},
-            {title: "Menu disabled item", itemType: "switch", checked: false, disabled: true},
-            {title: "Menu item with checkbox", itemType: "option", disabled: true},
-            {title: "Menu item with icon", itemType: "action", icon: "table"},
-            {title: "Link menu item", itemType: "link", url: "#button", disabled: true},
-            {title: "Export PDF", itemType: "link", icon: "export-pdf", url: "#button"},
-        ]},
+        {
+            header: "section title", itemsSource: [
+                { title: "Menu Item", itemType: "action" },
+                { title: "Hover me", itemType: "action" },
+                { title: "Selected menu item", isSelected: true },
+                { title: "Menu item", itemType: "switch", checked: true },
+                { title: "Menu disabled item", itemType: "switch", checked: false, disabled: true },
+                { title: "Menu item with checkbox", itemType: "option", disabled: true },
+                { title: "Menu item with icon", itemType: "action", icon: "table" },
+                { title: "Link menu item", itemType: "link", url: "#button", disabled: true },
+                { title: "Export PDF", itemType: "link", icon: "export-pdf", url: "#button" },
+            ],
+        },
     ];
 
-    constructor() {}
+    constructor() { }
 
-    public toggleFooter() {
+    public toggleFooter(): void {
         this.displayFooter = !this.displayFooter;
     }
 
-    public onCollapseChange($event: boolean) {
+    public onCollapseChange($event: boolean): void {
         this.isCollapsed = $event;
     }
 }

@@ -29,7 +29,7 @@ export class ChipsOverflowService {
     constructor(private zone: NgZone) {
     }
 
-    public init() {
+    public init(): void {
         this.initChipResizeObserver();
         this.initChipsMutationObserver();
     }

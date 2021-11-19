@@ -15,7 +15,7 @@ export class TimePickerLocalizedExampleComponent implements OnInit, OnDestroy {
     private baseDate: Moment;
     private oldLocale: string;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.oldLocale = moment.locale();
         moment.locale(window.navigator.language);
 
@@ -31,7 +31,7 @@ export class TimePickerLocalizedExampleComponent implements OnInit, OnDestroy {
         };
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         moment.locale(this.oldLocale);
     }
 }

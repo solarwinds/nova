@@ -9,9 +9,11 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 export class RadioGroupInFormExampleComponent implements OnInit {
     public fancyForm: FormGroup;
 
-    public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
-    constructor(private formBuilder: FormBuilder) {}
-    public ngOnInit() {
+    public vegetables = [$localize`Cabbage`, $localize`Potato`, $localize`Tomato`, $localize`Carrot`];
+
+    constructor(private formBuilder: FormBuilder) { }
+
+    public ngOnInit(): void {
         this.fancyForm = this.formBuilder.group({
             radioGroup: this.formBuilder.control(this.vegetables[1], [
                 Validators.required,

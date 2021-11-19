@@ -11,26 +11,26 @@ export class SpinnerWithCancelExampleComponent implements OnDestroy {
 
     private interval: any = undefined;
 
-    public toggleSpinners() {
+    public toggleSpinners(): void {
         this.show = !this.show;
         this.show ? this.startProgress() : this.onCancel();
     }
 
-    public startProgress() {
+    public startProgress(): void {
         this.clearInterval();
         this.interval = setInterval(() => {
             this.spinPercentage < 100 ? this.spinPercentage += 10 : this.onCancel();
         }, 500);
     }
 
-    public onCancel() {
+    public onCancel(): void {
         this.clearInterval();
         this.isCanceled = true;
         this.show = false;
         this.spinPercentage = 0;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.clearInterval();
     }
 

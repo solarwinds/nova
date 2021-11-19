@@ -41,14 +41,14 @@ import { PopoverOverlayPosition, PopoverPlacement, PopoverTrigger } from "./publ
 
 @Component({
     selector: "nui-popover",
-    host: {"class": "nui-popover"},
+    host: { "class": "nui-popover" },
     templateUrl: "./popover.component.html",
     styleUrls: ["./popover.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [PopoverPositionService],
 })
 export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
-    public static getHostView(componentInstance: ComponentRef<PopoverModalComponent>) {
+    public static getHostView(componentInstance: ComponentRef<PopoverModalComponent>): HTMLElement {
         return (componentInstance.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
     }
 
@@ -163,35 +163,35 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
     private resizeObserver: ResizeObserver;
 
     @HostListener("click", ["$event"])
-    public onClick(event: MouseEvent) {
+    public onClick(event: MouseEvent): void {
         if (this.isTriggerPresent("click") && this.popover) {
             this.hidePopover();
         } else {
             this.onTrigger("click");
         }
-        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT}).next(event);
+        this.eventBusService.getStream({ id: DOCUMENT_CLICK_EVENT }).next(event);
         event.stopPropagation();
     }
 
     @HostListener("mouseenter")
-    public onMouseEnter() {
+    public onMouseEnter(): void {
         this.onTrigger("mouseenter");
         this.mouseEnterResolver();
     }
 
     @HostListener("mouseleave")
-    public onMouseLeave() {
+    public onMouseLeave(): void {
         this.onTrigger("mouseleave");
         this.mouseLeaveResolver();
     }
 
     @HostListener("focusin")
-    public onFocusIn() {
+    public onFocusIn(): void {
         this.onTrigger("focus");
     }
 
     @HostListener("focusout")
-    public onFocusOut() {
+    public onFocusOut(): void {
         if (!this.closePopover) {
             if (this.isTriggerPresent("focus") && !this.preventClosing) {
                 this.hidePopover();
@@ -209,12 +209,12 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         private popoverPositionService: PopoverPositionService) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         if (this.container) {
             this.containerElementRef = new ElementRef(this.container);
         }
         if (this.modal) {
-            this.overlayConfig = {...this.overlayConfig, backdropClass: "modal-backdrop", hasBackdrop: true};
+            this.overlayConfig = { ...this.overlayConfig, backdropClass: "modal-backdrop", hasBackdrop: true };
         }
         if (!this.overlayConfig?.positionStrategy) {
             this.setPositionStrategy(this.placement);
@@ -225,7 +225,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
                 this.showPopover();
             });
         }
-        this.overlayConfig = {...this.overlayConfig, panelClass: "nui-popover-overlay"};
+        this.overlayConfig = { ...this.overlayConfig, panelClass: "nui-popover-overlay" };
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -234,7 +234,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         if (this.mouseEnterTimeout) {
             clearTimeout(this.mouseEnterTimeout);
             this.mouseEnterTimeout = undefined;
@@ -261,7 +261,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    public showPopover() {
+    public showPopover(): void {
         if (this.disabled) {
             return;
         }
@@ -286,14 +286,14 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
      * Updates the position of the popup based on its overlay's current position strategy.
      * This method is currently used in Charts by the ChartPopoverComponent.
      */
-    public updatePosition() {
+    public updatePosition(): void {
         this.overlayComponent?.getOverlayRef()?.updatePosition();
     }
 
     /**
      * Resets the size of the popover.
      */
-    public resetSize() {
+    public resetSize(): void {
         // This is set to undefined so that angular cdk will set the height and width automatically
         this.overlayComponent?.getOverlayRef()?.updateSize({
             height: undefined,
@@ -301,7 +301,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         });
     }
 
-    private onTrigger(triggerType: PopoverTrigger) {
+    private onTrigger(triggerType: PopoverTrigger): void {
         if (this.isTriggerPresent(triggerType)) {
             if (this.delay > 0 && triggerType === "mouseenter" && this.isTriggerPresent("mouseenter")) {
                 if (this.mouseEnterTimeout) {
@@ -316,15 +316,15 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         }
     }
 
-    private activatePopover() {
-        this.eventBusService.getStream({id: "close-popover"}).next();
+    private activatePopover(): void {
+        this.eventBusService.getStream({ id: "close-popover" }).next();
         this.showPopover();
     }
 
-    private initializePopover() {
+    private initializePopover(): void {
         this.popoverModalSubscriptions = [];
         const closePopoverSubscription = merge(
-            !this.preventClosing ? this.eventBusService.getStream({id: "close-popover"}) : EMPTY,
+            !this.preventClosing ? this.eventBusService.getStream({ id: "close-popover" }) : EMPTY,
             this.closePopover || EMPTY
         ).subscribe(() => {
             this.hidePopover();
@@ -357,7 +357,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         });
 
         if (this.isTriggerPresent("click") && !this.preventClosing) {
-            const documentClickSubscription = this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
+            const documentClickSubscription = this.eventBusService.getStream({ id: DOCUMENT_CLICK_EVENT })
                 .subscribe((event: any) => {
                     const popoverModalNativeElement = this.popover?.instance.elRef.nativeElement;
                     const eventPath = UtilService.getEventPath(event);
@@ -384,14 +384,18 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
                     break;
             }
         });
-        this.popoverModalSubscriptions.push(popoverModalEventSubscription, popoverBeforeHiddenSubscription,
-                                            popoverAfterHiddenSubscription, closePopoverSubscription);
+        this.popoverModalSubscriptions.push(
+            popoverModalEventSubscription,
+            popoverBeforeHiddenSubscription,
+            popoverAfterHiddenSubscription,
+            closePopoverSubscription
+        );
         this.popover.instance.displayChange = this.popoverDisplaySubject;
         this.popover.instance.backdrop = this.modal;
         this.popover.instance.hasPadding = _isUndefined(this.hasPadding) ? true : this.hasPadding;
     }
 
-    private cleanUp() {
+    private cleanUp(): void {
         this.resizeObserver?.disconnect();
         this.popoverModalSubscriptions.forEach(sub => {
             if (sub) {
@@ -404,7 +408,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         this.popover = undefined;
     }
 
-    private hidePopover() {
+    private hidePopover(): void {
         if (!this.disabled) {
             this.popoverDisplaySubject.next(false);
         }
@@ -420,14 +424,14 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         };
     }
 
-    private mouseEnterResolver() {
+    private mouseEnterResolver(): void {
         if (this.mouseLeaveTimeout) {
             clearTimeout(this.mouseLeaveTimeout);
             this.mouseLeaveTimeout = undefined;
         }
     }
 
-    private mouseLeaveResolver() {
+    private mouseLeaveResolver(): void {
         // if a cursor leaves both popover trigger and popover body - user has popoverConstants.mouseLeaveDelay ms
         // to return cursor to these elements. In case of using hover trigger it helps to ensure that popover won't close
         // when user moves their's cursor from popover trigger to popover body
@@ -477,7 +481,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
             });
         this.positionStrategySubscriptions.push(subscription);
 
-        this.overlayConfig = {...this.overlayConfig, positionStrategy };
+        this.overlayConfig = { ...this.overlayConfig, positionStrategy };
     }
 
     private getPopoverConnectedPosition(position: PopoverPlacement): ConnectedPosition[] {
@@ -490,7 +494,7 @@ export class PopoverComponent implements OnDestroy, OnInit, OnChanges {
         return this.popoverPositionService.possiblePositionsForPlacement(position);
     }
 
-    private clearPositionStrategySubscriptions() {
+    private clearPositionStrategySubscriptions(): void {
         for (const sub of this.positionStrategySubscriptions) {
             sub.unsubscribe();
         }

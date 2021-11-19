@@ -13,11 +13,11 @@ import { CustomDataSourceFilterGroupCompositeComponent } from "../custom-data-so
 export class CustomDataSourceFilterGroupsWrapperComponent implements AfterViewInit {
     @ContentChildren(CustomDataSourceFilterGroupCompositeComponent) filterGroups: QueryList<CustomDataSourceFilterGroupCompositeComponent>;
 
-    public i18nHiddenFiltersMapping: { [k: string]: string } = {"=1": $localize `1 hidden filter.`, "other": $localize `# hidden filters.`};
+    public i18nHiddenFiltersMapping: { [k: string]: string } = { "=1": $localize`1 hidden filter.`, "other": $localize`# hidden filters.` };
 
     constructor(@Inject(DataSourceService) public dataSourceService: DataSourceService<any>) { }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.registerComponent(this.getFilterComponents());
         this.filterGroups.changes.subscribe(() => {
             this.dataSourceService.registerComponent(this.getFilterComponents());
@@ -41,7 +41,7 @@ export class CustomDataSourceFilterGroupsWrapperComponent implements AfterViewIn
 
     private getFilterComponents(): IFilteringParticipants {
         return this.filterGroups.reduce((obj: IFilteringParticipants, item: CustomDataSourceFilterGroupCompositeComponent) => {
-            obj[item.filterGroupItem.id] = {componentInstance: item};
+            obj[item.filterGroupItem.id] = { componentInstance: item };
             return obj;
         }, {});
     }

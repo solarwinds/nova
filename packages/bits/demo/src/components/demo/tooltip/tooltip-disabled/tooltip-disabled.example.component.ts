@@ -8,16 +8,16 @@ import { Component } from "@angular/core";
 
 export class TooltipDisabledExampleComponent {
     public isDisabled = false;
-    public tooltip = $localize `I am a Tooltip!`;
-    public message = $localize `Toggle to switch state`;
+    public tooltip = $localize`I am a Tooltip!`;
+    public message = $localize`Toggle to switch state`;
 
 
-    constructor() {}
+    constructor() { }
 
-    public onValueChanged(value: boolean) {
+    public onValueChanged(value: boolean): void {
         this.isDisabled = value;
         this.message = value
-            ? $localize `Tooltip is Disabled and hidden!`
-            : $localize `Tooltip is Enabled and can be shown"`;
+            ? $localize`Tooltip is Disabled and hidden!`
+            : $localize`Tooltip is Enabled and can be shown"`;
     }
 }

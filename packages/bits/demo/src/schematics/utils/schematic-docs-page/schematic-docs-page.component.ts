@@ -16,7 +16,7 @@ export class SchematicDocsPageComponent implements OnInit {
     ]
 }`;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.schematicHeading = this.schematicFolderName.replace(/-/g, " ");
     }
 }

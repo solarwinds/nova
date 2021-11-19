@@ -5,7 +5,7 @@ import { Component } from "@angular/core";
     templateUrl: "./menu-item-variations.example.component.html",
 })
 export class MenuItemVariationsExampleComponent {
-    public onActionDone($event?: undefined|boolean) {
+    public onActionDone($event?: undefined | boolean): void {
         console.log("Action Done", $event);
     }
 }

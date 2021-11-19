@@ -14,7 +14,7 @@ import {
 export class CommonTestSuite {
     public static expected: INovaFilters;
     public static service: LocalFilteringDataSource<INovaFilteringOutputs>;
-    public static execute = () => {
+    public static execute = (): void => {
         describe("common specs for getFilters", () => {
             it("should get correct results when call getFilteredData with search value 'blue' (0 - 5) ", async () => {
                 if (!CommonTestSuite.expected.search) {

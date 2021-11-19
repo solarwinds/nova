@@ -98,12 +98,12 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
 
     private _ariaLabel: string = "";
 
-    onTouched = () => {};
-    onChange = (value: any) => {};
+    onTouched = (): void => {};
+    onChange = (value: any): void => {};
 
     constructor(private renderer: Renderer2, private cd: ChangeDetectorRef) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         if (!this.initEmpty && !this.model) {
             this.model = moment();
             this.onChange(this.model);
@@ -111,23 +111,23 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
         }
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         if (this.displayMode === "inline") {
             this.renderer.addClass(this.codeElement.nativeElement, "nui-datetime-picker--inline");
             this.renderer.addClass(this.codeElement.nativeElement.querySelector(".nui-timepicker"), "nui-dropdown--inline");
         }
     }
 
-    writeValue(value: Moment) {
+    writeValue(value: Moment): void {
         this.model = value;
         this.updateChildrenModels();
     }
 
-    registerOnTouched(fn: () => void) {
+    registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 
-    registerOnChange(fn: () => void) {
+    registerOnChange(fn: () => void): void {
         this.onChange = fn;
     }
 
@@ -136,14 +136,14 @@ export class DateTimePickerComponent implements AfterViewInit, OnInit, ControlVa
         this.cd.markForCheck(); // This is needed to update "disabled" state for child date and time pickers
     }
 
-    onTimeChanged(event: Moment) {
+    onTimeChanged(event: Moment): void {
         this.updateTime(event);
         this.modelChanged.emit(moment(this.model));
         this.onChange(this.model);
         this.onTouched();
     }
 
-    onDateChanged(event: Moment) {
+    onDateChanged(event: Moment): void {
         const isDateTheSame = moment.isMoment(this.date)
             && this.date.isSame(event);
 

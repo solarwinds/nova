@@ -8,7 +8,7 @@ import { Component } from "@angular/core";
 export class SearchInputChangeExampleComponent {
     public value: string = "example value";
 
-    public onInputChange(value: string) {
+    public onInputChange(value: string): void {
         this.value = value;
     }
 }

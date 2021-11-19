@@ -19,7 +19,7 @@ export class NuiEnvironment {
 }
 
 /** @ignore */
-export function NUI_ENV_PROVIDER_FACTORY(parentEnv: NuiEnvironment) {
+export function NUI_ENV_PROVIDER_FACTORY(parentEnv: NuiEnvironment): NuiEnvironment {
     return parentEnv || new NuiEnvironment();
 }
 

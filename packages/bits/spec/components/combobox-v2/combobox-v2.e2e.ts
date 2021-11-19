@@ -1,4 +1,4 @@
-import { browser, by, element, ElementFinder, ExpectedConditions, Key } from "protractor";
+import { browser, by, element, ElementFinder, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
@@ -117,12 +117,12 @@ describe("USERCONTROL Combobox >", () => {
 
                 await expect(await comboboxError.getInputValue()).toEqual("Item 0");
             });
-            
+
             it("should focus on the first item in dropdown, when removing item on backspace", async () => {
                 await comboboxError.click();
                 const option = await comboboxError.getOption(5);
                 await option.click();
-                
+
                 await expect(await comboboxError.getInputValue()).toEqual("Item 5");
                 await expect(await (await comboboxError.getOption(5)).isActive()).toBe(true);
 
@@ -317,13 +317,14 @@ describe("USERCONTROL Combobox >", () => {
 
             it("should always scroll to the first item in the list on filtering", async () => {
                 await virtualCombobox.type("Item 2");
-                await browser.wait(async () =>
-                    await (await virtualCombobox.getFirstOption()).getText() === "Item 2",
-                                   2000,
-                                   // eslint-disable-next-line max-len
-                                   `Expected first item to be visible during filtering, but it did not appear within the virtual scroll viewport within the reasonable time interval!`);
+                await browser.wait(
+                    async () => (await (await virtualCombobox.getFirstOption()).getText()) === "Item 2",
+                    2000,
+                    // eslint-disable-next-line max-len
+                    `Expected first item to be visible during filtering, but it did not appear within the virtual scroll viewport within the reasonable time interval!`
+                );
             });
         });
-            
+
     });
 });

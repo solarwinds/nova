@@ -14,8 +14,8 @@ export class DatePickerInsignificantExampleComponent {
 
     constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    public dateChanged(event: Moment) {
+    public dateChanged(event: Moment): void {
         this.selectedDate = new Date(event.valueOf());
-        this.toastService.info({message: $localize `Selected date: ${event.toString()}`});
+        this.toastService.info({ message: $localize`Selected date: ${event.toString()}` });
     }
 }

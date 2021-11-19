@@ -46,5 +46,5 @@ export class ToastAtom extends Atom {
 
     private getBodyElement = (): ElementFinder => this.root.element(by.css(`.${ToastAtom.CSS_CLASS}__content-body`));
 
-    private isToastType = (type: string): Promise<boolean> => Atom.hasClass(this.root, `${ToastAtom.CSS_CLASS}--${type}`);
+    private isToastType = async (type: string): Promise<boolean> => Atom.hasClass(this.root, `${ToastAtom.CSS_CLASS}--${type}`);
 }

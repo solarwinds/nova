@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, SecurityContext } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
+import { IChipsItem } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-combobox-v2-create-option-multiselect-example",
@@ -9,13 +10,13 @@ import { DomSanitizer } from "@angular/platform-browser";
     styleUrls: ["combobox-v2-create-option-multiselect.example.component.less"],
 })
 export class ComboboxV2CreateOptionMultiselectExampleComponent {
-    public options = Array.from({ length: 3 }).map((_, i) => $localize `Item ${i}`);
+    public options = Array.from({ length: 3 }).map((_, i) => $localize`Item ${i}`);
 
     public comboboxControl = new FormControl();
 
-    constructor(private domSanitizer: DomSanitizer) {}
+    constructor(private domSanitizer: DomSanitizer) { }
 
-    public createOption(optionName: string) {
+    public createOption(optionName: string): void {
         const sanitizedOption = this.domSanitizer.sanitize(SecurityContext.HTML, optionName)?.trim();
         if (sanitizedOption) {
             this.options.push(sanitizedOption);
@@ -23,7 +24,7 @@ export class ComboboxV2CreateOptionMultiselectExampleComponent {
         }
     }
 
-    public convertToChip(value: string) {
+    public convertToChip(value: string): IChipsItem {
         return ({ label: value });
     }
 }

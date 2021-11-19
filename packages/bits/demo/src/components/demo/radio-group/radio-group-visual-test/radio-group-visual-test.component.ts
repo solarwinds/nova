@@ -13,11 +13,11 @@ export class RadioGroupVisualTestComponent implements OnInit {
     public selectedFruit: string;
     public selectedColor: string;
 
-    constructor(private formBuilder: FormBuilder) {}
+    constructor(private formBuilder: FormBuilder) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.disabledForm = this.formBuilder.group({
-            radioGroup: this.formBuilder.control({value: "", disabled: true}),
+            radioGroup: this.formBuilder.control({ value: "", disabled: true }),
         });
     }
 }

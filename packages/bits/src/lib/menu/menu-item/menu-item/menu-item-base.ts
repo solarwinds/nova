@@ -33,7 +33,7 @@ export abstract class MenuItemBaseComponent implements OnChanges, Highlightable 
 
     @HostBinding("class.nui-menu-item--disabled") public setDisabledClass: boolean;
 
-    @HostBinding("class.nui-menu-item--active") get active() {
+    @HostBinding("class.nui-menu-item--active") get active(): boolean {
         return this.isActive;
     }
 
@@ -52,7 +52,7 @@ export abstract class MenuItemBaseComponent implements OnChanges, Highlightable 
         this.setDisabledClass = disabled;
     }
 
-    public setActive(val: boolean) {
+    public setActive(val: boolean): void {
         this.isActive = val;
     }
 

@@ -1,4 +1,4 @@
-export function uuid(prefix = "") {
+export function uuid(prefix = ""): string {
     let dt = new Date().getTime();
     const id = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
         // eslint-disable-next-line

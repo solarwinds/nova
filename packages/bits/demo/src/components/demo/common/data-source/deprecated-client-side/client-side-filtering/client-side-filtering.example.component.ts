@@ -179,7 +179,7 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent implements
     ngAfterViewInit(): void {
         this.chosenColors = [...this.selectedCriteriaColors];
         this.chosenStatuses = [...this.selectedColorTypes];
-        this.dataSourceService.registerComponent({ ...this.registerComponents() });
+        this.dataSourceService.registerComponent({ ...this.createComponents() });
 
         this.dataSourceService.applyFilters();
         this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
@@ -192,13 +192,13 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent implements
 
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.outputsSubscription) {
             this.outputsSubscription.unsubscribe();
         }
     }
 
-    private registerComponents = () => ({
+    private createComponents = () => ({
         // Here we're registering color and status filters
         color: {
             componentInstance: {
@@ -233,21 +233,21 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent implements
         },
     })
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataSourceService.applyFilters();
     }
 
-    public onSorterAction(changes: ISorterChanges) {
+    public onSorterAction(changes: ISorterChanges): void {
         this.sortBy = changes.newValue.sortBy;
         this.dataSourceService.applyFilters();
     }
 
-    public onSelectedCriteriaChange($event: string[]) {
+    public onSelectedCriteriaChange($event: string[]): void {
         this.chosenColors = $event;
         this.dataSourceService.applyFilters();
     }
 
-    public onSelectedColorTypesChange($event: string[]) {
+    public onSelectedColorTypesChange($event: string[]): void {
         this.chosenStatuses = $event;
         this.dataSourceService.applyFilters();
     }
@@ -264,16 +264,15 @@ export class DepreacatedDataSourceClientSideFilteringExampleComponent implements
         return !_isEmpty(_get(this, "filteringState.repeat.itemsSource"));
     }
 
-    public showStatus(status: string) {
+    public showStatus(status: string): boolean {
         return this.filteringState.status ? this.filteringState.status[status] : this.filteringState.status;
     }
 
-    public showColor(color: string) {
+    public showColor(color: string): boolean {
         return this.filteringState.color ? this.filteringState.color[color] : this.filteringState.color;
     }
 
     public isGreaterThanZero(amount: number): boolean {
         return amount > 0;
     }
-
 }

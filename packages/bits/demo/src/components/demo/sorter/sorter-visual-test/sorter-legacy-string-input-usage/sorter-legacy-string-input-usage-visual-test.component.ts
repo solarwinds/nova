@@ -30,17 +30,20 @@ export class SorterLegacyStringInputUsageVisualTestComponent implements AfterVie
         { title: "The Terminator", year: "1984", director: "James Cameron" },
     ];
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.sortItems(this.sortBy, this.initialSortDirection);
     }
 
-    onSorterAction(changeEvent: ISorterChanges) {
+    onSorterAction(changeEvent: ISorterChanges): void {
         this.sortBy = changeEvent.newValue.sortBy;
         this.sortItems(changeEvent.newValue.sortBy, changeEvent.newValue.direction);
     }
 
-    private sortItems(sortBy: string, direction: SorterDirection) {
-        this.items = _orderBy(this.items, [sortBy],
-                              [direction as (SorterDirection.ascending | SorterDirection.descending)]) as IFilm[];
+    private sortItems(sortBy: string, direction: SorterDirection): void {
+        this.items = _orderBy(
+            this.items,
+            [sortBy],
+            [direction as (SorterDirection.ascending | SorterDirection.descending)]
+        ) as IFilm[];
     }
 }

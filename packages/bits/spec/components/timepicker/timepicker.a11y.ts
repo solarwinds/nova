@@ -4,7 +4,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { TimepickerAtom } from "../public_api";
 
 describe("a11y: timepicker", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "scrollable-region-focusable", // NUI-6001
     ];
     let basicTimepicker: TimepickerAtom;

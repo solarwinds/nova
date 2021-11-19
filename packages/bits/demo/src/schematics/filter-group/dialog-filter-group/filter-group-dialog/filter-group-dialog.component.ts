@@ -22,18 +22,18 @@ export class FilterGroupCompositeDialogComponent {
 
     @Output() dialogClosed: EventEmitter<string[]> = new EventEmitter();
 
-    constructor(@Inject(NuiActiveDialog) private activeDialog: NuiActiveDialog, private selectorService: SelectorService) {}
+    constructor(@Inject(NuiActiveDialog) private activeDialog: NuiActiveDialog, private selectorService: SelectorService) { }
 
-    public acceptDialogFilters() {
+    public acceptDialogFilters(): void {
         this.dialogClosed.emit(this.selectedValues);
         this.closeDialog();
     }
 
-    public closeDialog() {
+    public closeDialog(): void {
         this.activeDialog.close();
     }
 
-    public onSelectionChanged(selection: IFilterGroupOption[]) {
+    public onSelectionChanged(selection: IFilterGroupOption[]): void {
         this.selectedValues = selection.map(item => item.value);
     }
 }

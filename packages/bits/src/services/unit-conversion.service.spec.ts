@@ -8,13 +8,12 @@ import { UnitConversionService } from "./unit-conversion.service";
 describe("services >", () => {
     describe("unit conversion >", () => {
         let logger: LoggerService;
-        let logWarnSpy: jasmine.Spy;
         let subject: UnitConversionService;
 
         beforeEach(() => {
             logger = new LoggerService();
             spyOnProperty(logger, "error").and.returnValue(noop);
-            logWarnSpy = spyOnProperty(logger, "warn").and.returnValue(noop);
+            spyOnProperty(logger, "warn").and.returnValue(noop);
 
             subject = new UnitConversionService(logger);
         });
@@ -126,7 +125,7 @@ describe("services >", () => {
             });
 
             it("should prefix the output with a plus sign for positive values", () => {
-                expect(subject.getValueDisplay({ value: "1", order: 1, scientificNotation: "1.0e+0"}, true)).toEqual("+1");
+                expect(subject.getValueDisplay({ value: "1", order: 1, scientificNotation: "1.0e+0" }, true)).toEqual("+1");
             });
 
             it("should not prefix the output with a plus sign for negative values", () => {
@@ -157,7 +156,7 @@ describe("services >", () => {
             });
 
             it("should prefix the output with a plus sign for positive values", () => {
-                expect(subject.getScientificDisplay({ value: "1", order: 1, scientificNotation: "1.0e+0"}, true)).toEqual("+1.0e+0");
+                expect(subject.getScientificDisplay({ value: "1", order: 1, scientificNotation: "1.0e+0" }, true)).toEqual("+1.0e+0");
             });
 
             it("should not prefix the output with a plus sign for negative values", () => {

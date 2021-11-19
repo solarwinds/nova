@@ -67,7 +67,7 @@ export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontend
 
     // cache used to store our previous fetched results while scrolling
     // and more data is automatically fetched from the backend
-    private cache = Array.from<IGBookFrontendDTO>({length: 0});
+    private cache = Array.from<IGBookFrontendDTO>({ length: 0 });
     private previousFilters: INovaFilters;
 
     private applyFilters$ = new Subject<IFilters>();
@@ -91,15 +91,15 @@ export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontend
             }),
             map((response: IGBooksFrontendCollection) => ({
                 result: {
-                    repeat: {itemsSource: this.cache},
-                    paginator: {total: response.totalItems},
+                    repeat: { itemsSource: this.cache },
+                    paginator: { total: response.totalItems },
                 },
             }))
         ).toPromise();
     }
 
     // redefine parent method
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         this.applyFilters$.next(this.getFilters());
     }
 
@@ -115,7 +115,7 @@ export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontend
         return this.http
             .get<IGBooksApiResponse>(
                 API_URL,
-                {params: this.getRequestParams(filters)}
+                { params: this.getRequestParams(filters) }
             )
             .pipe(
                 // show the loader
@@ -198,7 +198,7 @@ export class RepeatWithViewportManagerExampleComponent implements OnInit, OnDest
     ) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.busy = val;
@@ -218,7 +218,7 @@ export class RepeatWithViewportManagerExampleComponent implements OnInit, OnDest
             // Note: Initializing the stream with the desired page size, based on which
             // ViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
-            .observeNextPage$({pageSize: RESULTS_PER_PAGE}).pipe(
+            .observeNextPage$({ pageSize: RESULTS_PER_PAGE }).pipe(
                 tap(() => {
                     this.dataSource.applyFilters();
                 }),
@@ -238,26 +238,26 @@ export class RepeatWithViewportManagerExampleComponent implements OnInit, OnDest
         this.destroy$.complete();
     }
 
-    public onSearch() {
+    public onSearch(): void {
         this.doSearch();
     }
 
-    public onCancelSearch() {
+    public onCancelSearch(): void {
         this.doSearch();
     }
 
-    private doSearch() {
+    private doSearch(): void {
         // Note: It is important to reset viewportManager to start page
         // so that the datasource performs the search with 1st page
         // emitFirstPage: false prevents viewportManager emitting first page after reset
-        this.viewportManager.reset({emitFirstPage: false});
+        this.viewportManager.reset({ emitFirstPage: false });
         this.dataSource.applyFilters();
     }
 
-    private registerFilters() {
+    private registerFilters(): void {
         this.dataSource.registerComponent({
-            virtualScroll: {componentInstance: this.viewportManager},
-            search: {componentInstance: this.search},
+            virtualScroll: { componentInstance: this.viewportManager },
+            search: { componentInstance: this.search },
         });
     }
 }

@@ -85,7 +85,7 @@ export class DraggableDirective implements OnInit {
     @HostBinding("attr.draggable") draggable: boolean;
 
     @HostListener("dragstart", ["$event"])
-    onDragStart(event: IDragEvent) {
+    onDragStart(event: IDragEvent): void {
         this.dragStart.emit(event);
         this.document.defaultView?.getSelection()?.removeAllRanges();
         window.getSelection()?.removeAllRanges();
@@ -102,7 +102,7 @@ export class DraggableDirective implements OnInit {
     }
 
     @HostListener("dragend", ["$event"])
-    onDragEnd(event: IDragEvent) {
+    onDragEnd(event: IDragEvent): void {
         this.dragEnd.emit(event);
         this.elRef.nativeElement.classList.remove(DraggableDirective.dragSourceClass);
         if (this.adorner) {
@@ -127,7 +127,8 @@ export class DraggableDirective implements OnInit {
         private utilService: UtilService,
         private dragAndDropService: DragAndDropService,
         @Inject(DOCUMENT) private document: Document) { }
-    ngOnInit() {
+
+    ngOnInit(): void {
         this.draggable = true;
     }
 

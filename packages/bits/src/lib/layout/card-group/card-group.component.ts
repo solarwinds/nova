@@ -1,6 +1,6 @@
-import {Component, HostBinding, Input, OnInit} from "@angular/core";
+import { Component, HostBinding, Input, OnInit } from "@angular/core";
 
-import {ILayoutElementDirection} from "../public-api";
+import { ILayoutElementDirection } from "../public-api";
 
 // <example-url>./../examples/index.html#/layout</example-url>
 @Component({
@@ -12,7 +12,7 @@ export class CardGroupComponent implements OnInit {
     @Input() direction: ILayoutElementDirection = "row";
     @HostBinding("class.card-group-direction-column") directionColumn = false;
     @HostBinding("class.card-group-direction-row") directionRow = true;
-    ngOnInit() {
+    ngOnInit(): void {
         this.directionColumn = (this.directionColumn && !this.directionRow) || this.direction === "column";
         this.directionRow = (!this.directionColumn && this.directionRow) || this.direction === "row";
     }

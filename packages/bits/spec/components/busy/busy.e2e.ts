@@ -10,21 +10,16 @@ import {
     BusyAtom,
     ButtonAtom,
     SelectAtom,
-    SpinnerAtom,
 } from "../public_api";
 
 describe("USERCONTROL Busy", () => {
     let busy: BusyAtom;
-    let progressBusy: BusyAtom;
     let busyBtn: ButtonAtom;
-    let spinner: SpinnerAtom;
     let select: SelectAtom;
 
     beforeAll(async () => {
         busyBtn = Atom.find(ButtonAtom, "nui-busy-test-button");
         busy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-basic")));
-        progressBusy = Atom.findIn(BusyAtom, element(by.id("nui-busy-test-progress")));
-        spinner = Atom.findIn(SpinnerAtom, element(by.id("nui-busy-test-custom")));
         select = Atom.findIn(SelectAtom, element(by.id("nui-busy-select-overlay")));
     });
 

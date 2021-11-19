@@ -14,7 +14,7 @@ export class DateTimePickerDisabledExampleComponent {
         this.selectedDate = new Date(this.dt.valueOf());
     }
 
-    onModelChanged(event: any) {
+    onModelChanged(event: any): void {
         this.selectedDate = new Date(event.valueOf());
     }
 }

@@ -2,6 +2,7 @@ import {
     browser,
     by,
     element,
+    ElementFinder,
     ExpectedConditions,
 } from "protractor";
 
@@ -13,7 +14,7 @@ import { SelectV2OptionAtom } from "./select-v2-option.atom";
 export class BaseSelectV2Atom extends Atom {
     public popup: OverlayAtom = Atom.findIn(OverlayAtom, element(by.tagName("body")));
 
-    public getPopupElement() {
+    public getPopupElement(): ElementFinder {
         return this.popup.getElement();
     }
 
@@ -62,7 +63,7 @@ export class BaseSelectV2Atom extends Atom {
         return this.popup.getElement().all(by.className("active")).count();
     }
 
-    public async type(text: string) {
+    public async type(text: string): Promise<void> {
         await this.getElement().click();
         return browser.actions().sendKeys(text).perform();
     }
@@ -88,7 +89,7 @@ export class BaseSelectV2Atom extends Atom {
         }
     }
 
-    private async waitForPopup() {
+    private async waitForPopup(): Promise<unknown> {
         return await browser.wait(ExpectedConditions.visibilityOf(this.popup.getElement()));
     }
 }

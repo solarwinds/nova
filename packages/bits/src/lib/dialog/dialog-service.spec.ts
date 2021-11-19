@@ -16,10 +16,10 @@ import _noop from "lodash/noop";
 
 import { NuiActiveDialog, NuiDialogRef } from "./dialog-ref";
 import { DialogStackService } from "./dialog-stack.service";
-import {NuiDialogModule} from "./dialog.module";
+import { NuiDialogModule } from "./dialog.module";
 import { DialogService } from "./dialog.service";
-import {Router} from "@angular/router";
-import {Subject} from "rxjs/internal/Subject";
+import { Router } from "@angular/router";
+import { Subject } from "rxjs/internal/Subject";
 
 @Injectable()
 class SpyService {
@@ -31,39 +31,52 @@ class CustomSpyService {
     called = false;
 }
 
-@Component({selector: "nui-custom-injector-cmpt", template: "Some content"})
+@Component({ selector: "nui-custom-injector-cmpt", template: "Some content" })
 export class CustomInjectorComponent implements OnDestroy {
     constructor(private _spyService: CustomSpyService) {}
 
-    ngOnDestroy(): void { this._spyService.called = true; }
+    ngOnDestroy(): void {
+        this._spyService.called = true;
+    }
 }
 
-@Component({selector: "nui-destroyable-cmpt", template: "Some content"})
+@Component({ selector: "nui-destroyable-cmpt", template: "Some content" })
 export class DestroyableComponent implements OnDestroy {
     constructor(private _spyService: SpyService) {}
 
-    ngOnDestroy(): void { this._spyService.called = true; }
+    ngOnDestroy(): void {
+        this._spyService.called = true;
+    }
 }
 
-@Component(
-    {selector: "nui-dialog-content-cmpt", template: "<button class='closeFromInside' (click)='close()'>Close</button>"})
+@Component({
+    selector: "nui-dialog-content-cmpt",
+    template:
+        "<button class='closeFromInside' (click)='close()'>Close</button>",
+})
 export class WithActiveDialogComponent {
     constructor(public activeDialog: NuiActiveDialog) {}
 
-    close() { this.activeDialog.close("from inside"); }
+    close(): void {
+        this.activeDialog.close("from inside");
+    }
 }
 
 @Component({
     selector: "nui-test-cmpt",
     template: `
         <div id="testContainer"></div>
-        <ng-template #content>Hello, {{name}}!</ng-template>
-        <ng-template #destroyableContent><nui-destroyable-cmpt></nui-destroyable-cmpt></ng-template>
+        <ng-template #content>Hello, {{ name }}!</ng-template>
+        <ng-template #destroyableContent
+            ><nui-destroyable-cmpt></nui-destroyable-cmpt
+        ></ng-template>
         <ng-template #contentWithClose let-close="close">
             <button id="close" (click)="close('myResult')">Close me</button>
         </ng-template>
         <ng-template #contentWithDismiss let-dismiss="dismiss">
-            <button id="dismiss" (click)="dismiss('myReason')">Dismiss me</button>
+            <button id="dismiss" (click)="dismiss('myReason')">
+                Dismiss me
+            </button>
         </ng-template>
         <ng-template #contentWithIf>
             <ng-template [ngIf]="show">
@@ -71,22 +84,26 @@ export class WithActiveDialogComponent {
             </ng-template>
         </ng-template>
         <button id="open" (click)="open('from button')">Open</button>
-        <div id="open-no-focus" (click)="open('from non focusable element')">Open</div>
+        <div id="open-no-focus" (click)="open('from non focusable element')">
+            Open
+        </div>
     `,
 })
 class TestComponent {
     name = "World";
     openedDialog: NuiDialogRef;
     show = true;
-    @ViewChild("content", {static: true}) tplContent: any;
-    @ViewChild("destroyableContent", {static: true}) tplDestroyableContent: any;
-    @ViewChild("contentWithClose", {static: true}) tplContentWithClose: any;
-    @ViewChild("contentWithDismiss", {static: true}) tplContentWithDismiss: any;
-    @ViewChild("contentWithIf", {static: true}) tplContentWithIf: any;
+    @ViewChild("content", { static: true }) tplContent: any;
+    @ViewChild("destroyableContent", { static: true })
+    tplDestroyableContent: any;
+    @ViewChild("contentWithClose", { static: true }) tplContentWithClose: any;
+    @ViewChild("contentWithDismiss", { static: true })
+    tplContentWithDismiss: any;
+    @ViewChild("contentWithIf", { static: true }) tplContentWithIf: any;
 
     constructor(public dialogService: DialogService) {}
 
-    open(content: string, options?: Object) {
+    open(content: string, options?: Object): NuiDialogRef {
         this.openedDialog = this.dialogService.open(content, options);
         return this.openedDialog;
     }
@@ -99,12 +116,24 @@ class TestComponent {
         this.openedDialog = this.dialogService.confirm({ message: "foo" });
         return this.openedDialog;
     }
-    openTpl(options?: Object) { return this.dialogService.open(this.tplContent, options); }
-    openCmpt(cmptType: any, options?: Object) { return this.dialogService.open(cmptType, options); }
-    openDestroyableTpl(options?: Object) { return this.dialogService.open(this.tplDestroyableContent, options); }
-    openTplClose(options?: Object) { return this.dialogService.open(this.tplContentWithClose, options); }
-    openTplDismiss(options?: Object) { return this.dialogService.open(this.tplContentWithDismiss, options); }
-    openTplIf(options?: Object) { return this.dialogService.open(this.tplContentWithIf, options); }
+    openTpl(options?: Object) {
+        return this.dialogService.open(this.tplContent, options);
+    }
+    openCmpt(cmptType: any, options?: Object) {
+        return this.dialogService.open(cmptType, options);
+    }
+    openDestroyableTpl(options?: Object) {
+        return this.dialogService.open(this.tplDestroyableContent, options);
+    }
+    openTplClose(options?: Object) {
+        return this.dialogService.open(this.tplContentWithClose, options);
+    }
+    openTplDismiss(options?: Object) {
+        return this.dialogService.open(this.tplContentWithDismiss, options);
+    }
+    openTplIf(options?: Object) {
+        return this.dialogService.open(this.tplContentWithIf, options);
+    }
 }
 
 @NgModule({
@@ -116,14 +145,16 @@ class TestComponent {
     ],
     exports: [TestComponent, DestroyableComponent],
     imports: [CommonModule, NuiDialogModule],
-    entryComponents: [CustomInjectorComponent, DestroyableComponent, WithActiveDialogComponent ],
+    entryComponents: [
+        CustomInjectorComponent,
+        DestroyableComponent,
+        WithActiveDialogComponent,
+    ],
     providers: [SpyService],
 })
-class DialogTestModule {
-}
+class DialogTestModule {}
 
 describe("nui-dialog", () => {
-
     let fixture: ComponentFixture<TestComponent>;
     /**
      * In scope of NUI-3292 component (click) listener was substituted by (mousedown) and (mouseup). This is why we need this method
@@ -139,87 +170,103 @@ describe("nui-dialog", () => {
 
     beforeEach(() => {
         jasmine.addMatchers({
-            toHaveDialog: () =>
-                ({
-                    compare: (actual: any, content?: any, selector?: any) => {
-                        const allDialogsContent = document.querySelector(selector || "body").querySelectorAll(".dialog-content");
-                        let pass: boolean;
-                        let errMsg;
+            toHaveDialog: () => ({
+                compare: (actual: any, content?: any, selector?: any) => {
+                    const allDialogsContent = document
+                        .querySelector(selector || "body")
+                        .querySelectorAll(".dialog-content");
+                    let pass: boolean;
+                    let errMsg;
 
-                        if (!content) {
-                            pass = allDialogsContent.length > 0;
-                            errMsg = "at least one dialog open but found none";
-                        } else if (Array.isArray(content)) {
-                            pass = allDialogsContent.length === content.length;
-                            errMsg = `${content.length} dialogs open but found ${allDialogsContent.length}`;
-                        } else {
-                            pass = allDialogsContent.length === 1 && allDialogsContent[0].textContent.trim() === content;
-                            errMsg = `exactly one dialog open but found ${allDialogsContent.length}`;
-                        }
+                    if (!content) {
+                        pass = allDialogsContent.length > 0;
+                        errMsg = "at least one dialog open but found none";
+                    } else if (Array.isArray(content)) {
+                        pass = allDialogsContent.length === content.length;
+                        errMsg = `${content.length} dialogs open but found ${allDialogsContent.length}`;
+                    } else {
+                        pass =
+                            allDialogsContent.length === 1 &&
+                            allDialogsContent[0].textContent.trim() === content;
+                        errMsg = `exactly one dialog open but found ${allDialogsContent.length}`;
+                    }
 
-                        return {pass: pass, message: `Expected ${actual.outerHTML} to have ${errMsg}`};
-                    },
-                    negativeCompare: (actual: any) => {
-                        const allOpenDialogs = actual.querySelectorAll("nui-dialog-window");
+                    return {
+                        pass: pass,
+                        message: `Expected ${actual.outerHTML} to have ${errMsg}`,
+                    };
+                },
+                negativeCompare: (actual: any) => {
+                    const allOpenDialogs =
+                        actual.querySelectorAll("nui-dialog-window");
 
-                        return {
-                            pass: allOpenDialogs.length === 0,
-                            message: `Expected ${actual.outerHTML} not to have any dialogs open but found ${allOpenDialogs.length}`,
-                        };
-                    },
-                }),
+                    return {
+                        pass: allOpenDialogs.length === 0,
+                        message: `Expected ${actual.outerHTML} not to have any dialogs open but found ${allOpenDialogs.length}`,
+                    };
+                },
+            }),
         });
 
         jasmine.addMatchers({
-            toHaveBackdrop: () =>
-                ({
-                    compare: (actual: any) =>
-                        ({
-                            pass: document.querySelectorAll("nui-dialog-backdrop").length === 1,
-                            message: `Expected ${actual.outerHTML} to have exactly one backdrop element`,
-                        }),
-                    negativeCompare: (actual: any) => {
-                        const allOpenDialogs = document.querySelectorAll("nui-dialog-backdrop");
-
-                        return {
-                            pass: allOpenDialogs.length === 0,
-                            message: `Expected ${actual.outerHTML} not to have any backdrop elements`,
-                        };
-                    },
+            toHaveBackdrop: () => ({
+                compare: (actual: any) => ({
+                    pass:
+                        document.querySelectorAll("nui-dialog-backdrop")
+                            .length === 1,
+                    message: `Expected ${actual.outerHTML} to have exactly one backdrop element`,
                 }),
+                negativeCompare: (actual: any) => {
+                    const allOpenDialogs = document.querySelectorAll(
+                        "nui-dialog-backdrop"
+                    );
+
+                    return {
+                        pass: allOpenDialogs.length === 0,
+                        message: `Expected ${actual.outerHTML} not to have any backdrop elements`,
+                    };
+                },
+            }),
         });
     });
 
     beforeEach(() => {
         const mockRouter = {
             events: new Subject<any>(),
-        }
+        };
 
         TestBed.configureTestingModule({
             imports: [DialogTestModule],
             providers: [
                 DialogService,
                 DialogStackService,
-                { provide: Router, useValue: mockRouter }],
+                { provide: Router, useValue: mockRouter },
+            ],
         });
         fixture = TestBed.createComponent(TestComponent);
     });
 
     afterEach(() => {
         // detect left-over dialogs and close them or report errors when can"t
-        const remainingDialogWindows = document.querySelectorAll("nui-dialog-window");
+        const remainingDialogWindows =
+            document.querySelectorAll("nui-dialog-window");
         if (remainingDialogWindows.length) {
-            fail(`${remainingDialogWindows.length} dialog windows were left in the DOM.`);
+            fail(
+                `${remainingDialogWindows.length} dialog windows were left in the DOM.`
+            );
         }
 
-        const remainingDialogBackdrops = document.querySelectorAll("nui-dialog-backdrop");
+        const remainingDialogBackdrops = document.querySelectorAll(
+            "nui-dialog-backdrop"
+        );
         if (remainingDialogBackdrops.length) {
-            fail(`${remainingDialogBackdrops.length} dialog backdrops were left in the DOM.`);
+            fail(
+                `${remainingDialogBackdrops.length} dialog backdrops were left in the DOM.`
+            );
         }
     });
 
     describe("basic functionality", () => {
-
         it("should open and close dialog with default options", () => {
             const dialogInstance = fixture.componentInstance.open("foo");
             fixture.detectChanges();
@@ -241,7 +288,8 @@ describe("nui-dialog", () => {
 
         it("should properly destroy TemplateRef content", () => {
             const spyService = fixture.debugElement.injector.get(SpyService);
-            const dialogInstance = fixture.componentInstance.openDestroyableTpl();
+            const dialogInstance =
+                fixture.componentInstance.openDestroyableTpl();
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("Some content");
             expect(spyService.called).toBeFalsy();
@@ -254,7 +302,8 @@ describe("nui-dialog", () => {
 
         it("should open and close dialog from a component type", () => {
             const spyService = fixture.debugElement.injector.get(SpyService);
-            const dialogInstance = fixture.componentInstance.openCmpt(DestroyableComponent);
+            const dialogInstance =
+                fixture.componentInstance.openCmpt(DestroyableComponent);
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("Some content");
             expect(spyService.called).toBeFalsy();
@@ -270,16 +319,23 @@ describe("nui-dialog", () => {
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("Close");
 
-            (<HTMLElement>document.querySelector("button.closeFromInside")).click();
+            (<HTMLElement>(
+                document.querySelector("button.closeFromInside")
+            )).click();
             fixture.detectChanges();
             expect(fixture.nativeElement).not.toHaveDialog();
         });
 
         it("should expose component used as dialog content", () => {
-            const dialogInstance = fixture.componentInstance.openCmpt(WithActiveDialogComponent);
+            const dialogInstance = fixture.componentInstance.openCmpt(
+                WithActiveDialogComponent
+            );
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("Close");
-            expect(dialogInstance.componentInstance instanceof WithActiveDialogComponent).toBeTruthy();
+            expect(
+                dialogInstance.componentInstance instanceof
+                    WithActiveDialogComponent
+            ).toBeTruthy();
 
             dialogInstance.close();
             fixture.detectChanges();
@@ -308,7 +364,9 @@ describe("nui-dialog", () => {
 
         it("should resolve result promise on close", async () => {
             let resolvedResult: any;
-            fixture.componentInstance.openTplClose().result.then((result) => resolvedResult = result);
+            fixture.componentInstance
+                .openTplClose()
+                .result.then((result) => (resolvedResult = result));
 
             // const resolvedResult = await fixture.componentInstance.openTplClose().result;
             fixture.detectChanges();
@@ -324,7 +382,9 @@ describe("nui-dialog", () => {
 
         it("should reject result promise on dismiss", async () => {
             let rejectReason: any;
-            fixture.componentInstance.openTplDismiss().result.catch((reason) => rejectReason = reason);
+            fixture.componentInstance
+                .openTplDismiss()
+                .result.catch((reason) => (rejectReason = reason));
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog();
 
@@ -380,7 +440,6 @@ describe("nui-dialog", () => {
     });
 
     describe("backdrop options", () => {
-
         it("should have backdrop by default", () => {
             const dialogInstance = fixture.componentInstance.open("foo");
             fixture.detectChanges();
@@ -396,7 +455,9 @@ describe("nui-dialog", () => {
         });
 
         it("should open and close dialog without backdrop", () => {
-            const dialogInstance = fixture.componentInstance.open("foo", {backdrop: false});
+            const dialogInstance = fixture.componentInstance.open("foo", {
+                backdrop: false,
+            });
             fixture.detectChanges();
 
             expect(fixture.nativeElement).toHaveDialog("foo");
@@ -410,7 +471,9 @@ describe("nui-dialog", () => {
         });
 
         it("should open and close dialog without backdrop from template content", () => {
-            const dialogInstance = fixture.componentInstance.openTpl({backdrop: false});
+            const dialogInstance = fixture.componentInstance.openTpl({
+                backdrop: false,
+            });
             fixture.detectChanges();
 
             expect(fixture.nativeElement).toHaveDialog("Hello, World!");
@@ -430,7 +493,9 @@ describe("nui-dialog", () => {
             expect(fixture.nativeElement).toHaveDialog("foo");
             expect(fixture.nativeElement).toHaveBackdrop();
 
-            generateClickEvent((<HTMLElement>document.querySelector("nui-dialog-window")));
+            generateClickEvent(
+                <HTMLElement>document.querySelector("nui-dialog-window")
+            );
             fixture.detectChanges();
 
             expect(fixture.nativeElement).not.toHaveDialog();
@@ -438,13 +503,17 @@ describe("nui-dialog", () => {
         });
 
         it("should not dismiss on 'static' backdrop click", () => {
-            const dialogInstance = fixture.componentInstance.open("foo", {backdrop: "static"});
+            const dialogInstance = fixture.componentInstance.open("foo", {
+                backdrop: "static",
+            });
             fixture.detectChanges();
 
             expect(fixture.nativeElement).toHaveDialog("foo");
             expect(fixture.nativeElement).toHaveBackdrop();
 
-            generateClickEvent((<HTMLElement>document.querySelector("nui-dialog-window")));
+            generateClickEvent(
+                <HTMLElement>document.querySelector("nui-dialog-window")
+            );
             fixture.detectChanges();
 
             expect(fixture.nativeElement).toHaveDialog();
@@ -471,9 +540,10 @@ describe("nui-dialog", () => {
     });
 
     describe("beforeDismiss options", () => {
-
         it("should not dismiss when the callback returns false", () => {
-            const dialogInstance = fixture.componentInstance.openTplDismiss({beforeDismiss: () => false});
+            const dialogInstance = fixture.componentInstance.openTplDismiss({
+                beforeDismiss: () => false,
+            });
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog();
 
@@ -508,9 +578,10 @@ describe("nui-dialog", () => {
     });
 
     describe("container options", () => {
-
         it("should attach window and backdrop elements to the specified container", () => {
-            const dialogInstance = fixture.componentInstance.open("foo", {container: "#testContainer"});
+            const dialogInstance = fixture.componentInstance.open("foo", {
+                container: "#testContainer",
+            });
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("foo", "#testContainer");
 
@@ -522,29 +593,38 @@ describe("nui-dialog", () => {
         it("should throw when the specified container element doesnt exist", () => {
             const brokenSelector = "#notInTheDOM";
             expect(() => {
-                fixture.componentInstance.open("foo", {container: brokenSelector});
-            }).toThrowError(new RegExp(`container(.*)${brokenSelector}(.*)not found`));
+                fixture.componentInstance.open("foo", {
+                    container: brokenSelector,
+                });
+            }).toThrowError(
+                new RegExp(`container(.*)${brokenSelector}(.*)not found`)
+            );
         });
     });
 
     describe("keyboard options", () => {
-
         it("should dismiss dialogs on ESC by default", () => {
             fixture.componentInstance.open("foo").result.catch(_noop);
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("foo");
 
-            (<DebugElement>getDebugNode(document.querySelector("nui-dialog-window"))).triggerEventHandler("keyup.esc", {});
+            (<DebugElement>(
+                getDebugNode(document.querySelector("nui-dialog-window"))
+            )).triggerEventHandler("keyup.esc", {});
             fixture.detectChanges();
             expect(fixture.nativeElement).not.toHaveDialog();
         });
 
         it("should not dismiss dialogs on ESC when default is prevented", () => {
-            const dialogInstance = fixture.componentInstance.open("foo", {keyboard: true});
+            const dialogInstance = fixture.componentInstance.open("foo", {
+                keyboard: true,
+            });
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("foo");
 
-            (<DebugElement>getDebugNode(document.querySelector("nui-dialog-window"))).triggerEventHandler("keyup.esc", {
+            (<DebugElement>(
+                getDebugNode(document.querySelector("nui-dialog-window"))
+            )).triggerEventHandler("keyup.esc", {
                 defaultPrevented: true,
             });
             fixture.detectChanges();
@@ -557,44 +637,54 @@ describe("nui-dialog", () => {
     });
 
     describe("size options", () => {
-
         it("should render dialogs with specified size", () => {
-            const dialogInstance = fixture.componentInstance.open("foo", {size: "sm"});
+            const dialogInstance = fixture.componentInstance.open("foo", {
+                size: "sm",
+            });
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("foo");
-            expect(document.querySelector(".modal-dialog")?.classList).toContain("dialog-sm");
+            expect(
+                document.querySelector(".modal-dialog")?.classList
+            ).toContain("dialog-sm");
 
             dialogInstance.close();
             fixture.detectChanges();
             expect(fixture.nativeElement).not.toHaveDialog();
         });
-
     });
 
     describe("window custom class options", () => {
-
         it("should render dialogs with the correct window custom classes", () => {
-            const dialogInstance = fixture.componentInstance.open("foo", {windowClass: "bar"});
+            const dialogInstance = fixture.componentInstance.open("foo", {
+                windowClass: "bar",
+            });
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("foo");
-            expect(document.querySelector("nui-dialog-window")?.classList).toContain("bar");
+            expect(
+                document.querySelector("nui-dialog-window")?.classList
+            ).toContain("bar");
 
             dialogInstance.close();
             fixture.detectChanges();
             expect(fixture.nativeElement).not.toHaveDialog();
         });
-
     });
 
     describe("custom injector option", () => {
-
         it("should render dialog with a custom injector", () => {
             const customInjector = Injector.create({
                 providers: [
-                    {provide: CustomSpyService, useClass: CustomSpyService, deps: []},
+                    {
+                        provide: CustomSpyService,
+                        useClass: CustomSpyService,
+                        deps: [],
+                    },
                 ],
             });
-            const dialogInstance = fixture.componentInstance.openCmpt(CustomInjectorComponent, {injector: customInjector});
+            const dialogInstance = fixture.componentInstance.openCmpt(
+                CustomInjectorComponent,
+                { injector: customInjector }
+            );
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("Some content");
 
@@ -602,20 +692,21 @@ describe("nui-dialog", () => {
             fixture.detectChanges();
             expect(fixture.nativeElement).not.toHaveDialog();
         });
-
     });
 
     describe("focus management", () => {
-
         it("should focus dialog window and return focus to previously focused element", () => {
             fixture.detectChanges();
-            const openButtonEl = fixture.nativeElement.querySelector("button#open");
+            const openButtonEl =
+                fixture.nativeElement.querySelector("button#open");
 
             openButtonEl.focus();
             openButtonEl.click();
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("from button");
-            expect(document.activeElement).toBe(document.querySelector("nui-dialog-window"));
+            expect(document.activeElement).toBe(
+                document.querySelector("nui-dialog-window")
+            );
 
             fixture.componentInstance.close();
             expect(fixture.nativeElement).not.toHaveDialog();
@@ -626,7 +717,9 @@ describe("nui-dialog", () => {
             const dialogInstance = fixture.componentInstance.open("foo");
             fixture.detectChanges();
             expect(fixture.nativeElement).toHaveDialog("foo");
-            expect(document.activeElement).toBe(document.querySelector("nui-dialog-window"));
+            expect(document.activeElement).toBe(
+                document.querySelector("nui-dialog-window")
+            );
 
             dialogInstance.close("ok!");
             expect(document.activeElement).toBe(document.body);
@@ -634,12 +727,17 @@ describe("nui-dialog", () => {
 
         it("should return focus to body if the opening element is not stored as previously focused element", () => {
             fixture.detectChanges();
-            const openElement = fixture.nativeElement.querySelector("#open-no-focus");
+            const openElement =
+                fixture.nativeElement.querySelector("#open-no-focus");
 
             openElement.click();
             fixture.detectChanges();
-            expect(fixture.nativeElement).toHaveDialog("from non focusable element");
-            expect(document.activeElement).toBe(document.querySelector("nui-dialog-window"));
+            expect(fixture.nativeElement).toHaveDialog(
+                "from non focusable element"
+            );
+            expect(document.activeElement).toBe(
+                document.querySelector("nui-dialog-window")
+            );
 
             fixture.componentInstance.close();
             expect(fixture.nativeElement).not.toHaveDialog();
@@ -649,10 +747,14 @@ describe("nui-dialog", () => {
 
     describe("window element ordering", () => {
         it("should place newer windows on top of older ones", () => {
-            const dialogInstance1 = fixture.componentInstance.open("foo", {windowClass: "window-1"});
+            const dialogInstance1 = fixture.componentInstance.open("foo", {
+                windowClass: "window-1",
+            });
             fixture.detectChanges();
 
-            const dialogInstance2 = fixture.componentInstance.open("bar", {windowClass: "window-2"});
+            const dialogInstance2 = fixture.componentInstance.open("bar", {
+                windowClass: "window-2",
+            });
             fixture.detectChanges();
 
             const windows = document.querySelectorAll("nui-dialog-window");
@@ -668,8 +770,13 @@ describe("nui-dialog", () => {
 
     describe("afterOpened$", () => {
         it("should emit when dialogService.open is called", () => {
-            const subjectSpy = spyOn(fixture.componentInstance.dialogService.afterOpened$, "next");
-            const dialogInstance = fixture.componentInstance.open("foo", {windowClass: "window-1"});
+            const subjectSpy = spyOn(
+                fixture.componentInstance.dialogService.afterOpened$,
+                "next"
+            );
+            const dialogInstance = fixture.componentInstance.open("foo", {
+                windowClass: "window-1",
+            });
             fixture.detectChanges();
 
             expect(subjectSpy).toHaveBeenCalledTimes(1);
@@ -679,7 +786,10 @@ describe("nui-dialog", () => {
         });
 
         it("should emit when dialogService.confirm is called", () => {
-            const subjectSpy = spyOn(fixture.componentInstance.dialogService.afterOpened$, "next");
+            const subjectSpy = spyOn(
+                fixture.componentInstance.dialogService.afterOpened$,
+                "next"
+            );
             const dialogInstance = fixture.componentInstance.confirm();
             fixture.detectChanges();
 

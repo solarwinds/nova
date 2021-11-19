@@ -68,11 +68,11 @@ export class FormFieldComponent implements AfterContentInit, AfterContentChecked
 
     public controlIsOptional: boolean = false;
 
-    ngAfterContentChecked() {
+    ngAfterContentChecked(): void {
         this.controlIsOptional = this.showOptionalText && !this.hasRequiredField(this.control);
     }
 
-    public ngAfterContentInit() {
+    public ngAfterContentInit(): void {
         if (this.control) {
             merge(this.control.valueChanges, this.control.statusChanges, extractTouchedChanges(this.control))
                 .subscribe(
@@ -99,7 +99,7 @@ export class FormFieldComponent implements AfterContentInit, AfterContentChecked
         }
     }
 
-    public getWidth() {
+    public getWidth(): string {
         return this.customBoxWidth || "100%";
     }
 

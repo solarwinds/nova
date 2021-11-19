@@ -25,9 +25,9 @@ export class CustomTemplateFilterGroupCompositeComponent implements IFilterPub, 
     @Output() filterChanged: EventEmitter<IFilterGroupItem> = new EventEmitter();
     @Output() showAllButtonClicked: EventEmitter<any> = new EventEmitter();
 
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
+    constructor(@Inject(DialogService) private dialogService: DialogService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.filterGroupItem.allFilterOptions = _orderBy(this.filterGroupItem.allFilterOptions, "value", "asc");
     }
 
@@ -55,11 +55,11 @@ export class CustomTemplateFilterGroupCompositeComponent implements IFilterPub, 
         };
     }
 
-    public showFilterDialog() {
+    public showFilterDialog(): void {
         this.showAllButtonClicked.emit();
     }
 
-    public getDisplayedFiltersCount() {
+    public getDisplayedFiltersCount(): number {
         return this.filterGroupItem.itemsToDisplay ? this.filterGroupItem.itemsToDisplay : 10;
     }
 

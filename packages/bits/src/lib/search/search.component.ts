@@ -83,7 +83,7 @@ export class SearchComponent implements IFilterPub, OnDestroy {
     public searchIconColor: string = "gray";
 
     constructor() {
-        this.defaultPlaceholder = $localize `Search`;
+        this.defaultPlaceholder = $localize`Search`;
     }
 
     public getFilters(): IFilter<string> {
@@ -104,7 +104,7 @@ export class SearchComponent implements IFilterPub, OnDestroy {
         this.focusChange.emit(true);
     }
 
-    public onFocusChange(event: boolean) {
+    public onFocusChange(event: boolean): void {
         this.captureFocus = event;
         this.focusChange.emit(event);
     }
@@ -119,7 +119,7 @@ export class SearchComponent implements IFilterPub, OnDestroy {
         }
     }
 
-    public isButtonDisabled() {
+    public isButtonDisabled(): boolean {
         return _isEmpty(this.value);
     }
 
@@ -127,7 +127,7 @@ export class SearchComponent implements IFilterPub, OnDestroy {
         this.search.emit(this.value);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }

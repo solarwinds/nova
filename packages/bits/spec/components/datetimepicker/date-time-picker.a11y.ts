@@ -5,15 +5,13 @@ import { DateTimepickerAtom, DialogAtom } from "../public_api";
 
 describe("a11y: date time picker", () => {
     let dateTimePickerBasic: DateTimepickerAtom;
-    let dateTimePickerRanged: DateTimepickerAtom;
     let dateTimePickerDialog: DateTimepickerAtom;
     let dialogButtonElem: ElementFinder;
 
-    beforeAll(async () => {
+    beforeAll(async (): Promise<void> => {
         await Helpers.prepareBrowser("date-time-picker/date-time-picker-visual-test");
 
         dateTimePickerBasic = Atom.find(DateTimepickerAtom, "nui-basic-date-time-picker");
-        dateTimePickerRanged = Atom.find(DateTimepickerAtom, "nui-date-time-picker-ranged");
         dialogButtonElem = element(by.id("nui-visual-test-dialog-btn"));
     });
 
@@ -47,7 +45,7 @@ describe("a11y: date time picker", () => {
             await dateTimePickerDialog.getTimePicker().toggle();
             await assertA11y(browser, DateTimepickerAtom.CSS_CLASS);
         });
-    
+
         it("should verify a11y of the datepicker in modal dialog", async () => {
             await dateTimePickerDialog.getDatePicker().toggle();
             await assertA11y(browser, DateTimepickerAtom.CSS_CLASS);

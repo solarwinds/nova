@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, TemplateRef} from "@angular/core";
+import { Component, Input, OnInit, TemplateRef } from "@angular/core";
 import _isObject from "lodash/isObject";
 import _sortBy from "lodash/sortBy";
 
@@ -30,11 +30,11 @@ export class RecursiveObjectViewComponent implements OnInit {
 
     public orderOfKeys: Array<string>;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.orderOfKeys = _sortBy(Object.keys(this.object), (key: string) => key.length);
     }
 
-    public checkInstance(key: string) {
+    public checkInstance(key: string): boolean {
         return _isObject(this.object[key]);
     }
 }

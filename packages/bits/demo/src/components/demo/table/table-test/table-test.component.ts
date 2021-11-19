@@ -56,18 +56,18 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     private searchSubscription: Subscription;
 
     constructor(@Inject(ToastService) private toastService: IToastService,
-                @Inject(DialogService) private dialogService: DialogService,
-                @Inject(TableStateHandlerService) private tableStateHandlerService: TableStateHandlerService,
-                private formBuilder: FormBuilder,
-                public changeDetection: ChangeDetectorRef,
-                public viewContainerRef: ViewContainerRef,
-                public applicationRef: ApplicationRef,
-                public dataSourceService: ClientSideDataSource<ITestTableModel>
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(TableStateHandlerService) private tableStateHandlerService: TableStateHandlerService,
+        private formBuilder: FormBuilder,
+        public changeDetection: ChangeDetectorRef,
+        public viewContainerRef: ViewContainerRef,
+        public applicationRef: ApplicationRef,
+        public dataSourceService: ClientSideDataSource<ITestTableModel>
     ) {
         dataSourceService.setData(ELEMENT_DATA);
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(this.displayedColumnsCopy, [
                 Validators.required, Validators.minLength(3)]),
@@ -92,7 +92,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
         });
     }
 
-    async ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.componentTree = {
             paginator: {
                 componentInstance: this.filteringPaginator,
@@ -112,26 +112,26 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
             this.dataSourceService.applyFilters();
         });
 
-        await this.dataSourceService.applyFilters();
-    }
-
-    public sortData() {
         this.dataSourceService.applyFilters();
     }
 
-    public async onSearch(value: string) {
+    public async sortData(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public async onSearchCancel() {
+    public async onSearch(value: string): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public toastColumns(event: Array<string>) {
-        this.toastService.info({message: "Current order of columns is: " + event.toString().replace(/,/g, ", ")});
+    public async onSearchCancel(): Promise<void> {
+        await this.dataSourceService.applyFilters();
     }
 
-    public async changePagination() {
+    public toastColumns(event: Array<string>): void {
+        this.toastService.info({ message: "Current order of columns is: " + event.toString().replace(/,/g, ", ") });
+    }
+
+    public async changePagination(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
@@ -178,7 +178,7 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
 
     // TODO: temporary solution for changing table state dynamically, remove this after NUI-1999
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
         this.searchSubscription.unsubscribe();
     }

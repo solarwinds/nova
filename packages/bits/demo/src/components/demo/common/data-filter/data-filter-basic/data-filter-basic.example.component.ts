@@ -44,7 +44,7 @@ export class ListDatasource extends LocalFilteringDataSource<ListModel> implemen
         return filteredData;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
@@ -82,7 +82,7 @@ export class TableDatasource extends LocalFilteringDataSource<TableModel> implem
         return filteredData;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.onDestroy$.next(true);
         this.onDestroy$.complete();
     }
@@ -108,7 +108,7 @@ export class DataFilterBasicExampleComponent implements AfterViewInit {
         this.filterService.applyFilters();
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filterService.applyFilters();
     }
 }
@@ -172,7 +172,7 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
 
     constructor(private dataFilter: DataFilterService, private dataSourceService: TableDatasource) { }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         // this filter will be applied in this component and NuiDataFilterListComponent
         this.dataFilter.registerFilter({
             sorter: {
@@ -185,16 +185,16 @@ export class NuiDataFilterTableComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.dataFilter.applyFilters();
     }
 
-    public onSorterAction(changes: ISorterChanges) {
+    public onSorterAction(changes: ISorterChanges): void {
         this.sortBy = changes.newValue.sortBy;
         this.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }
@@ -238,7 +238,7 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
 
     constructor(private filterService: DataFilterService, private dataSourceService: ListDatasource) { }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         // this filter will be applied only in this component
         this.filterService.registerFilter({
             search: {
@@ -251,11 +251,11 @@ export class NuiDataFilterListComponent implements AfterViewInit, OnDestroy {
         });
     }
 
-    public applyFilters() {
+    public applyFilters(): void {
         this.filterService.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }
@@ -321,20 +321,21 @@ export class FilteringTimeFramePickerComponent implements IFilterPub, OnInit {
     public closePopoverSubject = new Subject();
     public openPopoverSubject = new Subject();
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.acceptedTimeframe = this.tf;
     }
 
-    public updateTf(value: any) {
+    public updateTf(value: any): void {
         this.tf = value;
     }
 
-    public confirmPopover() {
+    public confirmPopover(): void {
         this.closePopoverSubject.next();
         this.acceptedTimeframe = this.tf;
         this.timeFrameChanged.emit(this.acceptedTimeframe);
     }
-    public cancelPopover() {
+
+    public cancelPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
     }

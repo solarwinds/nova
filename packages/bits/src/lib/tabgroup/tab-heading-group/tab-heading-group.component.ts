@@ -28,7 +28,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
      */
     @Output() selected: EventEmitter<string> = new EventEmitter();
 
-    @HostBinding("class.vertical") get isVertical() { return this.vertical; }
+    @HostBinding("class.vertical") get isVertical(): boolean { return this.vertical; }
 
     public leftTraverseEnabled = true;
     public rightTraverseEnabled = false;
@@ -40,11 +40,13 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     private _tabSelectedSubscriptions: Subscription[] = [];
     private _changesSubscription: Subscription;
 
-    constructor (private el: ElementRef,
-                 private changeDetectorRef: ChangeDetectorRef,
-                 private ngZone: NgZone) {}
+    constructor(
+        private el: ElementRef,
+        private changeDetectorRef: ChangeDetectorRef,
+        private ngZone: NgZone
+    ) { }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         // Observing the size of the component to check traverse
         this._ro = new ResizeObserver(entries => entries.forEach(() => this.checkTraverse()));
         this.ngZone.runOutsideAngular(() => {
@@ -64,7 +66,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         });
     }
 
-    public setActiveTab() {
+    public setActiveTab(): void {
         if (this._tabs.length && !this.getActiveTab()) {
             this._tabs.first.active = true;
             this.selected.emit(this._tabs.first.tabId);
@@ -89,7 +91,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         if (this.vertical) {
             return false;
         }
-        return holderSize +  this._traverseButtonsWidth <= contentSize;
+        return holderSize + this._traverseButtonsWidth <= contentSize;
     }
 
     public traverseRight(): void {
@@ -119,7 +121,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
     }
 
     // Subscribing to all tabs and their 'selected' event. Once the event has been fired the origin tab becomes active.
-    private subscribeToSelection() {
+    private subscribeToSelection(): void {
         this._tabs.forEach((tab: TabHeadingComponent) => {
             this._tabSelectedSubscriptions.push(
                 tab.selected.subscribe((currentTab: TabHeadingComponent) => {
@@ -147,7 +149,7 @@ export class TabHeadingGroupComponent implements OnDestroy, AfterViewInit {
         return margin < maxAllowedMargin;
     }
 
-    private isTraverseRightAllowed (margin: string): boolean {
+    private isTraverseRightAllowed(margin: string): boolean {
         return this.getNumberFromPixels(margin) < 0;
     }
 

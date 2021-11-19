@@ -8,7 +8,7 @@ export class ButtonTestComponent {
     isRepeat = "true";
     count = 100;
 
-    onCountUpClick() {
+    onCountUpClick(): void {
         this.count++;
     }
 }

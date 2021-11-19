@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { PaginatorAtom } from "../public_api";
 
 describe("a11y: paginator", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "nested-interactive",
     ];
 

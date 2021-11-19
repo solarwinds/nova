@@ -7,12 +7,12 @@ import { Component } from "@angular/core";
 })
 export class PopoverDisabledExampleComponent {
     public disabled = false;
-    public buttonName = $localize `Disable`;
+    public buttonName = $localize`Disable`;
 
     constructor() { }
 
-    changeStatus() {
+    changeStatus(): void {
         this.disabled = !this.disabled;
-        this.buttonName = this.disabled ? $localize `Enable` : $localize `Disable`;
+        this.buttonName = this.disabled ? $localize`Enable` : $localize`Disable`;
     }
 }

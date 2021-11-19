@@ -1,5 +1,5 @@
-import {CdkDrag, DragDrop, DragRef, DropListRef, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {Point} from "@angular/cdk/drag-drop/drag-ref";
+import { CdkDrag, DragDrop, DragRef, DropListRef, moveItemInArray, transferArrayItem } from "@angular/cdk/drag-drop";
+import { Point } from "@angular/cdk/drag-drop/drag-ref";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 import {
     AfterViewInit,
@@ -23,12 +23,12 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import _isEqual from "lodash/isEqual";
-import {Subject} from "rxjs";
-import {takeUntil, tap} from "rxjs/operators";
+import { Subject } from "rxjs";
+import { takeUntil, tap } from "rxjs/operators";
 
-import {nameof} from "../../functions/nameof";
-import {IFilter, IFilterPub, INovaFilters, IRepeatFilter} from "../../services/data-source/public-api";
-import {LoggerService} from "../../services/log-service";
+import { nameof } from "../../functions/nameof";
+import { IFilter, IFilterPub, INovaFilters, IRepeatFilter } from "../../services/data-source/public-api";
+import { LoggerService } from "../../services/log-service";
 
 import {
     IItemsReorderedEvent,
@@ -86,7 +86,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
         }
     }
 
-    public get draggable() {
+    public get draggable(): boolean {
         return this._draggable;
     }
 
@@ -113,7 +113,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
         this._reorderable = value;
     }
 
-    public get reorderable() {
+    public get reorderable(): boolean {
         return this._reorderable;
     }
 
@@ -258,12 +258,15 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
 
     get role(): string { return this.selectionMode !== "none" ? "listbox" : "list"; }
 
-    constructor(public changeDetector: ChangeDetectorRef, public logger: LoggerService,
-                private iterableDiffers: IterableDiffers, public dragDropService: DragDrop,
-                private elRef: ElementRef) {
-    }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public logger: LoggerService,
+        private iterableDiffers: IterableDiffers,
+        public dragDropService: DragDrop,
+        private elRef: ElementRef
+    ) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.intersectionObserver = new IntersectionObserver(this.intersectionObserverCallback);
         this.intersectionObserver.observe(this.elRef.nativeElement);
 
@@ -290,7 +293,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.initializeCDKDropList();
     }
 
@@ -304,7 +307,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
         this.disposeCDKDropList();
     }
 
-    public update() {
+    public update(): void {
         this.changeDetector.detectChanges();
     }
 
@@ -349,7 +352,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
      * @param event
      * @param item value object that is used in nui-repeat-item
      */
-    public itemClicked(event: any, item: T) {
+    public itemClicked(event: any, item: T): void {
         if (this.selectionMode === RepeatSelectionMode.none || this.isItemDisabled(item)) {
             return;
         } else if (this.selectionMode === RepeatSelectionMode.multi) {
@@ -380,7 +383,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
      * nui-repeat-item selection change handler
      * @param item selected nui-repeat-item
      */
-    public multiSelectionChanged(item: T) {
+    public multiSelectionChanged(item: T): void {
         if (this.selection.indexOf(item) === -1) {
             this.selection = [...this.selection, item];
         } else {
@@ -410,7 +413,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
     }
     /* END - ITEM BEHAVIOUR DECIDERS */
 
-    private initializeCDKDropList() {
+    private initializeCDKDropList(): void {
         if (!this.virtualScroll && this.dropListArea && this._draggable && !this.dropListRef) {
             this.dropListRef = this.dragDropService.createDropList(this.dropListArea);
             this.dropListRef.disabled = !this._draggable;
@@ -426,7 +429,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
         }
     }
 
-    private disposeCDKDropList() {
+    private disposeCDKDropList(): void {
         if (this.dropListRef) {
             this.dropListRef.dispose();
             this.dropListDestroyed.next();
@@ -434,7 +437,7 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
         }
     }
 
-    private itemDropped(event: IDndItemDropped) {
+    private itemDropped(event: IDndItemDropped): void {
         // CDK retrieves incorrectly event.previousIndex so we need to compute it ourselves
         const item = event.item.data;
         const computedPreviousIndex = this.itemsSource.indexOf(item.data, 0);
@@ -450,10 +453,12 @@ export class RepeatComponent<T extends IRepeatItem = any> implements OnInit, OnD
             sortingOrderChanged = computedPreviousIndex !== event.currentIndex;
         } else {
             // moves the item from the source: event.container[computedPreviousIndex] to target: event.container.data[event.currentIndex]
-            transferArrayItem(event.previousContainer.data,
-                              event.container.data,
-                              computedPreviousIndex,
-                              event.currentIndex);
+            transferArrayItem(
+                event.previousContainer.data,
+                event.container.data,
+                computedPreviousIndex,
+                event.currentIndex
+            );
         }
 
         if (sortingOrderChanged) {

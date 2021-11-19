@@ -35,14 +35,14 @@ export class ComboboxVisualTestComponent implements OnInit {
     };
     public displayedItems = this.datasetInGroups.itemsInGroups;
 
-    public textboxChanged(searchQuery: ISelectChangedEvent<string>) {
+    public textboxChanged(searchQuery: ISelectChangedEvent<string>): void {
         this.displayedItems = _cloneDeep(this.datasetInGroups.itemsInGroups);
         this.displayedItems.forEach(items => {
             items.items = items.items.filter(item => item.includes(searchQuery.newValue));
         });
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.isInErrorState();
     }
 

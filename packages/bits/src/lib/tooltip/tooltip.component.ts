@@ -80,11 +80,11 @@ export class TooltipComponent implements OnDestroy, OnInit {
         protected overlay: Overlay) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.updatePopupOverlayConfig();
     }
 
-    public updatePossiblePositions(positions: ConnectedPosition[]) {
+    public updatePossiblePositions(positions: ConnectedPosition[]): void {
         this.possiblePositions = positions;
         const positionStrategy = this.overlayComponent.getOverlayRef().getConfig().positionStrategy as FlexibleConnectedPositionStrategy;
         positionStrategy.withPositions(this.possiblePositions);
@@ -138,14 +138,14 @@ export class TooltipComponent implements OnDestroy, OnInit {
         return this._visibility === true;
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.overlayComponent.hide();
         this._onHide.complete();
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    _animationStart() {
+    _animationStart(): void {
         this._closeOnInteraction = false;
     }
 
@@ -209,7 +209,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
         this.overlayConfig = {
             positionStrategy: strategy,
             panelClass: TOOLTIP_PANEL_CLASS,
-            scrollStrategy: this.overlay.scrollStrategies.reposition({autoClose: true}),
+            scrollStrategy: this.overlay.scrollStrategies.reposition({ autoClose: true }),
         };
         this._markForCheck();
     }

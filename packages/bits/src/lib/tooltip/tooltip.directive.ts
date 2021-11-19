@@ -54,7 +54,7 @@ export class TooltipDirective implements OnDestroy {
     /** Disables the display of the tooltip. */
     @Input("nuiTooltipDisabled")
     get disabled(): boolean { return this._disabled; }
-    set disabled(value) {
+    set disabled(value: boolean) {
         this._disabled = coerceBooleanProperty(value);
 
         // If tooltip is disabled, hide immediately.
@@ -67,7 +67,7 @@ export class TooltipDirective implements OnDestroy {
 
     /** The message to be displayed in the tooltip */
     @Input("nuiTooltip")
-    get message() { return this._message; }
+    get message(): string { return this._message; }
     set message(value: string) {
         this._ariaDescriber.removeDescription(this._elementRef.nativeElement, this._message);
 
@@ -121,7 +121,7 @@ export class TooltipDirective implements OnDestroy {
     /**
      * Dispose the tooltip when destroyed.
      */
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this._tooltipInstance) {
             this._tooltipInstance = undefined;
         }
@@ -179,7 +179,7 @@ export class TooltipDirective implements OnDestroy {
     }
 
     /** Handles the keydown events on the host element. */
-    _handleKeydown(e: KeyboardEvent) {
+    _handleKeydown(e: KeyboardEvent): void {
         if (this._isTooltipVisible() && e.keyCode === ESCAPE && !hasModifierKey(e)) {
             e.preventDefault();
             e.stopPropagation();
@@ -188,7 +188,7 @@ export class TooltipDirective implements OnDestroy {
     }
 
     /** Handles the touchend events on the host element. */
-    _handleTouchend() {
+    _handleTouchend(): void {
         this.hide();
     }
 

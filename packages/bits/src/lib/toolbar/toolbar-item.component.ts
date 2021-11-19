@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, EventEmitter, Input, Output} from "@angular/core";
+import { AfterContentInit, Component, EventEmitter, Input, Output } from "@angular/core";
 
 import { ToolbarItemDisplayStyle, ToolbarItemType } from "./public-api";
 /**
@@ -8,7 +8,7 @@ import { ToolbarItemDisplayStyle, ToolbarItemType } from "./public-api";
 @Component({
     selector: "nui-toolbar-item",
     template: "<ng-content></ng-content>",
-    host: { "class" : "nui-toolbar-item" },
+    host: { "class": "nui-toolbar-item" },
 })
 
 export class ToolbarItemComponent implements AfterContentInit {
@@ -25,11 +25,11 @@ export class ToolbarItemComponent implements AfterContentInit {
 
     @Output() public actionDone = new EventEmitter();
 
-    public get isDestructive() {
+    public get isDestructive(): boolean {
         return this.displayStyle === ToolbarItemDisplayStyle.destructive;
     }
 
-    ngAfterContentInit() {
+    ngAfterContentInit(): void {
         this.menuHidden = this.type === ToolbarItemType.secondary;
     }
 }

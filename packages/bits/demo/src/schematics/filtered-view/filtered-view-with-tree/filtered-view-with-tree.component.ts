@@ -20,7 +20,7 @@ import _pull from "lodash/pull";
 
 import { FilterGroupComponent } from "./filter-group/filter-group.component";
 import { IFilterGroupItem } from "./filter-group/public-api";
-import {FilteredViewWithTreeDataSource} from "./filtered-view-with-tree-data-source.service";
+import { FilteredViewWithTreeDataSource } from "./filtered-view-with-tree-data-source.service";
 import {
     IFilterable,
     IServer,
@@ -113,7 +113,7 @@ export class FilteredViewWithTreeComponent implements AfterViewInit {
 
     ];
 
-    public chipsDataSource: IChipsItemsSource = {groupedItems: [], flatItems: []};
+    public chipsDataSource: IChipsItemsSource = { groupedItems: [], flatItems: [] };
     public overflowCounter: number;
     public overflowSource: IChipsItemsSource;
     public overflowPopoverPosition: PopoverOverlayPosition[] = [PopoverOverlayPosition.bottomLeft, PopoverOverlayPosition.topLeft];
@@ -129,23 +129,23 @@ export class FilteredViewWithTreeComponent implements AfterViewInit {
     ) {
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSource.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.child.applyFilters();
         this.updateChips();
     }
 
-    public onChipsOverflow(source: IChipsItemsSource) {
+    public onChipsOverflow(source: IChipsItemsSource): void {
         this.overflowSource = source;
         const reducer = (accumulator: number, currentValue: IChipsGroup) => accumulator + currentValue.items.length;
         this.overflowCounter = (this.overflowSource.flatItems?.length || 0) + (this.overflowSource.groupedItems?.reduce(reducer, 0) || 0);
         this.popover?.updatePosition();
     }
 
-    public async onClear(event: { item: IChipsItem, group?: IChipsGroup }) {
+    public onClear(event: { item: IChipsItem, group?: IChipsGroup }): void {
         if (event.group) {
             _pull(event.group.items || [], event.item);
         } else {
@@ -155,7 +155,7 @@ export class FilteredViewWithTreeComponent implements AfterViewInit {
         group?.deselectFilterItemByValue(event.item.label);
     }
 
-    public onClearAll(e: MouseEvent) {
+    public onClearAll(e: MouseEvent): void {
         this.chipsDataSource.groupedItems = [];
         this.popover?.onClick(e);
         this.filterGroups.forEach(i => i.deselectAllFilterItems());
@@ -166,7 +166,7 @@ export class FilteredViewWithTreeComponent implements AfterViewInit {
             {
                 id: i.id,
                 label: i.title,
-                items: i.selectedFilterValues.map(selected => ({label: selected})),
+                items: i.selectedFilterValues.map(selected => ({ label: selected })),
             }
         ));
         this.cd.markForCheck();

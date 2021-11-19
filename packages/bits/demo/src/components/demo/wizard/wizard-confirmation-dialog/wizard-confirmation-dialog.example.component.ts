@@ -11,33 +11,33 @@ export class WizardConfirmationDialogExampleComponent {
     constructor(@Inject(DialogService) private dialogService: DialogService,
         @Inject(ToastService) private toastService: ToastService) { }
 
-    public openConfirmationDialog($event: boolean, content: TemplateRef<string>) {
+    public openConfirmationDialog($event: boolean, content: TemplateRef<string>): void {
         if ($event) {
-            this.activeDialog = this.dialogService.open(content, {size: "sm"});
+            this.activeDialog = this.dialogService.open(content, { size: "sm" });
         } else {
             this.toastService.info({
-                message: $localize `Cancel button clicked!`,
-                title: $localize `Event`,
+                message: $localize`Cancel button clicked!`,
+                title: $localize`Event`,
             });
         }
     }
 
-    public onButtonClick(title: string) {
+    public onButtonClick(title: string): void {
         title === "Leave" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }
 
     private actionDone(): void {
         this.toastService.success({
-            message: $localize `Leave Done!`,
-            title: $localize `Event`,
+            message: $localize`Leave Done!`,
+            title: $localize`Event`,
         });
     }
 
     private actionCanceled(): void {
         this.toastService.info({
-            message: $localize `Action Canceled!`,
-            title: $localize `Event`,
+            message: $localize`Action Canceled!`,
+            title: $localize`Event`,
         });
     }
 }

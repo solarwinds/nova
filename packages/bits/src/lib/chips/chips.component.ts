@@ -143,11 +143,11 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
         }
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.removeAllLinkText = this.removeAllLinkText || $localize `Clear all`;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         if (this.overflow) {
             this.initChipsOverflow();
         }
@@ -155,7 +155,7 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
 
     /** Handles Popup on window resize */
     @HostListener("window:resize")
-    public onWinResize() {
+    public onWinResize(): void {
         if (this.overflow && this.getItemsCount()) {
             this.chipsOverflowService.handleOverflow();
         }
@@ -170,11 +170,11 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
         return count;
     }
 
-    public onRemove(data: { item: IChipsItem, group?: IChipsGroup }) {
+    public onRemove(data: { item: IChipsItem, group?: IChipsGroup }): void {
         this.chipRemoved.emit(data);
     }
 
-    public onRemoveAll(event: MouseEvent) {
+    public onRemoveAll(event: MouseEvent): void {
         this.removeAll.emit(event);
         event.preventDefault();
     }

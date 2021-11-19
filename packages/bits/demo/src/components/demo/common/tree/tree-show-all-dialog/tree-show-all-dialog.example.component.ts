@@ -124,11 +124,12 @@ export class VirtualScrollListDataSource<T = any> extends DataSourceService<T> i
     public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
         // Every new search request or filter change should
         // clear the cache in order to correctly display a new set of data
-        const reset = this.filtersChanged(filters,
-                                          nameof<IServerFilters>("status"),
-                                          nameof<IServerFilters>("location"),
-                                          nameof<IServerFilters>("search"),
-                                          nameof<IServerFilters>("sorter")
+        const reset = this.filtersChanged(
+            filters,
+            nameof<IServerFilters>("status"),
+            nameof<IServerFilters>("location"),
+            nameof<IServerFilters>("search"),
+            nameof<IServerFilters>("sorter")
         );
 
         if (reset || filters.virtualScroll?.value.start === 0) {
@@ -152,7 +153,7 @@ export class VirtualScrollListDataSource<T = any> extends DataSourceService<T> i
         ).toPromise();
     }
 
-    public reset() {
+    public reset(): void {
         this.cache = [];
     }
 
@@ -202,13 +203,12 @@ export class VirtualScrollListDataSource<T = any> extends DataSourceService<T> i
     }
 
     // checks if any of the filters specified by name have changed from the previous evaluation
-    public filtersChanged(filters: INovaFilters, ...filterNames: string[]) {
+    public filtersChanged(filters: INovaFilters, ...filterNames: string[]): boolean {
         for (let i = 0; i < filterNames.length; i++) {
             const filterName = filterNames[i];
             const filter = filters[filterName];
             if (!isNil(filter?.value) && this.previousFilters
                 && !isEqual(filter?.value, this.previousFilters[filterName]?.value)) {
-
                 return true;
             }
         }
@@ -237,7 +237,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     public treeControl = new NestedTreeControl<IServerNode>((node) => node.children);
     public dataSource = new ArrayDataSource(TREE_DATA);
 
-    public hasChild = (_: number, node: IServerNode) => node.children;
+    public hasChild = (_: number, node: IServerNode): boolean => !!node?.children?.length;
 
     constructor(
         private virtualScrollListDataSource: VirtualScrollListDataSource,
@@ -247,7 +247,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     ) {
     }
 
-    public showAll(node: IServerNode) {
+    public showAll(node: IServerNode): void {
         // setup the Dialog
         this.activeDialogRef = this.dialogService.open(TreeDialogContentExampleComponent, { size: "sm" });
         // pass the inputs to the context component
@@ -269,7 +269,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     /**
      * Register the viewport container to the DataSource
      */
-    private subscribeToDialogScrolling() {
+    private subscribeToDialogScrolling(): void {
         // 'setTimeout' to wait until the dialog is rendered
         setTimeout(() => {
             const viewPortManager = this.activeDialogComponent.viewPortManager;
@@ -297,8 +297,8 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     }
 
     /** Load first page on first open */
-    public onToggleClick(node: IServerNode, nestedNode: CdkNestedTreeNode<any>) {
-        this.eventBusService.getStream({id: "document-click"}).next();
+    public onToggleClick(node: IServerNode, nestedNode: CdkNestedTreeNode<any>): void {
+        this.eventBusService.getStream({ id: "document-click" }).next();
 
         if (node.hasChildren && node.children && !node.children.length) {
             node.isLoading = true;
@@ -317,11 +317,11 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         }
     }
 
-    private handleNodeTotalItems(nodeId: string, totalItems: number) {
+    private handleNodeTotalItems(nodeId: string, totalItems: number): void {
         this.nodesTotalItems[nodeId] = totalItems;
     }
 
-    private handleNodeContent(node: IServerNode, nestedNodeDirective: CdkNestedTreeNode<any>, items: IServerNode[]) {
+    private handleNodeContent(node: IServerNode, nestedNodeDirective: CdkNestedTreeNode<any>, items: IServerNode[]): void {
         node.children = [];
         const differ: IterableDiffer<IServerNode> = this.differ.find(node.children).create();
         node.children = items;
@@ -332,7 +332,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     }
 
     /** Register node name as a search to get nodes of one location */
-    private setDsSearchFieldFor(node: IServerNode) {
+    private setDsSearchFieldFor(node: IServerNode): void {
         this.virtualScrollListDataSource.registerComponent({
             search: {
                 componentInstance: {
@@ -345,7 +345,7 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         });
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
@@ -393,24 +393,24 @@ export class TreeDialogContentExampleComponent implements AfterViewInit {
     @Input() isLoading: boolean = false;
 
     public itemConfig: IRepeatItemConfig = {
-        trackBy: (index, item) => item?.name,
+        trackBy: (index: number, item: IServerNode): string | undefined => item?.name,
     };
 
     @ViewChild(RepeatComponent)
     public repeat: RepeatComponent;
 
-    constructor(public cdRef: ChangeDetectorRef,
+    constructor(
+        public cdRef: ChangeDetectorRef,
         public viewPortManager: VirtualViewportManager,
         @Inject(NuiActiveDialog) public activeDialog: any
-    ) {}
+    ) { }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.viewPortManager.setViewport(this.repeat.viewportRef);
     }
 
-    close() {
+    close(): void {
         this.activeDialog.close();
     }
-
 }
 

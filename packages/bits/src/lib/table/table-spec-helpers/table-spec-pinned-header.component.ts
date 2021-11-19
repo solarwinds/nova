@@ -31,7 +31,7 @@ export class PinnedHeaderTableComponent {
     public dataSource = TableSpecHelpers.getTableInitialData();
     public isSticky = true;
 
-    public setStickyFalse() {
+    public setStickyFalse(): void {
         this.isSticky = false;
     }
 }

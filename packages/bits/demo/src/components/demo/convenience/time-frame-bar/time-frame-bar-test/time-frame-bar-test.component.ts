@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { HistoryStorage, ITimeframe } from "@nova-ui/bits";
-import moment, {  } from "moment/moment";
+import moment, { } from "moment/moment";
 
 @Component({
     selector: "nui-convenience-time-frame-bar-test",
@@ -17,18 +17,18 @@ export class TimeFrameBarTestComponent {
         this.resetDefault();
     }
 
-    public onChange(value?: ITimeframe) {
+    public onChange(value?: ITimeframe): void {
         this.timeFrame = this.history.restart(value);
     }
 
-    public zoomIn() {
+    public zoomIn(): void {
         this.timeFrame = this.history.save({
             startDatetime: this.timeFrame.startDatetime.clone().add(1, "day"),
             endDatetime: this.timeFrame.endDatetime.clone().subtract(1, "day"),
         });
     }
 
-    public resetDefault() {
+    public resetDefault(): void {
         this.onChange({
             startDatetime: this.baseDate.clone().subtract(1, "week"),
             endDatetime: this.baseDate.clone(),

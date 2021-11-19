@@ -83,7 +83,6 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
      */
     @Output() public valueChange = new EventEmitter<any>();
 
-    /* eslint-disable-next-line @typescript-eslint/no-use-before-define */
     @ContentChildren(forwardRef(() => RadioComponent), { descendants: true }) private children: QueryList<RadioComponent>;
     private _value: any = null;
     private selectedRadio: RadioComponent | null = null;
@@ -116,13 +115,13 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
         });
     }
 
-    public onChange(value: any) {
+    public onChange(value: any): void {
     }
 
-    public onTouched() {
+    public onTouched(): void {
     }
 
-    public writeValue(value: any) {
+    public writeValue(value: any): void {
         this.value = value;
     }
 
@@ -145,13 +144,13 @@ export class RadioGroupComponent implements AfterContentInit, OnDestroy, Control
         this.subscriptions.forEach(sub => sub.unsubscribe());
     }
 
-    private setChildDisabled = (child: RadioComponent) => {
+    private setChildDisabled = (child: RadioComponent): void => {
         if (!_isUndefined(this.disabled)) {
             child.disabled = this.disabled;
         }
     }
 
-    private checkSelectedRadioButton() {
+    private checkSelectedRadioButton(): void {
         if (this.selectedRadio && !this.selectedRadio.checked) {
             this.selectedRadio.checked = true;
         }
@@ -240,10 +239,10 @@ export class RadioComponent implements OnInit, OnDestroy {
      */
     @Input() public ariaLabel: string = "";
 
-    @ViewChild("inputViewContainer", {static: true, read: ViewContainerRef })
+    @ViewChild("inputViewContainer", { static: true, read: ViewContainerRef })
     public inputViewContainer: ViewContainerRef;
 
-    @ViewChild("radioTransclude", {static: true})
+    @ViewChild("radioTransclude", { static: true })
     public radioTransclude: ElementRef;
 
     public radioTranscludeIsEmpty: boolean;
@@ -254,8 +253,8 @@ export class RadioComponent implements OnInit, OnDestroy {
 
     readonly radioGroup: RadioGroupComponent;
     constructor(@Optional() radioGroup: RadioGroupComponent,
-                private changeDetector: ChangeDetectorRef,
-                private eventBusService: EventBusService) {
+        private changeDetector: ChangeDetectorRef,
+        private eventBusService: EventBusService) {
         this.radioGroup = radioGroup;
     }
 
@@ -289,7 +288,7 @@ export class RadioComponent implements OnInit, OnDestroy {
         this.valueChange.emit(this.value);
     }
 
-    public onInputClick(event: Event) {
+    public onInputClick(event: Event): void {
         // We have to stop propagation for click events on the visual hidden input element.
         // By default, when a user clicks on a label element, a generated click event will be
         // dispatched on the associated input element. Since we are using a label element as our
@@ -298,6 +297,6 @@ export class RadioComponent implements OnInit, OnDestroy {
         // This will lead to multiple click events.
         // Preventing bubbling for the second event will solve that issue.
         event.stopPropagation();
-        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT}).next(event);
+        this.eventBusService.getStream({ id: DOCUMENT_CLICK_EVENT }).next(event);
     }
 }

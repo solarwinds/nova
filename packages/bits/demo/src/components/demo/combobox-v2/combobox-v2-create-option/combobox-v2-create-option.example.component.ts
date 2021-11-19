@@ -9,14 +9,14 @@ import { ComboboxV2Component } from "@nova-ui/bits";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComboboxV2CreateOptionExampleComponent {
-    public options = Array.from({ length: 3 }).map((_, i) => $localize `Item ${i}`);
+    public options = Array.from({ length: 3 }).map((_, i) => $localize`Item ${i}`);
     @ViewChild("combobox") public combobox: ComboboxV2Component;
 
     public comboboxControl = new FormControl();
 
-    constructor(private domSanitizer: DomSanitizer) {}
+    constructor(private domSanitizer: DomSanitizer) { }
 
-    public createOption(option: string) {
+    public createOption(option: string): void {
         const sanitizedOption = this.domSanitizer.sanitize(SecurityContext.HTML, option)?.trim();
         if (sanitizedOption) {
             this.options.push(sanitizedOption);

@@ -23,19 +23,19 @@ export class SelectVisualTestComponent implements OnInit {
     public datasetSeparator = {
         itemsInGroups: [
             {
-                header: $localize `Group 1 header`,
-                items: [$localize `Item 1`, $localize `Item 2`, $localize `Item 3`],
+                header: $localize`Group 1 header`,
+                items: [$localize`Item 1`, $localize`Item 2`, $localize`Item 3`],
             },
             {
-                header: $localize `Group 2 header`,
-                items: [$localize `Item 4`, $localize `Item 5`, $localize `Item 6`],
+                header: $localize`Group 2 header`,
+                items: [$localize`Item 4`, $localize`Item 5`, $localize`Item 6`],
             },
             {
-                header: $localize `Group 3 header`,
-                items: [$localize `Item 7`, $localize `Item 8`, $localize `Item 9`],
+                header: $localize`Group 3 header`,
+                items: [$localize`Item 7`, $localize`Item 8`, $localize`Item 9`],
             },
         ],
-        selectedItem: $localize `Item 1`,
+        selectedItem: $localize`Item 1`,
     };
 
 
@@ -46,35 +46,35 @@ export class SelectVisualTestComponent implements OnInit {
         displayValue: "value",
         selectedItem: "",
         items: [
-            {name: "item_1", value: "Bonobo", icon: "severity_ok", progress: 78},
-            {name: "item_2", value: "Zelda", icon: "severity_ok", progress: 66},
-            {name: "item_3", value: "Max", icon: "severity_critical", progress: 7},
-            {name: "item_4", value: "Apple", icon: "severity_ok", progress: 24},
-            {name: "item_5", value: "Quartz", icon: "severity_warning", progress: 89},
+            { name: "item_1", value: "Bonobo", icon: "severity_ok", progress: 78 },
+            { name: "item_2", value: "Zelda", icon: "severity_ok", progress: 66 },
+            { name: "item_3", value: "Max", icon: "severity_critical", progress: 7 },
+            { name: "item_4", value: "Apple", icon: "severity_ok", progress: 24 },
+            { name: "item_5", value: "Quartz", icon: "severity_warning", progress: 89 },
         ],
     };
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
             item: this.formBuilder.control(this.datasetBasic.selectedItem, [Validators.required]),
         });
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         if (!this.myForm.valid) {
             // if form is invalid mark all controls as touched to trigger isInErrorState
             Object.keys(this.myForm.controls).forEach(field => {
                 const control = this.myForm.get(field);
-                control?.markAsTouched({onlySelf: true});
+                control?.markAsTouched({ onlySelf: true });
             });
         }
     }
 
-    public valueChange(changedEvent: ISelectChangedEvent<string>) {
+    public valueChange(changedEvent: ISelectChangedEvent<string>): void {
         this.datasetBasic.selectedItem = changedEvent.newValue;
     }
 
-    public isInErrorState() {
+    public isInErrorState(): boolean {
         return this.isRequired && !this.datasetBasic.selectedItem;
     }
 

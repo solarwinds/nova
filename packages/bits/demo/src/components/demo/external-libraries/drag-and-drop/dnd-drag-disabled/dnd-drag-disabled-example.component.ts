@@ -1,7 +1,7 @@
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import {Component} from "@angular/core";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Component } from "@angular/core";
 
-class IListItem  {
+class IListItem {
     title: string;
     enabled: boolean;
 }
@@ -23,11 +23,11 @@ export class DndDragDisabledExampleComponent {
         },
     ];
 
-    public onItemDropped(event: CdkDragDrop<IListItem[]>) {
+    public onItemDropped(event: CdkDragDrop<IListItem[]>): void {
         moveItemInArray(this.listItems, event.previousIndex, event.currentIndex);
     }
 
-    public translatedStatus(enabled: boolean) {
-        return enabled ? $localize `Enabled` : $localize `Disabled`;
+    public translatedStatus(enabled: boolean): string {
+        return enabled ? $localize`Enabled` : $localize`Disabled`;
     }
 }

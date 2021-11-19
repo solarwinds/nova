@@ -10,14 +10,14 @@ export class ToastStickyErrorExampleComponent implements OnInit {
 
     constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.toastService.setConfig({}, "id");
     }
 
     public onShowStickyError(highlightMode: boolean): void {
         this.toastService.error({
-            title: $localize `Sticky Error`,
-            message: $localize `Red Alert`,
+            title: $localize`Sticky Error`,
+            message: $localize`Red Alert`,
             options: this.getOptions(),
         });
     }

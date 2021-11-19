@@ -24,13 +24,13 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent implements Aft
             id: "1",
             presets: {
                 "last42Hours": {
-                    name: $localize `Last 42 hours`,
-                    startDatetimePattern: {hours: -42},
+                    name: $localize`Last 42 hours`,
+                    startDatetimePattern: { hours: -42 },
                     endDatetimePattern: {},
                 },
                 "last749Days": {
-                    name: $localize `Last 749 days`,
-                    startDatetimePattern: {days: -749},
+                    name: $localize`Last 749 days`,
+                    startDatetimePattern: { days: -749 },
                     endDatetimePattern: {},
                 },
             },
@@ -40,8 +40,8 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent implements Aft
             id: "2",
             presets: {
                 "last42Hours": {
-                    name: $localize `Last 42 hours`,
-                    startDatetimePattern: {hours: -42},
+                    name: $localize`Last 42 hours`,
+                    startDatetimePattern: { hours: -42 },
                     endDatetimePattern: {},
                 },
             },
@@ -51,13 +51,13 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent implements Aft
             id: "3",
             presets: {
                 "lastYear": {
-                    name: $localize `Last year`,
-                    startDatetimePattern: {year: -1},
+                    name: $localize`Last year`,
+                    startDatetimePattern: { year: -1 },
                     endDatetimePattern: {},
                 },
                 "last10Years": {
-                    name: $localize `Last 10 years`,
-                    startDatetimePattern: {year: -10},
+                    name: $localize`Last 10 years`,
+                    startDatetimePattern: { year: -10 },
                     endDatetimePattern: {},
                 },
             },
@@ -68,13 +68,13 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent implements Aft
 
     public presets: ITimeFramePresetDictionary = {
         "last42Hours": {
-            name: $localize `Last 42 hours`,
-            startDatetimePattern: {hours: -42},
+            name: $localize`Last 42 hours`,
+            startDatetimePattern: { hours: -42 },
             endDatetimePattern: {},
         },
         "last749Days": {
-            name: $localize `Last 749 days`,
-            startDatetimePattern: {days: -749},
+            name: $localize`Last 749 days`,
+            startDatetimePattern: { days: -749 },
             endDatetimePattern: {},
         },
     };
@@ -88,7 +88,7 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent implements Aft
     constructor(private cdRef: ChangeDetectorRef) {
     }
 
-    public updateTf(value: ITimeframe, index: number) {
+    public updateTf(value: ITimeframe, index: number): void {
         const picker = this.pickers[index];
         picker.tf = value;
 
@@ -102,7 +102,7 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent implements Aft
         picker.selectedPresetKey = <string>picker.tf.selectedPresetId;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.tfScopers.forEach((scoper, i) => {
             const picker = this.pickers[i];
             const timeframeService = scoper.timeframeService;
@@ -115,19 +115,20 @@ export class TimeFramePickerMultipleCustomPickersExampleComponent implements Aft
         this.cdRef.detectChanges();
     }
 
-    public confirmPopover(index: number) {
+    public confirmPopover(index: number): void {
         const picker = this.pickers[index];
 
         this.showFooter = false;
         this.closePopoverSubject.next();
         picker.acceptedTimeframe = picker.tf;
     }
-    public cancelPopover(index: number) {
+
+    public cancelPopover(index: number): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
     }
 
-    public handlePresetSelection(presetKey: string, index: number) {
+    public handlePresetSelection(presetKey: string, index: number): void {
         const picker = this.pickers[index];
 
         picker.selectedPresetKey = presetKey;

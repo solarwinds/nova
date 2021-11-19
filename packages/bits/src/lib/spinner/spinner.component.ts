@@ -9,7 +9,6 @@ import {
     OnChanges,
     OnDestroy,
     Output,
-    SimpleChange,
     SimpleChanges,
     ViewEncapsulation,
 } from "@angular/core";
@@ -29,10 +28,10 @@ import { ButtonIcon, SpinnerSize } from "./public-api";
     animations: [
         trigger("spinnerAppear", [
             transition(":enter", [
-                animate(".2s ease-in-out", style({opacity: 1})),
+                animate(".2s ease-in-out", style({ opacity: 1 })),
             ]),
             transition(":leave", [
-                animate(".2s ease-in-out", style({opacity: 0})),
+                animate(".2s ease-in-out", style({ opacity: 0 })),
             ]),
         ]),
     ],
@@ -48,7 +47,7 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
     private static defaultSize: SpinnerSize = SpinnerSize.Small;
     private showTimer: any;
     private _size: SpinnerSize;
-    public tooltipText = $localize `Cancel`;
+    public tooltipText = $localize`Cancel`;
 
     public showSpinner = false;
     public isDeterminate = false;
@@ -85,23 +84,25 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
         this._size = SpinnerComponent.defaultSize;
     }
 
-    public get size() {
+    public get size(): SpinnerSize {
         return this._size || SpinnerComponent.defaultSize;
     }
 
-    public get icon() {
+    public get icon(): ButtonIcon {
         return ButtonIcon[this.size];
     }
 
-    public get showText() {
+    public get showText(): boolean {
         return this.size !== SpinnerSize.Small;
     }
 
-    constructor(private logger: LoggerService,
+    constructor(
+        private logger: LoggerService,
         private changeDetector: ChangeDetectorRef,
-        private ngZone: NgZone) { }
+        private ngZone: NgZone
+    ) { }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes?.percent) {
             this.ariaValueNow = this.percent ? String(this.percent) : undefined;
         }
@@ -128,17 +129,17 @@ export class SpinnerComponent implements OnChanges, OnDestroy {
         }
     }
 
-    public cancelShowTimer() {
+    public cancelShowTimer(): void {
         if (this.showTimer) {
             clearTimeout(this.showTimer);
         }
     }
 
-    public cancelProgress() {
+    public cancelProgress(): void {
         this.cancel.emit();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.cancelShowTimer();
     }
 }

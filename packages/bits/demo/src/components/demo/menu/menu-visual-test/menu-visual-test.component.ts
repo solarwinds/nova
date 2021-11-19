@@ -12,7 +12,7 @@ export class MenuVisualTestComponent {
             header: "Group 1",
             itemsSource: [
                 { title: "Item 1", itemType: "action", action: this.actionDone },
-                { title: "Item 2", itemType: "action", action: () => alert("hello") },
+                { title: "Item 2", itemType: "action", action: (): void => { alert("hello"); } },
                 { title: "Item 3", itemType: "action", action: this.actionWithParams.bind(this, 2) },
                 { title: "Item 4", itemType: "action", action: this.actionDone },
                 { title: "Item 5", itemType: "action", action: this.actionDone },
@@ -62,7 +62,7 @@ export class MenuVisualTestComponent {
         console.log("Action Done");
     }
 
-    public actionWithParams(index: number) {
+    public actionWithParams(index: number): void {
         console.log("action", this.itemsSource[0].itemsSource[index].title);
     }
 }

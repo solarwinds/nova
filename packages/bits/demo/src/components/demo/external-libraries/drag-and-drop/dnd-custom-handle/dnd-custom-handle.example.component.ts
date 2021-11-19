@@ -1,5 +1,5 @@
-import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
-import { Component} from "@angular/core";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Component } from "@angular/core";
 
 class IListItem {
     title: string;
@@ -31,7 +31,7 @@ export class DndCustomHandleExampleComponent {
         },
     ];
 
-    public onItemDropped(event: CdkDragDrop<IListItem[]>) {
+    public onItemDropped(event: CdkDragDrop<IListItem[]>): void {
         moveItemInArray(this.listItems, event.previousIndex, event.currentIndex);
     }
 }

@@ -31,11 +31,11 @@ export class ClientSideDataSource<T, F extends INovaFilters = INovaFilters> exte
         super();
     }
 
-    public setData(initialData: T[] = []) {
+    public setData(initialData: T[] = []): void {
         this._allData = initialData;
     }
 
-    public setSearchProperties(properties: string[]) {
+    public setSearchProperties(properties: string[]): void {
         this._searchProps = properties;
     }
 
@@ -70,15 +70,15 @@ export class ClientSideDataSource<T, F extends INovaFilters = INovaFilters> exte
         };
     }
 
-    protected prepareData(filters: F) {
+    protected prepareData(filters: F): T[] {
         return this._allData;
     }
 
-    protected searchHandler(searchTerm: any) {
+    protected searchHandler(searchTerm: any): any[] {
         return this.searchService.search(this._allData, this._searchProps, searchTerm);
     }
 
-    protected sortingHandler(filters: any, nextChunk: any) {
+    protected sortingHandler(filters: any, nextChunk: any): any {
         if (_get(filters, "sorter.value.sortBy") && _get(filters, "sorter.value.direction")) {
             // Original direction means that sorting is not needed
             if (filters.sorter.value.direction !== SorterDirection.original) {
@@ -88,7 +88,7 @@ export class ClientSideDataSource<T, F extends INovaFilters = INovaFilters> exte
         return nextChunk;
     }
 
-    protected paginationHandler(filters: any, nextChunk: any) {
+    protected paginationHandler(filters: any, nextChunk: any): any {
         if (filters?.paginator) {
             return nextChunk.slice(
                 filters.paginator.value.start,
@@ -98,7 +98,7 @@ export class ClientSideDataSource<T, F extends INovaFilters = INovaFilters> exte
         return nextChunk;
     }
 
-    protected virtualScrollHandler(filters: any, nextChunk: any) {
+    protected virtualScrollHandler(filters: any, nextChunk: any): any {
         let data = nextChunk;
         if (filters?.virtualScroll) {
             data = nextChunk.slice(
@@ -118,7 +118,7 @@ export class ClientSideDataSource<T, F extends INovaFilters = INovaFilters> exte
         _forEach(filters, (value, key) => {
             if (value?.type === "string[]") {
                 multiFilterArr
-                    .push({[key]: value} as any);
+                    .push({ [key]: value } as any);
             }
         });
         return multiFilterArr;

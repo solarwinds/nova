@@ -20,7 +20,7 @@ const routes = [
     },
     {
         path: "time-frame-bar",
-        loadChildren: () => import("./time-frame-bar/time-frame-bar.module").then(m => m.TimeFrameBarModule),
+        loadChildren: async () => import("./time-frame-bar/time-frame-bar.module").then(m => m.TimeFrameBarModule),
     },
 ];
 

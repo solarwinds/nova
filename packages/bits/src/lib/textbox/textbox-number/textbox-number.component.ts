@@ -16,7 +16,7 @@ import isUndefined from "lodash/isUndefined";
 import round from "lodash/round";
 
 import { regexpValidation } from "../../../constants/regex.constants";
-import {NuiFormFieldControl} from "../../form-field/public-api";
+import { NuiFormFieldControl } from "../../form-field/public-api";
 import { KEYBOARD_CODE } from "../../../constants";
 
 // <example-url>./../examples/index.html#/textbox/textbox-number</example-url>
@@ -139,7 +139,7 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
 
     @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
 
-    @ViewChild("numberInput", {static: true}) private input: ElementRef<HTMLFieldSetElement>;
+    @ViewChild("numberInput", { static: true }) private input: ElementRef<HTMLFieldSetElement>;
 
     public formControl: FormControl;
 
@@ -147,18 +147,18 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
 
     private validatorFn: (c: FormControl) => ValidationErrors | null;
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes["minValue"] || changes["maxValue"]) {
             this.validatorFn = TextboxNumberComponent.createRangeValidator(this.minValue, this.maxValue);
         }
     }
 
-    public onBlurEventEmit() {
+    public onBlurEventEmit(): void {
         this.onTouched();
         this.blurred.emit(this.value);
     }
 
-    public addNumber(valueChange: number) {
+    public addNumber(valueChange: number): void {
         if (isUndefined(this.value) || isNaN(this.value)) {
             this.value = 0;
         }
@@ -168,7 +168,7 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
         this.onValueChange(round(newValue, this.stepPrecision));
     }
 
-    public onValueChange(value: any) {
+    public onValueChange(value: any): void {
         this.value = value;
 
         setTimeout(() => {
@@ -179,21 +179,21 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
         });
     }
 
-    public onChange(value: any) {
+    public onChange(value: any): void {
     }
 
-    public onTouched() {
+    public onTouched(): void {
     }
 
-    public writeValue(value: any) {
+    public writeValue(value: any): void {
         this.value = value;
     }
 
-    public registerOnChange(fn: (value: any) => {}) {
+    public registerOnChange(fn: (value: any) => {}): void {
         this.onChange = fn;
     }
 
-    public registerOnTouched(fn: () => {}) {
+    public registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
     }
 
@@ -214,7 +214,7 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
         return (this.validatorFn ? this.validatorFn(c) : null) || this.nativeValidator();
     }
 
-    public hasError() {
+    public hasError(): boolean {
         return (this.formControl?.touched || this.formControl?.dirty)
             && !this.formControl?.valid;
     }
@@ -224,7 +224,7 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
             return null;
         }
 
-        return {format: "Invalid input"};
+        return { format: "Invalid input" };
     }
 
     private clampToRange(value: number): number {

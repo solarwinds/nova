@@ -12,13 +12,13 @@ export class SearchFocusChangeExampleComponent {
     constructor(@Inject(ToastService) public toastService: ToastService) {
     }
 
-    public onFocusChange(focused: boolean) {
+    public onFocusChange(focused: boolean): void {
         this.isFocused = focused;
-        this.toastService.success({message: this.isFocused ? "Focused in!" : "Focused out"});
+        this.toastService.success({ message: this.isFocused ? "Focused in!" : "Focused out" });
     }
 
-    public setFocus() {
+    public setFocus(): void {
         this.isFocused = true;
-        this.toastService.success({message: "Focused in!"});
+        this.toastService.success({ message: "Focused in!" });
     }
 }

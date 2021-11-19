@@ -17,7 +17,7 @@ export class TableCellWidthSetExampleComponent {
     public positionWidth = 50;
     public displayedColumns = ["position", "item", "description", "status", "location"];
     public dataSource = getData();
-    public onOptionChange(value: number) {
+    public onOptionChange(value: number): void {
         this.positionWidth = value;
     }
 }

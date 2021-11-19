@@ -1,6 +1,6 @@
-import {Injectable, OnDestroy} from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
-import {switchMap, takeUntil, tap} from "rxjs/operators";
+import { switchMap, takeUntil, tap } from "rxjs/operators";
 
 import { DataSourceService } from "./data-source.service";
 import { IFilteringOutputs, IFilters } from "./public-api";
@@ -23,30 +23,30 @@ export abstract class ServerSideDataSource<T, F extends IFilters = IFilters, D =
         this.setupFilters();
     }
 
-    protected setupFilters() {
+    protected setupFilters(): void {
         this.applyFilters$.pipe(
             tap((filters) => this.beforeApplyFilters(filters)),
             switchMap((filters: F) => this.getBackendData(filters)),
-            tap(async(data: D) => this.afterApplyFilters(data)),
+            tap(async (data: D) => this.afterApplyFilters(data)),
             takeUntil(this.destroy$)
         ).subscribe();
     }
 
     // make sure we clean upon service destruction
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
         this.busy.complete();
     }
 
-    protected beforeApplyFilters(filters: F) {
+    protected beforeApplyFilters(filters: F): void {
         // show the loader
         this.busy.next(true);
 
         this.shouldResetFilters(filters);
     }
 
-    protected async afterApplyFilters(data: D) {
+    protected async afterApplyFilters(data: D): Promise<void> {
         await super.afterApplyFilters(data);
 
         // no matter if the backend response was successful or not,
@@ -54,7 +54,7 @@ export abstract class ServerSideDataSource<T, F extends IFilters = IFilters, D =
         this.busy.next(false);
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         this.applyFilters$.next(this.getFilters() as F);
     }
 

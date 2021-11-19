@@ -29,11 +29,11 @@ export class IconService {
         return this.names[iconName];
     }
 
-    getStatusIcon(status: string) {
+    getStatusIcon(status: string): string {
         return this.statuses[status];
     }
 
-    getIconResized(iconCode: string, iconNewSize: number, viewBox?: string) {
+    getIconResized(iconCode: string, iconNewSize: number, viewBox?: string): string {
         return `<g transform="translate(-${iconNewSize / 2}, -${iconNewSize / 2})">
                     <svg height="${iconNewSize}" width="${iconNewSize}" viewBox="${viewBox ? viewBox : "0 0 20 20"}">
                         ${iconCode}
@@ -46,13 +46,13 @@ export class IconService {
      *
      * @param iconsList
      */
-    public registerIcons(iconsList: IconData[]) {
+    public registerIcons(iconsList: IconData[]): void {
         this.icons.push(...iconsList);
 
         this.updateIconStatusesAndNames();
     }
 
-    private updateIconStatusesAndNames() {
+    private updateIconStatusesAndNames(): void {
         this.statuses = this.icons
             .filter(iconData => {
                 if (iconData.cat_namespace === IconCategoryNamespace.Status) {

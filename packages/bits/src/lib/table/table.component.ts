@@ -151,13 +151,13 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
         };
     }
 
-    public getPreselectedItems(items: any[]) {
+    public getPreselectedItems(items: ReadonlyArray<T>): T[] {
         return this.dataSource.filter((item) => _some(items, item));
     }
 
     // using on changes hook for datasource because if we use pagination,
     // datasource changes when we change page and rows should know about this
-    ngOnChanges(changes: ComponentChanges<TableComponent<T>>) {
+    ngOnChanges(changes: ComponentChanges<TableComponent<T>>): void {
         if (changes.resizable) {
             this.tableStateHandlerService.resizable = changes.resizable.currentValue;
             this.layoutFixed = changes.resizable.currentValue;
@@ -185,7 +185,7 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
         }
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         super.ngOnInit();
         const dataSet = (this.dataSource as Array<T>);
         const firstRow: TableRowData = dataSet && dataSet[0];
@@ -235,7 +235,7 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // moved this from ngOnInit since we might emit the selectionChange event
         // before our component is actually ready and it might cause problems
         // if we try to manually trigger change detection in a parent component
@@ -270,7 +270,7 @@ export class TableComponent<T> extends CdkTable<T> implements OnInit, AfterViewI
         this.tableStateHandlerService.changeDataSource(changedDataSource);
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.tableSortingSubscription) {
             this.tableSortingSubscription.unsubscribe();
         }

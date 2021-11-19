@@ -30,23 +30,25 @@ export class SelectReactiveFormTestComponent implements OnInit {
         selectedItem: "",
     };
 
-    constructor(private formBuilder: FormBuilder,
-                @Inject(ToastService) public toastService: ToastService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(ToastService) public toastService: ToastService
+    ) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            item: this.formBuilder.control( this.dataset.selectedItem, [Validators.required]),
+            item: this.formBuilder.control(this.dataset.selectedItem, [Validators.required]),
         });
     }
 
-    public valueChange(changedEvent: ISelectChangedEvent<string>) {
+    public valueChange(changedEvent: ISelectChangedEvent<string>): void {
         this.dataset.selectedItem = changedEvent.newValue;
     }
 
-    public onSubmit() {
+    public onSubmit(): void {
         this.myForm.valid
-            ? this.toastService.success({message: "Your form is valid!"})
-            : this.toastService.error({message: "Your form is invalid!"});
+            ? this.toastService.success({ message: "Your form is valid!" })
+            : this.toastService.error({ message: "Your form is invalid!" });
     }
 }
 
@@ -75,17 +77,19 @@ export class ComboboxReactiveFormTestComponent implements OnInit {
         selectedItem: "",
     };
 
-    constructor(private formBuilder: FormBuilder,
-                @Inject(ToastService) public toastService: ToastService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(ToastService) public toastService: ToastService
+    ) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.myForm = this.formBuilder.group({
-            item: this.formBuilder.control( this.dataset.selectedItem, [Validators.required]),
+            item: this.formBuilder.control(this.dataset.selectedItem, [Validators.required]),
         });
     }
 
-    public onSubmit() {
-        this.myForm.valid ? this.toastService.success({title: "Your form is valid!"}) :
-            this.toastService.error({title: "Your form is invalid!"});
+    public onSubmit(): void {
+        this.myForm.valid ? this.toastService.success({ title: "Your form is valid!" }) :
+            this.toastService.error({ title: "Your form is invalid!" });
     }
 }

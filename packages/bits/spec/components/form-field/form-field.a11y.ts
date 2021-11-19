@@ -6,7 +6,7 @@ import { ButtonAtom } from "../public_api";
 
 describe("a11y: form-field", () => {
     let toggleButton: ButtonAtom;
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "aria-allowed-role", // disabling because checkboxes are on the page
         "bypass", // because we're not on a real app's page
         "color-contrast",

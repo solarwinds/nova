@@ -8,7 +8,7 @@ import { Platform } from "@angular/cdk/platform";
 import { DOCUMENT } from "@angular/common";
 import { Inject, Injectable, OnDestroy } from "@angular/core";
 
-import {OverlayContainerService} from "./overlay-container.service";
+import { OverlayContainerService } from "./overlay-container.service";
 
 /** @dynamic */
 @Injectable()
@@ -18,7 +18,7 @@ export class OverlayCustomContainer extends OverlayContainer implements OnDestro
         super(document, platform);
     }
 
-    public setContainer(element: Element) {
+    public setContainer(element: Element): void {
         this._containerElement = this.overlayService.getOverlayContainer(element);
     }
 

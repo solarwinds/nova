@@ -9,23 +9,23 @@ export class IndeterminateProgressExampleComponent implements OnDestroy {
     public isCanceled = false;
     private stop: any = undefined;
 
-    public startProgress() {
+    public startProgress(): void {
         this.clearInterval();
         this.show = true;
     }
 
-    public onCancel() {
+    public onCancel(): void {
         this.clearInterval();
         this.isCanceled = true;
         this.show = false;
         this.stop = undefined;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.clearInterval();
     }
 
-    private clearInterval() {
+    private clearInterval(): void {
         if (this.stop) {
             clearInterval(this.stop);
         }

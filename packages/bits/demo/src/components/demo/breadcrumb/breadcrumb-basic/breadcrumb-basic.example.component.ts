@@ -11,11 +11,13 @@ export class BreadcrumbBasicExampleComponent implements OnInit, OnDestroy {
     public breadcrumbSource: Array<BreadcrumbItem>;
     private routerSubscription: Subscription;
 
-    constructor(private router: Router,
-                private routerState: ActivatedRoute,
-                private breadcrumbStateService: BreadcrumbStateService) { }
+    constructor(
+        private router: Router,
+        private routerState: ActivatedRoute,
+        private breadcrumbStateService: BreadcrumbStateService
+    ) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.routerState, "/breadcrumb/");
         this.routerSubscription = this.breadcrumbStateService.getNavigationSubscription(this.router)
             .subscribe(() => this.breadcrumbSource = this.breadcrumbStateService.getBreadcrumbState(this.routerState, "/breadcrumb/"));
@@ -26,10 +28,10 @@ export class BreadcrumbBasicExampleComponent implements OnInit, OnDestroy {
     }
 
     public relativeNavigation(routerState: string): void {
-        void this.router.navigate([routerState], {relativeTo: this.routerState});
+        void this.router.navigate([routerState], { relativeTo: this.routerState });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.routerSubscription.unsubscribe();
     }
 }
@@ -63,11 +65,11 @@ export class BreadcrumbBasicExampleComponent implements OnInit, OnDestroy {
 })
 export class BreadcrumbCountriesSubviewComponent {
     constructor(private router: Router,
-                private routerState: ActivatedRoute) {
+        private routerState: ActivatedRoute) {
     }
 
     public relativeNavigation(routerState: string): void {
-        this.router.navigate([routerState], {relativeTo: this.routerState});
+        this.router.navigate([routerState], { relativeTo: this.routerState });
     }
 }
 

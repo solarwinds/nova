@@ -2,6 +2,7 @@ import {
     AfterViewInit,
     Component,
     Inject,
+    OnDestroy,
     TemplateRef,
     ViewChild,
 } from "@angular/core";
@@ -27,19 +28,19 @@ interface IWizardStepData {
     templateUrl: "./wizard-test.component.html",
     styleUrls: ["./wizard-test.less"],
 })
-export class WizardV2TestComponent implements AfterViewInit{
+export class WizardV2TestComponent implements AfterViewInit, OnDestroy {
     public onDestroy$ = new Subject<void>();
     public overlayTriggered$ = new Subject<void>();
-    public responsiveSteps: Array<any> = Array.from({length: 20});
+    public responsiveSteps: Array<any> = Array.from({ length: 20 });
 
     private overlayRef: OverlayRef;
     public busy: boolean = false;
     public activeDialog: NuiDialogRef;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
+    constructor(@Inject(DialogService) private dialogService: DialogService) { }
 
-    public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
-    public selectedVegetables = [$localize `Potato`, $localize `Tomato`];
+    public vegetables = [$localize`Cabbage`, $localize`Potato`, $localize`Tomato`, $localize`Carrot`];
+    public selectedVegetables = [$localize`Potato`, $localize`Tomato`];
     public state: IWizardState;
     public steps: IWizardStepData[] = [];
 
@@ -99,7 +100,7 @@ export class WizardV2TestComponent implements AfterViewInit{
     }
 
     public open(content: TemplateRef<string>): void {
-        this.activeDialog = this.dialogService.open(content, {size: "lg", backdrop: "static", useOverlay: true});
+        this.activeDialog = this.dialogService.open(content, { size: "lg", backdrop: "static", useOverlay: true });
     }
 
     public actionDone(): void {

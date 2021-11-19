@@ -43,8 +43,8 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent implements 
     private virtualScrollFilterValue: ListRange = { start: 0, end: this.range };
     private onDestroy$: Subject<void> = new Subject<void>();
 
-    get totalItems() { return this._totalItems; }
-    get isBusy() { return this._isBusy; }
+    get totalItems(): number { return this._totalItems; }
+    get isBusy(): boolean { return this._isBusy; }
     // The dynamically changed array of items to render by the table
     public users: IRandomUserTableModel[] = [];
     public dataSourceObs: Subject<Array<any>> = new Subject();
@@ -61,7 +61,7 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent implements 
     @ViewChild(forwardRef(() => TableVirtualScrollDirective), { static: false }) virtualDirective: TableVirtualScrollDirective;
     @ViewChild(CdkVirtualScrollViewport, { static: false }) viewport: CdkVirtualScrollViewport;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.dataSource.outputsSubject.subscribe((outputs: IFilteringOutputs) => {
             if (outputs) {
                 this.users = outputs.repeat.itemsSource;
@@ -99,7 +99,7 @@ export class TableVirtualScrollRealApiProgressFooterExampleComponent implements 
                 if (page > this.lastPageFetched && page <= this.totalPages) {
                     const start = page * this.range;
                     const end = start + this.range;
-                    this.virtualScrollFilterValue = {start: start, end: end};
+                    this.virtualScrollFilterValue = { start: start, end: end };
                     this.lastPageFetched = page;
                     // Due to a specificity of the chosen API, we explicitly send it the page number, because the API can
                     // return data in pages. This can vary depending on the user's usecase

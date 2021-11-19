@@ -70,7 +70,7 @@ export class FilteredViewTableComponent implements OnInit, OnDestroy, AfterViewI
     ) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dataSource.busy.pipe(
             tap(val => {
                 this.isBusy = val;
@@ -80,9 +80,9 @@ export class FilteredViewTableComponent implements OnInit, OnDestroy, AfterViewI
         ).subscribe();
     }
 
-    public async ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.dataSource.registerComponent({
-            virtualScroll: {componentInstance: this.customVirtualScrollStrategyService },
+            virtualScroll: { componentInstance: this.customVirtualScrollStrategyService },
         });
         this.viewportManager
             // Note: Initializing viewportManager with the repeat's CDK Viewport Ref
@@ -116,19 +116,19 @@ export class FilteredViewTableComponent implements OnInit, OnDestroy, AfterViewI
             takeUntil(this.destroy$)
         ).subscribe();
 
-        await this.applyFilters();
+        this.applyFilters();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
 
-    public async applyFilters(resetVirtualScroll: boolean = true) {
+    public async applyFilters(resetVirtualScroll: boolean = true): Promise<void> {
         if (resetVirtualScroll) {
             // it is important to reset viewportManager to start page
             // so that the datasource performs the search with 1st page
-            this.viewportManager.reset({emitFirstPage: false});
+            this.viewportManager.reset({ emitFirstPage: false });
         }
 
         // Every new search request or filter change should

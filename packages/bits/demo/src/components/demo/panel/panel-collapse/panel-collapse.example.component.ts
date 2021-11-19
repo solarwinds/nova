@@ -10,7 +10,7 @@ export class PanelCollapseExampleComponent {
     public headerIcon = "filter";
     public headerIconCounter = 7;
 
-    public onCollapseChange($event: boolean) {
+    public onCollapseChange($event: boolean): void {
         this.isCollapsed = $event;
     }
 }

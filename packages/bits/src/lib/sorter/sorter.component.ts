@@ -13,7 +13,6 @@ import {
     SimpleChanges,
     ViewChild,
     ViewEncapsulation,
-    forwardRef,
 } from "@angular/core";
 import _assign from "lodash/assign";
 import _isEqual from "lodash/isEqual";
@@ -58,7 +57,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
     @Output() sorterAction = new EventEmitter<ISorterChanges>();
 
-    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
     @ViewChild("popup") public menuPopup: MenuPopupComponent;
 
@@ -75,7 +74,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
     };
 
-    @ViewChild("toggleRef", {static: true}) private toggleRef: ElementRef;
+    @ViewChild("toggleRef", { static: true }) private toggleRef: ElementRef;
     private sortConfig: ISortedItem;
     private sortIcons: { [key: string]: string } = {
         [SorterDirection.ascending]: "arrow-up",
@@ -83,16 +82,18 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     };
     private menuKeyControlListeners: Function[] = [];
 
-    constructor(private logger: LoggerService,
-                private sorterKeyboardService: SorterKeyboardService,
-                private elRef: ElementRef,
-                private renderer: Renderer2) {}
+    constructor(
+        private logger: LoggerService,
+        private sorterKeyboardService: SorterKeyboardService,
+        private elRef: ElementRef,
+        private renderer: Renderer2
+    ) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.onAppendToBodyChange(this.appendToBody);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.itemsSource && !_isEqual(changes.itemsSource.previousValue, changes.itemsSource.currentValue)) {
             if (this.itemsSource?.length > 0 && typeof this.itemsSource[0] === "string") {
                 this.logger.warn(`The 'string[]' type for the sorter's itemsSource input is deprecated as of Nova v9. \
@@ -103,10 +104,10 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         }
 
         if (changes.selectedItem && this.sortConfig?.sortBy !== changes.selectedItem.currentValue && !changes.selectedItem.firstChange) {
-            const oldValue = _assign({}, this.sortConfig, {sortBy: changes.selectedItem.previousValue});
+            const oldValue = _assign({}, this.sortConfig, { sortBy: changes.selectedItem.previousValue });
 
             this.selectedItem = changes.selectedItem.currentValue;
-            this.sortConfig = _assign({}, this.sortConfig, {sortBy: changes.selectedItem.currentValue});
+            this.sortConfig = _assign({}, this.sortConfig, { sortBy: changes.selectedItem.currentValue });
 
             this.triggerSorterAction(oldValue);
 
@@ -128,7 +129,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.initSelectedItem();
         this.initSortDirection();
 
@@ -149,7 +150,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         )
     }
 
-    public select(item: IMenuItem) {
+    public select(item: IMenuItem): void {
         // perform update only if the new value actually changes
         if (this.selectedItem !== item.value) {
             const oldValue = this.sortConfig;
@@ -196,7 +197,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         };
     }
 
-    public updateOverlayWidth() {
+    public updateOverlayWidth(): void {
         this.overlayConfig.minWidth = (this.toggleRef.nativeElement as HTMLElement).offsetWidth;
     }
 
@@ -206,7 +207,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
             : `${this.getSelectedItemTitle()}. Sorter direction - ascending`;
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.menuKeyControlListeners.forEach(listener => listener());
         this.onDestroy$.next();
         this.onDestroy$.complete();
@@ -217,7 +218,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         this.sorterKeyboardService.announceDropdown();
     }
 
-    private initSelectedItem() {
+    private initSelectedItem(): void {
         // skip initialization in case we already have a value
         // or if the itemsSource are lazy loaded
         if (this.selectedItem || !this.itemsSource?.length) {
@@ -228,7 +229,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         this.selectedItem = typeof firstItem === "string" ? firstItem : (firstItem as IMenuItem).value;
     }
 
-    private initPopupItems() {
+    private initPopupItems(): void {
         this.items[0].itemsSource = (this.itemsSource as any[]).map((item: string | IMenuItem) => {
             const menuItem: IMenuItem = typeof item === "string" ? { title: item, value: item } : item as IMenuItem;
             menuItem.isSelected = this.selectedItem === menuItem.value;
@@ -248,7 +249,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         });
     }
 
-    private triggerSorterAction(oldValue: ISortedItem) {
+    private triggerSorterAction(oldValue: ISortedItem): void {
         this.sorterAction.emit({ newValue: this.sortConfig, oldValue });
     }
 
@@ -256,7 +257,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         this.customContainer = appendToBody ? undefined : this.popupArea;
     }
 
-    private initKeyboardService (): void {
+    private initKeyboardService(): void {
         this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems;
         this.sorterKeyboardService.overlay = this.overlay;
         this.sorterKeyboardService.initKeyboardManager();

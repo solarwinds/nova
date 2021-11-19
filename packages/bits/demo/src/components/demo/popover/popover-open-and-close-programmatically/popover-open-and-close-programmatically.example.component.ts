@@ -9,11 +9,11 @@ export class PopoverOpenAndCloseProgrammaticallyExampleComponent {
     public closePopoverSubject = new Subject();
     public openPopoverSubject = new Subject();
 
-    public closePopover() {
+    public closePopover(): void {
         this.closePopoverSubject.next();
     }
 
-    public openPopover() {
+    public openPopover(): void {
         this.openPopoverSubject.next();
     }
 }

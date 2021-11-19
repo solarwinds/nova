@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { ImageAtom } from "../public_api";
 
 describe("a11y: image", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "duplicate-id", // has nothing to do with the images
     ];
 

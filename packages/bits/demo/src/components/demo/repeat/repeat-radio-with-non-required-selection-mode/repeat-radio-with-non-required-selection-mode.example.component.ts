@@ -7,12 +7,12 @@ import { Component } from "@angular/core";
 })
 export class RepeatRadioWithNonRequiredSelectionModeExampleComponent {
     public colors = [
-        { color: $localize `blue`, disabled: true},
-        { color: $localize `green`},
-        { color: $localize `yellow`, disabled: true},
-        { color: $localize `cyan`},
-        { color: $localize `magenta`},
-        { color: $localize `black`},
+        { color: $localize`blue`, disabled: true },
+        { color: $localize`green` },
+        { color: $localize`yellow`, disabled: true },
+        { color: $localize`cyan` },
+        { color: $localize`magenta` },
+        { color: $localize`black` },
     ];
 
     public selectedColors = [this.colors[1]];
@@ -20,7 +20,7 @@ export class RepeatRadioWithNonRequiredSelectionModeExampleComponent {
 
     constructor() { }
 
-    public onColorSelectionChange(selection: any) {
+    public onColorSelectionChange(selection: any): void {
         this.selectedColors = selection;
     }
 }

@@ -31,7 +31,7 @@ export class SchematicJsonComponent implements OnInit {
     public schemaViewData: any = {};
     public fieldsToDisplay: Array<string> = ["description", "type", "enum", "alias", "default"];
 
-    ngOnInit() {
+    ngOnInit(): void {
         const schemaJson = require(`../../../../schematics/src/${this.schematicFolderName}/schema.json`);
         this.fillViewData(schemaJson.properties);
     }

@@ -9,25 +9,26 @@ export class DialogSeverityExampleComponent {
     public severity: string;
     private activeDialog: NuiDialogRef;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-                @Inject(ToastService) private toastService: ToastService) {
-    }
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(ToastService) private toastService: ToastService
+    ) { }
 
-    public open(content: TemplateRef<string>, severity = "") {
+    public open(content: TemplateRef<string>, severity = ""): void {
         this.severity = severity;
-        this.activeDialog = this.dialogService.open(content, {size: "sm"});
+        this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
-    public onButtonClick(title: string) {
+    public onButtonClick(title: string): void {
         title === "Action" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }
 
     private actionDone(): void {
-        this.toastService.success({message: $localize `Action Done!`, title: $localize `Event`});
+        this.toastService.success({ message: $localize`Action Done!`, title: $localize`Event` });
     }
 
     private actionCanceled(): void {
-        this.toastService.info({message: $localize `Action Cancelled!`, title: $localize `Event`});
+        this.toastService.info({ message: $localize`Action Cancelled!`, title: $localize`Event` });
     }
 }

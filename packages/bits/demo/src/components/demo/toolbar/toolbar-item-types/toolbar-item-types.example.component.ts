@@ -6,7 +6,7 @@ import { Component } from "@angular/core";
 })
 
 export class ToolbarItemTypesExampleComponent {
-    public actionDone() {
+    public actionDone(): void {
         console.log("action");
     }
 }

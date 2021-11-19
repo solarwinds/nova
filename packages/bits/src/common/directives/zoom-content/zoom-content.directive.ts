@@ -29,7 +29,7 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges
 
     @HostBinding("style.padding")
     public scalePadding: string = "0";
-    
+
     // Zoom inputs
     @Input() public zoomRatio = 0.9;
     @Input() public minZoomDifference = 0.1;
@@ -68,7 +68,7 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges
         this.parentElement = this.element.parentElement;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.scaleOUT$ && this.scaleOUT$) {
 
             this.scaleIN$
@@ -101,7 +101,7 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges
         }
     }
 
-    public onResize() {
+    public onResize(): void {
         this.elementRect = this.element?.getBoundingClientRect();
         this.parentRect = this.parentElement?.getBoundingClientRect();
 

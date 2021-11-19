@@ -52,7 +52,7 @@ export class TreeCheckboxExampleComponent {
     public dataSource = new ArrayDataSource(TREE_DATA);
     public selectionModel = new SelectionModel<FoodNode>(true);
 
-    public hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    public hasChild = (_: number, node: FoodNode): boolean => !!node?.children?.length;
 
     /** Whether all the descendants of the node are selected. */
     public descendantsAllSelected(node: FoodNode): boolean {

@@ -27,32 +27,32 @@ export class TimeframeService {
 
     public defaultPresets: ITimeFramePresetDictionary = {
         "lastHour": {
-            name: $localize `Last hour`,
+            name: $localize`Last hour`,
             startDatetimePattern: { hours: -1 },
             endDatetimePattern: {},
         },
         "last12Hours": {
-            name: $localize `Last 12 hours`,
+            name: $localize`Last 12 hours`,
             startDatetimePattern: { hours: -12 },
             endDatetimePattern: {},
         },
         "last24Hours": {
-            name: $localize `Last 24 hours`,
+            name: $localize`Last 24 hours`,
             startDatetimePattern: { hours: -24 },
             endDatetimePattern: {},
         },
         "last5Days": {
-            name: $localize `Last 5 days`,
+            name: $localize`Last 5 days`,
             startDatetimePattern: { days: -5 },
             endDatetimePattern: {},
         },
         "last7Days": {
-            name: $localize `Last 7 days`,
+            name: $localize`Last 7 days`,
             startDatetimePattern: { days: -7 },
             endDatetimePattern: {},
         },
         "last30Days": {
-            name: $localize `Last 30 days`,
+            name: $localize`Last 30 days`,
             startDatetimePattern: { days: -30 },
             endDatetimePattern: {},
         },
@@ -69,8 +69,11 @@ export class TimeframeService {
      * @param endDatetimePattern
      * @param baseDatetime
      */
-    public getTimeframe(startDatetimePattern: any,
-                        endDatetimePattern: any, baseDatetime?: string): ITimeframe {
+    public getTimeframe(
+        startDatetimePattern: any,
+        endDatetimePattern: any,
+        baseDatetime?: string
+    ): ITimeframe {
         // check input parameters
         if (isUndefined(startDatetimePattern)) {
             throw new Error("Parameter 'startDatetimePattern' is undefined");
@@ -120,9 +123,11 @@ export class TimeframeService {
      * @param baseDatetime date that should be used for relative time calculations. Defaults to now.
      * @returns updated clone of timeframe with startDatetime and endDatetime reconciled with selectedPresetId
      */
-    public reconcileTimeframe = (timeFrame: ITimeframe,
-                                 presets?: ITimeFramePresetDictionary,
-                                 baseDatetime?: Moment): ITimeframe => {
+    public reconcileTimeframe = (
+        timeFrame: ITimeframe,
+        presets?: ITimeFramePresetDictionary,
+        baseDatetime?: Moment
+    ): ITimeframe => {
         if (!presets) {
             presets = this.currentPresets;
         }
@@ -209,7 +214,7 @@ export class TimeframeService {
      * @param {ITimeframe} tf
      * @returns {Boolean}
      */
-    public areTimeFrameDatesValid(tf: ITimeframe) {
+    public areTimeFrameDatesValid(tf: ITimeframe): boolean {
         const { startDatetime, endDatetime } = tf;
         const startValid = startDatetime && startDatetime.isValid();
         const endValid = endDatetime && endDatetime.isValid();

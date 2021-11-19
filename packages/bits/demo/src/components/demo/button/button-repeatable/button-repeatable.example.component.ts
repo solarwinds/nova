@@ -7,11 +7,11 @@ import { Component } from "@angular/core";
 export class ButtonRepeatableExampleComponent {
     count = 100;
 
-    onCountUpClick() {
+    onCountUpClick(): void {
         this.count++;
     }
 
-    onCountDownClick() {
+    onCountDownClick(): void {
         this.count--;
     }
 }

@@ -32,13 +32,13 @@ export function getCurrentBranchName(potentialGitRoot = process.cwd()): string |
         : getCurrentBranchName(path.resolve(potentialGitRoot, ".."));
 }
 
-export async function assertA11y(browser: ProtractorBrowser, atomSelector: string, disabledRules?: string[]) {
+export async function assertA11y(browser: ProtractorBrowser, atomSelector: string, disabledRules?: string[]): Promise<void> {
     const AxeBuilder = require("@axe-core/webdriverjs");
     const accessibilityScanResults =
-            await new AxeBuilder(browser.driver)
-                .include(`.${atomSelector}`)
-                .disableRules(disabledRules || [])
-                .analyze();
+        await new AxeBuilder(browser.driver)
+            .include(`.${atomSelector}`)
+            .disableRules(disabledRules || [])
+            .analyze();
 
     await expect(accessibilityScanResults.violations).toEqual([]);
 }
@@ -66,11 +66,11 @@ export class Helpers {
         return browser.executeScript(`document.getElementById("${id}").style.width = "${size}"`);
     }
 
-    public static async browserZoom(percent: number) {
+    public static async browserZoom(percent: number): Promise<void> {
         return browser.executeScript(`document.body.style.zoom='${percent}%'`);
     }
 
-    public static async pressKey(key: string, times: number = 1) {
+    public static async pressKey(key: string, times: number = 1): Promise<void> {
         while (times > 0) {
             await browser.actions().sendKeys(key).perform();
             times--;
@@ -82,7 +82,7 @@ export class Helpers {
     }
 
     // for non-applitools run just rename this method to `prepareEyes`
-    static prepareFakeEyes() {
+    static prepareFakeEyes(): void {
         const { Eyes } = require("@applitools/eyes-protractor");
 
         if (!eyes) {
@@ -92,14 +92,14 @@ export class Helpers {
             eyes.abortIfNotClosed = async () => true;
             eyes.setStitchMode = () => true;
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            eyes.checkWindow = async (s: string) => {  console.log(s); await browser.sleep(3000); },
+            eyes.checkWindow = async (s: string) => { console.log(s); await browser.sleep(3000); };
             eyes.checkRegion = console.log;
         }
 
         return eyes;
     }
 
-    static async prepareEyes() {
+    static async prepareEyes(): Promise<void> {
         const { Eyes } = require("@applitools/eyes-protractor");
 
         if (!eyes) {
@@ -109,11 +109,11 @@ export class Helpers {
             let branchName = <string>process.env.CIRCLE_BRANCH || getCurrentBranchName() || "Unknown";
             const userName: string = <string>process.env.CIRCLE_USERNAME ? ` - [${process.env.CIRCLE_USERNAME}]` : "";
             const batchName = (<string>process.env.CIRCLE_PROJECT_REPONAME)?.toUpperCase()
-                                + " - "
-                                + <string>process.env.CIRCLE_JOB
-                                + " - "
-                                + branchName
-                                + userName;
+                + " - "
+                + <string>process.env.CIRCLE_JOB
+                + " - "
+                + branchName
+                + userName;
             const batchID = <string>process.env.CIRCLE_JOB + "_" + <string>process.env.CIRCLE_SHA1;
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);

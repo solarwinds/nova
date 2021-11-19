@@ -10,7 +10,7 @@ export class SpinnerVisualTestComponent {
     public isCanceled: boolean = false;
     public spinPercentage: number = 0;
 
-    public onCancel() {
+    public onCancel(): void {
         this.showWithCancel = false;
         this.isCanceled = true;
     }

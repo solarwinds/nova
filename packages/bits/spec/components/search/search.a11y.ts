@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { SearchAtom } from "../public_api";
 
 describe("a11y: search", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "landmark-unique", // we don't care about it on test pages
     ];
 

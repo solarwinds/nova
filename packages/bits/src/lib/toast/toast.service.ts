@@ -1,20 +1,20 @@
-import {Injectable, Injector, SecurityContext} from "@angular/core";
-import {DomSanitizer} from "@angular/platform-browser";
+import { Injectable, Injector, SecurityContext } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 import _assign from "lodash/assign";
 import _cloneDeep from "lodash/cloneDeep";
 import _isArray from "lodash/isArray";
 import _toInteger from "lodash/toInteger";
-import {take} from "rxjs/operators";
+import { take } from "rxjs/operators";
 
-import {SwitchState} from "../../services/notification-args";
-import {NotificationService} from "../../services/notification-service";
+import { SwitchState } from "../../services/notification-args";
+import { NotificationService } from "../../services/notification-service";
 
-import {IActiveToast, IToastConfig, IToastDeclaration, IToastService, ToastPositionClass} from "./public-api";
-import {ToastContainerService} from "./toast-container.service";
-import {ToastInjector} from "./toast-injector";
-import {ToastPackage} from "./toast-package";
-import {ToastRef} from "./toast-ref";
-import {ToastComponent} from "./toast.component";
+import { IActiveToast, IToastConfig, IToastDeclaration, IToastService, ToastPositionClass } from "./public-api";
+import { ToastContainerService } from "./toast-container.service";
+import { ToastInjector } from "./toast-injector";
+import { ToastPackage } from "./toast-package";
+import { ToastRef } from "./toast-ref";
+import { ToastComponent } from "./toast.component";
 
 /**
  * __Name : __
@@ -26,7 +26,7 @@ import {ToastComponent} from "./toast.component";
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class ToastService implements IToastService {
     private index = 0;
     private currentlyActive = 0;
@@ -50,10 +50,12 @@ export class ToastService implements IToastService {
     private toastConfig: IToastConfig;
     private itemIdentificator: string | undefined;
 
-    constructor(private notificationService: NotificationService,
-                private toastContainerService: ToastContainerService,
-                private _injector: Injector,
-                private sanitizer: DomSanitizer) {
+    constructor(
+        private notificationService: NotificationService,
+        private toastContainerService: ToastContainerService,
+        private _injector: Injector,
+        private sanitizer: DomSanitizer
+    ) {
         this.toastConfig = _assign({}, this.defaultToastConfig);
     }
 
@@ -122,7 +124,7 @@ export class ToastService implements IToastService {
      * @param toastId
      * @return void
      */
-    public clear(toastId?: number) {
+    public clear(toastId?: number): void {
         for (const toast of this.toasts) {
             if (toastId !== undefined) {
                 if (toast.toastId === toastId) {
@@ -189,10 +191,12 @@ export class ToastService implements IToastService {
         return resultConfig;
     }
 
-    private buildNotification(toastType: string,
-                              body: string | undefined,
-                              title: string | undefined,
-                              config: IToastConfig): IActiveToast {
+    private buildNotification(
+        toastType: string,
+        body: string | undefined,
+        title: string | undefined,
+        config: IToastConfig
+    ): IActiveToast {
 
         // max opened and auto dismiss = true
         if (body && config.preventDuplicates && this.isDuplicate(body)) {
@@ -201,13 +205,8 @@ export class ToastService implements IToastService {
             return null;
         }
 
-        const toastContainer = this.toastContainerService.getContainerElement(config.positionClass);
         let keepInactive = false;
         let sanitizedBody: string | undefined = body;
-        let toastRef: ToastRef<ToastComponent>;
-        let toastPackage: ToastPackage;
-        let toastInjector: ToastInjector;
-        let toastInstance: IActiveToast;
 
         if (this.toastConfig.maxOpened && this.currentlyActive >= this.toastConfig.maxOpened) {
             keepInactive = true;
@@ -222,8 +221,8 @@ export class ToastService implements IToastService {
             sanitizedBody = <string>this.sanitizer.sanitize(SecurityContext.HTML, body);
         }
 
-        toastRef = new ToastRef(this.toastContainerService);
-        toastPackage = new ToastPackage(
+        const toastRef = new ToastRef(this.toastContainerService);
+        const toastPackage = new ToastPackage(
             this.index,
             config,
             sanitizedBody,
@@ -231,9 +230,9 @@ export class ToastService implements IToastService {
             toastType,
             toastRef
         );
-        toastInjector = new ToastInjector(toastPackage, this._injector);
+        const toastInjector = new ToastInjector(toastPackage, this._injector);
         toastRef.componentInstance = this.toastContainerService.attachToast(ToastComponent, toastInjector, !!config.newestOnTop);
-        toastInstance = {
+        const toastInstance: IActiveToast = {
             toastId: this.index,
             body: sanitizedBody,
             toastRef,
@@ -256,7 +255,7 @@ export class ToastService implements IToastService {
     /**
      * Determines if toast message is already shown
      */
-    private isDuplicate(body: string) {
+    private isDuplicate(body: string): boolean {
         for (let i = 0; i < this.toasts.length; i++) {
             if (this.toasts[i].body === body) {
                 return true;

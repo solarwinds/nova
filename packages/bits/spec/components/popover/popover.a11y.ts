@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { PopoverAtom } from "../public_api";
 
 describe("a11y: popover", () => {
-    let rulesToDisable: string[] = [];
+    const rulesToDisable: string[] = [];
     const popoverModal: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-modal")));
     const popoverBasic: PopoverAtom = new PopoverAtom(element(by.id("nui-demo-popover-basic")));
 

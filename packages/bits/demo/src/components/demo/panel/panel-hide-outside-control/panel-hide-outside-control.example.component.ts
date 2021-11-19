@@ -9,25 +9,26 @@ import { ToastService } from "@nova-ui/bits";
 export class PanelHideOutsideControlExampleComponent {
     public isHidden = false;
 
-    public hide() {
+    public hide(): void {
         this.isHidden = true;
         this.changeDetectorRef.detectChanges();
     }
 
-    public reveal() {
+    public reveal(): void {
         this.isHidden = false;
         this.changeDetectorRef.detectChanges();
     }
 
-    public getHideStateChanged($event: boolean) {
+    public getHideStateChanged($event: boolean): void {
         this.isHidden = $event;
         this.toastService.info({
-            message: this.isHidden ? $localize `Hidden` : $localize `Revealed`,
-            title: $localize `Panel State`,
+            message: this.isHidden ? $localize`Hidden` : $localize`Revealed`,
+            title: $localize`Panel State`,
         });
     }
 
-    constructor(@Inject(ToastService) private toastService: ToastService,
-                private changeDetectorRef: ChangeDetectorRef) {
-    }
+    constructor(
+        @Inject(ToastService) private toastService: ToastService,
+        private changeDetectorRef: ChangeDetectorRef
+    ) { }
 }

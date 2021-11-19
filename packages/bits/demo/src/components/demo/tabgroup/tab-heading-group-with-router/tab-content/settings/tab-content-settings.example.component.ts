@@ -15,14 +15,14 @@ export class TabContentSettingsExampleComponent implements OnInit {
     constructor(private formBuilder: FormBuilder) {
     }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.dynamicForm = this.formBuilder.group({
             password: this.formBuilder.control("", Validators.required),
-            confirmPassword: this.formBuilder.control({value: "", disabled: true}, Validators.required),
+            confirmPassword: this.formBuilder.control({ value: "", disabled: true }, Validators.required),
         });
     }
 
-    public onPasswordBlurred() {
+    public onPasswordBlurred(): void {
         if (this.dynamicForm.controls.password.valid) {
             this.dynamicForm.controls.confirmPassword.enable();
         } else {
@@ -30,7 +30,7 @@ export class TabContentSettingsExampleComponent implements OnInit {
         }
     }
 
-    public toggleRadio() {
+    public toggleRadio(): void {
         this.visibleRadio = !this.visibleRadio;
     }
 }

@@ -9,45 +9,45 @@ import {
 import _pull from "lodash/pull";
 
 const flatItems: IChipsItem[] = [
-    {id: "flatId1", label: "Down"},
-    {id: "flatId2", label: "Critical"},
-    {id: "flatId3", label: "Warning"},
-    {id: "flatId1", label: "Down"},
-    {id: "flatId2", label: "Critical"},
-    {id: "flatId3", label: "Warning"},
-    {id: "flatId1", label: "Down"},
-    {id: "flatId2", label: "Critical"},
-    {id: "flatId3", label: "Warning"},
+    { id: "flatId1", label: "Down" },
+    { id: "flatId2", label: "Critical" },
+    { id: "flatId3", label: "Warning" },
+    { id: "flatId1", label: "Down" },
+    { id: "flatId2", label: "Critical" },
+    { id: "flatId3", label: "Warning" },
+    { id: "flatId1", label: "Down" },
+    { id: "flatId2", label: "Critical" },
+    { id: "flatId3", label: "Warning" },
 ];
 
 const groupedItems: IChipsGroup[] = [
     {
         id: "statusGroupId", label: "Status", items: [
-            {id: "statusGroupItem1", label: "Down"},
-            {id: "statusGroupItem2", label: "Critical"},
-            {id: "statusGroupItem3", label: "Warning"},
-            {id: "statusGroupItem4", label: "Unknown"},
-            {id: "statusGroupItem5", label: "Ok"}],
+            { id: "statusGroupItem1", label: "Down" },
+            { id: "statusGroupItem2", label: "Critical" },
+            { id: "statusGroupItem3", label: "Warning" },
+            { id: "statusGroupItem4", label: "Unknown" },
+            { id: "statusGroupItem5", label: "Ok" }],
     },
     {
         id: "vendorGroupId", label: "Vendor", items: [
-            {id: "vendorGroupItem1", label: "Cisco"},
-            {id: "vendorGroupItem2", label: "Hewlett Packard"},
-            {id: "vendorGroupItem3", label: "Uniper"}],
+            { id: "vendorGroupItem1", label: "Cisco" },
+            { id: "vendorGroupItem2", label: "Hewlett Packard" },
+            { id: "vendorGroupItem3", label: "Uniper" }],
     },
     {
         id: "statusGroupId", label: "Status", items: [
-            {id: "statusGroupItem1", label: "Down"},
-            {id: "statusGroupItem2", label: "Critical"},
-            {id: "statusGroupItem3", label: "Warning"},
-            {id: "statusGroupItem4", label: "Unknown"},
-            {id: "statusGroupItem5", label: "Ok"}],
+            { id: "statusGroupItem1", label: "Down" },
+            { id: "statusGroupItem2", label: "Critical" },
+            { id: "statusGroupItem3", label: "Warning" },
+            { id: "statusGroupItem4", label: "Unknown" },
+            { id: "statusGroupItem5", label: "Ok" }],
     },
     {
         id: "vendorGroupId", label: "Vendor", items: [
-            {id: "vendorGroupItem1", label: "Cisco"},
-            {id: "vendorGroupItem2", label: "Hewlett Packard"},
-            {id: "vendorGroupItem3", label: "Uniper"}],
+            { id: "vendorGroupItem1", label: "Cisco" },
+            { id: "vendorGroupItem2", label: "Hewlett Packard" },
+            { id: "vendorGroupItem3", label: "Uniper" }],
     },
 ];
 
@@ -66,7 +66,7 @@ export class ChipsOverflowExampleComponent {
 
     @ViewChild(PopoverComponent) private popover: PopoverComponent;
 
-    public onClear(event: { item: IChipsItem, group?: IChipsGroup }) {
+    public onClear(event: { item: IChipsItem, group?: IChipsGroup }): void {
         console.log(`'onClear' event fired. $event.item.id=${event.item.id} $event.group.id=${event.group?.id}`);
         if (event.group) {
             _pull(event.group.items || [], event.item);
@@ -75,13 +75,13 @@ export class ChipsOverflowExampleComponent {
         }
     }
 
-    public onClearAll(e: MouseEvent) {
+    public onClearAll(e: MouseEvent): void {
         this.horizontalGroupedItemsSource.groupedItems = [];
         this.horizontalGroupedItemsSource.flatItems = [];
         this.popover?.onClick(e);
     }
 
-    onChipsOverflow(source: IChipsItemsSource) {
+    onChipsOverflow(source: IChipsItemsSource): void {
         this.overflowSource = source;
         const reducer = (accumulator: number, currentValue: IChipsGroup) => accumulator + currentValue.items.length;
         this.overflowCounter = (this.overflowSource.flatItems?.length || 0) + (this.overflowSource.groupedItems?.reduce(reducer, 0) || 0);

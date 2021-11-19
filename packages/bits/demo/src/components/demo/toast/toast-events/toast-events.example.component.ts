@@ -14,14 +14,14 @@ export class ToastEventsExampleComponent implements OnInit {
 
     constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.toastService.setConfig({}, "id");
     }
 
     public onShowToast(highlightMode: boolean): void {
         const toastInstance: IActiveToast = this.toastService.info({
-            title: $localize `Toast Events`,
-            message: $localize `Click Me!`,
+            title: $localize`Toast Events`,
+            message: $localize`Click Me!`,
             options: this.getOptions(),
         });
         toastInstance.onShown?.subscribe(() => {

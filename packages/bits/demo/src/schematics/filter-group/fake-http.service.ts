@@ -14,16 +14,16 @@ import { delay } from "rxjs/operators";
 import { ExampleItem, ICustomDSFilteredData, IFilterGroupItem } from "./custom-data-source-filter-group/public-api";
 
 const RANDOM_ARRAY = [
-    {color: "regular-azure", status: "Critical"},
-    {color: "regular-black", status: "Warning"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-yellow", status: "Critical"},
-    {color: "regular-yellow", status: "Warning"},
-    {color: "regular-black", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Critical"},
+    { color: "regular-azure", status: "Critical" },
+    { color: "regular-black", status: "Warning" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-yellow", status: "Critical" },
+    { color: "regular-yellow", status: "Warning" },
+    { color: "regular-black", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Critical" },
 ];
 
 const filterGroupItems: IFilterGroupItem[] = [
@@ -86,7 +86,7 @@ export class FakeHTTPService {
     public receiveFilteredDataSubject: Subject<ICustomDSFilteredData> = new Subject<ICustomDSFilteredData>();
     public getFilteredDataSubject: Subject<IFilters> = new Subject<IFilters>();
 
-    constructor() {}
+    constructor() { }
 
     public async getData(filters: IFilters): Promise<ICustomDSFilteredData> {
         this.getFilteredDataSubject.next(filters);
@@ -130,7 +130,7 @@ export class FakeServer implements OnDestroy {
     @ViewChild(RepeatComponent) filteringRepeat: RepeatComponent;
 
     constructor(@Inject(DataSourceService) private dataSourceService: DataSourceService<ExampleItem>,
-                @Inject(FakeHTTPService) private httpService: FakeHTTPService) {
+        @Inject(FakeHTTPService) private httpService: FakeHTTPService) {
         (this.dataSourceService as LocalFilteringDataSource<ExampleItem>).setData(RANDOM_ARRAY);
 
         this.filterGroupSubscriptions.push(
@@ -174,7 +174,7 @@ export class FakeServer implements OnDestroy {
         return !_isEmpty(_get(this, "filteringState.repeat.itemsSource"));
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.filterGroupSubscriptions.forEach(subscription => subscription.unsubscribe());
     }
 }

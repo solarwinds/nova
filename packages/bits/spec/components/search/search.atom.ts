@@ -6,7 +6,9 @@ import { ButtonAtom } from "../button/button.atom";
 export class SearchAtom extends Atom {
     public static CSS_CLASS = "nui-search";
 
-    public async acceptInput(input: string) { return super.getElement().element(by.css(".nui-search__input-control")).sendKeys(input); }
+    public async acceptInput(input: string): Promise<void> {
+        return super.getElement().element(by.css(".nui-search__input-control")).sendKeys(input);
+    }
 
     public async click(): Promise<void> { return super.getElement().click(); }
 

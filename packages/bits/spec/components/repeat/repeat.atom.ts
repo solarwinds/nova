@@ -12,9 +12,9 @@ export class RepeatAtom extends Atom {
 
     public getItem = (idx: number): ElementFinder => this.getItems().get(idx);
 
-    public isNormal = (): Promise<boolean> => this.hasClass("nui-repeat__normal");
+    public isNormal = async (): Promise<boolean> => this.hasClass("nui-repeat__normal");
 
-    public isCompact = (): Promise<boolean> => this.hasClass("nui-repeat__compact");
+    public isCompact = async (): Promise<boolean> => this.hasClass("nui-repeat__compact");
 
     public get vScrollViewport(): ElementFinder {
         return super.getElement().element(by.className("cdk-virtual-scroll-viewport"));
@@ -40,9 +40,9 @@ export class RepeatAtom extends Atom {
 
     public isStriped = async (): Promise<boolean> => {
         const items = this.getItems();
-        return items.first().getCssValue("background-color").then((lineOneColor: string) =>
-            items.get(1).getCssValue("background-color").then((lineTwoColor: string) =>
-                lineOneColor !== lineTwoColor));
+        const lineOneColor = await items.first().getCssValue("background-color");
+        const lineTwoColor = await items.get(1).getCssValue("background-color");
+        return lineOneColor !== lineTwoColor;
     }
 
     public isItemSelected = async (idx: number): Promise<boolean> =>

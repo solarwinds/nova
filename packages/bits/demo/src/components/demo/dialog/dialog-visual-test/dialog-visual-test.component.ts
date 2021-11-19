@@ -34,33 +34,33 @@ export class DialogVisualTestComponent {
         ],
     };
 
-    constructor(@Inject(DialogService) private dialogService: DialogService) {}
+    constructor(@Inject(DialogService) private dialogService: DialogService) { }
 
-    public open(content: TemplateRef<string>, severity = "") {
+    public open(content: TemplateRef<string>, severity = ""): void {
         this.severity = severity;
-        this.activeDialog = this.dialogService.open(content, {size: "sm"});
+        this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
-    public openSizes(content: TemplateRef<string>, size: any) {
-        this.activeDialog = this.dialogService.open(content, {size});
+    public openSizes(content: TemplateRef<string>, size: any): void {
+        this.activeDialog = this.dialogService.open(content, { size });
     }
 
-    public openResponsive(content: TemplateRef<string>, options: any) {
+    public openResponsive(content: TemplateRef<string>, options: any): void {
         this.isResponsiveMode = options.isResponsiveMode;
         this.activeDialog = this.dialogService.open(content);
     }
 
-    public onButtonClick() {
+    public onButtonClick(): void {
         this.activeDialog.close();
     }
 
-    public confirmationDefaults() {
+    public confirmationDefaults(): void {
         this.dialogService.confirm({
             message: "Should I do it?",
         });
     }
 
-    public confirmationOverrides() {
+    public confirmationOverrides(): void {
         this.dialogService.confirm({
             message: "Are you sure you want to do it?",
             title: "Format hard drive",

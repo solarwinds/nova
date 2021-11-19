@@ -12,7 +12,7 @@ import { takeUntil } from "rxjs/operators";
 })
 export class OverlayViewportMarginExampleComponent implements AfterViewInit, OnDestroy {
     public viewportMargin: number;
-    public items = Array.from({ length : 50 }).map((_, i) => `Item ${i}`);
+    public items = Array.from({ length: 50 }).map((_, i) => `Item ${i}`);
     public overlayConfig: OverlayConfig = {
         panelClass: OVERLAY_WITH_POPUP_STYLES_CLASS,
     };
@@ -21,13 +21,13 @@ export class OverlayViewportMarginExampleComponent implements AfterViewInit, OnD
 
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.overlay.clickOutside
             .pipe(takeUntil(this.destroy$))
             .subscribe(_ => this.overlay.hide());
     }
 
-    public setViewportMargin(margin: number) {
+    public setViewportMargin(margin: number): void {
         this.viewportMargin = margin;
     }
 

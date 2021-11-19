@@ -11,13 +11,13 @@ import { Subject } from "rxjs";
 export class TimeFramePickerCustomExampleComponent {
     public presets: ITimeFramePresetDictionary = {
         "last42Hours": {
-            name: $localize `Last 42 hours`,
-            startDatetimePattern: {hours: -42},
+            name: $localize`Last 42 hours`,
+            startDatetimePattern: { hours: -42 },
             endDatetimePattern: {},
         },
         "last749Days": {
-            name: $localize `Last 749 days`,
-            startDatetimePattern: {days: -749},
+            name: $localize`Last 749 days`,
+            startDatetimePattern: { days: -749 },
             endDatetimePattern: {},
         },
     };
@@ -36,7 +36,7 @@ export class TimeFramePickerCustomExampleComponent {
     public closePopoverSubject = new Subject();
     public openPopoverSubject = new Subject();
 
-    public updateTf(value: ITimeframe) {
+    public updateTf(value: ITimeframe): void {
         this.tf = value;
         const timeFrameDatesValid = () => this.timeframeService.areTimeFrameDatesValid(value);
         const timeFrameDatesEqual = () => this.timeframeService.isEqual(this.tf, this.acceptedTimeframe);
@@ -45,17 +45,17 @@ export class TimeFramePickerCustomExampleComponent {
         this.selectedPresetKey = this.tf.selectedPresetId;
     }
 
-    public confirmPopover() {
+    public confirmPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
         this.acceptedTimeframe = this.tf;
     }
-    public cancelPopover() {
+    public cancelPopover(): void {
         this.showFooter = false;
         this.closePopoverSubject.next();
     }
 
-    public handlePresetSelection(presetKey: string) {
+    public handlePresetSelection(presetKey: string): void {
         this.selectedPresetKey = presetKey;
         this.tf = this.timeframeService.getTimeframeByPresetId(presetKey);
         this.acceptedTimeframe = this.tf;

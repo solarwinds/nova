@@ -1,12 +1,13 @@
 import { TestBed } from "@angular/core/testing";
+import { ActivatedRoute } from "@angular/router";
 
 import { BreadcrumbStateService } from "./breadcrumb-state.service";
 
 describe("services >", () => {
     describe("breadcrumb-state >", () => {
-        let instance: BreadcrumbStateService;
-        let routerState: any;
-        routerState = {
+        let service: BreadcrumbStateService;
+
+        const routerState: ActivatedRoute = {
             routeConfig: {
                 path: "root",
             },
@@ -25,25 +26,24 @@ describe("services >", () => {
                     breadcrumb: "Root",
                 },
             },
-        };
+        } as unknown as ActivatedRoute;
+
         beforeEach(() => {
             TestBed.configureTestingModule({
                 declarations: [],
-                providers: [
-                    BreadcrumbStateService,
-                ],
+                providers: [BreadcrumbStateService],
             });
-            instance = TestBed.inject(BreadcrumbStateService);
-
+            service = TestBed.inject(BreadcrumbStateService);
         });
 
         it("should return correct breadcrumb state", () => {
-            const state = instance.getBreadcrumbState(routerState);
-            expect(state[0].routerState).toEqual("root/");
-            expect(state[1].routerState).toEqual("root/first-level/");
-
-            expect(state[0].title).toEqual("Root");
-            expect(state[1].title).toEqual("First Level");
+            const state = service.getBreadcrumbState(routerState);
+            expect(state.map((item) => [item.routerState, item.title])).toEqual(
+                [
+                    ["root/", "Root"],
+                    ["root/first-level/", "First Level"],
+                ]
+            );
         });
     });
 });

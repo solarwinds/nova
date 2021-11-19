@@ -31,7 +31,7 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
     public arrowSelectControl = new FormControl(true);
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.handlePosition();
 
         this.overlay.clickOutside
@@ -39,7 +39,7 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
             .subscribe(_ => this.overlay.hide());
     }
 
-    public handlePosition() {
+    public handlePosition(): void {
         // set the positions when showing the popup
         this.overlay.show$.subscribe(() => {
             this.overlay.overlayPositionService.setOverlayPositionConfig(this.getPositionServiceConfig());
@@ -48,7 +48,7 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
             // FlexibleConnectedPositionStrategy is default strategy of overlay component.
             const positionStrategy = this.overlay.getOverlayRef().getConfig().positionStrategy as FlexibleConnectedPositionStrategy;
             positionStrategy
-            // !!! using default '30' value breaks the edges, when displaying overlay from right, for the sake of the example, it's set to '0'.
+                // !!! using default '30' value breaks the edges, when displaying overlay from right, for the sake of the example, it's set to '0'.
                 .withViewportMargin(0)
                 .withPositions(availablePositions);
         });
@@ -68,7 +68,7 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
         };
 
         // 'undefined' is set to take default paddings and arrow size as in the style guides.
-        const positionServiceConfig  = isArrowNeeded ? undefined : noArrowCfg;
+        const positionServiceConfig = isArrowNeeded ? undefined : noArrowCfg;
 
         return positionServiceConfig;
     }

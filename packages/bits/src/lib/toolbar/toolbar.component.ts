@@ -57,7 +57,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     @ContentChildren(ToolbarGroupComponent)
     public groups: QueryList<ToolbarGroupComponent>;
 
-    @ContentChildren(ToolbarItemComponent, {descendants: true})
+    @ContentChildren(ToolbarItemComponent, { descendants: true })
     public items: QueryList<ToolbarItemComponent>;
 
     @Input()
@@ -83,8 +83,8 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     public menuGroups: IToolbarGroupContent[] = [];
     public showMenu = true;
     public allItemsHidden = false;
-    public commandsTitle = $localize `Commands`;
-    public moreTitle = $localize `More`;
+    public commandsTitle = $localize`Commands`;
+    public moreTitle = $localize`More`;
 
     private lastChildBorder: number;
     private toolbarItems: HTMLElement[] = [];
@@ -93,17 +93,17 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
     private destroy$: Subject<void> = new Subject<void>();
 
     constructor(public element: ElementRef,
-                private changeDetector: ChangeDetectorRef,
-                private logger: LoggerService,
-                private ngZone: NgZone,
-                private keyboardService: ToolbarKeyboardService) {}
+        private changeDetector: ChangeDetectorRef,
+        private logger: LoggerService,
+        private ngZone: NgZone,
+        private keyboardService: ToolbarKeyboardService) { }
 
     @HostListener("keydown", ["$event"])
     onKeyDown(event: KeyboardEvent): void {
         this.keyboardService.onKeyDown(event);
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.splitToolbarItems();
         this.childrenSubscription = merge(this.groups.changes, this.items.changes).pipe(debounceTime(20)).subscribe(() => {
             // timeout is needed for updating actual querylist. without it splitToolbarItems won't get new element in groups' arrays
@@ -128,7 +128,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.subscribeToToolbarStepsChanges();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.childrenSubscription.unsubscribe();
         this.destroy$.next();
         this.destroy$.complete();
@@ -140,7 +140,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         commandItem.actionDone.emit();
     }
 
-    public moveToolbarItems() {
+    public moveToolbarItems(): void {
         this.makeAllItemsVisible();
 
         const containerBorder = Math.floor(this.toolbarContainer.nativeElement.getBoundingClientRect().right);
@@ -161,7 +161,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    public splitToolbarItems() {
+    public splitToolbarItems(): void {
         this.commandGroups = [];
         this.menuGroups = [];
         this.groups.forEach((group: ToolbarGroupComponent) => {
@@ -169,10 +169,10 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
             const menuGroupItems = group.items.filter((item: ToolbarItemComponent) => item.menuHidden === true);
 
             if (commandGroupItems.length) {
-                this.commandGroups.push({items: commandGroupItems});
+                this.commandGroups.push({ items: commandGroupItems });
             }
             if (menuGroupItems.length) {
-                this.menuGroups.push({items: menuGroupItems, title: group.title});
+                this.menuGroups.push({ items: menuGroupItems, title: group.title });
             }
         });
         this.showMenu = this.menuGroups.length > 0;
@@ -180,7 +180,7 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.changeDetector.detectChanges();
     }
 
-    public makeAllItemsVisible() {
+    public makeAllItemsVisible(): void {
         this.groups.forEach((group: ToolbarGroupComponent) => {
             group.items.forEach((item: ToolbarItemComponent) => {
                 if (item.type === ToolbarItemType.primary) {
@@ -191,21 +191,21 @@ export class ToolbarComponent implements AfterViewInit, OnDestroy {
         this.splitToolbarItems();
     }
 
-    public handleSelectionState() {
+    public handleSelectionState(): string | undefined {
         if (this.selectionEnabled) {
             if (!_isEmpty(this.selectedItems)) {
-                const itemSelected = $localize `${this.selectedItems.current} of ${this.selectedItems.total} selected`;
-                const allItemSelected = $localize `All ${this.selectedItems.total} selected`;
+                const itemSelected = $localize`${this.selectedItems.current} of ${this.selectedItems.total} selected`;
+                const allItemSelected = $localize`All ${this.selectedItems.total} selected`;
                 return this.selectedItems.current === this.selectedItems.total ? allItemSelected : itemSelected;
             }
         }
     }
 
-    public get menuTitle() {
+    public get menuTitle(): string {
         return this.allItemsHidden ? this.commandsTitle : this.moreTitle;
     }
 
-    public get destructiveIsLastItem() {
+    public get destructiveIsLastItem(): boolean {
         return this.groups.last.items.last.displayStyle !== ToolbarItemDisplayStyle.destructive;
     }
 

@@ -26,31 +26,31 @@ export class SearchTestExampleComponent {
 
     public interval = 2000;
 
-    public onCancel(value: string) {
+    public onCancel(value: string): void {
         this.value = "";
         this.searchKey = "";
     }
 
-    public onFocusChange(event: boolean) {
+    public onFocusChange(event: boolean): void {
         this.captureFocus = event;
     }
 
-    public onInputChange(value: string) {
+    public onInputChange(value: string): void {
         this.value = value;
     }
 
-    public onSearch(value: string) {
+    public onSearch(value: string): void {
         this.doSearch(value);
     }
 
-    public setFocus() {
+    public setFocus(): void {
         this.captureFocus = true;
         setTimeout(() => {
             this.captureFocus = false;
         }, this.interval);
     }
 
-    private doSearch(value: string) {
+    private doSearch(value: string): void {
         this.searchKey = value;
     }
 }

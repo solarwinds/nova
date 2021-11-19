@@ -12,7 +12,7 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
 
     @Input() public icon: boolean = false;
 
-    constructor(private _router: Router) {}
+    constructor(private _router: Router) { }
 
     private routeSubscription = this._router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -24,7 +24,7 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
     public tabsetContent = [
         {
             id: "tab-settings",
-            title: $localize `Settings`,
+            title: $localize`Settings`,
             icon: {
                 name: "gear",
                 inactiveColor: "gray",
@@ -33,7 +33,7 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
         },
         {
             id: "tab-statistics",
-            title: $localize `Statistics`,
+            title: $localize`Statistics`,
             icon: {
                 name: "check",
                 inactiveColor: "gray",
@@ -42,7 +42,7 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
         },
         {
             id: "tab-about",
-            title: $localize `About`,
+            title: $localize`About`,
             icon: {
                 name: "add",
                 inactiveColor: "gray",
@@ -50,9 +50,7 @@ export class TabHeadingGroupWithRouterExampleComponent implements OnDestroy {
             },
         }];
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.routeSubscription.unsubscribe();
     }
 }
-
-

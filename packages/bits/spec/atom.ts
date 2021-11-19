@@ -24,20 +24,21 @@ export class Atom {
 
     private static addProperLocator() {
         // We need locator which can match root element
-        by.addLocator("properClassName",
+        by.addLocator(
+            "properClassName",
             // This function is executed inside browser, needs to be inline
-                      (className: string, rootElement: any) => {
-                          const classString = rootElement.getAttribute("class");
-                          if (classString) {
-                              const allClasses = " " + classString.replace(/\s+/g, " ") + " ";
-                              if (allClasses.indexOf(" " + className + " ") > -1) {
-                                  // Class is set in root element, let's return it
-                                  return rootElement;
-                              }
-                          }
-                          // Return matching sub-elements
-                          return rootElement.getElementsByClassName(className);
-                      }
+            (className: string, rootElement: any): any => {
+                const classString = rootElement.getAttribute("class");
+                if (classString) {
+                    const allClasses = " " + classString.replace(/\s+/g, " ") + " ";
+                    if (allClasses.indexOf(" " + className + " ") !== -1) {
+                        // Class is set in root element, let's return it
+                        return rootElement;
+                    }
+                }
+                // Return matching sub-elements
+                return rootElement.getElementsByClassName(className);
+            }
         );
     }
 
@@ -137,6 +138,6 @@ export class Atom {
         return browser.actions().mouseMove(el ?? this.getElement(), location).perform();
     }
 
-    public scrollTo = async (options?: ScrollIntoViewOptions) =>
+    public scrollTo = async (options?: ScrollIntoViewOptions): Promise<void> =>
         browser.executeScript("arguments[0].scrollIntoView(arguments[1])", this.getElement(), options || null)
 }

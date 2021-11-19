@@ -36,12 +36,12 @@ export class TableSortingExampleComponent implements AfterViewInit, OnDestroy {
         dataSourceService.setData(this.dataSource);
     }
 
-    public sortData(sortedColumn: ISortedItem) {
+    public async sortData(sortedColumn: ISortedItem): Promise<void> {
         this.sortedColumn = sortedColumn;
         this.dataSourceService.applyFilters();
     }
 
-    public sortByName() {
+    public sortByName(): void {
         this.nameSortedDesc = !this.nameSortedDesc;
         this.sortedColumn = {
             sortBy: "name",
@@ -49,7 +49,7 @@ export class TableSortingExampleComponent implements AfterViewInit, OnDestroy {
         };
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.registerComponent(this.sortableTable.getFilterComponents());
         this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
             this.dataSource = data.repeat?.itemsSource;
@@ -58,7 +58,7 @@ export class TableSortingExampleComponent implements AfterViewInit, OnDestroy {
         this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }

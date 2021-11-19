@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { CdkDropListAtom, CdkDraggableItemAtom } from "../public_api";
 
 describe("a11y: drag-and-drop", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "color-contrast",
     ];
 

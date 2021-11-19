@@ -89,7 +89,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     public menuOpenStream = new Subject<boolean>();
     // Only menu that resolves *ngIf on <ng-content> with these menuItems can correctly get ContentChildren
-    @ContentChildren(MenuItemBaseComponent, {descendants: true}) public menuItems: QueryList<MenuItemBaseComponent>;
+    @ContentChildren(MenuItemBaseComponent, { descendants: true }) public menuItems: QueryList<MenuItemBaseComponent>;
     @ContentChildren(MenuGroupComponent) public menuGroups: QueryList<MenuGroupComponent>;
     @ViewChild(PopupComponent) public popup: PopupComponent;
     @ViewChild(MenuPopupComponent) menuPopup: MenuPopupComponent;
@@ -98,8 +98,8 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
     private menuKeyControlListeners: Function[] = [];
     private focusMonitorSubscription: Subscription;
     constructor(private keyControlService: MenuKeyControlService,
-                private renderer: Renderer2,
-                private focusMonitor: FocusMonitor) {}
+        private renderer: Renderer2,
+        private focusMonitor: FocusMonitor) { }
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes["size"]) {
@@ -113,7 +113,7 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         // setting data for key-control service
         this.setKeyboardManagerServiceData();
         // initializing key-control manager
@@ -139,23 +139,23 @@ export class MenuComponent implements AfterViewInit, OnChanges, OnDestroy {
         });
     }
 
-    public isMenuCompact() {
+    public isMenuCompact(): boolean {
         return this.size === "compact";
     }
 
-    public isTitlePresent() {
+    public isTitlePresent(): boolean {
         return !_isEmpty(this.title);
     }
 
-    public onBlur(event: any) {
+    public onBlur(event: any): void {
         this.blurred.emit(event);
     }
 
-    public onMenuOpen() {
+    public onMenuOpen(): void {
         this.menuOpenStream.next();
     }
 
-    public isJustified() {
+    public isJustified(): boolean {
         return this.contextClass?.includes("nui-select--justified");
     }
 

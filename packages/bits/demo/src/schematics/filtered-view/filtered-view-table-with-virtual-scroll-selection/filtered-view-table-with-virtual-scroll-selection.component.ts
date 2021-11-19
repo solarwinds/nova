@@ -93,7 +93,7 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent implements Aft
         },
     ];
 
-    public chipsDataSource: IChipsItemsSource = {groupedItems: [], flatItems: []};
+    public chipsDataSource: IChipsItemsSource = { groupedItems: [], flatItems: [] };
     public overflowCounter: number;
     public overflowSource: IChipsItemsSource;
     public overflowPopoverPosition: PopoverOverlayPosition[] = [PopoverOverlayPosition.bottomLeft, PopoverOverlayPosition.topLeft];
@@ -110,26 +110,26 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent implements Aft
     ) {
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.outputsSubscription = this.dataSource.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
             this.recalculateCounts(data);
             this.cd.detectChanges();
         });
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.child.applyFilters();
         this.updateChips();
     }
 
-    public onChipsOverflow(source: IChipsItemsSource) {
+    public onChipsOverflow(source: IChipsItemsSource): void {
         this.overflowSource = source;
         const reducer = (accumulator: number, currentValue: IChipsGroup) => accumulator + currentValue.items.length;
         this.overflowCounter = (this.overflowSource.flatItems?.length || 0) + (this.overflowSource.groupedItems?.reduce(reducer, 0) || 0);
         this.popover?.updatePosition();
     }
 
-    public async onClear(event: { item: IChipsItem, group?: IChipsGroup }) {
+    public onClear(event: { item: IChipsItem, group?: IChipsGroup }): void {
         if (event.group) {
             _pull(event.group.items || [], event.item);
         } else {
@@ -139,7 +139,7 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent implements Aft
         group?.deselectFilterItemByValue(event.item.label);
     }
 
-    public onClearAll(e: MouseEvent) {
+    public onClearAll(e: MouseEvent): void {
         this.chipsDataSource.groupedItems = [];
         this.popover?.onClick(e);
         this.filterGroups.forEach(i => i.deselectAllFilterItems());
@@ -150,7 +150,7 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent implements Aft
             {
                 id: i.id,
                 label: i.title,
-                items: i.selectedFilterValues.map(selected => ({label: selected})),
+                items: i.selectedFilterValues.map(selected => ({ label: selected })),
             }
         ));
         this.cd.markForCheck();
@@ -165,7 +165,7 @@ export class FilteredViewTableWithVirtualScrollSelectionComponent implements Aft
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 }

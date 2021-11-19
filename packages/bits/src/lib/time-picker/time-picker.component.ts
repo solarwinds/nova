@@ -56,14 +56,14 @@ import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
 })
 export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit, ControlValueAccessor, NuiFormFieldControl {
 
-    @ViewChild("date", {static: true}) textbox: TextboxComponent;
-    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
-    @ViewChild("toggleRef", {static: true}) containerEl: ElementRef;
+    @ViewChild("date", { static: true }) textbox: TextboxComponent;
+    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
+    @ViewChild("toggleRef", { static: true }) containerEl: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
     @ViewChild("popup") public popup: MenuPopupComponent;
     @ViewChild("menuTrigger", { read: ElementRef }) public menuTrigger: ElementRef;
     /** sets a step (difference between item in picker) */
-    @Input() timeStep =  30;
+    @Input() timeStep = 30;
     /** sets disable state of the timepicker */
     @Input() isDisabled: boolean;
     /** sets custom formatting for time */
@@ -115,14 +115,16 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     private itemToSelect: any;
     private inputChanged: Subject<string> = new Subject<string>();
 
-    constructor(private elementRef: ElementRef,
-                private keyboardService: TimePickerKeyboardService,
-                private cdr: ChangeDetectorRef) {}
+    constructor(
+        private elementRef: ElementRef,
+        private keyboardService: TimePickerKeyboardService,
+        private cdr: ChangeDetectorRef
+    ) { }
 
-    public ngOnInit() {
+    public ngOnInit(): void {
         this.times = this.generateTimeItems(this.timeStep);
         this.times.map((value: Moment) => {
-            this.itemsSource[0].itemsSource.push({title: value, displayFormat: this.timeFormat, isSelected: false});
+            this.itemsSource[0].itemsSource.push({ title: value, displayFormat: this.timeFormat, isSelected: false });
         });
         if (!this.initEmpty) {
             this.innerModel = moment(this.model).clone() || moment();
@@ -142,13 +144,13 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         this.onAppendToBodyChange(this.appendToBody);
     }
 
-    public ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges): void {
         if (changes.appendToBody) {
             this.onAppendToBodyChange(changes.appendToBody.currentValue);
         }
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
             .subscribe(_ => this.overlay.hide());
@@ -158,9 +160,9 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         this.cdr.detectChanges();
     }
 
-    onChange(value: any) {}
+    onChange(value: any): void { }
 
-    onTouched() {}
+    onTouched(): void { }
 
     @HostListener("keydown", ["$event"])
     public onKeyDown(event: KeyboardEvent): void {
@@ -182,13 +184,17 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         }
     }
 
-    updateInnerModel(value: any) {
+    private isMoment(value: any): value is moment.Moment {
+        return value instanceof moment;
+    }
+
+    updateInnerModel(value: any): void {
         setTimeout(() => this.inputBlurred.emit(), 100);
-        if (value instanceof moment && !this.preserveInsignificant) {
-            (value as Moment).year(0);
-            (value as Moment).date(1);
-            (value as Moment).month(0);
-            (value as Moment).seconds(0);
+        if (this.isMoment(value) && !this.preserveInsignificant) {
+            value.year(0);
+            value.date(1);
+            value.month(0);
+            value.seconds(0);
         }
         this.innerModel = _isEmpty(value) || value.length === 0 ? undefined : moment(value, this.timeFormat);
         if (!moment(this.innerModel).isValid()) {
@@ -206,20 +212,21 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         this.setErrorState(value);
     }
 
-    writeValue(value: any) {
-        this.textbox.writeValue(this.formatValue(value));
-        this.updateInnerModel(this.formatValue(value));
+    writeValue(value: any): void {
+        const formatted = this.formatValue(value);
+        this.textbox.writeValue(formatted.toString());
+        this.updateInnerModel(formatted);
     }
 
-    setErrorState(value: string) {
+    setErrorState(value: string): void {
         this.isInErrorState = !moment(value, this.timeFormat, true).isValid();
     }
 
-    registerOnChange(fn: (value: any) => {}) {
+    registerOnChange(fn: (value: any) => {}): void {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: () => {}) {
+    registerOnTouched(fn: () => {}): void {
         this.onTouched = fn;
     }
 
@@ -227,7 +234,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         this.isDisabled = isDisabled;
     }
 
-    focusOnForm() {
+    focusOnForm(): void {
         this.textbox.focus();
     }
 
@@ -235,15 +242,15 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         this.inputChanged.next(value);
     }
 
-    public select(time: IMenuItem) {
+    public select(time: IMenuItem): void {
         this.updateInnerModel(time.title);
-        this.textbox.writeValue(this.formatValue() as string);
+        this.textbox.writeValue(this.formatValue().toString());
         this.timeChanged.emit(this.innerModel);
         this.onChange(this.innerModel);
         this.overlay.hide();
     }
 
-    public scrollToView() {
+    public scrollToView(): void {
         if (!this.isDisabled) {
             this.overlay.toggle();
         }
@@ -265,7 +272,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         return times;
     }
 
-    public isItemSelected(timeItem: Moment) {
+    public isItemSelected(timeItem: Moment): boolean {
         return moment(timeItem).isSame(this.itemToSelect.title);
     }
 
@@ -276,7 +283,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         return index === times.length ? 0 : index;
     }
 
-    public getItemToSelect() {
+    public getItemToSelect(): IMenuItem | undefined {
         if (_isEmpty(this.innerModel) || _isNil(this.innerModel)) {
             this.unselectAllItems();
             return;
@@ -290,12 +297,16 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         }
     }
 
-    public unselectAllItems() {
+    public unselectAllItems(): void {
         this.itemsSource[0].itemsSource.forEach((el: IMenuItem) => el.isSelected = false);
     }
 
-    public formatValue(value: any = this.innerModel) {
-        return moment(value).isValid() ? moment(value).format(this.timeFormat) : value;
+    public formatValue(value: any = this.innerModel): string | moment.Moment {
+        const m = moment(value);
+        if (m.isValid()) {
+            return m.format(this.timeFormat);
+        }
+        return value?.toString() ?? moment();
     }
 
     public getIconColor(): string {
@@ -321,7 +332,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.overlay?.showing) {
             this.overlay.hide();
         }

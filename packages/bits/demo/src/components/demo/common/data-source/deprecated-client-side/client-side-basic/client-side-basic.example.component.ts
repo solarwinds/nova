@@ -5,24 +5,24 @@ import {
 import { Subscription } from "rxjs";
 
 const RANDOM_ARRAY = [
-    {color: "regular-blue"},
-    {color: "regular-green"},
-    {color: "regular-yellow"},
-    {color: "regular-cyan "},
-    {color: "regular-magenta"},
-    {color: "regular-black"},
-    {color: "dark-blue"},
-    {color: "dark-green"},
-    {color: "dark-yellow"},
-    {color: "dark-cyan "},
-    {color: "dark-magenta"},
-    {color: "dark-black"},
-    {color: "light-blue"},
-    {color: "light-green"},
-    {color: "light-yellow"},
-    {color: "light-cyan "},
-    {color: "light-magenta"},
-    {color: "light-black"},
+    { color: "regular-blue" },
+    { color: "regular-green" },
+    { color: "regular-yellow" },
+    { color: "regular-cyan " },
+    { color: "regular-magenta" },
+    { color: "regular-black" },
+    { color: "dark-blue" },
+    { color: "dark-green" },
+    { color: "dark-yellow" },
+    { color: "dark-cyan " },
+    { color: "dark-magenta" },
+    { color: "dark-black" },
+    { color: "light-blue" },
+    { color: "light-green" },
+    { color: "light-yellow" },
+    { color: "light-cyan " },
+    { color: "light-magenta" },
+    { color: "light-black" },
 ];
 
 interface ExampleItem {
@@ -35,7 +35,7 @@ interface ExampleItem {
  */
 @Component({
     selector: "nui-deprecated-client-side-basic-data-source-example",
-    providers: [ LocalFilteringDataSource ],
+    providers: [LocalFilteringDataSource],
     templateUrl: "./client-side-basic.example.component.html",
 })
 export class DepreacatedDataSourceClientSideBasicExampleComponent implements AfterViewInit, OnDestroy {
@@ -60,15 +60,17 @@ export class DepreacatedDataSourceClientSideBasicExampleComponent implements Aft
 
     private outputsSubscription: Subscription;
 
-    constructor(public dataSourceService: LocalFilteringDataSource<ExampleItem>,
-                public changeDetection: ChangeDetectorRef) {
+    constructor(
+        public dataSourceService: LocalFilteringDataSource<ExampleItem>,
+        public changeDetection: ChangeDetectorRef
+    ) {
         dataSourceService.setData(RANDOM_ARRAY);
 
         this.filters = ["regular", "dark", "light"];
         this.selectedFilters = [];
     }
 
-    async ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.dataSourceService.registerComponent({
             search: {
                 componentInstance: this.filteringSearch,
@@ -84,22 +86,22 @@ export class DepreacatedDataSourceClientSideBasicExampleComponent implements Aft
             }
             this.changeDetection.detectChanges();
         });
-        await this.dataSourceService.applyFilters();
+        this.dataSourceService.applyFilters();
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.outputsSubscription.unsubscribe();
     }
 
-    public async onSearch(value: string) {
+    public async onSearch(value: string): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public async changePagination() {
+    public async changePagination(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 
-    public async applyFilters() {
+    public async applyFilters(): Promise<void> {
         await this.dataSourceService.applyFilters();
     }
 }

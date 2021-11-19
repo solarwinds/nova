@@ -3,7 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { SwitchAtom } from "../public_api";
 
 describe("a11y: switch", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
     ];
 

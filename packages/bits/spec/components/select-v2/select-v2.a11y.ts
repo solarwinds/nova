@@ -4,7 +4,7 @@ import { Animations, assertA11y, Helpers } from "../../helpers";
 import { SelectV2Atom } from "../public_api";
 
 describe("a11y: select-v2", () => {
-    let rulesToDisable: string[] = [
+    const rulesToDisable: string[] = [
         "color-contrast", // NUI-6014
         "nested-interactive",
     ];

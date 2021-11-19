@@ -48,41 +48,41 @@ export class DragdropBasicExampleComponent {
 
     constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    public onDropObject(dropEvent: IDropEvent) {
-        this.toastService.info({message: $localize `Drop object!`});
+    public onDropObject(dropEvent: IDropEvent): void {
+        this.toastService.info({ message: $localize`Drop object!` });
         this.destObject = dropEvent.payload;
     }
 
-    public onDropString(dropEvent: IDropEvent) {
-        this.toastService.info({message: $localize `Drop string!`});
+    public onDropString(dropEvent: IDropEvent): void {
+        this.toastService.info({ message: $localize`Drop string!` });
         this.destString = JSON.stringify(dropEvent.payload);
     }
 
-    public onDropAnything(dropEvent: IDropEvent) {
-        this.toastService.info({message: $localize `Drop anything!`});
+    public onDropAnything(dropEvent: IDropEvent): void {
+        this.toastService.info({ message: $localize`Drop anything!` });
         this.destAnything = dropEvent.payload;
     }
 
-    public onDragStart(event: DragEvent) {
-        this.toastService.info({message: $localize `Drag start`});
+    public onDragStart(event: DragEvent): void {
+        this.toastService.info({ message: $localize`Drag start` });
     }
 
-    public onDragEnd(event: DragEvent) {
-        this.toastService.info({message: $localize `Drag end`});
+    public onDragEnd(event: DragEvent): void {
+        this.toastService.info({ message: $localize`Drag end` });
     }
 
-    public onDragOver(event: DragEvent) {
+    public onDragOver(event: DragEvent): void {
         this.toastService.info({
-            message: $localize `Drag over`,
+            message: $localize`Drag over`,
             options: { preventDuplicates: true },
         });
     }
 
-    public onDragEnter(event: DragEvent) {
-        this.toastService.info({message: $localize `Drag enter`});
+    public onDragEnter(event: DragEvent): void {
+        this.toastService.info({ message: $localize`Drag enter` });
     }
 
-    public onDragLeave(event: DragEvent) {
-        this.toastService.info({message: $localize `Drag leave`});
+    public onDragLeave(event: DragEvent): void {
+        this.toastService.info({ message: $localize`Drag leave` });
     }
 }

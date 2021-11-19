@@ -48,9 +48,9 @@ export interface IEdgeDefinerMeasurements {
 
 export interface ISearchService {
     search(items: any[],
-           properties: string[],
-           searchValue: any,
-           dateFormat?: string): any[];
+        properties: string[],
+        searchValue: any,
+        dateFormat?: string): any[];
 }
 
 export interface INotificationService {
@@ -113,7 +113,7 @@ export class EventDefinition<T> implements IEventDefinition<IEvent<T>> {
     constructor(public id: string, public subjectFactory?: () => Subject<IEvent<T>>) {
     }
 
-    public toString() {
+    public toString(): string {
         return this.id;
     }
 }

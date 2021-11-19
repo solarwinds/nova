@@ -9,21 +9,21 @@ export class RuntimeI18NExampleComponent implements OnDestroy {
     public lastNamePlaceholder: string = `Doe`;
     public email: string = `john.doe@whatever.com`;
 
-    private pageReload() {
+    private pageReload(): void {
         window.location.reload();
     }
 
-    public setLocale(locale: string) {
+    public setLocale(locale: string): void {
         localStorage.setItem("locale", locale);
         this.pageReload();
     }
 
-    public setDefaultLocale() {
+    public setDefaultLocale(): void {
         localStorage.removeItem("locale");
         this.pageReload();
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         localStorage.removeItem("locale");
     }
 }

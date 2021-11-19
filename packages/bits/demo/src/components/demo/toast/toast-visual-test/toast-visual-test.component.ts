@@ -13,7 +13,7 @@ export class ToastVisualTestComponent implements OnInit {
 
     constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.toastService.setConfig({}, "id");
     }
 
@@ -26,7 +26,7 @@ export class ToastVisualTestComponent implements OnInit {
         this.onShowError(highlightMode, timeout, progress, ToastPositionClass.BOTTOM_CENTER);
     }
 
-    public showToastsFullWidth(highlightMode: boolean, timeout: number, progress: boolean = false) {
+    public showToastsFullWidth(highlightMode: boolean, timeout: number, progress: boolean = false): void {
         this.onShowSuccess(highlightMode, timeout, progress, ToastPositionClass.TOP_FULL_WIDTH);
         this.onShowWarning(highlightMode, timeout, progress, ToastPositionClass.BOTTOM_FULL_WIDTH);
     }
@@ -50,7 +50,7 @@ export class ToastVisualTestComponent implements OnInit {
         this.toastService.info({
             title: title,
             message: `${message}`,
-            options:  this.getOptions(timeout, position, progress),
+            options: this.getOptions(timeout, position, progress),
         });
     }
 
@@ -59,7 +59,7 @@ export class ToastVisualTestComponent implements OnInit {
         this.toastService.error({
             title: title,
             message: `${message}`,
-            options:  this.getOptions(timeout, position, progress),
+            options: this.getOptions(timeout, position, progress),
         });
     }
 
@@ -68,7 +68,7 @@ export class ToastVisualTestComponent implements OnInit {
         this.toastService.success({
             title: title,
             message: `${message}`,
-            options:  this.getOptions(timeout, position, progress),
+            options: this.getOptions(timeout, position, progress),
         });
     }
 
@@ -77,11 +77,11 @@ export class ToastVisualTestComponent implements OnInit {
         this.toastService.warning({
             title: title,
             message: `${message}`,
-            options:  this.getOptions(timeout, position, progress),
+            options: this.getOptions(timeout, position, progress),
         });
     }
 
-    public callStickyToast(highlightMode: boolean) {
+    public callStickyToast(highlightMode: boolean): void {
         this.toastService.error({
             title: "Failure",
             message: "This error is sticky!",

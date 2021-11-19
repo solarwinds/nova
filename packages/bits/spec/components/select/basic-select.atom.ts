@@ -16,19 +16,21 @@ export class BasicSelectAtom extends Atom {
      * Toggle select and select a new item from the options.
      */
     // Have to click (toggle the repeat) first because you can't interact with hidden elements
-    public select = async (title: string): Promise<void> =>
-        this.toggleMenu().then(() => this.getMenu().getMenuItemByContainingText(title).clickItem())
+    public select = async (title: string): Promise<void> => {
+        await this.toggleMenu();
+        await this.getMenu().getMenuItemByContainingText(title).clickItem();
+    };
 
     public getSelectedItem = (): ElementFinder => this.getElement().element(by.className("item-selected"));
 
     public getSelectedItems = (): ElementArrayFinder => this.getElement().all(by.css(".item-selected"));
 
-    public elementHasClass = async (selector: string, className: string) => {
+    public elementHasClass = async (selector: string, className: string): Promise<boolean> => {
         const elementClassList = await this.getElementByClass(selector).getAttribute("class");
         return elementClassList.includes(className);
-    }
+    };
 
-    public getItemsCount = async () => this.getMenu().itemCount();
+    public getItemsCount = async (): Promise<number> => this.getMenu().itemCount();
 
     public getItemText = async (idx: number): Promise<string> => this.getMenuItem(idx).getTitle();
 
@@ -42,5 +44,5 @@ export class BasicSelectAtom extends Atom {
 
     protected getElementsByCss = (selector: string): ElementArrayFinder => this.getElement().all(by.css(selector));
 
-    private getMenuItem  = (idx: number): MenuItemAtom => this.getMenu().getMenuItemByIndex(idx);
+    private getMenuItem = (idx: number): MenuItemAtom => this.getMenu().getMenuItemByIndex(idx);
 }

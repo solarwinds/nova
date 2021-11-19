@@ -8,39 +8,39 @@ import { IToastConfig, IToastService, ToastPositionClass, ToastService } from "@
 export class ToastPositionExampleComponent implements OnInit {
     public toastPositions = [
         {
-            displayValue: $localize `Top Right`,
+            displayValue: $localize`Top Right`,
             className: ToastPositionClass.TOP_RIGHT,
         },
         {
-            displayValue: $localize `Top Left`,
+            displayValue: $localize`Top Left`,
             className: ToastPositionClass.TOP_LEFT,
         },
         {
-            displayValue: $localize `Bottom Right`,
+            displayValue: $localize`Bottom Right`,
             className: ToastPositionClass.BOTTOM_RIGHT,
         },
         {
-            displayValue: $localize `Bottom Left`,
+            displayValue: $localize`Bottom Left`,
             className: ToastPositionClass.BOTTOM_LEFT,
         },
         {
-            displayValue: $localize `Top Full Width`,
+            displayValue: $localize`Top Full Width`,
             className: ToastPositionClass.TOP_FULL_WIDTH,
         },
         {
-            displayValue: $localize `Bottom Full Width`,
+            displayValue: $localize`Bottom Full Width`,
             className: ToastPositionClass.BOTTOM_FULL_WIDTH,
         },
         {
-            displayValue: $localize `Top Center`,
+            displayValue: $localize`Top Center`,
             className: ToastPositionClass.TOP_CENTER,
         },
         {
-            displayValue: $localize `Bottom Center`,
+            displayValue: $localize`Bottom Center`,
             className: ToastPositionClass.BOTTOM_CENTER,
         },
         {
-            displayValue: $localize `CUSTOM CLASS (top: 200px; right: 200px)`,
+            displayValue: $localize`CUSTOM CLASS (top: 200px; right: 200px)`,
             className: "demoToastCustomClass",
         },
     ];
@@ -48,13 +48,13 @@ export class ToastPositionExampleComponent implements OnInit {
 
     constructor(@Inject(ToastService) private toastService: IToastService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.toastService.setConfig({}, "id");
     }
 
     public onShowToast(highlightMode: boolean): void {
         this.toastService.info({
-            title: $localize `Position Example`,
+            title: $localize`Position Example`,
             message: this.selectedPosition,
             options: this.getOptions(),
         });

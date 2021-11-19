@@ -24,13 +24,13 @@ export class TimeFramePickerDateExampleComponent {
 
     public closePopoverSubject = new Subject();
 
-    public handlePresetSelection(presetKey: string) {
+    public handlePresetSelection(presetKey: string): void {
         this.selectedDate = this.getDateFromPreset(presetKey);
         this.selectedPresetKey = presetKey;
         this.confirmPopover();
     }
 
-    public dateChanged(value: Moment) {
+    public dateChanged(value: Moment): void {
         if (!this.selectedDate.isSame(value, "day")) {
             this.selectedDate = value;
             this.selectedPresetKey = this.getPresetFromDate(value); // will return undefined if not found, exactly what's needed
@@ -38,17 +38,17 @@ export class TimeFramePickerDateExampleComponent {
         }
     }
 
-    public confirmPopover() {
+    public confirmPopover(): void {
         this.closePopoverSubject.next();
     }
 
     // These private methods are specific and will be in any case abstracted to a service by end users:
 
-    private getDefaultPresets(): {[key: string]: any} {
+    private getDefaultPresets(): { [key: string]: any } {
         return {
-            today: {name: "Today", pattern: () => moment()},
-            yesterday: { name: "Yesterday", pattern: () => moment().subtract(1, "days")},
-            ihorsBirthday: {name: "Ihor's Birthday", pattern: () => moment("1989-04-09")},
+            today: { name: "Today", pattern: () => moment() },
+            yesterday: { name: "Yesterday", pattern: () => moment().subtract(1, "days") },
+            ihorsBirthday: { name: "Ihor's Birthday", pattern: () => moment("1989-04-09") },
             random: {
                 name: "Random date (to show that we can)",
                 pattern: () => moment(+(new Date()) - Math.floor(Math.random() * 100000000000)),
