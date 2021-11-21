@@ -29,8 +29,8 @@ const ELEMENT_DATA: TestTableModel[] = [
 ];
 
 interface TestCase {
-    dragCellIndex?: number;
-    dropCellIndex?: number;
+    dragCellIndex: number;
+    dropCellIndex: number;
     offsetX: number;
     clientWidth: number;
     expectedResult: unknown[];
@@ -41,7 +41,7 @@ export class TableSpecHelpers {
         return ELEMENT_DATA;
     }
 
-    public static basicTableCase(): TestCase {
+    public static basicTableCase(): Pick<TestCase, "dropCellIndex" | "offsetX" | "clientWidth" | "expectedResult"> {
         return {
             dropCellIndex: 1,
             offsetX: 15,

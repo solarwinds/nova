@@ -19,12 +19,14 @@ interface IToastContainers {
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class ToastContainerService {
 
-    constructor(private componentFactoryResolver: ComponentFactoryResolver,
-                private overlayService: OverlayContainerService,
-                private appRef: ApplicationRef) { }
+    constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private overlayService: OverlayContainerService,
+        private appRef: ApplicationRef
+    ) { }
 
     private static getComponentRootNode(componentRef: ComponentRef<any>): HTMLElement {
         return (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
@@ -55,8 +57,10 @@ export class ToastContainerService {
         this.appRef.attachView(componentRef.hostView);
 
         if (newestOnTop) {
-            this.containerElement.insertBefore(ToastContainerService.getComponentRootNode(componentRef),
-                                               this.containerElement.firstChild);
+            this.getContainerElement().insertBefore(
+                ToastContainerService.getComponentRootNode(componentRef),
+                this.containerElement.firstChild
+            );
         } else {
             this.containerElement.appendChild(ToastContainerService.getComponentRootNode(componentRef));
         }
