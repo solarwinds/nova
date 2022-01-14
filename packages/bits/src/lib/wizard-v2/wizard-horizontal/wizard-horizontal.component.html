@@ -63,7 +63,7 @@
 </div>
 
 <ng-template #stepHeaderWithLines let-steps let-step="step" let-i="i" let-isFirst="isFirst">
-    <div *ngIf="!isFirst" class="nui-wizard-horizontal__step-connector-line" 
+    <div *ngIf="!isFirst" class="nui-wizard-horizontal__step-connector-line"
              [ngClass]="{'nui-wizard-horizontal__step-connector-line--completed': stepsArray[i-1]?.completed && step.completed || selectedIndex === i}"></div>
         <nui-wizard-step-header
             #stepHeaders
@@ -75,7 +75,7 @@
             [attr.aria-posinset]="i + 1"
             [attr.aria-setsize]="steps.length"
             [attr.aria-controls]="stepContentIds[i]"
-            [attr.aria-selected]="selectedIndex == i"
+            [attr.aria-selected]="selectedIndex === i"
             [attr.aria-label]="step.ariaLabel || null"
             [attr.aria-labelledby]="(!step.ariaLabel && step.ariaLabelledby) ? step.ariaLabelledby : null"
             [index]="i"

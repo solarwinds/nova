@@ -1,5 +1,15 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, OnInit } from "@angular/core";
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import {
+    Component,
+    CUSTOM_ELEMENTS_SCHEMA,
+    DebugElement,
+    OnInit,
+} from "@angular/core";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { buttonConstants } from "../../constants/button.constants";
@@ -10,43 +20,28 @@ import { ButtonSizeType } from "./public-api";
 
 @Component({
     selector: "nui-button-on-button",
-    template: `
-        <button nui-button type="button">
-            Click me!
-        </button>
-    `,
+    template: ` <button nui-button type="button">Click me!</button> `,
 })
-class TestAppButtonComponent {
-}
+class TestAppButtonComponent {}
 
 @Component({
     selector: "nui-button-on-button-no-type",
-    template: `
-        <button nui-button>
-            Click me!
-        </button>
-    `,
+    template: ` <button nui-button>Click me!</button> `,
 })
-class TestAppButtonNoTypeComponent {
-}
+class TestAppButtonNoTypeComponent {}
 
 @Component({
     selector: "nui-button-on-div-no-type",
-    template: `
-        <div nui-button>
-            Click me!
-        </div>
-    `,
+    template: ` <div nui-button>Click me!</div> `,
 })
-class TestAppButtonOnDivNoTypeComponent {
-}
+class TestAppButtonOnDivNoTypeComponent {}
 
 @Component({
     selector: "nui-button-in-repeater",
     template: `
         <ul>
             <li *ngFor="let label of buttonLabels">
-                <button nui-button type="button">{{label}}</button>
+                <button nui-button type="button">{{ label }}</button>
             </li>
         </ul>
     `,
@@ -77,9 +72,7 @@ describe("components >", () => {
                     TestAppButtonComponent,
                 ],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
-                providers: [
-                    LoggerService,
-                ],
+                providers: [LoggerService],
             });
             logger = TestBed.inject(LoggerService);
         });
@@ -93,9 +86,15 @@ describe("components >", () => {
             });
             it("should remap 'iconSize' prop depending on 'size' prop value", () => {
                 subject.size = SIZE_LARGE;
-                expect(subject.getIconSize()).toEqual("", "size:" + SIZE_LARGE + " -> empty string");
+                expect(subject.getIconSize()).toEqual(
+                    "",
+                    "size:" + SIZE_LARGE + " -> empty string"
+                );
                 subject.size = ButtonSizeType.default;
-                expect(subject.getIconSize()).toEqual("", "size: empty -> empty string");
+                expect(subject.getIconSize()).toEqual(
+                    "",
+                    "size: empty -> empty string"
+                );
             });
 
             it(`should map 'iconColor' to '' if iconColor is not set`, () => {
@@ -108,17 +107,31 @@ describe("components >", () => {
                 logger = TestBed.inject(LoggerService);
             });
             it(`should log an error for buttons without a type attribute`, () => {
-                const errorSpy = spyOnProperty(logger, "error", "get").and.callThrough();
+                const errorSpy = spyOnProperty(
+                    logger,
+                    "error",
+                    "get"
+                ).and.callThrough();
                 fixture = TestBed.createComponent(TestAppButtonNoTypeComponent);
                 expect(errorSpy).toHaveBeenCalled();
             });
             it(`should not log an error for non-buttons without a type attribute`, () => {
-                const errorSpy = spyOnProperty(logger, "error", "get").and.callThrough();
-                fixture = TestBed.createComponent(TestAppButtonOnDivNoTypeComponent);
+                const errorSpy = spyOnProperty(
+                    logger,
+                    "error",
+                    "get"
+                ).and.callThrough();
+                fixture = TestBed.createComponent(
+                    TestAppButtonOnDivNoTypeComponent
+                );
                 expect(errorSpy).not.toHaveBeenCalled();
             });
             it(`should not log an error for buttons with a type attribute`, () => {
-                const errorSpy = spyOnProperty(logger, "error", "get").and.callThrough();
+                const errorSpy = spyOnProperty(
+                    logger,
+                    "error",
+                    "get"
+                ).and.callThrough();
                 fixture = TestBed.createComponent(TestAppButtonComponent);
                 expect(errorSpy).not.toHaveBeenCalled();
             });
@@ -126,12 +139,18 @@ describe("components >", () => {
 
         describe("inside repeater >", () => {
             beforeEach(() => {
-                de = TestBed.createComponent(TestAppButtonInRepeaterComponent).debugElement;
+                de = TestBed.createComponent(
+                    TestAppButtonInRepeaterComponent
+                ).debugElement;
             });
             it(`should have text content`, () => {
-                de.queryAll(By.css(".nui-button__content")).forEach((debugElement) => {
-                    expect(debugElement.nativeElement.textContent).toEqual("testText");
-                });
+                de.queryAll(By.css(".nui-button__content")).forEach(
+                    (debugElement) => {
+                        expect(debugElement.nativeElement.textContent).toEqual(
+                            "testText"
+                        );
+                    }
+                );
             });
         });
 

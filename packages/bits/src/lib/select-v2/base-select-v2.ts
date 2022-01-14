@@ -38,7 +38,6 @@ import { OptionKeyControlService } from "./option-key-control.service";
 import { SelectV2OptionComponent } from "./option/select-v2-option.component";
 import { InputValueTypes, IOptionedComponent } from "./types";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import ResizeObserver from "resize-observer-polyfill";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "./constants";
 
@@ -110,8 +109,7 @@ export abstract class BaseSelectV2 implements AfterViewInit, AfterContentInit, C
     }
 
     /** Corresponds to the Textbox of the Combobox */
-    @ViewChild("input", { static: false})
-    inputElement: ElementRef;
+    @ViewChild("input", { static: false}) inputElement: ElementRef;
 
     @ContentChild(CdkVirtualScrollViewport) cdkVirtualScroll: CdkVirtualScrollViewport;
 

@@ -6,14 +6,14 @@ import { Component } from "@angular/core";
     templateUrl: "./repeat-simple.example.component.html",
 })
 export class RepeatSimpleExampleComponent {
-public colors = [
-    { color: $localize `blue` },
-    { color: $localize `green` },
-    { color: $localize `yellow` },
-    { color: $localize `cyan` },
-    { color: $localize `magenta` },
-    { color: $localize `black` },
-];
+    public colors = [
+        { color: $localize `blue` },
+        { color: $localize `green` },
+        { color: $localize `yellow` },
+        { color: $localize `cyan` },
+        { color: $localize `magenta` },
+        { color: $localize `black` },
+    ];
 
-constructor() { }
+    constructor() { }
 }

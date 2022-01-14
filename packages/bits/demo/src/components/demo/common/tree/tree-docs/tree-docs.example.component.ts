@@ -20,6 +20,5 @@ import { CdkTreeModule } from "@angular/cdk/tree";
 })
 export class MyModule {}`
         .replace("\r\n", "<br/>") // nice rendering
-    ;
+        ;
 }
-

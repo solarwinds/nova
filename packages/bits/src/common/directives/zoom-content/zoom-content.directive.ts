@@ -1,6 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostBinding, Input, NgZone, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
 import isFinite from "lodash/isFinite";
-import ResizeObserver from "resize-observer-polyfill";
 import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -29,7 +28,7 @@ export class ZoomContentDirective implements OnDestroy, AfterViewInit, OnChanges
 
     @HostBinding("style.padding")
     public scalePadding: string = "0";
-    
+
     // Zoom inputs
     @Input() public zoomRatio = 0.9;
     @Input() public minZoomDifference = 0.1;

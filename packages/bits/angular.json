@@ -51,6 +51,11 @@
             "scripts": [],
             "styles": [],
             "assets": []
+          },
+          "configurations": {
+            "dev": {
+              "reporters": ["spec"]
+            }
           }
         },
         "lint": {
@@ -80,6 +85,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [ "lodash" ],
             "outputPath": "./sdk/api-docs-ng2/examples",
             "index": "./demo/src/index.html",
             "main": "./demo/src/index.ts",
@@ -282,6 +288,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "./.tmp",
+            "allowedCommonJsDependencies": [ "lodash" ],
             "index": "./src/index.html",
             "main": "./src/public_api.ts",
             "tsConfig": "./src/tsconfig.app.json",
@@ -301,7 +308,6 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "nui",
-      "styleext": "less",
       "lintFix": true
     },
     "@schematics/angular:directive": {

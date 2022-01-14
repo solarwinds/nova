@@ -5,14 +5,11 @@ import { WizardStepV2Component } from "../wizard-step/wizard-step.component";
 
 @Component({
     selector: "nui-test-cmp",
-    template: `
-        <nui-wizard-horizontal>
-            <nui-wizard-step-v2 label="step 1">
-            </nui-wizard-step-v2>
+    template: ` <nui-wizard-horizontal>
+        <nui-wizard-step-v2 label="step 1"> </nui-wizard-step-v2>
 
-            <nui-wizard-step-v2 label="step 2">
-            </nui-wizard-step-v2>
-        </nui-wizard-horizontal>`,
+        <nui-wizard-step-v2 label="step 2"> </nui-wizard-step-v2>
+    </nui-wizard-horizontal>`,
 })
 class TestWrapperComponent {}
 
@@ -28,9 +25,7 @@ describe("components >", () => {
                     WizardStepV2Component,
                     TestWrapperComponent,
                 ],
-                providers: [
-                    ChangeDetectorRef,
-                ],
+                providers: [ChangeDetectorRef],
                 schemas: [NO_ERRORS_SCHEMA],
             });
 
@@ -63,16 +58,9 @@ describe("components >", () => {
                 const oldObservers = component.selectionChange.observers.length;
 
                 component.ngAfterViewInit();
-                expect(component.selectionChange.observers.length).toBeGreaterThan(oldObservers);
-            });
-        });
-
-        describe("ngOnDestroy", () => {
-            it("should unsubscribe from the resize observer", () => {
-                const spy = spyOn(component["headerResizeObserver"], "disconnect");
-
-                component.ngOnDestroy();
-                expect(spy).toHaveBeenCalled();
+                expect(
+                    component.selectionChange.observers.length
+                ).toBeGreaterThan(oldObservers);
             });
         });
     });

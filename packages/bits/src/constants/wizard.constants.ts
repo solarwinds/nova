@@ -1,5 +1,5 @@
 import { InjectionToken } from "@angular/core";
-import { IWizardConfig, WizardStepStateConfig } from "../lib/public-api";
+import { IWizardConfig, WizardStepStateConfig } from "../lib/wizard-v2/types";
 
 export const WIZARD_CONFIG = new InjectionToken<IWizardConfig>("wizard.conf");
 

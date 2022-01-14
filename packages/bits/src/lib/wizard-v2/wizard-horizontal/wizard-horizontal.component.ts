@@ -1,12 +1,14 @@
 import { Directionality } from "@angular/cdk/bidi";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { CdkStepper, StepperSelectionEvent } from "@angular/cdk/stepper";
+import { DOCUMENT } from "@angular/common";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
     ElementRef,
+    Inject,
     Input,
     NgZone,
     OnDestroy,
@@ -19,7 +21,6 @@ import {
 import last from "lodash/last";
 import pull from "lodash/pull";
 import without from "lodash/without";
-import ResizeObserver from "resize-observer-polyfill";
 import { takeUntil } from "rxjs/operators";
 
 import { WizardOverflowComponent } from "../wizard-overflow/wizard-overflow.component";
@@ -68,7 +69,7 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
     private stepHeaderWidth: number = 0;
     private headerContainerWidth: number = 0;
     private overflowComponentWidth: number = 0;
-    
+
     public get selectedIndex(): number {
         return super.selectedIndex;
     }
@@ -84,11 +85,14 @@ export class WizardHorizontalComponent extends WizardDirective implements OnInit
     @ViewChildren("stepHeaders") public stepHeaders: QueryList<WizardStepHeaderComponent>;
     @ViewChildren("overflowComponent") public overflowComponents: QueryList<WizardOverflowComponent>;
 
-    constructor(private dir: Directionality,
-                private cdRef: ChangeDetectorRef,
-                private el: ElementRef,
-                private zone: NgZone) {
-        super(dir, cdRef, el);
+    constructor(
+        private dir: Directionality,
+        private cdRef: ChangeDetectorRef,
+        private el: ElementRef,
+        private zone: NgZone,
+        @Inject(DOCUMENT) _document: any
+    ) {
+        super(dir, cdRef, el, _document);
     }
 
     ngOnInit(): void {

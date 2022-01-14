@@ -16,7 +16,7 @@
                 <li>
                     <nui-expander [open]="false" header="multi">
                         <p>This option enables the possibility to select one or more rows in the {{forComponent ? forComponent : "component"}}.</p>
-                        <ng-container *ngIf="type == componentType.table">
+                        <ng-container *ngIf="type === componentType.table">
                             <p>To give users the ability to select rows, do the following:</p>
                             <ol>
                                 <li>
@@ -24,9 +24,9 @@
                                 </li>
                                 <li>
                                     Bind a trackBy handler to the
-                                    <code><a href="https://material.angular.io/cdk/table/overview#connecting-the-table-to-a-data-source" target="_blank">trackBy</a></code>
+                                    <code><a href="https://material.angular.io/cdk/table/overview#connecting-the-table-to-a-data-source" rel="noopener noreferrer" target="_blank">trackBy</a></code>
                                     property inherited from
-                                    <code><a href="https://material.angular.io/cdk/table/overview" target="_blank">CdkTable</a></code>.
+                                    <code><a href="https://material.angular.io/cdk/table/overview" rel="noopener noreferrer" target="_blank">CdkTable</a></code>.
                                     The trackBy handler should return a value that uniquely identifies each item in the table.
                                     <br>
                                     <strong>Note:</strong> When <code>trackBy</code> is used, the
@@ -68,22 +68,22 @@
                         </ng-container>
                     </nui-expander>
                 </li>
-                <li *ngIf="type == componentType.list">
+                <li *ngIf="type === componentType.list">
                     <nui-expander [open]="false" header="radio">
                         <p>Enables single-selection with deselection not allowed.</p>
                     </nui-expander>
                 </li>
-                <li *ngIf="type == componentType.list">
+                <li *ngIf="type === componentType.list">
                     <nui-expander [open]="false" header="single">
                         <p>Enables single-selection with no radio buttons and deselection allowed.</p>
                     </nui-expander>
                 </li>
-                <li *ngIf="type == componentType.list">
+                <li *ngIf="type === componentType.list">
                     <nui-expander [open]="false" header="singleWithRequiredSelection">
                         <p>Enables single-selection with no radio buttons and deselection not allowed.</p>
                     </nui-expander>
                 </li>
-                <li *ngIf="type == componentType.list">
+                <li *ngIf="type === componentType.list">
                     <nui-expander [open]="false" header="radioWithNonRequiredSelection">
                         <p>Enables single-selection with deselection allowed.</p>
                     </nui-expander>
@@ -107,7 +107,7 @@
                     </p>
                     <ng-container *ngTemplateOutlet="helpRenderer;context:{tpl: pagingModeVSTpl, types: [componentType.list, componentType.table]}"></ng-container>
                     <ng-template #pagingModeVSTpl let-type=type>
-                        <ng-container *ngIf="type == componentType.list">
+                        <ng-container *ngIf="type === componentType.list">
                             <p>
                                 The <code>nui-repeat</code> used inside this schematic allows you to manage the
                                 virtual viewport by exposing its <code>{{getRepeatPropKey('viewportRef')}}</code>
@@ -119,7 +119,7 @@
                                 <code>{{getRepeatPropKey('viewportRef')}}</code> property.
                             </p>
                         </ng-container>
-                        <ng-container *ngIf="type == componentType.table">
+                        <ng-container *ngIf="type === componentType.table">
                             The <code>nui-table</code> used inside this schematic API is using
                             <a href="../directives/TableVirtualScrollLinearDirective.html#info">nui table virtual scroll directive</a>. It makes it possible to
                             load items in chunks. The amount of items loaded per fetch can be configured by setting the <code>range</code> variable.
@@ -150,7 +150,7 @@
                             </nui-message>
                         </ng-container>
 
-                        <ng-container *ngIf="type == componentType.table">
+                        <ng-container *ngIf="type === componentType.table">
                             <p>
                                 To make the scrolling working with <code>nui-table</code> start with declaring the following variables:<br /><br />
                             </p>
@@ -242,7 +242,7 @@
                                 reset progress on the VirtualViewportManager before applying the filters.
                             </li>
                             <li>
-                                Due to a <a href="https://github.com/angular/components/issues/13981" target="_blank">known
+                                Due to a <a href="https://github.com/angular/components/issues/13981" rel="noopener noreferrer" target="_blank">known
                                 CDK issue</a>,
                                 make sure that the <code>nui-repeat</code> component hosting the virtual scroll is
                                 visible

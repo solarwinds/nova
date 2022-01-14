@@ -18,27 +18,38 @@ declare let process: any;
 
 let eyes: any;
 
-export function getCurrentBranchName(potentialGitRoot = process.cwd()): string | undefined {
+export function getCurrentBranchName(
+    potentialGitRoot: string = process.cwd()
+): string | undefined {
     const gitHeadPath = `${potentialGitRoot}/.git/HEAD`;
 
     if (!fs.existsSync(potentialGitRoot)) {
         return undefined;
     }
 
-    return fs.existsSync(gitHeadPath)
+    if (fs.existsSync(gitHeadPath)) {
         // Taking last two fragments of branch name, usually it is formatted like branch_type/branch_name
-        ? fs.readFileSync(gitHeadPath, "utf-8").trim().split("/").slice(2).join("/")
-        // Recursively looking for git folder
-        : getCurrentBranchName(path.resolve(potentialGitRoot, ".."));
+        return fs
+            .readFileSync(gitHeadPath, "utf-8")
+            .trim()
+            .split("/")
+            .slice(2)
+            .join("/");
+    }
+    // Recursively looking for git folder
+    return getCurrentBranchName(path.resolve(potentialGitRoot, ".."));
 }
 
-export async function assertA11y(browser: ProtractorBrowser, atomSelector: string, disabledRules?: string[]) {
+export async function assertA11y(
+    browser: ProtractorBrowser,
+    atomSelector: string,
+    disabledRules?: string[]
+): Promise<void> {
     const AxeBuilder = require("@axe-core/webdriverjs");
-    const accessibilityScanResults =
-            await new AxeBuilder(browser.driver)
-                .include(`.${atomSelector}`)
-                .disableRules(disabledRules || [])
-                .analyze();
+    const accessibilityScanResults = await new AxeBuilder(browser.driver)
+        .include(`.${atomSelector}`)
+        .disableRules(disabledRules || [])
+        .analyze();
 
     await expect(accessibilityScanResults.violations).toEqual([]);
 }
@@ -63,26 +74,38 @@ export class Helpers {
     }
 
     public static async setCustomWidth(size: string, id: string): Promise<{}> {
-        return browser.executeScript(`document.getElementById("${id}").style.width = "${size}"`);
+        return browser.executeScript(
+            `document.getElementById("${id}").style.width = "${size}"`
+        );
     }
 
-    public static async browserZoom(percent: number) {
+    public static async browserZoom(percent: number): Promise<unknown> {
         return browser.executeScript(`document.body.style.zoom='${percent}%'`);
     }
 
-    public static async pressKey(key: string, times: number = 1) {
+    public static async pressKey(
+        key: string,
+        times: number = 1
+    ): Promise<void> {
         while (times > 0) {
             await browser.actions().sendKeys(key).perform();
             times--;
         }
     }
 
-    public static async clickOnEmptySpace(x: number = 0, y: number = 0): Promise<void> {
-        return browser.executeScript("document.elementFromPoint(arguments[0],arguments[1]).click()", x, y);
+    public static async clickOnEmptySpace(
+        x: number = 0,
+        y: number = 0
+    ): Promise<void> {
+        return browser.executeScript(
+            "document.elementFromPoint(arguments[0],arguments[1]).click()",
+            x,
+            y
+        );
     }
 
     // for non-applitools run just rename this method to `prepareEyes`
-    static prepareFakeEyes() {
+    static prepareFakeEyes(): unknown {
         const { Eyes } = require("@applitools/eyes-protractor");
 
         if (!eyes) {
@@ -92,32 +115,45 @@ export class Helpers {
             eyes.abortIfNotClosed = async () => true;
             eyes.setStitchMode = () => true;
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            eyes.checkWindow = async (s: string) => {  console.log(s); await browser.sleep(3000); },
+            eyes.checkWindow = async (s: string) => {
+                console.log(s);
+                await browser.sleep(3000);
+            };
             eyes.checkRegion = console.log;
         }
 
         return eyes;
     }
 
-    static async prepareEyes() {
+    static async prepareEyes(): Promise<unknown> {
         const { Eyes } = require("@applitools/eyes-protractor");
 
         if (!eyes) {
             eyes = new Eyes();
             eyes.setApiKey(<string>process.env.EYES_API_KEY);
 
-            let branchName = <string>process.env.CIRCLE_BRANCH || getCurrentBranchName() || "Unknown";
-            const userName: string = <string>process.env.CIRCLE_USERNAME ? ` - [${process.env.CIRCLE_USERNAME}]` : "";
-            const batchName = (<string>process.env.CIRCLE_PROJECT_REPONAME)?.toUpperCase()
-                                + " - "
-                                + <string>process.env.CIRCLE_JOB
-                                + " - "
-                                + branchName
-                                + userName;
-            const batchID = <string>process.env.CIRCLE_JOB + "_" + <string>process.env.CIRCLE_SHA1;
+            let branchName =
+                <string>process.env.CIRCLE_BRANCH ||
+                getCurrentBranchName() ||
+                "Unknown";
+            const userName: string = <string>process.env.CIRCLE_USERNAME
+                ? ` - [${process.env.CIRCLE_USERNAME}]`
+                : "";
+            const batchName =
+                (<string>process.env.CIRCLE_PROJECT_REPONAME)?.toUpperCase() +
+                " - " +
+                <string>process.env.CIRCLE_JOB +
+                " - " +
+                branchName +
+                userName;
+            const batchID =
+                <string>process.env.CIRCLE_JOB +
+                "_" +
+                <string>process.env.CIRCLE_SHA1;
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
-            batchID ? eyes.setBatch(batchName, batchID)
+            batchID
+                ? eyes.setBatch(batchName, batchID)
                 : eyes.setBatch(batchName);
 
             eyes.setBranchName(branchName);
@@ -132,10 +168,11 @@ export class Helpers {
 
     static async switchDarkTheme(mode: "on" | "off"): Promise<void> {
         const htmlClassList: string = `document.getElementsByTagName("html")[0].classList`;
-
-        mode === "on"
-            ? await browser.executeScript(`${htmlClassList}.add("dark-nova-theme")`)
-            : await browser.executeScript(`${htmlClassList}.remove("dark-nova-theme")`);
+        const script =
+            mode === "on"
+                ? `${htmlClassList}.add("dark-nova-theme")`
+                : `${htmlClassList}.remove("dark-nova-theme")`;
+        await browser.executeScript(script);
     }
 
     /**
@@ -145,20 +182,22 @@ export class Helpers {
      * https://jira.solarwinds.com/browse/NUI-2034
      */
     static async disableCSSAnimations(type: Animations): Promise<{}> {
-
-        let disableTransitions = "-o-transition-property: none !important;" +
+        let disableTransitions =
+            "-o-transition-property: none !important;" +
             "-moz-transition-property: none !important;" +
             "-ms-transition-property: none !important;" +
             "-webkit-transition-property: none !important;" +
             "transition-property: none !important;";
 
-        let disableTransforms = "-o-transform: none !important;" +
+        let disableTransforms =
+            "-o-transform: none !important;" +
             "-moz-transform: none !important;" +
             "-ms-transform: none !important;" +
             "-webkit-transform: none !important;" +
             "transform: none !important;";
 
-        let disableAnimations = "-webkit-animation: none !important;" +
+        let disableAnimations =
+            "-webkit-animation: none !important;" +
             "-moz-animation: none !important;" +
             "-o-animation: none !important;" +
             "-ms-animation: none !important;" +
@@ -190,13 +229,20 @@ export class Helpers {
                 break;
         }
 
-        const css = "*, *:before, *:after {" + disableTransitions + disableTransforms + disableAnimations + "}";
+        const css =
+            "*, *:before, *:after {" +
+            disableTransitions +
+            disableTransforms +
+            disableAnimations +
+            "}";
 
-        return browser.executeScript(`var head = document.head || document.getElementsByTagName("head")[0];
+        return browser.executeScript(`
+            var head = document.head || document.getElementsByTagName("head")[0];
                             var style = document.createElement("style");
                             style.type = "text/css";
                             style.appendChild(document.createTextNode("${css}"));
-                            head.appendChild(style); `);
+            head.appendChild(style);
+        `);
     }
 
     static async saveScreenShot(filename: string): Promise<void> {
@@ -208,6 +254,9 @@ export class Helpers {
     }
 
     static async setLocation(url: string): Promise<void> {
-        return browser.executeScript((pUrl: string) => window.location.href = `/#/${pUrl}`, url);
+        return browser.executeScript(
+            (pUrl: string) => (window.location.href = `/#/${pUrl}`),
+            url
+        );
     }
 }

@@ -14,7 +14,6 @@ import {
 import debounce from "lodash/debounce";
 import isFunction from "lodash/isFunction";
 import isUndefined from "lodash/isUndefined";
-import ResizeObserver from "resize-observer-polyfill";
 import {Subscription} from "rxjs";
 
 import {RESIZE_DEBOUNCE_TIME} from "../../../constants/resize.constants";

@@ -10,8 +10,8 @@
     <!-- If there is no label template, fall back to the text label. -->
     <div class="nui-wizard-step-header__text-label" *ngIf="stringLabel">{{label}}</div>
 
-    <div class="nui-wizard-step-header__label--optional" *ngIf="step.optional && stepState != 'error'">{{optionalLabel}}</div>
-    <div class="nui-wizard-step-header__label--error" *ngIf="stepState == 'error'">{{errorMessage}}</div>
+    <div class="nui-wizard-step-header__label--optional" *ngIf="step.optional && stepState !== 'error'">{{optionalLabel}}</div>
+    <div class="nui-wizard-step-header__label--error" *ngIf="stepState === 'error'">{{errorMessage}}</div>
 </div>
 
 <div class="nui-wizard-step-header-icon nui-step-header-icon-state--{{stepState}}">

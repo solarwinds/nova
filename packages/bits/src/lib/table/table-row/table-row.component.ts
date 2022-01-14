@@ -19,7 +19,6 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import _includes from "lodash/includes";
-import _toArray from "lodash/toArray";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -56,7 +55,7 @@ export class TableHeaderRowDefDirective extends CdkHeaderRowDef implements OnIni
     }
 
     ngOnInit() {
-        this.tableStateHandlerService.tableColumns = _toArray(this.columns);
+        this.tableStateHandlerService.tableColumns = Array.from(this.columns);
 
         if (this.tableStateHandlerService.reorderable) {
             // reordering columns when drop is fired on column
@@ -105,7 +104,7 @@ export class TableRowDefDirective<T> extends CdkRowDef<T> implements OnInit, OnD
     }
 
     ngOnInit() {
-        this.tableStateHandlerService.tableColumns = _toArray(this.columns);
+        this.tableStateHandlerService.tableColumns = Array.from(this.columns);
 
         if (this.tableStateHandlerService.reorderable) {
             // reordering columns when drop is fired on column
@@ -147,7 +146,7 @@ export class TableFooterRowDefDirective extends CdkFooterRowDef implements OnIni
     }
 
     ngOnInit() {
-        this.tableStateHandlerService.tableColumns = _toArray(this.columns);
+        this.tableStateHandlerService.tableColumns = Array.from(this.columns);
 
         if (this.tableStateHandlerService.reorderable) {
             // reordering columns when drop is fired on column

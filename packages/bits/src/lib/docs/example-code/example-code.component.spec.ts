@@ -15,10 +15,10 @@ describe("components >", () => {
         });
 
         describe("ngAfterViewInit", () => {
-            it("should call hljs highlightBlock method", () => {
-                spyOn(hljs, "highlightBlock");
+            it("should call hljs highlightElement method", () => {
+                const spy = spyOn(hljs, "highlightElement");
                 subject.ngAfterViewInit();
-                expect(hljs.highlightBlock).toHaveBeenCalled();
+                expect(spy).toHaveBeenCalled();
             });
         });
     });

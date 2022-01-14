@@ -8,7 +8,6 @@ import {
     Output,
 } from "@angular/core";
 import debounce from "lodash/debounce";
-import ResizeObserver from "resize-observer-polyfill";
 
 import { RESIZE_DEBOUNCE_TIME } from "../../../constants/index";
 
@@ -26,14 +25,16 @@ export class ResizeObserverDirective implements OnDestroy, AfterViewInit {
     private _debounceTime = RESIZE_DEBOUNCE_TIME;
     private resizeObserver?: ResizeObserver;
 
-    constructor (private _element: ElementRef,
-                 private ngZone: NgZone) {}
+    constructor(
+        private _element: ElementRef,
+        private ngZone: NgZone
+    ) {}
 
     public set debounceTime(debounceTime: number) {
         this._debounceTime = debounceTime;
     }
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.resizeHandler = debounce(entry => this.containerResize.emit(entry), this._debounceTime);
         this.resizeObserver = new ResizeObserver(entries => {
             entries.forEach((entry: ResizeObserverEntry) => {
@@ -47,7 +48,7 @@ export class ResizeObserverDirective implements OnDestroy, AfterViewInit {
         });
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         if (this.resizeObserver) {
             this.resizeObserver.unobserve(<Element>(this._element.nativeElement));
         }

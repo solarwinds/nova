@@ -1,5 +1,6 @@
 FROM node:lts-slim
 ENV NODE_OPTIONS --max-old-space-size=8192
+
 # Installing tools
 RUN apt-get update && \
     apt-get -y install git curl wget nano vim procps sudo xvfb

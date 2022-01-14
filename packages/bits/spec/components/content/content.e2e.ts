@@ -18,10 +18,14 @@ describe("USERCONTROL content: ", () => {
         atom = Atom.find(ContentAtom, "test-element-small");
 
         testSmallElement = element(by.id("test-element-small"));
-        contentSmallElem = testSmallElement.element(by.className("nui-content"));
+        contentSmallElem = testSmallElement.element(
+            by.className("nui-content")
+        );
 
         testLargeElement = element(by.id("test-element-large"));
-        contentLargeElem = testLargeElement.element(by.className("nui-content"));
+        contentLargeElem = testLargeElement.element(
+            by.className("nui-content")
+        );
     });
 
     it("should display passed content", async () => {

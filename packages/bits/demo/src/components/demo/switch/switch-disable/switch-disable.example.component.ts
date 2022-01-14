@@ -6,6 +6,6 @@ import { Component, Input } from "@angular/core";
 })
 
 export class SwitchDisableExampleComponent {
-   @Input() isOn = true;
+    @Input() isOn = true;
     isDisabled = true;
 }

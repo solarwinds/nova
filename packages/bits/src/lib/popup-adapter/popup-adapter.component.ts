@@ -1,5 +1,4 @@
-import { Overlay, OverlayConfig } from "@angular/cdk/overlay";
-import { ConnectedPosition } from "@angular/cdk/overlay/position/flexible-connected-position-strategy";
+import { ConnectedPosition, Overlay, OverlayConfig } from "@angular/cdk/overlay";
 import { DOCUMENT } from "@angular/common";
 import {
     AfterContentInit,
@@ -75,7 +74,7 @@ export class PopupComponent implements AfterContentInit, AfterViewInit, OnChange
         }
         setTimeout(() => this.isOpenHandler(open));
     }
-    get isOpen() {
+    get isOpen(): boolean {
         return this.popup?.showing;
     }
 

@@ -59,11 +59,11 @@ export class ExampleCodeComponent implements  AfterViewInit {
      */
     @Input() public language: string;
 
-    @ViewChild("code") public codeElement: ElementRef;
+    @ViewChild("code") public codeElement: ElementRef<HTMLDivElement>;
 
-    public ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         // remove wrapping spaces. They might appear due to passing content via ng-content into element
         this.codeElement.nativeElement.innerHTML = this.codeElement.nativeElement.innerHTML.trim();
-        hljs.highlightBlock(this.codeElement.nativeElement);
+        hljs.highlightElement(this.codeElement.nativeElement);
     }
 }

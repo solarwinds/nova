@@ -1,4 +1,4 @@
-import { browser, by, element, ElementFinder, ExpectedConditions, Key } from "protractor";
+import { browser, by, element, ElementFinder, Key } from "protractor";
 
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
@@ -32,9 +32,7 @@ describe("USERCONTROL Combobox >", () => {
     });
 
     describe("combobox V2 >", () => {
-
         describe("keyboard navigation", () => {
-
             beforeEach(async () => {
                 await Helpers.pressKey(Key.TAB);
             });
@@ -53,10 +51,14 @@ describe("USERCONTROL Combobox >", () => {
 
             it("should navigate with UP and DOWN buttons", async () => {
                 await Helpers.pressKey(Key.DOWN, 5);
-                await expect(await (await comboboxError.getOption(5)).isActive()).toBe(true);
+                await expect(
+                    await (await comboboxError.getOption(5)).isActive()
+                ).toBe(true);
 
                 await Helpers.pressKey(Key.UP);
-                await expect(await (await comboboxError.getOption(4)).isActive()).toBe(true);
+                await expect(
+                    await (await comboboxError.getOption(4)).isActive()
+                ).toBe(true);
             });
 
             it("should close on focus out", async () => {
@@ -79,25 +81,40 @@ describe("USERCONTROL Combobox >", () => {
                 await Helpers.pressKey(Key.DOWN, 2);
                 await Helpers.pressKey(Key.ENTER);
 
-                await expect(await comboboxError.isOpened()).toBe(false, "Popup wasn't closed after selection!");
-                await expect(await comboboxError.getInputValue()).toEqual("Item 2");
+                await expect(await comboboxError.isOpened()).toBe(
+                    false,
+                    "Popup wasn't closed after selection!"
+                );
+                await expect(await comboboxError.getInputValue()).toEqual(
+                    "Item 2"
+                );
             });
 
             it("should reach the bottom of the list on PAGE_DOWN button pressed", async () => {
-                const lastItemText = await (await comboboxError.getLastOption()).getElement().getText();
+                const lastItemText = await (await comboboxError.getLastOption())
+                    .getElement()
+                    .getText();
                 await Helpers.pressKey(Key.PAGE_DOWN);
                 await Helpers.pressKey(Key.ENTER);
 
-                await expect(await comboboxError.getInputValue()).toEqual(lastItemText);
+                await expect(await comboboxError.getInputValue()).toEqual(
+                    lastItemText
+                );
             });
 
             it("should reach the bottom of the list on PAGE_UP button pressed", async () => {
-                const firstItemText = await (await comboboxError.getFirstOption()).getElement().getText();
+                const firstItemText = await (
+                    await comboboxError.getFirstOption()
+                )
+                    .getElement()
+                    .getText();
                 await Helpers.pressKey(Key.PAGE_DOWN);
                 await Helpers.pressKey(Key.PAGE_UP);
                 await Helpers.pressKey(Key.ENTER);
 
-                await expect(await comboboxError.getInputValue()).toEqual(firstItemText);
+                await expect(await comboboxError.getInputValue()).toEqual(
+                    firstItemText
+                );
             });
 
             it("should be able to navigate through the items if toggled using the toggle button", async () => {
@@ -106,7 +123,9 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxError.toggleButton.click();
                 await Helpers.pressKey(Key.DOWN, 3);
                 await Helpers.pressKey(Key.UP, 1);
-                await expect(await (await comboboxError.getOption(2)).getText()).toEqual("Item 2");
+                await expect(
+                    await (await comboboxError.getOption(2)).getText()
+                ).toEqual("Item 2");
             });
 
             it("shouldn't select a typed in option on press Tab key ", async () => {
@@ -115,22 +134,30 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxError.input.sendKeys("Item 11");
                 await Helpers.pressKey(Key.TAB);
 
-                await expect(await comboboxError.getInputValue()).toEqual("Item 0");
+                await expect(await comboboxError.getInputValue()).toEqual(
+                    "Item 0"
+                );
             });
-            
+
             it("should focus on the first item in dropdown, when removing item on backspace", async () => {
                 await comboboxError.click();
                 const option = await comboboxError.getOption(5);
                 await option.click();
-                
-                await expect(await comboboxError.getInputValue()).toEqual("Item 5");
-                await expect(await (await comboboxError.getOption(5)).isActive()).toBe(true);
+
+                await expect(await comboboxError.getInputValue()).toEqual(
+                    "Item 5"
+                );
+                await expect(
+                    await (await comboboxError.getOption(5)).isActive()
+                ).toBe(true);
 
                 browser.actions().doubleClick(comboboxError.input);
                 await Helpers.pressKey(Key.BACK_SPACE);
 
                 await expect(await comboboxError.getInputValue()).toEqual("");
-                await expect(await (await comboboxError.getOption(0)).isActive()).toBe(true);
+                await expect(
+                    await (await comboboxError.getOption(0)).isActive()
+                ).toBe(true);
             });
         });
 
@@ -142,12 +169,16 @@ describe("USERCONTROL Combobox >", () => {
             it("should select input text if clicked on toggle button", async () => {
                 await (await comboboxBasic.getFirstOption()).click();
                 await comboboxBasic.toggleButton.click();
-                await expect(await comboboxBasic.getSelectionRange()).toBeGreaterThan(0);
+                await expect(
+                    await comboboxBasic.getSelectionRange()
+                ).toBeGreaterThan(0);
             });
 
             it("should drop selection on click", async () => {
                 await comboboxBasic.click();
-                await expect(await comboboxBasic.getSelectionRange()).toEqual(0);
+                await expect(await comboboxBasic.getSelectionRange()).toEqual(
+                    0
+                );
             });
 
             it("should scroll to active option on click", async () => {
@@ -160,11 +191,19 @@ describe("USERCONTROL Combobox >", () => {
 
                 // Detect when option within a scrollable div are in view
                 // https://stackoverflow.com/questions/16308037/detect-when-elements-within-a-scrollable-div-are-out-of-view
-                const containerHeight = (await comboboxBasic.getPopupElement().getSize()).height;
-                const containerTop = +await comboboxBasic.getPopupElement().getAttribute("scrollTop");
-                const optionTop = +await (option).getElement().getAttribute("offsetTop");
+                const containerHeight = (
+                    await comboboxBasic.getPopupElement().getSize()
+                ).height;
+                const containerTop = +(await comboboxBasic
+                    .getPopupElement()
+                    .getAttribute("scrollTop"));
+                const optionTop = +(await option
+                    .getElement()
+                    .getAttribute("offsetTop"));
 
-                const isOptionVisibleInScrollBox = (optionTop > containerTop) && (optionTop < (containerTop + containerHeight));
+                const isOptionVisibleInScrollBox =
+                    optionTop > containerTop &&
+                    optionTop < containerTop + containerHeight;
 
                 await expect(isOptionVisibleInScrollBox).toBeTruthy();
             });
@@ -176,8 +215,12 @@ describe("USERCONTROL Combobox >", () => {
             });
 
             afterEach(async () => {
-                const comboboxWidth = (await comboboxCustomControl.getElement().getSize()).width;
-                const overlayWidth = (await comboboxCustomControl.getPopupElement().getSize()).width;
+                const comboboxWidth = (
+                    await comboboxCustomControl.getElement().getSize()
+                ).width;
+                const overlayWidth = (
+                    await comboboxCustomControl.getPopupElement().getSize()
+                ).width;
                 await expect(comboboxWidth).toEqual(overlayWidth);
             });
 
@@ -205,7 +248,8 @@ describe("USERCONTROL Combobox >", () => {
 
             beforeEach(async () => {
                 const removeButtonMulti = comboboxMulti.removeAllButton;
-                const removeButtonManual = comboboxCustomControl.removeAllButton;
+                const removeButtonManual =
+                    comboboxCustomControl.removeAllButton;
                 if (await removeButtonMulti.isPresent()) {
                     await removeButtonMulti.click();
                 }
@@ -235,11 +279,15 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxMulti.toggleButton.click();
                 await Helpers.pressKey(Key.LEFT);
 
-                await expect(await comboboxMulti.activeChip.isPresent()).toBe(true);
+                await expect(await comboboxMulti.activeChip.isPresent()).toBe(
+                    true
+                );
 
                 await Helpers.pressKey(Key.DOWN);
 
-                await expect(await comboboxMulti.activeChip.isPresent()).toBe(false);
+                await expect(await comboboxMulti.activeChip.isPresent()).toBe(
+                    false
+                );
             });
 
             it("popup should be closed on Selected Items focus in", async () => {
@@ -267,11 +315,15 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxMulti.toggleButton.click();
                 await Helpers.pressKey(Key.LEFT, 7);
 
-                await expect(await Atom.hasClass(comboboxMulti.chips.first(), "active")).toBe(true);
+                await expect(
+                    await Atom.hasClass(comboboxMulti.chips.first(), "active")
+                ).toBe(true);
 
                 await Helpers.pressKey(Key.RIGHT, 1);
 
-                await expect(await Atom.hasClass(comboboxMulti.chips.get(1), "active")).toBe(true);
+                await expect(
+                    await Atom.hasClass(comboboxMulti.chips.get(1), "active")
+                ).toBe(true);
             });
 
             it("it should deactivate active option", async () => {
@@ -280,8 +332,12 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxCustomControl.toggleButton.click();
                 await Helpers.pressKey(Key.LEFT);
 
-                await expect(await comboboxCustomControl.activeOption.isPresent()).toBe(false);
-                await expect(await comboboxCustomControl.activeChip.isPresent()).toBe(true);
+                await expect(
+                    await comboboxCustomControl.activeOption.isPresent()
+                ).toBe(false);
+                await expect(
+                    await comboboxCustomControl.activeChip.isPresent()
+                ).toBe(true);
             });
 
             it("should deactivate selected options", async () => {
@@ -291,8 +347,12 @@ describe("USERCONTROL Combobox >", () => {
                 await Helpers.pressKey(Key.LEFT);
                 await Helpers.pressKey(Key.DOWN);
 
-                await expect(await comboboxCustomControl.activeChip.isPresent()).toBe(false);
-                await expect(await comboboxCustomControl.activeOption.isPresent()).toBe(true);
+                await expect(
+                    await comboboxCustomControl.activeChip.isPresent()
+                ).toBe(false);
+                await expect(
+                    await comboboxCustomControl.activeOption.isPresent()
+                ).toBe(true);
             });
 
             it("shouldn't close popup on popup focus out", async () => {
@@ -301,7 +361,9 @@ describe("USERCONTROL Combobox >", () => {
                 await comboboxCustomControl.toggleButton.click();
                 await Helpers.pressKey(Key.LEFT);
 
-                await expect(await comboboxCustomControl.getPopupElement().isPresent()).toBe(true);
+                await expect(
+                    await comboboxCustomControl.getPopupElement().isPresent()
+                ).toBe(true);
             });
 
             it("should mark the first unfiltered item as active on open in multiselect", async () => {
@@ -309,21 +371,25 @@ describe("USERCONTROL Combobox >", () => {
                 await Helpers.pressKey(Key.ENTER);
                 await Helpers.pressKey(Key.DOWN);
 
-                await expect(await (await comboboxMulti.getOption(1)).isActive()).toBe(true);
+                await expect(
+                    await (await comboboxMulti.getOption(1)).isActive()
+                ).toBe(true);
             });
         });
 
         describe("> virtual scroll", () => {
-
             it("should always scroll to the first item in the list on filtering", async () => {
                 await virtualCombobox.type("Item 2");
-                await browser.wait(async () =>
-                    await (await virtualCombobox.getFirstOption()).getText() === "Item 2",
-                                   2000,
-                                   // eslint-disable-next-line max-len
-                                   `Expected first item to be visible during filtering, but it did not appear within the virtual scroll viewport within the reasonable time interval!`);
+                await browser.wait(
+                    async () =>
+                        (await (
+                            await virtualCombobox.getFirstOption()
+                        ).getText()) === "Item 2",
+                    2000,
+                    // eslint-disable-next-line max-len
+                    `Expected first item to be visible during filtering, but it did not appear within the virtual scroll viewport within the reasonable time interval!`
+                );
             });
         });
-            
     });
 });

@@ -2,7 +2,6 @@ import {
     AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, ElementRef, EventEmitter,
     HostBinding, Input, NgZone, OnDestroy, Output, QueryList, ViewChild,
 } from "@angular/core";
-import ResizeObserver from "resize-observer-polyfill";
 import { Subscription } from "rxjs";
 
 import { TabHeadingComponent } from "../tab-heading/tab-heading.component";
