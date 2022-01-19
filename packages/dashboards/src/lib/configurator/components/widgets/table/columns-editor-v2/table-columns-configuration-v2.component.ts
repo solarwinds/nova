@@ -100,7 +100,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
                 return;
             }
             const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
-            this.dataSourceFields = dataFields;
+            this.dataSourceFields = dataFields ?? [];
             const disableColumnGeneration = this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.DisableTableColumnGeneration)?.enabled;
 
             const columns = this.mergeColumns(this.dataSourceFields, this.getColumns());
