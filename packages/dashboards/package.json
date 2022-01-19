@@ -1,7 +1,7 @@
 {
   "name": "@nova-ui/dashboards",
   "license": "Apache-2.0",
-  "version": "11.12.0-0",
+  "version": "11.13.0-0",
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "contributors": [
     {
@@ -64,8 +64,8 @@
   },
   "schematics": "./sdk/schematics/collection.json",
   "peerDependencies": {
-    "@nova-ui/bits": "~11.12.0-0",
-    "@nova-ui/charts": "~11.12.0-0",
+    "@nova-ui/bits": "~11.13.0-0",
+    "@nova-ui/charts": "~11.13.0-0",
     "@schematics/angular": "^11.1.4 || ^12.0.0",
     "angular-gridster2": "^11.0.1 || ^12.0.0",
     "d3": "^5.9.2",
@@ -94,8 +94,8 @@
     "@angular/router": "^11.1.2",
     "@compodoc/compodoc": "^1.1.11",
     "@locl/cli": "^1.0.0",
-    "@nova-ui/bits": "~11.12.0-0",
-    "@nova-ui/charts": "~11.12.0-0",
+    "@nova-ui/bits": "~11.13.0-0",
+    "@nova-ui/charts": "~11.13.0-0",
     "@percy/cli": "^1.0.0-beta.41",
     "@percy/protractor": "^2.0.0",
     "@schematics/angular": "^11.1.4",
