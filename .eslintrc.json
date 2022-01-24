@@ -348,7 +348,10 @@
                             "balanced": true
                         }
                     }
-                ]
+                ],
+                // Fix in future
+                "no-loss-of-precision": "off",
+                "@typescript-eslint/no-loss-of-precision": ["warn"]
             }
         },
         {
