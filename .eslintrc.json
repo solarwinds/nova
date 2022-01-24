@@ -43,7 +43,7 @@
                 ],
                 "@angular-eslint/no-host-metadata-property": "off",
                 // TODO: fix lint errors
-                "@typescript-eslint/no-unsafe-argument": ["warn"],
+                "@typescript-eslint/no-unsafe-argument": "off",
 
                 /******************************
                  * Typescript-specific rules
@@ -176,7 +176,8 @@
                         "leadingUnderscore": "allow"
                     }
                 ],
-
+                // TODO fix in future
+                "no-unsafe-assignment": "off",
                 /******************************
                  * ESLint rules
                  *******************************/
@@ -349,7 +350,7 @@
                         }
                     }
                 ],
-                // Fix in future
+                // TODO Fix in future
                 "no-loss-of-precision": "off",
                 "@typescript-eslint/no-loss-of-precision": ["warn"]
             }
