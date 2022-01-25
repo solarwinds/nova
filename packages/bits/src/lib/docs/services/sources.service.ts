@@ -57,7 +57,7 @@ export class SourcesService {
         let fileData = {};
         const regExResultArray = this.fileExtensionsRegex.exec(fileName);
         if (regExResultArray) {
-            let fileContent = this.context(fileName).default;
+            let fileContent = this.context(fileName);
             const extension = <string>fileName.split(".").pop();
             if (extension === "less") {
                 fileContent = fileContent.replace(
@@ -66,7 +66,7 @@ export class SourcesService {
                 );
             }
 
-            fileData = { [extension]: fileContent };
+            fileData = { [extension]: extension === "less" ? fileContent : fileContent.default };
         }
 
         return fileData;
