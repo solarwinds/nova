@@ -102,7 +102,6 @@
             "moment": "moment",
             "moment/moment": "moment",
             "moment-timezone": "moment-timezone",
-            "resize-observer-polyfill": "ResizeObserver",
             "@nova-ui/bits": "nui.bits"
         }
     },
