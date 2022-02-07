@@ -133,7 +133,7 @@
     "@axe-core/webdriverjs": "^4.1.1",
     "@compodoc/compodoc": "^1.1.11",
     "@locl/cli": "^1.0.0",
-    "@percy/cli": "^1.0.0-beta.41",
+    "@percy/cli": "^1.0.0-beta.74",
     "@percy/protractor": "^2.0.0",
     "@schematics/angular": "^11.1.4",
     "@types/jasmine": "~3.5.0",

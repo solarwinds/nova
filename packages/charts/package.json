@@ -97,7 +97,7 @@
     "@compodoc/compodoc": "^1.1.11",
     "@locl/cli": "^1.0.0",
     "@nova-ui/bits": "~11.13.0-0",
-    "@percy/cli": "^1.0.0-beta.41",
+    "@percy/cli": "^1.0.0-beta.74",
     "@percy/protractor": "^2.0.0",
     "@types/d3": "^5.7.2",
     "@types/d3-selection-multi": "^1.0.7",
