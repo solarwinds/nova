@@ -10,7 +10,7 @@ export interface ITableWidgetColumnConfig {
     /**
      * Formatter configuration
      */
-    formatter: IFormatter;
+    formatter?: IFormatter;
     /**
      * Width of the column
      */

@@ -351,7 +351,7 @@ export class TableWidgetComponent implements AfterViewInit, OnChanges, OnDestroy
 
                 result[column.id] = {
                     data,
-                    ...omit(column.formatter.properties, "dataFieldIds"),
+                    ...omit(column.formatter?.properties, "dataFieldIds"),
                 };
 
                 return result;

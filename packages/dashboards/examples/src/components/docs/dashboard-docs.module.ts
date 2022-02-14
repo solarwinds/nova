@@ -1,9 +1,12 @@
+import { Apollo } from "apollo-angular";
+import { HttpLink } from "apollo-angular/http";
+import { InMemoryCache } from "@apollo/client/core";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { DEMO_PATH_TOKEN, NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
-import { Apollo, ApolloModule } from "apollo-angular";
-import { HttpLink, HttpLinkModule } from "apollo-angular-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
+
+
+
 
 import { APOLLO_API_NAMESPACE } from "./types";
 
@@ -28,8 +31,6 @@ const exampleRoutes: Routes = [
     imports: [
         NuiDocsModule,
         NuiMessageModule,
-        ApolloModule,
-        HttpLinkModule,
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [

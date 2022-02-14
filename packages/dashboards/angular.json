@@ -27,6 +27,13 @@
             }
           }
         },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "i18n:build",
+            "outputPath": "../.tmp"
+          }
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
@@ -75,7 +82,13 @@
                 "node_modules"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -98,7 +111,8 @@
               "vendorChunk": false,
               "buildOptimizer": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -164,6 +178,30 @@
               "spec/**/*.html"
             ]
           }
+        }
+      }
+    },
+    "i18n": {
+      "root": "src",
+      "sourceRoot": "src",
+      "projectType": "library",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "./.tmp",
+            "allowedCommonJsDependencies": [ "lodash" ],
+            "index": "./src/index.html",
+            "main": "./src/public-api.ts",
+            "tsConfig": "tsconfig.lib.json",
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "defaultConfiguration": ""
         }
       }
     }

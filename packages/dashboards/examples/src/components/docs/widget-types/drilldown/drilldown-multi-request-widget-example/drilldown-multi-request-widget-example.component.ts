@@ -1,3 +1,4 @@
+import { Apollo, gql } from "apollo-angular";
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { DataSourceService, IconStatus, IDataField, IFilters, INovaFilters } from "@nova-ui/bits";
@@ -20,8 +21,8 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { Apollo } from "apollo-angular";
-import gql from "graphql-tag";
+
+
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { finalize, map, switchMap, tap } from "rxjs/operators";
 
