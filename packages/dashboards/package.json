@@ -64,9 +64,9 @@
   },
   "schematics": "./sdk/schematics/collection.json",
   "peerDependencies": {
-    "@nova-ui/bits": "file:../bits/dist",
-    "@nova-ui/charts": "file:../charts/dist",
-    "@schematics/angular": "^12.2.14|| ^13.0.0",
+    "@nova-ui/bits": "~12.0.0",
+    "@nova-ui/charts": "~12.0.0",
+    "@schematics/angular": "^12.2.14 || ^13.0.0",
     "angular-gridster2": "^12.1.0 || ^13.0.0",
     "d3": "^5.9.2",
     "d3-selection-multi": "^1.0.1"
@@ -93,9 +93,9 @@
     "@angular/platform-browser-dynamic": "^12.2.16",
     "@angular/router": "^12.2.16",
     "@compodoc/compodoc": "^1.1.11",
-    "@nova-ui/bits": "file:../bits/dist",
-    "@nova-ui/charts": "file:../charts/dist",
-    "@percy/cli": "^1.0.0-beta.41",
+    "@nova-ui/bits": "~12.0.0",
+    "@nova-ui/charts": "~12.0.0",
+    "@percy/cli": "^1.0.0-beta.74",
     "@percy/protractor": "^2.0.0",
     "@schematics/angular": "^12.2.14",
     "@types/d3": "^5.7.2",
@@ -109,6 +109,7 @@
     "@yarnpkg/lockfile": "^1.1.0",
     "angular-gridster2": "^12.1.0",
     "apollo-angular": "^2.6.0",
+    "@apollo/client": "^3.0.0",
     "codelyzer": "^6.0.0",
     "core-js": "^2.6.9",
     "d3": "^5.9.2",
@@ -120,6 +121,7 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-prefer-arrow": "1.2.2",
+    "graphql": "^15.4.0",
     "highlight.js": "^10.6.0",
     "jasmine-core": "~3.5.0",
     "jasmine-reporters": "^2.3.1",
@@ -145,11 +147,6 @@
     "typescript": "~4.3.5",
     "zone.js": "~0.11.4"
   },
-  "dependencies": {
-    "@apollo/client": "^3.0.0",
-    "apollo-angular": "^2.6.0",
-    "graphql": "^15.0.0"
-  },
   "resolutions": {
     "@compodoc/compodoc/live-server/http-auth": "^3.2.4",
     "@compodoc/compodoc/i18next": "^19.8.5",
@@ -157,5 +154,6 @@
     "@compodoc/compodoc/**/glob-parent": "^5.1.2",
     "@compodoc/compodoc/marked": "^2.0.0",
     "postcss-preset-env": "^7.3.2"
-  }
+  },
+  "dependencies": {}
 }
