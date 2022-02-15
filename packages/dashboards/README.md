@@ -20,7 +20,7 @@ absorb into your product's code base.
 $ ng add @nova-ui/bits
 ```
 If needed, further instructions for Bits installation can be found 
-<a href="https://nova-ui.solarwinds.io/bits/release_v11.x/" target="_blank">here</a>.
+<a href="https://nova-ui.solarwinds.io/bits/release_v12.x/" target="_blank">here</a>.
 
 
 #### Installing NodeJS and npm
@@ -96,9 +96,9 @@ addition to the styles source paths:
 
 ## Start Implementing Your Dashboards
 An **overview** of Nova Dashboards is available 
-<a href="https://nova-ui.solarwinds.io/dashboards/release_v11.x/additional-documentation/overview.html">here</a>,
+<a href="https://nova-ui.solarwinds.io/dashboards/release_v12.x/additional-documentation/overview.html">here</a>,
 but if you'd prefer to dive right in, you can start with our **Hello, Dashboards!** tutorial 
-<a href="https://nova-ui.solarwinds.io/dashboards/release_v11.x/additional-documentation/tutorials/hello-dashboards.html">here</a>.
+<a href="https://nova-ui.solarwinds.io/dashboards/release_v12.x/additional-documentation/tutorials/hello-dashboards.html">here</a>.
 
 [//]: # (Line breaks leave breathing room when the user scrolls to the bottom)
 <br>

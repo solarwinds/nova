@@ -24,7 +24,7 @@ At this point, your app should have one file with a bunch of translations, and t
 
 ### Runtime i18n example
 
-The example can be found [here](https://nova-ui.solarwinds.io/bits/release_v11.x/examples/#/runtime-i18n) 
+The example can be found [here](https://nova-ui.solarwinds.io/bits/release_v12.x/examples/#/runtime-i18n) 
 
 This example shows how to achieve the runtime localization in Angular 9 using **$localize** and **localStorage**.
 
