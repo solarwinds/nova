@@ -7,7 +7,7 @@
       "dom"
     ],
     "declaration": true,
-    "module": "commonjs",
+    "module": "ESNext",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,

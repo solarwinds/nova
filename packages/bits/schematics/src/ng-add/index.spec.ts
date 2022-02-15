@@ -120,7 +120,7 @@ describe("ng-add", () => {
             {
                 "compilerOptions": {
                     "allowSyntheticDefaultImports": false,
-                    "module": "commonjs",
+                    "module": "ESNext",
                 },
                 "exclude": [
                     "node_modules",
