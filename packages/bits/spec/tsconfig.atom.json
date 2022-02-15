@@ -3,7 +3,7 @@
     "compilerOptions": {
         "outDir": "../dist/sdk/atoms",
         "baseUrl": "./",
-        "module": "ESNext",
+        "module": "commonjs",
         "target": "es6",
         "declaration": true,
         "types": [
