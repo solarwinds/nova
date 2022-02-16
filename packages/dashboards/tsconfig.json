@@ -4,7 +4,7 @@
     "baseUrl": "./",
     "declaration": false,
     "importHelpers": true,
-    "module": "ESNext",
+    "module": "commonjs",
     "outDir": "./dist/out-tsc",
     "preserveSymlinks": true,
     "typeRoots": [
