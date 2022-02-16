@@ -2,6 +2,8 @@
      [class.nui-panel--hoverable]="isHoverable"
      [class.nui-panel--is-collapsed]="isCollapsible && isCollapsed"
      [class.nui-panel--animating]="isAnimating"
+     role="tabpanel"
+     [attr.aria-expanded]="!isCollapsible || !isCollapsed"
      [attr.aria-hidden]="isCollapsible && isCollapsed">
 
     <div class="nui-panel__side-pane"
