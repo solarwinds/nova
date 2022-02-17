@@ -210,7 +210,6 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "nui",
-      "styleext": "less",
       "lintFix": true
     },
     "@schematics/angular:directive": {
