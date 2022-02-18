@@ -1,22 +1,20 @@
 {
-    "extends": "../../tsconfig.main",
+    "extends": "../../tsconfig.main.json",
     "compileOnSave": true,
     "compilerOptions": {
         "baseUrl": ".",
-        "module": "esnext",
+        "module": "ESNext",
         "noEmit": false,
         "resolveJsonModule": true,
+        "forceConsistentCasingInFileNames": true,
         // this was added to make demo project work in WebStorm,
         // currently it's the only available workaround
         "paths": {
             "@nova-ui/bits": ["./src/public_api.ts"],
             "protractor": ["../stub/protractor.d.ts"]
         },
-        "lib": ["es2015", "dom"],
+        "lib": ["ES2019", "DOM"],
         "importHelpers": true
     },
-    "exclude": [
-        "node_modules",
-        "atoms.d.ts"
-    ]
+    "exclude": ["node_modules", "atoms.d.ts"]
 }

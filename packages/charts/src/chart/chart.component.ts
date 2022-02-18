@@ -13,7 +13,6 @@ import {
     SimpleChanges,
 } from "@angular/core";
 import debounce from "lodash/debounce";
-import ResizeObserver from "resize-observer-polyfill";
 
 import { CHART_COMPONENT, CHART_VIEW_STATUS_EVENT, REFRESH_EVENT } from "../constants";
 import { IChart, IChartComponent, IChartViewStatusEventPayload } from "../core/common/types";

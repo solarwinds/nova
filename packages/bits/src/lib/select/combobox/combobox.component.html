@@ -6,7 +6,7 @@
                 [width]="getWidth()"
                 [contextClass]="getPopupContextClass()"
                 [appendToBody]="appendToBody">
-        <div class="nui-combobox__icon" *ngIf="icon != null">
+        <div class="nui-combobox__icon" *ngIf="!!icon">
             <nui-icon [icon]="icon"
                       aria-hidden="true"
                       [iconColor]="getIconColor()"></nui-icon>
@@ -37,6 +37,7 @@
                     (click)="clearValue($event);"
                     [isEmpty]="true"
                     icon="remove"
+                    title="remove"
                     displayStyle="action"
                     type="button">
             </button>
@@ -45,6 +46,7 @@
                     nui-button
                     [isEmpty]="true"
                     icon="caret-down"
+                    title="toggle"
                     displayStyle="action"
                     type="button"
                     [class.disabled]="isDisabled"

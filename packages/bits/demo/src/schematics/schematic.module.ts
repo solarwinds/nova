@@ -1,3 +1,6 @@
+import { APOLLO_OPTIONS } from "apollo-angular";
+import { HttpLink } from "apollo-angular/http";
+import { InMemoryCache } from "@apollo/client/core";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CommonModule, DatePipe } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
@@ -29,9 +32,9 @@ import {
     NuiToolbarModule,
     SrlcStage,
 } from "@nova-ui/bits";
-import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
-import { HttpLink, HttpLinkModule } from "apollo-angular-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
+
+
+
 
 import { BasicFilterGroupExampleComponent } from "./filter-group/basic-filter-group/basic-filter-group.example.component";
 import { BasicFilterGroupCompositeModule } from "./filter-group/basic-filter-group/basic-filter-group.module";
@@ -284,8 +287,6 @@ const staticRoutes: Routes = [
     ],
     imports: [
         CommonModule,
-        ApolloModule,
-        HttpLinkModule,
         NuiExpanderModule,
         NuiMessageModule,
         NuiPaginatorModule,

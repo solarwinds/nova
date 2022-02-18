@@ -1,6 +1,7 @@
 import { $, browser, by, element, ElementFinder, ExpectedConditions, Key } from "protractor";
 import { protractor } from "protractor/built/ptor";
 
+// eslint-disable-next-line import/no-unresolved
 import { WebElement } from "../../../stub/protractor";
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
@@ -121,7 +122,7 @@ describe("USERCONTROL Dialog", () => {
     });
 
     describe("Dismissal on route changes", async () => {
-        afterAll(async ()=> {
+        afterAll(async () => {
             await browser.navigate().back();
         })
 

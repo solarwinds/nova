@@ -174,9 +174,13 @@ export function assembleDependencies(dependencies: Record<string, string>): Node
     return Object.keys(dependencies).map((key) => (
         {
             type: NodeDependencyType.Default,
-            version: dependencies[key],
+            version: omitUpperPeerDependencyVersion(dependencies[key]),
             name: key,
             overwrite: true,
         }
     ));
+}
+
+export function omitUpperPeerDependencyVersion(version: string): string {
+    return version.split("||")[0].trim();
 }

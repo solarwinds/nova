@@ -1,3 +1,4 @@
+import { Apollo, gql } from "apollo-angular";
 import { Injectable } from "@angular/core";
 import {
     IDataSource,
@@ -5,9 +6,9 @@ import {
     LoggerService,
     ServerSideDataSource,
 } from "@nova-ui/bits";
-import { Apollo } from "apollo-angular";
+
 import { DocumentNode } from "graphql";
-import gql from "graphql-tag";
+
 import isArray from "lodash/isArray";
 import isPlainObject from "lodash/isPlainObject";
 import {

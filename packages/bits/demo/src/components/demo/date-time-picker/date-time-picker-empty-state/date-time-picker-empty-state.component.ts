@@ -8,15 +8,14 @@ import { Moment } from "moment/moment";
     templateUrl: "./date-time-picker-empty-state.component.html",
 })
 export class DateTimePickerEmptyStateComponent {
-  public dt: Moment | undefined = undefined;
-  public selectedDate: Date | String = "";
-  public initEmpty: boolean = true;
-  public control: FormControl = new FormControl(this.dt, Validators.required);
+    public dt: Moment | undefined = undefined;
+    public selectedDate: Date | String = "";
+    public initEmpty: boolean = true;
+    public control: FormControl = new FormControl(this.dt, Validators.required);
 
-  constructor() {}
+    constructor() {}
 
-  onModelChanged(event: Moment) {
-      this.selectedDate = new Date(event.valueOf());
-  }
-
+    onModelChanged(event: Moment): void {
+        this.selectedDate = new Date(event.valueOf());
+    }
 }

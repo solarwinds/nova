@@ -1,5 +1,9 @@
 import { ArrayDataSource } from "@angular/cdk/collections";
-import { CdkNestedTreeNode, CdkTree, NestedTreeControl } from "@angular/cdk/tree";
+import {
+    CdkNestedTreeNode,
+    CdkTree,
+    NestedTreeControl,
+} from "@angular/cdk/tree";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import {
     AfterViewInit,
@@ -21,6 +25,7 @@ import {
     expand,
     IDataSource,
     IFilter,
+    IFilteringOutputs,
     INovaFilteringOutputs,
     INovaFilters,
     IRepeatItemConfig,
@@ -28,6 +33,8 @@ import {
     nameof,
     NuiActiveDialog,
     NuiDialogRef,
+    Paginator,
+    Repeat,
     RepeatComponent,
     VirtualViewportManager,
 } from "@nova-ui/bits";
@@ -108,51 +115,55 @@ export const API_URL = "https://nova-pg.swdev.local/api/v1/servers";
  * to fetch data
  */
 @Injectable()
-export class VirtualScrollListDataSource<T = any> extends DataSourceService<T> implements IDataSource {
+export class VirtualScrollListDataSource<T = any>
+    extends DataSourceService<T>
+    implements IDataSource {
     // cache used to store our previous fetched results while scrolling
     // and more data is automatically fetched from the backend
     private cache = Array.from<IServer>({ length: 0 });
     private previousFilters: INovaFilters;
 
-    constructor(
-        private logger: LoggerService,
-        private http: HttpClient
-    ) {
+    constructor(private logger: LoggerService, private http: HttpClient) {
         super();
     }
 
-    public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<INovaFilteringOutputs> {
         // Every new search request or filter change should
         // clear the cache in order to correctly display a new set of data
-        const reset = this.filtersChanged(filters,
-                                          nameof<IServerFilters>("status"),
-                                          nameof<IServerFilters>("location"),
-                                          nameof<IServerFilters>("search"),
-                                          nameof<IServerFilters>("sorter")
+        const reset = this.filtersChanged(
+            filters,
+            nameof<IServerFilters>("status"),
+            nameof<IServerFilters>("location"),
+            nameof<IServerFilters>("search"),
+            nameof<IServerFilters>("sorter")
         );
 
         if (reset || filters.virtualScroll?.value.start === 0) {
             this.cache = [];
         }
-        return this.getBackendData(filters).pipe(
-            tap((response: IServersCollection) => {
-                // after receiving data we need to append it to our previous fetched results
-                this.cache = this.cache.concat(response.items);
-            }),
-            map((response: IServersCollection) => {
-                const itemsSource = this.cache;
+        return this.getBackendData(filters)
+            .pipe(
+                tap((response: IServersCollection) => {
+                    // after receiving data we need to append it to our previous fetched results
+                    this.cache = this.cache.concat(response.items);
+                }),
+                map((response: IServersCollection) => {
+                    const itemsSource = this.cache;
 
-                return {
-                    repeat: { itemsSource: itemsSource },
-                    paginator: {
-                        total: response.count,
-                    },
-                };
-            })
-        ).toPromise();
+                    return {
+                        repeat: { itemsSource: itemsSource },
+                        paginator: {
+                            total: response.count,
+                        },
+                    };
+                })
+            )
+            .toPromise();
     }
 
-    public reset() {
+    public reset(): void {
         this.cache = [];
     }
 
@@ -163,34 +174,32 @@ export class VirtualScrollListDataSource<T = any> extends DataSourceService<T> i
             // define the start page used by the virtual scroll internal "paginator"
             .set("page", Math.ceil(paging.start / RESULTS_PER_PAGE).toString())
             // specify the maximum number of items we need to fetch for each request
-            .set(
-                "pageSize",
-                String(
-                    RESULTS_PER_PAGE
-                )
-            )
+            .set("pageSize", String(RESULTS_PER_PAGE))
             .set("searchField", "location")
             .set("searchContent", filters.search?.value ?? "");
 
         return params;
     }
 
-    private getBackendData(filters: INovaFilters): Observable<IServersCollection> {
+    private getBackendData(
+        filters: INovaFilters
+    ): Observable<IServersCollection> {
         // fetch response from the backend
         const requestParams = this.getRequestParams(filters);
         return this.http
             .get<IServersApiResponse>(API_URL, { params: requestParams })
             .pipe(
                 delay(300),
-                map(response => ({
-                    items: response.items?.map(item => ({
-                        name: item.name,
-                        location: item.location,
-                        status: item.status,
-                    })) || [],
+                map((response) => ({
+                    items:
+                        response.items?.map((item) => ({
+                            name: item.name,
+                            location: item.location,
+                            status: item.status,
+                        })) || [],
                     count: response.count,
                 })),
-                catchError(e => {
+                catchError((e) => {
                     this.logger.error(e);
                     return of({
                         items: [],
@@ -198,17 +207,18 @@ export class VirtualScrollListDataSource<T = any> extends DataSourceService<T> i
                     });
                 })
             );
-
     }
 
     // checks if any of the filters specified by name have changed from the previous evaluation
-    public filtersChanged(filters: INovaFilters, ...filterNames: string[]) {
+    public filtersChanged(filters: INovaFilters, ...filterNames: string[]): boolean {
         for (let i = 0; i < filterNames.length; i++) {
             const filterName = filterNames[i];
             const filter = filters[filterName];
-            if (!isNil(filter?.value) && this.previousFilters
-                && !isEqual(filter?.value, this.previousFilters[filterName]?.value)) {
-
+            if (
+                !isNil(filter?.value) &&
+                this.previousFilters &&
+                !isEqual(filter?.value, this.previousFilters[filterName]?.value)
+            ) {
                 return true;
             }
         }
@@ -234,22 +244,26 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
 
     public nodesTotalItems: { [key: string]: number } = {};
 
-    public treeControl = new NestedTreeControl<IServerNode>((node) => node.children);
+    public treeControl = new NestedTreeControl<IServerNode>(
+        (node) => node.children
+    );
     public dataSource = new ArrayDataSource(TREE_DATA);
 
-    public hasChild = (_: number, node: IServerNode) => node.children;
+    public hasChild = (_: number, node: IServerNode): boolean => !!node.children;
 
     constructor(
         private virtualScrollListDataSource: VirtualScrollListDataSource,
         private differ: IterableDiffers,
         private eventBusService: EventBusService,
         private dialogService: DialogService
-    ) {
-    }
+    ) {}
 
-    public showAll(node: IServerNode) {
+    public showAll(node: IServerNode): void {
         // setup the Dialog
-        this.activeDialogRef = this.dialogService.open(TreeDialogContentExampleComponent, { size: "sm" });
+        this.activeDialogRef = this.dialogService.open(
+            TreeDialogContentExampleComponent,
+            { size: "sm" }
+        );
         // pass the inputs to the context component
         this.activeDialogComponent.items = [];
         this.activeDialogComponent.isLoading = true;
@@ -260,7 +274,9 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         this.subscribeToDialogScrolling();
 
         this.activeDialogRef.closed$.subscribe(() => {
-            this.virtualScrollListDataSource.deregisterComponent("virtualScroll");
+            this.virtualScrollListDataSource.deregisterComponent(
+                "virtualScroll"
+            );
             this.virtualScrollListDataSource.deregisterComponent("search");
             this.virtualScrollListDataSource.reset();
         });
@@ -278,27 +294,35 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
                 virtualScroll: { componentInstance: viewPortManager },
             });
 
-            viewPortManager.observeNextPage$({ pageSize: RESULTS_PER_PAGE })
+            viewPortManager
+                .observeNextPage$({ pageSize: RESULTS_PER_PAGE })
                 .pipe(
                     tap(() => {
                         this.virtualScrollListDataSource.applyFilters();
-                        this.virtualScrollListDataSource.outputsSubject
-                            .subscribe((v: any) => {
-                                if (!this.activeDialogComponent) { return; } // in case dialog was closed early
+                        this.virtualScrollListDataSource.outputsSubject.subscribe(
+                            (v: any) => {
+                                if (!this.activeDialogComponent) {
+                                    return;
+                                } // in case dialog was closed early
                                 const items = v.repeat.itemsSource as IServer[];
                                 this.activeDialogComponent.items = items;
                                 this.activeDialogComponent.isLoading = false;
                                 this.activeDialogComponent.cdRef.detectChanges();
-                            });
+                            }
+                        );
                     }),
                     takeUntil(this.destroy$)
-                ).subscribe();
+                )
+                .subscribe();
         });
     }
 
     /** Load first page on first open */
-    public onToggleClick(node: IServerNode, nestedNode: CdkNestedTreeNode<any>) {
-        this.eventBusService.getStream({id: "document-click"}).next();
+    public onToggleClick(
+        node: IServerNode,
+        nestedNode: CdkNestedTreeNode<any>
+    ): void {
+        this.eventBusService.getStream({ id: "document-click" }).next();
 
         if (node.hasChildren && node.children && !node.children.length) {
             node.isLoading = true;
@@ -306,13 +330,19 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
             this.virtualScrollListDataSource.applyFilters();
             this.virtualScrollListDataSource.outputsSubject
                 .pipe(take(1))
-                .subscribe((v: any) => {
-                    const items = v.repeat.itemsSource as IServer[];
+                .subscribe((v: IFilteringOutputs) => {
+                    const repeat = v.repeat as Repeat;
+                    const paginator = v.paginator as Paginator;
 
-                    this.handleNodeTotalItems(node.name, v.paginator.total);
+                    const items: IServer[] = repeat.itemsSource;
+                    const total: number = paginator.total;
+
+                    this.handleNodeTotalItems(node.name, total);
                     this.handleNodeContent(node, nestedNode, items);
                     node.isLoading = false;
-                    this.virtualScrollListDataSource.deregisterComponent("search");
+                    this.virtualScrollListDataSource.deregisterComponent(
+                        "search"
+                    );
                 });
         }
     }
@@ -321,14 +351,25 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         this.nodesTotalItems[nodeId] = totalItems;
     }
 
-    private handleNodeContent(node: IServerNode, nestedNodeDirective: CdkNestedTreeNode<any>, items: IServerNode[]) {
+    private handleNodeContent(
+        node: IServerNode,
+        nestedNodeDirective: CdkNestedTreeNode<any>,
+        items: IServerNode[]
+    ) {
         node.children = [];
-        const differ: IterableDiffer<IServerNode> = this.differ.find(node.children).create();
+        const differ: IterableDiffer<IServerNode> = this.differ
+            .find(node.children)
+            .create();
         node.children = items;
 
         // clear previously rendered leaf nodes
         nestedNodeDirective.nodeOutlet.first.viewContainer.clear();
-        this.cdkTree.renderNodeChanges(node.children, differ, nestedNodeDirective.nodeOutlet.first.viewContainer, node);
+        this.cdkTree.renderNodeChanges(
+            node.children,
+            differ,
+            nestedNodeDirective.nodeOutlet.first.viewContainer,
+            node
+        );
     }
 
     /** Register node name as a search to get nodes of one location */
@@ -345,21 +386,25 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         });
     }
 
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
     }
-
 }
 
 @Component({
     selector: "nui-dialog-content-dialog-example",
     template: `
-        <nui-dialog-header title="Dialog title" i18n-title (closed)="close()"></nui-dialog-header>
+        <nui-dialog-header
+            title="Dialog title"
+            i18n-title
+            (closed)="close()"
+        ></nui-dialog-header>
 
         <div nui-busy [busy]="isLoading">
             <div class="d-flex flex-row">
-                <nui-repeat class="virtual-scroll-list-repeat"
+                <nui-repeat
+                    class="virtual-scroll-list-repeat"
                     [itemConfig]="itemConfig"
                     [repeatItemTemplateRef]="repeatItemTemplate"
                     [itemsSource]="items"
@@ -376,16 +421,22 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         </nui-dialog-footer>
 
         <ng-template #repeatItemTemplate let-item="item">
-            <div class="d-flex justify-content-between w-100"><span>Node: {{item.name}}</span> <span> Status: {{item.status}}</span> </div>
+            <div class="d-flex justify-content-between w-100">
+                <span>Node: {{ item.name }}</span>
+                <span> Status: {{ item.status }}</span>
+            </div>
         </ng-template>
     `,
     animations: [],
     providers: [VirtualViewportManager],
-    styles: [`
-        .virtual-scroll-list-repeat {
-            height: 400px; // height has to be defined if using 'nui-repeat' with virtual scroll
-        }
-    `],
+    styles: [
+        `
+            .virtual-scroll-list-repeat {
+                /* height has to be defined if using 'nui-repeat' with virtual scroll */
+                height: 400px;
+            }
+        `,
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TreeDialogContentExampleComponent implements AfterViewInit {
@@ -393,24 +444,23 @@ export class TreeDialogContentExampleComponent implements AfterViewInit {
     @Input() isLoading: boolean = false;
 
     public itemConfig: IRepeatItemConfig = {
-        trackBy: (index, item) => item?.name,
+        trackBy: (index: number, item: IServerNode): string | undefined => item?.name,
     };
 
     @ViewChild(RepeatComponent)
     public repeat: RepeatComponent;
 
-    constructor(public cdRef: ChangeDetectorRef,
+    constructor(
+        public cdRef: ChangeDetectorRef,
         public viewPortManager: VirtualViewportManager,
         @Inject(NuiActiveDialog) public activeDialog: any
     ) {}
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.viewPortManager.setViewport(this.repeat.viewportRef);
     }
 
-    close() {
+    close(): void {
         this.activeDialog.close();
     }
-
 }
-

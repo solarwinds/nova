@@ -1,3 +1,4 @@
+import { Apollo, gql } from "apollo-angular";
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
 import {
@@ -30,8 +31,8 @@ import {
     WidgetTypesService,
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
-import { Apollo } from "apollo-angular";
-import gql from "graphql-tag";
+
+
 import groupBy from "lodash/groupBy";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { catchError, delay, filter, map } from "rxjs/operators";

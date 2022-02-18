@@ -30,7 +30,7 @@ export interface ITypedRepeatItem {
 
 export type IRepeatItem = ITypedRepeatItem | any;
 
-export interface IRepeatItemConfig<T = IRepeatItem> {
+export interface IRepeatItemConfig<T extends IRepeatItem = IRepeatItem> {
     isDisabled?: (params: T) => boolean;
     isDraggable?: (params: T) => boolean;
     trackBy?: TrackByFunction<T>;

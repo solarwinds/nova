@@ -2,7 +2,6 @@ import { CdkVirtualForOf, CdkVirtualScrollViewport } from "@angular/cdk/scrollin
 import { AfterViewInit, ContentChild, Directive, Input, OnDestroy, Renderer2 } from "@angular/core";
 import isBoolean from "lodash/isBoolean";
 import isEmpty from "lodash/isEmpty";
-import ResizeObserver from "resize-observer-polyfill";
 import { asyncScheduler, EMPTY, merge, Observable, Subject } from "rxjs";
 import { delay, exhaustMap, filter, finalize, map, take, takeUntil, tap, throttleTime } from "rxjs/operators";
 import { FIXED_WIDTH_CLASS } from "../constants";

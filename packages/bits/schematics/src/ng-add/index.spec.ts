@@ -1,5 +1,6 @@
 import { JsonParseMode, parseJson } from "@angular-devkit/core";
 import { SchematicTestRunner, UnitTestTree } from "@angular-devkit/schematics/testing";
+import { omitUpperPeerDependencyVersion } from "../utility/schematics-helper";
 
 function readJsonFile(tree: UnitTestTree, path: string): any {
     return parseJson(tree.readContent(path).toString(), JsonParseMode.CommentsAllowed);
@@ -137,7 +138,7 @@ describe("ng-add", () => {
         expect(afterFile.compilerOptions.allowSyntheticDefaultImports).toEqual(false);
     });
 
-    it("updates the dependencies in package.json with the peerDependencies from Bits", async () => {
+    it("updates the dependencies in package.json with the peerDependencies from Bits and ignores upper versions of peer dependencies if provided", async () => {
         const afterTree = await runner.runSchematicAsync("ng-add",
             {
                 project: "bar",
@@ -148,7 +149,7 @@ describe("ng-add", () => {
         const file = readJsonFile(afterTree, "package.json");
         const { peerDependencies } = require("../../../package.json");
         Object.keys(peerDependencies).forEach((key) => {
-            expect(peerDependencies[key]).toEqual(file.dependencies[key], `Dependency ${key} wasn't updated`);
+            expect(omitUpperPeerDependencyVersion(peerDependencies[key])).toEqual(file.dependencies[key], `Dependency ${key} wasn't updated`);
         });
     });
 });

@@ -8,12 +8,9 @@ describe("WizardOverflowComponent", () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ WizardOverflowComponent ],
-        })
-            .compileComponents();
-    });
+            declarations: [WizardOverflowComponent],
+        }).compileComponents();
 
-    beforeEach(() => {
         fixture = TestBed.createComponent(WizardOverflowComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();

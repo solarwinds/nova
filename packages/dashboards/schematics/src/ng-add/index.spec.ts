@@ -1,4 +1,5 @@
 import { SchematicTestRunner, UnitTestTree } from "@angular-devkit/schematics/testing";
+import { omitUpperPeerDependencyVersion } from "@nova-ui/bits/sdk/schematics";
 
 describe("ng-add", () => {
     const runner = new SchematicTestRunner("schematics", require.resolve("../collection.json"));
@@ -95,7 +96,7 @@ describe("ng-add", () => {
         const file = JSON.parse((afterTree.read("package.json") ?? "").toString("utf-8"));
         const { peerDependencies } = require("../../../package.json");
         Object.keys(peerDependencies).forEach((key) => {
-            expect(peerDependencies[key]).toEqual(file.dependencies[key], `Dependency ${key} wasn't updated`);
+            expect(omitUpperPeerDependencyVersion(peerDependencies[key])).toEqual(file.dependencies[key], `Dependency ${key} wasn't updated`);
         });
     });
 

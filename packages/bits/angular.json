@@ -51,6 +51,11 @@
             "scripts": [],
             "styles": [],
             "assets": []
+          },
+          "configurations": {
+            "dev": {
+              "reporters": ["spec"]
+            }
           }
         },
         "lint": {
@@ -67,8 +72,10 @@
     "demo": {
       "i18n": {
         "locales": {
-          "en-us": "./demo/src/locale/messages.en-us.xlf",
-          "es": "./demo/src/locale/messages.es.xlf"
+          "en-us": {
+            "translation": "./demo/src/locale/messages.en-us.xlf",
+            "baseHref": ""
+          }
         }
       },
       "root": "demo",
@@ -78,7 +85,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
+            "allowedCommonJsDependencies": [ "lodash" ],
             "outputPath": "./sdk/api-docs-ng2/examples",
             "index": "./demo/src/index.html",
             "main": "./demo/src/index.ts",
@@ -97,7 +104,13 @@
               "demo/src/demostyles.less",
               "src/styles/styles-font-roboto.less"
             ],
-            "scripts": []
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -106,16 +119,14 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
-              "vendorChunk": true,
               "buildOptimizer": true,
               "budgets": []
             },
             "i18n": {
-              "i18nFile": "./demo/src/locale/messages.en-us.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "en-us"
+              "localize": [
+                "en-us"
+              ]
             },
             "e2e": {
               "fileReplacements": [
@@ -128,12 +139,12 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -236,13 +247,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "outputPath": "./.tmp/css",
             "main": "",
             "tsConfig": "tsconfig.json",
             "index": "index.html",
             "deleteOutputPath": false,
-            "optimization": true,
             "styles": [
               "src/styles.less",
               "src/component-styles.less",
@@ -260,8 +269,14 @@
                 "input": "src/styles/nui-framework-theme.less",
                 "bundleName": "styles-css-variables"
               }
-            ]
-          }
+            ],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "namedChunks": true
+          },
+          "defaultConfiguration": ""
         }
       }
     },
@@ -272,12 +287,19 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "aot": true,
             "outputPath": "./.tmp",
+            "allowedCommonJsDependencies": [ "lodash" ],
             "index": "./src/index.html",
             "main": "./src/public_api.ts",
-            "tsConfig": "./src/tsconfig.app.json"
-          }
+            "tsConfig": "./src/tsconfig.app.json",
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "defaultConfiguration": ""
         }
       }
     }
@@ -286,7 +308,6 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "nui",
-      "styleext": "less",
       "lintFix": true
     },
     "@schematics/angular:directive": {

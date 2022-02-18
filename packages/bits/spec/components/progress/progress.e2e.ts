@@ -13,14 +13,22 @@ describe("USERCONTROL progress", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("progress/progress-test");
-        indeterminateProgress = Atom.find(ProgressAtom, "nui-demo-indeterminate-progress");
+        indeterminateProgress = Atom.find(
+            ProgressAtom,
+            "nui-demo-indeterminate-progress"
+        );
         compactProgress = Atom.find(ProgressAtom, "nui-demo-compact-progress");
-        compactProgressBtn = Atom.findIn(ButtonAtom, element(by.buttonText("Start/stop progress")));
+        compactProgressBtn = Atom.findIn(
+            ButtonAtom,
+            element(by.buttonText("Start/stop progress"))
+        );
     });
 
     describe("stacked header progress", () => {
         beforeEach(async () => {
-            const startBtn = element(by.id("nui-demo-indeterminate-progress-btn"));
+            const startBtn = element(
+                by.id("nui-demo-indeterminate-progress-btn")
+            );
             await browser.wait(ExpectedConditions.visibilityOf(startBtn), 3000);
             await startBtn.click();
         });
@@ -33,7 +41,10 @@ describe("USERCONTROL progress", () => {
 
         it("should be possible to display tooltip on close button", async () => {
             await indeterminateProgress.getCancelButton().hover();
-            const buttonTooltip = Atom.findIn(TooltipAtom, element(by.className("cdk-overlay-container")));
+            const buttonTooltip = Atom.findIn(
+                TooltipAtom,
+                element(by.className("cdk-overlay-container"))
+            );
             await buttonTooltip.waitToBeDisplayed();
             expect(await buttonTooltip.isTooltipDisplayed()).toBeTruthy();
             expect(await buttonTooltip.getTooltipText()).toContain("Cancel");

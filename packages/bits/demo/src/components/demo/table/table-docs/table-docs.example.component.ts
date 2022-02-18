@@ -5,8 +5,7 @@ import { Component } from "@angular/core";
     templateUrl: "./table-docs.example.component.html",
 })
 export class TableDocsComponent {
-    public alignmentCode =
-`<td nui-cell *nuiCellDef="let element">
+    public alignmentCode = `<td nui-cell *nuiCellDef="let element">
      <div class="custom-class">
          {{element.status}}
      </div>

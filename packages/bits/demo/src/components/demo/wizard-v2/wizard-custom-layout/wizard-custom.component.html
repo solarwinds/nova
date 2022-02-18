@@ -12,7 +12,7 @@
                         [attr.aria-posinset]="i + 1"
                         [attr.aria-setsize]="steps.length"
                         [attr.aria-controls]="_getStepContentId(i)"
-                        [attr.aria-selected]="selectedIndex == i"
+                        [attr.aria-selected]="selectedIndex === i"
                         [attr.aria-label]="step.ariaLabel || null"
                         [attr.aria-labelledby]="(!step.ariaLabel && step.ariaLabelledby) ? step.ariaLabelledby : null"
                         [index]="i"

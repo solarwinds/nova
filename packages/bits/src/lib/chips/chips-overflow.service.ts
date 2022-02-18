@@ -5,7 +5,6 @@ import {
     NgZone,
     QueryList,
 } from "@angular/core";
-import ResizeObserver from "resize-observer-polyfill";
 
 import { ChipComponent } from "./chip/chip.component";
 import { IChipsGroup, IChipsItem, IChipsItemsSource } from "./public-api";
@@ -29,7 +28,7 @@ export class ChipsOverflowService {
     constructor(private zone: NgZone) {
     }
 
-    public init() {
+    public init(): void {
         this.initChipResizeObserver();
         this.initChipsMutationObserver();
     }

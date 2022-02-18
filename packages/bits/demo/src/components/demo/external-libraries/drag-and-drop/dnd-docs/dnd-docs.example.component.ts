@@ -19,7 +19,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 })
 export class MyModule {}`
         .replace("\r\n", "<br/>") // nice rendering
-    ;
+        ;
 
     public hideHandleWhileDragging = `
 .dnd-drag-preview .drag-handle {

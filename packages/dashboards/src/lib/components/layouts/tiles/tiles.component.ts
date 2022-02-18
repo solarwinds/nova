@@ -1,7 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, NgZone, OnDestroy, ViewChild } from "@angular/core";
 import { LoggerService } from "@nova-ui/bits";
-import ResizeObserver from "resize-observer-polyfill";
-
 import { PizzagnaService } from "../../../pizzagna/services/pizzagna.service";
 import { BaseLayout } from "../base-layout";
 

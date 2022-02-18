@@ -1,6 +1,5 @@
 import { OverlayRef } from "@angular/cdk/overlay";
 import some from "lodash/some";
-import ResizeObserver from "resize-observer-polyfill";
 
 import { OverlayComponent } from "./overlay-component/overlay.component";
 import { IResizeConfig } from "./types";

@@ -23,7 +23,7 @@
 // eslint-disable-next-line
 import "@angular/localize/init";
 import "core-js/es7/reflect";
-import "zone.js/dist/zone";  // Included with Angular CLI.
+import "zone.js";  // Included with Angular CLI.
 
 /** localize polyfill **/
 

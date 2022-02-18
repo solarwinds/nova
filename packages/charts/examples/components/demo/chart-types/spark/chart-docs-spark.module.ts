@@ -12,6 +12,7 @@ import { AreaSparkMinimalTestComponent } from "./spark-chart-stroke-test/area-sp
 import { SparkChartTableExampleComponent } from "./spark-chart-table/spark-chart-table.example.component";
 import { SparkChartTestComponent } from "./spark-chart-test/spark-chart-test.component";
 import { SparkChartAreaMultipleExampleComponent } from "./spark-chart-area-multiple/spark-chart-area-multiple.example.component"
+import { DemoCommonModule } from "../../common/demo-common.module";
 
 const exampleRoutes: Routes = [
     {
@@ -97,6 +98,7 @@ const exampleRoutes: Routes = [
         NuiDocsModule,
         NuiMessageModule,
         NuiTableModule,
+        DemoCommonModule,
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [

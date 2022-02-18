@@ -21,6 +21,11 @@
             "type": "boolean",
             "description": "Skip setting styles",
             "default": false
+        },
+        "skipPackageJson": {
+            "type": "boolean",
+            "description": "Skip updating package.json dependencies",
+            "default": false
         }
     },
     "required": []

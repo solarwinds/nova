@@ -35,7 +35,6 @@ import {
 } from "@nova-ui/charts";
 import isEqual from "lodash/isEqual";
 import some from "lodash/some";
-import ResizeObserver from "resize-observer-polyfill";
 import { Subscription } from "rxjs";
 import { DashboardUnitConversionPipe } from "../../common/pipes/dashboard-unit-conversion-pipe";
 

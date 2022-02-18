@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { NuiDocsModule } from "@nova-ui/bits";
+import { NuiDocsModule, NuiSelectModule, NuiTabsModule } from "@nova-ui/bits";
 
 import { SourceInspectorComponent } from "./source-inspector.component";
 
@@ -12,6 +12,8 @@ import { SourceInspectorComponent } from "./source-inspector.component";
     imports: [
         CommonModule,
         NuiDocsModule,
+        NuiSelectModule,
+        NuiTabsModule,
     ],
     exports: [
         SourceInspectorComponent,

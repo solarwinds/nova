@@ -1,6 +1,7 @@
 // This file is required by karma.conf.js and loads recursively all the .spec and framework files
 
-import "zone.js/dist/zone-testing"; // this needs to be first
+import "zone.js"; // this needs to be first
+import "zone.js/testing"; // this needs to be second
 // eslint-disable-next-line
 import { getTestBed } from "@angular/core/testing";
 import {
@@ -17,7 +18,8 @@ getTestBed().initTestEnvironment(
         BrowserDynamicTestingModule,
         NoopAnimationsModule,
     ],
-    platformBrowserDynamicTesting()
+    platformBrowserDynamicTesting(),
+    { teardown: { destroyAfterEach: false } }
 );
 
 // Then we find all the tests.
