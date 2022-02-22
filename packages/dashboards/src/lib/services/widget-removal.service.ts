@@ -6,7 +6,7 @@ import { catchError } from "rxjs/operators";
 
 import { DashboardComponent } from "../components/dashboard/dashboard.component";
 import { IConfiguratorSource } from "../configurator/services/types";
-import { WidgetRemovalOperation } from "../types";
+import { WidgetRemovalOperation } from "../configurator/services/types";
 
 @Injectable({ providedIn: "root" })
 export class WidgetRemovalService {

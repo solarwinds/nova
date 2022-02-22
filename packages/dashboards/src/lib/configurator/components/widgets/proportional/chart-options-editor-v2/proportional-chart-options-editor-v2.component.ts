@@ -6,8 +6,9 @@ import { takeUntil } from "rxjs/operators";
 import { IProportionalWidgetChartTypeConfiguration, ProportionalWidgetChartTypes } from "../../../../../components/proportional-widget/types";
 import { IFormatter, IFormatterDefinition } from "../../../../../components/types";
 import { ProportionalLegendFormattersRegistryService } from "../../../../../services/table-formatter-registry.service";
-import { IHasChangeDetector, IHasForm, ILegendPlacementOption } from "../../../../../types";
+import { IHasChangeDetector, IHasForm } from "../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
+import { ILegendPlacementOption } from "../../../../../widget-types/common/widget/legend"
 
 @Component({
     selector: "nui-proportional-chart-options-editor-v2-component",

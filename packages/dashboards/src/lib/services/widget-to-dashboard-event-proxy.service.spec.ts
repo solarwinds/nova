@@ -2,7 +2,7 @@ import { EventBus, EventDefinition, IEvent } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
 import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
-import { IWidget } from "../types";
+import { IWidget } from "../components/widget/types";
 
 import { EventRegistryService } from "./event-registry.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";

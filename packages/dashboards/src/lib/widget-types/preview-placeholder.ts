@@ -1,7 +1,8 @@
 import { StackComponent } from "../components/layouts/stack/stack.component";
 import { PreviewPlaceholderComponent } from "../configurator/components/preview-placeholder/preview-placeholder.component";
 import { DEFAULT_PIZZAGNA_ROOT } from "../services/types";
-import { IWidgetTypeDefinition, PizzagnaLayer, WellKnownPathKey } from "../types";
+import { PizzagnaLayer, WellKnownPathKey } from "../types";
+import { IWidgetTypeDefinition } from "../components/widget/types";
 
 import { WIDGET_BODY, WIDGET_HEADER } from "./common/widget/components";
 

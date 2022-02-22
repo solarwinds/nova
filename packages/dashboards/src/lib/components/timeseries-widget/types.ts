@@ -1,7 +1,7 @@
 import { ITimeFramePresetDictionary } from "@nova-ui/bits";
 
 import { IProperties } from "../../types";
-import { LegendPlacement } from "../types";
+import { LegendPlacement } from "../../widget-types/common/widget/legend";
 
 export interface ITimeseriesWidgetConfig {
     interaction: null | "series" | "dataPoints";

@@ -3,8 +3,8 @@ import { IAllAround, IAccessors, IChartAssistSeries } from "@nova-ui/charts";
 import { BehaviorSubject } from "rxjs";
 
 import { IProportionalDonutContentAggregator } from "../../functions/proportional-aggregators/types";
-import { ILegendPlacementOption } from "../../types";
-import { IFormatter, IFormatterDefinition, LegendPlacement } from "../types";
+import { IFormatter, IFormatterDefinition } from "../types";
+import { ILegendPlacementOption, LegendPlacement } from "../../widget-types/common/widget/legend"
 
 export enum ProportionalWidgetChartTypes {
     DonutChart = "DonutChart",

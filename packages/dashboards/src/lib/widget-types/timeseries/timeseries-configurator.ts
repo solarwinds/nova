@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { LegendPlacement } from "../../components/types";
+import { LegendPlacement } from "../../widget-types/common/widget/legend"
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";

@@ -19,7 +19,9 @@ import _defaultsDeep from "lodash/defaultsDeep";
 
 import { DASHBOARD_EDIT_MODE, WIDGET_POSITION_CHANGE, WIDGET_RESIZE } from "../../services/types";
 import { IWidgetEvent } from "../../services/widget-to-dashboard-event-proxy.service";
-import { DASHBOARD_EVENT_BUS, IDashboard, IDashboardBelowFoldLazyLoadingConfig, IWidget } from "../../types";
+import { DASHBOARD_EVENT_BUS } from "../../types";
+import { IWidget } from "../widget/types";
+import { IDashboard, IDashboardBelowFoldLazyLoadingConfig } from "./types";
 
 import { DEFAULT_GRIDSTER_CONFIG } from "./default-gridster-config";
 

@@ -5,8 +5,9 @@ import { Subject } from "rxjs";
 
 import { PizzagnaComponent } from "../../../pizzagna/components/pizzagna/pizzagna.component";
 import { WidgetTypesService } from "../../../services/widget-types.service";
-import { IPizzagna, IWidget } from "../../../types";
+import { IPizzagna } from "../../../types";
 import { PreviewService } from "../../services/preview.service";
+import { IWidget } from "../../../components/widget/types"
 
 /** @ignore */
 @Component({

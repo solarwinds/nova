@@ -1,5 +1,5 @@
-import { IWidgetTypeDefinition, WellKnownPathKey } from "../types";
-
+import { WellKnownPathKey } from "../types";
+import { IWidgetTypeDefinition } from "../components/widget/types";
 import { WidgetTypesService } from "./widget-types.service";
 
 describe("WidgetTypesService", () => {

@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 
-import { DashwizComponent } from "./dashwiz.component";
+import { IDashwizComponent } from "./model";
 
 @Injectable({
     providedIn: "root",
 })
 export class DashwizService {
-    public component: DashwizComponent | undefined;
+    public component: IDashwizComponent | undefined;
 
     constructor() { }
 

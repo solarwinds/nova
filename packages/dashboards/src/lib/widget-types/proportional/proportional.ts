@@ -1,5 +1,6 @@
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
-import { IWidgetTypeDefinition, WellKnownPathKey } from "../../types";
+import { WellKnownPathKey } from "../../types";
+import { IWidgetTypeDefinition } from "../../components/widget/types";
 
 import { proportionalConfigurator } from "./proportional-configurator";
 import { proportionalWidget } from "./proportional-widget";

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, HostBinding, Input, OnInit } from "@angular/core";
 
-import { IHasChangeDetector, IWidgetErrorDisplayProperties } from "../../../types";
+import { IHasChangeDetector } from "../../../types";
+import { IWidgetErrorDisplayProperties } from "../../../components/widget/types";
 
 @Component({
     selector: "nui-widget-error",

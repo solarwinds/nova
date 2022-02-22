@@ -1,7 +1,7 @@
 import { EventEmitter } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
-import { IWidget } from "../../types";
+import { IWidget } from "../../components/widget/types";
 
 export interface IWidgetTemplateSelector {
     widgetSelected: EventEmitter<IWidget>;

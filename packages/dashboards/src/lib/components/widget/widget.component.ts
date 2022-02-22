@@ -3,7 +3,8 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { WidgetConfigurationService } from "../../services/widget-configuration.service";
 import { WidgetTypesService } from "../../services/widget-types.service";
-import { IPizzagna, IWidget } from "../../types";
+import { IPizzagna } from "../../types";
+import { IWidget } from "./types";
 
 @Component({
     selector: "nui-widget",

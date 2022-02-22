@@ -41,7 +41,8 @@ import { DashboardUnitConversionPipe } from "../../common/pipes/dashboard-unit-c
 import { CategoryChartUtilService } from "../../services/category-chart-util.service";
 import { INTERACTION } from "../../services/types";
 import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../types";
-import { IFormatter, LegendPlacement } from "../types";
+import { IFormatter } from "../types";
+import { LegendPlacement } from "../../widget-types/common/widget/legend"
 
 import { IProportionalWidgetData, IProportionalWidgetConfig, ProportionalWidgetChartTypes } from "./types";
 

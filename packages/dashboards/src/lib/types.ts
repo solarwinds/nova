@@ -1,12 +1,6 @@
 import { ChangeDetectorRef, EventEmitter, InjectionToken, Injector, StaticProvider } from "@angular/core";
 import { AbstractControl, FormGroup } from "@angular/forms";
 import { EventBus } from "@nova-ui/bits";
-import { GridsterItem } from "angular-gridster2";
-import { Observable } from "rxjs";
-
-import { LegendPlacement } from "./components/types";
-import { IHeaderLinkProvider } from "./components/widget/widget-header/types";
-import { IConfiguratorSource } from "./configurator/services/types";
 
 /**
  * Same as Partial<T> but goes deeper and makes all of its properties and sub-properties Partial<T>.
@@ -20,13 +14,8 @@ export const FORMATTERS_REGISTRY = new InjectionToken<EventBus<Event>>("FORMATTE
 export const TEST_REGISTRY = new InjectionToken<EventBus<Event>>("TEST_REGISTRY");
 export const HEADER_LINK_PROVIDER = new InjectionToken<EventBus<Event>>("HEADER_LINK_PROVIDER");
 
-export type WidgetUpdateOperation = (widget: IWidget, source: IConfiguratorSource) => Observable<IWidget>;
-export type WidgetRemovalOperation = (widgetId: string, source: IConfiguratorSource) => Observable<string>;
 
-export interface IDashboardPersistenceHandler {
-    trySubmit?: WidgetUpdateOperation;
-    tryRemove?: WidgetRemovalOperation;
-}
+
 
 export enum WellKnownProviders {
     DataSource = "dataSource",
@@ -88,23 +77,6 @@ export interface IPortalEnvironment {
     injector?: Injector;
 }
 
-export interface IDashboard {
-    widgets: IWidgets;
-    positions: Record<string, GridsterItem>;
-}
-
-export interface IDashboardBelowFoldLazyLoadingConfig {
-    enabled: boolean;
-    configuration?: {
-        // reloads widgets if they were already loaded but then disappeared from the view
-        reloadWidgetsOnScroll: boolean;
-    };
-}
-
-export interface IWidgets {
-    [key: string]: IWidget;
-}
-
 export interface IPizzagnaLayer extends Record<string, DeepPartial<IComponentConfiguration>> {
 }
 
@@ -114,33 +86,6 @@ export interface IPizzagna extends Record<string, IPizzagnaLayer> {
 export interface IPizza extends Record<string, IComponentConfiguration> {
 }
 
-export interface IWidget {
-    id: string;
-    type: string;
-    version?: number;
-    pizzagna: IPizzagna;
-    metadata?: IWidgetMetadata;
-}
-
-export interface IWidgetMetadata extends Record<string, any> {
-    /**
-     * Set this to true to communicate to the widget cloner that the widget requires
-     * further configuration before it can be placed on the dashboard.
-     */
-    needsConfiguration?: boolean;
-}
-
-export interface IWidgetTypeDefinition {
-    configurator?: IPizzagna;
-    widget: IPizzagna;
-    /**
-     * Paths to various important values in pizzagnas - this should be coupled with respective pizzagnas in v10 - NUI-5829
-     */
-    paths?: {
-        widget?: Record<string, string>;
-        configurator?: Record<string, string>;
-    };
-}
 
 /**
  * Interface for components that can be dynamically refreshed from the outside using the changeDetector
@@ -186,25 +131,11 @@ export enum AccordionState {
     DEFAULT = "default",
 }
 
-export interface ILegendPlacementOption {
-    id: LegendPlacement;
-    label: string;
-}
-
 export enum HttpStatusCode {
     Unknown = "0",
     Ok = "200",
     Forbidden = "403",
     NotFound = "404",
-}
-
-/**
- * The properties for widget error display
- */
-export interface IWidgetErrorDisplayProperties {
-    image: string;
-    title: string;
-    description: string;
 }
 
 export interface IPaletteColor {

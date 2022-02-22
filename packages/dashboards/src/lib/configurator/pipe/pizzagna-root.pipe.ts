@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 import { WidgetTypesService } from "../../services/widget-types.service";
-import { IWidget } from "../../types";
+import { IWidget } from "../../components/widget/types";
 
 @Pipe({
     name: "nuiPizzagnaRoot",

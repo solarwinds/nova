@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import { IBroadcasterConfig } from "../../components/providers/types";
-import { IFormatterDefinition, LegendPlacement } from "../../components/types";
+import { IFormatterDefinition } from "../../components/types";
+import { LegendPlacement } from "../../widget-types/common/widget/legend"
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
 import { DonutContentPercentageFormatterComponent } from "../../configurator/components/formatters/donut-content-percentage-formatter/donut-content-percentage-formatter.component";
 import { DonutContentRawFormatterComponent } from "../../configurator/components/formatters/donut-content-raw-formatter/donut-content-raw-formatter.component";

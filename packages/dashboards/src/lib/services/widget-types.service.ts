@@ -2,7 +2,8 @@ import { Injectable } from "@angular/core";
 import defaultsDeep from "lodash/defaultsDeep";
 import set from "lodash/set";
 
-import { IWidget, IWidgetTypeDefinition, PizzagnaLayer } from "../types";
+import { PizzagnaLayer } from "../types";
+import { IWidget, IWidgetTypeDefinition } from "../components/widget/types";
 
 @Injectable()
 export class WidgetTypesService {

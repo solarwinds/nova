@@ -16,7 +16,8 @@ import { PizzagnaComponent } from "../../pizzagna/components/pizzagna/pizzagna.c
 import { ComponentPortalDirective } from "../../pizzagna/directives/component-portal/component-portal.directive";
 import { WIDGET_EDIT, WIDGET_REMOVE } from "../../services/types";
 import { WidgetTypesService } from "../../services/widget-types.service";
-import { IDashboard, IDashboardPersistenceHandler, IWidget } from "../../types";
+import { IWidget } from "../../components/widget/types";
+import { IDashboard, IDashboardPersistenceHandler } from "../../components/dashboard/types";
 import { kpi } from "../../widget-types/kpi/kpi";
 import { GridsterItemWidgetIdDirective } from "../gridster-item-widget-id/gridster-item-widget-id.directive";
 

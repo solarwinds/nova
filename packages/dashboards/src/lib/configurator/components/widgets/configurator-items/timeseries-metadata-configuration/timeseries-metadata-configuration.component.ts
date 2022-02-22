@@ -5,7 +5,7 @@ import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { TimeseriesChartPreset } from "../../../../../components/timeseries-widget/types";
-import { LegendPlacement } from "../../../../../components/types";
+import { LegendPlacement } from "../../../../../widget-types/common/widget/legend";
 import { PREVIEW_EVENT, REFRESH } from "../../../../../services/types";
 import { IHasChangeDetector, IHasForm, PIZZAGNA_EVENT_BUS } from "../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";

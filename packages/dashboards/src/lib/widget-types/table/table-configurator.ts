@@ -1,9 +1,5 @@
 /* eslint-disable max-len */
-import { IFormatterDefinition } from "../../components/types";
 import { FormStackComponent } from "../../configurator/components/form-stack/form-stack.component";
-import { IconFormatterComponent } from "../../configurator/components/formatters/icon-formatter/icon-formatter.component";
-import { LinkFormatterComponent } from "../../configurator/components/formatters/link-formatter/link-formatter.component";
-import { RawFormatterComponent } from "../../configurator/components/formatters/raw-formatter/raw-formatter.component";
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { DataSourceConfigurationComponent } from "../../configurator/components/widgets/configurator-items/data-source-configuration/data-source-configuration.component";
 import { TitleAndDescriptionConfigurationComponent } from "../../configurator/components/widgets/configurator-items/title-and-description-configuration/title-and-description-configuration.component";
@@ -21,34 +17,10 @@ import {
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
 import { TableDataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/table/table-data-source-error.component";
-/* eslint-enable max-len */
 
-export const DEFAULT_TABLE_FORMATTERS: IFormatterDefinition[] = [
-    {
-        componentType: RawFormatterComponent.lateLoadKey,
-        label: $localize`No Formatter`,
-        dataTypes: {
-            // @ts-ignore
-            value: null,
-        },
-    },
-    {
-        componentType: LinkFormatterComponent.lateLoadKey,
-        label: $localize`Link`,
-        configurationComponent: "LinkConfiguratorComponent",
-        dataTypes: {
-            value: "label",
-            link: "link",
-        },
-    },
-    {
-        componentType: IconFormatterComponent.lateLoadKey,
-        label: $localize`Icon`,
-        dataTypes: {
-            value: "string",
-        },
-    },
-];
+import { DEFAULT_TABLE_FORMATTERS } from "./default-table-formatters";
+
+/* eslint-enable max-len */
 
 export const tableConfigurator: IPizzagna = {
     [PizzagnaLayer.Structure]: {

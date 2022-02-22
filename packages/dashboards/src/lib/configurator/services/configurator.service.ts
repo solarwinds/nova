@@ -18,7 +18,8 @@ import { catchError, filter, switchMap, takeUntil } from "rxjs/operators";
 
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
 import { WidgetTypesService } from "../../services/widget-types.service";
-import { IWidget, WidgetUpdateOperation } from "../../types";
+import { IWidget } from "../../components/widget/types";
+import { WidgetUpdateOperation } from "../../configurator/services/types"
 import { ConfiguratorComponent } from "../components/configurator/configurator.component";
 
 import { IConfigurator, IConfiguratorSource } from "./types";
