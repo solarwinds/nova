@@ -4,7 +4,7 @@ import { EventBus, IEvent, immutableSet } from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
 
 import { IProportionalWidgetChartOptions } from "../../../../components/proportional-widget/types";
-import { LegendPlacement } from "../../../../components/types";
+import { LegendPlacement } from "../../../../widget-types/common/widget/legend"
 import { PizzagnaService } from "../../../../pizzagna/services/pizzagna.service";
 import { PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { PreviewService } from "../../preview.service";

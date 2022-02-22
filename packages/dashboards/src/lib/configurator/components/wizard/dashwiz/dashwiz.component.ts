@@ -28,6 +28,7 @@ import { IDashwizButtonsComponent, IDashwizStepComponent, IDashwizStepNavigatedE
 
 import { DashwizButtonsComponent } from "./dashwiz-buttons.component";
 import { DashwizService } from "./dashwiz.service";
+import { IDashwizComponent } from "./model";
 
 /**
  * Component that provides wizard functionality.
@@ -38,7 +39,7 @@ import { DashwizService } from "./dashwiz.service";
     styleUrls: ["./dashwiz.component.less"],
     host: { class: "flex-grow-1 overflow-auto" },
 })
-export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChecked, OnDestroy, DoCheck {
+export class DashwizComponent implements OnInit, AfterContentInit, AfterViewChecked, OnDestroy, DoCheck, IDashwizComponent {
     private static placeholderFinishText = "Action"; // as a placeholder "Action" does not need to be i18n
 
     @ContentChildren(DashwizStepComponent) steps: QueryList<DashwizStepComponent>;

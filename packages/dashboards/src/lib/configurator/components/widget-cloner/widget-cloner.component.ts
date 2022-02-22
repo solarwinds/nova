@@ -5,7 +5,8 @@ import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { WidgetTypesService } from "../../../services/widget-types.service";
-import { IHasChangeDetector, IPizzagna, IPizzagnaLayer, IWidget, PizzagnaLayer } from "../../../types";
+import { IHasChangeDetector, IPizzagna, IPizzagnaLayer, PizzagnaLayer } from "../../../types";
+import { IWidget } from "../../../components/widget/types";
 import { PreviewService } from "../../services/preview.service";
 import { ConfiguratorComponent } from "../configurator/configurator.component";
 import { IDashwizStepNavigatedEvent, IDashwizWaitEvent } from "../wizard/types";

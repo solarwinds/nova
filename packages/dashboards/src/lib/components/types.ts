@@ -11,12 +11,6 @@ export interface IFormatter {
     properties: IFormatterProperties;
 }
 
-export enum LegendPlacement {
-    None = "None",
-    Right = "Right",
-    Bottom = "Bottom",
-}
-
 export interface IFormatterConfigurator {
     formatter?: IFormatter;
     formatterDefinition: IFormatterDefinition;

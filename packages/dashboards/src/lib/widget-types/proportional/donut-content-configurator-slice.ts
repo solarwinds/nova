@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { IBroadcasterConfig } from "../../components/providers/types";
-import { LegendPlacement } from "../../components/types";
+import { LegendPlacement } from "../../widget-types/common/widget/legend"
 import { WidgetConfiguratorSectionComponent } from "../../configurator/components/widget-configurator-section/widget-configurator-section.component";
 import { ProportionalChartOptionsEditorV2Component } from "../../configurator/components/widgets/proportional/chart-options-editor-v2/proportional-chart-options-editor-v2.component";
 import { DonutContentConfigurationComponent } from "../../configurator/components/widgets/proportional/donut-content-configuration/donut-content-configuration.component";

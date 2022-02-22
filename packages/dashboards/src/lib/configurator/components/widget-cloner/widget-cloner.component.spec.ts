@@ -10,7 +10,7 @@ import { mockChangeDetector, mockLoggerService } from "../../../mocks";
 import { NuiPizzagnaModule } from "../../../pizzagna/pizzagna.module";
 import { ProviderRegistryService } from "../../../services/provider-registry.service";
 import { WidgetTypesService } from "../../../services/widget-types.service";
-import { IWidget, PizzagnaLayer } from "../../../types";
+import { PizzagnaLayer } from "../../../types";
 import { kpi } from "../../../widget-types/kpi/kpi";
 import { table } from "../../../widget-types/table/table";
 import { PreviewService } from "../../services/preview.service";
@@ -21,6 +21,7 @@ import { DashwizStepComponent } from "../wizard/dashwiz-step/dashwiz-step.compon
 import { DashwizButtonsComponent } from "../wizard/dashwiz/dashwiz-buttons.component";
 import { DashwizComponent } from "../wizard/dashwiz/dashwiz.component";
 import { IDashwizStepNavigatedEvent } from "../wizard/types";
+import { IWidget } from "../../../components/widget/types"
 
 import { WidgetClonerComponent } from "./widget-cloner.component";
 

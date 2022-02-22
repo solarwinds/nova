@@ -9,7 +9,7 @@ import { WidgetEditorService } from "../../configurator/services/widget-editor.s
 import { WIDGET_EDIT, WIDGET_REMOVE } from "../../services/types";
 import { WidgetRemovalService } from "../../services/widget-removal.service";
 import { WidgetTypesService } from "../../services/widget-types.service";
-import { IDashboardPersistenceHandler } from "../../types";
+import { IDashboardPersistenceHandler } from "../../components/dashboard/types";
 
 @Directive({
     selector: "[nuiWidgetEditor]",

@@ -3,8 +3,9 @@ import cloneDeep from "lodash/cloneDeep";
 import { Observable } from "rxjs";
 
 import { ComponentPortalService } from "../../pizzagna/services/component-portal.service";
-import { IWidget, PizzagnaLayer } from "../../types";
+import { PizzagnaLayer } from "../../types";
 import { WidgetEditorComponent } from "../components/widget-editor/widget-editor.component";
+import { IWidget } from "../../components/widget/types";
 
 import { ConfiguratorService } from "./configurator.service";
 import { IComponentPortalBundle, IWidgetEditor } from "./types";

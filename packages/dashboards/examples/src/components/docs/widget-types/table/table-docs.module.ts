@@ -3,7 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
 import { NuiDashboardsModule, TableFormatterRegistryService } from "@nova-ui/dashboards";
 
-import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../src/lib/widget-types/table/table-configurator";
+import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../src/lib/widget-types/table/default-table-formatters";
 
 import { TableDocsComponent } from "./table-docs.component";
 import { TableWidgetExampleComponent } from "./table-widget/table-widget-example.component";

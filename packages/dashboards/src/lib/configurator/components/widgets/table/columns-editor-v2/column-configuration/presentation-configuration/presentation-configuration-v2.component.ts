@@ -35,7 +35,7 @@ import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../
 import { onMarkAsTouched } from "../../../../../../../functions/on-mark-as-touched";
 import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
 import { FORMATTERS_REGISTRY, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../../../../types";
-import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../../widget-types/table/table-configurator";
+import { DEFAULT_TABLE_FORMATTERS } from "../../../../../../../widget-types/table/default-table-formatters";
 import { DATA_SOURCE_OUTPUT } from "../../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../../../services/configurator-heading.service";
 

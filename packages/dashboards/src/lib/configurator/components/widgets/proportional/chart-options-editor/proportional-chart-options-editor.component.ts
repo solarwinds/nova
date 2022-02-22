@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { IProportionalWidgetChartEditorOptions, ProportionalWidgetChartTypes } from "../../../../../components/proportional-widget/types";
-import { IFormatterDefinition, LegendPlacement } from "../../../../../components/types";
+import { IFormatterDefinition } from "../../../../../components/types";
 import { IHasChangeDetector, IHasForm, IProperties } from "../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
+import { LegendPlacement } from "../../../../../widget-types/common/widget/legend";
 
 type ChartTypeNamesMap = { [key in ProportionalWidgetChartTypes]: string };
 const proportionalWidgetChartTypesNamesMap: ChartTypeNamesMap = {

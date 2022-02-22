@@ -23,7 +23,7 @@ import {
 import { merge } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { LegendPlacement } from "../../../../components/types";
+import { LegendPlacement } from "../../../../widget-types/common/widget/legend"
 import { INTERACTION, SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
