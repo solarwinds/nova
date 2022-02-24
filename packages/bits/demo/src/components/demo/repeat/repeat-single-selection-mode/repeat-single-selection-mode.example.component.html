@@ -7,26 +7,24 @@
     </div>
 </ng-template>
 
-<ng-template #actionsContent>
-    <button nui-button type="button" displayStyle="action" icon="menu"></button>
-    <button nui-button type="button" displayStyle="action" icon="caret-right"></button>
-</ng-template>
-
 <div class="example single-selection-example">
-    <div class="flex-row-container">
-        <div class="flex-independent-row-item simple-label" i18n>Selection:</div>
-        <span class="flex-independent-row-item" id="nui-demo-singleselect-value">
-            {{selectedPeople | json}}</span>
+    <div class="flex-row-item">
+        <span class="simple-label" i18n>Selection:</span>
+        <span id="nui-demo-singleselect-value">{{selectedPeople | json}}</span>
+    </div>
+    <div class="flex-row-item">
+        <nui-switch #preventRowClick>prevent row click</nui-switch>
     </div>
 
     <br>
 
     <nui-repeat id="nui-demo-single-repeat"
-              [itemsSource]="people"
-              [selection]="selectedPeople"
-              selectionMode="single"
-              (selectionChange)="onPeopleSelectionChange($event)"
-              [repeatItemTemplateRef]="repeatPeopleItemTemplate"
-              [actionsTemplateRef]="actionsContent">
+        [itemsSource]="people"
+        [selection]="selectedPeople"
+        selectionMode="single"
+        [preventRowClick]="preventRowClick.value"
+        (selectionChange)="selectedPeople = $event"
+        [repeatItemTemplateRef]="repeatPeopleItemTemplate"
+        >
     </nui-repeat>
 </div>

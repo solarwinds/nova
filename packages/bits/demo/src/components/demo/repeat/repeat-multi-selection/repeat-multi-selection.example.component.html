@@ -3,20 +3,24 @@
 </ng-template>
 
 <div class="example">
-    <div class="flex-row-container">
-        <div class="flex-independent-row-item simple-label" i18n>Selection:</div>
-        <span class="flex-independent-row-item" id="nui-demo-multiselect-values">
-            {{narrowRowSelectedColors | json}}</span>
+    <div>
+        <span class="simple-label" i18n>Selection:</span>
+        <span id="nui-demo-multiselect-values">{{repeat.selection | json}}</span>
+    </div>
+    <div>
+        <nui-switch #preventRowClick>prevent row click</nui-switch>
     </div>
 
     <br>
 
-    <nui-repeat id="nui-demo-multi-repeat"
-              [itemsSource]="colors"
-              selectionMode="multi"
-              [selection]="narrowRowSelectedColors"
-              (selectionChange)="onNarrowRowSelectionChange($event)"
-              [repeatItemTemplateRef]="repeatItemTemplate">
+    <nui-repeat #repeat
+        id="nui-demo-multi-repeat"
+        [itemsSource]="colors"
+        selectionMode="multi"
+        [preventRowClick]="preventRowClick.value"
+        [selection]="narrowRowSelectedColors"
+        (selectionChange)="narrowRowSelectedColors = $event"
+        [repeatItemTemplateRef]="repeatItemTemplate">
         <div repeatHeaderTemplate>
             <div class="template-header" i18n>repeat header from template</div>
         </div>

@@ -20,8 +20,4 @@ export class RepeatSingleSelectionModeExampleComponent {
     public selectedPeople = [this.people[2]];
 
     constructor() { }
-
-    public onPeopleSelectionChange(selection: any) {
-        this.selectedPeople = selection;
-    }
 }

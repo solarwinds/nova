@@ -3,20 +3,25 @@
 </ng-template>
 
 <div class="example">
-    <div class="flex-row-container">
-        <div class="flex-independent-row-item simple-label" i18n>Selection:</div>
-        <span class="flex-independent-row-item" id="nui-demo-singleselect-nonrequired-value">{{selectedColors | json}}</span>
+    <div>
+        <span i18n>Selection:</span>
+        <span id="nui-demo-singleselect-nonrequired-value">{{selectedColors | json}}</span>
     </div>
+    <div>
+        <nui-switch #preventRowClick>prevent row click</nui-switch>
+    </div>
+
 
     <br>
 
     <div>
         <nui-repeat id="nui-demo-radio-non-required-selection-repeat"
-                  [itemsSource]="colors"
-                  [selection]="selectedColors"
-                  [selectionMode]="selectedMode"
-                  (selectionChange)="onColorSelectionChange($event)"
-                  [repeatItemTemplateRef]="repeatItemTemplate">
+            [itemsSource]="colors"
+            [selection]="selectedColors"
+            [selectionMode]="selectedMode"
+            [preventRowClick]="preventRowClick.value"
+            (selectionChange)="selectedColors = $event"
+            [repeatItemTemplateRef]="repeatItemTemplate">
         </nui-repeat>
     </div>
 </div>

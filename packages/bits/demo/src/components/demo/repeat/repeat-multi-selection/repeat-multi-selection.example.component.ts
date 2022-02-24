@@ -19,10 +19,4 @@ export class RepeatMultiSelectionExampleComponent {
         this.colors[2],
         this.colors[5],
     ];
-
-    constructor() { }
-
-    public onNarrowRowSelectionChange(selection: any) {
-        this.narrowRowSelectedColors = selection;
-    }
 }

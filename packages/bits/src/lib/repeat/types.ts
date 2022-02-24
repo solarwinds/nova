@@ -1,5 +1,5 @@
-import {CdkDrag, DropListRef} from "@angular/cdk/drag-drop";
-import {TrackByFunction} from "@angular/core";
+import { DragRef, DropListRef } from "@angular/cdk/drag-drop";
+import { TrackByFunction } from "@angular/core";
 
 export enum RepeatSelectionMode {
     multi = "multi",
@@ -18,7 +18,7 @@ export enum PaddingOptions {
 export interface IItemsReorderedEvent<T = IRepeatItem> {
     previousIndex: number;
     currentIndex: number;
-    item: CdkDrag<T>;
+    item: DragRef<T>;
     previousState: T[];
     currentState: T[];
     dropListRef: DropListRef;

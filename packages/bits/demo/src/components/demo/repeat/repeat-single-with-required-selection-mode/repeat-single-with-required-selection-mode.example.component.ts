@@ -19,8 +19,4 @@ export class RepeatSingleWithRequiredSelectionModeExampleComponent {
     public selectedMode: string = "singleWithRequiredSelection";
 
     constructor() { }
-
-    public onColorSelectionChange(selection: any) {
-        this.selectedColors = selection;
-    }
 }

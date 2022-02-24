@@ -1,31 +1,28 @@
 <ng-template #repeatItems let-item="item" let-itemIndex="itemIndex">
-    <nui-repeat-item class="repeat-group-item"
-                     #drag=cdkDrag
-                     aria-grabbed="supported"
-                     cdkDrag
-                     [cdkDragData]="item"
-                     [cdkDragPreviewClass]="dragPreviewClass"
-                     [cdkDragDisabled]="!isItemDraggable(item)"
-                     (click)="itemClicked($event, item)"
-                     [clickable]="!(selectionMode === repeatSelectionMode.none)"
-                     [selectable]="!(selectionMode === repeatSelectionMode.none)"
-                     [selected]="isItemSelected(item) && !isItemDisabled(item)"
-                     [ngClass]="{
-            'repeat-group-item__disabled': isItemDisabled(item),
-            'nui-dnd-without-drag-handle': isItemDraggable(item) && !dragHandleTemplateRef,
-            'nui-dnd-raised-state': isItemDraggable(item) && mousedOver[itemIndex]
-        }">
+    <nui-repeat-item
+        class="repeat-group-item"
+        #drag=cdkDrag
+        cdkDrag
+        [cdkDragData]="item"
+        [cdkDragPreviewClass]="dragPreviewClass"
+        [cdkDragDisabled]="!isItemDraggable(item)"
+        (rowClicked)="itemClicked($event, item)"
+        [clickable]="isItemClickable(item)"
+        [selectable]="isItemSelectable(item)"
+        [selected]="isItemSelected(item) && !isItemDisabled(item)"
+        [class.repeat-group-item--disabled]="isItemDisabled(item)"
+        [class.nui-dnd-without-drag-handle]="isItemDraggable(item) && !dragHandleTemplateRef"
+        [class.nui-dnd-raised-state]="isItemDraggable(item) && mousedOver[itemIndex]">
         <div *ngIf="dragHandleTemplateRef && !virtualScroll"
-             [ngClass]="{
-                'hide': !draggable,
-                'invisible': !isItemDraggable(item)
-             }"
-             class="nui-repeat-item__controls-drag-handle align-self-center">
+            [class.hide]="!draggable"
+            [class.invisible]="!isItemDraggable(item)"
+            class="nui-repeat-item__controls-drag-handle align-self-center">
             <div cdkDragHandle (mouseover)="mousedOver[itemIndex]=true" (mouseout)="mousedOver[itemIndex]=false" [class.nui-dnd-handle]="!drag.disabled">
                 <ng-container [ngTemplateOutlet]="dragHandleTemplateRef" [ngTemplateOutletContext]="{item:item}"></ng-container>
             </div>
         </div>
-        <div *ngIf="dragPreviewTemplateRef && !virtualScroll" class="nui-repeat-item__controls-drag-handle">
+        <div *ngIf="dragPreviewTemplateRef && !virtualScroll"
+            class="nui-repeat-item__controls-drag-handle">
             <div *cdkDragPreview [class.nui-dnd-preview]="!isItemDisabled(item)">
                 <ng-container [ngTemplateOutlet]="dragPreviewTemplateRef" [ngTemplateOutletContext]="{item:item}"></ng-container>
             </div>
@@ -36,22 +33,23 @@
                 [value]="item"
                 [checked]="isItemSelected(item)"
                 [disabled]="isItemDisabled(item)"
-                (valueChange)="itemClicked($event, item)">
+                (valueChange)="preventRowClick ? itemClicked($event, item) : null">
             </nui-checkbox>
-
             <nui-radio *ngIf="selectionMode === repeatSelectionMode.radio || selectionMode === repeatSelectionMode.radioWithNonRequiredSelection"
                 class="nui-repeat-item__radio"
                 [value]="item"
                 [checked]="isItemSelected(item)"
-                [disabled]="isItemDisabled(item)">
+                [disabled]="isItemDisabled(item)"
+                (click)="preventRowClick ? itemClicked($event, item) : null">
             </nui-radio>
         </div>
         <div class="nui-repeat-item__content-container">
             <ng-container [ngTemplateOutlet]="repeatItemTemplateRef" [ngTemplateOutletContext]="{item:item}"></ng-container>
         </div>
         <div class="nui-repeat-item__actions-container" *ngIf="actionsTemplateRef">
-            <ng-container [ngTemplateOutlet]="actionsTemplateRef"
-                          [ngTemplateOutletContext]="{item:item}">
+            <ng-container
+                [ngTemplateOutlet]="actionsTemplateRef"
+                [ngTemplateOutletContext]="{item:item}">
             </ng-container>
         </div>
     </nui-repeat-item>
@@ -64,10 +62,10 @@
     <ul #dropListArea class="repeat-group" aria-dropeffect="move">
         <div *ngIf="!virtualScroll">
             <ng-container *ngFor="let sourceItem of itemsSource;trackBy: itemConfig?.trackBy;let itemIndex=index"
-                          [ngTemplateOutlet]="repeatItems"
-                          [ngTemplateOutletContext]="{item:sourceItem, itemIndex: itemIndex}"></ng-container>
+                [ngTemplateOutlet]="repeatItems"
+                [ngTemplateOutletContext]="{item:sourceItem, itemIndex: itemIndex}"></ng-container>
         </div>
-        <cdk-virtual-scroll-viewport style="height: 100%" [itemSize]="itemSize" *ngIf="virtualScroll && itemSize">
+        <cdk-virtual-scroll-viewport [itemSize]="itemSize" *ngIf="virtualScroll && itemSize">
             <ng-container *cdkVirtualFor="let sourceItem of itemsSource; templateCacheSize: 0">
                 <ng-container [ngTemplateOutlet]="repeatItems" [ngTemplateOutletContext]="{item:sourceItem}"></ng-container>
             </ng-container>

@@ -19,10 +19,4 @@ export class RepeatDisabledMultiSelectionExampleComponent {
         this.colorsWithIsDisabledProperty[0],
         this.colorsWithIsDisabledProperty[5],
     ];
-
-    public handleClick(event: any) {
-        event.stopPropagation();
-    }
-
-    constructor() { }
 }
