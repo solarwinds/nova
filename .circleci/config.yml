@@ -538,8 +538,8 @@ jobs:
             SOURCE_BRANCH: main
             # TODO: Change to false
             CREATE_RELEASE_BRANCH: true
-            RELEASE_BRANCH: release/v11.x
-            INCREMENT_TYPE: minor
+            RELEASE_BRANCH: release/v12.0.x
+            INCREMENT_TYPE: patch
         steps:
             -   checkout:
                     path: ~/nova
