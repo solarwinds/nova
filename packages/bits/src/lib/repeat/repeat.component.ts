@@ -221,7 +221,7 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
     /**
      * repeat view objects array
      */
-    @Input() public itemsSource: ReadonlyArray<T>;
+    @Input() public itemsSource: T[];
 
     /**
      * Is selected item should be highlighted
