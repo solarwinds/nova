@@ -4,7 +4,7 @@ import { Helpers } from "../../helpers";
 import { RepeatAtom, SwitchAtom, TabHeadingAtom } from "../public_api";
 import { TabHeadingGroupAtom } from "../tab-heading-group/tab-heading-group.atom";
 
-fdescribe("USERCONTROL Repeat", () => {
+describe("USERCONTROL Repeat", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("repeat/repeat-test");
     });
