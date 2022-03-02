@@ -15,8 +15,6 @@ export class RepeatSingleWithRequiredSelectionModeExampleComponent {
         { color: $localize `black`},
     ];
 
+    public preventRowClick = false;
     public selectedColors = [this.colors[1]];
-    public selectedMode: string = "singleWithRequiredSelection";
-
-    constructor() { }
 }

@@ -1,24 +1,22 @@
-<ng-template #repeatItemTemplate let-item="item">
-    <div>{{item.color}}</div>
-</ng-template>
-
 <div class="example">
-    <div>
-        <div class="simple-label" i18n>Selection:</div>
-        <span id="nui-demo-radioselect-value">{{selectedColors | json}}</span>
-    </div>
-    <div>
-        <nui-switch #preventRowClick>prevent row click</nui-switch>
-    </div>
-
-    <br>
-
-    <nui-repeat id="nui-demo-radio-repeat"
+    <p>
+        <span class="simple-label" i18n>Selection:</span>
+        <span id="nui-demo-radioselect-value">{{ selectedColors | json }}</span>
+    </p>
+    <p>
+        <nui-switch [(value)]="preventRowClick">prevent row click</nui-switch>
+    </p>
+    <nui-repeat
+        id="nui-demo-radio-repeat"
         [itemsSource]="colors"
         [selection]="selectedColors"
         selectionMode="radio"
-        [preventRowClick]="preventRowClick.value"
+        [preventRowClick]="preventRowClick"
         [repeatItemTemplateRef]="repeatItemTemplate"
-        (selectionChange)="onColorSelectionChange($event)">
-    </nui-repeat>
+        (selectionChange)="selectedColors = $event"
+    ></nui-repeat>
 </div>
+
+<ng-template #repeatItemTemplate let-item="item">
+    <div>{{ item.color }}</div>
+</ng-template>

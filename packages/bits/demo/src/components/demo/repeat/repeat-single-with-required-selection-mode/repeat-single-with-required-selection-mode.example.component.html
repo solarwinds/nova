@@ -1,26 +1,22 @@
-<ng-template #repeatItemTemplate let-item="item">
-    <div>{{item.color}}</div>
-</ng-template>
-
 <div class="example">
-    <div>
-        <span class="flex-independent-row-item simple-label" i18n>Selection:</span>
-        <span class="flex-independent-row-item">{{selectedColors | json}}</span>
-    </div>
-    <div>
-        <nui-switch #preventRowClick>prevent row click</nui-switch>
-    </div>
-
-    <br>
-
-    <div>
-        <nui-repeat #repeat
-            [itemsSource]="colors"
-            [selection]="selectedColors"
-            [selectionMode]="selectedMode"
-            [preventRowClick]="preventRowClick.value"
-            (selectionChange)="selectedColors = $event"
-            [repeatItemTemplateRef]="repeatItemTemplate">
-        </nui-repeat>
-    </div>
+    <p>
+        <span i18n>Selection:</span>
+        <span>{{ selectedColors | json }}</span>
+    </p>
+    <p>
+        <nui-switch [(value)]="preventRowClick">prevent row click</nui-switch>
+    </p>
+    <nui-repeat
+        #repeat
+        [itemsSource]="colors"
+        [selection]="selectedColors"
+        selectionMode="singleWithRequiredSelection"
+        [preventRowClick]="preventRowClick"
+        (selectionChange)="selectedColors = $event"
+        [repeatItemTemplateRef]="repeatItemTemplate"
+    ></nui-repeat>
 </div>
+
+<ng-template #repeatItemTemplate let-item="item">
+    <div>{{ item.color }}</div>
+</ng-template>

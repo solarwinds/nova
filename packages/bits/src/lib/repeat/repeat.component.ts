@@ -51,7 +51,7 @@ import {
 } from "./types";
 
 interface IDndItemDropped<T = any> {
-    item: DragRef<T>;
+    item: DragRef<CdkDrag<T>>;
     currentIndex: number;
     previousIndex: number;
     container: DropListRef<T[]>;
@@ -221,7 +221,7 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
     /**
      * repeat view objects array
      */
-    @Input() public itemsSource: T[];
+    @Input() public itemsSource: ReadonlyArray<T>;
 
     /**
      * Is selected item should be highlighted
@@ -360,7 +360,7 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
             type: nameof<INovaFilters>("selection"),
             value: {
                 selection: this.selection,
-                itemsSource: this.itemsSource,
+                itemsSource: this.itemsSource.slice(),
                 selectionMode: this.selectionMode,
                 selectionHasChanged: this.selectionHasChanged,
             },
@@ -408,8 +408,12 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
             return;
         }
 
+        // prevent handling both from row and input
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+        event.preventDefault();
+
         if (this.selectionMode === RepeatSelectionMode.multi) {
-            event.preventDefault(); // prevent invoking checkbox again
             this.selectionHasChanged = true;
             this.multiSelectionChanged(item);
             return;
@@ -437,6 +441,7 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
         this.selectionHasChanged = true;
         this.selectionChange.emit(this.selection);
     }
+
 
     /**
      * nui-repeat-item selection change handler
@@ -529,7 +534,7 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
 
     private itemDropped(event: IDndItemDropped<T>) {
         // CDK retrieves incorrectly event.previousIndex so we need to compute it ourselves
-        const item = event.item;
+        const item = event.item.data;
         const computedPreviousIndex = this.itemsSource.indexOf(item.data, 0);
         const oldSorting = [...this.itemsSource];
         const newSorting = [...this.itemsSource];

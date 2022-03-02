@@ -33,14 +33,14 @@
                 [value]="item"
                 [checked]="isItemSelected(item)"
                 [disabled]="isItemDisabled(item)"
-                (valueChange)="preventRowClick ? itemClicked($event, item) : null">
+                (valueChange)="itemClicked($event, item)">
             </nui-checkbox>
             <nui-radio *ngIf="selectionMode === repeatSelectionMode.radio || selectionMode === repeatSelectionMode.radioWithNonRequiredSelection"
                 class="nui-repeat-item__radio"
                 [value]="item"
                 [checked]="isItemSelected(item)"
                 [disabled]="isItemDisabled(item)"
-                (click)="preventRowClick ? itemClicked($event, item) : null">
+                (click)="itemClicked($event, item)">
             </nui-radio>
         </div>
         <div class="nui-repeat-item__content-container">
