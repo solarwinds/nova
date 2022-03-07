@@ -164,13 +164,13 @@
           },
           "configurations": {
             "serve": {
-              "devServerTarget": "demo:serve:e2e"
+              "devServerTarget": "examples:serve:e2e"
             },
             "gui": {
               "protractorConfig": "./protractor-gui.conf.js"
             },
             "full": {
-              "devServerTarget": "demo:serve:e2e",
+              "devServerTarget": "examples:serve:e2e",
               "protractorConfig": "./protractor-gui.conf.js"
             }
           }

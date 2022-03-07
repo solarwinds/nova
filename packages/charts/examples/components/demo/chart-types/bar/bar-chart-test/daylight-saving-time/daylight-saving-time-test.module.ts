@@ -16,8 +16,15 @@ import { DstTimeIntervalTestPageComponent } from "./dst-time-interval-test-page.
         NuiDocsModule,
         NuiChartsModule,
     ],
+    exports: [
+        BarChartTimeIntervalDstTestComponent,
+        DstTimeIntervalTestPageComponent,
+    ],
     providers: [
         { provide: DEMO_PATH_TOKEN, useFactory: () =>  (<any> require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/)},
     ],
 })
-export class DaylightSavingTimeTestModule { }
+export class DaylightSavingTimeTestModule {
+    public static DstTimeIntervalTestPageComponent = DstTimeIntervalTestPageComponent;
+    public static BarChartTimeIntervalDstTestComponent = BarChartTimeIntervalDstTestComponent;
+}
