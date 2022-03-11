@@ -74,7 +74,7 @@ interface IDndItemDropped<T = any> {
     host: {
         "[class.virtual-scroll-viewport]": "virtualScroll",
         "[attr.role]": "role",
-        "[attr.aria-multiselectable]": "isMultiselectable() || null",
+        "[attr.aria-multiselectable]": "ariaMultiselectable",
     },
 })
 export class RepeatComponent<T extends IRepeatItem = any>
@@ -261,9 +261,6 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
      */
     public dropListRef: DropListRef;
 
-    // Note: workaround to be able to use enum values in template
-    public repeatSelectionMode = RepeatSelectionMode;
-
     /**
      * Allows the list items to be draggable or not
      *
@@ -284,7 +281,13 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
     private readonly dropListDestroyed = new Subject<void>();
 
     get role(): string {
-        return this.selectionMode !== "none" ? "listbox" : "list";
+        return this.selectionMode !== RepeatSelectionMode.none
+            ? "listbox"
+            : "list";
+    }
+
+    get ariaMultiselectable(): true | null {
+        return this.isModeMulti() || null;
     }
 
     constructor(
@@ -413,7 +416,7 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
         event.stopPropagation();
         event.preventDefault();
 
-        if (this.selectionMode === RepeatSelectionMode.multi) {
+        if (this.isModeMulti()) {
             this.selectionHasChanged = true;
             this.multiSelectionChanged(item);
             return;
@@ -426,6 +429,7 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
         ) {
             this.selection = [item];
         }
+
         if (
             this.selectionMode === RepeatSelectionMode.single ||
             this.selectionMode ===
@@ -437,11 +441,11 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
                 this.selection = [item];
             }
         }
+
         this.changeDetector.markForCheck();
         this.selectionHasChanged = true;
         this.selectionChange.emit(this.selection);
     }
-
 
     /**
      * nui-repeat-item selection change handler
@@ -458,8 +462,15 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
         this.selectionChange.emit(this.selection);
     }
 
-    public isMultiselectable(): boolean {
+    public isModeMulti(): boolean {
         return this.selectionMode === RepeatSelectionMode.multi;
+    }
+
+    public isModeRadio(): boolean {
+        return [
+            RepeatSelectionMode.radio,
+            RepeatSelectionMode.radioWithNonRequiredSelection,
+        ].includes(this.selectionMode);
     }
 
     /* START - ITEM BEHAVIOUR DECIDERS */
@@ -472,11 +483,10 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
     }
 
     public isItemDisabled(item: T): boolean {
-        return (item as IRepeatItem).hasOwnProperty(
-            nameof<IRepeatItem>("disabled")
-        )
-            ? (item as IRepeatItem).disabled
-            : !!this.itemConfig?.isDisabled?.(item);
+        return (
+            (item as IRepeatItem).disabled ??
+            !!this.itemConfig?.isDisabled?.(item)
+        );
     }
 
     public isItemDraggable(item: T): boolean {
