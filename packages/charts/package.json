@@ -27,7 +27,7 @@
     "build-lib:locl": "run-s \"ng b lib --configuration=locl\" i18n-locl-extract",
     "build-lib:watch": "run-s dist-copy \"build-lib -- -c dev --watch\"",
     "build-examples": "ng b examples",
-    "build-examples:prod": "npm run build-examples --prod",
+    "build-examples:prod": "npm run build-examples -- -c production",
     "build-examples:watch": "ng b examples --watch",
     "serve-examples": "ng s examples",
     "serve-examples:prod": "npx local-web-server -p 4200 -d sdk/api-docs-ng2/examples --spa index.html",

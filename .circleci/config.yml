@@ -537,9 +537,9 @@ jobs:
         environment:
             SOURCE_BRANCH: main
             # TODO: Change to false
-            CREATE_RELEASE_BRANCH: true
+            CREATE_RELEASE_BRANCH: false
             RELEASE_BRANCH: release/v11.x
-            INCREMENT_TYPE: minor
+            INCREMENT_TYPE: patch
         steps:
             -   checkout:
                     path: ~/nova
@@ -682,7 +682,7 @@ workflows:
                                 - main
                                 - /release\/.*/
                                 - next
-                                
+
     nova-release:
         jobs:
             -   release-approval:

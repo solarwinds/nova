@@ -1,23 +1,27 @@
+<div class="example">
+    <p>
+        <span class="simple-label" i18n>Selection:</span>
+        <span id="nui-demo-multi-repeat-disabled-values">{{
+            selectedColors | json
+        }}</span>
+    </p>
+    <p>
+        <nui-switch [(value)]="preventRowClick">prevent row click</nui-switch>
+    </p>
+    <nui-repeat
+        id="nui-demo-multi-repeat-disabled"
+        [itemsSource]="colors"
+        selectionMode="multi"
+        [preventRowClick]="preventRowClick"
+        [selection]="selectedColors"
+        (selectionChange)="selectedColors = $event"
+        [repeatItemTemplateRef]="repeatItemColorBoxTemplate"
+    ></nui-repeat>
+</div>
+
 <ng-template #repeatItemColorBoxTemplate let-item="item">
-    <div class="color-box {{item.color}}"></div>
+    <div class="color-box {{ item.color }}"></div>
     <div [attr.class]="item.disabled ? 'nui-text-secondary--disabled' : null">
-        {{item.color}}
+        {{ item.color }}
     </div>
 </ng-template>
-
-<ng-template #actionsContent let-item="item">
-        <div >
-            <button nui-button [attr.disabled]="item.disabled ? '' : null" type="button" displayStyle="action" icon="menu" (click)="handleClick($event)"></button>
-            <button nui-button [attr.disabled]="item.disabled ? '' : null" type="button" displayStyle="action" icon="caret-right" (click)="handleClick($event)"></button>
-        </div>
-</ng-template>
-
-<div class="example">
-    <nui-repeat id="nui-demo-multi-repeat-disabled-items"
-              [itemsSource]="colorsWithIsDisabledProperty"
-              selectionMode="multi"
-              [selection]="selectedColorsWithIsDisabledProperty"
-              [repeatItemTemplateRef]="repeatItemColorBoxTemplate"
-              [actionsTemplateRef]="actionsContent">
-    </nui-repeat>
-</div>

@@ -39,7 +39,7 @@ describe("components >", () => {
             trackBy: (index, item) => item.name,
         };
 
-        const mockClickEvent = { type: "click" } as Event;
+        const mockClickEvent = new MouseEvent("click");
 
         beforeEach(() => {
             mockItemsSource = [BLUE_COLOR, GREEN_COLOR, BLACK_COLOR];
@@ -139,7 +139,7 @@ describe("components >", () => {
         describe("changeDetection > ", () => {
             it("should be triggered on dataSource items update", () => {
 
-                subject.itemsSource.push({color: "Magenta"});
+                subject.itemsSource = subject.itemsSource.concat([{color: "Magenta"}]);
 
                 const markForCheckSpy = spyOn(subject.changeDetector, "markForCheck");
                 fixture.detectChanges();
