@@ -537,7 +537,7 @@ jobs:
         environment:
             SOURCE_BRANCH: main
             # TODO: Change to false
-            CREATE_RELEASE_BRANCH: false
+            CREATE_RELEASE_BRANCH: true
             RELEASE_BRANCH: release/v11.x
             INCREMENT_TYPE: patch
         steps:
