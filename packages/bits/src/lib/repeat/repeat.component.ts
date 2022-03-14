@@ -363,7 +363,7 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
             type: nameof<INovaFilters>("selection"),
             value: {
                 selection: this.selection,
-                itemsSource: this.itemsSource.slice(),
+                itemsSource: this.itemsSource,
                 selectionMode: this.selectionMode,
                 selectionHasChanged: this.selectionHasChanged,
             },
