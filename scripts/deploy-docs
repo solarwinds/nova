@@ -24,6 +24,12 @@ while [ -n "$1" ]; do
     esac
 done
 
+# skip this if no DOC_SERVICE_REPO set
+if [ "" == "$DOC_SERVICE_REPO" ]; then
+    echo "Skipping nova-doc deployment"
+    exit
+fi
+
 # preparing paths to the docs inside apollo-doc-service
 BRANCH_PATH=$(echo "$CIRCLE_BRANCH" | tr / _)
 BITS_DOCS_PATH="./projects/bits/${BRANCH_PATH}"
