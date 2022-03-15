@@ -164,7 +164,8 @@ export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilter
     ngOnChanges(changes: SimpleChanges) {
         if (changes["total"]
             || changes["page"]
-            || changes["adjacent"]) {
+            || changes["adjacent"]
+            || changes["pageSize"]) {
             this.assemble();
         }
     }
