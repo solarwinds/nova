@@ -535,9 +535,9 @@ jobs:
         docker:
             -   image: circleci/node:12
         environment:
-            SOURCE_BRANCH: main
+            SOURCE_BRANCH: hotfix/v11.12.1
             # TODO: Change to false
-            CREATE_RELEASE_BRANCH: false
+            CREATE_RELEASE_BRANCH: true
             RELEASE_BRANCH: release/v11.x
             INCREMENT_TYPE: patch
         steps:
@@ -690,7 +690,7 @@ workflows:
                     filters:
                         branches:
                             only:
-                                - main
+                                - hotfix/v11.12.1
             -   release-prep:
                     requires:
                         - release-approval
