@@ -642,7 +642,7 @@ workflows:
                         branches:
                             only:
                                 - main
-                                - /release\/.*/
+                                - /^release\/.*/
                                 - next
             -   dashboards-build:
                     requires:
@@ -656,7 +656,7 @@ workflows:
                     filters:
                         branches:
                             ignore:
-                                - pull/*
+                                - /^pull\/.*/
                     requires:
                         - dashboards-pack
             -   dashboards-unit-test:
@@ -680,7 +680,7 @@ workflows:
                         branches:
                             only:
                                 - main
-                                - /release\/.*/
+                                - /^release\/.*/
                                 - next
                                 
     nova-release:
