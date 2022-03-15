@@ -1,7 +1,7 @@
 {
   "name": "@nova-ui/charts",
   "license": "Apache-2.0",
-  "version": "11.12.1-0",
+  "version": "11.12.2-0",
   "author": "SolarWinds <nova-ui@solarwinds.com>",
   "contributors": [
     {
@@ -64,7 +64,11 @@
     "postinstall": "node scripts/remove-deps-constraints.js"
   },
   "peerDependencies": {
+<<<<<<< HEAD
     "@nova-ui/bits": "~11.12.1-0",
+=======
+    "@nova-ui/bits": "~11.12.1",
+>>>>>>> release/v11.x
     "@types/d3": "^5.0.0",
     "@types/d3-selection-multi": "^1.0.0",
     "d3": "^5.0.0",
@@ -96,7 +100,11 @@
     "@angular/router": "^11.1.2",
     "@compodoc/compodoc": "^1.1.11",
     "@locl/cli": "^1.0.0",
+<<<<<<< HEAD
     "@nova-ui/bits": "~11.12.1-0",
+=======
+    "@nova-ui/bits": "~11.12.1",
+>>>>>>> release/v11.x
     "@percy/cli": "^1.0.0-beta.41",
     "@percy/protractor": "^2.0.0",
     "@types/d3": "^5.7.2",
