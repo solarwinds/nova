@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.2.5
 jobs:
     bits-build:
         working_directory: ~/nova
@@ -73,6 +75,8 @@ jobs:
         docker:
             -   image: cimg/node:16.14-browsers
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -85,6 +89,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -111,6 +117,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -129,6 +137,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -255,6 +265,8 @@ jobs:
             # Needed for daylight saving time tests
             TZ: "America/Chicago"
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -267,6 +279,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/charts
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -293,6 +307,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/charts
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -421,6 +437,8 @@ jobs:
         docker:
             -   image: cimg/node:16.14-browsers
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -433,6 +451,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/dashboards
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -459,6 +479,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/dashboards
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -682,7 +704,7 @@ workflows:
                                 - main
                                 - /^release\/.*/
                                 - next
-                                
+
     nova-release:
         jobs:
             -   release-approval:
