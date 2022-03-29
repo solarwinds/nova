@@ -199,7 +199,7 @@ export class TooltipComponent implements OnDestroy, OnInit {
             .withScrollableContainers(scrollableAncestors)
             .withPositions(this.possiblePositions);
 
-        strategy.positionChanges.pipe(takeUntil(this.destroy$)).subscribe(change => {
+        strategy.positionChanges.pipe(skip(1), takeUntil(this.destroy$)).subscribe(change => {
             if (change.scrollableViewProperties.isOverlayClipped && this.isVisible()) {
                 // After position changes occur and the overlay is clipped by
                 // a parent scrollable then close the tooltip.
