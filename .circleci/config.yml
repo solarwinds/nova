@@ -688,7 +688,7 @@ workflows:
                     filters:
                         branches:
                             only:
-                                - hotfix/v11.12.2
+                                - hotfix/v11.12.3
             -   release-prep:
                     requires:
                         - release-approval
