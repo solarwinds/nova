@@ -14,9 +14,8 @@ import { NuiTooltipModule } from "./tooltip.module";
     template: `
     <span [nuiTooltip]="tooltipValue" [nuiTooltipDisabled]="isDisabled">Tooltip</span>`,
 })
-
 class TooltipTestComponent {
-    public tooltipValue ? = "test tooltip";
+    public tooltipValue? = "test tooltip";
     public isDisabled = false;
 }
 
@@ -25,7 +24,6 @@ class TooltipTestComponent {
     template: `
     <span [nuiTooltip]="tooltipValue" [nuiTooltipDisabled]="isDisabled" [tooltipPlacement]="position">Tooltip</span>`,
 })
-
 class TooltipWithPositionTestComponent {
     public tooltipValue = "test tooltip";
     public isDisabled = false;
@@ -40,12 +38,21 @@ class TooltipWithPositionTestComponent {
         [nuiTooltipDisabled]="isDisabled"
         [tooltipPlacement]="position">Tooltip</button>`,
 })
-
 class TooltipOnButtonTestComponent {
     public tooltipValue = "test tooltip";
     public isDisabled = false;
     public position: TooltipPosition = "top";
 }
+
+@Component({
+    selector: "nui-tooltip-unit",
+    template: `
+        <div cdkScrollable>
+            <span nuiTooltip="Tooltip content">Tooltip target</span>
+        </div>
+    `,
+})
+class TooltipInOverlapingScrollContainerComponent { }
 
 describe("directives >", () => {
     describe("tooltip >", () => {
@@ -53,7 +60,12 @@ describe("directives >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [NuiTooltipModule, OverlayModule],
-                declarations: [TooltipTestComponent, TooltipWithPositionTestComponent, TooltipOnButtonTestComponent],
+                declarations: [
+                    TooltipTestComponent,
+                    TooltipWithPositionTestComponent,
+                    TooltipOnButtonTestComponent,
+                    TooltipInOverlapingScrollContainerComponent,
+                ],
             });
 
             TestBed.compileComponents();
@@ -110,6 +122,18 @@ describe("directives >", () => {
                 spanElement.dispatchEvent(new Event("mouseleave"));
                 tick(200);
                 expect(tooltipDirective._isTooltipVisible()).toBeFalsy();
+            }));
+
+            it("should appear on hover in overlaping scrollable container", fakeAsync(() => {
+                const scrollContainerFixture = TestBed.createComponent(TooltipInOverlapingScrollContainerComponent);
+                scrollContainerFixture.detectChanges();
+                spanDebugElement = scrollContainerFixture.debugElement.query(By.css("span"));
+                tooltipDirective = spanDebugElement.injector.get<TooltipDirective>(TooltipDirective);
+                tooltipDirective.show();
+                scrollContainerFixture.detectChanges();
+                tick();
+                scrollContainerFixture.detectChanges();
+                expect(tooltipDirective._isTooltipVisible()).toBeTrue();
             }));
 
             describe("show() >", () => {
@@ -246,6 +270,7 @@ describe("directives >", () => {
                 }));
 
             });
+
             describe("with button >", () => {
                 beforeEach(() => {
                     TestBed.resetTestingModule()
