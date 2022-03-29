@@ -535,9 +535,8 @@ jobs:
         docker:
             -   image: circleci/node:12
         environment:
-            SOURCE_BRANCH: hotfix/v11.12.2
-            # TODO: Change to false
-            CREATE_RELEASE_BRANCH: true
+            SOURCE_BRANCH: hotfix/v11.12.3
+            CREATE_RELEASE_BRANCH: false
             RELEASE_BRANCH: release/v11.x
             INCREMENT_TYPE: patch
         steps:
@@ -582,7 +581,6 @@ jobs:
                     name: Trigger release branch
                     command: yarn run trigger-pipeline-build-ci ${RELEASE_BRANCH}
 workflows:
-    version: 2.1
     nova:
         jobs:
             - bits-build
