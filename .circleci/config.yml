@@ -1,9 +1,11 @@
 version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.2.5
 jobs:
     bits-build:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         environment:
             PROJECT_DIR: ./packages/bits
             BUILD_COUNTER: << pipeline.number >>
@@ -71,8 +73,10 @@ jobs:
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -85,6 +89,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -111,6 +117,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -129,6 +137,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/bits
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -145,7 +155,7 @@ jobs:
     bits-pack:
         working_directory: ~/nova/packages/bits
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         steps:
             -   attach_workspace:
                     at: ~/nova
@@ -159,7 +169,7 @@ jobs:
     bits-publish:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         environment:
             PROJECT_DIR: ./packages/bits
         steps:
@@ -177,7 +187,7 @@ jobs:
     charts-build:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         environment:
             PROJECT_DIR: ./packages/charts
             BUILD_COUNTER: << pipeline.number >>
@@ -250,11 +260,13 @@ jobs:
     charts-unit-test:
         working_directory: ~/nova/packages/charts
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         environment:
             # Needed for daylight saving time tests
             TZ: "America/Chicago"
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -267,6 +279,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/charts
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -293,6 +307,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/charts
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -309,7 +325,7 @@ jobs:
     charts-pack:
         working_directory: ~/nova/packages/charts
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         steps:
             -   attach_workspace:
                     at: ~/nova
@@ -323,7 +339,7 @@ jobs:
     charts-publish:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         environment:
             PROJECT_DIR: ./packages/charts
         steps:
@@ -341,7 +357,7 @@ jobs:
     dashboards-build:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         environment:
             PROJECT_DIR: ./packages/dashboards
             BUILD_COUNTER: << pipeline.number >>
@@ -419,8 +435,10 @@ jobs:
     dashboards-unit-test:
         working_directory: ~/nova/packages/dashboards
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -433,6 +451,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/dashboards
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -459,6 +479,8 @@ jobs:
         environment:
             PROJECT_DIR: ~/nova/packages/dashboards
         steps:
+            -   browser-tools/install-chrome
+            -   browser-tools/install-chromedriver
             -   attach_workspace:
                     at: ~/nova
             -   run:
@@ -475,7 +497,7 @@ jobs:
     dashboards-pack:
         working_directory: ~/nova/packages/dashboards
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         steps:
             -   attach_workspace:
                     at: ~/nova
@@ -489,7 +511,7 @@ jobs:
     dashboards-publish:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12-browsers
+            -   image: cimg/node:16.14-browsers
         environment:
             PROJECT_DIR: ./packages/dashboards
         steps:
@@ -507,7 +529,7 @@ jobs:
     nova-docs:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12
+            -   image: cimg/node:16.14
         environment:
             NOVA_DIR: ~/nova
         steps:
@@ -521,7 +543,7 @@ jobs:
     nova-docs-cleanup:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12
+            -   image: cimg/node:16.14
         environment:
             NOVA_DIR: ~/nova
         steps:
@@ -533,7 +555,7 @@ jobs:
     release-prep:
         working_directory: ~/nova
         docker:
-            -   image: circleci/node:12
+            -   image: cimg/node:16.14
         environment:
             SOURCE_BRANCH: main
             # TODO: Change to false
@@ -682,7 +704,7 @@ workflows:
                                 - main
                                 - /^release\/.*/
                                 - next
-                                
+
     nova-release:
         jobs:
             -   release-approval:
