@@ -7,3 +7,4 @@ export * from "./event-registry.service";
 export * from "./table-formatter-registry.service";
 export * from "./kpi-color-comparators-registry.service";
 export * from "./proportional-content-aggregators-registry.service";
+export * from "./url-interaction.service";

@@ -6,6 +6,9 @@ import { INTERACTION } from "../../../services/types";
 
 import { IInteractionPayload } from "./interaction-handler";
 import { UrlInteractionHandler } from "./url-interaction-handler";
+import { UrlInteractionService } from "@nova-ui/dashboards";
+
+
 
 describe("UrlInteractionHandler", () => {
 
@@ -26,8 +29,9 @@ describe("UrlInteractionHandler", () => {
             };
             eventBus = new EventBus<IEvent>();
             const logger = new LoggerService();
+            const urlInteraction = new UrlInteractionService();
             spyOnProperty(logger, "warn").and.returnValue(noop); // suppress warnings
-            handler = new UrlInteractionHandler(eventBus, window, logger);
+            handler = new UrlInteractionHandler(eventBus, window, logger, urlInteraction);
             handleInteractionSpy = spyOn(handler as any, "handleInteraction").and.callThrough();
 
             payload = { interactionType: "click", data: "data" };
@@ -79,7 +83,5 @@ describe("UrlInteractionHandler", () => {
 
             expect(() => eventBus.getStream(INTERACTION).next({ payload })).not.toThrow();
         });
-
     });
-
 });
