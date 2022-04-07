@@ -8,10 +8,7 @@ import { IInteractionPayload } from "./interaction-handler";
 import { UrlInteractionHandler } from "./url-interaction-handler";
 import { UrlInteractionService } from "@nova-ui/dashboards";
 
-
-
 describe("UrlInteractionHandler", () => {
-
     describe("interactionType", () => {
         let payload: IInteractionPayload<string>;
         let handleInteractionSpy: Spy;
