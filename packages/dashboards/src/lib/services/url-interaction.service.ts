@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root",
 })
 export class UrlInteractionService {
     public template(url: string, data: any): string{
