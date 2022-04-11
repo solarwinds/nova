@@ -6,30 +6,13 @@ import { Injectable } from "@angular/core";
 export class UrlInteractionService {
     public template(url: string, data: any): string{
         const regex = new RegExp(/(\$\{[a-zA-Z0-9.]*\})/g)
-        let propertyArray: string[] = [];
-        
-        let interpolations = url.match(regex) || [];
-        if (interpolations.length === 0) {
-            return url;
-        }
-
-        interpolations.forEach(element => {
-            propertyArray.push(element.slice(2,-1))
-        });
-
-        let evaluatedUrl = url;
-        for (let i = 0; i < propertyArray.length; i++) {
-            const evaluation = this.evaluate(propertyArray[i].split("."), data);
-            evaluatedUrl = evaluatedUrl.replace(interpolations[i], evaluation)
-        }
-
-        return evaluatedUrl;
+        return url.replace(regex, (captured) => this.evaluate(captured, data));
     }
 
-    private evaluate(properties: string[], data: any): string {
+    private evaluate(expresion: string, data: any): string {
         let result = data;
 
-        properties.forEach(element => {
+        expresion.slice(2,-1).split(".").forEach(element => {
             result = result[element];
         });
 
