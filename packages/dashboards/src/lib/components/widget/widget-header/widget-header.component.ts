@@ -151,7 +151,7 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             return true;
         }
-        return false;
+        return !!this.url;
     }
 
 }
