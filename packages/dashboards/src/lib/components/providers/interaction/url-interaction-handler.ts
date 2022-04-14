@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
-import template from "lodash/template";
+import { UrlInteractionService } from "./../../../services/url-interaction.service";
 
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
 
@@ -17,14 +17,10 @@ export class WindowObject extends Window {
 
 @Injectable()
 export class UrlInteractionHandler extends InteractionHandler<IUrlInteractionHandlerProperties, any> {
-
-    private templateOptions = {
-        evaluate: null as unknown as RegExp, // disable javascript evaluation in provided url
-    };
-
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
                 @Inject("windowObject") private window: WindowObject,
-                private logger: LoggerService) {
+                private logger: LoggerService,
+                private urlInteractionService: UrlInteractionService) {
         super(eventBus);
     }
 
@@ -33,7 +29,7 @@ export class UrlInteractionHandler extends InteractionHandler<IUrlInteractionHan
             this.logger.warn("The target url has not been defined.");
             return;
         }
-        const href = template(this.properties.url, this.templateOptions)({ "data": interaction.data });
+        const href = this.urlInteractionService.template(this.properties.url, { "data": interaction.data })
 
         // if the link evaluates as empty, then don't go anywhere
         if (!href) {
@@ -46,5 +42,4 @@ export class UrlInteractionHandler extends InteractionHandler<IUrlInteractionHan
             this.window.location.href = href;
         }
     }
-
 }
