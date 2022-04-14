@@ -10,12 +10,6 @@ export class UrlInteractionService {
     }
 
     private evaluate(expresion: string[], data: any): string {
-        let result = data;
-
-        expresion.forEach(element => {
-            result = result[element];
-        });
-
-        return result;
+        return expresion.reduce((result, item) => result[item], data)
     }
 }
