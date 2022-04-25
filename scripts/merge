@@ -43,7 +43,7 @@ fi
 
 # initial merge with "ours" strategy to auto-resolve conflicts
 git checkout $SOURCE_BRANCH
-git pull origin $RELEASE_BRANCH -s ours
+git pull origin $RELEASE_BRANCH --no-rebase -s ours
 git checkout $RELEASE_BRANCH
 
 # get last release version
