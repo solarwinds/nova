@@ -1,3 +1,4 @@
+/* eslint-env node, es6 */
 const { SpecReporter } = require("jasmine-spec-reporter");
 const { TeamCityReporter } = require("jasmine-reporters");
 

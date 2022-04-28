@@ -8,6 +8,10 @@
         padding-bottom: @nui-space-xs;
     }
 
+    > ul > cdk-virtual-scroll-viewport {
+        height: 100%;
+    }
+
     &__compact .nui-repeat-item {
         padding-top: 0;
         padding-bottom: 0;
@@ -18,8 +22,10 @@
         .setCssVariable(background-color, nui-color-bg-light);
     }
 
-    .repeat-group .nui-repeatitem {
+    .repeat-group .nui-repeat-item {
+        cursor: auto;
         &.nui-repeat-item--clickable {
+            cursor: pointer;
             &:hover:not(.nui-repeat-item--selected) {
                 .setCssVariable(border-color, nui-color-line-default);
             }
@@ -64,7 +70,7 @@
             }
         }
 
-        &__disabled {
+        &--disabled {
             .setCssVariable(color, nui-color-text-disabled);
             &:hover  {
                 cursor: @cursor-disabled;

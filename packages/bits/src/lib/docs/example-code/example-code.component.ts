@@ -1,7 +1,6 @@
 /// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
 
 /** @ignore */
-declare let require: any;
 import {
     AfterViewInit,
     Component,
@@ -64,6 +63,6 @@ export class ExampleCodeComponent implements  AfterViewInit {
     public ngAfterViewInit(): void {
         // remove wrapping spaces. They might appear due to passing content via ng-content into element
         this.codeElement.nativeElement.innerHTML = this.codeElement.nativeElement.innerHTML.trim();
-        hljs.highlightElement(this.codeElement.nativeElement);
+        hljs.highlightElement(this.codeElement.nativeElement as HTMLElement);
     }
 }
