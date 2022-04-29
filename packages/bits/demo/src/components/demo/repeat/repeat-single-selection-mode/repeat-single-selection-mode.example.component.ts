@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 
-
 @Component({
     selector: "nui-repeat-single-selection-mode-example",
     templateUrl: "./repeat-single-selection-mode.example.component.html",
@@ -17,11 +16,6 @@ export class RepeatSingleSelectionModeExampleComponent {
         { name: "Catriona Kildare", level: $localize `gold`, status: $localize `active` },
     ];
 
+    public preventRowClick = false;
     public selectedPeople = [this.people[2]];
-
-    constructor() { }
-
-    public onPeopleSelectionChange(selection: any) {
-        this.selectedPeople = selection;
-    }
 }

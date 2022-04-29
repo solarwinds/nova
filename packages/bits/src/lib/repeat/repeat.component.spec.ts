@@ -41,7 +41,7 @@ describe("components >", () => {
             trackBy: (index, item) => item.name,
         };
 
-        const mockClickEvent = { type: "click" } as Event;
+        const mockClickEvent = new MouseEvent("click");
 
         beforeEach(() => {
             mockItemsSource = [BLUE_COLOR, GREEN_COLOR, BLACK_COLOR];

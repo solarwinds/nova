@@ -1,7 +1,9 @@
-<nui-repeat [itemsSource]="companies"
-            [dragHandleTemplateRef]="dragHandleTemplate"
-            [repeatItemTemplateRef]="repeatItemTemplate"
-            (itemsReordered)="onItemsReordered($event)">
+<nui-repeat
+    [itemsSource]="companies"
+    [dragHandleTemplateRef]="dragHandleTemplate"
+    [repeatItemTemplateRef]="repeatItemTemplate"
+    (itemsReordered)="onItemsReordered($event)"
+    >
 </nui-repeat>
 
 <!-- Content template for each item -->
@@ -10,6 +12,6 @@
 </ng-template>
 
 <!-- Drag handle template -->
-<ng-template #dragHandleTemplate  let-item="item">
+<ng-template #dragHandleTemplate let-item="item">
     <nui-icon icon="drag"></nui-icon>
 </ng-template>

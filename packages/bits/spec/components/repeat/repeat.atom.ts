@@ -2,6 +2,7 @@ import { by, ElementArrayFinder, ElementFinder } from "protractor";
 
 import { Atom } from "../../atom";
 import { CheckboxAtom } from "../checkbox/checkbox.atom";
+import { RadioGroupAtom } from "../public_api";
 
 export class RepeatAtom extends Atom {
     public static CSS_CLASS = "nui-repeat";
@@ -12,9 +13,9 @@ export class RepeatAtom extends Atom {
 
     public getItem = (idx: number): ElementFinder => this.getItems().get(idx);
 
-    public isNormal = (): Promise<boolean> => this.hasClass("nui-repeat__normal");
+    public isNormal = async (): Promise<boolean> => this.hasClass("nui-repeat__normal");
 
-    public isCompact = (): Promise<boolean> => this.hasClass("nui-repeat__compact");
+    public isCompact = async (): Promise<boolean> => this.hasClass("nui-repeat__compact");
 
     public get vScrollViewport(): ElementFinder {
         return super.getElement().element(by.className("cdk-virtual-scroll-viewport"));
@@ -25,7 +26,13 @@ export class RepeatAtom extends Atom {
     }
 
     public selectCheckbox = async (idx: number): Promise<void> =>
-        this.getItem(idx).element(by.className("nui-checkbox")).click()
+        this.getCheckbox(idx).toggle();
+
+    public selectCheckboxes = async (...indexes: number[]): Promise<void> => {
+        for (const index of indexes) {
+            await this.selectCheckbox(index);
+        }
+    }
 
     public getCheckbox = (idx: number): CheckboxAtom => {
         const checkboxElement = this.getItem(idx).element(by.className("nui-checkbox"));
@@ -35,21 +42,31 @@ export class RepeatAtom extends Atom {
     public selectRow = async (idx: number): Promise<void> =>
         this.getItem(idx).element(by.css(".nui-repeat-item__content")).click()
 
+    public selectRows = async (...indexes: number[]): Promise<void> => {
+        for (const index of indexes) {
+            await this.selectRow(index);
+        }
+    }
+
     public selectRadioRow = async (idx: number): Promise<void> =>
         this.getItem(idx).element(by.css(".nui-repeat-item")).click()
 
+    public selectRadio = async (idx: number): Promise<void> =>
+        this.getItem(idx).element(by.css(".nui-radio")).click()
+
     public isStriped = async (): Promise<boolean> => {
         const items = this.getItems();
-        return items.first().getCssValue("background-color").then((lineOneColor: string) =>
-            items.get(1).getCssValue("background-color").then((lineTwoColor: string) =>
-                lineOneColor !== lineTwoColor));
+        const lineOneColor = await items.first().getCssValue("background-color");
+        const lineTwoColor = await items.get(1).getCssValue("background-color");
+        return lineOneColor !== lineTwoColor;
     }
 
-    public isItemSelected = async (idx: number): Promise<boolean> =>
-        this.getItem(idx)
+    public isItemSelected = async (idx: number): Promise<boolean> => {
+        const classValue = await this.getItem(idx)
             .element(by.css("li.nui-repeat-item"))
-            .getAttribute("class")
-            .then((classValue: string) => !!(classValue && classValue.indexOf("nui-repeat-item--selected") >= 0))
+            .getAttribute("class");
+        return classValue?.indexOf("nui-repeat-item--selected") >= 0;
+    }
 
     public async isEmptyTextPresented(): Promise<boolean> {
         return super.getElement().element(by.css(".nui-repeat__empty .nui-repeat__empty--main-message")).isPresent();

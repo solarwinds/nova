@@ -15,14 +15,10 @@ export class RepeatMultiSelectionExampleComponent {
         { color: $localize `black` },
     ];
 
-    public narrowRowSelectedColors = [
+    public preventRowClick: boolean = false;
+
+    public selectedColors = [
         this.colors[2],
         this.colors[5],
     ];
-
-    constructor() { }
-
-    public onNarrowRowSelectionChange(selection: any) {
-        this.narrowRowSelectedColors = selection;
-    }
 }

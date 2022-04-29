@@ -74,8 +74,7 @@ interface IDndItemDropped<T = unknown> {
     host: {
         "[class.virtual-scroll-viewport]": "virtualScroll",
         "[attr.role]": "role",
-        "[attr.aria-multiselectable]":
-            "selectionMode === repeatSelectionMode.multi || null",
+        "[attr.aria-multiselectable]": "ariaMultiselectable",
     },
 })
 export class RepeatComponent<T extends IRepeatItem = unknown>
@@ -146,6 +145,11 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
     @HostBinding("style.width") width = "100%";
 
     /**
+     * Prevent item bodies from capturing clicks
+     */
+    @Input() preventRowClick: boolean = false;
+
+    /**
      * repeat item template
      */
     @Input() repeatItemTemplateRef: TemplateRef<any>;
@@ -202,6 +206,7 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
      * Selected repeat objects
      */
     @Input() public selection: T[] = [];
+
     /**
      * Is emitted when on items order has changed
      */
@@ -257,9 +262,6 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
      */
     public dropListRef: DropListRef;
 
-    // Note: workaround to be able to use enum values in template
-    public repeatSelectionMode = RepeatSelectionMode;
-
     /**
      * Allows the list items to be draggable or not
      *
@@ -280,7 +282,13 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
     private readonly dropListDestroyed = new Subject<void>();
 
     get role(): string {
-        return this.selectionMode !== "none" ? "listbox" : "list";
+        return this.selectionMode !== RepeatSelectionMode.none
+            ? "listbox"
+            : "list";
+    }
+
+    get ariaMultiselectable(): true | null {
+        return this.isModeMulti() || null;
     }
 
     constructor(
@@ -288,14 +296,16 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
         public logger: LoggerService,
         private iterableDiffers: IterableDiffers,
         public dragDropService: DragDrop,
-        private elRef: ElementRef<Element>
+        private elRef: ElementRef
     ) {}
 
     public ngOnInit(): void {
         this.intersectionObserver = new IntersectionObserver(
             this.intersectionObserverCallback
         );
-        this.intersectionObserver.observe(this.elRef.nativeElement);
+        if (this.elRef.nativeElement instanceof Element) {
+            this.intersectionObserver.observe(this.elRef.nativeElement);
+        }
 
         if (
             this.dragPreviewTemplateRef ||
@@ -394,40 +404,48 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
      * @param event
      * @param item value object that is used in nui-repeat-item
      */
-    public itemClicked(event: any, item: T): void {
+    public itemClicked(event: MouseEvent, item: T): void {
         if (
             this.selectionMode === RepeatSelectionMode.none ||
             this.isItemDisabled(item)
         ) {
             return;
-        } else if (this.selectionMode === RepeatSelectionMode.multi) {
-            event.preventDefault(); // TODO: add reasoning for this
+        }
+
+        // prevent handling both from row and input
+        event.stopImmediatePropagation();
+        event.stopPropagation();
+        event.preventDefault();
+
+        if (this.isModeMulti()) {
             this.selectionHasChanged = true;
             this.multiSelectionChanged(item);
-        } else {
-            if (
-                this.selectionMode ===
-                    RepeatSelectionMode.singleWithRequiredSelection ||
-                this.selectionMode === RepeatSelectionMode.radio
-            ) {
-                this.selection = [item];
-            }
-            if (
-                this.selectionMode === RepeatSelectionMode.single ||
-                this.selectionMode ===
-                    RepeatSelectionMode.radioWithNonRequiredSelection
-            ) {
-                if (this.selection.indexOf(item) !== -1) {
-                    this.selection = [];
-                } else {
-                    this.selection = [item];
-                }
-            }
-            this.changeDetector.markForCheck();
-            this.selectionHasChanged = true;
-            this.selectionChange.emit(this.selection);
             return;
         }
+
+        if (
+            this.selectionMode ===
+                RepeatSelectionMode.singleWithRequiredSelection ||
+            this.selectionMode === RepeatSelectionMode.radio
+        ) {
+            this.selection = [item];
+        }
+
+        if (
+            this.selectionMode === RepeatSelectionMode.single ||
+            this.selectionMode ===
+                RepeatSelectionMode.radioWithNonRequiredSelection
+        ) {
+            if (this.selection.indexOf(item) !== -1) {
+                this.selection = [];
+            } else {
+                this.selection = [item];
+            }
+        }
+
+        this.changeDetector.markForCheck();
+        this.selectionHasChanged = true;
+        this.selectionChange.emit(this.selection);
     }
 
     /**
@@ -445,13 +463,31 @@ implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
         this.selectionChange.emit(this.selection);
     }
 
+    public isModeMulti(): boolean {
+        return this.selectionMode === RepeatSelectionMode.multi;
+    }
+
+    public isModeRadio(): boolean {
+        return [
+            RepeatSelectionMode.radio,
+            RepeatSelectionMode.radioWithNonRequiredSelection,
+        ].includes(this.selectionMode);
+    }
+
     /* START - ITEM BEHAVIOUR DECIDERS */
+    public isItemClickable(item: T): boolean {
+        return !this.preventRowClick && !this.isItemDisabled(item);
+    }
+
+    public isItemSelectable(item: T): boolean {
+        return !this.isItemDisabled(item);
+    }
+
     public isItemDisabled(item: T): boolean {
-        return (item as IRepeatItem).hasOwnProperty(
-            nameof<IRepeatItem>("disabled")
-        )
-            ? (item as IRepeatItem).disabled
-            : !!this.itemConfig?.isDisabled?.(item);
+        return (
+            (item as IRepeatItem).disabled ??
+            !!this.itemConfig?.isDisabled?.(item)
+        );
     }
 
     public isItemDraggable(item: T): boolean {

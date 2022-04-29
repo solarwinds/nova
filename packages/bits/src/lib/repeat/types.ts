@@ -1,5 +1,5 @@
-import {CdkDrag, DropListRef} from "@angular/cdk/drag-drop";
-import {TrackByFunction} from "@angular/core";
+import { CdkDrag, DropListRef } from "@angular/cdk/drag-drop";
+import { TrackByFunction } from "@angular/core";
 
 export enum RepeatSelectionMode {
     multi = "multi",

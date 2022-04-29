@@ -19,8 +19,4 @@ export class RepeatRadioWithNonRequiredSelectionModeExampleComponent {
     public selectedMode: string = "radioWithNonRequiredSelection";
 
     constructor() { }
-
-    public onColorSelectionChange(selection: any) {
-        this.selectedColors = selection;
-    }
 }

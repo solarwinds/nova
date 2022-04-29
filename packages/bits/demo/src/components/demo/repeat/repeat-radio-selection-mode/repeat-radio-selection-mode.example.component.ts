@@ -14,11 +14,7 @@ export class RepeatRadioSelectionModeExampleComponent {
         { color: $localize `black` },
     ];
 
+    public preventRowClick = false;
+
     public selectedColors = [this.colors[1]];
-
-    constructor() { }
-
-    public onColorSelectionChange(selection: any) {
-        this.selectedColors = selection;
-    }
 }
