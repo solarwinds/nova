@@ -26,9 +26,8 @@ describe("UrlInteractionHandler", () => {
             };
             eventBus = new EventBus<IEvent>();
             const logger = new LoggerService();
-            const urlInteraction = new UrlInteractionService();
             spyOnProperty(logger, "warn").and.returnValue(noop); // suppress warnings
-            handler = new UrlInteractionHandler(eventBus, window, logger, urlInteraction);
+            handler = new UrlInteractionHandler(eventBus, window, logger);
             handleInteractionSpy = spyOn(handler as any, "handleInteraction").and.callThrough();
 
             payload = { interactionType: "click", data: "data" };

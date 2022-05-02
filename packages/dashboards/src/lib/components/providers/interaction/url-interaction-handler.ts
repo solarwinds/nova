@@ -17,11 +17,12 @@ export class WindowObject extends Window {
 
 @Injectable()
 export class UrlInteractionHandler extends InteractionHandler<IUrlInteractionHandlerProperties, any> {
+    private urlInteractionService: UrlInteractionService
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
                 @Inject("windowObject") private window: WindowObject,
-                private logger: LoggerService,
-                private urlInteractionService: UrlInteractionService) {
+                private logger: LoggerService) {
         super(eventBus);
+        this.urlInteractionService = new UrlInteractionService();
     }
 
     protected handleInteraction(interaction: IInteractionPayload<any>) {

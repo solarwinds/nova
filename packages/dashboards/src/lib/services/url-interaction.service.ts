@@ -1,8 +1,3 @@
-import { Injectable } from "@angular/core";
-
-@Injectable({
-    providedIn: "root",
-})
 export class UrlInteractionService {
     public template(url: string, data: any): string{
         const regex = new RegExp(/\$\{([a-zA-Z0-9.]*)\}/g)
