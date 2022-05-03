@@ -1,7 +1,6 @@
 import { Inject, Injectable } from "@angular/core";
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import { UrlInteractionService } from "./../../../services/url-interaction.service";
-import { TableFormatterRegistryService } from "./../../../services/table-formatter-registry.service";
 
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
 
