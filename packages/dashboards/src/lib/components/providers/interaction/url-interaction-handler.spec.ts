@@ -5,8 +5,8 @@ import noop from "lodash/noop";
 import { INTERACTION } from "../../../services/types";
 
 import { IInteractionPayload } from "./interaction-handler";
+import { UrlInteractionService } from "../../../services/url-interaction.service";
 import { UrlInteractionHandler } from "./url-interaction-handler";
-import { UrlInteractionService } from "@nova-ui/dashboards";
 
 describe("UrlInteractionHandler", () => {
     describe("interactionType", () => {
@@ -26,8 +26,9 @@ describe("UrlInteractionHandler", () => {
             };
             eventBus = new EventBus<IEvent>();
             const logger = new LoggerService();
+            const interactionService = new UrlInteractionService()
             spyOnProperty(logger, "warn").and.returnValue(noop); // suppress warnings
-            handler = new UrlInteractionHandler(eventBus, window, logger);
+            handler = new UrlInteractionHandler(eventBus, window, logger, interactionService);
             handleInteractionSpy = spyOn(handler as any, "handleInteraction").and.callThrough();
 
             payload = { interactionType: "click", data: "data" };

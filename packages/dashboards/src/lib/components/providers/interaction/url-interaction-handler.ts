@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@angular/core";
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import { UrlInteractionService } from "./../../../services/url-interaction.service";
+import { TableFormatterRegistryService } from "./../../../services/table-formatter-registry.service";
 
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
 
@@ -17,12 +18,11 @@ export class WindowObject extends Window {
 
 @Injectable()
 export class UrlInteractionHandler extends InteractionHandler<IUrlInteractionHandlerProperties, any> {
-    private urlInteractionService: UrlInteractionService
     constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
                 @Inject("windowObject") private window: WindowObject,
-                private logger: LoggerService) {
+                private logger: LoggerService,
+                private urlInteractionService: UrlInteractionService) {
         super(eventBus);
-        this.urlInteractionService = new UrlInteractionService();
     }
 
     protected handleInteraction(interaction: IInteractionPayload<any>) {
