@@ -78,6 +78,7 @@ import {
     NOVA_URL_INTERACTION_HANDLER,
     NOVA_VIRTUAL_VIEWPORT_MANAGER,
 } from "./types";
+import { UrlInteractionService } from "./url-interaction.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";
 import { WidgetToDashboardEventProxyService } from "./widget-to-dashboard-event-proxy.service";
 
@@ -199,7 +200,7 @@ export class ProviderRegistryService {
             },
             [NOVA_URL_INTERACTION_HANDLER]: {
                 provide: UrlInteractionHandler,
-                deps: [PIZZAGNA_EVENT_BUS, "windowObject", LoggerService],
+                deps: [PIZZAGNA_EVENT_BUS, "windowObject", LoggerService, UrlInteractionService],
             },
             [NOVA_EVENT_BUS_DEBUGGER]: {
                 provide: EventBusDebugger,
