@@ -149,9 +149,8 @@ export class WidgetHeaderComponent implements OnInit, OnDestroy, AfterViewInit {
             if (link) {
                 target.setAttribute("href", link);
             }
-            return true;
         }
-        return false;
+        return true;
     }
 
 }
