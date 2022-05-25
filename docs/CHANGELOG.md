@@ -6,7 +6,10 @@
     <summary>Dashboards</summary>
 
 ### Bugfix
- - ...
+ - Fixed bug, when "Explore this data" in the widget's header icon does not open a defined URL in some cases.
+ - Usage of lodash template, which is considered unsafe by 'Content Security Policy' and the evaluation of template is blocked by browser, was replaced with safer (explicit) property evaluation.
+    
+</details> 
     
 ## [11.0.0] - 2021-11-21
 
