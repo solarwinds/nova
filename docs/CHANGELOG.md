@@ -1,5 +1,13 @@
 # Changelog
 
+## [12.0.0] - 2022-06-01
+
+<details>
+    <summary>Dashboards</summary>
+
+### Bugfix
+ - ...
+    
 ## [11.0.0] - 2021-11-21
 
 <details>
