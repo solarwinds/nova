@@ -56,7 +56,7 @@ export abstract class TimeseriesChartComponent<T = ITimeseriesWidgetSeriesData> 
                     const scaleConfigPrevious = configurationPrevious?.scales?.[scaleKey];
 
                     if (scaleConfigCurrent?.type !== scaleConfigPrevious?.type || !this.scales[scaleKey]) {
-                        this.scales[scaleKey] = this.timeseriesScalesService.getScale(scaleConfigCurrent);
+                        this.scales[scaleKey] = this.timeseriesScalesService.getScale(scaleConfigCurrent, configurationCurrent.units);
                         shouldUpdateChart = true;
                     } else if (scaleConfigCurrent?.properties !== scaleConfigPrevious?.properties) {
                         this.timeseriesScalesService.updateConfiguration(this.scales[scaleKey], scaleConfigCurrent);
