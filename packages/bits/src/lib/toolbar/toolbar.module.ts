@@ -8,6 +8,7 @@ import { NuiMenuModule } from "../menu/menu.module";
 
 import { ToolbarGroupComponent } from "./toolbar-group.component";
 import { ToolbarItemComponent } from "./toolbar-item.component";
+import { ToolbarMessageComponent } from "./toolbar-message.component";
 import { ToolbarSplitterComponent } from "./toolbar-splitter.component";
 import { ToolbarComponent } from "./toolbar.component";
 
@@ -25,12 +26,14 @@ import { ToolbarComponent } from "./toolbar.component";
     declarations: [
         ToolbarComponent,
         ToolbarItemComponent,
+        ToolbarMessageComponent,
         ToolbarSplitterComponent,
         ToolbarGroupComponent,
     ],
     exports: [
         ToolbarComponent,
         ToolbarItemComponent,
+        ToolbarMessageComponent,
         ToolbarSplitterComponent,
         ToolbarGroupComponent,
     ],

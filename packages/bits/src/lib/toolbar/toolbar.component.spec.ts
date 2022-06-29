@@ -153,11 +153,11 @@ describe("components >", () => {
             });
             it("should return nothing when isSelected set to false", () => {
                 component.selectionEnabled = false;
-                expect(component.handleSelectionState()).toBeUndefined();
+                expect(component.handleSelectionState()).toBe("");
             });
             it("should return nothing when selected 0 items", () => {
                 component.selectedItems = {} as IToolbarSelectionState;
-                expect(component.handleSelectionState()).toBeUndefined();
+                expect(component.handleSelectionState()).toBe("");
             });
         });
 

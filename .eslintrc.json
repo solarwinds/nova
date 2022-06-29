@@ -1,9 +1,13 @@
 {
     "root": true,
-    "ignorePatterns": ["projects/**/*"],
+    "ignorePatterns": [
+        "projects/**/*"
+    ],
     "overrides": [
         {
-            "files": ["*.ts"],
+            "files": [
+                "*.ts"
+            ],
             "extends": [
                 "plugin:@angular-eslint/recommended",
                 "eslint:recommended",
@@ -14,7 +18,9 @@
                 "plugin:import/typescript",
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
-            "plugins": ["prefer-arrow"],
+            "plugins": [
+                "prefer-arrow"
+            ],
             "rules": {
                 /******************************
                  * Angular-specific rules
@@ -44,7 +50,6 @@
                 "@angular-eslint/no-host-metadata-property": "off",
                 // TODO: fix lint errors
                 "@typescript-eslint/no-unsafe-argument": "off",
-
                 /******************************
                  * Typescript-specific rules
                  *******************************/
@@ -109,13 +114,16 @@
                 ],
                 // TODO: fix lint errors
                 "@typescript-eslint/no-type-alias": [
-                    "warn",
+                    "off",
                     {
                         "allowAliases": "always",
-                        "allowConditionalTypes": "always",
-                        "allowMappedTypes": "always",
                         "allowCallbacks": "always",
-                        "allowLiterals": "in-intersections"
+                        "allowConstructors": "always",
+                        "allowConditionalTypes": "always",
+                        "allowGenerics": "always",
+                        "allowLiterals": "in-intersections",
+                        "allowMappedTypes": "always",
+                        "allowTupleTypes": "always"
                     }
                 ],
                 "@typescript-eslint/no-empty-interface": [
@@ -144,14 +152,12 @@
                 "@typescript-eslint/unified-signatures": "error",
                 "@typescript-eslint/type-annotation-spacing": "error",
                 "@typescript-eslint/restrict-plus-operands": "off",
-
                 "require-await": "off",
                 "@typescript-eslint/require-await": "off",
                 "@typescript-eslint/no-unnecessary-type-assertion": "off",
                 "@typescript-eslint/triple-slash-reference": "off",
                 // Substitutes the 'callable-types' tslint rule
                 "@typescript-eslint/prefer-function-type": "error",
-
                 // "semi": "off",
                 // "@typescript-eslint/semi": ["error"],
                 "@typescript-eslint/member-delimiter-style": [
@@ -172,7 +178,11 @@
                     "error",
                     {
                         "selector": "variable",
-                        "format": ["camelCase", "UPPER_CASE", "PascalCase"],
+                        "format": [
+                            "camelCase",
+                            "UPPER_CASE",
+                            "PascalCase"
+                        ],
                         "leadingUnderscore": "allow"
                     }
                 ],
@@ -182,13 +192,12 @@
                  * ESLint rules
                  *******************************/
                 // Substitutes the 'arrow-return-shorthand' tslint rule
-                "arrow-body-style": ["error", "as-needed"],
+                "arrow-body-style": [
+                    "error",
+                    "as-needed"
+                ],
                 "brace-style": [
-                    "warn",
-                    "1tbs",
-                    {
-                        "allowSingleLine": true
-                    }
+                    "off"
                 ],
                 "comma-dangle": [
                     "error",
@@ -203,7 +212,10 @@
                 "curly": "error",
                 "guard-for-in": "error",
                 "eol-last": "error",
-                "eqeqeq": ["error", "smart"],
+                "eqeqeq": [
+                    "error",
+                    "smart"
+                ],
                 "import/export": "off",
                 // Substitutes the 'deprecation' tslint rule
                 "import/no-deprecated": "warn",
@@ -213,29 +225,34 @@
                 "import/order": [
                     "off",
                     {
-                        "newlines-between": "always"
+                        "groups": [
+                            "builtin",
+                            "external",
+                            "internal",
+                            "parent",
+                            [
+                                "sibling",
+                                "index"
+                            ]
+                        ],
+                        "pathGroups": [
+                            {
+                                "pattern": "@{nova-ui}/**",
+                                "group": "internal",
+                                "position": "before"
+                            }
+                        ],
+                        "pathGroupsExcludedImportTypes": [
+                            "builtin"
+                        ],
+                        "newlines-between": "always",
+                        "alphabetize": {
+                            "order": "asc"
+                        }
                     }
                 ],
                 "indent": [
-                    "warn",
-                    4,
-                    {
-                        "SwitchCase": 1,
-                        "FunctionDeclaration": {
-                            "parameters": 1
-                        },
-                        "FunctionExpression": {
-                            "parameters": 1
-                        },
-                        "CallExpression": {
-                            "arguments": 1
-                        },
-                        "VariableDeclarator": 1,
-                        "ArrayExpression": 1,
-                        "ObjectExpression": 1,
-                        "ImportDeclaration": 1,
-                        "MemberExpression": 1
-                    }
+                    "off"
                 ],
                 "max-len": [
                     "error",
@@ -284,7 +301,10 @@
                 "no-restricted-imports": [
                     "error",
                     {
-                        "paths": ["lodash", "moment"]
+                        "paths": [
+                            "lodash",
+                            "moment"
+                        ]
                     }
                 ],
                 "no-trailing-spaces": [
@@ -341,23 +361,35 @@
                     "always",
                     {
                         "line": {
-                            "markers": ["/"]
+                            "markers": [
+                                "/"
+                            ]
                         },
                         "block": {
-                            "markers": ["/"],
-                            "exceptions": ["*"],
+                            "markers": [
+                                "/"
+                            ],
+                            "exceptions": [
+                                "*"
+                            ],
                             "balanced": true
                         }
                     }
                 ],
                 // TODO Fix in future
                 "no-loss-of-precision": "off",
-                "@typescript-eslint/no-loss-of-precision": ["warn"]
+                "@typescript-eslint/no-loss-of-precision": [
+                    "warn"
+                ]
             }
         },
         {
-            "files": ["*.html"],
-            "extends": ["plugin:@angular-eslint/template/recommended"],
+            "files": [
+                "*.html"
+            ],
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
+            ],
             "rules": {
                 "@angular-eslint/template/no-negated-async": "error"
             }

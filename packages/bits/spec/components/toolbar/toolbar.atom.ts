@@ -37,4 +37,12 @@ export class ToolbarAtom extends Atom {
     public async getSelectedStateText(): Promise<string> {
         return super.getElement().element(by.className("nui-toolbar-content__select")).getText();
     }
+
+    public getToolbarMessages(): ElementArrayFinder {
+        return this.getElement().all(by.tagName("nui-toolbar-message"));
+    }
+
+    public async getToolbarMessagesTexts(): Promise<string[]> {
+        return await this.getToolbarMessages().map<string>((el) => el?.getText());
+    }
 }
