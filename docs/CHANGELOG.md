@@ -1,6 +1,6 @@
 # Changelog
 
-## [12.0.4] - 2022-06-30
+## [12.0.7] - 2022-06-30
 
 <details>
     <summary>Bits</summary>
