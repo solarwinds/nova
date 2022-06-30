@@ -19,4 +19,11 @@ export class SwitchAtom extends Atom {
     public async isOn(): Promise<boolean> { return super.hasClass(SwitchAtom.ON_CSS); }
 
     public async disabled(): Promise<boolean> { return super.getElement().getAttribute("class").then((classString) => classString.indexOf("disabled") !== -1); }
+
+    public async setState(shouldBeOn: boolean): Promise<void> {
+        const current = await this.isOn();
+        if (current !== shouldBeOn) {
+            await this.toggle();
+        }
+    }
 }

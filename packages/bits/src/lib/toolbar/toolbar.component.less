@@ -1,6 +1,7 @@
 @import (reference) "../../styles/nui-framework-variables.less";
 @import (reference) "../../styles/nui-framework-animations.less";
 @import (reference) "../../styles/mixins.less";
+@import (reference) "../../styles/nui-framework-typography.less";
 @import (reference) "../../styles/nui-framework-spaces.less";
 
 .nui .nui-toolbar {
@@ -17,10 +18,15 @@
 
     &-content {
         width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
         transition: visibility .25s;
         padding: @nui-space-xs 0;
 
         &__embedded {
+            display: flex;
             & > div {
                 // The flex container is being sized using fit-content / shrink-to-fit algorithm.
                 // Since it overflows, what matters is the min-content contribution of the flex items.
@@ -30,6 +36,9 @@
             }
         }
         &__dynamic {
+            display: flex;
+            flex-direction: row;
+            flex-shrink: 0;
             .nui-button.btn-destructive {
                 border-color: transparent;
                 &:hover, &:active, &:focus {
@@ -37,9 +46,15 @@
                     .setCssVariable(background-color, nui-color-bg-transparent-hover);
                 }
             }
+            nui-divider {
+                flex-shrink: 0;
+            }
         }
 
         &__select {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
             font-size: @nui-font-size-small;
             font-weight: @nui-font-weight-semibold;
             padding-left: @nui-space-sm;
@@ -69,5 +84,10 @@
             .setCssVariable(background, nui-color-line-default);
             height: (@line-height-computed + (@nui-space-xs * 2));
         }
+    }
+
+    nui-toolbar-message {
+        padding: @nui-space-xs @nui-space-sm;
+        margin-bottom: @nui-space-xxs;
     }
 }

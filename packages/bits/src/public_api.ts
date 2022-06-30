@@ -90,6 +90,7 @@ export { TableResizerDirective } from "./lib/table/table-resizer/table-resizer.d
 export { ToolbarComponent } from "./lib/toolbar/toolbar.component";
 export { ToolbarGroupComponent } from "./lib/toolbar/toolbar-group.component";
 export { ToolbarItemComponent } from "./lib/toolbar/toolbar-item.component";
+export { ToolbarMessageComponent } from "./lib/toolbar/toolbar-message.component";
 export { ToolbarSplitterComponent } from "./lib/toolbar/toolbar-splitter.component";
 export { ValidationMessageComponent } from "./lib/validation-message/validation-message.component";
 export { TextboxNumberComponent } from "./lib/textbox/textbox-number/textbox-number.component";
