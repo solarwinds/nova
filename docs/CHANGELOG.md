@@ -12,6 +12,15 @@
 
 </details>
 
+<details>
+    <summary>Dashboards</summary>
+
+### Changed
+
+- DashboardUnitConversionPipe takes unit type to determine nuit number base
+
+</details>
+
 ## [12.0.0]
 
 This section is going to be added. (Leaving the section below for reuse)

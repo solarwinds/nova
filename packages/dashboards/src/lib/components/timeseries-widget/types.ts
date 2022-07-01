@@ -1,4 +1,4 @@
-import { ITimeFramePresetDictionary } from "@nova-ui/bits";
+import { ITimeFramePresetDictionary, UnitOption } from "@nova-ui/bits";
 
 import { IProperties } from "../../types";
 import { LegendPlacement } from "../../widget-types/common/widget/legend";
@@ -13,6 +13,7 @@ export interface ITimeseriesWidgetConfig {
     chartColors?: string[]; // might go under the 'chart' configuration
     preset: TimeseriesChartPreset;
     scales: ITimeseriesScalesConfig;
+    units: UnitOption;
 }
 
 export interface ITimeseriesWidgetSeries {

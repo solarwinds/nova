@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { UnitBase, UnitConversionService } from "@nova-ui/bits";
+import { UnitBase, UnitConversionService, UnitOption } from "@nova-ui/bits";
 import { DEFAULT_UNIT_CONVERSION_THRESHOLD } from "../constants";
 
 /**
@@ -17,14 +17,14 @@ export class DashboardUnitConversionPipe implements PipeTransform {
      *
      * @returns The string representation of the converted value
      */
-    public transform = (value: string | number | undefined): string => {
+    public transform = (value: string | number | undefined, units: UnitOption = "generic"): string => {
         const valueAsNumber = typeof value === "string" ? parseFloat(value) : value;
 
         if (valueAsNumber === undefined || isNaN(valueAsNumber) || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
             return value?.toString() || "";
         }
 
-        const conversion = this.unitConversionService.convert(valueAsNumber, UnitBase.Standard, 1);
-        return this.unitConversionService.getFullDisplay(conversion, "generic");
+        const conversion = this.unitConversionService.convert(valueAsNumber, (units === "bytes") ? UnitBase.Bytes : UnitBase.Standard, 1);
+        return this.unitConversionService.getFullDisplay(conversion, units);
     }
 }
