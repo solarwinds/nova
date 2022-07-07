@@ -1611,6 +1611,20 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@nova-ui/bits@~12.0.8-0":
+  version "12.0.8-3554"
+  resolved "https://registry.yarnpkg.com/@nova-ui/bits/-/bits-12.0.8-3554.tgz#1504feae0120d53ef10a744b3cec78314463f1ce"
+  integrity sha512-+MePt6LDC5+wuCOJESDsRLlhxpgrrDyWRoi+cHPBYxrVUHLDU+Kx4Pu63OAq6a9jc4eWvI9vLB/AnHdhtk2S1Q==
+  dependencies:
+    tslib "^2.1.0"
+
+"@nova-ui/charts@~12.0.8-0":
+  version "12.0.8-3554"
+  resolved "https://registry.yarnpkg.com/@nova-ui/charts/-/charts-12.0.8-3554.tgz#f8afb1d366e2100438d297cd0f407730bbed3e45"
+  integrity sha512-3tcVYoopKQJyn1FrzWIM4V1upgNMwdjtv6mMQYhmqXKggMIcQHFYFomhEYV0YwfL/6/4EKPivA3sg4FRao9BMQ==
+  dependencies:
+    tslib "^2.2.0"
+
 "@npmcli/fs@^1.0.0":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@npmcli/fs/-/fs-1.1.1.tgz#72f719fe935e687c56a4faecf3c03d06ba593257"
@@ -8132,10 +8146,15 @@ moment-timezone@^0.5.27:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.25.3:
+"moment@>= 2.9.0":
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 morgan@^1.9.1:
   version "1.10.0"
