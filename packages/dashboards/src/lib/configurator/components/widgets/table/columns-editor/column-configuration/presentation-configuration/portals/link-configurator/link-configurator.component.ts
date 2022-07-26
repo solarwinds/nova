@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 import { LoggerService } from "@nova-ui/bits";
+import { IHasChangeDetector } from "@nova-ui/dashboards";
 import { ConfiguratorHeadingService } from "../../../../../../../../services/configurator-heading.service";
 
 import { FormatterConfiguratorComponent } from "../formatter-configurator.component";
@@ -9,8 +10,10 @@ import { FormatterConfiguratorComponent } from "../formatter-configurator.compon
     selector: "nui-link-configurator",
     templateUrl: "./link-configurator.component.html",
 })
-export class LinkConfiguratorComponent extends FormatterConfiguratorComponent {
-    static lateLoadKey = "LinkConfiguratorComponent";
+export class LinkConfiguratorComponent
+      extends FormatterConfiguratorComponent
+      implements IHasChangeDetector {
+    public static lateLoadKey = "LinkConfiguratorComponent";
 
     constructor(changeDetector: ChangeDetectorRef,
                 configuratorHeading: ConfiguratorHeadingService,
@@ -18,4 +21,22 @@ export class LinkConfiguratorComponent extends FormatterConfiguratorComponent {
                 logger: LoggerService) {
         super(changeDetector, configuratorHeading, formBuilder, logger);
     }
+
+    public initForm(): void {
+        const dataFieldForm: Record<string, any> = {
+            link: [null, Validators.required],
+            value: [null, Validators.required],
+        };
+
+        this.form = this.formBuilder.group({
+          dataFieldIds: this.formBuilder.group(dataFieldForm),
+        });
+
+        this.form.addControl(
+          "target",
+          this.formBuilder.control(false, [])
+        );
+
+        this.formReady.emit(this.form);
+      }
 }
