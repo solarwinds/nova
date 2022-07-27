@@ -37,6 +37,7 @@ if [ -e ./compare/ ]; then
 fi
 
 mkdir compare compare/local compare/public
+cd compare
 
 echo "packing local .tgz"
 npm pack ../dist
