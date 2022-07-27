@@ -40,19 +40,20 @@ mkdir compare compare/local compare/public
 cd compare
 
 echo "packing local .tgz"
-npm pack ../dist
-mv ./$pkg_file ./local-$pkg_file
+local_file=$(npm pack ../dist | tail -n 1)
+mv ./$local_file ./local.tgz
 
-echo "getting public .tgz for $pkg_name"
-npm pack $pkg_name
-mv ./$pkg_file ./public-$pkg_file
 npm view $pkg_name name version dist.tarball dist.shasum dist.integrity
 
-echo "unpacking local .tgz"
-tar -zxf "local-$pkg_file" -C ./local
+echo "getting public .tgz for $pkg_name"
+public_file=$(npm pack $pkg_name | tail -n 1)
+mv ./$public_file ./public.tgz
 
-echo "unpacking public .tgz"
-tar -zxf "public-$pkg_file" -C ./public
+echo "unpacking local.tgz"
+tar -zxf local.tgz -C ./local
+
+echo "unpacking public.tgz"
+tar -zxf public.tgz -C ./public
 
 echo "comparing"
 diff=$(diff -qr ./local ./public)
