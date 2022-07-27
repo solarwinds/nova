@@ -25,11 +25,10 @@ while [ -n "$1" ]; do
     esac
 done
 
-set -x
-
 cd $PROJECT_DIR
 
 pkg_name=$(node -p 'const pkg = require("./dist/package.json"); `${pkg.name}@${pkg.version}`;')
+echo "pkg_name: $pkg_name"
 
 if [ -e ./compare/ ]; then
     rm -rf ./compare/
@@ -39,13 +38,13 @@ mkdir compare compare/local compare/public
 cd compare
 
 echo "packing local .tgz"
-local_file=$(npm pack ../dist | tail -n 1)
+local_file=$(npm pack ../dist 2>./local.log | tail -n 1)
 mv ./$local_file ./local.tgz
 
 npm view $pkg_name name version dist.tarball dist.shasum dist.integrity
 
 echo "getting public .tgz for $pkg_name"
-public_file=$(npm pack $pkg_name | tail -n 1)
+public_file=$(npm pack $pkg_name 2>./public.log | tail -n 1)
 mv ./$public_file ./public.tgz
 
 echo "unpacking local.tgz"
@@ -64,3 +63,7 @@ if [ "$diff" != "" ]; then
 fi
 
 echo "no differences found"
+
+cat ./local.log | grep "Tarball Details" -A 8
+
+cat ./public.log | grep "Tarball Details" -A 8
