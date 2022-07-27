@@ -29,7 +29,7 @@ set -x
 
 cd $PROJECT_DIR
 
-pkg_name=$(node -p 'const pkg = require("../dist/package.json"); `${pkg.name}@${pkg.version}`;')
+pkg_name=$(node -p 'const pkg = require("./dist/package.json"); `${pkg.name}@${pkg.version}`;')
 
 if [ -e ./compare/ ]; then
     rm -rf ./compare/
