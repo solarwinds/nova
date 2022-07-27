@@ -1,5 +1,11 @@
 # Changelog
 
+## [12.0.8] 📅 2022-07-27
+
+### Bugfix
+
+- `@nova-ui/bits` | _unitConversionConstants_ fixed typo in Gbps (was Gpbs)
+
 ## [12.0.7] 📅 2022-06-30
 
 ### Added
