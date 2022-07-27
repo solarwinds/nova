@@ -23,7 +23,7 @@ export const unitConversionConstants: IUnitConversionConstants = {
     generic: ["", "K", "M", "B", "T", "Qa", "Qi", "Sx", "Sp"],
     bytes: ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"],
     bytesPerSecond: ["Bps", "kBps", "MBps", "GBps", "TBps", "PBps", "EBps", "ZBps", "YBps"],
-    bitsPerSecond: ["bps", "kbps", "Mbps", "Gpbs", "Tbps", "Pbps", "Ebps", "Zbps", "Ybps"],
+    bitsPerSecond: ["bps", "kbps", "Mbps", "Gbps", "Tbps", "Pbps", "Ebps", "Zbps", "Ybps"],
     hertz: ["Hz", "kHz", "MHz", "GHz", "THz", "PHz", "EHz", "ZHz", "YHz"],
 };
 

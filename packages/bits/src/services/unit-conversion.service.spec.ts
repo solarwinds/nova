@@ -167,7 +167,7 @@ describe("services >", () => {
 
         describe("getUnitDisplay >", () => {
             it("should output the correct unit based on the conversion result", () => {
-                expect(subject.getUnitDisplay({ value: "1", order: 3, scientificNotation: "1.0e+9" }, "bitsPerSecond")).toEqual("Gpbs");
+                expect(subject.getUnitDisplay({ value: "1", order: 3, scientificNotation: "1.0e+9" }, "bitsPerSecond")).toEqual("Gbps");
             });
         });
 
