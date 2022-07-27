@@ -23,7 +23,7 @@ export class LinkFormatterComponent implements OnChanges, IHasChangeDetector {
     constructor(public changeDetector: ChangeDetectorRef) {
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    public ngOnChanges(changes: SimpleChanges) {
         this.isValid = Boolean(this.data && this.data.value && this.data.link);
         this.targetSelf = this.target ? "_self" : "_blank";
     }
