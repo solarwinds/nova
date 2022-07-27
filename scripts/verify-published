@@ -2,12 +2,11 @@
 set -e
 
 usage() {
-    echo "Usage: verify-package -p <PACKAGE_NAMR>"
+    echo "Usage: verify-package"
     echo
     echo "Verify content of package in project folder vs npm public repo content"
     echo
-    echo "Expects local package to be already persisted in project folder due to *-pack job"
-    echo "and public repo to contain this package due to *-publish job"
+    echo "Expects assembled package to be present in ./dist and to be already published into public npm repo"
     echo
     echo "Options:"
     echo "  -h, --help              print usage info"
@@ -26,28 +25,25 @@ while [ -n "$1" ]; do
     esac
 done
 
+set -x
+
 cd $PROJECT_DIR
 
 pkg_name=$(node -p 'const pkg = require("./package.json"); `${pkg.name}@${pkg.version}`;')
 pkg_file=$(node -p 'const pkg = require("./package.json"); `${pkg.name}@${pkg.version}.tgz`.replace(/[^\w\d.]/g, "-").replace(/^-/, "");')
-
-if [ ! -e ./$pkg_file ]; then
-    echo "local package tgz should be present"
-    exit 2
-fi
 
 if [ -e ./compare/ ]; then
     rm -rf ./compare/
 fi
 
 mkdir compare compare/local compare/public
-cd compare
 
-echo "copying local .tgz"
-cp ../$pkg_file ./local-$pkg_file
+echo "packing local .tgz"
+npm pack ../dist
+mv ./$pkg_file ./local-$pkg_file
 
 echo "getting public .tgz for $pkg_name"
-npm pack $pkg_name 2>/dev/null
+npm pack $pkg_name
 mv ./$pkg_file ./public-$pkg_file
 npm view $pkg_name name version dist.tarball dist.shasum dist.integrity
 
