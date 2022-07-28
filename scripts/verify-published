@@ -58,12 +58,12 @@ echo "# comparing"
 diff=$(diff -qr ./local ./public)
 
 if [ "$diff" != "" ]; then
-    echo "# found differences"
+    echo "× detected differences between public and local"
     echo $diff
     exit 3
 fi
 
-echo "# no differences found"
+echo "✓ content matches"
 
 echo
 echo "# LOCAL $pkg_name:"
