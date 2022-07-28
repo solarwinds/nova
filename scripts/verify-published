@@ -70,5 +70,5 @@ echo "# LOCAL $pkg_name:"
 cat ./local.log | grep "Tarball Details" -A 8
 
 echo
-echo "# LOCAL $pkg_name:"
+echo "# PUBLIC $pkg_name:"
 cat ./public.log | grep "Tarball Details" -A 8
