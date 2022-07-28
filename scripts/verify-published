@@ -30,6 +30,9 @@ cd $PROJECT_DIR
 pkg_name=$(node -p 'const pkg = require("./dist/package.json"); `${pkg.name}@${pkg.version}`;')
 echo "pkg_name: $pkg_name"
 
+echo "public version:"
+npm view $pkg_name name version dist.tarball dist.shasum dist.integrity
+
 if [ -e ./compare/ ]; then
     rm -rf ./compare/
 fi
@@ -37,33 +40,35 @@ fi
 mkdir compare compare/local compare/public
 cd compare
 
-echo "packing local .tgz"
+echo "# packing local .tgz"
 local_file=$(npm pack ../dist 2>./local.log | tail -n 1)
 mv ./$local_file ./local.tgz
 
-npm view $pkg_name name version dist.tarball dist.shasum dist.integrity
-
-echo "getting public .tgz for $pkg_name"
+echo "# getting public .tgz for $pkg_name"
 public_file=$(npm pack $pkg_name 2>./public.log | tail -n 1)
 mv ./$public_file ./public.tgz
 
-echo "unpacking local.tgz"
+echo "# unpacking local.tgz"
 tar -zxf local.tgz -C ./local
 
-echo "unpacking public.tgz"
+echo "# unpacking public.tgz"
 tar -zxf public.tgz -C ./public
 
-echo "comparing"
+echo "# comparing"
 diff=$(diff -qr ./local ./public)
 
 if [ "$diff" != "" ]; then
-    echo "found differences"
+    echo "# found differences"
     echo $diff
     exit 3
 fi
 
-echo "no differences found"
+echo "# no differences found"
 
+echo
+echo "# LOCAL $pkg_name:"
 cat ./local.log | grep "Tarball Details" -A 8
 
+echo
+echo "# LOCAL $pkg_name:"
 cat ./public.log | grep "Tarball Details" -A 8
