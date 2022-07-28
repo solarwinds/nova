@@ -184,6 +184,19 @@ jobs:
                         else
                             yarn run publish-ci
                         fi
+    bits-verify:
+        working_directory: ~/nova
+        docker:
+            -   image: cimg/node:16.14-browsers
+        environment:
+            PROJECT_DIR: ./packages/bits
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Verify published package
+                    command: |
+                        yarn run verify-ci
     charts-build:
         working_directory: ~/nova
         docker:
@@ -354,6 +367,19 @@ jobs:
                         else
                             yarn run publish-ci
                         fi
+    charts-verify:
+        working_directory: ~/nova
+        docker:
+            -   image: cimg/node:16.14-browsers
+        environment:
+            PROJECT_DIR: ./packages/charts
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Verify published package
+                    command: |
+                        yarn run verify-ci
     dashboards-build:
         working_directory: ~/nova
         docker:
@@ -526,6 +552,19 @@ jobs:
                         else
                             yarn run publish-ci
                         fi
+    dashboards-verify:
+        working_directory: ~/nova
+        docker:
+            -   image: cimg/node:16.14-browsers
+        environment:
+            PROJECT_DIR: ./packages/dashboards
+        steps:
+            -   attach_workspace:
+                    at: ~/nova
+            -   run:
+                    name: Verify published package
+                    command: |
+                        yarn run verify-ci
     nova-docs:
         working_directory: ~/nova
         docker:
@@ -637,6 +676,17 @@ workflows:
                                 - main
                                 - /release\/.*/
                                 - next
+                                - /^improvement/.*/
+            -   bits-verify:
+                    requires:
+                        - bits-publish
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /^release\/.*/
+                                - next
+                                - /^improvement/.*/
             -   charts-build:
                     requires:
                         - bits-pack
@@ -666,6 +716,17 @@ workflows:
                                 - main
                                 - /^release\/.*/
                                 - next
+                                - /^improvement/.*/
+            -   charts-verify:
+                    requires:
+                        - charts-publish
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /^release\/.*/
+                                - next
+                                - /^improvement/.*/
             -   dashboards-build:
                     requires:
                         - charts-pack
@@ -704,6 +765,17 @@ workflows:
                                 - main
                                 - /^release\/.*/
                                 - next
+                                - /^improvement/.*/
+            -   dashboards-verify:
+                    requires:
+                        - dashboards-publish
+                    filters:
+                        branches:
+                            only:
+                                - main
+                                - /^release\/.*/
+                                - next
+                                - /^improvement/.*/
 
     nova-release:
         jobs:
