@@ -7,6 +7,7 @@ import { INTERACTION } from "../../../services/types";
 import { IInteractionPayload } from "./interaction-handler";
 import { UrlInteractionHandler } from "./url-interaction-handler";
 import { UrlInteractionService } from "@nova-ui/dashboards";
+import { mockLoggerService } from "../../../mocks";
 
 describe("UrlInteractionHandler", () => {
     describe("interactionType", () => {
@@ -26,7 +27,7 @@ describe("UrlInteractionHandler", () => {
             };
             eventBus = new EventBus<IEvent>();
             const logger = new LoggerService();
-            const urlInteraction = new UrlInteractionService();
+            const urlInteraction = new UrlInteractionService(mockLoggerService);
             spyOnProperty(logger, "warn").and.returnValue(noop); // suppress warnings
             handler = new UrlInteractionHandler(eventBus, window, logger, urlInteraction);
             handleInteractionSpy = spyOn(handler as any, "handleInteraction").and.callThrough();
