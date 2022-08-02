@@ -17,10 +17,14 @@ export class DashboardUnitConversionPipe implements PipeTransform {
      *
      * @returns The string representation of the converted value
      */
-    public transform = (value: string | number | undefined, units: UnitOption = "generic"): string => {
+    public transform = (
+        value: string | number | undefined,
+        units: UnitOption = "generic",
+        defaultThreshold: number = DEFAULT_UNIT_CONVERSION_THRESHOLD
+    ): string => {
         const valueAsNumber = typeof value === "string" ? parseFloat(value) : value;
 
-        if (valueAsNumber === undefined || isNaN(valueAsNumber) || valueAsNumber < DEFAULT_UNIT_CONVERSION_THRESHOLD) {
+        if (valueAsNumber === undefined || isNaN(valueAsNumber) || valueAsNumber < defaultThreshold) {
             return value?.toString() || "";
         }
 
