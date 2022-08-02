@@ -20,11 +20,11 @@ export class DashboardUnitConversionPipe implements PipeTransform {
     public transform = (
         value: string | number | undefined,
         units: UnitOption = "generic",
-        defaultThreshhold: number = DEFAULT_UNIT_CONVERSION_THRESHOLD
+        defaultThreshold: number = DEFAULT_UNIT_CONVERSION_THRESHOLD
     ): string => {
         const valueAsNumber = typeof value === "string" ? parseFloat(value) : value;
 
-        if (valueAsNumber === undefined || isNaN(valueAsNumber) || valueAsNumber < defaultThreshhold) {
+        if (valueAsNumber === undefined || isNaN(valueAsNumber) || valueAsNumber < defaultThreshold) {
             return value?.toString() || "";
         }
 
