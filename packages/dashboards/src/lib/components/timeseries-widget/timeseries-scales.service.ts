@@ -32,7 +32,7 @@ export class TimeseriesScalesService {
             }
             case TimeseriesScaleType.Linear: {
                 scale = new LinearScale();
-                scale.formatters.tick = (value: string | number | undefined) => this.unitConversionPipe.transform(value, units);
+                scale.formatters.tick = (value: string | number | undefined) => this.unitConversionPipe.transform(value, units, 1000);
                 break;
             }
             case TimeseriesScaleType.TimeInterval: {
