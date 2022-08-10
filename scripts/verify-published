@@ -1,0 +1,74 @@
+#!/bin/bash
+set -e
+
+usage() {
+    echo "Usage: verify-package"
+    echo
+    echo "Verify content of package in project folder vs npm public repo content"
+    echo
+    echo "Expects assembled package to be present in ./dist and to be already published into public npm repo"
+    echo
+    echo "Options:"
+    echo "  -h, --help              print usage info"
+}
+
+while [ -n "$1" ]; do
+    case "$1" in
+    -h | --help)
+        usage
+        exit
+        ;;
+    -*)
+        echo "Unexpected argument '$1'."
+        exit 1
+        ;;
+    esac
+done
+
+cd $PROJECT_DIR
+
+pkg_name=$(node -p 'const pkg = require("./dist/package.json"); `${pkg.name}@${pkg.version}`;')
+echo "pkg_name: $pkg_name"
+
+echo "public version:"
+npm view $pkg_name name version dist.tarball dist.shasum dist.integrity
+
+if [ -e ./compare/ ]; then
+    rm -rf ./compare/
+fi
+
+mkdir compare compare/local compare/public
+cd compare
+
+echo "# packing local .tgz"
+local_file=$(npm pack ../dist 2>./local.log | tail -n 1)
+mv ./$local_file ./local.tgz
+
+echo "# getting public .tgz for $pkg_name"
+public_file=$(npm pack $pkg_name 2>./public.log | tail -n 1)
+mv ./$public_file ./public.tgz
+
+echo "# unpacking local.tgz"
+tar -zxf local.tgz -C ./local
+
+echo "# unpacking public.tgz"
+tar -zxf public.tgz -C ./public
+
+echo "# comparing"
+diff=$(diff -qr ./local ./public)
+
+if [ "$diff" != "" ]; then
+    echo "× detected differences between public and local"
+    echo $diff
+    exit 3
+fi
+
+echo "✓ content matches"
+
+echo
+echo "# LOCAL $pkg_name:"
+cat ./local.log | grep "Tarball Details" -A 8
+
+echo
+echo "# PUBLIC $pkg_name:"
+cat ./public.log | grep "Tarball Details" -A 8

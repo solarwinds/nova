@@ -1,5 +1,6 @@
 import { IInteractionPayload } from "../components/providers/interaction/interaction-handler";
 import { UrlInteractionService } from "./url-interaction.service";
+import { mockLoggerService } from "../mocks";
 
 const interaction: IInteractionPayload<any> = {
     data: {
@@ -11,7 +12,7 @@ const interaction: IInteractionPayload<any> = {
 }
 
 describe("UrlInteractionService > ", () => {
-    let service: UrlInteractionService = new UrlInteractionService();
+    let service: UrlInteractionService = new UrlInteractionService(mockLoggerService);
 
     it("should parse template correctly", () => {
         expect(service.template("${data.link2}", interaction)).toBe(interaction.data.link2);
@@ -28,5 +29,13 @@ describe("UrlInteractionService > ", () => {
         .toBe("Average Rating !@#$%^&*()_+/*-+1324657890 0");
 
         expect(service.template("${data.link2}", interaction)).not.toBe("Average Rating");
+    });
+
+    it("should return empty string if property doesn't exist", () => {
+        expect(service.template("${data.link3}", interaction)).toBe("");
+    });
+
+    it("should return empty string if property doesn't exist", () => {
+        expect(service.template("${data.link3.title}", interaction)).toBe("");
     });
 });

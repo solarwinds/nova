@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { UnitConversionService, UnitOption } from "@nova-ui/bits";
+import { UnitBase, UnitConversionService, UnitOption } from "@nova-ui/bits";
 import { IScale, LinearScale, TimeIntervalScale, TimeScale } from "@nova-ui/charts";
 import { duration } from "moment/moment";
 import { DashboardUnitConversionPipe } from "../../common/pipes/dashboard-unit-conversion-pipe";
@@ -32,7 +32,7 @@ export class TimeseriesScalesService {
             }
             case TimeseriesScaleType.Linear: {
                 scale = new LinearScale();
-                scale.formatters.tick = (value: string | number | undefined) => this.unitConversionPipe.transform(value, units);
+                scale.formatters.tick = (value: string | number | undefined) => this.unitConversionPipe.transform(value, units, UnitBase.Standard);
                 break;
             }
             case TimeseriesScaleType.TimeInterval: {
