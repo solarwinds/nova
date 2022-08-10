@@ -25,7 +25,7 @@ describe("LinkConfiguratorComponent", () => {
 
     it("Creates target component", () => {
         component.initForm();
-        const targetControl = component.form.controls['target'];
+        const targetControl = component.form.controls["target"];
         expect(targetControl).toBeTruthy();
     });
 });
