@@ -5,7 +5,7 @@ import { ILinkFormatterData } from "../types";
 
 @Component({
     template: `<div class="link-formatter-container">
-                    <a *ngIf="isValid" class="nui-text-ellipsis" [href]="data?.link" [target]="targetSelf">
+                    <a *ngIf="isValid" class="nui-text-ellipsis" [href]="data?.link" [target]="target">
                             {{data?.value}}
                     </a>
               </div>`,
@@ -15,9 +15,9 @@ export class LinkFormatterComponent implements OnChanges, IHasChangeDetector {
     static lateLoadKey = "LinkFormatterComponent";
 
     @Input() data: ILinkFormatterData;
-    @Input() target?: boolean;
+    @Input() targetSelf?: boolean;
 
-    public targetSelf: string;
+    public target: string;
     public isValid = false;
 
     constructor(public changeDetector: ChangeDetectorRef) {
@@ -25,6 +25,6 @@ export class LinkFormatterComponent implements OnChanges, IHasChangeDetector {
 
     public ngOnChanges(changes: SimpleChanges) {
         this.isValid = Boolean(this.data && this.data.value && this.data.link);
-        this.targetSelf = this.target ? "_self" : "_blank";
+        this.target = this.targetSelf ? "_self" : "_blank";
     }
 }
