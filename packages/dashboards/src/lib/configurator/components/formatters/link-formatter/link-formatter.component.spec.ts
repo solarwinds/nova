@@ -21,12 +21,12 @@ describe("LinkFormatterComponent", () => {
 
     it("Defaults to open in new tab", () => {
         component.ngOnChanges({});
-        expect(component.targetSelf).toBe("_blank");
+        expect(component.target).toBe("_blank");
     });
 
     it("Detects changes for target property", () => {
-        component.target = true;
+        component.targetSelf = true;
         component.ngOnChanges({});
-        expect(component.targetSelf).toBe("_self");
+        expect(component.target).toBe("_self");
     });
 });
