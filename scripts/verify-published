@@ -42,10 +42,20 @@ cd compare
 
 echo "# packing local .tgz"
 local_file=$(npm pack ../dist 2>./local.log | tail -n 1)
+if ["$local_file" == ""]; then
+    echo >&2 "error packing local dist"
+    cat ./local.log >&2
+    exit 2
+fi
 mv ./$local_file ./local.tgz
 
 echo "# getting public .tgz for $pkg_name"
 public_file=$(npm pack $pkg_name 2>./public.log | tail -n 1)
+if ["$public_file" == ""]; then
+    echo >&2 "error packing public pkg"
+    cat ./public.log >&2
+    exit 2
+fi
 mv ./$public_file ./public.tgz
 
 echo "# unpacking local.tgz"
