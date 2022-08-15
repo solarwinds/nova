@@ -72,3 +72,5 @@ cat ./local.log | grep "Tarball Details" -A 8
 echo
 echo "# PUBLIC $pkg_name:"
 cat ./public.log | grep "Tarball Details" -A 8
+echo "sha-256: $(sha256sum ./public.tgz)"
+echo "sha-512: $(sha512sum ./public.tgz)"
