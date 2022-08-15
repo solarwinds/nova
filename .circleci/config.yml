@@ -196,7 +196,12 @@ jobs:
             -   run:
                     name: Verify published package
                     command: |
-                        yarn run verify-ci
+                        if [ -f $PROJECT_DIR/package-cached ]; then
+                            echo "This package was restored from cache so we're skipping the verify step"
+                            circleci step halt
+                        else
+                            yarn run verify-ci
+                        fi
     charts-build:
         working_directory: ~/nova
         docker:
@@ -379,7 +384,12 @@ jobs:
             -   run:
                     name: Verify published package
                     command: |
-                        yarn run verify-ci
+                        if [ -f $PROJECT_DIR/package-cached ]; then
+                            echo "This package was restored from cache so we're skipping the verify step"
+                            circleci step halt
+                        else
+                            yarn run verify-ci
+                        fi
     dashboards-build:
         working_directory: ~/nova
         docker:
@@ -564,7 +574,12 @@ jobs:
             -   run:
                     name: Verify published package
                     command: |
-                        yarn run verify-ci
+                        if [ -f $PROJECT_DIR/package-cached ]; then
+                            echo "This package was restored from cache so we're skipping the verify step"
+                            circleci step halt
+                        else
+                            yarn run verify-ci
+                        fi
     nova-docs:
         working_directory: ~/nova
         docker:
@@ -674,7 +689,7 @@ workflows:
                         branches:
                             only:
                                 - main
-                                - /release\/.*/
+                                - /^release\/.*/
                                 - next
                                 - /^improvement/.*/
             -   bits-verify:
