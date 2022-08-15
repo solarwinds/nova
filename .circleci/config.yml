@@ -674,7 +674,7 @@ workflows:
                         branches:
                             only:
                                 - main
-                                - /release\/.*/
+                                - /^release\/.*/
                                 - next
                                 - /^improvement/.*/
             -   bits-verify:

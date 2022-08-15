@@ -39,7 +39,7 @@ case $CIRCLE_BRANCH in
             yarn publish ./dist --access public
             ;;
 
-      "main" | "next" | "hotfix/"*)
+      "main" | "next" | "hotfix/"* | "improvement/"*)
           echo Publishing $CIRCLE_BRANCH package
             yarn publish ./dist --tag $CIRCLE_BRANCH --access public
             ;;
