@@ -2,4 +2,10 @@
 /.github
 /.vscode
 /scripts
+.tmp
 node_modules
+packages/*/coverage
+packages/*/dist
+packages/*/schematics
+packages/*/scripts
+packages/*/sdk

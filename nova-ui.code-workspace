@@ -1,0 +1,47 @@
+{
+    "extensions": {
+        "recommendations": ["Angular.ng-template", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+    },
+    "folders": [
+        {
+            "name": "✨ nova",
+            "path": "."
+        },
+        {
+            "name": "📦 @nova-ui/bits",
+            "path": "packages\\bits"
+        },
+        {
+            "name": "📦 @nova-ui/charts",
+            "path": "packages\\charts"
+        },
+        {
+            "name": "📦 @nova-ui/dashboards",
+            "path": "packages\\dashboards"
+        }
+    ],
+    "settings": {
+        "angular.enable-strict-mode-prompt": false,
+        "angular.view-engine": false,
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "files.exclude": {
+            "**/.DS_Store": true,
+            "**/.git": true,
+            "**/.hg": true,
+            "**/.svn": true,
+            "**/CVS": true,
+            "**/node_modules": true,
+            "**/packages": true
+        },
+        "prettier.configPath": ".prettierrc.js",
+        "prettier.useEditorConfig": true,
+        "search.exclude": {
+            "**/*.code-search": true,
+            "**/bower_components": true,
+            "**/node_modules": true
+        },
+        "typescript.enablePromptUseWorkspaceTsdk": true,
+        "typescript.tsdk": "node_modules\\typescript\\lib",
+        "typescript.tsserver.experimental.enableProjectDiagnostics": false
+    }
+}
