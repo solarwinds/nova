@@ -47,7 +47,7 @@ export class HighlightPipe implements PipeTransform {
         for (let i = 0; i < matchRes.length; i++) {
             const isMatch = i % 2 !== 0;
             if (isMatch) {
-                result += "<span class=\"nui-highlighted\">" + this.escapeItem(matchRes[i]) + "</span>";
+                result += `<span class="nui-highlighted">${this.escapeItem(matchRes[i])}</span>`;
             } else {
                 result += this.escapeItem(matchRes[i]);
             }

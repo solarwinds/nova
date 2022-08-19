@@ -42,15 +42,15 @@ describe("USERCONTROL textbox >", () => {
         validationMessageText = element(by.css(".nui-textbox__messages.nui-validation > div"));
     });
 
-    it("should have native input element without \"disabled\" attribute by default", async () => {
+    it(`should have native input element without "disabled" attribute by default`, async () => {
         expect(await textBox.disabled()).toBe(false);
     });
 
-    it("should have native input element with \"disabled\" attribute", async () => {
+    it(`should have native input element with "disabled" attribute`, async () => {
         expect(await disabledTextbox.disabled()).toBe(true);
     });
 
-    it("should have native input element with \"readonly\" attribute", async () => {
+    it(`should have native input element with "readonly" attribute`, async () => {
         expect(await readonlyTextbox.isReadonly()).toBe(true);
     });
 

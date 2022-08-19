@@ -11,6 +11,6 @@ describe("SvgMarker >", () => {
     it("setColor", () => {
         marker.setColor("red");
 
-        expect(marker.getSvg()).toBe("<g fill=\"red\">xxx</g>");
+        expect(marker.getSvg()).toBe(`<g fill="red">xxx</g>`);
     });
 });

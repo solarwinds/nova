@@ -28,8 +28,8 @@ const FOCUSABLE_SELECTOR = "a, button, input, textarea, select, details, [tabind
 @Component({
     selector: "nui-dialog-window",
     host: {
-        "[class]": "\"nui-dialog fade in show\" + (windowClass ? \" \" + windowClass : \"\")",
-        "role": "dialog",
+        "[class]": `"nui-dialog fade in show" + (windowClass ? " " + windowClass : "")`,
+        role: "dialog",
         "aria-modal": "true",
         "tabindex": "-1",
         "(keyup.esc)": "escKey($event)",

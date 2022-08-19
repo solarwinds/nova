@@ -28,7 +28,7 @@ describe("components >", () => {
             expect(subject.icon).toEqual(MessageComponent.ICON_MAP[messageType]);
         });
 
-        it("shouldn\"t have class names when type is not specified", () => {
+        it(`shouldn"t have class names when type is not specified`, () => {
             expect(subject.messageClass).toEqual("");
             expect(subject.icon).toEqual(MessageComponent.UNKNOWN_ICON);
         });
