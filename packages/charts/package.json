@@ -21,7 +21,9 @@
   "scripts": {
     "ng": "ng",
     "start": "run-p -lr compodoc:serve build-examples:watch",
-    "assemble": "run-s lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
+    "assemble": "run-s prettier-check lint build-lib:locl build-lib:prod compodoc-custom-theme build-examples:prod",
+    "prettier-check": "yarn run --cwd=../.. prettier-check packages/charts",
+    "prettier-fix": "yarn run --cwd=../.. prettier-fix packages/charts",
     "build-lib": "ng b lib",
     "build-lib:prod": "run-s \"build-lib -- -c production\" dist-copy",
     "build-lib:locl": "run-s \"ng b lib -- -c locl\" i18n-locl-extract",

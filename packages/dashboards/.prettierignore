@@ -1,0 +1,6 @@
+/.tmp
+/coverage
+/dist
+/schematics
+/scripts
+/sdk
