@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { FormBuilder } from "@angular/forms";
-import { ConfiguratorHeadingService } from "src/lib/configurator/services/configurator-heading.service";
-import { LinkConfiguratorComponent } from "./link-configurator.component";
 
-describe("LinkConfiguratorComponent", () => {
+import { ConfiguratorHeadingService, LinkConfiguratorComponent } from "@nova-ui/dashboards";
+
+describe(LinkConfiguratorComponent.name, () => {
     let component: LinkConfiguratorComponent;
     let fixture: ComponentFixture<LinkConfiguratorComponent>;
 
@@ -23,9 +23,9 @@ describe("LinkConfiguratorComponent", () => {
         component = fixture.componentInstance;
     }));
 
-    it("Creates target component", () => {
+    it("Creates targetSelf component", () => {
         component.initForm();
-        const targetControl = component.form.controls["target"];
+        const targetControl = component.form.controls["targetSelf"];
         expect(targetControl).toBeTruthy();
     });
 });

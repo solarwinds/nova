@@ -147,7 +147,7 @@ jobs:
             -   run:
                     name: Visual tests
                     command: |
-                      export PERCY_TOKEN=${BITS_PERCY_TOKEN}
+                      export PERCY_TOKEN=${BITS_PERCY_TOKEN_BRAVO}
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/bits
             -   run:
                     name: Cleanup
@@ -335,7 +335,7 @@ jobs:
             -   run:
                     name: Visual tests
                     command: |
-                      export PERCY_TOKEN=${CHARTS_PERCY_TOKEN}
+                      export PERCY_TOKEN=${CHARTS_PERCY_TOKEN_BRAVO}
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/charts
             -   run:
                     name: Cleanup
@@ -525,7 +525,7 @@ jobs:
             -   run:
                     name: Visual tests
                     command: |
-                      export PERCY_TOKEN=${DASHBOARDS_PERCY_TOKEN}
+                      export PERCY_TOKEN=${DASHBOARDS_PERCY_TOKEN_BRAVO}
                       docker-compose run --user="$UID" build npm run percy:ci --prefix ./packages/dashboards
             -   run:
                     name: Cleanup

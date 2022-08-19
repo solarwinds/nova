@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
+
 import { LoggerService } from "@nova-ui/bits";
-import { IHasChangeDetector } from  "../../../../../../../../../../../src/lib/types";
+
+import { IHasChangeDetector } from "../../../../../../../../../../../src/lib/types";
 import { ConfiguratorHeadingService } from "../../../../../../../../services/configurator-heading.service";
 
 import { FormatterConfiguratorComponent } from "../formatter-configurator.component";
@@ -11,14 +13,16 @@ import { FormatterConfiguratorComponent } from "../formatter-configurator.compon
     templateUrl: "./link-configurator.component.html",
 })
 export class LinkConfiguratorComponent
-      extends FormatterConfiguratorComponent
-      implements IHasChangeDetector {
+    extends FormatterConfiguratorComponent
+    implements IHasChangeDetector {
     public static lateLoadKey = "LinkConfiguratorComponent";
 
-    constructor(changeDetector: ChangeDetectorRef,
-                configuratorHeading: ConfiguratorHeadingService,
-                formBuilder: FormBuilder,
-                logger: LoggerService) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        configuratorHeading: ConfiguratorHeadingService,
+        formBuilder: FormBuilder,
+        logger: LoggerService
+    ) {
         super(changeDetector, configuratorHeading, formBuilder, logger);
     }
 
@@ -29,14 +33,10 @@ export class LinkConfiguratorComponent
         };
 
         this.form = this.formBuilder.group({
-          dataFieldIds: this.formBuilder.group(dataFieldForm),
+            dataFieldIds: this.formBuilder.group(dataFieldForm),
+            targetSelf: [false],
         });
 
-        this.form.addControl(
-          "target",
-          this.formBuilder.control(false, [])
-        );
-
         this.formReady.emit(this.form);
-      }
+    }
 }
