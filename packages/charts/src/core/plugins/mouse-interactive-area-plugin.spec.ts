@@ -29,8 +29,8 @@ describe("MouseInteractiveAreaPlugin >", () => {
             .append("svg")
             .append("g")
             .append("rect");
-        // @ts-ignore: Disabled for testing purposes
         mouseInteractiveArea = new MouseInteractiveArea(
+            // @ts-ignore: Disabled for testing purposes
             target,
             interactiveArea,
             "crosshair"

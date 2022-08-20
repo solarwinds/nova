@@ -220,8 +220,8 @@ describe("components >", () => {
             it("should set the withGrowAfterOpen to true if the input is true", () => {
                 subject.withGrowAfterOpen = true;
                 subject.showPopover();
-                // @ts-ignore
                 expect(
+                    // @ts-ignore
                     subject.overlayConfig.positionStrategy._growAfterOpen
                 ).toBeTrue();
             });

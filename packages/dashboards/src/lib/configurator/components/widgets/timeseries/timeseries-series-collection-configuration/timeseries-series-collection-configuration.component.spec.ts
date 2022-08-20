@@ -20,8 +20,8 @@ describe("TimeseriesSeriesCollectionConfigurationComponent", () => {
     let fixture: ComponentFixture<TimeseriesSeriesCollectionConfigurationComponent>;
     const eventBus = new EventBus();
     const dynamicComponentCreator = new DynamicComponentCreator();
-    // @ts-ignore: Suppressed for test purposes
     const pizzagnaService = new PizzagnaService(
+        // @ts-ignore: Suppressed for test purposes
         eventBus,
         dynamicComponentCreator
     );

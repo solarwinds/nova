@@ -23,10 +23,10 @@ describe("WidgetRemovalService > ", () => {
             const tryRemoveSpy = jasmine
                 .createSpy()
                 .and.returnValue(of(testWidgetId));
-            // @ts-ignore: Suppressed for test purposes
             service.handleRemove(
                 mockDashboardComponent,
                 testWidgetId,
+                // @ts-ignore: Suppressed for test purposes
                 null,
                 tryRemoveSpy
             );
@@ -42,11 +42,11 @@ describe("WidgetRemovalService > ", () => {
                 return subject.asObservable();
             };
             const spy = jasmine.createSpy();
-            // @ts-ignore: Suppressed for test purposes
             const subscription = service
                 .handleRemove(
                     mockDashboardComponent,
                     testWidgetId,
+                    // @ts-ignore: Suppressed for test purposes
                     null,
                     tryRemove
                 )
@@ -67,11 +67,11 @@ describe("WidgetRemovalService > ", () => {
                 return subject.asObservable();
             };
             const spy = jasmine.createSpy();
-            // @ts-ignore: Suppressed for test purposes
             service
                 .handleRemove(
                     mockDashboardComponent,
                     testWidgetId,
+                    // @ts-ignore: Suppressed for test purposes
                     null,
                     tryRemove
                 )
@@ -85,8 +85,8 @@ describe("WidgetRemovalService > ", () => {
 
         it("should emit if the tryRemove is undefined", fakeAsync(() => {
             const spy = jasmine.createSpy();
-            // @ts-ignore: Suppressed for test purposes
             service
+                // @ts-ignore: Suppressed for test purposes
                 .handleRemove(mockDashboardComponent, testWidgetId, undefined)
                 .pipe(take(1))
                 .subscribe(() => {
@@ -105,11 +105,11 @@ describe("WidgetRemovalService > ", () => {
                 return subject.asObservable();
             };
             const spy = spyOn(mockDashboardComponent, "removeWidget");
-            // @ts-ignore: Suppressed for test purposes
             service
                 .handleRemove(
                     mockDashboardComponent,
                     testWidgetId,
+                    // @ts-ignore: Suppressed for test purposes
                     null,
                     tryRemove
                 )

@@ -217,8 +217,8 @@ describe("services >", () => {
                     });
 
                     it("should return the value property of an object", () => {
-                        // @ts-ignore: Suppressed for test purposes
                         expect(
+                            // @ts-ignore: Suppressed for test purposes
                             accessors.data.value({ value: 5 }, 0, null, null)
                         ).toEqual(5);
                     });
@@ -242,8 +242,8 @@ describe("services >", () => {
                     });
 
                     it("should return the value property of an object", () => {
-                        // @ts-ignore: Suppressed for test purposes
                         expect(
+                            // @ts-ignore: Suppressed for test purposes
                             accessors.data.value({ value: 5 }, 0, null, null)
                         ).toEqual(5);
                     });

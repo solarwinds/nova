@@ -125,16 +125,16 @@ export class ToastTestPage {
                 this.txtExtendedTimeOut,
                 "" + declaration.options.extendedTimeOut
             );
-            // @ts-ignore: Disabled for testing purposes
             await this.updateCheckBox(
                 this.chbEnableHtml,
+                // @ts-ignore: Disabled for testing purposes
                 declaration.options.enableHtml
             );
 
             // TODO: update all the other options
-            // @ts-ignore: Disabled for testing purposes
             await this.updateCheckBox(
                 this.chbClickToDismiss,
+                // @ts-ignore: Disabled for testing purposes
                 declaration.options.clickToDismiss
             );
         }

@@ -162,22 +162,23 @@ describe("services >", () => {
             let initialTimeFrame: ITimeframe;
             let updatedTimeFrame: ITimeframe;
 
-            function timeFrameFactory(
+            const timeFrameFactory = (
                 startDatetime: Moment,
                 endDatetime: Moment,
                 selectedPresetId: string,
                 title?: string
-            ): ITimeframe {
-                return { startDatetime, endDatetime, selectedPresetId, title };
-            }
+            ): ITimeframe => ({
+                startDatetime,
+                endDatetime,
+                selectedPresetId,
+                title,
+            });
 
-            function easyPreset(value: string): ITimeFramePreset {
-                return {
-                    name: "Last ${value}",
-                    startDatetimePattern: { [value]: -1 },
-                    endDatetimePattern: {},
-                };
-            }
+            const easyPreset = (value: string): ITimeFramePreset => ({
+                name: "Last ${value}",
+                startDatetimePattern: { [value]: -1 },
+                endDatetimePattern: {},
+            });
             const presetStrings: string[] = ["day", "week"];
             const testPresets: ITimeFramePresetDictionary = mapValues(
                 keyBy(presetStrings),
@@ -187,8 +188,8 @@ describe("services >", () => {
 
             it("should use baseDate provided for pattern calculations", () => {
                 const presetId = presetStrings[1];
-                // @ts-ignore: Suppressing error for testing purposes
                 initialTimeFrame = timeFrameFactory(
+                    // @ts-ignore: Suppressing error for testing purposes
                     undefined,
                     undefined,
                     presetId,
@@ -205,8 +206,8 @@ describe("services >", () => {
 
             it("should use now() if baseDate is not provided", () => {
                 const presetId = presetStrings[1];
-                // @ts-ignore: Suppressing error for testing purposes
                 initialTimeFrame = timeFrameFactory(
+                    // @ts-ignore: Suppressing error for testing purposes
                     undefined,
                     undefined,
                     presetId,
@@ -225,8 +226,8 @@ describe("services >", () => {
             it("should use currentPresets if no presets passed", () => {
                 const currentPresets = timeframeService.currentPresets;
                 const presetId = Object.keys(currentPresets)[0];
-                // @ts-ignore: Suppressing error for testing purposes
                 initialTimeFrame = timeFrameFactory(
+                    // @ts-ignore: Suppressing error for testing purposes
                     undefined,
                     undefined,
                     presetId,
@@ -255,8 +256,8 @@ describe("services >", () => {
             describe("if selectedPresetId is set", () => {
                 beforeEach(() => {
                     const presetId = presetStrings[0];
-                    // @ts-ignore: Suppressing error for testing purposes
                     initialTimeFrame = timeFrameFactory(
+                        // @ts-ignore: Suppressing error for testing purposes
                         undefined,
                         undefined,
                         presetId,
@@ -282,10 +283,10 @@ describe("services >", () => {
 
             describe("if selectedPresetId is not set", () => {
                 beforeEach(() => {
-                    // @ts-ignore: Suppressing error for testing purposes
                     initialTimeFrame = timeFrameFactory(
                         moment([1999]),
                         moment([2000]),
+                        // @ts-ignore: Suppressing error for testing purposes
                         null
                     );
                     updatedTimeFrame =

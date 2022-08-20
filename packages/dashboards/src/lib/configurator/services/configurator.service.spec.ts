@@ -246,8 +246,8 @@ describe("ConfiguratorService > ", () => {
                         {
                             widget: originalWidget,
                             dashboardComponent: dashboardComponent,
-                            // @ts-ignore: Suppressed for test purposes
                         },
+                        // @ts-ignore: Suppressed for test purposes
                         undefined
                     )
                 )

@@ -120,8 +120,8 @@ describe("Renderer >", () => {
 
         it("should return the empty continuous domain for null data", () => {
             const accessor: DataAccessor = (d) => d.a;
-            // @ts-ignore: Disabled for testing purposes
             const domain = renderer.getDomain(
+                // @ts-ignore: Disabled for testing purposes
                 null,
                 { id: "x", data: null, accessors: { data: { a: accessor } } },
                 "a",

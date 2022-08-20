@@ -46,9 +46,9 @@ describe("WidgetToDashboardEventProxyService", () => {
 
     describe("updateConfiguration > ", () => {
         it("should not register subscriptions if the dashboard bus is not defined", () => {
-            // @ts-ignore: Suppressed for testing purposes
             service = new WidgetToDashboardEventProxyService(
                 pizzagnaBus,
+                // @ts-ignore: Suppressed for testing purposes
                 undefined,
                 widgetConfigService,
                 eventRegistry,

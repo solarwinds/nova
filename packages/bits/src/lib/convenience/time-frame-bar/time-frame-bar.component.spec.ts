@@ -303,8 +303,8 @@ describe("convenience components >", () => {
                 component.quickPicker.selectedPreset = undefined;
                 component.onPopoverShown();
                 expect(component.quickPicker.selectedPreset).toBeDefined();
-                // @ts-ignore: Suppressing error for testing purposes
                 expect(component.quickPicker.selectedPreset).toEqual(
+                    // @ts-ignore: Suppressing error for testing purposes
                     component.timeFrame.selectedPresetId
                 );
             });

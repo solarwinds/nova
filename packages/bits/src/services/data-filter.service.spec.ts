@@ -139,8 +139,8 @@ describe("DataFilterService >", () => {
 
     describe("with parent >", () => {
         it("should correctly register and get filters with one parent", () => {
-            // @ts-ignore: Suppressing error for testing purposes
             service = new DataFilterService(
+                // @ts-ignore: Suppressing error for testing purposes
                 new DataFilterServiceSearchClassStub(null)
             );
             const filterComponents = {
@@ -156,9 +156,9 @@ describe("DataFilterService >", () => {
         });
 
         it("should correctly register and get filters with multiple parents", () => {
-            // @ts-ignore: Suppressing error for testing purposes
             service = new DataFilterService(
                 new DataFilterServiceSearchClassStub(
+                    // @ts-ignore: Suppressing error for testing purposes
                     new DataFilterServicePaginatorClassStub(null)
                 )
             );
