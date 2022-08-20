@@ -224,7 +224,7 @@
                 ],
                 "indent": ["off"],
                 "max-len": [
-                    "error",
+                    "off",
                     {
                         "code": 160
                     }

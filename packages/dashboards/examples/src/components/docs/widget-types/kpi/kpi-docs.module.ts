@@ -92,8 +92,8 @@ export class KpiDocsModule {
     private backgroundColorDocsSetup() {
         this.comparatorsRegistry.registerComparators({
             "!=": {
-                // eslint-disable-next-line eqeqeq
                 comparatorFn: (actual: any, reference: any) =>
+                    // eslint-disable-next-line eqeqeq
                     actual != reference,
                 label: "Not equal",
             },

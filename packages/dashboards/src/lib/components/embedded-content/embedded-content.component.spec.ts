@@ -44,7 +44,6 @@ describe("EmbeddedContentComponent", () => {
         it("should create element with innerHTML and apply embedded sanitized content there, when mode is `html`", () => {
             component.sanitized = true;
             component.mode = EmbeddedContentMode.HTML;
-            // eslint-disable-next-line max-len
             component.customEmbeddedContent =
                 "<p><a href='../../example/index.html''>Link</a></p><script type='text/javascrip'>alert('hello world!');</script>";
             spyOn(console, "warn"); // suppress sanitization warning
@@ -53,7 +52,7 @@ describe("EmbeddedContentComponent", () => {
             const anchorElement = component.anchor.nativeElement;
             expect(anchorElement).toBeDefined();
             expect(anchorElement.innerHTML).toEqual(
-                '<p><a href="../../example/index.html">Link</a></p>'
+                `<p><a href="../../example/index.html">Link</a></p>`
             );
         });
     });

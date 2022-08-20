@@ -50,9 +50,10 @@ export class WidgetEditorComponent
             .subscribe((event: IEvent<IPreviewEventPayload>) => {
                 const payload = event.payload;
                 // TODO: Ensure that we have payload
-                // @ts-ignore
                 this.configurator?.previewPizzagnaComponent?.eventBus
+                    // @ts-ignore
                     ?.getStream(payload.id)
+                    // @ts-ignore
                     .next(payload.payload);
             });
         this._formPizzagnaComponent = value;

@@ -69,10 +69,11 @@ export class PizzagnaComponent implements OnChanges {
             .getStream(SET_PROPERTY_VALUE)
             .subscribe((event: IEvent<ISetPropertyPayload>) => {
                 // TODO: Ensure that payload is defined
-                // @ts-ignore: Object is possibly 'undefined'.
                 const p = immutableSet(
                     this.pizzagna,
+                    // @ts-ignore: Object is possibly 'undefined'.
                     event.payload.path,
+                    // @ts-ignore: Object is possibly 'undefined'.
                     event.payload.value
                 );
 
