@@ -16,14 +16,19 @@ describe("USERCONTROL search", () => {
         searchField = Atom.find(SearchAtom, "nui-demo-search");
         searchBtnAtom = searchField.getSearchButton();
         cancelBtnAtom = searchField.getCancelButton();
-        setFocusBtnAtom = Atom.find(ButtonAtom, "nui-demo-search-set-focus-btn");
+        setFocusBtnAtom = Atom.find(
+            ButtonAtom,
+            "nui-demo-search-set-focus-btn"
+        );
     });
 
     // cleanup
     afterEach(async () => {
         // enable and deactivate the component if necessary
         // cancel any on-going search, then clear out the input
-        if (await cancelBtnAtom.isIconShown()) { await cancelBtnAtom.click(); }
+        if (await cancelBtnAtom.isIconShown()) {
+            await cancelBtnAtom.click();
+        }
     });
 
     it("buttons should be disabled when 'disabled' prop is true", async () => {
@@ -37,7 +42,11 @@ describe("USERCONTROL search", () => {
     it("should search on enter key", async () => {
         await searchField.acceptInput("Lorem");
         await searchField.acceptInput(protractor.Key.ENTER);
-        expect(await browser.element(by.cssContainingText(".nui-highlighted", "Lorem")).isPresent()).toBe(true);
+        expect(
+            await browser
+                .element(by.cssContainingText(".nui-highlighted", "Lorem"))
+                .isPresent()
+        ).toBe(true);
     });
 
     it("should have focus depending on 'captureFocus' prop", async () => {

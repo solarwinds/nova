@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-external-libraries-summary",
     templateUrl: "./summary.component.html",
 })
-export class SummaryComponent { }
+export class SummaryComponent {}

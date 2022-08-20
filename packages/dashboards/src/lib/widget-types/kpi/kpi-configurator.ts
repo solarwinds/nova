@@ -22,12 +22,15 @@ import {
     NOVA_PIZZAGNA_BROADCASTER,
     NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
 } from "../../services/types";
-import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
+import {
+    IProviderConfiguration,
+    PizzagnaLayer,
+    WellKnownProviders,
+} from "../../types";
 import { REFRESHER_CONFIGURATOR } from "../common/configurator/components";
 import { DataSourceErrorComponent } from "../../configurator/components/widgets/configurator-items/data-source-error/data-source-error.component";
 
 /* eslint-enable max-len */
-
 
 export const DEFAULT_KPI_FORMATTERS: IFormatterDefinition[] = [
     {
@@ -65,10 +68,7 @@ export const kpiConfigurator = {
             properties: {
                 elementClass: "flex-grow-1 overflow-auto nui-scroll-shadows",
                 // references to other components laid out in this form
-                nodes: [
-                    "presentation",
-                    "tiles",
-                ],
+                nodes: ["presentation", "tiles"],
             },
             providers: {
                 [WellKnownProviders.FormattersRegistry]: {
@@ -88,7 +88,8 @@ export const kpiConfigurator = {
         // /presentation/titleAndDescription
         titleAndDescription: {
             id: "titleAndDescription",
-            componentType: TitleAndDescriptionConfigurationComponent.lateLoadKey,
+            componentType:
+                TitleAndDescriptionConfigurationComponent.lateLoadKey,
             providers: {
                 converter: {
                     providerId: NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
@@ -106,10 +107,13 @@ export const kpiConfigurator = {
                     {
                         // KPI tile description (label, color, etc.) configuration section
                         id: "description",
-                        componentType: KpiDescriptionConfigurationComponent.lateLoadKey,
+                        componentType:
+                            KpiDescriptionConfigurationComponent.lateLoadKey,
                         properties: {
                             configurableUnits: true,
-                            backgroundColors: [...DEFAULT_KPI_BACKGROUND_COLORS],
+                            backgroundColors: [
+                                ...DEFAULT_KPI_BACKGROUND_COLORS,
+                            ],
                         },
                         providers: {
                             // converter transforms the data between the widget and the form
@@ -118,8 +122,13 @@ export const kpiConfigurator = {
                                 properties: {
                                     formParts: [
                                         {
-                                            previewPath: "properties.widgetData",
-                                            keys: ["label", "backgroundColor", "units"],
+                                            previewPath:
+                                                "properties.widgetData",
+                                            keys: [
+                                                "label",
+                                                "backgroundColor",
+                                                "units",
+                                            ],
                                         },
                                     ],
                                 },
@@ -129,11 +138,13 @@ export const kpiConfigurator = {
                     {
                         // data source configuration section
                         id: "dataSource",
-                        componentType: DataSourceConfigurationComponent.lateLoadKey,
+                        componentType:
+                            DataSourceConfigurationComponent.lateLoadKey,
                         properties: {
                             // for the DataSourceConfigurationComponent, this defines the list of data sources to pick from
                             dataSourceProviders: [] as string[],
-                            errorComponent: DataSourceErrorComponent.lateLoadKey,
+                            errorComponent:
+                                DataSourceErrorComponent.lateLoadKey,
                         },
                         providers: {
                             // converter transforms the data source metadata between the widget and the form
@@ -149,7 +160,8 @@ export const kpiConfigurator = {
                                         },
                                         {
                                             // this component updates 'properties' of 'dataSource' via an adapter
-                                            previewPath: "providers.adapter.properties.dataSource",
+                                            previewPath:
+                                                "providers.adapter.properties.dataSource",
                                             keys: ["properties"],
                                         },
                                     ],
@@ -162,7 +174,9 @@ export const kpiConfigurator = {
                                         {
                                             trackOn: "component",
                                             key: "dataFieldIds",
-                                            paths: ["data.{parentComponentId}/formatting.properties.dataFieldIds"],
+                                            paths: [
+                                                "data.{parentComponentId}/formatting.properties.dataFieldIds",
+                                            ],
                                         },
                                     ] as IBroadcasterConfig[],
                                 },
@@ -172,7 +186,8 @@ export const kpiConfigurator = {
                     {
                         // thresholds configuration section
                         id: "thresholds",
-                        componentType: ThresholdsConfigurationComponent.lateLoadKey,
+                        componentType:
+                            ThresholdsConfigurationComponent.lateLoadKey,
                         providers: {
                             // converter transforms the data between the widget and the form
                             [WellKnownProviders.Converter]: {
@@ -181,7 +196,8 @@ export const kpiConfigurator = {
                                     formParts: [
                                         {
                                             // this component updates `thresholds` properties of `adapter`
-                                            previewPath: "providers.adapter.properties.thresholds",
+                                            previewPath:
+                                                "providers.adapter.properties.thresholds",
                                             keys: [
                                                 "criticalThresholdValue",
                                                 "warningThresholdValue",
@@ -196,9 +212,12 @@ export const kpiConfigurator = {
                     },
                     {
                         id: "backgroundColorRules",
-                        componentType: BackgroundColorRulesConfigurationComponent.lateLoadKey,
+                        componentType:
+                            BackgroundColorRulesConfigurationComponent.lateLoadKey,
                         properties: {
-                            backgroundColors: [...DEFAULT_KPI_BACKGROUND_COLORS],
+                            backgroundColors: [
+                                ...DEFAULT_KPI_BACKGROUND_COLORS,
+                            ],
                         },
                         providers: {
                             [WellKnownProviders.Converter]: {
@@ -206,7 +225,8 @@ export const kpiConfigurator = {
                                 properties: {
                                     formParts: [
                                         {
-                                            previewPath: "providers.kpiColorPrioritizer.properties",
+                                            previewPath:
+                                                "providers.kpiColorPrioritizer.properties",
                                             keys: ["rules"],
                                         },
                                     ],
@@ -216,14 +236,16 @@ export const kpiConfigurator = {
                     },
                     {
                         id: "formatting",
-                        componentType: PresentationConfigurationComponent.lateLoadKey,
+                        componentType:
+                            PresentationConfigurationComponent.lateLoadKey,
                         providers: {
                             [WellKnownProviders.Converter]: {
                                 providerId: NOVA_KPI_SECTION_CONVERTER,
                                 properties: {
                                     formParts: [
                                         {
-                                            previewPath: "properties.configuration.formatters.Value",
+                                            previewPath:
+                                                "properties.configuration.formatters.Value",
                                             keys: ["formatter"],
                                         },
                                     ],
@@ -237,7 +259,8 @@ export const kpiConfigurator = {
                             // Set default formatter to the configuration section as RawFormatterComponent.
                             // In case Kpi doesn't use the formatters yet, it will be overridden with default formatter value on first save
                             formatter: {
-                                componentType: RawFormatterComponent.lateLoadKey,
+                                componentType:
+                                    RawFormatterComponent.lateLoadKey,
                                 properties: {
                                     dataFieldIds: {
                                         value: "value",

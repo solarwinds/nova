@@ -23,9 +23,12 @@ import { IHasForm } from "../../../types";
     styleUrls: ["./widget-configurator-section.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    host: { class: "nui-widget-configurator-section"},
+    host: { class: "nui-widget-configurator-section" },
 })
-export class WidgetConfiguratorSectionComponent extends BaseLayout implements OnInit, OnDestroy, IHasForm {
+export class WidgetConfiguratorSectionComponent
+    extends BaseLayout
+    implements OnInit, OnDestroy, IHasForm
+{
     public static lateLoadKey = "WidgetConfiguratorSectionComponent";
 
     @Input() headerTextTemplate: TemplateRef<any>;
@@ -43,7 +46,8 @@ export class WidgetConfiguratorSectionComponent extends BaseLayout implements On
         changeDetector: ChangeDetectorRef,
         pizzagnaService: PizzagnaService,
         logger: LoggerService,
-        private formBuilder: FormBuilder) {
+        private formBuilder: FormBuilder
+    ) {
         super(changeDetector, pizzagnaService, logger);
     }
 

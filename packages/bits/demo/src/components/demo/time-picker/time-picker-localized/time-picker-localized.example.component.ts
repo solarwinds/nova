@@ -7,7 +7,6 @@ import moment, { Moment } from "moment/moment";
     templateUrl: "./time-picker-localized.example.component.html",
 })
 export class TimePickerLocalizedExampleComponent implements OnInit, OnDestroy {
-
     public minDate: Moment;
     public maxDate: Moment;
     public timeFrame: ITimeframe;

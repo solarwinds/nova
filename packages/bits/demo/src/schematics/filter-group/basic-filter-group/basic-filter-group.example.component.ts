@@ -1,9 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    Inject,
-    OnDestroy,
-} from "@angular/core";
+import { AfterViewInit, Component, Inject, OnDestroy } from "@angular/core";
 import {
     DataSourceService,
     INovaFilteringOutputs,
@@ -21,27 +16,31 @@ interface ExampleItem {
 }
 
 const RANDOM_ARRAY = [
-    {color: "regular-azure", status: "Critical"},
-    {color: "regular-black", status: "Warning"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-yellow", status: "Critical"},
-    {color: "regular-yellow", status: "Warning"},
-    {color: "regular-black", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Critical"},
+    { color: "regular-azure", status: "Critical" },
+    { color: "regular-black", status: "Warning" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-yellow", status: "Critical" },
+    { color: "regular-yellow", status: "Warning" },
+    { color: "regular-black", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Critical" },
 ];
 
 @Component({
     selector: "app-basic-filter-group-composite-example",
     templateUrl: "basic-filter-group.example.component.html",
-    providers: [{
-        provide: DataSourceService,
-        useClass: LocalFilteringDataSource,
-    }],
+    providers: [
+        {
+            provide: DataSourceService,
+            useClass: LocalFilteringDataSource,
+        },
+    ],
 })
-export class BasicFilterGroupExampleComponent implements AfterViewInit, OnDestroy {
+export class BasicFilterGroupExampleComponent
+    implements AfterViewInit, OnDestroy
+{
     public filterGroupItems: IFilterGroupItem[] = [
         {
             id: "color",
@@ -52,22 +51,26 @@ export class BasicFilterGroupExampleComponent implements AfterViewInit, OnDestro
                     value: "azure",
                     displayValue: "Azure FilterGroup Basic Example",
                     count: 3,
-                }, {
+                },
+                {
                     value: "black",
                     displayValue: "Black",
                     count: 2,
-                }, {
+                },
+                {
                     value: "blue",
                     displayValue: "Blue FilterGroup Basic Example",
                     count: 3,
-                }, {
+                },
+                {
                     value: "yellow",
                     displayValue: "Yellow",
                     count: 2,
                 },
             ],
             selectedFilterValues: [],
-        }, {
+        },
+        {
             id: "status",
             title: "Status",
             allFilterOptions: [
@@ -75,7 +78,8 @@ export class BasicFilterGroupExampleComponent implements AfterViewInit, OnDestro
                     value: "warning",
                     displayValue: "Warning",
                     count: 2,
-                }, {
+                },
+                {
                     value: "critical",
                     displayValue: "Critical",
                     count: 2,
@@ -106,16 +110,24 @@ export class BasicFilterGroupExampleComponent implements AfterViewInit, OnDestro
 
     private outputsSubscription: Subscription;
 
-    constructor(@Inject(DataSourceService) public dataSourceService: DataSourceService<ExampleItem>) {
-        (this.dataSourceService as LocalFilteringDataSource<ExampleItem>).setData(RANDOM_ARRAY);
+    constructor(
+        @Inject(DataSourceService)
+        public dataSourceService: DataSourceService<ExampleItem>
+    ) {
+        (
+            this.dataSourceService as LocalFilteringDataSource<ExampleItem>
+        ).setData(RANDOM_ARRAY);
     }
 
     ngAfterViewInit(): void {
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.filteringState = data;
-            // get counts of filters
-            this.recalculateCounts(data);
-        });
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.filteringState = data;
+                    // get counts of filters
+                    this.recalculateCounts(data);
+                }
+            );
         this.dataSourceService.applyFilters();
     }
 
@@ -128,8 +140,8 @@ export class BasicFilterGroupExampleComponent implements AfterViewInit, OnDestro
     }
 
     private recalculateCounts(filterData: INovaFilteringOutputs) {
-        this.filterGroupItems.forEach(filterGroupItem => {
-            filterGroupItem.allFilterOptions.forEach(filterOption => {
+        this.filterGroupItems.forEach((filterGroupItem) => {
+            filterGroupItem.allFilterOptions.forEach((filterOption) => {
                 const counts = filterData[filterGroupItem.id];
                 filterOption.count = counts[filterOption.value];
             });

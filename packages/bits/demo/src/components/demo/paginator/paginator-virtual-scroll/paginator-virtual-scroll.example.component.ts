@@ -7,4 +7,3 @@ import { Component } from "@angular/core";
 export class PaginatorVirtualScrollExampleComponent {
     public customPageSizeSet = [1, 30, 200];
 }
-

@@ -23,18 +23,28 @@ export class DonutGaugeTesterComponent implements OnInit, OnChanges {
     public contentPlugin: ChartDonutContentPlugin;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnChanges(changes: ComponentChanges<DonutGaugeTesterComponent>): void {
+    public ngOnChanges(
+        changes: ComponentChanges<DonutGaugeTesterComponent>
+    ): void {
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
-            this.chartAssist.update(GaugeUtil.update(this.seriesSet, this.gaugeConfig));
+            this.chartAssist.update(
+                GaugeUtil.update(this.seriesSet, this.gaugeConfig)
+            );
         }
     }
 
     public ngOnInit(): void {
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
         this.chartAssist.update(this.seriesSet);
     }
 }

@@ -14,12 +14,11 @@ declare const require: any;
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
-    [
-        BrowserDynamicTestingModule,
-        NoopAnimationsModule,
-    ],
+    [BrowserDynamicTestingModule, NoopAnimationsModule],
     platformBrowserDynamicTesting(),
-    { teardown: { destroyAfterEach: false } }
+    {
+        teardown: { destroyAfterEach: false },
+    }
 );
 
 // Then we find all the tests.

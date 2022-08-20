@@ -61,18 +61,21 @@ describe("PresentationConfigurationV2Component", () => {
             component.ngOnInit();
 
             component.form.get("properties")?.setValue({
-                dataFieldIds: {value: "firstUrlLabel", link: "firstUrl"},
+                dataFieldIds: { value: "firstUrlLabel", link: "firstUrl" },
             });
 
             const propertiesForm = formBuilder.group({
-                dataFieldIds: {value: "", link: ""},
+                dataFieldIds: { value: "", link: "" },
             });
             component.onFormReady(propertiesForm);
 
             expect(component.propertiesForm).toBe(propertiesForm);
-            expect(component.propertiesForm.value.dataFieldIds.value).toEqual("firstUrlLabel");
-            expect(component.propertiesForm.value.dataFieldIds.link).toEqual("firstUrl");
-
+            expect(component.propertiesForm.value.dataFieldIds.value).toEqual(
+                "firstUrlLabel"
+            );
+            expect(component.propertiesForm.value.dataFieldIds.link).toEqual(
+                "firstUrl"
+            );
         });
     });
 });

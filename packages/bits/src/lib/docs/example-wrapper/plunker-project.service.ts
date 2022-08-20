@@ -18,19 +18,26 @@ export class PlunkerProjectService {
 
         const modifySources = (source: string) =>
             // Handle non-existent less references that are just killing plunker
-            source.replace(/^.*@import \(reference\).*$/mg, "/* NUI LESS VARIABLES ARE NOT SUPPORTED YET */");
+            source.replace(
+                /^.*@import \(reference\).*$/gm,
+                "/* NUI LESS VARIABLES ARE NOT SUPPORTED YET */"
+            );
 
         // HACK FOR HANDLING FILENAME VARIATION: We're only appending '.example' to the prefix if the component doesn't already
         // have '-example' in its prefix. The presence of '-example' in the prefix indicates that the component doesn't
         // follow the convention of having a '.example' substring in its filenames. The '.example' substring is normally
         // used in determining the filename prefix to use for the example wrapper's code sources.
         const hyphenExampleSubstr = "-example";
-        const hyphenExampleSubstrFound = (prefix.indexOf(hyphenExampleSubstr) + hyphenExampleSubstr.length) === prefix.length;
-        const modifiedPrefix = `${prefix}${hyphenExampleSubstrFound ? "" : ".example"}`
+        const hyphenExampleSubstrFound =
+            prefix.indexOf(hyphenExampleSubstr) + hyphenExampleSubstr.length ===
+            prefix.length;
+        const modifiedPrefix = `${prefix}${
+            hyphenExampleSubstrFound ? "" : ".example"
+        }`;
         // END HACK
 
         // example files
-        Object.keys(sources).forEach( key => {
+        Object.keys(sources).forEach((key) => {
             form.append(
                 this.formInput(
                     `${modifiedPrefix}.component`,
@@ -60,7 +67,11 @@ export class PlunkerProjectService {
     }
 
     public getIndexHTMLInput(): HTMLInputElement {
-        return this.formInput("index", "html", this.plunkerFiles.getIndexFile());
+        return this.formInput(
+            "index",
+            "html",
+            this.plunkerFiles.getIndexFile()
+        );
     }
 
     public getMainTSInput(): HTMLInputElement {
@@ -68,13 +79,20 @@ export class PlunkerProjectService {
     }
 
     public getConfigJSInput(): HTMLInputElement {
-
-        return this.formInput("config", "js", this.plunkerFiles.getSystemJsConfigFile());
+        return this.formInput(
+            "config",
+            "js",
+            this.plunkerFiles.getSystemJsConfigFile()
+        );
     }
 
-    public getAppComponentTSInput(filePrefix: string, fileContent: string): HTMLInputElement {
+    public getAppComponentTSInput(
+        filePrefix: string,
+        fileContent: string
+    ): HTMLInputElement {
         const className: string | undefined = this.getClassName(fileContent);
-        const selectorName: string | undefined = this.getSelectorName(fileContent);
+        const selectorName: string | undefined =
+            this.getSelectorName(fileContent);
 
         if (!className) {
             throw new Error("Provided file should contain a class");
@@ -84,10 +102,18 @@ export class PlunkerProjectService {
             throw new Error("Provided file should contain selector");
         }
 
-        return this.formInput("app", "ts", this.plunkerFiles.getAppFile(filePrefix, className, selectorName));
+        return this.formInput(
+            "app",
+            "ts",
+            this.plunkerFiles.getAppFile(filePrefix, className, selectorName)
+        );
     }
 
-    private formInput(prefixName: string, extName: string, content: string): HTMLInputElement {
+    private formInput(
+        prefixName: string,
+        extName: string,
+        content: string
+    ): HTMLInputElement {
         const inputEl: HTMLInputElement = this.document.createElement("input");
         inputEl.setAttribute("type", "hidden");
         inputEl.setAttribute("name", `files[${prefixName}.${extName}]`);
@@ -97,11 +123,14 @@ export class PlunkerProjectService {
     }
 
     private getClassName(fileContent: string): string | undefined {
-        const matches: RegExpMatchArray | null = fileContent.match(/export class (\w+Component)/);
+        const matches: RegExpMatchArray | null = fileContent.match(
+            /export class (\w+Component)/
+        );
         return (matches || [])[1]; // capture exported component name
     }
     private getSelectorName(fileContent: string): string | undefined {
-        const matches: RegExpMatchArray | null = fileContent.match(/selector: \"(.*)\"/);
+        const matches: RegExpMatchArray | null =
+            fileContent.match(/selector: \"(.*)\"/);
         return (matches || [])[1]; // capture selector
     }
 }

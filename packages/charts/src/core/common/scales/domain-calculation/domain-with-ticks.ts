@@ -4,8 +4,16 @@ import { IAccessors, IChartSeries } from "../../types";
 import { domain } from "../helpers/domain";
 import { DomainCalculator, IDomainWithTicksCalculator, IScale } from "../types";
 
-export const getAutomaticDomainWithTicks = (config: IAxisConfig, axisGenerator: any, domainCalculator: DomainCalculator): IDomainWithTicksCalculator  => {
-    const result: IDomainWithTicksCalculator = (chartSeriesSet: IChartSeries<IAccessors>[], scaleKey: string, scale: IScale<any>): any[] => {
+export const getAutomaticDomainWithTicks = (
+    config: IAxisConfig,
+    axisGenerator: any,
+    domainCalculator: DomainCalculator
+): IDomainWithTicksCalculator => {
+    const result: IDomainWithTicksCalculator = (
+        chartSeriesSet: IChartSeries<IAccessors>[],
+        scaleKey: string,
+        scale: IScale<any>
+    ): any[] => {
         const mergedDomains = domainCalculator(chartSeriesSet, scaleKey, scale);
         const clonedScale = cloneDeep(scale);
         domain(clonedScale, mergedDomains);
@@ -25,4 +33,4 @@ export const getAutomaticDomainWithTicks = (config: IAxisConfig, axisGenerator: 
     };
     result.domainWithTicks = true;
     return result;
-}
+};

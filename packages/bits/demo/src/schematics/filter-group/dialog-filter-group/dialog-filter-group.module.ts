@@ -39,6 +39,4 @@ import { ItemPickerCompositeModule } from "./item-picker/item-picker.module";
     providers: [FilterGroupService],
     entryComponents: [FilterGroupCompositeDialogComponent],
 })
-
-export class DialogFilterGroupCompositeModule {
-}
+export class DialogFilterGroupCompositeModule {}

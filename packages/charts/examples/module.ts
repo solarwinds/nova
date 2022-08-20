@@ -20,14 +20,11 @@ import { AnimationsModule } from "./environments/environment";
         NuiDocsModule,
         NuiExpanderModule,
     ],
-    declarations: [
-        AppComponent,
-        ChartExampleIndexComponent,
-    ],
+    declarations: [AppComponent, ChartExampleIndexComponent],
     providers: [
         { provide: TRANSLATIONS_FORMAT, useValue: "xlf" },
         { provide: TRANSLATIONS, useValue: "" },
     ],
     bootstrap: [AppComponent],
-}) export class ChartsDemoModule {
-}
+})
+export class ChartsDemoModule {}

@@ -1,11 +1,16 @@
 import { Injectable, OnDestroy, Optional, SkipSelf } from "@angular/core";
 import _forEach from "lodash/forEach";
 import _omit from "lodash/omit";
-import { Subject, Subscription} from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { INovaFilters } from "./data-source/public-api";
-import { IFilteringParticipant, IFilteringParticipants, IFilterPub, IFilters } from "./public-api";
+import {
+    IFilteringParticipant,
+    IFilteringParticipants,
+    IFilterPub,
+    IFilters,
+} from "./public-api";
 
 /**
  * <example-url>./../examples/index.html#/common/data-filter-service</example-url>
@@ -18,11 +23,11 @@ export class DataFilterService implements IFilterPub, OnDestroy {
     private destroySubscriptions: Subscription[] = [];
     constructor(@Optional() @SkipSelf() public parent: DataFilterService) {
         if (this.parent) {
-            this.parent.filteringSubject.pipe(
-                takeUntil(this.onDestroy$)
-            ).subscribe(() => {
-                this.filteringSubject.next();
-            });
+            this.parent.filteringSubject
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(() => {
+                    this.filteringSubject.next();
+                });
         }
     }
 
@@ -35,9 +40,11 @@ export class DataFilterService implements IFilterPub, OnDestroy {
         // subscribing to onDestroy of filtering components to remove them from memory when this components are destroyed
         _forEach(this._filters, (node: IFilteringParticipant, key: string) => {
             if (node.componentInstance.onDestroy$) {
-                this.destroySubscriptions.push(node.componentInstance.onDestroy$.subscribe(() => {
-                    this.unregisterFilters([key]);
-                }));
+                this.destroySubscriptions.push(
+                    node.componentInstance.onDestroy$.subscribe(() => {
+                        this.unregisterFilters([key]);
+                    })
+                );
             }
         });
         this.filteringSubject.next();
@@ -57,7 +64,10 @@ export class DataFilterService implements IFilterPub, OnDestroy {
 
         // Merge current filters
         _forEach(this._filters, (node: IFilteringParticipant, key: string) => {
-            const getFilters = node && node.componentInstance && node.componentInstance.getFilters;
+            const getFilters =
+                node &&
+                node.componentInstance &&
+                node.componentInstance.getFilters;
             if (typeof getFilters === "function") {
                 filters[key] = node.componentInstance.getFilters();
             }
@@ -72,6 +82,8 @@ export class DataFilterService implements IFilterPub, OnDestroy {
     ngOnDestroy(): void {
         this.onDestroy$.next();
         this.onDestroy$.complete();
-        this.destroySubscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.destroySubscriptions.forEach((subscription) =>
+            subscription.unsubscribe()
+        );
     }
 }

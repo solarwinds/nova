@@ -43,14 +43,23 @@ export class LineChartInterruptedCalculatedExampleComponent implements OnInit {
         // The line renderer will make the chart look like a line chart.
         const renderer = new LineRenderer();
         // Line accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
 
         // Renderer for the missing dataSeries
-        const rendererMissing = new LineRenderer(new MissingDataLineRendererConfig());
-        const accessorsMissing = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const rendererMissing = new LineRenderer(
+            new MissingDataLineRendererConfig()
+        );
+        const accessorsMissing = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
         // Link the colors from 'parent' series
         const origColorAccessor = accessorsMissing.series.color;
-        accessorsMissing.series.color = (seriesId, series) => origColorAccessor?.(seriesId.split("__")[0], series);
+        accessorsMissing.series.color = (seriesId, series) =>
+            origColorAccessor?.(seriesId.split("__")[0], series);
 
         // We need to store the original value of the 'defined' accessor
         const origDefinedAccessor = accessorsMissing.data.defined;

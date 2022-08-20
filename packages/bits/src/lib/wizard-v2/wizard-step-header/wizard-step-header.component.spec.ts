@@ -8,17 +8,14 @@ import { STEP_STATE } from "@angular/cdk/stepper";
 
 const fakeStep = {} as WizardStepV2Component;
 
-describe("components >",() => {
+describe("components >", () => {
     describe("WizardStepHeader", () => {
         let component: WizardStepHeaderComponent;
         let fixture: ComponentFixture<WizardStepHeaderComponent>;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    WizardStepHeaderComponent,
-                    IconComponent,
-                ],
+                declarations: [WizardStepHeaderComponent, IconComponent],
             });
 
             fixture = TestBed.createComponent(WizardStepHeaderComponent);
@@ -31,7 +28,10 @@ describe("components >",() => {
                 const spy = spyOn(component["_focusMonitor"], "monitor");
 
                 component.ngAfterViewInit();
-                expect(spy).toHaveBeenCalledWith(component["_elementRef"], true);
+                expect(spy).toHaveBeenCalledWith(
+                    component["_elementRef"],
+                    true
+                );
             });
         });
 
@@ -49,7 +49,10 @@ describe("components >",() => {
                 const spy = spyOn(component["_focusMonitor"], "focusVia");
 
                 component.focus();
-                expect(spy).toHaveBeenCalledWith(component["_elementRef"], "program");
+                expect(spy).toHaveBeenCalledWith(
+                    component["_elementRef"],
+                    "program"
+                );
             });
         });
 
@@ -64,11 +67,16 @@ describe("components >",() => {
                 const spy = spyOn(component, "updateStepStateConfig" as never);
 
                 component.ngOnChanges(config);
-                expect(spy).toHaveBeenCalledWith(config.stepStateConfig.currentValue as never);
+                expect(spy).toHaveBeenCalledWith(
+                    config.stepStateConfig.currentValue as never
+                );
             });
 
             it("should call createStepStateConfigMap method", () => {
-                const spy = spyOn(component, "createStepStateConfigMap" as never);
+                const spy = spyOn(
+                    component,
+                    "createStepStateConfigMap" as never
+                );
 
                 component.ngOnChanges(config);
                 expect(spy).toHaveBeenCalled();
@@ -94,7 +102,9 @@ describe("components >",() => {
             });
 
             it("should return null if user pass template as input for label", () => {
-                const label = new WizardStepLabelDirective({} as TemplateRef<any>);
+                const label = new WizardStepLabelDirective(
+                    {} as TemplateRef<any>
+                );
 
                 component.label = label;
                 expect(component.stringLabel).toEqual(null);
@@ -114,7 +124,9 @@ describe("components >",() => {
             });
 
             it("should return wizardDirective if user pass template as input for label", () => {
-                const label = new WizardStepLabelDirective({} as TemplateRef<any>);
+                const label = new WizardStepLabelDirective(
+                    {} as TemplateRef<any>
+                );
 
                 component.label = label;
                 expect(component.templateLabel).toEqual(label);
@@ -123,7 +135,9 @@ describe("components >",() => {
 
         describe("getStepState", () => {
             it("should return error state if step invalid", () => {
-                const stepMock: WizardStepV2Component = { hasError: true } as WizardStepV2Component;
+                const stepMock: WizardStepV2Component = {
+                    hasError: true,
+                } as WizardStepV2Component;
 
                 component.selected = true;
                 const state = component["getStepState"](stepMock);
@@ -132,7 +146,8 @@ describe("components >",() => {
             });
 
             it("should return edit state for current no completed step", () => {
-                const stepMock: WizardStepV2Component = {} as WizardStepV2Component;
+                const stepMock: WizardStepV2Component =
+                    {} as WizardStepV2Component;
 
                 component.selected = true;
                 const state = component["getStepState"](stepMock);
@@ -141,7 +156,9 @@ describe("components >",() => {
             });
 
             it("should return complete state for completed step", () => {
-                const stepMock: WizardStepV2Component = { completed: true } as WizardStepV2Component;
+                const stepMock: WizardStepV2Component = {
+                    completed: true,
+                } as WizardStepV2Component;
 
                 const state = component["getStepState"](stepMock);
 
@@ -149,7 +166,8 @@ describe("components >",() => {
             });
 
             it("should return number state", () => {
-                const stepMock: WizardStepV2Component = {} as WizardStepV2Component;
+                const stepMock: WizardStepV2Component =
+                    {} as WizardStepV2Component;
 
                 const state = component["getStepState"](stepMock);
 

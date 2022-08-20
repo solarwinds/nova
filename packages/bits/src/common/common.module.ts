@@ -5,11 +5,14 @@ import { CommonModule, DatePipe } from "@angular/common";
 import { NgModule, Provider } from "@angular/core";
 // This is not technically used here, but it does pull in the type for $localize
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import {LocalizeFn} from "@angular/localize/init";
+import { LocalizeFn } from "@angular/localize/init";
 
 import { imagesData as IMAGES_PRESET } from "../constants/images";
 import { imagesPresetToken } from "../constants/images.constants";
-import { unitConversionConstants, unitConversionToken } from "../constants/unit-conversion.constants";
+import {
+    unitConversionConstants,
+    unitConversionToken,
+} from "../constants/unit-conversion.constants";
 import { NUI_ENV_PROVIDER } from "../environment";
 import { SelectorService } from "../lib/selector/selector.service";
 import { LimitToPipe } from "../pipes/limit-to.pipe";
@@ -43,9 +46,7 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
  * @ignore
  */
 @NgModule({
-    imports: [
-        CommonModule,
-    ],
+    imports: [CommonModule],
     providers: [
         DragAndDropService,
         EventBusService,
@@ -63,9 +64,12 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         DomUtilService,
         SelectorService,
         HistoryStorage,
-        {provide: "windowObject", useValue: window},
-        {provide: unitConversionToken, useValue: unitConversionConstants} as Provider,
-        {provide: imagesPresetToken, useValue: IMAGES_PRESET} as Provider,
+        { provide: "windowObject", useValue: window },
+        {
+            provide: unitConversionToken,
+            useValue: unitConversionConstants,
+        } as Provider,
+        { provide: imagesPresetToken, useValue: IMAGES_PRESET } as Provider,
     ],
     declarations: [
         ClickInterceptorDirective,
@@ -95,8 +99,6 @@ import { ZoomContentDirective } from "./directives/zoom-content/zoom-content.dir
         HighlightPipe,
         ZoomContentDirective,
     ],
-    entryComponents: [
-    ],
+    entryComponents: [],
 })
-export class NuiCommonModule {
-}
+export class NuiCommonModule {}

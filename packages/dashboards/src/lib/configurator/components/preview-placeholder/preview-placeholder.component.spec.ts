@@ -8,9 +8,8 @@ describe("PreviewPlaceholderComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [ PreviewPlaceholderComponent ],
-        })
-            .compileComponents();
+            declarations: [PreviewPlaceholderComponent],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

@@ -7,7 +7,9 @@ import { Directive, TemplateRef } from "@angular/core";
 
 @Directive({
     selector: "[nuiHeaderCellDef]",
-    providers: [{ provide: CdkHeaderCellDef, useExisting: TableHeaderCellDefDirective }],
+    providers: [
+        { provide: CdkHeaderCellDef, useExisting: TableHeaderCellDefDirective },
+    ],
 })
 export class TableHeaderCellDefDirective extends CdkHeaderCellDef {
     constructor(public template: TemplateRef<any>) {

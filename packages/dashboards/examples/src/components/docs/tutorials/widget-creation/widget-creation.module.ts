@@ -2,19 +2,30 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiButtonModule, NuiDocsModule, NuiImageModule, NuiMessageModule, NuiRepeatModule, NuiSwitchModule, NuiToastModule } from "@nova-ui/bits";
+import {
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiImageModule,
+    NuiMessageModule,
+    NuiRepeatModule,
+    NuiSwitchModule,
+    NuiToastModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { WidgetCreationDocsComponent } from "./widget-creation-docs.component";
-import { WidgetCreationComponent, WidgetTemplateSelectionComponent } from "./widget-creation.component";
+import {
+    WidgetCreationComponent,
+    WidgetTemplateSelectionComponent,
+} from "./widget-creation.component";
 
 const routes = [
     {
         path: "",
         component: WidgetCreationDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -23,8 +34,8 @@ const routes = [
         path: "example",
         component: WidgetCreationComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -49,7 +60,6 @@ const routes = [
         WidgetCreationComponent,
         WidgetTemplateSelectionComponent,
     ],
-    entryComponents: [
-    ],
+    entryComponents: [],
 })
-export class WidgetCreationModule { }
+export class WidgetCreationModule {}

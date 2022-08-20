@@ -8,7 +8,11 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 export class RadioGroupVisualTestComponent implements OnInit {
     public disabledForm: FormGroup;
     public colors = ["Red", "Green", "Blue"];
-    public colorHints = { "Red": "hot color", "Green": "color of nature", "Blue": "color of sky" };
+    public colorHints = {
+        Red: "hot color",
+        Green: "color of nature",
+        Blue: "color of sky",
+    };
     public fruits = ["Banana", "Orange", "Kiwi", "Papaya"];
     public selectedFruit: string;
     public selectedColor: string;
@@ -17,7 +21,7 @@ export class RadioGroupVisualTestComponent implements OnInit {
 
     public ngOnInit() {
         this.disabledForm = this.formBuilder.group({
-            radioGroup: this.formBuilder.control({value: "", disabled: true}),
+            radioGroup: this.formBuilder.control({ value: "", disabled: true }),
         });
     }
 }

@@ -1,11 +1,19 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, SimpleChanges, ViewEncapsulation } from "@angular/core";
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    SimpleChanges,
+    ViewEncapsulation,
+} from "@angular/core";
 
 import { LegendOrientation } from "./types";
 
 @Component({
     selector: "nui-legend",
     // eslint-disable-next-line
-    host: { "class": "d-inline-block" },
+    host: { class: "d-inline-block" },
     templateUrl: "./legend.component.html",
     encapsulation: ViewEncapsulation.Emulated,
 })
@@ -54,5 +62,4 @@ export class LegendComponent implements OnChanges, OnDestroy {
     public ngOnDestroy(): void {
         this.activeChanged.complete();
     }
-
 }

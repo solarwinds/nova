@@ -27,7 +27,9 @@ import { extractTouchedChanges } from "./touched-changes-helper";
     styleUrls: ["./form-field.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class FormFieldComponent implements AfterContentInit, AfterContentChecked {
+export class FormFieldComponent
+    implements AfterContentInit, AfterContentChecked
+{
     /**
      * Form control obtained from the parent reactive form
      */
@@ -62,34 +64,38 @@ export class FormFieldComponent implements AfterContentInit, AfterContentChecked
      */
     @Input() showOptionalText = true;
 
-    @ContentChildren(ValidationMessageComponent) validationMessages: QueryList<ValidationMessageComponent>;
+    @ContentChildren(ValidationMessageComponent)
+    validationMessages: QueryList<ValidationMessageComponent>;
 
-    @ContentChild(forwardRef(() => NuiFormFieldControl)) nuiFormControl: NuiFormFieldControl;
+    @ContentChild(forwardRef(() => NuiFormFieldControl))
+    nuiFormControl: NuiFormFieldControl;
 
     public controlIsOptional: boolean = false;
 
     ngAfterContentChecked() {
-        this.controlIsOptional = this.showOptionalText && !this.hasRequiredField(this.control);
+        this.controlIsOptional =
+            this.showOptionalText && !this.hasRequiredField(this.control);
     }
 
     public ngAfterContentInit() {
         if (this.control) {
-            merge(this.control.valueChanges, this.control.statusChanges, extractTouchedChanges(this.control))
-                .subscribe(
-                    () => {
-                        this.validationMessages.forEach(message => {
-                            if (_isNull(this.control.errors)) {
-                                message.show = false;
-                            } else {
-                                message.show = !!this.control.errors[message.for];
-                            }
-                        });
-
-                        if (this.nuiFormControl) {
-                            this.nuiFormControl.isInErrorState = this.control.invalid;
-                        }
+            merge(
+                this.control.valueChanges,
+                this.control.statusChanges,
+                extractTouchedChanges(this.control)
+            ).subscribe(() => {
+                this.validationMessages.forEach((message) => {
+                    if (_isNull(this.control.errors)) {
+                        message.show = false;
+                    } else {
+                        message.show = !!this.control.errors[message.for];
                     }
-                );
+                });
+
+                if (this.nuiFormControl) {
+                    this.nuiFormControl.isInErrorState = this.control.invalid;
+                }
+            });
         }
         if (this.nuiFormControl) {
             // using setTimeout to prevent "expression changed after it has been checked" error
@@ -121,11 +127,14 @@ export class FormFieldComponent implements AfterContentInit, AfterContentChecked
         }
         // This also works for a form Group
         if ((abstractControl as FormGroup)["controls"]) {
-            _forOwn((abstractControl as FormGroup)["controls"], (control: AbstractControl) => {
-                if (control && this.hasRequiredField(control)) {
-                    return true;
+            _forOwn(
+                (abstractControl as FormGroup)["controls"],
+                (control: AbstractControl) => {
+                    if (control && this.hasRequiredField(control)) {
+                        return true;
+                    }
                 }
-            });
+            );
         }
         return false;
     }

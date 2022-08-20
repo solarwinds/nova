@@ -5,9 +5,8 @@ const fs = require("fs");
 module.exports = {
     install: function (less, pluginManager, functions) {
         functions.add("process", function (file) {
-
             //break up the less file into lines.
-            const lines = fs.readFileSync(file.value, 'utf-8').split('\n');
+            const lines = fs.readFileSync(file.value, "utf-8").split("\n");
 
             let finalString = "";
             let firstItem = true;
@@ -28,4 +27,3 @@ module.exports = {
         });
     },
 };
-

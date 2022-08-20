@@ -13,7 +13,10 @@ xdescribe("Visual Tests: Filtered View Schematics", () => {
     beforeEach(async () => {
         eyes = await Helpers.prepareEyes();
         await Helpers.disableCSSAnimations(Animations.ALL);
-        checkboxJustified = Atom.findIn(CheckboxGroupAtom, element(by.className("nui-checkbox-group")));
+        checkboxJustified = Atom.findIn(
+            CheckboxGroupAtom,
+            element(by.className("nui-checkbox-group"))
+        );
     });
 
     afterAll(async () => {
@@ -26,11 +29,15 @@ xdescribe("Visual Tests: Filtered View Schematics", () => {
         await eyes.open(browser, "NUI", "Filtered View");
         await eyes.checkWindow("Filtered View List");
 
-        await Helpers.prepareBrowser(`schematics/filtered-view/list-pagination`);
+        await Helpers.prepareBrowser(
+            `schematics/filtered-view/list-pagination`
+        );
         await filterByFirstOption();
         await eyes.checkWindow("Filtered View List with Pagination");
 
-        await Helpers.prepareBrowser(`schematics/filtered-view/list-virtual-scroll`);
+        await Helpers.prepareBrowser(
+            `schematics/filtered-view/list-virtual-scroll`
+        );
         await filterByFirstOption();
         await eyes.checkWindow("Filtered View List with Virtual Scroll");
 
@@ -38,25 +45,41 @@ xdescribe("Visual Tests: Filtered View Schematics", () => {
         await filterByFirstOption();
         await eyes.checkWindow("Filtered View Table");
 
-        await Helpers.prepareBrowser(`schematics/filtered-view/table-pagination`);
+        await Helpers.prepareBrowser(
+            `schematics/filtered-view/table-pagination`
+        );
         await filterByFirstOption();
         await eyes.checkWindow("Filtered View Table with Pagination");
 
-        await Helpers.prepareBrowser(`schematics/filtered-view/table-pagination-selection`);
+        await Helpers.prepareBrowser(
+            `schematics/filtered-view/table-pagination-selection`
+        );
         await filterByFirstOption();
-        await eyes.checkWindow("Filtered View Table with Pagination and Selection");
+        await eyes.checkWindow(
+            "Filtered View Table with Pagination and Selection"
+        );
 
-        await Helpers.prepareBrowser(`schematics/filtered-view/table-virtual-scroll`);
+        await Helpers.prepareBrowser(
+            `schematics/filtered-view/table-virtual-scroll`
+        );
         await filterByFirstOption();
         await eyes.checkWindow("Filtered View Table with Virtual Scroll");
 
-        await Helpers.prepareBrowser(`schematics/filtered-view/table-virtual-scroll-selection`);
+        await Helpers.prepareBrowser(
+            `schematics/filtered-view/table-virtual-scroll-selection`
+        );
         await filterByFirstOption();
-        await eyes.checkWindow("Filtered View Table with Virtual Scroll and Selection");
+        await eyes.checkWindow(
+            "Filtered View Table with Virtual Scroll and Selection"
+        );
 
-        await Helpers.prepareBrowser(`schematics/filtered-view/table-virtual-scroll-custom`);
+        await Helpers.prepareBrowser(
+            `schematics/filtered-view/table-virtual-scroll-custom`
+        );
         await filterByFirstOption();
-        await eyes.checkWindow("Filtered View Table with Virtual Scroll with Custom Strategy");
+        await eyes.checkWindow(
+            "Filtered View Table with Virtual Scroll with Custom Strategy"
+        );
 
         Helpers.switchDarkTheme("on");
         await eyes.checkWindow("Dark theme");
@@ -68,5 +91,4 @@ xdescribe("Visual Tests: Filtered View Schematics", () => {
     async function filterByFirstOption(): Promise<void> {
         return checkboxJustified.getFirst().setChecked(true);
     }
-
 });

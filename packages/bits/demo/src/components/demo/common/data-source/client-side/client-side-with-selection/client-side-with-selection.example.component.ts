@@ -1,7 +1,20 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    ViewChild,
+} from "@angular/core";
 import {
     ClientSideDataSource,
-    INovaFilteringOutputs, ListService, PaginatorComponent, RepeatComponent, RepeatSelectionMode, SearchComponent, SelectionType,
+    INovaFilteringOutputs,
+    ListService,
+    PaginatorComponent,
+    RepeatComponent,
+    RepeatSelectionMode,
+    SearchComponent,
+    SelectionType,
 } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 
@@ -15,7 +28,9 @@ interface IExampleItem {
     templateUrl: "./client-side-with-selection.example.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataSourceWithSelectionExampleComponent implements AfterViewInit, OnDestroy {
+export class DataSourceWithSelectionExampleComponent
+    implements AfterViewInit, OnDestroy
+{
     public searchTerm = "";
     public page = 1;
 
@@ -27,9 +42,11 @@ export class DataSourceWithSelectionExampleComponent implements AfterViewInit, O
 
     private outputsSubscription: Subscription;
 
-    constructor(public dataSourceService: ClientSideDataSource<IExampleItem>,
+    constructor(
+        public dataSourceService: ClientSideDataSource<IExampleItem>,
         public changeDetection: ChangeDetectorRef,
-        private listService: ListService) {
+        private listService: ListService
+    ) {
         dataSourceService.setData(getData());
     }
 
@@ -46,12 +63,17 @@ export class DataSourceWithSelectionExampleComponent implements AfterViewInit, O
             },
         });
 
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.state = { ...this.state, ...data };
-            this.state = this.listService.updateSelectionState(this.state);
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.state = { ...this.state, ...data };
+                    this.state = this.listService.updateSelectionState(
+                        this.state
+                    );
 
-            this.changeDetection.detectChanges();
-        });
+                    this.changeDetection.detectChanges();
+                }
+            );
 
         await this.applyFilters();
     }
@@ -69,7 +91,11 @@ export class DataSourceWithSelectionExampleComponent implements AfterViewInit, O
     }
 
     public onRepeatOutput(selectedItems: IExampleItem[]) {
-        this.state = this.listService.selectItems(selectedItems, RepeatSelectionMode.multi, this.state);
+        this.state = this.listService.selectItems(
+            selectedItems,
+            RepeatSelectionMode.multi,
+            this.state
+        );
     }
 }
 

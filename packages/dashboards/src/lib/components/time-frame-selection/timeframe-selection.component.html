@@ -1,18 +1,21 @@
-<nui-time-frame-bar [minDate]="minDateAsMoment"
-                    [maxDate]="maxDateAsMoment"
-                    [timeFrame]="currentTimeframe"
-                    (timeFrameChange)="onTimeframeChange(history.restart($event))"
-                    [historyIndex]="history.index"
-                    (undo)="onTimeframeChange(history.undo())"
-                    (clear)="onTimeframeChange(history.restart())">
-
+<nui-time-frame-bar
+    [minDate]="minDateAsMoment"
+    [maxDate]="maxDateAsMoment"
+    [timeFrame]="currentTimeframe"
+    (timeFrameChange)="onTimeframeChange(history.restart($event))"
+    [historyIndex]="history.index"
+    (undo)="onTimeframeChange(history.undo())"
+    (clear)="onTimeframeChange(history.restart())"
+>
     <!-- content for default projection slot -->
     <nui-icon icon="calendar" class="pr-3"></nui-icon>
-    {{currentTimeframe | timeFrame}}
+    {{ currentTimeframe | timeFrame }}
 
     <!-- content for time frame selection projection slot -->
-    <nui-quick-picker [presets]="timeframeService.currentPresets" timeFrameSelection>
+    <nui-quick-picker
+        [presets]="timeframeService.currentPresets"
+        timeFrameSelection
+    >
         <nui-time-frame-picker></nui-time-frame-picker>
     </nui-quick-picker>
-
 </nui-time-frame-bar>

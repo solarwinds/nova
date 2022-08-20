@@ -1,15 +1,21 @@
-<nui-combobox-v2 placeholder="Select Item" i18n-placeholder
-                 [formControl]="comboboxControl"
-                 [isTypeaheadEnabled]="false"
-                 #combobox>
-
-    <cdk-virtual-scroll-viewport itemSize="30"
-                                 [minBufferPx]="300"
-                                 [maxBufferPx]="600"
-                                 [style.height.px]="containerHeight">
-
+<nui-combobox-v2
+    placeholder="Select Item"
+    i18n-placeholder
+    [formControl]="comboboxControl"
+    [isTypeaheadEnabled]="false"
+    #combobox
+>
+    <cdk-virtual-scroll-viewport
+        itemSize="30"
+        [minBufferPx]="300"
+        [maxBufferPx]="600"
+        [style.height.px]="containerHeight"
+    >
         <div *cdkVirtualFor="let item of filteredItems | async; index as i">
-            <nui-select-v2-option [value]="item" class="d-flex align-items-center">
+            <nui-select-v2-option
+                [value]="item"
+                class="d-flex align-items-center"
+            >
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
             </nui-select-v2-option>
         </div>

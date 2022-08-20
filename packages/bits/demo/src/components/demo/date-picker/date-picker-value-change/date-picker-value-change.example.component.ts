@@ -13,6 +13,8 @@ export class DatePickerValueChangeExampleComponent {
 
     public dateChanged(event: Moment) {
         this.selectedDate = new Date(event.valueOf());
-        this.toastService.info({message: $localize `Selected date: ${event.toString()}`});
+        this.toastService.info({
+            message: $localize`Selected date: ${event.toString()}`,
+        });
     }
 }

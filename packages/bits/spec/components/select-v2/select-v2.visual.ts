@@ -21,7 +21,10 @@ describe(`Visual tests: ${name}`, () => {
     beforeAll(async () => {
         selectBasic = Atom.find(SelectV2Atom, "basic");
         selectErrorState = Atom.find(SelectV2Atom, "error-state");
-        selectDisplayValueSmall = Atom.find(SelectV2Atom, "display-value-mw200");
+        selectDisplayValueSmall = Atom.find(
+            SelectV2Atom,
+            "display-value-mw200"
+        );
         selectDisplayValue = Atom.find(SelectV2Atom, "display-value");
         selectGrouped = Atom.find(SelectV2Atom, "grouped");
         selectInForm = Atom.find(SelectV2Atom, "reactive-form");

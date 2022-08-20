@@ -1,14 +1,36 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from "@angular/forms";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { IProportionalWidgetChartTypeConfiguration, ProportionalWidgetChartTypes } from "../../../../../components/proportional-widget/types";
-import { IFormatter, IFormatterDefinition } from "../../../../../components/types";
+import {
+    IProportionalWidgetChartTypeConfiguration,
+    ProportionalWidgetChartTypes,
+} from "../../../../../components/proportional-widget/types";
+import {
+    IFormatter,
+    IFormatterDefinition,
+} from "../../../../../components/types";
 import { ProportionalLegendFormattersRegistryService } from "../../../../../services/table-formatter-registry.service";
 import { IHasChangeDetector, IHasForm } from "../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
-import { ILegendPlacementOption } from "../../../../../widget-types/common/widget/legend"
+import { ILegendPlacementOption } from "../../../../../widget-types/common/widget/legend";
 
 @Component({
     selector: "nui-proportional-chart-options-editor-v2-component",
@@ -16,7 +38,9 @@ import { ILegendPlacementOption } from "../../../../../widget-types/common/widge
     styleUrls: ["proportional-chart-options-editor-v2.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProportionalChartOptionsEditorV2Component implements OnInit, IHasChangeDetector, IHasForm, OnChanges, OnDestroy {
+export class ProportionalChartOptionsEditorV2Component
+    implements OnInit, IHasChangeDetector, IHasForm, OnChanges, OnDestroy
+{
     static lateLoadKey = "ProportionalChartOptionsEditorV2Component";
 
     @Input() type: ProportionalWidgetChartTypes;
@@ -65,11 +89,15 @@ export class ProportionalChartOptionsEditorV2Component implements OnInit, IHasCh
         }
 
         if (changes.legendPlacement) {
-            this.form.controls["legendPlacement"].setValue(changes.legendPlacement.currentValue);
+            this.form.controls["legendPlacement"].setValue(
+                changes.legendPlacement.currentValue
+            );
         }
 
         if (changes.legendFormatter) {
-            this.form.get("legendFormatter.componentType")?.setValue(changes.legendFormatter.currentValue.componentType);
+            this.form
+                .get("legendFormatter.componentType")
+                ?.setValue(changes.legendFormatter.currentValue.componentType);
         }
     }
 
@@ -81,12 +109,13 @@ export class ProportionalChartOptionsEditorV2Component implements OnInit, IHasCh
 
     public get chartTitle() {
         const currentChartType: string = this.form.get("type")?.value;
-        const currentChartTypeDefinition = this.chartTypes.find((chartType) => chartType.id === currentChartType);
+        const currentChartTypeDefinition = this.chartTypes.find(
+            (chartType) => chartType.id === currentChartType
+        );
         return currentChartTypeDefinition?.label;
     }
 
     public get legendFormatterControl(): FormControl {
         return this.form.get("legendFormatter.componentType") as FormControl;
     }
-
 }

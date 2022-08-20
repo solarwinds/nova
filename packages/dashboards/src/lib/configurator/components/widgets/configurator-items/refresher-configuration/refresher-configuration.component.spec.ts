@@ -41,9 +41,11 @@ describe("RefresherConfigurationComponent", () => {
                 NuiFormFieldModule,
                 NuiSwitchModule,
             ],
-            providers: [FormBuilder, WidgetConfiguratorSectionCoordinatorService],
-        })
-            .compileComponents();
+            providers: [
+                FormBuilder,
+                WidgetConfiguratorSectionCoordinatorService,
+            ],
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -91,6 +93,5 @@ describe("RefresherConfigurationComponent", () => {
             const label = component.getDurationLabel(0);
             expect(label).toEqual("0 sec");
         });
-
     });
 });

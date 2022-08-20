@@ -5,4 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./tooltips-visual-test.component.html",
     styleUrls: ["./tooltips-visual-test.component.less"],
 })
-export class TooltipsVisualTestComponent { }
+export class TooltipsVisualTestComponent {}

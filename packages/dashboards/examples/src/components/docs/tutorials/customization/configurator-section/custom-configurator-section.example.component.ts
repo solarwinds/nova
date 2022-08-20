@@ -47,36 +47,70 @@ import { finalize, map, startWith } from "rxjs/operators";
 @Component({
     selector: "custom-kpi-description-configuration",
     template: `
-        <nui-widget-editor-accordion [formGroup]="form"
-                                     [state]="form | nuiWidgetEditorAccordionFormState | async">
+        <nui-widget-editor-accordion
+            [formGroup]="form"
+            [state]="form | nuiWidgetEditorAccordionFormState | async"
+        >
             <div accordionHeader class="d-flex align-items-center px-4 py-2">
-                <nui-icon class="align-self-start pt-2" [icon]="form | nuiFormHeaderIconPipe:'widget_list' | async"></nui-icon>
+                <nui-icon
+                    class="align-self-start pt-2"
+                    [icon]="form | nuiFormHeaderIconPipe: 'widget_list' | async"
+                ></nui-icon>
                 <div class="d-flex flex-column ml-4 pt-1">
                     <span class="nui-text-label" i18n>Description</span>
                     <div class="nui-text-secondary" [title]="subtitle$ | async">
-                        {{subtitle$ | async}}
+                        {{ subtitle$ | async }}
                     </div>
                 </div>
             </div>
             <div class="kpi-description-configuration__accordion-content">
                 <div class="mb-4">
-                    <nui-form-field caption="Label" i18n-caption [control]="form.get('label')" class="form-group">
-                        <nui-textbox formControlName="label" placeholder="Set label" i18n-placeholder></nui-textbox>
+                    <nui-form-field
+                        caption="Label"
+                        i18n-caption
+                        [control]="form.get('label')"
+                        class="form-group"
+                    >
+                        <nui-textbox
+                            formControlName="label"
+                            placeholder="Set label"
+                            i18n-placeholder
+                        ></nui-textbox>
                     </nui-form-field>
                 </div>
 
                 <!-- Begin custom layout content -->
-                <div class="my-4 pt-1 px-3 pb-3 kpi-description-configuration__custom-content-container">
-                    <h5 class="kpi-description-configuration__custom-content-header" i18n>Custom Content</h5>
-                    <div class="kpi-description-configuration__custom-content" i18n>
-                        The default version of this configurator section displays a background color selector here.
+                <div
+                    class="my-4 pt-1 px-3 pb-3 kpi-description-configuration__custom-content-container"
+                >
+                    <h5
+                        class="kpi-description-configuration__custom-content-header"
+                        i18n
+                    >
+                        Custom Content
+                    </h5>
+                    <div
+                        class="kpi-description-configuration__custom-content"
+                        i18n
+                    >
+                        The default version of this configurator section
+                        displays a background color selector here.
                     </div>
                 </div>
                 <!-- End custom layout content -->
 
                 <div class="mt-4" *ngIf="configurableUnits">
-                    <nui-form-field caption="Units" i18n-caption [control]="form.get('units')" class="form-group">
-                        <nui-textbox formControlName="units" placeholder="Units" i18n-placeholder></nui-textbox>
+                    <nui-form-field
+                        caption="Units"
+                        i18n-caption
+                        [control]="form.get('units')"
+                        class="form-group"
+                    >
+                        <nui-textbox
+                            formControlName="units"
+                            placeholder="Units"
+                            i18n-placeholder
+                        ></nui-textbox>
                     </nui-form-field>
                 </div>
             </div>
@@ -86,8 +120,9 @@ import { finalize, map, startWith } from "rxjs/operators";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // Remember to declare this class in the parent module
-export class CustomKpiDescriptionConfigurationComponent implements OnInit, OnChanges, IHasChangeDetector, IHasForm {
-
+export class CustomKpiDescriptionConfigurationComponent
+    implements OnInit, OnChanges, IHasChangeDetector, IHasForm
+{
     // Ensure that the lateLoadKey value matches class name
     public static lateLoadKey = "CustomKpiDescriptionConfigurationComponent";
 
@@ -102,7 +137,10 @@ export class CustomKpiDescriptionConfigurationComponent implements OnInit, OnCha
     public form: FormGroup;
     public subtitle$: Observable<string>;
 
-    constructor(public changeDetector: ChangeDetectorRef, private formBuilder: FormBuilder) { }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private formBuilder: FormBuilder
+    ) {}
 
     public ngOnInit(): void {
         this.form = this.formBuilder.group({
@@ -117,9 +155,8 @@ export class CustomKpiDescriptionConfigurationComponent implements OnInit, OnCha
         const labelValue = label?.valueChanges.pipe(startWith(label?.value));
 
         this.subtitle$ = combineLatest([
-            labelValue?.pipe(map(t => t || $localize`no label`)),
-        ])
-            .pipe(map((labels) => labels.join(", ")));
+            labelValue?.pipe(map((t) => t || $localize`no label`)),
+        ]).pipe(map((labels) => labels.join(", ")));
 
         this.formReady.emit(this.form);
     }
@@ -138,7 +175,10 @@ export class CustomKpiDescriptionConfigurationComponent implements OnInit, OnCha
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class AverageRatingKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "AverageRatingKpiDataSource";
 
@@ -155,7 +195,8 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
         this.busy.next(true);
         return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -186,7 +227,10 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
  * A simple KPI data source to retrieve the ratings count of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class RatingsCountKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     public static providerId = "RatingsCountKpiDataSource";
 
     // Use this subject to communicate the data source's busy state
@@ -199,7 +243,8 @@ export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> imple
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         return new Promise((resolve) => {
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -257,7 +302,7 @@ export class CustomConfiguratorSectionExampleComponent implements OnInit {
         private componentRegistry: ComponentRegistryService,
 
         private changeDetectorRef: ChangeDetectorRef
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // Grab the widget's default template which will be needed as a parameter for setNode.
@@ -266,12 +311,18 @@ export class CustomConfiguratorSectionExampleComponent implements OnInit {
         // Replace the default KPI description configuration component with our custom one.
         // Note: This could also be done in the parent module's constructor to give
         // multiple dashboards access to the same custom configurator section.
-        this.widgetTypesService.setNode(widgetTemplate, "configurator",
-                                        WellKnownPathKey.TileDescriptionConfigComponentType, CustomKpiDescriptionConfigurationComponent.lateLoadKey);
+        this.widgetTypesService.setNode(
+            widgetTemplate,
+            "configurator",
+            WellKnownPathKey.TileDescriptionConfigComponentType,
+            CustomKpiDescriptionConfigurationComponent.lateLoadKey
+        );
 
         // Register the custom configurator section with the component registry to make it available
         // for late loading by the dashboards framework.
-        this.componentRegistry.registerByLateLoadKey(CustomKpiDescriptionConfigurationComponent);
+        this.componentRegistry.registerByLateLoadKey(
+            CustomKpiDescriptionConfigurationComponent
+        );
 
         // Register our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
@@ -285,7 +336,10 @@ export class CustomConfiguratorSectionExampleComponent implements OnInit {
             // the data source providers available for selection in the editor.
             WellKnownPathKey.DataSourceProviders,
             // We are setting the data sources available for selection in the editor
-            [AverageRatingKpiDataSource.providerId, RatingsCountKpiDataSource.providerId]
+            [
+                AverageRatingKpiDataSource.providerId,
+                RatingsCountKpiDataSource.providerId,
+            ]
         );
 
         // Register the data sources available for injection into the KPI tiles.
@@ -313,7 +367,8 @@ export class CustomConfiguratorSectionExampleComponent implements OnInit {
         const kpiWidget = widgetConfig;
         const widgetIndex: IWidgets = {
             // Complete the KPI widget with information coming from its type definition
-            [kpiWidget.id]: this.widgetTypesService.mergeWithWidgetType(kpiWidget),
+            [kpiWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -341,7 +396,6 @@ export class CustomConfiguratorSectionExampleComponent implements OnInit {
 
         this.initializeDashboard();
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -350,46 +404,46 @@ const widgetConfig: IWidget = {
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": {
+                providers: {
                     [WellKnownProviders.Refresher]: {
-                        "properties": {
+                        properties: {
                             // Configuring the refresher interval so that our data source is invoked every ten minutes
-                            "interval": 60 * 10,
-                            "enabled": true,
+                            interval: 60 * 10,
+                            enabled: true,
                         } as IRefresherProperties,
                     } as Partial<IProviderConfiguration>,
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Harry Potter and the Sorcerer's Stone",
-                    "subtitle": "By J. K. Rowling",
+            header: {
+                properties: {
+                    title: "Harry Potter and the Sorcerer's Stone",
+                    subtitle: "By J. K. Rowling",
                 },
             },
-            "tiles": {
-                "properties": {
-                    "nodes": ["kpi1"],
+            tiles: {
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "componentType": KpiComponent.lateLoadKey,
-                "properties": {
-                    "widgetData": {
-                        "units": "out of 5 Stars",
-                        "label": "Average Rating",
+            kpi1: {
+                id: "kpi1",
+                componentType: KpiComponent.lateLoadKey,
+                properties: {
+                    widgetData: {
+                        units: "out of 5 Stars",
+                        label: "Average Rating",
                     },
                 },
-                "providers": {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
-                        "providerId": AverageRatingKpiDataSource.providerId,
+                        providerId: AverageRatingKpiDataSource.providerId,
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
-                        "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                        "properties": {
-                            "componentId": "kpi1",
-                            "propertyPath": "widgetData",
+                        providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                        properties: {
+                            componentId: "kpi1",
+                            propertyPath: "widgetData",
                         },
                     } as IProviderConfiguration,
                 },

@@ -8,13 +8,14 @@ import { LinearScale } from "./linear-scale";
 import { Scale } from "./scale";
 import { IBandScale, IHasInnerScale, IScale } from "./types";
 
-
 /**
  * Nova wrapper around [D3's scaleBand](https://d3indepth.com/scales/#scaleband)
  * A typical use case for a band scale is a bar chart
  */
-export class BandScale<T = string> extends Scale<T> implements IBandScale<T>, IHasInnerScale<T> {
-
+export class BandScale<T = string>
+    extends Scale<T>
+    implements IBandScale<T>, IHasInnerScale<T>
+{
     public innerScale: IScale<any>;
 
     constructor(id?: string) {
@@ -53,13 +54,27 @@ export class BandScale<T = string> extends Scale<T> implements IBandScale<T>, IH
     public invert(coordinate: number): T {
         const domain = this._d3Scale.domain();
         if (this.range()[0] < this.range()[1]) {
-            const rangeMidPoints = this.getRangeMidPoints(domain.map(this._d3Scale));
+            const rangeMidPoints = this.getRangeMidPoints(
+                domain.map(this._d3Scale)
+            );
             return domain[bisect(rangeMidPoints, coordinate)];
         } else {
             // bisector needs to have values sorted in natural order, so we reverse the domain first ...
             const rangeMidPoints = this.getRangeMidPoints(
-                domain.map((d: any, i: number) => this._d3Scale(domain[domain.length - 1 - i /* ... here ... */])));
-            return domain[domain.length - 1 - bisect(rangeMidPoints, coordinate) /* ... and reverse it back here */];
+                domain.map((d: any, i: number) =>
+                    this._d3Scale(
+                        domain[domain.length - 1 - i /* ... here ... */]
+                    )
+                )
+            );
+            return domain[
+                domain.length -
+                    1 -
+                    bisect(
+                        rangeMidPoints,
+                        coordinate
+                    ) /* ... and reverse it back here */
+            ];
         }
     }
 
@@ -67,7 +82,6 @@ export class BandScale<T = string> extends Scale<T> implements IBandScale<T>, IH
     public range(): [number, number];
     public range(range: [number, number]): this;
     public range(range?: [number, number]): any {
-
         const result = range ? super.range(range) : super.range();
 
         if (range && this.innerScale) {
@@ -153,7 +167,9 @@ export class BandScale<T = string> extends Scale<T> implements IBandScale<T>, IH
      * Please note the fact that bandScale._d3Scale.step() returns step size without outer paddings!
      */
     public step(): number {
-        return this.domain().length ? Math.abs(this.range()[1] - this.range()[0]) / this.domain().length : 0;
+        return this.domain().length
+            ? Math.abs(this.range()[1] - this.range()[0]) / this.domain().length
+            : 0;
     }
 
     /**
@@ -161,8 +177,7 @@ export class BandScale<T = string> extends Scale<T> implements IBandScale<T>, IH
      */
     public copyToLinear(): LinearScale {
         const scale = new LinearScale();
-        scale.domain(this.range())
-            .range(this.range());
+        scale.domain(this.range()).range(this.range());
         return scale;
     }
 
@@ -186,7 +201,12 @@ export class BandScale<T = string> extends Scale<T> implements IBandScale<T>, IH
     }
 
     private getRangeMidPoints(coords: number[]) {
-        return coords.slice(1)
-            .map((d: number) => d - this._d3Scale.step() * this._d3Scale.paddingInner() / 2);
+        return coords
+            .slice(1)
+            .map(
+                (d: number) =>
+                    d -
+                    (this._d3Scale.step() * this._d3Scale.paddingInner()) / 2
+            );
     }
 }

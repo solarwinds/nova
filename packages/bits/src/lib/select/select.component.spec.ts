@@ -42,9 +42,9 @@ describe("components >", () => {
     describe("select >", () => {
         const itemsSource = ["Item 1", "Item 2", "Item 3"];
         const itemsSourceComplex = [
-            {name: "Item 4", value: "Bonobo"},
-            {name: "Item 5", value: "Zelda"},
-            {name: "Item 6", value: "Max"},
+            { name: "Item 4", value: "Bonobo" },
+            { name: "Item 5", value: "Zelda" },
+            { name: "Item 6", value: "Max" },
         ];
 
         let fixture: ComponentFixture<SelectComponent>;
@@ -53,11 +53,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    FormsModule,
-                    ReactiveFormsModule,
-                    NuiOverlayModule,
-                ],
+                imports: [FormsModule, ReactiveFormsModule, NuiOverlayModule],
                 declarations: [
                     ButtonComponent,
                     CheckboxComponent,
@@ -105,13 +101,19 @@ describe("components >", () => {
             componentInstance.placeholder = "select item";
             expect(componentInstance.displayPlaceholder()).toEqual(true);
             componentInstance.ngOnChanges({
-                value: new SimpleChange(componentInstance.value, itemsSource[1], false),
+                value: new SimpleChange(
+                    componentInstance.value,
+                    itemsSource[1],
+                    false
+                ),
             });
             expect(componentInstance.displayPlaceholder()).toEqual(false);
         });
 
         it("should contain proper number of items", () => {
-            componentInstance.menu.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.menu.popup.toggleOpened(
+                new FocusEvent("focusin")
+            );
             fixture.detectChanges();
             const listItems = debugElement.queryAll(By.css("nui-menu-action"));
             expect(listItems.length).toEqual(3);
@@ -120,12 +122,18 @@ describe("components >", () => {
         it("should highlight selected item", () => {
             spyOn(componentInstance, "isItemSelected").and.callThrough();
             componentInstance.value = itemsSource[1];
-            componentInstance.menu.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.menu.popup.toggleOpened(
+                new FocusEvent("focusin")
+            );
             componentInstance.ngOnInit();
             fixture.detectChanges();
-            const selected = debugElement.query(By.css(".nui-menu-item.item-selected"));
+            const selected = debugElement.query(
+                By.css(".nui-menu-item.item-selected")
+            );
             expect(selected).toBeDefined();
-            expect(selected.nativeElement.textContent.trim()).toEqual(itemsSource[1]);
+            expect(selected.nativeElement.textContent.trim()).toEqual(
+                itemsSource[1]
+            );
             expect(componentInstance.isItemSelected).toHaveBeenCalled();
         });
 
@@ -140,10 +148,14 @@ describe("components >", () => {
             componentInstance.itemsSource = itemsSourceComplex;
             componentInstance.displayValue = "value";
             componentInstance.value = itemsSourceComplex[1];
-            componentInstance.menu.popup.toggleOpened(new FocusEvent("focusin"));
+            componentInstance.menu.popup.toggleOpened(
+                new FocusEvent("focusin")
+            );
             componentInstance.ngOnInit();
             fixture.detectChanges();
-            const selected = debugElement.query(By.css(".nui-menu-item.item-selected"));
+            const selected = debugElement.query(
+                By.css(".nui-menu-item.item-selected")
+            );
             expect(selected).toBeDefined();
             expect(selected.nativeElement.textContent.trim()).toEqual("Zelda");
         });
@@ -215,13 +227,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    FormsModule,
-                    ReactiveFormsModule,
-                ],
-                declarations: [
-                    SelectReactiveFormTestComponent,
-                ],
+                imports: [FormsModule, ReactiveFormsModule],
+                declarations: [SelectReactiveFormTestComponent],
                 providers: [
                     ToastService,
                     ToastContainerService,
@@ -236,7 +243,7 @@ describe("components >", () => {
 
         it("should change selected item on 'changed' event", () => {
             expect(componentInstance.dataset.selectedItem).toEqual("");
-            componentInstance.valueChange({newValue: "Item 1", oldValue: ""});
+            componentInstance.valueChange({ newValue: "Item 1", oldValue: "" });
             expect(componentInstance.dataset.selectedItem).toEqual("Item 1");
         });
 

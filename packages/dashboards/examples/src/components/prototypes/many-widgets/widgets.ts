@@ -14,32 +14,30 @@ const getKpiWidgetCfg = (id: string) => ({
     type: "kpi",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
-                "properties": {
-                    "title": "KPI Widget!",
-                    "subtitle": "A bunch of number boxes",
-                    "collapsible": true,
+            header: {
+                properties: {
+                    title: "KPI Widget!",
+                    subtitle: "A bunch of number boxes",
+                    collapsible: true,
                 },
             },
-            "tiles": {
-                providers: { },
-                "properties": {
-                    "nodes": [
-                        "kpi1",
-                    ],
+            tiles: {
+                providers: {},
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "providers": {
+            kpi1: {
+                id: "kpi1",
+                providers: {
                     [WellKnownProviders.DataSource]: {
-                        "providerId": AcmeKpiDataSource.providerId,
+                        providerId: AcmeKpiDataSource.providerId,
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
-                        "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                        "properties": {
-                            "componentId": "kpi1",
-                            "propertyPath": "widgetData",
+                        providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                        properties: {
+                            componentId: "kpi1",
+                            propertyPath: "widgetData",
                         },
                     } as IProviderConfiguration,
                 },
@@ -48,15 +46,17 @@ const getKpiWidgetCfg = (id: string) => ({
     },
 });
 
-function generateKpiWidgets(quantity: number): [IWidget[], Record<string, GridsterItem>] {
+function generateKpiWidgets(
+    quantity: number
+): [IWidget[], Record<string, GridsterItem>] {
     const _widgets: IWidget[] = [];
     const _positions: Record<string, GridsterItem> = {};
 
     const initPosition = {
-        "cols": 8,
-        "rows": 6,
-        "y": 0,
-        "x": 0,
+        cols: 8,
+        rows: 6,
+        y: 0,
+        x: 0,
     };
 
     for (let i = 0; i <= quantity; i++) {
@@ -66,9 +66,9 @@ function generateKpiWidgets(quantity: number): [IWidget[], Record<string, Gridst
         const prevWidgetPosition = _positions[`widget${(i - 1).toString()}`];
         const widgetPosition = prevWidgetPosition
             ? {
-                ...prevWidgetPosition,
-                y: prevWidgetPosition.y + 6,
-            }
+                  ...prevWidgetPosition,
+                  y: prevWidgetPosition.y + 6,
+              }
             : initPosition;
 
         _widgets.push(widget);

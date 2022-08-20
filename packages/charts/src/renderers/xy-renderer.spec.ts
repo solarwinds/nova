@@ -2,19 +2,25 @@ import { Subject } from "rxjs";
 
 import { LinearScale } from "../core/common/scales/linear-scale";
 import { Scales } from "../core/common/scales/types";
-import { IAccessors, IDataSeries, IPosition, IRendererEventPayload } from "../core/common/types";
+import {
+    IAccessors,
+    IDataSeries,
+    IPosition,
+    IRendererEventPayload,
+} from "../core/common/types";
 
 import { XYAccessors } from "./accessors/xy-accessors";
 import { IRenderSeries } from "./types";
 import { XYRenderer } from "./xy-renderer";
 
 export class MockXYRenderer extends XYRenderer<XYAccessors> {
-    public draw(renderSeries: IRenderSeries<IAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
-    }
+    public draw(
+        renderSeries: IRenderSeries<IAccessors>,
+        rendererSubject: Subject<IRendererEventPayload>
+    ): void {}
 }
 
-class TestXYAccessors extends XYAccessors {
-}
+class TestXYAccessors extends XYAccessors {}
 
 describe("XY Renderer >", () => {
     let renderer: MockXYRenderer;
@@ -32,7 +38,10 @@ describe("XY Renderer >", () => {
             dataSeries = {
                 id: "1",
                 name: "Series 1",
-                data: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
+                data: [
+                    { x: 0, y: 0 },
+                    { x: 1, y: 1 },
+                ],
                 accessors: new TestXYAccessors(),
             };
             scales = {
@@ -65,5 +74,4 @@ describe("XY Renderer >", () => {
             expect(position).toEqual({ x: 100, y: 200 });
         });
     });
-
 });

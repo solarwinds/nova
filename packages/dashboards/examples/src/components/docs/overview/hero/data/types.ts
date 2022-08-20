@@ -68,11 +68,11 @@ export interface IRandomUserTableModel {
 
 export interface IRandomUserLocation {
     city: string;
-    coordinates: {latitude: string, longitude: string};
+    coordinates: { latitude: string; longitude: string };
     country: string;
     postcode: number;
     state: string;
-    street: {number: number, name: string};
+    street: { number: number; name: string };
     timezone: any;
 }
 

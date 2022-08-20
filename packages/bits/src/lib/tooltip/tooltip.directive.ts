@@ -43,7 +43,9 @@ export class TooltipDirective implements OnDestroy {
 
     /** Allows the user to define the position of the tooltip relative to the parent element */
     @Input("tooltipPlacement")
-    get position(): TooltipPosition { return this._position; }
+    get position(): TooltipPosition {
+        return this._position;
+    }
     set position(value: TooltipPosition) {
         if (value !== this._position) {
             this._position = value;
@@ -53,7 +55,9 @@ export class TooltipDirective implements OnDestroy {
 
     /** Disables the display of the tooltip. */
     @Input("nuiTooltipDisabled")
-    get disabled(): boolean { return this._disabled; }
+    get disabled(): boolean {
+        return this._disabled;
+    }
     set disabled(value) {
         this._disabled = coerceBooleanProperty(value);
 
@@ -67,9 +71,14 @@ export class TooltipDirective implements OnDestroy {
 
     /** The message to be displayed in the tooltip */
     @Input("nuiTooltip")
-    get message() { return this._message; }
+    get message() {
+        return this._message;
+    }
     set message(value: string) {
-        this._ariaDescriber.removeDescription(this._elementRef.nativeElement, this._message);
+        this._ariaDescriber.removeDescription(
+            this._elementRef.nativeElement,
+            this._message
+        );
 
         // If the message is not a string (e.g. number), convert it to a string and trim it.
         this._message = value != null ? `${value}`.trim() : "";
@@ -78,11 +87,17 @@ export class TooltipDirective implements OnDestroy {
             this.hide();
         } else {
             this._updateTooltipMessage();
-            this._ariaDescriber.describe(this._elementRef.nativeElement, this.message);
+            this._ariaDescriber.describe(
+                this._elementRef.nativeElement,
+                this.message
+            );
         }
     }
 
-    private _manualListeners = new Map<string, EventListenerOrEventListenerObject>();
+    private _manualListeners = new Map<
+        string,
+        EventListenerOrEventListenerObject
+    >();
 
     /** Emits when the component is destroyed. */
     private readonly _destroyed = new Subject<void>();
@@ -106,16 +121,21 @@ export class TooltipDirective implements OnDestroy {
             .set("mouseenter", () => this.show())
             .set("mouseleave", () => this.hide());
 
-        this._manualListeners.forEach((listener, event) => element.addEventListener(event, listener));
+        this._manualListeners.forEach((listener, event) =>
+            element.addEventListener(event, listener)
+        );
 
-        _focusMonitor.monitor(_elementRef).pipe(takeUntil(this._destroyed)).subscribe(origin => {
-            // Note that the focus monitor runs outside the Angular zone.
-            if (!origin) {
-                _ngZone.run(() => this.hide());
-            } else if (origin === "keyboard") {
-                _ngZone.run(() => this.show());
-            }
-        });
+        _focusMonitor
+            .monitor(_elementRef)
+            .pipe(takeUntil(this._destroyed))
+            .subscribe((origin) => {
+                // Note that the focus monitor runs outside the Angular zone.
+                if (!origin) {
+                    _ngZone.run(() => this.hide());
+                } else if (origin === "keyboard") {
+                    _ngZone.run(() => this.show());
+                }
+            });
     }
 
     /**
@@ -135,7 +155,10 @@ export class TooltipDirective implements OnDestroy {
         this._destroyed.next();
         this._destroyed.complete();
 
-        this._ariaDescriber.removeDescription(this._elementRef.nativeElement, this.message);
+        this._ariaDescriber.removeDescription(
+            this._elementRef.nativeElement,
+            this.message
+        );
         this._focusMonitor.stopMonitoring(this._elementRef);
     }
 
@@ -154,7 +177,9 @@ export class TooltipDirective implements OnDestroy {
                 // added this check here, because of the manual-trigger-example in docs.
                 // "Disabled" attribute is set after 1st "show" is triggered and it should hide the tooltip.
                 // That's why inside setTimeout operation there's one more check if it's disabled.
-                if (!this.canShowTooltip()) { return; }
+                if (!this.canShowTooltip()) {
+                    return;
+                }
                 this._tooltipInstance?.show();
             });
         } else {
@@ -180,7 +205,11 @@ export class TooltipDirective implements OnDestroy {
 
     /** Handles the keydown events on the host element. */
     _handleKeydown(e: KeyboardEvent) {
-        if (this._isTooltipVisible() && e.keyCode === ESCAPE && !hasModifierKey(e)) {
+        if (
+            this._isTooltipVisible() &&
+            e.keyCode === ESCAPE &&
+            !hasModifierKey(e)
+        ) {
             e.preventDefault();
             e.stopPropagation();
             this.hide();
@@ -193,17 +222,27 @@ export class TooltipDirective implements OnDestroy {
     }
 
     private createTooltipComponent() {
-        const componentFactory = this.resolver.resolveComponentFactory(TooltipComponent);
-        const tooltipComponentRef = this._viewContainerRef.createComponent(componentFactory);
+        const componentFactory =
+            this.resolver.resolveComponentFactory(TooltipComponent);
+        const tooltipComponentRef =
+            this._viewContainerRef.createComponent(componentFactory);
         this._tooltipInstance = tooltipComponentRef.instance;
         this._tooltipInstance.toggleReference = this._elementRef;
-        this._tooltipInstance.possiblePositions = this.overlayPositionService.getPossiblePositionsForPlacement(this.position as OverlayPlacement);
+        this._tooltipInstance.possiblePositions =
+            this.overlayPositionService.getPossiblePositionsForPlacement(
+                this.position as OverlayPlacement
+            );
     }
 
     private updateOverlayPositions() {
-        if (!this._tooltipInstance) { return; }
+        if (!this._tooltipInstance) {
+            return;
+        }
 
-        const possiblePositions = this.overlayPositionService.getPossiblePositionsForPlacement(this.position as OverlayPlacement);
+        const possiblePositions =
+            this.overlayPositionService.getPossiblePositionsForPlacement(
+                this.position as OverlayPlacement
+            );
         this._tooltipInstance.updatePossiblePositions(possiblePositions);
     }
 
@@ -218,4 +257,3 @@ export class TooltipDirective implements OnDestroy {
         return !(this.disabled || !this.message || this._isTooltipVisible());
     }
 }
-

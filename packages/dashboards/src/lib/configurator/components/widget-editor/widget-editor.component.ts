@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { IEvent } from "@nova-ui/bits";
 import get from "lodash/get";
@@ -7,7 +15,12 @@ import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaComponent } from "../../../pizzagna/components/pizzagna/pizzagna.component";
 import { IPreviewEventPayload, PREVIEW_EVENT } from "../../../services/types";
-import { IHasChangeDetector, IPizzagna, IPizzagnaLayer, PizzagnaLayer } from "../../../types";
+import {
+    IHasChangeDetector,
+    IPizzagna,
+    IPizzagnaLayer,
+    PizzagnaLayer,
+} from "../../../types";
 import { PreviewService } from "../../services/preview.service";
 import { ConfiguratorComponent } from "../configurator/configurator.component";
 import { IDashwizWaitEvent } from "../wizard/types";
@@ -18,7 +31,9 @@ import { IDashwizWaitEvent } from "../wizard/types";
     host: { class: "d-flex flex-column h-100" },
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WidgetEditorComponent implements OnInit, OnDestroy, IHasChangeDetector {
+export class WidgetEditorComponent
+    implements OnInit, OnDestroy, IHasChangeDetector
+{
     public static lateLoadKey = "WidgetEditorComponent";
     public static readonly TITLE_PATH = "header.properties.title";
 
@@ -29,38 +44,47 @@ export class WidgetEditorComponent implements OnInit, OnDestroy, IHasChangeDetec
 
     @ViewChild("formPizzagnaComponent", { static: false })
     public set formPizzagnaComponent(value: PizzagnaComponent) {
-        value?.eventBus?.getStream(PREVIEW_EVENT)
+        value?.eventBus
+            ?.getStream(PREVIEW_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IEvent<IPreviewEventPayload>) => {
                 const payload = event.payload;
                 // TODO: Ensure that we have payload
                 // @ts-ignore
-                this.configurator?.previewPizzagnaComponent?.eventBus?.getStream(payload.id).next(payload.payload);
+                this.configurator?.previewPizzagnaComponent?.eventBus
+                    ?.getStream(payload.id)
+                    .next(payload.payload);
             });
         this._formPizzagnaComponent = value;
     }
 
     public form: FormGroup;
-    public navigationControl: BehaviorSubject<IDashwizWaitEvent> = new BehaviorSubject<IDashwizWaitEvent>({
-        busyState: { busy: false },
-        allowStepChange: true,
-    });
+    public navigationControl: BehaviorSubject<IDashwizWaitEvent> =
+        new BehaviorSubject<IDashwizWaitEvent>({
+            busyState: { busy: false },
+            allowStepChange: true,
+        });
     public busy = false;
     public configuratorTitle: string;
 
     private destroy$ = new Subject();
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                private formBuilder: FormBuilder,
-                private previewService: PreviewService,
-                private configurator: ConfiguratorComponent) {
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private formBuilder: FormBuilder,
+        private previewService: PreviewService,
+        private configurator: ConfiguratorComponent
+    ) {
         this.form = this.formBuilder.group({});
     }
 
     public ngOnInit() {
         // TODO: Reconsider this
         // @ts-ignore: We can depend on preview being undefined somewhere
-        this.previewService.preview = this.configurator.previewWidget?.pizzagna[PizzagnaLayer.Configuration];
+        this.previewService.preview =
+            this.configurator.previewWidget?.pizzagna[
+                PizzagnaLayer.Configuration
+            ];
 
         this.previewService.previewChanged
             .pipe(takeUntil(this.destroy$))
@@ -95,7 +119,11 @@ export class WidgetEditorComponent implements OnInit, OnDestroy, IHasChangeDetec
         // TODO: Make previewWidget to be assignable to IWidget
         // @ts-ignore: Type '{ pizzagna: { configuration: IPizzagnaLayer; }; }' is missing the following properties from type 'IWidget': id, type
         this.configurator.updateWidget(previewWidget);
-        const widgetTitle = get(configLayer, WidgetEditorComponent.TITLE_PATH, "");
+        const widgetTitle = get(
+            configLayer,
+            WidgetEditorComponent.TITLE_PATH,
+            ""
+        );
         this.configuratorTitle = $localize`Editing ${widgetTitle}`;
     }
 
@@ -106,7 +134,10 @@ export class WidgetEditorComponent implements OnInit, OnDestroy, IHasChangeDetec
             // as form is invalid and marking as touched doesn't trigger neither statusChanges nor valueChanges
             // and validation messages and styles are not applied in that cases
             this.form.patchValue(this.form.value);
-            this.form.updateValueAndValidity({ onlySelf: false, emitEvent: true });
+            this.form.updateValueAndValidity({
+                onlySelf: false,
+                emitEvent: true,
+            });
             return;
         }
 
@@ -120,7 +151,9 @@ export class WidgetEditorComponent implements OnInit, OnDestroy, IHasChangeDetec
 
     private toggleBusy() {
         this.busy = !this.busy;
-        this.navigationControl.next({ busyState: { busy: this.busy }, allowStepChange: !this.busy });
+        this.navigationControl.next({
+            busyState: { busy: this.busy },
+            allowStepChange: !this.busy,
+        });
     }
-
 }

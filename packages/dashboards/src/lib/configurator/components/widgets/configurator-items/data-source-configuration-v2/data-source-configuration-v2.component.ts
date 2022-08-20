@@ -28,7 +28,11 @@ import {
     IProviderConfigurationForDisplay,
     PIZZAGNA_EVENT_BUS,
 } from "../../../../../types";
-import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
+import {
+    DATA_SOURCE_CHANGE,
+    DATA_SOURCE_CREATED,
+    DATA_SOURCE_OUTPUT,
+} from "../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 import { DataSourceErrorComponent } from "../data-source-error/data-source-error.component";
 
@@ -42,7 +46,9 @@ import { DataSourceErrorComponent } from "../data-source-error/data-source-error
     styleUrls: ["./data-source-configuration-v2.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataSourceConfigurationV2Component implements IHasChangeDetector, IHasForm, OnInit, OnChanges, AfterViewInit {
+export class DataSourceConfigurationV2Component
+    implements IHasChangeDetector, IHasForm, OnInit, OnChanges, AfterViewInit
+{
     public static lateLoadKey = "DataSourceConfigurationV2Component";
 
     /**
@@ -63,14 +69,15 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
     // used by the Broadcaster
     public dataFieldIds = new Subject<any>();
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                public configuratorHeading: ConfiguratorHeadingService,
-                protected formBuilder: FormBuilder,
-                protected providerRegistryService: ProviderRegistryService,
-                @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
-                protected injector: Injector,
-                protected logger: LoggerService) {
-    }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public configuratorHeading: ConfiguratorHeadingService,
+        protected formBuilder: FormBuilder,
+        protected providerRegistryService: ProviderRegistryService,
+        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
+        protected injector: Injector,
+        protected logger: LoggerService
+    ) {}
 
     public ngOnInit(): void {
         this.form = this.formBuilder.group({
@@ -80,28 +87,46 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
             properties: [this.properties || {}],
             dataSource: [null, [Validators.required]],
         });
-        this.form.setValidators([() => this.hasDataSourceError ? { dataSourceError: true } : null])
+        this.form.setValidators([
+            () => (this.hasDataSourceError ? { dataSourceError: true } : null),
+        ]);
 
-        this.form.get("dataSource")?.valueChanges.subscribe((selectedDataSource) => {
-            this.form.get("providerId")?.setValue(selectedDataSource?.providerId);
-            if (selectedDataSource?.properties) {
-                this.form.get("properties")?.setValue(selectedDataSource?.properties);
-            }
-        });
+        this.form
+            .get("dataSource")
+            ?.valueChanges.subscribe((selectedDataSource) => {
+                this.form
+                    .get("providerId")
+                    ?.setValue(selectedDataSource?.providerId);
+                if (selectedDataSource?.properties) {
+                    this.form
+                        .get("properties")
+                        ?.setValue(selectedDataSource?.properties);
+                }
+            });
 
         this.formReady.emit(this.form);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if ((changes.providerId && !changes.providerId.isFirstChange()) ||
-            (changes.properties && !changes.properties.isFirstChange())) {
+        if (
+            (changes.providerId && !changes.providerId.isFirstChange()) ||
+            (changes.properties && !changes.properties.isFirstChange())
+        ) {
             const previousProvider: string = changes.providerId?.previousValue;
-            const previousProperties: IProperties = changes.properties?.previousValue;
-            if (previousProvider !== this.providerId || previousProperties !== this.properties) {
-                const dataSource = this.dataSourceProviders
-                    .find(provider =>
-                        provider.providerId === this.providerId && isEqual(provider.properties ?? {}, this.properties ?? {})
-                    );
+            const previousProperties: IProperties =
+                changes.properties?.previousValue;
+            if (
+                previousProvider !== this.providerId ||
+                previousProperties !== this.properties
+            ) {
+                const dataSource = this.dataSourceProviders.find(
+                    (provider) =>
+                        provider.providerId === this.providerId &&
+                        isEqual(
+                            provider.properties ?? {},
+                            this.properties ?? {}
+                        )
+                );
                 if (!dataSource) {
                     this.form?.get("providerId")?.setValue(this.providerId);
                     this.form?.get("properties")?.setValue(this.properties);
@@ -115,7 +140,11 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
                 }
             }
         }
-        if (changes.dataSourceProviders && !changes.dataSourceProviders.isFirstChange() && this.dataSourceProviders.length === 1) {
+        if (
+            changes.dataSourceProviders &&
+            !changes.dataSourceProviders.isFirstChange() &&
+            this.dataSourceProviders.length === 1
+        ) {
             const dataSource = this.dataSourceProviders[0];
             this.form.get("dataSource")?.setValue(dataSource);
             this.invokeDataSource(dataSource);
@@ -130,7 +159,9 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
         }
     }
 
-    public onDataSourceSelected(selectedDataSource: IProviderConfigurationForDisplay) {
+    public onDataSourceSelected(
+        selectedDataSource: IProviderConfigurationForDisplay
+    ) {
         this.eventBus.next(DATA_SOURCE_CHANGE, {});
         this.invokeDataSource(selectedDataSource);
     }
@@ -147,22 +178,34 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
         if (!data.providerId) {
             return;
         }
-        const provider = this.providerRegistryService.getProvider(data.providerId);
+        const provider = this.providerRegistryService.getProvider(
+            data.providerId
+        );
         if (provider) {
-            this.dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
+            this.dataSource = this.providerRegistryService.getProviderInstance(
+                provider,
+                this.injector
+            );
 
-            this.eventBus.next(DATA_SOURCE_CREATED, { payload: this.dataSource });
+            this.eventBus.next(DATA_SOURCE_CREATED, {
+                payload: this.dataSource,
+            });
 
             this.dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any) => {
                     this.eventBus.next(DATA_SOURCE_OUTPUT, { payload: result });
-                    this.dataFieldIds.next(Object.keys(result.result || result));
+                    this.dataFieldIds.next(
+                        Object.keys(result.result || result)
+                    );
                 });
 
-            const configurableDataSource = (this.dataSource as unknown as IConfigurable);
+            const configurableDataSource = this
+                .dataSource as unknown as IConfigurable;
             if (configurableDataSource?.updateConfiguration) {
-                configurableDataSource.updateConfiguration(data.properties ?? {});
+                configurableDataSource.updateConfiguration(
+                    data.properties ?? {}
+                );
             }
             // This setTimeout is because the output of the data source might come faster than the data-source-error-component is initiated
             setTimeout(() => {
@@ -175,8 +218,8 @@ export class DataSourceConfigurationV2Component implements IHasChangeDetector, I
 
     public onErrorState(isError: boolean) {
         this.hasDataSourceError = isError;
-        this.form.markAsTouched({onlySelf: true});
-        this.form.updateValueAndValidity({emitEvent: false});
+        this.form.markAsTouched({ onlySelf: true });
+        this.form.updateValueAndValidity({ emitEvent: false });
         this.changeDetector.detectChanges();
     }
 }

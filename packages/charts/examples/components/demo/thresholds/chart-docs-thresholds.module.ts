@@ -1,7 +1,13 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiIconModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiDocsModule,
+    NuiIconModule,
+    NuiMessageModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../common/demo-common.module";
@@ -21,8 +27,8 @@ const exampleRoutes: Routes = [
         path: "",
         component: ChartDocsThresholdsComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -31,8 +37,8 @@ const exampleRoutes: Routes = [
         path: "basic",
         component: ThresholdsBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -40,8 +46,8 @@ const exampleRoutes: Routes = [
         path: "spark",
         component: ThresholdsSparkExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -49,8 +55,8 @@ const exampleRoutes: Routes = [
         path: "summary",
         component: ThresholdsSummaryExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -58,8 +64,8 @@ const exampleRoutes: Routes = [
         path: "summary-test",
         component: ThresholdsSummaryTestHarnessComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -67,8 +73,8 @@ const exampleRoutes: Routes = [
         path: "summary-visual-test",
         component: ThresholdsSummaryVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -95,8 +101,15 @@ const exampleRoutes: Routes = [
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class ChartDocsThresholdsModule {
-}
+export class ChartDocsThresholdsModule {}

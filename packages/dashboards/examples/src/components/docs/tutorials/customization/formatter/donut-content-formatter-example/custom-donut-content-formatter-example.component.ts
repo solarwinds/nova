@@ -1,8 +1,28 @@
 import { HttpClient } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Injectable, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DataSourceService, IconService, IDataSource, IFilteringOutputs, LoggerService } from "@nova-ui/bits";
-import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@nova-ui/charts";
+import {
+    DataSourceService,
+    IconService,
+    IDataSource,
+    IFilteringOutputs,
+    LoggerService,
+} from "@nova-ui/bits";
+import {
+    ChartAssist,
+    IAccessors,
+    IChartAssistEvent,
+    IChartAssistSeries,
+} from "@nova-ui/charts";
 import {
     ComponentRegistryService,
     ConfiguratorHeadingService,
@@ -42,22 +62,24 @@ export enum Units {
     selector: "custom-donut-content-formatter",
     host: { class: "d-flex flex-column align-items-center" },
     template: `<ng-container>
-                    <div class="nui-text-panel">
-                        <!-- First we look at the metric currently being hovered,
+        <div class="nui-text-panel">
+            <!-- First we look at the metric currently being hovered,
                              then, if not interaction occurs we take currently selected metric,
                              finally, we fall back to the very first element if none were selected so far -->
-                        {{ chartMetric || properties?.currentMetric || data[0].id }}
-                    </div>
-                    <div class="nui-text-page">
-                        {{ chartContent }}
-                    </div>
-                    <div class="nui-text-secondary">
-                        {{ units }}
-                    </div>
-               </ng-container>`,
+            {{ chartMetric || properties?.currentMetric || data[0].id }}
+        </div>
+        <div class="nui-text-page">
+            {{ chartContent }}
+        </div>
+        <div class="nui-text-secondary">
+            {{ units }}
+        </div>
+    </ng-container>`,
     styleUrls: ["./custom-donut-content-formatter-example.component.less"],
 })
-export class CustomDonutContentFormatterComponent implements IHasChangeDetector, OnInit, OnChanges {
+export class CustomDonutContentFormatterComponent
+    implements IHasChangeDetector, OnInit, OnChanges
+{
     public static lateLoadKey = "CustomDonutContentFormatterComponent";
 
     // Used to emphasize the chart series when user interacts either with the chart legend, or chart segments.
@@ -77,7 +99,7 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
 
     private destroy$: Subject<any> = new Subject();
 
-    constructor(public changeDetector: ChangeDetectorRef) { }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     // The data we receive from the chart, including metrics names and their values
     @Input() data: IChartAssistSeries<IAccessors>[];
@@ -89,10 +111,12 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
     @Input() properties: IProperties;
 
     public ngOnChanges(changes: SimpleChanges): void {
-
         if (changes.properties || !this.properties) {
             // If current metric is not in the list of metrics any more we fall back to the very first one from the list we get from the datasource
-            this.currentMetricData = this.data.find(item => item.id === this.properties?.currentMetric)?.data[0] || this.data[0].data[0];
+            this.currentMetricData =
+                this.data.find(
+                    (item) => item.id === this.properties?.currentMetric
+                )?.data[0] || this.data[0].data[0];
 
             // We either take the selected value, or fall back to the preselected default one
             this.units = this.properties?.units || this.units;
@@ -104,10 +128,14 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
     public ngOnInit(): void {
         // Here 'chartAssistSubject' is the entity that emits events every time user interacts with either chart legend, or chart segments.
         // Subscribing to properly react on these kind of events
-        this.chartAssist
-            .chartAssistSubject
+        this.chartAssist.chartAssistSubject
             .pipe(
-                tap((data: IChartAssistEvent) => this.emphasizedSeriesData = this.data.find(item => item.id === data.payload.seriesId)),
+                tap(
+                    (data: IChartAssistEvent) =>
+                        (this.emphasizedSeriesData = this.data.find(
+                            (item) => item.id === data.payload.seriesId
+                        ))
+                ),
                 tap(() => this.setContentValue()),
                 tap(() => this.setMetricValue()),
                 takeUntil(this.destroy$)
@@ -118,13 +146,12 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
     public getConvertedData(emphData: number): number {
         // Recalculating data depending on the units user selected from the configuration view
         switch (this.units) {
-
-            case(Units.Weeks):
+            case Units.Weeks:
                 return this.emphasizedSeriesData
                     ? this.convertToWeeks(emphData)
                     : this.convertToWeeks(this.currentMetricData);
 
-            case(Units.Hours):
+            case Units.Hours:
                 return this.emphasizedSeriesData
                     ? this.convertToHours(emphData)
                     : this.convertToHours(this.currentMetricData);
@@ -137,14 +164,20 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
     }
 
     public setContentValue(): void {
-        this.chartContent = this.getConvertedData(this.emphasizedSeriesData?.data[0]);
+        this.chartContent = this.getConvertedData(
+            this.emphasizedSeriesData?.data[0]
+        );
     }
 
     public setMetricValue(): void {
-        this.chartMetric = this.emphasizedSeriesData ?
-            this.data.find(item => this.getConvertedData(item.data[0]) === this.getConvertedData(this.emphasizedSeriesData?.data[0]))?.id
-            // if metric was not initially selected we fall back to the very first one
-            : (this.properties?.currentMetric || this.data[0].id);
+        this.chartMetric = this.emphasizedSeriesData
+            ? this.data.find(
+                  (item) =>
+                      this.getConvertedData(item.data[0]) ===
+                      this.getConvertedData(this.emphasizedSeriesData?.data[0])
+              )?.id
+            : // if metric was not initially selected we fall back to the very first one
+              this.properties?.currentMetric || this.data[0].id;
     }
 
     private convertToWeeks(days: number | undefined): number {
@@ -160,55 +193,85 @@ export class CustomDonutContentFormatterComponent implements IHasChangeDetector,
     selector: "custom-donut-content-formatter-configurator",
     styleUrls: ["./custom-donut-content-formatter-example.component.less"],
     template: `
-<div [formGroup]="form">
-    <div class="mt-4">
-        <nui-form-field caption="Metrics"
-                        i18n-caption
-                        class="mb-3"
-                        [control]="currentMetric">
-            <nui-select-v2 formControlName="currentMetric" [formControl]="currentMetric" [popupViewportMargin]="configuratorHeading.height$ | async">
-                <nui-select-v2-option *ngFor="let itemValue of dsOutput?.result"
-                                      [value]="itemValue?.id">
-                    {{itemValue?.name}}
-                </nui-select-v2-option>
-            </nui-select-v2>
-            <nui-validation-message for="required" i18n>
-                This field is required
-            </nui-validation-message>
-        </nui-form-field>
-    </div>
-    <div class="mt-4">
-        <nui-form-field caption="Units"
-                        i18n-caption
-                        class="mb-3"
-                        [control]="form.controls['units']">
-            <nui-select-v2 formControlName="units" [formControl]="form.controls['units']" [popupViewportMargin]="configuratorHeading.height$ | async">
-                <nui-select-v2-option *ngFor="let itemValue of availableUnits"
-                                      [value]="itemValue">
-                    {{itemValue}}
-                </nui-select-v2-option>
-            </nui-select-v2>
-            <nui-validation-message for="required" i18n>
-                This field is required
-            </nui-validation-message>
-        </nui-form-field>
-    </div>
-</div>
-`,
+        <div [formGroup]="form">
+            <div class="mt-4">
+                <nui-form-field
+                    caption="Metrics"
+                    i18n-caption
+                    class="mb-3"
+                    [control]="currentMetric"
+                >
+                    <nui-select-v2
+                        formControlName="currentMetric"
+                        [formControl]="currentMetric"
+                        [popupViewportMargin]="
+                            configuratorHeading.height$ | async
+                        "
+                    >
+                        <nui-select-v2-option
+                            *ngFor="let itemValue of dsOutput?.result"
+                            [value]="itemValue?.id"
+                        >
+                            {{ itemValue?.name }}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                    <nui-validation-message for="required" i18n>
+                        This field is required
+                    </nui-validation-message>
+                </nui-form-field>
+            </div>
+            <div class="mt-4">
+                <nui-form-field
+                    caption="Units"
+                    i18n-caption
+                    class="mb-3"
+                    [control]="form.controls['units']"
+                >
+                    <nui-select-v2
+                        formControlName="units"
+                        [formControl]="form.controls['units']"
+                        [popupViewportMargin]="
+                            configuratorHeading.height$ | async
+                        "
+                    >
+                        <nui-select-v2-option
+                            *ngFor="let itemValue of availableUnits"
+                            [value]="itemValue"
+                        >
+                            {{ itemValue }}
+                        </nui-select-v2-option>
+                    </nui-select-v2>
+                    <nui-validation-message for="required" i18n>
+                        This field is required
+                    </nui-validation-message>
+                </nui-form-field>
+            </div>
+        </div>
+    `,
 })
-
-export class CustomDonutContentFormatterConfiguratorComponent extends DonutChartFormatterConfiguratorComponent
-    implements OnChanges, OnInit, IHasChangeDetector {
+export class CustomDonutContentFormatterConfiguratorComponent
+    extends DonutChartFormatterConfiguratorComponent
+    implements OnChanges, OnInit, IHasChangeDetector
+{
     public static lateLoadKey = "CustomFormatterConfiguratorComponent";
 
-    constructor(changeDetector: ChangeDetectorRef, formBuilder: FormBuilder, logger: LoggerService, public iconService: IconService, public configuratorHeading: ConfiguratorHeadingService) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        formBuilder: FormBuilder,
+        logger: LoggerService,
+        public iconService: IconService,
+        public configuratorHeading: ConfiguratorHeadingService
+    ) {
         super(changeDetector, formBuilder, logger);
     }
 
     public availableUnits: Units[] = [Units.Days, Units.Hours, Units.Weeks];
 
     protected addCustomFormControls(form: FormGroup): void {
-        form.addControl("units", this.formBuilder.control(Units.Days, Validators.required));
+        form.addControl(
+            "units",
+            this.formBuilder.control(Units.Days, Validators.required)
+        );
     }
 }
 
@@ -241,13 +304,20 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
     ) {
         // Register the custom configurator component with the component registry to make it available
         // for late loading by the dashboard framework.
-        this.componentRegistry.registerByLateLoadKey(CustomDonutContentFormatterConfiguratorComponent);
+        this.componentRegistry.registerByLateLoadKey(
+            CustomDonutContentFormatterConfiguratorComponent
+        );
         // Register the custom formatter component with the component registry to make it available
         // for late loading by the dashboard framework.
-        this.componentRegistry.registerByLateLoadKey(CustomDonutContentFormatterComponent);
+        this.componentRegistry.registerByLateLoadKey(
+            CustomDonutContentFormatterComponent
+        );
 
         // Grab the widget's default template which will be needed as a parameter for setNode below.
-        const proportional = this.widgetTypesService.getWidgetType("proportional", 1);
+        const proportional = this.widgetTypesService.getWidgetType(
+            "proportional",
+            1
+        );
 
         const donutFormatters: IFormatterDefinition[] = [
             {
@@ -255,15 +325,18 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
                 label: $localize`Sum`,
             } as IFormatterDefinition,
             {
-                componentType: DonutContentPercentageFormatterComponent.lateLoadKey,
+                componentType:
+                    DonutContentPercentageFormatterComponent.lateLoadKey,
                 label: $localize`Percentage`,
-                configurationComponent: DonutContentPercentageConfigurationComponent.lateLoadKey,
+                configurationComponent:
+                    DonutContentPercentageConfigurationComponent.lateLoadKey,
             } as IFormatterDefinition,
             {
                 componentType: CustomDonutContentFormatterComponent.lateLoadKey,
                 label: $localize`Custom`,
                 // This is a custom configurator that will pop up below the formatter once it gets selected
-                configurationComponent: CustomDonutContentFormatterConfiguratorComponent.lateLoadKey,
+                configurationComponent:
+                    CustomDonutContentFormatterConfiguratorComponent.lateLoadKey,
             } as IFormatterDefinition,
         ];
 
@@ -279,7 +352,12 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
         );
 
         // This sets the donut chart's datasource to have the StatusesExampleDatasource so the drop down is filled similar to the line above.
-        this.widgetTypesService.setNode(proportional, "configurator", WellKnownPathKey.DataSourceProviders, [StatusesExampleDatasource.providerId]);
+        this.widgetTypesService.setNode(
+            proportional,
+            "configurator",
+            WellKnownPathKey.DataSourceProviders,
+            [StatusesExampleDatasource.providerId]
+        );
 
         // Registering the data source for injection into the widget.
         this.providerRegistry.setProviders({
@@ -311,7 +389,8 @@ export class CustomDonutContentFormatterExampleComponent implements OnInit {
         const proportionalWidget = widgetConfig;
         const widgetIndex: IWidgets = {
             // Enhance the widget with information coming from it's type definition
-            [proportionalWidget.id]: this.widgetTypesService.mergeWithWidgetType(proportionalWidget),
+            [proportionalWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(proportionalWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -372,8 +451,10 @@ export const randomStatusesWidgetData: IStatusesWidgetData[] = [
 ];
 
 @Injectable()
-export class StatusesExampleDatasource extends DataSourceService<IStatusesWidgetData>
-    implements IDataSource<IStatusesWidgetData>, OnDestroy {
+export class StatusesExampleDatasource
+    extends DataSourceService<IStatusesWidgetData>
+    implements IDataSource<IStatusesWidgetData>, OnDestroy
+{
     public static providerId = "StatusesExampleDatasource";
 
     public busy = new Subject<boolean>();
@@ -405,14 +486,14 @@ export const widgetConfig: IWidget = {
     type: "proportional",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
-                "properties": {
+            header: {
+                properties: {
                     title: "Proportional Widget!",
                     subtitle: "Proportional widget with legend formatters",
                 },
             },
-            "chart": {
-                "providers": {
+            chart: {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         providerId: StatusesExampleDatasource.providerId,
                     } as IProviderConfiguration,
@@ -424,7 +505,8 @@ export const widgetConfig: IWidget = {
                             type: ProportionalWidgetChartTypes.DonutChart,
                             legendPlacement: LegendPlacement.Right,
                             contentFormatter: {
-                                componentType: CustomDonutContentFormatterComponent.lateLoadKey,
+                                componentType:
+                                    CustomDonutContentFormatterComponent.lateLoadKey,
                                 properties: {
                                     // here you can set the default value for the metric you receive. If not set the first one from the list will be taken
                                     currentMetric: "Down",

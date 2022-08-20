@@ -16,8 +16,14 @@ describe("a11y: expander", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("expander/expander-visual-test");
-        basicExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-basic");
-        lineLessExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-without-border");
+        basicExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-basic"
+        );
+        lineLessExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-without-border"
+        );
     });
 
     it("should check a11y of expander", async () => {

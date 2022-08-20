@@ -91,9 +91,9 @@ describe("components >", () => {
         it("should change disable state", () => {
             componentInstance.isDisabled = true;
             _debounce(() => {
-                const secondaryState = debugElement.query(By.css(".nui-textbox__input"))
-                    .nativeElement
-                    .getAttribute("disabled");
+                const secondaryState = debugElement
+                    .query(By.css(".nui-textbox__input"))
+                    .nativeElement.getAttribute("disabled");
                 expect(secondaryState).toBeTruthy();
             });
         });
@@ -101,19 +101,29 @@ describe("components >", () => {
         it("should change selected element", () => {
             componentInstance.overlay.toggle();
             fixture.detectChanges();
-            const initialState
-                = debugElement.query(By.css(".nui-menu-item--selected")).nativeElement.innerText;
-            const index
-                = _findIndex(componentInstance.times, time => moment(time)
-                    .format(componentInstance.timeFormat)
-                    .toUpperCase() === initialState);
-            const movedTime = index < 2 ? componentInstance.times[index + 1] : componentInstance.times[index - 1];
-            const movedTimeFormatted = moment(movedTime).format(componentInstance.timeFormat);
+            const initialState = debugElement.query(
+                By.css(".nui-menu-item--selected")
+            ).nativeElement.innerText;
+            const index = _findIndex(
+                componentInstance.times,
+                (time) =>
+                    moment(time)
+                        .format(componentInstance.timeFormat)
+                        .toUpperCase() === initialState
+            );
+            const movedTime =
+                index < 2
+                    ? componentInstance.times[index + 1]
+                    : componentInstance.times[index - 1];
+            const movedTimeFormatted = moment(movedTime).format(
+                componentInstance.timeFormat
+            );
             expect(movedTimeFormatted).not.toBe(initialState);
             componentInstance.writeValue(movedTime);
             fixture.detectChanges();
-            const changedState
-                = debugElement.query(By.css(".nui-menu-item--selected")).nativeElement.textContent.trim();
+            const changedState = debugElement
+                .query(By.css(".nui-menu-item--selected"))
+                .nativeElement.textContent.trim();
             expect(changedState).toBe(movedTimeFormatted);
         });
 
@@ -137,14 +147,18 @@ describe("components >", () => {
             const timeStep = 60;
             const items = componentInstance.generateTimeItems(timeStep);
             let prevItem: Moment;
-            _each(items, item => {
+            _each(items, (item) => {
                 if (!prevItem) {
                     // this checks that first element in array of times is 00:00
                     prevItem = item;
-                    expect(moment(prevItem).toISOString()).toBe(moment(prevItem).startOf("day").toISOString());
+                    expect(moment(prevItem).toISOString()).toBe(
+                        moment(prevItem).startOf("day").toISOString()
+                    );
                 } else {
                     // this checks that dates is generated correctly considering the step
-                    expect(moment(item).diff(moment(prevItem), "minutes")).toBe(timeStep);
+                    expect(moment(item).diff(moment(prevItem), "minutes")).toBe(
+                        timeStep
+                    );
                     prevItem = item;
                 }
             });
@@ -154,26 +168,34 @@ describe("components >", () => {
             const timeStep = 30;
             const items = componentInstance.generateTimeItems(timeStep);
             let prevItem: Moment;
-            _each(items, item => {
+            _each(items, (item) => {
                 if (!prevItem) {
                     // this checks that first element in array of times is 00:00
                     prevItem = item;
-                    expect(moment(prevItem).toISOString()).toBe(moment(prevItem).startOf("day").toISOString());
+                    expect(moment(prevItem).toISOString()).toBe(
+                        moment(prevItem).startOf("day").toISOString()
+                    );
                 } else {
                     // this checks that dates is generated correctly considering the step
-                    expect(moment(item).diff(moment(prevItem), "minutes")).toBe(timeStep);
+                    expect(moment(item).diff(moment(prevItem), "minutes")).toBe(
+                        timeStep
+                    );
                     prevItem = item;
                 }
             });
         });
 
         it("should check if item is selected", () => {
-            componentInstance.writeValue(componentInstance.itemsSource[0].itemsSource[0].title);
+            componentInstance.writeValue(
+                componentInstance.itemsSource[0].itemsSource[0].title
+            );
             fixture.detectChanges();
-            const isSelected = componentInstance.itemsSource[0].itemsSource[4].isSelected;
+            const isSelected =
+                componentInstance.itemsSource[0].itemsSource[4].isSelected;
             expect(isSelected).toBeFalsy();
 
-            const isSelected2 = componentInstance.itemsSource[0].itemsSource[0].isSelected;
+            const isSelected2 =
+                componentInstance.itemsSource[0].itemsSource[0].isSelected;
             expect(isSelected2).toBeTruthy();
         });
 
@@ -195,7 +217,9 @@ describe("components >", () => {
                 const expectedModelToReturn = moment();
                 expectedModelToReturn.hour(0).minute(0).second(0);
                 const selectedItem = componentInstance.getItemToSelect();
-                expect(selectedItem?.title.hour()).toBe(expectedModelToReturn.hour());
+                expect(selectedItem?.title.hour()).toBe(
+                    expectedModelToReturn.hour()
+                );
             });
 
             it("should check 00:01 case", () => {
@@ -207,7 +231,9 @@ describe("components >", () => {
                 const expectedSecondModelToReturn = moment();
                 expectedSecondModelToReturn.hour(0).minute(0).second(0);
                 const secondSelectedItem = componentInstance.getItemToSelect();
-                expect(secondSelectedItem?.title.hour()).toBe(expectedSecondModelToReturn.hour());
+                expect(secondSelectedItem?.title.hour()).toBe(
+                    expectedSecondModelToReturn.hour()
+                );
             });
         });
 
@@ -231,7 +257,6 @@ describe("components >", () => {
                 moment.locale(oldLocale);
             });
         });
-
     });
 
     describe("timepicker with reactive form >", () => {
@@ -240,13 +265,8 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                imports: [
-                    FormsModule,
-                    ReactiveFormsModule,
-                ],
-                declarations: [
-                    TimePickerReactiveFormTestComponent,
-                ],
+                imports: [FormsModule, ReactiveFormsModule],
+                declarations: [TimePickerReactiveFormTestComponent],
                 providers: [
                     ToastService,
                     ToastContainerService,
@@ -255,14 +275,18 @@ describe("components >", () => {
                 schemas: [NO_ERRORS_SCHEMA],
             });
 
-            fixture = TestBed.createComponent(TimePickerReactiveFormTestComponent);
+            fixture = TestBed.createComponent(
+                TimePickerReactiveFormTestComponent
+            );
             componentInstance = fixture.componentInstance;
         });
 
         it("should change selected item on 'timeChanged' event", () => {
             const testTime = "03:30 AM";
             componentInstance.valueChange(testTime);
-            expect(moment(componentInstance.time.toString(), "HH:mm a")).toEqual(moment(testTime, "HH:mm a"));
+            expect(
+                moment(componentInstance.time.toString(), "HH:mm a")
+            ).toEqual(moment(testTime, "HH:mm a"));
         });
 
         it("should validate form on submit, emit error toast if no value is selected and re-validate form on value selection", () => {

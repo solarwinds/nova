@@ -16,7 +16,6 @@ import {
     selector: "nui-basic-horizontal-bar-chart-test",
     templateUrl: "./basic-horizontal-bar-chart-test.component.html",
 })
-
 export class BasicHorizontalBarChartTestComponent implements AfterViewInit {
     public config: IBarChartConfig = { horizontal: true };
     public chart = new Chart(barGrid(this.config));
@@ -29,11 +28,13 @@ export class BasicHorizontalBarChartTestComponent implements AfterViewInit {
 
     public ngAfterViewInit() {
         const accessors = barAccessors(this.config);
-        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("y") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("y"),
+        });
 
         const scales = barScales(this.config);
 
-        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map(d => ({
+        const seriesSet: IChartSeries<IBarAccessors>[] = getData().map((d) => ({
             ...d,
             accessors,
             renderer,

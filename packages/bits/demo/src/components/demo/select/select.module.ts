@@ -29,9 +29,9 @@ const routes = [
         path: "",
         component: SelectDocsComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.support,
-                "eolDate": new Date("2020-07-09"),
+            srlc: {
+                stage: SrlcStage.support,
+                eolDate: new Date("2020-07-09"),
             },
             showThemeSwitcher: true,
         },
@@ -40,8 +40,8 @@ const routes = [
         path: "basic",
         component: SelectBasicExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -50,8 +50,8 @@ const routes = [
         path: "select-visual-test",
         component: SelectVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -59,8 +59,8 @@ const routes = [
         path: "select-reactive-form",
         component: SelectReactiveFormExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -91,12 +91,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class SelectModule {
-}
+export class SelectModule {}

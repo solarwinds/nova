@@ -27,4 +27,3 @@ export class StatusAccessors implements IStatusAccessors {
         barAccessors.data.status = (d: any) => d.status;
     }
 }
-

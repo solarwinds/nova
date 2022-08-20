@@ -1,7 +1,17 @@
 import { ChangeDetectorRef, Component, SimpleChange } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { LoggerService, NuiFormFieldModule, NuiSelectV2Module, NuiValidationMessageModule } from "@nova-ui/bits";
+import {
+    FormBuilder,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+} from "@angular/forms";
+import {
+    LoggerService,
+    NuiFormFieldModule,
+    NuiSelectV2Module,
+    NuiValidationMessageModule,
+} from "@nova-ui/bits";
 
 import { IFormatterDefinition } from "../../../../../../../../components/types";
 import { ConfiguratorHeadingService } from "../../../../../../../services/configurator-heading.service";
@@ -13,19 +23,28 @@ import { FormatterConfiguratorComponent } from "./formatter-configurator.compone
     template: "",
 })
 class FormatterConfiguratorTestComponent extends FormatterConfiguratorComponent {
-    constructor(changeDetector: ChangeDetectorRef, formBuilder: FormBuilder, logger: LoggerService, configuratoeHeading: ConfiguratorHeadingService) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        formBuilder: FormBuilder,
+        logger: LoggerService,
+        configuratoeHeading: ConfiguratorHeadingService
+    ) {
         super(changeDetector, configuratoeHeading, formBuilder, logger);
     }
 }
 
 const DATA_FIELDS = [
-    {id: "position", label: $localize`Position`, dataType: "number"},
-    {id: "name", label: $localize`Name`, dataType: "string"},
-    {id: "features", label: $localize`Features`, dataType: "icons"},
-    {id: "checks", label: $localize`Checks`, dataType: "iconAndText"},
-    {id: "status", label: $localize`Status`, dataType: "string"},
-    {id: "firstUrl", label: $localize`First Url`, dataType: "link"},
-    {id: "firstUrlLabel", label: $localize`First Url Label`, dataType: "label"},
+    { id: "position", label: $localize`Position`, dataType: "number" },
+    { id: "name", label: $localize`Name`, dataType: "string" },
+    { id: "features", label: $localize`Features`, dataType: "icons" },
+    { id: "checks", label: $localize`Checks`, dataType: "iconAndText" },
+    { id: "status", label: $localize`Status`, dataType: "string" },
+    { id: "firstUrl", label: $localize`First Url`, dataType: "link" },
+    {
+        id: "firstUrlLabel",
+        label: $localize`First Url Label`,
+        dataType: "label",
+    },
 ];
 const FORMATTER_DEFINITION: IFormatterDefinition = {
     label: $localize`Test Formatter`,
@@ -42,9 +61,7 @@ describe("FormatterConfiguratorComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                FormatterConfiguratorTestComponent,
-            ],
+            declarations: [FormatterConfiguratorTestComponent],
             imports: [
                 FormsModule,
                 ReactiveFormsModule,
@@ -72,7 +89,10 @@ describe("FormatterConfiguratorComponent", () => {
         });
 
         it("should update dataField items", () => {
-            component.formatterDefinition.dataTypes["value"] = ["string", "number"];
+            component.formatterDefinition.dataTypes["value"] = [
+                "string",
+                "number",
+            ];
             component.mapDropdownItems();
 
             expect(component.dropdownItems["value"][0].id).toEqual("position");
@@ -85,14 +105,18 @@ describe("FormatterConfiguratorComponent", () => {
             component.formatterDefinition.dataTypes["value"] = null;
             component.mapDropdownItems();
 
-            expect(component.dropdownItems["value"].length).toEqual(component.dataFields.length);
+            expect(component.dropdownItems["value"].length).toEqual(
+                component.dataFields.length
+            );
         });
-
     });
 
     describe("addCustomFormControls", () => {
         it("adds custom form controls", () => {
-            (component as any).addCustomFormControls = function (this: FormatterConfiguratorComponent, form: FormGroup) {
+            (component as any).addCustomFormControls = function (
+                this: FormatterConfiguratorComponent,
+                form: FormGroup
+            ) {
                 form.addControl("custom", this.formBuilder.control(""));
             };
             component.formatterDefinition = {
@@ -107,7 +131,9 @@ describe("FormatterConfiguratorComponent", () => {
             };
             component.dataFields = DATA_FIELDS;
 
-            component.ngOnChanges({formatterDefinition: new SimpleChange(null, null, true)});
+            component.ngOnChanges({
+                formatterDefinition: new SimpleChange(null, null, true),
+            });
 
             expect(component.form.get("custom")).toBeDefined();
         });
@@ -115,16 +141,24 @@ describe("FormatterConfiguratorComponent", () => {
 
     describe("change of formatter", () => {
         it("should set the dataField form value to 'null' when new formatter does not support old value", () => {
-            component.formatterDefinition = {...FORMATTER_DEFINITION, dataTypes: {value: ["string"]}};
+            component.formatterDefinition = {
+                ...FORMATTER_DEFINITION,
+                dataTypes: { value: ["string"] },
+            };
             component.dataFields = DATA_FIELDS;
             component.mapDropdownItems();
             component.initForm();
-            component.formatterDefinition = {...FORMATTER_DEFINITION, dataTypes: {value: ["number"]}};
+            component.formatterDefinition = {
+                ...FORMATTER_DEFINITION,
+                dataTypes: { value: ["number"] },
+            };
 
             component.mapDropdownItems();
             component.initForm();
 
-            expect(component.form.get("dataFieldIds")?.value.value).toEqual(null);
+            expect(component.form.get("dataFieldIds")?.value.value).toEqual(
+                null
+            );
             expect(component.form.valid).toEqual(false);
         });
     });

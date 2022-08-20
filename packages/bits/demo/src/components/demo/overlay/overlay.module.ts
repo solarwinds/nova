@@ -39,7 +39,7 @@ const routes = [
         path: "",
         component: OverlayDocsComponent,
         data: {
-            "srlc": {
+            srlc: {
                 stage: SrlcStage.beta,
             },
             showThemeSwitcher: true,
@@ -49,8 +49,8 @@ const routes = [
         path: "basic",
         component: OverlaySimpleExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -58,8 +58,8 @@ const routes = [
         path: "with-popup-styles",
         component: OverlayPopupStylesExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -67,8 +67,8 @@ const routes = [
         path: "custom-styles",
         component: OverlayCustomStylesExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -76,8 +76,8 @@ const routes = [
         path: "arrow",
         component: OverlayArrowExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -85,8 +85,8 @@ const routes = [
         path: "custom-container",
         component: OverlayCustomContainerExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -94,8 +94,8 @@ const routes = [
         path: "toggle-examples",
         component: OverlayShowHideToggleExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -103,8 +103,8 @@ const routes = [
         path: "viewport-margin",
         component: OverlayViewportMarginExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -112,8 +112,8 @@ const routes = [
         path: "custom-dialog",
         component: OverlayCustomDialogComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -121,8 +121,8 @@ const routes = [
         path: "custom-confirmation-dialog",
         component: CustomConfirmationInsideDialogComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -130,8 +130,8 @@ const routes = [
         path: "overlay-test",
         component: OverlayTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -173,12 +173,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class OverlayModule {
-}
+export class OverlayModule {}

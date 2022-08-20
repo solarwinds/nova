@@ -30,28 +30,45 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     private labelsPlugin: DonutGaugeLabelsPlugin;
     private readonly labelClearance = 40;
 
-    public ngOnChanges(changes: ComponentChanges<DonutGaugePrototypeComponent>): void {
-        if ((changes.size && !changes.size.firstChange) ||
+    public ngOnChanges(
+        changes: ComponentChanges<DonutGaugePrototypeComponent>
+    ): void {
+        if (
+            (changes.size && !changes.size.firstChange) ||
             (changes.annularWidth && !changes.annularWidth.firstChange) ||
-            (changes.annularGrowth && !changes.annularGrowth.firstChange)) {
+            (changes.annularGrowth && !changes.annularGrowth.firstChange)
+        ) {
             this.updateDonutSize();
             this.updateAnnularAttributes();
             this.chartAssist.chart.updateDimensions();
         }
 
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
-            this.labelsPlugin.config.disableThresholdLabels = this.gaugeConfig.thresholds?.disableMarkers ?? false;
+            this.labelsPlugin.config.disableThresholdLabels =
+                this.gaugeConfig.thresholds?.disableMarkers ?? false;
 
             this.chartAssist.chart.updateDimensions();
-            this.chartAssist.update(GaugeUtil.update(this.seriesSet, this.gaugeConfig));
+            this.chartAssist.update(
+                GaugeUtil.update(this.seriesSet, this.gaugeConfig)
+            );
         }
     }
 
     public ngOnInit(): void {
-        const gaugeConfigWithLabelClearance = { ...this.gaugeConfig, labels: { ...this.gaugeConfig.labels, clearance: this.labelClearance } };
+        const gaugeConfigWithLabelClearance = {
+            ...this.gaugeConfig,
+            labels: {
+                ...this.gaugeConfig.labels,
+                clearance: this.labelClearance,
+            },
+        };
 
         this.labelsPlugin = new DonutGaugeLabelsPlugin();
-        this.chartAssist = GaugeUtil.createChartAssist(gaugeConfigWithLabelClearance, GaugeMode.Donut, this.labelsPlugin);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            gaugeConfigWithLabelClearance,
+            GaugeMode.Donut,
+            this.labelsPlugin
+        );
         const gridConfig = this.chartAssist.chart.getGrid().config();
         gridConfig.dimension.autoHeight = false;
         gridConfig.dimension.autoWidth = false;
@@ -59,7 +76,10 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(gaugeConfigWithLabelClearance, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            gaugeConfigWithLabelClearance,
+            GaugeMode.Donut
+        );
 
         this.updateDonutSize();
         this.updateAnnularAttributes();
@@ -67,14 +87,17 @@ export class DonutGaugePrototypeComponent implements OnChanges, OnInit {
     }
 
     private updateDonutSize(): void {
-        const gridDimensions = this.chartAssist.chart.getGrid().config().dimension;
+        const gridDimensions = this.chartAssist.chart
+            .getGrid()
+            .config().dimension;
         gridDimensions.height(this.size);
         gridDimensions.width(this.size);
     }
 
     private updateAnnularAttributes(): void {
-        this.seriesSet.forEach(series => {
-            const rendererConfig = (series.renderer.config as IRadialRendererConfig);
+        this.seriesSet.forEach((series) => {
+            const rendererConfig = series.renderer
+                .config as IRadialRendererConfig;
             // increase the max thickness from 30 for testing purposes
             rendererConfig.maxThickness = 20000;
             rendererConfig.annularGrowth = this.annularGrowth;

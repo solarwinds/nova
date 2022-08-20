@@ -13,18 +13,38 @@ import {
     SimpleChanges,
     ViewEncapsulation,
 } from "@angular/core";
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { DialogService, EventBus, IDataField, IDataSource, IEvent, uuid } from "@nova-ui/bits";
+import {
+    AbstractControl,
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+} from "@angular/forms";
+import {
+    DialogService,
+    EventBus,
+    IDataField,
+    IDataSource,
+    IEvent,
+    uuid,
+} from "@nova-ui/bits";
 import isUndefined from "lodash/isUndefined";
 import values from "lodash/values";
 import { Observable, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { IDataSourceError, IDataSourceOutput } from "../../../../../components/providers/types";
+import {
+    IDataSourceError,
+    IDataSourceOutput,
+} from "../../../../../components/providers/types";
 import { ITableWidgetColumnConfig } from "../../../../../components/table-widget/types";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
 import { TableFormatterRegistryService } from "../../../../../services/table-formatter-registry.service";
-import { IHasForm, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
+import {
+    IHasForm,
+    PIZZAGNA_EVENT_BUS,
+    WellKnownDataSourceFeatures,
+} from "../../../../../types";
 import { ConfiguratorDataSourceManagerService } from "../../../../services/configurator-data-source-manager.service";
 import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
 
@@ -35,7 +55,9 @@ import { DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
 })
-export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, OnChanges, OnDestroy {
+export class TableColumnsConfigurationV2Component
+    implements OnInit, IHasForm, OnChanges, OnDestroy
+{
     static lateLoadKey = "TableColumnsConfigurationV2Component";
 
     @Input() columns: ITableWidgetColumnConfig[] = [];
@@ -59,7 +81,8 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     public dataSourceError: IDataSourceError | null;
 
     public get columnForms(): FormControl[] {
-        return (this.form.controls["columns"] as FormArray).controls as FormControl[];
+        return (this.form.controls["columns"] as FormArray)
+            .controls as FormControl[];
     }
 
     // the last selected data source will be stored here
@@ -68,13 +91,15 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
 
     private onDestroy$: Subject<void> = new Subject<void>();
 
-    constructor(private formBuilder: FormBuilder,
-                private changeDetector: ChangeDetectorRef,
-                private dialogService: DialogService,
-                private pizzagnaService: PizzagnaService,
-                public dataSourceManager: ConfiguratorDataSourceManagerService,
-                public tableFormatterRegistry: TableFormatterRegistryService,
-                @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
+    constructor(
+        private formBuilder: FormBuilder,
+        private changeDetector: ChangeDetectorRef,
+        private dialogService: DialogService,
+        private pizzagnaService: PizzagnaService,
+        public dataSourceManager: ConfiguratorDataSourceManagerService,
+        public tableFormatterRegistry: TableFormatterRegistryService,
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
+    ) {
         this.form = this.formBuilder.group({
             columns: this.formBuilder.array([]),
         });
@@ -82,39 +107,56 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
         this.form.controls["columns"].valueChanges
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((columns: ITableWidgetColumnConfig[]) => {
-                this.isWidthMessageDisplayed = this.getWidthMessageDisplayed(columns);
+                this.isWidthMessageDisplayed =
+                    this.getWidthMessageDisplayed(columns);
                 this.changeDetector.markForCheck();
             });
 
-        this.eventBus.subscribeUntil(DATA_SOURCE_CREATED, this.onDestroy$, (event: IEvent<IDataSource>) => {
-            if (!event.payload) {
-                return;
-            }
-
-            this.dataSource = event.payload;
-            this.changeDetector.markForCheck();
-        });
-
-        this.eventBus.subscribeUntil(DATA_SOURCE_OUTPUT, this.onDestroy$, (event: IEvent<any | IDataSourceOutput<any>>) => {
-            if (event.payload?.error) {
-                return;
-            }
-            const { dataFields } = isUndefined(event.payload.result) ? event.payload : (event.payload.result || {});
-            this.dataSourceFields = dataFields ?? [];
-            const disableColumnGeneration = this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.DisableTableColumnGeneration)?.enabled;
-
-            const columns = this.mergeColumns(this.dataSourceFields, this.getColumns());
-            if (columns?.length || disableColumnGeneration) {
-                // if disableColumnGeneration is enabled and there are no columns to be kept,
-                // we have to clear the form by updating the column input via the `onItemsChange` method
-                this.updateColumns(columns);
-            } else {
-                if (!disableColumnGeneration) {
-                    this.resetColumns(false);
+        this.eventBus.subscribeUntil(
+            DATA_SOURCE_CREATED,
+            this.onDestroy$,
+            (event: IEvent<IDataSource>) => {
+                if (!event.payload) {
+                    return;
                 }
+
+                this.dataSource = event.payload;
+                this.changeDetector.markForCheck();
             }
-            this.changeDetector.markForCheck();
-        });
+        );
+
+        this.eventBus.subscribeUntil(
+            DATA_SOURCE_OUTPUT,
+            this.onDestroy$,
+            (event: IEvent<any | IDataSourceOutput<any>>) => {
+                if (event.payload?.error) {
+                    return;
+                }
+                const { dataFields } = isUndefined(event.payload.result)
+                    ? event.payload
+                    : event.payload.result || {};
+                this.dataSourceFields = dataFields ?? [];
+                const disableColumnGeneration =
+                    this.dataSource?.features?.getFeatureConfig(
+                        WellKnownDataSourceFeatures.DisableTableColumnGeneration
+                    )?.enabled;
+
+                const columns = this.mergeColumns(
+                    this.dataSourceFields,
+                    this.getColumns()
+                );
+                if (columns?.length || disableColumnGeneration) {
+                    // if disableColumnGeneration is enabled and there are no columns to be kept,
+                    // we have to clear the form by updating the column input via the `onItemsChange` method
+                    this.updateColumns(columns);
+                } else {
+                    if (!disableColumnGeneration) {
+                        this.resetColumns(false);
+                    }
+                }
+                this.changeDetector.markForCheck();
+            }
+        );
         dataSourceManager.error$
             .pipe(takeUntil(this.onDestroy$))
             .subscribe((err: IDataSourceError | null) => {
@@ -148,9 +190,12 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
         return this.form.controls["columns"].value;
     }
 
-    public updateColumns(columns: ITableWidgetColumnConfig[], emitEvent: boolean = true) {
+    public updateColumns(
+        columns: ITableWidgetColumnConfig[],
+        emitEvent: boolean = true
+    ) {
         const cols = this.form.controls["columns"] as FormArray;
-        cols.controls = columns.map(c => {
+        cols.controls = columns.map((c) => {
             const fc = new FormControl(c);
             fc.setParent(cols);
 
@@ -175,12 +220,14 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     }
 
     public addColumn() {
-        (this.form.controls["columns"] as FormArray).push(new FormControl({
-            id: uuid("column"),
-            label: "",
-            isActive: true,
-            formatter: {},
-        } as ITableWidgetColumnConfig));
+        (this.form.controls["columns"] as FormArray).push(
+            new FormControl({
+                id: uuid("column"),
+                label: "",
+                isActive: true,
+                formatter: {},
+            } as ITableWidgetColumnConfig)
+        );
     }
 
     public onResetColumns() {
@@ -189,21 +236,22 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
 
     public resetColumns(confirmation: boolean) {
         const reset = () => {
-            const columns: ITableWidgetColumnConfig[] = this.dataSourceFields?.map(df => ({
-                id: uuid("column"),
-                formatter: {
-                    componentType: "RawFormatterComponent",
-                    properties: {
-                        dataFieldIds: {
-                            value: df.id,
+            const columns: ITableWidgetColumnConfig[] =
+                this.dataSourceFields?.map((df) => ({
+                    id: uuid("column"),
+                    formatter: {
+                        componentType: "RawFormatterComponent",
+                        properties: {
+                            dataFieldIds: {
+                                value: df.id,
+                            },
                         },
                     },
-                },
-                isActive: true,
-                label: df.label,
-                width: undefined,
-                sortable: df.sortable,
-            }));
+                    isActive: true,
+                    label: df.label,
+                    width: undefined,
+                    sortable: df.sortable,
+                }));
 
             this.updateColumns(columns);
         };
@@ -215,14 +263,16 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
                 confirmText: $localize`Reset Columns`,
             });
 
-            dialog.result
-                .then((result) => {
+            dialog.result.then(
+                (result) => {
                     if (result) {
                         reset();
                     }
-                }, () => {
+                },
+                () => {
                     // this being here prevents a "unhandled rejection" console error from showing up
-                });
+                }
+            );
         } else {
             reset();
         }
@@ -234,13 +284,20 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
      * @param currentDatafields
      * @param columns
      */
-    private mergeColumns(currentDatafields: IDataField[], columns: ITableWidgetColumnConfig[]): ITableWidgetColumnConfig[] {
-        const currentDatafieldIds = currentDatafields.map(datafield => datafield.id);
-        return columns.filter(column => {
+    private mergeColumns(
+        currentDatafields: IDataField[],
+        columns: ITableWidgetColumnConfig[]
+    ): ITableWidgetColumnConfig[] {
+        const currentDatafieldIds = currentDatafields.map(
+            (datafield) => datafield.id
+        );
+        return columns.filter((column) => {
             if (!column.formatter?.properties?.dataFieldIds) {
                 return false;
             }
-            return values(column.formatter?.properties?.dataFieldIds).some((datafield: string) => currentDatafieldIds.includes(datafield));
+            return values(column.formatter?.properties?.dataFieldIds).some(
+                (datafield: string) => currentDatafieldIds.includes(datafield)
+            );
         });
     }
 
@@ -266,7 +323,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     // ------------------------------------------------- items dynamic stuff ------------------------------------------------
 
     public moveItem(index: number, toIndex: number) {
-        const columns = (this.form.controls["columns"] as FormArray);
+        const columns = this.form.controls["columns"] as FormArray;
 
         const column = columns.at(index);
         columns.removeAt(index);
@@ -276,7 +333,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     }
 
     public removeItem(index: number): void {
-        const columns = (this.form.controls["columns"] as FormArray);
+        const columns = this.form.controls["columns"] as FormArray;
         columns.removeAt(index);
 
         this.changeDetector.detectChanges();
@@ -287,7 +344,7 @@ export class TableColumnsConfigurationV2Component implements OnInit, IHasForm, O
     }
 
     public cdkDragStarted(event: CdkDragStart): void {
-        this.draggedItemHeight = event.source.element.nativeElement.offsetHeight;
+        this.draggedItemHeight =
+            event.source.element.nativeElement.offsetHeight;
     }
-
 }

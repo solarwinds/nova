@@ -36,13 +36,19 @@ enum ChartType {
     Line = "line",
 }
 
-type PreprocessorType<T> = (this: ChartAssist, series: IChartAssistSeries<T>[]) => IChartAssistSeries<T>[];
+type PreprocessorType<T> = (
+    this: ChartAssist,
+    series: IChartAssistSeries<T>[]
+) => IChartAssistSeries<T>[];
 
 interface IChartTools<T = IAccessors> {
     preprocessor?: PreprocessorType<T>;
     gridFunction: () => IGrid;
     rendererFunction: () => Renderer<IAccessors>;
-    accessorFunction: (colors?: IValueProvider<string>, markers?: IValueProvider<IChartMarker>) => IAccessors;
+    accessorFunction: (
+        colors?: IValueProvider<string>,
+        markers?: IValueProvider<IChartMarker>
+    ) => IAccessors;
     scaleFunction: () => Scales;
 }
 
@@ -59,13 +65,24 @@ export interface IChartAttributes<T = IAccessors> {
     templateUrl: "./two-dimensional-data.example.component.html",
 })
 export class TwoDimensionalDataExampleComponent implements OnInit {
-    public chartTypes = [ChartType.StackedBar, ChartType.GroupedBar, ChartType.Line];
+    public chartTypes = [
+        ChartType.StackedBar,
+        ChartType.GroupedBar,
+        ChartType.Line,
+    ];
     public chartType = this.chartTypes[0];
     public mainCategoryOptions = ["quarters", "statuses"];
     public mainCategory = this.mainCategoryOptions[0];
     public statuses = ["down", "critical", "warning", "unknown", "ok", "other"];
     public quarters = ["Q1", "Q2", "Q3", "Q4"];
-    public iconNames = ["down", "critical", "warning", "unknown", "up", "unmanaged"];
+    public iconNames = [
+        "down",
+        "critical",
+        "warning",
+        "unknown",
+        "up",
+        "unmanaged",
+    ];
     public categories: string[];
     public subCategories: string[];
     public values = [
@@ -76,7 +93,10 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
     ];
     public valueAccessor: (i: number, j: number) => number;
 
-    public iconMap = zipObject(this.statuses, this.iconNames.map(n => `status_${n}`));
+    public iconMap = zipObject(
+        this.statuses,
+        this.iconNames.map((n) => `status_${n}`)
+    );
     public palette: ChartPalette;
     public chartAssist: ChartAssist;
     public accessors: IAccessors;
@@ -89,14 +109,21 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
     }
 
     public updateMainCategory() {
-        const statusPalette = new ChartPalette(new MappedValueProvider<string>(zipObject(this.statuses, CHART_PALETTE_CS_S)));
+        const statusPalette = new ChartPalette(
+            new MappedValueProvider<string>(
+                zipObject(this.statuses, CHART_PALETTE_CS_S)
+            )
+        );
         const standardPalette = new ChartPalette(CHART_PALETTE_CS1);
 
-        const groupByQuarter = this.mainCategory === this.mainCategoryOptions[0];
+        const groupByQuarter =
+            this.mainCategory === this.mainCategoryOptions[0];
 
         this.categories = groupByQuarter ? this.statuses : this.quarters;
         this.subCategories = groupByQuarter ? this.quarters : this.statuses;
-        this.valueAccessor = groupByQuarter ? (i, j) => this.values[i][j] : (i, j) => this.values[j][i];
+        this.valueAccessor = groupByQuarter
+            ? (i, j) => this.values[i][j]
+            : (i, j) => this.values[j][i];
         this.palette = groupByQuarter ? standardPalette : statusPalette;
 
         this.updateChartType();
@@ -108,7 +135,8 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
     }
 
     private buildChart() {
-        const {grid, accessors, renderer, scales, preprocessor} = this.getChartAttributes(this.chartType);
+        const { grid, accessors, renderer, scales, preprocessor } =
+            this.getChartAttributes(this.chartType);
 
         this.renderer = renderer;
         this.accessors = accessors;
@@ -125,21 +153,36 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
     }
 
     private updateChart() {
-        this.chartAssist.update(this.buildChartSeries(this.categories, this.subCategories, this.valueAccessor));
+        this.chartAssist.update(
+            this.buildChartSeries(
+                this.categories,
+                this.subCategories,
+                this.valueAccessor
+            )
+        );
     }
 
-    private buildChartSeries(categories: string[], subCategories: string[], valueAccessor: (i: number, j: number) => number): IChartSeries<IAccessors>[] {
+    private buildChartSeries(
+        categories: string[],
+        subCategories: string[],
+        valueAccessor: (i: number, j: number) => number
+    ): IChartSeries<IAccessors>[] {
         return subCategories.map((subCategory, i) => ({
             id: subCategory,
             name: subCategory,
-            data: categories.map((xCategory, j) => ({category: xCategory, value: valueAccessor(i, j) || 0})),
+            data: categories.map((xCategory, j) => ({
+                category: xCategory,
+                value: valueAccessor(i, j) || 0,
+            })),
             accessors: this.accessors,
             renderer: this.renderer,
             scales: this.scales,
         }));
     }
 
-    private getChartAttributes(chartType: ChartType): IChartAttributes<IBarAccessors> {
+    private getChartAttributes(
+        chartType: ChartType
+    ): IChartAttributes<IBarAccessors> {
         const t: IChartTools<IBarAccessors> = this.getChartTools(chartType);
         const result: IChartAttributes<IBarAccessors> = {
             grid: t.gridFunction(),
@@ -149,7 +192,8 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
         };
 
         if (t.preprocessor) {
-            result.preprocessor = t.preprocessor as PreprocessorType<IBarAccessors>;
+            result.preprocessor =
+                t.preprocessor as PreprocessorType<IBarAccessors>;
         }
         return result;
     }
@@ -159,28 +203,43 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
             [ChartType.StackedBar]: {
                 preprocessor: stack,
                 gridFunction: barGrid,
-                rendererFunction: () => new BarRenderer({highlightStrategy: new BarHighlightStrategy("x")}),
-                accessorFunction: () => barAccessors(undefined, this.palette.standardColors),
+                rendererFunction: () =>
+                    new BarRenderer({
+                        highlightStrategy: new BarHighlightStrategy("x"),
+                    }),
+                accessorFunction: () =>
+                    barAccessors(undefined, this.palette.standardColors),
                 scaleFunction: barScales,
             },
             [ChartType.GroupedBar]: {
-                gridFunction: () => barGrid({grouped: true}),
-                rendererFunction: () => new BarRenderer({highlightStrategy: new BarHighlightStrategy("x")}),
+                gridFunction: () => barGrid({ grouped: true }),
+                rendererFunction: () =>
+                    new BarRenderer({
+                        highlightStrategy: new BarHighlightStrategy("x"),
+                    }),
                 accessorFunction: () => {
-                    const accessors = barAccessors({grouped: true}, this.palette.standardColors);
-                    accessors.data.category = (data, i, series, dataSeries) => [data.category, dataSeries.name];
+                    const accessors = barAccessors(
+                        { grouped: true },
+                        this.palette.standardColors
+                    );
+                    accessors.data.category = (data, i, series, dataSeries) => [
+                        data.category,
+                        dataSeries.name,
+                    ];
                     return accessors;
                 },
-                scaleFunction: () => barScales({grouped: true}),
+                scaleFunction: () => barScales({ grouped: true }),
             },
             [ChartType.Line]: {
                 gridFunction: () => new XYGrid(),
                 rendererFunction: () => new LineRenderer(),
                 accessorFunction: () => {
-                    const accessors = new LineAccessors(this.palette.standardColors);
-                    accessors.data.x = d => d.category;
-                    accessors.data.y = d => d.value;
-                    accessors.data.value = d => d.value;
+                    const accessors = new LineAccessors(
+                        this.palette.standardColors
+                    );
+                    accessors.data.x = (d) => d.category;
+                    accessors.data.y = (d) => d.value;
+                    accessors.data.value = (d) => d.value;
                     return accessors;
                 },
                 scaleFunction: () => ({
@@ -192,5 +251,4 @@ export class TwoDimensionalDataExampleComponent implements OnInit {
 
         return chartTools[chartType];
     }
-
 }

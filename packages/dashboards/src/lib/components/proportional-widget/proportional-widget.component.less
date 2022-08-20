@@ -19,11 +19,11 @@
 
 .nui-chart-layout {
     grid-template:
-        "axis-label-left    axis-label-right    ."          0fr
-        "chart              chart               legend"     minmax(60%, auto)
-        "axis-label-bottom  axis-label-bottom   ."          0fr
-        "legend-bottom      legend-bottom       ."          minmax(auto, min-content)
-        ~"/"1fr                1fr                 auto;
+        "axis-label-left    axis-label-right    ." 0fr
+        "chart              chart               legend" minmax(60%, auto)
+        "axis-label-bottom  axis-label-bottom   ." 0fr
+        "legend-bottom      legend-bottom       ." minmax(auto, min-content)
+        ~"/" 1fr 1fr auto;
 
     .legend-bottom {
         overflow: auto;
@@ -33,7 +33,8 @@
 }
 
 .prioritize-rows {
-    &__right, &__bottom {
+    &__right,
+    &__bottom {
         .nui-legend-series {
             max-width: unset;
             width: 100%;
@@ -46,14 +47,14 @@
 
     &__right {
         grid-template:
-            "chart       chart        ."     60%
-            "legend      legend       ."     40%;
+            "chart       chart        ." 60%
+            "legend      legend       ." 40%;
     }
 
     &__bottom {
         grid-template:
-            "chart       chart        ."     60%
-            "legend-bottom      legend-bottom      ."     40%;
+            "chart       chart        ." 60%
+            "legend-bottom      legend-bottom      ." 40%;
     }
 }
 

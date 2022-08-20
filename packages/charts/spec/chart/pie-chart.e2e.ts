@@ -8,7 +8,9 @@ describe("Pie chart", async () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/pie-and-donut/pie-test");
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
     });
 
     it("should be displayed", async () => {
@@ -17,7 +19,9 @@ describe("Pie chart", async () => {
     });
 
     it("should highlight active segments and fade inactive ones", async () => {
-        const series = await page.chart.getAllVisibleDataSeries(RadialSeriesAtom);
+        const series = await page.chart.getAllVisibleDataSeries(
+            RadialSeriesAtom
+        );
         await series?.[0].getElement().click();
         await expect(await series?.[0].getOpacity()).toBe(1);
         await expect(await series?.[1].getOpacity()).toBe(0.1);

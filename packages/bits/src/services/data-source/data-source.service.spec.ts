@@ -2,7 +2,16 @@ import { nameof } from "../../functions/nameof";
 import { SorterDirection } from "../../lib/public-api";
 
 import { DataSourceService } from "./data-source.service";
-import { IFilter, IFilteringOutputs, IFilterPub, IFilters, IRange, ISorterFilter, Paginator, Repeat } from "./public-api";
+import {
+    IFilter,
+    IFilteringOutputs,
+    IFilterPub,
+    IFilters,
+    IRange,
+    ISorterFilter,
+    Paginator,
+    Repeat,
+} from "./public-api";
 
 const expectedFilteringOutputs: IStubFilteringOutputs = {
     repeat: {
@@ -91,7 +100,9 @@ class DataSourceServiceSubClassStub<T> extends DataSourceService<T> {
     public get rememberedComponentTree() {
         return this._components;
     }
-    public async getFilteredData(filters: IStubFilters): Promise<IStubFilteringOutputs> {
+    public async getFilteredData(
+        filters: IStubFilters
+    ): Promise<IStubFilteringOutputs> {
         return Promise.resolve(expectedFilteringOutputs);
     }
 }
@@ -104,7 +115,9 @@ describe("DataSourceService >", () => {
     });
 
     it("should remember correctly componentTree", () => {
-        expect(service.rememberedComponentTree).toBe(expectedComponentTreeStructure);
+        expect(service.rememberedComponentTree).toBe(
+            expectedComponentTreeStructure
+        );
     });
 
     it("should retrieve an individual filter by name", () => {
@@ -114,7 +127,9 @@ describe("DataSourceService >", () => {
 
     it("should throw an error when trying to retrieve an invalid filter name", () => {
         const filterName = "invalidFilterName";
-        expect(() => service.getFilter(filterName)).toThrowError(new RegExp("Invalid filter name(.*)"));
+        expect(() => service.getFilter(filterName)).toThrowError(
+            new RegExp("Invalid filter name(.*)")
+        );
     });
 
     it("should retrieve all current filters", () => {
@@ -128,7 +143,7 @@ describe("DataSourceService >", () => {
         expect(spyFunc).toHaveBeenCalledWith(expectedFilters);
     });
 
-    it("should detect a filter changed from the previous run when applying filters", async() => {
+    it("should detect a filter changed from the previous run when applying filters", async () => {
         let filters: IFilter<string>;
 
         const initialValue = "searchValue";
@@ -144,7 +159,12 @@ describe("DataSourceService >", () => {
         filters = { type: "string", value: changedValue };
         expect(service.filterChanged(testedFilterName, filters)).toBeTruthy();
 
-        expect(service.filtersChanged({[testedFilterName]: filters}, testedFilterName)).toBeTruthy();
+        expect(
+            service.filtersChanged(
+                { [testedFilterName]: filters },
+                testedFilterName
+            )
+        ).toBeTruthy();
     });
 
     it("should return correct value when call applyFilters ", async () => {
@@ -155,5 +175,4 @@ describe("DataSourceService >", () => {
             expect(result).toBe(expectedFilteringOutputs);
         });
     });
-
 });

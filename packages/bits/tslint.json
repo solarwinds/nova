@@ -1,6 +1,4 @@
 {
-    "rulesDirectory": [ "node_modules/codelyzer" ],
-    "extends": [
-        "../../ts-lint-rules/tslint.angular.json"
-    ]
+    "extends": ["../../ts-lint-rules/tslint.angular.json"],
+    "rulesDirectory": ["node_modules/codelyzer"]
 }

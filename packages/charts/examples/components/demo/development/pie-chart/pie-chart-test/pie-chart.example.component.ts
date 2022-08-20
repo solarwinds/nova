@@ -1,8 +1,21 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { IToastService, ToastService } from "@nova-ui/bits";
 import {
-    Chart, ChartAssist, ChartDonutContentPlugin, GridConfig, IAccessors, IChartAssistSeries, IChartEvent, IChartSeries, IRadialAccessors, LinearScale,
-    PieRenderer, RadialGrid, radialPreprocessor, RadialRenderer, Scales,
+    Chart,
+    ChartAssist,
+    ChartDonutContentPlugin,
+    GridConfig,
+    IAccessors,
+    IChartAssistSeries,
+    IChartEvent,
+    IChartSeries,
+    IRadialAccessors,
+    LinearScale,
+    PieRenderer,
+    RadialGrid,
+    radialPreprocessor,
+    RadialRenderer,
+    Scales,
 } from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
@@ -24,8 +37,7 @@ export class PieChartTestComponent implements OnInit {
     private scales: Scales;
     private interactive: boolean = false;
 
-    constructor(@Inject(ToastService) private toastr: IToastService) {
-    }
+    constructor(@Inject(ToastService) private toastr: IToastService) {}
 
     ngOnInit() {
         const gridConfig = new GridConfig();
@@ -41,27 +53,39 @@ export class PieChartTestComponent implements OnInit {
         this.chart.addPlugin(this.contentPlugin);
         this.refreshPie();
 
-        this.chart.getEventBus().getStream("click").subscribe((event: IChartEvent) => {
-            this.toastr.info({
-                title: "Event Published",
-                message: `event: click; data: ${event.data}`,
-                options: {
-                    timeOut: 1500,
-                },
+        this.chart
+            .getEventBus()
+            .getStream("click")
+            .subscribe((event: IChartEvent) => {
+                this.toastr.info({
+                    title: "Event Published",
+                    message: `event: click; data: ${event.data}`,
+                    options: {
+                        timeOut: 1500,
+                    },
+                });
             });
-        });
     }
 
-    private processSeries = (chartSeriesSet: IChartAssistSeries<IRadialAccessors>[]) =>
-        radialPreprocessor(chartSeriesSet, (series: IChartSeries<IAccessors>) => !this.chartAssist.isSeriesHidden(series.id))
+    private processSeries = (
+        chartSeriesSet: IChartAssistSeries<IRadialAccessors>[]
+    ) =>
+        radialPreprocessor(
+            chartSeriesSet,
+            (series: IChartSeries<IAccessors>) =>
+                !this.chartAssist.isSeriesHidden(series.id)
+        );
 
     private generateSeriesSet(layers = 1): IChartAssistSeries<IAccessors>[] {
-        const donutSeriesSet = DataGenerator.generateMockOrdinalSeriesSet(["Chrome", "Firefox", "Edge"], layers);
-        donutSeriesSet.forEach(s => {
+        const donutSeriesSet = DataGenerator.generateMockOrdinalSeriesSet(
+            ["Chrome", "Firefox", "Edge"],
+            layers
+        );
+        donutSeriesSet.forEach((s) => {
             s.id += `-${Math.round(Math.random() * 100)}`;
         });
 
-        return donutSeriesSet.map(dataSeries => ({
+        return donutSeriesSet.map((dataSeries) => ({
             ...dataSeries,
             accessors: {
                 data: {

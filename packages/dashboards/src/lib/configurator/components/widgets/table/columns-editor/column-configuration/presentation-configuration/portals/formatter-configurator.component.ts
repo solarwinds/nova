@@ -1,13 +1,27 @@
-import { ChangeDetectorRef, EventEmitter, Injectable, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    EventEmitter,
+    Injectable,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IDataField, LoggerService } from "@nova-ui/bits";
 
-import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../../components/types";
+import {
+    IFormatter,
+    IFormatterConfigurator,
+    IFormatterDefinition,
+} from "../../../../../../../../components/types";
 import { IHasChangeDetector, IHasForm } from "../../../../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../../../../services/configurator-heading.service";
 
 @Injectable()
-export abstract class FormatterConfiguratorComponent implements IFormatterConfigurator, IHasChangeDetector, IHasForm, OnChanges {
+export abstract class FormatterConfiguratorComponent
+    implements IFormatterConfigurator, IHasChangeDetector, IHasForm, OnChanges
+{
     @Input() formatter: IFormatter;
     @Input() formatterDefinition: IFormatterDefinition;
     @Input() dataFields: IDataField[];
@@ -18,11 +32,12 @@ export abstract class FormatterConfiguratorComponent implements IFormatterConfig
     public form: FormGroup;
     public dropdownItems: Record<string, IDataField[]> = {};
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                public configuratorHeading: ConfiguratorHeadingService,
-                protected formBuilder: FormBuilder,
-                public logger: LoggerService) {
-    }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public configuratorHeading: ConfiguratorHeadingService,
+        protected formBuilder: FormBuilder,
+        public logger: LoggerService
+    ) {}
 
     public ngOnChanges(changes: SimpleChanges) {
         if (changes.formatterDefinition) {
@@ -42,23 +57,27 @@ export abstract class FormatterConfiguratorComponent implements IFormatterConfig
      */
     public mapDropdownItems() {
         if (!this.dataFields) {
-            this.logger.error("There are no dataFields defined for formatter:", this.formatterDefinition);
+            this.logger.error(
+                "There are no dataFields defined for formatter:",
+                this.formatterDefinition
+            );
             return;
         }
 
-        this.dropdownItems = Object.keys(this.formatterDefinition.dataTypes).reduce((result, next) => {
+        this.dropdownItems = Object.keys(
+            this.formatterDefinition.dataTypes
+        ).reduce((result, next) => {
             const allowedDataTypes = this.formatterDefinition.dataTypes[next];
 
             result[next] = allowedDataTypes
-                ? this.dataFields.filter(
-                    df =>
-                        // dataTypes could be a string or an array of strings, so we're checking that here
-                        typeof allowedDataTypes === "string" ?
-                            df.dataType === allowedDataTypes :
-                            (allowedDataTypes as string[]).includes(df.dataType)
-                )
-                // if no data types are defined then just include all the fields
-                : this.dataFields;
+                ? this.dataFields.filter((df) =>
+                      // dataTypes could be a string or an array of strings, so we're checking that here
+                      typeof allowedDataTypes === "string"
+                          ? df.dataType === allowedDataTypes
+                          : (allowedDataTypes as string[]).includes(df.dataType)
+                  )
+                : // if no data types are defined then just include all the fields
+                  this.dataFields;
 
             return result;
         }, {} as Record<string, IDataField[]>);
@@ -71,16 +90,19 @@ export abstract class FormatterConfiguratorComponent implements IFormatterConfig
     public initForm(): void {
         // initialize the formArray with selected values or null
         const dataFieldsDefinition = this.formatterDefinition.dataTypes || {};
-        const dataFieldForm = Object.keys(dataFieldsDefinition).reduce((result, next) => {
-            result[next] = [
-                this.formatter?.properties?.dataFieldIds?.[next] ?? null,
-                Validators.required,
-            ];
-            return result;
-        }, {} as Record<string, any>);
+        const dataFieldForm = Object.keys(dataFieldsDefinition).reduce(
+            (result, next) => {
+                result[next] = [
+                    this.formatter?.properties?.dataFieldIds?.[next] ?? null,
+                    Validators.required,
+                ];
+                return result;
+            },
+            {} as Record<string, any>
+        );
 
         this.form = this.formBuilder.group({
-            "dataFieldIds": this.formBuilder.group(dataFieldForm),
+            dataFieldIds: this.formBuilder.group(dataFieldForm),
         });
 
         this.addCustomFormControls(this.form);
@@ -89,7 +111,10 @@ export abstract class FormatterConfiguratorComponent implements IFormatterConfig
     }
 
     protected updateForm(): void {
-        this.form.patchValue(this.formatter.properties ?? {}, { onlySelf: false, emitEvent: false });
+        this.form.patchValue(this.formatter.properties ?? {}, {
+            onlySelf: false,
+            emitEvent: false,
+        });
     }
 
     /**
@@ -97,6 +122,5 @@ export abstract class FormatterConfiguratorComponent implements IFormatterConfig
      *
      * @param form
      */
-    protected addCustomFormControls(form: FormGroup): void {
-    }
+    protected addCustomFormControls(form: FormGroup): void {}
 }

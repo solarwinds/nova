@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./tag-with-hover.example.component.html",
     styleUrls: ["./tag-with-hover.example.component.less"],
 })
-export class TagWithHoverExampleComponent {
-}
+export class TagWithHoverExampleComponent {}

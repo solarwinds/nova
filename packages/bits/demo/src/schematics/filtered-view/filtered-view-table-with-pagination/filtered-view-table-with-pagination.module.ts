@@ -45,5 +45,4 @@ import { FilteredViewTableComponent } from "./filtered-view-table/filtered-view-
         FilteredViewTableComponent,
     ],
 })
-
 export class FilteredViewTableWithPaginationModule {}

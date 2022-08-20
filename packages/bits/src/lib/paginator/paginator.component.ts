@@ -19,10 +19,14 @@ import _get from "lodash/get";
 import _includes from "lodash/includes";
 import _min from "lodash/min";
 import _range from "lodash/range";
-import {Subject} from "rxjs";
+import { Subject } from "rxjs";
 
-import {IFilter, IFilterPub, IRange} from "../../services/data-source/public-api";
-import {LoggerService} from "../../services/log-service";
+import {
+    IFilter,
+    IFilterPub,
+    IRange,
+} from "../../services/data-source/public-api";
+import { LoggerService } from "../../services/log-service";
 import { PopupContainerService } from "../popup/popup-container.service";
 import { SelectComponent } from "../select";
 import { InputValueTypes } from "../select-v2/types";
@@ -46,10 +50,11 @@ const containerPaddingsWithScroll = 37;
     styleUrls: ["./paginator.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [PopupContainerService],
-    host: { "role": "navigation" },
+    host: { role: "navigation" },
 })
-
-export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilterPub {
+export class PaginatorComponent
+    implements OnInit, OnChanges, OnDestroy, IFilterPub
+{
     @Input() public itemsList: Array<IPaginatorItem> = [];
     /**
      * Current page number
@@ -123,7 +128,8 @@ export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilter
     @ViewChild("select")
     private selectComponent: SelectComponent;
 
-    @ViewChild(CdkVirtualScrollViewport) private virtualScrollViewport: CdkVirtualScrollViewport;
+    @ViewChild(CdkVirtualScrollViewport)
+    private virtualScrollViewport: CdkVirtualScrollViewport;
 
     private _dotsPagesPerRow = 5;
 
@@ -142,8 +148,8 @@ export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilter
     }
 
     /**
-    * Component initialization
-    */
+     * Component initialization
+     */
     ngOnInit(): void {
         this.initPageSizeSet();
         const pageCount = this.getPageCount();
@@ -162,10 +168,12 @@ export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilter
      * @param changes Changed properties
      */
     ngOnChanges(changes: SimpleChanges) {
-        if (changes["total"]
-            || changes["page"]
-            || changes["adjacent"]
-            || changes["pageSize"]) {
+        if (
+            changes["total"] ||
+            changes["page"] ||
+            changes["adjacent"] ||
+            changes["pageSize"]
+        ) {
             this.assemble();
         }
     }
@@ -181,7 +189,8 @@ export class PaginatorComponent implements OnInit, OnChanges, OnDestroy, IFilter
             this.pageSize = this.pageSizeSet[0];
         }
         if (!_includes(this.pageSizeSet, this.pageSize)) {
-            this.logger.warn(`pageSize ${this.pageSize} not found in the current pageSizeSet ${this.pageSizeSet}. pageSize will be set to
+            this.logger
+                .warn(`pageSize ${this.pageSize} not found in the current pageSizeSet ${this.pageSizeSet}. pageSize will be set to
 ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part of the paginator's pageSizeSet input.`);
             this.pageSize = this.pageSizeSet[0];
         }
@@ -248,7 +257,10 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
         if (newValue) {
             if (newValue < 1) {
-                this.logger.warn("paginator-controller.setItemsPerPage - invalid newValue: " + newValue);
+                this.logger.warn(
+                    "paginator-controller.setItemsPerPage - invalid newValue: " +
+                        newValue
+                );
                 return;
             }
             this.pageSize = newValue;
@@ -277,14 +289,14 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
     /**
      * Get sequence number of first item of currently displayed paginated list
-    */
+     */
     public getFirstItemOnPage(): number {
         return this.pageSize * (this.page - 1) + 1;
     }
 
     /**
      * Get sequence number of last item of currently displayed paginated repeat
-    */
+     */
     public getLastItemOnPage(): number | undefined {
         return _min([this.pageSize * this.page, this.total]);
     }
@@ -293,7 +305,9 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
      * Return range for info section
      */
     public getRange(total: number): string {
-        return total > 0 ? `${this.getFirstItemOnPage()}-${this.getLastItemOnPage()}` : "0";
+        return total > 0
+            ? `${this.getFirstItemOnPage()}-${this.getLastItemOnPage()}`
+            : "0";
     }
 
     /**
@@ -359,31 +373,44 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         }
 
         // set main range to
-        this.mainRangeStart = (page - adjacent < 1) ? 1 : page - adjacent;
-        this.mainRangeEnd = (page + adjacent > pageCount) ? pageCount : page + adjacent;
+        this.mainRangeStart = page - adjacent < 1 ? 1 : page - adjacent;
+        this.mainRangeEnd =
+            page + adjacent > pageCount ? pageCount : page + adjacent;
 
         // case where starting separator is not shown
-        if ((this.mainRangeStart - 1) // end of possible starting separator
-            - 2 // start of possible starting separator
-            < 1) {
+        if (
+            this.mainRangeStart -
+                1 - // end of possible starting separator
+                2 < // start of possible starting separator
+            1
+        ) {
             this.mainRangeStart = 1;
         }
 
         // case where ending separator is not shown
-        if ((pageCount - 1) // end of possible ending separator
-            - (this.mainRangeEnd + 1) // start of possible ending separator
-            < 1) {
+        if (
+            pageCount -
+                1 - // end of possible ending separator
+                (this.mainRangeEnd + 1) < // start of possible ending separator
+            1
+        ) {
             this.mainRangeEnd = pageCount;
         }
 
         // case where we have one of the first pages selected and the ending separator
-        if (this.mainRangeEnd !== pageCount && page < this.maxElements - 2 - adjacent) {
+        if (
+            this.mainRangeEnd !== pageCount &&
+            page < this.maxElements - 2 - adjacent
+        ) {
             this.mainRangeStart = 1;
             this.mainRangeEnd = this.mainRangeStart + this.maxElements - 3;
         }
 
         // case where we have one of the last pages selected and the starting separator
-        if (this.mainRangeStart !== 1 && page > pageCount - this.maxElements + 2 + adjacent) {
+        if (
+            this.mainRangeStart !== 1 &&
+            page > pageCount - this.maxElements + 2 + adjacent
+        ) {
             this.mainRangeEnd = pageCount;
             this.mainRangeStart = this.mainRangeEnd - this.maxElements + 3;
         }
@@ -392,11 +419,14 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
     private addSeparator(from: number, to: number) {
         const pageRows = _chunk(_range(from, to + 1), this._dotsPagesPerRow);
         this.itemsList.push({
-            title: $localize `Pages ${from} - ${to}`,
+            title: $localize`Pages ${from} - ${to}`,
             value: this.dots,
             pageRows: pageRows,
-            popupWidth: (to.toString().length * singleSymbolWidth + singleCellPaddings)
-                * this._dotsPagesPerRow + containerPaddingsWithScroll,  // each popup will have its own width
+            popupWidth:
+                (to.toString().length * singleSymbolWidth +
+                    singleCellPaddings) *
+                    this._dotsPagesPerRow +
+                containerPaddingsWithScroll, // each popup will have its own width
             useVirtualScroll: pageRows.length * this._dotsPagesPerRow >= 1000,
         });
     }
@@ -409,7 +439,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
         const prevBtn = {
             iconName: "caret-left",
-            title: $localize `Previous Page`,
+            title: $localize`Previous Page`,
             page: this.page - 1 <= 0 ? 1 : this.page - 1,
         };
         const isDisabled = this.page - 1 <= 0;
@@ -424,7 +454,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
 
         const nextBtn = {
             iconName: "caret-right",
-            title: $localize `Next Page`,
+            title: $localize`Next Page`,
             page: this.page + 1 >= pageCount ? pageCount : this.page + 1,
         };
         const isDisabled = this.page + 1 > pageCount;
@@ -450,7 +480,7 @@ ${this.pageSizeSet[0]}. To set the desired initial page size, include it as part
         const inst = this;
         this.itemsList.push({
             value: page,
-            title: $localize `Page ${page}`,
+            title: $localize`Page ${page}`,
             style: this.page === page ? this.activeClass : "",
             action: function () {
                 inst.goToPage(this.value);

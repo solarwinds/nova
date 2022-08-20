@@ -13,19 +13,26 @@ export class ComboboxReactiveFormExampleComponent implements OnInit {
         selectedItem: "Item 2",
     };
 
-    constructor(private formBuilder: FormBuilder,
-                @Inject(ToastService) private toastService: ToastService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(ToastService) private toastService: ToastService
+    ) {}
 
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
-            item: this.formBuilder.control(this.dataset.selectedItem, [Validators.required]),
+            item: this.formBuilder.control(this.dataset.selectedItem, [
+                Validators.required,
+            ]),
         });
 
-        this.myForm.controls["item"].valueChanges.subscribe(value => console.log(value));
+        this.myForm.controls["item"].valueChanges.subscribe((value) =>
+            console.log(value)
+        );
     }
 
     public onSubmit() {
-        this.myForm.valid ? this.toastService.success({message: "Your form is valid!"}) :
-            this.toastService.error({message: `Your form is invalid!`});
+        this.myForm.valid
+            ? this.toastService.success({ message: "Your form is valid!" })
+            : this.toastService.error({ message: `Your form is invalid!` });
     }
 }

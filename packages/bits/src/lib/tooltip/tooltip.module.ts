@@ -10,12 +10,7 @@ import { TooltipDirective } from "./tooltip.directive";
 
 /** @ignore */
 @NgModule({
-    imports: [
-        A11yModule,
-        CommonModule,
-        OverlayModule,
-        NuiOverlayModule,
-    ],
+    imports: [A11yModule, CommonModule, OverlayModule, NuiOverlayModule],
     exports: [TooltipDirective, TooltipComponent],
     declarations: [TooltipDirective, TooltipComponent],
     entryComponents: [TooltipComponent],

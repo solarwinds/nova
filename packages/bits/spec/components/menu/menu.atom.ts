@@ -15,48 +15,72 @@ import { MenuItemAtom } from "./menu-item.atom";
 export class MenuAtom extends Atom {
     public static CSS_CLASS = "nui-menu";
 
-    public static getAllMenuItems = () => element.all(by.css(".nui-menu-item:not(.nui-menu-item--header"));
+    public static getAllMenuItems = () =>
+        element.all(by.css(".nui-menu-item:not(.nui-menu-item--header"));
 
     public menuContentId: string;
 
-    private getPopupBox = (): PopupAtom => Atom.findIn(PopupAtom, this.getElement());
+    private getPopupBox = (): PopupAtom =>
+        Atom.findIn(PopupAtom, this.getElement());
 
-    public getMenuButton = (): ButtonAtom => Atom.findIn(ButtonAtom, this.getElement());
+    public getMenuButton = (): ButtonAtom =>
+        Atom.findIn(ButtonAtom, this.getElement());
 
-    public getMenuButtonIconName = async (): Promise<string | undefined> => this.getMenuButton().getIcon().then(icon =>
-        icon?.getName())
+    public getMenuButtonIconName = async (): Promise<string | undefined> =>
+        this.getMenuButton()
+            .getIcon()
+            .then((icon) => icon?.getName());
 
     public toggleMenu = async (): Promise<void> => this.getMenuButton().click();
 
-    public getMenuItemByContainingText = (text: string): MenuItemAtom => new MenuItemAtom(this.getElementByCssContainingText(".nui-menu-item", text));
+    public getMenuItemByContainingText = (text: string): MenuItemAtom =>
+        new MenuItemAtom(
+            this.getElementByCssContainingText(".nui-menu-item", text)
+        );
 
-    public itemCount = async (): Promise<number> => this.getItemElements().count();
+    public itemCount = async (): Promise<number> =>
+        this.getItemElements().count();
 
-    public isMenuOpened = async (): Promise<boolean> => this.getPopupBox().isOpened();
+    public isMenuOpened = async (): Promise<boolean> =>
+        this.getPopupBox().isOpened();
 
-    public mouseDownOnMenuButton = async (): Promise<void> => this.getMenuButton().mouseDown();
+    public mouseDownOnMenuButton = async (): Promise<void> =>
+        this.getMenuButton().mouseDown();
 
-    public mouseUp = async (): Promise<void> => browser.actions().mouseUp().perform();
+    public mouseUp = async (): Promise<void> =>
+        browser.actions().mouseUp().perform();
 
-    public getMenuItemByIndex = (idx: number): MenuItemAtom => new MenuItemAtom(this.getItemElements().get(idx));
+    public getMenuItemByIndex = (idx: number): MenuItemAtom =>
+        new MenuItemAtom(this.getItemElements().get(idx));
 
     // DO NOT USE. The following method is broken and will be fixed in the scope of NUI-6105
-    public getMenuItems = async (): Promise<MenuItemAtom[]> => this.getItemElements().map<MenuItemAtom>(((elementFinder?: ElementFinder) => {
-        if (!elementFinder) {
-            throw new Error("elementFinder is not defined");
-        }
-        return new MenuItemAtom(elementFinder);
-    }))
+    public getMenuItems = async (): Promise<MenuItemAtom[]> =>
+        this.getItemElements().map<MenuItemAtom>(
+            (elementFinder?: ElementFinder) => {
+                if (!elementFinder) {
+                    throw new Error("elementFinder is not defined");
+                }
+                return new MenuItemAtom(elementFinder);
+            }
+        );
 
     public getItemTextArray = async (): Promise<string[]> =>
-        this.getItemElements().map<string>(((elementFinder: ElementFinder | undefined) => elementFinder?.getText()))
+        this.getItemElements().map<string>(
+            (elementFinder: ElementFinder | undefined) =>
+                elementFinder?.getText()
+        );
 
     public getHeaderTextArray = async (): Promise<string[]> =>
-        this.getHeaderElements().map<string>(((elementFinder: ElementFinder | undefined) => elementFinder?.getText()))
+        this.getHeaderElements().map<string>(
+            (elementFinder: ElementFinder | undefined) =>
+                elementFinder?.getText()
+        );
 
-    public clickHeaderByIndex = async (idx: number): Promise<void> => this.getHeaderElements().get(idx).click();
+    public clickHeaderByIndex = async (idx: number): Promise<void> =>
+        this.getHeaderElements().get(idx).click();
 
-    public clickDividerByIndex = async (idx: number): Promise<void> => this.getElement().all(by.className("nui-divider")).get(idx).click();
+    public clickDividerByIndex = async (idx: number): Promise<void> =>
+        this.getElement().all(by.className("nui-divider")).get(idx).click();
 
     /**
      * Returns array of checked checkboxes
@@ -90,25 +114,41 @@ export class MenuAtom extends Atom {
         return menuItemsSelected;
     }
 
-    public getSelectedCheckboxesCount = async (): Promise<number> => (await this.getSelectedMenuCheckboxes()).length;
+    public getSelectedCheckboxesCount = async (): Promise<number> =>
+        (await this.getSelectedMenuCheckboxes()).length;
 
-    public getSelectedSwitchesCount = async (): Promise<number> => (await this.getSelectedMenuSwitches()).length;
+    public getSelectedSwitchesCount = async (): Promise<number> =>
+        (await this.getSelectedMenuSwitches()).length;
 
-    public getAppendToBodyMenu = (): ElementFinder => browser.element(by.id(this.menuContentId));
+    public getAppendToBodyMenu = (): ElementFinder =>
+        browser.element(by.id(this.menuContentId));
 
-    public getAppendToBodyMenuDividers = (): ElementArrayFinder => this.getAppendToBodyMenu().all(by.className("nui-menu-group-divider--container"));
+    public getAppendToBodyMenuDividers = (): ElementArrayFinder =>
+        this.getAppendToBodyMenu().all(
+            by.className("nui-menu-group-divider--container")
+        );
 
     private getItemElements(): ElementArrayFinder {
-        const parentElement = this.menuContentId ? this.getAppendToBodyMenu() : super.getElement();
-        return parentElement.all(by.css(".nui-menu-item:not(.nui-menu-item--header)"));
+        const parentElement = this.menuContentId
+            ? this.getAppendToBodyMenu()
+            : super.getElement();
+        return parentElement.all(
+            by.css(".nui-menu-item:not(.nui-menu-item--header)")
+        );
     }
 
-    private getHeaderElements = (): ElementArrayFinder => super.getElement().all(by.css(".nui-menu-item--header"));
+    private getHeaderElements = (): ElementArrayFinder =>
+        super.getElement().all(by.css(".nui-menu-item--header"));
 
-    private getSelectedCheckboxElements = (): ElementArrayFinder => super.getElement().all(by.css(".nui-checkbox--checked"));
+    private getSelectedCheckboxElements = (): ElementArrayFinder =>
+        super.getElement().all(by.css(".nui-checkbox--checked"));
 
-    private getSelectedSwitchElements = (): ElementArrayFinder => super.getElement().all(by.css(".nui-switched"));
+    private getSelectedSwitchElements = (): ElementArrayFinder =>
+        super.getElement().all(by.css(".nui-switched"));
 
-    private getElementByCssContainingText = (selector: string, text: string): ElementFinder =>
-        this.getElement().all(by.cssContainingText(selector, text)).first()
+    private getElementByCssContainingText = (
+        selector: string,
+        text: string
+    ): ElementFinder =>
+        this.getElement().all(by.cssContainingText(selector, text)).first();
 }

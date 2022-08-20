@@ -11,15 +11,8 @@ import { DocumentNode } from "graphql";
 
 import isArray from "lodash/isArray";
 import isPlainObject from "lodash/isPlainObject";
-import {
-    Observable,
-    of,
-} from "rxjs";
-import {
-    catchError,
-    delay,
-    map,
-} from "rxjs/operators";
+import { Observable, of } from "rxjs";
+import { catchError, delay, map } from "rxjs/operators";
 
 import {
     IServerFilters,
@@ -35,30 +28,36 @@ const nameFieldsProperties = ["name", "code", "__typename"];
  * to fetch data
  */
 @Injectable()
-export class FilteredViewWithTreeDataSource<T> extends ServerSideDataSource<T> implements IDataSource {
-    constructor(
-        private logger: LoggerService,
-        private apollo: Apollo
-    ) {
+export class FilteredViewWithTreeDataSource<T>
+    extends ServerSideDataSource<T>
+    implements IDataSource
+{
+    constructor(private logger: LoggerService, private apollo: Apollo) {
         super();
     }
 
-    public async getFilteredData(data: IServersCollection): Promise<INovaFilteringOutputs> {
-        return of(data).pipe(
-            map((response: IServersCollection) => {
-                const itemsSource = response.Subregion;
+    public async getFilteredData(
+        data: IServersCollection
+    ): Promise<INovaFilteringOutputs> {
+        return of(data)
+            .pipe(
+                map((response: IServersCollection) => {
+                    const itemsSource = response.Subregion;
 
-                return {
-                    tree: { itemsSource: this.buildTree(itemsSource) },
-                };
-            })
-        ).toPromise();
+                    return {
+                        tree: { itemsSource: this.buildTree(itemsSource) },
+                    };
+                })
+            )
+            .toPromise();
     }
 
     // This method is expected to return all data needed for repeat/paginator/filterGroups in order to work.
     // In case of custom filtering participants feel free to extend INovaFilteringOutputs.
     protected getBackendData(filters: IServerFilters): Observable<ISubregion> {
-        const mainRequest = this.apollo.query<ISubregion>({query: this.generateQuery(filters)});
+        const mainRequest = this.apollo.query<ISubregion>({
+            query: this.generateQuery(filters),
+        });
 
         return mainRequest.pipe(
             // since API being used sends the response almost immediately,
@@ -69,10 +68,10 @@ export class FilteredViewWithTreeDataSource<T> extends ServerSideDataSource<T> i
 
             // transform backend API response (IServersApiResponse)
             // to our frontend items collection (IServersCollection)
-            map(mainResponse => mainResponse.data),
+            map((mainResponse) => mainResponse.data),
 
             // error handle in case of any error
-            catchError(e => {
+            catchError((e) => {
                 this.logger.error(e);
                 return of({} as ISubregion);
             })
@@ -84,14 +83,26 @@ export class FilteredViewWithTreeDataSource<T> extends ServerSideDataSource<T> i
         let currencies = "";
         let subregion = "";
 
-        filters.language?.value.forEach(i => languages += `{officialLanguages_some: {name: "${i}"}},`);
-        filters.currency?.value.forEach(i => currencies += `{currencies_some: {code: "${i}"}},`);
-        filters.subregion?.value.forEach(i => subregion += `{name: "${i}"},`);
+        filters.language?.value.forEach(
+            (i) => (languages += `{officialLanguages_some: {name: "${i}"}},`)
+        );
+        filters.currency?.value.forEach(
+            (i) => (currencies += `{currencies_some: {code: "${i}"}},`)
+        );
+        filters.subregion?.value.forEach(
+            (i) => (subregion += `{name: "${i}"},`)
+        );
 
         const queryString = `query {
-          Subregion(filter: {AND: [{region: {name: "Americas"}}], ${subregion ? "OR: [" + subregion + "]" : ""}}) {
+          Subregion(filter: {AND: [{region: {name: "Americas"}}], ${
+              subregion ? "OR: [" + subregion + "]" : ""
+          }}) {
             name,
-            countries${languages || currencies ? "(filter: {AND: [" + languages + currencies + "]})" : ""} {
+            countries${
+                languages || currencies
+                    ? "(filter: {AND: [" + languages + currencies + "]})"
+                    : ""
+            } {
               name,
               population,
               officialLanguages {
@@ -104,7 +115,9 @@ export class FilteredViewWithTreeDataSource<T> extends ServerSideDataSource<T> i
           }
         }`;
 
-        return gql`${queryString}`;
+        return gql`
+            ${queryString}
+        `;
     }
 
     private buildTree(value: any): ITreeNode[] {
@@ -120,14 +133,16 @@ export class FilteredViewWithTreeDataSource<T> extends ServerSideDataSource<T> i
                     node.children = this.buildTree(nodeValue);
                 } else if (isPlainObject(nodeValue)) {
                     node.name = nodeValue.name || nodeValue.code || `${k}`;
-                    const hasChildren = Object.keys(nodeValue).filter((key: any) => !nameFieldsProperties.includes(key)).length;
+                    const hasChildren = Object.keys(nodeValue).filter(
+                        (key: any) => !nameFieldsProperties.includes(key)
+                    ).length;
                     if (hasChildren) {
                         node.children = this.buildTree(nodeValue);
                     }
                 } else {
                     if (!nameFieldsProperties.includes(k)) {
                         node.name = `${k}`;
-                        node.children = [{name: nodeValue}];
+                        node.children = [{ name: nodeValue }];
                     }
                 }
 
@@ -139,5 +154,4 @@ export class FilteredViewWithTreeDataSource<T> extends ServerSideDataSource<T> i
 
         return data;
     }
-
 }

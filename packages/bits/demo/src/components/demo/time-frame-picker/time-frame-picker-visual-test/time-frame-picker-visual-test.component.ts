@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
 import {
-    IQuickPickPresetDictionary, ITimeframe, ITimeFramePresetDictionary, TimeframeService,
+    IQuickPickPresetDictionary,
+    ITimeframe,
+    ITimeFramePresetDictionary,
+    TimeframeService,
 } from "@nova-ui/bits";
 import _find from "lodash/find";
 import _isUndefined from "lodash/isUndefined";
@@ -11,7 +14,6 @@ import { Subject } from "rxjs";
     selector: "nui-time-frame-picker-visual-test",
     templateUrl: "./time-frame-picker-visual-test.component.html",
 })
-
 export class TimeFramePickerVisualTestComponent {
     public presets: ITimeFramePresetDictionary;
     public presetsDatePicker: IQuickPickPresetDictionary;
@@ -25,10 +27,15 @@ export class TimeFramePickerVisualTestComponent {
 
     constructor(public timeframeService: TimeframeService) {
         this.presets = timeframeService.getDefaultPresets();
-        this.acceptedTimeframe = this.timeframeService.getTimeframeByPresetId(this.selectedPresetKey, "02/17/1986");
+        this.acceptedTimeframe = this.timeframeService.getTimeframeByPresetId(
+            this.selectedPresetKey,
+            "02/17/1986"
+        );
         this.tf = this.acceptedTimeframe;
         this.presetsDatePicker = this.getDefaultPresets();
-        this.selectedDate = this.getDateFromPreset(this.selectedPresetKeyDatePicker);
+        this.selectedDate = this.getDateFromPreset(
+            this.selectedPresetKeyDatePicker
+        );
     }
 
     public closePopoverSubject = new Subject();
@@ -36,9 +43,13 @@ export class TimeFramePickerVisualTestComponent {
 
     public updateTf(value: ITimeframe) {
         this.tf = value;
-        const timeFrameDatesValid = () => this.timeframeService.areTimeFrameDatesValid(value);
-        const timeFrameDatesEqual = () => this.timeframeService.isEqual(this.tf, this.acceptedTimeframe);
-        if (timeFrameDatesValid() && !timeFrameDatesEqual()) { this.showFooter = true; }
+        const timeFrameDatesValid = () =>
+            this.timeframeService.areTimeFrameDatesValid(value);
+        const timeFrameDatesEqual = () =>
+            this.timeframeService.isEqual(this.tf, this.acceptedTimeframe);
+        if (timeFrameDatesValid() && !timeFrameDatesEqual()) {
+            this.showFooter = true;
+        }
         this.selectedPresetKey = this.tf.selectedPresetId;
     }
 
@@ -54,7 +65,10 @@ export class TimeFramePickerVisualTestComponent {
 
     public handlePresetSelection(presetKey: string) {
         this.selectedPresetKeyDatePicker = presetKey;
-        this.tf = this.timeframeService.getTimeframeByPresetId(presetKey, "02/17/1986");
+        this.tf = this.timeframeService.getTimeframeByPresetId(
+            presetKey,
+            "02/17/1986"
+        );
         this.acceptedTimeframe = this.tf;
         this.closePopoverSubject.next();
     }
@@ -77,14 +91,23 @@ export class TimeFramePickerVisualTestComponent {
         }
     }
 
-    private getDefaultPresets(): {[key: string]: any} {
+    private getDefaultPresets(): { [key: string]: any } {
         return {
-            today: {name: "Today", pattern: () => moment()},
-            yesterday: { name: "Yesterday", pattern: () => moment().subtract(1, "days")},
-            dimasBirthday: {name: "Dima's Birthday", pattern: () => moment("1986-02-17")},
+            today: { name: "Today", pattern: () => moment() },
+            yesterday: {
+                name: "Yesterday",
+                pattern: () => moment().subtract(1, "days"),
+            },
+            dimasBirthday: {
+                name: "Dima's Birthday",
+                pattern: () => moment("1986-02-17"),
+            },
             random: {
                 name: "Random date (to show that we can)",
-                pattern: () => moment(+(new Date()) - Math.floor(Math.random() * 100000000000)),
+                pattern: () =>
+                    moment(
+                        +new Date() - Math.floor(Math.random() * 100000000000)
+                    ),
             },
         };
     }
@@ -95,7 +118,10 @@ export class TimeFramePickerVisualTestComponent {
     }
 
     private getPresetFromDate(date: Moment): string {
-        const preset: string | undefined = _find(Object.keys(this.presets), (key) => date.isSame(this.getDateFromPreset(key), "day"));
+        const preset: string | undefined = _find(
+            Object.keys(this.presets),
+            (key) => date.isSame(this.getDateFromPreset(key), "day")
+        );
         if (_isUndefined(preset)) {
             throw new Error("DatePreset was not found");
         }

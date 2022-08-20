@@ -53,7 +53,6 @@ describe("Refresher > ", () => {
     });
 
     describe("refresherSettings", () => {
-
         it("updates interval when global settings change", fakeAsync(() => {
             refresherSettings.refreshRateSeconds = 1;
             refresher.updateConfiguration({ overrideDefaultSettings: false });
@@ -69,7 +68,5 @@ describe("Refresher > ", () => {
             expect(spy).toHaveBeenCalledTimes(2);
             refresher.ngOnDestroy();
         }));
-
     });
-
 });

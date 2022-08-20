@@ -18,15 +18,16 @@ export class MonthPickerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.datePicker.stepMonth = {years: 1};
+        this.datePicker.stepMonth = { years: 1 };
 
         this.datePicker.setRefreshViewHandler((): void => {
             const picker = this.datePicker;
             const months: any[] = new Array(12);
 
-            let date: Moment = picker.value && picker.value.isValid()
-                ? picker.value.clone()
-                : moment();
+            let date: Moment =
+                picker.value && picker.value.isValid()
+                    ? picker.value.clone()
+                    : moment();
             date = date.set("date", 1);
 
             for (let i = 0; i < 12; i++) {
@@ -39,10 +40,13 @@ export class MonthPickerComponent implements OnInit {
             this.rows = picker.split(months, 3);
         }, "month");
 
-        this.datePicker.setCompareHandler((date1: Moment, date2: Moment): number => {
-            const d1 = moment({"year": date1.year(), "month": date1.month()});
-            const d2 = moment({"year": date2.year(), "month": date2.month()});
-            return d1.valueOf() - d2.valueOf();
-        }, "month");
+        this.datePicker.setCompareHandler(
+            (date1: Moment, date2: Moment): number => {
+                const d1 = moment({ year: date1.year(), month: date1.month() });
+                const d2 = moment({ year: date2.year(), month: date2.month() });
+                return d1.valueOf() - d2.valueOf();
+            },
+            "month"
+        );
     }
 }

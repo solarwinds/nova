@@ -16,25 +16,30 @@ export class LoadingAdapter implements OnDestroy, IHasComponent {
     private destroy$ = new Subject();
     private componentId: string;
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-                private pizzagnaService: PizzagnaService) {
-
-        this.eventBus.getStream(DATA_SOURCE_BUSY)
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
+        private pizzagnaService: PizzagnaService
+    ) {
+        this.eventBus
+            .getStream(DATA_SOURCE_BUSY)
             .pipe(takeUntil(this.destroy$))
             .subscribe(({ payload }: IEvent<IDataSourceBusyPayload>) => {
                 if (payload?.componentId) {
-                    if (payload?.busy)  {
+                    if (payload?.busy) {
                         this.loadingMap[payload.componentId] = true;
                     } else {
                         delete this.loadingMap[payload.componentId];
                     }
                 }
 
-                this.pizzagnaService.setProperty({
-                    componentId: this.componentId,
-                    propertyPath: ["active"],
-                    pizzagnaKey: PizzagnaLayer.Data,
-                }, !isEmpty(this.loadingMap));
+                this.pizzagnaService.setProperty(
+                    {
+                        componentId: this.componentId,
+                        propertyPath: ["active"],
+                        pizzagnaKey: PizzagnaLayer.Data,
+                    },
+                    !isEmpty(this.loadingMap)
+                );
             });
     }
 

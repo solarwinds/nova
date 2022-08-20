@@ -7,6 +7,18 @@ import { DomainCalculator, IScale } from "../types";
  * @param additionalSeriesFn this function returns series to be added
  * @param domainCalculator
  */
-export const domainWithAuxiliarySeries = (additionalSeriesFn: () => IChartSeries<any>[], domainCalculator: DomainCalculator) =>
-    (chartSeriesSet: IChartSeries<any>[], scaleId: string, scale: IScale<any>) =>
-        domainCalculator(additionalSeriesFn().concat(chartSeriesSet), scaleId, scale);
+export const domainWithAuxiliarySeries =
+    (
+        additionalSeriesFn: () => IChartSeries<any>[],
+        domainCalculator: DomainCalculator
+    ) =>
+    (
+        chartSeriesSet: IChartSeries<any>[],
+        scaleId: string,
+        scale: IScale<any>
+    ) =>
+        domainCalculator(
+            additionalSeriesFn().concat(chartSeriesSet),
+            scaleId,
+            scale
+        );

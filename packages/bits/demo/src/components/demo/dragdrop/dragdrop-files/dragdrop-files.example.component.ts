@@ -8,7 +8,6 @@ import { FileDropState } from "../file-drop/public-api";
     styleUrls: ["./dragdrop-files.example.component.less"],
 })
 export class DragdropFilesExampleComponent {
-
     public gifError = false;
     public imageType = "image/gif";
 
@@ -17,13 +16,13 @@ export class DragdropFilesExampleComponent {
     public files: File[] = [];
 
     dropHandler(ev: DragEvent) {
-
         if (!ev.dataTransfer) {
             throw new Error("dataTransfer is not defined");
         }
         this.files.push(
-            ...this.extractFilesFromDropEventData(ev.dataTransfer)
-                .filter((file: File) => this.validateDataType(file.type))
+            ...this.extractFilesFromDropEventData(ev.dataTransfer).filter(
+                (file: File) => this.validateDataType(file.type)
+            )
         );
 
         this.invalidateFiles();
@@ -42,10 +41,14 @@ export class DragdropFilesExampleComponent {
         // This naively checks only first file
 
         if (ev.dataTransfer && ev.dataTransfer.items) {
-            this.gifError = !this.validateDataType(ev.dataTransfer.items[0].type);
+            this.gifError = !this.validateDataType(
+                ev.dataTransfer.items[0].type
+            );
         }
 
-        this.fileDropState = this.gifError ? FileDropState.error : FileDropState.active;
+        this.fileDropState = this.gifError
+            ? FileDropState.error
+            : FileDropState.active;
     }
 
     invalidateFiles() {
@@ -55,7 +58,7 @@ export class DragdropFilesExampleComponent {
     }
 
     rmFile(fileInput: File) {
-        this.files = this.files.filter(file => file !== fileInput);
+        this.files = this.files.filter((file) => file !== fileInput);
     }
 
     private validateDataType(dataType: string) {
@@ -84,5 +87,4 @@ export class DragdropFilesExampleComponent {
         }
         return files;
     }
-
 }

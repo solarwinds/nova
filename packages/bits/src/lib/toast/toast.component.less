@@ -32,7 +32,7 @@
 
     &:hover {
         &::before {
-            .opacity(1.0);
+            .opacity(1);
         }
     }
 
@@ -110,7 +110,7 @@
         .setCssVariable(color, nui-color-text-default);
 
         &:hover {
-            .opacity(1.0);
+            .opacity(1);
         }
 
         &-message {
@@ -138,7 +138,9 @@
     }
 
     &__dismiss-button {
-        margin: (@nui-space-sm - @btn-padding-is-empty - @nui-button-border-width);
+        margin: (
+            @nui-space-sm - @btn-padding-is-empty - @nui-button-border-width
+        );
     }
 
     &__progress {

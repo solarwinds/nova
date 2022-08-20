@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-paginator-test",
     templateUrl: "./paginator-test.component.html",
 })
-export class PaginatorTestComponent {
-}
+export class PaginatorTestComponent {}

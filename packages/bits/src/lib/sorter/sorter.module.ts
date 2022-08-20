@@ -17,13 +17,8 @@ import { SorterComponent } from "./sorter.component";
         NuiButtonModule,
         NuiOverlayModule,
     ],
-    declarations: [
-        SorterComponent,
-    ],
-    exports: [
-        SorterComponent,
-    ],
+    declarations: [SorterComponent],
+    exports: [SorterComponent],
     providers: [],
 })
-export class NuiSorterModule {
-}
+export class NuiSorterModule {}

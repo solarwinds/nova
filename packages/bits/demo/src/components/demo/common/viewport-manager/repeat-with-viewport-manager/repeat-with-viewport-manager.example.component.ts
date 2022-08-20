@@ -1,5 +1,13 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { AfterViewInit, ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from "@angular/core";
 import {
     DataSourceService,
     IDataSource,
@@ -17,7 +25,15 @@ import {
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
-import { catchError, delay, finalize, map, switchMap, takeUntil, tap } from "rxjs/operators";
+import {
+    catchError,
+    delay,
+    finalize,
+    map,
+    switchMap,
+    takeUntil,
+    tap,
+} from "rxjs/operators";
 
 const API_URL = "https://www.googleapis.com/books/v1/volumes";
 const RESULTS_PER_PAGE = 20;
@@ -62,12 +78,15 @@ interface IGBookFrontendDTO {
  * to fetch data
  */
 @Injectable()
-export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontendDTO> implements IDataSource {
+export class GBooksDataSourceWithSearch
+    extends DataSourceService<IGBookFrontendDTO>
+    implements IDataSource
+{
     public busy = new BehaviorSubject(false);
 
     // cache used to store our previous fetched results while scrolling
     // and more data is automatically fetched from the backend
-    private cache = Array.from<IGBookFrontendDTO>({length: 0});
+    private cache = Array.from<IGBookFrontendDTO>({ length: 0 });
     private previousFilters: INovaFilters;
 
     private applyFilters$ = new Subject<IFilters>();
@@ -75,27 +94,33 @@ export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontend
     constructor(private logger: LoggerService, private http: HttpClient) {
         super();
 
-        this.applyFilters$.pipe(
-            // cancel any previous requests
-            switchMap(filters => this.getData(filters))
-        ).subscribe(async (res) => {
-            this.outputsSubject.next(await this.getFilteredData(res));
-        });
+        this.applyFilters$
+            .pipe(
+                // cancel any previous requests
+                switchMap((filters) => this.getData(filters))
+            )
+            .subscribe(async (res) => {
+                this.outputsSubject.next(await this.getFilteredData(res));
+            });
     }
 
-    public async getFilteredData(booksData: IGBooksFrontendCollection): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
-        return of(booksData).pipe(
-            tap((response: IGBooksFrontendCollection) => {
-                // after receiving data we need to append it to our previous fetched results
-                this.cache = this.cache.concat(response.books);
-            }),
-            map((response: IGBooksFrontendCollection) => ({
-                result: {
-                    repeat: {itemsSource: this.cache},
-                    paginator: {total: response.totalItems},
-                },
-            }))
-        ).toPromise();
+    public async getFilteredData(
+        booksData: IGBooksFrontendCollection
+    ): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
+        return of(booksData)
+            .pipe(
+                tap((response: IGBooksFrontendCollection) => {
+                    // after receiving data we need to append it to our previous fetched results
+                    this.cache = this.cache.concat(response.books);
+                }),
+                map((response: IGBooksFrontendCollection) => ({
+                    result: {
+                        repeat: { itemsSource: this.cache },
+                        paginator: { total: response.totalItems },
+                    },
+                }))
+            )
+            .toPromise();
     }
 
     // redefine parent method
@@ -103,8 +128,9 @@ export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontend
         this.applyFilters$.next(this.getFilters());
     }
 
-    private getData(filters: INovaFilters): Observable<IGBooksFrontendCollection> {
-
+    private getData(
+        filters: INovaFilters
+    ): Observable<IGBooksFrontendCollection> {
         // Note: Every new search request should clear the
         // cache in order to correctly display a new set of data.
         if (this.isNewSearchTerm(filters.search)) {
@@ -113,10 +139,9 @@ export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontend
 
         // fetch response from the backend
         return this.http
-            .get<IGBooksApiResponse>(
-                API_URL,
-                {params: this.getRequestParams(filters)}
-            )
+            .get<IGBooksApiResponse>(API_URL, {
+                params: this.getRequestParams(filters),
+            })
             .pipe(
                 // show the loader
                 tap(() => this.busy.next(true)),
@@ -129,16 +154,18 @@ export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontend
 
                 // transform backend API response (IGBooksApiResponse)
                 // to our frontend books collection (IGBooksFrontendCollection)
-                map(response => ({
-                    books: response.items?.map(volume => ({
-                        title: volume.volumeInfo.title,
-                        authors: volume.volumeInfo.authors?.join(", ") || "",
-                    })) || [],
+                map((response) => ({
+                    books:
+                        response.items?.map((volume) => ({
+                            title: volume.volumeInfo.title,
+                            authors:
+                                volume.volumeInfo.authors?.join(", ") || "",
+                        })) || [],
                     totalItems: response.totalItems,
                 })),
 
                 // error handle in case of any error
-                catchError(e => {
+                catchError((e) => {
                     this.logger.error(e);
                     return of({
                         books: [],
@@ -157,23 +184,30 @@ export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontend
 
     // build query params specific to our backend API
     private getRequestParams(filters: INovaFilters): HttpParams {
-        return new HttpParams()
-            // define the start page used by the virtual scroll internal "paginator"
-            .set("startIndex", filters.virtualScroll?.value?.start.toString() ?? "")
+        return (
+            new HttpParams()
+                // define the start page used by the virtual scroll internal "paginator"
+                .set(
+                    "startIndex",
+                    filters.virtualScroll?.value?.start.toString() ?? ""
+                )
 
-            // specify the maximum number of items we need to fetch for each request
-            .set("maxResults", String(RESULTS_PER_PAGE))
+                // specify the maximum number of items we need to fetch for each request
+                .set("maxResults", String(RESULTS_PER_PAGE))
 
-            // google books api requires some criteria to do the search
-            .set("q", filters.search
-                ? `intitle:${filters.search.value}`
-                : "_" // google books api requires some criteria to do the search
-            );
+                // google books api requires some criteria to do the search
+                .set(
+                    "q",
+                    filters.search ? `intitle:${filters.search.value}` : "_" // google books api requires some criteria to do the search
+                )
+        );
     }
 
     private isNewSearchTerm(search: IFilter<string> | undefined) {
-        return !isNil(search?.value)
-            && !isEqual(search?.value, this.previousFilters?.search?.value);
+        return (
+            !isNil(search?.value) &&
+            !isEqual(search?.value, this.previousFilters?.search?.value)
+        );
     }
 }
 
@@ -182,7 +216,9 @@ export class GBooksDataSourceWithSearch extends DataSourceService<IGBookFrontend
     templateUrl: "./repeat-with-viewport-manager.example.component.html",
     providers: [VirtualViewportManager, GBooksDataSourceWithSearch],
 })
-export class RepeatWithViewportManagerExampleComponent implements OnInit, OnDestroy, AfterViewInit {
+export class RepeatWithViewportManagerExampleComponent
+    implements OnInit, OnDestroy, AfterViewInit
+{
     public books$ = new BehaviorSubject<IGBookBackendDTO[]>([]);
     public busy: boolean = false;
 
@@ -195,17 +231,18 @@ export class RepeatWithViewportManagerExampleComponent implements OnInit, OnDest
         private viewportManager: VirtualViewportManager,
         private cd: ChangeDetectorRef,
         private dataSource: GBooksDataSourceWithSearch
-    ) {
-    }
+    ) {}
 
     public ngOnInit() {
-        this.dataSource.busy.pipe(
-            tap(val => {
-                this.busy = val;
-                this.cd.detectChanges();
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.dataSource.busy
+            .pipe(
+                tap((val) => {
+                    this.busy = val;
+                    this.cd.detectChanges();
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public ngAfterViewInit(): void {
@@ -218,19 +255,25 @@ export class RepeatWithViewportManagerExampleComponent implements OnInit, OnDest
             // Note: Initializing the stream with the desired page size, based on which
             // ViewportManager will perform the observations and will emit
             // distinct ranges with step equal to provided pageSize
-            .observeNextPage$({pageSize: RESULTS_PER_PAGE}).pipe(
+            .observeNextPage$({ pageSize: RESULTS_PER_PAGE })
+            .pipe(
                 tap(() => {
                     this.dataSource.applyFilters();
                 }),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
-                switchMap(() => this.dataSource.outputsSubject.pipe(
-                    tap((outputs: IFilteringOutputs) => {
-                        this.books$.next(outputs.result.repeat.itemsSource || []);
-                        this.cd.detectChanges();
-                    })
-                )),
+                switchMap(() =>
+                    this.dataSource.outputsSubject.pipe(
+                        tap((outputs: IFilteringOutputs) => {
+                            this.books$.next(
+                                outputs.result.repeat.itemsSource || []
+                            );
+                            this.cd.detectChanges();
+                        })
+                    )
+                ),
                 takeUntil(this.destroy$)
-            ).subscribe();
+            )
+            .subscribe();
     }
 
     public ngOnDestroy(): void {
@@ -250,14 +293,14 @@ export class RepeatWithViewportManagerExampleComponent implements OnInit, OnDest
         // Note: It is important to reset viewportManager to start page
         // so that the datasource performs the search with 1st page
         // emitFirstPage: false prevents viewportManager emitting first page after reset
-        this.viewportManager.reset({emitFirstPage: false});
+        this.viewportManager.reset({ emitFirstPage: false });
         this.dataSource.applyFilters();
     }
 
     private registerFilters() {
         this.dataSource.registerComponent({
-            virtualScroll: {componentInstance: this.viewportManager},
-            search: {componentInstance: this.search},
+            virtualScroll: { componentInstance: this.viewportManager },
+            search: { componentInstance: this.search },
         });
     }
 }

@@ -1,5 +1,15 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { Chart, ChartComponent, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, XYGrid, XYGridConfig } from "@nova-ui/charts";
+import {
+    Chart,
+    ChartComponent,
+    IChartSeries,
+    ILineAccessors,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    XYGrid,
+    XYGridConfig,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-base-grid-auto-margins-example",
@@ -16,15 +26,17 @@ export class BaseGridAutoMarginsExampleComponent implements OnInit {
         gridConfig.axis.left.fit = false;
 
         this.chart = new Chart(new XYGrid(gridConfig));
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors: new LineAccessors(),
-            renderer: new LineRenderer(),
-            scales: {
-                x: new LinearScale(),
-                y: new LinearScale(),
-            },
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors: new LineAccessors(),
+                renderer: new LineRenderer(),
+                scales: {
+                    x: new LinearScale(),
+                    y: new LinearScale(),
+                },
+            })
+        );
 
         this.chart.update(seriesSet);
     }
@@ -34,7 +46,10 @@ export class BaseGridAutoMarginsExampleComponent implements OnInit {
         gridConfig.axis.bottom.fit = !gridConfig.axis.bottom.fit;
         gridConfig.axis.left.fit = !gridConfig.axis.left.fit;
         if (!gridConfig.axis.bottom.fit) {
-            gridConfig.dimension.margin = Object.assign({}, XYGridConfig.DEFAULT_MARGIN);
+            gridConfig.dimension.margin = Object.assign(
+                {},
+                XYGridConfig.DEFAULT_MARGIN
+            );
         }
         this.chart.updateDimensions();
         this.chartComponent.redraw();
@@ -43,15 +58,17 @@ export class BaseGridAutoMarginsExampleComponent implements OnInit {
 
 /* Chart data */
 function getData() {
-    return [{
-        id: "series-1",
-        name: "Series 1",
-        data: [
-            { x: 100, y: 10000 },
-            { x: 200, y: 30000 },
-            { x: 300, y: 5000 },
-            { x: 400, y: 20000 },
-            { x: 500, y: 15000 },
-        ],
-    }];
+    return [
+        {
+            id: "series-1",
+            name: "Series 1",
+            data: [
+                { x: 100, y: 10000 },
+                { x: 200, y: 30000 },
+                { x: 300, y: 5000 },
+                { x: 400, y: 20000 },
+                { x: 500, y: 15000 },
+            ],
+        },
+    ];
 }

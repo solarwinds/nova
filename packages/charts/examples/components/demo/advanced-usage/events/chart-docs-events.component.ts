@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-chart-docs-events",
     templateUrl: "./chart-docs-events.component.html",
 })
-export class ChartDocsEventsComponent { }
+export class ChartDocsEventsComponent {}

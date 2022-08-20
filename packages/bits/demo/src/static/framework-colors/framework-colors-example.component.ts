@@ -16,7 +16,7 @@ export class FrameworkColorsExampleComponent {
 
     public onClipboardSuccess() {
         this.toastService.success({
-            message: $localize `Color successfully copied to clipboard`,
+            message: $localize`Color successfully copied to clipboard`,
         });
     }
     public keyValueCompare(a: any, b: any) {

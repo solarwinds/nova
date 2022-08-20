@@ -13,11 +13,8 @@ describe("ThresholdsConfigurationComponent > ", () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
-            providers: [
-                ProviderRegistryService,
-            ],
-        })
-            .compileComponents();
+            providers: [ProviderRegistryService],
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -76,7 +73,5 @@ describe("ThresholdsConfigurationComponent > ", () => {
             expect(formSpy).not.toHaveBeenCalled();
             expect(cdSpy).not.toHaveBeenCalled();
         });
-
     });
-
 });

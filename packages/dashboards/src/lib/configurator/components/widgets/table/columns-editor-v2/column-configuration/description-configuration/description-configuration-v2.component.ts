@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    forwardRef,
+    Input,
+    OnInit,
+} from "@angular/core";
 import {
     AbstractControl,
     ControlValueAccessor,
@@ -35,7 +42,9 @@ import { IHasChangeDetector } from "../../../../../../../types";
         },
     ],
 })
-export class DescriptionConfigurationV2Component implements IHasChangeDetector, ControlValueAccessor, OnInit {
+export class DescriptionConfigurationV2Component
+    implements IHasChangeDetector, ControlValueAccessor, OnInit
+{
     static lateLoadKey = "DescriptionConfigurationV2Component";
 
     @Input() formControl: AbstractControl;
@@ -46,7 +55,10 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
 
     private destroy$ = new Subject();
 
-    constructor(private formBuilder: FormBuilder, public changeDetector: ChangeDetectorRef) {
+    constructor(
+        private formBuilder: FormBuilder,
+        public changeDetector: ChangeDetectorRef
+    ) {
         this.form = this.formBuilder.group({
             label: ["", [Validators.required]],
             isActive: true,
@@ -64,8 +76,7 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
         this.changeFn = fn;
     }
 
-    public registerOnTouched(fn: any): void {
-    }
+    public registerOnTouched(fn: any): void {}
 
     public setDisabledState(isDisabled: boolean): void {
         if (isDisabled) {
@@ -76,15 +87,18 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
     }
 
     public validate(c: FormControl): ValidationErrors | null {
-        return this.form.valid ? null : { "nestedForm": true };
+        return this.form.valid ? null : { nestedForm: true };
     }
 
     public writeValue(obj: ITableWidgetColumnConfig): void {
-        this.form.patchValue({
-            label: obj.label,
-            isActive: obj.isActive,
-            width: obj.width,
-        }, { emitEvent: false });
+        this.form.patchValue(
+            {
+                label: obj.label,
+                isActive: obj.isActive,
+                width: obj.width,
+            },
+            { emitEvent: false }
+        );
 
         this.changeDetector.markForCheck();
     }
@@ -108,5 +122,4 @@ export class DescriptionConfigurationV2Component implements IHasChangeDetector, 
         const width = this.form.controls["width"].value;
         return this.isWidthMessageDisplayed && typeof width !== "number";
     }
-
 }

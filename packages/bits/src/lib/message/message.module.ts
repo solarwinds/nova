@@ -10,15 +10,9 @@ import { MessageComponent } from "./message.component";
  * @ignore
  */
 @NgModule({
-    declarations: [ MessageComponent ],
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-        NuiButtonModule,
-    ],
-    exports: [
-        MessageComponent,
-    ],
+    declarations: [MessageComponent],
+    imports: [NuiCommonModule, NuiIconModule, NuiButtonModule],
+    exports: [MessageComponent],
     providers: [],
 })
 export class NuiMessageModule {}

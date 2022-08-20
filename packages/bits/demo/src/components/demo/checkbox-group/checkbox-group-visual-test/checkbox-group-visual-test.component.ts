@@ -20,10 +20,12 @@ export class CheckboxGroupVisualTestComponent implements OnInit {
     ngOnInit() {
         this.testForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control({
-                value: this.selectedVegetables, disabled: true,
+                value: this.selectedVegetables,
+                disabled: true,
             }),
             checkboxGroup2: this.formBuilder.control({
-                value: this.selectedVegetables, disabled: false,
+                value: this.selectedVegetables,
+                disabled: false,
             }),
         });
     }

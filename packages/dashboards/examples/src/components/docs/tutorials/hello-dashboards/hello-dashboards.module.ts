@@ -1,7 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiDocsModule,
+    NuiMessageModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { HelloDashboardsDocsComponent } from "./hello-dashboards-docs.component";
@@ -12,8 +16,8 @@ const routes = [
         path: "",
         component: HelloDashboardsDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -22,8 +26,8 @@ const routes = [
         path: "example",
         component: HelloDashboardsExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -42,7 +46,15 @@ const routes = [
         HelloDashboardsExampleComponent,
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class HelloDashboardsModule { }
+export class HelloDashboardsModule {}

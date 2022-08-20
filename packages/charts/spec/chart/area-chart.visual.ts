@@ -12,7 +12,10 @@ describe(`Visual Tests: Charts - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/area/test");
-        legend = Atom.findIn(LegendAtom, element(by.tagName("area-chart-bi-directional-example")));
+        legend = Atom.findIn(
+            LegendAtom,
+            element(by.tagName("area-chart-bi-directional-example"))
+        );
         camera = new Camera().loadFilm(browser, name);
     });
 

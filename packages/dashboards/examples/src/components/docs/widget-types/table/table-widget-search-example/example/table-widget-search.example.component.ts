@@ -1,5 +1,10 @@
 import { HttpClient } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Injectable, OnInit } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnInit,
+} from "@angular/core";
 import {
     DataSourceFeatures,
     DataSourceService,
@@ -30,7 +35,14 @@ import { GBOOKS_API_URL } from "components/prototypes/data/table/constants";
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
-import { catchError, delay, finalize, map, switchMap, tap } from "rxjs/operators";
+import {
+    catchError,
+    delay,
+    finalize,
+    map,
+    switchMap,
+    tap,
+} from "rxjs/operators";
 
 interface IGBooksApiResponse {
     kind: string;
@@ -64,7 +76,10 @@ interface IGBooksVolume {
 type searchableColumnType = "title" | "authors";
 
 @Injectable()
-export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> implements IDataSource {
+export class AcmeTableGBooksDataSource
+    extends DataSourceService<IGBooksVolume>
+    implements IDataSource
+{
     public static providerId = "AcmeTableGBooksDataSource";
     public static mockError = false;
 
@@ -82,15 +97,25 @@ export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> 
         pagination: { enabled: true },
     };
     private columnToQueryParamMap: { [k in searchableColumnType]: string } = {
-        "title": "intitle",
-        "authors": "inauthor",
+        title: "intitle",
+        authors: "inauthor",
     };
 
     private applyFilters$ = new Subject<IFilters>();
 
     public dataFields: Array<IDataField> = [
-        { id: "title", label: $localize `Title`, dataType: "string", sortable: false },
-        { id: "authors", label: $localize `Authors`, dataType: "string", sortable: false },
+        {
+            id: "title",
+            label: $localize`Title`,
+            dataType: "string",
+            sortable: false,
+        },
+        {
+            id: "authors",
+            label: $localize`Authors`,
+            dataType: "string",
+            sortable: false,
+        },
     ];
 
     constructor(private logger: LoggerService, private http: HttpClient) {
@@ -98,45 +123,55 @@ export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> 
         // Using Nova DataSourceFeatures implementation for the features
         this.features = new DataSourceFeatures(this.supportedFeatures);
 
-        this.applyFilters$.pipe(
-            switchMap(filters => this.getData(filters))
-        ).subscribe(async (res) => {
-            this.outputsSubject.next(await this.getFilteredData(res));
-        });
+        this.applyFilters$
+            .pipe(switchMap((filters) => this.getData(filters)))
+            .subscribe(async (res) => {
+                this.outputsSubject.next(await this.getFilteredData(res));
+            });
     }
 
-    public async getFilteredData(booksData: IGBooksData): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
-        return of(booksData).pipe(
-            tap((response) => {
-                this.cache = this.cache.concat(response.books);
-            }),
-            map(response => ({
-                result: {
-                    repeat: { itemsSource: this.cache },
-                    paginator: { total: response.totalItems },
-                    dataFields: this.dataFields,
-                },
-            }))
-        ).toPromise();
+    public async getFilteredData(
+        booksData: IGBooksData
+    ): Promise<IDataSourceOutput<INovaFilteringOutputs>> {
+        return of(booksData)
+            .pipe(
+                tap((response) => {
+                    this.cache = this.cache.concat(response.books);
+                }),
+                map((response) => ({
+                    result: {
+                        repeat: { itemsSource: this.cache },
+                        paginator: { total: response.totalItems },
+                        dataFields: this.dataFields,
+                    },
+                }))
+            )
+            .toPromise();
     }
 
     private getData(filters: INovaFilters): Observable<IGBooksData> {
-        if (this.isNewSearchTerm(filters.search) && filters.virtualScroll?.value.start === 0) {
+        if (
+            this.isNewSearchTerm(filters.search) &&
+            filters.virtualScroll?.value.start === 0
+        ) {
             this.cache = [];
         }
 
-        return this.http.get<IGBooksApiResponse>(this.getComposedUrl(filters))
+        return this.http
+            .get<IGBooksApiResponse>(this.getComposedUrl(filters))
             .pipe(
                 tap(() => this.busy.next(true)),
                 delay(300), // mock
-                map(response => ({
-                    books: response.items?.map(volume => ({
-                        title: volume.volumeInfo.title,
-                        authors: volume.volumeInfo.authors?.join(", ") || "",
-                    })) || [],
+                map((response) => ({
+                    books:
+                        response.items?.map((volume) => ({
+                            title: volume.volumeInfo.title,
+                            authors:
+                                volume.volumeInfo.authors?.join(", ") || "",
+                        })) || [],
                     totalItems: response.totalItems,
                 })),
-                catchError(e => {
+                catchError((e) => {
                     this.logger.error(e);
                     return of({
                         books: [],
@@ -152,13 +187,17 @@ export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> 
 
     private getComposedUrl(filters: INovaFilters) {
         const initialUrl = `${GBOOKS_API_URL}?q=`;
-        const maxResults = `maxResults=${(filters.virtualScroll?.value.end || 0) - (filters.virtualScroll?.value.start || 0)}`;
+        const maxResults = `maxResults=${
+            (filters.virtualScroll?.value.end || 0) -
+            (filters.virtualScroll?.value.start || 0)
+        }`;
 
         const virtualScrollPart = filters.virtualScroll
             ? `startIndex=${filters.virtualScroll.value.start}`
             : "";
 
-        const searchQueryParam = this.columnToQueryParamMap[this.searchableColumn];
+        const searchQueryParam =
+            this.columnToQueryParamMap[this.searchableColumn];
         const searchPart = filters.search
             ? `${searchQueryParam}:${filters.search.value}`
             : "_"; // google books api requires some criteria to do the search
@@ -167,8 +206,10 @@ export class AcmeTableGBooksDataSource extends DataSourceService<IGBooksVolume> 
     }
 
     private isNewSearchTerm(search: IFilter<string> | undefined) {
-        return !isNil(search?.value)
-            && !isEqual(search?.value, this.previousFilters?.search?.value);
+        return (
+            !isNil(search?.value) &&
+            !isEqual(search?.value, this.previousFilters?.search?.value)
+        );
     }
 
     // redefine parent method
@@ -194,10 +235,13 @@ export class TableWidgetSearchExampleComponent implements OnInit {
         private widgetTypesService: WidgetTypesService,
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
-        const widgetTemplate = this.widgetTypesService.getWidgetType("table", 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "table",
+            1
+        );
         this.widgetTypesService.setNode(
             widgetTemplate,
             "configurator",
@@ -228,7 +272,8 @@ export class TableWidgetSearchExampleComponent implements OnInit {
     public initializeDashboard(): void {
         const tableWidget = widgetConfig;
         const widgetIndex: IWidgets = {
-            [tableWidget.id]: this.widgetTypesService.mergeWithWidgetType(tableWidget),
+            [tableWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(tableWidget),
         };
 
         const positions: Record<string, GridsterItem> = {
@@ -245,7 +290,6 @@ export class TableWidgetSearchExampleComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-
 }
 
 export const widgetConfig: IWidget = {
@@ -253,12 +297,12 @@ export const widgetConfig: IWidget = {
     type: "table",
     pizzagna: {
         configuration: {
-            "header": {
+            header: {
                 properties: {
                     title: "Google Books",
                 },
             },
-            "table": {
+            table: {
                 providers: {
                     [WellKnownProviders.DataSource]: {
                         providerId: AcmeTableGBooksDataSource.providerId,
@@ -269,7 +313,7 @@ export const widgetConfig: IWidget = {
                         columns: [
                             {
                                 id: "column1",
-                                label: $localize `Title`,
+                                label: $localize`Title`,
                                 isActive: true,
                                 formatter: {
                                     componentType: "RawFormatterComponent",
@@ -282,7 +326,7 @@ export const widgetConfig: IWidget = {
                             },
                             {
                                 id: "column2",
-                                label: $localize `Author`,
+                                label: $localize`Author`,
                                 isActive: true,
                                 formatter: {
                                     componentType: "RawFormatterComponent",

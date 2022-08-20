@@ -1,18 +1,17 @@
 import { ChangeDetectorRef, Component, Input } from "@angular/core";
 
-
 @Component({
     selector: "nui-tab-heading-group-responsive-example",
-    styles: [`
-        .set-container-max-width {
-            max-width: 1000px;
-        }
-    `],
+    styles: [
+        `
+            .set-container-max-width {
+                max-width: 1000px;
+            }
+        `,
+    ],
     templateUrl: "./tab-heading-group-responsive.example.component.html",
 })
-
 export class TabHeadingGroupResponsiveExampleComponent {
-
     @Input() public icon: boolean = false;
 
     public currentTabId: string;
@@ -29,12 +28,10 @@ export class TabHeadingGroupResponsiveExampleComponent {
 
     public setTabs(tabsAmount: number = 20) {
         for (let i = 1; i < tabsAmount; i++) {
-            this.tabsetContent.push(
-                {
-                    id: i.toString(),
-                    title: $localize `Tab ${i.toString()}`,
-                }
-            );
+            this.tabsetContent.push({
+                id: i.toString(),
+                title: $localize`Tab ${i.toString()}`,
+            });
         }
     }
 }

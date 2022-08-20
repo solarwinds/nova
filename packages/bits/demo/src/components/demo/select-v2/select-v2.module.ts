@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import {
     DEMO_PATH_TOKEN,
-    NuiButtonModule, NuiDialogModule,
+    NuiButtonModule,
+    NuiDialogModule,
     NuiDividerModule,
     NuiDocsModule,
     NuiFormFieldModule,
@@ -37,7 +38,6 @@ import {
     SelectV2TestExampleComponent,
     SelectV2VirtualScrollExampleComponent,
 } from "./index";
-
 
 const routes = [
     {
@@ -214,7 +214,7 @@ const routes = [
         path: "test",
         component: SelectV2TestExampleComponent,
         data: {
-            "srlc": {
+            srlc: {
                 hideIndicator: true,
             },
         },
@@ -262,12 +262,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class SelectV2Module {
-}
+export class SelectV2Module {}

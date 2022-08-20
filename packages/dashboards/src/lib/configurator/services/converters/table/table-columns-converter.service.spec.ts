@@ -18,7 +18,6 @@ class MockComponent {
             columns: formBuilder.array([]),
         });
     }
-
 }
 
 const mockedColumnsFormValue = {
@@ -41,15 +40,23 @@ describe("TableColumnsConverterService >", () => {
     const component = new MockComponent(formBuilder);
     const previewService = new PreviewService();
     const dynamicComponentCreator = new DynamicComponentCreator();
-    const pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+    const pizzagnaService = new PizzagnaService(
+        eventBus,
+        dynamicComponentCreator
+    );
 
     let service: TableColumnsConverterService;
 
     beforeEach(fakeAsync(() => {
         spyOn(pizzagnaService, "createComponentsFromTemplate");
-        previewService.preview = TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration;
+        previewService.preview =
+            TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration;
         pizzagnaService.pizzagna = EDITOR_PIZZAGNA;
-        service = new TableColumnsConverterService(eventBus, previewService, pizzagnaService);
+        service = new TableColumnsConverterService(
+            eventBus,
+            previewService,
+            pizzagnaService
+        );
         service.setComponent(component as any, "");
         service.ngAfterViewInit();
         service.buildForm();
@@ -61,26 +68,36 @@ describe("TableColumnsConverterService >", () => {
     });
 
     it("should properly build form", () => {
-        const columnsInFormPizzagna = pizzagnaService.pizzagna.data.columns.properties?.columns;
-        const columnsInPreviewPizzagna = TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration.table.properties.configuration.columns;
+        const columnsInFormPizzagna =
+            pizzagnaService.pizzagna.data.columns.properties?.columns;
+        const columnsInPreviewPizzagna =
+            TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration.table
+                .properties.configuration.columns;
 
         expect(columnsInFormPizzagna).toEqual(columnsInPreviewPizzagna);
     });
 
     xit("should properly update preview", fakeAsync(() => {
         spyOn(service, "updatePreview");
-        const expectedPreviewPizzagna = { ...TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration };
-        expectedPreviewPizzagna.table.properties.configuration.columns = [{
-            id: "column1",
-            label: $localize`No`,
-            isActive: true,
-            dataFieldIds: ["position"],
-            formatterId: "RawFormatterComponent",
-        }];
-        (component.form.get("columns") as FormArray).push(formBuilder.control(mockedColumnsFormValue));
+        const expectedPreviewPizzagna = {
+            ...TABLE_WIDGET_PREVIEW_PIZZAGNA.pizzagna.configuration,
+        };
+        expectedPreviewPizzagna.table.properties.configuration.columns = [
+            {
+                id: "column1",
+                label: $localize`No`,
+                isActive: true,
+                dataFieldIds: ["position"],
+                formatterId: "RawFormatterComponent",
+            },
+        ];
+        (component.form.get("columns") as FormArray).push(
+            formBuilder.control(mockedColumnsFormValue)
+        );
         tick(0);
 
-        expect(service.updatePreview).toHaveBeenCalledWith(expectedPreviewPizzagna);
+        expect(service.updatePreview).toHaveBeenCalledWith(
+            expectedPreviewPizzagna
+        );
     }));
-
 });

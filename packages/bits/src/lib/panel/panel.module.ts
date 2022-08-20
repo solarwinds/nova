@@ -9,17 +9,9 @@ import { PanelComponent } from "./panel.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiButtonModule,
-    ],
-    declarations: [
-        PanelComponent,
-    ],
-    exports: [
-        PanelComponent,
-    ],
+    imports: [NuiCommonModule, NuiButtonModule],
+    declarations: [PanelComponent],
+    exports: [PanelComponent],
     providers: [],
 })
-export class NuiPanelModule {
-}
+export class NuiPanelModule {}

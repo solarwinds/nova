@@ -17,12 +17,7 @@ import { DialogService } from "./dialog.service";
  * @ignore
  */
 @NgModule({
-    imports: [
-        A11yModule,
-        NuiCommonModule,
-        NuiIconModule,
-        NuiButtonModule,
-    ],
+    imports: [A11yModule, NuiCommonModule, NuiIconModule, NuiButtonModule],
     declarations: [
         ConfirmationDialogComponent,
         DialogComponent,
@@ -30,19 +25,12 @@ import { DialogService } from "./dialog.service";
         DialogFooterComponent,
         DialogBackdropComponent,
     ],
-    exports: [
-        DialogHeaderComponent,
-        DialogFooterComponent,
-    ],
+    exports: [DialogHeaderComponent, DialogFooterComponent],
     entryComponents: [
         DialogComponent,
         DialogBackdropComponent,
         ConfirmationDialogComponent,
     ],
-    providers: [
-        DialogService,
-        DialogStackService,
-    ],
+    providers: [DialogService, DialogStackService],
 })
-export class NuiDialogModule {
-}
+export class NuiDialogModule {}

@@ -1,6 +1,9 @@
 import cloneDeep from "lodash/cloneDeep";
 
-import { INTERACTION_DATA_POINTS_EVENT, MOUSE_ACTIVE_EVENT } from "../../constants";
+import {
+    INTERACTION_DATA_POINTS_EVENT,
+    MOUSE_ACTIVE_EVENT,
+} from "../../constants";
 import { XYGridConfig } from "../../core/grid/config/xy-grid-config";
 import { RenderState } from "../../renderers/types";
 import { Chart } from "../chart";
@@ -9,7 +12,15 @@ import { ChartPalette } from "../common/palette/chart-palette";
 import { CHART_MARKERS, CHART_PALETTE_CS1 } from "../common/palette/palettes";
 import { SequentialChartMarkerProvider } from "../common/palette/sequential-chart-marker-provider";
 import {
-    IAccessors, IChartAssistSeries, IChartEvent, IChartMarker, IChartPalette, IChartSeries, IDataPointsPayload, InteractionType, IValueProvider,
+    IAccessors,
+    IChartAssistSeries,
+    IChartEvent,
+    IChartMarker,
+    IChartPalette,
+    IChartSeries,
+    IDataPointsPayload,
+    InteractionType,
+    IValueProvider,
 } from "../common/types";
 import { UtilityService } from "../common/utility.service";
 import { sparkChartGridConfig } from "../grid/config/spark-chart-grid-config";
@@ -35,14 +46,26 @@ export class SparkChartAssist implements IChartAssist {
 
     public highlightedDataPoints: IDataPointsPayload = {};
 
-    constructor(public readonly showBottomAxis = true,
+    constructor(
+        public readonly showBottomAxis = true,
         public readonly showTopBorder = true,
         public palette: IChartPalette = new ChartPalette(CHART_PALETTE_CS1),
-        public markers: IValueProvider<IChartMarker> = new SequentialChartMarkerProvider(CHART_MARKERS)) {
-        this.gridConfig = sparkChartGridConfig(new XYGridConfig(), false, showTopBorder);
+        public markers: IValueProvider<IChartMarker> = new SequentialChartMarkerProvider(
+            CHART_MARKERS
+        )
+    ) {
+        this.gridConfig = sparkChartGridConfig(
+            new XYGridConfig(),
+            false,
+            showTopBorder
+        );
         this.gridConfig.interactionPlugins = false;
 
-        this.lastGridConfig = sparkChartGridConfig(new XYGridConfig(), showBottomAxis, showTopBorder);
+        this.lastGridConfig = sparkChartGridConfig(
+            new XYGridConfig(),
+            showBottomAxis,
+            showTopBorder
+        );
         this.lastGridConfig.interactionPlugins = false;
     }
 
@@ -53,7 +76,10 @@ export class SparkChartAssist implements IChartAssist {
      * See {@link IChartAssist#update}
      */
     public update(inputSeriesSet: IChartAssistSeries<IAccessors>[]): void {
-        const sparks = inputSeriesSet.map(chartSeries => ({ id: chartSeries.id, chartSeriesSet: [chartSeries] }));
+        const sparks = inputSeriesSet.map((chartSeries) => ({
+            id: chartSeries.id,
+            chartSeriesSet: [chartSeries],
+        }));
         this.updateSparks(sparks);
     }
 
@@ -66,9 +92,16 @@ export class SparkChartAssist implements IChartAssist {
         const inputSparks = cloneDeep(sparks);
         this.sparks = inputSparks.map((spark, index): ISpark<IAccessors> => {
             const lastSpark = index === inputSparks.length - 1;
-            const existingSparkIndex = spark.id ? this.sparks.findIndex(existingSpark => existingSpark.id === spark.id) : -1;
+            const existingSparkIndex = spark.id
+                ? this.sparks.findIndex(
+                      (existingSpark) => existingSpark.id === spark.id
+                  )
+                : -1;
             if (existingSparkIndex !== -1) {
-                spark.chart = this.reconfigureChart(this.sparks[existingSparkIndex].chart as Chart, lastSpark);
+                spark.chart = this.reconfigureChart(
+                    this.sparks[existingSparkIndex].chart as Chart,
+                    lastSpark
+                );
             } else {
                 spark.chart = spark.chart || this.createChart(lastSpark);
                 spark.id = spark.id || UtilityService.uuid();
@@ -81,8 +114,17 @@ export class SparkChartAssist implements IChartAssist {
     }
 
     /** See {@link IChartAssist#getHighlightedValue} */
-    public getHighlightedValue(chartSeries: IChartSeries<IAccessors>, scaleKey: string, formatterName?: string): string | number {
-        return ChartAssist.getLabel(chartSeries, this.highlightedDataPoints[chartSeries.id], scaleKey, formatterName);
+    public getHighlightedValue(
+        chartSeries: IChartSeries<IAccessors>,
+        scaleKey: string,
+        formatterName?: string
+    ): string | number {
+        return ChartAssist.getLabel(
+            chartSeries,
+            this.highlightedDataPoints[chartSeries.id],
+            scaleKey,
+            formatterName
+        );
     }
 
     /**
@@ -102,7 +144,9 @@ export class SparkChartAssist implements IChartAssist {
     }
 
     protected createChart(lastSpark: boolean) {
-        const grid = new XYGrid(lastSpark ? this.lastGridConfig : this.gridConfig);
+        const grid = new XYGrid(
+            lastSpark ? this.lastGridConfig : this.gridConfig
+        );
         const chart = new Chart(grid);
 
         if (this.showTopBorder || this.showBottomAxis) {
@@ -121,8 +165,11 @@ export class SparkChartAssist implements IChartAssist {
         eventBus.getStream(INTERACTION_DATA_POINTS_EVENT).subscribe((event) => {
             if (event.data.interactionType === InteractionType.MouseMove) {
                 const dataPoints = <IDataPointsPayload>event.data.dataPoints;
-                Object.keys(dataPoints).forEach(seriesId => {
-                    this.highlightedDataPoints[seriesId] = Object.assign({}, dataPoints[seriesId]);
+                Object.keys(dataPoints).forEach((seriesId) => {
+                    this.highlightedDataPoints[seriesId] = Object.assign(
+                        {},
+                        dataPoints[seriesId]
+                    );
                 });
             }
         });
@@ -132,7 +179,9 @@ export class SparkChartAssist implements IChartAssist {
     }
 
     private reconfigureChart(chart: Chart, lastSpark: boolean): Chart {
-        chart.getGrid().config(lastSpark ? this.lastGridConfig : this.gridConfig);
+        chart
+            .getGrid()
+            .config(lastSpark ? this.lastGridConfig : this.gridConfig);
         chart.updateDimensions();
 
         const hasInteractionLabel = chart.hasPlugin(InteractionLabelPlugin);

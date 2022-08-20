@@ -11,18 +11,21 @@ import { hasControlInErrorState } from "../functions/has-control-in-error-state"
     pure: false,
 })
 export class WidgetEditorAccordionFormStatePipe implements PipeTransform {
-
-    public transform(form: FormGroup | AbstractControl | null): Observable<AccordionState> {
+    public transform(
+        form: FormGroup | AbstractControl | null
+    ): Observable<AccordionState> {
         if (!form) {
             throw new Error("Provided form is undefined");
         }
 
-        return combineLatest([form.statusChanges, form.valueChanges])
-            .pipe(
-                startWith(null),
-                map(() => hasControlInErrorState(form) ? AccordionState.CRITICAL : AccordionState.DEFAULT),
-                distinct()
-            );
+        return combineLatest([form.statusChanges, form.valueChanges]).pipe(
+            startWith(null),
+            map(() =>
+                hasControlInErrorState(form)
+                    ? AccordionState.CRITICAL
+                    : AccordionState.DEFAULT
+            ),
+            distinct()
+        );
     }
-
 }

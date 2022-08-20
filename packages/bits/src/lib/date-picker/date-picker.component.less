@@ -5,9 +5,13 @@
 @nui-datepicker-calendar-min-cell-size: 30px;
 @nui-datepicker-width: 135px;
 // 9 * 30 + 2 * 10 (9 cells + paddings)
-@nui-datepicker-popup-min-height: (9 * @nui-datepicker-calendar-min-cell-size + 2 * @nui-space-sm);
+@nui-datepicker-popup-min-height: (
+    9 * @nui-datepicker-calendar-min-cell-size + 2 * @nui-space-sm
+);
 // 7 * 30 + 2 * 10 (7 cells + paddings)
-@nui-datepicker-popup-min-width: (7 * @nui-datepicker-calendar-min-cell-size + 2 * @nui-space-sm);
+@nui-datepicker-popup-min-width: (
+    7 * @nui-datepicker-calendar-min-cell-size + 2 * @nui-space-sm
+);
 
 .nui .nui-datepicker {
     display: inline-block;
@@ -197,7 +201,6 @@
                 }
 
                 > button:disabled {
-
                     span.today:not(.text-info) {
                         border-bottom-color: @nui-color-disabled;
                     }

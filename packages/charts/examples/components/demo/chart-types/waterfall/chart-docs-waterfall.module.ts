@@ -1,7 +1,13 @@
 import { DragDropModule } from "@angular/cdk/drag-drop";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDocsModule, NuiIconModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiDocsModule,
+    NuiIconModule,
+    NuiMessageModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
@@ -16,8 +22,8 @@ const collectionRoutes: Routes = [
         path: "",
         component: ChartDocsWaterfallComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -26,8 +32,8 @@ const collectionRoutes: Routes = [
         path: "simple",
         component: WaterfallChartSimpleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -35,8 +41,8 @@ const collectionRoutes: Routes = [
         path: "advanced",
         component: WaterfallChartAdvancedComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -44,8 +50,8 @@ const collectionRoutes: Routes = [
         path: "test",
         component: WaterfallChartTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -68,8 +74,15 @@ const collectionRoutes: Routes = [
         RouterModule.forChild(collectionRoutes),
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class ChartDocsWaterfallModule {
-}
+export class ChartDocsWaterfallModule {}

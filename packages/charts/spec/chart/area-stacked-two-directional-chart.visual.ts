@@ -11,7 +11,9 @@ describe(`Visual Tests: Charts - ${name}`, () => {
     let camera: Camera;
 
     beforeAll(async () => {
-        await Helpers.prepareBrowser("chart-types/area/bi-directional-stacked-test");
+        await Helpers.prepareBrowser(
+            "chart-types/area/bi-directional-stacked-test"
+        );
         camera = new Camera().loadFilm(browser, name);
     });
 

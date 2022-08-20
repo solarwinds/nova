@@ -1,5 +1,12 @@
 import { Overlay } from "@angular/cdk/overlay";
-import { AfterViewInit, Component, ElementRef, Input, NO_ERRORS_SCHEMA, ViewChild } from "@angular/core";
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    Input,
+    NO_ERRORS_SCHEMA,
+    ViewChild,
+} from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import set from "lodash/set";
 import { first } from "rxjs/operators";
@@ -21,15 +28,15 @@ import { OverlayComponent } from "./overlay.component";
     `,
 })
 class PopupWrapperComponent implements AfterViewInit {
-    public items = Array.from({ length : 50 }).map((_, i) => `Item ${i}`);
+    public items = Array.from({ length: 50 }).map((_, i) => `Item ${i}`);
     public selectedOptions = this.items[0];
     @Input() destroyed: boolean = false;
 
     @ViewChild(OverlayComponent) dropdown: OverlayComponent;
 
-    constructor(public elRef: ElementRef) { }
+    constructor(public elRef: ElementRef) {}
 
-    ngAfterViewInit() { }
+    ngAfterViewInit() {}
 }
 
 describe("components >", () => {
@@ -55,9 +62,8 @@ describe("components >", () => {
                         useClass: PopupWrapperComponent,
                     },
                 ],
-                schemas: [ NO_ERRORS_SCHEMA ],
-            })
-                .compileComponents();
+                schemas: [NO_ERRORS_SCHEMA],
+            }).compileComponents();
         }));
 
         beforeEach(() => {
@@ -105,20 +111,30 @@ describe("components >", () => {
 
                 expect(wrapperComponent.dropdown.getOverlayRef()).toBeTruthy();
                 expect(wrapperComponent.dropdown.showing).toBe(true);
-                const isEmpty = await wrapperComponent.dropdown.empty$.pipe(first()).toPromise();
+                const isEmpty = await wrapperComponent.dropdown.empty$
+                    .pipe(first())
+                    .toPromise();
                 expect(isEmpty).toBe(false);
             });
 
             it("should set default config", () => {
                 wrapperComponent.dropdown.show();
-                expect(wrapperComponent.dropdown.getOverlayRef().getConfig()).toBeTruthy();
+                expect(
+                    wrapperComponent.dropdown.getOverlayRef().getConfig()
+                ).toBeTruthy();
             });
 
             it("should extend overlay config by user", () => {
-                wrapperComponent.dropdown.overlayConfig = {hasBackdrop: true, backdropClass: "mock-class", width: "300px"};
+                wrapperComponent.dropdown.overlayConfig = {
+                    hasBackdrop: true,
+                    backdropClass: "mock-class",
+                    width: "300px",
+                };
                 wrapperComponent.dropdown.show();
 
-                const config = wrapperComponent.dropdown.getOverlayRef().getConfig();
+                const config = wrapperComponent.dropdown
+                    .getOverlayRef()
+                    .getConfig();
                 expect(config.hasBackdrop).toBe(true);
                 expect(config.backdropClass).toBe("mock-class");
                 expect(config.width).toBe("300px");
@@ -130,9 +146,13 @@ describe("components >", () => {
                 wrapperComponent.dropdown.show();
                 wrapperComponent.dropdown.hide();
 
-                expect(wrapperComponent.dropdown.getOverlayRef().overlayElement).toBeFalsy();
+                expect(
+                    wrapperComponent.dropdown.getOverlayRef().overlayElement
+                ).toBeFalsy();
                 expect(wrapperComponent.dropdown.showing).toBe(false);
-                wrapperComponent.dropdown.clickOutside.subscribe((e: MouseEvent) => expect(e).toBeTruthy());
+                wrapperComponent.dropdown.clickOutside.subscribe(
+                    (e: MouseEvent) => expect(e).toBeTruthy()
+                );
             });
         });
 
@@ -166,4 +186,3 @@ describe("components >", () => {
         });
     });
 });
-

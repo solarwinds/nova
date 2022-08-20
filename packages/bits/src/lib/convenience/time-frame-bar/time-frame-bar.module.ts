@@ -27,13 +27,8 @@ import { TimeFrameBarComponent } from "./time-frame-bar.component";
         NuiTimePickerModule,
         NuiTooltipModule,
     ],
-    declarations: [
-        TimeFrameBarComponent,
-    ],
-    exports: [
-        TimeFrameBarComponent,
-    ],
+    declarations: [TimeFrameBarComponent],
+    exports: [TimeFrameBarComponent],
     providers: [],
 })
-export class NuiTimeFrameBarModule {
-}
+export class NuiTimeFrameBarModule {}

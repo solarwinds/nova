@@ -21,22 +21,11 @@ import {
     SorterComponent,
     SorterDirection,
 } from "@nova-ui/bits";
-import {
-    Subject,
-} from "rxjs";
-import {
-    takeUntil,
-    tap,
-} from "rxjs/operators";
+import { Subject } from "rxjs";
+import { takeUntil, tap } from "rxjs/operators";
 
-import {
-    LOCAL_DATA,
-    RESULTS_PER_PAGE,
-} from "./basic-list-data";
-import {
-    IServer,
-    IServerFilters,
-} from "./types";
+import { LOCAL_DATA, RESULTS_PER_PAGE } from "./basic-list-data";
+import { IServer, IServerFilters } from "./types";
 
 @Component({
     selector: "app-basic-list",
@@ -90,7 +79,8 @@ export class BasicListComponent implements AfterViewInit, OnDestroy {
     private destroy$ = new Subject();
 
     constructor(
-        @Inject(DataSourceService) private dataSource: ClientSideDataSource<IServer>,
+        @Inject(DataSourceService)
+        private dataSource: ClientSideDataSource<IServer>,
         private changeDetection: ChangeDetectorRef
     ) {
         this.dataSource.setData(LOCAL_DATA);
@@ -104,27 +94,36 @@ export class BasicListComponent implements AfterViewInit, OnDestroy {
             repeat: { componentInstance: this.repeat },
         });
 
-        this.search.focusChange.pipe(
-            tap(async(focused: boolean) => {
-                // we want to perform a new search on blur event
-                // only if the search filter changed
-                if (!focused && this.dataSource.filterChanged(nameof<IServerFilters>("search"))) {
-                    await this.applyFilters();
-                }
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.search.focusChange
+            .pipe(
+                tap(async (focused: boolean) => {
+                    // we want to perform a new search on blur event
+                    // only if the search filter changed
+                    if (
+                        !focused &&
+                        this.dataSource.filterChanged(
+                            nameof<IServerFilters>("search")
+                        )
+                    ) {
+                        await this.applyFilters();
+                    }
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
-        this.dataSource.outputsSubject.pipe(
-            tap((data: INovaFilteringOutputs) => {
-                this.filteringState = data;
+        this.dataSource.outputsSubject
+            .pipe(
+                tap((data: INovaFilteringOutputs) => {
+                    this.filteringState = data;
 
-                this.totalItems = data.paginator?.total ?? 0;
+                    this.totalItems = data.paginator?.total ?? 0;
 
-                this.changeDetection.detectChanges();
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+                    this.changeDetection.detectChanges();
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
         // make 1st call to retrieve initial results
         await this.applyFilters();

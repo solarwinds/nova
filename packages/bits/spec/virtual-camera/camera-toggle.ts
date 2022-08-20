@@ -1,7 +1,6 @@
 import { CameraEngine } from "./camera-engine";
 
 export class CameraToggle {
-
     constructor(private cameraEngine: CameraEngine) {}
 
     public async on(): Promise<void> {

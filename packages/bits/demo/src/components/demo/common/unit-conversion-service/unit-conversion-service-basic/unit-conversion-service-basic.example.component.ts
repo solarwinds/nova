@@ -1,5 +1,9 @@
-import {Component, OnInit } from "@angular/core";
-import { IUnitConversionResult, UnitBase, UnitConversionService } from "@nova-ui/bits";
+import { Component, OnInit } from "@angular/core";
+import {
+    IUnitConversionResult,
+    UnitBase,
+    UnitConversionService,
+} from "@nova-ui/bits";
 
 @Component({
     selector: "unit-conversion-service-basic-example",
@@ -18,7 +22,11 @@ export class UnitConversionServiceBasicExampleComponent implements OnInit {
 
     public onNumberChange(num: number): void {
         this.num = num;
-        const conversionResult: IUnitConversionResult = this.unitConversionService.convert(this.num, UnitBase.Bytes, 2);
-        this.conversionDisplay = this.unitConversionService.getFullDisplay(conversionResult, "bytes");
+        const conversionResult: IUnitConversionResult =
+            this.unitConversionService.convert(this.num, UnitBase.Bytes, 2);
+        this.conversionDisplay = this.unitConversionService.getFullDisplay(
+            conversionResult,
+            "bytes"
+        );
     }
 }

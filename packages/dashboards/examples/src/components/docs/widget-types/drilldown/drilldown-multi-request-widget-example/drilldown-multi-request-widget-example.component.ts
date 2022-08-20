@@ -1,7 +1,19 @@
 import { Apollo, gql } from "apollo-angular";
 import { HttpClient } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IconStatus, IDataField, IFilters, INovaFilters } from "@nova-ui/bits";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
+import {
+    DataSourceService,
+    IconStatus,
+    IDataField,
+    IFilters,
+    INovaFilters,
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -22,7 +34,6 @@ import {
 } from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 
-
 import { BehaviorSubject, Observable, of, Subject } from "rxjs";
 import { finalize, map, switchMap, tap } from "rxjs/operators";
 
@@ -32,7 +43,10 @@ import { APOLLO_API_NAMESPACE } from "../../../types";
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class DrilldownDataSource extends DataSourceService<any> implements OnDestroy {
+export class DrilldownDataSource
+    extends DataSourceService<any>
+    implements OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "DrilldownDataSource";
 
@@ -55,10 +69,17 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
         super();
 
         // TODO: remove Partial in vNext after marking dataType field as optional - NUI-5838
-        (this.dataFieldsConfig.dataFields$ as BehaviorSubject<Partial<IDataField>[]>).next(this.dataFields);
+        (
+            this.dataFieldsConfig.dataFields$ as BehaviorSubject<
+                Partial<IDataField>[]
+            >
+        ).next(this.dataFields);
 
-        this.applyFilters$.pipe(switchMap(filters => this.getData(filters)))
-            .subscribe(async res => { this.outputsSubject.next(await this.getFilteredData(res)); });
+        this.applyFilters$
+            .pipe(switchMap((filters) => this.getData(filters)))
+            .subscribe(async (res) => {
+                this.outputsSubject.next(await this.getFilteredData(res));
+            });
     }
 
     private groupedDataHistory: any[] = [];
@@ -68,26 +89,36 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     public async getFilteredData(data: any): Promise<any> {
         return of(data)
             .pipe(
-                map(entries => {
+                map((entries) => {
                     let widgetInput, mapIconsToEntries;
 
                     if (this.isDrillDown()) {
                         const activeDrillLvl = this.drillState.length;
                         const group = this.groupBy[activeDrillLvl];
-                        const lastGroupedValue = this.getTransformedDataForGroup(entries, group, getLast(this.drillState));
+                        const lastGroupedValue =
+                            this.getTransformedDataForGroup(
+                                entries,
+                                group,
+                                getLast(this.drillState)
+                            );
 
                         this.groupedDataHistory.push(lastGroupedValue);
 
                         return lastGroupedValue;
                     }
 
-                    mapIconsToEntries = entries.map((item: any) => ({...item, icon: "virtual-host", icon_status: IconStatus.Up }));
+                    mapIconsToEntries = entries.map((item: any) => ({
+                        ...item,
+                        icon: "virtual-host",
+                        icon_status: IconStatus.Up,
+                    }));
                     this.groupedDataHistory.push(mapIconsToEntries);
                     widgetInput = this.getOutput(entries);
 
                     return widgetInput;
                 })
-            ).toPromise();
+            )
+            .toPromise();
     }
 
     public ngOnDestroy(): void {
@@ -101,12 +132,14 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
 
     private getQuery(key: string, value: string) {
         const groupToRequestMap: Record<string, string> = {
-            "Region": `{ Region { name } }`,
-            "Subregion": `{ Subregion(filter: { region: { name: "${value}" } } ) { name } }`,
-            "Country": `{ Country(filter: { subregion: { name: "${value}" } } ) { name capital } }`,
+            Region: `{ Region { name } }`,
+            Subregion: `{ Subregion(filter: { region: { name: "${value}" } } ) { name } }`,
+            Country: `{ Country(filter: { subregion: { name: "${value}" } } ) { name capital } }`,
         };
 
-        return gql`${groupToRequestMap[key]}`;
+        return gql`
+            ${groupToRequestMap[key]}
+        `;
     }
 
     private getData(filters: INovaFilters): Observable<any> {
@@ -124,25 +157,47 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
         this.busy.next(true);
 
         if (this.cache && (isDrillUp || this.isHome())) {
-            return of(this.cache).pipe(map(data => data.data[group]), finalize(() => this.busy.next(false)));
+            return of(this.cache).pipe(
+                map((data) => data.data[group]),
+                finalize(() => this.busy.next(false))
+            );
         } else {
-            return this.apollo.use(APOLLO_API_NAMESPACE.COUNTRIES).query<any>({query: this.getQuery(group || this.leafGroup, getLast(this.drillState))})
+            return this.apollo
+                .use(APOLLO_API_NAMESPACE.COUNTRIES)
+                .query<any>({
+                    query: this.getQuery(
+                        group || this.leafGroup,
+                        getLast(this.drillState)
+                    ),
+                })
                 .pipe(
-                    tap(data => this.cache = { data: {...this.cache?.data, ...data?.data} }),
-                    map(data => data.data[group || this.leafGroup]),
+                    tap(
+                        (data) =>
+                            (this.cache = {
+                                data: { ...this.cache?.data, ...data?.data },
+                            })
+                    ),
+                    map((data) => data.data[group || this.leafGroup]),
                     finalize(() => this.busy.next(false))
                 );
         }
     }
 
-    private getTransformedDataForGroup(data: any, group: string, drillStateValue: string) {
+    private getTransformedDataForGroup(
+        data: any,
+        group: string,
+        drillStateValue: string
+    ) {
         const fallback: string = `No ${group} for ${drillStateValue}`;
         const dataArr = Object.values(data).map((val: any) => ({
             id: val.name || fallback,
             label: val.name || fallback,
             statuses: [
                 { key: "state_ok", value: val.name?.length },
-                { key: "status_unreachable", value: generateNumberUpTo(100000) },
+                {
+                    key: "status_unreachable",
+                    value: generateNumberUpTo(100000),
+                },
                 { key: "status_warning", value: generateNumberUpTo(10000) },
                 { key: "status_unknown", value: generateNumberUpTo(1000) },
             ],
@@ -196,15 +251,21 @@ export class DrilldownMultiRequestWidgetExampleComponent implements OnInit {
         private widgetTypesService: WidgetTypesService,
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // this.prepareNovaDashboards();
         this.initializeDashboard();
-        const widgetTemplate = this.widgetTypesService.getWidgetType("drilldown", 1);
-        this.widgetTypesService.setNode(widgetTemplate, "configurator", WellKnownPathKey.DataSourceProviders, [
-            DrilldownDataSource.providerId,
-        ]);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "drilldown",
+            1
+        );
+        this.widgetTypesService.setNode(
+            widgetTemplate,
+            "configurator",
+            WellKnownPathKey.DataSourceProviders,
+            [DrilldownDataSource.providerId]
+        );
 
         // Registering the data source for injection into the KPI tile.
         // Note: Each tile of a KPI widget is assigned its own instance of the data source
@@ -233,7 +294,8 @@ export class DrilldownMultiRequestWidgetExampleComponent implements OnInit {
         const drilldownWidget = widgetConfig;
         const widgets: IWidgets = {
             // Complete the widget with information coming from its type definition
-            [drilldownWidget.id]: this.widgetTypesService.mergeWithWidgetType(drilldownWidget),
+            [drilldownWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(drilldownWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -249,7 +311,6 @@ export class DrilldownMultiRequestWidgetExampleComponent implements OnInit {
         // Finally, assigning the variables we created above to the dashboard
         this.dashboard = { positions, widgets };
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -257,10 +318,10 @@ const widgetConfig: IWidget = {
     type: "drilldown",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
-                "properties": {
-                    "title": "Drilldown Widget",
-                    "subtitle": "Countries BY continent THEN currency",
+            header: {
+                properties: {
+                    title: "Drilldown Widget",
+                    subtitle: "Countries BY continent THEN currency",
                 },
             },
             [DEFAULT_PIZZAGNA_ROOT]: {
@@ -268,8 +329,7 @@ const widgetConfig: IWidget = {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
                         providerId: DrilldownDataSource.providerId,
-                        properties: {
-                        },
+                        properties: {},
                     } as IProviderConfiguration,
                 },
             },
@@ -291,7 +351,8 @@ const widgetConfig: IWidget = {
                             // components
                             componentsConfig: {
                                 group: {
-                                    componentType: ListGroupItemComponent.lateLoadKey,
+                                    componentType:
+                                        ListGroupItemComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             id: "id",
@@ -304,7 +365,8 @@ const widgetConfig: IWidget = {
                                     },
                                 },
                                 leaf: {
-                                    componentType: ListLeafItemComponent.lateLoadKey,
+                                    componentType:
+                                        ListLeafItemComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             icon: "icon",
@@ -335,7 +397,6 @@ const widgetConfig: IWidget = {
                         // },
                         //
                     } as IListWidgetConfiguration,
-
                 },
             },
         },
@@ -344,4 +405,5 @@ const widgetConfig: IWidget = {
 
 const getLast = (arr: any[]) => arr[arr.length - 1];
 
-const generateNumberUpTo = (upperLimit: number): number => Math.floor((Math.random() * upperLimit) + 1);
+const generateNumberUpTo = (upperLimit: number): number =>
+    Math.floor(Math.random() * upperLimit + 1);

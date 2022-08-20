@@ -1,11 +1,18 @@
 import { Component, OnInit } from "@angular/core";
-import { barAccessors, barGrid, BarRenderer, barScales, BarSeriesHighlightStrategy, Chart, ChartAssist } from "@nova-ui/charts";
+import {
+    barAccessors,
+    barGrid,
+    BarRenderer,
+    barScales,
+    BarSeriesHighlightStrategy,
+    Chart,
+    ChartAssist,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-horizontal-with-legend-bar-chart-test",
     templateUrl: "./horizontal-with-legend-bar-chart-test.component.html",
 })
-
 export class HorizontalWithLegendBarChartTestComponent implements OnInit {
     public barConfig = { horizontal: true };
     public grid = barGrid(this.barConfig);
@@ -15,16 +22,23 @@ export class HorizontalWithLegendBarChartTestComponent implements OnInit {
         this.grid.config().axis.left.visible = false;
         this.grid.config().dimension.margin.left = 0;
 
-        const accessors = barAccessors(this.barConfig, this.chartAssist.palette.standardColors);
-        const renderer = new BarRenderer({ highlightStrategy: new BarSeriesHighlightStrategy("y") });
+        const accessors = barAccessors(
+            this.barConfig,
+            this.chartAssist.palette.standardColors
+        );
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarSeriesHighlightStrategy("y"),
+        });
         const scales = barScales(this.barConfig);
 
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            scales,
-            renderer,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                scales,
+                renderer,
+            }))
+        );
     }
 }
 

@@ -1,5 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, ChartAssist, ChartDonutContentPlugin, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales } from "@nova-ui/charts";
+import {
+    Chart,
+    ChartAssist,
+    ChartDonutContentPlugin,
+    radial,
+    RadialAccessors,
+    radialGrid,
+    RadialRenderer,
+    radialScales,
+} from "@nova-ui/charts";
 
 interface IExampleSeries {
     id: string;
@@ -37,19 +46,23 @@ export class DonutChartWithContentExampleComponent implements OnInit {
 
         this.series = getData();
         // Invoke the chart assist's update method with the IChartAssistSeries collection as the argument
-        this.chartAssist1.update(this.series.map(s => ({
-            ...s,
-            accessors,
-            scales: scales1,
-            renderer,
-        })));
+        this.chartAssist1.update(
+            this.series.map((s) => ({
+                ...s,
+                accessors,
+                scales: scales1,
+                renderer,
+            }))
+        );
 
-        this.chartAssist2.update(this.series.map(s => ({
-            ...s,
-            accessors,
-            scales: scales2,
-            renderer,
-        })));
+        this.chartAssist2.update(
+            this.series.map((s) => ({
+                ...s,
+                accessors,
+                scales: scales2,
+                renderer,
+            }))
+        );
     }
 
     public value = (s: IExampleSeries) => s.data[0];

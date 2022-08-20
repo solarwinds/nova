@@ -15,13 +15,13 @@
 // Source for 3: https://danisadesigner.com/blog/flexbox-clear-fix-pseudo-elements/
 
 .clearfix() {
-  &:before,
-  &:after {
-    content: " "; // 1
-    display: table; // 2
-    width: 0px; // 3
-  }
-  &:after {
-    clear: both;
-  }
+    &:before,
+    &:after {
+        content: " "; // 1
+        display: table; // 2
+        width: 0px; // 3
+    }
+    &:after {
+        clear: both;
+    }
 }

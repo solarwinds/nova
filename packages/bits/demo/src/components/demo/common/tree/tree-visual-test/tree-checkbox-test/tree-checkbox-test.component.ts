@@ -3,7 +3,7 @@ import { NestedTreeControl } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
 import { expand } from "@nova-ui/bits";
 
-import {FoodNode, TREE_DATA_CHECKBOX} from "../data";
+import { FoodNode, TREE_DATA_CHECKBOX } from "../data";
 
 @Component({
     selector: "nui-tree-checkbox-test",
@@ -12,24 +12,31 @@ import {FoodNode, TREE_DATA_CHECKBOX} from "../data";
     host: { id: "nui-tree-checkbox-example" },
     animations: [expand],
 })
-
 export class TreeCheckboxTestComponent {
-    public treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
+    public treeControl = new NestedTreeControl<FoodNode>(
+        (node) => node.children
+    );
     public dataSource = new ArrayDataSource(TREE_DATA_CHECKBOX);
     public selectionModel = new SelectionModel<FoodNode>(true);
 
-    public hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    public hasChild = (_: number, node: FoodNode) =>
+        !!node.children && node.children.length > 0;
 
     /** Whether all the descendants of the node are selected. */
     public descendantsAllSelected(node: FoodNode): boolean {
         const descendants = this.treeControl.getDescendants(node);
-        return descendants.length > 0 && descendants.every(child => this.selectionModel.isSelected(child));
+        return (
+            descendants.length > 0 &&
+            descendants.every((child) => this.selectionModel.isSelected(child))
+        );
     }
 
     /** Whether part of the descendants are selected */
     public descendantsPartiallySelected(node: FoodNode): boolean {
         const descendants = this.treeControl.getDescendants(node);
-        const result = descendants.some(child => this.selectionModel.isSelected(child));
+        const result = descendants.some((child) =>
+            this.selectionModel.isSelected(child)
+        );
         return result && !this.descendantsAllSelected(node);
     }
 
@@ -42,7 +49,7 @@ export class TreeCheckboxTestComponent {
             : this.selectionModel.deselect(...descendants);
 
         // Force update for the parent
-        descendants.forEach(child => this.selectionModel.isSelected(child));
+        descendants.forEach((child) => this.selectionModel.isSelected(child));
         this.checkAllParentsSelection(node);
     }
 
@@ -65,7 +72,9 @@ export class TreeCheckboxTestComponent {
     private checkRootNodeSelection(node: FoodNode): void {
         const nodeSelected = this.selectionModel.isSelected(node);
         const descendants = this.treeControl.getDescendants(node);
-        const descAllSelected = descendants.length > 0 && descendants.every(child => this.selectionModel.isSelected(child));
+        const descAllSelected =
+            descendants.length > 0 &&
+            descendants.every((child) => this.selectionModel.isSelected(child));
         if (nodeSelected && !descAllSelected) {
             this.selectionModel.deselect(node);
         } else if (!nodeSelected && descAllSelected) {
@@ -78,7 +87,7 @@ export class TreeCheckboxTestComponent {
         let parent: FoodNode | undefined;
 
         // Don't need to get parent if node on the 0 level
-        if (TREE_DATA_CHECKBOX.find(n => n === node)) {
+        if (TREE_DATA_CHECKBOX.find((n) => n === node)) {
             return;
         }
 
@@ -86,7 +95,7 @@ export class TreeCheckboxTestComponent {
             if (parent || !n.children) {
                 return;
             }
-            if (n.children.find(i => i === node)) {
+            if (n.children.find((i) => i === node)) {
                 parent = n;
                 return;
             }

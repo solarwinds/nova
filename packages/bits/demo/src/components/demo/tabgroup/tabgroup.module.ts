@@ -40,8 +40,8 @@ const routes = [
         path: "",
         component: TabgroupDocsExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
         },
         children: [
@@ -50,8 +50,8 @@ const routes = [
                 redirectTo: "tab-settings",
                 pathMatch: "full",
                 data: {
-                    "srlc": {
-                        "stage": SrlcStage.ga,
+                    srlc: {
+                        stage: SrlcStage.ga,
                     },
                 },
             },
@@ -59,8 +59,8 @@ const routes = [
                 path: "tab-settings",
                 component: TabContentSettingsExampleComponent,
                 data: {
-                    "srlc": {
-                        "stage": SrlcStage.ga,
+                    srlc: {
+                        stage: SrlcStage.ga,
                     },
                     showThemeSwitcher: true,
                 },
@@ -69,8 +69,8 @@ const routes = [
                 path: "tab-statistics",
                 component: TabContentStatisticsExampleComponent,
                 data: {
-                    "srlc": {
-                        "stage": SrlcStage.ga,
+                    srlc: {
+                        stage: SrlcStage.ga,
                     },
                     showThemeSwitcher: true,
                 },
@@ -79,8 +79,8 @@ const routes = [
                 path: "tab-about",
                 component: TabContentAboutExampleComponent,
                 data: {
-                    "srlc": {
-                        "stage": SrlcStage.ga,
+                    srlc: {
+                        stage: SrlcStage.ga,
                     },
                     showThemeSwitcher: true,
                 },
@@ -91,8 +91,8 @@ const routes = [
         path: "tabgroup-test",
         component: TabHeadingGroupTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -135,12 +135,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class TabgroupModule {
-}
+export class TabgroupModule {}

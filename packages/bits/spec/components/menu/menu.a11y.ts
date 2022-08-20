@@ -12,7 +12,9 @@ describe("a11y: menu", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("menu/menu-visual-test");
 
-        menuBasic = new MenuAtom(element(by.id("nui-demo-basic-menu-with-icon")));
+        menuBasic = new MenuAtom(
+            element(by.id("nui-demo-basic-menu-with-icon"))
+        );
     });
 
     it("should check a11y of menu", async () => {

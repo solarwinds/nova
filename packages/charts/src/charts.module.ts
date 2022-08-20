@@ -3,7 +3,11 @@ import { NgModule } from "@angular/core";
 // This is not technically used here, but it does pull in the type for $localize
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { LocalizeFn } from "@angular/localize/init";
-import { NuiCommonModule, NuiIconModule, NuiPopoverModule } from "@nova-ui/bits";
+import {
+    NuiCommonModule,
+    NuiIconModule,
+    NuiPopoverModule,
+} from "@nova-ui/bits";
 import "d3-selection-multi";
 
 import { ChartCollectionIdDirective } from "./chart-collection/chart-collection-id.directive";
@@ -22,12 +26,7 @@ import { LegendComponent } from "./legend/legend.component";
 import { ThresholdsService } from "./thresholds/thresholds-service";
 
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-        NuiPopoverModule,
-        OverlayModule,
-    ],
+    imports: [NuiCommonModule, NuiIconModule, NuiPopoverModule, OverlayModule],
     declarations: [
         LegendComponent,
         LegendSeriesComponent,
@@ -56,10 +55,6 @@ import { ThresholdsService } from "./thresholds/thresholds-service";
         ChartTooltipComponent,
         ChartTooltipDirective,
     ],
-    providers: [
-        ChartCollectionService,
-        ThresholdsService,
-    ],
+    providers: [ChartCollectionService, ThresholdsService],
 })
-export class NuiChartsModule {
-}
+export class NuiChartsModule {}

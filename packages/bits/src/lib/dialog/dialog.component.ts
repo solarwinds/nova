@@ -18,7 +18,8 @@ import {
 import { Router } from "@angular/router";
 import { take } from "rxjs/operators";
 
-const FOCUSABLE_SELECTOR = "a, button, input, textarea, select, details, [tabindex]:not([tabindex='-1'])";
+const FOCUSABLE_SELECTOR =
+    "a, button, input, textarea, select, details, [tabindex]:not([tabindex='-1'])";
 
 /*
  * <example-url>./../examples/index.html#/dialog</example-url><br />
@@ -31,7 +32,7 @@ const FOCUSABLE_SELECTOR = "a, button, input, textarea, select, details, [tabind
         "[class]": `"nui-dialog fade in show" + (windowClass ? " " + windowClass : "")`,
         role: "dialog",
         "aria-modal": "true",
-        "tabindex": "-1",
+        tabindex: "-1",
         "(keyup.esc)": "escKey($event)",
         "(mousedown)": "backdropMouseDown($event)",
         "(mouseup)": "backdropMouseUp($event)",
@@ -82,7 +83,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @HostListener("window:keydown.shift.tab", ["$event"])
     onShiftTab(event: KeyboardEvent): void {
-        if (this.elRef.nativeElement === this.document.activeElement || !this.elRef.nativeElement.contains(this.document.activeElement)) {
+        if (
+            this.elRef.nativeElement === this.document.activeElement ||
+            !this.elRef.nativeElement.contains(this.document.activeElement)
+        ) {
             this.handleFocus(event);
         }
     }
@@ -114,12 +118,18 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    dismiss(reason: any): void { this.dismissEvent.emit(reason); }
+    dismiss(reason: any): void {
+        this.dismissEvent.emit(reason);
+    }
 
     ngOnInit() {
         this.elWithFocus = this.document.activeElement;
         this.renderer.addClass(this.document.body, "dialog-open");
-        this.scrollableElement = new CdkScrollable(this.elRef, this.scrollDispatcher, this.ngZone);
+        this.scrollableElement = new CdkScrollable(
+            this.elRef,
+            this.scrollDispatcher,
+            this.ngZone
+        );
         this.scrollDispatcher.register(this.scrollableElement);
         this.router.events.pipe(take(1)).subscribe(() => {
             this.dismiss("ROUTE_CHANGED");
@@ -128,7 +138,10 @@ export class DialogComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         if (!this.elRef.nativeElement.contains(document.activeElement)) {
-            this.elRef.nativeElement["focus"].apply(this.elRef.nativeElement, []);
+            this.elRef.nativeElement["focus"].apply(
+                this.elRef.nativeElement,
+                []
+            );
         }
     }
 

@@ -15,9 +15,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        StackedBarPrototypeComponent,
-    ],
+    declarations: [StackedBarPrototypeComponent],
     imports: [
         DemoCommonModule,
         NuiChartsModule,
@@ -25,5 +23,4 @@ const routes: Routes = [
         RouterModule.forChild(routes),
     ],
 })
-export class BarPrototypeModule {
-}
+export class BarPrototypeModule {}

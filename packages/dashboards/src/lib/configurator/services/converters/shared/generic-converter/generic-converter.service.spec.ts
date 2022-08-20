@@ -11,8 +11,8 @@ const testKey = "providerId";
 const testProviderId = "TestProviderId";
 const mockFormParts = [
     {
-        "previewPath": "chart.providers.dataSource",
-        "keys": [testKey],
+        previewPath: "chart.providers.dataSource",
+        keys: [testKey],
     },
 ];
 
@@ -28,8 +28,15 @@ describe("GenericConverterService > ", () => {
         previewService = new PreviewService();
         previewService.preview = {};
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
-        service = new GenericConverterService(eventBus, previewService, pizzagnaService);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
+        service = new GenericConverterService(
+            eventBus,
+            previewService,
+            pizzagnaService
+        );
         service.updateConfiguration({
             formParts: mockFormParts,
         });
@@ -73,10 +80,12 @@ describe("GenericConverterService > ", () => {
         it("should ignore invalid preview paths", () => {
             // setup
             service.updateConfiguration({
-                formParts: [{
-                    "previewPath": "unknownPath.unknownPath",
-                    "keys": [testKey],
-                }],
+                formParts: [
+                    {
+                        previewPath: "unknownPath.unknownPath",
+                        keys: [testKey],
+                    },
+                ],
             });
 
             const preview: IPizzagnaLayer = {
@@ -104,10 +113,12 @@ describe("GenericConverterService > ", () => {
         it("should ignore irrelevant keys", () => {
             // setup
             service.updateConfiguration({
-                formParts: [{
-                    "previewPath": "chart.providers.dataSource",
-                    "keys": ["irrelevantKey"],
-                }],
+                formParts: [
+                    {
+                        previewPath: "chart.providers.dataSource",
+                        keys: ["irrelevantKey"],
+                    },
+                ],
             });
 
             const preview: IPizzagnaLayer = {

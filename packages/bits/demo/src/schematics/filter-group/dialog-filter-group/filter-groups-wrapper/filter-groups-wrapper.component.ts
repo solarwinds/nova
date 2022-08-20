@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ContentChildren, Inject, QueryList } from "@angular/core";
+import {
+    AfterViewInit,
+    Component,
+    ContentChildren,
+    Inject,
+    QueryList,
+} from "@angular/core";
 import { DataSourceService, IFilteringParticipants } from "@nova-ui/bits";
 import _isEmpty from "lodash/isEmpty";
 
@@ -9,25 +15,35 @@ import { DialogFilterGroupCompositeComponent } from "../dialog-filter-group.comp
     templateUrl: "filter-groups-wrapper.component.html",
     styleUrls: ["filter-groups-wrapper.component.less"],
 })
-
 export class FilterGroupsWrapperComponent implements AfterViewInit {
-    @ContentChildren(DialogFilterGroupCompositeComponent) filterGroups: QueryList<DialogFilterGroupCompositeComponent>;
+    @ContentChildren(DialogFilterGroupCompositeComponent)
+    filterGroups: QueryList<DialogFilterGroupCompositeComponent>;
 
-    public i18nHiddenFiltersMapping: { [k: string]: string } = {"=1": $localize `1 hidden filter.`, "other": $localize `# hidden filters.`};
+    public i18nHiddenFiltersMapping: { [k: string]: string } = {
+        "=1": $localize`1 hidden filter.`,
+        other: $localize`# hidden filters.`,
+    };
 
-    constructor(@Inject(DataSourceService) public dataSourceService: DataSourceService<any>) { }
+    constructor(
+        @Inject(DataSourceService)
+        public dataSourceService: DataSourceService<any>
+    ) {}
 
     ngAfterViewInit() {
         this.dataSourceService.registerComponent(this.getFilterComponents());
         this.filterGroups.changes.subscribe(() => {
-            this.dataSourceService.registerComponent(this.getFilterComponents());
+            this.dataSourceService.registerComponent(
+                this.getFilterComponents()
+            );
         });
     }
 
     public emptyFilterGroupsTitles(): string {
         return this.filterGroups
-            .filter(filterGroup => _isEmpty(filterGroup.filterGroupItem.allFilterOptions))
-            .map(filterGroup => filterGroup.filterGroupItem.title)
+            .filter((filterGroup) =>
+                _isEmpty(filterGroup.filterGroupItem.allFilterOptions)
+            )
+            .map((filterGroup) => filterGroup.filterGroupItem.title)
             .join(", ");
     }
 
@@ -36,13 +52,21 @@ export class FilterGroupsWrapperComponent implements AfterViewInit {
     }
 
     public emptyFilterGroupsCount(): number {
-        return this.filterGroups.filter(filterGroup => _isEmpty(filterGroup.filterGroupItem.allFilterOptions)).length;
+        return this.filterGroups.filter((filterGroup) =>
+            _isEmpty(filterGroup.filterGroupItem.allFilterOptions)
+        ).length;
     }
 
     private getFilterComponents(): IFilteringParticipants {
-        return this.filterGroups.reduce((obj: IFilteringParticipants, item: DialogFilterGroupCompositeComponent) => {
-            obj[item.filterGroupItem.id] = {componentInstance: item};
-            return obj;
-        }, {});
+        return this.filterGroups.reduce(
+            (
+                obj: IFilteringParticipants,
+                item: DialogFilterGroupCompositeComponent
+            ) => {
+                obj[item.filterGroupItem.id] = { componentInstance: item };
+                return obj;
+            },
+            {}
+        );
     }
 }

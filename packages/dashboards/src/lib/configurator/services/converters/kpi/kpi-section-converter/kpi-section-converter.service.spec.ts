@@ -11,8 +11,8 @@ const testKey = "providerId";
 const testProviderId = "TestProviderId";
 const mockFormParts = [
     {
-        "previewPath": "providers.dataSource",
-        "keys": [testKey],
+        previewPath: "providers.dataSource",
+        keys: [testKey],
     },
 ];
 
@@ -28,8 +28,15 @@ describe("KpiSectionConverterService > ", () => {
         previewService = new PreviewService();
         previewService.preview = {};
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
-        service = new KpiSectionConverterService(eventBus, previewService, pizzagnaService);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
+        service = new KpiSectionConverterService(
+            eventBus,
+            previewService,
+            pizzagnaService
+        );
         service.componentId = "kpi1";
         service.updateConfiguration({
             formParts: mockFormParts,
@@ -74,10 +81,12 @@ describe("KpiSectionConverterService > ", () => {
         it("should ignore invalid preview paths", () => {
             // setup
             service.updateConfiguration({
-                formParts: [{
-                    "previewPath": "unknownPath.unknownPath",
-                    "keys": [testKey],
-                }],
+                formParts: [
+                    {
+                        previewPath: "unknownPath.unknownPath",
+                        keys: [testKey],
+                    },
+                ],
             });
 
             const preview: IPizzagnaLayer = {
@@ -105,10 +114,12 @@ describe("KpiSectionConverterService > ", () => {
         it("should ignore irrelevant keys", () => {
             // setup
             service.updateConfiguration({
-                formParts: [{
-                    "previewPath": "providers.dataSource",
-                    "keys": ["irrelevantKey"],
-                }],
+                formParts: [
+                    {
+                        previewPath: "providers.dataSource",
+                        keys: ["irrelevantKey"],
+                    },
+                ],
             });
 
             const preview: IPizzagnaLayer = {

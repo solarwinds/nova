@@ -1,5 +1,5 @@
-import {Component, ViewEncapsulation} from "@angular/core";
-import {IItemsReorderedEvent} from "@nova-ui/bits";
+import { Component, ViewEncapsulation } from "@angular/core";
+import { IItemsReorderedEvent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-repeat-drag-handle-example",

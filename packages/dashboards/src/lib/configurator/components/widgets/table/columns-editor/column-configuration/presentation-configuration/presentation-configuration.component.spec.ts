@@ -30,9 +30,7 @@ describe("PresentationConfigurationComponent", () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
-            providers: [
-                ProviderRegistryService,
-            ],
+            providers: [ProviderRegistryService],
         }).compileComponents();
     }));
 
@@ -50,26 +48,42 @@ describe("PresentationConfigurationComponent", () => {
         [
             {
                 providedDataFields: [
-                    { id: "position", label: $localize`Position`, dataType: "number" },
+                    {
+                        id: "position",
+                        label: $localize`Position`,
+                        dataType: "number",
+                    },
                 ],
                 expectedFormatters: [rawFormatter],
             },
             {
                 providedDataFields: [
-                    { id: "position", label: $localize`Position`, dataType: "number" },
-                    { id: "firstUrlLabel", label: $localize`First Url Label`, dataType: "label" },
+                    {
+                        id: "position",
+                        label: $localize`Position`,
+                        dataType: "number",
+                    },
+                    {
+                        id: "firstUrlLabel",
+                        label: $localize`First Url Label`,
+                        dataType: "label",
+                    },
                 ],
                 expectedFormatters: [rawFormatter, linkFormatter],
             },
-        ].forEach(testData => {
-            const dataTypes = testData.providedDataFields.map(df => df.dataType);
+        ].forEach((testData) => {
+            const dataTypes = testData.providedDataFields.map(
+                (df) => df.dataType
+            );
             it(`- case ${dataTypes}`, () => {
                 component.formatters = [rawFormatter, linkFormatter];
                 component.dataFields = testData.providedDataFields;
 
                 fixture.detectChanges();
 
-                expect(component.formatters).toEqual(testData.expectedFormatters);
+                expect(component.formatters).toEqual(
+                    testData.expectedFormatters
+                );
             });
         });
     });
@@ -88,10 +102,18 @@ describe("PresentationConfigurationComponent", () => {
 
             component.ngOnInit();
 
-            expect(component.formatterConfiguratorProps.formatter?.properties?.dataFieldIds?.value).toEqual("john");
-            component.formatterForm.controls["componentType"].setValue(linkFormatter.componentType);
+            expect(
+                component.formatterConfiguratorProps.formatter?.properties
+                    ?.dataFieldIds?.value
+            ).toEqual("john");
+            component.formatterForm.controls["componentType"].setValue(
+                linkFormatter.componentType
+            );
 
-            expect(component.formatterConfiguratorProps.formatter?.properties?.dataFieldIds?.value).toBeFalsy(); // null
+            expect(
+                component.formatterConfiguratorProps.formatter?.properties
+                    ?.dataFieldIds?.value
+            ).toBeFalsy(); // null
         });
     });
 });

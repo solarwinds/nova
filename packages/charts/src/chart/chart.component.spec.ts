@@ -12,9 +12,7 @@ describe("ChartComponent", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                ChartComponent,
-            ],
+            declarations: [ChartComponent],
         });
         fixture = TestBed.createComponent(ChartComponent);
         component = fixture.componentInstance;
@@ -31,33 +29,60 @@ describe("ChartComponent", () => {
             });
 
             it("should invoke observe on the IntersectionObserver", () => {
-                const spy = spyOn(window.IntersectionObserver.prototype, "observe");
+                const spy = spyOn(
+                    window.IntersectionObserver.prototype,
+                    "observe"
+                );
                 component.ngOnInit();
-                expect(spy).toHaveBeenCalledWith((<any>component).elRef.nativeElement);
+                expect(spy).toHaveBeenCalledWith(
+                    (<any>component).elRef.nativeElement
+                );
             });
         });
 
         describe("ngOnDestroy", () => {
             it("should invoke unobserve on the IntersectionObserver", () => {
-                const spy = spyOn(window.IntersectionObserver.prototype, "unobserve");
+                const spy = spyOn(
+                    window.IntersectionObserver.prototype,
+                    "unobserve"
+                );
                 component.ngOnDestroy();
-                expect(spy).toHaveBeenCalledWith((<any>component).elRef.nativeElement);
+                expect(spy).toHaveBeenCalledWith(
+                    (<any>component).elRef.nativeElement
+                );
             });
         });
 
         describe("intersectionObserverCallback", () => {
             it("should emit CHART_VIEW_STATUS_EVENT with isChartInView set to true", () => {
-                const spy = spyOn(component.chart.getEventBus().getStream(CHART_VIEW_STATUS_EVENT), "next");
-                (<any>component).intersectionObserverCallback([{ isIntersecting: true }]);
-                expect(spy).toHaveBeenCalledWith({ data: { isChartInView: true }});
+                const spy = spyOn(
+                    component.chart
+                        .getEventBus()
+                        .getStream(CHART_VIEW_STATUS_EVENT),
+                    "next"
+                );
+                (<any>component).intersectionObserverCallback([
+                    { isIntersecting: true },
+                ]);
+                expect(spy).toHaveBeenCalledWith({
+                    data: { isChartInView: true },
+                });
             });
 
             it("should emit CHART_VIEW_STATUS_EVENT with isChartInView set to false", () => {
-                const spy = spyOn(component.chart.getEventBus().getStream(CHART_VIEW_STATUS_EVENT), "next");
-                (<any>component).intersectionObserverCallback([{ isIntersecting: false }]);
-                expect(spy).toHaveBeenCalledWith({ data: { isChartInView: false }});
+                const spy = spyOn(
+                    component.chart
+                        .getEventBus()
+                        .getStream(CHART_VIEW_STATUS_EVENT),
+                    "next"
+                );
+                (<any>component).intersectionObserverCallback([
+                    { isIntersecting: false },
+                ]);
+                expect(spy).toHaveBeenCalledWith({
+                    data: { isChartInView: false },
+                });
             });
         });
-
     });
 });

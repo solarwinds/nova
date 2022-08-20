@@ -2,16 +2,14 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SheetGroupComponent } from "./sheet-group.component";
 
-
 describe("sheet-group", () => {
     let fixture: ComponentFixture<SheetGroupComponent>;
     let sheetGroupComponent: SheetGroupComponent;
 
     beforeEach(() => {
-        TestBed
-            .configureTestingModule({
-                declarations: [SheetGroupComponent],
-            });
+        TestBed.configureTestingModule({
+            declarations: [SheetGroupComponent],
+        });
         fixture = TestBed.createComponent(SheetGroupComponent);
         sheetGroupComponent = fixture.componentInstance;
         fixture.detectChanges();

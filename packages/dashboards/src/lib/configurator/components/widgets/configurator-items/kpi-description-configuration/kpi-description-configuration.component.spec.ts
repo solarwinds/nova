@@ -12,11 +12,8 @@ describe("DataSourceConfigurationComponent", () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
-            providers: [
-                ProviderRegistryService,
-            ],
-        })
-            .compileComponents();
+            providers: [ProviderRegistryService],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

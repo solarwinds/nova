@@ -1,6 +1,19 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    OnChanges,
+    OnDestroy,
+    SimpleChanges,
+} from "@angular/core";
 import { LoggerService } from "@nova-ui/bits";
-import { ChartAssist, IAccessors, IChartAssistEvent, IChartAssistSeries } from "@nova-ui/charts";
+import {
+    ChartAssist,
+    IAccessors,
+    IChartAssistEvent,
+    IChartAssistSeries,
+} from "@nova-ui/charts";
 import { Subject, Subscription } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -13,7 +26,11 @@ import {
 import { ProportionalContentAggregatorsRegistryService } from "../../../services/proportional-content-aggregators-registry.service";
 import { ProportionalDonutContentFormattersRegistryService } from "../../../services/public-api";
 import { IHasChangeDetector } from "../../../types";
-import { IFormatter, IFormatterDefinition, IFormatterProperties } from "../../types";
+import {
+    IFormatter,
+    IFormatterDefinition,
+    IFormatterProperties,
+} from "../../types";
 import { IDonutContentConfig } from "../types";
 
 @Component({
@@ -22,7 +39,9 @@ import { IDonutContentConfig } from "../types";
     styleUrls: ["./proportional-donut-content.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProportionalDonutContentComponent implements OnChanges, OnDestroy, IHasChangeDetector {
+export class ProportionalDonutContentComponent
+    implements OnChanges, OnDestroy, IHasChangeDetector
+{
     static lateLoadKey = "ProportionalDonutContentComponent";
 
     @Input() public widgetData: IChartAssistSeries<IAccessors>[];
@@ -46,11 +65,12 @@ export class ProportionalDonutContentComponent implements OnChanges, OnDestroy, 
         private formatterRegistry: ProportionalDonutContentFormattersRegistryService,
         public changeDetector: ChangeDetectorRef,
         private logger: LoggerService
-    ) { }
+    ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.donutConfig) {
-            const donutConfig: IDonutContentConfig = changes.donutConfig.currentValue;
+            const donutConfig: IDonutContentConfig =
+                changes.donutConfig.currentValue;
 
             const { formatter, aggregator } = donutConfig;
             if (aggregator?.aggregatorType) {
@@ -86,57 +106,73 @@ export class ProportionalDonutContentComponent implements OnChanges, OnDestroy, 
      * @param formattersConfiguration
      */
     private getFormatterProperties(formatter: IFormatter | undefined) {
-        if (!formatter) { return undefined; }
+        if (!formatter) {
+            return undefined;
+        }
 
         return {
             ...this.contentFormatterDefinition?.properties,
             data: mapDataToFormatterProperties(formatter, {
                 // add "aggregatedValue" as "value" so that formatter processes it by default
-                "value": this.aggregatedValue,
+                value: this.aggregatedValue,
             }),
         };
     }
 
-    private updateAggregatorDefinition(aggregatorConfig: IProportionalDonutContentAggregator) {
-        const fromRegistry = this.aggregatorRegistry.getItem(aggregatorConfig.aggregatorType);
+    private updateAggregatorDefinition(
+        aggregatorConfig: IProportionalDonutContentAggregator
+    ) {
+        const fromRegistry = this.aggregatorRegistry.getItem(
+            aggregatorConfig.aggregatorType
+        );
 
         if (fromRegistry) {
             this.contentAggregatorDefinition = fromRegistry;
         } else {
-            this.logger.warn(`No aggregator with key ${aggregatorConfig.aggregatorType} found in registry.`);
+            this.logger.warn(
+                `No aggregator with key ${aggregatorConfig.aggregatorType} found in registry.`
+            );
         }
     }
 
     private updateFormatterDefinition(formatterConfig: IFormatter) {
-        const fromRegistry = this.formatterRegistry.getItem(formatterConfig.componentType);
+        const fromRegistry = this.formatterRegistry.getItem(
+            formatterConfig.componentType
+        );
 
         if (fromRegistry) {
             this.contentFormatterDefinition = fromRegistry;
         } else {
-            this.logger.warn(`No aggregator with key ${formatterConfig.componentType} found in registry.`);
+            this.logger.warn(
+                `No aggregator with key ${formatterConfig.componentType} found in registry.`
+            );
         }
     }
 
     private updateAggregatedValue(): void {
         if (!this.widgetData || !this.contentAggregatorDefinition) {
-            this.logger.warn(`Can't aggregate value. Aggregator key: ${this.contentAggregatorDefinition?.aggregatorType}. Data: ${this.widgetData}`);
+            this.logger.warn(
+                `Can't aggregate value. Aggregator key: ${this.contentAggregatorDefinition?.aggregatorType}. Data: ${this.widgetData}`
+            );
             return;
         }
 
         const properties = this.getAggregatorProperties();
 
-        this.aggregatedValue = this.contentAggregatorDefinition.fn(
-            this.widgetData,
-            {
+        this.aggregatedValue = this.contentAggregatorDefinition
+            .fn(this.widgetData, {
                 ...properties,
                 // prioritize emphasizedSeriesId if series is hovered on the chart
-                activeMetricId: this.emphasizedSeriesId || properties.activeMetricId,
-            }
-        ).toString();
+                activeMetricId:
+                    this.emphasizedSeriesId || properties.activeMetricId,
+            })
+            .toString();
     }
 
     private updateFormatterProperties() {
-        this.contentFormatterProperties = this.getFormatterProperties(this.contentFormatter);
+        this.contentFormatterProperties = this.getFormatterProperties(
+            this.contentFormatter
+        );
     }
 
     private getAggregatorProperties(): IProportionalDonutContentAggregatorProperties {

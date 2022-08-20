@@ -1,12 +1,20 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, ChartAssist, ChartDonutContentPlugin, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales } from "@nova-ui/charts";
+import {
+    Chart,
+    ChartAssist,
+    ChartDonutContentPlugin,
+    radial,
+    RadialAccessors,
+    radialGrid,
+    RadialRenderer,
+    radialScales,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-donut-chart-test",
     templateUrl: "./donut-chart-test.component.html",
 })
 export class DonutChartTestComponent implements OnInit {
-
     public chartAssist = new ChartAssist(new Chart(radialGrid()), radial);
     public contentPlugin: ChartDonutContentPlugin;
 
@@ -18,12 +26,14 @@ export class DonutChartTestComponent implements OnInit {
         const scales = radialScales();
         const renderer = new RadialRenderer();
 
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            scales,
-            renderer,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                scales,
+                renderer,
+            }))
+        );
     }
 }
 

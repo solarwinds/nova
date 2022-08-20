@@ -15,34 +15,41 @@ const appRoutes: Routes = [
     },
     {
         path: "test",
-        loadChildren: async () => import("../test/test.module").then(m => m.DashboardTestModule),
+        loadChildren: async () =>
+            import("../test/test.module").then((m) => m.DashboardTestModule),
     },
     {
         path: "prototypes",
-        loadChildren: async () => import("../prototypes/prototypes.module").then(m => m.DashboardPrototypesModule),
+        loadChildren: async () =>
+            import("../prototypes/prototypes.module").then(
+                (m) => m.DashboardPrototypesModule
+            ),
     },
     {
         path: "schematics",
-        loadChildren: async () => import("../schematics/schematics-docs.module").then(m => m.SchematicsDocsModule),
+        loadChildren: async () =>
+            import("../schematics/schematics-docs.module").then(
+                (m) => m.SchematicsDocsModule
+            ),
     },
     {
         path: "docs",
-        loadChildren: async () => import("../docs/dashboard-docs.module").then(m => m.DashboardDocsModule),
+        loadChildren: async () =>
+            import("../docs/dashboard-docs.module").then(
+                (m) => m.DashboardDocsModule
+            ),
     },
 ];
 
-
 @NgModule({
-    declarations: [
-        DeveloperQuickLinksComponent,
-    ],
+    declarations: [DeveloperQuickLinksComponent],
     imports: [
         CommonModule,
-        RouterModule.forRoot(appRoutes, { useHash: true, relativeLinkResolution: "legacy" }),
+        RouterModule.forRoot(appRoutes, {
+            useHash: true,
+            relativeLinkResolution: "legacy",
+        }),
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

@@ -1,5 +1,11 @@
 import { Component, ViewChild } from "@angular/core";
-import { IWizardConfig, ToastService, WizardHorizontalComponent, WizardStepStateConfig, WIZARD_CONFIG } from "@nova-ui/bits";
+import {
+    IWizardConfig,
+    ToastService,
+    WizardHorizontalComponent,
+    WizardStepStateConfig,
+    WIZARD_CONFIG,
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-with-custom-icons-example",
@@ -21,8 +27,7 @@ import { IWizardConfig, ToastService, WizardHorizontalComponent, WizardStepState
 export class WizardWithCustomIconsExampleComponent {
     @ViewChild("wizard") wizard: WizardHorizontalComponent;
 
-    constructor(private toastService: ToastService) {
-    }
+    constructor(private toastService: ToastService) {}
 
     public secondStepIconConfig: Partial<WizardStepStateConfig> = {
         initial: {

@@ -117,7 +117,8 @@ export const API_URL = "https://nova-pg.swdev.local/api/v1/servers";
 @Injectable()
 export class VirtualScrollListDataSource<T = any>
     extends DataSourceService<T>
-    implements IDataSource {
+    implements IDataSource
+{
     // cache used to store our previous fetched results while scrolling
     // and more data is automatically fetched from the backend
     private cache = Array.from<IServer>({ length: 0 });
@@ -210,7 +211,10 @@ export class VirtualScrollListDataSource<T = any>
     }
 
     // checks if any of the filters specified by name have changed from the previous evaluation
-    public filtersChanged(filters: INovaFilters, ...filterNames: string[]): boolean {
+    public filtersChanged(
+        filters: INovaFilters,
+        ...filterNames: string[]
+    ): boolean {
         for (let i = 0; i < filterNames.length; i++) {
             const filterName = filterNames[i];
             const filter = filters[filterName];
@@ -249,7 +253,8 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
     );
     public dataSource = new ArrayDataSource(TREE_DATA);
 
-    public hasChild = (_: number, node: IServerNode): boolean => !!node.children;
+    public hasChild = (_: number, node: IServerNode): boolean =>
+        !!node.children;
 
     constructor(
         private virtualScrollListDataSource: VirtualScrollListDataSource,
@@ -262,7 +267,9 @@ export class TreeShowAllDialogExampleComponent implements OnDestroy {
         // setup the Dialog
         this.activeDialogRef = this.dialogService.open(
             TreeDialogContentExampleComponent,
-            { size: "sm" }
+            {
+                size: "sm",
+            }
         );
         // pass the inputs to the context component
         this.activeDialogComponent.items = [];
@@ -444,7 +451,8 @@ export class TreeDialogContentExampleComponent implements AfterViewInit {
     @Input() isLoading: boolean = false;
 
     public itemConfig: IRepeatItemConfig = {
-        trackBy: (index: number, item: IServerNode): string | undefined => item?.name,
+        trackBy: (index: number, item: IServerNode): string | undefined =>
+            item?.name,
     };
 
     @ViewChild(RepeatComponent)

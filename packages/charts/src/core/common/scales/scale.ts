@@ -6,7 +6,6 @@ import { getAutomaticDomain } from "./domain-calculation/automatic-domain";
 import { DomainCalculator, IFormatters, IScale } from "./types";
 
 export abstract class Scale<T> implements IScale<T> {
-
     public readonly id: string;
     public domainCalculator: DomainCalculator = getAutomaticDomain;
     public formatters: IFormatters<T> = {};
@@ -90,5 +89,4 @@ export abstract class Scale<T> implements IScale<T> {
             return this;
         }
     }
-
 }

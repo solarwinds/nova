@@ -12,14 +12,9 @@ describe("ChartPopoverComponent", () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [
-                ChartPopoverComponent,
-            ],
-            imports: [
-                NuiPopoverModule,
-            ],
-        })
-            .compileComponents();
+            declarations: [ChartPopoverComponent],
+            imports: [NuiPopoverModule],
+        }).compileComponents();
     });
 
     beforeEach(() => {
@@ -35,7 +30,12 @@ describe("ChartPopoverComponent", () => {
 
     describe("plugin.updatePositionSubject subscription", () => {
         it("should update the host element's position", () => {
-            component.plugin.updatePositionSubject.next({ top: 5, left: 5, height: 0, width: 0 });
+            component.plugin.updatePositionSubject.next({
+                top: 5,
+                left: 5,
+                height: 0,
+                width: 0,
+            });
 
             expect(component.element.nativeElement.style.top).toEqual("5px");
             expect(component.element.nativeElement.style.left).toEqual("5px");
@@ -43,14 +43,22 @@ describe("ChartPopoverComponent", () => {
 
         it("should invoke popover.updatePosition and popover.resetSize", () => {
             component.popover = {
-                updatePosition: () => { },
-                resetSize: () => { },
+                updatePosition: () => {},
+                resetSize: () => {},
             } as PopoverComponent;
 
-            const updatePositionSpy = spyOn(component.popover, "updatePosition");
+            const updatePositionSpy = spyOn(
+                component.popover,
+                "updatePosition"
+            );
             const resetSizeSpy = spyOn(component.popover, "resetSize");
 
-            component.plugin.updatePositionSubject.next({ top: 5, left: 5, height: 0, width: 0 });
+            component.plugin.updatePositionSubject.next({
+                top: 5,
+                left: 5,
+                height: 0,
+                width: 0,
+            });
 
             expect(updatePositionSpy).toHaveBeenCalled();
             expect(resetSizeSpy).toHaveBeenCalled();
@@ -74,34 +82,54 @@ describe("ChartPopoverComponent", () => {
             };
 
             const spy = spyOn(component.update, "next");
-            component.plugin.updatePositionSubject.next({ top: 5, left: 5, height: 0, width: 0 });
+            component.plugin.updatePositionSubject.next({
+                top: 5,
+                left: 5,
+                height: 0,
+                width: 0,
+            });
 
             expect(spy).toHaveBeenCalledWith(component.plugin.dataPoints);
         });
 
         it("should be unsubscribed on component destruction", () => {
-            component.popover = { updatePosition: () => { } } as PopoverComponent;
+            component.popover = {
+                updatePosition: () => {},
+            } as PopoverComponent;
 
             component.ngOnDestroy();
 
             const spy = spyOn(component.popover, "updatePosition");
-            component.plugin.updatePositionSubject.next({ top: 5, left: 5, height: 0, width: 0 });
+            component.plugin.updatePositionSubject.next({
+                top: 5,
+                left: 5,
+                height: 0,
+                width: 0,
+            });
 
             expect(spy).not.toHaveBeenCalled();
         });
 
         it("should be unsubscribed when the plugin changes", () => {
-            component.popover = { updatePosition: () => { } } as PopoverComponent;
+            component.popover = {
+                updatePosition: () => {},
+            } as PopoverComponent;
             const oldPopoverPlugin = component.plugin;
 
             component.plugin = new ChartPopoverPlugin();
-            component.ngOnChanges({ plugin: { isFirstChange: () => false } as SimpleChange } as SimpleChanges);
+            component.ngOnChanges({
+                plugin: { isFirstChange: () => false } as SimpleChange,
+            } as SimpleChanges);
 
             const spy = spyOn(component.popover, "updatePosition");
-            oldPopoverPlugin.updatePositionSubject.next({ top: 5, left: 5, height: 0, width: 0 });
+            oldPopoverPlugin.updatePositionSubject.next({
+                top: 5,
+                left: 5,
+                height: 0,
+                width: 0,
+            });
 
             expect(spy).not.toHaveBeenCalled();
         });
     });
-
 });

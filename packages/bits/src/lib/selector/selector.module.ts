@@ -19,13 +19,8 @@ import { SelectorComponent } from "./selector.component";
         NuiButtonModule,
         NuiOverlayModule,
     ],
-    declarations: [
-        SelectorComponent,
-    ],
-    exports: [
-        SelectorComponent,
-    ],
+    declarations: [SelectorComponent],
+    exports: [SelectorComponent],
     providers: [],
 })
-export class NuiSelectorModule {
-}
+export class NuiSelectorModule {}

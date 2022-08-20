@@ -14,27 +14,31 @@ import { ToastService } from "../../toast/toast.service";
             <div class="form-group">
                 <nui-time-picker
                     formControlName="testTime"
-                    [isInErrorState]="myForm.controls['testTime'].invalid && myForm.controls['testTime'].touched"
-                    (timeChanged)="valueChange($event)"></nui-time-picker>
-                <button nui-button
-                        type="submit"
-                        class="mt-1">Submit</button>
+                    [isInErrorState]="
+                        myForm.controls['testTime'].invalid &&
+                        myForm.controls['testTime'].touched
+                    "
+                    (timeChanged)="valueChange($event)"
+                ></nui-time-picker>
+                <button nui-button type="submit" class="mt-1">Submit</button>
             </div>
         </form>
-
     `,
 })
-
 export class TimePickerReactiveFormTestComponent implements OnInit {
     public time: Moment;
     public myForm: FormGroup;
 
-    constructor(private formBuilder: FormBuilder,
-                @Inject(ToastService) public toastService: ToastService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(ToastService) public toastService: ToastService
+    ) {}
 
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
-            testTimePicker: this.formBuilder.control( this.time, [Validators.required]),
+            testTimePicker: this.formBuilder.control(this.time, [
+                Validators.required,
+            ]),
         });
     }
 
@@ -43,7 +47,8 @@ export class TimePickerReactiveFormTestComponent implements OnInit {
     }
 
     public onSubmit() {
-        this.myForm.valid ? this.toastService.success({message: "Your form is valid!"}) :
-            this.toastService.error({message: "Your form is invalid!"});
+        this.myForm.valid
+            ? this.toastService.success({ message: "Your form is valid!" })
+            : this.toastService.error({ message: "Your form is invalid!" });
     }
 }

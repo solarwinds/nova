@@ -8,11 +8,15 @@ import { Component } from "@angular/core";
         <h1>Dashboard Developer Links</h1>
         <h2>Prototypes</h2>
         <ul>
-            <li *ngFor="let link of prototypes"><a [routerLink]="link.path">{{link.title}}</a></li>
+            <li *ngFor="let link of prototypes">
+                <a [routerLink]="link.path">{{ link.title }}</a>
+            </li>
         </ul>
         <h2>Visual Tests</h2>
         <ul>
-            <li *ngFor="let link of visualTests"><a [routerLink]="link.path">{{link.title}}</a></li>
+            <li *ngFor="let link of visualTests">
+                <a [routerLink]="link.path">{{ link.title }}</a>
+            </li>
         </ul>
     `,
 })

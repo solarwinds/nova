@@ -14,8 +14,11 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("date-picker/date-picker-visual-test");
-        datepickerBasic = Atom.find(DatepickerAtom, "nui-basic-usage-datepicker");
-        
+        datepickerBasic = Atom.find(
+            DatepickerAtom,
+            "nui-basic-usage-datepicker"
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 

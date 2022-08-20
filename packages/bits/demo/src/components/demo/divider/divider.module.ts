@@ -1,25 +1,32 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDividerModule, NuiDocsModule, SrlcStage } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiDividerModule,
+    NuiDocsModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 
-import { DividerExampleComponent, HorizontalDividersExampleComponent, VerticalDividersExampleComponent } from "./index";
+import {
+    DividerExampleComponent,
+    HorizontalDividersExampleComponent,
+    VerticalDividersExampleComponent,
+} from "./index";
 
-const routes = [{
-    path: "",
-    component: DividerExampleComponent,
-    data: {
-        "srlc": {
-            "stage": SrlcStage.alpha,
+const routes = [
+    {
+        path: "",
+        component: DividerExampleComponent,
+        data: {
+            srlc: {
+                stage: SrlcStage.alpha,
+            },
         },
     },
-}];
+];
 
 @NgModule({
-    imports: [
-        NuiDividerModule,
-        NuiDocsModule,
-        RouterModule.forChild(routes),
-    ],
+    imports: [NuiDividerModule, NuiDocsModule, RouterModule.forChild(routes)],
     declarations: [
         DividerExampleComponent,
         HorizontalDividersExampleComponent,
@@ -28,12 +35,14 @@ const routes = [{
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class DividerModule {
-}
+export class DividerModule {}

@@ -13,25 +13,45 @@ import {
     Output,
     SimpleChanges,
 } from "@angular/core";
-import { ControlContainer, FormBuilder, FormGroup, FormGroupDirective, Validators } from "@angular/forms";
+import {
+    ControlContainer,
+    FormBuilder,
+    FormGroup,
+    FormGroupDirective,
+    Validators,
+} from "@angular/forms";
 import { IDataField } from "@nova-ui/bits";
 import capitalize from "lodash/capitalize";
 import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
-import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../../../components/types";
-import { FormatterRegistryService, TableFormatterRegistryService } from "../../../../../../../services/table-formatter-registry.service";
-import { FORMATTERS_REGISTRY, IHasChangeDetector } from "../../../../../../../types";
+import {
+    IFormatter,
+    IFormatterConfigurator,
+    IFormatterDefinition,
+} from "../../../../../../../components/types";
+import {
+    FormatterRegistryService,
+    TableFormatterRegistryService,
+} from "../../../../../../../services/table-formatter-registry.service";
+import {
+    FORMATTERS_REGISTRY,
+    IHasChangeDetector,
+} from "../../../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../../../services/configurator-heading.service";
 
 @Component({
     selector: "nui-table-column-presentation-configuration",
     templateUrl: "./presentation-configuration.component.html",
     styleUrls: ["./presentation-configuration.component.less"],
-    viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+    viewProviders: [
+        { provide: ControlContainer, useExisting: FormGroupDirective },
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PresentationConfigurationComponent implements IHasChangeDetector, OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class PresentationConfigurationComponent
+    implements IHasChangeDetector, OnInit, OnDestroy, OnChanges, AfterViewInit
+{
     static lateLoadKey = "PresentationConfigurationComponent";
 
     private _providedFormatters: Array<IFormatterDefinition> = [];
@@ -65,8 +85,10 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
         return this._dataFields;
     }
 
-    @Output() formReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-    @Output() formDestroy: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+    @Output() formReady: EventEmitter<FormGroup> =
+        new EventEmitter<FormGroup>();
+    @Output() formDestroy: EventEmitter<FormGroup> =
+        new EventEmitter<FormGroup>();
 
     public form: FormGroup;
     public formatterForm: FormGroup = this.formBuilder.group({});
@@ -81,7 +103,9 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
         private formBuilder: FormBuilder,
         public changeDetector: ChangeDetectorRef,
         public configuratorHeading: ConfiguratorHeadingService,
-        @Optional() @Inject(FORMATTERS_REGISTRY) private formattersRegistryCommon: FormatterRegistryService,
+        @Optional()
+        @Inject(FORMATTERS_REGISTRY)
+        private formattersRegistryCommon: FormatterRegistryService,
         // used as a fallback, remove in vNext
         /**
          * @deprecated  will be removed in the scope of NUI-5839
@@ -93,15 +117,21 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
 
     ngOnInit(): void {
         this.formatterForm = this.formBuilder.group({
-            "componentType":
-                [(this.formatter && this.formatter.componentType) ||
-                (this._providedFormatters && this._providedFormatters.length > 0 && this._providedFormatters[0].componentType), [Validators.required]],
+            componentType: [
+                (this.formatter && this.formatter.componentType) ||
+                    (this._providedFormatters &&
+                        this._providedFormatters.length > 0 &&
+                        this._providedFormatters[0].componentType),
+                [Validators.required],
+            ],
         });
         this.form = this.formBuilder.group({
             [this.formatterFormGroupName]: this.formatterForm,
         });
 
-        this.formatterForm.get("componentType")?.valueChanges.pipe(takeUntil(this.onDestroy$))
+        this.formatterForm
+            .get("componentType")
+            ?.valueChanges.pipe(takeUntil(this.onDestroy$))
             .subscribe(() => this.createFormatterConfigurator());
 
         this.createFormatterConfigurator();
@@ -114,18 +144,20 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
             });
     }
 
-    ngAfterViewInit() {
-    }
+    ngAfterViewInit() {}
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.dataFieldIds) {
             const { currentValue, previousValue } = changes.dataFieldIds;
 
             if (currentValue && currentValue !== previousValue) {
-                const dataFields = currentValue.map((df: string) => ({
-                    id: df,
-                    label: capitalize(df),
-                } as IDataField));
+                const dataFields = currentValue.map(
+                    (df: string) =>
+                        ({
+                            id: df,
+                            label: capitalize(df),
+                        } as IDataField)
+                );
 
                 this.dataFields = dataFields;
                 this.updateSubtitle();
@@ -133,11 +165,21 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
         }
 
         if (changes.formatter) {
-            this.form?.patchValue({ [this.formatterFormGroupName]: changes.formatter.currentValue }, { emitEvent: false });
+            this.form?.patchValue(
+                {
+                    [this.formatterFormGroupName]:
+                        changes.formatter.currentValue,
+                },
+                { emitEvent: false }
+            );
             this.updateSubtitle();
         }
 
-        if (changes.dataFields && changes.dataFields.previousValue.length === 0 && this.formatterForm) {
+        if (
+            changes.dataFields &&
+            changes.dataFields.previousValue.length === 0 &&
+            this.formatterForm
+        ) {
             this.updateSubtitle();
         }
     }
@@ -145,28 +187,46 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     public getSelectedFormatterDefinition(): IFormatterDefinition | null {
         if (this._providedFormatters.length > 0) {
             const formatterId = this.formatterForm.get("componentType")?.value;
-            return this._providedFormatters.find(formatter => formatter.componentType === formatterId) ?? null;
+            return (
+                this._providedFormatters.find(
+                    (formatter) => formatter.componentType === formatterId
+                ) ?? null
+            );
         }
         return null;
     }
 
     public getSelectedDataField(): IDataField | null {
         const propertiesControl = this.formatterForm.controls["properties"];
-        if (propertiesControl && this.dataFields && this.dataFields.length > 0) {
-            const dataFieldId = propertiesControl.get("dataFieldIds")?.value.value;
-            return this.dataFields.find(dataField => dataField.id === dataFieldId) ?? null;
+        if (
+            propertiesControl &&
+            this.dataFields &&
+            this.dataFields.length > 0
+        ) {
+            const dataFieldId =
+                propertiesControl.get("dataFieldIds")?.value.value;
+            return (
+                this.dataFields.find(
+                    (dataField) => dataField.id === dataFieldId
+                ) ?? null
+            );
         }
         return null;
     }
 
     public onFormReady(form: FormGroup) {
-        (this.form.get(this.formatterFormGroupName) as FormGroup).setControl("properties", form);
+        (this.form.get(this.formatterFormGroupName) as FormGroup).setControl(
+            "properties",
+            form
+        );
     }
 
     private updateSubtitle() {
         this.subtitleText = `${this.getSelectedFormatterDefinition()?.label}`;
         if (this.getSelectedDataField()) {
-            this.subtitleText = this.subtitleText.concat(`, ${this.getSelectedDataField()?.label}`);
+            this.subtitleText = this.subtitleText.concat(
+                `, ${this.getSelectedDataField()?.label}`
+            );
         }
     }
 
@@ -176,19 +236,27 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
      */
     private createFormatterConfigurator() {
         const formatterDefinition = this._providedFormatters.find(
-            formatter => formatter.componentType === this.formatterForm.get("componentType")?.value
+            (formatter) =>
+                formatter.componentType ===
+                this.formatterForm.get("componentType")?.value
         );
 
         // if configurationComponent property is present in formatters configuration, use it to render portal,
         // otherwise, use default ValueSelectorComponent
         if (formatterDefinition) {
-            this.formatterConfigurator = formatterDefinition.configurationComponent ?? "ValueSelectorComponent";
+            this.formatterConfigurator =
+                formatterDefinition.configurationComponent ??
+                "ValueSelectorComponent";
         } else {
             this.formatterConfigurator = null;
         }
 
         // if the currently selected component doesn't match the original value from the input then we reset the form values
-        if (formatterDefinition?.componentType !== this.formatter?.componentType && this.formatter?.properties?.dataFieldIds) {
+        if (
+            formatterDefinition?.componentType !==
+                this.formatter?.componentType &&
+            this.formatter?.properties?.dataFieldIds
+        ) {
             this.formatter.properties.dataFieldIds = { value: null };
         }
 
@@ -207,17 +275,16 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
 
         // allow by default RawFormatter which has null as dataType
         const sourceDataTypes: Record<string, boolean> = { null: true };
-        this._dataFields.forEach(f => sourceDataTypes[f.dataType] = true);
-        this._formatters = this._providedFormatters.filter(
-            (f) => {
-                // cast to array in case we have a single value
-                const formatterDataTypes = f.dataTypes.value instanceof Array
+        this._dataFields.forEach((f) => (sourceDataTypes[f.dataType] = true));
+        this._formatters = this._providedFormatters.filter((f) => {
+            // cast to array in case we have a single value
+            const formatterDataTypes =
+                f.dataTypes.value instanceof Array
                     ? f.dataTypes.value
                     : [f.dataTypes.value];
 
-                return formatterDataTypes.some(v => sourceDataTypes[v]);
-            }
-        );
+            return formatterDataTypes.some((v) => sourceDataTypes[v]);
+        });
         if (this.formatterForm) {
             this.createFormatterConfigurator();
         }
@@ -226,10 +293,12 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
     private subscribeToFormattersRegistry(): void {
         this.handleFormattersUpdate(this.formattersRegistry.getItems());
 
-        this.formattersRegistry.stateChanged$.pipe(
-            tap(this.handleFormattersUpdate.bind(this)),
-            takeUntil(this.onDestroy$)
-        ).subscribe();
+        this.formattersRegistry.stateChanged$
+            .pipe(
+                tap(this.handleFormattersUpdate.bind(this)),
+                takeUntil(this.onDestroy$)
+            )
+            .subscribe();
     }
 
     private handleFormattersUpdate(formatters: IFormatterDefinition[]): void {
@@ -245,7 +314,9 @@ export class PresentationConfigurationComponent implements IHasChangeDetector, O
      * nothing should go wrong, but in case "FORMATTERS_REGISTRY" is lost, get table registry
      */
     private get formattersRegistry() {
-        return this.formattersRegistryCommon || this.tableFormattersRegistryService;
+        return (
+            this.formattersRegistryCommon || this.tableFormattersRegistryService
+        );
     }
 
     ngOnDestroy(): void {

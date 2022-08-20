@@ -34,7 +34,7 @@ export class SparkChartTestPage {
         return Atom.findIn(LegendSeriesAtom, this.root, index);
     }
 
-    public async changeData(input: number [][]): Promise<void> {
+    public async changeData(input: number[][]): Promise<void> {
         await this.dataInput.clear();
         return this.dataInput.sendKeys(JSON.stringify(input));
     }

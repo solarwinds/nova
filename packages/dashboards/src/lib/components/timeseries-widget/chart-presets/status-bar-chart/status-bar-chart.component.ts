@@ -1,5 +1,17 @@
-import { ChangeDetectorRef, Component, Inject, OnInit, Optional } from "@angular/core";
-import { EventBus, IconService, IDataSource, IEvent, uuid } from "@nova-ui/bits";
+import {
+    ChangeDetectorRef,
+    Component,
+    Inject,
+    OnInit,
+    Optional,
+} from "@angular/core";
+import {
+    EventBus,
+    IconService,
+    IDataSource,
+    IEvent,
+    uuid,
+} from "@nova-ui/bits";
 import {
     BandScale,
     BarHighlightStrategy,
@@ -25,7 +37,10 @@ import { takeUntil } from "rxjs/operators";
 import { SET_TIMEFRAME } from "../../../../services/types";
 import { DATA_SOURCE, PIZZAGNA_EVENT_BUS } from "../../../../types";
 import { TimeseriesScalesService } from "../../timeseries-scales.service";
-import { ITimeseriesWidgetData, ITimeseriesWidgetStatusData } from "../../types";
+import {
+    ITimeseriesWidgetData,
+    ITimeseriesWidgetStatusData,
+} from "../../types";
 import { TimeseriesChartComponent } from "../timeseries-chart.component";
 
 @Component({
@@ -33,7 +48,10 @@ import { TimeseriesChartComponent } from "../timeseries-chart.component";
     templateUrl: "./status-bar-chart.component.html",
     styleUrls: ["./status-bar-chart.component.less"],
 })
-export class StatusBarChartComponent extends TimeseriesChartComponent<ITimeseriesWidgetStatusData> implements OnInit {
+export class StatusBarChartComponent
+    extends TimeseriesChartComponent<ITimeseriesWidgetStatusData>
+    implements OnInit
+{
     public static lateLoadKey = "StatusChartComponent";
 
     public chartAssist: SparkChartAssist;
@@ -42,44 +60,62 @@ export class StatusBarChartComponent extends TimeseriesChartComponent<ITimeserie
     protected renderer: Renderer<IAccessors>;
     private chartUpdate$ = new Subject<void>();
 
-    constructor(private iconService: IconService,
+    constructor(
+        private iconService: IconService,
         @Optional() @Inject(DATA_SOURCE) dataSource: IDataSource,
         public timeseriesScalesService: TimeseriesScalesService,
         public changeDetector: ChangeDetectorRef,
-        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>) {
+        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>
+    ) {
         super(timeseriesScalesService, dataSource);
     }
 
-    public ngOnInit() {
-    }
+    public ngOnInit() {}
 
-    public getDataPointData(series: IChartAssistSeries<IAccessors>, key: string): any {
+    public getDataPointData(
+        series: IChartAssistSeries<IAccessors>,
+        key: string
+    ): any {
         const data = this.chartAssist.highlightedDataPoints[series.id]?.data;
         if (data) {
             return data[key];
         }
-        return series.data.length > 0 ? series.data[series.data.length - 1][key] : undefined;
+        return series.data.length > 0
+            ? series.data[series.data.length - 1][key]
+            : undefined;
     }
 
     protected buildChart(): void {
         this.buildChart$.next();
         this.chartAssist = new SparkChartAssist();
 
-        this.accessors = statusAccessors(this.chartAssist.palette.standardColors);
+        this.accessors = statusAccessors(
+            this.chartAssist.palette.standardColors
+        );
         this.accessors.data.color = (d, i, series, dataSeries) =>
-            typeof d.color === "undefined" ? "var(--nui-color-semantic-unknown)" : d.color;
+            typeof d.color === "undefined"
+                ? "var(--nui-color-semantic-unknown)"
+                : d.color;
 
-        this.accessors.data.thickness = (data: any) => typeof data.thick === "undefined" || data.thick ?
-            BarRenderer.THICK : BarRenderer.THIN;
+        this.accessors.data.thickness = (data: any) =>
+            typeof data.thick === "undefined" || data.thick
+                ? BarRenderer.THICK
+                : BarRenderer.THIN;
 
         const iconSize: number = 8;
         this.accessors.data.marker = (data: any) =>
-            data.icon ?
-                this.iconService.getIconResized(this.iconService.getIconData(data.icon).code, iconSize) :
-                undefined;
+            data.icon
+                ? this.iconService.getIconResized(
+                      this.iconService.getIconData(data.icon).code,
+                      iconSize
+                  )
+                : undefined;
 
         // disable pointer events on bars to ensure the zoom drag target is the mouse interactive area rather than the bars
-        this.renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x"), pointerEvents: false });
+        this.renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+            pointerEvents: false,
+        });
 
         this.scales.y = new BandScale();
         this.scales.y.fixDomain(StatusAccessors.STATUS_DOMAIN);
@@ -90,27 +126,46 @@ export class StatusBarChartComponent extends TimeseriesChartComponent<ITimeserie
 
         // Assemble the series set
         const seriesSet: IChartAssistSeries<IStatusAccessors>[] =
-            this.widgetData.series.map((d: ITimeseriesWidgetData<ITimeseriesWidgetStatusData>) => ({
-                ...d,
-                data: this.transformData(d.data, this.scales.x instanceof TimeIntervalScale),
-                accessors: this.accessors,
-                renderer: this.renderer,
-                scales: this.scales,
-            }));
+            this.widgetData.series.map(
+                (d: ITimeseriesWidgetData<ITimeseriesWidgetStatusData>) => ({
+                    ...d,
+                    data: this.transformData(
+                        d.data,
+                        this.scales.x instanceof TimeIntervalScale
+                    ),
+                    accessors: this.accessors,
+                    renderer: this.renderer,
+                    scales: this.scales,
+                })
+            );
 
         // Update the chart
         this.chartAssist.update(seriesSet);
 
         if (this.configuration.enableZoom) {
-            this.chartAssist.sparks.forEach(spark => {
+            this.chartAssist.sparks.forEach((spark) => {
                 if (!(spark?.chart as Chart)?.hasPlugin(ZoomPlugin)) {
-                    spark?.chart?.addPlugin(new ZoomPlugin({ enableExternalEvents: true }));
+                    spark?.chart?.addPlugin(
+                        new ZoomPlugin({ enableExternalEvents: true })
+                    );
                 }
             });
 
             // only need to subscribe to one chart's SET_DOMAIN_EVENT
-            this.chartAssist.sparks[0].chart?.getEventBus().getStream(SET_DOMAIN_EVENT)
-                .pipe(takeUntil(merge(this.chartUpdate$, (this.chartAssist.sparks[0].chart as Chart)?.eventBus.getStream(DESTROY_EVENT), this.buildChart$)))
+            this.chartAssist.sparks[0].chart
+                ?.getEventBus()
+                .getStream(SET_DOMAIN_EVENT)
+                .pipe(
+                    takeUntil(
+                        merge(
+                            this.chartUpdate$,
+                            (
+                                this.chartAssist.sparks[0].chart as Chart
+                            )?.eventBus.getStream(DESTROY_EVENT),
+                            this.buildChart$
+                        )
+                    )
+                )
                 .subscribe((event: IChartEvent) => {
                     const payload = <ISetDomainEventPayload>event.data;
                     const newDomain = payload[Object.keys(payload)[0]];
@@ -133,7 +188,10 @@ export class StatusBarChartComponent extends TimeseriesChartComponent<ITimeserie
      *
      * @returns The transformed data
      */
-    protected transformData(data: ITimeseriesWidgetStatusData[], isIntervalProgression: boolean): IStatusData[] {
+    protected transformData(
+        data: ITimeseriesWidgetStatusData[],
+        isIntervalProgression: boolean
+    ): IStatusData[] {
         const statusDataArray: any[] = [];
         data.forEach((d, i) => {
             if (isIntervalProgression || data.length - 1 !== i) {
@@ -149,7 +207,6 @@ export class StatusBarChartComponent extends TimeseriesChartComponent<ITimeserie
         });
         return statusDataArray;
     }
-
 }
 
 interface IStatusData {

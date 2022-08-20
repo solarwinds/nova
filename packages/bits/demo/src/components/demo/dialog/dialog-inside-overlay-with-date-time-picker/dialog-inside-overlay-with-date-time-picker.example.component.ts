@@ -4,7 +4,8 @@ import moment, { Moment } from "moment/moment";
 
 @Component({
     selector: "nui-dialog-inside-overlay-with-date-time-picker-example",
-    templateUrl: "./dialog-inside-overlay-with-date-time-picker.example.component.html",
+    templateUrl:
+        "./dialog-inside-overlay-with-date-time-picker.example.component.html",
 })
 export class DialogInsideOverlayWithDateTimePickerExampleComponent {
     public dt: Moment;
@@ -21,7 +22,10 @@ export class DialogInsideOverlayWithDateTimePickerExampleComponent {
      * Notice that the 'useOverlay' option is being passed in here
      */
     public openInOverlay(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm", useOverlay: true});
+        this.activeDialog = this.dialogService.open(content, {
+            size: "sm",
+            useOverlay: true,
+        });
     }
 
     public onDone(): void {

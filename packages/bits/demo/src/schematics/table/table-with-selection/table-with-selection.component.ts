@@ -19,15 +19,9 @@ import {
     TableComponent,
 } from "@nova-ui/bits";
 import { Subject } from "rxjs";
-import {
-    debounceTime,
-    takeUntil,
-    tap,
-} from "rxjs/operators";
+import { debounceTime, takeUntil, tap } from "rxjs/operators";
 
-import {
-    RESULTS_PER_PAGE,
-} from "./table-with-selection-data";
+import { RESULTS_PER_PAGE } from "./table-with-selection-data";
 import { TableWithSelectionDataSource } from "./table-with-selection-data-source.service";
 import { IServer } from "./types";
 
@@ -43,7 +37,9 @@ import { IServer } from "./types";
         },
     ],
 })
-export class TableWithSelectionComponent implements OnInit, OnDestroy, AfterViewInit {
+export class TableWithSelectionComponent
+    implements OnInit, OnDestroy, AfterViewInit
+{
     public items: IServer[] = [];
     public isBusy: boolean = false;
     // This value is obtained from the server and used to evaluate the total number of pages to display
@@ -81,19 +77,21 @@ export class TableWithSelectionComponent implements OnInit, OnDestroy, AfterView
     private destroy$ = new Subject();
 
     constructor(
-        @Inject(DataSourceService) private dataSource: TableWithSelectionDataSource<IServer>,
+        @Inject(DataSourceService)
+        private dataSource: TableWithSelectionDataSource<IServer>,
         private changeDetection: ChangeDetectorRef
-    ) {
-    }
+    ) {}
 
     public ngOnInit() {
-        this.dataSource.busy.pipe(
-            tap(val => {
-                this.isBusy = val;
-                this.changeDetection.detectChanges();
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.dataSource.busy
+            .pipe(
+                tap((val) => {
+                    this.isBusy = val;
+                    this.changeDetection.detectChanges();
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public async ngAfterViewInit() {
@@ -104,22 +102,26 @@ export class TableWithSelectionComponent implements OnInit, OnDestroy, AfterView
             paginator: { componentInstance: this.paginator },
         });
 
-        this.dataSource.outputsSubject.pipe(
-            tap((data: INovaFilteringOutputs) => {
-                // update the list of items to be rendered
-                this.items = data.repeat?.itemsSource || [];
-                this.totalItems = data.paginator?.total ?? 0;
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.dataSource.outputsSubject
+            .pipe(
+                tap((data: INovaFilteringOutputs) => {
+                    // update the list of items to be rendered
+                    this.items = data.repeat?.itemsSource || [];
+                    this.totalItems = data.paginator?.total ?? 0;
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
         // listen for input change in order to perform the search
-        this.search.inputChange.pipe(
-            debounceTime(500),
-            // perform actual search
-            tap(() => this.onSearch()),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.search.inputChange
+            .pipe(
+                debounceTime(500),
+                // perform actual search
+                tap(() => this.onSearch()),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
         await this.applyFilters();
     }

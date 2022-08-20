@@ -15,9 +15,7 @@ const collectionRoutes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        ChartCollectionTestComponent,
-    ],
+    declarations: [ChartCollectionTestComponent],
     imports: [
         DemoCommonModule,
         NuiChartsModule,
@@ -25,5 +23,4 @@ const collectionRoutes: Routes = [
         RouterModule.forChild(collectionRoutes),
     ],
 })
-export class ChartCollectionExampleModule {
-}
+export class ChartCollectionExampleModule {}

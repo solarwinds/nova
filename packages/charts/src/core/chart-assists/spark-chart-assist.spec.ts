@@ -1,5 +1,11 @@
-import { INTERACTION_DATA_POINTS_EVENT, MOUSE_ACTIVE_EVENT } from "../../constants";
-import { ILineAccessors, LineAccessors } from "../../renderers/line/line-accessors";
+import {
+    INTERACTION_DATA_POINTS_EVENT,
+    MOUSE_ACTIVE_EVENT,
+} from "../../constants";
+import {
+    ILineAccessors,
+    LineAccessors,
+} from "../../renderers/line/line-accessors";
 import { LineRenderer } from "../../renderers/line/line-renderer";
 import { Chart } from "../chart";
 import { LinearScale } from "../common/scales/linear-scale";
@@ -12,7 +18,6 @@ import { SparkChartAssist } from "./spark-chart-assist";
 import { ISpark } from "./types";
 
 describe("SparkChartAssist >", () => {
-
     let chartAssist: SparkChartAssist;
     const renderer = new LineRenderer();
     const xScale = new LinearScale();
@@ -40,9 +45,14 @@ describe("SparkChartAssist >", () => {
                 { x: 2, y: 20 },
             ],
         },
-    ].map(s => ({ ...s, scales: sparkScales, renderer, accessors }));
+    ].map((s) => ({ ...s, scales: sparkScales, renderer, accessors }));
 
-    const testSparks: ISpark<ILineAccessors>[] = testSeriesSet.map(chartSeries => ({ id: chartSeries.id, chartSeriesSet: [chartSeries] }));
+    const testSparks: ISpark<ILineAccessors>[] = testSeriesSet.map(
+        (chartSeries) => ({
+            id: chartSeries.id,
+            chartSeriesSet: [chartSeries],
+        })
+    );
 
     const additionalSpark: ISpark<ILineAccessors> = {
         id: `spark-series-3`,
@@ -80,32 +90,42 @@ describe("SparkChartAssist >", () => {
     describe("updateSparks", () => {
         let realLabelPluginInitialize: () => void;
         beforeAll(() => {
-            realLabelPluginInitialize = InteractionLabelPlugin.prototype.initialize;
+            realLabelPluginInitialize =
+                InteractionLabelPlugin.prototype.initialize;
             InteractionLabelPlugin.prototype.initialize = jasmine.createSpy();
         });
 
         afterAll(() => {
-            InteractionLabelPlugin.prototype.initialize = realLabelPluginInitialize;
+            InteractionLabelPlugin.prototype.initialize =
+                realLabelPluginInitialize;
         });
 
         it("should reuse an existing chart if it already exists", () => {
             chartAssist.updateSparks(testSparks);
-            const testChart = chartAssist.sparks.find(spark => spark.id === testSparks[1].id)?.chart;
+            const testChart = chartAssist.sparks.find(
+                (spark) => spark.id === testSparks[1].id
+            )?.chart;
             const amendedSparks = [...testSparks, additionalSpark];
-            chartAssist.sparks.forEach(spark => {
+            chartAssist.sparks.forEach((spark) => {
                 // @ts-ignore: Disabled for testing purposes
                 spyOn(spark.chart, "removePlugin");
             });
             chartAssist.updateSparks(amendedSparks);
             expect(chartAssist.sparks.length).toEqual(amendedSparks.length);
             // test for instance equality using toBe
-            expect(testChart).toBe(chartAssist.sparks.find(spark => spark.id === testSparks[1].id)?.chart);
+            expect(testChart).toBe(
+                chartAssist.sparks.find(
+                    (spark) => spark.id === testSparks[1].id
+                )?.chart
+            );
         });
 
         it("should invoke an existing chart's updateDimensions method", () => {
             const amendedSparks = [...testSparks, additionalSpark];
             chartAssist.updateSparks(amendedSparks);
-            const testChart = chartAssist.sparks.find(spark => spark.id === testSparks[1].id)?.chart;
+            const testChart = chartAssist.sparks.find(
+                (spark) => spark.id === testSparks[1].id
+            )?.chart;
             // @ts-ignore: Disabled for testing purposes
             spyOn(testChart, "updateDimensions");
             chartAssist.updateSparks(testSparks);
@@ -115,7 +135,9 @@ describe("SparkChartAssist >", () => {
         it("should generate a spark id if one isn't provided", () => {
             testSparks[0].id = undefined;
             const realUuid = UtilityService.uuid;
-            UtilityService.uuid = jasmine.createSpy().and.returnValue("mock-id");
+            UtilityService.uuid = jasmine
+                .createSpy()
+                .and.returnValue("mock-id");
             chartAssist.updateSparks(testSparks);
             UtilityService.uuid = realUuid;
             expect(chartAssist.sparks[0].id).toEqual("mock-id");
@@ -133,33 +155,49 @@ describe("SparkChartAssist >", () => {
             it("should add the InteractionLabelPlugin to an existing chart if its needed'", () => {
                 const amendedSparks = [...testSparks, additionalSpark];
                 chartAssist.updateSparks(amendedSparks);
-                const testChart = chartAssist.sparks.find(spark => spark.id === testSparks[1].id)?.chart as Chart;
-                expect(testChart.hasPlugin(InteractionLabelPlugin)).toEqual(false);
+                const testChart = chartAssist.sparks.find(
+                    (spark) => spark.id === testSparks[1].id
+                )?.chart as Chart;
+                expect(testChart.hasPlugin(InteractionLabelPlugin)).toEqual(
+                    false
+                );
                 chartAssist.updateSparks(testSparks);
-                expect(testChart.hasPlugin(InteractionLabelPlugin)).toEqual(true);
+                expect(testChart.hasPlugin(InteractionLabelPlugin)).toEqual(
+                    true
+                );
             });
 
             it("should add the InteractionLabelPlugin to a new chart if its needed'", () => {
                 chartAssist.updateSparks(testSparks);
                 const amendedSparks = [...testSparks, additionalSpark];
-                chartAssist.sparks.forEach(spark => {
+                chartAssist.sparks.forEach((spark) => {
                     // @ts-ignore: Disabled for testing purposes
                     spyOn(spark.chart, "removePlugin");
                 });
                 chartAssist.updateSparks(amendedSparks);
-                const testChart = chartAssist.sparks.find(spark => spark.id === amendedSparks[2].id)?.chart as Chart;
-                expect(testChart.hasPlugin(InteractionLabelPlugin)).toEqual(true);
+                const testChart = chartAssist.sparks.find(
+                    (spark) => spark.id === amendedSparks[2].id
+                )?.chart as Chart;
+                expect(testChart.hasPlugin(InteractionLabelPlugin)).toEqual(
+                    true
+                );
             });
 
             it("should remove the InteractionLabelPlugin from an existing chart if it's not needed'", () => {
                 chartAssist.updateSparks(testSparks);
-                const testChart = chartAssist.sparks.find(spark => spark.id === testSparks[1].id)?.chart as Chart;
-                expect(testChart.hasPlugin(InteractionLabelPlugin)).toEqual(true);
+                const testChart = chartAssist.sparks.find(
+                    (spark) => spark.id === testSparks[1].id
+                )?.chart as Chart;
+                expect(testChart.hasPlugin(InteractionLabelPlugin)).toEqual(
+                    true
+                );
                 spyOn(testChart, "updateDimensions");
                 const amendedSparks = [...testSparks, additionalSpark];
                 spyOn(testChart, "removePlugin");
                 chartAssist.updateSparks(amendedSparks);
-                expect(testChart.removePlugin).toHaveBeenCalledWith(InteractionLabelPlugin);
+                expect(testChart.removePlugin).toHaveBeenCalledWith(
+                    InteractionLabelPlugin
+                );
             });
         });
 
@@ -167,74 +205,108 @@ describe("SparkChartAssist >", () => {
             it("should hide the bottom axis for all except the last grid", () => {
                 chartAssist.updateSparks(testSparks);
                 chartAssist.sparks.forEach((spark, index) => {
-                    const isBottomAxisVisible = !!(<XYGridConfig>spark.chart?.getGrid().config()).dimension.margin.bottom;
-                    expect(isBottomAxisVisible).toEqual(index === chartAssist.sparks.length - 1);
+                    const isBottomAxisVisible = !!(<XYGridConfig>(
+                        spark.chart?.getGrid().config()
+                    )).dimension.margin.bottom;
+                    expect(isBottomAxisVisible).toEqual(
+                        index === chartAssist.sparks.length - 1
+                    );
                 });
             });
 
             it("should hide the bottom border for all except the last grid", () => {
                 chartAssist.updateSparks(testSparks);
                 chartAssist.sparks.forEach((spark, index) => {
-                    const bottomBorder = spark.chart?.getGrid().config().borders.bottom;
-                    expect(bottomBorder?.visible).toEqual(index === chartAssist.sparks.length - 1);
+                    const bottomBorder = spark.chart?.getGrid().config()
+                        .borders.bottom;
+                    expect(bottomBorder?.visible).toEqual(
+                        index === chartAssist.sparks.length - 1
+                    );
                 });
             });
 
             it("should reconfigure an existing chart to not use the 'last chart' grid configuration", () => {
                 chartAssist.updateSparks(testSparks);
-                const testChart = chartAssist.sparks.find(spark => spark.id === testSparks[1].id)?.chart;
-                expect(testChart?.getGrid().config()).toEqual(chartAssist.lastGridConfig);
+                const testChart = chartAssist.sparks.find(
+                    (spark) => spark.id === testSparks[1].id
+                )?.chart;
+                expect(testChart?.getGrid().config()).toEqual(
+                    chartAssist.lastGridConfig
+                );
                 const amendedSparks = [...testSparks, additionalSpark];
-                chartAssist.sparks.forEach(spark => {
+                chartAssist.sparks.forEach((spark) => {
                     // @ts-ignore: Disabled for testing purposes
                     spyOn(spark.chart, "removePlugin");
                 });
                 chartAssist.updateSparks(amendedSparks);
-                expect(testChart?.getGrid().config()).toEqual(chartAssist.gridConfig);
+                expect(testChart?.getGrid().config()).toEqual(
+                    chartAssist.gridConfig
+                );
             });
 
             it("should reconfigure an existing chart to use the 'last chart' grid configuration", () => {
                 const amendedSparks = [...testSparks, additionalSpark];
                 chartAssist.updateSparks(amendedSparks);
-                const testChart = chartAssist.sparks.find(spark => spark.id === testSparks[1].id)?.chart;
-                expect(testChart?.getGrid().config()).toEqual(chartAssist.gridConfig);
+                const testChart = chartAssist.sparks.find(
+                    (spark) => spark.id === testSparks[1].id
+                )?.chart;
+                expect(testChart?.getGrid().config()).toEqual(
+                    chartAssist.gridConfig
+                );
                 chartAssist.updateSparks(testSparks);
-                expect(testChart?.getGrid().config()).toEqual(chartAssist.lastGridConfig);
+                expect(testChart?.getGrid().config()).toEqual(
+                    chartAssist.lastGridConfig
+                );
             });
         });
 
         describe("event subscriptions", () => {
             it("should configure a subscription per chart for the INTERACTION_DATA_POINTS_EVENT", () => {
-                const payloads: IChartEvent[] = testSeriesSet.map(chartSeries => ({
-                    data: {
-                        interactionType: InteractionType.MouseMove,
-                        dataPoints: {
-                            [chartSeries.id]: {
-                                data: chartSeries.data[1],
-                                index: 1,
-                                seriesId: chartSeries.id,
+                const payloads: IChartEvent[] = testSeriesSet.map(
+                    (chartSeries) => ({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            dataPoints: {
+                                [chartSeries.id]: {
+                                    data: chartSeries.data[1],
+                                    index: 1,
+                                    seriesId: chartSeries.id,
+                                },
                             },
                         },
-                    },
-                }));
+                    })
+                );
 
                 chartAssist.updateSparks(testSparks);
                 payloads.forEach((payload, index) => {
                     const chartSeries = testSeriesSet[index];
-                    expect(chartAssist.getHighlightedValue(chartSeries, "y")).toBeNull();
-                    chartAssist.sparks[index].chart?.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(payload);
-                    expect(chartAssist.getHighlightedValue(chartSeries, "y")).toEqual(payload.data.dataPoints[chartSeries.id].data.y);
+                    expect(
+                        chartAssist.getHighlightedValue(chartSeries, "y")
+                    ).toBeNull();
+                    chartAssist.sparks[index].chart
+                        ?.getEventBus()
+                        .getStream(INTERACTION_DATA_POINTS_EVENT)
+                        .next(payload);
+                    expect(
+                        chartAssist.getHighlightedValue(chartSeries, "y")
+                    ).toEqual(payload.data.dataPoints[chartSeries.id].data.y);
                 });
             });
         });
 
         it("should configure a subscription per chart for the MOUSE_ACTIVE_EVENT", () => {
             chartAssist.updateSparks(testSparks);
-            chartAssist.sparks.forEach(spark => {
+            chartAssist.sparks.forEach((spark) => {
                 expect(chartAssist.isLegendActive).toEqual(false);
-                spark.chart?.getEventBus().getStream(MOUSE_ACTIVE_EVENT).next({ data: true });
+                spark.chart
+                    ?.getEventBus()
+                    .getStream(MOUSE_ACTIVE_EVENT)
+                    .next({ data: true });
                 expect(chartAssist.isLegendActive).toEqual(true);
-                spark.chart?.getEventBus().getStream(MOUSE_ACTIVE_EVENT).next({ data: false });
+                spark.chart
+                    ?.getEventBus()
+                    .getStream(MOUSE_ACTIVE_EVENT)
+                    .next({ data: false });
             });
         });
     });

@@ -11,19 +11,9 @@ import { SearchComponent } from "./search.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiSpinnerModule,
-        FormsModule,
-        NuiButtonModule,
-    ],
-    declarations: [
-        SearchComponent,
-    ],
-    exports: [
-        SearchComponent,
-    ],
+    imports: [NuiCommonModule, NuiSpinnerModule, FormsModule, NuiButtonModule],
+    declarations: [SearchComponent],
+    exports: [SearchComponent],
     providers: [],
 })
-export class NuiSearchModule {
-}
+export class NuiSearchModule {}

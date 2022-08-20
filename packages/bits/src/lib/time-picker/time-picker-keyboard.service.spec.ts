@@ -14,16 +14,13 @@ const overlayMock = {
     show: () => {},
 } as OverlayComponent;
 
-const menuTriggerMock = {
+const menuTriggerMock = {} as HTMLElement;
 
-} as HTMLElement;
-
-const keyBoardEventFactory = (code: KEYBOARD_CODE): KeyboardEvent => (
-    {
+const keyBoardEventFactory = (code: KEYBOARD_CODE): KeyboardEvent =>
+    ({
         preventDefault: () => {},
         code,
-    } as KeyboardEvent
-);
+    } as KeyboardEvent);
 
 describe("Services >", () => {
     describe("TimePickerKeyboardService", () => {
@@ -67,7 +64,9 @@ describe("Services >", () => {
 
             it("should call 'navigateByArrow' on DOWN and UP arrow buttons", () => {
                 const spy = spyOn(service, "navigateByArrow" as never);
-                const pressDown = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                const pressDown = keyBoardEventFactory(
+                    KEYBOARD_CODE.ARROW_DOWN
+                );
                 const pressUp = keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP);
 
                 service["handleOpenedMenu"](pressDown);
@@ -90,7 +89,10 @@ describe("Services >", () => {
                 const activeItem = { doAction: (even: any) => {} };
                 const spy = spyOn(activeItem, "doAction");
 
-                spyOnProperty(service["keyboardEventsManager"], "activeItem").and.returnValue(activeItem);
+                spyOnProperty(
+                    service["keyboardEventsManager"],
+                    "activeItem"
+                ).and.returnValue(activeItem);
 
                 service["handleOpenedMenu"](event);
                 expect(spy).toHaveBeenCalled();
@@ -123,10 +125,19 @@ describe("Services >", () => {
                     },
                 };
                 const event = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
-                const spy = spyOn(activeItem.menuItem.nativeElement, "scrollIntoView");
+                const spy = spyOn(
+                    activeItem.menuItem.nativeElement,
+                    "scrollIntoView"
+                );
 
-                spyOn(service["keyboardEventsManager"], "setActiveItem" as never);
-                spyOnProperty(service["keyboardEventsManager"], "activeItem").and.returnValue(activeItem);
+                spyOn(
+                    service["keyboardEventsManager"],
+                    "setActiveItem" as never
+                );
+                spyOnProperty(
+                    service["keyboardEventsManager"],
+                    "activeItem"
+                ).and.returnValue(activeItem);
                 service["handleClosedMenu"](event);
                 expect(spy).toHaveBeenCalledWith({ block: "center" });
             });
@@ -134,7 +145,9 @@ describe("Services >", () => {
 
         describe("navigateByArrow", () => {
             it("should call preventDefault", () => {
-                const pressDown = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                const pressDown = keyBoardEventFactory(
+                    KEYBOARD_CODE.ARROW_DOWN
+                );
                 const spy = spyOn(pressDown, "preventDefault" as never);
 
                 service["navigateByArrow"](pressDown);
@@ -144,16 +157,24 @@ describe("Services >", () => {
             it("should call navigateOnLast on press arrowUp and if index = 0", () => {
                 const pressUp = keyBoardEventFactory(KEYBOARD_CODE.ARROW_UP);
                 const spy = spyOn(service, "navigateOnLast" as never);
-                spyOnProperty(service["keyboardEventsManager"], "activeItemIndex").and.returnValue(0);
+                spyOnProperty(
+                    service["keyboardEventsManager"],
+                    "activeItemIndex"
+                ).and.returnValue(0);
 
                 service["navigateByArrow"](pressUp);
                 expect(spy).toHaveBeenCalled();
             });
 
             it("should call navigateOnFirst on press arrowDown if index on last item", () => {
-                const pressDown = keyBoardEventFactory(KEYBOARD_CODE.ARROW_DOWN);
+                const pressDown = keyBoardEventFactory(
+                    KEYBOARD_CODE.ARROW_DOWN
+                );
                 const spy = spyOn(service, "navigateOnFirst" as never);
-                spyOnProperty(service["keyboardEventsManager"], "activeItemIndex").and.returnValue(0);
+                spyOnProperty(
+                    service["keyboardEventsManager"],
+                    "activeItemIndex"
+                ).and.returnValue(0);
 
                 service["navigateByArrow"](pressDown);
                 expect(spy).toHaveBeenCalled();

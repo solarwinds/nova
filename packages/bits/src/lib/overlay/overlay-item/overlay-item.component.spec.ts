@@ -10,13 +10,10 @@ describe("OverlayItemComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                OverlayItemComponent,
-            ],
+            declarations: [OverlayItemComponent],
             imports: [],
-            schemas: [ NO_ERRORS_SCHEMA ],
-        })
-            .compileComponents();
+            schemas: [NO_ERRORS_SCHEMA],
+        }).compileComponents();
         TestBed.configureTestingModule({
             declarations: [OverlayItemComponent],
         }).compileComponents();
@@ -64,23 +61,28 @@ describe("OverlayItemComponent", () => {
             component.active = false;
         });
 
-        ["active", "disabled"]
-            .forEach(className => {
-                it(`is not have ${className} class name by default`, () => {
-                    expect(debug.nativeElement.classList.value.includes(className)).toBe(false);
-                });
+        ["active", "disabled"].forEach((className) => {
+            it(`is not have ${className} class name by default`, () => {
+                expect(
+                    debug.nativeElement.classList.value.includes(className)
+                ).toBe(false);
             });
+        });
 
         it(`the "disabled" class is added`, () => {
             component.isDisabled = true;
             fixture.detectChanges();
-            expect(debug.nativeElement.classList.value.includes("disabled")).toBe(true);
+            expect(
+                debug.nativeElement.classList.value.includes("disabled")
+            ).toBe(true);
         });
 
         it(`the "active" class is added`, () => {
             component.active = true;
             fixture.detectChanges();
-            expect(debug.nativeElement.classList.value.includes("active")).toBe(true);
+            expect(debug.nativeElement.classList.value.includes("active")).toBe(
+                true
+            );
         });
     });
 });

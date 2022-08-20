@@ -1,28 +1,41 @@
 import {
-    AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild, ViewEncapsulation,
+    AfterViewInit,
+    Component,
+    EventEmitter,
+    OnDestroy,
+    OnInit,
+    Output,
+    ViewChild,
+    ViewEncapsulation,
 } from "@angular/core";
 import {
-    DataFilterService, IFilter, IFilterPub, INovaFilteringOutputs, IRange, ITimeframe, SearchComponent,
+    DataFilterService,
+    IFilter,
+    IFilterPub,
+    INovaFilteringOutputs,
+    IRange,
+    ITimeframe,
+    SearchComponent,
 } from "@nova-ui/bits";
 import moment from "moment/moment";
 import { Subject, Subscription } from "rxjs";
 
 import {
-    FilteringTimeFramePickerComponent, ListDatasource, TableDatasource,
+    FilteringTimeFramePickerComponent,
+    ListDatasource,
+    TableDatasource,
 } from "../data-filter-basic/data-filter-basic.example.component";
-
 
 @Component({
     selector: "nui-data-filter-isolated-example",
     templateUrl: "data-filter-isolated.example.component.html",
     providers: [DataFilterService],
 })
-
 export class DataFilterIsolatedExampleComponent implements AfterViewInit {
-    @ViewChild("timeFramePicker") timeFramePicker: FilteringTimeFramePickerComponent;
+    @ViewChild("timeFramePicker")
+    timeFramePicker: FilteringTimeFramePickerComponent;
 
-    constructor(private filterService: DataFilterService) {
-    }
+    constructor(private filterService: DataFilterService) {}
 
     ngAfterViewInit(): void {
         this.filterService.registerFilter({
@@ -42,43 +55,61 @@ export class DataFilterIsolatedExampleComponent implements AfterViewInit {
     selector: "nui-data-filter-isolated-table-example",
     template: `
         <div class="mb-2">
-            <nui-search id="nui-data-filter-isolated-table-search"
-                        class="d-flex justify-content-end flex-grow-1"
-                        (inputChange)="applyFilters()"
-                        (cancel)="applyFilters()"
-                        #tableSearch></nui-search>
+            <nui-search
+                id="nui-data-filter-isolated-table-search"
+                class="d-flex justify-content-end flex-grow-1"
+                (inputChange)="applyFilters()"
+                (cancel)="applyFilters()"
+                #tableSearch
+            ></nui-search>
         </div>
-        <table nui-table [dataSource]="tableData" id="nui-data-filter-isolated-table">
+        <table
+            nui-table
+            [dataSource]="tableData"
+            id="nui-data-filter-isolated-table"
+        >
             <ng-container nuiColumnDef="position">
-                <th nui-header-cell *nuiHeaderCellDef i18n> No.</th>
-                <td nui-cell *nuiCellDef="let element">{{element.position}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
+                <td nui-cell *nuiCellDef="let element">
+                    {{ element.position }}
+                </td>
             </ng-container>
 
             <ng-container nuiColumnDef="issue">
-                <th nui-header-cell *nuiHeaderCellDef i18n> Issue</th>
-                <td nui-cell *nuiCellDef="let element">{{element.issue}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>Issue</th>
+                <td nui-cell *nuiCellDef="let element">{{ element.issue }}</td>
             </ng-container>
 
             <ng-container nuiColumnDef="date">
-                <th nui-header-cell *nuiHeaderCellDef i18n> Date</th>
-                <td nui-cell *nuiCellDef="let element"> {{element.date | date: 'EEEE, MMMM dd, yyyy'}}</td>
+                <th nui-header-cell *nuiHeaderCellDef i18n>Date</th>
+                <td nui-cell *nuiCellDef="let element">
+                    {{ element.date | date: "EEEE, MMMM dd, yyyy" }}
+                </td>
             </ng-container>
 
-            <tr nui-header-row *nuiHeaderRowDef="displayedColumns;"></tr>
-            <tr nui-row *nuiRowDef="let row; columns: displayedColumns" density="compact"></tr>
+            <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
+            <tr
+                nui-row
+                *nuiRowDef="let row; columns: displayedColumns"
+                density="compact"
+            ></tr>
         </table>
     `,
     providers: [DataFilterService, TableDatasource],
 })
-export class NuiDataFilterIsolatedTableComponent implements AfterViewInit, OnDestroy {
+export class NuiDataFilterIsolatedTableComponent
+    implements AfterViewInit, OnDestroy
+{
     public tableData?: any[] = [];
     public displayedColumns = ["position", "issue", "date"];
     @ViewChild("tableSearch") search: SearchComponent;
 
     private outputsSubscription: Subscription;
 
-    constructor(private dataFilter: DataFilterService, private dataSourceService: TableDatasource) {
-    }
+    constructor(
+        private dataFilter: DataFilterService,
+        private dataSourceService: TableDatasource
+    ) {}
 
     ngAfterViewInit() {
         this.dataFilter.registerFilter({
@@ -87,9 +118,12 @@ export class NuiDataFilterIsolatedTableComponent implements AfterViewInit, OnDes
             },
         });
         this.applyFilters();
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.tableData = data.repeat?.itemsSource;
-        });
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.tableData = data.repeat?.itemsSource;
+                }
+            );
     }
 
     public applyFilters() {
@@ -105,27 +139,35 @@ export class NuiDataFilterIsolatedTableComponent implements AfterViewInit, OnDes
     selector: "nui-data-filter-isolated-list-example",
     template: `
         <div class="mb-2">
-            <nui-search id="nui-data-filter-isolated-list-search"
-                        class="d-flex justify-content-end flex-grow-1"
-                        (inputChange)="applyFilters()"
-                        (cancel)="applyFilters()"
-                        #listSearch>
+            <nui-search
+                id="nui-data-filter-isolated-list-search"
+                class="d-flex justify-content-end flex-grow-1"
+                (inputChange)="applyFilters()"
+                (cancel)="applyFilters()"
+                #listSearch
+            >
             </nui-search>
         </div>
 
-        <nui-repeat id="nui-data-filter-list-isolated-repeat"
-                    [itemsSource]="state.repeat?.itemsSource"
-                    [repeatItemTemplateRef]="repeatItemTemplate"
-                    #filteringRepeat>
+        <nui-repeat
+            id="nui-data-filter-list-isolated-repeat"
+            [itemsSource]="state.repeat?.itemsSource"
+            [repeatItemTemplateRef]="repeatItemTemplate"
+            #filteringRepeat
+        >
         </nui-repeat>
 
         <ng-template #repeatItemTemplate let-item="item">
-            <div>{{item.issue}} - {{item.date | date: 'EEEE, MMMM dd, yyyy'}}</div>
+            <div>
+                {{ item.issue }} - {{ item.date | date: "EEEE, MMMM dd, yyyy" }}
+            </div>
         </ng-template>
     `,
     providers: [DataFilterService, ListDatasource],
 })
-export class NuiDataFilterIsolatedListComponent implements AfterViewInit, OnDestroy {
+export class NuiDataFilterIsolatedListComponent
+    implements AfterViewInit, OnDestroy
+{
     public state: INovaFilteringOutputs = {
         repeat: {
             itemsSource: [],
@@ -134,8 +176,10 @@ export class NuiDataFilterIsolatedListComponent implements AfterViewInit, OnDest
     @ViewChild("listSearch") search: SearchComponent;
     private outputsSubscription: Subscription;
 
-    constructor(private filterService: DataFilterService, private dataSourceService: ListDatasource) {
-    }
+    constructor(
+        private filterService: DataFilterService,
+        private dataSourceService: ListDatasource
+    ) {}
 
     ngAfterViewInit() {
         this.filterService.registerFilter({
@@ -144,9 +188,12 @@ export class NuiDataFilterIsolatedListComponent implements AfterViewInit, OnDest
             },
         });
         this.filterService.applyFilters();
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.state = data;
-        });
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.state = data;
+                }
+            );
     }
 
     public applyFilters() {
@@ -161,38 +208,48 @@ export class NuiDataFilterIsolatedListComponent implements AfterViewInit, OnDest
 @Component({
     selector: "nui-filtering-isolated-time-frame-picker",
     template: `
-        <nui-popover trigger='click'
-                     id="nui-data-filter-isolated-time-frame-picker-popover"
-                     [template]="popoverTimeFramePicker"
-                     [hasPadding]="false"
-                     [closePopover]="closePopoverSubject"
-                     [modal]="true">
-            <button nui-button type="button" displayStyle="action">{{ tf | timeFrame }}</button>
+        <nui-popover
+            trigger="click"
+            id="nui-data-filter-isolated-time-frame-picker-popover"
+            [template]="popoverTimeFramePicker"
+            [hasPadding]="false"
+            [closePopover]="closePopoverSubject"
+            [modal]="true"
+        >
+            <button nui-button type="button" displayStyle="action">
+                {{ tf | timeFrame }}
+            </button>
         </nui-popover>
 
         <ng-template #popoverTimeFramePicker>
             <div class="m-3">
-                <nui-time-frame-picker [startModel]="tf"
-                                       (changed)="updateTf($event)"
-                                       [maxDate]="maxDate"
-                                       [minDate]="minDate">
+                <nui-time-frame-picker
+                    [startModel]="tf"
+                    (changed)="updateTf($event)"
+                    [maxDate]="maxDate"
+                    [minDate]="minDate"
+                >
                 </nui-time-frame-picker>
             </div>
             <nui-dialog-footer>
-                <button nui-button
-                        id="nui-data-filter-isolated-time-frame-picker-cancel-btn"
-                        type="button"
-                        displayStyle="action"
-                        (click)="cancelPopover()"
-                        i18n>
+                <button
+                    nui-button
+                    id="nui-data-filter-isolated-time-frame-picker-cancel-btn"
+                    type="button"
+                    displayStyle="action"
+                    (click)="cancelPopover()"
+                    i18n
+                >
                     Cancel
                 </button>
-                <button nui-button
-                        id="nui-data-filter-isolated-time-frame-picker-apply-btn"
-                        type="button"
-                        displayStyle="primary"
-                        (click)="confirmPopover()"
-                        i18n>
+                <button
+                    nui-button
+                    id="nui-data-filter-isolated-time-frame-picker-apply-btn"
+                    type="button"
+                    displayStyle="primary"
+                    (click)="confirmPopover()"
+                    i18n
+                >
                     Apply
                 </button>
             </nui-dialog-footer>
@@ -200,7 +257,9 @@ export class NuiDataFilterIsolatedListComponent implements AfterViewInit, OnDest
     `,
     encapsulation: ViewEncapsulation.None,
 })
-export class FilteringIsolatedTimeFramePickerComponent implements IFilterPub, OnInit {
+export class FilteringIsolatedTimeFramePickerComponent
+    implements IFilterPub, OnInit
+{
     @Output() timeFrameChanged: EventEmitter<any> = new EventEmitter();
     public acceptedTimeframe: ITimeframe;
     public tf: ITimeframe = {

@@ -4,16 +4,9 @@ import { NgModule } from "@angular/core";
 import { ItemPickerCompositeComponent } from "./item-picker.component";
 
 @NgModule({
-    imports: [
-        CommonModule,
-    ],
-    declarations: [
-        ItemPickerCompositeComponent,
-    ],
-    exports: [
-        ItemPickerCompositeComponent,
-    ],
+    imports: [CommonModule],
+    declarations: [ItemPickerCompositeComponent],
+    exports: [ItemPickerCompositeComponent],
     providers: [],
 })
-
 export class ItemPickerCompositeModule {}

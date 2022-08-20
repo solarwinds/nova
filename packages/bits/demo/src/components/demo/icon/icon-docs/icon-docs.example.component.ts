@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-icon-docs-example",
     templateUrl: "./icon-docs.example.component.html",
 })
-
 export class IconDocsExampleComponent {}

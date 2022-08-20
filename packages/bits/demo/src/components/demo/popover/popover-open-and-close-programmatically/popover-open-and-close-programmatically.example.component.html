@@ -1,10 +1,12 @@
-<nui-popover id="nui-demo-popover-open-close-programmatically"
-             popoverTitle="Opened Programmatically"
-             i18n-popoverTitle
-             trigger="openPopoverSubject"
-             [template]="popoverOpenClose"
-             [openPopover]="openPopoverSubject"
-             [closePopover]="closePopoverSubject">
+<nui-popover
+    id="nui-demo-popover-open-close-programmatically"
+    popoverTitle="Opened Programmatically"
+    i18n-popoverTitle
+    trigger="openPopoverSubject"
+    [template]="popoverOpenClose"
+    [openPopover]="openPopoverSubject"
+    [closePopover]="closePopoverSubject"
+>
     <span i18n>This popover will be triggered programmatically!</span>
 </nui-popover>
 
@@ -15,15 +17,23 @@
 </ng-template>
 
 <div class="mt-2">
-    <button id="nui-demo-popover-close-programmatically-btn"
-            nui-button
-            type="button"
-            (click)="closePopover()"
-            i18n>Close popover</button>
-    <button id="nui-demo-popover-open-programmatically-btn"
-            nui-button
-            class="ml-2"
-            type="button"
-            (click)="openPopover()"
-            i18n>Open popover</button>
+    <button
+        id="nui-demo-popover-close-programmatically-btn"
+        nui-button
+        type="button"
+        (click)="closePopover()"
+        i18n
+    >
+        Close popover
+    </button>
+    <button
+        id="nui-demo-popover-open-programmatically-btn"
+        nui-button
+        class="ml-2"
+        type="button"
+        (click)="openPopover()"
+        i18n
+    >
+        Open popover
+    </button>
 </div>

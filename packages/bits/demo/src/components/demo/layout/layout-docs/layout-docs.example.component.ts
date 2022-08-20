@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-layout-docs-example",
     templateUrl: "./layout-docs.example.component.html",
 })
-export class LayoutExampleComponent {
-
-}
+export class LayoutExampleComponent {}

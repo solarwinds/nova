@@ -4,7 +4,6 @@ import { DatepickerAtom } from "../public_api";
 
 // Disabled until NUI-6014 is fixed
 xdescribe("a11y: datepicker", () => {
-
     beforeAll(async () => {
         await Helpers.prepareBrowser("date-picker/date-picker-visual-test");
     });

@@ -1,4 +1,11 @@
-import { CdkFooterRow, CdkFooterRowDef, CdkHeaderRow, CdkHeaderRowDef, CdkRow, CdkRowDef } from "@angular/cdk/table";
+import {
+    CdkFooterRow,
+    CdkFooterRowDef,
+    CdkHeaderRow,
+    CdkHeaderRowDef,
+    CdkRow,
+    CdkRowDef,
+} from "@angular/cdk/table";
 import {
     AfterViewInit,
     ChangeDetectionStrategy,
@@ -36,10 +43,15 @@ import { TableStateHandlerService } from "../table-state-handler.service";
 
 @Directive({
     selector: "[nuiHeaderRowDef]",
-    providers: [{provide: CdkHeaderRowDef, useExisting: TableHeaderRowDefDirective}],
-    host: { "role": "row" },
+    providers: [
+        { provide: CdkHeaderRowDef, useExisting: TableHeaderRowDefDirective },
+    ],
+    host: { role: "row" },
 })
-export class TableHeaderRowDefDirective extends CdkHeaderRowDef implements OnInit, OnDestroy, OnChanges {
+export class TableHeaderRowDefDirective
+    extends CdkHeaderRowDef
+    implements OnInit, OnDestroy, OnChanges
+{
     @Input() set nuiHeaderRowDef(value: any) {
         this.columns = value ?? [];
     }
@@ -48,9 +60,11 @@ export class TableHeaderRowDefDirective extends CdkHeaderRowDef implements OnIni
     }
 
     public tableColumnsSubscription: Subscription;
-    constructor(template: TemplateRef<any>,
-                _differs: IterableDiffers,
-                private tableStateHandlerService: TableStateHandlerService) {
+    constructor(
+        template: TemplateRef<any>,
+        _differs: IterableDiffers,
+        private tableStateHandlerService: TableStateHandlerService
+    ) {
         super(template, _differs);
     }
 
@@ -59,18 +73,20 @@ export class TableHeaderRowDefDirective extends CdkHeaderRowDef implements OnIni
 
         if (this.tableStateHandlerService.reorderable) {
             // reordering columns when drop is fired on column
-            this.tableColumnsSubscription = this.tableStateHandlerService.columnsState.subscribe(
-                (tableColumns: string[]) => {
-                    this.columns = tableColumns;
-                }
-            );
+            this.tableColumnsSubscription =
+                this.tableStateHandlerService.columnsState.subscribe(
+                    (tableColumns: string[]) => {
+                        this.columns = tableColumns;
+                    }
+                );
         }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         super.ngOnChanges(changes);
         if (changes.nuiHeaderRowDef) {
-            this.tableStateHandlerService.tableColumns = changes.nuiHeaderRowDef.currentValue;
+            this.tableStateHandlerService.tableColumns =
+                changes.nuiHeaderRowDef.currentValue;
         }
     }
 
@@ -87,9 +103,12 @@ export class TableHeaderRowDefDirective extends CdkHeaderRowDef implements OnIni
 
 @Directive({
     selector: "[nuiRowDef]",
-    providers: [{provide: CdkRowDef, useExisting: TableRowDefDirective}],
+    providers: [{ provide: CdkRowDef, useExisting: TableRowDefDirective }],
 })
-export class TableRowDefDirective<T> extends CdkRowDef<T> implements OnInit, OnDestroy {
+export class TableRowDefDirective<T>
+    extends CdkRowDef<T>
+    implements OnInit, OnDestroy
+{
     @Input() set nuiRowDefColumns(value: any) {
         this.columns = value ?? [];
     }
@@ -97,9 +116,11 @@ export class TableRowDefDirective<T> extends CdkRowDef<T> implements OnInit, OnD
         this.when = value;
     }
     public tableColumnsSubscription: Subscription;
-    constructor(template: TemplateRef<any>,
-                _differs: IterableDiffers,
-                private tableStateHandlerService: TableStateHandlerService) {
+    constructor(
+        template: TemplateRef<any>,
+        _differs: IterableDiffers,
+        private tableStateHandlerService: TableStateHandlerService
+    ) {
         super(template, _differs);
     }
 
@@ -108,11 +129,12 @@ export class TableRowDefDirective<T> extends CdkRowDef<T> implements OnInit, OnD
 
         if (this.tableStateHandlerService.reorderable) {
             // reordering columns when drop is fired on column
-            this.tableColumnsSubscription = this.tableStateHandlerService.columnsState.subscribe(
-                (tableColumns: string[]) => {
-                    this.columns = tableColumns;
-                }
-            );
+            this.tableColumnsSubscription =
+                this.tableStateHandlerService.columnsState.subscribe(
+                    (tableColumns: string[]) => {
+                        this.columns = tableColumns;
+                    }
+                );
         }
     }
 
@@ -129,9 +151,14 @@ export class TableRowDefDirective<T> extends CdkRowDef<T> implements OnInit, OnD
 
 @Directive({
     selector: "[nuiFooterRowDef]",
-    providers: [{provide: CdkFooterRowDef, useExisting: TableFooterRowDefDirective}],
+    providers: [
+        { provide: CdkFooterRowDef, useExisting: TableFooterRowDefDirective },
+    ],
 })
-export class TableFooterRowDefDirective extends CdkFooterRowDef implements OnInit, OnDestroy {
+export class TableFooterRowDefDirective
+    extends CdkFooterRowDef
+    implements OnInit, OnDestroy
+{
     @Input() set nuiFooterRowDef(value: any) {
         this.columns = value ?? [];
     }
@@ -139,9 +166,11 @@ export class TableFooterRowDefDirective extends CdkFooterRowDef implements OnIni
         this.sticky = value;
     }
     public tableColumnsSubscription: Subscription;
-    constructor(template: TemplateRef<any>,
-                _differs: IterableDiffers,
-                private tableStateHandlerService: TableStateHandlerService) {
+    constructor(
+        template: TemplateRef<any>,
+        _differs: IterableDiffers,
+        private tableStateHandlerService: TableStateHandlerService
+    ) {
         super(template, _differs);
     }
 
@@ -150,11 +179,12 @@ export class TableFooterRowDefDirective extends CdkFooterRowDef implements OnIni
 
         if (this.tableStateHandlerService.reorderable) {
             // reordering columns when drop is fired on column
-            this.tableColumnsSubscription = this.tableStateHandlerService.columnsState.subscribe(
-                (tableColumns: string[]) => {
-                    this.columns = tableColumns;
-                }
-            );
+            this.tableColumnsSubscription =
+                this.tableStateHandlerService.columnsState.subscribe(
+                    (tableColumns: string[]) => {
+                        this.columns = tableColumns;
+                    }
+                );
         }
     }
 
@@ -170,31 +200,39 @@ export class TableFooterRowDefDirective extends CdkFooterRowDef implements OnIni
  */
 
 @Component({
-    template: `
-        <th *ngIf="selectable"
+    template: ` <th
+            *ngIf="selectable"
             nuiClickInterceptor
             class="nui-table__table-header-cell nui-table__table-header-cell--selectable"
-            [ngClass]="{'no-options': !hasOptions}">
-            <nui-selector class="nui-table__table-header-cell__selector"
-                          [ngClass]="{'no-options': !hasOptions}"
-                          [appendToBody]="true"
-                          (selectionChange)="onSelectorChange($event)"
-                          [checkboxStatus]="selectorState.checkboxStatus"
-                          [items]="selectorState.selectorItems">
+            [ngClass]="{ 'no-options': !hasOptions }"
+        >
+            <nui-selector
+                class="nui-table__table-header-cell__selector"
+                [ngClass]="{ 'no-options': !hasOptions }"
+                [appendToBody]="true"
+                (selectionChange)="onSelectorChange($event)"
+                [checkboxStatus]="selectorState.checkboxStatus"
+                [items]="selectorState.selectorItems"
+            >
             </nui-selector>
         </th>
         <ng-container cdkCellOutlet></ng-container>`,
     host: {
-        "role": "row",
-        "class": "nui-table__table-header-row",
+        role: "row",
+        class: "nui-table__table-header-row",
     },
     selector: "nui-header-row, tr[nui-header-row]",
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs: "nuiHeaderRow",
-    providers: [{ provide: CdkHeaderRow, useExisting: TableHeaderRowComponent }],
+    providers: [
+        { provide: CdkHeaderRow, useExisting: TableHeaderRowComponent },
+    ],
 })
-export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnDestroy, AfterViewInit {
+export class TableHeaderRowComponent
+    extends CdkHeaderRow
+    implements OnInit, OnDestroy, AfterViewInit
+{
     @Input() density: RowHeightOptions = "default";
     public selectorState: ISelectorState = {
         checkboxStatus: CheckboxStatus.Unchecked,
@@ -221,32 +259,43 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
 
     private onDestroy$ = new Subject<void>();
 
-    constructor(private tableStateHandlerService: TableStateHandlerService,
-        private changeDetectorRef: ChangeDetectorRef) {
+    constructor(
+        private tableStateHandlerService: TableStateHandlerService,
+        private changeDetectorRef: ChangeDetectorRef
+    ) {
         super();
     }
 
     ngOnInit() {
         if (this.tableStateHandlerService.selectable) {
-            this.selectorState = this.tableStateHandlerService.getSelectorState();
+            this.selectorState =
+                this.tableStateHandlerService.getSelectorState();
             this.updateSelectorState();
         }
 
         // if dataSource changes we need to update selector state
-        this.dataSourceChangeSubscription = this.tableStateHandlerService.dataSourceChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            this.updateSelectorState();
-        });
+        this.dataSourceChangeSubscription =
+            this.tableStateHandlerService.dataSourceChanged
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(() => {
+                    this.updateSelectorState();
+                });
 
         // when single row is selected we need to update selector state
         // we also need to detect changes for selector state
-        this.selectionChangeSubscription = this.tableStateHandlerService.selectionChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            this.updateSelectorState();
-        });
+        this.selectionChangeSubscription =
+            this.tableStateHandlerService.selectionChanged
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(() => {
+                    this.updateSelectorState();
+                });
 
-        this.tableStateHandlerService.selectableChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
-            this.selectable = selectable;
-            this.changeDetectorRef.markForCheck();
-        });
+        this.tableStateHandlerService.selectableChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((selectable: boolean) => {
+                this.selectable = selectable;
+                this.changeDetectorRef.markForCheck();
+            });
     }
 
     ngAfterViewInit() {
@@ -256,9 +305,12 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
     }
 
     public onSelectorChange(selectorValue: SelectionType) {
-        this.tableStateHandlerService.selection = this.tableStateHandlerService.applySelector(selectorValue);
+        this.tableStateHandlerService.selection =
+            this.tableStateHandlerService.applySelector(selectorValue);
         this.updateSelectorState();
-        this.tableStateHandlerService.selectionChanged.next(this.tableStateHandlerService.selection);
+        this.tableStateHandlerService.selectionChanged.next(
+            this.tableStateHandlerService.selection
+        );
     }
 
     public updateSelectorState() {
@@ -279,21 +331,23 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
 /** Data row template container that contains the cell outlet. Adds the right class and role. */
 @Component({
     selector: "nui-row, tr[nui-row]",
-    template: `
-        <td *ngIf="selectable"
-            class="nui-table__table-cell nui-table__table-cell--selectable">
+    template: ` <td
+            *ngIf="selectable"
+            class="nui-table__table-cell nui-table__table-cell--selectable"
+        >
             <nui-checkbox
                 class="nui-table__table-cell__checkbox d-inline-block"
                 [checked]="isRowSelected()"
                 (valueChange)="checkboxClicked()"
                 (click)="stopPropagation($event)"
-                #rowSelectionCheckbox>
+                #rowSelectionCheckbox
+            >
             </nui-checkbox>
         </td>
         <ng-container cdkCellOutlet></ng-container>`,
     host: {
-        "role": "row",
-        "class": "nui-table__table-row",
+        role: "row",
+        class: "nui-table__table-row",
     },
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -303,7 +357,9 @@ export class TableHeaderRowComponent extends CdkHeaderRow implements OnInit, OnD
 export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     @Input() density: RowHeightOptions = "default";
     @Input() rowObject: Object;
-    @Input() @HostBinding("class.nui-table__table-row--clickable") clickableRow = false;
+    @Input()
+    @HostBinding("class.nui-table__table-row--clickable")
+    clickableRow = false;
     @Input() clickableRowConfig: ClickableRowOptions = {
         clickableSelectors: ["nui-row", "tr[nui-row]"],
         ignoredSelectors: DEFAULT_INTERACTIVE_ELEMENTS,
@@ -332,9 +388,11 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
 
     private onDestroy$ = new Subject<void>();
 
-    constructor(private elementRef: ElementRef,
-                private tableStateHandlerService: TableStateHandlerService,
-                private changeDetectorRef: ChangeDetectorRef) {
+    constructor(
+        private elementRef: ElementRef,
+        private tableStateHandlerService: TableStateHandlerService,
+        private changeDetectorRef: ChangeDetectorRef
+    ) {
         super();
     }
 
@@ -343,29 +401,40 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
         this.elementRef.nativeElement.classList.add(rowHeightClass);
 
         // when selection changes we need to detect changes to check check-boxes
-        this.selectionChangeSubscription = this.tableStateHandlerService.selectionChanged.pipe(takeUntil(this.onDestroy$)).subscribe(() => {
-            this.changeDetectorRef.detectChanges();
-        });
+        this.selectionChangeSubscription =
+            this.tableStateHandlerService.selectionChanged
+                .pipe(takeUntil(this.onDestroy$))
+                .subscribe(() => {
+                    this.changeDetectorRef.detectChanges();
+                });
 
-        this.tableStateHandlerService.selectableChanged.pipe(takeUntil(this.onDestroy$)).subscribe((selectable: boolean) => {
-            this.selectable = selectable;
-            this.changeDetectorRef.markForCheck();
-        });
+        this.tableStateHandlerService.selectableChanged
+            .pipe(takeUntil(this.onDestroy$))
+            .subscribe((selectable: boolean) => {
+                this.selectable = selectable;
+                this.changeDetectorRef.markForCheck();
+            });
     }
 
     @HostListener("click", ["$event.target"])
     public rowClickHandler(target: HTMLElement): void {
-        if (!this.tableStateHandlerService.selectable ||
+        if (
+            !this.tableStateHandlerService.selectable ||
             !this.clickableRow ||
-            !this.clickableRowConfig.clickableSelectors.length) {
+            !this.clickableRowConfig.clickableSelectors.length
+        ) {
             return;
         }
-        const closestTableRow = target.closest(this.clickableRowConfig.clickableSelectors.join(","));
+        const closestTableRow = target.closest(
+            this.clickableRowConfig.clickableSelectors.join(",")
+        );
         if (!closestTableRow) {
             return;
         }
-        if (this.clickableRowConfig.ignoredSelectors.length &&
-            target.closest(this.clickableRowConfig.ignoredSelectors.join(","))) {
+        if (
+            this.clickableRowConfig.ignoredSelectors.length &&
+            target.closest(this.clickableRowConfig.ignoredSelectors.join(","))
+        ) {
             return;
         }
         const rowSelectCheckbox = closestTableRow.querySelector("nui-checkbox");
@@ -386,7 +455,10 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     }
 
     public isRowSelected(): boolean {
-        const rowObjectTrackBy = this.tableStateHandlerService.trackBy(0, this.rowObject);
+        const rowObjectTrackBy = this.tableStateHandlerService.trackBy(
+            0,
+            this.rowObject
+        );
 
         const includedRows = this.tableStateHandlerService.selection.include;
         const excludedRows = this.tableStateHandlerService.selection.exclude;
@@ -397,7 +469,9 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
             }
             return true;
         }
-        return includedRows.length > 0 ? _includes(includedRows, rowObjectTrackBy) : false;
+        return includedRows.length > 0
+            ? _includes(includedRows, rowObjectTrackBy)
+            : false;
     }
 
     ngOnDestroy() {
@@ -413,13 +487,14 @@ export class TableRowComponent extends CdkRow implements OnInit, OnDestroy {
     selector: "nui-footer-row, tr[nui-footer-row]",
     template: "<ng-container cdkCellOutlet></ng-container>",
     host: {
-        "class": "nui-footer-row",
-        "role": "row",
+        class: "nui-footer-row",
+        role: "row",
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     exportAs: "nuiFooterRow",
-    providers: [{provide: CdkFooterRow, useExisting: TableFooterRowComponent}],
+    providers: [
+        { provide: CdkFooterRow, useExisting: TableFooterRowComponent },
+    ],
 })
-export class TableFooterRowComponent extends CdkFooterRow {
-}
+export class TableFooterRowComponent extends CdkFooterRow {}

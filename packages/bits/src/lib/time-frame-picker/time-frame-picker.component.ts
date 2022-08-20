@@ -1,5 +1,13 @@
 import {
-    ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    ViewEncapsulation,
 } from "@angular/core";
 import _cloneDeep from "lodash/cloneDeep";
 import { Moment } from "moment/moment";
@@ -18,7 +26,6 @@ import { TimeframeService } from "./services/timeframe.service";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimeFramePickerComponent implements OnChanges, OnInit {
-
     /**  earliest selectable date */
     @Input() minDate: Moment;
     /**  latest selectable date */
@@ -37,8 +44,11 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
     public modelDefault: any;
 
     public distanceToEndDate: number; // to keep distance between start and end-date
-    
-    constructor(private timeFrameService: TimeframeService, public changeDetector: ChangeDetectorRef) {}
+
+    constructor(
+        private timeFrameService: TimeframeService,
+        public changeDetector: ChangeDetectorRef
+    ) {}
 
     ngOnChanges(changes: any): void {
         if (changes["startModel"]) {
@@ -55,7 +65,10 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
     }
 
     public selectPreset(key: string, value: ITimeFramePreset) {
-        const timeframe = this.timeFrameService.getTimeframe(value.startDatetimePattern, value.endDatetimePattern);
+        const timeframe = this.timeFrameService.getTimeframe(
+            value.startDatetimePattern,
+            value.endDatetimePattern
+        );
         timeframe.selectedPresetId = key;
         this.model = timeframe;
     }
@@ -93,21 +106,30 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
     private validateCombination() {
         if (this.model.startDatetime && this.model.endDatetime) {
             if (this.model.startDatetime >= this.model.endDatetime) {
-                this.model.endDatetime = moment(this.model.startDatetime.valueOf() + this.distanceToEndDate);
+                this.model.endDatetime = moment(
+                    this.model.startDatetime.valueOf() + this.distanceToEndDate
+                );
                 this.model.selectedPresetId = undefined;
                 this.model.title = undefined;
             } else {
-                this.updateDistanceToEndDate(this.model.startDatetime, this.model.endDatetime);
+                this.updateDistanceToEndDate(
+                    this.model.startDatetime,
+                    this.model.endDatetime
+                );
             }
         }
     }
 
-    private updateDistanceToEndDate(newStartDatetime: Date | Moment, newEndDatetime: Date | Moment) {
+    private updateDistanceToEndDate(
+        newStartDatetime: Date | Moment,
+        newEndDatetime: Date | Moment
+    ) {
         const startMoment = moment(newStartDatetime);
         const endMoment = moment(newEndDatetime);
 
         if (startMoment.isValid() && endMoment.isValid()) {
-            this.distanceToEndDate = newEndDatetime.valueOf() - newStartDatetime.valueOf();
+            this.distanceToEndDate =
+                newEndDatetime.valueOf() - newStartDatetime.valueOf();
         }
     }
 
@@ -117,10 +139,15 @@ export class TimeFramePickerComponent implements OnChanges, OnInit {
         }
         // clear 'selectedPresetId' and 'title' values
         if (this.model.selectedPresetId) {
-            const timeFrame = this.timeFrameService.getTimeframeByPresetId(this.model.selectedPresetId);
+            const timeFrame = this.timeFrameService.getTimeframeByPresetId(
+                this.model.selectedPresetId
+            );
 
-            if (!this.model.startDatetime || !this.model.endDatetime ||
-                !this.timeFrameService.isEqualDuration(this.model, timeFrame)) {
+            if (
+                !this.model.startDatetime ||
+                !this.model.endDatetime ||
+                !this.timeFrameService.isEqualDuration(this.model, timeFrame)
+            ) {
                 this.model.selectedPresetId = undefined;
                 this.model.title = undefined;
             }

@@ -13,7 +13,9 @@ describe("WidgetEditorAccordionFormStatePipe > ", () => {
 
     beforeEach(() => {
         const formBuilder = new FormBuilder();
-        form = formBuilder.group({ testControl: ["", [Validators.maxLength(0)]] });
+        form = formBuilder.group({
+            testControl: ["", [Validators.maxLength(0)]],
+        });
         pipe = new WidgetEditorAccordionFormStatePipe();
     });
 
@@ -55,5 +57,4 @@ describe("WidgetEditorAccordionFormStatePipe > ", () => {
             expect(args[1]).toEqual([AccordionState.CRITICAL]);
         });
     });
-
 });

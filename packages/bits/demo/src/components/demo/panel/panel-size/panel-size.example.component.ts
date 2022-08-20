@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-panel-size-example",
     templateUrl: "./panel-size.example.component.html",
 })
-
 export class PanelSizeExampleComponent {}

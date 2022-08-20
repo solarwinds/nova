@@ -5,10 +5,12 @@ import { IValueProvider } from "../types";
  * Examples would be darken, lighten, reduce opacity, etc.
  */
 export class ProcessedColorProvider implements IValueProvider<string> {
-
     private processedColors: { [key: string]: string };
 
-    constructor(private sourceProvider: IValueProvider<string>, private fn: (input: string) => string) {
+    constructor(
+        private sourceProvider: IValueProvider<string>,
+        private fn: (input: string) => string
+    ) {
         this.reset();
     }
 
@@ -25,7 +27,7 @@ export class ProcessedColorProvider implements IValueProvider<string> {
             this.processedColors[clr] = processedColor;
         }
         return processedColor;
-    }
+    };
 
     public reset(): void {
         this.processedColors = {};

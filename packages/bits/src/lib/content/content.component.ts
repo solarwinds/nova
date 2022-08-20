@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from "@angular/core";
+import { Component, Input, ViewEncapsulation } from "@angular/core";
 
 /**
  * <example-url>./../examples/index.html#/content</example-url>
@@ -10,14 +10,12 @@ import {Component, Input, ViewEncapsulation} from "@angular/core";
     templateUrl: "./content.component.html",
     styleUrls: ["./content.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "document" },
+    host: { role: "document" },
 })
 export class ContentComponent {
-
     @Input() size: "small" | "normal" | "large" = "normal";
 
     public getMessageClass(): string {
         return "nui-content-" + this.size;
     }
-
 }

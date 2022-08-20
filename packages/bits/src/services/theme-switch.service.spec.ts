@@ -9,7 +9,7 @@ import { ThemeSwitchService } from "./theme-switch.service";
     template: "",
 })
 class FakeComponent {
-    constructor(private zone: NgZone, private router: Router) { }
+    constructor(private zone: NgZone, private router: Router) {}
 
     public navigate(commands: any[]) {
         this.zone.run(async () => this.router.navigate(commands));
@@ -17,7 +17,11 @@ class FakeComponent {
 }
 
 const routes: Routes = [
-    { path: "route/with/allowed/theme/switcher", component: FakeComponent, data: { showThemeSwitcher: true } },
+    {
+        path: "route/with/allowed/theme/switcher",
+        component: FakeComponent,
+        data: { showThemeSwitcher: true },
+    },
     { path: "route/with/denied/theme/switcher", component: FakeComponent },
 ];
 
@@ -27,12 +31,8 @@ describe("ThemeSwitchService", () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [
-                RouterTestingModule.withRoutes(routes),
-            ],
-            declarations: [
-                FakeComponent,
-            ],
+            imports: [RouterTestingModule.withRoutes(routes)],
+            declarations: [FakeComponent],
         });
 
         const fixture = TestBed.createComponent(FakeComponent);
@@ -46,22 +46,44 @@ describe("ThemeSwitchService", () => {
     });
 
     it("should allow to show theme switcher when route has appropriate data", fakeAsync(() => {
-        fakeComponent.navigate(["route", "with", "allowed", "theme", "switcher"]);
+        fakeComponent.navigate([
+            "route",
+            "with",
+            "allowed",
+            "theme",
+            "switcher",
+        ]);
         tick();
         expect(service.showThemeSwitcherSubject.getValue()).toBeTruthy();
     }));
 
     it("should deny to show theme switcher when route has not appropriate data", fakeAsync(() => {
-        fakeComponent.navigate(["route", "with", "denied", "theme", "switcher"]);
+        fakeComponent.navigate([
+            "route",
+            "with",
+            "denied",
+            "theme",
+            "switcher",
+        ]);
         tick();
         expect(service.showThemeSwitcherSubject.getValue()).toBeFalsy();
     }));
 
     it("should be applied system theme by default", fakeAsync(() => {
-        const isDarkModeEnabled = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        fakeComponent.navigate(["route", "with", "allowed", "theme", "switcher"]);
+        const isDarkModeEnabled = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        ).matches;
+        fakeComponent.navigate([
+            "route",
+            "with",
+            "allowed",
+            "theme",
+            "switcher",
+        ]);
         tick();
-        expect(service.isDarkModeEnabledSubject.getValue()).toEqual(isDarkModeEnabled);
+        expect(service.isDarkModeEnabledSubject.getValue()).toEqual(
+            isDarkModeEnabled
+        );
     }));
 
     it("should be dark mode when method setDarkTheme was called with true parameter", fakeAsync(() => {

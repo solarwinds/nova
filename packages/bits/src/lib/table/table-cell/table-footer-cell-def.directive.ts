@@ -7,7 +7,9 @@ import { Directive, TemplateRef } from "@angular/core";
 
 @Directive({
     selector: "[nuiFooterCellDef]",
-    providers: [{ provide: CdkFooterCellDef, useExisting: TableFooterCellDefDirective }],
+    providers: [
+        { provide: CdkFooterCellDef, useExisting: TableFooterCellDefDirective },
+    ],
 })
 export class TableFooterCellDefDirective extends CdkFooterCellDef {
     constructor(public template: TemplateRef<any>) {

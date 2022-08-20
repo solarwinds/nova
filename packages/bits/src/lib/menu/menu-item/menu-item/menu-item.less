@@ -51,7 +51,8 @@
         align-items: center;
         padding: @nui-space-xs @nui-space-sm;
         text-decoration: none;
-        &:active, &:focus {
+        &:active,
+        &:focus {
             .focus-outline-inset();
         }
     }
@@ -78,7 +79,8 @@
     &--active {
         .setCssVariable(background-color, nui-color-bg-light-hover);
         .focus-outline-inset();
-        &.nui-menu-item--selected, &.nui-menu-item.checked {
+        &.nui-menu-item--selected,
+        &.nui-menu-item.checked {
             .setCssVariable(background-color, nui-color-selected-hover);
         }
     }

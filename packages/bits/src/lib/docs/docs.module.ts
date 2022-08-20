@@ -54,4 +54,4 @@ import { ThemeSwitcherComponent } from "./theme-switcher/theme-switcher.componen
         ExampleCodeComponent,
     ],
 })
-export class NuiDocsModule { }
+export class NuiDocsModule {}

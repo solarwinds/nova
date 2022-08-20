@@ -1,24 +1,20 @@
 {
-    "extends": "./tsconfig.json",
-    "compilerOptions": {
-        "outDir": "./dist/aot",
-        "declaration": false,
-        "target": "es6",
-        "module": "es6",
-        "baseUrl": ".",
-    },
-    "typeRoots": [
-        "node_modules/@types"
-    ],
-    "files": [
-        "./src/public_api.ts"
-    ],
-    "exclude": [],
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
         "fullTemplateTypeCheck": true,
         "strictInjectionParameters": true,
         "enableResourceInlining": true
-    }
+    },
+    "compilerOptions": {
+        "outDir": "./dist/aot",
+        "declaration": false,
+        "target": "es6",
+        "module": "es6",
+        "baseUrl": "."
+    },
+    "exclude": [],
+    "extends": "./tsconfig.json",
+    "files": ["./src/public_api.ts"],
+    "typeRoots": ["node_modules/@types"]
 }

@@ -1,5 +1,10 @@
 import { Inject, Injectable } from "@angular/core";
-import { IDataField, INovaFilters, LocalFilteringDataSource, SearchService } from "@nova-ui/bits";
+import {
+    IDataField,
+    INovaFilters,
+    LocalFilteringDataSource,
+    SearchService,
+} from "@nova-ui/bits";
 import { BehaviorSubject, Subject } from "rxjs";
 
 import { TABLE_DATA } from "../widget-data";
@@ -15,13 +20,17 @@ export class TableWidgetDataSource extends LocalFilteringDataSource<BasicTableMo
 
     public busy = new BehaviorSubject(false);
     public dataFields: Array<IDataField> = [
-        {id: "position", label: $localize`Position`, dataType: "number"},
-        {id: "name", label: $localize`Name`, dataType: "string"},
-        {id: "features", label: $localize`Features`, dataType: "icons"},
-        {id: "checks", label: $localize`Checks`, dataType: "iconAndText"},
-        {id: "status", label: $localize`Status`, dataType: "string"},
-        {id: "firstUrl", label: $localize`First Url`, dataType: "link"},
-        {id: "firstUrlLabel", label: $localize`First Url Label`, dataType: "label"},
+        { id: "position", label: $localize`Position`, dataType: "number" },
+        { id: "name", label: $localize`Name`, dataType: "string" },
+        { id: "features", label: $localize`Features`, dataType: "icons" },
+        { id: "checks", label: $localize`Checks`, dataType: "iconAndText" },
+        { id: "status", label: $localize`Status`, dataType: "string" },
+        { id: "firstUrl", label: $localize`First Url`, dataType: "link" },
+        {
+            id: "firstUrlLabel",
+            label: $localize`First Url Label`,
+            dataType: "label",
+        },
     ];
 
     public tableData: Array<any>;
@@ -34,12 +43,15 @@ export class TableWidgetDataSource extends LocalFilteringDataSource<BasicTableMo
      * Makes a request to get correct data depending on filters
      * @param filters
      */
-    public async getFilteredData(filters: INovaFilters): Promise<ITableDataSourceOutput> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<ITableDataSourceOutput> {
         this.busy.next(true);
 
         return new Promise((resolve) => {
             setTimeout(async () => {
-                const virtualScrollFilter = filters.virtualScroll && filters.virtualScroll.value;
+                const virtualScrollFilter =
+                    filters.virtualScroll && filters.virtualScroll.value;
 
                 if (virtualScrollFilter) {
                     // The multiplier used here is a way to fetch more items per scroll
@@ -52,7 +64,9 @@ export class TableWidgetDataSource extends LocalFilteringDataSource<BasicTableMo
                     }
                     // We identify here whether the cached array does already contain some of the fetched data.
                     // Then we update the cached array with the only values it doesn't contain
-                    this.cache = this.cache.concat(nextChunk.filter(item => !this.cache.includes(item)));
+                    this.cache = this.cache.concat(
+                        nextChunk.filter((item) => !this.cache.includes(item))
+                    );
                     super.setData(this.cache);
                 }
 
@@ -75,12 +89,16 @@ export class TableWidgetDataSource extends LocalFilteringDataSource<BasicTableMo
 export class TableWidgetDataSource2 extends TableWidgetDataSource {
     public busy = new BehaviorSubject(false);
     public dataFields: Array<IDataField> = [
-        {id: "position", label: $localize`Position`, dataType: "number"},
-        {id: "name", label: $localize`Name`, dataType: "string"},
-        {id: "status", label: $localize`Status`, dataType: "string"},
-        {id: "cpu-load", label: $localize`CPU load`, dataType: "number"},
-        {id: "secondUrl", label: $localize`Second Url`, dataType: "link"},
-        {id: "secondUrlLabel", label: $localize`Second Url Label`, dataType: "label"},
+        { id: "position", label: $localize`Position`, dataType: "number" },
+        { id: "name", label: $localize`Name`, dataType: "string" },
+        { id: "status", label: $localize`Status`, dataType: "string" },
+        { id: "cpu-load", label: $localize`CPU load`, dataType: "number" },
+        { id: "secondUrl", label: $localize`Second Url`, dataType: "link" },
+        {
+            id: "secondUrlLabel",
+            label: $localize`Second Url Label`,
+            dataType: "label",
+        },
     ];
     public tableData: Array<any>;
 

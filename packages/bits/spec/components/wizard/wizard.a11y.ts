@@ -4,9 +4,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { WizardAtom } from "../public_api";
 
 describe("a11y: wizard", () => {
-    let rulesToDisable: string[] = [
-        "duplicate-id",
-    ];
+    let rulesToDisable: string[] = ["duplicate-id"];
     let basicWizard: WizardAtom;
 
     beforeAll(async () => {

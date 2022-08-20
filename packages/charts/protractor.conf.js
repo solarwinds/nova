@@ -1,4 +1,4 @@
-const { SpecReporter } = require('jasmine-spec-reporter');
+const { SpecReporter } = require("jasmine-spec-reporter");
 const { TeamCityReporter } = require("jasmine-reporters");
 
 exports.config = {
@@ -6,28 +6,28 @@ exports.config = {
     seleniumAddress: process.env.SELENIUM_ADDRESS,
     allScriptsTimeout: 11000,
     suites: {
-        e2e: './spec/**/*.e2e.ts',
-        visual: './spec/**/*.visual.ts'
+        e2e: "./spec/**/*.e2e.ts",
+        visual: "./spec/**/*.visual.ts",
     },
     capabilities: {
         shardTestFiles: process.env.CI ? true : false,
         maxInstances: process.env.CI ? 4 : 1,
-        'browserName': 'chrome',
-        'chromeOptions': {
-            'w3c': false, // enable legacy API to prevent this error: https://github.com/angular/protractor/issues/5285
-            'args': [
+        browserName: "chrome",
+        chromeOptions: {
+            w3c: false, // enable legacy API to prevent this error: https://github.com/angular/protractor/issues/5285
+            args: [
                 "--headless",
                 "--no-sandbox",
                 "--disable-extensions",
                 "--disable-gpu",
                 "--disable-dev-shm-usage",
-                "--window-size=1920,1080"
-            ]
-        }
+                "--window-size=1920,1080",
+            ],
+        },
     },
     baseUrl: process.env.E2E_BASE_URL || "http://localhost:4200/",
     directConnect: !process.env.SELENIUM_ADDRESS,
-    framework: 'jasmine',
+    framework: "jasmine",
     params: {
         visual: "percy",
         snapshotsUpload: "manual",
@@ -35,16 +35,20 @@ exports.config = {
     jasmineNodeOpts: {
         showColors: true,
         defaultTimeoutInterval: 30000,
-        print: function () { }
+        print: function () {},
     },
     onPrepare() {
-        require('ts-node').register({
-            project: require('path').join(__dirname, './tsconfig.e2e.json')
+        require("ts-node").register({
+            project: require("path").join(__dirname, "./tsconfig.e2e.json"),
         });
-        jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: "pretty" } }));
+        jasmine
+            .getEnv()
+            .addReporter(
+                new SpecReporter({ spec: { displayStacktrace: "pretty" } })
+            );
 
         if (process.env.TEAMCITY_VERSION) {
-            jasmine.getEnv().addReporter(new TeamCityReporter())
+            jasmine.getEnv().addReporter(new TeamCityReporter());
         }
     },
     onComplete() {
@@ -53,5 +57,5 @@ exports.config = {
     onCleanUp(exitCode) {
         //console.log("Clean up fired, code = " + exitCode);
     },
-    logLevel: process.env.CI ? "INFO" : "WARN"
+    logLevel: process.env.CI ? "INFO" : "WARN",
 };

@@ -12,12 +12,15 @@
     </nui-message>
 </div>
 
-<button nui-button
-        *ngIf="isPossibleToAddSeries()"
-        icon="add"
-        displayStyle="action"
-        type="button"
-        class="ml-4 mb-4"
-        (click)="addSeries()"
-        i18n>Add new series
+<button
+    nui-button
+    *ngIf="isPossibleToAddSeries()"
+    icon="add"
+    displayStyle="action"
+    type="button"
+    class="ml-4 mb-4"
+    (click)="addSeries()"
+    i18n
+>
+    Add new series
 </button>

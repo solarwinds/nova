@@ -15,7 +15,15 @@ import { DstTimeIntervalTestPageComponent } from "./dst-time-interval-test-page.
         ChartDocsBarModule,
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () =>  (<any> require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/)},
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class DaylightSavingTimeTestModule { }
+export class DaylightSavingTimeTestModule {}

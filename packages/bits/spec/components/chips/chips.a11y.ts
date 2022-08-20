@@ -3,9 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { ChipsAtom } from "../public_api";
 
 describe("a11y: chips", () => {
-    let rulesToDisable: string[] = [
-        "color-contrast",
-    ];
+    let rulesToDisable: string[] = ["color-contrast"];
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chips/chips-visual-test");

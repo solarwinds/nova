@@ -11,10 +11,14 @@ import {
     ViewChild,
 } from "@angular/core";
 
-import {ResizerDirective} from "../../../common/directives";
-import {ResizeDirection, resizeDirectionHelpers, ResizeUnit} from "../../../common/directives/resizer/public-api";
-import {EventBusService} from "../../../services/event-bus.service";
-import {UtilService} from "../../../services/util.service";
+import { ResizerDirective } from "../../../common/directives";
+import {
+    ResizeDirection,
+    resizeDirectionHelpers,
+    ResizeUnit,
+} from "../../../common/directives/resizer/public-api";
+import { EventBusService } from "../../../services/event-bus.service";
+import { UtilService } from "../../../services/util.service";
 
 /**
  * @ignore
@@ -29,7 +33,10 @@ import {UtilService} from "../../../services/util.service";
         "[class.nui-layout-resizer--horizontal]": "isResizeHorizontal()",
     },
 })
-export class LayoutResizerComponent extends ResizerDirective implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+export class LayoutResizerComponent
+    extends ResizerDirective
+    implements OnInit, AfterViewInit, OnChanges, OnDestroy
+{
     @Input() resizeDirection: ResizeDirection;
     @Input() resizeElement: any;
     @Input() resizeUnit: ResizeUnit;
@@ -37,17 +44,25 @@ export class LayoutResizerComponent extends ResizerDirective implements OnInit, 
     @Input() enableSeparateOffsetSize: boolean;
     @ViewChild("resizerSplit") resizerSplitEl: ElementRef;
 
-    constructor(private _elRef: ElementRef,
-                private _renderer: Renderer2,
-                private _utilService: UtilService,
-                private _targetElement: ElementRef,
-                private _ngZone: NgZone,
-                private _eventBusService: EventBusService) {
-        super(_elRef, _renderer, _utilService, _targetElement, _ngZone, _eventBusService);
+    constructor(
+        private _elRef: ElementRef,
+        private _renderer: Renderer2,
+        private _utilService: UtilService,
+        private _targetElement: ElementRef,
+        private _ngZone: NgZone,
+        private _eventBusService: EventBusService
+    ) {
+        super(
+            _elRef,
+            _renderer,
+            _utilService,
+            _targetElement,
+            _ngZone,
+            _eventBusService
+        );
     }
 
     public resizeClass = "nui-layout-resizer";
-
 
     /*
      * From template can be accessed only public properties
@@ -69,7 +84,8 @@ export class LayoutResizerComponent extends ResizerDirective implements OnInit, 
         // This Overrides ResizerDirective's ngAfterViewInit
         this.resizePropObj = resizeDirectionHelpers[this.resizeDirection];
         this.targetElement = this.resizeElement.elRef;
-        this.parentContainerNode = this.targetElement.nativeElement.parentElement;
+        this.parentContainerNode =
+            this.targetElement.nativeElement.parentElement;
         this.resizeGutter = this._elRef.nativeElement;
         this.resizerSplit = this.resizerSplitEl.nativeElement;
         this.addSubscription();
@@ -82,4 +98,3 @@ export class LayoutResizerComponent extends ResizerDirective implements OnInit, 
         this.unlistenEvents();
     }
 }
-

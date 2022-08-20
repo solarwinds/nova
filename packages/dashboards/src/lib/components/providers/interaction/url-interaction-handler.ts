@@ -4,23 +4,32 @@ import { UrlInteractionService } from "./../../../services/url-interaction.servi
 
 import { PIZZAGNA_EVENT_BUS } from "../../../types";
 
-import { IInteractionHandlerProperties, IInteractionPayload, InteractionHandler } from "./interaction-handler";
+import {
+    IInteractionHandlerProperties,
+    IInteractionPayload,
+    InteractionHandler,
+} from "./interaction-handler";
 
-export interface IUrlInteractionHandlerProperties extends IInteractionHandlerProperties {
+export interface IUrlInteractionHandlerProperties
+    extends IInteractionHandlerProperties {
     url: string;
     newWindow?: boolean;
 }
 
 // Window is an interface, so it fails when used in constructor parameters for AoT
-export class WindowObject extends Window {
-}
+export class WindowObject extends Window {}
 
 @Injectable()
-export class UrlInteractionHandler extends InteractionHandler<IUrlInteractionHandlerProperties, any> {
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                @Inject("windowObject") private window: WindowObject,
-                private logger: LoggerService,
-                private urlInteractionService: UrlInteractionService) {
+export class UrlInteractionHandler extends InteractionHandler<
+    IUrlInteractionHandlerProperties,
+    any
+> {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
+        @Inject("windowObject") private window: WindowObject,
+        private logger: LoggerService,
+        private urlInteractionService: UrlInteractionService
+    ) {
         super(eventBus);
     }
 
@@ -29,7 +38,9 @@ export class UrlInteractionHandler extends InteractionHandler<IUrlInteractionHan
             this.logger.warn("The target url has not been defined.");
             return;
         }
-        const href = this.urlInteractionService.template(this.properties.url, { "data": interaction.data })
+        const href = this.urlInteractionService.template(this.properties.url, {
+            data: interaction.data,
+        });
 
         // if the link evaluates as empty, then don't go anywhere
         if (!href) {

@@ -1,6 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { ChartDocsDomainsComponent } from "./chart-docs-domains.component";
@@ -11,8 +17,8 @@ const exampleRoutes: Routes = [
         path: "",
         component: ChartDocsDomainsComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -20,10 +26,7 @@ const exampleRoutes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        ChartDocsDomainsComponent,
-        FixedDomainsExampleComponent,
-    ],
+    declarations: [ChartDocsDomainsComponent, FixedDomainsExampleComponent],
     imports: [
         NuiButtonModule,
         NuiChartsModule,
@@ -32,8 +35,15 @@ const exampleRoutes: Routes = [
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class ChartDocsDomainsModule {
-}
+export class ChartDocsDomainsModule {}

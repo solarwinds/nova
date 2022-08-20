@@ -41,13 +41,18 @@ export class HighlightPipe implements PipeTransform {
         if (!isString(search) || isEmpty(search)) {
             return this.escapeItem(text);
         }
-        const regex = new RegExp(  "(" + this.getHighlightRegex(search) + ")", "i");
+        const regex = new RegExp(
+            "(" + this.getHighlightRegex(search) + ")",
+            "i"
+        );
         const matchRes = Array.from(text.split(regex));
         let result = "";
         for (let i = 0; i < matchRes.length; i++) {
             const isMatch = i % 2 !== 0;
             if (isMatch) {
-                result += `<span class="nui-highlighted">${this.escapeItem(matchRes[i])}</span>`;
+                result += `<span class="nui-highlighted">${this.escapeItem(
+                    matchRes[i]
+                )}</span>`;
             } else {
                 result += this.escapeItem(matchRes[i]);
             }
@@ -62,5 +67,5 @@ export class HighlightPipe implements PipeTransform {
     private getHighlightRegex = (text: string) => {
         const escaped = escapeRegExp(text);
         return escaped.replace(this.deduplicateStarsRegex, () => ".*");
-    }
+    };
 }

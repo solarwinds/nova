@@ -13,18 +13,25 @@ import {
     NuiSelectV2Module,
     NuiSwitchModule,
 } from "@nova-ui/bits";
-import { NuiDashboardConfiguratorModule, NuiDashboardsModule } from "@nova-ui/dashboards";
+import {
+    NuiDashboardConfiguratorModule,
+    NuiDashboardsModule,
+} from "@nova-ui/dashboards";
 
 import { CustomWidgetDocsComponent } from "./custom-widget-docs.component";
-import { CustomConfiguratorSectionComponent, CustomWidgetBodyContentComponent, CustomWidgetComponent } from "./custom-widget.component";
+import {
+    CustomConfiguratorSectionComponent,
+    CustomWidgetBodyContentComponent,
+    CustomWidgetComponent,
+} from "./custom-widget.component";
 
 const routes = [
     {
         path: "",
         component: CustomWidgetDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -33,8 +40,8 @@ const routes = [
         path: "example",
         component: CustomWidgetComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -64,4 +71,4 @@ const routes = [
         CustomWidgetComponent,
     ],
 })
-export class CustomWidgetModule { }
+export class CustomWidgetModule {}

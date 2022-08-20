@@ -11,22 +11,15 @@ const routes: Routes = [
         path: "",
         component: ThresholdsPrototypeComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
 ];
 
 @NgModule({
-    declarations: [
-        ThresholdsPrototypeComponent,
-    ],
-    imports: [
-        DemoCommonModule,
-        NuiChartsModule,
-        RouterModule.forChild(routes),
-    ],
+    declarations: [ThresholdsPrototypeComponent],
+    imports: [DemoCommonModule, NuiChartsModule, RouterModule.forChild(routes)],
 })
-export class ThresholdsPrototypeModule {
-}
+export class ThresholdsPrototypeModule {}

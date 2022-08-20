@@ -57,7 +57,6 @@ describe("WidgetTypesService", () => {
             expect(service.getWidgetType("type")).toBe(widgetType2);
             expect(service.getWidgetType("type", 1)).toBe(widgetType2);
         });
-
     });
 
     describe("setNode > ", () => {
@@ -65,7 +64,8 @@ describe("WidgetTypesService", () => {
             const providerIds = ["testId1", "testId2"];
             const testPaths = {
                 configurator: {
-                    [WellKnownPathKey.DataSourceProviders]: "dataSource.properties.dataSourceProviders",
+                    [WellKnownPathKey.DataSourceProviders]:
+                        "dataSource.properties.dataSourceProviders",
                 },
             };
             const widgetType1: IWidgetTypeDefinition = {
@@ -84,7 +84,12 @@ describe("WidgetTypesService", () => {
             service.registerWidgetType("type", 1, widgetType1);
 
             const widgetTemplate = service.getWidgetType("type");
-            service.setNode(widgetTemplate, "configurator", WellKnownPathKey.DataSourceProviders, providerIds);
+            service.setNode(
+                widgetTemplate,
+                "configurator",
+                WellKnownPathKey.DataSourceProviders,
+                providerIds
+            );
             expect(service.getWidgetType("type", 1)).toEqual({
                 paths: testPaths,
                 configurator: {

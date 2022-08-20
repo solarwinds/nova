@@ -1,7 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    ChartPalette, CHART_MARKERS, CHART_PALETTE_CS1, IChartPalette, ILineAccessors, ISpark, LineAccessors, LinearScale, LineRenderer,
-    SequentialChartMarkerProvider, SparkChartAssist,
+    ChartPalette,
+    CHART_MARKERS,
+    CHART_PALETTE_CS1,
+    IChartPalette,
+    ILineAccessors,
+    ISpark,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    SequentialChartMarkerProvider,
+    SparkChartAssist,
 } from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
@@ -25,23 +34,31 @@ export class SparkPrototypeComponent implements OnInit {
     public ngOnInit() {
         this.sparkLineRenderer = new LineRenderer();
 
-        this.sparkXScale.formatters.tick = (value: any) => Math.round(value).toString();
+        this.sparkXScale.formatters.tick = (value: any) =>
+            Math.round(value).toString();
         this.chartAssist = new SparkChartAssist();
 
         this.update();
     }
 
     public update() {
-        this.chartAssist.updateSparks(this.generateSparkSeriesSet(Math.floor(Math.random() * 6 + 1)));
+        this.chartAssist.updateSparks(
+            this.generateSparkSeriesSet(Math.floor(Math.random() * 6 + 1))
+        );
     }
 
-    private generateSparkSeriesSet(numSparks: number): ISpark<ILineAccessors>[] {
+    private generateSparkSeriesSet(
+        numSparks: number
+    ): ISpark<ILineAccessors>[] {
         const sparks: ISpark<ILineAccessors>[] = [];
-        const accessors = new LineAccessors(this.colorPalette.standardColors, this.markers);
+        const accessors = new LineAccessors(
+            this.colorPalette.standardColors,
+            this.markers
+        );
 
         for (let i = 0; i < numSparks; ++i) {
             const sparkYScale = new LinearScale();
-            sparkYScale.formatters.value = v => (Number(v).toPrecision(4));
+            sparkYScale.formatters.value = (v) => Number(v).toPrecision(4);
             const sparkScales = {
                 x: this.sparkXScale,
                 y: sparkYScale,
@@ -72,5 +89,4 @@ export class SparkPrototypeComponent implements OnInit {
 
         return sparks;
     }
-
 }

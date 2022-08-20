@@ -21,12 +21,13 @@ describe("ProportionalChartOptionsEditorComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ProportionalChartOptionsEditorComponent);
+        fixture = TestBed.createComponent(
+            ProportionalChartOptionsEditorComponent
+        );
         component = fixture.componentInstance;
     });
 

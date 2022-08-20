@@ -8,7 +8,11 @@ import { XYGridConfig } from "./xy-grid-config";
  * @param showBottomAxis
  * @param showTopBorder
  */
-export function sparkChartGridConfig(c: XYGridConfig = new XYGridConfig(), showBottomAxis: boolean = false, showTopBorder: boolean = true): XYGridConfig {
+export function sparkChartGridConfig(
+    c: XYGridConfig = new XYGridConfig(),
+    showBottomAxis: boolean = false,
+    showTopBorder: boolean = true
+): XYGridConfig {
     c.interactionPlugins = false;
 
     c.axis.left.visible = false;

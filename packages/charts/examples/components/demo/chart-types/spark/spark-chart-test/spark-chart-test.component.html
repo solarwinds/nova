@@ -3,26 +3,71 @@
         <div class="m-5">
             <h4>Sparkline Chart Multiple Test</h4>
             <div class="nui-spark-chart-multiple-test">
-                <div *ngFor="let spark of chartAssist.sparks; trackBy: chartAssist.trackByFn">
+                <div
+                    *ngFor="
+                        let spark of chartAssist.sparks;
+                        trackBy: chartAssist.trackByFn
+                    "
+                >
                     <div class="d-flex">
-                        <nui-chart [chart]="spark.chart" nuiChartCollectionId="1"></nui-chart>
+                        <nui-chart
+                            [chart]="spark.chart"
+                            nuiChartCollectionId="1"
+                        ></nui-chart>
                         <div class="d-flex flex-column pl-2">
-                            <nui-legend-series [interactive]="false" [active]="chartAssist.isLegendActive"
-                                            [descriptionPrimary]="spark.chartSeriesSet[0].name">
-                                <nui-rich-legend-tile unitLabel="sec"
-                                                    [value]="chartAssist.getHighlightedValue(spark.chartSeriesSet[0], 'y', 'value')"
-                                                    [backgroundColor]="chartAssist.palette.standardColors.get(spark.chartSeriesSet[0].id)"
-                                                    [color]="chartAssist.palette.textColors.get(spark.chartSeriesSet[0].id)">
-                                    <nui-chart-marker [marker]="chartAssist.markers.get(spark.chartSeriesSet[0].id)"
-                                                    [color]="chartAssist.palette.standardColors.get(spark.chartSeriesSet[0].id)"
-                                                    rightEdge>
+                            <nui-legend-series
+                                [interactive]="false"
+                                [active]="chartAssist.isLegendActive"
+                                [descriptionPrimary]="
+                                    spark.chartSeriesSet[0].name
+                                "
+                            >
+                                <nui-rich-legend-tile
+                                    unitLabel="sec"
+                                    [value]="
+                                        chartAssist.getHighlightedValue(
+                                            spark.chartSeriesSet[0],
+                                            'y',
+                                            'value'
+                                        )
+                                    "
+                                    [backgroundColor]="
+                                        chartAssist.palette.standardColors.get(
+                                            spark.chartSeriesSet[0].id
+                                        )
+                                    "
+                                    [color]="
+                                        chartAssist.palette.textColors.get(
+                                            spark.chartSeriesSet[0].id
+                                        )
+                                    "
+                                >
+                                    <nui-chart-marker
+                                        [marker]="
+                                            chartAssist.markers.get(
+                                                spark.chartSeriesSet[0].id
+                                            )
+                                        "
+                                        [color]="
+                                            chartAssist.palette.standardColors.get(
+                                                spark.chartSeriesSet[0].id
+                                            )
+                                        "
+                                        rightEdge
+                                    >
                                     </nui-chart-marker>
                                 </nui-rich-legend-tile>
                             </nui-legend-series>
                         </div>
                     </div>
                 </div>
-                <input id="data-input" type="text" class="w-100 mt-5" [ngModel]="input" (ngModelChange)="inputChanged($event)">
+                <input
+                    id="data-input"
+                    type="text"
+                    class="w-100 mt-5"
+                    [ngModel]="input"
+                    (ngModelChange)="inputChanged($event)"
+                />
             </div>
         </div>
         <div class="m-5">

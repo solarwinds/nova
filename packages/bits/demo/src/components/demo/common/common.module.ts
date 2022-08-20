@@ -30,9 +30,9 @@ import {
     SrlcStage,
 } from "@nova-ui/bits";
 
-import {DataSourceClientSideFilteringExampleComponent} from "./data-source/client-side/client-side-filtering/client-side-filtering.example.component";
-import {DataSourceWithSelectionExampleComponent} from "./data-source/client-side/client-side-with-selection/client-side-with-selection.example.component";
-import {DataSourceModule} from "./data-source/data-source.module";
+import { DataSourceClientSideFilteringExampleComponent } from "./data-source/client-side/client-side-filtering/client-side-filtering.example.component";
+import { DataSourceWithSelectionExampleComponent } from "./data-source/client-side/client-side-with-selection/client-side-with-selection.example.component";
+import { DataSourceModule } from "./data-source/data-source.module";
 import {
     ClipboardExampleComponent,
     DataFilterBasicExampleComponent,
@@ -57,7 +57,9 @@ import { VirtualViewportManagerDocsComponent } from "./viewport-manager/virtual-
 
 const routes = [
     {
-        path: "", redirectTo: "welcome", pathMatch: "full",
+        path: "",
+        redirectTo: "welcome",
+        pathMatch: "full",
     },
     {
         path: "clipboard",
@@ -87,8 +89,8 @@ const routes = [
         path: "search-service",
         component: SearchServiceExampleComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
         },
     },
@@ -98,10 +100,13 @@ const routes = [
     },
     {
         path: "data-source-service",
-        loadChildren: () => import("./data-source/data-source.module").then(m => m.DataSourceModule),
+        loadChildren: () =>
+            import("./data-source/data-source.module").then(
+                (m) => m.DataSourceModule
+            ),
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
         },
     },
@@ -117,8 +122,8 @@ const routes = [
         component: VirtualViewportManagerDocsComponent,
         data: {
             showThemeSwitcher: true,
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
         },
     },
@@ -128,32 +133,38 @@ const routes = [
     },
     {
         path: "badge",
-        loadChildren: () => import("./badge/badge.module").then(m => m.BadgeModule),
+        loadChildren: () =>
+            import("./badge/badge.module").then((m) => m.BadgeModule),
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
         },
     },
     {
         path: "tag",
-        loadChildren: () => import("./tag/tag.module").then(m => m.TagModule),
+        loadChildren: () => import("./tag/tag.module").then((m) => m.TagModule),
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
         },
     },
     {
         path: "tree",
-        loadChildren: () => import("./tree/tree.module").then(m => m.TreeModule),
+        loadChildren: () =>
+            import("./tree/tree.module").then((m) => m.TreeModule),
     },
     {
-        path: "welcome", component: WelcomePageComponent,
+        path: "welcome",
+        component: WelcomePageComponent,
     },
     {
         path: "unit-conversion-service",
-        loadChildren: () => import("./unit-conversion-service/unit-conversion-service-example.module").then(m => m.UnitConversionServiceExampleModule),
+        loadChildren: () =>
+            import(
+                "./unit-conversion-service/unit-conversion-service-example.module"
+            ).then((m) => m.UnitConversionServiceExampleModule),
     },
 ];
 
@@ -212,12 +223,14 @@ const routes = [
         DatePipe,
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class CommonModule {
-}
+export class CommonModule {}

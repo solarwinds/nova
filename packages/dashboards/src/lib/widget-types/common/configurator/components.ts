@@ -1,6 +1,9 @@
 // eslint-disable-next-line max-len
 import { RefresherConfigurationComponent } from "../../../configurator/components/widgets/configurator-items/refresher-configuration/refresher-configuration.component";
-import { DEFAULT_PIZZAGNA_ROOT, NOVA_GENERIC_CONVERTER } from "../../../services/types";
+import {
+    DEFAULT_PIZZAGNA_ROOT,
+    NOVA_GENERIC_CONVERTER,
+} from "../../../services/types";
 import { IComponentConfiguration, WellKnownProviders } from "../../../types";
 
 /**
@@ -16,7 +19,11 @@ export const REFRESHER_CONFIGURATOR: IComponentConfiguration = {
                 formParts: [
                     {
                         previewPath: `${DEFAULT_PIZZAGNA_ROOT}.providers.refresher.properties`,
-                        keys: ["enabled", "interval", "overrideDefaultSettings"],
+                        keys: [
+                            "enabled",
+                            "interval",
+                            "overrideDefaultSettings",
+                        ],
                     },
                 ],
             },

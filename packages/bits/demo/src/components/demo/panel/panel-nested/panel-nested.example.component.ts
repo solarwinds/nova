@@ -13,37 +13,45 @@ export class PanelNestedExampleComponent {
             name: "AvantiA",
             type: "V12",
             disabled: true,
-        }, {
+        },
+        {
             name: "AvantiA",
             type: "V12",
             disabled: true,
-        }, {
+        },
+        {
             name: "AvantiA",
             type: "V12",
             disabled: true,
-        }, {
+        },
+        {
             name: "AvantiA",
             type: "V12",
             disabled: true,
-        }];
+        },
+    ];
     public innerRepeat = [
         {
             name: `AvantiA Item-${Math.round(Math.random() * 100)}`,
             type: "V12",
             disabled: true,
-        }, {
+        },
+        {
             name: `AvantiA Item-${Math.round(Math.random() * 100)}`,
             type: "V12",
             disabled: true,
-        }, {
+        },
+        {
             name: `AvantiA Item-${Math.round(Math.random() * 100)}`,
             type: "V12",
             disabled: true,
-        }, {
+        },
+        {
             name: `AvantiA Item-${Math.round(Math.random() * 100)}`,
             type: "V12",
             disabled: true,
-        }];
+        },
+    ];
     public headerIcon = "filter";
     public headerIconCounter = 4;
 

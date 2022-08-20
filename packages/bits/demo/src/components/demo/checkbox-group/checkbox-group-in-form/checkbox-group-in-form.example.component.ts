@@ -8,26 +8,30 @@ import { ToastService } from "@nova-ui/bits";
 })
 export class CheckboxGroupInFormExampleComponent implements OnInit {
     public myForm: FormGroup;
-    public cabbage = $localize `Cabbage`;
-    public potato = $localize `Potato`;
-    public tomato = $localize `Tomato`;
-    public carrot = $localize `Carrot`;
+    public cabbage = $localize`Cabbage`;
+    public potato = $localize`Potato`;
+    public tomato = $localize`Tomato`;
+    public carrot = $localize`Carrot`;
     public vegetables = [this.cabbage, this.potato, this.tomato, this.carrot];
     public selectedVegetables = [this.cabbage];
 
-    constructor(private formBuilder: FormBuilder,
-                private toastService: ToastService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        private toastService: ToastService
+    ) {}
 
     public ngOnInit() {
         this.myForm = this.formBuilder.group({
-            checkboxGroup: this.formBuilder.control([this.cabbage, this.potato], [
-                Validators.required, Validators.minLength(3)]),
+            checkboxGroup: this.formBuilder.control(
+                [this.cabbage, this.potato],
+                [Validators.required, Validators.minLength(3)]
+            ),
         });
     }
 
     public onSubmit() {
         console.log(this.myForm);
-        this.toastService.success({message: $localize `Your form is valid!`});
+        this.toastService.success({ message: $localize`Your form is valid!` });
     }
 
     public isChecked(vegetable: string): boolean {

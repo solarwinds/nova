@@ -6,5 +6,7 @@ import { Component } from "@angular/core";
     host: { class: "combobox-container" },
 })
 export class ComboboxV2BasicExampleComponent {
-    public items = Array.from({ length : 50 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 50 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
 }

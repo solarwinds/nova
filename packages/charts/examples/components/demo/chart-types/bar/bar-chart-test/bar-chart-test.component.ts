@@ -4,7 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-bar-chart-test",
     templateUrl: "./bar-chart-test.component.html",
 })
-
-export class BarChartTestComponent {
-
-}
+export class BarChartTestComponent {}

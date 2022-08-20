@@ -45,22 +45,27 @@ describe("pipes >", () => {
                 expectation: presetTimeFrame.title,
             },
             {
-                condition: "formatted start - end string if time frame has no title",
+                condition:
+                    "formatted start - end string if time frame has no title",
                 arguments: [customTimeFrame],
-                expectation: "December 31, 1999 12:00 AM - December 31, 1999 11:59 PM",
+                expectation:
+                    "December 31, 1999 12:00 AM - December 31, 1999 11:59 PM",
             },
             {
-                condition: "formatted start - end string if time frame has no title",
+                condition:
+                    "formatted start - end string if time frame has no title",
                 arguments: [customTimeFrame, "MMMM Do YYYY, h:mm:ss a"],
-                expectation: "December 31st 1999, 12:00:00 am - December 31st 1999, 11:59:00 pm",
+                expectation:
+                    "December 31st 1999, 12:00:00 am - December 31st 1999, 11:59:00 pm",
             },
         ];
 
-        testCases.forEach(testCase => {
+        testCases.forEach((testCase) => {
             it(`should return ${testCase.condition}`, () => {
-                expect(pipe.transform(...testCase.arguments)).toBe(testCase.expectation);
+                expect(pipe.transform(...testCase.arguments)).toBe(
+                    testCase.expectation
+                );
             });
         });
-
     });
 });

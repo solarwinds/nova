@@ -1,5 +1,16 @@
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IDataField, IDataSource, IFilteringOutputs } from "@nova-ui/bits";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
+import {
+    DataSourceService,
+    IDataField,
+    IDataSource,
+    IFilteringOutputs,
+} from "@nova-ui/bits";
 import { IAccessors, IChartAssistSeries } from "@nova-ui/charts";
 import {
     DATA_SOURCE,
@@ -36,9 +47,10 @@ import { BehaviorSubject } from "rxjs";
  * A simple proportional data source to retrieve beer review counts by city
  */
 @Injectable()
-export class BeerReviewCountsByCityMockDataSource extends DataSourceService<IChartAssistSeries<IAccessors>>
-    implements IDataSource<IChartAssistSeries<IAccessors>>, OnDestroy {
-
+export class BeerReviewCountsByCityMockDataSource
+    extends DataSourceService<IChartAssistSeries<IAccessors>>
+    implements IDataSource<IChartAssistSeries<IAccessors>>, OnDestroy
+{
     public static providerId = "BeerReviewCountsByCityMockDataSource";
     public busy = new BehaviorSubject(false);
 
@@ -110,12 +122,14 @@ export class BeerReviewCountsByCityMockDataSource extends DataSourceService<ICha
      */
     public dataFieldsConfig: IProportionalDataFieldsConfig = {
         dataFields$: new BehaviorSubject<IDataField[]>(this.dataFields),
-        chartSeriesDataFields$: new BehaviorSubject<IDataField[]>(this.chartSeriesDataFields),
+        chartSeriesDataFields$: new BehaviorSubject<IDataField[]>(
+            this.chartSeriesDataFields
+        ),
     };
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             setTimeout(() => {
                 this.outputsSubject.next({
                     result: getMockBeerReviewCountsByCity(),
@@ -135,10 +149,15 @@ export class BeerReviewCountsByCityMockDataSource extends DataSourceService<ICha
  */
 @Component({
     selector: "proportional-widget-donut-content-formatters-example",
-    templateUrl: "./proportional-donut-content-formatters-example.component.html",
-    styleUrls: ["./proportional-donut-content-formatters-example.component.less"],
+    templateUrl:
+        "./proportional-donut-content-formatters-example.component.html",
+    styleUrls: [
+        "./proportional-donut-content-formatters-example.component.less",
+    ],
 })
-export class ProportionalWidgetDonutContentFormattersExampleComponent implements OnInit {
+export class ProportionalWidgetDonutContentFormattersExampleComponent
+    implements OnInit
+{
     public dashboard: IDashboard | undefined;
 
     // Angular gridster requires a configuration object even if it's empty.
@@ -164,13 +183,18 @@ export class ProportionalWidgetDonutContentFormattersExampleComponent implements
         // on the dashboard startup, it's necessary to add possible content formatters, legend formatters and content aggregators to the registry.
         // using registry is a way for setting the available formatters.
         legendFormattersRegistry.addItems(DEFAULT_LEGEND_FORMATTERS);
-        contentFormattersRegistry.addItems(DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS);
+        contentFormattersRegistry.addItems(
+            DEFAULT_PROPORTIONAL_CONTENT_FORMATTERS
+        );
         aggregatorRegistry.addItems(DEFAULT_PROPORTIONAL_CONTENT_AGGREGATORS);
     }
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
-        const widgetTemplate = this.widgetTypesService.getWidgetType("proportional", 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "proportional",
+            1
+        );
 
         // Registering our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
@@ -216,7 +240,8 @@ export class ProportionalWidgetDonutContentFormattersExampleComponent implements
         // the widget's configuration could potentially be populated from a database
         const widgetIndex: IWidgets = {
             // Complete the proportional widget with information coming from its type definition
-            [widgetConfig.id]: this.widgetTypesService.mergeWithWidgetType(widgetConfig),
+            [widgetConfig.id]:
+                this.widgetTypesService.mergeWithWidgetType(widgetConfig),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -240,12 +265,16 @@ export class ProportionalWidgetDonutContentFormattersExampleComponent implements
      * Sets up the configurator sections for proportional donut
      */
     private setupConfigurator() {
-        const widgetTemplate = this.widgetTypesService.getWidgetType("proportional", 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "proportional",
+            1
+        );
 
         // remove old "presentation", "chartOptionsEditor" and "donutContentConfiguration" sections from the configurator
         delete widgetTemplate.configurator?.structure?.presentation;
         delete widgetTemplate.configurator?.structure?.chartOptionsEditor;
-        delete widgetTemplate.configurator?.structure?.donutContentConfiguration;
+        delete widgetTemplate.configurator?.structure
+            ?.donutContentConfiguration;
 
         // add new "presentation" section
         this.widgetTypesService.setNode(
@@ -269,7 +298,6 @@ export class ProportionalWidgetDonutContentFormattersExampleComponent implements
             DONUT_CONTENT_CONFIGURATION_SLICE.donutContentConfiguration
         );
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -278,26 +306,27 @@ const widgetConfig: IWidget = {
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": { },
+                providers: {},
             },
-            "header": {
-                "properties": {
-                    "title": "Beer Review Tally by City",
-                    "subtitle": "These People Love Beer",
+            header: {
+                properties: {
+                    title: "Beer Review Tally by City",
+                    subtitle: "These People Love Beer",
                 },
             },
-            "chart": {
-                "providers": {
+            chart: {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the chart
-                        "providerId": BeerReviewCountsByCityMockDataSource.providerId,
+                        providerId:
+                            BeerReviewCountsByCityMockDataSource.providerId,
                     } as IProviderConfiguration,
                 },
-                "properties": {
-                    "configuration": {
-                        "chartOptions": {
-                            "type": ProportionalWidgetChartTypes.DonutChart,
-                            "legendPlacement": LegendPlacement.Right,
+                properties: {
+                    configuration: {
+                        chartOptions: {
+                            type: ProportionalWidgetChartTypes.DonutChart,
+                            legendPlacement: LegendPlacement.Right,
                             // old configuration looks like this
                             // contentFormatter: {
                             //     componentType: DonutContentSumFormatterComponent.lateLoadKey,
@@ -306,10 +335,12 @@ const widgetConfig: IWidget = {
                             // NEW configuration looks like this
                             donutContentConfig: {
                                 formatter: {
-                                    componentType: SiUnitsFormatterComponent.lateLoadKey,
+                                    componentType:
+                                        SiUnitsFormatterComponent.lateLoadKey,
                                 },
                                 aggregator: {
-                                    aggregatorType: sumAggregator.aggregatorType,
+                                    aggregatorType:
+                                        sumAggregator.aggregatorType,
                                     properties: {
                                         // example of a default metric to be used for the percentage calculation
                                         // activeMetricId: "austin",
@@ -381,5 +412,4 @@ export function getMockBeerReviewCountsByCity() {
             customDonutContent: "Custom Nur-Sultan",
         },
     ].sort((a, b) => a.data[0] - b.data[0]);
-
 }

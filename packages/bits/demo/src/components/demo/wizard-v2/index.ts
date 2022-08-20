@@ -15,4 +15,3 @@ export * from "./wizard-responsive-header/wizard-responsive-header.example.compo
 export * from "./wizard-with-confirmation-dialog-on-cancel/wizard-with-confirmation-dialog-on-cancel.example.component";
 export * from "./wizard-tooltip/wizard-tooltip.example.component";
 export * from "./wizard-test/wizard-test.component";
-

@@ -6,6 +6,8 @@ import { Component } from "@angular/core";
     host: { class: "select-container" },
 })
 export class SelectV2ErrorExampleComponent {
-    public items = Array.from({ length: 100 }).map((_, i) => $localize`Item ${i}`);
+    public items = Array.from({ length: 100 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public error: boolean = false;
 }

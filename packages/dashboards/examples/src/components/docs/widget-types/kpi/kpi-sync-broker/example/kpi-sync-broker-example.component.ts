@@ -1,5 +1,11 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -25,7 +31,10 @@ import { delay, finalize, take } from "rxjs/operators";
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class AverageRatingKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     public static providerId = "AverageRatingKpiDataSource";
     public busy = new BehaviorSubject<boolean>(false);
 
@@ -37,7 +46,8 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
         this.busy.next(true);
         return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -68,7 +78,10 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
  * A simple KPI data source to retrieve the ratings count of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class RatingsCountKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     public static providerId = "RatingsCountKpiDataSource";
 
     // Use this subject to communicate the data source's busy state
@@ -81,7 +94,8 @@ export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> imple
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         return new Promise((resolve) => {
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(
                     delay(2000),
                     finalize(() => this.busy.next(false))
@@ -114,7 +128,10 @@ export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> imple
  * A simple KPI data source to retrieve the ratings count of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class MockKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class MockKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     public static providerId = "MockKpiDataSource";
 
     // Use this subject to communicate the data source's busy state
@@ -126,7 +143,7 @@ export class MockKpiDataSource extends DataSourceService<IKpiData> implements On
 
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             of(3381342)
                 .pipe(
                     delay(5000),
@@ -167,7 +184,7 @@ export class KpiSyncBrokerExampleComponent implements OnInit {
         private widgetTypesService: WidgetTypesService,
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         this.setupDashboard();
@@ -182,7 +199,11 @@ export class KpiSyncBrokerExampleComponent implements OnInit {
             widgetTemplate,
             "configurator",
             WellKnownPathKey.DataSourceProviders,
-            [AverageRatingKpiDataSource.providerId, RatingsCountKpiDataSource.providerId, MockKpiDataSource.providerId]
+            [
+                AverageRatingKpiDataSource.providerId,
+                RatingsCountKpiDataSource.providerId,
+                MockKpiDataSource.providerId,
+            ]
         );
 
         this.providerRegistry.setProviders({
@@ -204,7 +225,6 @@ export class KpiSyncBrokerExampleComponent implements OnInit {
         });
     }
 
-
     /** Used for restoring widgets state */
     public reInitializeDashboard() {
         // destroys the components and their providers so the dashboard can re init data
@@ -215,17 +235,19 @@ export class KpiSyncBrokerExampleComponent implements OnInit {
     }
 
     private initializeDashboard(): void {
-        const widgetsWithStructure = widgetsConfig.map(w => this.widgetTypesService.mergeWithWidgetType(w));
+        const widgetsWithStructure = widgetsConfig.map((w) =>
+            this.widgetTypesService.mergeWithWidgetType(w)
+        );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
 
         const positions: Record<string, GridsterItem> = {
-            "kpiWidgetId": {
+            kpiWidgetId: {
                 cols: 3,
                 rows: 6,
                 y: 0,
                 x: 0,
             },
-            "kpiWidgetId2": {
+            kpiWidgetId2: {
                 cols: 3,
                 rows: 6,
                 y: 0,
@@ -238,7 +260,6 @@ export class KpiSyncBrokerExampleComponent implements OnInit {
             widgets: widgetsIndex,
         };
     }
-
 }
 
 const widgetsConfig: IWidget[] = [
@@ -247,81 +268,81 @@ const widgetsConfig: IWidget[] = [
         type: "kpi",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "NO Sync Broker",
-                        "subtitle": "Values sizes are being not synced",
+                header: {
+                    properties: {
+                        title: "NO Sync Broker",
+                        subtitle: "Values sizes are being not synced",
                     },
                 },
-                "tiles": {
-                    "properties": {
-                        "nodes": ["kpi1", "kpi2", "kpi3"],
+                tiles: {
+                    properties: {
+                        nodes: ["kpi1", "kpi2", "kpi3"],
                     },
                 },
-                "kpi1": {
-                    "id": "kpi1",
-                    "componentType": KpiComponent.lateLoadKey,
-                    "properties": {
-                        "widgetData": {
-                            "units": `out of 5 Stars`,
-                            "label": `Average Rating`,
-                            "backgroundColor": "lightpink",
+                kpi1: {
+                    id: "kpi1",
+                    componentType: KpiComponent.lateLoadKey,
+                    properties: {
+                        widgetData: {
+                            units: `out of 5 Stars`,
+                            label: `Average Rating`,
+                            backgroundColor: "lightpink",
                         },
                     },
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AverageRatingKpiDataSource.providerId,
+                            providerId: AverageRatingKpiDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi1",
-                                "propertyPath": "widgetData",
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                componentId: "kpi1",
+                                propertyPath: "widgetData",
                             },
                         } as IProviderConfiguration,
                     },
                 },
-                "kpi2": {
-                    "id": "kpi2",
-                    "componentType": KpiComponent.lateLoadKey,
-                    "properties": {
-                        "widgetData": {
-                            "label": `Another label which might be a pretty long one`,
-                            "units": `Which comes from somewhere`,
-                            "backgroundColor": "skyblue",
+                kpi2: {
+                    id: "kpi2",
+                    componentType: KpiComponent.lateLoadKey,
+                    properties: {
+                        widgetData: {
+                            label: `Another label which might be a pretty long one`,
+                            units: `Which comes from somewhere`,
+                            backgroundColor: "skyblue",
                         },
                     },
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": RatingsCountKpiDataSource.providerId,
+                            providerId: RatingsCountKpiDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi2",
-                                "propertyPath": "widgetData",
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                componentId: "kpi2",
+                                propertyPath: "widgetData",
                             },
                         } as IProviderConfiguration,
                     },
                 },
-                "kpi3": {
-                    "id": "kpi3",
-                    "componentType": KpiComponent.lateLoadKey,
-                    "properties": {
-                        "widgetData": {
-                            "label": `Random`,
-                            "units": `Data`,
+                kpi3: {
+                    id: "kpi3",
+                    componentType: KpiComponent.lateLoadKey,
+                    properties: {
+                        widgetData: {
+                            label: `Random`,
+                            units: `Data`,
                         },
                     },
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": MockKpiDataSource.providerId,
+                            providerId: MockKpiDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi3",
-                                "propertyPath": "widgetData",
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                componentId: "kpi3",
+                                propertyPath: "widgetData",
                             },
                         } as IProviderConfiguration,
                     },
@@ -334,17 +355,18 @@ const widgetsConfig: IWidget[] = [
         type: "kpi",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "WITH Sync Broker",
-                        "subtitle": "Now the values of label, units, and value are being synced",
+                header: {
+                    properties: {
+                        title: "WITH Sync Broker",
+                        subtitle:
+                            "Now the values of label, units, and value are being synced",
                     },
                 },
-                "tiles": {
-                    "properties": {
-                        "nodes": ["kpi4", "kpi5", "kpi6"],
+                tiles: {
+                    properties: {
+                        nodes: ["kpi4", "kpi5", "kpi6"],
                     },
-                    "providers": {
+                    providers: {
                         // This is where and how you set the sync broker provider
                         kpiScaleSyncBroker: {
                             providerId: NOVA_KPI_SCALE_SYNC_BROKER,
@@ -359,70 +381,70 @@ const widgetsConfig: IWidget[] = [
                         },
                     },
                 },
-                "kpi4": {
-                    "id": "kpi4",
-                    "componentType": KpiComponent.lateLoadKey,
-                    "properties": {
-                        "widgetData": {
-                            "units": `out of 5 Stars`,
-                            "label": `Average Rating`,
-                            "backgroundColor": "lightpink",
+                kpi4: {
+                    id: "kpi4",
+                    componentType: KpiComponent.lateLoadKey,
+                    properties: {
+                        widgetData: {
+                            units: `out of 5 Stars`,
+                            label: `Average Rating`,
+                            backgroundColor: "lightpink",
                         },
                     },
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AverageRatingKpiDataSource.providerId,
+                            providerId: AverageRatingKpiDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi4",
-                                "propertyPath": "widgetData",
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                componentId: "kpi4",
+                                propertyPath: "widgetData",
                             },
                         } as IProviderConfiguration,
                     },
                 },
-                "kpi5": {
-                    "id": "kpi5",
-                    "componentType": KpiComponent.lateLoadKey,
-                    "properties": {
-                        "widgetData": {
-                            "label": `Another label which might be a pretty long one`,
-                            "units": `Which comes from somewhere`,
-                            "backgroundColor": "skyblue",
+                kpi5: {
+                    id: "kpi5",
+                    componentType: KpiComponent.lateLoadKey,
+                    properties: {
+                        widgetData: {
+                            label: `Another label which might be a pretty long one`,
+                            units: `Which comes from somewhere`,
+                            backgroundColor: "skyblue",
                         },
                     },
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": RatingsCountKpiDataSource.providerId,
+                            providerId: RatingsCountKpiDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi5",
-                                "propertyPath": "widgetData",
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                componentId: "kpi5",
+                                propertyPath: "widgetData",
                             },
                         } as IProviderConfiguration,
                     },
                 },
-                "kpi6": {
-                    "id": "kpi6",
-                    "componentType": KpiComponent.lateLoadKey,
-                    "properties": {
-                        "widgetData": {
-                            "label": `Random`,
-                            "units": `Data`,
+                kpi6: {
+                    id: "kpi6",
+                    componentType: KpiComponent.lateLoadKey,
+                    properties: {
+                        widgetData: {
+                            label: `Random`,
+                            units: `Data`,
                         },
                     },
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": MockKpiDataSource.providerId,
+                            providerId: MockKpiDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi6",
-                                "propertyPath": "widgetData",
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                componentId: "kpi6",
+                                propertyPath: "widgetData",
                             },
                         } as IProviderConfiguration,
                     },

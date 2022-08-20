@@ -8,19 +8,24 @@ import _pull from "lodash/pull";
     styleUrls: ["chips-custom-css.example.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-
 export class ChipsCustomCssExampleComponent {
     public standaloneChips: Array<IChipsItem & any> = [
         {
             id: "standaloneChip1",
             label: "Custom Critical",
-            customClass: ["standalone-chip-custom-styles", "custom-chip-critical"],
+            customClass: [
+                "standalone-chip-custom-styles",
+                "custom-chip-critical",
+            ],
             icon: "severity_critical",
         },
         {
             id: "standaloneChip2",
             label: "Custom Warning",
-            customClass: ["standalone-chip-custom-styles", "custom-chip-warning"],
+            customClass: [
+                "standalone-chip-custom-styles",
+                "custom-chip-warning",
+            ],
             icon: "severity_warning",
         },
         {
@@ -32,7 +37,10 @@ export class ChipsCustomCssExampleComponent {
         {
             id: "statusGroupItem5",
             label: "Disabled",
-            customClass: ["standalone-chip-custom-styles", "custom-chip-disabled"],
+            customClass: [
+                "standalone-chip-custom-styles",
+                "custom-chip-disabled",
+            ],
             icon: "severity_unknown",
         },
     ];
@@ -42,7 +50,8 @@ export class ChipsCustomCssExampleComponent {
             {
                 id: "flatId2",
                 label: "Critical",
-                customClass: "nui-tag-critical nui-tag-with-hover-styles nui-tag-text-light",
+                customClass:
+                    "nui-tag-critical nui-tag-with-hover-styles nui-tag-text-light",
             },
             {
                 id: "flatId3",
@@ -52,12 +61,14 @@ export class ChipsCustomCssExampleComponent {
             {
                 id: "flatId4",
                 label: "Info",
-                customClass: "nui-tag-info nui-tag-with-hover-styles nui-tag-text-light",
+                customClass:
+                    "nui-tag-info nui-tag-with-hover-styles nui-tag-text-light",
             },
             {
                 id: "flatId5",
                 label: "Ok",
-                customClass: "nui-tag-ok nui-tag-with-hover-styles nui-tag-text-light",
+                customClass:
+                    "nui-tag-ok nui-tag-with-hover-styles nui-tag-text-light",
             },
         ],
         groupedItems: [
@@ -68,12 +79,14 @@ export class ChipsCustomCssExampleComponent {
                     {
                         id: "statusGroupItem2",
                         label: "Critical",
-                        customClass: "nui-tag-critical nui-tag-with-hover-styles nui-tag-text-light",
+                        customClass:
+                            "nui-tag-critical nui-tag-with-hover-styles nui-tag-text-light",
                     },
                     {
                         id: "statusGroupItem3",
                         label: "Warning",
-                        customClass: "nui-tag-warning nui-tag-with-hover-styles",
+                        customClass:
+                            "nui-tag-warning nui-tag-with-hover-styles",
                     },
                     {
                         id: "statusGroupItem4",
@@ -82,13 +95,13 @@ export class ChipsCustomCssExampleComponent {
                     {
                         id: "statusGroupItem5",
                         label: "Ok",
-                        customClass: "nui-tag-ok nui-tag-with-hover-styles nui-tag-text-light",
+                        customClass:
+                            "nui-tag-ok nui-tag-with-hover-styles nui-tag-text-light",
                     },
                 ],
             },
         ],
     };
-
 
     public widthChips: Array<IChipsItem & any> = [
         {
@@ -102,10 +115,11 @@ export class ChipsCustomCssExampleComponent {
         },
     ];
 
-
     public onClear(event: IChipRemoved) {
         const source = event.group
-            ? this.nuiChipsSet.groupedItems?.find((group) => group.id === event.group?.id)?.items
+            ? this.nuiChipsSet.groupedItems?.find(
+                  (group) => group.id === event.group?.id
+              )?.items
             : this.nuiChipsSet.flatItems;
         _pull(source || [], event.item);
     }
@@ -114,5 +128,4 @@ export class ChipsCustomCssExampleComponent {
         this.nuiChipsSet.flatItems = [];
         this.nuiChipsSet.groupedItems = [];
     }
-
 }

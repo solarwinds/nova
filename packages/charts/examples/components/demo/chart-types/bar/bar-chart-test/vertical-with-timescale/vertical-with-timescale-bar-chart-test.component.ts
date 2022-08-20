@@ -1,6 +1,17 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    barAccessors, barGrid, BarRenderer, barScales, Chart, IBarAccessors, IChartSeries, NoopAccessors, NoopRenderer, NoopScale, TimeScale, XYGrid,
+    barAccessors,
+    barGrid,
+    BarRenderer,
+    barScales,
+    Chart,
+    IBarAccessors,
+    IChartSeries,
+    NoopAccessors,
+    NoopRenderer,
+    NoopScale,
+    TimeScale,
+    XYGrid,
 } from "@nova-ui/charts";
 import moment, { Moment } from "moment/moment";
 
@@ -8,7 +19,6 @@ import moment, { Moment } from "moment/moment";
     selector: "nui-vertical-with-timescale-bar-chart-test",
     templateUrl: "./vertical-with-timescale-bar-chart-test.component.html",
 })
-
 export class VerticalWithTimescaleBarChartTestComponent implements OnInit {
     public chart = new Chart(barGrid());
 
@@ -19,14 +29,16 @@ export class VerticalWithTimescaleBarChartTestComponent implements OnInit {
         const scales = barScales();
 
         const start = moment([2018, 7, 4]);
-        const seriesSet = getData(start).map((d): IChartSeries<IBarAccessors> => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet = getData(start).map(
+            (d): IChartSeries<IBarAccessors> => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
-        scales.x.fixDomain(seriesSet.map(s => s.data[0].category));
+        scales.x.fixDomain(seriesSet.map((s) => s.data[0].category));
 
         const scaleId = "bottom";
         const time = new TimeScale(scaleId);
@@ -63,14 +75,16 @@ function getData(start: Moment) {
         dataSet.push({
             id: `id-${i}`,
             name: date.toString(),
-            data: [{
-                value: values[i],
-                category: date.toString(),
-                ["__bar"]: {
-                    start: 0,
-                    end: values[i],
+            data: [
+                {
+                    value: values[i],
+                    category: date.toString(),
+                    ["__bar"]: {
+                        start: 0,
+                        end: values[i],
+                    },
                 },
-            }],
+            ],
         });
     }
 

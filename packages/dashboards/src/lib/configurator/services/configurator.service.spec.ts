@@ -11,7 +11,12 @@ import {
     RendererFactory2,
     Type,
 } from "@angular/core";
-import { ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+} from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { NuiPanelModule } from "@nova-ui/bits";
@@ -34,15 +39,15 @@ import { ConfiguratorService } from "./configurator.service";
 import { IConfigurator } from "./types";
 
 class MockComponentFactoryResolver {
-    constructor(private configuratorComponentRef: ComponentRef<ConfiguratorComponent>) {
-    }
+    constructor(
+        private configuratorComponentRef: ComponentRef<ConfiguratorComponent>
+    ) {}
 
     public resolveComponentFactory<T>(): Partial<ComponentFactory<T>> {
         const componentRef = this.configuratorComponentRef;
         return {
             create(): ComponentRef<any> {
-                componentRef.instance.changeDetector.detectChanges = () => {
-                };
+                componentRef.instance.changeDetector.detectChanges = () => {};
                 return componentRef;
             },
         };
@@ -50,24 +55,24 @@ class MockComponentFactoryResolver {
 }
 
 class MockInjector implements Injector {
-    public get<T>(token: Type<T> | InjectionToken<T>, notFoundValue?: T, flags?: InjectFlags): T {
+    public get<T>(
+        token: Type<T> | InjectionToken<T>,
+        notFoundValue?: T,
+        flags?: InjectFlags
+    ): T {
         // @ts-ignore: Suppressed for test purposes
         return null;
     }
 }
 
 class MockRenderer implements Partial<Renderer2> {
-    public appendChild() {
-    }
+    public appendChild() {}
 
-    public setStyle() {
-    }
+    public setStyle() {}
 
-    public removeStyle() {
-    }
+    public removeStyle() {}
 
-    public removeChild() {
-    }
+    public removeChild() {}
 }
 
 class MockRendererFactory {
@@ -75,11 +80,9 @@ class MockRendererFactory {
         return new MockRenderer();
     }
 
-    public begin(): void {
-    }
+    public begin(): void {}
 
-    public end(): void {
-    }
+    public end(): void {}
 
     public async whenRenderingDone?(): Promise<any> {
         return Promise.resolve(null);
@@ -111,24 +114,25 @@ describe("ConfiguratorService > ", () => {
                 PreviewOverlayComponent,
                 WidgetComponent,
             ],
-            providers: [
-                WidgetTypesService,
-            ],
+            providers: [WidgetTypesService],
         });
-        dashboardComponent = TestBed.createComponent(DashboardComponent).componentInstance;
+        dashboardComponent =
+            TestBed.createComponent(DashboardComponent).componentInstance;
         configComponentFixture = TestBed.createComponent(ConfiguratorComponent);
-        configuratorNativeElement = configComponentFixture.debugElement.nativeElement;
+        configuratorNativeElement =
+            configComponentFixture.debugElement.nativeElement;
         const appRef = TestBed.inject(ApplicationRef) as ApplicationRef;
         const router = TestBed.inject(Router);
-        appRef.attachView = (): void => {
-        };
+        appRef.attachView = (): void => {};
 
         widgetTypesService = new WidgetTypesService();
         widgetTypesService.registerWidgetType("table", 2, table);
         widgetTypesService.registerWidgetType("proportional", 1, proportional);
 
         service = new ConfiguratorService(
-            new MockComponentFactoryResolver(configComponentFixture.componentRef) as ComponentFactoryResolver,
+            new MockComponentFactoryResolver(
+                configComponentFixture.componentRef
+            ) as ComponentFactoryResolver,
             widgetTypesService,
             new MockInjector(),
             appRef,
@@ -143,7 +147,6 @@ describe("ConfiguratorService > ", () => {
                 portal: {} as ComponentPortal<any>,
             },
         };
-
     });
 
     afterEach(() => {
@@ -152,7 +155,10 @@ describe("ConfiguratorService > ", () => {
 
     describe("open > ", () => {
         it("should append the configurator to the document body", () => {
-            const spy = spyOn((<any>service), "appendComponentToBody").and.callThrough();
+            const spy = spyOn(
+                <any>service,
+                "appendComponentToBody"
+            ).and.callThrough();
             service.open(configuratorArgs);
             expect(spy).toHaveBeenCalled();
         });
@@ -227,17 +233,24 @@ describe("ConfiguratorService > ", () => {
             };
 
             // we don't want anything to happen here
-            service.close = () => {
-            };
+            service.close = () => {};
 
-            const removeWidgetSpy = spyOn(dashboardComponent, "removeWidget").and.callThrough();
+            const removeWidgetSpy = spyOn(
+                dashboardComponent,
+                "removeWidget"
+            ).and.callThrough();
 
             of(newWidget)
-                .pipe(service.handleSubmit({
-                    widget: originalWidget,
-                    dashboardComponent: dashboardComponent,
-                    // @ts-ignore: Suppressed for test purposes
-                }, undefined))
+                .pipe(
+                    service.handleSubmit(
+                        {
+                            widget: originalWidget,
+                            dashboardComponent: dashboardComponent,
+                            // @ts-ignore: Suppressed for test purposes
+                        },
+                        undefined
+                    )
+                )
                 .subscribe();
 
             flush();
@@ -245,21 +258,29 @@ describe("ConfiguratorService > ", () => {
             configComponentFixture.whenStable().then(() => {
                 expect(removeWidgetSpy).toHaveBeenCalledWith("id", false);
 
-                const dashboardWidget = dashboardComponent.dashboard.widgets["id"];
+                const dashboardWidget =
+                    dashboardComponent.dashboard.widgets["id"];
 
                 expect(dashboardWidget.type).toBe(newWidget.type);
                 expect(dashboardWidget.version).toBe(newWidget.version);
 
-                expect(dashboardWidget.pizzagna.data).toBeUndefined("data to be erased");
+                expect(dashboardWidget.pizzagna.data).toBeUndefined(
+                    "data to be erased"
+                );
 
                 expect(dashboardWidget.pizzagna.configuration).toBe(
-                    newWidget.pizzagna.configuration, "configuration to be taken from the updated widget");
+                    newWidget.pizzagna.configuration,
+                    "configuration to be taken from the updated widget"
+                );
 
                 expect(dashboardWidget.pizzagna.structure).toBe(
-                    widgetTypesService.getWidgetType(newWidget.type, newWidget.version).widget.structure,
-                    "structure to be taken from the new widget's type");
+                    widgetTypesService.getWidgetType(
+                        newWidget.type,
+                        newWidget.version
+                    ).widget.structure,
+                    "structure to be taken from the new widget's type"
+                );
             });
         }));
     });
-
 });

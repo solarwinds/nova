@@ -1,6 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
+import {
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { TimeseriesDocsComponent } from "./timeseries-docs.component";
@@ -13,8 +18,8 @@ const routes: Routes = [
         path: "",
         component: TimeseriesDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -23,8 +28,8 @@ const routes: Routes = [
         path: "example",
         component: TimeseriesWidgetExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -46,5 +51,4 @@ const routes: Routes = [
         TimeseriesWidgetStatusBarExampleComponent,
     ],
 })
-export class TimeseriesDocsModule {
-}
+export class TimeseriesDocsModule {}

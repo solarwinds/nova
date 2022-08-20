@@ -1,4 +1,9 @@
-import { Overlay, OverlayConfig, OverlayContainer, OverlaySizeConfig } from "@angular/cdk/overlay";
+import {
+    Overlay,
+    OverlayConfig,
+    OverlayContainer,
+    OverlaySizeConfig,
+} from "@angular/cdk/overlay";
 import { CdkPortal } from "@angular/cdk/portal";
 import {
     AfterContentChecked,
@@ -33,12 +38,16 @@ export const POPUP_V2_VIEWPORT_MARGINS_DEFAULT = 30;
 /* @dynamic */
 @Component({
     selector: "nui-overlay",
-    template: `
-        <ng-template cdk-portal>
-            <div id="nui-overlay" class="nui-overlay" [attr.role]="roleAttr || null" [ngClass]="{'empty': empty$ | async}">
-                <ng-content></ng-content>
-            </div>
-        </ng-template>`,
+    template: ` <ng-template cdk-portal>
+        <div
+            id="nui-overlay"
+            class="nui-overlay"
+            [attr.role]="roleAttr || null"
+            [ngClass]="{ empty: empty$ | async }"
+        >
+            <ng-content></ng-content>
+        </div>
+    </ng-template>`,
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         Overlay,
@@ -49,8 +58,14 @@ export const POPUP_V2_VIEWPORT_MARGINS_DEFAULT = 30;
     styleUrls: ["overlay.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterContentChecked, AfterViewInit, OnChanges {
-
+export class OverlayComponent
+    implements
+        OnDestroy,
+        IOverlayComponent,
+        AfterContentChecked,
+        AfterViewInit,
+        OnChanges
+{
     /** Sets overlay config in accordance with [Material CDK]{@link https://material.angular.io/cdk/overlay/api#OverlayConfig} */
     @Input() public overlayConfig: OverlayConfig;
 
@@ -100,13 +115,10 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        const overlayPropsToMap = [
-            "toggleReference",
-            "customContainer",
-        ];
+        const overlayPropsToMap = ["toggleReference", "customContainer"];
 
         if (changes) {
-            overlayPropsToMap.forEach(key => {
+            overlayPropsToMap.forEach((key) => {
                 if (changes[key]) {
                     set(this.overlayService, key, changes[key].currentValue);
                 }
@@ -154,18 +166,25 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
         this.overlayService.updateSize(size);
     }
 
-
     /** Stream of clicks outside. */
     private overlayClickOutside(): Observable<MouseEvent> {
-        return this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
+        return this.eventBusService
+            .getStream({ id: DOCUMENT_CLICK_EVENT })
             .pipe(
-                filter(event => {
+                filter((event) => {
                     const clickTarget = event.target as HTMLElement;
-                    const notOrigin = !some(event.composedPath(), p => p === this.toggleReference); // the toggle elem
-                    const notOverlay = this.overlayService.getOverlayRef()?.overlayElement?.contains(clickTarget) === false; // the popup
+                    const notOrigin = !some(
+                        event.composedPath(),
+                        (p) => p === this.toggleReference
+                    ); // the toggle elem
+                    const notOverlay =
+                        this.overlayService
+                            .getOverlayRef()
+                            ?.overlayElement?.contains(clickTarget) === false; // the popup
 
                     return notOrigin && notOverlay;
-                }));
+                })
+            );
     }
 
     private handleOutsideClicks() {
@@ -173,29 +192,41 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
             ? this.overlayService.getOverlayRef().backdropClick()
             : this.overlayClickOutside();
 
-        clicksOutsideStream$.pipe(takeUntil(this.hide$)).subscribe(v => this.clickOutside.emit(v));
+        clicksOutsideStream$
+            .pipe(takeUntil(this.hide$))
+            .subscribe((v) => this.clickOutside.emit(v));
     }
 
     private setOverlayConfig(): void {
         const overlayConfig = this.overlayService.overlayConfig;
 
-        const positionStrategy = this.cdkOverlay.position()
+        const positionStrategy = this.cdkOverlay
+            .position()
             .flexibleConnectedTo(this.toggleReference)
             .withPush(false)
-            .withViewportMargin(this.viewportMargin || POPUP_V2_VIEWPORT_MARGINS_DEFAULT)
-            .withPositions([{
-                originX: "start",
-                originY: "bottom",
-                overlayX: "start",
-                overlayY: "top",
-            }, {
-                originX: "start",
-                originY: "top",
-                overlayX: "start",
-                overlayY: "bottom",
-            }]);
+            .withViewportMargin(
+                this.viewportMargin || POPUP_V2_VIEWPORT_MARGINS_DEFAULT
+            )
+            .withPositions([
+                {
+                    originX: "start",
+                    originY: "bottom",
+                    overlayX: "start",
+                    overlayY: "top",
+                },
+                {
+                    originX: "start",
+                    originY: "top",
+                    overlayX: "start",
+                    overlayY: "bottom",
+                },
+            ]);
 
-        this.positionStrategySubscription = this.overlayPositionService.updateOffsetOnPositionChanges(positionStrategy, () => this.getOverlayRef());
+        this.positionStrategySubscription =
+            this.overlayPositionService.updateOffsetOnPositionChanges(
+                positionStrategy,
+                () => this.getOverlayRef()
+            );
 
         this.overlayService.overlayConfig = {
             ...overlayConfig,
@@ -205,7 +236,8 @@ export class OverlayComponent implements OnDestroy, IOverlayComponent, AfterCont
     }
 
     private getContentHeight(): number {
-        const lastElementChild = this.overlayService.getOverlayRef()?.hostElement?.lastElementChild;
+        const lastElementChild =
+            this.overlayService.getOverlayRef()?.hostElement?.lastElementChild;
 
         // to maintain current signature we will return 0 to avoid unnecessary undefined/null checks
         return lastElementChild?.clientHeight || 0;

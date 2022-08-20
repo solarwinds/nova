@@ -1,28 +1,37 @@
 <div class="widget-configurator-section">
-    <div class="widget-configurator-section__header d-flex justify-content-between align-items-center">
+    <div
+        class="widget-configurator-section__header d-flex justify-content-between align-items-center"
+    >
         <ng-container *ngTemplateOutlet="headerTextTemplate"></ng-container>
         <ng-container *ngTemplateOutlet="headerButtonsTemplate"></ng-container>
 
         <!-- TODO: REMOVE THOSE AFTER ALL WIDGETS ARE USING nui-items-dynamic -->
-        <div headerText
-             *ngIf="headerText"
-             class="widget-configurator-section__header-text"
-             [title]="headerText">
-            {{headerText}}
+        <div
+            headerText
+            *ngIf="headerText"
+            class="widget-configurator-section__header-text"
+            [title]="headerText"
+        >
+            {{ headerText }}
         </div>
         <ng-content select="[headerText]"></ng-content>
         <ng-content select="[headerButtons]"></ng-content>
     </div>
     <ng-container *ngFor="let node of nodeConfigs; trackBy: trackByFn">
-        <ng-container nuiComponentPortal
-                      #componentPortal="nuiComponentPortal"
-                      [componentId]="node.id"
-                      [componentType]="node.componentType"
-                      [providers]="node.providers"
-                      [properties]="node.properties"
-                      [outputs]="['formReady']"
-                      (output)="onEvent(node.id, $event)">
-            <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)"></ng-template>
+        <ng-container
+            nuiComponentPortal
+            #componentPortal="nuiComponentPortal"
+            [componentId]="node.id"
+            [componentType]="node.componentType"
+            [providers]="node.providers"
+            [properties]="node.properties"
+            [outputs]="['formReady']"
+            (output)="onEvent(node.id, $event)"
+        >
+            <ng-template
+                [cdkPortalOutlet]="componentPortal.portal"
+                (attached)="componentPortal.attached($event)"
+            ></ng-template>
         </ng-container>
     </ng-container>
     <ng-content></ng-content>

@@ -3,7 +3,6 @@ import { Helpers } from "../../helpers";
 import { IconAtom } from "../public_api";
 
 describe("USERCONTROL icon", () => {
-
     beforeAll(async () => {
         await Helpers.prepareBrowser("icon");
     });

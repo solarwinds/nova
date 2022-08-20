@@ -9,11 +9,9 @@ import { IconService } from "./icon.service";
  * @ignore
  */
 @NgModule({
-    declarations: [ IconComponent],
-    imports: [
-        NuiCommonModule,
-    ],
-    exports: [ IconComponent ],
-    providers: [ IconService ],
+    declarations: [IconComponent],
+    imports: [NuiCommonModule],
+    exports: [IconComponent],
+    providers: [IconService],
 })
 export class NuiIconModule {}

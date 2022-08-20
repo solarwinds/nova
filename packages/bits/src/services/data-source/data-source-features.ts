@@ -1,6 +1,9 @@
 import { Subject } from "rxjs";
 
-import { IDataSourceFeatures, IDataSourceFeaturesConfiguration } from "./public-api";
+import {
+    IDataSourceFeatures,
+    IDataSourceFeaturesConfiguration,
+} from "./public-api";
 
 export class DataSourceFeatures implements IDataSourceFeaturesConfiguration {
     public featuresChanged = new Subject<IDataSourceFeatures>();

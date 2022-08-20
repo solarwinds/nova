@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-image-basic-example",
     templateUrl: "./image-basic.example.component.html",
 })
-
 export class ImageBasicExampleComponent {}

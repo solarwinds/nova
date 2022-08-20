@@ -22,10 +22,7 @@ import { TabComponent } from "./tab/tab.component";
         TabHeadingComponent,
         TabHeadingGroupComponent,
     ],
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-    ],
+    imports: [NuiCommonModule, NuiIconModule],
     exports: [
         TabHeadingCustomTemplateRefDirective,
         TabHeadingDirective,

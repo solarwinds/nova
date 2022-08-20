@@ -51,7 +51,7 @@ import * as hljs from "highlight.js/lib/core";
     styleUrls: ["./example-code.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class ExampleCodeComponent implements  AfterViewInit {
+export class ExampleCodeComponent implements AfterViewInit {
     /**
      * Programming language used (auto-detect if not present) - see
      * https://highlightjs.org/static/demo/ for possible values
@@ -62,7 +62,8 @@ export class ExampleCodeComponent implements  AfterViewInit {
 
     public ngAfterViewInit(): void {
         // remove wrapping spaces. They might appear due to passing content via ng-content into element
-        this.codeElement.nativeElement.innerHTML = this.codeElement.nativeElement.innerHTML.trim();
+        this.codeElement.nativeElement.innerHTML =
+            this.codeElement.nativeElement.innerHTML.trim();
         hljs.highlightElement(this.codeElement.nativeElement as HTMLElement);
     }
 }

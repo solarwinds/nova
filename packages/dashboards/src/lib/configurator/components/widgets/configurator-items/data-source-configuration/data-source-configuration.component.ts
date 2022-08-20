@@ -18,8 +18,17 @@ import { take } from "rxjs/operators";
 
 import { IDataSourceOutput } from "../../../../../components/providers/types";
 import { ProviderRegistryService } from "../../../../../services/provider-registry.service";
-import { IHasChangeDetector, IHasForm, IProperties, PIZZAGNA_EVENT_BUS } from "../../../../../types";
-import { DATA_SOURCE_CHANGE, DATA_SOURCE_CREATED, DATA_SOURCE_OUTPUT } from "../../../../types";
+import {
+    IHasChangeDetector,
+    IHasForm,
+    IProperties,
+    PIZZAGNA_EVENT_BUS,
+} from "../../../../../types";
+import {
+    DATA_SOURCE_CHANGE,
+    DATA_SOURCE_CREATED,
+    DATA_SOURCE_OUTPUT,
+} from "../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 import { DataSourceErrorComponent } from "../data-source-error/data-source-error.component";
 
@@ -33,7 +42,9 @@ import { DataSourceErrorComponent } from "../data-source-error/data-source-error
     styleUrls: ["./data-source-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DataSourceConfigurationComponent implements IHasChangeDetector, IHasForm, OnInit, OnChanges {
+export class DataSourceConfigurationComponent
+    implements IHasChangeDetector, IHasForm, OnInit, OnChanges
+{
     public static lateLoadKey = "DataSourceConfigurationComponent";
 
     /**
@@ -55,21 +66,24 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
     public dsOutput = new Subject<any>();
     public dataFieldIds = new Subject<any>();
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                public configuratorHeading: ConfiguratorHeadingService,
-                private formBuilder: FormBuilder,
-                private providerRegistryService: ProviderRegistryService,
-                @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-                private injector: Injector,
-                private logger: LoggerService) {
-    }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        public configuratorHeading: ConfiguratorHeadingService,
+        private formBuilder: FormBuilder,
+        private providerRegistryService: ProviderRegistryService,
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
+        private injector: Injector,
+        private logger: LoggerService
+    ) {}
 
     public ngOnInit(): void {
         this.form = this.formBuilder.group({
             providerId: [this.providerId || "", [Validators.required]],
             properties: this.formBuilder.group(this.properties || {}),
         });
-        this.form.setValidators([() => this.hasDataSourceError ? { dataSourceError: true } : null])
+        this.form.setValidators([
+            () => (this.hasDataSourceError ? { dataSourceError: true } : null),
+        ]);
 
         this.formReady.emit(this.form);
     }
@@ -77,7 +91,7 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.providerId && !changes.providerId.isFirstChange()) {
             const previousValue: string = changes.providerId.previousValue;
-            if ((previousValue) !== this.providerId) {
+            if (previousValue !== this.providerId) {
                 this.form.get("providerId")?.setValue(this.providerId);
                 this.invokeDataSource(this.providerId);
             }
@@ -103,8 +117,13 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
         }
         const provider = this.providerRegistryService.getProvider(providerId);
         if (provider) {
-            this.dataSource = this.providerRegistryService.getProviderInstance(provider, this.injector);
-            this.eventBus.next(DATA_SOURCE_CREATED, {payload: this.dataSource});
+            this.dataSource = this.providerRegistryService.getProviderInstance(
+                provider,
+                this.injector
+            );
+            this.eventBus.next(DATA_SOURCE_CREATED, {
+                payload: this.dataSource,
+            });
             this.dataSource.outputsSubject
                 .pipe(take(1))
                 .subscribe((result: any | IDataSourceOutput<any>) => {
@@ -126,8 +145,8 @@ export class DataSourceConfigurationComponent implements IHasChangeDetector, IHa
 
     public onErrorState(isError: boolean) {
         this.hasDataSourceError = isError;
-        this.form.markAsTouched({onlySelf: true});
-        this.form.updateValueAndValidity({emitEvent: false});
+        this.form.markAsTouched({ onlySelf: true });
+        this.form.updateValueAndValidity({ emitEvent: false });
         this.changeDetector.detectChanges();
     }
 }

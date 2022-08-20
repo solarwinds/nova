@@ -8,16 +8,9 @@ import { ContentComponent } from "./content.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-    ],
-    declarations: [
-        ContentComponent,
-    ],
-    exports: [
-        ContentComponent,
-    ],
+    imports: [NuiCommonModule],
+    declarations: [ContentComponent],
+    exports: [ContentComponent],
     providers: [],
 })
-export class NuiContentModule {
-}
+export class NuiContentModule {}

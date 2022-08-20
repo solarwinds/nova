@@ -1,6 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    barAccessors, barGrid, BarHighlightStrategy, BarRenderer, barScales, BarTooltipsPlugin, Chart, ChartAssist, InteractionLabelPlugin, stack,
+    barAccessors,
+    barGrid,
+    BarHighlightStrategy,
+    BarRenderer,
+    barScales,
+    BarTooltipsPlugin,
+    Chart,
+    ChartAssist,
+    InteractionLabelPlugin,
+    stack,
 } from "@nova-ui/charts";
 
 @Component({
@@ -10,10 +19,9 @@ import {
 export class BarChartPercentageExampleComponent implements OnInit {
     public chartAssist: ChartAssist;
     public tooltipsPlugin = new BarTooltipsPlugin();
-    private mbpsUnit = $localize `Mbps`;
+    private mbpsUnit = $localize`Mbps`;
 
-    constructor() {
-    }
+    constructor() {}
 
     ngOnInit() {
         this.chartAssist = new ChartAssist(new Chart(barGrid()), stack);
@@ -26,7 +34,9 @@ export class BarChartPercentageExampleComponent implements OnInit {
         // Note changed data accessor matching value.percentageValue instead of just value
         // accessors.data.value = (data: any) => data.percentageValue;
 
-        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+        });
         const scales = barScales();
 
         const dataSeriesSet = getData();
@@ -43,7 +53,7 @@ export class BarChartPercentageExampleComponent implements OnInit {
         //     });
         // });
 
-        const chartSeriesSet = dataSeriesSet.map(d => ({
+        const chartSeriesSet = dataSeriesSet.map((d) => ({
             ...d,
             accessors,
             renderer,
@@ -56,7 +66,9 @@ export class BarChartPercentageExampleComponent implements OnInit {
     public getTitleFromDataPoint(dataPoint: any) {
         // This generates content for a tooltip.
         // Both seriesId and the data of the corresponding bar are available in the tooltip.
-        return `${dataPoint.seriesId}: ${dataPoint.data.value}${this.mbpsUnit} (${Math.round(dataPoint.data.percentageValue)}%)`;
+        return `${dataPoint.seriesId}: ${dataPoint.data.value}${
+            this.mbpsUnit
+        } (${Math.round(dataPoint.data.percentageValue)}%)`;
     }
 }
 
@@ -64,48 +76,48 @@ export class BarChartPercentageExampleComponent implements OnInit {
 function getData() {
     return [
         {
-            "id": "Brno",
-            "data": [
-                { "category": "Q1 2018", "value": 167 },
-                { "category": "Q2 2018", "value": 122 },
-                { "category": "Q3 2018", "value": 141 },
-                { "category": "Q4 2018", "value": 66 },
+            id: "Brno",
+            data: [
+                { category: "Q1 2018", value: 167 },
+                { category: "Q2 2018", value: 122 },
+                { category: "Q3 2018", value: 141 },
+                { category: "Q4 2018", value: 66 },
             ],
         },
         {
-            "id": "Austin",
-            "data": [
-                { "category": "Q1 2018", "value": 167 },
-                { "category": "Q2 2018", "value": 198 },
-                { "category": "Q3 2018", "value": 208 },
-                { "category": "Q4 2018", "value": 233 },
+            id: "Austin",
+            data: [
+                { category: "Q1 2018", value: 167 },
+                { category: "Q2 2018", value: 198 },
+                { category: "Q3 2018", value: 208 },
+                { category: "Q4 2018", value: 233 },
             ],
         },
         {
-            "id": "Edinburgh",
-            "data": [
-                { "category": "Q1 2018", "value": 167 },
-                { "category": "Q2 2018", "value": 15 },
-                { "category": "Q3 2018", "value": 208 },
-                { "category": "Q4 2018", "value": 123 },
+            id: "Edinburgh",
+            data: [
+                { category: "Q1 2018", value: 167 },
+                { category: "Q2 2018", value: 15 },
+                { category: "Q3 2018", value: 208 },
+                { category: "Q4 2018", value: 123 },
             ],
         },
         {
-            "id": "Newcastle",
-            "data": [
-                { "category": "Q1 2018", "value": 11 },
-                { "category": "Q2 2018", "value": 99 },
-                { "category": "Q3 2018", "value": 17 },
-                { "category": "Q4 2018", "value": 25 },
+            id: "Newcastle",
+            data: [
+                { category: "Q1 2018", value: 11 },
+                { category: "Q2 2018", value: 99 },
+                { category: "Q3 2018", value: 17 },
+                { category: "Q4 2018", value: 25 },
             ],
         },
         {
-            "id": "Kyiv",
-            "data": [
-                { "category": "Q1 2018", "value": 121 },
-                { "category": "Q2 2018", "value": 222 },
-                { "category": "Q3 2018", "value": 319 },
-                { "category": "Q4 2018", "value": 328 },
+            id: "Kyiv",
+            data: [
+                { category: "Q1 2018", value: 121 },
+                { category: "Q2 2018", value: 222 },
+                { category: "Q3 2018", value: 319 },
+                { category: "Q4 2018", value: 328 },
             ],
         },
     ];

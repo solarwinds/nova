@@ -24,7 +24,6 @@ enum Status {
     selector: "nui-vertical-with-legend-bar-chart-test",
     templateUrl: "./vertical-with-legend-bar-chart-test.component.html",
 })
-
 export class VerticalWithLegendBarChartTestComponent implements OnInit {
     public chartAssist = new ChartAssist(new Chart(barGrid()));
 
@@ -32,18 +31,24 @@ export class VerticalWithLegendBarChartTestComponent implements OnInit {
         const statusColorProvider = createColorProvider();
 
         const accessors = barAccessors();
-        accessors.series.color = (seriesId: string, dataSeries: any) => statusColorProvider.get(dataSeries.name);
+        accessors.series.color = (seriesId: string, dataSeries: any) =>
+            statusColorProvider.get(dataSeries.name);
 
-        const renderer = new BarRenderer({ highlightStrategy: new BarSeriesHighlightStrategy("x") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarSeriesHighlightStrategy("x"),
+        });
         const scales = barScales();
-        scales.x.formatters.tick = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
+        scales.x.formatters.tick = (value: string) =>
+            value.charAt(0).toUpperCase() + value.slice(1);
 
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            renderer,
-            scales,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                renderer,
+                scales,
+            }))
+        );
     }
 }
 

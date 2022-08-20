@@ -1,5 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { barAccessors, barGrid, BarRenderer, barScales, Chart, IBarChartConfig } from "@nova-ui/charts";
+import {
+    barAccessors,
+    barGrid,
+    BarRenderer,
+    barScales,
+    Chart,
+    IBarChartConfig,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-bar-chart-horizontal-example",
@@ -14,12 +21,14 @@ export class BarChartHorizontalExampleComponent implements OnInit {
         const renderer = new BarRenderer();
         const scales = barScales(this.barConfig);
 
-        this.chart.update(getData().map(s => ({
-            ...s,
-            accessors,
-            renderer,
-            scales,
-        })));
+        this.chart.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                renderer,
+                scales,
+            }))
+        );
     }
 }
 

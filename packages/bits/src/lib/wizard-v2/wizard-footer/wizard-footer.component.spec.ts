@@ -20,7 +20,10 @@ describe("components >", () => {
                 const spy = spyOn(component["_focusMonitor"], "monitor");
 
                 component.ngAfterViewInit();
-                expect(spy).toHaveBeenCalledWith(component["_elementRef"], true);
+                expect(spy).toHaveBeenCalledWith(
+                    component["_elementRef"],
+                    true
+                );
             });
         });
 
@@ -38,7 +41,10 @@ describe("components >", () => {
                 const spy = spyOn(component["_focusMonitor"], "focusVia");
 
                 component.focus();
-                expect(spy).toHaveBeenCalledWith(component["_elementRef"], "program");
+                expect(spy).toHaveBeenCalledWith(
+                    component["_elementRef"],
+                    "program"
+                );
             });
         });
     });

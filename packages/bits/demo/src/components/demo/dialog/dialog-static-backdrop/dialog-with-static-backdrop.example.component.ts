@@ -8,24 +8,38 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 export class DialogWithStaticBackdropExampleComponent {
     private activeDialog: NuiDialogRef;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-                @Inject(ToastService) private toastService: ToastService) {
-    }
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(ToastService) private toastService: ToastService
+    ) {}
 
     public openWith(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm", backdrop: "static"});
+        this.activeDialog = this.dialogService.open(content, {
+            size: "sm",
+            backdrop: "static",
+        });
     }
     public openWithout(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm", keyboard: false, backdrop: "static"});
+        this.activeDialog = this.dialogService.open(content, {
+            size: "sm",
+            keyboard: false,
+            backdrop: "static",
+        });
     }
 
     public actionDone(): void {
-        this.toastService.success({message: $localize `Action Done!`, title: $localize `Event`});
+        this.toastService.success({
+            message: $localize`Action Done!`,
+            title: $localize`Event`,
+        });
         this.activeDialog.close();
     }
 
     public actionCanceled(): void {
-        this.toastService.info({message: $localize `Action Cancelled!`, title: $localize `Event`});
+        this.toastService.info({
+            message: $localize`Action Cancelled!`,
+            title: $localize`Event`,
+        });
         this.activeDialog.close();
     }
 }

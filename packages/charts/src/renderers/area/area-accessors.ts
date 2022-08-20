@@ -1,5 +1,14 @@
-import { defaultColorProvider, defaultMarkerProvider } from "../../core/common/palette/default-providers";
-import { DataAccessor, IAccessors, IDataAccessors, ISeriesAccessors, SeriesAccessor } from "../../core/common/types";
+import {
+    defaultColorProvider,
+    defaultMarkerProvider,
+} from "../../core/common/palette/default-providers";
+import {
+    DataAccessor,
+    IAccessors,
+    IDataAccessors,
+    ISeriesAccessors,
+    SeriesAccessor,
+} from "../../core/common/types";
 
 export interface IAreaDataAccessors extends IDataAccessors {
     x: DataAccessor;
@@ -28,7 +37,10 @@ export class AreaAccessors implements IAreaAccessors {
     data: IAreaDataAccessors;
     series: IAreaSeriesAccessors;
 
-    constructor(private colorProvider = defaultColorProvider(), private markerProvider = defaultMarkerProvider()) {
+    constructor(
+        private colorProvider = defaultColorProvider(),
+        private markerProvider = defaultMarkerProvider()
+    ) {
         this.data = {
             x: (d, i, ds, s) => d.x,
             x0: (d, i, ds, s) => this.data.x(d, i, ds, s),
@@ -36,10 +48,14 @@ export class AreaAccessors implements IAreaAccessors {
             y: (d, i, ds, s) => d.y,
             y0: (d, i, ds, s) => this.data.y(d, i, ds, s),
             y1: (d, i, ds, s) => this.data.y(d, i, ds, s),
-            absoluteX0: (d, i, ds, s) => d["__stack_x"]?.start ?? this.data.x0(d, i, ds, s),
-            absoluteX1: (d, i, ds, s) => d["__stack_x"]?.end ?? this.data.x1(d, i, ds, s),
-            absoluteY0: (d, i, ds, s) => d["__stack_y"]?.start ?? this.data.y0(d, i, ds, s),
-            absoluteY1: (d, i, ds, s) => d["__stack_y"]?.end ?? this.data.y1(d, i, ds, s),
+            absoluteX0: (d, i, ds, s) =>
+                d["__stack_x"]?.start ?? this.data.x0(d, i, ds, s),
+            absoluteX1: (d, i, ds, s) =>
+                d["__stack_x"]?.end ?? this.data.x1(d, i, ds, s),
+            absoluteY0: (d, i, ds, s) =>
+                d["__stack_y"]?.start ?? this.data.y0(d, i, ds, s),
+            absoluteY1: (d, i, ds, s) =>
+                d["__stack_y"]?.end ?? this.data.y1(d, i, ds, s),
         };
 
         this.series = {
@@ -48,4 +64,3 @@ export class AreaAccessors implements IAreaAccessors {
         };
     }
 }
-

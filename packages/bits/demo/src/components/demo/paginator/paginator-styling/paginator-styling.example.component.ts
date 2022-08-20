@@ -5,4 +5,3 @@ import { Component } from "@angular/core";
     templateUrl: "./paginator-styling.example.component.html",
 })
 export class PaginatorStylingExampleComponent {}
-

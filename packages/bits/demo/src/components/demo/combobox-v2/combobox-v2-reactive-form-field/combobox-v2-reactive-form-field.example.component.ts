@@ -8,7 +8,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class ComboboxV2ReactiveFormFieldExampleComponent implements OnInit {
     public icons: any[] = ["check", "email", "execute"];
-    public items = Array.from({ length: 100 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 100 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public fancyForm: FormGroup;
 
     constructor(private formBuilder: FormBuilder) {}

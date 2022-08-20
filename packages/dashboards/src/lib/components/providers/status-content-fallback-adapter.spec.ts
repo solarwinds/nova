@@ -19,7 +19,10 @@ describe("StatusContentFallbackAdapter > ", () => {
     beforeEach(() => {
         eventBus = new EventBus();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
         adapter = new StatusContentFallbackAdapter(eventBus, pizzagnaService);
         (<any>adapter).componentId = "testId";
 
@@ -85,8 +88,10 @@ describe("StatusContentFallbackAdapter > ", () => {
 
             const spy = spyOn(pizzagnaService, "setProperty");
             eventBus.getStream(DATA_SOURCE_OUTPUT).next(event);
-            expect(spy).toHaveBeenCalledWith(firstSetPropArg, expectedError.toString());
+            expect(spy).toHaveBeenCalledWith(
+                firstSetPropArg,
+                expectedError.toString()
+            );
         });
     });
-
 });

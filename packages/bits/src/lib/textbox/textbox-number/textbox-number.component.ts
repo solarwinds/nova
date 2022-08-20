@@ -10,13 +10,19 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors } from "@angular/forms";
+import {
+    ControlValueAccessor,
+    FormControl,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR,
+    ValidationErrors,
+} from "@angular/forms";
 import isNumber from "lodash/isNumber";
 import isUndefined from "lodash/isUndefined";
 import round from "lodash/round";
 
 import { regexpValidation } from "../../../constants/regex.constants";
-import {NuiFormFieldControl} from "../../form-field/public-api";
+import { NuiFormFieldControl } from "../../form-field/public-api";
 import { KEYBOARD_CODE } from "../../../constants";
 
 // <example-url>./../examples/index.html#/textbox/textbox-number</example-url>
@@ -44,23 +50,29 @@ import { KEYBOARD_CODE } from "../../../constants";
     styleUrls: ["../textbox.component.less", "./textbox-number.component.less"],
     encapsulation: ViewEncapsulation.None,
     host: {
-        "role": "spinbutton",
+        role: "spinbutton",
         "[attr.aria-label]": "ariaLabel",
         "[attr.aria-valuemin]": "minValue || null",
         "[attr.aria-valuemax]": "maxValue || null",
         "[attr.aria-valuenow]": "value || 0",
     },
 })
-export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFieldControl, OnChanges {
-
-    private static createRangeValidator(min: number, max: number): (c: FormControl) => ValidationErrors | null {
+export class TextboxNumberComponent
+    implements ControlValueAccessor, NuiFormFieldControl, OnChanges
+{
+    private static createRangeValidator(
+        min: number,
+        max: number
+    ): (c: FormControl) => ValidationErrors | null {
         const rangeValidator = (c: FormControl) => {
             if (!c.value && c.value !== 0) {
                 return null;
             }
 
-            if ((!isUndefined(max) && c.value > max) ||
-                (!isUndefined(min) && c.value < min)) {
+            if (
+                (!isUndefined(max) && c.value > max) ||
+                (!isUndefined(min) && c.value < min)
+            ) {
                 return {
                     range: {
                         given: c.value,
@@ -117,7 +129,7 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
     /**
      * Input to apply error state styles
      */
-    @Input() public isInErrorState: boolean = false;  // TODO: do we need to hook this up?
+    @Input() public isInErrorState: boolean = false; // TODO: do we need to hook this up?
 
     /**
      * Input to set aria label text
@@ -139,7 +151,8 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
 
     @Output() valueChange: EventEmitter<number> = new EventEmitter<number>();
 
-    @ViewChild("numberInput", {static: true}) private input: ElementRef<HTMLFieldSetElement>;
+    @ViewChild("numberInput", { static: true })
+    private input: ElementRef<HTMLFieldSetElement>;
 
     public formControl: FormControl;
 
@@ -149,7 +162,10 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
 
     public ngOnChanges(changes: SimpleChanges) {
         if (changes["minValue"] || changes["maxValue"]) {
-            this.validatorFn = TextboxNumberComponent.createRangeValidator(this.minValue, this.maxValue);
+            this.validatorFn = TextboxNumberComponent.createRangeValidator(
+                this.minValue,
+                this.maxValue
+            );
         }
     }
 
@@ -179,11 +195,9 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
         });
     }
 
-    public onChange(value: any) {
-    }
+    public onChange(value: any) {}
 
-    public onTouched() {
-    }
+    public onTouched() {}
 
     public writeValue(value: any) {
         this.value = value;
@@ -211,12 +225,17 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
 
     public validate(c: FormControl): ValidationErrors | null {
         this.formControl = c;
-        return (this.validatorFn ? this.validatorFn(c) : null) || this.nativeValidator();
+        return (
+            (this.validatorFn ? this.validatorFn(c) : null) ||
+            this.nativeValidator()
+        );
     }
 
     public hasError() {
-        return (this.formControl?.touched || this.formControl?.dirty)
-            && !this.formControl?.valid;
+        return (
+            (this.formControl?.touched || this.formControl?.dirty) &&
+            !this.formControl?.valid
+        );
     }
 
     private nativeValidator(): ValidationErrors | null {
@@ -224,7 +243,7 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
             return null;
         }
 
-        return {format: "Invalid input"};
+        return { format: "Invalid input" };
     }
 
     private clampToRange(value: number): number {
@@ -242,21 +261,34 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
 
     // We need to restrict user input because safari does not prevent non numerical input in type 'number'
     public preventNonNumericalPaste(event: ClipboardEvent): void {
-        const pastedString: String | undefined = event.clipboardData?.getData("text/plain");
+        const pastedString: String | undefined =
+            event.clipboardData?.getData("text/plain");
         if (!pastedString) {
             throw new Error("Unable to parse clipboardData");
         }
-        this.preventDefaultEventBehavior(event, pastedString, regexpValidation.multiCharNumeric);
+        this.preventDefaultEventBehavior(
+            event,
+            pastedString,
+            regexpValidation.multiCharNumeric
+        );
     }
 
     public preventNonNumericalInput(event: KeyboardEvent): void {
         const inputString: String = event.key;
         if (!this.isMetaKey(event)) {
-            this.preventDefaultEventBehavior(event, inputString, regexpValidation.singleCharNumeric);
+            this.preventDefaultEventBehavior(
+                event,
+                inputString,
+                regexpValidation.singleCharNumeric
+            );
         }
     }
 
-    private preventDefaultEventBehavior(event: KeyboardEvent | ClipboardEvent, inputString: String, regexp: RegExp): void {
+    private preventDefaultEventBehavior(
+        event: KeyboardEvent | ClipboardEvent,
+        inputString: String,
+        regexp: RegExp
+    ): void {
         if (!inputString?.match(regexp)) {
             event.preventDefault();
         }
@@ -275,5 +307,4 @@ export class TextboxNumberComponent implements ControlValueAccessor, NuiFormFiel
             event.code === KEYBOARD_CODE.ARROW_UP
         );
     }
-
 }

@@ -2,7 +2,12 @@ import { PortalModule } from "@angular/cdk/portal";
 import { Component, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BrowserDynamicTestingModule } from "@angular/platform-browser-dynamic/testing";
-import { ButtonComponent, IconComponent, IconService, LoggerService } from "@nova-ui/bits";
+import {
+    ButtonComponent,
+    IconComponent,
+    IconService,
+    LoggerService,
+} from "@nova-ui/bits";
 
 import { TemplateLoadErrorComponent } from "../../../../components/template-load-error/template-load-error.component";
 import { mockLoggerService } from "../../../../mocks";
@@ -16,14 +21,13 @@ import { DashwizComponent } from "./dashwiz.component";
 
 @Component({
     selector: "nui-test-cmp",
-    template: `
-        <nui-dashwiz finishText="Finish">
-            <nui-dashwiz-step></nui-dashwiz-step>
-            <nui-dashwiz-step></nui-dashwiz-step>
-            <nui-dashwiz-step></nui-dashwiz-step>
-        </nui-dashwiz>`,
+    template: ` <nui-dashwiz finishText="Finish">
+        <nui-dashwiz-step></nui-dashwiz-step>
+        <nui-dashwiz-step></nui-dashwiz-step>
+        <nui-dashwiz-step></nui-dashwiz-step>
+    </nui-dashwiz>`,
 })
-class TestWrapperComponent { }
+class TestWrapperComponent {}
 
 describe("components >", () => {
     describe("wizard >", () => {
@@ -80,7 +84,9 @@ describe("components >", () => {
                 };
 
                 component.selectStep(component.steps.toArray()[0]);
-                expect(component.stepNavigated.emit).toHaveBeenCalledWith(stepNavigatedEventMock);
+                expect(component.stepNavigated.emit).toHaveBeenCalledWith(
+                    stepNavigatedEventMock
+                );
             });
         });
 
@@ -143,17 +149,28 @@ describe("components >", () => {
             });
 
             it("should move to next wizard step", () => {
-
                 component.onNext();
-                expect(component.currentStep).toBe(component.steps.toArray()[1]);
+                expect(component.currentStep).toBe(
+                    component.steps.toArray()[1]
+                );
             });
 
             it("should move to next step only after delay (simulating long action on exit step)", () => {
-                component.navigationControl.next({ busyState: { busy: false }, allowStepChange: false });
+                component.navigationControl.next({
+                    busyState: { busy: false },
+                    allowStepChange: false,
+                });
                 component.onNext();
-                expect(component.currentStep).toBe(component.steps.toArray()[0]);
-                component.navigationControl.next({ busyState: { busy: false }, allowStepChange: true });
-                expect(component.currentStep).toBe(component.steps.toArray()[1]);
+                expect(component.currentStep).toBe(
+                    component.steps.toArray()[0]
+                );
+                component.navigationControl.next({
+                    busyState: { busy: false },
+                    allowStepChange: true,
+                });
+                expect(component.currentStep).toBe(
+                    component.steps.toArray()[1]
+                );
             });
         });
 
@@ -180,7 +197,9 @@ describe("components >", () => {
                 component.onNext();
 
                 component.onBack();
-                expect(component.currentStep).toBe(component.steps.toArray()[0]);
+                expect(component.currentStep).toBe(
+                    component.steps.toArray()[0]
+                );
             });
 
             it("should notify on Back button click", () => {

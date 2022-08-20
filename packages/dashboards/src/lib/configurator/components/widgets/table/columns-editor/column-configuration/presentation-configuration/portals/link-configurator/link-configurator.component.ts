@@ -14,7 +14,8 @@ import { FormatterConfiguratorComponent } from "../formatter-configurator.compon
 })
 export class LinkConfiguratorComponent
     extends FormatterConfiguratorComponent
-    implements IHasChangeDetector {
+    implements IHasChangeDetector
+{
     public static lateLoadKey = "LinkConfiguratorComponent";
 
     constructor(

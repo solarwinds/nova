@@ -38,11 +38,11 @@ export class DialogVisualTestComponent {
 
     public open(content: TemplateRef<string>, severity = "") {
         this.severity = severity;
-        this.activeDialog = this.dialogService.open(content, {size: "sm"});
+        this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
     public openSizes(content: TemplateRef<string>, size: any) {
-        this.activeDialog = this.dialogService.open(content, {size});
+        this.activeDialog = this.dialogService.open(content, { size });
     }
 
     public openResponsive(content: TemplateRef<string>, options: any) {

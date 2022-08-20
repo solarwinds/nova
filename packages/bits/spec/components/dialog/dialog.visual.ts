@@ -25,18 +25,32 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("dialog/dialog-visual-test");
-        buttonCriticalDialog = element(by.id("nui-visual-test-critical-dialog-btn"));
-        buttonWarningDialog = element(by.id("nui-visual-test-warning-dialog-btn"));
+        buttonCriticalDialog = element(
+            by.id("nui-visual-test-critical-dialog-btn")
+        );
+        buttonWarningDialog = element(
+            by.id("nui-visual-test-warning-dialog-btn")
+        );
         buttonInfoDialog = element(by.id("nui-visual-test-info-dialog-btn"));
-        buttonMediumDialog = element(by.id("nui-visual-test-medium-dialog-btn"));
+        buttonMediumDialog = element(
+            by.id("nui-visual-test-medium-dialog-btn")
+        );
         buttonLargeDialog = element(by.id("nui-visual-test-large-dialog-btn"));
-        buttonCustomHeaderDialog = element(by.id("nui-visual-test-custom-actions-dialog-btn"));
-        buttonConfirmationDialogOverrides = element(by.id("nui-visual-test-confirmation-dialog-overrides-btn"));
-        buttonConfirmationDialogDefaults = element(by.id("nui-visual-test-confirmation-dialog-defaults-btn"));
+        buttonCustomHeaderDialog = element(
+            by.id("nui-visual-test-custom-actions-dialog-btn")
+        );
+        buttonConfirmationDialogOverrides = element(
+            by.id("nui-visual-test-confirmation-dialog-overrides-btn")
+        );
+        buttonConfirmationDialogDefaults = element(
+            by.id("nui-visual-test-confirmation-dialog-defaults-btn")
+        );
         buttonLongDialog = element(by.id("nui-visual-test-long-dialog-btn"));
-        buttonResponsiveDialog = element(by.id("nui-visual-test-responsive-dialog-btn"));
+        buttonResponsiveDialog = element(
+            by.id("nui-visual-test-responsive-dialog-btn")
+        );
         select = Atom.find(SelectAtom, "nui-visual-basic-select");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 

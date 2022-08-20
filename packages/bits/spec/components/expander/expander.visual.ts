@@ -22,15 +22,42 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("expander/expander-visual-test");
-        basicExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-basic");
-        lineLessExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-without-border");
-        customHeaderExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-custom-header");
-        stakedExpander = Atom.find(ExpanderAtom, "nui-visual-test-staked-expander-1");
-        nestedParentExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-nested-expander");
-        nestedChildExpander = Atom.find(ExpanderAtom, "nui-visual-test-expander-nested-expander-child");
-        expanderWithText = Atom.find(ExpanderAtom, "nui-visual-test-expander-header-text");
-        expanderWithTextAndIcon = Atom.find(ExpanderAtom, "nui-visual-test-expander-text-and-icon");
-        menuOfCustomHeader = Atom.find(MenuAtom, "nui-demo-expander-header-menu");
+        basicExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-basic"
+        );
+        lineLessExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-without-border"
+        );
+        customHeaderExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-custom-header"
+        );
+        stakedExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-staked-expander-1"
+        );
+        nestedParentExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-nested-expander"
+        );
+        nestedChildExpander = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-nested-expander-child"
+        );
+        expanderWithText = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-header-text"
+        );
+        expanderWithTextAndIcon = Atom.find(
+            ExpanderAtom,
+            "nui-visual-test-expander-text-and-icon"
+        );
+        menuOfCustomHeader = Atom.find(
+            MenuAtom,
+            "nui-demo-expander-header-menu"
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });
@@ -42,7 +69,9 @@ describe(`Visual tests: ${name}`, () => {
         await basicExpander.toggle();
         await nestedChildExpander.toggle();
         await lineLessExpander.getExpanderToggleIcon().hover();
-        await camera.say.cheese(`BasicExpander and NestedChildExpander is toggled and Expander without expand line is hovered`);
+        await camera.say.cheese(
+            `BasicExpander and NestedChildExpander is toggled and Expander without expand line is hovered`
+        );
 
         await basicExpander.toggle();
         await lineLessExpander.toggle();
@@ -56,11 +85,15 @@ describe(`Visual tests: ${name}`, () => {
 
         await customHeaderExpander.toggle();
         await menuOfCustomHeader.toggleMenu();
-        await camera.say.cheese(`Expander with custom header and header menu in expanded state`);
+        await camera.say.cheese(
+            `Expander with custom header and header menu in expanded state`
+        );
 
         await nestedParentExpander.toggle();
         await Helpers.switchDarkTheme("on");
-        await camera.say.cheese(`Dark theme and expanded NestedExpander and NestedChildExpander`);
+        await camera.say.cheese(
+            `Dark theme and expanded NestedExpander and NestedChildExpander`
+        );
 
         await camera.turn.off();
     }, 100000);

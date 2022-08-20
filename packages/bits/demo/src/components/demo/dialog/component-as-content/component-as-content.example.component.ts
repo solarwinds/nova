@@ -11,7 +11,12 @@ export class ComponentAsContentExampleComponent {
     constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
     public openWithComponent() {
-        const dialogRef = this.dialogService.open(DialogContentExampleComponent, { size: "sm" });
-        dialogRef.componentInstance.name = $localize `Dialog title`;
+        const dialogRef = this.dialogService.open(
+            DialogContentExampleComponent,
+            {
+                size: "sm",
+            }
+        );
+        dialogRef.componentInstance.name = $localize`Dialog title`;
     }
 }

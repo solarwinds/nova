@@ -1,4 +1,10 @@
-import { Component, Inject, Injectable, OnDestroy, ViewChild } from "@angular/core";
+import {
+    Component,
+    Inject,
+    Injectable,
+    OnDestroy,
+    ViewChild,
+} from "@angular/core";
 import {
     DataSourceService,
     IFilteringOutputs,
@@ -11,19 +17,23 @@ import _isEmpty from "lodash/isEmpty";
 import { Subject, Subscription } from "rxjs";
 import { delay } from "rxjs/operators";
 
-import { ExampleItem, ICustomDSFilteredData, IFilterGroupItem } from "./custom-data-source-filter-group/public-api";
+import {
+    ExampleItem,
+    ICustomDSFilteredData,
+    IFilterGroupItem,
+} from "./custom-data-source-filter-group/public-api";
 
 const RANDOM_ARRAY = [
-    {color: "regular-azure", status: "Critical"},
-    {color: "regular-black", status: "Warning"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-yellow", status: "Critical"},
-    {color: "regular-yellow", status: "Warning"},
-    {color: "regular-black", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Up"},
-    {color: "regular-blue", status: "Up"},
-    {color: "regular-azure", status: "Critical"},
+    { color: "regular-azure", status: "Critical" },
+    { color: "regular-black", status: "Warning" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-yellow", status: "Critical" },
+    { color: "regular-yellow", status: "Warning" },
+    { color: "regular-black", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Up" },
+    { color: "regular-blue", status: "Up" },
+    { color: "regular-azure", status: "Critical" },
 ];
 
 const filterGroupItems: IFilterGroupItem[] = [
@@ -36,22 +46,26 @@ const filterGroupItems: IFilterGroupItem[] = [
                 value: "azure",
                 displayValue: "Azure",
                 count: 3,
-            }, {
+            },
+            {
                 value: "black",
                 displayValue: "Black",
                 count: 2,
-            }, {
+            },
+            {
                 value: "blue",
                 displayValue: "Blue",
                 count: 3,
-            }, {
+            },
+            {
                 value: "yellow",
                 displayValue: "Yellow",
                 count: 2,
             },
         ],
         selectedFilterValues: [],
-    }, {
+    },
+    {
         id: "status",
         title: "Status",
         allFilterOptions: [
@@ -59,7 +73,8 @@ const filterGroupItems: IFilterGroupItem[] = [
                 value: "warning",
                 displayValue: "Warning",
                 count: 2,
-            }, {
+            },
+            {
                 value: "critical",
                 displayValue: "Critical",
                 count: 2,
@@ -83,7 +98,8 @@ const filterGroupItems: IFilterGroupItem[] = [
 /** @ignore */
 @Injectable()
 export class FakeHTTPService {
-    public receiveFilteredDataSubject: Subject<ICustomDSFilteredData> = new Subject<ICustomDSFilteredData>();
+    public receiveFilteredDataSubject: Subject<ICustomDSFilteredData> =
+        new Subject<ICustomDSFilteredData>();
     public getFilteredDataSubject: Subject<IFilters> = new Subject<IFilters>();
 
     constructor() {}
@@ -92,9 +108,11 @@ export class FakeHTTPService {
         this.getFilteredDataSubject.next(filters);
 
         return new Promise((resolve) => {
-            this.receiveFilteredDataSubject.subscribe((filteredData: ICustomDSFilteredData) => {
-                resolve(filteredData);
-            });
+            this.receiveFilteredDataSubject.subscribe(
+                (filteredData: ICustomDSFilteredData) => {
+                    resolve(filteredData);
+                }
+            );
         });
     }
 
@@ -129,22 +147,30 @@ export class FakeServer implements OnDestroy {
 
     @ViewChild(RepeatComponent) filteringRepeat: RepeatComponent;
 
-    constructor(@Inject(DataSourceService) private dataSourceService: DataSourceService<ExampleItem>,
-                @Inject(FakeHTTPService) private httpService: FakeHTTPService) {
-        (this.dataSourceService as LocalFilteringDataSource<ExampleItem>).setData(RANDOM_ARRAY);
+    constructor(
+        @Inject(DataSourceService)
+        private dataSourceService: DataSourceService<ExampleItem>,
+        @Inject(FakeHTTPService) private httpService: FakeHTTPService
+    ) {
+        (
+            this.dataSourceService as LocalFilteringDataSource<ExampleItem>
+        ).setData(RANDOM_ARRAY);
 
         this.filterGroupSubscriptions.push(
-            this.dataSourceService.outputsSubject.subscribe((filteringState: IFilteringOutputs) => {
-                this.filteringState = filteringState;
-                this.recalculateCounts(filteringState);
-            })
+            this.dataSourceService.outputsSubject.subscribe(
+                (filteringState: IFilteringOutputs) => {
+                    this.filteringState = filteringState;
+                    this.recalculateCounts(filteringState);
+                }
+            )
         );
 
         this.filterGroupSubscriptions.push(
             this.httpService.getFilteredDataSubject
                 .pipe(delay(500))
                 .subscribe(async (filters: IFilters) => {
-                    this.filteringState = await this.dataSourceService.getFilteredData(filters);
+                    this.filteringState =
+                        await this.dataSourceService.getFilteredData(filters);
                     this.recalculateCounts(this.filteringState);
                     this.sendFilteredData();
                 })
@@ -159,8 +185,8 @@ export class FakeServer implements OnDestroy {
     }
 
     private recalculateCounts(filterData: IFilteringOutputs): void {
-        this.filterGroupItems.forEach(filterGroupItem => {
-            filterGroupItem.allFilterOptions.forEach(filterOption => {
+        this.filterGroupItems.forEach((filterGroupItem) => {
+            filterGroupItem.allFilterOptions.forEach((filterOption) => {
                 const counts = filterData[filterGroupItem.id];
 
                 if (!_isEmpty(counts)) {
@@ -175,6 +201,8 @@ export class FakeServer implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this.filterGroupSubscriptions.forEach(subscription => subscription.unsubscribe());
+        this.filterGroupSubscriptions.forEach((subscription) =>
+            subscription.unsubscribe()
+        );
     }
 }

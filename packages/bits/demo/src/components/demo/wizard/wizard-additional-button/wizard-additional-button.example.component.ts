@@ -5,10 +5,12 @@ import { ToastService } from "@nova-ui/bits";
     selector: "nui-wizard-additional-button-example",
     templateUrl: "./wizard-additional-button.example.component.html",
 })
-export class WizardAdditionalButtonExampleComponent  {
+export class WizardAdditionalButtonExampleComponent {
     constructor(@Inject(ToastService) private toastService: ToastService) {}
 
     public onAdditionalButtonClick() {
-        this.toastService.info({message: $localize `Additional button clicked!`});
+        this.toastService.info({
+            message: $localize`Additional button clicked!`,
+        });
     }
 }

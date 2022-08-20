@@ -2,7 +2,12 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { CdkTreeModule } from "@angular/cdk/tree";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiDndModule, NuiDocsModule, NuiMessageModule } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiDndModule,
+    NuiDocsModule,
+    NuiMessageModule,
+} from "@nova-ui/bits";
 
 import { DndAxisConstraintsExampleComponent } from "./dnd-axis-constraints/dnd-axis-constraints.example.component";
 import { DndBasicExampleComponent } from "./dnd-basic/dnd-basic.example.component";
@@ -57,9 +62,13 @@ const routes: Routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
 })
-export class DndModule {
-}
+export class DndModule {}

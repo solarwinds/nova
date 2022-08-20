@@ -1,5 +1,9 @@
 import { defaultColorProvider } from "../../../core/common/palette/default-providers";
-import { DataAccessor, IAccessors, SeriesAccessor } from "../../../core/common/types";
+import {
+    DataAccessor,
+    IAccessors,
+    SeriesAccessor,
+} from "../../../core/common/types";
 
 export interface IRadialDataAccessors {
     value: DataAccessor;
@@ -25,7 +29,7 @@ export class RadialAccessors implements IRadialAccessors {
 
     constructor(private colorProvider = defaultColorProvider()) {
         this.data = {
-            value: (d: any) => Number.isFinite(d) ? d : d.value,
+            value: (d: any) => (Number.isFinite(d) ? d : d.value),
         };
         this.series = {
             color: this.colorProvider ? this.colorProvider.get : undefined,

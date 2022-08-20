@@ -1,6 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiMessageModule, SrlcStage } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 
 import {
     MessageBasicExampleComponent,
@@ -20,8 +26,8 @@ const routes = [
         path: "",
         component: MessageDocsComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -30,8 +36,8 @@ const routes = [
         path: "message-test",
         component: MessageTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -39,8 +45,8 @@ const routes = [
         path: "message-visual-test",
         component: MessageVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -68,12 +74,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class MessageModule {
-}
+export class MessageModule {}

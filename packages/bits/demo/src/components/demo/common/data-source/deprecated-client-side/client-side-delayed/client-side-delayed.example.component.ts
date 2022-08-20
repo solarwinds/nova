@@ -1,28 +1,38 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, ViewChild } from "@angular/core";
 import {
-    INovaFilteringOutputs, LocalFilteringDataSource, PaginatorComponent, SearchComponent, SorterComponent,
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnDestroy,
+    ViewChild,
+} from "@angular/core";
+import {
+    INovaFilteringOutputs,
+    LocalFilteringDataSource,
+    PaginatorComponent,
+    SearchComponent,
+    SorterComponent,
 } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
 const INITIAL_ARRAY = [
-    {color: "regular-blue"},
-    {color: "regular-green"},
-    {color: "regular-yellow"},
-    {color: "regular-cyan"},
-    {color: "regular-magenta"},
-    {color: "regular-black"},
-    {color: "dark-blue"},
-    {color: "dark-green"},
-    {color: "dark-yellow"},
-    {color: "dark-cyan"},
-    {color: "dark-magenta"},
-    {color: "light-blue"},
-    {color: "light-green"},
-    {color: "light-yellow"},
-    {color: "light-cyan"},
-    {color: "light-magenta"},
+    { color: "regular-blue" },
+    { color: "regular-green" },
+    { color: "regular-yellow" },
+    { color: "regular-cyan" },
+    { color: "regular-magenta" },
+    { color: "regular-black" },
+    { color: "dark-blue" },
+    { color: "dark-green" },
+    { color: "dark-yellow" },
+    { color: "dark-cyan" },
+    { color: "dark-magenta" },
+    { color: "light-blue" },
+    { color: "light-green" },
+    { color: "light-yellow" },
+    { color: "light-cyan" },
+    { color: "light-magenta" },
 ];
 
 /**
@@ -34,7 +44,9 @@ const INITIAL_ARRAY = [
     providers: [LocalFilteringDataSource],
     templateUrl: "./client-side-delayed.example.component.html",
 })
-export class DepreacatedDataSourceClientSideDelayedExampleComponent implements AfterViewInit, OnDestroy {
+export class DepreacatedDataSourceClientSideDelayedExampleComponent
+    implements AfterViewInit, OnDestroy
+{
     public searchTerm = "";
     public page = 1;
     public sorter = {
@@ -63,8 +75,10 @@ export class DepreacatedDataSourceClientSideDelayedExampleComponent implements A
     @ViewChild("filteringSearch") filteringSearch: SearchComponent;
     @ViewChild("filteringSorter") filteringSorter: SorterComponent;
 
-    constructor(public dataSourceService: LocalFilteringDataSource<any>,
-                public changeDetection: ChangeDetectorRef) {
+    constructor(
+        public dataSourceService: LocalFilteringDataSource<any>,
+        public changeDetection: ChangeDetectorRef
+    ) {
         dataSourceService.setData(INITIAL_ARRAY);
 
         this.filters = ["regular", "dark", "light"];
@@ -81,13 +95,16 @@ export class DepreacatedDataSourceClientSideDelayedExampleComponent implements A
             },
         };
         this.dataSourceService.applyFilters();
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.state = data;
-            if (data.paginator?.reset) {
-                this.filteringPaginator.page = 1;
-            }
-            this.changeDetection.detectChanges();
-        });
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.state = data;
+                    if (data.paginator?.reset) {
+                        this.filteringPaginator.page = 1;
+                    }
+                    this.changeDetection.detectChanges();
+                }
+            );
         this.delayActionSubject.pipe(debounceTime(500)).subscribe(() => {
             this.dataSourceService.applyFilters();
         });
@@ -104,5 +121,4 @@ export class DepreacatedDataSourceClientSideDelayedExampleComponent implements A
     public changePagination() {
         this.dataSourceService.applyFilters();
     }
-
 }

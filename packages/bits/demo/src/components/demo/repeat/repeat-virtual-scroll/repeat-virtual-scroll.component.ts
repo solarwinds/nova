@@ -1,6 +1,20 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import {
-    DataSourceService, IFilteringOutputs, INovaFilteringOutputs, IRepeatItemConfig, RepeatComponent, VirtualViewportManager,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Inject,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from "@angular/core";
+import {
+    DataSourceService,
+    IFilteringOutputs,
+    INovaFilteringOutputs,
+    IRepeatItemConfig,
+    RepeatComponent,
+    VirtualViewportManager,
 } from "@nova-ui/bits";
 import { BehaviorSubject, Subject } from "rxjs";
 import { filter, switchMap, takeUntil, tap } from "rxjs/operators";
@@ -22,7 +36,9 @@ import { IServer } from "./types";
         },
     ],
 })
-export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDestroy {
+export class RepeatVirtualScrollComponent
+    implements OnInit, AfterViewInit, OnDestroy
+{
     public listItems$ = new BehaviorSubject<IServer[]>([]);
 
     public filteringState: INovaFilteringOutputs = {};
@@ -39,19 +55,22 @@ export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDe
     private destroy$ = new Subject();
 
     constructor(
-        @Inject(DataSourceService) private dataSource: RepeatVirtualScrollDataSource<IServer>,
+        @Inject(DataSourceService)
+        private dataSource: RepeatVirtualScrollDataSource<IServer>,
         private changeDetection: ChangeDetectorRef,
         private viewportManager: VirtualViewportManager
-    ) { }
+    ) {}
 
     public ngOnInit() {
-        this.dataSource.busy.pipe(
-            tap(val => {
-                this.isBusy = val;
-                this.changeDetection.detectChanges();
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.dataSource.busy
+            .pipe(
+                tap((val) => {
+                    this.isBusy = val;
+                    this.changeDetection.detectChanges();
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public async ngAfterViewInit() {
@@ -77,20 +96,24 @@ export class RepeatVirtualScrollComponent implements OnInit, AfterViewInit, OnDe
                 }),
                 tap(() => this.applyFilters(false)),
                 // Note: Using the same stream to subscribe to the outputsSubject and update the items list
-                switchMap(() => this.dataSource.outputsSubject.pipe(
-                    tap((data: IFilteringOutputs) => {
-                        // update the list of items to be rendered
-                        const items = data.repeat?.itemsSource || [];
-                        this.totalItems = data.repeat?.itemsSource.length;
+                switchMap(() =>
+                    this.dataSource.outputsSubject.pipe(
+                        tap((data: IFilteringOutputs) => {
+                            // update the list of items to be rendered
+                            const items = data.repeat?.itemsSource || [];
+                            this.totalItems = data.repeat?.itemsSource.length;
 
-                        // after receiving data we need to append it to our previous fetched results
-                        this.listItems$.next(this.listItems$.getValue().concat(items));
-                        this.changeDetection.detectChanges();
-                    })
-                )
+                            // after receiving data we need to append it to our previous fetched results
+                            this.listItems$.next(
+                                this.listItems$.getValue().concat(items)
+                            );
+                            this.changeDetection.detectChanges();
+                        })
+                    )
                 ),
                 takeUntil(this.destroy$)
-            ).subscribe();
+            )
+            .subscribe();
     }
 
     public ngOnDestroy() {

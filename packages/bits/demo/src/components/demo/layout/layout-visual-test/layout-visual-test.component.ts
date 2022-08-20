@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-layout-visual-test",
     templateUrl: "./layout-visual-test.component.html",
 })
-export class LayoutVisualTestComponent {
-}
+export class LayoutVisualTestComponent {}

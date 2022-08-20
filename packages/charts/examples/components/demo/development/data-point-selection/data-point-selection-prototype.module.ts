@@ -1,6 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiIconModule, NuiMessageModule } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiIconModule,
+    NuiMessageModule,
+} from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
@@ -12,17 +18,15 @@ const routes: Routes = [
         path: "",
         component: DataPointSelectionPrototypeComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
 ];
 
 @NgModule({
-    declarations: [
-        DataPointSelectionPrototypeComponent,
-    ],
+    declarations: [DataPointSelectionPrototypeComponent],
     imports: [
         DemoCommonModule,
         NuiButtonModule,
@@ -33,8 +37,15 @@ const routes: Routes = [
         RouterModule.forChild(routes),
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () =>  (<any> require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/)},
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class DataPointSelectionPrototypeModule {
-}
+export class DataPointSelectionPrototypeModule {}

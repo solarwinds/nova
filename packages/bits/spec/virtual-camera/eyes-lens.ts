@@ -4,8 +4,10 @@ import { getCurrentBranchName } from "../helpers";
 export class EyesLens implements ILens {
     public eyes: any;
 
-    constructor(private browser: ProtractorBrowser, private cameraSettings: ICameraSettings) {
-    }
+    constructor(
+        private browser: ProtractorBrowser,
+        private cameraSettings: ICameraSettings
+    ) {}
 
     public async takeSnapshot(label: string): Promise<void> {
         await this.eyes.setForceFullPageScreenshot(false);
@@ -19,7 +21,11 @@ export class EyesLens implements ILens {
 
     public async cameraON(): Promise<void> {
         this.eyes = await this.configure();
-        await this.eyes.open(this.browser, this.cameraSettings.currentSuiteName, this.cameraSettings.currentTestName);
+        await this.eyes.open(
+            this.browser,
+            this.cameraSettings.currentSuiteName,
+            this.cameraSettings.currentTestName
+        );
     }
 
     public async cameraOFF(): Promise<void> {
@@ -35,21 +41,31 @@ export class EyesLens implements ILens {
         const { Eyes } = require("@applitools/eyes-protractor");
 
         if (!this.eyes) {
-            this.eyes = new Eyes;
+            this.eyes = new Eyes();
             this.eyes.setApiKey(<string>process.env.EYES_API_KEY);
 
-            let branchName = <string>process.env.CIRCLE_BRANCH || getCurrentBranchName() || "Unknown";
-            const userName: string = <string>process.env.CIRCLE_USERNAME ? ` - [${process.env.CIRCLE_USERNAME}]` : "";
-            const batchName = (<string>process.env.CIRCLE_PROJECT_REPONAME)?.toUpperCase()
-                                + " - "
-                                + <string>process.env.CIRCLE_JOB
-                                + " - "
-                                + branchName
-                                + userName;
-            const batchID = <string>process.env.CIRCLE_JOB + "_" + <string>process.env.CIRCLE_SHA1;
+            let branchName =
+                <string>process.env.CIRCLE_BRANCH ||
+                getCurrentBranchName() ||
+                "Unknown";
+            const userName: string = <string>process.env.CIRCLE_USERNAME
+                ? ` - [${process.env.CIRCLE_USERNAME}]`
+                : "";
+            const batchName =
+                (<string>process.env.CIRCLE_PROJECT_REPONAME)?.toUpperCase() +
+                " - " +
+                <string>process.env.CIRCLE_JOB +
+                " - " +
+                branchName +
+                userName;
+            const batchID =
+                <string>process.env.CIRCLE_JOB +
+                "_" +
+                <string>process.env.CIRCLE_SHA1;
 
             branchName = branchName.substring(branchName.lastIndexOf("/") + 1);
-            batchID ? this.eyes.setBatch(batchName, batchID)
+            batchID
+                ? this.eyes.setBatch(batchName, batchID)
                 : this.eyes.setBatch(batchName);
 
             this.eyes.setBranchName(branchName);

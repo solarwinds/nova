@@ -9,11 +9,15 @@ import { PreviewService } from "../../preview.service";
 import { BaseConverter } from "../base-converter";
 
 @Injectable()
-export class TableFiltersConverterService extends BaseConverter implements AfterViewInit {
-
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                                            previewService: PreviewService,
-                                            pizzagnaService: PizzagnaService) {
+export class TableFiltersConverterService
+    extends BaseConverter
+    implements AfterViewInit
+{
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
+        previewService: PreviewService,
+        pizzagnaService: PizzagnaService
+    ) {
         super(eventBus, previewService, pizzagnaService);
     }
 
@@ -26,10 +30,19 @@ export class TableFiltersConverterService extends BaseConverter implements After
 
         const table = this.getPreview()?.table;
         const columns = table?.properties?.configuration?.columns;
-        const sorterConfiguration = table?.properties?.configuration?.sorterConfiguration;
+        const sorterConfiguration =
+            table?.properties?.configuration?.sorterConfiguration;
 
-        formPizzagna = immutableSet(formPizzagna, `${PizzagnaLayer.Data}.filters.properties.columns`, columns);
-        formPizzagna = immutableSet(formPizzagna, `${PizzagnaLayer.Data}.filters.properties.sorterConfiguration`, sorterConfiguration);
+        formPizzagna = immutableSet(
+            formPizzagna,
+            `${PizzagnaLayer.Data}.filters.properties.columns`,
+            columns
+        );
+        formPizzagna = immutableSet(
+            formPizzagna,
+            `${PizzagnaLayer.Data}.filters.properties.sorterConfiguration`,
+            sorterConfiguration
+        );
 
         this.updateFormPizzagna(formPizzagna);
     }
@@ -37,9 +50,13 @@ export class TableFiltersConverterService extends BaseConverter implements After
     public toPreview(form: FormGroup): void {
         form.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe(filters => {
+            .subscribe((filters) => {
                 let preview = this.getPreview();
-                preview = immutableSet(preview, "table.properties.configuration.sorterConfiguration", filters.sorterConfiguration);
+                preview = immutableSet(
+                    preview,
+                    "table.properties.configuration.sorterConfiguration",
+                    filters.sorterConfiguration
+                );
                 this.updatePreview(preview);
                 // we need to update form with columns that are available
                 this.buildForm();

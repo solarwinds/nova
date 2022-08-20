@@ -7,7 +7,6 @@ import { TextboxNumberAtom } from "./textbox-number.atom";
 import { browser, Key } from "protractor";
 
 describe("USERCONTROL textbox-number >", () => {
-
     let component: TextboxNumberAtom;
 
     let basic: TextboxNumberAtom;
@@ -22,7 +21,10 @@ describe("USERCONTROL textbox-number >", () => {
         basic = Atom.find(TextboxNumberAtom, "test-textbox-number");
         minMax = Atom.find(TextboxNumberAtom, "test-textbox-number-min-max");
         disabled = Atom.find(TextboxNumberAtom, "test-textbox-number-disabled");
-        validation = Atom.find(TextboxNumberAtom, "test-textbox-number-validation");
+        validation = Atom.find(
+            TextboxNumberAtom,
+            "test-textbox-number-validation"
+        );
         reactive = Atom.find(TextboxNumberAtom, "test-textbox-number-reactive");
     });
 
@@ -59,7 +61,9 @@ describe("USERCONTROL textbox-number >", () => {
         });
 
         it("should have proper text", async () => {
-            expect(await component.getPlaceholder()).toBe("Enter value between 1 and 10");
+            expect(await component.getPlaceholder()).toBe(
+                "Enter value between 1 and 10"
+            );
         });
     });
 
@@ -177,33 +181,39 @@ describe("USERCONTROL textbox-number >", () => {
         beforeEach(async () => {
             await browser.refresh();
             component = basic;
-        })
+        });
 
         it("should navigate between elements using TAB", async () => {
-            expect(await browser.switchTo().activeElement().getTagName())
-                .toEqual("body");
+            expect(
+                await browser.switchTo().activeElement().getTagName()
+            ).toEqual("body");
 
             await Helpers.pressKey(Key.TAB);
-            expect(await component.input.getId())
-                .toEqual(await browser.switchTo().activeElement().getId());
+            expect(await component.input.getId()).toEqual(
+                await browser.switchTo().activeElement().getId()
+            );
 
             await Helpers.pressKey(Key.TAB);
-            expect(await component.upButton.getElement().getId())
-                .toEqual(await browser.switchTo().activeElement().getId());
+            expect(await component.upButton.getElement().getId()).toEqual(
+                await browser.switchTo().activeElement().getId()
+            );
 
             await Helpers.pressKey(Key.TAB);
-            expect(await component.downButton.getElement().getId())
-                .toEqual(await browser.switchTo().activeElement().getId());
+            expect(await component.downButton.getElement().getId()).toEqual(
+                await browser.switchTo().activeElement().getId()
+            );
         });
 
         it("should switch focus from input to button on click", async () => {
             await Helpers.pressKey(Key.TAB);
             await component.downButton.click();
 
-            expect(await component.input.getId())
-                .not.toEqual(await browser.switchTo().activeElement().getId());
-            expect(await component.downButton.getElement().getId())
-                .toEqual(await browser.switchTo().activeElement().getId());
-        })
-    })
+            expect(await component.input.getId()).not.toEqual(
+                await browser.switchTo().activeElement().getId()
+            );
+            expect(await component.downButton.getElement().getId()).toEqual(
+                await browser.switchTo().activeElement().getId()
+            );
+        });
+    });
 });

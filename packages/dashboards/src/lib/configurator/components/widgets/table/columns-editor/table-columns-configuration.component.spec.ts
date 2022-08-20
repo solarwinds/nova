@@ -5,7 +5,10 @@ import { DataSourceFeatures, EventBus } from "@nova-ui/bits";
 import { NuiDashboardsModule } from "../../../../../dashboards.module";
 import { DynamicComponentCreator } from "../../../../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
-import { PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../../../../types";
+import {
+    PIZZAGNA_EVENT_BUS,
+    WellKnownDataSourceFeatures,
+} from "../../../../../types";
 import { DATA_SOURCE_CREATED } from "../../../../types";
 
 import { TableColumnsConfigurationComponent } from "./table-columns-configuration.component";
@@ -28,8 +31,7 @@ describe("TableColumnsConfigurationComponent", () => {
                     useValue: eventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -43,25 +45,31 @@ describe("TableColumnsConfigurationComponent", () => {
 
     describe("ngOnChanges > ", () => {
         it("should not throw if a column doesn't have a formatter defined", () => {
-            component.columns = [{
-                id: "testId",
-                label: "",
-                // @ts-ignore: Suppressed for test purposes
-                formatter: null,
-            }];
+            component.columns = [
+                {
+                    id: "testId",
+                    label: "",
+                    // @ts-ignore: Suppressed for test purposes
+                    formatter: null,
+                },
+            ];
 
             const changes: SimpleChanges = {
                 dataFields: {
-                    previousValue: [{
-                        id: "oldId",
-                        label: "Old Label",
-                        dataType: "string",
-                    }],
-                    currentValue: [{
-                        id: "newId",
-                        label: "New Label",
-                        dataType: "string",
-                    }],
+                    previousValue: [
+                        {
+                            id: "oldId",
+                            label: "Old Label",
+                            dataType: "string",
+                        },
+                    ],
+                    currentValue: [
+                        {
+                            id: "newId",
+                            label: "New Label",
+                            dataType: "string",
+                        },
+                    ],
                     isFirstChange: () => false,
                     firstChange: false,
                 },
@@ -73,7 +81,6 @@ describe("TableColumnsConfigurationComponent", () => {
     });
 
     describe("automatic column generation", () => {
-
         let resetColumnsSpy: Spy;
         let onItemsChangeSpy: Spy;
 
@@ -90,11 +97,13 @@ describe("TableColumnsConfigurationComponent", () => {
             const changes: SimpleChanges = {
                 dataFields: {
                     previousValue: undefined,
-                    currentValue: [{
-                        id: "newId",
-                        label: "New Label",
-                        dataType: "string",
-                    }],
+                    currentValue: [
+                        {
+                            id: "newId",
+                            label: "New Label",
+                            dataType: "string",
+                        },
+                    ],
                     isFirstChange: () => false,
                     firstChange: false,
                 },
@@ -110,7 +119,10 @@ describe("TableColumnsConfigurationComponent", () => {
             eventBus.getStream(DATA_SOURCE_CREATED).next({
                 payload: {
                     features: new DataSourceFeatures({
-                        [WellKnownDataSourceFeatures.DisableTableColumnGeneration]: { enabled: false },
+                        [WellKnownDataSourceFeatures.DisableTableColumnGeneration]:
+                            {
+                                enabled: false,
+                            },
                     }),
                 },
             });
@@ -118,11 +130,13 @@ describe("TableColumnsConfigurationComponent", () => {
             const changes: SimpleChanges = {
                 dataFields: {
                     previousValue: undefined,
-                    currentValue: [{
-                        id: "newId",
-                        label: "New Label",
-                        dataType: "string",
-                    }],
+                    currentValue: [
+                        {
+                            id: "newId",
+                            label: "New Label",
+                            dataType: "string",
+                        },
+                    ],
                     isFirstChange: () => false,
                     firstChange: false,
                 },
@@ -138,7 +152,10 @@ describe("TableColumnsConfigurationComponent", () => {
             eventBus.getStream(DATA_SOURCE_CREATED).next({
                 payload: {
                     features: new DataSourceFeatures({
-                        [WellKnownDataSourceFeatures.DisableTableColumnGeneration]: { enabled: true },
+                        [WellKnownDataSourceFeatures.DisableTableColumnGeneration]:
+                            {
+                                enabled: true,
+                            },
                     }),
                 },
             });
@@ -146,11 +163,13 @@ describe("TableColumnsConfigurationComponent", () => {
             const changes: SimpleChanges = {
                 dataFields: {
                     previousValue: undefined,
-                    currentValue: [{
-                        id: "newId",
-                        label: "New Label",
-                        dataType: "string",
-                    }],
+                    currentValue: [
+                        {
+                            id: "newId",
+                            label: "New Label",
+                            dataType: "string",
+                        },
+                    ],
                     isFirstChange: () => false,
                     firstChange: false,
                 },
@@ -161,6 +180,5 @@ describe("TableColumnsConfigurationComponent", () => {
             expect(resetColumnsSpy).not.toHaveBeenCalled();
             expect(onItemsChangeSpy).toHaveBeenCalled();
         });
-
     });
 });

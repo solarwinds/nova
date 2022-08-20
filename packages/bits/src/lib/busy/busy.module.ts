@@ -9,17 +9,9 @@ import { BusyComponent } from "./busy.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiSpinnerModule,
-    ],
-    declarations: [
-        BusyComponent,
-    ],
-    exports: [
-        BusyComponent,
-    ],
+    imports: [NuiCommonModule, NuiSpinnerModule],
+    declarations: [BusyComponent],
+    exports: [BusyComponent],
     providers: [],
 })
-export class NuiBusyModule {
-}
+export class NuiBusyModule {}

@@ -12,12 +12,15 @@ import { ComponentRegistryService } from "./component-registry.service";
     providedIn: "root",
 })
 export class ComponentPortalService {
+    constructor(
+        private componentRegistry: ComponentRegistryService,
+        private logger: LoggerService
+    ) {}
 
-    constructor(private componentRegistry: ComponentRegistryService,
-                private logger: LoggerService) {
-    }
-
-    public createComponentPortal(componentType: string | Function, injector: Injector | null): ComponentPortal<any> {
+    public createComponentPortal(
+        componentType: string | Function,
+        injector: Injector | null
+    ): ComponentPortal<any> {
         let loadType: any;
         if (typeof componentType === "string") {
             loadType = this.componentRegistry.getComponentType(componentType);
@@ -35,7 +38,10 @@ export class ComponentPortalService {
 
     public createInjector(environment: IPortalEnvironment): Injector {
         const providers = environment.providers || [];
-        return Injector.create({ providers, parent: environment.injector, name: "Component Injector" });
+        return Injector.create({
+            providers,
+            parent: environment.injector,
+            name: "Component Injector",
+        });
     }
-
 }

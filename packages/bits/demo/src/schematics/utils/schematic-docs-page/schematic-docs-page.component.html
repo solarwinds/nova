@@ -4,20 +4,31 @@
     <h2 class="mt-4">API</h2>
     <div>
         <p>
-            Use the following command to generate a {{ schematicHeading | titlecase }}:
-            <code>ng g @nova-ui/bits:{{ schematicFolderName }} --name=%name_of_component% --p=%prefix_for_component_selector%</code>
+            Use the following command to generate a
+            {{ schematicHeading | titlecase }}:
+            <code
+                >ng g @nova-ui/bits:{{
+                    schematicFolderName
+                }}
+                --name=%name_of_component%
+                --p=%prefix_for_component_selector%</code
+            >
         </p>
         <p>
-            The schematic generates styles with a reference to files that are stored in
-            <code>node_modules/@nova-ui/bits/sdk/less</code>. You can provide this path in your project's
-            <code>angular.json</code> to make these references work:
+            The schematic generates styles with a reference to files that are
+            stored in
+            <code>node_modules/@nova-ui/bits/sdk/less</code>. You can provide
+            this path in your project's <code>angular.json</code> to make these
+            references work:
         </p>
         <p>
             <nui-example-code>
                 {{ angularJsonStylePreprocOptions }}
             </nui-example-code>
         </p>
-        <nui-schematic-json [schematicFolderName]="schematicFolderName"></nui-schematic-json>
+        <nui-schematic-json
+            [schematicFolderName]="schematicFolderName"
+        ></nui-schematic-json>
     </div>
 
     <div class="nui-schematic-docs-examples">

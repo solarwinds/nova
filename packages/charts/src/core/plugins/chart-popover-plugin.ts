@@ -4,16 +4,26 @@ import values from "lodash/values";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { INTERACTION_DATA_POINTS_EVENT, INTERACTION_DATA_POINT_EVENT } from "../../constants";
+import {
+    INTERACTION_DATA_POINTS_EVENT,
+    INTERACTION_DATA_POINT_EVENT,
+} from "../../constants";
 import { ChartPlugin } from "../common/chart-plugin";
-import { IChartEvent, IDataPoint, IDataPointsPayload, InteractionType } from "../common/types";
+import {
+    IChartEvent,
+    IDataPoint,
+    IDataPointsPayload,
+    InteractionType,
+} from "../common/types";
 
 import { IElementPosition } from "./types";
 
 /** Configuration for the popover plugin */
 export interface IPopoverPluginConfig {
     /** ID of the event stream the plugin will respond to */
-    eventStreamId?: typeof INTERACTION_DATA_POINTS_EVENT | typeof INTERACTION_DATA_POINT_EVENT;
+    eventStreamId?:
+        | typeof INTERACTION_DATA_POINTS_EVENT
+        | typeof INTERACTION_DATA_POINT_EVENT;
     /** The type of interaction that will trigger the showing and hiding of the popovers */
     interactionType?: InteractionType;
 }
@@ -54,15 +64,22 @@ export class ChartPopoverPlugin extends ChartPlugin {
     }
 
     public initialize(): void {
-        this.chart.getEventBus().getStream(this.config.eventStreamId as string).pipe(
-            takeUntil(this.destroy$)
-        ).subscribe((event: IChartEvent) => {
-            if (event.data.interactionType === this.config.interactionType) {
-                // here we handle data either of type IInteractionDataPointsEvent or IInteractionDataPointEvent
-                const dataPoints: IDataPointsPayload = event.data.dataPoints ?? { [event.data.dataPoint.seriesId]: event.data.dataPoint };
-                this.processDataPoints(dataPoints);
-            }
-        });
+        this.chart
+            .getEventBus()
+            .getStream(this.config.eventStreamId as string)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((event: IChartEvent) => {
+                if (
+                    event.data.interactionType === this.config.interactionType
+                ) {
+                    // here we handle data either of type IInteractionDataPointsEvent or IInteractionDataPointEvent
+                    const dataPoints: IDataPointsPayload = event.data
+                        .dataPoints ?? {
+                        [event.data.dataPoint.seriesId]: event.data.dataPoint,
+                    };
+                    this.processDataPoints(dataPoints);
+                }
+            });
     }
 
     public destroy(): void {
@@ -88,24 +105,41 @@ export class ChartPopoverPlugin extends ChartPlugin {
             throw new Error("Chart parent node is not defined");
         }
 
-        const dataPointsLeft = Math.min(...valuesArray.map(d => d.position.x));
-        const left = chartElement.offsetLeft + this.chart.getGrid().config().dimension.margin.left + dataPointsLeft;
-        const top = chartElement.offsetTop + this.chart.getGrid().config().dimension.margin.top;
+        const dataPointsLeft = Math.min(
+            ...valuesArray.map((d) => d.position.x)
+        );
+        const left =
+            chartElement.offsetLeft +
+            this.chart.getGrid().config().dimension.margin.left +
+            dataPointsLeft;
+        const top =
+            chartElement.offsetTop +
+            this.chart.getGrid().config().dimension.margin.top;
         // area for popovers is enlarged to cover the whole chart (top to bottom),
         // so that we avoid collision of chart visualization and popover (by UX request)
         return {
             top: top,
             left: left,
             height: chartElement.offsetHeight,
-            width: Math.max(...valuesArray.map(d => d.position.x + (d.position.width || 0))) - dataPointsLeft,
+            width:
+                Math.max(
+                    ...valuesArray.map(
+                        (d) => d.position.x + (d.position.width || 0)
+                    )
+                ) - dataPointsLeft,
         };
     }
 
     private processDataPoints(dataPoints: IDataPointsPayload) {
-        const validDataPoints = pickBy(dataPoints, (d: IDataPoint) => d.index >= 0 && d.position);
+        const validDataPoints = pickBy(
+            dataPoints,
+            (d: IDataPoint) => d.index >= 0 && d.position
+        );
         const validDataPointsValues = values(validDataPoints);
         if (validDataPointsValues.length > 0) {
-            this.popoverTargetPosition = this.getAbsolutePosition(validDataPointsValues);
+            this.popoverTargetPosition = this.getAbsolutePosition(
+                validDataPointsValues
+            );
             this.dataPoints = validDataPoints;
             // timeout is needed in order to successfully open popover on initial hover over the chart
             setTimeout(() => {
@@ -115,7 +149,6 @@ export class ChartPopoverPlugin extends ChartPlugin {
                     this.openPopoverSubject.next();
                 }
             });
-
         } else {
             // timeout is needed for symmetry of timing with above timeout for opening the popover
             setTimeout(() => {

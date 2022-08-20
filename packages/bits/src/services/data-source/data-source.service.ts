@@ -6,11 +6,22 @@ import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import { BehaviorSubject, Observable, Subject } from "rxjs";
 
-import { IDataField, IDataFieldsConfig, IFilter, IFilteringOutputs, IFilteringParticipant, IFilteringParticipants, IFilters } from "./public-api";
+import {
+    IDataField,
+    IDataFieldsConfig,
+    IFilter,
+    IFilteringOutputs,
+    IFilteringParticipant,
+    IFilteringParticipants,
+    IFilters,
+} from "./public-api";
 
 @Injectable()
-export abstract class DataSourceService<T, F extends IFilters = IFilters, D = any> extends DataSource<T> {
-
+export abstract class DataSourceService<
+    T,
+    F extends IFilters = IFilters,
+    D = any
+> extends DataSource<T> {
     public dataSubject: BehaviorSubject<T[]>;
     public outputsSubject: Subject<IFilteringOutputs>;
     public dataFieldsConfig: IDataFieldsConfig;
@@ -45,7 +56,9 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
 
     public abstract getFilteredData(filters: F): Promise<IFilteringOutputs>;
 
-    public connect(collectionViewer: CollectionViewer): Observable<T[] | ReadonlyArray<T>> {
+    public connect(
+        collectionViewer: CollectionViewer
+    ): Observable<T[] | ReadonlyArray<T>> {
         return this.dataSubject.asObservable();
     }
 
@@ -61,10 +74,16 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
         await this.afterApplyFilters(filters);
     }
 
-    public getFilter(componentName: keyof IFilteringParticipants): F | undefined {
+    public getFilter(
+        componentName: keyof IFilteringParticipants
+    ): F | undefined {
         const filter = this._components[componentName];
         if (!filter) {
-            throw new Error(`Invalid filter name '${componentName}' requested; available filter names are: ${Object.keys(this._components)}`);
+            throw new Error(
+                `Invalid filter name '${componentName}' requested; available filter names are: ${Object.keys(
+                    this._components
+                )}`
+            );
         }
 
         return filter?.componentInstance?.getFilters() as F;
@@ -74,9 +93,16 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
         const filters: F = {} as F;
 
         // Merge current filters
-        _forEach(this._components, (node: IFilteringParticipant, componentName: keyof IFilteringParticipants) => {
-            (filters as IFilters)[componentName] = this.getFilter(componentName);
-        });
+        _forEach(
+            this._components,
+            (
+                node: IFilteringParticipant,
+                componentName: keyof IFilteringParticipants
+            ) => {
+                (filters as IFilters)[componentName] =
+                    this.getFilter(componentName);
+            }
+        );
 
         return filters;
     }
@@ -84,25 +110,41 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
     public get monitoredFilters(): string[] {
         const filters: string[] = [];
 
-        _forEach(this._components, (node: IFilteringParticipant, componentName: keyof IFilteringParticipants) => {
-            if (node.componentInstance?.detectFilterChanges === true) {
-                filters.push(componentName as string);
+        _forEach(
+            this._components,
+            (
+                node: IFilteringParticipant,
+                componentName: keyof IFilteringParticipants
+            ) => {
+                if (node.componentInstance?.detectFilterChanges === true) {
+                    filters.push(componentName as string);
+                }
             }
-        });
+        );
 
         return filters;
     }
 
     // check if a specific filter changed
-    public filterChanged(filterName: keyof IFilteringParticipants, currentFilterValue?: IFilter<any>): boolean {
+    public filterChanged(
+        filterName: keyof IFilteringParticipants,
+        currentFilterValue?: IFilter<any>
+    ): boolean {
         // retrieve provided value if provided, otherwise get a fresh one
-        const filterValue = (currentFilterValue ?? this.getFilter(filterName))?.value;
-        return !isNil(filterValue) && this._previousFilters
-            && !isEqual(filterValue, this._previousFilters[filterName]?.value);
+        const filterValue = (currentFilterValue ?? this.getFilter(filterName))
+            ?.value;
+        return (
+            !isNil(filterValue) &&
+            this._previousFilters &&
+            !isEqual(filterValue, this._previousFilters[filterName]?.value)
+        );
     }
 
     // checks if any of the filters specified by name have changed from the previous evaluation
-    public filtersChanged(filters: F, ...filterNames: (keyof IFilteringParticipants)[]) {
+    public filtersChanged(
+        filters: F,
+        ...filterNames: (keyof IFilteringParticipants)[]
+    ) {
         for (let i = 0; i < filterNames.length; i++) {
             const filterName = filterNames[i];
             if (this.filterChanged(filterName, filters[filterName])) {
@@ -114,10 +156,7 @@ export abstract class DataSourceService<T, F extends IFilters = IFilters, D = an
     }
 
     public computeFiltersChange(filters: F): boolean {
-        return this.filtersChanged(
-            filters,
-            ...this.monitoredFilters
-        );
+        return this.filtersChanged(filters, ...this.monitoredFilters);
     }
 
     protected beforeApplyFilters(filters: F) {}

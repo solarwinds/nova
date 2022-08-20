@@ -23,53 +23,53 @@ import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-sour
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
 
 export const positions: Record<string, GridsterItem> = {
-    "widget1": {
-        "cols": 5,
-        "rows": 6,
-        "y": 0,
-        "x": 0,
+    widget1: {
+        cols: 5,
+        rows: 6,
+        y: 0,
+        x: 0,
     },
-    "widget2": {
-        "cols": 7,
-        "rows": 6,
-        "y": 0,
-        "x": 5,
+    widget2: {
+        cols: 7,
+        rows: 6,
+        y: 0,
+        x: 5,
     },
-    "widget3": {
-        "cols": 6,
-        "rows": 6,
-        "y": 6,
-        "x": 0,
+    widget3: {
+        cols: 6,
+        rows: 6,
+        y: 6,
+        x: 0,
     },
-    "widget4": {
-        "cols": 6,
-        "rows": 6,
-        "y": 6,
-        "x": 6,
+    widget4: {
+        cols: 6,
+        rows: 6,
+        y: 6,
+        x: 6,
     },
-    "widget5": {
-        "cols": 7,
-        "rows": 6,
-        "y": 12,
-        "x": 5,
+    widget5: {
+        cols: 7,
+        rows: 6,
+        y: 12,
+        x: 5,
     },
-    "widget6": {
-        "cols": 5,
-        "rows": 6,
-        "y": 12,
-        "x": 0,
+    widget6: {
+        cols: 5,
+        rows: 6,
+        y: 12,
+        x: 0,
     },
-    "widget7": {
-        "cols": 6,
-        "rows": 6,
-        "y": 18,
-        "x": 0,
+    widget7: {
+        cols: 6,
+        rows: 6,
+        y: 18,
+        x: 0,
     },
-    "widget8": {
-        "cols": 6,
-        "rows": 6,
-        "y": 18,
-        "x": 6,
+    widget8: {
+        cols: 6,
+        rows: 6,
+        y: 18,
+        x: 6,
     },
 };
 
@@ -89,14 +89,14 @@ export const widgets: IWidget[] = [
                         // },
                     },
                 },
-                "header": {
+                header: {
                     properties: {
                         title: "Table Widget!",
                         subtitle: "Basic table widget",
                         collapsible: true,
                     },
                 },
-                "table": {
+                table: {
                     providers: {
                         [WellKnownProviders.DataSource]: {
                             providerId: AcmeTableMockDataSource.providerId,
@@ -111,7 +111,8 @@ export const widgets: IWidget[] = [
                                     label: "No.",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "position",
@@ -124,7 +125,8 @@ export const widgets: IWidget[] = [
                                     label: "Name",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "name",
@@ -137,7 +139,8 @@ export const widgets: IWidget[] = [
                                     label: "Status",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "status",
@@ -178,37 +181,37 @@ export const widgets: IWidget[] = [
                         },
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeProportionalDataSource.providerId,
+                            providerId: AcmeProportionalDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
+                            properties: {
                                 [WellKnownProviders.DataSource]: {
-                                    "properties": {
-                                        "isEuropeOnly": false,
+                                    properties: {
+                                        isEuropeOnly: false,
                                     },
                                 },
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
-                        "configuration": {
+                    properties: {
+                        configuration: {
                             interactive: true,
                             chartDonutContentLabel: "Some label",
                             chartDonutContentIcon: "printer",
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.VerticalBarChart,
-                                "legendPlacement": LegendPlacement.Right,
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.VerticalBarChart,
+                                legendPlacement: LegendPlacement.Right,
                             } as IProportionalWidgetChartOptions,
-                            "chartColors": [
+                            chartColors: [
                                 "var(--nui-color-chart-eight)",
                                 "var(--nui-color-chart-nine)",
                                 "var(--nui-color-chart-ten)",
@@ -225,9 +228,9 @@ export const widgets: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.InteractionHandler]: {
                             providerId: NOVA_URL_INTERACTION_HANDLER,
@@ -237,17 +240,17 @@ export const widgets: IWidget[] = [
                         // },
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Timeseries Widget!",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Timeseries Widget!",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-2",
                                         label: "Average CPU Load",
@@ -257,12 +260,12 @@ export const widgets: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
-                            "chartColors": [
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
+                            chartColors: [
                                 "var(--nui-color-chart-eight)",
                                 "var(--nui-color-chart-nine)",
                                 "var(--nui-color-chart-ten)",
@@ -270,13 +273,13 @@ export const widgets: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "minDate": moment().subtract(10, "days").format(),
-                        "maxDate": moment().format(),
+                        minDate: moment().subtract(10, "days").format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -297,14 +300,14 @@ export const widgets: IWidget[] = [
                         // },
                     },
                 },
-                "header": {
+                header: {
                     properties: {
                         title: "Table Widget!",
                         subtitle: "Basic table widget",
                         collapsible: true,
                     },
                 },
-                "table": {
+                table: {
                     providers: {
                         [WellKnownProviders.DataSource]: {
                             providerId: AcmeTableMockDataSource.providerId,
@@ -319,7 +322,8 @@ export const widgets: IWidget[] = [
                                     label: "No.",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "position",
@@ -332,7 +336,8 @@ export const widgets: IWidget[] = [
                                     label: "Name",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "name",
@@ -345,7 +350,8 @@ export const widgets: IWidget[] = [
                                     label: "Status",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "status",
@@ -386,37 +392,37 @@ export const widgets: IWidget[] = [
                         },
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeProportionalDataSource.providerId,
+                            providerId: AcmeProportionalDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
+                            properties: {
                                 [WellKnownProviders.DataSource]: {
-                                    "properties": {
-                                        "isEuropeOnly": false,
+                                    properties: {
+                                        isEuropeOnly: false,
                                     },
                                 },
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
-                        "configuration": {
+                    properties: {
+                        configuration: {
                             interactive: true,
                             chartDonutContentLabel: "Some label",
                             chartDonutContentIcon: "printer",
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.VerticalBarChart,
-                                "legendPlacement": LegendPlacement.Right,
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.VerticalBarChart,
+                                legendPlacement: LegendPlacement.Right,
                             } as IProportionalWidgetChartOptions,
-                            "chartColors": [
+                            chartColors: [
                                 "var(--nui-color-chart-eight)",
                                 "var(--nui-color-chart-nine)",
                                 "var(--nui-color-chart-ten)",
@@ -442,14 +448,14 @@ export const widgets: IWidget[] = [
                         // },
                     },
                 },
-                "header": {
+                header: {
                     properties: {
                         title: "Table Widget!",
                         subtitle: "Basic table widget",
                         collapsible: true,
                     },
                 },
-                "table": {
+                table: {
                     providers: {
                         [WellKnownProviders.DataSource]: {
                             providerId: AcmeTableMockDataSource.providerId,
@@ -464,7 +470,8 @@ export const widgets: IWidget[] = [
                                     label: "No.",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "position",
@@ -477,7 +484,8 @@ export const widgets: IWidget[] = [
                                     label: "Name",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "name",
@@ -490,7 +498,8 @@ export const widgets: IWidget[] = [
                                     label: "Status",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "status",
@@ -519,9 +528,9 @@ export const widgets: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.InteractionHandler]: {
                             providerId: NOVA_URL_INTERACTION_HANDLER,
@@ -531,17 +540,17 @@ export const widgets: IWidget[] = [
                         // },
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Timeseries Widget!",
-                        "subtitle": "Basic timeseries widget",
+                header: {
+                    properties: {
+                        title: "Timeseries Widget!",
+                        subtitle: "Basic timeseries widget",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-2",
                                         label: "Average CPU Load",
@@ -551,12 +560,12 @@ export const widgets: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
-                            "chartColors": [
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
+                            chartColors: [
                                 "var(--nui-color-chart-eight)",
                                 "var(--nui-color-chart-nine)",
                                 "var(--nui-color-chart-ten)",
@@ -564,13 +573,13 @@ export const widgets: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "minDate": moment().subtract(10, "days").format(),
-                        "maxDate": moment().format(),
+                        minDate: moment().subtract(10, "days").format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -591,14 +600,14 @@ export const widgets: IWidget[] = [
                         // },
                     },
                 },
-                "header": {
+                header: {
                     properties: {
                         title: "Table Widget!",
                         subtitle: "Basic table widget",
                         collapsible: true,
                     },
                 },
-                "table": {
+                table: {
                     providers: {
                         [WellKnownProviders.DataSource]: {
                             providerId: AcmeTableMockDataSource.providerId,
@@ -613,7 +622,8 @@ export const widgets: IWidget[] = [
                                     label: "No.",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "position",
@@ -626,7 +636,8 @@ export const widgets: IWidget[] = [
                                     label: "Name",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "name",
@@ -639,7 +650,8 @@ export const widgets: IWidget[] = [
                                     label: "Status",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "status",

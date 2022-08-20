@@ -6,15 +6,15 @@ export const TABLE_WIDGET_PREVIEW_PIZZAGNA = {
     type: "table",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
+            header: {
                 properties: {
                     title: "Table Widget!",
                     subtitle: "Basic table widget",
                 },
             },
-            "table": {
+            table: {
                 providers: {
-                    "dataSource": {
+                    dataSource: {
                         providerId: "WIDGET_TABLE_DATA_SOURCE",
                     },
                 },
@@ -79,15 +79,13 @@ export const EDITOR_PIZZAGNA = {
             id: "dataSource",
             componentType: "DataSourceConfigurationComponent",
             properties: {
-                dataSourceProviders: [
-                    "WIDGET_TABLE_DATA_SOURCE",
-                ],
+                dataSourceProviders: ["WIDGET_TABLE_DATA_SOURCE"],
             },
             providers: {
                 DATA_SOURCE_CONVERTER: {
                     providerId: "DATA_SOURCE_CONVERTER",
                     properties: {
-                        "componentName": "table",
+                        componentName: "table",
                     },
                 },
             },

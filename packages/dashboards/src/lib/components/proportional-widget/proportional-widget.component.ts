@@ -15,7 +15,13 @@ import {
     ViewChild,
     ViewEncapsulation,
 } from "@angular/core";
-import { EventBus, IDataSource, IEvent, LoggerService, UnitConversionService } from "@nova-ui/bits";
+import {
+    EventBus,
+    IDataSource,
+    IEvent,
+    LoggerService,
+    UnitConversionService,
+} from "@nova-ui/bits";
 import {
     Chart,
     ChartAssist,
@@ -40,11 +46,20 @@ import { DashboardUnitConversionPipe } from "../../common/pipes/dashboard-unit-c
 
 import { CategoryChartUtilService } from "../../services/category-chart-util.service";
 import { INTERACTION } from "../../services/types";
-import { DATA_SOURCE, IHasChangeDetector, PIZZAGNA_EVENT_BUS, WellKnownDataSourceFeatures } from "../../types";
+import {
+    DATA_SOURCE,
+    IHasChangeDetector,
+    PIZZAGNA_EVENT_BUS,
+    WellKnownDataSourceFeatures,
+} from "../../types";
 import { IFormatter } from "../types";
-import { LegendPlacement } from "../../widget-types/common/widget/legend"
+import { LegendPlacement } from "../../widget-types/common/widget/legend";
 
-import { IProportionalWidgetData, IProportionalWidgetConfig, ProportionalWidgetChartTypes } from "./types";
+import {
+    IProportionalWidgetData,
+    IProportionalWidgetConfig,
+    ProportionalWidgetChartTypes,
+} from "./types";
 
 /** @ignore */
 @Component({
@@ -55,7 +70,9 @@ import { IProportionalWidgetData, IProportionalWidgetConfig, ProportionalWidgetC
     // TODO: uncomment when NUI-4307 is fixed
     // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IHasChangeDetector, OnDestroy {
+export class ProportionalWidgetComponent
+    implements AfterViewInit, OnChanges, IHasChangeDetector, OnDestroy
+{
     static lateLoadKey = "ProportionalWidgetComponent";
     private static NO_SWITCH_LAYOUT_INTERVAL_SIZE = 20;
     private static MAX_ROW_LAYOUT_SIZE = 360;
@@ -83,7 +100,9 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
 
     private renderer: Renderer<IAccessors>;
     private scales: Scales;
-    private chartPalette: IChartPalette = new ChartPalette(defaultColorProvider());
+    private chartPalette: IChartPalette = new ChartPalette(
+        defaultColorProvider()
+    );
     private proportionalWidgetResizeObserver: ResizeObserver;
     private unitConversionPipe: DashboardUnitConversionPipe;
 
@@ -93,19 +112,28 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     private chartTypeSubscription$: Subscription;
 
     public get interactive(): boolean {
-        return this.configuration?.interactive ||
-            this.dataSource?.features?.getFeatureConfig(WellKnownDataSourceFeatures.Interactivity)?.enabled || false;
+        return (
+            this.configuration?.interactive ||
+            this.dataSource?.features?.getFeatureConfig(
+                WellKnownDataSourceFeatures.Interactivity
+            )?.enabled ||
+            false
+        );
     }
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                private ngZone: NgZone,
-                private kvDiffers: KeyValueDiffers,
-                @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-                @Inject(DATA_SOURCE) private dataSource: IDataSource,
-                private logger: LoggerService,
-                unitConversionService: UnitConversionService) {
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private ngZone: NgZone,
+        private kvDiffers: KeyValueDiffers,
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
+        @Inject(DATA_SOURCE) private dataSource: IDataSource,
+        private logger: LoggerService,
+        unitConversionService: UnitConversionService
+    ) {
         this.differ = this.kvDiffers.find(this.prioritizedGridRows).create();
-        this.unitConversionPipe = new DashboardUnitConversionPipe(unitConversionService);
+        this.unitConversionPipe = new DashboardUnitConversionPipe(
+            unitConversionService
+        );
     }
 
     // Note: Using this helper method to be able to use
@@ -117,15 +145,19 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
 
     public ngOnChanges(changes: SimpleChanges): void {
         const newChartColors = changes.configuration?.currentValue?.chartColors;
-        const prevChartColors = changes.configuration?.previousValue?.chartColors;
+        const prevChartColors =
+            changes.configuration?.previousValue?.chartColors;
 
         if (changes.widgetData || !isEqual(newChartColors, prevChartColors)) {
             this.updateChartColors();
         }
 
         if (changes.configuration) {
-            const newChartType = changes.configuration.currentValue.chartOptions.type;
-            const prevChartType = changes.configuration.previousValue && changes.configuration.previousValue.chartOptions.type;
+            const newChartType =
+                changes.configuration.currentValue.chartOptions.type;
+            const prevChartType =
+                changes.configuration.previousValue &&
+                changes.configuration.previousValue.chartOptions.type;
 
             // configure the chart
             if (newChartType && newChartType !== prevChartType) {
@@ -136,9 +168,12 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
                 }
             }
 
-            this.legendFormatter = this.configuration.chartOptions.legendFormatter;
-            this.contentFormatter = this.configuration.chartOptions.contentFormatter;
-            this.chartFormatterComponentType = this.configuration.chartOptions.chartFormatterComponentType;
+            this.legendFormatter =
+                this.configuration.chartOptions.legendFormatter;
+            this.contentFormatter =
+                this.configuration.chartOptions.contentFormatter;
+            this.chartFormatterComponentType =
+                this.configuration.chartOptions.chartFormatterComponentType;
 
             this.getContentFormatterProperties();
 
@@ -174,22 +209,36 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
 
     /** Checks if chart is donut. */
     public isDonutChart(): boolean {
-        return this.configuration.chartOptions.type === ProportionalWidgetChartTypes.DonutChart;
+        return (
+            this.configuration.chartOptions.type ===
+            ProportionalWidgetChartTypes.DonutChart
+        );
     }
 
     /** Checks if chart is radial. */
     public isRadialChart(): boolean {
-        return [ProportionalWidgetChartTypes.DonutChart, ProportionalWidgetChartTypes.PieChart].indexOf(this.configuration.chartOptions.type) !== -1;
+        return (
+            [
+                ProportionalWidgetChartTypes.DonutChart,
+                ProportionalWidgetChartTypes.PieChart,
+            ].indexOf(this.configuration.chartOptions.type) !== -1
+        );
     }
 
     /** Checks if legend should be shown. */
     public hasLegend(): boolean {
-        return this.configuration.chartOptions.legendPlacement !== LegendPlacement.None;
+        return (
+            this.configuration.chartOptions.legendPlacement !==
+            LegendPlacement.None
+        );
     }
 
     /** Checks if legend should be aligned to right. */
     public legendShouldBeAlignedRight(): boolean {
-        return this.configuration.chartOptions.legendPlacement === LegendPlacement.Right;
+        return (
+            this.configuration.chartOptions.legendPlacement ===
+            LegendPlacement.Right
+        );
     }
 
     public onInteraction(data: any): void {
@@ -203,9 +252,17 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     /** Configures the chart options */
     private buildChart(chartType: ProportionalWidgetChartTypes): void {
         this.donutContentPlugin = null;
-        const { grid, accessors, renderer, scales, preprocessor } = CategoryChartUtilService.getChartAttributes(chartType, this.chartPalette?.standardColors);
+        const { grid, accessors, renderer, scales, preprocessor } =
+            CategoryChartUtilService.getChartAttributes(
+                chartType,
+                this.chartPalette?.standardColors
+            );
         // TODO: Refactor this to be able to pass different types of preprocessor to get rid of the any
-        this.chartAssist = new ChartAssist(new Chart(grid), <any>preprocessor, this.chartPalette);
+        this.chartAssist = new ChartAssist(
+            new Chart(grid),
+            <any>preprocessor,
+            this.chartPalette
+        );
         this.renderer = renderer;
         this.accessors = accessors;
         this.scales = scales;
@@ -214,35 +271,60 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
             this.chartAssist.chart.addPlugin(this.donutContentPlugin);
         }
 
-        if (this.configuration.chartOptions.type === ProportionalWidgetChartTypes.HorizontalBarChart) {
-            this.scales.x.formatters.tick = (value: string | number | undefined) => this.unitConversionPipe.transform(value);
+        if (
+            this.configuration.chartOptions.type ===
+            ProportionalWidgetChartTypes.HorizontalBarChart
+        ) {
+            this.scales.x.formatters.tick = (
+                value: string | number | undefined
+            ) => this.unitConversionPipe.transform(value);
             this.applyTickLabelMaxWidths();
-        } else if (this.configuration.chartOptions.type === ProportionalWidgetChartTypes.VerticalBarChart) {
-            this.scales.y.formatters.tick = (value: string | number | undefined) => this.unitConversionPipe.transform(value);
+        } else if (
+            this.configuration.chartOptions.type ===
+            ProportionalWidgetChartTypes.VerticalBarChart
+        ) {
+            this.scales.y.formatters.tick = (
+                value: string | number | undefined
+            ) => this.unitConversionPipe.transform(value);
         }
 
         this.chartTypeSubscription$?.unsubscribe();
-        this.chartTypeSubscription$ = this.chartAssist.chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe((event) => {
-            // event payload is a data point from the chart - since we display one data point for every series,
-            // we convert the data point to the original series
-            const series = this.widgetData.find(s => s.id === event.data.seriesId);
-            this.onInteraction(series);
-        });
+        this.chartTypeSubscription$ = this.chartAssist.chart
+            .getEventBus()
+            .getStream(SELECT_DATA_POINT_EVENT)
+            .subscribe((event) => {
+                // event payload is a data point from the chart - since we display one data point for every series,
+                // we convert the data point to the original series
+                const series = this.widgetData.find(
+                    (s) => s.id === event.data.seriesId
+                );
+                this.onInteraction(series);
+            });
     }
 
     private handleGridFlowOnResize(): void {
-        this.proportionalWidgetResizeObserver = new ResizeObserver(() => this.onResize());
+        this.proportionalWidgetResizeObserver = new ResizeObserver(() =>
+            this.onResize()
+        );
         this.ngZone.runOutsideAngular(() => {
-            this.proportionalWidgetResizeObserver.observe(this.gridContainer.nativeElement);
+            this.proportionalWidgetResizeObserver.observe(
+                this.gridContainer.nativeElement
+            );
         });
     }
 
     private applyTickLabelMaxWidths() {
-        const gridConfigAxis = (this.chartAssist.chart.getGrid().config() as XYGridConfig).axis;
+        const gridConfigAxis = (
+            this.chartAssist.chart.getGrid().config() as XYGridConfig
+        ).axis;
 
-        gridConfigAxis.left.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig?.maxWidth?.left ??
+        gridConfigAxis.left.tickLabel.maxWidth =
+            this.configuration.chartOptions.horizontalBarTickLabelConfig
+                ?.maxWidth?.left ??
             ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
-        gridConfigAxis.right.tickLabel.maxWidth = this.configuration.chartOptions.horizontalBarTickLabelConfig?.maxWidth?.right ??
+        gridConfigAxis.right.tickLabel.maxWidth =
+            this.configuration.chartOptions.horizontalBarTickLabelConfig
+                ?.maxWidth?.right ??
             ProportionalWidgetComponent.TICK_LABEL_MAX_WIDTH;
     }
 
@@ -253,10 +335,12 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
 
         switch (this.configuration.chartOptions.legendPlacement) {
             case LegendPlacement.Bottom:
-                this.prioritizedGridRows.bottom = this.containerHasRowLayoutWidth();
+                this.prioritizedGridRows.bottom =
+                    this.containerHasRowLayoutWidth();
                 break;
             case LegendPlacement.Right:
-                this.prioritizedGridRows.right = this.containerHasRowLayoutWidth();
+                this.prioritizedGridRows.right =
+                    this.containerHasRowLayoutWidth();
                 break;
         }
 
@@ -266,31 +350,49 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
     }
 
     private isContainerInNoSwitchLayoutInterval(): boolean {
-        const containerWidth = this.gridContainer.nativeElement.getBoundingClientRect().width;
-        return containerWidth > ProportionalWidgetComponent.MAX_ROW_LAYOUT_SIZE - (ProportionalWidgetComponent.NO_SWITCH_LAYOUT_INTERVAL_SIZE / 2)
-            && containerWidth < ProportionalWidgetComponent.MAX_ROW_LAYOUT_SIZE + (ProportionalWidgetComponent.NO_SWITCH_LAYOUT_INTERVAL_SIZE / 2);
+        const containerWidth =
+            this.gridContainer.nativeElement.getBoundingClientRect().width;
+        return (
+            containerWidth >
+                ProportionalWidgetComponent.MAX_ROW_LAYOUT_SIZE -
+                    ProportionalWidgetComponent.NO_SWITCH_LAYOUT_INTERVAL_SIZE /
+                        2 &&
+            containerWidth <
+                ProportionalWidgetComponent.MAX_ROW_LAYOUT_SIZE +
+                    ProportionalWidgetComponent.NO_SWITCH_LAYOUT_INTERVAL_SIZE /
+                        2
+        );
     }
 
     private containerHasRowLayoutWidth(): boolean {
-        const containerWidth = this.gridContainer.nativeElement.getBoundingClientRect().width;
+        const containerWidth =
+            this.gridContainer.nativeElement.getBoundingClientRect().width;
         return containerWidth < ProportionalWidgetComponent.MAX_ROW_LAYOUT_SIZE;
     }
 
     /** Builds the chart */
     private updateChart(): void {
-        this.chartAssist.update(CategoryChartUtilService.buildChartSeries(this.widgetData, this.accessors, this.renderer, this.scales));
+        this.chartAssist.update(
+            CategoryChartUtilService.buildChartSeries(
+                this.widgetData,
+                this.accessors,
+                this.renderer,
+                this.scales
+            )
+        );
     }
 
     private updateChartColors(): void {
         let colorProvider: IValueProvider<string>;
 
-        const dataColors = this.widgetData?.map(v => v.color);
+        const dataColors = this.widgetData?.map((v) => v.color);
         const configurationColors = this.configuration.chartColors;
 
         if (!this.configuration.prioritizeWidgetColors && some(dataColors)) {
             colorProvider = this.getDataDriverColorProvider(this.widgetData);
         } else if (configurationColors) {
-            colorProvider = this.getConfigurationColorProvider(configurationColors);
+            colorProvider =
+                this.getConfigurationColorProvider(configurationColors);
         } else {
             colorProvider = defaultColorProvider();
         }
@@ -303,35 +405,50 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
         }
     }
 
-    private getDataDriverColorProvider(widgetData: IChartAssistSeries<IAccessors<any>>[]): IValueProvider<string> {
+    private getDataDriverColorProvider(
+        widgetData: IChartAssistSeries<IAccessors<any>>[]
+    ): IValueProvider<string> {
         let colorProvider: IValueProvider<string>;
 
-        const dataColors = widgetData?.map(v => v.color).filter(v => !!v);
+        const dataColors = widgetData?.map((v) => v.color).filter((v) => !!v);
 
         if (dataColors.length === widgetData.length) {
-            const colorMap = widgetData.reduce((acc: { [key: string]: string }, next) => {
-                acc[next.id] = next.color;
-                return acc;
-            }, {});
+            const colorMap = widgetData.reduce(
+                (acc: { [key: string]: string }, next) => {
+                    acc[next.id] = next.color;
+                    return acc;
+                },
+                {}
+            );
             colorProvider = new MappedValueProvider<string>(colorMap);
         } else {
-            const widgetDataWithColor = widgetData.filter(series => series.color);
+            const widgetDataWithColor = widgetData.filter(
+                (series) => series.color
+            );
 
-            this.logger.warn(`Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(widgetDataWithColor)}`);
+            this.logger.warn(
+                `Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(
+                    widgetDataWithColor
+                )}`
+            );
             colorProvider = defaultColorProvider();
         }
 
         return colorProvider;
     }
 
-    private getConfigurationColorProvider(configurationColors: string[] | {
-        [key: string]: string;
-    }): IValueProvider<string> {
+    private getConfigurationColorProvider(
+        configurationColors:
+            | string[]
+            | {
+                  [key: string]: string;
+              }
+    ): IValueProvider<string> {
         let colorProvider: IValueProvider<string>;
 
         // remove data colors since nui-chart takes them into consideration no matter what
         if (this.configuration.prioritizeWidgetColors && this.widgetData) {
-            this.widgetData = this.widgetData.map(origin => {
+            this.widgetData = this.widgetData.map((origin) => {
                 const series = { ...origin };
                 if (series.color) {
                     delete series.color;
@@ -348,7 +465,11 @@ export class ProportionalWidgetComponent implements AfterViewInit, OnChanges, IH
                 colorProvider = new MappedValueProvider(configurationColors);
             } else {
                 // eslint-disable-next-line max-len
-                this.logger.warn(`Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(configurationColors)}`);
+                this.logger.warn(
+                    `Not all series have colors set, setting default pallette. Current series color config: ${JSON.stringify(
+                        configurationColors
+                    )}`
+                );
                 colorProvider = defaultColorProvider();
             }
         }

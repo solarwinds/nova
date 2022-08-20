@@ -12,12 +12,11 @@ interface IExampleItem {
     host: { class: "combobox-container" },
 })
 export class ComboboxV2DisabledExampleComponent {
-    public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) =>
-        ({
-            id: `value-${i}`,
-            name: $localize `Item ${i}`,
-            disabled: Boolean(Math.round(Math.random())),
-        }));
+    public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) => ({
+        id: `value-${i}`,
+        name: $localize`Item ${i}`,
+        disabled: Boolean(Math.round(Math.random())),
+    }));
     public comboboxControl = new FormControl();
     public isComboboxDisabled = false;
 

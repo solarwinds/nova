@@ -25,8 +25,7 @@ describe("KpiTilesConfigurationComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {

@@ -19,7 +19,9 @@ import { LegendComponent } from "../../legend.component";
     styleUrls: ["./rich-legend-tile.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
 })
-export class RichLegendTileComponent implements AfterContentInit, AfterViewInit {
+export class RichLegendTileComponent
+    implements AfterContentInit, AfterViewInit
+{
     /**
      * The series unit label
      */
@@ -42,20 +44,25 @@ export class RichLegendTileComponent implements AfterContentInit, AfterViewInit 
 
     public seriesHasAdditionalContent: boolean;
 
-    constructor(@Host() private legendSeries: LegendSeriesComponent,
-                @Optional() @Host() private legend: LegendComponent,
-                private changeDetector: ChangeDetectorRef) { }
+    constructor(
+        @Host() private legendSeries: LegendSeriesComponent,
+        @Optional() @Host() private legend: LegendComponent,
+        private changeDetector: ChangeDetectorRef
+    ) {}
 
     public ngAfterContentInit() {
         if (this.legend) {
             this.unitLabel = this.unitLabel || this.legend.seriesUnitLabel;
-            this.backgroundColor = this.backgroundColor || this.legend.seriesColor || "white";
+            this.backgroundColor =
+                this.backgroundColor || this.legend.seriesColor || "white";
         }
     }
 
     public ngAfterViewInit() {
         if (this.legendSeries) {
-            this.seriesHasAdditionalContent = this.legendSeries.hasInputDescription() || this.legendSeries.hasProjectedDescription();
+            this.seriesHasAdditionalContent =
+                this.legendSeries.hasInputDescription() ||
+                this.legendSeries.hasProjectedDescription();
             this.changeDetector.detectChanges();
         }
     }

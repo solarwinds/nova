@@ -10,17 +10,9 @@ import { BreadcrumbComponent } from "./breadcrumb.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-    ],
-    declarations: [
-        BreadcrumbComponent,
-    ],
-    exports: [
-        BreadcrumbComponent,
-    ],
+    imports: [NuiCommonModule, NuiIconModule],
+    declarations: [BreadcrumbComponent],
+    exports: [BreadcrumbComponent],
     providers: [BreadcrumbStateService],
 })
-export class NuiBreadcrumbModule {
-}
+export class NuiBreadcrumbModule {}

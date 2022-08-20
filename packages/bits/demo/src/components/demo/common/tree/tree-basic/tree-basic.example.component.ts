@@ -3,7 +3,6 @@ import { NestedTreeControl } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
 import { expand } from "@nova-ui/bits";
 
-
 interface FoodNode {
     name: string;
     children?: FoodNode[];
@@ -39,7 +38,6 @@ const TREE_DATA: FoodNode[] = [
     },
 ];
 
-
 @Component({
     selector: "nui-tree-basic-example",
     templateUrl: "tree-basic.example.component.html",
@@ -51,5 +49,6 @@ export class TreeBasicExampleComponent {
     treeControl = new NestedTreeControl<FoodNode>((node) => node.children);
     dataSource = new ArrayDataSource(TREE_DATA);
 
-    hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    hasChild = (_: number, node: FoodNode) =>
+        !!node.children && node.children.length > 0;
 }

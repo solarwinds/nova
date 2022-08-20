@@ -10,8 +10,10 @@ describe("components >", () => {
     describe("code >", () => {
         let subject: ExampleCodeComponent;
         beforeEach(() => {
-            subject = new ExampleCodeComponent;
-            subject.codeElement =  {nativeElement: document.createElement("div")} as ElementRef;
+            subject = new ExampleCodeComponent();
+            subject.codeElement = {
+                nativeElement: document.createElement("div"),
+            } as ElementRef;
         });
 
         describe("ngAfterViewInit", () => {

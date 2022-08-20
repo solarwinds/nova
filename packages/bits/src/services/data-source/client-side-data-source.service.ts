@@ -19,7 +19,10 @@ import {
  * <example-url>./../examples/index.html#/common/data-source-service/client-side</example-url>
  */
 @Injectable()
-export class ClientSideDataSource<T, F extends INovaFilters = INovaFilters> extends DataSourceService<T, F> {
+export class ClientSideDataSource<
+    T,
+    F extends INovaFilters = INovaFilters
+> extends DataSourceService<T, F> {
     protected _allData: T[];
     protected _searchProps: string[] = [];
 
@@ -75,14 +78,25 @@ export class ClientSideDataSource<T, F extends INovaFilters = INovaFilters> exte
     }
 
     protected searchHandler(searchTerm: any) {
-        return this.searchService.search(this._allData, this._searchProps, searchTerm);
+        return this.searchService.search(
+            this._allData,
+            this._searchProps,
+            searchTerm
+        );
     }
 
     protected sortingHandler(filters: any, nextChunk: any) {
-        if (_get(filters, "sorter.value.sortBy") && _get(filters, "sorter.value.direction")) {
+        if (
+            _get(filters, "sorter.value.sortBy") &&
+            _get(filters, "sorter.value.direction")
+        ) {
             // Original direction means that sorting is not needed
             if (filters.sorter.value.direction !== SorterDirection.original) {
-                return _orderBy(nextChunk, filters.sorter.value.sortBy, filters.sorter.value.direction);
+                return _orderBy(
+                    nextChunk,
+                    filters.sorter.value.sortBy,
+                    filters.sorter.value.direction
+                );
             }
         }
         return nextChunk;
@@ -113,15 +127,17 @@ export class ClientSideDataSource<T, F extends INovaFilters = INovaFilters> exte
         return data;
     }
 
-    protected extractMultiFilters(filters: F): IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[] {
-        const multiFilterArr: IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[] = [];
+    protected extractMultiFilters(
+        filters: F
+    ): IFilterGroup<IFilter<string[], IMultiFilterMetadata>>[] {
+        const multiFilterArr: IFilterGroup<
+            IFilter<string[], IMultiFilterMetadata>
+        >[] = [];
         _forEach(filters, (value, key) => {
             if (value?.type === "string[]") {
-                multiFilterArr
-                    .push({[key]: value} as any);
+                multiFilterArr.push({ [key]: value } as any);
             }
         });
         return multiFilterArr;
     }
-
 }

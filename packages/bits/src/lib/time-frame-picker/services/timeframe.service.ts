@@ -26,41 +26,44 @@ export class TimeframeService {
     }
 
     public defaultPresets: ITimeFramePresetDictionary = {
-        "lastHour": {
-            name: $localize `Last hour`,
+        lastHour: {
+            name: $localize`Last hour`,
             startDatetimePattern: { hours: -1 },
             endDatetimePattern: {},
         },
-        "last12Hours": {
-            name: $localize `Last 12 hours`,
+        last12Hours: {
+            name: $localize`Last 12 hours`,
             startDatetimePattern: { hours: -12 },
             endDatetimePattern: {},
         },
-        "last24Hours": {
-            name: $localize `Last 24 hours`,
+        last24Hours: {
+            name: $localize`Last 24 hours`,
             startDatetimePattern: { hours: -24 },
             endDatetimePattern: {},
         },
-        "last5Days": {
-            name: $localize `Last 5 days`,
+        last5Days: {
+            name: $localize`Last 5 days`,
             startDatetimePattern: { days: -5 },
             endDatetimePattern: {},
         },
-        "last7Days": {
-            name: $localize `Last 7 days`,
+        last7Days: {
+            name: $localize`Last 7 days`,
             startDatetimePattern: { days: -7 },
             endDatetimePattern: {},
         },
-        "last30Days": {
-            name: $localize `Last 30 days`,
+        last30Days: {
+            name: $localize`Last 30 days`,
             startDatetimePattern: { days: -30 },
             endDatetimePattern: {},
         },
     };
 
-    public currentPresets: ITimeFramePresetDictionary = extend({}, this.defaultPresets);
+    public currentPresets: ITimeFramePresetDictionary = extend(
+        {},
+        this.defaultPresets
+    );
 
-    constructor() { }
+    constructor() {}
 
     /**
      *
@@ -69,8 +72,11 @@ export class TimeframeService {
      * @param endDatetimePattern
      * @param baseDatetime
      */
-    public getTimeframe(startDatetimePattern: any,
-                        endDatetimePattern: any, baseDatetime?: string): ITimeframe {
+    public getTimeframe(
+        startDatetimePattern: any,
+        endDatetimePattern: any,
+        baseDatetime?: string
+    ): ITimeframe {
         // check input parameters
         if (isUndefined(startDatetimePattern)) {
             throw new Error("Parameter 'startDatetimePattern' is undefined");
@@ -95,14 +101,21 @@ export class TimeframeService {
      * __Description:__ Get timeframe by preset id, using the list of pre-defined presets
 
      */
-    public getTimeframeByPresetId(id: string | undefined, baseDatetime?: string): ITimeframe {
+    public getTimeframeByPresetId(
+        id: string | undefined,
+        baseDatetime?: string
+    ): ITimeframe {
         // check input parameters
         if (isUndefined(id)) {
             throw new Error("Parameter 'id' is undefined");
         }
 
-        const startDatetime = moment(baseDatetime).add(this.currentPresets[id].startDatetimePattern);
-        const endDatetime = moment(baseDatetime).add(this.currentPresets[id].endDatetimePattern);
+        const startDatetime = moment(baseDatetime).add(
+            this.currentPresets[id].startDatetimePattern
+        );
+        const endDatetime = moment(baseDatetime).add(
+            this.currentPresets[id].endDatetimePattern
+        );
 
         return {
             startDatetime: startDatetime,
@@ -120,9 +133,11 @@ export class TimeframeService {
      * @param baseDatetime date that should be used for relative time calculations. Defaults to now.
      * @returns updated clone of timeframe with startDatetime and endDatetime reconciled with selectedPresetId
      */
-    public reconcileTimeframe = (timeFrame: ITimeframe,
-                                 presets?: ITimeFramePresetDictionary,
-                                 baseDatetime?: Moment): ITimeframe => {
+    public reconcileTimeframe = (
+        timeFrame: ITimeframe,
+        presets?: ITimeFramePresetDictionary,
+        baseDatetime?: Moment
+    ): ITimeframe => {
         if (!presets) {
             presets = this.currentPresets;
         }
@@ -130,15 +145,20 @@ export class TimeframeService {
             baseDatetime = moment();
         }
 
-        const preset = timeFrame.selectedPresetId && presets[timeFrame.selectedPresetId];
+        const preset =
+            timeFrame.selectedPresetId && presets[timeFrame.selectedPresetId];
         return preset
             ? {
-                ...timeFrame,
-                startDatetime: baseDatetime.clone().add(preset.startDatetimePattern),
-                endDatetime: baseDatetime.clone().add(preset.endDatetimePattern),
-            }
+                  ...timeFrame,
+                  startDatetime: baseDatetime
+                      .clone()
+                      .add(preset.startDatetimePattern),
+                  endDatetime: baseDatetime
+                      .clone()
+                      .add(preset.endDatetimePattern),
+              }
             : TimeframeService.cloneTimeFrame(timeFrame);
-    }
+    };
 
     /**
      * __Description:__ Get the list of all default presets
@@ -159,18 +179,45 @@ export class TimeframeService {
     /**
      * __Description:__ Compare two timeframes, return false if they are not equal
      */
-    public isEqual(firstTimeFrame: ITimeframe, secondTimeFrame: ITimeframe, units: moment.unitOfTime.Base = "minutes"): boolean {
-        return firstTimeFrame && secondTimeFrame
-            && firstTimeFrame.endDatetime.isSame(secondTimeFrame.endDatetime, units)
-            && firstTimeFrame.startDatetime.isSame(secondTimeFrame.startDatetime, units);
+    public isEqual(
+        firstTimeFrame: ITimeframe,
+        secondTimeFrame: ITimeframe,
+        units: moment.unitOfTime.Base = "minutes"
+    ): boolean {
+        return (
+            firstTimeFrame &&
+            secondTimeFrame &&
+            firstTimeFrame.endDatetime.isSame(
+                secondTimeFrame.endDatetime,
+                units
+            ) &&
+            firstTimeFrame.startDatetime.isSame(
+                secondTimeFrame.startDatetime,
+                units
+            )
+        );
     }
 
     /**
      * __Description:__ Compare two timeframe durations, return false if they are not equal
      */
-    public isEqualDuration(firstTimeFrame: ITimeframe, secondTimeFrame: ITimeframe, units: moment.unitOfTime.Base = "minutes"): boolean {
-        return firstTimeFrame && secondTimeFrame &&
-            firstTimeFrame.startDatetime.diff(firstTimeFrame.endDatetime, units) === secondTimeFrame.startDatetime.diff(secondTimeFrame.endDatetime, units);
+    public isEqualDuration(
+        firstTimeFrame: ITimeframe,
+        secondTimeFrame: ITimeframe,
+        units: moment.unitOfTime.Base = "minutes"
+    ): boolean {
+        return (
+            firstTimeFrame &&
+            secondTimeFrame &&
+            firstTimeFrame.startDatetime.diff(
+                firstTimeFrame.endDatetime,
+                units
+            ) ===
+                secondTimeFrame.startDatetime.diff(
+                    secondTimeFrame.endDatetime,
+                    units
+                )
+        );
     }
 
     /**
@@ -182,7 +229,10 @@ export class TimeframeService {
      * @param {Duration} duration The duration of the timeframe shift
      * @returns {ITimeframe} The shifted timeframe
      */
-    public shiftTimeFrame(timeFrame: ITimeframe, duration: Duration): ITimeframe {
+    public shiftTimeFrame(
+        timeFrame: ITimeframe,
+        duration: Duration
+    ): ITimeframe {
         return {
             startDatetime: timeFrame.startDatetime.clone().add(duration),
             endDatetime: timeFrame.endDatetime.clone().add(duration),
@@ -199,7 +249,9 @@ export class TimeframeService {
      * @returns {Duration}
      */
     public getDuration(timeFrame: ITimeframe): Duration {
-        return moment.duration(timeFrame.endDatetime.diff(timeFrame.startDatetime));
+        return moment.duration(
+            timeFrame.endDatetime.diff(timeFrame.startDatetime)
+        );
     }
 
     /**

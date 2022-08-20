@@ -11,8 +11,13 @@ export class SelectV2OverlayConfigExampleComponent {
     public overlayConfig: OverlayConfig = {
         width: 300,
         height: 200,
-        panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS, "overlay-config-demo-custom-class"],
+        panelClass: [
+            OVERLAY_WITH_POPUP_STYLES_CLASS,
+            "overlay-config-demo-custom-class",
+        ],
     };
 
-    public items = Array.from({ length: 100 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 100 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
 }

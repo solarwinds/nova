@@ -16,7 +16,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import {Subscription} from "rxjs";
+import { Subscription } from "rxjs";
 
 import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EventBusService } from "../../services/event-bus.service";
@@ -54,8 +54,13 @@ import { CheckboxChangeEvent, ICheckboxComponent } from "./public-api";
  * <input type="checkbox"> enhanced with NUI styling.
  * <example-url>./../examples/index.html#/checkbox</example-url>
  */
-export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, ControlValueAccessor, OnDestroy {
-
+export class CheckboxComponent
+    implements
+        AfterViewInit,
+        ICheckboxComponent,
+        ControlValueAccessor,
+        OnDestroy
+{
     private _checked: boolean;
     private _disabled: boolean;
 
@@ -165,26 +170,36 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
 
     private _ariaLabel: string = "Checkbox";
 
-    constructor(private changeDetector: ChangeDetectorRef,
-                private eventBusService: EventBusService,
-                private renderer: Renderer2) {}
+    constructor(
+        private changeDetector: ChangeDetectorRef,
+        private eventBusService: EventBusService,
+        private renderer: Renderer2
+    ) {}
 
     ngAfterViewInit() {
-        this.rendererListener = this.renderer.listen(this.checkboxLabel.nativeElement, "keydown", (event) => {
-            this.eventBusService.getStream({id: "checkbox-keydown"}).next(event);
-        });
+        this.rendererListener = this.renderer.listen(
+            this.checkboxLabel.nativeElement,
+            "keydown",
+            (event) => {
+                this.eventBusService
+                    .getStream({ id: "checkbox-keydown" })
+                    .next(event);
+            }
+        );
 
-        this.sub = this.eventBusService.getStream({id: "checkbox-keydown"}).subscribe((event: KeyboardEvent) => {
-            if (event.target === this.checkboxLabel.nativeElement) {
-                if (event.keyCode === ENTER || event.keyCode === SPACE) {
-                    event.stopPropagation();
-                    event.preventDefault();
-                    if (!this.disabled) {
-                        this.handleKeyboardActions();
+        this.sub = this.eventBusService
+            .getStream({ id: "checkbox-keydown" })
+            .subscribe((event: KeyboardEvent) => {
+                if (event.target === this.checkboxLabel.nativeElement) {
+                    if (event.keyCode === ENTER || event.keyCode === SPACE) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        if (!this.disabled) {
+                            this.handleKeyboardActions();
+                        }
                     }
                 }
-            }
-        });
+            });
     }
     public getAriaChecked(): "true" | "false" | "mixed" {
         if (this.checked) {
@@ -214,7 +229,9 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
 
     public onClick(event: Event) {
         event.stopPropagation();
-        this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT}).next(event);
+        this.eventBusService
+            .getStream({ id: DOCUMENT_CLICK_EVENT })
+            .next(event);
     }
 
     public onChange(value: any) {}
@@ -251,8 +268,11 @@ export class CheckboxComponent implements AfterViewInit, ICheckboxComponent, Con
             this.inputViewContainer.element.nativeElement.checked = true;
             this.indeterminate = false;
         } else {
-            this.inputViewContainer.element.nativeElement.checked = !this.inputViewContainer.element.nativeElement.checked;
+            this.inputViewContainer.element.nativeElement.checked =
+                !this.inputViewContainer.element.nativeElement.checked;
         }
-        this.inputViewContainer.element.nativeElement.dispatchEvent(new Event("change"));
+        this.inputViewContainer.element.nativeElement.dispatchEvent(
+            new Event("change")
+        );
     }
 }

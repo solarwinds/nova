@@ -12,7 +12,10 @@ describe(`Visual Tests: Charts - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/line/visual-test");
-        legend = Atom.findIn(LegendAtom, element(by.tagName("line-chart-with-axis-labels-example")));
+        legend = Atom.findIn(
+            LegendAtom,
+            element(by.tagName("line-chart-with-axis-labels-example"))
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });

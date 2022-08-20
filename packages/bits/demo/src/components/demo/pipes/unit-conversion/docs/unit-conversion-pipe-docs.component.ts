@@ -4,4 +4,4 @@ import { Component } from "@angular/core";
     templateUrl: "./unit-conversion-pipe-docs.component.html",
     styleUrls: ["./unit-conversion-pipe-docs.component.less"],
 })
-export class UnitConversionPipeDocsComponent { }
+export class UnitConversionPipeDocsComponent {}

@@ -1,6 +1,19 @@
-import { Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import {
+    Component,
+    Inject,
+    OnDestroy,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { DialogService, NuiDialogRef, WizardStepV2Component, IWizardState, ToastService } from "@nova-ui/bits";
+import {
+    DialogService,
+    NuiDialogRef,
+    WizardStepV2Component,
+    IWizardState,
+    ToastService,
+} from "@nova-ui/bits";
 import isEqual from "lodash/isEqual";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
@@ -31,39 +44,46 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         @Inject(DialogService) private dialogService: DialogService,
         private toastService: ToastService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.form = new FormGroup({
-            "personDetails": this.formBuilder.group({
-                "name": [
-                    "",
-                    [Validators.required, Validators.minLength(3)],
-                ],
-                "privacy": [false, [Validators.requiredTrue]],
+            personDetails: this.formBuilder.group({
+                name: ["", [Validators.required, Validators.minLength(3)]],
+                privacy: [false, [Validators.requiredTrue]],
             }),
-            "organization": this.formBuilder.group({
-                "title": ["", [Validators.required]],
-                "date": ["", [Validators.required]],
-                "createDynamicStep1": [false],
-                "createDynamicStep2": [false],
+            organization: this.formBuilder.group({
+                title: ["", [Validators.required]],
+                date: ["", [Validators.required]],
+                createDynamicStep1: [false],
+                createDynamicStep2: [false],
             }),
-            "contactDetails": this.formBuilder.group({
-                "email": ["", [Validators.required, Validators.email]],
-                "options": [""],
+            contactDetails: this.formBuilder.group({
+                email: ["", [Validators.required, Validators.email]],
+                options: [""],
             }),
         });
 
-        this.form.get(["organization", "createDynamicStep1"])?.valueChanges
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(changes => {
-                this.handleDynamicSteps("I was created dynamically!", this.template1, changes);
+        this.form
+            .get(["organization", "createDynamicStep1"])
+            ?.valueChanges.pipe(takeUntil(this.destroy$))
+            .subscribe((changes) => {
+                this.handleDynamicSteps(
+                    "I was created dynamically!",
+                    this.template1,
+                    changes
+                );
             });
 
-        this.form.get(["organization", "createDynamicStep2"])?.valueChanges
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(changes => {
-                this.handleDynamicSteps("Another dynamic step", this.template2, changes);
+        this.form
+            .get(["organization", "createDynamicStep2"])
+            ?.valueChanges.pipe(takeUntil(this.destroy$))
+            .subscribe((changes) => {
+                this.handleDynamicSteps(
+                    "Another dynamic step",
+                    this.template2,
+                    changes
+                );
             });
     }
 
@@ -84,7 +104,10 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
         this.state = state;
     }
 
-    public completeWizard(formControlName: string, step: WizardStepV2Component): void {
+    public completeWizard(
+        formControlName: string,
+        step: WizardStepV2Component
+    ): void {
         this.validateStep(formControlName);
 
         if (!this.form.valid) {
@@ -110,9 +133,18 @@ export class WizardRestoreStateExampleComponent implements OnInit, OnDestroy {
         this.form.get(formGroup)?.markAllAsTouched();
     }
 
-    private handleDynamicSteps(title: string, template: TemplateRef<string>, controlValue: boolean) {
-        const newStep: IWizardStepData = { title: title, templateRef: template };
-        const index = this.dynamicSteps.findIndex(step => isEqual(step, newStep));
+    private handleDynamicSteps(
+        title: string,
+        template: TemplateRef<string>,
+        controlValue: boolean
+    ) {
+        const newStep: IWizardStepData = {
+            title: title,
+            templateRef: template,
+        };
+        const index = this.dynamicSteps.findIndex((step) =>
+            isEqual(step, newStep)
+        );
 
         controlValue
             ? this.dynamicSteps.push({ ...newStep })

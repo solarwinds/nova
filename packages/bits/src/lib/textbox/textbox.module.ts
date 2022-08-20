@@ -21,14 +21,8 @@ import { TextboxComponent } from "./textbox.component";
         NuiButtonModule,
         NuiRepeatModule,
     ],
-    declarations: [
-        TextboxComponent,
-        TextboxNumberComponent,
-    ],
-    exports: [
-        TextboxComponent,
-        TextboxNumberComponent,
-    ],
+    declarations: [TextboxComponent, TextboxNumberComponent],
+    exports: [TextboxComponent, TextboxNumberComponent],
     providers: [],
 })
-export class NuiTextboxModule { }
+export class NuiTextboxModule {}

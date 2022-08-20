@@ -2,9 +2,20 @@ import { fakeAsync, flush } from "@angular/core/testing";
 import { select } from "d3-selection";
 import cloneDeep from "lodash/cloneDeep";
 
-import { DATA_POINT_INTERACTION_RESET, INTERACTION_DATA_POINTS_EVENT, INTERACTION_DATA_POINT_EVENT } from "../../constants";
+import {
+    DATA_POINT_INTERACTION_RESET,
+    INTERACTION_DATA_POINTS_EVENT,
+    INTERACTION_DATA_POINT_EVENT,
+} from "../../constants";
 import { Chart } from "../chart";
-import { IChartEvent, IDataPoint, IDataPointsPayload, IInteractionDataPointEvent, IInteractionDataPointsEvent, InteractionType } from "../common/types";
+import {
+    IChartEvent,
+    IDataPoint,
+    IDataPointsPayload,
+    IInteractionDataPointEvent,
+    IInteractionDataPointsEvent,
+    InteractionType,
+} from "../common/types";
 import { XYGridConfig } from "../grid/config/xy-grid-config";
 import { IGrid, IGridConfig } from "../grid/types";
 import { XYGrid } from "../grid/xy-grid";
@@ -37,12 +48,12 @@ describe("ChartPopoverPlugin >", () => {
                     interactionType: InteractionType.MouseMove,
                     dataPoints: {
                         "series-1": {
-                            "index": 5,
-                            "position": { "x": 400 },
+                            index: 5,
+                            position: { x: 400 },
                         } as IDataPoint,
                         "series-2": {
-                            "index": 5,
-                            "position": { "x": 560 },
+                            index: 5,
+                            position: { x: 560 },
                         } as IDataPoint,
                     },
                 } as IInteractionDataPointsEvent,
@@ -51,7 +62,10 @@ describe("ChartPopoverPlugin >", () => {
             plugin.initialize();
 
             const spy = spyOn(plugin.openPopoverSubject, "next");
-            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(event);
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .next(event);
 
             flush();
 
@@ -63,8 +77,8 @@ describe("ChartPopoverPlugin >", () => {
                 data: {
                     interactionType: InteractionType.MouseMove,
                     dataPoint: {
-                        "index": 5,
-                        "position": { "x": 400 },
+                        index: 5,
+                        position: { x: 400 },
                     } as IDataPoint,
                 } as IInteractionDataPointEvent,
             };
@@ -73,7 +87,10 @@ describe("ChartPopoverPlugin >", () => {
             plugin.initialize();
 
             const spy = spyOn(plugin.openPopoverSubject, "next");
-            chart.getEventBus().getStream(INTERACTION_DATA_POINT_EVENT).next(event);
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINT_EVENT)
+                .next(event);
 
             flush();
 
@@ -85,8 +102,8 @@ describe("ChartPopoverPlugin >", () => {
                 data: {
                     interactionType: InteractionType.Click,
                     dataPoint: {
-                        "index": 5,
-                        "position": { "x": 400 },
+                        index: 5,
+                        position: { x: 400 },
                     } as IDataPoint,
                 } as IInteractionDataPointEvent,
             };
@@ -96,7 +113,10 @@ describe("ChartPopoverPlugin >", () => {
             plugin.initialize();
 
             const spy = spyOn(plugin.openPopoverSubject, "next");
-            chart.getEventBus().getStream(INTERACTION_DATA_POINT_EVENT).next(event);
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINT_EVENT)
+                .next(event);
 
             flush();
 
@@ -112,12 +132,12 @@ describe("ChartPopoverPlugin >", () => {
                     interactionType: InteractionType.MouseMove,
                     dataPoints: {
                         "series-1": {
-                            "index": 5,
-                            "position": { "x": 400 },
+                            index: 5,
+                            position: { x: 400 },
                         },
                         "series-2": {
-                            "index": 5,
-                            "position": { "x": 560 },
+                            index: 5,
+                            position: { x: 560 },
                         },
                     },
                 },
@@ -127,10 +147,13 @@ describe("ChartPopoverPlugin >", () => {
         });
 
         it("should not attempt to process data points for an interaction type other than mousemove", () => {
-            spyOn((<any>plugin), "processDataPoints");
+            spyOn(<any>plugin, "processDataPoints");
             const testPayload = cloneDeep(interactionDataPointsEventPayload);
             testPayload.data.interactionType = InteractionType.Click;
-            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(testPayload);
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .next(testPayload);
 
             expect((<any>plugin).processDataPoints).not.toHaveBeenCalled();
         });
@@ -143,8 +166,13 @@ describe("ChartPopoverPlugin >", () => {
             };
 
             // @ts-ignore: Disabled for testing purposes
-            spyOnProperty(chart.target?.node(), "parentNode").and.returnValue(parentNodeValues);
-            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
+            spyOnProperty(chart.target?.node(), "parentNode").and.returnValue(
+                parentNodeValues
+            );
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .next(interactionDataPointsEventPayload);
 
             expect(plugin.popoverTargetPosition).toEqual({
                 top: 10,
@@ -155,14 +183,22 @@ describe("ChartPopoverPlugin >", () => {
         });
 
         it("should result in populating the plugin's dataPoints member", () => {
-            chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
-            expect(plugin.dataPoints).toEqual(interactionDataPointsEventPayload.data.dataPoints);
+            chart
+                .getEventBus()
+                .getStream(INTERACTION_DATA_POINTS_EVENT)
+                .next(interactionDataPointsEventPayload);
+            expect(plugin.dataPoints).toEqual(
+                interactionDataPointsEventPayload.data.dataPoints
+            );
         });
 
         describe("open/close subjects", () => {
             it("should trigger the openPopoverSubject", fakeAsync(() => {
                 spyOn(plugin.openPopoverSubject, "next");
-                chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_DATA_POINTS_EVENT)
+                    .next(interactionDataPointsEventPayload);
 
                 flush();
 
@@ -172,8 +208,14 @@ describe("ChartPopoverPlugin >", () => {
             it(`should trigger the openPopoverSubject only once if the INTERACTION_DATA_POINTS_EVENT
                 is received multiple times before closing the popover`, fakeAsync(() => {
                 spyOn(plugin.openPopoverSubject, "next");
-                chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
-                chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_DATA_POINTS_EVENT)
+                    .next(interactionDataPointsEventPayload);
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_DATA_POINTS_EVENT)
+                    .next(interactionDataPointsEventPayload);
 
                 flush();
 
@@ -182,16 +224,26 @@ describe("ChartPopoverPlugin >", () => {
 
             it("should not trigger the closePopoverSubject", () => {
                 spyOn(plugin.closePopoverSubject, "next");
-                chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_DATA_POINTS_EVENT)
+                    .next(interactionDataPointsEventPayload);
 
                 expect(plugin.closePopoverSubject.next).not.toHaveBeenCalled();
             });
 
             it("should not trigger the openPopoverSubject", fakeAsync(() => {
-                interactionDataPointsEventPayload.data.dataPoints["series-1"].position = null;
-                interactionDataPointsEventPayload.data.dataPoints["series-2"].position = null;
+                interactionDataPointsEventPayload.data.dataPoints[
+                    "series-1"
+                ].position = null;
+                interactionDataPointsEventPayload.data.dataPoints[
+                    "series-2"
+                ].position = null;
                 spyOn(plugin.openPopoverSubject, "next");
-                chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_DATA_POINTS_EVENT)
+                    .next(interactionDataPointsEventPayload);
 
                 flush();
 
@@ -199,10 +251,17 @@ describe("ChartPopoverPlugin >", () => {
             }));
 
             it("should trigger the closePopoverSubject if the positions are null", fakeAsync(() => {
-                interactionDataPointsEventPayload.data.dataPoints["series-1"].position = null;
-                interactionDataPointsEventPayload.data.dataPoints["series-2"].position = null;
+                interactionDataPointsEventPayload.data.dataPoints[
+                    "series-1"
+                ].position = null;
+                interactionDataPointsEventPayload.data.dataPoints[
+                    "series-2"
+                ].position = null;
                 spyOn(plugin.closePopoverSubject, "next");
-                chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_DATA_POINTS_EVENT)
+                    .next(interactionDataPointsEventPayload);
 
                 flush();
 
@@ -214,8 +273,8 @@ describe("ChartPopoverPlugin >", () => {
                     data: {
                         interactionType: InteractionType.MouseMove,
                         dataPoint: {
-                            "index": DATA_POINT_INTERACTION_RESET,
-                            "position": { "x": 400 },
+                            index: DATA_POINT_INTERACTION_RESET,
+                            position: { x: 400 },
                         } as IDataPoint,
                     } as IInteractionDataPointEvent,
                 };
@@ -223,7 +282,10 @@ describe("ChartPopoverPlugin >", () => {
                 plugin.config.eventStreamId = INTERACTION_DATA_POINT_EVENT;
                 plugin.initialize();
                 spyOn(plugin.closePopoverSubject, "next");
-                chart.getEventBus().getStream(INTERACTION_DATA_POINT_EVENT).next(event);
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_DATA_POINT_EVENT)
+                    .next(event);
 
                 flush();
 
@@ -235,14 +297,16 @@ describe("ChartPopoverPlugin >", () => {
             it("should emit", fakeAsync(() => {
                 const spy = spyOn(plugin.updatePositionSubject, "next");
 
-                chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
+                chart
+                    .getEventBus()
+                    .getStream(INTERACTION_DATA_POINTS_EVENT)
+                    .next(interactionDataPointsEventPayload);
 
                 flush();
 
                 expect(spy).toHaveBeenCalledWith(plugin.popoverTargetPosition);
             }));
         });
-
     });
 
     describe("cleanup", () => {
@@ -285,7 +349,15 @@ describe("ChartPopoverPlugin >", () => {
             };
 
             plugin.destroy();
-            chart.getEventBus().getStream(plugin.config.eventStreamId as string).next({ data: { interactionType: InteractionType.MouseMove, dataPoints } });
+            chart
+                .getEventBus()
+                .getStream(plugin.config.eventStreamId as string)
+                .next({
+                    data: {
+                        interactionType: InteractionType.MouseMove,
+                        dataPoints,
+                    },
+                });
 
             expect(plugin.popoverTargetPosition).toEqual(expectedPosition);
         });

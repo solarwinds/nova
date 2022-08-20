@@ -32,8 +32,7 @@ describe("WidgetConfiguratorSectionCoordinatorService", () => {
                     useValue: service,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -45,20 +44,26 @@ describe("WidgetConfiguratorSectionCoordinatorService", () => {
         it("should register the accordion component", () => {
             service.registerAccordion(component);
             expect((<any>service).accordions[0].instance).toEqual(component);
-            expect((<any>service).accordions[0].openSubscription instanceof Subscriber).toEqual(true);
-            expect((<any>service).accordions[0].destroySubscription instanceof Subscriber).toEqual(true);
+            expect(
+                (<any>service).accordions[0].openSubscription instanceof
+                    Subscriber
+            ).toEqual(true);
+            expect(
+                (<any>service).accordions[0].destroySubscription instanceof
+                    Subscriber
+            ).toEqual(true);
         });
 
         it("should invoke closeAllAccordions on component.openSubject.next", () => {
             service.registerAccordion(component);
-            const closeAllSpy = spyOn((<any>service), "closeAllAccordions");
+            const closeAllSpy = spyOn(<any>service, "closeAllAccordions");
             component.openSubject.next();
             expect(closeAllSpy).toHaveBeenCalled();
         });
 
         it("should invoke removeAccordion on component.destroySubject.next", () => {
             service.registerAccordion(component);
-            const removeSpy = spyOn((<any>service), "removeAccordion");
+            const removeSpy = spyOn(<any>service, "removeAccordion");
             component.destroySubject.next();
             expect(removeSpy).toHaveBeenCalled();
         });
@@ -82,7 +87,10 @@ describe("WidgetConfiguratorSectionCoordinatorService", () => {
         });
 
         it("should unsubscribe from the openSubscription", () => {
-            const unsubscribeSpy = spyOn((<any>service).accordions[0].openSubscription, "unsubscribe");
+            const unsubscribeSpy = spyOn(
+                (<any>service).accordions[0].openSubscription,
+                "unsubscribe"
+            );
             component.ngOnDestroy(); // removeAccordion is invoked on component destroy
             expect(unsubscribeSpy).toHaveBeenCalled();
         });

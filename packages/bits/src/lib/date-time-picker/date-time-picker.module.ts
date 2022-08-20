@@ -10,18 +10,9 @@ import { DateTimePickerComponent } from "./date-time-picker.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiDatePickerModule,
-        NuiTimePickerModule,
-    ],
-    declarations: [
-        DateTimePickerComponent,
-    ],
-    exports: [
-        DateTimePickerComponent,
-    ],
+    imports: [NuiCommonModule, NuiDatePickerModule, NuiTimePickerModule],
+    declarations: [DateTimePickerComponent],
+    exports: [DateTimePickerComponent],
     providers: [],
 })
-export class NuiDateTimePickerModule {
-}
+export class NuiDateTimePickerModule {}

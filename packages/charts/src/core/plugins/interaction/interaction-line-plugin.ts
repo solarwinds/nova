@@ -3,10 +3,18 @@ import isEmpty from "lodash/isEmpty";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { CHART_VIEW_STATUS_EVENT, INTERACTION_VALUES_EVENT } from "../../../constants";
+import {
+    CHART_VIEW_STATUS_EVENT,
+    INTERACTION_VALUES_EVENT,
+} from "../../../constants";
 import { ChartPlugin } from "../../common/chart-plugin";
 import { IScale } from "../../common/scales/types";
-import { D3Selection, IChartEvent, IChartViewStatusEventPayload, InteractionType } from "../../common/types";
+import {
+    D3Selection,
+    IChartEvent,
+    IChartViewStatusEventPayload,
+    InteractionType,
+} from "../../common/types";
 import { XYGrid } from "../../grid/xy-grid";
 import { IInteractionValuesPayload } from "../types";
 
@@ -31,7 +39,9 @@ export class InteractionLinePlugin extends ChartPlugin {
             clipped: true,
         });
 
-        this.chart.getEventBus().getStream(INTERACTION_VALUES_EVENT)
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_VALUES_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IChartEvent) => {
                 this.lastInteractionValuesPayload = event.data;
@@ -40,7 +50,9 @@ export class InteractionLinePlugin extends ChartPlugin {
                 }
             });
 
-        this.chart.getEventBus().getStream(CHART_VIEW_STATUS_EVENT)
+        this.chart
+            .getEventBus()
+            .getStream(CHART_VIEW_STATUS_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IChartEvent<IChartViewStatusEventPayload>) => {
                 this.isChartInView = event.data.isChartInView;
@@ -52,7 +64,11 @@ export class InteractionLinePlugin extends ChartPlugin {
 
     private handleLineUpdate() {
         const scales = this.chart.getGrid().scales;
-        if (this.lastInteractionValuesPayload.interactionType !== InteractionType.MouseMove || isEmpty(scales)) {
+        if (
+            this.lastInteractionValuesPayload.interactionType !==
+                InteractionType.MouseMove ||
+            isEmpty(scales)
+        ) {
             return;
         }
 
@@ -63,7 +79,9 @@ export class InteractionLinePlugin extends ChartPlugin {
             throw new Error("xScale is not defined");
         }
 
-        const xValue = this.lastInteractionValuesPayload.values.x ? this.lastInteractionValuesPayload.values.x[xScale.id] : null;
+        const xValue = this.lastInteractionValuesPayload.values.x
+            ? this.lastInteractionValuesPayload.values.x[xScale.id]
+            : null;
         this.updateLine(this.interactionLineLayer, xScale, xValue);
     }
 
@@ -72,15 +90,17 @@ export class InteractionLinePlugin extends ChartPlugin {
         if (value) {
             data.push(value);
         }
-        const line = layer.selectAll(`.${InteractionLinePlugin.LAYER_NAME}`).data(data);
+        const line = layer
+            .selectAll(`.${InteractionLinePlugin.LAYER_NAME}`)
+            .data(data);
 
         const xFn = (d: any) => xScale.convert(d);
         const attrs = {
-            "class": InteractionLinePlugin.LAYER_NAME,
-            "x1": xFn,
-            "y1": 0,
-            "x2": xFn,
-            "y2": this.chart.getGrid().config().dimension.height(),
+            class: InteractionLinePlugin.LAYER_NAME,
+            x1: xFn,
+            y1: 0,
+            x2: xFn,
+            y2: this.chart.getGrid().config().dimension.height(),
         };
 
         line.enter()
@@ -92,7 +112,10 @@ export class InteractionLinePlugin extends ChartPlugin {
     }
 
     public destroy(): void {
-        this.chart.getGrid().getLasagna().removeLayer(InteractionLinePlugin.LAYER_NAME);
+        this.chart
+            .getGrid()
+            .getLasagna()
+            .removeLayer(InteractionLinePlugin.LAYER_NAME);
         this.destroy$.next();
         this.destroy$.complete();
     }

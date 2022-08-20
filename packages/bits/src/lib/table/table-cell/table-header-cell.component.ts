@@ -1,5 +1,17 @@
 import { CdkHeaderCell } from "@angular/cdk/table";
-import { AfterViewInit, Component, ElementRef, HostBinding, HostListener, Input, NgZone, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    HostBinding,
+    HostListener,
+    Input,
+    NgZone,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges,
+} from "@angular/core";
 import _get from "lodash/get";
 import _isNil from "lodash/isNil";
 import _isUndefined from "lodash/isUndefined";
@@ -11,7 +23,12 @@ import { UtilService } from "../../../services/util.service";
 import { FIXED_WIDTH_CLASS } from "../constants";
 import { NonResizableColumnTypes, TableAlignmentOptions } from "../types";
 import { TableResizePhase } from "../table-resizer/table-resizer.directive";
-import { ColumnType, DraggedOverCell, ITableSortingState, TableStateHandlerService } from "../table-state-handler.service";
+import {
+    ColumnType,
+    DraggedOverCell,
+    ITableSortingState,
+    TableStateHandlerService,
+} from "../table-state-handler.service";
 
 import { TableColumnDefDirective } from "./table-column-def.directive";
 
@@ -23,22 +40,28 @@ import { TableColumnDefDirective } from "./table-column-def.directive";
     // eslint-disable-next-line
     selector: "nui-header-cell, th[nui-header-cell]",
     host: {
-        "role": "columnheader",
-        "class": "nui-table__table-header-cell",
+        role: "columnheader",
+        class: "nui-table__table-header-cell",
     },
-    template: `
-        <ng-content></ng-content>
-        <nui-icon *ngIf="sortingState.isColumnSorted"
-                  class="nui-table__sorting-icon"
-                  [icon]="sortingState.sortingIcon"
-                  iconColor="gray"></nui-icon>
-        <span *ngIf="isColumnResizable()"
-              (click)="$event.stopPropagation()"
-              nuiTableResizer
-              [columnIndex]="currentCellIndex"
-              (resizerMovement)="onColumnWidthChange($event)"></span>`,
+    template: ` <ng-content></ng-content>
+        <nui-icon
+            *ngIf="sortingState.isColumnSorted"
+            class="nui-table__sorting-icon"
+            [icon]="sortingState.sortingIcon"
+            iconColor="gray"
+        ></nui-icon>
+        <span
+            *ngIf="isColumnResizable()"
+            (click)="$event.stopPropagation()"
+            nuiTableResizer
+            [columnIndex]="currentCellIndex"
+            (resizerMovement)="onColumnWidthChange($event)"
+        ></span>`,
 })
-export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class TableHeaderCellComponent
+    extends CdkHeaderCell
+    implements OnInit, OnChanges, AfterViewInit, OnDestroy
+{
     @Input() alignment: TableAlignmentOptions;
     @Input() tooltipText: string;
     @Input() isColumnSortingDisabled: boolean = false;
@@ -78,7 +101,10 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
 
     @HostBinding("class.nui-table__table-header-cell--sortable")
     get isSortable(): boolean {
-        return this.tableStateHandlerService.sortable && !this.isColumnSortingDisabled;
+        return (
+            this.tableStateHandlerService.sortable &&
+            !this.isColumnSortingDisabled
+        );
     }
 
     @HostBinding("class.nui-table__table-header-cell--sortable--text-black")
@@ -97,8 +123,10 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         return this.tooltipText;
     }
 
-    @HostBinding("class.nui-table__table-cell--left-edge-action") leftEdgeActive: boolean;
-    @HostBinding("class.nui-table__table-cell--right-edge-action") rightEdgeActive: boolean;
+    @HostBinding("class.nui-table__table-cell--left-edge-action")
+    leftEdgeActive: boolean;
+    @HostBinding("class.nui-table__table-cell--right-edge-action")
+    rightEdgeActive: boolean;
 
     @HostListener("mouseover")
     mouseMovedOver(): void {
@@ -118,8 +146,15 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
 
     @HostListener("click")
     clicked(): void {
-        if (this.tableStateHandlerService.sortable && !this.isColumnSortingDisabled && this.resizeEventPhase !== TableResizePhase.start) {
-            const cellIndex = this.tableStateHandlerService.tableColumns.indexOf(this.columnDef.name);
+        if (
+            this.tableStateHandlerService.sortable &&
+            !this.isColumnSortingDisabled &&
+            this.resizeEventPhase !== TableResizePhase.start
+        ) {
+            const cellIndex =
+                this.tableStateHandlerService.tableColumns.indexOf(
+                    this.columnDef.name
+                );
             this.tableStateHandlerService.sortColumn(cellIndex);
         }
     }
@@ -129,7 +164,8 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
     dragStarted(event: IDragEvent): void {
         if (this.isReorderable) {
             const dragTarget = <Element>event.target;
-            const dragCellIndex = this.tableStateHandlerService.getTargetElementCellIndex(event);
+            const dragCellIndex =
+                this.tableStateHandlerService.getTargetElementCellIndex(event);
 
             this.tableStateHandlerService.dragCellIndex = dragCellIndex;
             event.stopPropagation();
@@ -146,9 +182,16 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
 
             const windowSelection: Selection | null = window.getSelection();
             // Prevents dragging a halo of multiple elements, if being selected on screen
-            if (!_isNil(windowSelection?.type) && windowSelection?.type === "Range") {
+            if (
+                !_isNil(windowSelection?.type) &&
+                windowSelection?.type === "Range"
+            ) {
                 windowSelection.removeAllRanges();
-                event.dataTransfer.setDragImage(dragTarget, dragTarget.clientWidth / 2, dragTarget.clientHeight / 2);
+                event.dataTransfer.setDragImage(
+                    dragTarget,
+                    dragTarget.clientWidth / 2,
+                    dragTarget.clientHeight / 2
+                );
             }
         }
     }
@@ -162,7 +205,11 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         event.preventDefault();
         this.tableStateHandlerService.draggedOverCell.next(undefined);
 
-        if (!_isNil(dragCellIndex) && !_isNil(dataTransferData) && (dragCellIndex.toString() === dataTransferData)) {
+        if (
+            !_isNil(dragCellIndex) &&
+            !_isNil(dataTransferData) &&
+            dragCellIndex.toString() === dataTransferData
+        ) {
             this.tableStateHandlerService.reorderColumnsOnDrop();
         }
     }
@@ -173,11 +220,13 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
         this.tableStateHandlerService.draggedOverCell.next(undefined);
     }
 
-    constructor(private columnDef: TableColumnDefDirective,
-                private elementRef: ElementRef,
-                private tableStateHandlerService: TableStateHandlerService,
-                private utilService: UtilService,
-                private zone: NgZone) {
+    constructor(
+        private columnDef: TableColumnDefDirective,
+        private elementRef: ElementRef,
+        private tableStateHandlerService: TableStateHandlerService,
+        private utilService: UtilService,
+        private zone: NgZone
+    ) {
         super(columnDef, elementRef);
 
         this.tableStateHandlerService.columnType = <ColumnType>{
@@ -187,61 +236,93 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
     }
 
     ngOnInit(): void {
-        const alignment = this.alignment ? `align-${ this.alignment }` : this.tableStateHandlerService.getAlignment(this.columnDef.name);
+        const alignment = this.alignment
+            ? `align-${this.alignment}`
+            : this.tableStateHandlerService.getAlignment(this.columnDef.name);
 
         this.resizable = this.tableStateHandlerService.resizable;
         this.elementRef.nativeElement.classList.add(alignment);
-        this.currentCellIndex = this.tableStateHandlerService.tableColumns.indexOf(this.columnDef.name);
-        this.sortingState = this.tableStateHandlerService.getSortingState(this.currentCellIndex);
+        this.currentCellIndex =
+            this.tableStateHandlerService.tableColumns.indexOf(
+                this.columnDef.name
+            );
+        this.sortingState = this.tableStateHandlerService.getSortingState(
+            this.currentCellIndex
+        );
 
         if (this.resizable) {
             // Get initial width
-            const columnWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
+            const columnWidth = this.tableStateHandlerService.getColumnWidth(
+                this.columnDef.name
+            );
 
             this.elementRef.nativeElement.style.width = columnWidth + "px";
-            this.subscriptions.push(this.tableStateHandlerService.shouldHighlightEdge
-                .pipe(
-                    filter(value => {
-                        // When resize is in progress on other columns this one shouldn't be highlighted
-                        this.resizeInProgress = value.columnIndex !== this.currentCellIndex &&
-                            value.eventPhase === "start";
-                        return value.columnIndex === this.currentCellIndex;
-                    }),
-                    pluck("eventPhase")
-                )
-                .subscribe((eventPhase: TableResizePhase) => {
-                    this.resizeEventPhase = eventPhase;
-                    this.rightEdgeActive = this.isCursorInCell;
-                }));
+            this.subscriptions.push(
+                this.tableStateHandlerService.shouldHighlightEdge
+                    .pipe(
+                        filter((value) => {
+                            // When resize is in progress on other columns this one shouldn't be highlighted
+                            this.resizeInProgress =
+                                value.columnIndex !== this.currentCellIndex &&
+                                value.eventPhase === "start";
+                            return value.columnIndex === this.currentCellIndex;
+                        }),
+                        pluck("eventPhase")
+                    )
+                    .subscribe((eventPhase: TableResizePhase) => {
+                        this.resizeEventPhase = eventPhase;
+                        this.rightEdgeActive = this.isCursorInCell;
+                    })
+            );
         }
-        this.subscriptions.push(this.tableStateHandlerService.columnWidthSubject.subscribe(() => {
-            const columnWidth = this.tableStateHandlerService.getColumnWidth(this.columnDef.name);
-            if (columnWidth > 45) {
-                this.elementRef.nativeElement.style.width = columnWidth + "px";
-            }
-        }));
+        this.subscriptions.push(
+            this.tableStateHandlerService.columnWidthSubject.subscribe(() => {
+                const columnWidth =
+                    this.tableStateHandlerService.getColumnWidth(
+                        this.columnDef.name
+                    );
+                if (columnWidth > 45) {
+                    this.elementRef.nativeElement.style.width =
+                        columnWidth + "px";
+                }
+            })
+        );
 
         if (this.isSortable) {
-            this.subscriptions.push(this.tableStateHandlerService.sortingState.subscribe(() => {
-                this.sortingState = this.tableStateHandlerService.getSortingState(this.currentCellIndex);
-            }));
+            this.subscriptions.push(
+                this.tableStateHandlerService.sortingState.subscribe(() => {
+                    this.sortingState =
+                        this.tableStateHandlerService.getSortingState(
+                            this.currentCellIndex
+                        );
+                })
+            );
         }
 
         if (this.isReorderable) {
-            this.subscriptions.push(this.tableStateHandlerService.draggedOverCell.subscribe((draggedOverCell: DraggedOverCell) => {
-                this.rightEdgeActive = this.leftEdgeActive = false;
-                if (_get(draggedOverCell, "cellIndex") === this.currentCellIndex) {
-                    this.rightEdgeActive = draggedOverCell.dropAlignment === "right";
-                    this.leftEdgeActive = draggedOverCell.dropAlignment === "left";
-                }
-            }));
+            this.subscriptions.push(
+                this.tableStateHandlerService.draggedOverCell.subscribe(
+                    (draggedOverCell: DraggedOverCell) => {
+                        this.rightEdgeActive = this.leftEdgeActive = false;
+                        if (
+                            _get(draggedOverCell, "cellIndex") ===
+                            this.currentCellIndex
+                        ) {
+                            this.rightEdgeActive =
+                                draggedOverCell.dropAlignment === "right";
+                            this.leftEdgeActive =
+                                draggedOverCell.dropAlignment === "left";
+                        }
+                    }
+                )
+            );
         }
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.alignment && !changes.alignment.firstChange) {
-            const newAlignment = `align-${ changes.alignment.currentValue }`;
-            const oldAlignment = `align-${ changes.alignment.previousValue }`;
+            const newAlignment = `align-${changes.alignment.currentValue}`;
+            const oldAlignment = `align-${changes.alignment.previousValue}`;
             this.elementRef.nativeElement.classList.remove(oldAlignment);
             this.elementRef.nativeElement.classList.add(newAlignment);
         }
@@ -249,30 +330,43 @@ export class TableHeaderCellComponent extends CdkHeaderCell implements OnInit, O
 
     ngAfterViewInit(): void {
         this.zone.runOutsideAngular(() => {
-            this.subscriptions.push(fromEvent<DragEvent>(this.elementRef.nativeElement, "dragover").subscribe((event: DragEvent) => {
-                event.stopPropagation();
-                event.preventDefault();
-                this.tableStateHandlerService.setDraggedOverCell(event);
-            }));
+            this.subscriptions.push(
+                fromEvent<DragEvent>(
+                    this.elementRef.nativeElement,
+                    "dragover"
+                ).subscribe((event: DragEvent) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    this.tableStateHandlerService.setDraggedOverCell(event);
+                })
+            );
         });
     }
 
     public isColumnResizable(): boolean {
-        const isColumnTypeResizable = _isUndefined(<NonResizableColumnTypes>(this.columnDef.type));
+        const isColumnTypeResizable = _isUndefined(
+            <NonResizableColumnTypes>this.columnDef.type
+        );
         return this.tableStateHandlerService.resizable && isColumnTypeResizable;
     }
 
     public onColumnWidthChange(offset: number): void {
-        const calculatedWidth = this.elementRef.nativeElement.getBoundingClientRect().width;
+        const calculatedWidth =
+            this.elementRef.nativeElement.getBoundingClientRect().width;
         const resultWidth = calculatedWidth + offset;
         // resultWidth must be more than 45 because minimum width of the column is 46px
         if (resultWidth > 45 || offset > 0) {
             this.elementRef.nativeElement.style.width = resultWidth + "px";
-            this.tableStateHandlerService.setColumnWidth(this.columnDef.name, resultWidth);
+            this.tableStateHandlerService.setColumnWidth(
+                this.columnDef.name,
+                resultWidth
+            );
         }
     }
 
     ngOnDestroy(): void {
-        this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+        this.subscriptions.forEach((subscription) =>
+            subscription.unsubscribe()
+        );
     }
 }

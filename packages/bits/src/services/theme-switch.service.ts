@@ -10,10 +10,12 @@ import { filter, map } from "rxjs/operators";
 })
 export class ThemeSwitchService {
     /** @ignore BehaviorSubject indicating whether we should display theme switcher */
-    public showThemeSwitcherSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public showThemeSwitcherSubject: BehaviorSubject<boolean> =
+        new BehaviorSubject<boolean>(false);
 
     /** BehaviorSubject indicating whether dark mode is enabled */
-    public isDarkModeEnabledSubject: BehaviorSubject<boolean | null> = new BehaviorSubject<boolean | null>(null);
+    public isDarkModeEnabledSubject: BehaviorSubject<boolean | null> =
+        new BehaviorSubject<boolean | null>(null);
 
     /** Should route be refreshed after theme switching */
     public withRefreshRoute: boolean = false;
@@ -32,25 +34,32 @@ export class ThemeSwitchService {
         /** Getting renderer instance */
         this.renderer = this.rendererFactory.createRenderer(null, null);
 
-        this.router.events.pipe(
-            filter(event => event instanceof NavigationEnd),
-            map(() => {
-                let route = this._route.root;
-                while (route.firstChild) {
-                    route = route.firstChild;
-                }
-                return route;
-            })
-        )
-            .subscribe(route => {
-                const showThemeSwitcher = (route.snapshot.data || {}).showThemeSwitcher;
+        this.router.events
+            .pipe(
+                filter((event) => event instanceof NavigationEnd),
+                map(() => {
+                    let route = this._route.root;
+                    while (route.firstChild) {
+                        route = route.firstChild;
+                    }
+                    return route;
+                })
+            )
+            .subscribe((route) => {
+                const showThemeSwitcher = (route.snapshot.data || {})
+                    .showThemeSwitcher;
 
                 this.showThemeSwitcherSubject.next(showThemeSwitcher);
 
                 if (showThemeSwitcher) {
                     /** Case when route is changed on the same page (see on breadcrumb component docs page) */
-                    if (typeof this.isDarkModeEnabledSubject.getValue() === "boolean") {
-                        this.darkThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
+                    if (
+                        typeof this.isDarkModeEnabledSubject.getValue() ===
+                        "boolean"
+                    ) {
+                        this.darkThemePreference = window.matchMedia(
+                            "(prefers-color-scheme: dark)"
+                        );
                         return;
                     }
 
@@ -78,14 +87,19 @@ export class ThemeSwitchService {
      * light/dark mode system preference
      */
     public enableColorSchemePreferenceHandling() {
-        this.darkThemePreference = window.matchMedia("(prefers-color-scheme: dark)");
+        this.darkThemePreference = window.matchMedia(
+            "(prefers-color-scheme: dark)"
+        );
 
         /** First call to set initial theme */
         this.darkModePreferenceHandler(this.darkThemePreference.matches);
 
         /** If browser supports subscribing to MediaQueryList event we do it */
         if (typeof this.darkThemePreference.addEventListener === "function") {
-            this.darkThemePreference.addEventListener("change", this.darkModePreferenceHandler);
+            this.darkThemePreference.addEventListener(
+                "change",
+                this.darkModePreferenceHandler
+            );
         }
     }
 
@@ -94,29 +108,45 @@ export class ThemeSwitchService {
      * system preference
      */
     public disableColorSchemePreferenceHandling() {
-        if (this.darkThemePreference && typeof this.darkThemePreference.removeEventListener === "function") {
-            this.darkThemePreference.removeEventListener("change", this.darkModePreferenceHandler);
+        if (
+            this.darkThemePreference &&
+            typeof this.darkThemePreference.removeEventListener === "function"
+        ) {
+            this.darkThemePreference.removeEventListener(
+                "change",
+                this.darkModePreferenceHandler
+            );
         }
     }
 
-    private darkModePreferenceHandler = (event: MediaQueryListEvent | boolean) => {
-        const isDarkModeEnabled = typeof event === "boolean" ? event : event.matches;
+    private darkModePreferenceHandler = (
+        event: MediaQueryListEvent | boolean
+    ) => {
+        const isDarkModeEnabled =
+            typeof event === "boolean" ? event : event.matches;
         const isDarkPrevColorMode = this.isDarkModeEnabledSubject.getValue();
         const demoContainerElement = this.document.children[0];
 
         /** Adding class "dark-nova-theme" to html element we make dark mode, otherwise - light mode */
-        this.renderer[isDarkModeEnabled ? "addClass" : "removeClass"](demoContainerElement, "dark-nova-theme");
+        this.renderer[isDarkModeEnabled ? "addClass" : "removeClass"](
+            demoContainerElement,
+            "dark-nova-theme"
+        );
 
         /**
          * Reiniting route in case when theme is switching forced
          * It allows to avoid reiniting route while application is started
          */
-        if (isDarkPrevColorMode !== null && isDarkPrevColorMode !== isDarkModeEnabled && this.withRefreshRoute) {
+        if (
+            isDarkPrevColorMode !== null &&
+            isDarkPrevColorMode !== isDarkModeEnabled &&
+            this.withRefreshRoute
+        ) {
             this.reInitRoute();
         }
 
         this.isDarkModeEnabledSubject.next(isDarkModeEnabled);
-    }
+    };
 
     private reInitRoute() {
         /**
@@ -124,16 +154,20 @@ export class ThemeSwitchService {
          */
         const scrolledElement = this.document.children[0];
         const currentScrollTopPosition = scrolledElement.scrollTop;
-        const originalShouldReuseRoute = this.router.routeReuseStrategy.shouldReuseRoute;
+        const originalShouldReuseRoute =
+            this.router.routeReuseStrategy.shouldReuseRoute;
 
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.navigated = false;
 
         this.router.navigate([this.router.url]).then(() => {
-            this.router.routeReuseStrategy.shouldReuseRoute = originalShouldReuseRoute;
+            this.router.routeReuseStrategy.shouldReuseRoute =
+                originalShouldReuseRoute;
 
             /** After reiniting route we should restore scroll position */
-            setTimeout(() => scrolledElement.scrollTop = currentScrollTopPosition);
+            setTimeout(
+                () => (scrolledElement.scrollTop = currentScrollTopPosition)
+            );
         });
     }
 }

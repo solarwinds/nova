@@ -32,7 +32,6 @@ import { NuiFormFieldControl } from "../form-field/public-api";
     styleUrls: ["./switch.component.less"],
     encapsulation: ViewEncapsulation.Emulated,
 })
-
 export class SwitchComponent implements OnInit, ControlValueAccessor {
     @Input() public value: boolean;
     @Input() public disabled: boolean;
@@ -61,9 +60,9 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         this.onTouched();
     }
 
-    onChange(value: any) { }
+    onChange(value: any) {}
 
-    onTouched() { }
+    onTouched() {}
 
     writeValue(value: any) {
         if (value !== undefined) {
@@ -87,4 +86,3 @@ export class SwitchComponent implements OnInit, ControlValueAccessor {
         this.value = !!this.value;
     }
 }
-

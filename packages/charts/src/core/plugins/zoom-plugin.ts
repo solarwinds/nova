@@ -6,11 +6,21 @@ import isUndefined from "lodash/isUndefined";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { INTERACTION_COORDINATES_EVENT, INTERACTION_VALUES_ACTIVE_EVENT, SET_DOMAIN_EVENT, STANDARD_RENDER_LAYERS } from "../../constants";
+import {
+    INTERACTION_COORDINATES_EVENT,
+    INTERACTION_VALUES_ACTIVE_EVENT,
+    SET_DOMAIN_EVENT,
+    STANDARD_RENDER_LAYERS,
+} from "../../constants";
 import { RenderLayerName } from "../../renderers/types";
 import { ChartPlugin } from "../common/chart-plugin";
 import { IScale } from "../common/scales/types";
-import { D3Selection, IChartEvent, InteractionType, ISetDomainEventPayload } from "../common/types";
+import {
+    D3Selection,
+    IChartEvent,
+    InteractionType,
+    ISetDomainEventPayload,
+} from "../common/types";
 import { Grid } from "../grid/grid";
 import { XYGrid } from "../grid/xy-grid";
 
@@ -57,7 +67,9 @@ export class ZoomPlugin extends ChartPlugin {
             clipped: true,
         });
 
-        this.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT)
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_COORDINATES_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((chartEvent: IChartEvent) => {
                 if (chartEvent.broadcast && !this.config.enableExternalEvents) {
@@ -76,33 +88,41 @@ export class ZoomPlugin extends ChartPlugin {
             });
 
         this.brush = brushX();
-        this.brushElement = this.zoomBrushLayer.append("g")
+        this.brushElement = this.zoomBrushLayer
+            .append("g")
             .attr("class", "brush");
 
         // engage pointer capture to confine mouse events to the interactive area
         // (in other words, if the 'mouseup' is physically triggered outside the interactive area,
         // the pointer capture allows us to still zoom based on that event)
-        this.chart.getGrid().getInteractiveArea()
-            .on("pointerdown", () => event.target.setPointerCapture(event.pointerId))
-            .on("pointerup", () => event.target.releasePointerCapture(event.pointerId));
+        this.chart
+            .getGrid()
+            .getInteractiveArea()
+            .on("pointerdown", () =>
+                event.target.setPointerCapture(event.pointerId)
+            )
+            .on("pointerup", () =>
+                event.target.releasePointerCapture(event.pointerId)
+            );
     }
 
     public updateDimensions(): void {
         const dimension = this.grid.config().dimension;
 
         // set the brush area's dimensions
-        this.brush.extent([[0, 0], [dimension.width(), dimension.height()]]);
+        this.brush.extent([
+            [0, 0],
+            [dimension.width(), dimension.height()],
+        ]);
 
         // render the brush area after we have dimensions
         this.brush(this.zoomBrushLayer.select(".brush"));
 
         // prevent the brush from handling its own pointer events
-        this.brushElement.select(".overlay")
-            .style("pointer-events", "none");
+        this.brushElement.select(".overlay").style("pointer-events", "none");
 
         // remove stroke per mockups
-        this.brushElement.select(".selection")
-            .attr("stroke", null);
+        this.brushElement.select(".selection").attr("stroke", null);
     }
 
     public destroy(): void {
@@ -116,9 +136,12 @@ export class ZoomPlugin extends ChartPlugin {
             return;
         }
 
-        this.chart.getEventBus().getStream(INTERACTION_VALUES_ACTIVE_EVENT).next({ data: false });
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_VALUES_ACTIVE_EVENT)
+            .next({ data: false });
         this.brushStartX = xCoord;
-    }
+    };
 
     private brushMove = (xCoord: number) => {
         if (isUndefined(this.brushStartX)) {
@@ -127,7 +150,7 @@ export class ZoomPlugin extends ChartPlugin {
 
         const selection = [this.brushStartX, xCoord].sort((a, b) => a - b);
         this.brush.move(this.brushElement, selection as BrushSelection);
-    }
+    };
 
     private brushEnd = (xCoord: number) => {
         if (isUndefined(this.brushStartX)) {
@@ -136,7 +159,10 @@ export class ZoomPlugin extends ChartPlugin {
 
         const selection = [this.brushStartX, xCoord].sort((a, b) => a - b);
         this.brushStartX = undefined;
-        this.chart.getEventBus().getStream(INTERACTION_VALUES_ACTIVE_EVENT).next({ data: true });
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_VALUES_ACTIVE_EVENT)
+            .next({ data: true });
 
         // remove the brush
         this.brush.move(this.brushElement, null);
@@ -148,17 +174,27 @@ export class ZoomPlugin extends ChartPlugin {
 
         let widthCorrection = 0;
         const gridConfig = this.grid.config();
-        if (!gridConfig.disableRenderAreaWidthCorrection && selection[1] === gridConfig.dimension.width() - Grid.RENDER_AREA_WIDTH_CORRECTION) {
+        if (
+            !gridConfig.disableRenderAreaWidthCorrection &&
+            selection[1] ===
+                gridConfig.dimension.width() - Grid.RENDER_AREA_WIDTH_CORRECTION
+        ) {
             // Width correction to accommodate similar adjustment in grid. This ensures that the right-most column of pixels on the chart is selectable.
             widthCorrection = Grid.RENDER_AREA_WIDTH_CORRECTION;
         }
 
-        const data: ISetDomainEventPayload = xScales.reduce((result, next: IScale<any>) => {
-            result[next.id] = [selection[0], selection[1] as number + widthCorrection].map(x => next.invert(x as number));
-            return result;
-        }, <ISetDomainEventPayload>{});
+        const data: ISetDomainEventPayload = xScales.reduce(
+            (result, next: IScale<any>) => {
+                result[next.id] = [
+                    selection[0],
+                    (selection[1] as number) + widthCorrection,
+                ].map((x) => next.invert(x as number));
+                return result;
+            },
+            <ISetDomainEventPayload>{}
+        );
 
         // zoom the chart
         this.chart.getEventBus().getStream(SET_DOMAIN_EVENT).next({ data });
-    }
+    };
 }

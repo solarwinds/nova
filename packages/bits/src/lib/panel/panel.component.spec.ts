@@ -1,5 +1,10 @@
 import { Component, DebugElement } from "@angular/core";
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+} from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
@@ -22,24 +27,31 @@ const PANE_HEADER = "DEFAULT HEADER";
 @Component({
     selector: "nui-test-app",
     template: `
-        <nui-panel [paneSize]="paneSize" [panelMode]="panelMode"
-                   [isCollapsed]="isCollapsed" [orientation]="orientation"
-                   [heading]="heading" [displacePrimaryContent]="displacePrimaryContent"
-                   [darkBorder]="darkBorder" [headerPadding]="headerPadding" [panelBackgroundColor]="panelBackgroundColor"
-                   (collapsed)="onCollapse($event)" (hidden)="onHide($event)"
+        <nui-panel
+            [paneSize]="paneSize"
+            [panelMode]="panelMode"
+            [isCollapsed]="isCollapsed"
+            [orientation]="orientation"
+            [heading]="heading"
+            [displacePrimaryContent]="displacePrimaryContent"
+            [darkBorder]="darkBorder"
+            [headerPadding]="headerPadding"
+            [panelBackgroundColor]="panelBackgroundColor"
+            (collapsed)="onCollapse($event)"
+            (hidden)="onHide($event)"
         >
             <div nuiPanelEmbeddedIcon class="nui-panel__header-embedded-icon">
-                <nui-icon [icon]="headerIcon"
-                          [counter]="headerIconCounter"
-                          [iconSize]="'small'">
+                <nui-icon
+                    [icon]="headerIcon"
+                    [counter]="headerIconCounter"
+                    [iconSize]="'small'"
+                >
                 </nui-icon>
             </div>
             <div nuiPanelEmbeddedBody class="nui-panel__header-embedded-body">
                 ${LEFT_PANE_CONTENT}
             </div>
-            <div>
-                ${CENTER_PANE_CONTENT}
-            </div>
+            <div>${CENTER_PANE_CONTENT}</div>
         </nui-panel>
     `,
 })
@@ -74,9 +86,14 @@ describe("components >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [NoopAnimationsModule],
-                declarations: [IconComponent, ButtonComponent, PanelComponent, TestAppComponent, ResizerDirective],
-                providers: [
-                    IconService, UtilService],
+                declarations: [
+                    IconComponent,
+                    ButtonComponent,
+                    PanelComponent,
+                    TestAppComponent,
+                    ResizerDirective,
+                ],
+                providers: [IconService, UtilService],
             });
 
             fixture = TestBed.createComponent(TestAppComponent);
@@ -88,21 +105,26 @@ describe("components >", () => {
 
         it("should have content in left pane and center pane", () => {
             fixture.detectChanges();
-            const leftPaneBody =
-                fixture.debugElement.query(By.css(".nui-panel__side-pane-body")).nativeElement;
+            const leftPaneBody = fixture.debugElement.query(
+                By.css(".nui-panel__side-pane-body")
+            ).nativeElement;
             expect(leftPaneBody.textContent).toContain(LEFT_PANE_CONTENT);
 
-            const centerPaneBody =
-                fixture.debugElement.query(By.css(".nui-panel__center-pane .nui-panel__body")).nativeElement;
+            const centerPaneBody = fixture.debugElement.query(
+                By.css(".nui-panel__center-pane .nui-panel__body")
+            ).nativeElement;
             expect(centerPaneBody.textContent).toContain(CENTER_PANE_CONTENT);
         });
 
         it("should have set width in left pane container and side pane body if not collapsible", () => {
             fixture.detectChanges();
 
-            const leftPaneContainer =
-                fixture.debugElement.query(By.css(".nui-panel__side-pane")).nativeElement;
-            expect(leftPaneContainer.style.width).toBe(`${PanelComponent.SIZE_VALUES.width.DEFAULT_VALUE}`);
+            const leftPaneContainer = fixture.debugElement.query(
+                By.css(".nui-panel__side-pane")
+            ).nativeElement;
+            expect(leftPaneContainer.style.width).toBe(
+                `${PanelComponent.SIZE_VALUES.width.DEFAULT_VALUE}`
+            );
 
             testComponent.paneSize = PANE_WIDTH;
             fixture.detectChanges();
@@ -116,9 +138,12 @@ describe("components >", () => {
             testComponent.isCollapsed = true;
             fixture.detectChanges();
             tick();
-            const leftPaneContainer =
-                fixture.debugElement.query(By.css(".nui-panel__side-pane")).nativeElement;
-            expect(leftPaneContainer.style.width).toBe(`${PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE}`);
+            const leftPaneContainer = fixture.debugElement.query(
+                By.css(".nui-panel__side-pane")
+            ).nativeElement;
+            expect(leftPaneContainer.style.width).toBe(
+                `${PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE}`
+            );
         }));
 
         it("should set width in percents when allowPercentageSize is true and is not collapsed", () => {
@@ -128,9 +153,12 @@ describe("components >", () => {
             testComponent.paneSize = PANE_WIDTH_PERCENTS;
             fixture.detectChanges();
 
-            const leftPaneContainer =
-                fixture.debugElement.query(By.css(".nui-panel__side-pane")).nativeElement;
-            expect(leftPaneContainer.style.width).toBe(`${PANE_WIDTH_PERCENTS}`);
+            const leftPaneContainer = fixture.debugElement.query(
+                By.css(".nui-panel__side-pane")
+            ).nativeElement;
+            expect(leftPaneContainer.style.width).toBe(
+                `${PANE_WIDTH_PERCENTS}`
+            );
         });
 
         it("should change height in top pane container if collapsible and not collapsed", () => {
@@ -141,8 +169,9 @@ describe("components >", () => {
             testComponent.paneSize = PANE_HEIGHT;
             fixture.detectChanges();
 
-            const topPaneContainer =
-                fixture.debugElement.query(By.css(".nui-panel__side-pane")).nativeElement;
+            const topPaneContainer = fixture.debugElement.query(
+                By.css(".nui-panel__side-pane")
+            ).nativeElement;
             expect(topPaneContainer.style.height).toBe(`${PANE_HEIGHT}`);
         });
 
@@ -152,8 +181,9 @@ describe("components >", () => {
             testComponent.paneSize = PANE_HEIGHT;
             fixture.detectChanges();
 
-            const topPaneContainer =
-                fixture.debugElement.query(By.css(".nui-panel__side-pane")).nativeElement;
+            const topPaneContainer = fixture.debugElement.query(
+                By.css(".nui-panel__side-pane")
+            ).nativeElement;
             expect(topPaneContainer.style.height).toBe(`${PANE_HEIGHT}`);
         });
 
@@ -164,21 +194,26 @@ describe("components >", () => {
             testComponent.isCollapsed = true;
             fixture.detectChanges();
             tick();
-            const topPaneContainer =
-                fixture.debugElement.query(By.css(".nui-panel__side-pane")).nativeElement;
-            expect(topPaneContainer.style.height).toBe(`${PanelComponent.SIZE_VALUES.height.COLLAPSED_VALUE}`);
+            const topPaneContainer = fixture.debugElement.query(
+                By.css(".nui-panel__side-pane")
+            ).nativeElement;
+            expect(topPaneContainer.style.height).toBe(
+                `${PanelComponent.SIZE_VALUES.height.COLLAPSED_VALUE}`
+            );
         }));
 
         it("should have collapse button when collapsible", () => {
             fixture.detectChanges();
-            let collapseButtonDebugElement =
-                fixture.debugElement.query(By.css(".nui-panel__header-btn"));
+            let collapseButtonDebugElement = fixture.debugElement.query(
+                By.css(".nui-panel__header-btn")
+            );
             expect(collapseButtonDebugElement).toBeNull();
 
             testComponent.panelMode = PanelModes.collapsible;
             fixture.detectChanges();
-            collapseButtonDebugElement =
-                fixture.debugElement.query(By.css(".nui-panel__header-btn"));
+            collapseButtonDebugElement = fixture.debugElement.query(
+                By.css(".nui-panel__header-btn")
+            );
             expect(collapseButtonDebugElement).not.toBeNull();
         });
 
@@ -188,14 +223,22 @@ describe("components >", () => {
 
             it("when not collapsible and not collapsed", () => {
                 fixture.detectChanges();
-                panelContainer =
-                    fixture.debugElement.query(By.css(".nui-panel.media")).nativeElement;
-                collapseIconDebugElement =
-                    fixture.debugElement.query(By.css(".nui-panel__header-btn"));
+                panelContainer = fixture.debugElement.query(
+                    By.css(".nui-panel.media")
+                ).nativeElement;
+                collapseIconDebugElement = fixture.debugElement.query(
+                    By.css(".nui-panel__header-btn")
+                );
 
-                expect(panelContainer.classList).not.toContain("nui-panel--is-collapsed");
-                expect(panelContainer.getAttribute("aria-expanded")).toBe("true");
-                expect(panelContainer.getAttribute("aria-hidden")).toBe("false");
+                expect(panelContainer.classList).not.toContain(
+                    "nui-panel--is-collapsed"
+                );
+                expect(panelContainer.getAttribute("aria-expanded")).toBe(
+                    "true"
+                );
+                expect(panelContainer.getAttribute("aria-hidden")).toBe(
+                    "false"
+                );
                 expect(collapseIconDebugElement).toBeNull();
             });
 
@@ -204,14 +247,22 @@ describe("components >", () => {
                 testComponent.isCollapsed = true;
                 tick();
                 fixture.detectChanges();
-                panelContainer =
-                    fixture.debugElement.query(By.css(".nui-panel.media")).nativeElement;
-                collapseIconDebugElement =
-                    fixture.debugElement.query(By.css(".nui-panel__header-btn"));
+                panelContainer = fixture.debugElement.query(
+                    By.css(".nui-panel.media")
+                ).nativeElement;
+                collapseIconDebugElement = fixture.debugElement.query(
+                    By.css(".nui-panel__header-btn")
+                );
 
-                expect(panelContainer.classList).not.toContain("nui-panel--is-collapsed");
-                expect(panelContainer.getAttribute("aria-expanded")).toBe("true");
-                expect(panelContainer.getAttribute("aria-hidden")).toBe("false");
+                expect(panelContainer.classList).not.toContain(
+                    "nui-panel--is-collapsed"
+                );
+                expect(panelContainer.getAttribute("aria-expanded")).toBe(
+                    "true"
+                );
+                expect(panelContainer.getAttribute("aria-hidden")).toBe(
+                    "false"
+                );
                 expect(collapseIconDebugElement).toBeNull();
             }));
 
@@ -220,16 +271,26 @@ describe("components >", () => {
                 testComponent.panelMode = PanelModes.collapsible;
                 fixture.detectChanges();
 
-                panelContainer =
-                    fixture.debugElement.query(By.css(".nui-panel.media")).nativeElement;
-                collapseIconDebugElement =
-                    fixture.debugElement.query(By.css(".nui-panel__header-btn"));
+                panelContainer = fixture.debugElement.query(
+                    By.css(".nui-panel.media")
+                ).nativeElement;
+                collapseIconDebugElement = fixture.debugElement.query(
+                    By.css(".nui-panel__header-btn")
+                );
 
-                expect(panelContainer.classList).not.toContain("nui-panel--is-collapsed");
-                expect(panelContainer.getAttribute("aria-expanded")).toBe("true");
-                expect(panelContainer.getAttribute("aria-hidden")).toBe("false");
+                expect(panelContainer.classList).not.toContain(
+                    "nui-panel--is-collapsed"
+                );
+                expect(panelContainer.getAttribute("aria-expanded")).toBe(
+                    "true"
+                );
+                expect(panelContainer.getAttribute("aria-hidden")).toBe(
+                    "false"
+                );
                 expect(collapseIconDebugElement).not.toBeNull();
-                expect(collapseIconDebugElement.context.icon).toBe("double-caret-left");
+                expect(collapseIconDebugElement.context.icon).toBe(
+                    "double-caret-left"
+                );
             });
         });
 
@@ -244,35 +305,47 @@ describe("components >", () => {
                 fixture.detectChanges();
                 tick();
                 fixture.detectChanges();
-                panelContainer =
-                fixture.debugElement.query(By.css(".nui-panel.media")).nativeElement;
-                collapseIconDebugElement =
-                fixture.debugElement.query(By.css(".nui-panel__header-btn"));
+                panelContainer = fixture.debugElement.query(
+                    By.css(".nui-panel.media")
+                ).nativeElement;
+                collapseIconDebugElement = fixture.debugElement.query(
+                    By.css(".nui-panel__header-btn")
+                );
 
-                expect(panelContainer.classList).toContain("nui-panel--is-collapsed");
-                expect(panelContainer.getAttribute("aria-expanded")).toBe("false");
+                expect(panelContainer.classList).toContain(
+                    "nui-panel--is-collapsed"
+                );
+                expect(panelContainer.getAttribute("aria-expanded")).toBe(
+                    "false"
+                );
                 expect(panelContainer.getAttribute("aria-hidden")).toBe("true");
                 expect(collapseIconDebugElement).not.toBeNull();
-                expect(collapseIconDebugElement.context.icon).toBe("double-caret-right");
+                expect(collapseIconDebugElement.context.icon).toBe(
+                    "double-caret-right"
+                );
             }));
         });
 
         it("should have header", () => {
             fixture.detectChanges();
-            const headerDebugElement =
-                fixture.debugElement.query(By.css(".nui-panel__header-content-default"));
+            const headerDebugElement = fixture.debugElement.query(
+                By.css(".nui-panel__header-content-default")
+            );
             expect(headerDebugElement).toBeTruthy();
-            expect(headerDebugElement.nativeElement.innerText.trim()).toEqual(PANE_HEADER);
-
+            expect(headerDebugElement.nativeElement.innerText.trim()).toEqual(
+                PANE_HEADER
+            );
         });
         it("should have embedded header icon", () => {
             testComponent.headerIcon = "filter";
             fixture.detectChanges();
-            const embeddedHeaderIconDebugElement =
-                fixture.debugElement.query(By.css(".nui-panel__header-embedded-icon"));
+            const embeddedHeaderIconDebugElement = fixture.debugElement.query(
+                By.css(".nui-panel__header-embedded-icon")
+            );
             expect(embeddedHeaderIconDebugElement).not.toBeNull();
-            const embeddedIconDebugElement =
-                fixture.debugElement.query(By.css(".nui-panel__header-embedded-icon nui-icon"));
+            const embeddedIconDebugElement = fixture.debugElement.query(
+                By.css(".nui-panel__header-embedded-icon nui-icon")
+            );
             expect(embeddedIconDebugElement).not.toBeNull();
             expect(embeddedIconDebugElement.context.icon).toBe("filter");
         });
@@ -281,12 +354,13 @@ describe("components >", () => {
                 testComponent.orientation = "right";
                 fixture.detectChanges();
 
-                const leftPaneBody =
-                    fixture.debugElement.query(By.css(".nui-panel--left .nui-panel__side-pane-body"));
+                const leftPaneBody = fixture.debugElement.query(
+                    By.css(".nui-panel--left .nui-panel__side-pane-body")
+                );
                 expect(leftPaneBody).toBeNull();
-                const rightPaneBody =
-
-                    fixture.debugElement.query(By.css(".nui-panel--right .nui-panel__side-pane-body"));
+                const rightPaneBody = fixture.debugElement.query(
+                    By.css(".nui-panel--right .nui-panel__side-pane-body")
+                );
                 expect(rightPaneBody).not.toBeNull();
             });
             it("should have correct margin when position is right and displacePrimaryContent is true", () => {
@@ -296,9 +370,12 @@ describe("components >", () => {
                 testComponent.displacePrimaryContent = true;
                 fixture.detectChanges();
 
-                const panelBodyDebugElement =
-                    fixture.debugElement.query(By.css(".media-body.nui-panel__center-pane"));
-                expect(panelBodyDebugElement.nativeElement.style.marginRight).toBe(`${PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE}`);
+                const panelBodyDebugElement = fixture.debugElement.query(
+                    By.css(".media-body.nui-panel__center-pane")
+                );
+                expect(
+                    panelBodyDebugElement.nativeElement.style.marginRight
+                ).toBe(`${PanelComponent.SIZE_VALUES.width.COLLAPSED_VALUE}`);
             });
             it("should have correct classes and margin when position is top and displacePrimaryContent is true", () => {
                 testComponent.orientation = "top";
@@ -308,15 +385,22 @@ describe("components >", () => {
                 testComponent.displacePrimaryContent = true;
                 fixture.detectChanges();
 
-                const panelContainer =
-                    fixture.debugElement.query(By.css(".nui-panel.media"));
-                expect(panelContainer.nativeElement.classList).toContain("nui-panel--top");
-                const topPaneDebugElement =
-                    fixture.debugElement.query(By.css(".nui-panel--top .nui-panel__side-pane-body"));
+                const panelContainer = fixture.debugElement.query(
+                    By.css(".nui-panel.media")
+                );
+                expect(panelContainer.nativeElement.classList).toContain(
+                    "nui-panel--top"
+                );
+                const topPaneDebugElement = fixture.debugElement.query(
+                    By.css(".nui-panel--top .nui-panel__side-pane-body")
+                );
                 expect(topPaneDebugElement).not.toBeNull();
-                const panelBodyDebugElement =
-                    fixture.debugElement.query(By.css(".media-body.nui-panel__center-pane"));
-                expect(panelBodyDebugElement.nativeElement.style.marginTop).toBe(`${PanelComponent.SIZE_VALUES.height.COLLAPSED_VALUE}`);
+                const panelBodyDebugElement = fixture.debugElement.query(
+                    By.css(".media-body.nui-panel__center-pane")
+                );
+                expect(
+                    panelBodyDebugElement.nativeElement.style.marginTop
+                ).toBe(`${PanelComponent.SIZE_VALUES.height.COLLAPSED_VALUE}`);
             });
             it("should have correct classes and margin when position is bottom and displacePrimaryContent is true", () => {
                 testComponent.orientation = "bottom";
@@ -326,15 +410,22 @@ describe("components >", () => {
                 testComponent.displacePrimaryContent = true;
                 fixture.detectChanges();
 
-                const panelContainer =
-                    fixture.debugElement.query(By.css(".nui-panel.media"));
-                expect(panelContainer.nativeElement.classList).toContain("nui-panel--bottom");
-                const topPaneDebugElement =
-                    fixture.debugElement.query(By.css(".nui-panel--bottom .nui-panel__side-pane-body"));
+                const panelContainer = fixture.debugElement.query(
+                    By.css(".nui-panel.media")
+                );
+                expect(panelContainer.nativeElement.classList).toContain(
+                    "nui-panel--bottom"
+                );
+                const topPaneDebugElement = fixture.debugElement.query(
+                    By.css(".nui-panel--bottom .nui-panel__side-pane-body")
+                );
                 expect(topPaneDebugElement).not.toBeNull();
-                const panelBodyDebugElement =
-                    fixture.debugElement.query(By.css(".media-body.nui-panel__center-pane"));
-                expect(panelBodyDebugElement.nativeElement.style.marginBottom).toBe(`${PanelComponent.SIZE_VALUES.height.COLLAPSED_VALUE}`);
+                const panelBodyDebugElement = fixture.debugElement.query(
+                    By.css(".media-body.nui-panel__center-pane")
+                );
+                expect(
+                    panelBodyDebugElement.nativeElement.style.marginBottom
+                ).toBe(`${PanelComponent.SIZE_VALUES.height.COLLAPSED_VALUE}`);
             });
             it("should display correct button icons when collapse is toggled", fakeAsync(() => {
                 fixture.detectChanges();
@@ -344,23 +435,29 @@ describe("components >", () => {
                 fixture.detectChanges();
                 tick();
                 fixture.detectChanges();
-                const collapsibleIconDebugElement =
-                    fixture.debugElement.query(By.css(".nui-panel__header-btn"));
-                expect(collapsibleIconDebugElement.context.icon).toBe("double-caret-down");
+                const collapsibleIconDebugElement = fixture.debugElement.query(
+                    By.css(".nui-panel__header-btn")
+                );
+                expect(collapsibleIconDebugElement.context.icon).toBe(
+                    "double-caret-down"
+                );
 
                 testComponent.isCollapsed = false;
                 fixture.detectChanges();
                 tick();
                 fixture.detectChanges();
-                expect(collapsibleIconDebugElement.context.icon).toBe("double-caret-up");
+                expect(collapsibleIconDebugElement.context.icon).toBe(
+                    "double-caret-up"
+                );
             }));
             it("should display correct button icon when closable", () => {
                 testComponent.orientation = "left";
                 testComponent.panelMode = PanelModes.closable;
                 fixture.detectChanges();
 
-                const closableIconDebugElement =
-                    fixture.debugElement.query(By.css(".nui-panel__header-btn--close"));
+                const closableIconDebugElement = fixture.debugElement.query(
+                    By.css(".nui-panel__header-btn--close")
+                );
                 expect(closableIconDebugElement).not.toBeNull();
                 expect(closableIconDebugElement.context.icon).toBe("close");
             });
@@ -369,22 +466,30 @@ describe("components >", () => {
             it("should have correct class when darkBorder input set to true", () => {
                 testComponent.darkBorder = true;
                 fixture.detectChanges();
-                const paneContainer =
-                    fixture.debugElement.query(By.css(".nui-panel__side-pane")).nativeElement;
-                expect(paneContainer.classList).toContain("nui-panel-pane--border-dark");
+                const paneContainer = fixture.debugElement.query(
+                    By.css(".nui-panel__side-pane")
+                ).nativeElement;
+                expect(paneContainer.classList).toContain(
+                    "nui-panel-pane--border-dark"
+                );
             });
             it("should have correct class when headerPadding input set to false", () => {
                 testComponent.headerPadding = false;
                 fixture.detectChanges();
-                const paneHeader =
-                    fixture.debugElement.query(By.css(".nui-panel__header")).nativeElement;
-                expect(paneHeader.classList).toContain("nui-panel__header--no-padding");
+                const paneHeader = fixture.debugElement.query(
+                    By.css(".nui-panel__header")
+                ).nativeElement;
+                expect(paneHeader.classList).toContain(
+                    "nui-panel__header--no-padding"
+                );
             });
             it("should have correct class when panelBackgroundColor input set to colorBgSecondary", () => {
-                testComponent.panelBackgroundColor = PanelBackgroundColor.colorBgSecondary;
+                testComponent.panelBackgroundColor =
+                    PanelBackgroundColor.colorBgSecondary;
                 fixture.detectChanges();
-                const paneContainer =
-                    fixture.debugElement.query(By.css(".nui-panel__side-pane")).nativeElement;
+                const paneContainer = fixture.debugElement.query(
+                    By.css(".nui-panel__side-pane")
+                ).nativeElement;
                 expect(paneContainer.classList).toContain("color-bg-secondary");
             });
         });
@@ -392,8 +497,9 @@ describe("components >", () => {
             const spy = spyOn(testComponent, "onCollapse");
             testComponent.panelMode = PanelModes.collapsible;
             fixture.detectChanges();
-            const toggleButton =
-                fixture.debugElement.query(By.css(".nui-panel__header-btn")).nativeElement;
+            const toggleButton = fixture.debugElement.query(
+                By.css(".nui-panel__header-btn")
+            ).nativeElement;
             toggleButton.click();
             tick();
             expect(spy).toHaveBeenCalledWith(true);
@@ -401,14 +507,14 @@ describe("components >", () => {
             fixture.whenStable().then(() => {
                 expect(testComponent.onCollapse).toHaveBeenCalled();
             });
-
         }));
         it("should emit 'hidden' event when closable panel is shown/hidden", () => {
             const spy = spyOn(testComponent, "onHide");
             testComponent.panelMode = PanelModes.closable;
             fixture.detectChanges();
-            const closeButton =
-                fixture.debugElement.query(By.css(".nui-panel__header-btn--close")).nativeElement;
+            const closeButton = fixture.debugElement.query(
+                By.css(".nui-panel__header-btn--close")
+            ).nativeElement;
             closeButton.click();
             expect(spy).toHaveBeenCalledWith(true);
         });

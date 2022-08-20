@@ -55,14 +55,23 @@ describe("components > ", () => {
             });
 
             it("should call 'keyboardEventsManager.onKeydown' on arrow down/up key", () => {
-                const spy = spyOn(service["keyboardEventsManager"], "onKeydown" as any);
-                const arrowDownEvent = {...keyBoardEventMock, ...{ code: KEYBOARD_CODE.ARROW_DOWN }};
+                const spy = spyOn(
+                    service["keyboardEventsManager"],
+                    "onKeydown" as any
+                );
+                const arrowDownEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.ARROW_DOWN },
+                };
 
                 service.handleKeydown(arrowDownEvent as any);
 
                 expect(spy).toHaveBeenCalledWith(arrowDownEvent);
 
-                const arrowUpEvent = {...keyBoardEventMock, ...{ code: KEYBOARD_CODE.ARROW_UP}};
+                const arrowUpEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.ARROW_UP },
+                };
 
                 service.handleKeydown(arrowUpEvent as any);
                 expect(spy).toHaveBeenCalledWith(arrowUpEvent);
@@ -71,16 +80,29 @@ describe("components > ", () => {
             it("should call 'liveAnnouncer.announce' on arrow down/up key", () => {
                 const itemTitle = "Item 1";
                 spyOn(service["keyboardEventsManager"], "onKeydown" as any);
-                spyOnProperty(service["keyboardEventsManager"], "activeItem").and.returnValue({ value: itemTitle });
-                const arrowDownEvent = {...keyBoardEventMock, ...{ code: KEYBOARD_CODE.ARROW_DOWN }};
+                spyOnProperty(
+                    service["keyboardEventsManager"],
+                    "activeItem"
+                ).and.returnValue({
+                    value: itemTitle,
+                });
+                const arrowDownEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.ARROW_DOWN },
+                };
 
                 service.handleKeydown(arrowDownEvent as any);
-                expect(service.liveAnnouncer.announce).toHaveBeenCalledWith(itemTitle);
+                expect(service.liveAnnouncer.announce).toHaveBeenCalledWith(
+                    itemTitle
+                );
             });
 
             it("should call popup 'toggle' method on tab key", () => {
                 const spy = spyOn(service.popup, "toggle");
-                const tabEvent = {...keyBoardEventMock, ...{ code: KEYBOARD_CODE.TAB}};
+                const tabEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.TAB },
+                };
 
                 service.handleKeydown(tabEvent as any);
                 expect(spy).toHaveBeenCalled();
@@ -88,21 +110,33 @@ describe("components > ", () => {
 
             it("should call 'announceDropdown' on tab key", () => {
                 const spy = spyOn(service, "announceDropdown" as any);
-                const tabEvent = {...keyBoardEventMock, ...{ code: KEYBOARD_CODE.TAB}};
+                const tabEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.TAB },
+                };
 
                 service.handleKeydown(tabEvent as any);
                 expect(spy).toHaveBeenCalledWith(service.popup.showing);
             });
 
             it("should call 'keyboardEventsManager.onKeydown' on pageUp/pageDown key", () => {
-                const spy = spyOn(service["keyboardEventsManager"], "onKeydown" as any);
-                const pageDownEvent = {...keyBoardEventMock, ...{ code: KEYBOARD_CODE.PAGE_DOWN }};
+                const spy = spyOn(
+                    service["keyboardEventsManager"],
+                    "onKeydown" as any
+                );
+                const pageDownEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.PAGE_DOWN },
+                };
 
                 service.handleKeydown(pageDownEvent as any);
 
                 expect(spy).toHaveBeenCalledWith(pageDownEvent);
 
-                const pageUpEvent = {...keyBoardEventMock, ...{ code: KEYBOARD_CODE.PAGE_UP }};
+                const pageUpEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.PAGE_UP },
+                };
 
                 service.handleKeydown(pageUpEvent as any);
                 expect(spy).toHaveBeenCalledWith(pageUpEvent);
@@ -119,7 +153,10 @@ describe("components > ", () => {
 
             it("should call prevent default on arrowDown key", () => {
                 service.popup.showing = false;
-                const arrowDownEvent = {...keyBoardEventMock, ...{ code: KEYBOARD_CODE.ARROW_DOWN }};
+                const arrowDownEvent = {
+                    ...keyBoardEventMock,
+                    ...{ code: KEYBOARD_CODE.ARROW_DOWN },
+                };
                 const spy = spyOn(arrowDownEvent, "preventDefault");
 
                 service.handleKeydown(arrowDownEvent as any);
@@ -129,7 +166,10 @@ describe("components > ", () => {
         });
         describe("setActiveItem", () => {
             it("should call keyboardEventsManager.setActiveItem method", () => {
-                const spy = spyOn(service["keyboardEventsManager"], "setActiveItem");
+                const spy = spyOn(
+                    service["keyboardEventsManager"],
+                    "setActiveItem"
+                );
                 const mock = {};
 
                 service.setActiveItem(mock);
@@ -139,7 +179,10 @@ describe("components > ", () => {
 
         describe("resetActiveItem", () => {
             it("should call keyboardEventsManager.setActiveItem method", () => {
-                const spy = spyOn(service["keyboardEventsManager"], "setActiveItem");
+                const spy = spyOn(
+                    service["keyboardEventsManager"],
+                    "setActiveItem"
+                );
 
                 service.resetActiveItem();
                 expect(spy).toHaveBeenCalledWith(-1);
@@ -148,7 +191,10 @@ describe("components > ", () => {
 
         describe("setFirstItemActive", () => {
             it("should call keyboardEventsManager.setFirstItemActive method", () => {
-                const spy = spyOn(service["keyboardEventsManager"], "setFirstItemActive");
+                const spy = spyOn(
+                    service["keyboardEventsManager"],
+                    "setFirstItemActive"
+                );
 
                 service.setFirstItemActive();
                 expect(spy).toHaveBeenCalled();

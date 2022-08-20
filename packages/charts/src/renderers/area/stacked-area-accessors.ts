@@ -2,7 +2,10 @@ import { IChartMarker, IValueProvider } from "../../core/common/types";
 
 import { AreaAccessors, IAreaAccessors } from "./area-accessors";
 
-export function stackedAreaAccessors(colorProvider?: IValueProvider<string>, markerProvider?: IValueProvider<IChartMarker>): IAreaAccessors {
+export function stackedAreaAccessors(
+    colorProvider?: IValueProvider<string>,
+    markerProvider?: IValueProvider<IChartMarker>
+): IAreaAccessors {
     const areaAccessors = new AreaAccessors(colorProvider, markerProvider);
 
     areaAccessors.data.x = (d) => d.x;

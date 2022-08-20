@@ -13,7 +13,10 @@ describe(`Visual tests: Dashboards - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("test/kpi/error");
-        configurator = Atom.findIn(ConfiguratorAtom, element(by.className(ConfiguratorAtom.CSS_CLASS)));
+        configurator = Atom.findIn(
+            ConfiguratorAtom,
+            element(by.className(ConfiguratorAtom.CSS_CLASS))
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });
@@ -26,19 +29,24 @@ describe(`Visual tests: Dashboards - ${name}`, () => {
         await page.enableEditMode();
         await page.editWidget("Error Widget");
 
-        const dsAccordion = await configurator?.getAccordion("Value 1 - Average Rating", "Data Source");
+        const dsAccordion = await configurator?.getAccordion(
+            "Value 1 - Average Rating",
+            "Data Source"
+        );
         await dsAccordion?.toggle();
 
         await camera.say.cheese(`${name} - Error 0`);
 
-        const dataSourceSelect = dsAccordion?.getSelect("datasource-configuration__accordion-content__datasource-input");
-        await dataSourceSelect?.select("TestKpiDataSource2")
+        const dataSourceSelect = dsAccordion?.getSelect(
+            "datasource-configuration__accordion-content__datasource-input"
+        );
+        await dataSourceSelect?.select("TestKpiDataSource2");
         await camera.say.cheese(`${name} - Error 403`);
 
-        await dataSourceSelect?.select("TestKpiDataSourceBigNumber")
+        await dataSourceSelect?.select("TestKpiDataSourceBigNumber");
         await camera.say.cheese(`${name} - Error 404`);
 
-        await dataSourceSelect?.select("TestKpiDataSourceSmallNumber")
+        await dataSourceSelect?.select("TestKpiDataSourceSmallNumber");
         await camera.say.cheese(`${name} - No Error`);
 
         await camera.turn.off();

@@ -69,5 +69,4 @@ const DECLARATIONS_EXPORTS: Array<Type<any> | any[]> = [
     exports: DECLARATIONS_EXPORTS,
     providers: [],
 })
-export class NuiTableModule {
-}
+export class NuiTableModule {}

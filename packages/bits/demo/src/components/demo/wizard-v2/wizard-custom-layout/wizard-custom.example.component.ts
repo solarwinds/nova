@@ -16,7 +16,7 @@ import { tap } from "rxjs/operators";
     templateUrl: "wizard-custom.component.html",
     styleUrls: ["wizard-custom.component.less"],
     host: {
-        "class": "nui-wizard-custom-layout",
+        class: "nui-wizard-custom-layout",
         "aria-orientation": "horizontal",
     },
     providers: [
@@ -26,15 +26,18 @@ import { tap } from "rxjs/operators";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardCustomComponent extends WizardDirective { }
+export class WizardCustomComponent extends WizardDirective {}
 
 @Component({
     selector: "nui-wizard-custom-example",
     templateUrl: "./wizard-custom.example.component.html",
     styleUrls: ["wizard-custom.component.less"],
-    providers: [{
-        provide: STEPPER_GLOBAL_OPTIONS, useValue: { displayDefaultIndicatorType: false },
-    }],
+    providers: [
+        {
+            provide: STEPPER_GLOBAL_OPTIONS,
+            useValue: { displayDefaultIndicatorType: false },
+        },
+    ],
 })
 export class WizardCustomExampleComponent implements OnInit, AfterViewInit {
     public formGroup: FormGroup;
@@ -44,20 +47,20 @@ export class WizardCustomExampleComponent implements OnInit, AfterViewInit {
 
     @ViewChild("wizard") wizard: WizardCustomComponent;
 
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(private formBuilder: FormBuilder) {}
 
     ngOnInit(): void {
         this.formGroup = new FormGroup({
-            "personDetails": this.formBuilder.group({
-                "name": ["", [Validators.required, Validators.minLength(3)]],
-                "symptoms": [undefined, Validators.required],
+            personDetails: this.formBuilder.group({
+                name: ["", [Validators.required, Validators.minLength(3)]],
+                symptoms: [undefined, Validators.required],
             }),
-            "diseaseDetails": this.formBuilder.group({
-                "date": ["", Validators.required],
+            diseaseDetails: this.formBuilder.group({
+                date: ["", Validators.required],
             }),
-            "contactDetails": this.formBuilder.group({
-                "email": ["", [Validators.required, Validators.email]],
-                "phone": [""],
+            contactDetails: this.formBuilder.group({
+                email: ["", [Validators.required, Validators.email]],
+                phone: [""],
             }),
         });
     }
@@ -71,30 +74,35 @@ export class WizardCustomExampleComponent implements OnInit, AfterViewInit {
                 if (selectedIndex !== undefined && selectedIndex >= 0) {
                     this.selectedIndex = selectedIndex;
                 }
-                this.progress = 100 * (1 + this.selectedIndex) / this.steps;
+                this.progress = (100 * (1 + this.selectedIndex)) / this.steps;
             });
         };
 
-        this.wizard.selectionChange.pipe(
-            tap(i => {
-                update(i.selectedIndex);
-            })
-        ).subscribe();
+        this.wizard.selectionChange
+            .pipe(
+                tap((i) => {
+                    update(i.selectedIndex);
+                })
+            )
+            .subscribe();
 
-        this.wizard.steps.changes.pipe(
-            tap(c => {
-                update(undefined, c.length);
-            })
-        ).subscribe();
+        this.wizard.steps.changes
+            .pipe(
+                tap((c) => {
+                    update(undefined, c.length);
+                })
+            )
+            .subscribe();
     }
 
     validate(step: WizardStepV2Component): void {
         // mark all fields from current step as touched
         // in order to display the validation messages
-        Object.keys((step.stepControl as FormGroup)?.controls || {})
-            .forEach(key => {
+        Object.keys((step.stepControl as FormGroup)?.controls || {}).forEach(
+            (key) => {
                 const field = this.wizard.selected.stepControl.get(key);
                 field?.markAsTouched();
-            });
+            }
+        );
     }
 }

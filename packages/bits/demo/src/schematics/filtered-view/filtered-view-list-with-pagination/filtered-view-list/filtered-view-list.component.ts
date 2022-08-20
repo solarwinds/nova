@@ -21,23 +21,12 @@ import {
     SorterComponent,
     SorterDirection,
 } from "@nova-ui/bits";
-import {
-    BehaviorSubject,
-    Subject,
-} from "rxjs";
-import {
-    takeUntil,
-    tap,
-} from "rxjs/operators";
+import { BehaviorSubject, Subject } from "rxjs";
+import { takeUntil, tap } from "rxjs/operators";
 
-import {
-    RESULTS_PER_PAGE,
-} from "../filtered-view-list-with-pagination-data";
+import { RESULTS_PER_PAGE } from "../filtered-view-list-with-pagination-data";
 import { FilteredViewListWithPaginationDataSource } from "../filtered-view-list-with-pagination-data-source.service";
-import {
-    IServer,
-    IServerFilters,
-} from "../types";
+import { IServer, IServerFilters } from "../types";
 
 @Component({
     selector: "app-filtered-view-list-with-pagination-list",
@@ -45,7 +34,9 @@ import {
     styleUrls: ["./filtered-view-list.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class FilteredViewListComponent
+    implements OnInit, AfterViewInit, OnDestroy
+{
     public listItems$ = new BehaviorSubject<IServer[]>([]);
     public readonly sorterItems: IMenuItem[] = [
         {
@@ -87,19 +78,21 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
     private destroy$ = new Subject();
 
     constructor(
-        @Inject(DataSourceService) private dataSource: FilteredViewListWithPaginationDataSource<IServer>,
+        @Inject(DataSourceService)
+        private dataSource: FilteredViewListWithPaginationDataSource<IServer>,
         private changeDetection: ChangeDetectorRef
-    ) {
-    }
+    ) {}
 
     public ngOnInit() {
-        this.dataSource.busy.pipe(
-            tap(val => {
-                this.isBusy = val;
-                this.changeDetection.detectChanges();
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.dataSource.busy
+            .pipe(
+                tap((val) => {
+                    this.isBusy = val;
+                    this.changeDetection.detectChanges();
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public async ngAfterViewInit() {
@@ -110,30 +103,39 @@ export class FilteredViewListComponent implements OnInit, AfterViewInit, OnDestr
             repeat: { componentInstance: this.repeat },
         });
 
-        this.search.focusChange.pipe(
-            tap(async(focused: boolean) => {
-                // we want to perform a new search on blur event
-                // only if the search filter changed
-                if (!focused && this.dataSource.filterChanged(nameof<IServerFilters>("search"))) {
-                    await this.applyFilters();
-                }
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.search.focusChange
+            .pipe(
+                tap(async (focused: boolean) => {
+                    // we want to perform a new search on blur event
+                    // only if the search filter changed
+                    if (
+                        !focused &&
+                        this.dataSource.filterChanged(
+                            nameof<IServerFilters>("search")
+                        )
+                    ) {
+                        await this.applyFilters();
+                    }
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
-        this.dataSource.outputsSubject.pipe(
-            tap((data: INovaFilteringOutputs) => {
-                // update the list of items to be rendered
-                this.listItems$.next(data.repeat?.itemsSource || []);
+        this.dataSource.outputsSubject
+            .pipe(
+                tap((data: INovaFilteringOutputs) => {
+                    // update the list of items to be rendered
+                    this.listItems$.next(data.repeat?.itemsSource || []);
 
-                this.filteringState = data;
+                    this.filteringState = data;
 
-                this.totalItems = data.paginator?.total ?? 0;
+                    this.totalItems = data.paginator?.total ?? 0;
 
-                this.changeDetection.detectChanges();
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+                    this.changeDetection.detectChanges();
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
         // make 1st call to retrieve initial results
         await this.applyFilters();

@@ -20,18 +20,9 @@ import { WizardComponent } from "./wizard.component";
         NuiIconModule,
         NuiSpinnerModule,
     ],
-    declarations: [
-        WizardComponent,
-        WizardStepComponent,
-    ],
-    exports: [
-        WizardComponent,
-        WizardStepComponent,
-    ],
-    entryComponents: [
-        WizardStepComponent,
-    ],
+    declarations: [WizardComponent, WizardStepComponent],
+    exports: [WizardComponent, WizardStepComponent],
+    entryComponents: [WizardStepComponent],
     providers: [],
 })
-export class NuiWizardModule {
-}
+export class NuiWizardModule {}

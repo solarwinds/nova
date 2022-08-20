@@ -1,12 +1,27 @@
 import {
-    AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild,
+    AfterViewInit,
+    ApplicationRef,
+    ChangeDetectorRef,
+    Component,
+    Inject,
+    OnDestroy,
+    OnInit,
+    TemplateRef,
+    ViewChild,
     ViewContainerRef,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
     ClientSideDataSource,
-    DialogService, INovaFilteringOutputs, IToastService, PaginatorComponent, RowHeightOptions,
-    SearchComponent, TableAlignmentOptions, TableComponent, ToastService,
+    DialogService,
+    INovaFilteringOutputs,
+    IToastService,
+    PaginatorComponent,
+    RowHeightOptions,
+    SearchComponent,
+    TableAlignmentOptions,
+    TableComponent,
+    ToastService,
 } from "@nova-ui/bits";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -25,12 +40,25 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     public myForm: FormGroup;
     public optionsForm: FormGroup;
     public newColumn: string;
-    public availableColumns = ["position", "name", "features", "asset", "location", "status", "outages", "checks"];
+    public availableColumns = [
+        "position",
+        "name",
+        "features",
+        "asset",
+        "location",
+        "status",
+        "outages",
+        "checks",
+    ];
     public displayedColumns = this.availableColumns.slice();
     // full copy of displayed columns added to update columns only when updateTable() is called
     public displayedColumnsCopy = this.displayedColumns.slice();
 
-    public alignmentsArray: TableAlignmentOptions[] = ["right", "left", "center"];
+    public alignmentsArray: TableAlignmentOptions[] = [
+        "right",
+        "left",
+        "center",
+    ];
     public densitiesArray: RowHeightOptions[] = ["default", "tiny", "compact"];
 
     public alignment: string = "center";
@@ -48,21 +76,24 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
 
     @ViewChild("filteringPaginator") filteringPaginator: PaginatorComponent;
     @ViewChild("filteringSearch") filteringSearch: SearchComponent;
-    @ViewChild("filteringTable") filteringTable: TableComponent<ITestTableModel>;
+    @ViewChild("filteringTable")
+    filteringTable: TableComponent<ITestTableModel>;
     @ViewChild("sortableTable") sortableTable: TableComponent<ITestTableModel>;
     @ViewChild(TableComponent) testTable: TableComponent<ITestTableModel>;
 
     private outputsSubscription: Subscription;
     private searchSubscription: Subscription;
 
-    constructor(@Inject(ToastService) private toastService: IToastService,
-                @Inject(DialogService) private dialogService: DialogService,
-                @Inject(TableStateHandlerService) private tableStateHandlerService: TableStateHandlerService,
-                private formBuilder: FormBuilder,
-                public changeDetection: ChangeDetectorRef,
-                public viewContainerRef: ViewContainerRef,
-                public applicationRef: ApplicationRef,
-                public dataSourceService: ClientSideDataSource<ITestTableModel>
+    constructor(
+        @Inject(ToastService) private toastService: IToastService,
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(TableStateHandlerService)
+        private tableStateHandlerService: TableStateHandlerService,
+        private formBuilder: FormBuilder,
+        public changeDetection: ChangeDetectorRef,
+        public viewContainerRef: ViewContainerRef,
+        public applicationRef: ApplicationRef,
+        public dataSourceService: ClientSideDataSource<ITestTableModel>
     ) {
         dataSourceService.setData(ELEMENT_DATA);
     }
@@ -70,7 +101,9 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     ngOnInit() {
         this.myForm = this.formBuilder.group({
             checkboxGroup: this.formBuilder.control(this.displayedColumnsCopy, [
-                Validators.required, Validators.minLength(3)]),
+                Validators.required,
+                Validators.minLength(3),
+            ]),
         });
 
         this.optionsForm = this.formBuilder.group({
@@ -82,14 +115,16 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
             sortable: this.formBuilder.control(this.sortable),
         });
 
-        this.optionsForm.valueChanges.pipe(debounceTime(500)).subscribe(value => {
-            this.alignment = value.alignment;
-            this.positionWidth = value.positionWidth;
-            this.density = value.density;
-            this.sortable = value.sortable;
-            this.resizable = value.resizable;
-            this.reorderable = value.reorderable;
-        });
+        this.optionsForm.valueChanges
+            .pipe(debounceTime(500))
+            .subscribe((value) => {
+                this.alignment = value.alignment;
+                this.positionWidth = value.positionWidth;
+                this.density = value.density;
+                this.sortable = value.sortable;
+                this.resizable = value.resizable;
+                this.reorderable = value.reorderable;
+            });
     }
 
     async ngAfterViewInit() {
@@ -102,15 +137,22 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
             },
         };
 
-        this.dataSourceService.registerComponent(this.testTable.getFilterComponents());
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.dataSource = data.repeat?.itemsSource;
-            this.paginationTotal = data.paginator?.total;
-        });
+        this.dataSourceService.registerComponent(
+            this.testTable.getFilterComponents()
+        );
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.dataSource = data.repeat?.itemsSource;
+                    this.paginationTotal = data.paginator?.total;
+                }
+            );
 
-        this.searchSubscription = this.filteringSearch.inputChange.pipe(debounceTime(500)).subscribe(() => {
-            this.dataSourceService.applyFilters();
-        });
+        this.searchSubscription = this.filteringSearch.inputChange
+            .pipe(debounceTime(500))
+            .subscribe(() => {
+                this.dataSourceService.applyFilters();
+            });
 
         await this.dataSourceService.applyFilters();
     }
@@ -128,7 +170,11 @@ export class TableTestComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     public toastColumns(event: Array<string>) {
-        this.toastService.info({message: "Current order of columns is: " + event.toString().replace(/,/g, ", ")});
+        this.toastService.info({
+            message:
+                "Current order of columns is: " +
+                event.toString().replace(/,/g, ", "),
+        });
     }
 
     public async changePagination() {

@@ -1,5 +1,15 @@
-import { ChangeDetectorRef, Component, Injectable, OnInit } from "@angular/core";
-import { DataSourceService, IDataSource, INovaFilters, ITimeframe } from "@nova-ui/bits";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnInit,
+} from "@angular/core";
+import {
+    DataSourceService,
+    IDataSource,
+    INovaFilters,
+    ITimeframe,
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -34,12 +44,17 @@ import { BehaviorSubject } from "rxjs";
  * A simple Timeseries data source implementation
  */
 @Injectable()
-export class TimeseriesMockDataSource extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
+export class TimeseriesMockDataSource
+    extends DataSourceService<ITimeseriesWidgetData>
+    implements IDataSource<ITimeseriesOutput>
+{
     public static providerId = "TimeseriesMockDataSource";
 
     public busy = new BehaviorSubject<boolean>(false);
 
-    public async getFilteredData(filters: INovaFilters): Promise<IDataSourceOutput<ITimeseriesOutput>> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<IDataSourceOutput<ITimeseriesOutput>> {
         // In this example we're using some static mock data located at the bottom of this file. In a real-world
         // scenario, the data for the chart would likely be retrieved via an asynchronous backend call.
         let filteredData = getData();
@@ -49,17 +64,22 @@ export class TimeseriesMockDataSource extends DataSourceService<ITimeseriesWidge
         // Filtering using the filter registered by the TimeFrameBar
         const timeframeFilter = filters.timeframe?.value as ITimeframe;
         if (timeframeFilter) {
-            filteredData = filteredData.map((item: ITimeseriesWidgetData) =>
-                ({
-                    id: item.id,
-                    name: item.name,
-                    description: item.description,
-                    // the filtered data should return the provided links if they are set.
-                    link: item?.link,
-                    secondaryLink: item?.secondaryLink,
-                    data: item.data.filter((seriesData: ITimeseriesWidgetSeriesData) =>
-                        filterDates(seriesData.x, timeframeFilter.startDatetime, timeframeFilter.endDatetime)),
-                }));
+            filteredData = filteredData.map((item: ITimeseriesWidgetData) => ({
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                // the filtered data should return the provided links if they are set.
+                link: item?.link,
+                secondaryLink: item?.secondaryLink,
+                data: item.data.filter(
+                    (seriesData: ITimeseriesWidgetSeriesData) =>
+                        filterDates(
+                            seriesData.x,
+                            timeframeFilter.startDatetime,
+                            timeframeFilter.endDatetime
+                        )
+                ),
+            }));
         }
 
         this.busy.next(false);
@@ -70,7 +90,11 @@ export class TimeseriesMockDataSource extends DataSourceService<ITimeseriesWidge
 
 function filterDates(dateToCheck: Date, startDate: Moment, endDate: Moment) {
     const mom = moment(dateToCheck);
-    return mom.isBetween(startDate, endDate) || mom.isSame(startDate) || mom.isSame(endDate);
+    return (
+        mom.isBetween(startDate, endDate) ||
+        mom.isSame(startDate) ||
+        mom.isSame(endDate)
+    );
 }
 
 /**
@@ -102,11 +126,14 @@ export class TimeseriesWidgetInteractiveExampleComponent implements OnInit {
 
         // Angular's ChangeDetectorRef
         private changeDetectorRef: ChangeDetectorRef
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
-        const widgetTemplate = this.widgetTypesService.getWidgetType("timeseries", 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "timeseries",
+            1
+        );
         // Registering our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
         // multiple dashboards could have access to the same widget template modification.
@@ -137,9 +164,10 @@ export class TimeseriesWidgetInteractiveExampleComponent implements OnInit {
     public initializeDashboard(): void {
         // We're using a static configuration object for this example, but this is where
         // the widget's configuration could potentially be populated from a database
-        const widgetsWithStructure = widgetConfigs.map(w => this.widgetTypesService.mergeWithWidgetType(w));
+        const widgetsWithStructure = widgetConfigs.map((w) =>
+            this.widgetTypesService.mergeWithWidgetType(w)
+        );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
-
 
         // Finally, assigning the variables we created above to the dashboard
         this.dashboard = {
@@ -165,10 +193,10 @@ const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
                             // Setting the initially selected data source providerId
-                            "providerId": TimeseriesMockDataSource.providerId,
+                            providerId: TimeseriesMockDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.InteractionHandler]: {
                             // Setting the UrlInteractionHandler as an interactionHandler
@@ -182,18 +210,18 @@ const widgetConfigs: IWidget[] = [
                         },
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Line Chart",
-                        "subtitle": "Basic Timeseries with Interaction",
+                header: {
+                    properties: {
+                        title: "Line Chart",
+                        subtitle: "Basic Timeseries with Interaction",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
+                            properties: {
                                 // Setting the series and corresponding labels to initially display on the chart
-                                "series": [
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Nur-Sultan",
@@ -218,23 +246,23 @@ const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
+                    properties: {
                         // Setting the general chart configuration
-                        "configuration": {
+                        configuration: {
                             // setting interaction to 'series' will make all series in the chart interactable
-                            "interaction": "series",
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
+                            interaction: "series",
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "minDate": moment().subtract(60, "days").format(),
-                        "maxDate": moment().format(),
+                        minDate: moment().subtract(60, "days").format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -246,25 +274,26 @@ const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
                             // Setting the initially selected data source providerId
-                            "providerId": TimeseriesMockDataSource.providerId,
+                            providerId: TimeseriesMockDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Stacked Bar Chart",
-                        "subtitle": "Basic Timeseries without Interaction Handler",
+                header: {
+                    properties: {
+                        title: "Stacked Bar Chart",
+                        subtitle:
+                            "Basic Timeseries without Interaction Handler",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                            // Setting the series and corresponding labels to initially display on the chart
-                                "series": [
+                            properties: {
+                                // Setting the series and corresponding labels to initially display on the chart
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Nur-Sultan",
@@ -289,11 +318,11 @@ const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
+                    properties: {
                         // Setting the general chart configuration
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
                             // Setting the preset to stacked bar
                             preset: TimeseriesChartPreset.StackedBar,
                             scales: {
@@ -307,14 +336,14 @@ const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
+                timeframeSelection: {
+                    properties: {
                         // Setting the initial timeframe selected in the timeframe bar
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "minDate": moment().subtract(60, "days").format(),
-                        "maxDate": moment().format(),
+                        minDate: moment().subtract(60, "days").format(),
+                        maxDate: moment().format(),
                     },
                 },
             },

@@ -1,4 +1,4 @@
-import {Injector} from "@angular/core";
+import { Injector } from "@angular/core";
 
 export type SeverityLevels = "critical" | "warning" | "info";
 export type ConfirmationDialogButtons = "confirm" | "dismiss";

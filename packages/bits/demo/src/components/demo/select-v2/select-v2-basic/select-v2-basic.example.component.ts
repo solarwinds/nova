@@ -7,6 +7,8 @@ import { FormControl } from "@angular/forms";
     host: { class: "select-container" },
 })
 export class SelectV2BasicExampleComponent {
-    public items = Array.from({ length : 50 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 50 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public selectControl = new FormControl();
 }

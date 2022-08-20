@@ -9,16 +9,23 @@ import { takeUntil, tap } from "rxjs/operators";
     host: { class: "select-container" },
 })
 export class SelectV2GettingValueExampleComponent implements AfterViewInit {
-    public items = Array.from({ length : 50 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 50 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public selectValueSelectedValue: string;
 
-    @ViewChild("selectValueSelectedExample") private selectValueSelectedExample: SelectV2Component;
+    @ViewChild("selectValueSelectedExample")
+    private selectValueSelectedExample: SelectV2Component;
     private destroy$: Subject<any> = new Subject<any>();
 
     ngAfterViewInit(): void {
-        this.selectValueSelectedExample.valueSelected.pipe(
-            tap(value => this.selectValueSelectedValue = value as string),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.selectValueSelectedExample.valueSelected
+            .pipe(
+                tap(
+                    (value) => (this.selectValueSelectedValue = value as string)
+                ),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 }

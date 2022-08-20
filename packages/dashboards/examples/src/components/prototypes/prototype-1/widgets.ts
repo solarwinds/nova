@@ -25,36 +25,40 @@ import {
 import { GridsterItem } from "angular-gridster2";
 import moment from "moment/moment";
 
-import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
+import {
+    AcmeKpiDataSource,
+    AcmeKpiDataSource2,
+    AcmeKpiDataSource3,
+} from "../data/kpi-datasources";
 import { AcmeProportionalDataSource2 } from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTimeseriesDataSource } from "../data/timeseries-data-sources";
 import { HeaderLinkProviderService } from "./header-link-provider.service";
 
 export const positions: Record<string, GridsterItem> = {
-    "widget1": {
-        "cols": 5,
-        "rows": 6,
-        "y": 0,
-        "x": 0,
+    widget1: {
+        cols: 5,
+        rows: 6,
+        y: 0,
+        x: 0,
     },
-    "widget2": {
-        "cols": 7,
-        "rows": 6,
-        "y": 0,
-        "x": 5,
+    widget2: {
+        cols: 7,
+        rows: 6,
+        y: 0,
+        x: 5,
     },
-    "widget3": {
-        "cols": 6,
-        "rows": 6,
-        "y": 6,
-        "x": 0,
+    widget3: {
+        cols: 6,
+        rows: 6,
+        y: 6,
+        x: 0,
     },
-    "widget4": {
-        "cols": 6,
-        "rows": 6,
-        "y": 6,
-        "x": 6,
+    widget4: {
+        cols: 6,
+        rows: 6,
+        y: 6,
+        x: 6,
     },
 };
 
@@ -64,14 +68,14 @@ export const widgets: IWidget[] = [
         type: "kpi",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "KPI Widget!",
-                        "subtitle": "A bunch of number boxes",
-                        "collapsible": true,
+                header: {
+                    properties: {
+                        title: "KPI Widget!",
+                        subtitle: "A bunch of number boxes",
+                        collapsible: true,
                     },
                 },
-                "tiles": {
+                tiles: {
                     providers: {
                         interaction: {
                             providerId: NOVA_URL_INTERACTION_HANDLER,
@@ -91,56 +95,53 @@ export const widgets: IWidget[] = [
                         //     },
                         // },
                     },
-                    "properties": {
-                        "nodes": [
-                            "kpi1",
-                            "kpi2",
-                            "kpi3",
-                        ],
+                    properties: {
+                        nodes: ["kpi1", "kpi2", "kpi3"],
                     },
                 },
-                "kpi1": {
-                    "id": "kpi1",
-                    "providers": {
+                kpi1: {
+                    id: "kpi1",
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeKpiDataSource.providerId,
+                            providerId: AcmeKpiDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                            "properties": {
-                                "componentId": "kpi1",
-                                "propertyPath": "widgetData",
+                            providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                            properties: {
+                                componentId: "kpi1",
+                                propertyPath: "widgetData",
                             },
                         } as IProviderConfiguration,
                         [WellKnownProviders.KpiColorPrioritizer]: {
-                            "providerId": NOVA_KPI_COLOR_PRIORITIZER,
-                            "properties": {
-                                "rules": [
+                            providerId: NOVA_KPI_COLOR_PRIORITIZER,
+                            properties: {
+                                rules: [
                                     {
-                                        "comparisonType": ">",
-                                        "value": 2,
-                                        "color": "var(--nui-color-chart-four)",
+                                        comparisonType: ">",
+                                        value: 2,
+                                        color: "var(--nui-color-chart-four)",
                                     },
                                     {
-                                        "comparisonType": "==",
-                                        "value": 1.5,
-                                        "color": "var(--nui-color-chart-seven)",
+                                        comparisonType: "==",
+                                        value: 1.5,
+                                        color: "var(--nui-color-chart-seven)",
                                     },
                                     {
-                                        "comparisonType": "<",
-                                        "value": 1,
-                                        "color": "var(--nui-color-chart-one)",
+                                        comparisonType: "<",
+                                        value: 1,
+                                        color: "var(--nui-color-chart-one)",
                                     },
                                 ] as IKpiColorRules[],
                             },
                         } as IProviderConfiguration,
                     },
-                    "properties": {
+                    properties: {
                         configuration: {
                             formatters: {
                                 [KpiFormatterTypes.Value]: {
                                     formatter: {
-                                        componentType: SiUnitsFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            SiUnitsFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "value",
@@ -151,34 +152,35 @@ export const widgets: IWidget[] = [
                             },
                         } as IKpiConfiguration,
 
-                        "widgetData": {
-                            "id":  "totalStorage",
-                            "value": 0,
-                            "label": "Total storage",
-                            "units": "Bytes",
+                        widgetData: {
+                            id: "totalStorage",
+                            value: 0,
+                            label: "Total storage",
+                            units: "Bytes",
                             // "backgroundColor": "blue",
-                            "icon": "state_ok",
-                            "link": "http://www.google.com",
+                            icon: "state_ok",
+                            link: "http://www.google.com",
                         },
                     },
                 },
-                "kpi2": {
-                    "id": "kpi2",
-                    "providers": {
+                kpi2: {
+                    id: "kpi2",
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeKpiDataSource2.providerId,
-                            "properties": {
-                                "numberFormat": "1.1-1",
+                            providerId: AcmeKpiDataSource2.providerId,
+                            properties: {
+                                numberFormat: "1.1-1",
                             },
                         } as IProviderConfiguration,
                     },
-                    "properties": {
+                    properties: {
                         configuration: {
                             formatters: {
                                 // can be used for testing in the future
                                 [KpiFormatterTypes.Value]: {
                                     formatter: {
-                                        componentType: IconFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            IconFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "icon",
@@ -188,28 +190,29 @@ export const widgets: IWidget[] = [
                                 },
                             },
                         } as IKpiConfiguration,
-                        "widgetData": {
-                            "id": "downloadSpeed",
-                            "value": 0,
-                            "label": "Download SUPER DUPER VERY LONG STRING Speed",
-                            "icon": "state_ok",
-                            "units": "MB/S",
+                        widgetData: {
+                            id: "downloadSpeed",
+                            value: 0,
+                            label: "Download SUPER DUPER VERY LONG STRING Speed",
+                            icon: "state_ok",
+                            units: "MB/S",
                         },
                     },
                 },
-                "kpi3": {
-                    "id": "kpi3",
-                    "providers": {
+                kpi3: {
+                    id: "kpi3",
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeKpiDataSource3.providerId,
+                            providerId: AcmeKpiDataSource3.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
+                    properties: {
                         configuration: {
                             formatters: {
                                 [KpiFormatterTypes.Value]: {
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "value",
@@ -219,11 +222,11 @@ export const widgets: IWidget[] = [
                                 },
                             },
                         } as IKpiConfiguration,
-                        "widgetData": {
-                            "id": "uploadSpeed",
-                            "value": 0,
-                            "label": "Upload Speed",
-                            "units": "MB/S",
+                        widgetData: {
+                            id: "uploadSpeed",
+                            value: 0,
+                            label: "Upload Speed",
+                            units: "MB/S",
                             // "backgroundColor": "salmon",
                         },
                     },
@@ -249,41 +252,37 @@ export const widgets: IWidget[] = [
                         },
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeProportionalDataSource2.providerId,
+                            providerId: AcmeProportionalDataSource2.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
+                            properties: {
                                 [WellKnownProviders.DataSource]: {
-                                    "properties": {
-                                        "isEuropeOnly": false,
+                                    properties: {
+                                        isEuropeOnly: false,
                                     },
                                 },
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
-                        "configuration": {
+                    properties: {
+                        configuration: {
                             interactive: true,
                             chartDonutContentLabel: "Some label",
                             chartDonutContentIcon: "printer",
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.VerticalBarChart,
-                                "legendPlacement": LegendPlacement.Right,
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.VerticalBarChart,
+                                legendPlacement: LegendPlacement.Right,
                             } as IProportionalWidgetChartOptions,
-                            "chartColors": [
-                                "gray",
-                                "orange",
-                                "black",
-                            ],
+                            chartColors: ["gray", "orange", "black"],
                             // "chartColors": {
                             //     "Down": "var(--nui-color-chart-three)",
                             //     "Critical": "var(--nui-color-chart-two)",
@@ -302,9 +301,9 @@ export const widgets: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": AcmeTimeseriesDataSource.providerId,
+                            providerId: AcmeTimeseriesDataSource.providerId,
                         } as IProviderConfiguration,
                         [WellKnownProviders.InteractionHandler]: {
                             providerId: NOVA_URL_INTERACTION_HANDLER,
@@ -314,23 +313,23 @@ export const widgets: IWidget[] = [
                         // },
                     },
                 },
-                "header": {
-                    "providers": {
-                        "dynamicLinkProvider": {
+                header: {
+                    providers: {
+                        dynamicLinkProvider: {
                             providerId: HeaderLinkProviderService.providerId,
                         },
                     },
-                    "properties": {
-                        "title": "Timeseries Widget!",
-                        "subtitle": "Basic timeseries widget",
-                        "url": "https://www.google.com",
+                    properties: {
+                        title: "Timeseries Widget!",
+                        subtitle: "Basic timeseries widget",
+                        url: "https://www.google.com",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
-                                "series": [
+                            properties: {
+                                series: [
                                     {
                                         id: "series-2",
                                         label: "Average CPU Load",
@@ -340,12 +339,12 @@ export const widgets: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Utilization (%)",
-                            "chartColors": [
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Utilization (%)",
+                            chartColors: [
                                 "var(--nui-color-chart-eight)",
                                 "var(--nui-color-chart-nine)",
                                 "var(--nui-color-chart-ten)",
@@ -353,13 +352,13 @@ export const widgets: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                timeframeSelection: {
+                    properties: {
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "minDate": moment().subtract(10, "days").format(),
-                        "maxDate": moment().format(),
+                        minDate: moment().subtract(10, "days").format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -380,14 +379,14 @@ export const widgets: IWidget[] = [
                         // },
                     },
                 },
-                "header": {
+                header: {
                     properties: {
                         title: "Table Widget!",
                         subtitle: "Basic table widget",
                         collapsible: true,
                     },
                 },
-                "table": {
+                table: {
                     providers: {
                         [WellKnownProviders.DataSource]: {
                             providerId: AcmeTableDataSource.providerId,
@@ -402,7 +401,8 @@ export const widgets: IWidget[] = [
                                     label: "No",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "no",
@@ -415,7 +415,8 @@ export const widgets: IWidget[] = [
                                     label: "Title",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "nameTitle",
@@ -428,7 +429,8 @@ export const widgets: IWidget[] = [
                                     label: "First Name",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "nameFirst",
@@ -441,7 +443,8 @@ export const widgets: IWidget[] = [
                                     label: "Last Name",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "nameLast",
@@ -454,7 +457,8 @@ export const widgets: IWidget[] = [
                                     label: "E-Mail",
                                     isActive: true,
                                     formatter: {
-                                        componentType: RawFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            RawFormatterComponent.lateLoadKey,
                                         properties: {
                                             dataFieldIds: {
                                                 value: "email",

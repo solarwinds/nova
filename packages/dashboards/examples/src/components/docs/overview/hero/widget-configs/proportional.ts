@@ -17,31 +17,32 @@ export const proportionalConfig: IWidget = {
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": {
+                providers: {
                     [WellKnownProviders.Refresher]: {
-                        "properties": {
-                            "interval": 0,
+                        properties: {
+                            interval: 0,
                         },
                     },
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Beer Review Tally by City",
-                    "subtitle": "These People Love Beer",
+            header: {
+                properties: {
+                    title: "Beer Review Tally by City",
+                    subtitle: "These People Love Beer",
                 },
             },
-            "chart": {
-                "providers": {
+            chart: {
+                providers: {
                     [WellKnownProviders.DataSource]: {
-                        "providerId": BeerReviewCountsByCityMockDataSource.providerId,
+                        providerId:
+                            BeerReviewCountsByCityMockDataSource.providerId,
                     } as IProviderConfiguration,
                 },
-                "properties": {
-                    "configuration": {
-                        "chartOptions": {
-                            "type": ProportionalWidgetChartTypes.DonutChart,
-                            "legendPlacement": LegendPlacement.Right,
+                properties: {
+                    configuration: {
+                        chartOptions: {
+                            type: ProportionalWidgetChartTypes.DonutChart,
+                            legendPlacement: LegendPlacement.Right,
                         } as IProportionalWidgetChartOptions,
                     },
                 },

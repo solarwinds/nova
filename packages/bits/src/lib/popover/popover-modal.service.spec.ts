@@ -5,7 +5,11 @@ import { LoggerService } from "../../services/log-service";
 import { PositionService } from "../../services/position.service";
 import { IEdgeDetectionResult } from "../../services/public-api";
 
-import { IPopoverPosition, PopoverAlignment, PopoverModalService } from "./popover-modal.service";
+import {
+    IPopoverPosition,
+    PopoverAlignment,
+    PopoverModalService,
+} from "./popover-modal.service";
 import { PopoverPlacement } from "./public-api";
 
 interface IPopoverModalTestCase {
@@ -17,7 +21,10 @@ interface IPopoverModalTestCase {
 }
 
 const triggerElementDimension = 200;
-const expectedPositionOffset = triggerElementDimension / 2 - popoverConstants.arrowOffset - popoverConstants.arrowBorderWidth;
+const expectedPositionOffset =
+    triggerElementDimension / 2 -
+    popoverConstants.arrowOffset -
+    popoverConstants.arrowBorderWidth;
 const popoverModalTestCases: IPopoverModalTestCase[] = [
     {
         name: "left placement / top alignment popover position",
@@ -45,7 +52,8 @@ const popoverModalTestCases: IPopoverModalTestCase[] = [
                 left: 0,
             },
         },
-    }, {
+    },
+    {
         name: "left placement / bottom alignment popover position",
         placement: "left",
         alignment: "bottom",
@@ -71,7 +79,8 @@ const popoverModalTestCases: IPopoverModalTestCase[] = [
                 left: 0,
             },
         },
-    }, {
+    },
+    {
         name: "right placement / top alignment popover position",
         placement: "right",
         alignment: "top",
@@ -97,7 +106,8 @@ const popoverModalTestCases: IPopoverModalTestCase[] = [
                 left: 0,
             },
         },
-    }, {
+    },
+    {
         name: "right placement / bottom alignment popover position",
         placement: "right",
         alignment: "bottom",
@@ -123,7 +133,8 @@ const popoverModalTestCases: IPopoverModalTestCase[] = [
                 left: 0,
             },
         },
-    }, {
+    },
+    {
         name: "bottom placement / right alignment popover position",
         placement: "bottom",
         alignment: "right",
@@ -149,7 +160,8 @@ const popoverModalTestCases: IPopoverModalTestCase[] = [
                 left: -expectedPositionOffset,
             },
         },
-    }, {
+    },
+    {
         name: "bottom placement / left alignment popover position",
         placement: "bottom",
         alignment: "left",
@@ -175,7 +187,8 @@ const popoverModalTestCases: IPopoverModalTestCase[] = [
                 left: expectedPositionOffset,
             },
         },
-    }, {
+    },
+    {
         name: "top placement / right alignment popover position",
         placement: "top",
         alignment: "right",
@@ -201,7 +214,8 @@ const popoverModalTestCases: IPopoverModalTestCase[] = [
                 left: -expectedPositionOffset,
             },
         },
-    }, {
+    },
+    {
         name: "top placement / left alignment popover position",
         placement: "top",
         alignment: "left",
@@ -227,7 +241,8 @@ const popoverModalTestCases: IPopoverModalTestCase[] = [
                 left: expectedPositionOffset,
             },
         },
-    }, {
+    },
+    {
         name: "position when placement is not defined",
         // @ts-ignore: Suppressing error for testing purposes
         placement: null,
@@ -255,7 +270,8 @@ const popoverModalTestCases: IPopoverModalTestCase[] = [
                 left: 0,
             },
         },
-    }, {
+    },
+    {
         name: "position when popover can not be opened in any direction",
         // @ts-ignore: Suppressing error for testing purposes
         placement: null,
@@ -295,12 +311,21 @@ describe("services >", () => {
         let triggerElement: HTMLDivElement;
 
         beforeAll(() => {
-            edgeDetectionService = new EdgeDetectionService(new DomUtilService(document), document, new LoggerService());
+            edgeDetectionService = new EdgeDetectionService(
+                new DomUtilService(document),
+                document,
+                new LoggerService()
+            );
             positionService = new PositionService(document);
-            popoverModalService = new PopoverModalService(positionService, document, edgeDetectionService);
+            popoverModalService = new PopoverModalService(
+                positionService,
+                document,
+                edgeDetectionService
+            );
 
             popover = document.createElement("div");
-            popover.innerHTML = "<div class='nui-popover-container' width='100' height='100'></div>";
+            popover.innerHTML =
+                "<div class='nui-popover-container' width='100' height='100'></div>";
             triggerElement = document.createElement("div");
             triggerElement.style.height = `${triggerElementDimension}px`;
             triggerElement.style.width = `${triggerElementDimension}px`;
@@ -313,14 +338,24 @@ describe("services >", () => {
 
         beforeEach(() => {
             // return uniform position since position service isn't focus of testing
-            spyOn(positionService, "getPosition").and.returnValue({ top: 0, left: 0 });
+            spyOn(positionService, "getPosition").and.returnValue({
+                top: 0,
+                left: 0,
+            });
         });
 
         describe("setPosition >", () => {
-            popoverModalTestCases.forEach(test => {
+            popoverModalTestCases.forEach((test) => {
                 it(`should correctly calculate ${test.name}`, () => {
-                    spyOn(edgeDetectionService, "canBe").and.returnValue(test.edgeDetectionResult);
-                    const result = popoverModalService.setPosition(popover, triggerElement, true, test.placement);
+                    spyOn(edgeDetectionService, "canBe").and.returnValue(
+                        test.edgeDetectionResult
+                    );
+                    const result = popoverModalService.setPosition(
+                        popover,
+                        triggerElement,
+                        true,
+                        test.placement
+                    );
                     expect(result).toEqual(test.expectedResult);
                 });
             });

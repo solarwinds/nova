@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { LoggerService } from "@nova-ui/bits";
 import includes from "lodash/includes";
@@ -16,7 +27,9 @@ import { thresholdsValidator } from "./thresholds-validator";
     styleUrls: ["./thresholds-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThresholdsConfigurationComponent implements OnInit, OnDestroy, OnChanges, IHasChangeDetector, IHasForm {
+export class ThresholdsConfigurationComponent
+    implements OnInit, OnDestroy, OnChanges, IHasChangeDetector, IHasForm
+{
     public static lateLoadKey = "ThresholdsConfigurationComponent";
 
     @Input() criticalThresholdValue: number;
@@ -47,31 +60,41 @@ export class ThresholdsConfigurationComponent implements OnInit, OnDestroy, OnCh
 
     private destroyed$ = new Subject();
 
-    constructor(public changeDetector: ChangeDetectorRef,
-                private formBuilder: FormBuilder,
-                private logger: LoggerService,
-                private cd: ChangeDetectorRef) {
-    }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        private formBuilder: FormBuilder,
+        private logger: LoggerService,
+        private cd: ChangeDetectorRef
+    ) {}
 
     public ngOnInit(): void {
         this.validateRadioButtonsGroupValue();
-        this.form = this.formBuilder.group({
-            criticalThresholdValue: [this.criticalThresholdValue || 0, [Validators.required]],
-            warningThresholdValue: [this.warningThresholdValue || 0],
-            showThresholds: [this.showThresholds || false, [Validators.required]],
-            reversedThresholds: [this.reversedThresholds || false],
-        }, {
-            validators: thresholdsValidator,
-        });
+        this.form = this.formBuilder.group(
+            {
+                criticalThresholdValue: [
+                    this.criticalThresholdValue || 0,
+                    [Validators.required],
+                ],
+                warningThresholdValue: [this.warningThresholdValue || 0],
+                showThresholds: [
+                    this.showThresholds || false,
+                    [Validators.required],
+                ],
+                reversedThresholds: [this.reversedThresholds || false],
+            },
+            {
+                validators: thresholdsValidator,
+            }
+        );
 
         this.handleWarningThreshold(this.warningThresholdValue);
 
-        this.form.statusChanges.pipe(
-            takeUntil(this.destroyed$)
-        ).subscribe((change) => {
-            this.form.markAllAsTouched();
-            this.cd.detectChanges();
-        });
+        this.form.statusChanges
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((change) => {
+                this.form.markAllAsTouched();
+                this.cd.detectChanges();
+            });
 
         this.formReady.emit(this.form);
     }
@@ -100,12 +123,16 @@ export class ThresholdsConfigurationComponent implements OnInit, OnDestroy, OnCh
         }
 
         if (changes.warningThresholdValue) {
-            this.handleWarningThreshold(changes.warningThresholdValue.currentValue);
+            this.handleWarningThreshold(
+                changes.warningThresholdValue.currentValue
+            );
         }
     }
 
     public getThresholdsSubtitle(showThreshold: boolean): string {
-        return showThreshold ? $localize`Custom thresholds` : $localize`No thresholds`;
+        return showThreshold
+            ? $localize`Custom thresholds`
+            : $localize`No thresholds`;
     }
 
     public ngOnDestroy() {
@@ -118,7 +145,9 @@ export class ThresholdsConfigurationComponent implements OnInit, OnDestroy, OnCh
     }
 
     private handleWarningThreshold(value: number | undefined) {
-        const warningThresholdFormControl = this.form?.get("warningThresholdValue");
+        const warningThresholdFormControl = this.form?.get(
+            "warningThresholdValue"
+        );
         if (_isNil(value)) {
             warningThresholdFormControl?.setValue(null);
         }

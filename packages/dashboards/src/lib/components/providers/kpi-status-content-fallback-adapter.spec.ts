@@ -1,6 +1,9 @@
 import { EventBus, IEvent } from "@nova-ui/bits";
 
-import { DATA_SOURCE_DESTROYED, DATA_SOURCE_OUTPUT } from "../../configurator/types";
+import {
+    DATA_SOURCE_DESTROYED,
+    DATA_SOURCE_OUTPUT,
+} from "../../configurator/types";
 import { IPizzagnaProperty } from "../../pizzagna/functions/get-pizzagna-property-path";
 import { DynamicComponentCreator } from "../../pizzagna/services/dynamic-component-creator.service";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
@@ -19,8 +22,14 @@ describe("KpiStatusContentFallbackAdapter > ", () => {
     beforeEach(() => {
         eventBus = new EventBus();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
-        adapter = new KpiStatusContentFallbackAdapter(eventBus, pizzagnaService);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
+        adapter = new KpiStatusContentFallbackAdapter(
+            eventBus,
+            pizzagnaService
+        );
         (<any>adapter).componentId = "testId";
 
         firstSetPropArg = {
@@ -88,7 +97,10 @@ describe("KpiStatusContentFallbackAdapter > ", () => {
 
             const spy = spyOn(pizzagnaService, "setProperty");
             eventBus.getStream(DATA_SOURCE_OUTPUT).next(event);
-            expect(spy).toHaveBeenCalledWith(firstSetPropArg, event.payload?.error?.type.toString());
+            expect(spy).toHaveBeenCalledWith(
+                firstSetPropArg,
+                event.payload?.error?.type.toString()
+            );
         });
 
         it(`should invoke PizzagnaService.setProperty with the specified error type if some kpi adapters
@@ -114,7 +126,10 @@ describe("KpiStatusContentFallbackAdapter > ", () => {
 
             const spy = spyOn(pizzagnaService, "setProperty");
             eventBus.getStream(DATA_SOURCE_OUTPUT).next(event);
-            expect(spy).toHaveBeenCalledWith(firstSetPropArg, expectedError.toString());
+            expect(spy).toHaveBeenCalledWith(
+                firstSetPropArg,
+                expectedError.toString()
+            );
         });
 
         it(`should invoke PizzagnaService.setProperty with the 'multipleErrorFallbackKey' if one kpi adapter
@@ -139,7 +154,10 @@ describe("KpiStatusContentFallbackAdapter > ", () => {
             }
             const spy = spyOn(pizzagnaService, "setProperty");
             eventBus.getStream(DATA_SOURCE_OUTPUT).next(event);
-            expect(spy).toHaveBeenCalledWith(firstSetPropArg, adapter.multipleErrorFallbackKey);
+            expect(spy).toHaveBeenCalledWith(
+                firstSetPropArg,
+                adapter.multipleErrorFallbackKey
+            );
         });
 
         it("should invoke PizzagnaService.setProperty with the specified error type if all kpi adapters report the same error", () => {
@@ -172,7 +190,7 @@ describe("KpiStatusContentFallbackAdapter > ", () => {
                 },
             };
 
-            (<any>adapter).errorMap = { "kpi1": "errorCode" };
+            (<any>adapter).errorMap = { kpi1: "errorCode" };
             const spy = spyOn(pizzagnaService, "setProperty");
             eventBus.getStream(DATA_SOURCE_DESTROYED).next(event);
             expect(spy).toHaveBeenCalledWith(firstSetPropArg, undefined);
@@ -186,9 +204,9 @@ describe("KpiStatusContentFallbackAdapter > ", () => {
             };
 
             (<any>adapter).errorMap = {
-                "kpi1": "errorType",
-                "kpi2": "errorType",
-                "kpi3": "anotherErrorType",
+                kpi1: "errorType",
+                kpi2: "errorType",
+                kpi3: "anotherErrorType",
             };
             const spy = spyOn(pizzagnaService, "setProperty");
             eventBus.getStream(DATA_SOURCE_DESTROYED).next(event);
@@ -203,13 +221,16 @@ describe("KpiStatusContentFallbackAdapter > ", () => {
             };
 
             (<any>adapter).errorMap = {
-                "kpi1": "errorType",
-                "kpi2": "errorType",
-                "kpi3": "anotherErrorType",
+                kpi1: "errorType",
+                kpi2: "errorType",
+                kpi3: "anotherErrorType",
             };
             const spy = spyOn(pizzagnaService, "setProperty");
             eventBus.getStream(DATA_SOURCE_DESTROYED).next(event);
-            expect(spy).toHaveBeenCalledWith(firstSetPropArg, adapter.multipleErrorFallbackKey);
+            expect(spy).toHaveBeenCalledWith(
+                firstSetPropArg,
+                adapter.multipleErrorFallbackKey
+            );
         });
     });
 });

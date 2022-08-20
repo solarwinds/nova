@@ -56,10 +56,12 @@ import {
     templateUrl: "./chips.component.html",
     styleUrls: ["./chips.component.less"],
     encapsulation: ViewEncapsulation.None,
-    providers: [ ChipsOverflowService ],
-    host: {  "[attr.role]": "role" },
+    providers: [ChipsOverflowService],
+    host: { "[attr.role]": "role" },
 })
-export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class ChipsComponent
+    implements OnInit, OnDestroy, OnChanges, AfterViewInit
+{
     /**
      * Whether overflow mode turned on
      */
@@ -109,7 +111,8 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
     /**
      * Emits overflowed chips if chips overflow
      */
-    @Output() public chipsOverflowed: EventEmitter<IChipsItemsSource> = new EventEmitter<IChipsItemsSource>();
+    @Output() public chipsOverflowed: EventEmitter<IChipsItemsSource> =
+        new EventEmitter<IChipsItemsSource>();
 
     public isOverflowed: Boolean;
 
@@ -118,25 +121,34 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
         this.chipsOverflowService.clearAll = elem;
     }
     @ViewChild("nuiChips") private nuiChips: ElementRef;
-    @ViewChildren("chipItem") private allChips: QueryList<ChipComponent | ElementRef<HTMLElement>>;
-    @ContentChild("overflowCounterLabel") private set overflowCounter(el: ElementRef<HTMLElement>) {
+    @ViewChildren("chipItem") private allChips: QueryList<
+        ChipComponent | ElementRef<HTMLElement>
+    >;
+    @ContentChild("overflowCounterLabel") private set overflowCounter(
+        el: ElementRef<HTMLElement>
+    ) {
         this.chipsOverflowService.overflowCounter = el;
     }
 
     private destroy$: Subject<void> = new Subject();
 
-    get role(): string | null { return this.getItemsCount() ? "list": null; }
-
-    constructor(private zone: NgZone,
-                private chipsOverflowService: ChipsOverflowService) {
+    get role(): string | null {
+        return this.getItemsCount() ? "list" : null;
     }
+
+    constructor(
+        private zone: NgZone,
+        private chipsOverflowService: ChipsOverflowService
+    ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.itemsSource) {
-            this.chipsOverflowService.itemsSource = changes.itemsSource.currentValue;
+            this.chipsOverflowService.itemsSource =
+                changes.itemsSource.currentValue;
         }
         if (changes.overflowLinesNumber) {
-            this.chipsOverflowService.overflowLinesNumber = changes.overflowLinesNumber.currentValue;
+            this.chipsOverflowService.overflowLinesNumber =
+                changes.overflowLinesNumber.currentValue;
         }
         if (changes.overflow && !changes.overflow.currentValue) {
             this.chipsOverflowService.onDestroy();
@@ -144,7 +156,7 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
     }
 
     public ngOnInit() {
-        this.removeAllLinkText = this.removeAllLinkText || $localize `Clear all`;
+        this.removeAllLinkText = this.removeAllLinkText || $localize`Clear all`;
     }
 
     public ngAfterViewInit() {
@@ -164,13 +176,14 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
     public getItemsCount(): number {
         let count = _size(this.itemsSource.flatItems);
         if (!_isEmpty(this.itemsSource.groupedItems)) {
-            count += (this.itemsSource.groupedItems || []).map<number>((group) => group.items.length)
+            count += (this.itemsSource.groupedItems || [])
+                .map<number>((group) => group.items.length)
                 .reduce((sum, val) => sum + val);
         }
         return count;
     }
 
-    public onRemove(data: { item: IChipsItem, group?: IChipsGroup }) {
+    public onRemove(data: { item: IChipsItem; group?: IChipsGroup }) {
         this.chipRemoved.emit(data);
     }
 
@@ -192,15 +205,18 @@ export class ChipsComponent implements OnInit, OnDestroy, OnChanges, AfterViewIn
         this.chipsOverflowService.nuiChips = this.nuiChips;
         this.chipsOverflowService.allChips = this.allChips;
         this.chipsOverflowService.itemsSource = this.itemsSource;
-        this.chipsOverflowService.overflowLinesNumber = this.overflowLinesNumber;
+        this.chipsOverflowService.overflowLinesNumber =
+            this.overflowLinesNumber;
 
         this.chipsOverflowService.init();
 
-        this.chipsOverflowService.chipsOverflowed.pipe(
-            takeUntil(this.destroy$)
-        ).subscribe((e: IChipsItemsSource) => {
-            this.chipsOverflowed.emit(e);
-            this.isOverflowed = Boolean(e.groupedItems?.length || e.flatItems?.length);
-        });
+        this.chipsOverflowService.chipsOverflowed
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((e: IChipsItemsSource) => {
+                this.chipsOverflowed.emit(e);
+                this.isOverflowed = Boolean(
+                    e.groupedItems?.length || e.flatItems?.length
+                );
+            });
     }
 }

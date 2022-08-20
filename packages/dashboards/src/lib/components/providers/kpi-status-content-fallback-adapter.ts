@@ -6,7 +6,14 @@ import { takeUntil } from "rxjs/operators";
 
 import { DATA_SOURCE_DESTROYED } from "../../configurator/types";
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
-import { HttpStatusCode, IConfigurable, IHasComponent, IProperties, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
+import {
+    HttpStatusCode,
+    IConfigurable,
+    IHasComponent,
+    IProperties,
+    PizzagnaLayer,
+    PIZZAGNA_EVENT_BUS,
+} from "../../types";
 
 import { StatusContentFallbackAdapter } from "./status-content-fallback-adapter";
 import { IComponentIdPayload, IDataSourceOutputPayload } from "./types";
@@ -17,8 +24,10 @@ export interface IKpiFallbackAdapterProperties extends IProperties {
 }
 
 @Injectable()
-export class KpiStatusContentFallbackAdapter extends StatusContentFallbackAdapter implements OnDestroy, IHasComponent, IConfigurable {
-
+export class KpiStatusContentFallbackAdapter
+    extends StatusContentFallbackAdapter
+    implements OnDestroy, IHasComponent, IConfigurable
+{
     /**
      * Fallback node key to use if multiple tile data sources report different errors
      */
@@ -29,12 +38,16 @@ export class KpiStatusContentFallbackAdapter extends StatusContentFallbackAdapte
      */
     private errorMap: Record<string, string> = {};
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                                            pizzagnaService: PizzagnaService) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
+        pizzagnaService: PizzagnaService
+    ) {
         super(eventBus, pizzagnaService);
 
-        this.eventBus.getStream(DATA_SOURCE_DESTROYED)
-            .pipe(takeUntil(this.destroy$)).subscribe((event: IEvent<IComponentIdPayload>) => {
+        this.eventBus
+            .getStream(DATA_SOURCE_DESTROYED)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((event: IEvent<IComponentIdPayload>) => {
                 this.handleDataSourceDestroyed(event);
             });
     }
@@ -45,7 +58,9 @@ export class KpiStatusContentFallbackAdapter extends StatusContentFallbackAdapte
         }
     }
 
-    protected handleDataSourceOutput(event: IEvent<any | IDataSourceOutputPayload<any>>) {
+    protected handleDataSourceOutput(
+        event: IEvent<any | IDataSourceOutputPayload<any>>
+    ) {
         this.errorMap = this.updateErrorMap(event);
 
         this.setFallbackKeyProperty();
@@ -60,11 +75,14 @@ export class KpiStatusContentFallbackAdapter extends StatusContentFallbackAdapte
     }
 
     private setFallbackKeyProperty() {
-        this.pizzagnaService.setProperty({
-            componentId: this.componentId,
-            propertyPath: ["fallbackKey"],
-            pizzagnaKey: PizzagnaLayer.Data,
-        }, this.getFallbackKey());
+        this.pizzagnaService.setProperty(
+            {
+                componentId: this.componentId,
+                propertyPath: ["fallbackKey"],
+                pizzagnaKey: PizzagnaLayer.Data,
+            },
+            this.getFallbackKey()
+        );
     }
 
     private getFallbackKey(): string | undefined {
@@ -73,12 +91,17 @@ export class KpiStatusContentFallbackAdapter extends StatusContentFallbackAdapte
         }
 
         const uniqueErrors = uniq(Object.values(this.errorMap));
-        return uniqueErrors.length === 1 ? uniqueErrors[0] : this.multipleErrorFallbackKey;
+        return uniqueErrors.length === 1
+            ? uniqueErrors[0]
+            : this.multipleErrorFallbackKey;
     }
 
     private updateErrorMap(event: IEvent<any | IDataSourceOutputPayload<any>>) {
         const errorMap = this.errorMap;
-        const errorCode = typeof event.payload?.error?.type !== "undefined" ? event.payload?.error?.type.toString() : undefined;
+        const errorCode =
+            typeof event.payload?.error?.type !== "undefined"
+                ? event.payload?.error?.type.toString()
+                : undefined;
 
         // an undefined result indicates the kpi tile was destroyed
         if (!errorCode) {

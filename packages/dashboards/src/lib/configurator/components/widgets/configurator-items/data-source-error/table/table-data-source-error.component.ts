@@ -16,12 +16,13 @@ import { IDataField } from "@nova-ui/bits";
     templateUrl: "./table-data-source-error.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableDataSourceErrorComponent extends DataSourceErrorComponent implements OnDestroy {
+export class TableDataSourceErrorComponent
+    extends DataSourceErrorComponent
+    implements OnDestroy
+{
     public static lateLoadKey = "TableDataSourceErrorComponent";
 
-    constructor(
-        public changeDetector: ChangeDetectorRef
-    ) {
+    constructor(public changeDetector: ChangeDetectorRef) {
         super(changeDetector);
     }
 

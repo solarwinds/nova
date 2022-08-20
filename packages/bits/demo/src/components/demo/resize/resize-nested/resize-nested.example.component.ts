@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-resize-nested-example",
     templateUrl: "./resize-nested.example.component.html",
 })
-export class ResizeNestedExampleComponent {
-}
+export class ResizeNestedExampleComponent {}

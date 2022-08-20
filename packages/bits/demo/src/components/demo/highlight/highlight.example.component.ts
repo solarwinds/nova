@@ -1,11 +1,11 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "nui-highlight",
     templateUrl: "./highlight.example.component.html",
 })
 export class HighlightExampleComponent {
-    public contentString = $localize `
+    public contentString = $localize`
         Hello, it's me, I was wondering,<br>
         If after all these years you'd like to meet to go over everything,<br>
         They say that time's supposed to heal, yeah,<br>
@@ -30,7 +30,7 @@ export class HighlightExampleComponent {
         But it don't matter, it clearly doesn't tear you apart anymore
     `;
 
-    public contentStringIgnore = $localize `
+    public contentStringIgnore = $localize`
         Hello, can you hear me?,<br>
         I'm in California dreaming about who we used to be,<br>
         When we were younger and free,<br>

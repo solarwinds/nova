@@ -18,10 +18,9 @@ import { IQuickPickPresetDictionary } from "../public-api";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuickPickerComponent {
-
     @Input() presets: IQuickPickPresetDictionary;
     @Input() pickerTitle: string;
-    @Input() presetsTitle: string = $localize `Quick picks`;
+    @Input() presetsTitle: string = $localize`Quick picks`;
 
     @Input() selectedPreset?: string;
 
@@ -29,7 +28,6 @@ export class QuickPickerComponent {
      * To control an order of presetKeys
      */
     @Input() public presetKeysOrder: string[];
-
 
     /** callback to invoke on selecting specific preset */
     @Output() public presetSelected = new EventEmitter<string>();

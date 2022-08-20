@@ -20,15 +20,25 @@ export class HorizontalGaugeTesterComponent implements OnInit, OnChanges {
     public chartAssist: ChartAssist;
     public seriesSet: IChartAssistSeries<IAccessors>[];
 
-    public ngOnChanges(changes: ComponentChanges<HorizontalGaugeTesterComponent>): void {
+    public ngOnChanges(
+        changes: ComponentChanges<HorizontalGaugeTesterComponent>
+    ): void {
         if (changes.gaugeConfig && !changes.gaugeConfig.firstChange) {
-            this.chartAssist.update(GaugeUtil.update(this.seriesSet, this.gaugeConfig));
+            this.chartAssist.update(
+                GaugeUtil.update(this.seriesSet, this.gaugeConfig)
+            );
         }
     }
 
     public ngOnInit(): void {
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Horizontal);
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Horizontal);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Horizontal
+        );
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Horizontal
+        );
         this.chartAssist.update(this.seriesSet);
     }
 }

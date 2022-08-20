@@ -24,7 +24,7 @@ describe(`Visual tests: ${name}`, () => {
         basicWizard = Atom.find(WizardAtom, "nui-demo-wizard");
         busyButton = Atom.find(ButtonAtom, "nui-demo-busy-button");
         dialogButton = Atom.find(ButtonAtom, "nui-demo-dialog-wizard-btn");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -42,17 +42,23 @@ describe(`Visual tests: ${name}`, () => {
         await basicWizard.next();
         steps = await basicWizard.getSteps();
         await steps[0].icon.hover();
-        await camera.say.cheese("Steps statuses and button in footer, hover first step");
+        await camera.say.cheese(
+            "Steps statuses and button in footer, hover first step"
+        );
 
         await basicWizard.next();
         steps = await basicWizard.getSteps();
         await steps[1].icon.hover();
-        await camera.say.cheese("Steps statuses and button in footer, hover second step");
+        await camera.say.cheese(
+            "Steps statuses and button in footer, hover second step"
+        );
 
         await basicWizard.back();
         steps = await basicWizard.getSteps();
         await steps[2].icon.hover();
-        await camera.say.cheese("Steps statuses and button in footer, hover third step");
+        await camera.say.cheese(
+            "Steps statuses and button in footer, hover third step"
+        );
 
         await dialogButton.click();
         dialogWizard = Atom.find(WizardAtom, "nui-demo-wizard-dialog");

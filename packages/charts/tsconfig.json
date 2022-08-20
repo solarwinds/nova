@@ -1,5 +1,4 @@
 {
-    "extends": "../../tsconfig.main.json",
     "compilerOptions": {
         "baseUrl": "./",
         "declaration": false,
@@ -13,5 +12,6 @@
             "@nova-ui/charts": ["./src/public-api.ts"]
         }
     },
-    "exclude": ["node_modules"]
+    "exclude": ["node_modules"],
+    "extends": "../../tsconfig.main.json"
 }

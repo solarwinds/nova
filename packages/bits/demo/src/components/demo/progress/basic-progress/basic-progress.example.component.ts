@@ -5,7 +5,6 @@ import { Component, OnDestroy } from "@angular/core";
     templateUrl: "./basic-progress.example.component.html",
 })
 export class BasicProgressExampleComponent implements OnDestroy {
-
     public show = false;
     public percent = 0;
     public isCanceled = false;

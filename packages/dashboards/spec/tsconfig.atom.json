@@ -1,23 +1,15 @@
 {
-    "extends": "../tsconfig.json",
     "compilerOptions": {
         "outDir": "../dist/sdk/atoms",
         "baseUrl": "./",
         "module": "commonjs",
         "target": "es6",
         "declaration": true,
-        "types": [
-            "jasmine",
-            "jasminewd2",
-            "node",
-            "selenium-webdriver"
-        ],
+        "types": ["jasmine", "jasminewd2", "node", "selenium-webdriver"],
         "paths": {
             "@nova-ui/dashboards": ["../src/public-api.ts"]
         }
     },
-    "exclude": [
-        "**/*.e2e.ts",
-        "**/*.visual.ts"
-    ]
+    "exclude": ["**/*.e2e.ts", "**/*.visual.ts"],
+    "extends": "../tsconfig.json"
 }

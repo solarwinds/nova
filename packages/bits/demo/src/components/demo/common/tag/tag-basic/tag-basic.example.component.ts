@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-tag-basic-example",
     templateUrl: "./tag-basic.example.component.html",
 })
-export class TagBasicExampleComponent {
-}
+export class TagBasicExampleComponent {}

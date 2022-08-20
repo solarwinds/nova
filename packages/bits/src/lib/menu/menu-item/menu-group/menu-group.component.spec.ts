@@ -1,11 +1,8 @@
-import {MenuGroupComponent} from "./menu-group.component";
+import { MenuGroupComponent } from "./menu-group.component";
 
 describe("components >", () => {
-
     describe("menu-popup >", () => {
-
         describe("onHeaderClick function >", () => {
-
             let mockEvent: MouseEvent;
             let menuGroupComponent: MenuGroupComponent;
 
@@ -19,9 +16,6 @@ describe("components >", () => {
                 menuGroupComponent.stopClickPropagation(mockEvent);
                 expect(mockEvent.stopPropagation).toHaveBeenCalled();
             });
-
         });
-
     });
-
 });

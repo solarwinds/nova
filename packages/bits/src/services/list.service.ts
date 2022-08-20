@@ -1,15 +1,15 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
-import {RepeatSelectionMode} from "../lib/repeat/types";
-import {SelectionType} from "../lib/selector/public-api";
-import {SelectorService} from "../lib/selector/selector.service";
+import { RepeatSelectionMode } from "../lib/repeat/types";
+import { SelectionType } from "../lib/selector/public-api";
+import { SelectorService } from "../lib/selector/selector.service";
 
 import { INovaFilteringOutputs } from "./data-source/public-api";
 import { SelectionModel } from "./public-api";
 
 @Injectable({ providedIn: "root" })
 export class ListService {
-    constructor(private selectorService: SelectorService) { }
+    constructor(private selectorService: SelectorService) {}
 
     /**
      * Updates the selector checkbox status, selector menu items, and the repeat selected items.
@@ -18,12 +18,17 @@ export class ListService {
      *
      * @returns {INovaFilteringOutputs} The updated state
      */
-    public updateSelectionState(state: INovaFilteringOutputs): INovaFilteringOutputs {
+    public updateSelectionState(
+        state: INovaFilteringOutputs
+    ): INovaFilteringOutputs {
         const selection = new SelectionModel(state.selector?.selection ?? {});
         const itemsSource = (state.repeat && state.repeat.itemsSource) || [];
         const paginator = state.paginator || { total: undefined };
 
-        const selectedItems = this.selectorService.getSelectedItems(selection, itemsSource);
+        const selectedItems = this.selectorService.getSelectedItems(
+            selection,
+            itemsSource
+        );
         const outputState = {
             ...state,
             repeat: {
@@ -58,8 +63,11 @@ export class ListService {
      *
      * @returns {INovaFilteringOutputs} The updated state
      */
-    public selectItems(selectedItems: any[], selectionMode: RepeatSelectionMode, state: INovaFilteringOutputs): INovaFilteringOutputs {
-
+    public selectItems(
+        selectedItems: any[],
+        selectionMode: RepeatSelectionMode,
+        state: INovaFilteringOutputs
+    ): INovaFilteringOutputs {
         if (!state.selector || !state.selector.selection) {
             throw new Error("State must contain selector property");
         }
@@ -97,7 +105,10 @@ export class ListService {
      *
      * @returns {INovaFilteringOutputs} The updated state
      */
-    public applySelector(selectionType: SelectionType, state: INovaFilteringOutputs): INovaFilteringOutputs {
+    public applySelector(
+        selectionType: SelectionType,
+        state: INovaFilteringOutputs
+    ): INovaFilteringOutputs {
         if (!state.selector || !state.selector.selection) {
             throw new Error("State must contain selector property");
         }

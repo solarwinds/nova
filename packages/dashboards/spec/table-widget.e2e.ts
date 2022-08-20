@@ -11,16 +11,23 @@ describe("Dashboards - Table Widget", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("test/table");
-        configurator = Atom.findIn(ConfiguratorAtom, element(by.className(ConfiguratorAtom.CSS_CLASS)));
+        configurator = Atom.findIn(
+            ConfiguratorAtom,
+            element(by.className(ConfiguratorAtom.CSS_CLASS))
+        );
     });
-
 
     it("should generate columns if widget has a datasource and is empty", async () => {
         await page.enableEditMode();
         await page.editWidget("An Empty Table Widget!");
-        const accordion = await configurator?.getAccordion("Presentation", "Sorting");
+        const accordion = await configurator?.getAccordion(
+            "Presentation",
+            "Sorting"
+        );
         await accordion?.toggle();
-        const sortBy = accordion?.getSelect("table-filters-configuration__accordion-content__sort-by-input");
+        const sortBy = accordion?.getSelect(
+            "table-filters-configuration__accordion-content__sort-by-input"
+        );
         const count = await sortBy?.countOptions();
         // Amount of columns able to be sorted
         expect(count).toEqual(7);
@@ -37,16 +44,26 @@ describe("Dashboards - Table Widget", () => {
         await page.enableEditMode();
         await page.editWidget("Another Table Widget!");
 
-        const sortingAccordion = await configurator?.getAccordion("Presentation", "Sorting");
+        const sortingAccordion = await configurator?.getAccordion(
+            "Presentation",
+            "Sorting"
+        );
         await sortingAccordion?.toggle();
-        const sortBy = sortingAccordion?.getSelect("table-filters-configuration__accordion-content__sort-by-input");
+        const sortBy = sortingAccordion?.getSelect(
+            "table-filters-configuration__accordion-content__sort-by-input"
+        );
         let count = await sortBy?.countOptions();
         // Amount of columns able to be sorted before columns are reset
         expect(count).toEqual(2);
 
-        const dataSourceAccordion = await configurator?.getAccordion("Data and Calculations", "Data Source");
+        const dataSourceAccordion = await configurator?.getAccordion(
+            "Data and Calculations",
+            "Data Source"
+        );
         await dataSourceAccordion?.toggle();
-        const dataSourceSelect = dataSourceAccordion?.getSelect("datasource-configuration__accordion-content__datasource-input");
+        const dataSourceSelect = dataSourceAccordion?.getSelect(
+            "datasource-configuration__accordion-content__datasource-input"
+        );
         await (await dataSourceSelect?.getFirstOption())?.click();
         await sortingAccordion?.toggle();
         count = await sortBy?.countOptions();
@@ -54,7 +71,7 @@ describe("Dashboards - Table Widget", () => {
         expect(count).toEqual(2);
 
         const resetButton = configurator.getResetColumnsButton();
-        await (resetButton.click());
+        await resetButton.click();
         await element(by.className("nui-dialog")).$(".btn-primary").click();
         count = await sortBy?.countOptions();
         // Amount of columns able to be sorted after datasource changed and after columns are reset

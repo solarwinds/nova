@@ -1,5 +1,11 @@
 import { Component } from "@angular/core";
-import { CHART_MARKERS, IChartMarker, IValueProvider, RenderState, SequentialChartMarkerProvider } from "@nova-ui/charts";
+import {
+    CHART_MARKERS,
+    IChartMarker,
+    IValueProvider,
+    RenderState,
+    SequentialChartMarkerProvider,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-legend-visual-test",
@@ -7,7 +13,8 @@ import { CHART_MARKERS, IChartMarker, IValueProvider, RenderState, SequentialCha
     styleUrls: ["legend-visual-test.component.less"],
 })
 export class LegendVisualTestComponent {
-    public markers: IValueProvider<IChartMarker> = new SequentialChartMarkerProvider(CHART_MARKERS);
+    public markers: IValueProvider<IChartMarker> =
+        new SequentialChartMarkerProvider(CHART_MARKERS);
 
     public seriesData = [
         {

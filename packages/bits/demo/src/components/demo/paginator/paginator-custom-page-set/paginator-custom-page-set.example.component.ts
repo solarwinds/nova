@@ -7,4 +7,3 @@ import { Component } from "@angular/core";
 export class PaginatorCustomPageSetExampleComponent {
     public customPageSizeSet = [5, 15, 30, 150, 200];
 }
-

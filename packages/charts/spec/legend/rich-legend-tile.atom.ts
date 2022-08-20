@@ -5,8 +5,10 @@ export class RichLegendTileAtom extends Atom {
     public static CSS_CLASS = "nui-rich-legend-tile";
 
     public async getValue(): Promise<string> {
-        const valueElements = this.getElement().all(by.className("nui-rich-legend-tile__tilebox-value"));
-        if (await valueElements.count() > 0) {
+        const valueElements = this.getElement().all(
+            by.className("nui-rich-legend-tile__tilebox-value")
+        );
+        if ((await valueElements.count()) > 0) {
             return valueElements.first().getText();
         }
 
@@ -15,8 +17,10 @@ export class RichLegendTileAtom extends Atom {
     }
 
     public async getUnitLabel(): Promise<string> {
-        const unitLabelElements = this.getElement().all(by.className("nui-rich-legend-tile__tilebox-unit"));
-        if (await unitLabelElements.count() > 0) {
+        const unitLabelElements = this.getElement().all(
+            by.className("nui-rich-legend-tile__tilebox-unit")
+        );
+        if ((await unitLabelElements.count()) > 0) {
             return unitLabelElements.first().getText();
         }
 
@@ -25,17 +29,22 @@ export class RichLegendTileAtom extends Atom {
     }
 
     public async isMarkerVisible(): Promise<boolean> {
-        const marker = this.getElement().element(by.className("nui-rich-legend-tile__point-marker"));
+        const marker = this.getElement().element(
+            by.className("nui-rich-legend-tile__point-marker")
+        );
         return marker.isDisplayed();
     }
 
     public async isIconVisible(): Promise<boolean> {
-        const icon = this.getElement().element(by.className("nui-rich-legend-tile__icon"));
+        const icon = this.getElement().element(
+            by.className("nui-rich-legend-tile__icon")
+        );
         return icon.isDisplayed();
     }
 
     public async getBackgroundColor(): Promise<string> {
-        return this.getElement().element(by.className("nui-rich-legend-tile__tilebox")).getCssValue("background-color");
+        return this.getElement()
+            .element(by.className("nui-rich-legend-tile__tilebox"))
+            .getCssValue("background-color");
     }
-
 }

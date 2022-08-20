@@ -7,7 +7,6 @@ import { Component, ViewEncapsulation } from "@angular/core";
     encapsulation: ViewEncapsulation.None,
 })
 export class PopupTestComponent {
-
     public width = "200px";
     public icon = "caret-down";
     public itemsSource: string[] = [
@@ -21,5 +20,4 @@ export class PopupTestComponent {
     public handleClick(event: MouseEvent) {
         event.stopPropagation();
     }
-
 }

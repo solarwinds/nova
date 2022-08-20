@@ -19,11 +19,11 @@ import {
     TemplateRef,
     ViewEncapsulation,
 } from "@angular/core";
-import {FormControl, FormGroupDirective, NgForm} from "@angular/forms";
+import { FormControl, FormGroupDirective, NgForm } from "@angular/forms";
 
-import {ErrorStateMatcher} from "../error-state-matcher.provider";
-import {WizardStepFooterDirective} from "../wizard-step-footer.directive";
-import {WizardStepLabelDirective} from "../wizard-step-label.directive";
+import { ErrorStateMatcher } from "../error-state-matcher.provider";
+import { WizardStepFooterDirective } from "../wizard-step-footer.directive";
+import { WizardStepLabelDirective } from "../wizard-step-label.directive";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { WizardStepStateConfig } from "../types";
@@ -47,7 +47,10 @@ import { WizardStepStateConfig } from "../types";
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy, ErrorStateMatcher {
+export class WizardStepV2Component
+    extends CdkStep
+    implements OnInit, OnDestroy, ErrorStateMatcher
+{
     @Input() template?: TemplateRef<any>;
 
     @Input() stepStateConfig: Partial<WizardStepStateConfig>;
@@ -58,7 +61,8 @@ export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy,
     @ContentChild(WizardStepLabelDirective) stepLabel: WizardStepLabelDirective;
 
     /** Content for footer given by `<ng-template wizardStepFooter>`. */
-    @ContentChild(WizardStepFooterDirective) stepFooter: WizardStepFooterDirective;
+    @ContentChild(WizardStepFooterDirective)
+    stepFooter: WizardStepFooterDirective;
 
     private destroy$ = new Subject();
 
@@ -66,7 +70,9 @@ export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy,
         private changeDetectorRef: ChangeDetectorRef,
         @Inject(forwardRef(() => CdkStepper)) stepper: any,
         @SkipSelf() private _errorStateMatcher: ErrorStateMatcher,
-        @Optional() @Inject(STEPPER_GLOBAL_OPTIONS) stepperOptions?: StepperOptions
+        @Optional()
+        @Inject(STEPPER_GLOBAL_OPTIONS)
+        stepperOptions?: StepperOptions
     ) {
         super(stepper, stepperOptions);
     }
@@ -81,8 +87,14 @@ export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy,
     }
 
     /** Custom error state matcher that additionally checks for validity of interacted form. */
-    public isErrorState(control?: FormControl, form?: FormGroupDirective | NgForm): boolean {
-        const originalErrorState = this._errorStateMatcher.isErrorState(control, form);
+    public isErrorState(
+        control?: FormControl,
+        form?: FormGroupDirective | NgForm
+    ): boolean {
+        const originalErrorState = this._errorStateMatcher.isErrorState(
+            control,
+            form
+        );
 
         // Custom error state checks for the validity of form that is not submitted or touched
         // since user can trigger a form change by calling for another step without directly
@@ -94,15 +106,17 @@ export class WizardStepV2Component extends CdkStep implements OnInit, OnDestroy,
 
     private onControlStatusChanges(): void {
         if (this.stepControl) {
-            this.stepControl.statusChanges.pipe(takeUntil(this.destroy$)).subscribe((status)  => {
-                if (status === "INVALID") {
-                    this.completed = false;
-                }
+            this.stepControl.statusChanges
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((status) => {
+                    if (status === "INVALID") {
+                        this.completed = false;
+                    }
 
-                if (status === "VALID") {
-                    this.completed = true;
-                }
-            });
+                    if (status === "VALID") {
+                        this.completed = true;
+                    }
+                });
         }
     }
 }

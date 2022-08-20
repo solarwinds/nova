@@ -21,15 +21,8 @@ import { FilterGroupsWrapperComponent } from "./filter-groups-wrapper/filter-gro
         NuiExpanderModule,
         NuiPopoverModule,
     ],
-    declarations: [
-        FilterGroupsWrapperComponent,
-        FilterGroupComponent,
-    ],
-    exports: [
-        FilterGroupsWrapperComponent,
-        FilterGroupComponent,
-    ],
+    declarations: [FilterGroupsWrapperComponent, FilterGroupComponent],
+    exports: [FilterGroupsWrapperComponent, FilterGroupComponent],
     providers: [FilterGroupService],
 })
-
 export class FilterGroupModule {}

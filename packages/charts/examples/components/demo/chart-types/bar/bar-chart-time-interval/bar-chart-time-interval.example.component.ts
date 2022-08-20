@@ -23,19 +23,23 @@ export class BarChartTimeIntervalExampleComponent implements OnInit {
         accessors.data.category = (d) => d.x;
         accessors.data.value = (d) => d.y;
 
-        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+        });
 
         const scales: Scales = {
             x: new TimeIntervalScale(duration(1, "days")),
             y: new LinearScale(),
         };
 
-        this.chart.update(getData().map(s => ({
-            ...s,
-            accessors,
-            renderer,
-            scales,
-        })));
+        this.chart.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                renderer,
+                scales,
+            }))
+        );
     }
 }
 
@@ -48,11 +52,11 @@ function getData() {
             id: "series-1",
             name: "Series 1",
             data: [
-                {x: moment("2020-07-01T0", format).toDate(), y: 30},
-                {x: moment("2020-07-02T0", format).toDate(), y: 95},
-                {x: moment("2020-07-03T0", format).toDate(), y: 15},
-                {x: moment("2020-07-04T0", format).toDate(), y: 60},
-                {x: moment("2020-07-05T0", format).toDate(), y: 35},
+                { x: moment("2020-07-01T0", format).toDate(), y: 30 },
+                { x: moment("2020-07-02T0", format).toDate(), y: 95 },
+                { x: moment("2020-07-03T0", format).toDate(), y: 15 },
+                { x: moment("2020-07-04T0", format).toDate(), y: 60 },
+                { x: moment("2020-07-05T0", format).toDate(), y: 35 },
             ],
         },
     ];

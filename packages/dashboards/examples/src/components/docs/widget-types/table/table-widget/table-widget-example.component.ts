@@ -1,5 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { DataSourceService, IDataField, INovaFilteringOutputs, INovaFilters, nameof } from "@nova-ui/bits";
+import {
+    DataSourceService,
+    IDataField,
+    INovaFilteringOutputs,
+    INovaFilters,
+    nameof,
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     IDashboard,
@@ -15,7 +21,6 @@ import { GridsterConfig, GridsterItem } from "angular-gridster2";
 import orderBy from "lodash/orderBy";
 import { BehaviorSubject, from } from "rxjs";
 import { map, tap } from "rxjs/operators";
-
 
 export const BREW_API_URL = "https://api.punkapi.com/v2/beers";
 
@@ -41,16 +46,48 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
     public busy = new BehaviorSubject(false);
 
     public dataFields: Array<IDataField> = [
-        { id: nameof<IBrewInfo>("id"), label: "No", dataType: "number", sortable: true },
+        {
+            id: nameof<IBrewInfo>("id"),
+            label: "No",
+            dataType: "number",
+            sortable: true,
+        },
         // To indicate that a column should not be sortable, set the optional IDataField 'sortable' property to false
-        { id: nameof<IBrewInfo>("name"), label: "Name", dataType: "string", sortable: true },
-        { id: nameof<IBrewInfo>("tagline"), label: "Tagline", dataType: "string", sortable: true },
-        { id: nameof<IBrewInfo>("first_brewed"), label: "First Brewed", dataType: "string", sortable: true },
-        { id: nameof<IBrewInfo>("description"), label: "Description", dataType: "string", sortable: false },
-        { id: nameof<IBrewInfo>("brewers_tips"), label: "Brewer's Tips", dataType: "string", sortable: false },
+        {
+            id: nameof<IBrewInfo>("name"),
+            label: "Name",
+            dataType: "string",
+            sortable: true,
+        },
+        {
+            id: nameof<IBrewInfo>("tagline"),
+            label: "Tagline",
+            dataType: "string",
+            sortable: true,
+        },
+        {
+            id: nameof<IBrewInfo>("first_brewed"),
+            label: "First Brewed",
+            dataType: "string",
+            sortable: true,
+        },
+        {
+            id: nameof<IBrewInfo>("description"),
+            label: "Description",
+            dataType: "string",
+            sortable: false,
+        },
+        {
+            id: nameof<IBrewInfo>("brewers_tips"),
+            label: "Brewer's Tips",
+            dataType: "string",
+            sortable: false,
+        },
     ];
 
-    public async getFilteredData(filters: INovaFilters): Promise<INovaFilteringOutputs> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<INovaFilteringOutputs> {
         const start = filters.virtualScroll?.value?.start ?? 0;
         const end = filters.virtualScroll?.value?.end ?? 0;
 
@@ -61,24 +98,37 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
 
         // extract sorter settings to send to the backend
         // filters.sorterValue.sortBy; filters.sorterValue.direction
-        return from(this.fetch(start, end)).pipe(
-            tap((response: IBrewDatasourceResponse | undefined) => {
-                if (!response) {
-                    return;
-                }
-                this.cache = this.sortData(this.cache.concat(response.brewInfo), filters);
-                this.dataSubject.next(this.cache);
-            }),
-            map(() => ({
-                repeat: { itemsSource: this.cache },
-                dataFields: this.dataFields,
-            }))).toPromise();
+        return from(this.fetch(start, end))
+            .pipe(
+                tap((response: IBrewDatasourceResponse | undefined) => {
+                    if (!response) {
+                        return;
+                    }
+                    this.cache = this.sortData(
+                        this.cache.concat(response.brewInfo),
+                        filters
+                    );
+                    this.dataSubject.next(this.cache);
+                }),
+                map(() => ({
+                    repeat: { itemsSource: this.cache },
+                    dataFields: this.dataFields,
+                }))
+            )
+            .toPromise();
     }
 
-    public async fetch(start: number, end: number): Promise<IBrewDatasourceResponse | undefined> {
+    public async fetch(
+        start: number,
+        end: number
+    ): Promise<IBrewDatasourceResponse | undefined> {
         const delta: number = end - start;
-        const currentPage: number = (end / delta) || 0;
-        const response: Object | Array<IBrewInfo> = await (await fetch(`${ BREW_API_URL }/?page=${ currentPage }&per_page=${ delta }`)).json();
+        const currentPage: number = end / delta || 0;
+        const response: Object | Array<IBrewInfo> = await (
+            await fetch(
+                `${BREW_API_URL}/?page=${currentPage}&per_page=${delta}`
+            )
+        ).json();
 
         // Note: In case request fails we should not proceed with mapping
         if (!Array.isArray(response)) {
@@ -99,10 +149,13 @@ export class BeerDataSource extends DataSourceService<IBrewInfo> {
     }
 
     private sortData(data: IBrewInfo[], filters: INovaFilters): IBrewInfo[] {
-        return orderBy(data, filters.sorter?.value?.sortBy, filters.sorter?.value?.direction as "desc" | "asc");
+        return orderBy(
+            data,
+            filters.sorter?.value?.sortBy,
+            filters.sorter?.value?.direction as "desc" | "asc"
+        );
     }
 }
-
 
 /**
  * A component that instantiates the dashboard
@@ -130,12 +183,14 @@ export class TableWidgetExampleComponent implements OnInit {
         // In general, the ProviderRegistryService is used for making entities available for injection into dynamically loaded components.
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-    ) {
-    }
+    ) {}
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
-        const widgetTemplate = this.widgetTypesService.getWidgetType("table", 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "table",
+            1
+        );
 
         // Registering our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
@@ -180,7 +235,8 @@ export class TableWidgetExampleComponent implements OnInit {
         const tableWidget = widgetConfig;
         const widgetIndex: IWidgets = {
             // Enhance the widget with information coming from it's type definition
-            [tableWidget.id]: this.widgetTypesService.mergeWithWidgetType(tableWidget),
+            [tableWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(tableWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -199,7 +255,6 @@ export class TableWidgetExampleComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-
 }
 
 const TABLE_COLUMNS: ITableWidgetColumnConfig[] = [
@@ -265,13 +320,13 @@ export const widgetConfig: IWidget = {
     type: "table",
     pizzagna: {
         configuration: {
-            "header": {
+            header: {
                 properties: {
                     title: "Stupendous Suds",
                     subtitle: "Try These Brilliant Brews",
                 },
             },
-            "table": {
+            table: {
                 providers: {
                     [WellKnownProviders.DataSource]: {
                         providerId: BeerDataSource.providerId,

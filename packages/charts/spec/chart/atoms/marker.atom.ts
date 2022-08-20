@@ -7,7 +7,10 @@ export class MarkerAtom extends Atom {
     private root: ElementFinder = this.getElement();
 
     public async getColor(): Promise<string> {
-        return this.root.all(by.css(`.${MarkerAtom.CSS_CLASS} > g`)).first().getAttribute("fill");
+        return this.root
+            .all(by.css(`.${MarkerAtom.CSS_CLASS} > g`))
+            .first()
+            .getAttribute("fill");
     }
 
     public async getPosition(): Promise<ILocation> {

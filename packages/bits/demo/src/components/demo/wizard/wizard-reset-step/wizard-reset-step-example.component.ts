@@ -6,7 +6,6 @@ import { IWizardSelectionEvent, WizardComponent } from "@nova-ui/bits";
     selector: "nui-wizard-reset-step-example",
     templateUrl: "./wizard-reset-step.example.component.html",
 })
-
 export class WizardResetStepExampleComponent implements OnInit {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
     public myForm: FormGroup;
@@ -34,7 +33,11 @@ export class WizardResetStepExampleComponent implements OnInit {
     }
 
     public onSelectionChange(event: IWizardSelectionEvent): void {
-        const { selectedIndex, previouslySelectedStep, previouslySelectedIndex } = event;
+        const {
+            selectedIndex,
+            previouslySelectedStep,
+            previouslySelectedIndex,
+        } = event;
 
         /* Example of reset statuses of second step */
         if (selectedIndex === 0 && previouslySelectedIndex === 1) {

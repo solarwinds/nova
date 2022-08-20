@@ -5,7 +5,6 @@ import { ToastService } from "@nova-ui/bits";
     selector: "nui-panel-hide-outside-control-example",
     templateUrl: "./panel-hide-outside-control.example.component.html",
 })
-
 export class PanelHideOutsideControlExampleComponent {
     public isHidden = false;
 
@@ -22,12 +21,13 @@ export class PanelHideOutsideControlExampleComponent {
     public getHideStateChanged($event: boolean) {
         this.isHidden = $event;
         this.toastService.info({
-            message: this.isHidden ? $localize `Hidden` : $localize `Revealed`,
-            title: $localize `Panel State`,
+            message: this.isHidden ? $localize`Hidden` : $localize`Revealed`,
+            title: $localize`Panel State`,
         });
     }
 
-    constructor(@Inject(ToastService) private toastService: ToastService,
-                private changeDetectorRef: ChangeDetectorRef) {
-    }
+    constructor(
+        @Inject(ToastService) private toastService: ToastService,
+        private changeDetectorRef: ChangeDetectorRef
+    ) {}
 }

@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "area-chart-test",
     templateUrl: "./area-chart-test.component.html",
 })
-export class AreaChartTestComponent {
-
-}
+export class AreaChartTestComponent {}

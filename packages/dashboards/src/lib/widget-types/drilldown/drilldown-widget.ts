@@ -4,7 +4,12 @@ import { ListWidgetComponent } from "../../components/list-widget/list-widget.co
 import { WidgetSearchComponent } from "../../components/widget-search/widget-search.component";
 import { DEFAULT_PIZZAGNA_ROOT } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
-import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";
+import {
+    widgetBodyContentNodes,
+    WIDGET_BODY,
+    WIDGET_HEADER,
+    WIDGET_LOADING,
+} from "../common/widget/components";
 import { EVENT_PROXY } from "../common/widget/providers";
 
 export const drilldownWidget: IPizzagna = {
@@ -15,12 +20,7 @@ export const drilldownWidget: IPizzagna = {
             componentType: StackComponent.lateLoadKey,
             properties: {
                 // these values reference other components in this structure
-                nodes: [
-                    "header",
-                    "loading",
-                    "search",
-                    "body",
-                ],
+                nodes: ["header", "loading", "search", "body"],
             },
             providers: {
                 // event proxy manages the transmission of events between widget and dashboard
@@ -51,10 +51,7 @@ export const drilldownWidget: IPizzagna = {
             componentType: StackComponent.lateLoadKey,
             properties: {
                 // these values reference other components in this configuration
-                nodes: [
-                    "navigationBar",
-                    "listWidget",
-                ],
+                nodes: ["navigationBar", "listWidget"],
             },
         },
         navigationBar: {
@@ -64,7 +61,7 @@ export const drilldownWidget: IPizzagna = {
         listWidget: {
             id: "listWidget",
             componentType: ListWidgetComponent.lateLoadKey,
-            providers: { },
+            providers: {},
             properties: {
                 elementClass: "w-100 p-3",
             },

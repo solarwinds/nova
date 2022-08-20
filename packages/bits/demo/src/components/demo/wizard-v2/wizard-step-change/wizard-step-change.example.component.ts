@@ -23,15 +23,17 @@ export class WizardStepChangeExampleComponent implements AfterViewInit {
     @ViewChild("normalStep") normalStep: TemplateRef<string>;
     @ViewChild("wizard") wizard: WizardHorizontalComponent;
 
-    constructor(private toastService: ToastService) {
-    }
+    constructor(private toastService: ToastService) {}
 
     public ngAfterViewInit(): void {
         this.addStep(this.normalStep, $localize`Normal step`);
     }
 
     public addStep(templateRef: TemplateRef<string>, title?: string): void {
-        this.steps.push({ title: title ?? `Dynamic Step`, templateRef: templateRef });
+        this.steps.push({
+            title: title ?? `Dynamic Step`,
+            templateRef: templateRef,
+        });
     }
 
     public onSelectionChange($event: StepperSelectionEvent): void {

@@ -11,21 +11,32 @@ export class ThresholdsSummaryTestPage {
     private zonesInput: ElementFinder;
 
     constructor() {
-        this.root = element(by.className("nui-thresholds-summary-test-harness"));
+        this.root = element(
+            by.className("nui-thresholds-summary-test-harness")
+        );
         this.dataInput = this.root.element(by.id("data-input"));
         this.zonesInput = this.root.element(by.id("zones-input"));
     }
 
     public get mainChart(): ChartAtom {
-        return Atom.findIn(ChartAtom, element(by.className("thresholds-main-chart")));
+        return Atom.findIn(
+            ChartAtom,
+            element(by.className("thresholds-main-chart"))
+        );
     }
 
     public get summaryChart(): ChartAtom {
-        return Atom.findIn(ChartAtom, element(by.className("thresholds-summary-chart")));
+        return Atom.findIn(
+            ChartAtom,
+            element(by.className("thresholds-summary-chart"))
+        );
     }
 
     public get legend(): LegendAtom {
-        return Atom.findIn(LegendAtom, element(by.className("thresholds-legend")));
+        return Atom.findIn(
+            LegendAtom,
+            element(by.className("thresholds-legend"))
+        );
     }
 
     public async changeData(input: Record<string, number[]>): Promise<void> {

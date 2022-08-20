@@ -20,13 +20,18 @@ export class CdkDraggableItemAtom extends Atom {
         await browser.actions().mouseMove(this.getElement(), offset).perform();
     }
 
-    public async dragTo(location: WebElement | ILocation, offset?: ILocation): Promise<void> {
+    public async dragTo(
+        location: WebElement | ILocation,
+        offset?: ILocation
+    ): Promise<void> {
         await browser.actions().mouseDown(this.getElement()).perform();
         await browser.actions().mouseMove(location, offset).perform();
     }
 
-    public async move(location: WebElement | ILocation, offset?: ILocation): Promise<void> {
+    public async move(
+        location: WebElement | ILocation,
+        offset?: ILocation
+    ): Promise<void> {
         await browser.actions().mouseMove(location, offset).perform();
     }
-
 }

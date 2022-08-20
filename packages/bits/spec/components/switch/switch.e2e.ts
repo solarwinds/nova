@@ -12,14 +12,21 @@ describe("USERCONTROL switch", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("switch/switch-test");
         switchComponent = Atom.find(SwitchAtom, "nui-switch-simple-example");
-        disabledSwitchComponent = Atom.find(SwitchAtom, "nui-switch-disabled-example");
+        disabledSwitchComponent = Atom.find(
+            SwitchAtom,
+            "nui-switch-disabled-example"
+        );
         toggleDisableBtn = Atom.find(ButtonAtom, "nui-switch-toggle-button");
     });
 
     // cleanup
     beforeEach(async () => {
-        if (!(await switchComponent.isOn())) { await switchComponent.slider().click(); }
-        if (!(await switchComponent.slider().isEnabled())) { await toggleDisableBtn.click(); }
+        if (!(await switchComponent.isOn())) {
+            await switchComponent.slider().click();
+        }
+        if (!(await switchComponent.slider().isEnabled())) {
+            await toggleDisableBtn.click();
+        }
     });
 
     it("should be switched on by default ", async () => {
@@ -49,7 +56,9 @@ describe("USERCONTROL switch", () => {
         const webElem = await disabledSwitchComponent.slider().getWebElement();
 
         const size = await webElem.getSize();
-        await browser.actions().mouseMove(webElem, {x: size.width / 2, y: size.height / 2})
+        await browser
+            .actions()
+            .mouseMove(webElem, { x: size.width / 2, y: size.height / 2 })
             .click()
             .perform();
         await browser.sleep(500);
@@ -75,5 +84,4 @@ describe("USERCONTROL switch", () => {
         await switchComponent.slider().sendKeys(Key.SPACE);
         expect(await switchComponent.isOn()).toBe(true);
     });
-
 });

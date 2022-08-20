@@ -12,22 +12,23 @@ export const drilldown: IWidgetTypeDefinition = {
     /***************************************************************************************************
      *  Paths to important settings in this type definition
      ***************************************************************************************************/
-    "paths": {
-        "widget": {
+    paths: {
+        widget: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
         },
-        "configurator": {
+        configurator: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
             // for the default data source configuration component, this changes the list of data sources to pick from
-            [WellKnownPathKey.DataSourceProviders]: "dataSource.properties.dataSourceProviders",
+            [WellKnownPathKey.DataSourceProviders]:
+                "dataSource.properties.dataSourceProviders",
         },
     },
     /***************************************************************************************************
      *  Widget section describes the structural part of the KPI widget
      ***************************************************************************************************/
-    "widget": drilldownWidget,
+    widget: drilldownWidget,
     /***************************************************************************************************
      *  Configurator section describes the form that is used to configure the widget
      ***************************************************************************************************/
-    "configurator": drilldownConfigurator,
+    configurator: drilldownConfigurator,
 };

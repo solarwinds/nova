@@ -12,20 +12,20 @@ export const embeddedContent: IWidgetTypeDefinition = {
     /***************************************************************************************************
      *  Paths to important settings in this type definition
      ***************************************************************************************************/
-    "paths": {
-        "widget": {
+    paths: {
+        widget: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
         },
-        "configurator": {
+        configurator: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
         },
     },
     /***************************************************************************************************
      *  Widget section describes the structural part of the widget
      ***************************************************************************************************/
-    "widget": embeddedContentWidget,
+    widget: embeddedContentWidget,
     /***************************************************************************************************
      *  Configurator section describes the form that is used to configure the widget
      ***************************************************************************************************/
-    "configurator": embeddedContentConfigurator,
+    configurator: embeddedContentConfigurator,
 };

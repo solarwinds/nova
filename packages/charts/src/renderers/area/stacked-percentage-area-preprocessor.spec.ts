@@ -1,13 +1,11 @@
 import { LinearScale } from "../../core/common/scales/linear-scale";
 import { TimeScale } from "../../core/common/scales/time-scale";
 import { IXYScales } from "../../core/common/scales/types";
-import {  IChartSeries } from "../../core/common/types";
+import { IChartSeries } from "../../core/common/types";
 
 import { AreaAccessors, IAreaAccessors } from "./area-accessors";
 import { AreaRenderer } from "./area-renderer";
-import {
-    stackedPercentageAreaPreprocessor,
-} from "./stacked-percentage-area-preprocessor";
+import { stackedPercentageAreaPreprocessor } from "./stacked-percentage-area-preprocessor";
 
 describe("Stacked Area Preprocessor >", () => {
     let accessors: any;
@@ -33,34 +31,29 @@ describe("Stacked Area Preprocessor >", () => {
             {
                 id: "series-1",
                 name: "Series 1",
-                data: [
-                    { x: "test1", value: 2.5 },
-                ],
+                data: [{ x: "test1", value: 2.5 }],
             },
             {
                 id: "series-2",
                 name: "Series 2",
-                data: [
-                    { x: "test1", value: 2.5 },
-                ],
+                data: [{ x: "test1", value: 2.5 }],
             },
             {
                 id: "series-3",
                 name: "Series 3",
-                data: [
-                    { x: "test1", value: 5 },
-                ],
+                data: [{ x: "test1", value: 5 }],
             },
         ];
 
-        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map(d => ({
+        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map((d) => ({
             ...d,
             accessors,
             renderer,
             scales,
         }));
 
-        const [ firstSeries, secondSeries, thirdSeries ] = stackedPercentageAreaPreprocessor(seriesSet, () => true);
+        const [firstSeries, secondSeries, thirdSeries] =
+            stackedPercentageAreaPreprocessor(seriesSet, () => true);
         expect(firstSeries.data[0]["__stack_y"].start).toEqual(0);
         expect(firstSeries.data[0]["__stack_y"].end).toEqual(25);
         expect(secondSeries.data[0]["__stack_y"].start).toEqual(25);
@@ -74,16 +67,12 @@ describe("Stacked Area Preprocessor >", () => {
             {
                 id: "series-1",
                 name: "Series 1",
-                data: [
-                    { x: "test1", value: 2.5 },
-                ],
+                data: [{ x: "test1", value: 2.5 }],
             },
             {
                 id: "series-2",
                 name: "Series 2",
-                data: [
-                    { x: "test2", value: 2.5 },
-                ],
+                data: [{ x: "test2", value: 2.5 }],
             },
             {
                 id: "series-3",
@@ -96,14 +85,15 @@ describe("Stacked Area Preprocessor >", () => {
             },
         ];
 
-        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map(d => ({
+        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map((d) => ({
             ...d,
             accessors,
             renderer,
             scales,
         }));
 
-        const [ firstSeries, secondSeries, thirdSeries ] = stackedPercentageAreaPreprocessor(seriesSet, () => true);
+        const [firstSeries, secondSeries, thirdSeries] =
+            stackedPercentageAreaPreprocessor(seriesSet, () => true);
         expect(firstSeries.data[0]["__stack_y"].start).toEqual(0);
         expect(firstSeries.data[0]["__stack_y"].end).toEqual(50);
         expect(thirdSeries.data[0]["__stack_y"].start).toEqual(50);
@@ -121,27 +111,26 @@ describe("Stacked Area Preprocessor >", () => {
             {
                 id: "series-1",
                 name: "Series 1",
-                data: [
-                    { x: -123, value: 2.5 },
-                ],
+                data: [{ x: -123, value: 2.5 }],
             },
             {
                 id: "series-2",
                 name: "Series 2",
-                data: [
-                    { x: -123, value: 2.5 },
-                ],
+                data: [{ x: -123, value: 2.5 }],
             },
         ];
 
-        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map(d => ({
+        const seriesSet: IChartSeries<IAreaAccessors>[] = data.map((d) => ({
             ...d,
             accessors,
             renderer,
             scales,
         }));
 
-        const [ firstSeries, secondSeries ] = stackedPercentageAreaPreprocessor(seriesSet, () => true);
+        const [firstSeries, secondSeries] = stackedPercentageAreaPreprocessor(
+            seriesSet,
+            () => true
+        );
         expect(firstSeries.data[0]["__stack_y"].start).toEqual(0);
         expect(firstSeries.data[0]["__stack_y"].end).toEqual(50);
         expect(secondSeries.data[0]["__stack_y"].start).toEqual(50);

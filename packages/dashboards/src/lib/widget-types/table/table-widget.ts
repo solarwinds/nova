@@ -5,10 +5,16 @@ import {
     DEFAULT_PIZZAGNA_ROOT,
     NOVA_DASHBOARD_EVENT_PROXY,
     NOVA_TABLE_DATASOURCE_ADAPTER,
-    NOVA_VIRTUAL_VIEWPORT_MANAGER, WIDGET_RESIZE,
+    NOVA_VIRTUAL_VIEWPORT_MANAGER,
+    WIDGET_RESIZE,
 } from "../../services/types";
 import { IPizzagna, PizzagnaLayer, WellKnownProviders } from "../../types";
-import { widgetBodyContentNodes, WIDGET_BODY, WIDGET_HEADER, WIDGET_LOADING } from "../common/widget/components";
+import {
+    widgetBodyContentNodes,
+    WIDGET_BODY,
+    WIDGET_HEADER,
+    WIDGET_LOADING,
+} from "../common/widget/components";
 import { refresher } from "../common/widget/providers";
 
 export const tableWidget: IPizzagna = {
@@ -30,11 +36,7 @@ export const tableWidget: IPizzagna = {
                 },
             },
             properties: {
-                nodes: [
-                    "header",
-                    "loading",
-                    "body",
-                ],
+                nodes: ["header", "loading", "body"],
             },
         },
         // widget header
@@ -49,7 +51,6 @@ export const tableWidget: IPizzagna = {
                 elementClass: "overflow-auto",
             },
         },
-
 
         // retrieving the definitions for the body content nodes. the argument corresponds to the main content node key
         ...widgetBodyContentNodes("table"),
@@ -70,7 +71,7 @@ export const tableWidget: IPizzagna = {
                         totalItemsPath: "totalItems",
                     },
                 },
-                "virtualViewportManager": {
+                virtualViewportManager: {
                     providerId: NOVA_VIRTUAL_VIEWPORT_MANAGER,
                 },
             },

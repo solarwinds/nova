@@ -12,9 +12,8 @@ describe("EmbeddedContentComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [ NuiDashboardsModule ],
-        })
-            .compileComponents();
+            imports: [NuiDashboardsModule],
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -30,10 +29,12 @@ describe("EmbeddedContentComponent", () => {
         it("should create iframe and apply embedded sanitized content there, when mode is `url`", () => {
             component.sanitized = true;
             component.mode = EmbeddedContentMode.URL;
-            component.customEmbeddedContent = "https://www.ventusky.com/<script type='text/javascript'>alert(\'hello world!\');</script>";
+            component.customEmbeddedContent =
+                "https://www.ventusky.com/<script type='text/javascript'>alert('hello world!');</script>";
             component.ngOnInit();
 
-            const iframeElement = fixture.debugElement.nativeElement.querySelector("iframe");
+            const iframeElement =
+                fixture.debugElement.nativeElement.querySelector("iframe");
             expect(iframeElement).toBeDefined();
             expect(iframeElement.src).not.toContain("</script>");
             expect(iframeElement.width).toEqual("100%");
@@ -44,28 +45,37 @@ describe("EmbeddedContentComponent", () => {
             component.sanitized = true;
             component.mode = EmbeddedContentMode.HTML;
             // eslint-disable-next-line max-len
-            component.customEmbeddedContent = "<p><a href='../../example/index.html''>Link</a></p><script type='text/javascrip'>alert(\'hello world!\');</script>";
+            component.customEmbeddedContent =
+                "<p><a href='../../example/index.html''>Link</a></p><script type='text/javascrip'>alert('hello world!');</script>";
             spyOn(console, "warn"); // suppress sanitization warning
             component.ngOnInit();
 
             const anchorElement = component.anchor.nativeElement;
             expect(anchorElement).toBeDefined();
-            expect(anchorElement.innerHTML).toEqual("<p><a href=\"../../example/index.html\">Link</a></p>");
+            expect(anchorElement.innerHTML).toEqual(
+                '<p><a href="../../example/index.html">Link</a></p>'
+            );
         });
     });
 
     describe("ngOnChanges > ", () => {
         it("should change embedded content properly", () => {
-            const oldEmbeddedContent = "https://www.ventusky.com/?p=50.3;31.2;5&l=radar";
+            const oldEmbeddedContent =
+                "https://www.ventusky.com/?p=50.3;31.2;5&l=radar";
             component.customEmbeddedContent = "https://www.ventusky.com/";
             const changes = {
-                customEmbeddedContent: new SimpleChange(oldEmbeddedContent, component.customEmbeddedContent, false),
+                customEmbeddedContent: new SimpleChange(
+                    oldEmbeddedContent,
+                    component.customEmbeddedContent,
+                    false
+                ),
             };
             component.sanitized = true;
             component.mode = EmbeddedContentMode.URL;
             component.ngOnChanges(changes);
 
-            const iframeElement = fixture.debugElement.nativeElement.querySelector("iframe");
+            const iframeElement =
+                fixture.debugElement.nativeElement.querySelector("iframe");
             expect(iframeElement).toBeDefined();
             expect(iframeElement.src).toEqual(component.customEmbeddedContent);
         });

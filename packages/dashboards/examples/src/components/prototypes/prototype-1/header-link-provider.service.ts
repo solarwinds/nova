@@ -6,8 +6,7 @@ import { GlobalFilteringDataSource } from "./global-filtering-data.source";
 export class HeaderLinkProviderService implements IHeaderLinkProvider {
     public static providerId = "HeaderLinkProviderService";
 
-    constructor(@Optional() private globalFilters: GlobalFilteringDataSource) {
-    }
+    constructor(@Optional() private globalFilters: GlobalFilteringDataSource) {}
 
     public getLink(template: string): string {
         if (!this.globalFilters) {
@@ -18,10 +17,14 @@ export class HeaderLinkProviderService implements IHeaderLinkProvider {
 
         // use global filter values as query parameters for the string
         const queryParams = Object.keys(filters)
-            .map(f => encodeURIComponent(f) + "=" +  encodeURIComponent(filters[f].data.value))
+            .map(
+                (f) =>
+                    encodeURIComponent(f) +
+                    "=" +
+                    encodeURIComponent(filters[f].data.value)
+            )
             .join("&");
 
         return template + "/search?" + queryParams;
     }
-
 }

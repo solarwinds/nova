@@ -1,4 +1,14 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    Input,
+    OnChanges,
+    OnDestroy,
+    SimpleChanges,
+    ViewChild,
+} from "@angular/core";
 import isFunction from "lodash/isFunction";
 import { BehaviorSubject } from "rxjs";
 
@@ -12,7 +22,9 @@ const SVG_PADDING = 3;
     templateUrl: "./chart-marker.component.html",
     styleUrls: ["./chart-marker.component.less"],
 })
-export class ChartMarkerComponent implements OnDestroy, AfterViewInit, OnChanges {
+export class ChartMarkerComponent
+    implements OnDestroy, AfterViewInit, OnChanges
+{
     @Input() marker: IChartMarker;
     @Input() drawLine: boolean;
     @Input() color: string;
@@ -26,8 +38,7 @@ export class ChartMarkerComponent implements OnDestroy, AfterViewInit, OnChanges
 
     private svg = new BehaviorSubject<string>("");
 
-    constructor(private changeDetector: ChangeDetectorRef) {
-    }
+    constructor(private changeDetector: ChangeDetectorRef) {}
 
     public ngAfterViewInit() {
         this.svg.subscribe((svg: string) => {
@@ -40,7 +51,11 @@ export class ChartMarkerComponent implements OnDestroy, AfterViewInit, OnChanges
             if (changes["color"]) {
                 this.marker.setColor(this.color);
             }
-            if (this.marker && this.marker.getSvg && isFunction(this.marker.getSvg)) {
+            if (
+                this.marker &&
+                this.marker.getSvg &&
+                isFunction(this.marker.getSvg)
+            ) {
                 this.svg.next(this.marker.getSvg());
             }
         }
@@ -62,10 +77,17 @@ export class ChartMarkerComponent implements OnDestroy, AfterViewInit, OnChanges
 
         setTimeout(() => {
             const clientRect = svgContainerElement.getBBox();
-            this.viewBox = `${clientRect.x - SVG_PADDING} ${clientRect.y - SVG_PADDING} ` +
-                `${clientRect.width + 2 * SVG_PADDING} ${clientRect.height + 2 * SVG_PADDING}`;
-            this.width = Math.min(clientRect.width + 2 * SVG_PADDING, this.maxSize) + "px";
-            this.height = Math.min(clientRect.height + 2 * SVG_PADDING, this.maxSize) + "px";
+            this.viewBox =
+                `${clientRect.x - SVG_PADDING} ${clientRect.y - SVG_PADDING} ` +
+                `${clientRect.width + 2 * SVG_PADDING} ${
+                    clientRect.height + 2 * SVG_PADDING
+                }`;
+            this.width =
+                Math.min(clientRect.width + 2 * SVG_PADDING, this.maxSize) +
+                "px";
+            this.height =
+                Math.min(clientRect.height + 2 * SVG_PADDING, this.maxSize) +
+                "px";
 
             this.changeDetector.markForCheck();
         });

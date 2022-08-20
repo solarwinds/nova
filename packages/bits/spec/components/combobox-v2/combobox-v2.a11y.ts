@@ -78,5 +78,3 @@ describe("a11y: combobox-v2", () => {
         await assertA11y(browser, ComboboxV2Atom.CSS_CLASS, rulesToDisable);
     }, 100000);
 });
-
-

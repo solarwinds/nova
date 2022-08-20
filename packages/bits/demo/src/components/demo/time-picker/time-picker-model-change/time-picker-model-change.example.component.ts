@@ -6,7 +6,6 @@ import moment, { Moment } from "moment/moment";
     selector: "nui-time-picker-model-change",
     templateUrl: "./time-picker-model-change.example.component.html",
 })
-
 export class TimePickerModelChangeExampleComponent {
     public time: Moment;
     constructor(@Inject(ToastService) private toastService: ToastService) {
@@ -14,6 +13,8 @@ export class TimePickerModelChangeExampleComponent {
     }
     public valueChange(time: any): void {
         this.time = time;
-        this.toastService.info({message: $localize `Selected time is: ` + this.time.toString()});
+        this.toastService.info({
+            message: $localize`Selected time is: ` + this.time.toString(),
+        });
     }
 }

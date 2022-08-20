@@ -19,13 +19,25 @@ describe(`Visual tests: ${name}`, () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("menu/menu-visual-test");
 
-        menuBasic = new MenuAtom(element(by.id("nui-demo-basic-menu-with-icon")));
-        menuBasicDesctructive = new MenuAtom(element(by.id("nui-demo-destructive-menu-with-icon")));
-        menuBasicFooter = new MenuAtom(element(by.id("nui-demo-basic-menu-with-icon-footer")));
-        menuBasicFooterDestructive = new MenuAtom(element(by.id("nui-demo-destructive-menu-with-icon-footer")));
-        menuIconOnlyDestructive = new MenuAtom(element(by.id("nui-demo-menu-variants_run")));
-        menuMultiSelection = new MenuAtom(element(by.id("nui-demo-multi-selection-menu")));
-        
+        menuBasic = new MenuAtom(
+            element(by.id("nui-demo-basic-menu-with-icon"))
+        );
+        menuBasicDesctructive = new MenuAtom(
+            element(by.id("nui-demo-destructive-menu-with-icon"))
+        );
+        menuBasicFooter = new MenuAtom(
+            element(by.id("nui-demo-basic-menu-with-icon-footer"))
+        );
+        menuBasicFooterDestructive = new MenuAtom(
+            element(by.id("nui-demo-destructive-menu-with-icon-footer"))
+        );
+        menuIconOnlyDestructive = new MenuAtom(
+            element(by.id("nui-demo-menu-variants_run"))
+        );
+        menuMultiSelection = new MenuAtom(
+            element(by.id("nui-demo-multi-selection-menu"))
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -38,28 +50,40 @@ describe(`Visual tests: ${name}`, () => {
 
         await menuBasic.mouseUp();
         await menuBasic.getMenuItemByIndex(2).hover();
-        await camera.say.cheese(`Basic menu aligned top-left toggled. Edge detection worked fine`);
+        await camera.say.cheese(
+            `Basic menu aligned top-left toggled. Edge detection worked fine`
+        );
 
         await menuBasic.getMenuItemByIndex(-1).scrollTo();
-        await camera.say.cheese(`Scroll to bottom to capture the destructive item and verify it's last`);
+        await camera.say.cheese(
+            `Scroll to bottom to capture the destructive item and verify it's last`
+        );
 
         await menuBasicDesctructive.toggleMenu();
-        await camera.say.cheese(`Basic destructive menu aligned top-right toggled. Edge detection worked fine`);
+        await camera.say.cheese(
+            `Basic destructive menu aligned top-right toggled. Edge detection worked fine`
+        );
         await menuBasicDesctructive.toggleMenu();
 
         await menuBasicFooter.toggleMenu();
-        await camera.say.cheese(`Basic menu aligned bottom-left toggled. Edge detection worked fine`);
+        await camera.say.cheese(
+            `Basic menu aligned bottom-left toggled. Edge detection worked fine`
+        );
         await menuBasicFooter.toggleMenu();
 
         await menuBasicFooterDestructive.toggleMenu();
-        await camera.say.cheese(`Basic menu bottom-right toggled. Edge detection worked fine`);
+        await camera.say.cheese(
+            `Basic menu bottom-right toggled. Edge detection worked fine`
+        );
         await menuBasicFooterDestructive.toggleMenu();
 
         await menuIconOnlyDestructive.toggleMenu();
         await menuIconOnlyDestructive.getMenuItemByIndex(-1).scrollTo();
         await menuIconOnlyDestructive.getMenuItemByIndex(3).clickItem();
         await menuIconOnlyDestructive.getMenuItemByIndex(5).hover();
-        await camera.say.cheese(`Menu with different types of menu items is toggled (destructive menu)`);
+        await camera.say.cheese(
+            `Menu with different types of menu items is toggled (destructive menu)`
+        );
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme test`);
@@ -71,7 +95,9 @@ describe(`Visual tests: ${name}`, () => {
         await menuMultiSelection.getMenuItemByIndex(3).clickItem();
         await menuMultiSelection.getMenuItemByIndex(4).clickItem();
         await menuMultiSelection.getMenuItemByIndex(5).hover();
-        await camera.say.cheese(`Menu with multiseletion is toggled (two items are selected and one is hovered)`);
+        await camera.say.cheese(
+            `Menu with multiseletion is toggled (two items are selected and one is hovered)`
+        );
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);

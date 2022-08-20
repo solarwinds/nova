@@ -6,7 +6,9 @@ describe("ComponentRegistryService", () => {
     beforeEach(() => TestBed.configureTestingModule({}));
 
     it("should be created", () => {
-        const service: ComponentRegistryService = TestBed.inject(ComponentRegistryService);
+        const service: ComponentRegistryService = TestBed.inject(
+            ComponentRegistryService
+        );
         expect(service).toBeTruthy();
     });
 });

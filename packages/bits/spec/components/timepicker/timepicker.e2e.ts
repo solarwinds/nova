@@ -9,9 +9,18 @@ describe("USERCONTROL timepicker", () => {
     let customFormatTimePicker: TimepickerAtom;
 
     beforeAll(() => {
-        basicTimePicker = Atom.find(TimepickerAtom, "nui-demo-timepicker-basic");
-        disabledTimePicker = Atom.find(TimepickerAtom, "nui-demo-timepicker-disabled");
-        customFormatTimePicker = Atom.find(TimepickerAtom, "nui-demo-timepicker-custom-format");
+        basicTimePicker = Atom.find(
+            TimepickerAtom,
+            "nui-demo-timepicker-basic"
+        );
+        disabledTimePicker = Atom.find(
+            TimepickerAtom,
+            "nui-demo-timepicker-disabled"
+        );
+        customFormatTimePicker = Atom.find(
+            TimepickerAtom,
+            "nui-demo-timepicker-custom-format"
+        );
     });
 
     beforeEach(async () => {
@@ -40,7 +49,10 @@ describe("USERCONTROL timepicker", () => {
         describe("select time in menu >", () => {
             it("should select last item", async () => {
                 await basicTimePicker.toggle();
-                const lastItem = await basicTimePicker.menuPopup.getItems().last().getText();
+                const lastItem = await basicTimePicker.menuPopup
+                    .getItems()
+                    .last()
+                    .getText();
                 await basicTimePicker.menuPopup.clickItemByText(lastItem);
                 const selectedValue = await basicTimePicker.textbox.getValue();
                 expect(selectedValue).toBe(lastItem);
@@ -48,7 +60,10 @@ describe("USERCONTROL timepicker", () => {
 
             it("should select first item", async () => {
                 await basicTimePicker.toggle();
-                const firstItem = await basicTimePicker.menuPopup.getItems().first().getText();
+                const firstItem = await basicTimePicker.menuPopup
+                    .getItems()
+                    .first()
+                    .getText();
                 await basicTimePicker.menuPopup.clickItemByText(firstItem);
                 const selectedValue = await basicTimePicker.textbox.getValue();
                 expect(selectedValue).toBe(firstItem);
@@ -64,12 +79,13 @@ describe("USERCONTROL timepicker", () => {
             it("should highlight correct time in menu when selecting time", async () => {
                 const timeToSelect = TimepickerAtom.createTimeString(7, 0);
                 await basicTimePicker.selectTime(timeToSelect);
-                const highlightedValue = await basicTimePicker.getHighlightedMenuValue();
+                const highlightedValue =
+                    await basicTimePicker.getHighlightedMenuValue();
                 expect(highlightedValue).toBe(timeToSelect);
             });
         });
 
-        describe("select time when typing into textbox >" , () => {
+        describe("select time when typing into textbox >", () => {
             beforeEach(async () => {
                 await basicTimePicker.textbox.clearText();
             });
@@ -77,14 +93,17 @@ describe("USERCONTROL timepicker", () => {
             it("should apply correct time when typing time into textbox", async () => {
                 const timeToType = TimepickerAtom.createTimeString(3, 33);
                 await basicTimePicker.textbox.acceptText(timeToType);
-                expect(await basicTimePicker.textbox.getValue()).toEqual(timeToType);
+                expect(await basicTimePicker.textbox.getValue()).toEqual(
+                    timeToType
+                );
             });
 
             it("should highlight time in menu in correct time range when typing time into textbox", async () => {
                 const timeToType = TimepickerAtom.createTimeString(3, 33);
                 const expectedTime = TimepickerAtom.createTimeString(3, 30);
                 await basicTimePicker.textbox.acceptText(timeToType);
-                const highlightedValue = await basicTimePicker.getHighlightedMenuValue();
+                const highlightedValue =
+                    await basicTimePicker.getHighlightedMenuValue();
                 expect(highlightedValue).toEqual(expectedTime);
             });
 
@@ -95,7 +114,9 @@ describe("USERCONTROL timepicker", () => {
                 const stringToType = "3";
                 const expectedTime = TimepickerAtom.createTimeString(3, 0);
                 await basicTimePicker.textbox.acceptText(stringToType);
-                expect(await basicTimePicker.textbox.getValue()).toEqual(expectedTime);
+                expect(await basicTimePicker.textbox.getValue()).toEqual(
+                    expectedTime
+                );
             });
 
             /**
@@ -105,7 +126,9 @@ describe("USERCONTROL timepicker", () => {
                 const stringToType = "17";
                 const expectedTime = TimepickerAtom.createTimeString(17, 0);
                 await basicTimePicker.textbox.acceptText(stringToType);
-                expect(await basicTimePicker.textbox.getValue()).toEqual(expectedTime);
+                expect(await basicTimePicker.textbox.getValue()).toEqual(
+                    expectedTime
+                );
             });
 
             /**
@@ -115,7 +138,9 @@ describe("USERCONTROL timepicker", () => {
                 const stringToType = "5PM";
                 const expectedTime = TimepickerAtom.createTimeString(17, 0);
                 await basicTimePicker.textbox.acceptText(stringToType);
-                expect(await basicTimePicker.textbox.getValue()).toEqual(expectedTime);
+                expect(await basicTimePicker.textbox.getValue()).toEqual(
+                    expectedTime
+                );
             });
 
             /**
@@ -125,7 +150,9 @@ describe("USERCONTROL timepicker", () => {
                 const stringToType = "5AM";
                 const expectedTime = TimepickerAtom.createTimeString(5, 0);
                 await basicTimePicker.textbox.acceptText(stringToType);
-                expect(await basicTimePicker.textbox.getValue()).toEqual(expectedTime);
+                expect(await basicTimePicker.textbox.getValue()).toEqual(
+                    expectedTime
+                );
             });
         });
     });
@@ -137,30 +164,44 @@ describe("USERCONTROL timepicker", () => {
 
         it("should not display menu after timepicker toggle", async () => {
             await disabledTimePicker.toggle();
-            const firstCheckOfMenu = await disabledTimePicker.overlay.isOpened();
+            const firstCheckOfMenu =
+                await disabledTimePicker.overlay.isOpened();
             expect(firstCheckOfMenu).toBeFalsy();
         });
     });
 
     describe(" custom date format >", () => {
         it("time picker should have 'h:mm:ss' format on init", async () => {
-            const timepickerValue = await customFormatTimePicker.textbox.getValue();
-            expect(TimepickerAtom.isCorrectTimeFormat(timepickerValue, "h:mm:ss")).toBeTruthy();
+            const timepickerValue =
+                await customFormatTimePicker.textbox.getValue();
+            expect(
+                TimepickerAtom.isCorrectTimeFormat(timepickerValue, "h:mm:ss")
+            ).toBeTruthy();
         });
 
         it("time picker should have 'h:mm:ss' format after selecting item in menu", async () => {
-            const timepickerValue = await customFormatTimePicker.textbox.getValue();
-            const timeToSelect = TimepickerAtom.createTimeString(7, 0, "h:mm:ss");
+            const timepickerValue =
+                await customFormatTimePicker.textbox.getValue();
+            const timeToSelect = TimepickerAtom.createTimeString(
+                7,
+                0,
+                "h:mm:ss"
+            );
             await customFormatTimePicker.selectTime(timeToSelect);
-            expect(TimepickerAtom.isCorrectTimeFormat(timepickerValue, "h:mm:ss")).toBeTruthy();
+            expect(
+                TimepickerAtom.isCorrectTimeFormat(timepickerValue, "h:mm:ss")
+            ).toBeTruthy();
         });
 
         it("time picker should have 'h:mm:ss' format after typing in textbox", async () => {
-            const timepickerValue = await customFormatTimePicker.textbox.getValue();
+            const timepickerValue =
+                await customFormatTimePicker.textbox.getValue();
             const timeToType = TimepickerAtom.createTimeString(7, 0, "h:mm:ss");
             await customFormatTimePicker.textbox.clearText();
             await customFormatTimePicker.textbox.acceptText(timeToType);
-            expect(TimepickerAtom.isCorrectTimeFormat(timepickerValue, "h:mm:ss")).toBeTruthy();
+            expect(
+                TimepickerAtom.isCorrectTimeFormat(timepickerValue, "h:mm:ss")
+            ).toBeTruthy();
         });
     });
 });

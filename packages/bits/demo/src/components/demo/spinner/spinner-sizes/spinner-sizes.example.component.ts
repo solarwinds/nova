@@ -4,6 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-spinner-sizes-example",
     templateUrl: "./spinner-sizes.example.component.html",
 })
-
-export class SpinnerSizesExampleComponent {
-}
+export class SpinnerSizesExampleComponent {}

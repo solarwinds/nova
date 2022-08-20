@@ -15,7 +15,10 @@ export class ToolbarKeyboardService {
     public onKeyDown(event: KeyboardEvent): void {
         const { code } = event;
 
-        if (code === KEYBOARD_CODE.ARROW_LEFT || code === KEYBOARD_CODE.ARROW_RIGHT) {
+        if (
+            code === KEYBOARD_CODE.ARROW_LEFT ||
+            code === KEYBOARD_CODE.ARROW_RIGHT
+        ) {
             event.preventDefault();
             this.navigateByArrow(code);
         }
@@ -36,7 +39,9 @@ export class ToolbarKeyboardService {
         }
 
         if (code === KEYBOARD_CODE.ARROW_RIGHT && activeIndex !== -1) {
-            activeEl === last ? this.focusFirst() : this.focusRight(activeIndex);
+            activeEl === last
+                ? this.focusFirst()
+                : this.focusRight(activeIndex);
         }
     }
 

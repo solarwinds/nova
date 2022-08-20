@@ -1,21 +1,30 @@
 <ng-container [formGroup]="form">
-    <nui-widget-editor-accordion [state]="form | nuiWidgetEditorAccordionFormState | async">
-        <div accordionHeader
-             class="d-flex align-items-center px-4 py-2">
-            <nui-icon class="align-self-start pt-2"
-                      [icon]="form | nuiFormHeaderIconPipe:'widget_list' | async"></nui-icon>
+    <nui-widget-editor-accordion
+        [state]="form | nuiWidgetEditorAccordionFormState | async"
+    >
+        <div accordionHeader class="d-flex align-items-center px-4 py-2">
+            <nui-icon
+                class="align-self-start pt-2"
+                [icon]="form | nuiFormHeaderIconPipe: 'widget_list' | async"
+            ></nui-icon>
             <div class="d-flex flex-column ml-4 w-100 overflow-hidden pt-1">
                 <span class="nui-text-label" i18n>Description</span>
-                <div class="nui-text-secondary nui-text-ellipsis" [title]="form.controls['label'].value">
+                <div
+                    class="nui-text-secondary nui-text-ellipsis"
+                    [title]="form.controls['label'].value"
+                >
                     {{ form.controls["label"].value }}
                 </div>
             </div>
         </div>
         <div class="description-configuration__accordion-content">
             <div class="mb-4">
-                <nui-form-field caption="Label" i18n-caption
-                                class="mb-3"
-                                [control]="form.controls['label']">
+                <nui-form-field
+                    caption="Label"
+                    i18n-caption
+                    class="mb-3"
+                    [control]="form.controls['label']"
+                >
                     <nui-textbox formControlName="label"></nui-textbox>
                     <nui-validation-message for="required" i18n>
                         This field is required
@@ -24,34 +33,47 @@
             </div>
 
             <nui-form-field [control]="form.controls['isActive']">
-                <nui-checkbox formControlName="isActive" i18n>Show this column</nui-checkbox>
+                <nui-checkbox formControlName="isActive" i18n
+                    >Show this column</nui-checkbox
+                >
             </nui-form-field>
 
             <ng-container *ngIf="form.get('isActive')?.value">
                 <ng-container *ngIf="!isWidthMessageDisplayedForThisColumn()">
                     <div class="mt-4">
-                        <nui-form-field caption="Column width (px)" i18n-caption
-                                        class="mb-3"
-                                        [control]="form.controls['width']">
+                        <nui-form-field
+                            caption="Column width (px)"
+                            i18n-caption
+                            class="mb-3"
+                            [control]="form.controls['width']"
+                        >
                             <!-- TODO: Remove this valueChange stub after NUI-3442 is finished-->
-                            <nui-textbox-number class="description-configuration__accordion-content__width-input"
-                                                (valueChange)="stub()"
-                                                placeholder="Auto width"
-                                                i18n-placeholder
-                                                formControlName="width"></nui-textbox-number>
-                            <nui-validation-message [show]="form.controls['width'].invalid" for="min" i18n>
+                            <nui-textbox-number
+                                class="description-configuration__accordion-content__width-input"
+                                (valueChange)="stub()"
+                                placeholder="Auto width"
+                                i18n-placeholder
+                                formControlName="width"
+                            ></nui-textbox-number>
+                            <nui-validation-message
+                                [show]="form.controls['width'].invalid"
+                                for="min"
+                                i18n
+                            >
                                 Minimum width of the column is 62px
                             </nui-validation-message>
                         </nui-form-field>
                     </div>
                 </ng-container>
-                <div *ngIf="isWidthMessageDisplayedForThisColumn()" class="mt-4">
+                <div
+                    *ngIf="isWidthMessageDisplayedForThisColumn()"
+                    class="mt-4"
+                >
                     <nui-message type="info" [allowDismiss]="false" i18n>
                         <b>All columns cannot have fixed width.</b>
                     </nui-message>
                 </div>
             </ng-container>
         </div>
-
     </nui-widget-editor-accordion>
 </ng-container>

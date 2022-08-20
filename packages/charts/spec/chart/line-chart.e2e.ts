@@ -11,24 +11,42 @@ import { LineChartTestPage } from "./line-chart-test.po";
 describe("Line chart", () => {
     const page = new LineChartTestPage();
     const xTicks = [0, 100, 200, 300, 400]; // for 5 datapoints and grid width of 400px
-    const data = [[60, 40, 70, 45, 90], [30, 95, 15, 60, 35]];
-    const colors = ["red", "orange", "yellow", "green", "blue", "purple", "black", "white"];
+    const data = [
+        [60, 40, 70, 45, 90],
+        [30, 95, 15, 60, 35],
+    ];
+    const colors = [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "purple",
+        "black",
+        "white",
+    ];
 
-    const getYCoordinate = (value: number): number => 105 - value// 105 = 100px of height + 5px of padding. Zero is at the top for y-axis.;
+    const getYCoordinate = (value: number): number => 105 - value; // 105 = 100px of height + 5px of padding. Zero is at the top for y-axis.;
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/line/test");
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         await page.changeData(data);
     });
 
     describe("by default", () => {
         it("should render 2 lines in basic line chart", async () => {
-            await expect(await page.chart.getNumberOfVisibleDataSeries()).toEqual(2);
+            await expect(
+                await page.chart.getNumberOfVisibleDataSeries()
+            ).toEqual(2);
         });
 
         it("should have markers in basic line chart", async () => {
-            await expect(await page.chart.getNumberOfSeriesWithMarkers()).toEqual(2);
+            await expect(
+                await page.chart.getNumberOfSeriesWithMarkers()
+            ).toEqual(2);
         });
     });
 
@@ -36,11 +54,14 @@ describe("Line chart", () => {
         let firstLine: LineSeriesAtom | undefined;
         let secondLine: LineSeriesAtom | undefined;
         let firstLinePoints: ILocation[] | undefined;
-        let secondLinePoints: ILocation[]  | undefined;
+        let secondLinePoints: ILocation[] | undefined;
 
         beforeAll(async () => {
             firstLine = await page.chart.getDataSeriesById(LineSeriesAtom, "1");
-            secondLine = await page.chart.getDataSeriesById(LineSeriesAtom, "2");
+            secondLine = await page.chart.getDataSeriesById(
+                LineSeriesAtom,
+                "2"
+            );
             firstLinePoints = await firstLine?.getPoints();
             secondLinePoints = await secondLine?.getPoints();
         });
@@ -91,11 +112,17 @@ describe("Line chart", () => {
             const index = 1;
 
             beforeAll(async () => {
-                await InteractiveBooster.hover(page.chart, { x: xTicks[index], y: getYCoordinate(50) });
+                await InteractiveBooster.hover(page.chart, {
+                    x: xTicks[index],
+                    y: getYCoordinate(50),
+                });
             });
 
             afterAll(async () => {
-                await browser.actions().mouseMove(page.chart.getElement(), { x: 0, y: 0 }).perform();
+                await browser
+                    .actions()
+                    .mouseMove(page.chart.getElement(), { x: 0, y: 0 })
+                    .perform();
             });
 
             it("should be moved to correct positions", async () => {
@@ -104,15 +131,22 @@ describe("Line chart", () => {
 
                 await expect(position1?.x).toEqual(xTicks[index]);
                 await expect(position2?.x).toEqual(xTicks[index]);
-                await expect(position1?.y).toEqual(getYCoordinate(data[0][index]));
-                await expect(position2?.y).toEqual(getYCoordinate(data[1][index]));
+                await expect(position1?.y).toEqual(
+                    getYCoordinate(data[0][index])
+                );
+                await expect(position2?.y).toEqual(
+                    getYCoordinate(data[1][index])
+                );
             });
         });
     });
 
     describe("zoom", () => {
         it("should be disabled by default", async () => {
-            const firstLine = await page.chart.getDataSeriesById(LineSeriesAtom, "1");
+            const firstLine = await page.chart.getDataSeriesById(
+                LineSeriesAtom,
+                "1"
+            );
             const pointsBefore = await firstLine?.getPoints();
             await ZoomBooster.zoom(
                 page.chart,
@@ -122,5 +156,4 @@ describe("Line chart", () => {
             await expect(await firstLine?.getPoints()).toEqual(pointsBefore);
         });
     });
-
 });

@@ -47,10 +47,13 @@ describe("Services > ", () => {
         });
 
         describe("onKeyDown", () => {
-            const rightButtonPressEvent = { ...keyboardEventMock, ...{ code: KEYBOARD_CODE.ARROW_RIGHT } };
+            const rightButtonPressEvent = {
+                ...keyboardEventMock,
+                ...{ code: KEYBOARD_CODE.ARROW_RIGHT },
+            };
 
             it("should call preventDefault", () => {
-                const spy = spyOn(keyboardEventMock,"preventDefault");
+                const spy = spyOn(keyboardEventMock, "preventDefault");
 
                 service.onKeyDown(keyboardEventMock);
                 expect(spy).toHaveBeenCalled();
@@ -101,5 +104,4 @@ describe("Services > ", () => {
             });
         });
     });
-
 });

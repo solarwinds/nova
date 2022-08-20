@@ -15,7 +15,7 @@ class MockFormGroupDirective {
     public form: FormGroup = {
         valueChanges: new Subject(),
         value: null,
-        addControl(name: string, control: AbstractControl): void { },
+        addControl(name: string, control: AbstractControl): void {},
     } as unknown as FormGroup;
 }
 
@@ -39,8 +39,7 @@ describe("FormStackComponent", () => {
                     useClass: MockFormGroupDirective,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -66,8 +65,14 @@ describe("FormStackComponent", () => {
             const testComponentId = "testComponentId";
             const testPayload = "test payload";
             spyOn(component, "addFormGroup" as never);
-            component.onEvent(testComponentId, { id: "formReady", payload: testPayload });
-            expect(component.addFormGroup).toHaveBeenCalledWith( testComponentId, testPayload as never);
+            component.onEvent(testComponentId, {
+                id: "formReady",
+                payload: testPayload,
+            });
+            expect(component.addFormGroup).toHaveBeenCalledWith(
+                testComponentId,
+                testPayload as never
+            );
         });
     });
 
@@ -77,8 +82,14 @@ describe("FormStackComponent", () => {
             const testFormGroup = { test: {} };
             component.ngOnInit();
             spyOn(component.form, "addControl" as never);
-            component.addFormGroup(testComponentId, testFormGroup as unknown as FormGroup);
-            expect(component.form.addControl).toHaveBeenCalledWith(testComponentId, testFormGroup as never);
+            component.addFormGroup(
+                testComponentId,
+                testFormGroup as unknown as FormGroup
+            );
+            expect(component.form.addControl).toHaveBeenCalledWith(
+                testComponentId,
+                testFormGroup as never
+            );
         });
     });
 });

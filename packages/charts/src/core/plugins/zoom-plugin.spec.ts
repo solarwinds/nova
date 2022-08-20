@@ -1,4 +1,8 @@
-import { INTERACTION_COORDINATES_EVENT, INTERACTION_VALUES_ACTIVE_EVENT, SET_DOMAIN_EVENT } from "../../constants";
+import {
+    INTERACTION_COORDINATES_EVENT,
+    INTERACTION_VALUES_ACTIVE_EVENT,
+    SET_DOMAIN_EVENT,
+} from "../../constants";
 import { LineAccessors } from "../../renderers/line/line-accessors";
 import { LineRenderer } from "../../renderers/line/line-renderer";
 import { Chart } from "../chart";
@@ -83,10 +87,16 @@ describe("ZoomPlugin >", () => {
         describe("INTERACTION_COORDINATES_EVENT observer", () => {
             it("should short-circuit if the event is broadcast and 'enableExternalEvents' is 'false'", () => {
                 plugin.config.enableExternalEvents = false;
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: 5, y: 5 } },
-                    broadcast: true,
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: 5, y: 5 },
+                        },
+                        broadcast: true,
+                    });
 
                 expect((<any>plugin).brushStartX).toBeUndefined();
             });
@@ -94,10 +104,16 @@ describe("ZoomPlugin >", () => {
             it("should not short-circuit if the event is not broadcast and 'enableExternalEvents' is 'false'", () => {
                 const expectedBrushStart = 5;
                 plugin.config.enableExternalEvents = false;
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 5 } },
-                    broadcast: false,
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 5 },
+                        },
+                        broadcast: false,
+                    });
 
                 expect((<any>plugin).brushStartX).toEqual(expectedBrushStart);
             });
@@ -105,10 +121,16 @@ describe("ZoomPlugin >", () => {
             it("should not short-circuit if the event is not broadcast and 'enableExternalEvents' is 'true'", () => {
                 const expectedBrushStart = 5;
                 plugin.config.enableExternalEvents = true;
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 5 } },
-                    broadcast: false,
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 5 },
+                        },
+                        broadcast: false,
+                    });
 
                 expect((<any>plugin).brushStartX).toEqual(expectedBrushStart);
             });
@@ -116,45 +138,79 @@ describe("ZoomPlugin >", () => {
             it("should not short-circuit if the event is broadcast and 'enableExternalEvents' is 'true'", () => {
                 const expectedBrushStart = 5;
                 plugin.config.enableExternalEvents = true;
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 5 } },
-                    broadcast: true,
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 5 },
+                        },
+                        broadcast: true,
+                    });
 
                 expect((<any>plugin).brushStartX).toEqual(expectedBrushStart);
             });
         });
 
-
         describe("mousedown", () => {
             it("should set the brush start value", () => {
                 const expectedBrushStart = 5;
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 5 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 5 },
+                        },
+                    });
 
                 expect((<any>plugin).brushStartX).toEqual(expectedBrushStart);
             });
 
             it("should not set the brush start value if it's already set", () => {
                 const expectedBrushStart = 5;
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 5 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 5 },
+                        },
+                    });
 
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart + 1, y: 5 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart + 1, y: 5 },
+                        },
+                    });
 
                 expect((<any>plugin).brushStartX).toEqual(expectedBrushStart);
             });
 
             it("should emit the INTERACTION_VALUES_ACTIVE_EVENT", () => {
                 const expectedBrushStart = 5;
-                const spy = spyOn(plugin.chart.getEventBus().getStream(INTERACTION_VALUES_ACTIVE_EVENT), "next");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 5 } },
-                });
+                const spy = spyOn(
+                    plugin.chart
+                        .getEventBus()
+                        .getStream(INTERACTION_VALUES_ACTIVE_EVENT),
+                    "next"
+                );
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 5 },
+                        },
+                    });
 
                 expect(spy).toHaveBeenCalledWith({ data: false });
             });
@@ -164,23 +220,44 @@ describe("ZoomPlugin >", () => {
             it("should move the brush", () => {
                 const expectedBrushStart = 5;
                 const expectedBrushMovement = 10;
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 5 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 5 },
+                        },
+                    });
 
                 const spy = spyOn((<any>plugin).brush, "move");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: expectedBrushMovement, y: 5 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: expectedBrushMovement, y: 5 },
+                        },
+                    });
 
-                expect(spy).toHaveBeenCalledWith((<any>plugin).brushElement, [expectedBrushStart, expectedBrushMovement]);
+                expect(spy).toHaveBeenCalledWith((<any>plugin).brushElement, [
+                    expectedBrushStart,
+                    expectedBrushMovement,
+                ]);
             });
 
             it("should not move the brush if the start value is unset", () => {
                 const spy = spyOn((<any>plugin).brush, "move");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: 10, y: 5 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: 10, y: 5 },
+                        },
+                    });
 
                 expect(spy).not.toHaveBeenCalled();
             });
@@ -188,72 +265,161 @@ describe("ZoomPlugin >", () => {
             it("should invert the selection if the mouse moves to the left instead of to the right", () => {
                 const expectedBrushStart = 5;
                 const expectedBrushMovement = 2;
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 5 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 5 },
+                        },
+                    });
 
                 const spy = spyOn((<any>plugin).brush, "move");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: expectedBrushMovement, y: 5 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: expectedBrushMovement, y: 5 },
+                        },
+                    });
 
-                expect(spy).toHaveBeenCalledWith((<any>plugin).brushElement, [expectedBrushMovement, expectedBrushStart]);
+                expect(spy).toHaveBeenCalledWith((<any>plugin).brushElement, [
+                    expectedBrushMovement,
+                    expectedBrushStart,
+                ]);
             });
         });
 
         describe("mouseup", () => {
             it("should set a new domain on the chart", () => {
                 const expectedBrushStart = 2;
-                const expectedBrushMovement = gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
-                const expectedDomain = [xScale.invert(expectedBrushStart), xScale.invert(expectedBrushMovement + Grid.RENDER_AREA_WIDTH_CORRECTION)];
+                const expectedBrushMovement =
+                    gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
+                const expectedDomain = [
+                    xScale.invert(expectedBrushStart),
+                    xScale.invert(
+                        expectedBrushMovement +
+                            Grid.RENDER_AREA_WIDTH_CORRECTION
+                    ),
+                ];
 
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 2 } },
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 2 },
+                        },
+                    });
+
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: expectedBrushMovement, y: 2 },
+                        },
+                    });
+
+                const spy = spyOn(
+                    plugin.chart.getEventBus().getStream(SET_DOMAIN_EVENT),
+                    "next"
+                );
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseUp,
+                            coordinates: { x: expectedBrushMovement, y: 2 },
+                        },
+                    });
+
+                expect(spy).toHaveBeenCalledWith({
+                    data: { [xScaleId]: expectedDomain },
                 });
-
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: expectedBrushMovement, y: 2 } },
-                });
-
-                const spy = spyOn(plugin.chart.getEventBus().getStream(SET_DOMAIN_EVENT), "next");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseUp, coordinates: { x: expectedBrushMovement, y: 2 } },
-                });
-
-                expect(spy).toHaveBeenCalledWith({ data: { [xScaleId]: expectedDomain } });
             });
 
             it("should ignore a disabled render area width correction when setting a new domain on the chart", () => {
                 const expectedBrushStart = 2;
-                const expectedBrushMovement = gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
-                plugin.chart.getGrid().config().disableRenderAreaWidthCorrection = true;
-                const expectedDomain = [xScale.invert(expectedBrushStart), xScale.invert(expectedBrushMovement)];
+                const expectedBrushMovement =
+                    gridWidth - Grid.RENDER_AREA_WIDTH_CORRECTION;
+                plugin.chart
+                    .getGrid()
+                    .config().disableRenderAreaWidthCorrection = true;
+                const expectedDomain = [
+                    xScale.invert(expectedBrushStart),
+                    xScale.invert(expectedBrushMovement),
+                ];
 
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 2 } },
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 2 },
+                        },
+                    });
+
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: expectedBrushMovement, y: 2 },
+                        },
+                    });
+
+                const spy = spyOn(
+                    plugin.chart.getEventBus().getStream(SET_DOMAIN_EVENT),
+                    "next"
+                );
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseUp,
+                            coordinates: { x: expectedBrushMovement, y: 2 },
+                        },
+                    });
+
+                expect(spy).toHaveBeenCalledWith({
+                    data: { [xScaleId]: expectedDomain },
                 });
-
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: expectedBrushMovement, y: 2 } },
-                });
-
-                const spy = spyOn(plugin.chart.getEventBus().getStream(SET_DOMAIN_EVENT), "next");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseUp, coordinates: { x: expectedBrushMovement, y: 2 } },
-                });
-
-                expect(spy).toHaveBeenCalledWith({ data: { [xScaleId]: expectedDomain } });
             });
 
             it("should not set a new domain on the chart if the start value is unset", () => {
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: 4, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: 4, y: 2 },
+                        },
+                    });
 
-                const spy = spyOn(plugin.chart.getEventBus().getStream(SET_DOMAIN_EVENT), "next");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseUp, coordinates: { x: 4, y: 2 } },
-                });
+                const spy = spyOn(
+                    plugin.chart.getEventBus().getStream(SET_DOMAIN_EVENT),
+                    "next"
+                );
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseUp,
+                            coordinates: { x: 4, y: 2 },
+                        },
+                    });
 
                 expect(spy).not.toHaveBeenCalled();
             });
@@ -262,71 +428,154 @@ describe("ZoomPlugin >", () => {
                 const expectedBrushStart = 2;
                 const expectedBrushMovement = 2;
 
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: expectedBrushStart, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: expectedBrushStart, y: 2 },
+                        },
+                    });
 
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: expectedBrushMovement, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: expectedBrushMovement, y: 2 },
+                        },
+                    });
 
-                const spy = spyOn(plugin.chart.getEventBus().getStream(SET_DOMAIN_EVENT), "next");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseUp, coordinates: { x: expectedBrushMovement, y: 2 } },
-                });
+                const spy = spyOn(
+                    plugin.chart.getEventBus().getStream(SET_DOMAIN_EVENT),
+                    "next"
+                );
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseUp,
+                            coordinates: { x: expectedBrushMovement, y: 2 },
+                        },
+                    });
 
                 expect(spy).not.toHaveBeenCalled();
             });
 
             it("should emit the INTERACTION_VALUES_ACTIVE_EVENT", () => {
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: 2, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: 2, y: 2 },
+                        },
+                    });
 
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: 4, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: 4, y: 2 },
+                        },
+                    });
 
-                const spy = spyOn(plugin.chart.getEventBus().getStream(INTERACTION_VALUES_ACTIVE_EVENT), "next");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseUp, coordinates: { x: 4, y: 2 } },
-                });
+                const spy = spyOn(
+                    plugin.chart
+                        .getEventBus()
+                        .getStream(INTERACTION_VALUES_ACTIVE_EVENT),
+                    "next"
+                );
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseUp,
+                            coordinates: { x: 4, y: 2 },
+                        },
+                    });
 
                 expect(spy).toHaveBeenCalledWith({ data: true });
             });
 
             it("should reset the brush start value", () => {
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: 2, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: 2, y: 2 },
+                        },
+                    });
                 expect((<any>plugin).brushStartX).toEqual(2);
 
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: 4, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: 4, y: 2 },
+                        },
+                    });
 
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseUp, coordinates: { x: 4, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseUp,
+                            coordinates: { x: 4, y: 2 },
+                        },
+                    });
 
                 expect((<any>plugin).brushStartX).toBeUndefined();
             });
 
             it("should remove the brush visualization", () => {
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseDown, coordinates: { x: 2, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseDown,
+                            coordinates: { x: 2, y: 2 },
+                        },
+                    });
 
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseMove, coordinates: { x: 4, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseMove,
+                            coordinates: { x: 4, y: 2 },
+                        },
+                    });
 
                 const spy = spyOn((<any>plugin).brush, "move");
-                plugin.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: InteractionType.MouseUp, coordinates: { x: 4, y: 2 } },
-                });
+                plugin.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: InteractionType.MouseUp,
+                            coordinates: { x: 4, y: 2 },
+                        },
+                    });
 
-                expect(spy).toHaveBeenCalledWith((<any>plugin).brushElement, null);
+                expect(spy).toHaveBeenCalledWith(
+                    (<any>plugin).brushElement,
+                    null
+                );
             });
         });
     });
@@ -337,23 +586,36 @@ describe("ZoomPlugin >", () => {
             dimension.width(25);
             const spy = spyOn((<any>plugin).brush, "extent").and.callThrough();
             plugin.updateDimensions();
-            expect(spy).toHaveBeenCalledWith([[0, 0], [dimension.width(), dimension.height()]]);
+            expect(spy).toHaveBeenCalledWith([
+                [0, 0],
+                [dimension.width(), dimension.height()],
+            ]);
         });
 
         it("should trigger the rendering of the brush area", () => {
-            const spy = spyOn((<any>plugin), "brush");
+            const spy = spyOn(<any>plugin, "brush");
             plugin.updateDimensions();
-            expect(spy).toHaveBeenCalledWith((<any>plugin).zoomBrushLayer.select(".brush"));
+            expect(spy).toHaveBeenCalledWith(
+                (<any>plugin).zoomBrushLayer.select(".brush")
+            );
         });
 
         it("should disable pointer-events on the brush overlay", () => {
             plugin.updateDimensions();
-            expect((<any>plugin).zoomBrushLayer.select(".overlay").node().attributeStyleMap.get("pointer-events").toString()).toEqual("none");
+            expect(
+                (<any>plugin).zoomBrushLayer
+                    .select(".overlay")
+                    .node()
+                    .attributeStyleMap.get("pointer-events")
+                    .toString()
+            ).toEqual("none");
         });
 
         it("should remove the stroke value on the selection node", () => {
             plugin.updateDimensions();
-            expect((<any>plugin).zoomBrushLayer.select(".selection").attr("stroke")).toBeNull();
+            expect(
+                (<any>plugin).zoomBrushLayer.select(".selection").attr("stroke")
+            ).toBeNull();
         });
     });
 });

@@ -1,44 +1,46 @@
-<div class="nui-textbox"
-     [class.nui-textbox--disabled]="disabled"
-     [class.has-error]="isInErrorState">
+<div
+    class="nui-textbox"
+    [class.nui-textbox--disabled]="disabled"
+    [class.has-error]="isInErrorState"
+>
+    <div class="has-feedback" [ngStyle]="{ width: customBoxWidth }">
+        <input
+            *ngIf="!rows || rows <= 1"
+            class="form-control input-control nui-textbox__input"
+            value="{{ value }}"
+            [autocomplete]="autocomplete"
+            [disabled]="disabled"
+            [attr.name]="name"
+            [type]="type"
+            (blur)="onBlurEventEmit()"
+            (input)="onChangeEvent($event)"
+            [placeholder]="placeholder"
+            [readonly]="readonly"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-readonly]="readonly"
+            [attr.aria-invalid]="isInErrorState"
+            #textboxInput
+        />
 
-    <div class="has-feedback"
-         [ngStyle]="{'width': customBoxWidth}">
-
-        <input *ngIf="!rows || rows <= 1"
-               class="form-control input-control nui-textbox__input"
-               value="{{value}}"
-               [autocomplete]="autocomplete"
-               [disabled]="disabled"
-               [attr.name]="name"
-               [type]="type"
-               (blur)="onBlurEventEmit()"
-               (input)="onChangeEvent($event)"
-               [placeholder]="placeholder"
-               [readonly]="readonly"
-               [attr.aria-label]="ariaLabel"
-               [attr.aria-readonly]="readonly"
-               [attr.aria-invalid]="isInErrorState"
-               #textboxInput/>
-
-        <textarea *ngIf="rows > 1"
-                  class="form-control input-control nui-textbox__input"
-                  value="{{value}}"
-                  [rows]="rows"
-                  [disabled]="disabled"
-                  [attr.name]="name"
-                  (blur)="onBlurEventEmit()"
-                  (input)="onChangeEvent($event)"
-                  [placeholder]="placeholder"
-                  [readonly]="readonly"
-                  [attr.aria-label]="ariaLabel"
-                  [attr.aria-readonly]="readonly"
-                  [attr.aria-invalid]="isInErrorState"
-                  #textboxInput></textarea>
+        <textarea
+            *ngIf="rows > 1"
+            class="form-control input-control nui-textbox__input"
+            value="{{ value }}"
+            [rows]="rows"
+            [disabled]="disabled"
+            [attr.name]="name"
+            (blur)="onBlurEventEmit()"
+            (input)="onChangeEvent($event)"
+            [placeholder]="placeholder"
+            [readonly]="readonly"
+            [attr.aria-label]="ariaLabel"
+            [attr.aria-readonly]="readonly"
+            [attr.aria-invalid]="isInErrorState"
+            #textboxInput
+        ></textarea>
 
         <div class="form-control-feedback nui-textbox__busy">
             <nui-spinner [show]="isBusy"></nui-spinner>
         </div>
-
     </div>
 </div>

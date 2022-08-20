@@ -1,5 +1,4 @@
 {
-    "plugins": ["prettier-plugin-sort-json"],
     "overrides": [
         {
             "files": "*",
@@ -10,6 +9,7 @@
                 "htmlWhitespaceSensitivity": "strict",
                 "quoteProps": "consistent",
                 "semi": true,
+                "singleAttributePerLine": true,
                 "singleQuote": false,
                 "trailingComma": "es5",
                 "useTabs": false
@@ -22,5 +22,6 @@
                 "parser": "json"
             }
         }
-    ]
+    ],
+    "plugins": ["prettier-plugin-sort-json"]
 }

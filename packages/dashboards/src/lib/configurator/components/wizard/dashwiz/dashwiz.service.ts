@@ -8,6 +8,5 @@ import { IDashwizComponent } from "./model";
 export class DashwizService {
     public component: IDashwizComponent | undefined;
 
-    constructor() { }
-
+    constructor() {}
 }

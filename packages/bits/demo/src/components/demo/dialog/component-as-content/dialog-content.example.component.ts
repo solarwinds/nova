@@ -8,9 +8,10 @@ import { IToastService, NuiActiveDialog, ToastService } from "@nova-ui/bits";
 export class DialogContentExampleComponent {
     @Input() name: string;
 
-    constructor(@Inject(NuiActiveDialog) public activeDialog: any,
-                @Inject(ToastService) private toastService: IToastService) {
-    }
+    constructor(
+        @Inject(NuiActiveDialog) public activeDialog: any,
+        @Inject(ToastService) private toastService: IToastService
+    ) {}
 
     public onButtonClick(title: string) {
         title === "Action" ? this.actionDone() : this.actionCanceled();
@@ -18,10 +19,16 @@ export class DialogContentExampleComponent {
     }
 
     private actionDone(): void {
-        this.toastService.success({message: $localize `Action Done!`, title: $localize `Event`});
+        this.toastService.success({
+            message: $localize`Action Done!`,
+            title: $localize`Event`,
+        });
     }
 
     private actionCanceled(): void {
-        this.toastService.info({message: $localize `Action Cancelled!`, title: $localize `Event`});
+        this.toastService.info({
+            message: $localize`Action Cancelled!`,
+            title: $localize`Event`,
+        });
     }
 }

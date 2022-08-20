@@ -7,7 +7,11 @@ import _reject from "lodash/reject";
 import _unionWith from "lodash/unionWith";
 
 import { LoggerService } from "../../services/log-service";
-import { ISelection, ISelectorState, SelectionModel } from "../../services/public-api";
+import {
+    ISelection,
+    ISelectorState,
+    SelectionModel,
+} from "../../services/public-api";
 import { IMenuGroup } from "../menu/public-api";
 import { RepeatSelectionMode } from "../repeat/types";
 
@@ -24,10 +28,16 @@ export class SelectorService {
     public i18nTitleMap: Record<string, string> = {};
 
     constructor(@Optional() private logger?: LoggerService) {
-        this.i18nTitleMap[SelectionType.All] = $localize`Select all items on this page`;
-        this.i18nTitleMap[SelectionType.AllPages] = $localize`Select all items on all pages`;
+        this.i18nTitleMap[
+            SelectionType.All
+        ] = $localize`Select all items on this page`;
+        this.i18nTitleMap[
+            SelectionType.AllPages
+        ] = $localize`Select all items on all pages`;
         this.i18nTitleMap[SelectionType.None] = $localize`Unselect all items`;
-        this.i18nTitleMap[SelectionType.UnselectAll] = $localize`Unselect all items on this page`;
+        this.i18nTitleMap[
+            SelectionType.UnselectAll
+        ] = $localize`Unselect all items on this page`;
     }
 
     // TODO: think about an ability to provide isEqual function from outside
@@ -44,11 +54,19 @@ export class SelectorService {
      * @param {boolean} virtualScroll Enables virtual scroll selection behavior
      * @returns {ISelection} New selection object
      */
-    public applySelector(currentSelection: ISelection, currentItems: any[], selectorValue: SelectionType,
-                         totalItems: number, trackBy: TrackByFunction<any> = ((i, d) => d), virtualScroll?: boolean): ISelection {
-
+    public applySelector(
+        currentSelection: ISelection,
+        currentItems: any[],
+        selectorValue: SelectionType,
+        totalItems: number,
+        trackBy: TrackByFunction<any> = (i, d) => d,
+        virtualScroll?: boolean
+    ): ISelection {
         if (virtualScroll) {
-            if (selectorValue === SelectionType.AllPages || selectorValue === SelectionType.All) {
+            if (
+                selectorValue === SelectionType.AllPages ||
+                selectorValue === SelectionType.All
+            ) {
                 return new SelectionModel({ isAllPages: true });
             }
             return new SelectionModel();
@@ -58,28 +76,50 @@ export class SelectorService {
             return new SelectionModel({ isAllPages: true });
         }
 
-        const trackedItems = currentItems.map((value, index) => trackBy(index, value));
+        const trackedItems = currentItems.map((value, index) =>
+            trackBy(index, value)
+        );
         if (currentSelection.isAllPages) {
             if (selectorValue === SelectionType.All) {
                 return new SelectionModel({
                     isAllPages: true,
-                    exclude: _differenceWith(currentSelection.exclude, trackedItems, _isEqual),
+                    exclude: _differenceWith(
+                        currentSelection.exclude,
+                        trackedItems,
+                        _isEqual
+                    ),
                 });
             }
 
             if (selectorValue === SelectionType.UnselectAll) {
                 return new SelectionModel({
                     isAllPages: true,
-                    exclude: _unionWith(currentSelection.exclude, trackedItems, _isEqual),
+                    exclude: _unionWith(
+                        currentSelection.exclude,
+                        trackedItems,
+                        _isEqual
+                    ),
                 });
             }
         } else {
             if (selectorValue === SelectionType.All) {
-                return new SelectionModel({ include: _unionWith(currentSelection.include, trackedItems, _isEqual) });
+                return new SelectionModel({
+                    include: _unionWith(
+                        currentSelection.include,
+                        trackedItems,
+                        _isEqual
+                    ),
+                });
             }
 
             if (selectorValue === SelectionType.UnselectAll) {
-                return new SelectionModel({ include: _differenceWith(currentSelection.include, trackedItems, _isEqual) });
+                return new SelectionModel({
+                    include: _differenceWith(
+                        currentSelection.include,
+                        trackedItems,
+                        _isEqual
+                    ),
+                });
             }
         }
 
@@ -119,7 +159,6 @@ export class SelectorService {
         selectedOnAllPages?: number,
         virtualScroll?: boolean
     ): ISelectorState {
-
         // Note: short cutting the flow in case we're preforming the selection in
         // virtual scroll mode where we can't have options for selection, just select all and unselect all
         if (virtualScroll) {
@@ -135,14 +174,18 @@ export class SelectorService {
                 return {
                     // Note: In case master checkbox is in the checked state we should ensure
                     // that we don't have any excluded items to prevent displaying Checked state
-                    checkboxStatus: currentSelection.exclude.length ? CheckboxStatus.Indeterminate : CheckboxStatus.Checked,
+                    checkboxStatus: currentSelection.exclude.length
+                        ? CheckboxStatus.Indeterminate
+                        : CheckboxStatus.Checked,
                     selectorItems: [],
                 };
             } else {
                 return {
                     // Note: In case master checkbox is in the unchecked state we should ensure
                     // that we don't have any included items to prevent displaying Unchecked state
-                    checkboxStatus: currentSelection.include.length ? CheckboxStatus.Indeterminate : CheckboxStatus.Unchecked,
+                    checkboxStatus: currentSelection.include.length
+                        ? CheckboxStatus.Indeterminate
+                        : CheckboxStatus.Unchecked,
                     selectorItems: [],
                 };
             }
@@ -152,41 +195,65 @@ export class SelectorService {
             if (totalOnCurrentPage === totalItems) {
                 return {
                     checkboxStatus: CheckboxStatus.Unchecked,
-                    selectorItems: this.getFlatSelectorItems([SelectionType.All]),
+                    selectorItems: this.getFlatSelectorItems([
+                        SelectionType.All,
+                    ]),
                 };
             }
             if (selectedOnAllPages && selectedOnAllPages > 0) {
                 return {
                     checkboxStatus: CheckboxStatus.Unchecked,
-                    selectorItems: this.getFlatSelectorItems([SelectionType.All, SelectionType.AllPages, SelectionType.None]),
+                    selectorItems: this.getFlatSelectorItems([
+                        SelectionType.All,
+                        SelectionType.AllPages,
+                        SelectionType.None,
+                    ]),
                 };
             }
 
             return {
                 checkboxStatus: CheckboxStatus.Unchecked,
-                selectorItems: this.getFlatSelectorItems([SelectionType.AllPages, SelectionType.All]),
+                selectorItems: this.getFlatSelectorItems([
+                    SelectionType.AllPages,
+                    SelectionType.All,
+                ]),
             };
         }
         // case when we have only one page. Clarified with UX team that when we have one page we need to have SelectionType.All
-        if (selectedOnCurrentPage < totalOnCurrentPage && totalOnCurrentPage === totalItems) {
+        if (
+            selectedOnCurrentPage < totalOnCurrentPage &&
+            totalOnCurrentPage === totalItems
+        ) {
             return {
                 checkboxStatus: CheckboxStatus.Indeterminate,
-                selectorItems: this.getFlatSelectorItems([SelectionType.All, SelectionType.None]),
+                selectorItems: this.getFlatSelectorItems([
+                    SelectionType.All,
+                    SelectionType.None,
+                ]),
             };
         }
 
         if (selectedOnCurrentPage === totalOnCurrentPage) {
             return {
                 checkboxStatus: CheckboxStatus.Checked,
-                selectorItems: (currentSelection.isAllPages && currentSelection.exclude.length === 0)
-                    ? this.getFlatSelectorItems([SelectionType.None])
-                    : this.getFlatSelectorItems([SelectionType.AllPages, SelectionType.None]),
+                selectorItems:
+                    currentSelection.isAllPages &&
+                    currentSelection.exclude.length === 0
+                        ? this.getFlatSelectorItems([SelectionType.None])
+                        : this.getFlatSelectorItems([
+                              SelectionType.AllPages,
+                              SelectionType.None,
+                          ]),
             };
         }
 
         return {
             checkboxStatus: CheckboxStatus.Indeterminate,
-            selectorItems: this.getFlatSelectorItems([SelectionType.All, SelectionType.AllPages, SelectionType.None]),
+            selectorItems: this.getFlatSelectorItems([
+                SelectionType.All,
+                SelectionType.AllPages,
+                SelectionType.None,
+            ]),
         };
     }
 
@@ -199,20 +266,27 @@ export class SelectorService {
      * @param {number} totalItems Deprecated in v9 - Unused - Removal: NUI-5809
      * @returns {ISelection} New selection
      */
-    public selectItems(prevSelection: ISelection,
-                       selectedItems: any[],
-                       items: any[],
-                       selectionMode: RepeatSelectionMode,
-                       totalItems?: number): ISelection {
+    public selectItems(
+        prevSelection: ISelection,
+        selectedItems: any[],
+        items: any[],
+        selectionMode: RepeatSelectionMode,
+        totalItems?: number
+    ): ISelection {
         if (!_isUndefined(totalItems)) {
-            this.logger?.warn("'totalItems' parameter of SelectorService.selectItems is unused and deprecated. As of Nova v9, this \
-                argument may be omitted. Removal: NUI-5896");
+            this.logger?.warn(
+                "'totalItems' parameter of SelectorService.selectItems is unused and deprecated. As of Nova v9, this \
+                argument may be omitted. Removal: NUI-5896"
+            );
         }
 
-        if (selectionMode === RepeatSelectionMode.radio ||
+        if (
+            selectionMode === RepeatSelectionMode.radio ||
             selectionMode === RepeatSelectionMode.single ||
-            selectionMode === RepeatSelectionMode.radioWithNonRequiredSelection ||
-            selectionMode === RepeatSelectionMode.singleWithRequiredSelection) {
+            selectionMode ===
+                RepeatSelectionMode.radioWithNonRequiredSelection ||
+            selectionMode === RepeatSelectionMode.singleWithRequiredSelection
+        ) {
             return new SelectionModel({ include: selectedItems });
         }
 
@@ -221,12 +295,20 @@ export class SelectorService {
             return new SelectionModel();
         }
 
-        const includedItems = this.getIncludedItems(prevSelection, items, selectedItems);
+        const includedItems = this.getIncludedItems(
+            prevSelection,
+            items,
+            selectedItems
+        );
 
         if (prevSelection.isAllPages) {
             return new SelectionModel({
                 isAllPages: prevSelection.isAllPages,
-                exclude: this.getExcludedItems(prevSelection, items, selectedItems),
+                exclude: this.getExcludedItems(
+                    prevSelection,
+                    items,
+                    selectedItems
+                ),
             });
         }
 
@@ -237,20 +319,38 @@ export class SelectorService {
     }
 
     // items are all items in current repeater
-    private getIncludedItems(prevSelection: ISelection, items: any[], selectedItems: any[]): any[] {
+    private getIncludedItems(
+        prevSelection: ISelection,
+        items: any[],
+        selectedItems: any[]
+    ): any[] {
         const unselectedItems = _differenceWith(items, selectedItems, _isEqual);
         const includedItems = _reject(prevSelection.include, (includedItem) =>
-            unselectedItems.some((unselectedItem) => _isEqual(includedItem, unselectedItem)));
+            unselectedItems.some((unselectedItem) =>
+                _isEqual(includedItem, unselectedItem)
+            )
+        );
         return _unionWith(includedItems, selectedItems, _isEqual);
     }
 
-    private getExcludedItems(prevSelection: ISelection, items: any[], selectedItems: any[]): any[] {
+    private getExcludedItems(
+        prevSelection: ISelection,
+        items: any[],
+        selectedItems: any[]
+    ): any[] {
         const excludedItems = _reject(prevSelection.exclude, (excludedItem) =>
-            selectedItems.some((item) => _isEqual(excludedItem, item)));
-        const unselectedItemsOnPage = _differenceWith(items, selectedItems, _isEqual);
+            selectedItems.some((item) => _isEqual(excludedItem, item))
+        );
+        const unselectedItemsOnPage = _differenceWith(
+            items,
+            selectedItems,
+            _isEqual
+        );
 
         return unselectedItemsOnPage.reduce((memo, item) => {
-            const isItemExcluded = excludedItems.some(excludedItem => _isEqual(excludedItem, item));
+            const isItemExcluded = excludedItems.some((excludedItem) =>
+                _isEqual(excludedItem, item)
+            );
             if (!isItemExcluded) {
                 memo.push(item);
             }
@@ -259,9 +359,13 @@ export class SelectorService {
     }
 
     private getFlatSelectorItems(arr: SelectionType[]): IMenuGroup[] {
-        return [{
-            itemsSource: arr.map((element: SelectionType) => ({ value: element, title: this.i18nTitleMap[element] })),
-        }];
+        return [
+            {
+                itemsSource: arr.map((element: SelectionType) => ({
+                    value: element,
+                    title: this.i18nTitleMap[element],
+                })),
+            },
+        ];
     }
 }
-

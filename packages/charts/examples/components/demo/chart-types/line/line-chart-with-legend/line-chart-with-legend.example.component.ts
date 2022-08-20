@@ -1,6 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart, ChartAssist, IChartSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid,
+    Chart,
+    ChartAssist,
+    IChartSeries,
+    ILineAccessors,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    TimeScale,
+    XYGrid,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 
@@ -14,19 +23,24 @@ export class LineChartWithLegendExampleComponent implements OnInit {
 
     public ngOnInit() {
         // providing chartAssist colors and markers to LineAccessors will share them with the line chart
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
         const renderer = new LineRenderer();
         const scales: IXYScales = {
             x: new TimeScale(),
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            scales,
-            renderer,
-            accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                scales,
+                renderer,
+                accessors,
+            })
+        );
 
         // chart assist needs to be used to update data
         this.chartAssist.update(seriesSet);

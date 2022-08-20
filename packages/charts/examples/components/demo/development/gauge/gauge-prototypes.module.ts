@@ -1,7 +1,11 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
-import { NuiCommonModule, NuiFormFieldModule, NuiTextboxModule } from "@nova-ui/bits";
+import {
+    NuiCommonModule,
+    NuiFormFieldModule,
+    NuiTextboxModule,
+} from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
@@ -40,5 +44,4 @@ const routes: Routes = [
         RouterModule.forChild(routes),
     ],
 })
-export class GaugePrototypesModule {
-}
+export class GaugePrototypesModule {}

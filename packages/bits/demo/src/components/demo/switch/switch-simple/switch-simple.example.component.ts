@@ -4,7 +4,6 @@ import { Component, Input } from "@angular/core";
     selector: "nui-switch-simple-example",
     templateUrl: "./switch-simple.example.component.html",
 })
-
 export class SwitchSimpleExampleComponent {
     @Input() isOn = true;
 }

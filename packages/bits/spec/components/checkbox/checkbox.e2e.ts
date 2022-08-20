@@ -15,7 +15,10 @@ describe("USERCONTROL Checkbox", () => {
         atom = Atom.find(CheckboxAtom, "nui-demo-checkbox");
         atomBasic = Atom.find(CheckboxAtom, "nui-demo-checkbox-basic");
         atomDisabled = Atom.find(CheckboxAtom, "nui-demo-checkbox-disabled");
-        atomIndeterminate = Atom.find(CheckboxAtom, "nui-demo-checkbox-indeterminate");
+        atomIndeterminate = Atom.find(
+            CheckboxAtom,
+            "nui-demo-checkbox-indeterminate"
+        );
     });
 
     describe("Value section:", () => {
@@ -52,7 +55,9 @@ describe("USERCONTROL Checkbox", () => {
             expect(await atomBasic.isChecked()).toBeTruthy();
 
             await Helpers.pressKey(Key.TAB, 1);
-            expect(await atomBasic.getLabel().getId()).not.toBe(await (await browser.driver.switchTo().activeElement()).getId());
+            expect(await atomBasic.getLabel().getId()).not.toBe(
+                await (await browser.driver.switchTo().activeElement()).getId()
+            );
         });
     });
 });

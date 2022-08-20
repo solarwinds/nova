@@ -1,6 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiBreadcrumbModule, NuiButtonModule, NuiDocsModule, SrlcStage } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiBreadcrumbModule,
+    NuiButtonModule,
+    NuiDocsModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 
 import {
     BreadcrumbBasicExampleComponent,
@@ -19,8 +25,8 @@ const routes = [
         component: BreadcrumbDocsExampleComponent,
         data: {
             breadcrumb: "Root",
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
             showThemeSwitcher: true,
         },
@@ -66,8 +72,8 @@ const routes = [
         path: "breadcrumb-visual-test",
         component: BreadcrumbVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             breadcrumb: "Root",
         },
@@ -77,8 +83,8 @@ const routes = [
                 component: BreadcrumbFirstSubviewLevelComponent,
                 data: {
                     breadcrumb: "First Level",
-                    "srlc": {
-                        "hideIndicator": true,
+                    srlc: {
+                        hideIndicator: true,
                     },
                 },
                 children: [
@@ -87,8 +93,8 @@ const routes = [
                         component: BreadcrumbSecondSubviewLevelComponent,
                         data: {
                             breadcrumb: "Second Level",
-                            "srlc": {
-                                "hideIndicator": true,
+                            srlc: {
+                                hideIndicator: true,
                             },
                         },
                     },
@@ -118,12 +124,14 @@ const routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class BreadcrumbModule {
-}
+export class BreadcrumbModule {}

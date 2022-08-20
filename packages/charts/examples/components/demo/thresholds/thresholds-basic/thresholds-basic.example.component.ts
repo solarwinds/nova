@@ -1,7 +1,24 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    BandScale, Chart, ChartAssist, ChartPalette, CHART_PALETTE_CS_S, IAccessors, IChartAssistSeries, IChartSeries, ILineAccessors, ISimpleThresholdZone,
-    IXYScales, LineAccessors, LinearScale, LineRenderer, MappedValueProvider, StatusAccessors, ThresholdsService, TimeIntervalScale, XYGrid,
+    BandScale,
+    Chart,
+    ChartAssist,
+    ChartPalette,
+    CHART_PALETTE_CS_S,
+    IAccessors,
+    IChartAssistSeries,
+    IChartSeries,
+    ILineAccessors,
+    ISimpleThresholdZone,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    MappedValueProvider,
+    StatusAccessors,
+    ThresholdsService,
+    TimeIntervalScale,
+    XYGrid,
 } from "@nova-ui/charts";
 import moment, { duration } from "moment/moment";
 
@@ -18,16 +35,20 @@ export class ThresholdsBasicExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());
     public chartAssist = new ChartAssist(this.chart);
 
-    private thresholdsPalette = new ChartPalette(new MappedValueProvider({
-        [Status.Error]: CHART_PALETTE_CS_S[1],
-        [Status.Warning]: CHART_PALETTE_CS_S[2],
-    }));
+    private thresholdsPalette = new ChartPalette(
+        new MappedValueProvider({
+            [Status.Error]: CHART_PALETTE_CS_S[1],
+            [Status.Warning]: CHART_PALETTE_CS_S[2],
+        })
+    );
 
-    constructor(private thresholdsService: ThresholdsService) {
-    }
+    constructor(private thresholdsService: ThresholdsService) {}
 
     public ngOnInit() {
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
         const renderer = new LineRenderer();
         const scales: IXYScales = {
             x: new TimeIntervalScale(duration(5, "minutes")),
@@ -52,12 +73,14 @@ export class ThresholdsBasicExampleComponent implements OnInit {
         // Zone definitions tell the threshold service where threshold zones begin and end
         const zoneDefinitions: ISimpleThresholdZone[] = getZoneDefinitions();
         // Here we define the main data series on the chart which will be visualized as lines
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         const thresholds: IChartAssistSeries<IAccessors>[] = [];
         for (const s of seriesSet) {
@@ -65,7 +88,11 @@ export class ThresholdsBasicExampleComponent implements OnInit {
             // here, but what we do instead is use simplified zones that are defined by a start value and/or an end value. (A missing
             // start or end value indicates an infinite zone.)
             // Those values are then converted into a set of data series in this step.
-            const zones = this.thresholdsService.getThresholdZones(s, zoneDefinitions, this.thresholdsPalette.standardColors);
+            const zones = this.thresholdsService.getThresholdZones(
+                s,
+                zoneDefinitions,
+                this.thresholdsPalette.standardColors
+            );
 
             // This injects threshold data into every data point of the source series. It is important, because later we can
             // access related threshold information from many different places like legend, tooltips or even when calculating
@@ -80,7 +107,12 @@ export class ThresholdsBasicExampleComponent implements OnInit {
             // the elements are defined here. So, in this case, since the threshold lines are defined after the
             // backgrounds in this array, the threshold lines will be rendered in front of the backgrounds on the chart.
             const seriesThresholds = [
-                this.thresholdsService.getBackgrounds(s, zones, bgScales, this.thresholdsPalette.backgroundColors),
+                this.thresholdsService.getBackgrounds(
+                    s,
+                    zones,
+                    bgScales,
+                    this.thresholdsPalette.backgroundColors
+                ),
                 ...this.thresholdsService.getThresholdLines(zones),
                 ...this.thresholdsService.getSideIndicators(zones, scales),
             ];
@@ -109,20 +141,22 @@ function getZoneDefinitions() {
 
 function getData() {
     const format = "YYYY-MM-DDTHH:mm:ssZ";
-    return [{
-        id: "series-1",
-        name: "Series 1",
-        data: [
-            { x: moment("2016-12-25T15:05:00Z", format).toDate(), y: 30 },
-            { x: moment("2016-12-25T15:10:00Z", format).toDate(), y: 95 },
-            { x: moment("2016-12-25T15:15:00Z", format).toDate(), y: 15 },
-            { x: moment("2016-12-25T15:20:00Z", format).toDate(), y: 60 },
-            { x: moment("2016-12-25T15:25:00Z", format).toDate(), y: 35 },
-            { x: moment("2016-12-25T15:30:00Z", format).toDate(), y: 5 },
-            { x: moment("2016-12-25T15:35:00Z", format).toDate(), y: 60 },
-            { x: moment("2016-12-25T15:40:00Z", format).toDate(), y: 84 },
-            { x: moment("2016-12-25T15:55:00Z", format).toDate(), y: 86 },
-            { x: moment("2016-12-25T16:00:00Z", format).toDate(), y: 35 },
-        ],
-    }];
+    return [
+        {
+            id: "series-1",
+            name: "Series 1",
+            data: [
+                { x: moment("2016-12-25T15:05:00Z", format).toDate(), y: 30 },
+                { x: moment("2016-12-25T15:10:00Z", format).toDate(), y: 95 },
+                { x: moment("2016-12-25T15:15:00Z", format).toDate(), y: 15 },
+                { x: moment("2016-12-25T15:20:00Z", format).toDate(), y: 60 },
+                { x: moment("2016-12-25T15:25:00Z", format).toDate(), y: 35 },
+                { x: moment("2016-12-25T15:30:00Z", format).toDate(), y: 5 },
+                { x: moment("2016-12-25T15:35:00Z", format).toDate(), y: 60 },
+                { x: moment("2016-12-25T15:40:00Z", format).toDate(), y: 84 },
+                { x: moment("2016-12-25T15:55:00Z", format).toDate(), y: 86 },
+                { x: moment("2016-12-25T16:00:00Z", format).toDate(), y: 35 },
+            ],
+        },
+    ];
 }

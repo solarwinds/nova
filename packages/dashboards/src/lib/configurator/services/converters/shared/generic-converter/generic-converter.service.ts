@@ -15,13 +15,17 @@ import { IConverterFormPartsProperties } from "../../types";
 export class GenericConverterService extends BaseConverter {
     private formParts: IConverterFormPartsProperties[];
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                                            previewService: PreviewService,
-                                            pizzagnaService: PizzagnaService) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
+        previewService: PreviewService,
+        pizzagnaService: PizzagnaService
+    ) {
         super(eventBus, previewService, pizzagnaService);
     }
 
-    public updateConfiguration(properties: { formParts: IConverterFormPartsProperties[] }) {
+    public updateConfiguration(properties: {
+        formParts: IConverterFormPartsProperties[];
+    }) {
         if (properties && properties.formParts) {
             this.formParts = properties.formParts;
         }
@@ -32,12 +36,19 @@ export class GenericConverterService extends BaseConverter {
 
         const updatedPizzagna = this.formParts.reduce((res, v) => {
             // TODO: Define correct index type
-            const previewSlice: Record<string, any> = get(preview, v.previewPath);
+            const previewSlice: Record<string, any> = get(
+                preview,
+                v.previewPath
+            );
 
             if (previewSlice) {
                 for (const key of v.keys) {
                     if (previewSlice[key] !== undefined) {
-                        res = immutableSet(res, `${PizzagnaLayer.Data}.${this.componentId}.properties.${key}`, previewSlice[key]);
+                        res = immutableSet(
+                            res,
+                            `${PizzagnaLayer.Data}.${this.componentId}.properties.${key}`,
+                            previewSlice[key]
+                        );
                     }
                 }
             }
@@ -50,7 +61,7 @@ export class GenericConverterService extends BaseConverter {
     public toPreview(form: FormGroup) {
         form.valueChanges
             .pipe(takeUntil(this.destroy$))
-            .subscribe(formData => {
+            .subscribe((formData) => {
                 const updatedPreview = this.formParts.reduce((p, v) => {
                     const outPath = v.previewOutputPath || v.previewPath;
                     const fromPreview = get(p, outPath);

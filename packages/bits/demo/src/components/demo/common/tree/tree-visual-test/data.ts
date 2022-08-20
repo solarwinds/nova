@@ -1,6 +1,6 @@
-import {Injectable} from "@angular/core";
-import {Observable, of} from "rxjs";
-import {delay} from "rxjs/operators";
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { delay } from "rxjs/operators";
 
 export interface FoodNode {
     name: string;
@@ -18,40 +18,48 @@ export interface IApiResponse {
 @Injectable()
 export class HttpMock {
     private fruitsList = [
-        $localize `apple`,
-        $localize `orange`,
-        $localize `banana`,
-        $localize `watermelon`,
-        $localize `peach`,
-        $localize `pineapple`,
-        $localize `lemon`,
-        $localize `mango`,
+        $localize`apple`,
+        $localize`orange`,
+        $localize`banana`,
+        $localize`watermelon`,
+        $localize`peach`,
+        $localize`pineapple`,
+        $localize`lemon`,
+        $localize`mango`,
     ];
     private vegetablesList = [
-        $localize `tomato`,
-        $localize `cucumber`,
-        $localize `cabbage`,
-        $localize `pepper`,
-        $localize `carrot`,
-        $localize `onion`,
-        $localize `broccoli`,
-        $localize `corn`,
+        $localize`tomato`,
+        $localize`cucumber`,
+        $localize`cabbage`,
+        $localize`pepper`,
+        $localize`carrot`,
+        $localize`onion`,
+        $localize`broccoli`,
+        $localize`corn`,
     ];
 
     private totalItems = 1337;
 
-    getNodeItems(nodeId: string, page: number, pageSize: number): Observable<IApiResponse> {
+    getNodeItems(
+        nodeId: string,
+        page: number,
+        pageSize: number
+    ): Observable<IApiResponse> {
         // nodeId can be handled on API depending on app needs
-        const itemList = nodeId === "Vegetables"
-            ? this.vegetablesList
-            : this.fruitsList;
+        const itemList =
+            nodeId === "Vegetables" ? this.vegetablesList : this.fruitsList;
 
-        const totalItemList = this.getTotalItemList(itemList, this.totalItems/itemList.length);
+        const totalItemList = this.getTotalItemList(
+            itemList,
+            this.totalItems / itemList.length
+        );
 
-        const items: FoodNode[] = Array.from({ length: pageSize }).map((i, ind) => ({
-            name: totalItemList[ind],
-            page,
-        }));
+        const items: FoodNode[] = Array.from({ length: pageSize }).map(
+            (i, ind) => ({
+                name: totalItemList[ind],
+                page,
+            })
+        );
 
         const response = {
             items,
@@ -63,12 +71,11 @@ export class HttpMock {
     private getTotalItemList(list: any[], times: number) {
         const totalArray = [];
         for (let i = 0; i < times; i++) {
-            totalArray.push(...list)
+            totalArray.push(...list);
         }
         return totalArray;
     }
 }
-
 
 export const TREE_DATA_PAGINATOR: FoodNode[] = [
     {
@@ -86,7 +93,6 @@ export const TREE_DATA_PAGINATOR: FoodNode[] = [
             },
         ],
     },
-
 ];
 
 export const TREE_DATA: FoodNode[] = [

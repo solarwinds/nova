@@ -5,6 +5,4 @@ import { IMenuGroup, PanelBackgroundColor } from "@nova-ui/bits";
     selector: "nui-panel-test",
     templateUrl: "./panel-test.component.html",
 })
-
-export class PanelTestComponent {
-}
+export class PanelTestComponent {}

@@ -1,7 +1,9 @@
 import { XYGridConfig } from "./xy-grid-config";
 
 export class BarStatusGridConfig extends XYGridConfig {
-    constructor(config: { showBottomAxis: boolean } = {showBottomAxis: true}) {
+    constructor(
+        config: { showBottomAxis: boolean } = { showBottomAxis: true }
+    ) {
         super();
 
         this.interactive = true;

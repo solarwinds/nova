@@ -1,5 +1,9 @@
-
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+} from "@angular/core";
 
 import { ILinkDefinition } from "../../../../../components/types";
 import { IHasChangeDetector } from "../../../../../types";
@@ -9,7 +13,6 @@ import { IHasChangeDetector } from "../../../../../types";
     templateUrl: "./info-message-configuration.component.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class InfoMessageConfigurationComponent implements IHasChangeDetector {
     public static lateLoadKey = "InfoMessageConfigurationComponent";
 

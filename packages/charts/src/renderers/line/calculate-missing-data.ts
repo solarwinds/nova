@@ -10,7 +10,11 @@ import { IAccessors, IDataSeries } from "../../core/common/types";
  * @param accessorKey
  * @param interval
  */
-export function calculateMissingData(dataSeries: IDataSeries<IAccessors>, accessorKey: string, interval: Duration): any[] {
+export function calculateMissingData(
+    dataSeries: IDataSeries<IAccessors>,
+    accessorKey: string,
+    interval: Duration
+): any[] {
     const dataAccessors = dataSeries.accessors.data;
     const data = dataSeries.data;
     const accessor = dataAccessors?.[accessorKey];
@@ -18,7 +22,12 @@ export function calculateMissingData(dataSeries: IDataSeries<IAccessors>, access
         throw new Error("Accessor " + accessorKey + " not defined!");
     }
     const minValue = accessor(data[0], 0, data, dataSeries);
-    const maxValue = accessor(data[data.length - 1], data.length - 1, data, dataSeries);
+    const maxValue = accessor(
+        data[data.length - 1],
+        data.length - 1,
+        data,
+        dataSeries
+    );
     if (!minValue || !maxValue) {
         throw new Error("First or last values not defined!");
     }

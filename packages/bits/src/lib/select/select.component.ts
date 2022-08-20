@@ -33,7 +33,7 @@ import { BaseSelect } from "./base-select";
  */
 @Component({
     selector: "nui-select",
-    host: {"class": "nui-select"},
+    host: { class: "nui-select" },
     templateUrl: "./select.component.html",
     providers: [
         {
@@ -50,7 +50,10 @@ import { BaseSelect } from "./base-select";
     styleUrls: ["./select.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class SelectComponent extends BaseSelect implements OnInit, OnChanges, OnDestroy {
+export class SelectComponent
+    extends BaseSelect
+    implements OnInit, OnChanges, OnDestroy
+{
     /**
      * A value that tells popup to be attached right after it's parent declaration or in <body>
      */
@@ -82,19 +85,30 @@ export class SelectComponent extends BaseSelect implements OnInit, OnChanges, On
 
     @ViewChild("menu") public menu: MenuComponent;
 
-    constructor(utilService: UtilService, private renderer: Renderer2, public elRef: ElementRef, private logger: LoggerService) {
+    constructor(
+        utilService: UtilService,
+        private renderer: Renderer2,
+        public elRef: ElementRef,
+        private logger: LoggerService
+    ) {
         super(utilService);
-        this.logger.warn("<nui-select> is deprecated as of Nova v11. Please use <nui-select-v2> instead.");
+        this.logger.warn(
+            "<nui-select> is deprecated as of Nova v11. Please use <nui-select-v2> instead."
+        );
     }
 
     private unsubscriber: () => void;
 
     ngOnInit() {
         super.ngOnInit();
-        this.unsubscriber = this.renderer.listen(this.elRef.nativeElement, "focusout", () => {
-            // Blur is debounced cause when you click on menu item blur is triggered twice: from textbox and when popup is closed.
-            this.debouncedBlur();
-        });
+        this.unsubscriber = this.renderer.listen(
+            this.elRef.nativeElement,
+            "focusout",
+            () => {
+                // Blur is debounced cause when you click on menu item blur is triggered twice: from textbox and when popup is closed.
+                this.debouncedBlur();
+            }
+        );
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -106,8 +120,9 @@ export class SelectComponent extends BaseSelect implements OnInit, OnChanges, On
     }
 
     public displayedValue(): string {
-        return this.displayPlaceholder() ? this.placeholder :
-            _toString(this.getDisplayValueFormatted(this.getSelectedItem()));
+        return this.displayPlaceholder()
+            ? this.placeholder
+            : _toString(this.getDisplayValueFormatted(this.getSelectedItem()));
     }
 
     public handleBlur() {
@@ -116,7 +131,9 @@ export class SelectComponent extends BaseSelect implements OnInit, OnChanges, On
 
     public getWidth(): string {
         // when appendToBody=true popup goes to body, so it's out of nui-select and it's width needs to be set explicitly
-        return this.appendToBody || this.isJustified ? this.elRef.nativeElement.getBoundingClientRect().width + "px" : "";
+        return this.appendToBody || this.isJustified
+            ? this.elRef.nativeElement.getBoundingClientRect().width + "px"
+            : "";
     }
 
     ngOnDestroy(): void {

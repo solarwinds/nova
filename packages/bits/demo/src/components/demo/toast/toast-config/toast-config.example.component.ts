@@ -1,5 +1,10 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { IToastConfig, IToastService, ToastPositionClass, ToastService } from "@nova-ui/bits";
+import {
+    IToastConfig,
+    IToastService,
+    ToastPositionClass,
+    ToastService,
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-toast-config-example",
@@ -8,7 +13,7 @@ import { IToastConfig, IToastService, ToastPositionClass, ToastService } from "@
 export class ToastConfigExampleComponent implements OnInit {
     public selectedPosition: string;
 
-    constructor(@Inject(ToastService) private toastService: IToastService) { }
+    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     ngOnInit() {
         this.toastService.setConfig({}, "id");
@@ -16,8 +21,8 @@ export class ToastConfigExampleComponent implements OnInit {
 
     public onShowToast(highlightMode: boolean): void {
         this.toastService.info({
-            title: $localize `Toast Configuration`,
-            message: $localize `I'm pretty easy to configure`,
+            title: $localize`Toast Configuration`,
+            message: $localize`I'm pretty easy to configure`,
             options: this.getOptions(),
         });
     }

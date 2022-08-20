@@ -18,8 +18,14 @@ describe("USERCONTROL tab heading group", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("tabgroup/tabgroup-test");
         await Helpers.disableCSSAnimations(Animations.ALL);
-        tabGroupHorizontal = Atom.findIn(TabHeadingGroupAtom, element(by.id("nui-demo-visual-tabgroup-horizontal")));
-        tabGroupResponsive = Atom.findIn(TabHeadingGroupAtom, element(by.id("nui-demo-visual-tabgroup-responsive")));
+        tabGroupHorizontal = Atom.findIn(
+            TabHeadingGroupAtom,
+            element(by.id("nui-demo-visual-tabgroup-horizontal"))
+        );
+        tabGroupResponsive = Atom.findIn(
+            TabHeadingGroupAtom,
+            element(by.id("nui-demo-visual-tabgroup-responsive"))
+        );
     });
 
     it("should tab content be visible", async () => {
@@ -33,8 +39,12 @@ describe("USERCONTROL tab heading group", () => {
 
     it("should switch between tabs", async () => {
         await (await tabGroupHorizontal.getLastTab()).click();
-        expect(await (await tabGroupHorizontal.getFirstTab()).isActive()).toBe(false);
-        expect(await (await tabGroupHorizontal.getLastTab()).isActive()).toBe(true);
+        expect(await (await tabGroupHorizontal.getFirstTab()).isActive()).toBe(
+            false
+        );
+        expect(await (await tabGroupHorizontal.getLastTab()).isActive()).toBe(
+            true
+        );
     });
 
     it("should not allow disabled tabs to get selected", async () => {
@@ -49,16 +59,23 @@ describe("USERCONTROL tab heading group", () => {
     });
 
     it("should navigate through responsive tabs", async () => {
-        expect(await (await tabGroupResponsive.getFirstTab()).isDisplayed()).toBe(true);
+        expect(
+            await (await tabGroupResponsive.getFirstTab()).isDisplayed()
+        ).toBe(true);
         await tabGroupResponsive.clickCaretRight(10);
-        expect(await (await tabGroupResponsive.getFirstTab()).isDisplayed()).toBe(false);
-        expect(await (await tabGroupResponsive.getLastTab()).isDisplayed()).toBe(true);
+        expect(
+            await (await tabGroupResponsive.getFirstTab()).isDisplayed()
+        ).toBe(false);
+        expect(
+            await (await tabGroupResponsive.getLastTab()).isDisplayed()
+        ).toBe(true);
     });
 
     it("should the last item in responsive tabs be clickable", async () => {
         await tabGroupResponsive.clickCaretRight(10);
         await (await tabGroupResponsive.getLastTab()).click();
-        expect(await tabGroupResponsive.getLastTab().then(tab => tab.isActive())).toBe(true);
+        expect(
+            await tabGroupResponsive.getLastTab().then((tab) => tab.isActive())
+        ).toBe(true);
     });
-
 });

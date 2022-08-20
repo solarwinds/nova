@@ -21,7 +21,9 @@ describe("components >", () => {
                     EdgeDetectionService,
                 ],
             });
-            const componentFixture = TestBed.createComponent(PopupDeprecatedComponent);
+            const componentFixture = TestBed.createComponent(
+                PopupDeprecatedComponent
+            );
             subject = componentFixture.componentInstance;
         });
 
@@ -95,5 +97,7 @@ describe("components >", () => {
 });
 
 export class MockElementRef extends ElementRef {
-    constructor() { super(null); }
+    constructor() {
+        super(null);
+    }
 }

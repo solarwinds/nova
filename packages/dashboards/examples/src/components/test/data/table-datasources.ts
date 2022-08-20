@@ -1,5 +1,12 @@
 import { Inject, Injectable } from "@angular/core";
-import { IDataField, IDataSource, INovaFilteringOutputs, INovaFilters, LocalFilteringDataSource, SearchService } from "@nova-ui/bits";
+import {
+    IDataField,
+    IDataSource,
+    INovaFilteringOutputs,
+    INovaFilters,
+    LocalFilteringDataSource,
+    SearchService,
+} from "@nova-ui/bits";
 import { HttpStatusCode, IDataSourceOutput } from "@nova-ui/dashboards";
 import { BehaviorSubject, Subject } from "rxjs";
 
@@ -24,7 +31,10 @@ interface ITableDataSourceOutput extends INovaFilteringOutputs {
 // https://nova-ui.solarwinds.io/bits/release_v12.x/injectables/LocalFilteringDataSource.html
 // If you need to work with back-end filtering, you need to extend DataSourceService instead of LocalFilteringDataSource
 @Injectable()
-export class TestTableDataSource extends LocalFilteringDataSource<BasicTableModel> implements IDataSource {
+export class TestTableDataSource
+    extends LocalFilteringDataSource<BasicTableModel>
+    implements IDataSource
+{
     public static providerId = "TestTableDataSource";
     public static mockError = false;
 
@@ -37,7 +47,11 @@ export class TestTableDataSource extends LocalFilteringDataSource<BasicTableMode
         { id: "checks", label: $localize`Checks`, dataType: "iconAndText" },
         { id: "status", label: $localize`Status`, dataType: "string" },
         { id: "firstUrl", label: $localize`First Url`, dataType: "link" },
-        { id: "firstUrlLabel", label: $localize`First Url Label`, dataType: "label" },
+        {
+            id: "firstUrlLabel",
+            label: $localize`First Url Label`,
+            dataType: "label",
+        },
     ];
 
     public tableData: Array<any>;
@@ -52,8 +66,11 @@ export class TestTableDataSource extends LocalFilteringDataSource<BasicTableMode
      * Makes a request to get correct data depending on filters
      * @param filters
      */
-    public async getFilteredData(filters: INovaFilters): Promise<IDataSourceOutput<ITableDataSourceOutput>> {
-        const virtualScrollFilter = filters.virtualScroll && filters.virtualScroll.value;
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<IDataSourceOutput<ITableDataSourceOutput>> {
+        const virtualScrollFilter =
+            filters.virtualScroll && filters.virtualScroll.value;
 
         if (virtualScrollFilter) {
             // The multiplier used here is a way to fetch more items per scroll
@@ -62,7 +79,9 @@ export class TestTableDataSource extends LocalFilteringDataSource<BasicTableMode
             const nextChunk = TABLE_DATA.slice(start, end);
             // We identify here whether the cached array does already contain some of the fetched data.
             // Then we update the cached array with the only values it doesn't contain
-            this.cache = this.cache.concat(nextChunk.filter(item => !this.cache.includes(item)));
+            this.cache = this.cache.concat(
+                nextChunk.filter((item) => !this.cache.includes(item))
+            );
             super.setData(this.cache);
         }
 
@@ -74,7 +93,8 @@ export class TestTableDataSource extends LocalFilteringDataSource<BasicTableMode
         if (!TestTableDataSource.mockError) {
             return {
                 result: {
-                    ...filteredData, dataFields: this.dataFields,
+                    ...filteredData,
+                    dataFields: this.dataFields,
                 },
             };
         }
@@ -87,9 +107,11 @@ export class TestTableDataSource extends LocalFilteringDataSource<BasicTableMode
     }
 }
 
-
 @Injectable()
-export class TestTableDataSource2 extends LocalFilteringDataSource<BasicTableModel> implements IDataSource {
+export class TestTableDataSource2
+    extends LocalFilteringDataSource<BasicTableModel>
+    implements IDataSource
+{
     public static providerId = "TestTableDataSource2";
     public static mockError = false;
 
@@ -102,7 +124,11 @@ export class TestTableDataSource2 extends LocalFilteringDataSource<BasicTableMod
         { id: "status", label: $localize`Status`, dataType: "string" },
         { id: "cpu-load", label: $localize`CPU load`, dataType: "number" },
         { id: "secondUrl", label: $localize`Second Url`, dataType: "link" },
-        { id: "secondUrlLabel", label: $localize`Second Url Label`, dataType: "label" },
+        {
+            id: "secondUrlLabel",
+            label: $localize`Second Url Label`,
+            dataType: "label",
+        },
     ];
 
     public tableData: Array<any>;
@@ -113,8 +139,11 @@ export class TestTableDataSource2 extends LocalFilteringDataSource<BasicTableMod
         super.setData([]);
     }
 
-    public async getFilteredData(filters: INovaFilters): Promise<IDataSourceOutput<ITableDataSourceOutput>> {
-        const virtualScrollFilter = filters.virtualScroll && filters.virtualScroll.value;
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<IDataSourceOutput<ITableDataSourceOutput>> {
+        const virtualScrollFilter =
+            filters.virtualScroll && filters.virtualScroll.value;
 
         if (virtualScrollFilter) {
             // The multiplier used here is a way to fetch more items per scroll
@@ -123,7 +152,9 @@ export class TestTableDataSource2 extends LocalFilteringDataSource<BasicTableMod
             const nextChunk = TABLE_DATA2.slice(start, end);
             // We identify here whether the cached array does already contain some of the fetched data.
             // Then we update the cached array with the only values it doesn't contain
-            this.cache = this.cache.concat(nextChunk.filter(item => !this.cache.includes(item)));
+            this.cache = this.cache.concat(
+                nextChunk.filter((item) => !this.cache.includes(item))
+            );
             super.setData(this.cache);
         }
 
@@ -135,7 +166,8 @@ export class TestTableDataSource2 extends LocalFilteringDataSource<BasicTableMod
         if (!TestTableDataSource.mockError) {
             return {
                 result: {
-                    ...filteredData, dataFields: this.dataFields,
+                    ...filteredData,
+                    dataFields: this.dataFields,
                 },
             };
         }
@@ -146,7 +178,6 @@ export class TestTableDataSource2 extends LocalFilteringDataSource<BasicTableMod
             error: { type: HttpStatusCode.Unknown },
         };
     }
-
 }
 
 const TABLE_DATA: BasicTableModel[] = [
@@ -183,7 +214,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 3,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",
@@ -198,7 +234,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 4,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -213,7 +254,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 5,
         name: "Man-LT-JYJ425",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -228,7 +274,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 6,
         name: "Man-LT-JYJ4333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -258,7 +309,13 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 8,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -273,7 +330,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 9,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -288,7 +350,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 10,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -318,7 +385,13 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 12,
         name: "Man-LT-2222",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -333,7 +406,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 13,
         name: "Man-LT-333333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -348,7 +426,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 14,
         name: "Man-LT-444444",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -363,7 +446,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 15,
         name: "Man-LT-555555",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -408,7 +496,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 18,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",
@@ -423,7 +516,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 19,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -438,7 +536,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 20,
         name: "Man-LT-JYJ425",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -453,7 +556,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 21,
         name: "Man-LT-JYJ4333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -483,7 +591,13 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 23,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -498,7 +612,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 24,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -513,7 +632,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 25,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -543,7 +667,13 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 27,
         name: "Man-LT-2222",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -558,7 +688,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 28,
         name: "Man-LT-333333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -573,7 +708,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 29,
         name: "Man-LT-444444",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -588,7 +728,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 30,
         name: "Man-LT-555555",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -633,7 +778,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 33,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",
@@ -648,7 +798,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 34,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -663,7 +818,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 35,
         name: "Man-LT-JYJ425",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -678,7 +838,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 36,
         name: "Man-LT-JYJ4333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -708,7 +873,13 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 38,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -723,7 +894,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 39,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -738,7 +914,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 40,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -768,7 +949,13 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 42,
         name: "Man-LT-2222",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -783,7 +970,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 43,
         name: "Man-LT-333333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -798,7 +990,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 44,
         name: "Man-LT-444444",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -813,7 +1010,12 @@ const TABLE_DATA: BasicTableModel[] = [
     {
         position: 45,
         name: "Man-LT-555555",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -861,7 +1063,12 @@ const TABLE_DATA2: BasicTableModel[] = [
     {
         position: 3,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",

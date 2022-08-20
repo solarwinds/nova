@@ -21,7 +21,9 @@ export const SERIES_STATE_CHANGE_EVENT = "series_state_change";
 export const AXES_STYLE_CHANGE_EVENT = "axes_style_change";
 
 /** @ignore */
-export const CHART_COMPONENT = new InjectionToken<IChartComponent>("chart_component");
+export const CHART_COMPONENT = new InjectionToken<IChartComponent>(
+    "chart_component"
+);
 
 /** @ignore */
 export const STANDARD_RENDER_LAYERS: { [name: string]: ILasagnaLayer } = {

@@ -1,10 +1,6 @@
 import { Atom } from "../../atom";
 import { Helpers } from "../../helpers";
-import {
-    ButtonAtom,
-    IconAtom,
-    SorterAtom,
-} from "../public_api";
+import { ButtonAtom, IconAtom, SorterAtom } from "../public_api";
 import { Key } from "protractor";
 
 describe("USERCONTROL Sorter >", () => {
@@ -20,9 +16,15 @@ describe("USERCONTROL Sorter >", () => {
     });
 
     beforeEach(async () => {
-        if (await sorter.isPopupDisplayed()) { await sorter.click(); }
-        if (await sorter.getCurrentValue() !== "Year") { await sorter.select("Year"); }
-        if (await icon?.getName() === "arrow-down") { await sorterButton.click(); }
+        if (await sorter.isPopupDisplayed()) {
+            await sorter.click();
+        }
+        if ((await sorter.getCurrentValue()) !== "Year") {
+            await sorter.select("Year");
+        }
+        if ((await icon?.getName()) === "arrow-down") {
+            await sorterButton.click();
+        }
     });
 
     describe("sorter >", () => {

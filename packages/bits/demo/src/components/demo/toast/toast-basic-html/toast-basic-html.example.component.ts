@@ -6,17 +6,19 @@ import { IToastService, ToastService } from "@nova-ui/bits";
     templateUrl: "./toast-basic-html.example.component.html",
 })
 export class ToastBasicHtmlExampleComponent implements OnInit {
-
-    constructor(@Inject(ToastService) private toastService: IToastService) { }
+    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     ngOnInit() {
-        this.toastService.setConfig({ timeOut: 5000, extendedTimeOut: 2000 }, "id");
+        this.toastService.setConfig(
+            { timeOut: 5000, extendedTimeOut: 2000 },
+            "id"
+        );
     }
 
     public showToastWithEnabledHtml(): void {
         this.toastService.info({
-            title: $localize `Toast with enableHtml set to true`,
-            message: $localize `Hi there! I'm a simple toast message. <a href="#">Awesome link</a>`,
+            title: $localize`Toast with enableHtml set to true`,
+            message: $localize`Hi there! I'm a simple toast message. <a href="#">Awesome link</a>`,
             options: {
                 enableHtml: true, // Note: Default value
             },
@@ -25,8 +27,8 @@ export class ToastBasicHtmlExampleComponent implements OnInit {
 
     public showToastWithDisabledHtml(): void {
         this.toastService.info({
-            title: $localize `Toast with enableHtml set to false`,
-            message: $localize `Hi there! I'm a simple toast message <a href="#">Awesome link</a>`,
+            title: $localize`Toast with enableHtml set to false`,
+            message: $localize`Hi there! I'm a simple toast message <a href="#">Awesome link</a>`,
             options: {
                 enableHtml: false,
             },
@@ -35,8 +37,8 @@ export class ToastBasicHtmlExampleComponent implements OnInit {
 
     public showToastWithScriptTagIncluded(): void {
         this.toastService.info({
-            title: $localize `Toast with forbidden tags and enableHtml set to true`,
-            message: $localize `
+            title: $localize`Toast with forbidden tags and enableHtml set to true`,
+            message: $localize`
                 Hi there! I'm a toast message with forbidden tags:
                 <script>alert("You shall not pass")</script>
                 <object width="400" height="400"></object>
@@ -48,5 +50,4 @@ export class ToastBasicHtmlExampleComponent implements OnInit {
             },
         });
     }
-
 }

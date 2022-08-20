@@ -57,7 +57,12 @@ describe("services >", () => {
             let series: IChartAssistSeries<IAccessors>[] = [];
 
             beforeAll(() => {
-                series = CategoryChartUtilService.buildChartSeries(data, accessors, renderer, scales);
+                series = CategoryChartUtilService.buildChartSeries(
+                    data,
+                    accessors,
+                    renderer,
+                    scales
+                );
             });
 
             it("should return the same number of series", () => {
@@ -91,7 +96,6 @@ describe("services >", () => {
                     expect(s.scales).toEqual(scales);
                 }
             });
-
         });
 
         describe("getChartAttributes >", () => {
@@ -105,7 +109,8 @@ describe("services >", () => {
             describe("For DonutChart type", () => {
                 beforeAll(() => {
                     chartType = ProportionalWidgetChartTypes.DonutChart;
-                    ({ grid, accessors, renderer, scales } = CategoryChartUtilService.getChartAttributes(chartType));
+                    ({ grid, accessors, renderer, scales } =
+                        CategoryChartUtilService.getChartAttributes(chartType));
                 });
 
                 it("it should return correct grid", () => {
@@ -125,7 +130,8 @@ describe("services >", () => {
             describe("For PieChart type", () => {
                 beforeAll(() => {
                     chartType = ProportionalWidgetChartTypes.PieChart;
-                    ({ grid, accessors, renderer, scales } = CategoryChartUtilService.getChartAttributes(chartType));
+                    ({ grid, accessors, renderer, scales } =
+                        CategoryChartUtilService.getChartAttributes(chartType));
                 });
 
                 it("it should return correct grid", () => {
@@ -145,14 +151,17 @@ describe("services >", () => {
             describe("For HorizontalBarChart type", () => {
                 beforeAll(() => {
                     chartType = ProportionalWidgetChartTypes.HorizontalBarChart;
-                    ({ grid, accessors, renderer, scales } = CategoryChartUtilService.getChartAttributes(chartType));
+                    ({ grid, accessors, renderer, scales } =
+                        CategoryChartUtilService.getChartAttributes(chartType));
                 });
 
                 it("it should return correct grid", () => {
                     expect(grid instanceof XYGrid).toBe(true);
                 });
                 it("it should return correct accessors", () => {
-                    expect(accessors instanceof HorizontalBarAccessors).toBe(true);
+                    expect(accessors instanceof HorizontalBarAccessors).toBe(
+                        true
+                    );
                 });
                 it("it should return correct renderer", () => {
                     expect(renderer instanceof BarRenderer).toBe(true);
@@ -166,14 +175,17 @@ describe("services >", () => {
             describe("For VerticalBarChart type", () => {
                 beforeAll(() => {
                     chartType = ProportionalWidgetChartTypes.VerticalBarChart;
-                    ({ grid, accessors, renderer, scales } = CategoryChartUtilService.getChartAttributes(chartType));
+                    ({ grid, accessors, renderer, scales } =
+                        CategoryChartUtilService.getChartAttributes(chartType));
                 });
 
                 it("it should return correct grid", () => {
                     expect(grid instanceof XYGrid).toBe(true);
                 });
                 it("it should return correct accessors", () => {
-                    expect(accessors instanceof VerticalBarAccessors).toBe(true);
+                    expect(accessors instanceof VerticalBarAccessors).toBe(
+                        true
+                    );
                 });
                 it("it should return correct renderer", () => {
                     expect(renderer instanceof BarRenderer).toBe(true);
@@ -183,7 +195,6 @@ describe("services >", () => {
                     expect(scales.y instanceof LinearScale).toBe(true);
                 });
             });
-
         });
 
         describe("bar accessors >", () => {
@@ -191,38 +202,50 @@ describe("services >", () => {
 
             describe("vertical >", () => {
                 describe("data >", () => {
-
                     beforeAll(() => {
-                        ({ accessors } = CategoryChartUtilService.getChartAttributes(ProportionalWidgetChartTypes.VerticalBarChart));
+                        ({ accessors } =
+                            CategoryChartUtilService.getChartAttributes(
+                                ProportionalWidgetChartTypes.VerticalBarChart
+                            ));
                     });
 
                     it("should return primitive numbers as is", () => {
                         // @ts-ignore: Suppressed for test purposes
-                        expect(accessors.data.value(5, 0, null, null)).toEqual(5);
+                        expect(accessors.data.value(5, 0, null, null)).toEqual(
+                            5
+                        );
                     });
 
                     it("should return the value property of an object", () => {
                         // @ts-ignore: Suppressed for test purposes
-                        expect(accessors.data.value({ value: 5 }, 0, null, null)).toEqual(5);
+                        expect(
+                            accessors.data.value({ value: 5 }, 0, null, null)
+                        ).toEqual(5);
                     });
                 });
             });
 
             describe("horizontal >", () => {
                 describe("data >", () => {
-
                     beforeAll(() => {
-                        ({ accessors } = CategoryChartUtilService.getChartAttributes(ProportionalWidgetChartTypes.HorizontalBarChart));
+                        ({ accessors } =
+                            CategoryChartUtilService.getChartAttributes(
+                                ProportionalWidgetChartTypes.HorizontalBarChart
+                            ));
                     });
 
                     it("should return primitive numbers as is", () => {
                         // @ts-ignore: Suppressed for test purposes
-                        expect(accessors.data.value(5, 0, null, null)).toEqual(5);
+                        expect(accessors.data.value(5, 0, null, null)).toEqual(
+                            5
+                        );
                     });
 
                     it("should return the value property of an object", () => {
                         // @ts-ignore: Suppressed for test purposes
-                        expect(accessors.data.value({ value: 5 }, 0, null, null)).toEqual(5);
+                        expect(
+                            accessors.data.value({ value: 5 }, 0, null, null)
+                        ).toEqual(5);
                     });
                 });
             });

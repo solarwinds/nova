@@ -13,10 +13,12 @@ import { FormatterConfiguratorComponent } from "../formatter-configurator.compon
 export class ValueSelectorComponent extends FormatterConfiguratorComponent {
     static lateLoadKey = "ValueSelectorComponent";
 
-    constructor(changeDetector: ChangeDetectorRef,
-                configuratorHeading: ConfiguratorHeadingService,
-                formBuilder: FormBuilder,
-                logger: LoggerService) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        configuratorHeading: ConfiguratorHeadingService,
+        formBuilder: FormBuilder,
+        logger: LoggerService
+    ) {
         super(changeDetector, configuratorHeading, formBuilder, logger);
     }
 }

@@ -16,33 +16,63 @@ describe(`Visual tests: ${name}`, () => {
     let topOrientedPanel: PanelAtom;
     let nestedPanelOuter: PanelAtom;
     let resizablePanel: PanelAtom;
-    let expanders: {[key: string]: ElementFinder};
+    let expanders: { [key: string]: ElementFinder };
 
     beforeAll(async (done) => {
         await Helpers.prepareBrowser("panel/panel-visual-test");
 
-        collapsiblePanel = Atom.find(PanelAtom, "nui-visual-test-embedded-content-panel");
+        collapsiblePanel = Atom.find(
+            PanelAtom,
+            "nui-visual-test-embedded-content-panel"
+        );
         closablePanel = Atom.find(PanelAtom, "nui-visual-test-hidden-panel");
-        customStylesPanel = Atom.find(PanelAtom, "nui-visual-test-custom-styles-panel");
-        hoverablePanel = Atom.find(PanelAtom, "nui-visual-test-hoverable-panel");
-        topOrientedPanel = Atom.find(PanelAtom, "nui-visual-test-top-oriented-panel");
-        nestedPanelOuter = Atom.find(PanelAtom, "nui-visual-test-nested-panel-outer");
-        resizablePanel = Atom.find(PanelAtom, "nui-visual-test-resizable-panel");
+        customStylesPanel = Atom.find(
+            PanelAtom,
+            "nui-visual-test-custom-styles-panel"
+        );
+        hoverablePanel = Atom.find(
+            PanelAtom,
+            "nui-visual-test-hoverable-panel"
+        );
+        topOrientedPanel = Atom.find(
+            PanelAtom,
+            "nui-visual-test-top-oriented-panel"
+        );
+        nestedPanelOuter = Atom.find(
+            PanelAtom,
+            "nui-visual-test-nested-panel-outer"
+        );
+        resizablePanel = Atom.find(
+            PanelAtom,
+            "nui-visual-test-resizable-panel"
+        );
 
         expanders = {
-            detailsBasicPanel : element(by.id("nui-visual-basic-panel-details")),
-            detailsCustomSizes : element(by.id("nui-visual-custom-size-panel-details")),
-            detailsHoverable : element(by.id("nui-visual-hoverable-panel-details")),
-            detailsClosable : element(by.id("nui-visual-closable-panel-details")),
-            detailsWithEmbeddedContent : element(by.id("nui-visual-with-embedded-details")),
-            detailsCustomStyles : element(by.id("nui-visual-custom-style-panel-details")),
-            detailsResizable : element(by.id("nui-visual-resizable-details")),
-            detailsTopOriented : element(by.id("nui-visual-top-oriented-panel-details")),
-            detailsNested : element(by.id("nui-visual-nested-panel-details")),
+            detailsBasicPanel: element(by.id("nui-visual-basic-panel-details")),
+            detailsCustomSizes: element(
+                by.id("nui-visual-custom-size-panel-details")
+            ),
+            detailsHoverable: element(
+                by.id("nui-visual-hoverable-panel-details")
+            ),
+            detailsClosable: element(
+                by.id("nui-visual-closable-panel-details")
+            ),
+            detailsWithEmbeddedContent: element(
+                by.id("nui-visual-with-embedded-details")
+            ),
+            detailsCustomStyles: element(
+                by.id("nui-visual-custom-style-panel-details")
+            ),
+            detailsResizable: element(by.id("nui-visual-resizable-details")),
+            detailsTopOriented: element(
+                by.id("nui-visual-top-oriented-panel-details")
+            ),
+            detailsNested: element(by.id("nui-visual-nested-panel-details")),
         };
 
         done();
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -52,10 +82,14 @@ describe(`Visual tests: ${name}`, () => {
 
     it(`${name} visual test`, async (done) => {
         await camera.turn.on();
-        
+
         // First we expand all expanders to check the default state of all panel cases
-        for (const key of Object.keys(expanders)) { await expanders[key].click(); }
-        await camera.say.cheese(`Basic view with hover on top orienter arrow button`);
+        for (const key of Object.keys(expanders)) {
+            await expanders[key].click();
+        }
+        await camera.say.cheese(
+            `Basic view with hover on top orienter arrow button`
+        );
 
         await Helpers.switchDarkTheme("on");
         await camera.say.cheese(`Dark theme`);
@@ -68,7 +102,9 @@ describe(`Visual tests: ${name}`, () => {
         await expanders.detailsCustomSizes.click();
         await expanders.detailsHoverable.click();
 
-        await camera.say.cheese(`Expanded Closable Panel with embedded footer and header`);
+        await camera.say.cheese(
+            `Expanded Closable Panel with embedded footer and header`
+        );
         await expanders.detailsClosable.click();
 
         // Toggling outer panel, because its style previously overwritten styles of inner panel
@@ -81,12 +117,15 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Expandable panes can be collapsed`);
 
         // This closes last 4 examples that are already tested and expand ones closed in previous test
-        for (const key of Object.keys(expanders)) { await expanders[key].click(); }
+        for (const key of Object.keys(expanders)) {
+            await expanders[key].click();
+        }
 
         await closablePanel.closeSidePane();
         await hoverablePanel.hoverOnSidePane();
-        await camera.say.cheese(`Closable paned can be closed. Hoverable panel can be hovered`);
-
+        await camera.say.cheese(
+            `Closable paned can be closed. Hoverable panel can be hovered`
+        );
 
         await camera.turn.off();
 

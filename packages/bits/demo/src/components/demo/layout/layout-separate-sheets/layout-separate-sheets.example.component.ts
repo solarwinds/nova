@@ -5,6 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./layout-separate-sheets.example.component.html",
     styleUrls: ["./layout-separate-sheets.example.component.less"],
 })
-export class LayoutSeparateSheetsExampleComponent {
-
-}
+export class LayoutSeparateSheetsExampleComponent {}

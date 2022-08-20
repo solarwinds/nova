@@ -14,11 +14,15 @@ export class TimeFrameBarZoomExampleComponent implements OnInit {
     public timeFrame: ITimeframe;
 
     private baseDate = moment([2018, 5, 1, 15, 0, 0]);
-    private zoomLevels: DurationInputArg2[] = ["weeks", "days", "hours", "minutes"];
+    private zoomLevels: DurationInputArg2[] = [
+        "weeks",
+        "days",
+        "hours",
+        "minutes",
+    ];
 
     // Inject an instance of HistoryStorage
-    constructor(public history: HistoryStorage<ITimeframe>) {
-    }
+    constructor(public history: HistoryStorage<ITimeframe>) {}
 
     public ngOnInit() {
         // Set the minimum and maximum selectable dates
@@ -31,21 +35,29 @@ export class TimeFrameBarZoomExampleComponent implements OnInit {
 
     // Save the new timeframe to the history storage and set it as the current timeFrame
     public onZoomIn = () =>
-        this.timeFrame = this.history.save(this.getTimeFrame(this.zoomLevels[this.history.index + 1]))
+        (this.timeFrame = this.history.save(
+            this.getTimeFrame(this.zoomLevels[this.history.index + 1])
+        ));
 
     // Use the history storage to go back one time frame
-    public onUndo = () => this.timeFrame = this.history.undo();
+    public onUndo = () => (this.timeFrame = this.history.undo());
 
     // Reset the history storage and save a new initial value if provided
     // Otherwise preserve the previous one
-    public onChange = (value?: ITimeframe) => this.timeFrame = this.history.restart(value);
+    public onChange = (value?: ITimeframe) =>
+        (this.timeFrame = this.history.restart(value));
 
     // This method is for demo purposes only
     public canZoom() {
-        const expectedTF = this.getTimeFrame(this.zoomLevels[this.history.index]);
-        const matchesZoomLevel = this.timeFrame.startDatetime.isSame(expectedTF.startDatetime) &&
+        const expectedTF = this.getTimeFrame(
+            this.zoomLevels[this.history.index]
+        );
+        const matchesZoomLevel =
+            this.timeFrame.startDatetime.isSame(expectedTF.startDatetime) &&
             this.timeFrame.endDatetime.isSame(expectedTF.endDatetime);
-        return matchesZoomLevel && this.history.index < this.zoomLevels.length - 1;
+        return (
+            matchesZoomLevel && this.history.index < this.zoomLevels.length - 1
+        );
     }
 
     // This method is for demo purposes only

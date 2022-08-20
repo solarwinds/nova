@@ -39,8 +39,7 @@ describe("WidgetHeaderComponent", () => {
                     useClass: TestHeaderLinkProviderService,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -56,35 +55,41 @@ describe("WidgetHeaderComponent", () => {
     });
 
     describe("removable configuration >", () => {
-        [true, false]
-            .forEach(removable => {
-                it(`is removable button shown ${removable}`, () => {
-                    component.removable = removable;
-                    fixture.detectChanges();
-                    const removeEl = bannerElement.querySelector(".nui-widget-header__action-remove");
-                    expect(!!removeEl).toBe(removable);
-                });
+        [true, false].forEach((removable) => {
+            it(`is removable button shown ${removable}`, () => {
+                component.removable = removable;
+                fixture.detectChanges();
+                const removeEl = bannerElement.querySelector(
+                    ".nui-widget-header__action-remove"
+                );
+                expect(!!removeEl).toBe(removable);
             });
+        });
 
         it("should show the remove button by default", () => {
-            const removeEl = bannerElement.querySelector(".nui-widget-header__action-remove");
+            const removeEl = bannerElement.querySelector(
+                ".nui-widget-header__action-remove"
+            );
             expect(removeEl).toBeTruthy();
         });
     });
 
     describe("editable configuration > ", () => {
-        [true, false]
-            .forEach(editable => {
-                it(`is edit button shown ${editable}`, () => {
-                    component.editable = editable;
-                    fixture.detectChanges();
-                    const pencilEl = bannerElement.querySelector(".nui-widget-header__action-edit");
-                    expect(!!pencilEl).toBe(editable);
-                });
+        [true, false].forEach((editable) => {
+            it(`is edit button shown ${editable}`, () => {
+                component.editable = editable;
+                fixture.detectChanges();
+                const pencilEl = bannerElement.querySelector(
+                    ".nui-widget-header__action-edit"
+                );
+                expect(!!pencilEl).toBe(editable);
             });
+        });
 
         it("should show the edit button by default", () => {
-            const pencilEl = bannerElement.querySelector(".nui-widget-header__action-edit");
+            const pencilEl = bannerElement.querySelector(
+                ".nui-widget-header__action-edit"
+            );
             expect(pencilEl).toBeTruthy();
         });
     });
@@ -101,9 +106,12 @@ describe("WidgetHeaderComponent", () => {
 
             component.collapsible = true;
             component.ngOnInit();
-            expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({
-                propertyPath: ["isCollapsed"],
-            }), true);
+            expect(spy).toHaveBeenCalledWith(
+                jasmine.objectContaining({
+                    propertyPath: ["isCollapsed"],
+                }),
+                true
+            );
         });
 
         it("should not set the state to 'collapsed' if collapsible is false", () => {
@@ -124,7 +132,9 @@ describe("WidgetHeaderComponent", () => {
         it("should invoke next on the event bus REMOVE stream", () => {
             spyOn((<any>component).eventBus.getStream(WIDGET_REMOVE), "next");
             component.removeWidget();
-            expect((<any>component).eventBus.getStream(WIDGET_REMOVE).next).toHaveBeenCalled();
+            expect(
+                (<any>component).eventBus.getStream(WIDGET_REMOVE).next
+            ).toHaveBeenCalled();
         });
     });
 
@@ -134,9 +144,12 @@ describe("WidgetHeaderComponent", () => {
 
             component.collapsed = false;
             component.toggleCollapsed();
-            expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({
-                propertyPath: ["collapsed"],
-            }), true);
+            expect(spy).toHaveBeenCalledWith(
+                jasmine.objectContaining({
+                    propertyPath: ["collapsed"],
+                }),
+                true
+            );
         });
     });
 
@@ -144,7 +157,9 @@ describe("WidgetHeaderComponent", () => {
         it("should invoke next on the event bus WIDGET_EDIT stream", () => {
             spyOn((<any>component).eventBus.getStream(WIDGET_EDIT), "next");
             component.onEditWidget();
-            expect((<any>component).eventBus.getStream(WIDGET_EDIT).next).toHaveBeenCalled();
+            expect(
+                (<any>component).eventBus.getStream(WIDGET_EDIT).next
+            ).toHaveBeenCalled();
         });
     });
 
@@ -153,7 +168,9 @@ describe("WidgetHeaderComponent", () => {
             component.reloadable = true;
             spyOn((<any>component).eventBus.getStream(REFRESH), "next");
             component.onReloadData();
-            expect((<any>component).eventBus.getStream(REFRESH).next).toHaveBeenCalled();
+            expect(
+                (<any>component).eventBus.getStream(REFRESH).next
+            ).toHaveBeenCalled();
         });
 
         it("should throw an error if widget is not reloadable", () => {
@@ -162,12 +179,13 @@ describe("WidgetHeaderComponent", () => {
             expect(() => {
                 component.onReloadData();
             }).toThrow();
-            expect((<any>component).eventBus.getStream(REFRESH).next).not.toHaveBeenCalled();
+            expect(
+                (<any>component).eventBus.getStream(REFRESH).next
+            ).not.toHaveBeenCalled();
         });
     });
 
     describe("prepareLink", () => {
-
         it("updates the link", () => {
             const element = document.createElement("div");
 
@@ -177,12 +195,15 @@ describe("WidgetHeaderComponent", () => {
 
             component.url = "mistle";
             component.prepareLink(event as any);
-            expect(element.attributes.getNamedItem("href")?.value).toEqual("mistletoe");
+            expect(element.attributes.getNamedItem("href")?.value).toEqual(
+                "mistletoe"
+            );
 
             component.url = "tictac";
             component.prepareLink(event as any);
-            expect(element.attributes.getNamedItem("href")?.value).toEqual("tictactoe");
+            expect(element.attributes.getNamedItem("href")?.value).toEqual(
+                "tictactoe"
+            );
         });
-
     });
 });

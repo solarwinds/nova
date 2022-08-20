@@ -1,14 +1,24 @@
 <div class="nui-table__container" id="nui-demo-table-select">
-    <table nui-table [dataSource]="dataSource" [(selection)]="selection" [selectable]="true" [trackBy]="trackBy">
+    <table
+        nui-table
+        [dataSource]="dataSource"
+        [(selection)]="selection"
+        [selectable]="true"
+        [trackBy]="trackBy"
+    >
         <ng-container nuiColumnDef="position">
-            <th nui-header-cell *nuiHeaderCellDef i18n> No.</th>
-            <td nui-cell *nuiCellDef="let element"> {{element.position}}</td>
+            <th nui-header-cell *nuiHeaderCellDef i18n>No.</th>
+            <td nui-cell *nuiCellDef="let element">{{ element.position }}</td>
         </ng-container>
 
         <ng-container nuiColumnDef="description">
-            <th nui-header-cell *nuiHeaderCellDef i18n> Description</th>
-            <td nui-cell *nuiCellDef="let element" [tooltipText]="element.description">
-                {{element.description}}
+            <th nui-header-cell *nuiHeaderCellDef i18n>Description</th>
+            <td
+                nui-cell
+                *nuiCellDef="let element"
+                [tooltipText]="element.description"
+            >
+                {{ element.description }}
             </td>
         </ng-container>
 
@@ -26,8 +36,14 @@
         </ng-container>
 
         <ng-container nuiColumnDef="location">
-            <th nui-header-cell *nuiHeaderCellDef i18n> Location</th>
-            <td nui-cell *nuiCellDef="let element"> <a href="https://maps.google.com/?q={{element.location}}" target="_blank">{{element.location}}</a></td>
+            <th nui-header-cell *nuiHeaderCellDef i18n>Location</th>
+            <td nui-cell *nuiCellDef="let element">
+                <a
+                    href="https://maps.google.com/?q={{ element.location }}"
+                    target="_blank"
+                    >{{ element.location }}</a
+                >
+            </td>
         </ng-container>
 
         <ng-container nuiColumnDef="actions">
@@ -39,12 +55,17 @@
         </ng-container>
 
         <tr nui-header-row *nuiHeaderRowDef="displayedColumns"></tr>
-        <tr nui-row *nuiRowDef="let row; columns: displayedColumns;" [rowObject]="row" [clickableRow]="true"></tr>
+        <tr
+            nui-row
+            *nuiRowDef="let row; columns: displayedColumns"
+            [rowObject]="row"
+            [clickableRow]="true"
+        ></tr>
     </table>
 </div>
 <h2>Selection result</h2>
 <div class="flex-row-container">
     <span class="flex-independent-row-item">
-        {{selection | json}}
+        {{ selection | json }}
     </span>
 </div>

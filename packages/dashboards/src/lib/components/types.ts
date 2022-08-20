@@ -58,4 +58,7 @@ export interface ILinkDefinition {
     text: string;
 }
 
-export enum EmbeddedContentMode { URL, HTML }
+export enum EmbeddedContentMode {
+    URL,
+    HTML,
+}

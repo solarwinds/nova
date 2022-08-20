@@ -7,8 +7,11 @@ describe("services >", () => {
         let utilService: UtilService;
         let cache: ITransientCache;
 
-        const getTestObj = (): any =>
-            ({key: "obj", msg: "hello world", someNumber: 9});
+        const getTestObj = (): any => ({
+            key: "obj",
+            msg: "hello world",
+            someNumber: 9,
+        });
 
         beforeEach(() => {
             utilService = <UtilService>{};
@@ -38,8 +41,12 @@ describe("services >", () => {
 
         it("should remove all objects from the cache", () => {
             const obj1 = getTestObj();
-            const obj2 = {key: "obj2", msg: "grumble", someNumber: 99};
-            const obj3 = {key: "obj3", msg: "grumble grumble", someNumber: 999};
+            const obj2 = { key: "obj2", msg: "grumble", someNumber: 99 };
+            const obj3 = {
+                key: "obj3",
+                msg: "grumble grumble",
+                someNumber: 999,
+            };
             expect(cache.entryCount()).toBe(0);
             cache.put(obj1.key, obj1, 3000);
             cache.put(obj2.key, obj2, 3000);
@@ -55,7 +62,7 @@ describe("services >", () => {
 
         it("should be removed from the cache on timeout interval provided", () => {
             const obj = getTestObj();
-            const obj2 = {key: "obj2", msg: "grumble", someNumber: 99};
+            const obj2 = { key: "obj2", msg: "grumble", someNumber: 99 };
             let notifiedOnExpiration = false;
             let notifiedOnExpiration1 = false;
 

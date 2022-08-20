@@ -4,7 +4,10 @@ import { BehaviorSubject } from "rxjs";
 
 import { IProportionalDonutContentAggregator } from "../../functions/proportional-aggregators/types";
 import { IFormatter, IFormatterDefinition } from "../types";
-import { ILegendPlacementOption, LegendPlacement } from "../../widget-types/common/widget/legend"
+import {
+    ILegendPlacementOption,
+    LegendPlacement,
+} from "../../widget-types/common/widget/legend";
 
 export enum ProportionalWidgetChartTypes {
     DonutChart = "DonutChart",
@@ -65,6 +68,7 @@ export interface IProportionalDataFieldsConfig extends IDataFieldsConfig {
     chartSeriesDataFields$: BehaviorSubject<IDataField[]>;
 }
 
-export interface IProportionalWidgetData extends IChartAssistSeries<IAccessors> {
+export interface IProportionalWidgetData
+    extends IChartAssistSeries<IAccessors> {
     link?: string;
 }

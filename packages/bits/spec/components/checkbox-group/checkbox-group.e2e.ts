@@ -17,10 +17,22 @@ describe("USERCONTROL Checkbox Group", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("checkbox-group/checkbox-group-test");
-        checkboxGroup = Atom.find(CheckboxGroupAtom, "nui-demo-checkbox-group-basic");
-        checkboxGroupJustified = Atom.find(CheckboxGroupAtom, "nui-demo-checkbox-group-justified");
-        checkboxGroupCheckboxDisabled = Atom.find(CheckboxAtom, "nui-demo-checkbox-group-1-disabled-checkbox");
-        checkboxGroupPartOfForm = Atom.find(CheckboxGroupAtom, "nui-demo-checkbox-group-part-of-form");
+        checkboxGroup = Atom.find(
+            CheckboxGroupAtom,
+            "nui-demo-checkbox-group-basic"
+        );
+        checkboxGroupJustified = Atom.find(
+            CheckboxGroupAtom,
+            "nui-demo-checkbox-group-justified"
+        );
+        checkboxGroupCheckboxDisabled = Atom.find(
+            CheckboxAtom,
+            "nui-demo-checkbox-group-1-disabled-checkbox"
+        );
+        checkboxGroupPartOfForm = Atom.find(
+            CheckboxGroupAtom,
+            "nui-demo-checkbox-group-part-of-form"
+        );
         submitBtn = Atom.findIn(ButtonAtom, element(by.buttonText("Submit")));
         checkbox1 = await checkboxGroup.getCheckbox("Cabbage");
         checkbox2 = await checkboxGroup.getCheckbox("Potato");
@@ -52,11 +64,17 @@ describe("USERCONTROL Checkbox Group", () => {
     });
 
     it("should activate submit button when 3 checkboxes selected", async () => {
-        expect(await checkboxGroupPartOfForm.getCheckboxByIndex(0).isChecked()).toBe(true);
-        expect(await checkboxGroupPartOfForm.getCheckboxByIndex(1).isChecked()).toBe(true);
-        expect(await checkboxGroupPartOfForm.getCheckboxByIndex(2).isChecked()).toBe(false);
+        expect(
+            await checkboxGroupPartOfForm.getCheckboxByIndex(0).isChecked()
+        ).toBe(true);
+        expect(
+            await checkboxGroupPartOfForm.getCheckboxByIndex(1).isChecked()
+        ).toBe(true);
+        expect(
+            await checkboxGroupPartOfForm.getCheckboxByIndex(2).isChecked()
+        ).toBe(false);
         expect(await submitBtn.isDisabled()).toBe(true);
         await checkboxGroupPartOfForm.getCheckboxByIndex(2).toggle();
         expect(await submitBtn.isDisabled()).toBe(false);
-    })
+    });
 });

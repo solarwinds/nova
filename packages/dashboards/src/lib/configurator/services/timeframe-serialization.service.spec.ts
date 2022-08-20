@@ -24,7 +24,11 @@ describe("TimeframeSerializationService > ", () => {
             title,
         };
 
-        expect(new TimeframeSerializationService().convertFromSerializable(serializableTimeframe)).toEqual(nonSerializableTimeframe);
+        expect(
+            new TimeframeSerializationService().convertFromSerializable(
+                serializableTimeframe
+            )
+        ).toEqual(nonSerializableTimeframe);
     });
 
     it("should render a serializable timeframe", () => {
@@ -35,6 +39,10 @@ describe("TimeframeSerializationService > ", () => {
             title,
         };
 
-        expect(new TimeframeSerializationService().convertToSerializable(nonSerializableTimeframe)).toEqual(serializableTimeframe);
+        expect(
+            new TimeframeSerializationService().convertToSerializable(
+                nonSerializableTimeframe
+            )
+        ).toEqual(serializableTimeframe);
     });
 });

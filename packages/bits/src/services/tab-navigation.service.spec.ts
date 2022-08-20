@@ -1,6 +1,9 @@
-import {ElementRef} from "@angular/core";
+import { ElementRef } from "@angular/core";
 
-import {focusableElementsCSSSelector, TabNavigationService} from "./tab-navigation.service";
+import {
+    focusableElementsCSSSelector,
+    TabNavigationService,
+} from "./tab-navigation.service";
 
 class MockElementRef extends ElementRef {}
 
@@ -28,7 +31,9 @@ describe("services >", () => {
         it("should detect navigatable elements and disable tab navigation for them", () => {
             tabNavigationService.disableTabNavigation(elRef);
 
-            const tabFocusableElements = elRef.nativeElement.querySelectorAll(focusableElementsCSSSelector);
+            const tabFocusableElements = elRef.nativeElement.querySelectorAll(
+                focusableElementsCSSSelector
+            );
 
             // all known use cases are detected
             // - div with tabindex attribute
@@ -42,8 +47,9 @@ describe("services >", () => {
                     `Element tag '${domEl.tagName}' doesn't have tabindex attribute`
                 );
 
-                expect(domEl.getAttribute("tabindex")).toBe("-1",
-                                                            `Element tag '${domEl.tagName}' should have tabindex="-1"`
+                expect(domEl.getAttribute("tabindex")).toBe(
+                    "-1",
+                    `Element tag '${domEl.tagName}' should have tabindex="-1"`
                 );
             });
         });
@@ -52,7 +58,9 @@ describe("services >", () => {
             tabNavigationService.disableTabNavigation(elRef);
             tabNavigationService.restoreTabNavigation();
 
-            const tabFocusableElements = elRef.nativeElement.querySelectorAll(focusableElementsCSSSelector);
+            const tabFocusableElements = elRef.nativeElement.querySelectorAll(
+                focusableElementsCSSSelector
+            );
 
             // all known use cases are detected
             expect(tabFocusableElements.length).toBe(4);
@@ -61,13 +69,17 @@ describe("services >", () => {
             expect(tabFocusableElements[0].getAttribute("tabindex")).toBe("1");
 
             // button didn't had initially a tab index
-            expect(tabFocusableElements[1].hasAttribute("tabindex")).toBeFalsy();
+            expect(
+                tabFocusableElements[1].hasAttribute("tabindex")
+            ).toBeFalsy();
 
             // a tag had initially a tab index
             expect(tabFocusableElements[2].getAttribute("tabindex")).toBe("2");
 
             // input didn't had initially a tab index
-            expect(tabFocusableElements[3].hasAttribute("tabindex")).toBeFalsy();
+            expect(
+                tabFocusableElements[3].hasAttribute("tabindex")
+            ).toBeFalsy();
         });
     });
 });

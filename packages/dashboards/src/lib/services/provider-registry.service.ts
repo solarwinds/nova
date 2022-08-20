@@ -1,6 +1,16 @@
 import { DecimalPipe } from "@angular/common";
-import { Injectable, Injector, NgZone, Optional, StaticProvider } from "@angular/core";
-import { LoggerService, TimeframeService, VirtualViewportManager } from "@nova-ui/bits";
+import {
+    Injectable,
+    Injector,
+    NgZone,
+    Optional,
+    StaticProvider,
+} from "@angular/core";
+import {
+    LoggerService,
+    TimeframeService,
+    VirtualViewportManager,
+} from "@nova-ui/bits";
 
 import { DataSourceAdapter } from "../components/providers/data-source-adapter";
 import { DrilldownDataSourceAdapter } from "../components/providers/drilldown-data-source-adapter";
@@ -35,7 +45,12 @@ import { TimeseriesTileIndicatorDataConverterService } from "../configurator/ser
 import { CONFIGURATOR_CONVERTER } from "../configurator/services/converters/types";
 import { PreviewService } from "../configurator/services/preview.service";
 import { PizzagnaService } from "../pizzagna/services/pizzagna.service";
-import { DASHBOARD_EVENT_BUS, DATA_SOURCE, FORMATTERS_REGISTRY, PIZZAGNA_EVENT_BUS } from "../types";
+import {
+    DASHBOARD_EVENT_BUS,
+    DATA_SOURCE,
+    FORMATTERS_REGISTRY,
+    PIZZAGNA_EVENT_BUS,
+} from "../types";
 
 import { EventRegistryService } from "./event-registry.service";
 import { KpiColorComparatorsRegistryService } from "./kpi-color-comparators-registry.service";
@@ -82,7 +97,6 @@ import { UrlInteractionService } from "./url-interaction.service";
 import { WidgetConfigurationService } from "./widget-configuration.service";
 import { WidgetToDashboardEventProxyService } from "./widget-to-dashboard-event-proxy.service";
 
-
 @Injectable({ providedIn: "root" })
 export class ProviderRegistryService {
     public staticProviders: IStaticProviders = {};
@@ -105,27 +119,53 @@ export class ProviderRegistryService {
             },
             [NOVA_DATASOURCE_ADAPTER]: {
                 provide: DataSourceAdapter,
-                deps: [PIZZAGNA_EVENT_BUS, [new Optional(), DATA_SOURCE], PizzagnaService],
+                deps: [
+                    PIZZAGNA_EVENT_BUS,
+                    [new Optional(), DATA_SOURCE],
+                    PizzagnaService,
+                ],
             },
             [NOVA_TABLE_DATASOURCE_ADAPTER]: {
                 provide: TableDataSourceAdapter,
-                deps: [PIZZAGNA_EVENT_BUS, [new Optional(), DATA_SOURCE], PizzagnaService, VirtualViewportManager],
+                deps: [
+                    PIZZAGNA_EVENT_BUS,
+                    [new Optional(), DATA_SOURCE],
+                    PizzagnaService,
+                    VirtualViewportManager,
+                ],
             },
             [NOVA_TIMESERIES_DATASOURCE_ADAPTER]: {
                 provide: TimeseriesDataSourceAdapter,
-                deps: [PIZZAGNA_EVENT_BUS, [new Optional(), DATA_SOURCE], PizzagnaService],
+                deps: [
+                    PIZZAGNA_EVENT_BUS,
+                    [new Optional(), DATA_SOURCE],
+                    PizzagnaService,
+                ],
             },
             [NOVA_KPI_DATASOURCE_ADAPTER]: {
                 provide: KpiDataSourceAdapter,
-                deps: [PIZZAGNA_EVENT_BUS, [new Optional(), DATA_SOURCE], PizzagnaService, DecimalPipe],
+                deps: [
+                    PIZZAGNA_EVENT_BUS,
+                    [new Optional(), DATA_SOURCE],
+                    PizzagnaService,
+                    DecimalPipe,
+                ],
             },
             [NOVA_DRILLDOWN_DATASOURCE_ADAPTER]: {
                 provide: DrilldownDataSourceAdapter,
-                deps: [PIZZAGNA_EVENT_BUS, [new Optional(), DATA_SOURCE], PizzagnaService],
+                deps: [
+                    PIZZAGNA_EVENT_BUS,
+                    [new Optional(), DATA_SOURCE],
+                    PizzagnaService,
+                ],
             },
             [NOVA_KPI_COLOR_PRIORITIZER]: {
                 provide: KpiColorPrioritizer,
-                deps: [[new Optional(), DATA_SOURCE], PizzagnaService, KpiColorComparatorsRegistryService],
+                deps: [
+                    [new Optional(), DATA_SOURCE],
+                    PizzagnaService,
+                    KpiColorComparatorsRegistryService,
+                ],
             },
             [NOVA_TITLE_AND_DESCRIPTION_CONVERTER]: {
                 provide: CONFIGURATOR_CONVERTER,
@@ -160,12 +200,22 @@ export class ProviderRegistryService {
             [NOVA_TIMESERIES_TILE_INDICATOR_DATA_CONVERTER]: {
                 provide: CONFIGURATOR_CONVERTER,
                 useClass: TimeseriesTileIndicatorDataConverterService,
-                deps: [PIZZAGNA_EVENT_BUS, PreviewService, PizzagnaService, TimeframeService],
+                deps: [
+                    PIZZAGNA_EVENT_BUS,
+                    PreviewService,
+                    PizzagnaService,
+                    TimeframeService,
+                ],
             },
             [NOVA_TIMESERIES_METADATA_CONVERTER]: {
                 provide: CONFIGURATOR_CONVERTER,
                 useClass: TimeseriesMetadataConverterService,
-                deps: [PIZZAGNA_EVENT_BUS, PreviewService, PizzagnaService, TimeframeService],
+                deps: [
+                    PIZZAGNA_EVENT_BUS,
+                    PreviewService,
+                    PizzagnaService,
+                    TimeframeService,
+                ],
             },
             [NOVA_TIMESERIES_SERIES_CONVERTER]: {
                 provide: CONFIGURATOR_CONVERTER,
@@ -200,7 +250,12 @@ export class ProviderRegistryService {
             },
             [NOVA_URL_INTERACTION_HANDLER]: {
                 provide: UrlInteractionHandler,
-                deps: [PIZZAGNA_EVENT_BUS, "windowObject", LoggerService, UrlInteractionService],
+                deps: [
+                    PIZZAGNA_EVENT_BUS,
+                    "windowObject",
+                    LoggerService,
+                    UrlInteractionService,
+                ],
             },
             [NOVA_EVENT_BUS_DEBUGGER]: {
                 provide: EventBusDebugger,
@@ -237,19 +292,29 @@ export class ProviderRegistryService {
     }
 
     public setProviders(providers: IStaticProviders): void {
-        this.staticProviders = Object.assign({}, this.staticProviders, providers);
+        this.staticProviders = Object.assign(
+            {},
+            this.staticProviders,
+            providers
+        );
     }
 
     public getProvider(providerId: string): StaticProvider {
         const provider = this.staticProviders[providerId];
         if (!provider) {
             this.logger.warn("No provider registered for id", providerId);
-            this.logger.warn("Known providers:", Object.keys(this.staticProviders).join(", "));
+            this.logger.warn(
+                "Known providers:",
+                Object.keys(this.staticProviders).join(", ")
+            );
         }
         return provider;
     }
 
-    public getProviderInstance(provider: StaticProvider, parentInjector: Injector): any {
+    public getProviderInstance(
+        provider: StaticProvider,
+        parentInjector: Injector
+    ): any {
         const injector = Injector.create({
             providers: [provider],
             parent: parentInjector,

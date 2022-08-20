@@ -10,7 +10,11 @@ class MockComponent {
 }
 
 class MockInjector implements Injector {
-    public get<T>(token: Type<T> | InjectionToken<T>, notFoundValue?: T, flags?: InjectFlags): T {
+    public get<T>(
+        token: Type<T> | InjectionToken<T>,
+        notFoundValue?: T,
+        flags?: InjectFlags
+    ): T {
         // @ts-ignore: Suppressed for test purposes
         return null;
     }
@@ -22,7 +26,10 @@ describe("ComponentPortalService > ", () => {
 
     beforeEach(() => {
         componentRegistry = new ComponentRegistryService(mockLoggerService);
-        service = new ComponentPortalService(componentRegistry, mockLoggerService);
+        service = new ComponentPortalService(
+            componentRegistry,
+            mockLoggerService
+        );
     });
 
     describe("createComponentPortal > ", () => {
@@ -31,7 +38,10 @@ describe("ComponentPortalService > ", () => {
         });
 
         it("should return a component portal for the specified string argument", () => {
-            const portal = service.createComponentPortal(MockComponent.lateLoadKey, null);
+            const portal = service.createComponentPortal(
+                MockComponent.lateLoadKey,
+                null
+            );
             expect(portal.component.name).toEqual(MockComponent.lateLoadKey);
         });
 
@@ -41,7 +51,10 @@ describe("ComponentPortalService > ", () => {
         });
 
         it("should return a component portal for the TemplateLoadErrorComponent", () => {
-            const portal = service.createComponentPortal("NonExistentComponent", null);
+            const portal = service.createComponentPortal(
+                "NonExistentComponent",
+                null
+            );
             expect(portal.component.name).toEqual("TemplateLoadErrorComponent");
         });
     });
@@ -53,13 +66,16 @@ describe("ComponentPortalService > ", () => {
         });
 
         it("should assign a parent injector if specified", () => {
-            const injector = service.createInjector({ injector: new MockInjector() });
-            expect((<any>injector).parent.constructor.name).toEqual("MockInjector");
+            const injector = service.createInjector({
+                injector: new MockInjector(),
+            });
+            expect((<any>injector).parent.constructor.name).toEqual(
+                "MockInjector"
+            );
         });
 
         it("should assign providers if specified", () => {
-            class MockProvider {
-            }
+            class MockProvider {}
 
             const provider = {
                 provide: MockProvider,

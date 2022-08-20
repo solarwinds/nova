@@ -3,7 +3,6 @@ import { Subject } from "rxjs";
 import { EventBus } from "./event-bus";
 import { EventDefinition, IEvent } from "./public-api";
 
-
 describe("EventBus > ", () => {
     let eventBus: EventBus<IEvent>;
     beforeEach(() => {
@@ -14,7 +13,9 @@ describe("EventBus > ", () => {
         it("should add a stream if it doesn't already exist", () => {
             const newStream = new EventDefinition("new_stream");
             eventBus.getStream(newStream);
-            expect((<any>eventBus).streams[newStream.id] instanceof Subject).toEqual(true);
+            expect(
+                (<any>eventBus).streams[newStream.id] instanceof Subject
+            ).toEqual(true);
         });
 
         it("should invoke streamAdded.next", () => {
@@ -70,9 +71,15 @@ describe("EventBus > ", () => {
         it("should invoke next on the specified stream", () => {
             const newStream = new EventDefinition("new_stream");
             const testEventPayload = { payload: "test" };
-            const spy = spyOn(eventBus.getStream(newStream), "next").and.callThrough();
+            const spy = spyOn(
+                eventBus.getStream(newStream),
+                "next"
+            ).and.callThrough();
             eventBus.next(newStream, testEventPayload);
-            expect(spy).toHaveBeenCalledWith({ id: newStream.id, ...testEventPayload });
+            expect(spy).toHaveBeenCalledWith({
+                id: newStream.id,
+                ...testEventPayload,
+            });
         });
     });
 });

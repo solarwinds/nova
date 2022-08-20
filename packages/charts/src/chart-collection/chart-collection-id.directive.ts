@@ -19,11 +19,14 @@ export class ChartCollectionIdDirective implements AfterViewInit {
     @Input("nuiChartCollectionId")
     public collectionId: string;
 
-    constructor(@Inject(CHART_COMPONENT) private chartComponent: IChartComponent,
-                private chartCollectionService: ChartCollectionService) {
-    }
+    constructor(
+        @Inject(CHART_COMPONENT) private chartComponent: IChartComponent,
+        private chartCollectionService: ChartCollectionService
+    ) {}
 
     public ngAfterViewInit(): void {
-        this.chartCollectionService.getChartCollection(this.collectionId).addChart(this.chartComponent.chart);
+        this.chartCollectionService
+            .getChartCollection(this.collectionId)
+            .addChart(this.chartComponent.chart);
     }
 }

@@ -8,7 +8,6 @@ import { XYGrid } from "../grid/xy-grid";
 import { ChartAssist, LegendInteractionAssist } from "./chart-assist";
 
 describe("legend interaction assist >", () => {
-
     let chartAssist: ChartAssist;
     let legendInteractionAssist: LegendInteractionAssist;
     let seriesSet: IChartAssistSeries<IAccessors>[];
@@ -49,15 +48,21 @@ describe("legend interaction assist >", () => {
     });
 
     describe("update >", () => {
-
         it("initializes states to default values", () => {
             legendInteractionAssist.update(seriesSet);
 
-            const seriesStatesBeforeIndex = legendInteractionAssist.renderStatesIndex;
+            const seriesStatesBeforeIndex =
+                legendInteractionAssist.renderStatesIndex;
             expect(Object.keys(seriesStatesBeforeIndex).length).toBe(3);
-            expect(seriesStatesBeforeIndex["series-1"].state).toBe(RenderState.default);
-            expect(seriesStatesBeforeIndex["series-1__trendline"].state).toBe(RenderState.default);
-            expect(seriesStatesBeforeIndex["series-2"].state).toBe(RenderState.default);
+            expect(seriesStatesBeforeIndex["series-1"].state).toBe(
+                RenderState.default
+            );
+            expect(seriesStatesBeforeIndex["series-1__trendline"].state).toBe(
+                RenderState.default
+            );
+            expect(seriesStatesBeforeIndex["series-2"].state).toBe(
+                RenderState.default
+            );
         });
 
         it("initializes states to provided values", () => {
@@ -66,9 +71,14 @@ describe("legend interaction assist >", () => {
 
             legendInteractionAssist.update(seriesSet);
 
-            const seriesStatesBeforeIndex = legendInteractionAssist.renderStatesIndex;
-            expect(seriesStatesBeforeIndex["series-1"].state).toBe(RenderState.hidden);
-            expect(seriesStatesBeforeIndex["series-1"].emphasisState).toBe(RenderState.default);
+            const seriesStatesBeforeIndex =
+                legendInteractionAssist.renderStatesIndex;
+            expect(seriesStatesBeforeIndex["series-1"].state).toBe(
+                RenderState.hidden
+            );
+            expect(seriesStatesBeforeIndex["series-1"].emphasisState).toBe(
+                RenderState.default
+            );
             expect(seriesStatesBeforeIndex["series-1"].visible).toBe(false);
 
             // provided hidden state
@@ -76,8 +86,12 @@ describe("legend interaction assist >", () => {
 
             legendInteractionAssist.update(seriesSet);
 
-            expect(seriesStatesBeforeIndex["series-1"].state).toBe(RenderState.emphasized);
-            expect(seriesStatesBeforeIndex["series-1"].emphasisState).toBe(RenderState.emphasized);
+            expect(seriesStatesBeforeIndex["series-1"].state).toBe(
+                RenderState.emphasized
+            );
+            expect(seriesStatesBeforeIndex["series-1"].emphasisState).toBe(
+                RenderState.emphasized
+            );
             expect(seriesStatesBeforeIndex["series-1"].visible).toBe(true);
         });
 
@@ -87,9 +101,14 @@ describe("legend interaction assist >", () => {
 
             legendInteractionAssist.update(seriesSet);
 
-            const seriesStatesBeforeIndex = legendInteractionAssist.renderStatesIndex;
-            expect(seriesStatesBeforeIndex["series-1"].state).toBe(RenderState.hidden);
-            expect(seriesStatesBeforeIndex["series-1"].emphasisState).toBe(RenderState.default);
+            const seriesStatesBeforeIndex =
+                legendInteractionAssist.renderStatesIndex;
+            expect(seriesStatesBeforeIndex["series-1"].state).toBe(
+                RenderState.hidden
+            );
+            expect(seriesStatesBeforeIndex["series-1"].emphasisState).toBe(
+                RenderState.default
+            );
             expect(seriesStatesBeforeIndex["series-1"].visible).toBe(false);
 
             // provided hidden state
@@ -98,45 +117,65 @@ describe("legend interaction assist >", () => {
             chartAssist.update([seriesSet[0]]);
             legendInteractionAssist.update([seriesSet[0]]);
 
-            expect(seriesStatesBeforeIndex["series-1"].state).toBe(RenderState.emphasized);
-            expect(seriesStatesBeforeIndex["series-1"].emphasisState).toBe(RenderState.emphasized);
+            expect(seriesStatesBeforeIndex["series-1"].state).toBe(
+                RenderState.emphasized
+            );
+            expect(seriesStatesBeforeIndex["series-1"].emphasisState).toBe(
+                RenderState.emphasized
+            );
             expect(seriesStatesBeforeIndex["series-1"].visible).toBe(true);
         });
-
     });
 
     describe("setGroupState >", () => {
-
         beforeEach(() => {
             legendInteractionAssist.update(seriesSet);
         });
 
         it("sets state to a single series", () => {
-            legendInteractionAssist.setGroupState("series-2", RenderState.deemphasized);
+            legendInteractionAssist.setGroupState(
+                "series-2",
+                RenderState.deemphasized
+            );
 
-            const seriesStatesAfterIndex = legendInteractionAssist.renderStatesIndex;
+            const seriesStatesAfterIndex =
+                legendInteractionAssist.renderStatesIndex;
 
             expect(Object.keys(seriesStatesAfterIndex).length).toBe(3);
-            expect(seriesStatesAfterIndex["series-1"].state).toBe(RenderState.default);
-            expect(seriesStatesAfterIndex["series-1__trendline"].state).toBe(RenderState.default);
-            expect(seriesStatesAfterIndex["series-2"].state).toBe(RenderState.deemphasized);
+            expect(seriesStatesAfterIndex["series-1"].state).toBe(
+                RenderState.default
+            );
+            expect(seriesStatesAfterIndex["series-1__trendline"].state).toBe(
+                RenderState.default
+            );
+            expect(seriesStatesAfterIndex["series-2"].state).toBe(
+                RenderState.deemphasized
+            );
         });
 
         it("propagates state to a group of series", () => {
-            legendInteractionAssist.setGroupState("series-1", RenderState.deemphasized);
+            legendInteractionAssist.setGroupState(
+                "series-1",
+                RenderState.deemphasized
+            );
 
-            const seriesStatesAfterIndex = legendInteractionAssist.renderStatesIndex;
+            const seriesStatesAfterIndex =
+                legendInteractionAssist.renderStatesIndex;
 
             expect(Object.keys(seriesStatesAfterIndex).length).toBe(3);
-            expect(seriesStatesAfterIndex["series-1"].state).toBe(RenderState.deemphasized);
-            expect(seriesStatesAfterIndex["series-1__trendline"].state).toBe(RenderState.deemphasized);
-            expect(seriesStatesAfterIndex["series-2"].state).toBe(RenderState.default);
+            expect(seriesStatesAfterIndex["series-1"].state).toBe(
+                RenderState.deemphasized
+            );
+            expect(seriesStatesAfterIndex["series-1__trendline"].state).toBe(
+                RenderState.deemphasized
+            );
+            expect(seriesStatesAfterIndex["series-2"].state).toBe(
+                RenderState.default
+            );
         });
-
     });
 
     describe("setGroupVisibility >", () => {
-
         beforeEach(() => {
             legendInteractionAssist.update(seriesSet);
         });
@@ -144,35 +183,49 @@ describe("legend interaction assist >", () => {
         it("propagates visibility to a group of series", () => {
             legendInteractionAssist.setGroupVisibility("series-1", false);
 
-            const seriesStatesAfterIndex = legendInteractionAssist.renderStatesIndex;
+            const seriesStatesAfterIndex =
+                legendInteractionAssist.renderStatesIndex;
 
             expect(Object.keys(seriesStatesAfterIndex).length).toBe(3);
-            expect(seriesStatesAfterIndex["series-1"].state).toBe(RenderState.hidden);
-            expect(seriesStatesAfterIndex["series-1__trendline"].state).toBe(RenderState.hidden);
-            expect(seriesStatesAfterIndex["series-2"].state).toBe(RenderState.default);
+            expect(seriesStatesAfterIndex["series-1"].state).toBe(
+                RenderState.hidden
+            );
+            expect(seriesStatesAfterIndex["series-1__trendline"].state).toBe(
+                RenderState.hidden
+            );
+            expect(seriesStatesAfterIndex["series-2"].state).toBe(
+                RenderState.default
+            );
         });
 
         it("persists state after visibility revert to a group of series", () => {
             // set series-2 to emphasized
-            legendInteractionAssist.setGroupState("series-2", RenderState.emphasized);
+            legendInteractionAssist.setGroupState(
+                "series-2",
+                RenderState.emphasized
+            );
 
-            expect(legendInteractionAssist.renderStatesIndex["series-2"].state).toBe(RenderState.emphasized);
+            expect(
+                legendInteractionAssist.renderStatesIndex["series-2"].state
+            ).toBe(RenderState.emphasized);
 
             // then hide it
             legendInteractionAssist.setGroupVisibility("series-2", false);
 
-            expect(legendInteractionAssist.renderStatesIndex["series-2"].state).toBe(RenderState.hidden);
+            expect(
+                legendInteractionAssist.renderStatesIndex["series-2"].state
+            ).toBe(RenderState.hidden);
 
             // then show it again
             legendInteractionAssist.setGroupVisibility("series-2", true);
 
-            expect(legendInteractionAssist.renderStatesIndex["series-2"].state).toBe(RenderState.emphasized);
+            expect(
+                legendInteractionAssist.renderStatesIndex["series-2"].state
+            ).toBe(RenderState.emphasized);
         });
-
     });
 
     describe("resetValues >", () => {
-
         it("resets states of single series, which becomes emphasized", () => {
             const singleSeriesSet = [seriesSet[0]];
 
@@ -180,14 +233,22 @@ describe("legend interaction assist >", () => {
             legendInteractionAssist.update(singleSeriesSet);
 
             // mess with the states a little bit
-            legendInteractionAssist.setGroupState("series-1", RenderState.deemphasized);
+            legendInteractionAssist.setGroupState(
+                "series-1",
+                RenderState.deemphasized
+            );
 
-            expect(legendInteractionAssist.renderStatesIndex["series-1"].state).toBe(RenderState.deemphasized);
+            expect(
+                legendInteractionAssist.renderStatesIndex["series-1"].state
+            ).toBe(RenderState.deemphasized);
 
             legendInteractionAssist.resetSeries();
 
-            const seriesStatesAfterIndex = legendInteractionAssist.renderStatesIndex;
-            expect(seriesStatesAfterIndex["series-1"].state).toBe(RenderState.emphasized);
+            const seriesStatesAfterIndex =
+                legendInteractionAssist.renderStatesIndex;
+            expect(seriesStatesAfterIndex["series-1"].state).toBe(
+                RenderState.emphasized
+            );
         });
 
         it("resets states of multiple series", () => {
@@ -195,18 +256,28 @@ describe("legend interaction assist >", () => {
             legendInteractionAssist.update(seriesSet);
 
             // mess with the states a little bit
-            legendInteractionAssist.setGroupState("series-2", RenderState.deemphasized);
+            legendInteractionAssist.setGroupState(
+                "series-2",
+                RenderState.deemphasized
+            );
 
-            expect(legendInteractionAssist.renderStatesIndex["series-2"].state).toBe(RenderState.deemphasized);
+            expect(
+                legendInteractionAssist.renderStatesIndex["series-2"].state
+            ).toBe(RenderState.deemphasized);
 
             legendInteractionAssist.resetSeries();
 
-            const seriesStatesAfterIndex = legendInteractionAssist.renderStatesIndex;
-            expect(seriesStatesAfterIndex["series-1"].state).toBe(RenderState.default);
-            expect(seriesStatesAfterIndex["series-1__trendline"].state).toBe(RenderState.default);
-            expect(seriesStatesAfterIndex["series-2"].state).toBe(RenderState.default);
+            const seriesStatesAfterIndex =
+                legendInteractionAssist.renderStatesIndex;
+            expect(seriesStatesAfterIndex["series-1"].state).toBe(
+                RenderState.default
+            );
+            expect(seriesStatesAfterIndex["series-1__trendline"].state).toBe(
+                RenderState.default
+            );
+            expect(seriesStatesAfterIndex["series-2"].state).toBe(
+                RenderState.default
+            );
         });
-
     });
-
 });

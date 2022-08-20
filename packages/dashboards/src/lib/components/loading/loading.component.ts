@@ -1,4 +1,10 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
+import {
+    animate,
+    state,
+    style,
+    transition,
+    trigger,
+} from "@angular/animations";
 import { ChangeDetectorRef, Component, Input } from "@angular/core";
 
 import { IHasChangeDetector } from "../../types";
@@ -20,7 +26,5 @@ export class LoadingComponent implements IHasChangeDetector {
 
     @Input() public active = false;
 
-    constructor(public changeDetector: ChangeDetectorRef) {
-    }
-
+    constructor(public changeDetector: ChangeDetectorRef) {}
 }

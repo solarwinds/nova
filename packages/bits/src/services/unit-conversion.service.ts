@@ -12,7 +12,7 @@ import { IUnitConversionResult } from "./public-api";
  */
 @Injectable({ providedIn: "root" })
 export class UnitConversionService {
-    constructor(private logger: LoggerService) { }
+    constructor(private logger: LoggerService) {}
 
     /**
      * Converts a raw value to a larger unit approximation of the value. For example, 1024 B to 1 KB, 12345 Hz to 12.35 kHz, etc.
@@ -23,13 +23,19 @@ export class UnitConversionService {
      *
      * @returns {IUnitConversionResult} The conversion result
      */
-    convert(value: number, base: number = UnitBase.Standard, scale: number = 1): IUnitConversionResult {
+    convert(
+        value: number,
+        base: number = UnitBase.Standard,
+        scale: number = 1
+    ): IUnitConversionResult {
         let resultValue: number;
         let resultOrder: number;
         let strValue: string;
 
         if (value !== 0) {
-            resultOrder = Math.floor(Math.log(Math.abs(value)) / Math.log(base));
+            resultOrder = Math.floor(
+                Math.log(Math.abs(value)) / Math.log(base)
+            );
             resultValue = value / Math.pow(base, Math.floor(resultOrder));
 
             if (Math.abs(value) > 0 && Math.abs(value) < 1) {
@@ -38,7 +44,7 @@ export class UnitConversionService {
                     scientificNotation: value.toExponential(scale),
                     order: 0,
                     scale,
-                }
+                };
             }
 
             // fix the precision edge case
@@ -48,7 +54,7 @@ export class UnitConversionService {
                 resultOrder += 1;
             }
 
-            strValue = (resultValue).toFixed(scale);
+            strValue = resultValue.toFixed(scale);
 
             // remove trailing zeros
             strValue = parseFloat(strValue).toString();
@@ -75,21 +81,37 @@ export class UnitConversionService {
      *
      * @returns {string} The display string of the conversion result
      */
-    public getFullDisplay(conversion: IUnitConversionResult, unit: UnitOption, plusSign = false, nanDisplay = "---"): string {
+    public getFullDisplay(
+        conversion: IUnitConversionResult,
+        unit: UnitOption,
+        plusSign = false,
+        nanDisplay = "---"
+    ): string {
         const isValidNumber = this.isValidNumber(conversion.value);
         const spacing = unit !== "generic" && isValidNumber ? " " : "";
-        let unitDisplay = isValidNumber ? this.getUnitDisplay(conversion, unit) : "";
+        let unitDisplay = isValidNumber
+            ? this.getUnitDisplay(conversion, unit)
+            : "";
 
         // The generic unit is not currently i18n friendly
         const localizeValue = unit !== "generic";
 
         let displayValue: string;
 
-        if (!unitDisplay && isValidNumber && conversion.order ) {
+        if (!unitDisplay && isValidNumber && conversion.order) {
             unitDisplay = this.getUnitDisplayBaseValue(unit);
-            displayValue= this.getScientificDisplay(conversion, plusSign, nanDisplay);
+            displayValue = this.getScientificDisplay(
+                conversion,
+                plusSign,
+                nanDisplay
+            );
         } else {
-            displayValue = this.getValueDisplay(conversion, plusSign, nanDisplay, localizeValue)
+            displayValue = this.getValueDisplay(
+                conversion,
+                plusSign,
+                nanDisplay,
+                localizeValue
+            );
         }
         return `${displayValue}${spacing}${unitDisplay}`;
     }
@@ -105,13 +127,23 @@ export class UnitConversionService {
      *
      * @returns {string} The converted value display string
      */
-    public getValueDisplay(conversion: IUnitConversionResult, plusSign = false, nanDisplay = "---", localize = true): string {
+    public getValueDisplay(
+        conversion: IUnitConversionResult,
+        plusSign = false,
+        nanDisplay = "---",
+        localize = true
+    ): string {
         if (!this.isValidNumber(conversion.value)) {
             return nanDisplay;
         }
 
-        const outputValue = localize ? parseFloat(conversion.value).toLocaleString(undefined, { maximumFractionDigits: conversion.scale }) : conversion.value;
-        const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
+        const outputValue = localize
+            ? parseFloat(conversion.value).toLocaleString(undefined, {
+                  maximumFractionDigits: conversion.scale,
+              })
+            : conversion.value;
+        const prefix =
+            plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
         return `${prefix}${outputValue}`;
     }
 
@@ -123,7 +155,10 @@ export class UnitConversionService {
      *
      * @returns {string} The converted unit display string
      */
-    public getUnitDisplay(conversion: IUnitConversionResult, unit: UnitOption): string {
+    public getUnitDisplay(
+        conversion: IUnitConversionResult,
+        unit: UnitOption
+    ): string {
         return unitConversionConstants[unit][conversion.order];
     }
 
@@ -146,11 +181,16 @@ export class UnitConversionService {
      *
      * @returns {string} The converted value display string in scientific notation
      */
-    public getScientificDisplay(conversion: IUnitConversionResult, plusSign = false, nanDisplay = "---"): string {
+    public getScientificDisplay(
+        conversion: IUnitConversionResult,
+        plusSign = false,
+        nanDisplay = "---"
+    ): string {
         if (!this.isValidNumber(conversion.value)) {
             return nanDisplay;
         }
-        const prefix = plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
+        const prefix =
+            plusSign && parseInt(conversion.value, 10) > 0 ? "+" : "";
 
         return `${prefix}${conversion.scientificNotation}`;
     }

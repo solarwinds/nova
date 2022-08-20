@@ -54,16 +54,24 @@ import { TimePickerKeyboardService } from "./time-picker-keyboard.service";
     styleUrls: ["./time-picker.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
-export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit, ControlValueAccessor, NuiFormFieldControl {
-
-    @ViewChild("date", {static: true}) textbox: TextboxComponent;
-    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
-    @ViewChild("toggleRef", {static: true}) containerEl: ElementRef;
+export class TimePickerComponent
+    implements
+        OnInit,
+        OnDestroy,
+        OnChanges,
+        AfterViewInit,
+        ControlValueAccessor,
+        NuiFormFieldControl
+{
+    @ViewChild("date", { static: true }) textbox: TextboxComponent;
+    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
+    @ViewChild("toggleRef", { static: true }) containerEl: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
     @ViewChild("popup") public popup: MenuPopupComponent;
-    @ViewChild("menuTrigger", { read: ElementRef }) public menuTrigger: ElementRef;
+    @ViewChild("menuTrigger", { read: ElementRef })
+    public menuTrigger: ElementRef;
     /** sets a step (difference between item in picker) */
-    @Input() timeStep =  30;
+    @Input() timeStep = 30;
     /** sets disable state of the timepicker */
     @Input() isDisabled: boolean;
     /** sets custom formatting for time */
@@ -93,16 +101,20 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
             value.year(0).month(0).date(0);
         }
         this.innerModel = value;
-        this.textbox.writeValue(moment(this.innerModel).format(this.timeFormat));
+        this.textbox.writeValue(
+            moment(this.innerModel).format(this.timeFormat)
+        );
     }
 
     @Output() public timeChanged = new EventEmitter();
     @Output() inputBlurred: EventEmitter<any> = new EventEmitter<Moment>();
 
     public times: Moment[];
-    public itemsSource: IMenuGroup[] = [{
-        itemsSource: [],
-    }];
+    public itemsSource: IMenuGroup[] = [
+        {
+            itemsSource: [],
+        },
+    ];
     public innerModel?: Moment;
     public customContainer: ElementRef | undefined;
     public overlayConfig: OverlayConfig = {
@@ -110,35 +122,42 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     };
     public onDestroy$ = new Subject<void>();
 
-    protected popupUtilities: OverlayUtilitiesService = new OverlayUtilitiesService();
+    protected popupUtilities: OverlayUtilitiesService =
+        new OverlayUtilitiesService();
 
     private itemToSelect: any;
     private inputChanged: Subject<string> = new Subject<string>();
 
-    constructor(private elementRef: ElementRef,
-                private keyboardService: TimePickerKeyboardService,
-                private cdr: ChangeDetectorRef) {}
+    constructor(
+        private elementRef: ElementRef,
+        private keyboardService: TimePickerKeyboardService,
+        private cdr: ChangeDetectorRef
+    ) {}
 
     public ngOnInit() {
         this.times = this.generateTimeItems(this.timeStep);
         this.times.map((value: Moment) => {
-            this.itemsSource[0].itemsSource.push({title: value, displayFormat: this.timeFormat, isSelected: false});
+            this.itemsSource[0].itemsSource.push({
+                title: value,
+                displayFormat: this.timeFormat,
+                isSelected: false,
+            });
         });
         if (!this.initEmpty) {
             this.innerModel = moment(this.model).clone() || moment();
-            this.textbox.writeValue(moment(this.innerModel).format(this.timeFormat));
+            this.textbox.writeValue(
+                moment(this.innerModel).format(this.timeFormat)
+            );
         }
 
         this.itemToSelect = this.getItemToSelect();
-        this.inputChanged
-            .pipe(debounceTime(500))
-            .subscribe(value => {
-                this.updateInnerModel(value);
-                this.itemToSelect = this.getItemToSelect();
-                this.timeChanged.emit(this.innerModel);
-                this.onChange(this.innerModel);
-                this.setErrorState(value);
-            });
+        this.inputChanged.pipe(debounceTime(500)).subscribe((value) => {
+            this.updateInnerModel(value);
+            this.itemToSelect = this.getItemToSelect();
+            this.timeChanged.emit(this.innerModel);
+            this.onChange(this.innerModel);
+            this.setErrorState(value);
+        });
         this.onAppendToBodyChange(this.appendToBody);
     }
 
@@ -151,10 +170,14 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     public ngAfterViewInit() {
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(_ => this.overlay.hide());
+            .subscribe((_) => this.overlay.hide());
 
         this.initPopupUtilities();
-        this.keyboardService.initService(this.popup, this.overlay, this.menuTrigger.nativeElement);
+        this.keyboardService.initService(
+            this.popup,
+            this.overlay,
+            this.menuTrigger.nativeElement
+        );
         this.cdr.detectChanges();
     }
 
@@ -173,11 +196,19 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
             return;
         }
 
-        if (this.popupArea.nativeElement.contains(event.relatedTarget as HTMLElement)) {
+        if (
+            this.popupArea.nativeElement.contains(
+                event.relatedTarget as HTMLElement
+            )
+        ) {
             return;
         }
 
-        if (!this.containerEl.nativeElement.contains(event.relatedTarget as HTMLElement)) {
+        if (
+            !this.containerEl.nativeElement.contains(
+                event.relatedTarget as HTMLElement
+            )
+        ) {
             this.overlay.hide();
         }
     }
@@ -190,13 +221,24 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
             (value as Moment).month(0);
             (value as Moment).seconds(0);
         }
-        this.innerModel = _isEmpty(value) || value.length === 0 ? undefined : moment(value, this.timeFormat);
+        this.innerModel =
+            _isEmpty(value) || value.length === 0
+                ? undefined
+                : moment(value, this.timeFormat);
         if (!moment(this.innerModel).isValid()) {
             this.innerModel = value;
         }
         this.onTouched();
-        if (!_isEmpty(this.times) && !_isEmpty(this.innerModel) && !_isNil(this.innerModel)) {
-            const index = this.getItemIndexToSelect(this.innerModel, this.timeStep, this.times);
+        if (
+            !_isEmpty(this.times) &&
+            !_isEmpty(this.innerModel) &&
+            !_isNil(this.innerModel)
+        ) {
+            const index = this.getItemIndexToSelect(
+                this.innerModel,
+                this.timeStep,
+                this.times
+            );
             this.unselectAllItems();
             if (isFinite(index)) {
                 this.itemsSource[0].itemsSource[index].isSelected = true;
@@ -247,14 +289,17 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         if (!this.isDisabled) {
             this.overlay.toggle();
         }
-        const selectedItem = this.elementRef
-            .nativeElement
-            .getElementsByClassName("nui-menu-item--selected")[0];
+        const selectedItem =
+            this.elementRef.nativeElement.getElementsByClassName(
+                "nui-menu-item--selected"
+            )[0];
         selectedItem?.scrollIntoView({ block: "center" });
     }
 
     public generateTimeItems(timeStep: number): Moment[] {
-        const time = this.preserveInsignificant ? moment().hour(0).startOf("hour") : moment().year(0).startOf("year");
+        const time = this.preserveInsignificant
+            ? moment().hour(0).startOf("hour")
+            : moment().year(0).startOf("year");
 
         const initialDay = time.dayOfYear();
         const times: Moment[] = [];
@@ -269,7 +314,11 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
         return moment(timeItem).isSame(this.itemToSelect.title);
     }
 
-    public getItemIndexToSelect(model: Moment | string, timeStep: number, times: Moment[]): number {
+    public getItemIndexToSelect(
+        model: Moment | string,
+        timeStep: number,
+        times: Moment[]
+    ): number {
         const time = moment(model);
         const minutes = time.get("hours") * 60 + time.get("minutes");
         const index = Math.round(minutes / timeStep);
@@ -282,7 +331,11 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
             return;
         }
 
-        const index = this.getItemIndexToSelect(this.innerModel, this.timeStep, this.times);
+        const index = this.getItemIndexToSelect(
+            this.innerModel,
+            this.timeStep,
+            this.times
+        );
         this.unselectAllItems();
         if (isFinite(index)) {
             this.itemsSource[0].itemsSource[index].isSelected = true;
@@ -291,11 +344,15 @@ export class TimePickerComponent implements OnInit, OnDestroy, OnChanges, AfterV
     }
 
     public unselectAllItems() {
-        this.itemsSource[0].itemsSource.forEach((el: IMenuItem) => el.isSelected = false);
+        this.itemsSource[0].itemsSource.forEach(
+            (el: IMenuItem) => (el.isSelected = false)
+        );
     }
 
     public formatValue(value: any = this.innerModel) {
-        return moment(value).isValid() ? moment(value).format(this.timeFormat) : value;
+        return moment(value).isValid()
+            ? moment(value).format(this.timeFormat)
+            : value;
     }
 
     public getIconColor(): string {

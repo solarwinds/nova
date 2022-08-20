@@ -3,7 +3,10 @@ import { Injectable, QueryList } from "@angular/core";
 import isNil from "lodash/isNil";
 
 import { IOption, IOverlayComponent } from "../overlay/types";
-import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "./constants";
+import {
+    ANNOUNCER_CLOSE_MESSAGE,
+    ANNOUNCER_OPEN_MESSAGE_SUFFIX,
+} from "./constants";
 import { KEYBOARD_CODE } from "../../constants";
 
 @Injectable()
@@ -13,15 +16,18 @@ export class OptionKeyControlService<T extends IOption> {
 
     private keyboardEventsManager: ActiveDescendantKeyManager<T>;
 
-    constructor(public liveAnnouncer: LiveAnnouncer) {
-    }
+    constructor(public liveAnnouncer: LiveAnnouncer) {}
 
     public initKeyboardManager(): void {
-        this.keyboardEventsManager = new ActiveDescendantKeyManager(this.optionItems).withVerticalOrientation();
+        this.keyboardEventsManager = new ActiveDescendantKeyManager(
+            this.optionItems
+        ).withVerticalOrientation();
     }
 
     public handleKeydown(event: KeyboardEvent): void {
-        this.popup.showing ? this.handleOpenKeyDown(event) : this.handleClosedKeyDown(event);
+        this.popup.showing
+            ? this.handleOpenKeyDown(event)
+            : this.handleClosedKeyDown(event);
     }
 
     public setActiveItem(option: T): void {
@@ -57,7 +63,10 @@ export class OptionKeyControlService<T extends IOption> {
         if (isNil(this.keyboardEventsManager.activeItemIndex)) {
             throw new Error("ActiveItemIndex is not defined");
         }
-        return Boolean(this.keyboardEventsManager.activeItem && this.keyboardEventsManager.activeItemIndex >= 0);
+        return Boolean(
+            this.keyboardEventsManager.activeItem &&
+                this.keyboardEventsManager.activeItemIndex >= 0
+        );
     }
 
     private handleOpenKeyDown(event: KeyboardEvent): void {
@@ -87,7 +96,6 @@ export class OptionKeyControlService<T extends IOption> {
         }
 
         if (this.hasActiveItem() && event.code === KEYBOARD_CODE.ENTER) {
-
             if (!this.keyboardEventsManager.activeItem) {
                 throw new Error("ActiveItem is not defined");
             }
@@ -96,7 +104,10 @@ export class OptionKeyControlService<T extends IOption> {
             this.keyboardEventsManager.activeItem.element.nativeElement.click();
         }
 
-        if (event.code === KEYBOARD_CODE.TAB || event.code === KEYBOARD_CODE.ESCAPE) {
+        if (
+            event.code === KEYBOARD_CODE.TAB ||
+            event.code === KEYBOARD_CODE.ESCAPE
+        ) {
             this.popup.toggle();
             this.announceDropdown(this.popup.showing);
         }
@@ -115,8 +126,11 @@ export class OptionKeyControlService<T extends IOption> {
     }
 
     private shouldBePrevented(event: KeyboardEvent) {
-        return event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP
-            || event.code === KEYBOARD_CODE.ENTER;
+        return (
+            event.code === KEYBOARD_CODE.ARROW_DOWN ||
+            event.code === KEYBOARD_CODE.ARROW_UP ||
+            event.code === KEYBOARD_CODE.ENTER
+        );
     }
 
     private announceNavigatedOption(): void {
@@ -128,7 +142,9 @@ export class OptionKeyControlService<T extends IOption> {
     }
 
     private announceDropdown(open: boolean) {
-        const message = open ? `${this.optionItems.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}` : ANNOUNCER_CLOSE_MESSAGE;
+        const message = open
+            ? `${this.optionItems.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`
+            : ANNOUNCER_CLOSE_MESSAGE;
 
         this.liveAnnouncer.announce(message);
     }

@@ -8,12 +8,13 @@ import { DialogService, NuiDialogRef, ToastService } from "@nova-ui/bits";
 export class HeaderButtonsExampleComponent {
     private activeDialog: NuiDialogRef;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-                @Inject(ToastService) private toastService: ToastService) {
-    }
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(ToastService) private toastService: ToastService
+    ) {}
 
     public open(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm"});
+        this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
     public onButtonClick(title: string) {
@@ -23,16 +24,15 @@ export class HeaderButtonsExampleComponent {
 
     private actionDone(): void {
         this.toastService.success({
-            message: $localize `Action Done!`,
-            title: $localize `Event`,
+            message: $localize`Action Done!`,
+            title: $localize`Event`,
         });
     }
 
     private actionCanceled(): void {
         this.toastService.info({
-            message: $localize `Action Cancelled!`,
-            title: $localize `Event`,
+            message: $localize`Action Cancelled!`,
+            title: $localize`Event`,
         });
     }
-
 }

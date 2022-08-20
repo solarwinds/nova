@@ -1,6 +1,6 @@
-import {Injectable} from "@angular/core";
-import {Subscription} from "rxjs";
-import {take} from "rxjs/operators";
+import { Injectable } from "@angular/core";
+import { Subscription } from "rxjs";
+import { take } from "rxjs/operators";
 
 import { WidgetEditorAccordionComponent } from "../widget-editor-accordion/widget-editor-accordion.component";
 
@@ -21,20 +21,24 @@ export class WidgetConfiguratorSectionCoordinatorService {
                 this.closeAllAccordions();
                 accordion.open = true;
             }),
-            destroySubscription: accordion.destroySubject.pipe(take(1)).subscribe(() => {
-                this.removeAccordion(accordion);
-            }),
+            destroySubscription: accordion.destroySubject
+                .pipe(take(1))
+                .subscribe(() => {
+                    this.removeAccordion(accordion);
+                }),
         });
     }
 
     private closeAllAccordions() {
-        this.accordions.forEach(state => {
+        this.accordions.forEach((state) => {
             state.instance.closeAccordion();
         });
     }
 
     private removeAccordion(instanceToRemove: WidgetEditorAccordionComponent) {
-        const stateToRemoveIndex = this.accordions.findIndex(state => state.instance === instanceToRemove);
+        const stateToRemoveIndex = this.accordions.findIndex(
+            (state) => state.instance === instanceToRemove
+        );
         this.accordions[stateToRemoveIndex].openSubscription.unsubscribe();
         this.accordions.splice(stateToRemoveIndex, 1);
     }

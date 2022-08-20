@@ -10,9 +10,8 @@ describe("TemplateLoadErrorComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            imports: [ NuiDashboardsModule ],
-        })
-            .compileComponents();
+            imports: [NuiDashboardsModule],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

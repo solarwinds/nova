@@ -9,14 +9,9 @@ import { ButtonComponent } from "./button.component";
  * @ignore
  */
 @NgModule({
-    declarations: [ ButtonComponent ],
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-    ],
-    exports: [
-        ButtonComponent,
-    ],
+    declarations: [ButtonComponent],
+    imports: [NuiCommonModule, NuiIconModule],
+    exports: [ButtonComponent],
     providers: [],
 })
 export class NuiButtonModule {}

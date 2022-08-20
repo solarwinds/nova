@@ -10,22 +10,30 @@ import { Component } from "@angular/core";
     template: `
         <h1>Prototypes</h1>
         <ul>
-            <li *ngFor="let link of prototypes"><a [routerLink]="link.path">{{link.title}}</a></li>
+            <li *ngFor="let link of prototypes">
+                <a [routerLink]="link.path">{{ link.title }}</a>
+            </li>
         </ul>
         <nui-expander header="Archive">
             <ul>
-                <li *ngFor="let link of archivedLinks"><a [routerLink]="link.path">{{link.title}}</a></li>
+                <li *ngFor="let link of archivedLinks">
+                    <a [routerLink]="link.path">{{ link.title }}</a>
+                </li>
             </ul>
         </nui-expander>
-        <hr>
+        <hr />
         <h1>Visual Tests</h1>
         <h2>Chart Types</h2>
         <ul>
-            <li *ngFor="let link of chartTypesVisualTests"><a [routerLink]="link.path">{{link.title}}</a></li>
+            <li *ngFor="let link of chartTypesVisualTests">
+                <a [routerLink]="link.path">{{ link.title }}</a>
+            </li>
         </ul>
         <h2>Other</h2>
         <ul>
-            <li *ngFor="let link of otherVisualTests"><a [routerLink]="link.path">{{link.title}}</a></li>
+            <li *ngFor="let link of otherVisualTests">
+                <a [routerLink]="link.path">{{ link.title }}</a>
+            </li>
         </ul>
     `,
 })

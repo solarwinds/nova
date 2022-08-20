@@ -48,5 +48,4 @@ export class KpiColorComparatorsRegistryService {
     public getComparators(): IComparatorsDict {
         return this.comparators;
     }
-
 }

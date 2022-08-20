@@ -13,8 +13,8 @@ const routes = [
         path: "",
         component: DataSourceDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -23,8 +23,8 @@ const routes = [
         path: "example",
         component: DataSourceSetupComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -39,11 +39,7 @@ const routes = [
         NuiMessageModule,
         RouterModule.forChild(routes),
     ],
-    declarations: [
-        DataSourceDocsComponent,
-        DataSourceSetupComponent,
-    ],
-    entryComponents: [
-    ],
+    declarations: [DataSourceDocsComponent, DataSourceSetupComponent],
+    entryComponents: [],
 })
-export class DataSourceSetupModule { }
+export class DataSourceSetupModule {}

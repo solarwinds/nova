@@ -16,11 +16,11 @@ export const kpi: IWidgetTypeDefinition = {
     /***************************************************************************************************
      *  Paths to important settings in this type definition
      ***************************************************************************************************/
-    "paths": {
-        "widget": {
+    paths: {
+        widget: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
         },
-        "configurator": {
+        configurator: {
             [WellKnownPathKey.Root]: DEFAULT_PIZZAGNA_ROOT,
             // this points at the component type you need to change if you want to change the component for data source configuration
             [WellKnownPathKey.DataSourceConfigComponentType]: `${dataSourceConfiguratorTemplatePath}.componentType`,
@@ -37,9 +37,9 @@ export const kpi: IWidgetTypeDefinition = {
     /***************************************************************************************************
      *  Widget section describes the structural part of the KPI widget
      ***************************************************************************************************/
-    "widget": kpiWidget,
+    widget: kpiWidget,
     /***************************************************************************************************
      *  Configurator section describes the form that is used to configure the widget
      ***************************************************************************************************/
-    "configurator": kpiConfigurator,
+    configurator: kpiConfigurator,
 };

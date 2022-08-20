@@ -5,7 +5,10 @@ import isNull from "lodash/isNull";
 import { MenuItemBaseComponent } from "../menu";
 import { OverlayComponent } from "../overlay/overlay-component/overlay.component";
 import { KEYBOARD_CODE } from "../../constants";
-import { ANNOUNCER_CLOSE_SORTER_LIST_MESSAGE, ANNOUNCER_OPEN_SORTER_LIST_MESSAGE_SUFFIX } from "./constants";
+import {
+    ANNOUNCER_CLOSE_SORTER_LIST_MESSAGE,
+    ANNOUNCER_OPEN_SORTER_LIST_MESSAGE_SUFFIX,
+} from "./constants";
 
 @Injectable()
 export class SorterKeyboardService {
@@ -16,7 +19,9 @@ export class SorterKeyboardService {
     constructor(private liveAnnouncer: LiveAnnouncer) {}
 
     public initKeyboardManager(): void {
-        this.keyboardEventsManager = new ListKeyManager(this.menuItems).withVerticalOrientation();
+        this.keyboardEventsManager = new ListKeyManager(
+            this.menuItems
+        ).withVerticalOrientation();
         // TODO Uncomment in the scope of NUI-6132
         // this.keyboardEventsManager.setFirstItemActive();
 
@@ -25,7 +30,9 @@ export class SorterKeyboardService {
     }
 
     public handleKeydown(event: KeyboardEvent): void {
-        this.overlay.showing ? this.handleOpenKeyDown(event) : this.handleClosedKeyDown(event);
+        this.overlay.showing
+            ? this.handleOpenKeyDown(event)
+            : this.handleClosedKeyDown(event);
     }
 
     public getActiveItemIndex(): number | null {
@@ -33,13 +40,18 @@ export class SorterKeyboardService {
     }
 
     public announceDropdown(): void {
-        const message = this.overlay.showing ? `${this.menuItems.length} ${ANNOUNCER_OPEN_SORTER_LIST_MESSAGE_SUFFIX}` : ANNOUNCER_CLOSE_SORTER_LIST_MESSAGE;
+        const message = this.overlay.showing
+            ? `${this.menuItems.length} ${ANNOUNCER_OPEN_SORTER_LIST_MESSAGE_SUFFIX}`
+            : ANNOUNCER_CLOSE_SORTER_LIST_MESSAGE;
         this.liveAnnouncer.announce(message);
     }
 
     private handleOpenKeyDown(event: KeyboardEvent): void {
         this.keyboardEventsManager.activeItem?.setInactiveStyles();
-        if (event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP) {
+        if (
+            event.code === KEYBOARD_CODE.ARROW_DOWN ||
+            event.code === KEYBOARD_CODE.ARROW_UP
+        ) {
             this.keyboardEventsManager.onKeydown(event);
             this.announceCurrentItem();
         }
@@ -58,7 +70,10 @@ export class SorterKeyboardService {
             this.keyboardEventsManager.setActiveItem(-1);
         }
 
-        if (event.code === KEYBOARD_CODE.TAB || event.code === KEYBOARD_CODE.ESCAPE) {
+        if (
+            event.code === KEYBOARD_CODE.TAB ||
+            event.code === KEYBOARD_CODE.ESCAPE
+        ) {
             this.overlay.hide();
             this.announceDropdown();
 
@@ -77,17 +92,28 @@ export class SorterKeyboardService {
     }
 
     private hasActiveItem(): boolean {
-        if (isNull(this.keyboardEventsManager.activeItem) || isNull(this.keyboardEventsManager.activeItemIndex)) {
+        if (
+            isNull(this.keyboardEventsManager.activeItem) ||
+            isNull(this.keyboardEventsManager.activeItemIndex)
+        ) {
             return false;
         }
-        return this.keyboardEventsManager.activeItem && this.keyboardEventsManager.activeItemIndex >= 0;
+        return (
+            this.keyboardEventsManager.activeItem &&
+            this.keyboardEventsManager.activeItemIndex >= 0
+        );
     }
 
     private shouldPreventDefault(event: KeyboardEvent) {
-        return event.code === KEYBOARD_CODE.ARROW_DOWN || event.code === KEYBOARD_CODE.ARROW_UP;
+        return (
+            event.code === KEYBOARD_CODE.ARROW_DOWN ||
+            event.code === KEYBOARD_CODE.ARROW_UP
+        );
     }
 
     private announceCurrentItem() {
-        this.liveAnnouncer.announce(`Sort by ${this.keyboardEventsManager?.activeItem?.menuItem.nativeElement.innerText}.`);
+        this.liveAnnouncer.announce(
+            `Sort by ${this.keyboardEventsManager?.activeItem?.menuItem.nativeElement.innerText}.`
+        );
     }
 }

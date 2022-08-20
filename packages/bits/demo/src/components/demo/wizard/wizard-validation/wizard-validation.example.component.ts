@@ -6,7 +6,6 @@ import { WizardComponent } from "@nova-ui/bits";
     selector: "nui-wizard-validation-example",
     templateUrl: "./wizard-validation.example.component.html",
 })
-
 export class WizardValidationExampleComponent implements OnInit {
     @ViewChild("wizardComponent") wizardComponent: WizardComponent;
     public myForm: FormGroup;

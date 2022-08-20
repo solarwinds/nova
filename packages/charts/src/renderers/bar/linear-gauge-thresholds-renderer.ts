@@ -4,7 +4,11 @@ import { Subject } from "rxjs";
 import { StandardGaugeThresholdMarkerRadius } from "../../gauge/constants";
 
 import { STANDARD_RENDER_LAYERS } from "../../constants";
-import { ILasagnaLayer, ILinearGaugeThresholdsRendererConfig, IRendererEventPayload } from "../../core/common/types";
+import {
+    ILasagnaLayer,
+    ILinearGaugeThresholdsRendererConfig,
+    IRendererEventPayload,
+} from "../../core/common/types";
 import { IRectangleAccessors } from "../accessors/rectangle-accessors";
 import { GAUGE_THRESHOLD_MARKER_CLASS } from "../constants";
 import { IRenderSeries, RenderLayerName } from "../types";
@@ -14,10 +18,11 @@ import { BarRenderer } from "./bar-renderer";
 /**
  * Default configuration for Linear Gauge Thresholds Renderer
  */
-export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresholdsRendererConfig = {
-    markerRadius: StandardGaugeThresholdMarkerRadius.Large,
-    enabled: true,
-};
+export const DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG: ILinearGaugeThresholdsRendererConfig =
+    {
+        markerRadius: StandardGaugeThresholdMarkerRadius.Large,
+        enabled: true,
+    };
 
 /**
  * Renderer for drawing threshold level indicators for gauges
@@ -30,12 +35,19 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
      */
     constructor(public config: ILinearGaugeThresholdsRendererConfig = {}) {
         super(config);
-        this.config = defaultsDeep(this.config, DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG);
+        this.config = defaultsDeep(
+            this.config,
+            DEFAULT_LINEAR_GAUGE_THRESHOLDS_RENDERER_CONFIG
+        );
     }
 
     /** See {@link Renderer#draw} */
-    public draw(renderSeries: IRenderSeries<IRectangleAccessors>, rendererSubject: Subject<IRendererEventPayload>): void {
-        const dataContainer = renderSeries.containers[RenderLayerName.unclippedData];
+    public draw(
+        renderSeries: IRenderSeries<IRectangleAccessors>,
+        rendererSubject: Subject<IRendererEventPayload>
+    ): void {
+        const dataContainer =
+            renderSeries.containers[RenderLayerName.unclippedData];
         const dataSeries = renderSeries.dataSeries;
         const accessors = dataSeries.accessors;
 
@@ -45,24 +57,39 @@ export class LinearGaugeThresholdsRenderer extends BarRenderer {
         // removing this value to avoid rendering a marker for it
         data.pop();
 
-        const markerSelection = dataContainer.selectAll(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`).data(data);
+        const markerSelection = dataContainer
+            .selectAll(`circle.${GAUGE_THRESHOLD_MARKER_CLASS}`)
+            .data(data);
 
         markerSelection.exit().remove();
-        markerSelection.enter()
+        markerSelection
+            .enter()
             .append("circle")
             .attr("class", GAUGE_THRESHOLD_MARKER_CLASS)
             .merge(markerSelection as any)
-            .attr("cx", (d, i) => renderSeries.scales.x.convert(accessors?.data?.endX?.(d, i, dataSeries.data, dataSeries)))
-            .attr("cy", (d, i) => renderSeries.scales.y.convert(accessors?.data?.endY?.(d, i, dataSeries.data, dataSeries)))
+            .attr("cx", (d, i) =>
+                renderSeries.scales.x.convert(
+                    accessors?.data?.endX?.(d, i, dataSeries.data, dataSeries)
+                )
+            )
+            .attr("cy", (d, i) =>
+                renderSeries.scales.y.convert(
+                    accessors?.data?.endY?.(d, i, dataSeries.data, dataSeries)
+                )
+            )
             .attr("r", this.config.markerRadius as number)
-            .style("fill", (d, i) => `var(--nui-color-${data[i].hit ? "text-light" : "icon-default"})`)
+            .style(
+                "fill",
+                (d, i) =>
+                    `var(--nui-color-${
+                        data[i].hit ? "text-light" : "icon-default"
+                    })`
+            )
             .style("stroke-width", 0);
     }
 
     /** See {@link Renderer#getRequiredLayers} */
     public getRequiredLayers(): ILasagnaLayer[] {
-        return [
-            STANDARD_RENDER_LAYERS[RenderLayerName.unclippedData],
-        ];
+        return [STANDARD_RENDER_LAYERS[RenderLayerName.unclippedData]];
     }
 }

@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-date-picker-show-weeks-example",
     templateUrl: "./date-picker-show-weeks.example.component.html",
 })
-export class DatePickerShowWeeksExampleComponent {
-}
+export class DatePickerShowWeeksExampleComponent {}

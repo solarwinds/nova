@@ -1,6 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    BandScale, barAccessors, barGrid, BarHighlightStrategy, BarRenderer, Chart, ChartAssist, InteractionLabelPlugin, INTERACTION_DATA_POINTS_EVENT, LinearScale,
+    BandScale,
+    barAccessors,
+    barGrid,
+    BarHighlightStrategy,
+    BarRenderer,
+    Chart,
+    ChartAssist,
+    InteractionLabelPlugin,
+    INTERACTION_DATA_POINTS_EVENT,
+    LinearScale,
     Scales,
     SELECT_DATA_POINT_EVENT,
 } from "@nova-ui/charts";
@@ -9,7 +18,6 @@ import {
     selector: "nui-grouped-vertical-bar-chart-test",
     templateUrl: "./grouped-vertical-bar-chart-test.component.html",
 })
-
 export class GroupedVerticalBarChartTestComponent implements OnInit {
     public chartAssist: ChartAssist;
     public accessors = barAccessors();
@@ -25,9 +33,14 @@ export class GroupedVerticalBarChartTestComponent implements OnInit {
         bandScale.innerScale = new BandScale();
 
         const linearScale = new LinearScale();
-        const renderer = new BarRenderer({ highlightStrategy: new BarHighlightStrategy("x") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarHighlightStrategy("x"),
+        });
 
-        this.accessors.data.category = (data: any) => [data.name, data.subCategory];
+        this.accessors.data.category = (data: any) => [
+            data.name,
+            data.subCategory,
+        ];
 
         this.chartAssist = new ChartAssist(chart);
 
@@ -36,7 +49,7 @@ export class GroupedVerticalBarChartTestComponent implements OnInit {
             y: linearScale,
         };
 
-        const mappedSeries = getData().map(d => ({
+        const mappedSeries = getData().map((d) => ({
             ...d,
             accessors: this.accessors,
             renderer,
@@ -44,8 +57,14 @@ export class GroupedVerticalBarChartTestComponent implements OnInit {
         }));
 
         // Sample events that can be used in order to handle click or highlighting of certain status
-        chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).subscribe(console.log);
-        chart.getEventBus().getStream(SELECT_DATA_POINT_EVENT).subscribe(console.log);
+        chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT)
+            .subscribe(console.log);
+        chart
+            .getEventBus()
+            .getStream(SELECT_DATA_POINT_EVENT)
+            .subscribe(console.log);
 
         this.chartAssist.update(mappedSeries);
     }
@@ -55,65 +74,65 @@ export class GroupedVerticalBarChartTestComponent implements OnInit {
 function getData() {
     return [
         {
-            "id": "Brno",
-            "name": "Brno",
-            "data": [
+            id: "Brno",
+            name: "Brno",
+            data: [
                 {
-                    "name": "Q1 2018",
-                    "subCategory": "Brno",
-                    "value": 167,
+                    name: "Q1 2018",
+                    subCategory: "Brno",
+                    value: 167,
                 },
                 {
-                    "name": "Q2 2018",
-                    "subCategory": "Brno",
-                    "value": 122,
+                    name: "Q2 2018",
+                    subCategory: "Brno",
+                    value: 122,
                 },
                 {
-                    "name": "Q3 2018",
-                    "subCategory": "Brno",
-                    "value": 141,
+                    name: "Q3 2018",
+                    subCategory: "Brno",
+                    value: 141,
                 },
                 {
-                    "name": "Q4 2018",
-                    "subCategory": "Brno",
-                    "value": 66,
-                },
-            ],
-        },
-        {
-            "id": "Austin",
-            "name": "Austin",
-            "data": [
-                {
-                    "name": "Q1 2018",
-                    "subCategory": "Austin",
-                    "value": 167,
-                },
-                {
-                    "name": "Q2 2018",
-                    "subCategory": "Austin",
-                    "value": 198,
-                },
-                {
-                    "name": "Q3 2018",
-                    "subCategory": "Austin",
-                    "value": 208,
-                },
-                {
-                    "name": "Q4 2018",
-                    "subCategory": "Austin",
-                    "value": 233,
+                    name: "Q4 2018",
+                    subCategory: "Brno",
+                    value: 66,
                 },
             ],
         },
         {
-            "id": "Edinburgh",
-            "name": "Edinburgh",
-            "data": [
+            id: "Austin",
+            name: "Austin",
+            data: [
                 {
-                    "name": "Q1 2018",
-                    "subCategory": "Edinburgh",
-                    "value": 167,
+                    name: "Q1 2018",
+                    subCategory: "Austin",
+                    value: 167,
+                },
+                {
+                    name: "Q2 2018",
+                    subCategory: "Austin",
+                    value: 198,
+                },
+                {
+                    name: "Q3 2018",
+                    subCategory: "Austin",
+                    value: 208,
+                },
+                {
+                    name: "Q4 2018",
+                    subCategory: "Austin",
+                    value: 233,
+                },
+            ],
+        },
+        {
+            id: "Edinburgh",
+            name: "Edinburgh",
+            data: [
+                {
+                    name: "Q1 2018",
+                    subCategory: "Edinburgh",
+                    value: 167,
                 },
                 // sparse data is handled as well
                 // {
@@ -122,66 +141,66 @@ function getData() {
                 //     "value": 15,
                 // },
                 {
-                    "name": "Q3 2018",
-                    "subCategory": "Edinburgh",
-                    "value": 208,
+                    name: "Q3 2018",
+                    subCategory: "Edinburgh",
+                    value: 208,
                 },
                 {
-                    "name": "Q4 2018",
-                    "subCategory": "Edinburgh",
-                    "value": 123,
-                },
-            ],
-        },
-        {
-            "id": "Newcastle",
-            "name": "Newcastle",
-            "data": [
-                {
-                    "name": "Q1 2018",
-                    "subCategory": "Newcastle",
-                    "value": 11,
-                },
-                {
-                    "name": "Q2 2018",
-                    "subCategory": "Newcastle",
-                    "value": 99,
-                },
-                {
-                    "name": "Q3 2018",
-                    "subCategory": "Newcastle",
-                    "value": 17,
-                },
-                {
-                    "name": "Q4 2018",
-                    "subCategory": "Newcastle",
-                    "value": 25,
+                    name: "Q4 2018",
+                    subCategory: "Edinburgh",
+                    value: 123,
                 },
             ],
         },
         {
-            "id": "Kyiv",
-            "name": "Kyiv",
-            "data": [
+            id: "Newcastle",
+            name: "Newcastle",
+            data: [
                 {
-                    "name": "Q1 2018",
-                    "subCategory": "Kyiv",
-                    "value": 121,
+                    name: "Q1 2018",
+                    subCategory: "Newcastle",
+                    value: 11,
                 },
                 {
-                    "name": "Q2 2018",
-                    "subCategory": "Kyiv",
-                    "value": 222,
+                    name: "Q2 2018",
+                    subCategory: "Newcastle",
+                    value: 99,
                 },
                 {
-                    "name": "Q3 2018",
-                    "subCategory": "Kyiv",
-                    "value": 319,
+                    name: "Q3 2018",
+                    subCategory: "Newcastle",
+                    value: 17,
                 },
                 {
-                    "name": "Q4 2018",
-                    "subCategory": "Kyiv",
-                    "value": 328,
+                    name: "Q4 2018",
+                    subCategory: "Newcastle",
+                    value: 25,
+                },
+            ],
+        },
+        {
+            id: "Kyiv",
+            name: "Kyiv",
+            data: [
+                {
+                    name: "Q1 2018",
+                    subCategory: "Kyiv",
+                    value: 121,
+                },
+                {
+                    name: "Q2 2018",
+                    subCategory: "Kyiv",
+                    value: 222,
+                },
+                {
+                    name: "Q3 2018",
+                    subCategory: "Kyiv",
+                    value: 319,
+                },
+                {
+                    name: "Q4 2018",
+                    subCategory: "Kyiv",
+                    value: 328,
                 },
             ],
         },

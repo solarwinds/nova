@@ -1,6 +1,9 @@
 import { TitleCasePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { IWidgetTemplateSelector, WidgetTypesService } from "@nova-ui/dashboards";
+import {
+    IWidgetTemplateSelector,
+    WidgetTypesService,
+} from "@nova-ui/dashboards";
 
 import { widgets } from "../widgets";
 
@@ -11,7 +14,10 @@ import { AcmeCloneSelectionComponent } from "./acme-clone-selection.component";
     templateUrl: "./acme-clone-selection.component.html",
     styleUrls: ["./acme-clone-selection.component.less"],
 })
-export class AcmeEditWithClonerComponent extends AcmeCloneSelectionComponent implements IWidgetTemplateSelector, OnInit {
+export class AcmeEditWithClonerComponent
+    extends AcmeCloneSelectionComponent
+    implements IWidgetTemplateSelector, OnInit
+{
     static lateLoadKey = "AcmeCloneSelectionComponent";
 
     constructor(widgetTypesService: WidgetTypesService) {
@@ -21,12 +27,12 @@ export class AcmeEditWithClonerComponent extends AcmeCloneSelectionComponent imp
     public ngOnInit() {
         const titleCasePipe = new TitleCasePipe();
 
-        this.widgetItems = widgets.map(w => {
+        this.widgetItems = widgets.map((w) => {
             const typeDisplay = titleCasePipe.transform(w.type);
-            return ({
+            return {
                 title: typeDisplay,
                 widget: this.widgetTypesService.mergeWithWidgetType(w),
-            });
+            };
         });
     }
 }

@@ -2,13 +2,16 @@ import keyBy from "lodash/keyBy";
 import mapValues from "lodash/mapValues";
 import moment, { Moment } from "moment/moment";
 
-import { ITimeframe, ITimeFramePreset, ITimeFramePresetDictionary } from "../public-api";
+import {
+    ITimeframe,
+    ITimeFramePreset,
+    ITimeFramePresetDictionary,
+} from "../public-api";
 
 import { TimeframeService } from "./timeframe.service";
 
 describe("services >", () => {
     describe("timeframe >", () => {
-
         let timeframeService: TimeframeService;
 
         beforeEach(() => {
@@ -23,18 +26,31 @@ describe("services >", () => {
 
         it("should return correct time frame", () => {
             const baseTime = "2015-02-02T10:00:00.000Z";
-            const presets = timeframeService.getTimeframe({ days: -7 }, {}, baseTime);
+            const presets = timeframeService.getTimeframe(
+                { days: -7 },
+                {},
+                baseTime
+            );
 
-            expect(presets.startDatetime.toISOString()).toBe("2015-01-26T10:00:00.000Z");
+            expect(presets.startDatetime.toISOString()).toBe(
+                "2015-01-26T10:00:00.000Z"
+            );
             expect(presets.endDatetime.toISOString()).toBe(baseTime);
         });
 
         it("should return correct time frame for specified preset", () => {
             const baseTime = "2015-02-02T10:00:00.000Z";
-            const presets = timeframeService.getTimeframeByPresetId("lastHour", baseTime);
+            const presets = timeframeService.getTimeframeByPresetId(
+                "lastHour",
+                baseTime
+            );
 
-            expect(presets.startDatetime.toISOString()).toBe("2015-02-02T09:00:00.000Z");
-            expect(presets.endDatetime.toISOString()).toBe("2015-02-02T10:00:00.000Z");
+            expect(presets.startDatetime.toISOString()).toBe(
+                "2015-02-02T09:00:00.000Z"
+            );
+            expect(presets.endDatetime.toISOString()).toBe(
+                "2015-02-02T10:00:00.000Z"
+            );
         });
 
         it("should return correct time frame for custom preset", () => {
@@ -52,10 +68,17 @@ describe("services >", () => {
             };
             timeframeService.extendCurrentPresets(customPreset);
             const baseTime = "2015-02-02T10:00:00.000Z";
-            const presets = timeframeService.getTimeframeByPresetId("lastMonth", baseTime);
+            const presets = timeframeService.getTimeframeByPresetId(
+                "lastMonth",
+                baseTime
+            );
 
-            expect(presets.startDatetime.toISOString()).toBe("2015-01-02T10:00:00.000Z");
-            expect(presets.endDatetime.toISOString()).toBe("2015-02-02T10:00:00.000Z");
+            expect(presets.startDatetime.toISOString()).toBe(
+                "2015-01-02T10:00:00.000Z"
+            );
+            expect(presets.endDatetime.toISOString()).toBe(
+                "2015-02-02T10:00:00.000Z"
+            );
         });
 
         it("should shift time frame by duration", () => {
@@ -65,17 +88,30 @@ describe("services >", () => {
                 endDatetime: moment([2000]),
                 selectedPresetId: "lastDayOfMillennium",
             };
-            const nextTimeFrame = timeframeService.shiftTimeFrame(timeFrame, moment.duration(duration));
-            const prevTimeFrame = timeframeService.shiftTimeFrame(timeFrame, moment.duration(-duration));
+            const nextTimeFrame = timeframeService.shiftTimeFrame(
+                timeFrame,
+                moment.duration(duration)
+            );
+            const prevTimeFrame = timeframeService.shiftTimeFrame(
+                timeFrame,
+                moment.duration(-duration)
+            );
 
-            expect(nextTimeFrame.startDatetime.diff(timeFrame.startDatetime)).toEqual(duration);
-            expect(nextTimeFrame.endDatetime.diff(timeFrame.endDatetime)).toEqual(duration);
+            expect(
+                nextTimeFrame.startDatetime.diff(timeFrame.startDatetime)
+            ).toEqual(duration);
+            expect(
+                nextTimeFrame.endDatetime.diff(timeFrame.endDatetime)
+            ).toEqual(duration);
             expect(nextTimeFrame.selectedPresetId).toBeNull();
 
-            expect(prevTimeFrame.startDatetime.diff(timeFrame.startDatetime)).toEqual(-duration);
-            expect(prevTimeFrame.endDatetime.diff(timeFrame.endDatetime)).toEqual(-duration);
+            expect(
+                prevTimeFrame.startDatetime.diff(timeFrame.startDatetime)
+            ).toEqual(-duration);
+            expect(
+                prevTimeFrame.endDatetime.diff(timeFrame.endDatetime)
+            ).toEqual(-duration);
             expect(prevTimeFrame.selectedPresetId).toBeNull();
-
         });
 
         it("should return the timeframe duration", () => {
@@ -101,16 +137,24 @@ describe("services >", () => {
             });
 
             it("should preserve the values of all incoming properties", () => {
-                const clonedTimeframe = TimeframeService.cloneTimeFrame(testTimeFrame);
-                Object.keys(testTimeFrame).forEach(key => {
-                    expect(testTimeFrame[<keyof ITimeframe>key]).toEqual(clonedTimeframe[<keyof ITimeframe>key]);
+                const clonedTimeframe =
+                    TimeframeService.cloneTimeFrame(testTimeFrame);
+                Object.keys(testTimeFrame).forEach((key) => {
+                    expect(testTimeFrame[<keyof ITimeframe>key]).toEqual(
+                        clonedTimeframe[<keyof ITimeframe>key]
+                    );
                 });
             });
 
             it("should make clones of the start and end datetimes", () => {
-                const clonedTimeframe = TimeframeService.cloneTimeFrame(testTimeFrame);
-                expect(clonedTimeframe.startDatetime).not.toBe(testTimeFrame.startDatetime);
-                expect(clonedTimeframe.endDatetime).not.toBe(testTimeFrame.endDatetime);
+                const clonedTimeframe =
+                    TimeframeService.cloneTimeFrame(testTimeFrame);
+                expect(clonedTimeframe.startDatetime).not.toBe(
+                    testTimeFrame.startDatetime
+                );
+                expect(clonedTimeframe.endDatetime).not.toBe(
+                    testTimeFrame.endDatetime
+                );
             });
         });
 
@@ -118,7 +162,12 @@ describe("services >", () => {
             let initialTimeFrame: ITimeframe;
             let updatedTimeFrame: ITimeframe;
 
-            function timeFrameFactory(startDatetime: Moment, endDatetime: Moment, selectedPresetId: string, title?: string): ITimeframe {
+            function timeFrameFactory(
+                startDatetime: Moment,
+                endDatetime: Moment,
+                selectedPresetId: string,
+                title?: string
+            ): ITimeframe {
                 return { startDatetime, endDatetime, selectedPresetId, title };
             }
 
@@ -130,14 +179,26 @@ describe("services >", () => {
                 };
             }
             const presetStrings: string[] = ["day", "week"];
-            const testPresets: ITimeFramePresetDictionary = mapValues(keyBy(presetStrings), easyPreset);
+            const testPresets: ITimeFramePresetDictionary = mapValues(
+                keyBy(presetStrings),
+                easyPreset
+            );
             const baseDate = moment([2000]);
 
             it("should use baseDate provided for pattern calculations", () => {
                 const presetId = presetStrings[1];
                 // @ts-ignore: Suppressing error for testing purposes
-                initialTimeFrame = timeFrameFactory(undefined, undefined, presetId, testPresets[presetId].name);
-                updatedTimeFrame = timeframeService.reconcileTimeframe(initialTimeFrame, testPresets, baseDate);
+                initialTimeFrame = timeFrameFactory(
+                    undefined,
+                    undefined,
+                    presetId,
+                    testPresets[presetId].name
+                );
+                updatedTimeFrame = timeframeService.reconcileTimeframe(
+                    initialTimeFrame,
+                    testPresets,
+                    baseDate
+                );
 
                 expect(updatedTimeFrame.endDatetime).toEqual(baseDate);
             });
@@ -145,25 +206,47 @@ describe("services >", () => {
             it("should use now() if baseDate is not provided", () => {
                 const presetId = presetStrings[1];
                 // @ts-ignore: Suppressing error for testing purposes
-                initialTimeFrame = timeFrameFactory(undefined, undefined, presetId, testPresets[presetId].name);
-                updatedTimeFrame = timeframeService.reconcileTimeframe(initialTimeFrame, testPresets);
+                initialTimeFrame = timeFrameFactory(
+                    undefined,
+                    undefined,
+                    presetId,
+                    testPresets[presetId].name
+                );
+                updatedTimeFrame = timeframeService.reconcileTimeframe(
+                    initialTimeFrame,
+                    testPresets
+                );
 
-                expect(moment().diff(updatedTimeFrame.endDatetime)).toBeLessThan(100); // up to 100ms difference allowed
+                expect(
+                    moment().diff(updatedTimeFrame.endDatetime)
+                ).toBeLessThan(100); // up to 100ms difference allowed
             });
 
             it("should use currentPresets if no presets passed", () => {
                 const currentPresets = timeframeService.currentPresets;
                 const presetId = Object.keys(currentPresets)[0];
                 // @ts-ignore: Suppressing error for testing purposes
-                initialTimeFrame = timeFrameFactory(undefined, undefined, presetId, currentPresets[presetId].name);
-                updatedTimeFrame = timeframeService.reconcileTimeframe(initialTimeFrame);
+                initialTimeFrame = timeFrameFactory(
+                    undefined,
+                    undefined,
+                    presetId,
+                    currentPresets[presetId].name
+                );
+                updatedTimeFrame =
+                    timeframeService.reconcileTimeframe(initialTimeFrame);
                 expect(updatedTimeFrame).toBeTruthy();
             });
 
             it("should return cloned timeFrame with unapplicable selectedPresetId", () => {
                 const presetId = presetStrings[0];
-                initialTimeFrame = timeFrameFactory(baseDate, baseDate, presetId, testPresets[presetId].name);
-                updatedTimeFrame = timeframeService.reconcileTimeframe(initialTimeFrame);
+                initialTimeFrame = timeFrameFactory(
+                    baseDate,
+                    baseDate,
+                    presetId,
+                    testPresets[presetId].name
+                );
+                updatedTimeFrame =
+                    timeframeService.reconcileTimeframe(initialTimeFrame);
 
                 expect(updatedTimeFrame).toEqual(initialTimeFrame);
                 expect(updatedTimeFrame).not.toBe(initialTimeFrame);
@@ -173,8 +256,16 @@ describe("services >", () => {
                 beforeEach(() => {
                     const presetId = presetStrings[0];
                     // @ts-ignore: Suppressing error for testing purposes
-                    initialTimeFrame = timeFrameFactory(undefined, undefined, presetId, "my title");
-                    updatedTimeFrame = timeframeService.reconcileTimeframe(initialTimeFrame, testPresets);
+                    initialTimeFrame = timeFrameFactory(
+                        undefined,
+                        undefined,
+                        presetId,
+                        "my title"
+                    );
+                    updatedTimeFrame = timeframeService.reconcileTimeframe(
+                        initialTimeFrame,
+                        testPresets
+                    );
                 });
 
                 it("should fill start and end dates", () => {
@@ -183,32 +274,49 @@ describe("services >", () => {
                 });
 
                 it("should preserve title", () => {
-                    expect(updatedTimeFrame.title).toEqual(initialTimeFrame.title);
+                    expect(updatedTimeFrame.title).toEqual(
+                        initialTimeFrame.title
+                    );
                 });
             });
 
             describe("if selectedPresetId is not set", () => {
                 beforeEach(() => {
                     // @ts-ignore: Suppressing error for testing purposes
-                    initialTimeFrame = timeFrameFactory(moment([1999]), moment([2000]), null);
-                    updatedTimeFrame = timeframeService.reconcileTimeframe(initialTimeFrame);
+                    initialTimeFrame = timeFrameFactory(
+                        moment([1999]),
+                        moment([2000]),
+                        null
+                    );
+                    updatedTimeFrame =
+                        timeframeService.reconcileTimeframe(initialTimeFrame);
                 });
 
                 it("should clone start and end dates", () => {
-                    expect(updatedTimeFrame.startDatetime).toEqual(initialTimeFrame.startDatetime);
-                    expect(updatedTimeFrame.startDatetime).not.toBe(initialTimeFrame.startDatetime);
+                    expect(updatedTimeFrame.startDatetime).toEqual(
+                        initialTimeFrame.startDatetime
+                    );
+                    expect(updatedTimeFrame.startDatetime).not.toBe(
+                        initialTimeFrame.startDatetime
+                    );
 
-                    expect(updatedTimeFrame.endDatetime).toEqual(initialTimeFrame.endDatetime);
-                    expect(updatedTimeFrame.endDatetime).not.toBe(initialTimeFrame.endDatetime);
+                    expect(updatedTimeFrame.endDatetime).toEqual(
+                        initialTimeFrame.endDatetime
+                    );
+                    expect(updatedTimeFrame.endDatetime).not.toBe(
+                        initialTimeFrame.endDatetime
+                    );
                 });
 
                 it("should preserve selectedPresetId and title", () => {
-                    expect(updatedTimeFrame.selectedPresetId).toEqual(initialTimeFrame.selectedPresetId);
-                    expect(updatedTimeFrame.title).toEqual(initialTimeFrame.title);
+                    expect(updatedTimeFrame.selectedPresetId).toEqual(
+                        initialTimeFrame.selectedPresetId
+                    );
+                    expect(updatedTimeFrame.title).toEqual(
+                        initialTimeFrame.title
+                    );
                 });
             });
-
         });
-
     });
 });

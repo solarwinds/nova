@@ -1,4 +1,9 @@
-import { Component, NO_ERRORS_SCHEMA, TRANSLATIONS, TRANSLATIONS_FORMAT } from "@angular/core";
+import {
+    Component,
+    NO_ERRORS_SCHEMA,
+    TRANSLATIONS,
+    TRANSLATIONS_FORMAT,
+} from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import noop from "lodash/noop";
 
@@ -6,7 +11,6 @@ import { ButtonComponent } from "../../lib/button/button.component";
 import { IconComponent } from "../../lib/icon/icon.component";
 import { IconService } from "../../lib/icon/icon.service";
 import { LoggerService } from "../../services/log-service";
-
 
 import { IToolbarSelectionState, ToolbarItemType } from "./public-api";
 import { ToolbarGroupComponent } from "./toolbar-group.component";
@@ -37,9 +41,10 @@ import { MenuComponent } from "../menu";
                 <nui-toolbar-item type="secondary" icon="add" title="add">
                 </nui-toolbar-item>
             </nui-toolbar-group>
-        </nui-toolbar> `,
+        </nui-toolbar>
+    `,
 })
-class TestWrapperComponent { }
+class TestWrapperComponent {}
 
 describe("components >", () => {
     describe("toolbar >", () => {
@@ -100,8 +105,9 @@ describe("components >", () => {
                 component.commandGroups = [];
                 component.menuGroups = [];
                 component.splitToolbarItems();
-                const allVisibleItems: number
-                    = component.commandGroups[0].items.length + component.commandGroups[1].items.length;
+                const allVisibleItems: number =
+                    component.commandGroups[0].items.length +
+                    component.commandGroups[1].items.length;
                 expect(component.menuGroups[0].items.length).toBe(2);
                 expect(allVisibleItems).toBe(4);
                 expect(component.showMenu).toBeTruthy();
@@ -141,7 +147,9 @@ describe("components >", () => {
                     current: 1,
                     total: 23,
                 };
-                expect(component.handleSelectionState()).toBe("1 of 23 selected");
+                expect(component.handleSelectionState()).toBe(
+                    "1 of 23 selected"
+                );
             });
             it("should change title to 'All selected' with selection items", () => {
                 component.selectionEnabled = true;
@@ -149,7 +157,9 @@ describe("components >", () => {
                     current: 23,
                     total: 23,
                 };
-                expect(component.handleSelectionState()).toBe("All 23 selected");
+                expect(component.handleSelectionState()).toBe(
+                    "All 23 selected"
+                );
             });
             it("should return nothing when isSelected set to false", () => {
                 component.selectionEnabled = false;

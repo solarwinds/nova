@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./tag-color.example.component.html",
     styleUrls: ["./tag-color.example.component.less"],
 })
-export class TagColorExampleComponent {
-}
+export class TagColorExampleComponent {}

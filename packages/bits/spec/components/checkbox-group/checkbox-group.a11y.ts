@@ -11,7 +11,9 @@ describe("a11y: checkbox-group", () => {
 
     beforeAll(async () => {
         await browser.waitForAngularEnabled(false);
-        await Helpers.prepareBrowser("checkbox-group/checkbox-group-visual-test");
+        await Helpers.prepareBrowser(
+            "checkbox-group/checkbox-group-visual-test"
+        );
     });
 
     it("should verify a11y of checkbox group", async () => {

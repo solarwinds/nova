@@ -129,12 +129,12 @@ const emptyShapes: string[] = [
 
 /** Default chart marker set */
 export const CHART_MARKERS: SvgMarker[] = [
-    ...regularShapes
-        .map(s => `<path class="nui-chart--path__outline" d="${s}"></path>`),
-    ...emptyShapes
-        .map((s, i) =>
+    ...regularShapes.map(
+        (s) => `<path class="nui-chart--path__outline" d="${s}"></path>`
+    ),
+    ...emptyShapes.map(
+        (s, i) =>
             `<path class="nui-chart--path__outline-fill" stroke="none" d="${regularShapes[i]}"></path>
             <path class="nui-chart--path__outline" d="${s}"></path>`
-        ),
-].map(s => new SvgMarker(s));
-
+    ),
+].map((s) => new SvgMarker(s));

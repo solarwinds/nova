@@ -30,7 +30,8 @@ describe("directives >", () => {
             spyOnProperty(logger, "warn").and.returnValue(noop);
 
             de = fixture.debugElement;
-            button = de.query(By.directive(ClipboardDirective)).nativeElement as HTMLButtonElement;
+            button = de.query(By.directive(ClipboardDirective))
+                .nativeElement as HTMLButtonElement;
             event = new Event("click");
         });
 

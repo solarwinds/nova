@@ -10,7 +10,6 @@ import { DEFAULT_REFRESH_INTERVAL } from "./types";
     providedIn: "root",
 })
 export class RefresherSettingsService {
-
     private _refreshRateSeconds: number = DEFAULT_REFRESH_INTERVAL;
     public refreshRateSeconds$ = new BehaviorSubject(this.refreshRateSeconds);
 
@@ -26,5 +25,4 @@ export class RefresherSettingsService {
         this._refreshRateSeconds = value;
         this.refreshRateSeconds$.next(this._refreshRateSeconds);
     }
-
 }

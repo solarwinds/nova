@@ -1,7 +1,6 @@
 import { SvgMarker } from "./svg-marker";
 
 describe("SvgMarker >", () => {
-
     let marker: SvgMarker;
 
     beforeEach(() => {

@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    ViewEncapsulation,
+} from "@angular/core";
 import {
     BandScale,
     barAccessors,
@@ -55,13 +61,19 @@ enum ChartType {
     Line = "Line",
 }
 
-type SeriesProcessor<T = IAccessors> = (series: IChartSeries<T>[], isVisible: (chartSeries: IChartSeries<T>) => boolean) => IChartSeries<T>[];
+type SeriesProcessor<T = IAccessors> = (
+    series: IChartSeries<T>[],
+    isVisible: (chartSeries: IChartSeries<T>) => boolean
+) => IChartSeries<T>[];
 
 interface IChartTools<T = IAccessors> {
     seriesProcessor?: SeriesProcessor<T>;
     gridFunction: () => IGrid;
     rendererFunction: () => Renderer<IAccessors>;
-    accessorFunction: (colors?: IValueProvider<string>, markers?: IValueProvider<IChartMarker>) => T;
+    accessorFunction: (
+        colors?: IValueProvider<string>,
+        markers?: IValueProvider<IChartMarker>
+    ) => T;
     scaleFunction: () => Scales;
 }
 
@@ -90,12 +102,18 @@ export class EventSamplerComponent implements OnInit {
         {
             id: INTERACTION_VALUES_EVENT,
             name: "INTERACTION_VALUES_EVENT",
-            interactionTypes: [InteractionType.Click, InteractionType.MouseMove],
+            interactionTypes: [
+                InteractionType.Click,
+                InteractionType.MouseMove,
+            ],
         },
         {
             id: INTERACTION_DATA_POINTS_EVENT,
             name: "INTERACTION_DATA_POINTS_EVENT",
-            interactionTypes: [InteractionType.Click, InteractionType.MouseMove],
+            interactionTypes: [
+                InteractionType.Click,
+                InteractionType.MouseMove,
+            ],
         },
         {
             id: INTERACTION_DATA_POINT_EVENT,
@@ -135,10 +153,21 @@ export class EventSamplerComponent implements OnInit {
     public selectedEvent: IEventInfo = this.eventFilters[0];
     public selectedInteractionType = "";
 
-    public chartTypes = [ChartType.GroupedBar, ChartType.StackedBar, ChartType.Line];
+    public chartTypes = [
+        ChartType.GroupedBar,
+        ChartType.StackedBar,
+        ChartType.Line,
+    ];
     public selectedChartType: ChartType;
     public categories = ["Q1", "Q2", "Q3", "Q4"];
-    public subCategories = ["down", "critical", "warning", "unknown", "ok", "other"];
+    public subCategories = [
+        "down",
+        "critical",
+        "warning",
+        "unknown",
+        "ok",
+        "other",
+    ];
     public values = [
         [24, 16, 7, 6, 97, 4],
         [13, 8, 5, 17, 5, 25],
@@ -156,19 +185,24 @@ export class EventSamplerComponent implements OnInit {
 
     public onEventFilterChange(selectedEvent: IEventInfo) {
         this.selectedEvent = selectedEvent;
-        this.selectedInteractionType = this.selectedEvent.interactionTypes ? this.selectedEvent.interactionTypes[0] : "";
+        this.selectedInteractionType = this.selectedEvent.interactionTypes
+            ? this.selectedEvent.interactionTypes[0]
+            : "";
     }
 
     public onInteractionTypeChange(type: InteractionType) {
         this.selectedInteractionType = type;
     }
 
-    constructor(private changeDetector: ChangeDetectorRef) {
-    }
+    constructor(private changeDetector: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.valueAccessor = (i, j) => this.values[j][i];
-        this.palette = new ChartPalette(new MappedValueProvider<string>(zipObject(this.subCategories, CHART_PALETTE_CS_S)));
+        this.palette = new ChartPalette(
+            new MappedValueProvider<string>(
+                zipObject(this.subCategories, CHART_PALETTE_CS_S)
+            )
+        );
 
         this.updateChartType(this.chartTypes[0]);
     }
@@ -181,7 +215,8 @@ export class EventSamplerComponent implements OnInit {
     }
 
     private buildChart() {
-        const {grid, accessors, renderer, scales, seriesProcessor} = this.getChartAttributes(this.selectedChartType);
+        const { grid, accessors, renderer, scales, seriesProcessor } =
+            this.getChartAttributes(this.selectedChartType);
 
         this.chartAssist = new ChartAssist(new Chart(grid));
         this.chartAssist.palette = this.palette;
@@ -195,24 +230,42 @@ export class EventSamplerComponent implements OnInit {
     }
 
     private subscribeToChart() {
-        each(this.eventFilters, filter => {
-            this.chartAssist.chart.getEventBus().getStream(filter.id).subscribe((event: IChartEvent) => {
-                if (this.selectedEvent.id === filter.id) {
-                    if (!event.data.interactionType || this.selectedInteractionType === event.data.interactionType) {
-                        recursivelyReplacePropValue(event, "dataSeries", "<< IChartSeries info is available here (replaced in output for brevity) >>");
-                        this.parsedEvent = event;
-                        this.changeDetector.markForCheck();
+        each(this.eventFilters, (filter) => {
+            this.chartAssist.chart
+                .getEventBus()
+                .getStream(filter.id)
+                .subscribe((event: IChartEvent) => {
+                    if (this.selectedEvent.id === filter.id) {
+                        if (
+                            !event.data.interactionType ||
+                            this.selectedInteractionType ===
+                                event.data.interactionType
+                        ) {
+                            recursivelyReplacePropValue(
+                                event,
+                                "dataSeries",
+                                "<< IChartSeries info is available here (replaced in output for brevity) >>"
+                            );
+                            this.parsedEvent = event;
+                            this.changeDetector.markForCheck();
+                        }
                     }
-                }
-            });
+                });
         });
     }
 
     private updateChart(): void {
-        let seriesSet: IChartSeries<IAccessors>[]
-            | IChartSeries<IBarAccessors>[] = this.buildChartSeries(this.categories, this.subCategories, this.valueAccessor);
+        let seriesSet:
+            | IChartSeries<IAccessors>[]
+            | IChartSeries<IBarAccessors>[] = this.buildChartSeries(
+            this.categories,
+            this.subCategories,
+            this.valueAccessor
+        );
         // TODO: Refactor this to be able to pass different types of seriesSet to get rid of the any
-        seriesSet = this.seriesProcessor ? this.seriesProcessor(<any>seriesSet, () => true) : seriesSet;
+        seriesSet = this.seriesProcessor
+            ? this.seriesProcessor(<any>seriesSet, () => true)
+            : seriesSet;
         this.chartAssist.update(seriesSet);
     }
 
@@ -224,15 +277,21 @@ export class EventSamplerComponent implements OnInit {
         return subCategories.map((subCategory, i) => ({
             id: subCategory,
             name: subCategory,
-            data: categories.map((xCategory, j) => ({category: xCategory, value: valueAccessor(i, j) || 0})),
+            data: categories.map((xCategory, j) => ({
+                category: xCategory,
+                value: valueAccessor(i, j) || 0,
+            })),
             accessors: this.accessors,
             renderer: this.renderer,
             scales: this.scales,
         }));
     }
 
-    private getChartAttributes(chartType: ChartType): IChartAttributes | IChartAttributes<IBarAccessors> {
-        const t: IChartTools | IChartTools<IBarAccessors> = this.getChartTools(chartType);
+    private getChartAttributes(
+        chartType: ChartType
+    ): IChartAttributes | IChartAttributes<IBarAccessors> {
+        const t: IChartTools | IChartTools<IBarAccessors> =
+            this.getChartTools(chartType);
         let result: IChartAttributes | IChartAttributes<IBarAccessors> = {
             grid: t.gridFunction(),
             accessors: t.accessorFunction(),
@@ -241,41 +300,66 @@ export class EventSamplerComponent implements OnInit {
         };
 
         if (t.seriesProcessor) {
-            result = {...result, seriesProcessor: t.seriesProcessor} as IChartAttributes<IBarAccessors>;
+            result = {
+                ...result,
+                seriesProcessor: t.seriesProcessor,
+            } as IChartAttributes<IBarAccessors>;
         }
         return result;
     }
 
-    private getChartTools(chartType: ChartType): IChartTools<IBarAccessors> | IChartTools {
-        const chartTools: Record<ChartType, IChartTools<IBarAccessors> | IChartTools> = {
+    private getChartTools(
+        chartType: ChartType
+    ): IChartTools<IBarAccessors> | IChartTools {
+        const chartTools: Record<
+            ChartType,
+            IChartTools<IBarAccessors> | IChartTools
+        > = {
             [ChartType.StackedBar]: {
                 seriesProcessor: stackedPreprocessor,
                 gridFunction: barGrid,
-                rendererFunction: () => new BarRenderer({highlightStrategy: new BarHighlightStrategy("x")}),
-                accessorFunction: () => barAccessors(undefined, this.palette.standardColors),
+                rendererFunction: () =>
+                    new BarRenderer({
+                        highlightStrategy: new BarHighlightStrategy("x"),
+                    }),
+                accessorFunction: () =>
+                    barAccessors(undefined, this.palette.standardColors),
                 scaleFunction: barScales,
             },
             [ChartType.GroupedBar]: {
-                gridFunction: () => barGrid({grouped: true}),
-                rendererFunction: () => new BarRenderer({highlightStrategy: new BarSeriesHighlightStrategy("x")}),
+                gridFunction: () => barGrid({ grouped: true }),
+                rendererFunction: () =>
+                    new BarRenderer({
+                        highlightStrategy: new BarSeriesHighlightStrategy("x"),
+                    }),
                 accessorFunction: () => {
-                    const accessors = barAccessors({grouped: true}, this.palette.standardColors);
-                    accessors.data.category = (data, i, series, dataSeries) => [data.category, dataSeries.name];
+                    const accessors = barAccessors(
+                        { grouped: true },
+                        this.palette.standardColors
+                    );
+                    accessors.data.category = (data, i, series, dataSeries) => [
+                        data.category,
+                        dataSeries.name,
+                    ];
                     return accessors;
                 },
-                scaleFunction: () => barScales({grouped: true}),
+                scaleFunction: () => barScales({ grouped: true }),
             },
             [ChartType.Line]: {
                 gridFunction: () => new XYGrid(),
-                rendererFunction: () => new LineRenderer({
-                    interactionStrategy: new LineSelectSeriesInteractionStrategy(),
-                    markerInteraction: { enabled: true, clickable: true },
-                }),
+                rendererFunction: () =>
+                    new LineRenderer({
+                        interactionStrategy:
+                            new LineSelectSeriesInteractionStrategy(),
+                        markerInteraction: { enabled: true, clickable: true },
+                    }),
                 accessorFunction: () => {
-                    const accessors = new LineAccessors(this.palette.standardColors);
-                    accessors.data.x = d => d.category;
-                    accessors.data.y = d => d.value;
-                    accessors.data.value = d => d.value;
+                    const accessors = new LineAccessors(
+                        this.palette.standardColors
+                    );
+                    accessors.data.x = (d) => d.category;
+                    accessors.data.y = (d) => d.value;
+                    accessors.data.value = (d) => d.value;
                     return accessors;
                 },
                 scaleFunction: () => ({
@@ -287,10 +371,13 @@ export class EventSamplerComponent implements OnInit {
 
         return chartTools[chartType];
     }
-
 }
 
-function recursivelyReplacePropValue(obj: Record<string, any>, property: string, replacement: string): void {
+function recursivelyReplacePropValue(
+    obj: Record<string, any>,
+    property: string,
+    replacement: string
+): void {
     for (const prop in obj) {
         if (prop === property) {
             obj[prop] = replacement;

@@ -12,7 +12,12 @@ import { isBandScale, IScale } from "../types";
  * @param {number} position Number in the range of [0, 1] that will define the point inside of the band. Where 0 stands for start.
  * @param levels how many levels deep can we go during the conversion
  */
-export function convert(scale: IScale<any>, value: any, position: number = BAND_CENTER, levels: number = Number.MAX_VALUE): number {
+export function convert(
+    scale: IScale<any>,
+    value: any,
+    position: number = BAND_CENTER,
+    levels: number = Number.MAX_VALUE
+): number {
     if (!scale) {
         return 0;
     }
@@ -29,5 +34,8 @@ export function convert(scale: IScale<any>, value: any, position: number = BAND_
         return bandScale.convert(values[0], position);
     }
 
-    return bandScale.convert(values[0], 0) + convert(bandScale.innerScale, values.slice(1), position, levels - 1);
+    return (
+        bandScale.convert(values[0], 0) +
+        convert(bandScale.innerScale, values.slice(1), position, levels - 1)
+    );
 }

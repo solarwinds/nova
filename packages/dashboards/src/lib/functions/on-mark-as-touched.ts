@@ -6,7 +6,10 @@ import { AbstractControl } from "@angular/forms";
  * @param formControl
  * @param callback Run this callback when the `formControl.markAsTouched` is run
  */
-export function onMarkAsTouched(formControl: AbstractControl, callback: Function) {
+export function onMarkAsTouched(
+    formControl: AbstractControl,
+    callback: Function
+) {
     const origFunc = formControl.markAsTouched;
     formControl.markAsTouched = () => {
         // @ts-ignore

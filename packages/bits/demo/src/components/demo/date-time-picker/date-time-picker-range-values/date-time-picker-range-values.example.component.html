@@ -1,4 +1,9 @@
 <section class="demo-options-section">
-    <nui-date-time-picker [minDate]="minDate" [maxDate]="maxDate" (modelChanged)="onModelChanged($event)"  [model]="dt"></nui-date-time-picker>
-    <p class="mt-2">{{selectedDate}}</p>
+    <nui-date-time-picker
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        (modelChanged)="onModelChanged($event)"
+        [model]="dt"
+    ></nui-date-time-picker>
+    <p class="mt-2">{{ selectedDate }}</p>
 </section>

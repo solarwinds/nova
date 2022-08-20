@@ -1,5 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { AreaRenderer, IAreaAccessors, IChartAssistSeries, LinearScale, SparkChartAssist, TimeScale, stackedAreaAccessors } from "@nova-ui/charts";
+import {
+    AreaRenderer,
+    IAreaAccessors,
+    IChartAssistSeries,
+    LinearScale,
+    SparkChartAssist,
+    TimeScale,
+    stackedAreaAccessors,
+} from "@nova-ui/charts";
 import moment from "moment/moment";
 
 @Component({
@@ -15,21 +23,26 @@ export class SparkChartAreaMultipleExampleComponent implements OnInit {
 
         // Stacked Area accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
         // providing chartAssist colors and markers to stackedAreaAccessors will share them with the area chart
-        const accessors = stackedAreaAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = stackedAreaAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
         // setting the AreaRenderer congif's strokeWidth to zero so no stroke is added around the filled area
         const renderer = new AreaRenderer({ strokeWidth: 0 });
 
-        const seriesSet: IChartAssistSeries<IAreaAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales: {
-                // using the same scale id for the x-axes is necessary to achieve synchronized hover interaction between charts
-                // - sharing the same instance of the scale would work as well
-                x: new TimeScale("shared_id"),
-                y: new LinearScale(),
-            },
-        }));
+        const seriesSet: IChartAssistSeries<IAreaAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales: {
+                    // using the same scale id for the x-axes is necessary to achieve synchronized hover interaction between charts
+                    // - sharing the same instance of the scale would work as well
+                    x: new TimeScale("shared_id"),
+                    y: new LinearScale(),
+                },
+            })
+        );
 
         // chart assist needs to be used to update data
         this.chartAssist.update(seriesSet);

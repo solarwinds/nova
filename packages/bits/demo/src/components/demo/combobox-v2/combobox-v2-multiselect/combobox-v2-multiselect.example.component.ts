@@ -9,9 +9,11 @@ import { Subject } from "rxjs";
     host: { class: "combobox-container" },
 })
 export class ComboboxV2MultiselectExampleComponent implements OnDestroy {
-    public items = Array.from({ length: 100 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 100 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public comboboxControl = new FormControl();
-    public placeholder: string = $localize `Select Item`;
+    public placeholder: string = $localize`Select Item`;
 
     private destroy$: Subject<void> = new Subject();
 
@@ -21,14 +23,14 @@ export class ComboboxV2MultiselectExampleComponent implements OnDestroy {
     }
 
     public convertToChip(value: string) {
-        return ({ label: value });
+        return { label: value };
     }
 
     public setModel() {
         this.comboboxControl.setValue([
-            $localize `Item 10`,
-            $localize `Item 12`,
-            $localize `Item 14`,
+            $localize`Item 10`,
+            $localize`Item 12`,
+            $localize`Item 14`,
         ]);
     }
 }

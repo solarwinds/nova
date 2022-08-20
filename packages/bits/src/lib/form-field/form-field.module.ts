@@ -10,18 +10,9 @@ import { FormFieldComponent } from "./form-field.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-        NuiPopoverModule,
-    ],
-    declarations: [
-        FormFieldComponent,
-    ],
-    exports: [
-        FormFieldComponent,
-    ],
+    imports: [NuiCommonModule, NuiIconModule, NuiPopoverModule],
+    declarations: [FormFieldComponent],
+    exports: [FormFieldComponent],
     providers: [],
 })
-export class NuiFormFieldModule {
-}
+export class NuiFormFieldModule {}

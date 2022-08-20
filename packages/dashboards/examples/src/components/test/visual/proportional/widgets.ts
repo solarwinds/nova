@@ -14,44 +14,48 @@ import {
 } from "@nova-ui/dashboards";
 import { GridsterItem } from "angular-gridster2";
 
-import { TestProportionalDataSource, TestProportionalDataSource3, TestProportionalDataSource4 } from "../../data/proportional-data-sources";
+import {
+    TestProportionalDataSource,
+    TestProportionalDataSource3,
+    TestProportionalDataSource4,
+} from "../../data/proportional-data-sources";
 
 export const positions: Record<string, GridsterItem> = {
-    "widget1": {
-        "cols": 4,
-        "rows": 4,
-        "x": 0,
-        "y": 0,
+    widget1: {
+        cols: 4,
+        rows: 4,
+        x: 0,
+        y: 0,
     },
-    "widget2": {
-        "cols": 5,
-        "rows": 8,
-        "x": 0,
-        "y": 4,
+    widget2: {
+        cols: 5,
+        rows: 8,
+        x: 0,
+        y: 4,
     },
-    "widget3": {
-        "cols": 4,
-        "rows": 4,
-        "x": 4,
-        "y": 0,
+    widget3: {
+        cols: 4,
+        rows: 4,
+        x: 4,
+        y: 0,
     },
-    "widget4": {
-        "cols": 3,
-        "rows": 8,
-        "x": 4,
-        "y": 4,
+    widget4: {
+        cols: 3,
+        rows: 8,
+        x: 4,
+        y: 4,
     },
-    "widget5": {
-        "cols": 4,
-        "rows": 6,
-        "x": 5,
-        "y": 0,
+    widget5: {
+        cols: 4,
+        rows: 6,
+        x: 5,
+        y: 0,
     },
-    "widget6": {
-        "cols": 4,
-        "rows": 6,
-        "x": 6,
-        "y": 4,
+    widget6: {
+        cols: 4,
+        rows: 6,
+        x: 6,
+        y: 4,
     },
 };
 
@@ -61,25 +65,26 @@ export const widgets: IWidget[] = [
         type: "proportional",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestProportionalDataSource3.providerId,
+                            providerId: TestProportionalDataSource3.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "configuration": {
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.PieChart,
-                                "legendPlacement": LegendPlacement.Right,
-                                "legendFormatter": {
-                                    "componentType": LinkFormatterComponent.lateLoadKey,
+                    properties: {
+                        configuration: {
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.PieChart,
+                                legendPlacement: LegendPlacement.Right,
+                                legendFormatter: {
+                                    componentType:
+                                        LinkFormatterComponent.lateLoadKey,
                                 },
                             } as IProportionalWidgetChartOptions,
                         },
@@ -93,23 +98,23 @@ export const widgets: IWidget[] = [
         type: "proportional",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestProportionalDataSource3.providerId,
+                            providerId: TestProportionalDataSource3.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "configuration": {
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.VerticalBarChart,
-                                "legendPlacement": LegendPlacement.Bottom,
+                    properties: {
+                        configuration: {
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.VerticalBarChart,
+                                legendPlacement: LegendPlacement.Bottom,
                             } as IProportionalWidgetChartOptions,
                         },
                     },
@@ -122,27 +127,28 @@ export const widgets: IWidget[] = [
         type: "proportional",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestProportionalDataSource.providerId,
+                            providerId: TestProportionalDataSource.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "configuration": {
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.HorizontalBarChart,
-                                "legendPlacement": LegendPlacement.Right,
-                                "legendFormatter": {
-                                    "componentType": LinkFormatterComponent.lateLoadKey,
+                    properties: {
+                        configuration: {
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.HorizontalBarChart,
+                                legendPlacement: LegendPlacement.Right,
+                                legendFormatter: {
+                                    componentType:
+                                        LinkFormatterComponent.lateLoadKey,
                                 },
-                                "horizontalBarTickLabelConfig": {
+                                horizontalBarTickLabelConfig: {
                                     maxWidth: {
                                         left: 55,
                                     },
@@ -159,25 +165,25 @@ export const widgets: IWidget[] = [
         type: "proportional",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestProportionalDataSource.providerId,
+                            providerId: TestProportionalDataSource.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "configuration": {
+                    properties: {
+                        configuration: {
                             chartDonutContentLabel: "Some label",
                             chartDonutContentIcon: "printer",
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.DonutChart,
-                                "legendPlacement": LegendPlacement.Bottom,
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.DonutChart,
+                                legendPlacement: LegendPlacement.Bottom,
                             } as IProportionalWidgetChartOptions,
                         },
                     },
@@ -190,29 +196,31 @@ export const widgets: IWidget[] = [
         type: "proportional",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestProportionalDataSource.providerId,
+                            providerId: TestProportionalDataSource.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "configuration": {
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.DonutChart,
-                                "legendPlacement": LegendPlacement.Bottom,
+                    properties: {
+                        configuration: {
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.DonutChart,
+                                legendPlacement: LegendPlacement.Bottom,
                                 donutContentConfig: {
                                     formatter: {
-                                        componentType: PercentageFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            PercentageFormatterComponent.lateLoadKey,
                                     },
                                     aggregator: {
-                                        aggregatorType: percentageAggregator.aggregatorType,
+                                        aggregatorType:
+                                            percentageAggregator.aggregatorType,
                                     },
                                 },
                             } as IProportionalWidgetChartOptions,
@@ -227,29 +235,31 @@ export const widgets: IWidget[] = [
         type: "proportional",
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
-                "header": {
-                    "properties": {
-                        "title": "Proportional Widget!",
-                        "subtitle": "Proportional widget with legend formatters",
+                header: {
+                    properties: {
+                        title: "Proportional Widget!",
+                        subtitle: "Proportional widget with legend formatters",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
-                            "providerId": TestProportionalDataSource4.providerId,
+                            providerId: TestProportionalDataSource4.providerId,
                         } as IProviderConfiguration,
                     },
-                    "properties": {
-                        "configuration": {
-                            "chartOptions": {
-                                "type": ProportionalWidgetChartTypes.DonutChart,
-                                "legendPlacement": LegendPlacement.Right,
+                    properties: {
+                        configuration: {
+                            chartOptions: {
+                                type: ProportionalWidgetChartTypes.DonutChart,
+                                legendPlacement: LegendPlacement.Right,
                                 donutContentConfig: {
                                     formatter: {
-                                        componentType: SiUnitsFormatterComponent.lateLoadKey,
+                                        componentType:
+                                            SiUnitsFormatterComponent.lateLoadKey,
                                     },
                                     aggregator: {
-                                        aggregatorType: sumAggregator.aggregatorType,
+                                        aggregatorType:
+                                            sumAggregator.aggregatorType,
                                     },
                                 },
                             } as IProportionalWidgetChartOptions,

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import {FormFieldComponent} from "@nova-ui/bits";
+import { FormFieldComponent } from "@nova-ui/bits";
 
 @Component({
     selector: "nui-form-field-docs-example",

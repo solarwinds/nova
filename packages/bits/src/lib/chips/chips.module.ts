@@ -12,22 +12,9 @@ import { ChipsComponent } from "./chips.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-        NuiTooltipModule,
-    ],
-    declarations: [
-        ChipComponent,
-        ChipsComponent,
-        ChipsOverflowComponent,
-    ],
-    exports: [
-        ChipComponent,
-        ChipsComponent,
-        ChipsOverflowComponent,
-    ],
+    imports: [NuiCommonModule, NuiIconModule, NuiTooltipModule],
+    declarations: [ChipComponent, ChipsComponent, ChipsOverflowComponent],
+    exports: [ChipComponent, ChipsComponent, ChipsOverflowComponent],
     providers: [],
 })
-export class NuiChipsModule {
-}
+export class NuiChipsModule {}

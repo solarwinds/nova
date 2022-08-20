@@ -13,11 +13,7 @@ import { TimeFramePickerComponent } from "./time-frame-picker.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiMenuModule,
-        NuiDateTimePickerModule,
-    ],
+    imports: [NuiCommonModule, NuiMenuModule, NuiDateTimePickerModule],
     declarations: [
         QuickPickerComponent,
         TimeFramePickerComponent,
@@ -30,5 +26,4 @@ import { TimeFramePickerComponent } from "./time-frame-picker.component";
     ],
     providers: [TimeframeService],
 })
-export class NuiTimeFramePickerModule {
-}
+export class NuiTimeFramePickerModule {}

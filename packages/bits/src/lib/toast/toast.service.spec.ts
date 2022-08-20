@@ -22,10 +22,7 @@ describe("services >", () => {
             });
 
             TestBed.configureTestingModule({
-                declarations: [
-                    ToastComponent,
-                    IconComponent,
-                ],
+                declarations: [ToastComponent, IconComponent],
                 providers: [
                     NotificationService,
                     ToastContainerService,
@@ -45,8 +42,7 @@ describe("services >", () => {
             fakeAsync(() => {
                 try {
                     tick(10000);
-                } catch (e) {
-                }
+                } catch (e) {}
             });
         });
 
@@ -59,7 +55,9 @@ describe("services >", () => {
         });
 
         it("should activate success toast", fakeAsync(() => {
-            const activeToast = toastService.success({message: "Test success message"});
+            const activeToast = toastService.success({
+                message: "Test success message",
+            });
             expect(toastService.toasts.length).toEqual(1);
             expect(activeToast.body).toEqual("Test success message");
             toastService.remove(activeToast.toastId);
@@ -67,7 +65,9 @@ describe("services >", () => {
         }));
 
         it("should activate warning toast", fakeAsync(() => {
-            const activeToast = toastService.warning({message: "Test warning message"});
+            const activeToast = toastService.warning({
+                message: "Test warning message",
+            });
             expect(toastService.toasts.length).toEqual(1);
             expect(activeToast.body).toEqual("Test warning message");
             toastService.remove(activeToast.toastId);
@@ -75,7 +75,9 @@ describe("services >", () => {
         }));
 
         it("should activate error toast", fakeAsync(() => {
-            const activeToast = toastService.error({message: "Test error message"});
+            const activeToast = toastService.error({
+                message: "Test error message",
+            });
             expect(toastService.toasts.length).toEqual(1);
             expect(activeToast.body).toEqual("Test error message");
             toastService.remove(activeToast.toastId);
@@ -83,7 +85,9 @@ describe("services >", () => {
         }));
 
         it("should activate info toast", fakeAsync(() => {
-            const activeToast = toastService.info({message: "Test info message"});
+            const activeToast = toastService.info({
+                message: "Test info message",
+            });
             expect(toastService.toasts.length).toEqual(1);
             expect(activeToast.body).toEqual("Test info message");
             toastService.remove(activeToast.toastId);
@@ -93,7 +97,7 @@ describe("services >", () => {
         it("should sanitize body content", fakeAsync(() => {
             const activeToast = toastService.info({
                 message: `Test info message, <script>alert("ALERT")</script>`,
-                options: {enableHtml: true},
+                options: { enableHtml: true },
             });
             expect(toastService.toasts.length).toEqual(1);
             expect(activeToast.body).not.toContain("<script>");
@@ -104,7 +108,7 @@ describe("services >", () => {
         it("should not sanitize body content", fakeAsync(() => {
             const activeToast = toastService.info({
                 message: `Test info message, <script>alert("ALERT")</script>`,
-                options: {enableHtml: false},
+                options: { enableHtml: false },
             });
             expect(toastService.toasts.length).toEqual(1);
             expect(activeToast.body).toContain("<script>");
@@ -113,10 +117,21 @@ describe("services >", () => {
         }));
 
         it("should make error message unclosable", fakeAsync(() => {
-            const activeToast = toastService.error({message: "Test message", options: {stickyError: true}});
-            expect(activeToast.toastRef.componentInstance.instance.options.timeOut).toEqual(0);
-            expect(activeToast.toastRef.componentInstance.instance.options.extendedTimeOut).toEqual(0);
-            expect(activeToast.toastRef.componentInstance.instance.options.closeButton).toEqual(false);
+            const activeToast = toastService.error({
+                message: "Test message",
+                options: { stickyError: true },
+            });
+            expect(
+                activeToast.toastRef.componentInstance.instance.options.timeOut
+            ).toEqual(0);
+            expect(
+                activeToast.toastRef.componentInstance.instance.options
+                    .extendedTimeOut
+            ).toEqual(0);
+            expect(
+                activeToast.toastRef.componentInstance.instance.options
+                    .closeButton
+            ).toEqual(false);
             toastService.remove(activeToast.toastId);
             tick(10000);
         }));

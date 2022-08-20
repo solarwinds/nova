@@ -32,13 +32,16 @@ describe("components >", () => {
             subject.ngOnInit();
         }));
 
-        it("should select page number " + page , () => {
+        it("should select page number " + page, () => {
             subject.goToPage(3);
             expect(subject.page).toEqual(3);
         });
 
         it("should have pageSize equal to " + pageSize, () => {
-            subject.setItemsPerPage({ newValue: pageSize, oldValue: pageSize - 1 });
+            subject.setItemsPerPage({
+                newValue: pageSize,
+                oldValue: pageSize - 1,
+            });
             expect(subject.pageSize).toEqual(pageSize);
         });
 
@@ -56,7 +59,9 @@ describe("components >", () => {
 
         it("should have items count in paginator equal to 7", () => {
             expect(subject.adjacent).toEqual(1);
-            const changes: SimpleChanges = {"page": new SimpleChange(3, 1, true)};
+            const changes: SimpleChanges = {
+                page: new SimpleChange(3, 1, true),
+            };
             subject.ngOnChanges(changes);
             // "< 1 2 3 4 5 ... 40 >" - including arrows -> 9
             expect(subject.itemsList.length).toEqual(9);

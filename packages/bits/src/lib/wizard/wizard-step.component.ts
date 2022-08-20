@@ -20,7 +20,9 @@ import { IWizardSelectionEvent, IWizardStepComponent } from "./public-api";
     selector: "nui-wizard-step",
     templateUrl: "./wizard-step.component.html",
 })
-export class WizardStepComponent implements IWizardStepComponent, OnInit, OnChanges {
+export class WizardStepComponent
+    implements IWizardStepComponent, OnInit, OnChanges
+{
     /**
      * Template for step.
      */
@@ -110,29 +112,29 @@ export class WizardStepComponent implements IWizardStepComponent, OnInit, OnChan
      */
     public enterStep = (event?: IWizardSelectionEvent): void => {
         this.enter.emit(event);
-    }
+    };
 
     /**
      * Set flags for step exiting and emits exit event
      */
     public exitStep = (event?: IWizardSelectionEvent): void => {
         this.exit.emit(event);
-    }
+    };
 
     public nextStep = (event?: IWizardSelectionEvent): void => {
         this.next.emit(event);
-    }
+    };
 
     public applyEnteringStep = (): void => {
         this.active = true;
         this.icon = "step-active";
         this.iconColor = "black";
-    }
+    };
 
     public applyExitingStep = (): void => {
         this.active = false;
         this.visited = true;
         this.icon = "step-complete";
         this.iconColor = "";
-    }
+    };
 }

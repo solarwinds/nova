@@ -14,27 +14,14 @@ import { ToastServiceBase } from "./toast.servicebase";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-        NuiButtonModule,
-    ],
-    declarations: [
-        ToastComponent,
-        ToastDirective,
-    ],
-    exports: [
-        ToastComponent,
-        ToastDirective,
-    ],
-    entryComponents: [
-        ToastComponent,
-    ],
+    imports: [NuiCommonModule, NuiIconModule, NuiButtonModule],
+    declarations: [ToastComponent, ToastDirective],
+    exports: [ToastComponent, ToastDirective],
+    entryComponents: [ToastComponent],
     providers: [
         ToastService,
         ToastContainerService,
         { provide: ToastServiceBase, useExisting: ToastService },
     ],
 })
-export class NuiToastModule {
-}
+export class NuiToastModule {}

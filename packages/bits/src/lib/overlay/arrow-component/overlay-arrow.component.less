@@ -2,7 +2,7 @@
 @import (reference) "../../../styles/mixins.less";
 
 @arrow-size: 12.72px;
-@arrow-padding: (@arrow-size/2);
+@arrow-padding: (@arrow-size / 2);
 @arrow-top-bottom: top, bottom;
 @arrow-shadow: 3px;
 @arrow-center: left, right, top, bottom;
@@ -92,8 +92,13 @@
         box-shadow: @arrow-shadow -@arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
     }
 
-    .overlay-left-top & { top: unset; bottom: @arrow-size; }
-    .overlay-left-bottom & { top: @arrow-size + @arrow-padding; }
+    .overlay-left-top & {
+        top: unset;
+        bottom: @arrow-size;
+    }
+    .overlay-left-bottom & {
+        top: @arrow-size + @arrow-padding;
+    }
 
     .overlay-right-bottom &,
     .overlay-right-top &,
@@ -110,6 +115,11 @@
         box-shadow: -@arrow-shadow @arrow-shadow @arrow-shadow 0 rgba(0, 0, 0, 0.05);
     }
 
-    .overlay-right-top & { top: unset; bottom: @arrow-size; }
-    .overlay-right-bottom & { top: @arrow-size + @arrow-padding; }
+    .overlay-right-top & {
+        top: unset;
+        bottom: @arrow-size;
+    }
+    .overlay-right-bottom & {
+        top: @arrow-size + @arrow-padding;
+    }
 }

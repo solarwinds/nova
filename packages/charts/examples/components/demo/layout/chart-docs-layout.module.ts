@@ -11,17 +11,15 @@ const exampleRoutes: Routes = [
         path: "",
         component: ChartDocsLayoutComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
         },
     },
 ];
 
 @NgModule({
-    declarations: [
-        ChartDocsLayoutComponent,
-    ],
+    declarations: [ChartDocsLayoutComponent],
     imports: [
         DemoCommonModule,
         NuiDocsModule,
@@ -29,5 +27,4 @@ const exampleRoutes: Routes = [
         RouterModule.forChild(exampleRoutes),
     ],
 })
-export class ChartDocsLayoutModule {
-}
+export class ChartDocsLayoutModule {}

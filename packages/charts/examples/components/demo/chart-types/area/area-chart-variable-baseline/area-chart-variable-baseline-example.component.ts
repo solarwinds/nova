@@ -1,5 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { AreaAccessors, areaGrid, AreaRenderer, Chart, IAreaAccessors, IChartSeries, IXYScales, LinearScale, TimeScale } from "@nova-ui/charts";
+import {
+    AreaAccessors,
+    areaGrid,
+    AreaRenderer,
+    Chart,
+    IAreaAccessors,
+    IChartSeries,
+    IXYScales,
+    LinearScale,
+    TimeScale,
+} from "@nova-ui/charts";
 import moment from "moment/moment";
 
 @Component({
@@ -40,12 +50,14 @@ export class AreaChartVariableBaselineExampleComponent implements OnInit {
         scales.y.fixDomain([-100, 100]);
 
         // Here we assemble the complete chart series.
-        const seriesSet: IChartSeries<IAreaAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet: IChartSeries<IAreaAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         // Finally, pass the series set to the chart's update method.
         this.chart.update(seriesSet);
@@ -61,20 +73,76 @@ function getData() {
             id: "series-1",
             name: "Series 1",
             data: [
-                { timeStamp: moment("2016-12-25T11:45:29.909Z", format), start: -58, end: 12 },
-                { timeStamp: moment("2016-12-25T12:10:29.909Z", format), start: -5, end: 65 },
-                { timeStamp: moment("2016-12-25T12:50:29.909Z", format), start: -40, end: 30 },
-                { timeStamp: moment("2016-12-25T13:15:29.909Z", format), start: -30, end: 40 },
-                { timeStamp: moment("2016-12-25T13:40:29.909Z", format), start: -10, end: 60 },
-                { timeStamp: moment("2016-12-25T13:55:29.909Z", format), start: -47, end: 23 },
-                { timeStamp: moment("2016-12-25T14:20:29.909Z", format), start: -58, end: 12 },
-                { timeStamp: moment("2016-12-25T14:40:29.909Z", format), start: 0, end: 70 },
-                { timeStamp: moment("2016-12-25T15:00:29.909Z", format), start: -25, end: 45 },
-                { timeStamp: moment("2016-12-25T15:25:29.909Z", format), start: -20, end: 50 },
-                { timeStamp: moment("2016-12-25T15:45:29.909Z", format), start: 5, end: 75 },
-                { timeStamp: moment("2016-12-25T16:10:29.909Z", format), start: -20, end: 50 },
-                { timeStamp: moment("2016-12-25T16:30:29.909Z", format), start: 15, end: 85 },
-                { timeStamp: moment("2016-12-25T16:45:29.909Z", format), start: -15, end: 55 },
+                {
+                    timeStamp: moment("2016-12-25T11:45:29.909Z", format),
+                    start: -58,
+                    end: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:10:29.909Z", format),
+                    start: -5,
+                    end: 65,
+                },
+                {
+                    timeStamp: moment("2016-12-25T12:50:29.909Z", format),
+                    start: -40,
+                    end: 30,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:15:29.909Z", format),
+                    start: -30,
+                    end: 40,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:40:29.909Z", format),
+                    start: -10,
+                    end: 60,
+                },
+                {
+                    timeStamp: moment("2016-12-25T13:55:29.909Z", format),
+                    start: -47,
+                    end: 23,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:20:29.909Z", format),
+                    start: -58,
+                    end: 12,
+                },
+                {
+                    timeStamp: moment("2016-12-25T14:40:29.909Z", format),
+                    start: 0,
+                    end: 70,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:00:29.909Z", format),
+                    start: -25,
+                    end: 45,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:25:29.909Z", format),
+                    start: -20,
+                    end: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T15:45:29.909Z", format),
+                    start: 5,
+                    end: 75,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:10:29.909Z", format),
+                    start: -20,
+                    end: 50,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:30:29.909Z", format),
+                    start: 15,
+                    end: 85,
+                },
+                {
+                    timeStamp: moment("2016-12-25T16:45:29.909Z", format),
+                    start: -15,
+                    end: 55,
+                },
             ],
         },
     ];

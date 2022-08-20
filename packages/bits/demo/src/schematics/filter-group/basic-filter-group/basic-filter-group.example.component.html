@@ -6,24 +6,28 @@
 </ng-template>
 
 <ng-template #listRepeatItemTemplate let-item="item">
-    <div>{{item.color}}</div>
-    <div>{{item.status}}</div>
+    <div>{{ item.color }}</div>
+    <div>{{ item.status }}</div>
 </ng-template>
 
 <nui-panel>
     <div nuiPanelEmbeddedBody>
         <app-basic-filter-groups-wrapper>
-            <app-basic-filter-group *ngFor="let filterGroupItem of filterGroupItems"
-                                        [filterGroupItem]="filterGroupItem"
-                                        (filterChanged)="changeFilters($event)"></app-basic-filter-group>
+            <app-basic-filter-group
+                *ngFor="let filterGroupItem of filterGroupItems"
+                [filterGroupItem]="filterGroupItem"
+                (filterChanged)="changeFilters($event)"
+            ></app-basic-filter-group>
         </app-basic-filter-groups-wrapper>
     </div>
     <div>
         <div *ngIf="hasItems(); else emptyListTemplate">
-            <nui-repeat id="nui-composites-demo-repeat"
-                        [itemsSource]="filteringState.repeat.itemsSource"
-                        [repeatItemTemplateRef]="listRepeatItemTemplate"
-                        paddingSize="normal">
+            <nui-repeat
+                id="nui-composites-demo-repeat"
+                [itemsSource]="filteringState.repeat.itemsSource"
+                [repeatItemTemplateRef]="listRepeatItemTemplate"
+                paddingSize="normal"
+            >
             </nui-repeat>
         </div>
     </div>

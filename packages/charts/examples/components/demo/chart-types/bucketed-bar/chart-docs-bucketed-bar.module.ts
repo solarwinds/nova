@@ -1,7 +1,14 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import {
-    DEMO_PATH_TOKEN, NuiButtonModule, NuiCheckboxModule, NuiDocsModule, NuiIconModule, NuiMessageModule, NuiSwitchModule, SrlcStage,
+    DEMO_PATH_TOKEN,
+    NuiButtonModule,
+    NuiCheckboxModule,
+    NuiDocsModule,
+    NuiIconModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+    SrlcStage,
 } from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
@@ -25,8 +32,8 @@ const routes: Routes = [
         path: "",
         component: ChartDocsBucketedBarComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
             showThemeSwitcher: true,
         },
@@ -35,8 +42,8 @@ const routes: Routes = [
         path: "stacked",
         component: BarChartStackedExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -44,8 +51,8 @@ const routes: Routes = [
         path: "stacked-test",
         component: BasicStackedVerticalBarChartTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -53,8 +60,8 @@ const routes: Routes = [
         path: "percentage",
         component: BarChartPercentageExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -62,8 +69,8 @@ const routes: Routes = [
         path: "grouped",
         component: BarChartGroupedExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -71,8 +78,8 @@ const routes: Routes = [
         path: "grouped-horizontal",
         component: BarChartGroupedHorizontalExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -80,8 +87,8 @@ const routes: Routes = [
         path: "test",
         component: BarChartBucketedTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -114,8 +121,15 @@ const routes: Routes = [
         RouterModule.forChild(routes),
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class ChartDocsBucketedBarModule {
-}
+export class ChartDocsBucketedBarModule {}

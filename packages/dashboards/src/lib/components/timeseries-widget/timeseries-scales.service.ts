@@ -1,6 +1,11 @@
 import { Injectable } from "@angular/core";
 import { UnitBase, UnitConversionService, UnitOption } from "@nova-ui/bits";
-import { IScale, LinearScale, TimeIntervalScale, TimeScale } from "@nova-ui/charts";
+import {
+    IScale,
+    LinearScale,
+    TimeIntervalScale,
+    TimeScale,
+} from "@nova-ui/charts";
 import { duration } from "moment/moment";
 import { DashboardUnitConversionPipe } from "../../common/pipes/dashboard-unit-conversion-pipe";
 
@@ -14,7 +19,9 @@ export class TimeseriesScalesService {
     private unitConversionPipe: DashboardUnitConversionPipe;
 
     constructor(private unitConversionService: UnitConversionService) {
-        this.unitConversionPipe = new DashboardUnitConversionPipe(this.unitConversionService);
+        this.unitConversionPipe = new DashboardUnitConversionPipe(
+            this.unitConversionService
+        );
     }
 
     /**
@@ -22,7 +29,10 @@ export class TimeseriesScalesService {
      *
      * @param scaleConfig
      */
-    public getScale(scaleConfig: ITimeseriesScaleConfig, units: UnitOption): IScale<any> {
+    public getScale(
+        scaleConfig: ITimeseriesScaleConfig,
+        units: UnitOption
+    ): IScale<any> {
         let scale: IScale<any>;
 
         switch (scaleConfig.type) {
@@ -32,7 +42,12 @@ export class TimeseriesScalesService {
             }
             case TimeseriesScaleType.Linear: {
                 scale = new LinearScale();
-                scale.formatters.tick = (value: string | number | undefined) => this.unitConversionPipe.transform(value, units, UnitBase.Standard);
+                scale.formatters.tick = (value: string | number | undefined) =>
+                    this.unitConversionPipe.transform(
+                        value,
+                        units,
+                        UnitBase.Standard
+                    );
                 break;
             }
             case TimeseriesScaleType.TimeInterval: {
@@ -52,12 +67,20 @@ export class TimeseriesScalesService {
      * @param scale
      * @param scaleConfig
      */
-    public updateConfiguration(scale: IScale<any>, scaleConfig: ITimeseriesScaleConfig): void {
-        if (scaleConfig.type === TimeseriesScaleType.TimeInterval && scale instanceof TimeIntervalScale) {
+    public updateConfiguration(
+        scale: IScale<any>,
+        scaleConfig: ITimeseriesScaleConfig
+    ): void {
+        if (
+            scaleConfig.type === TimeseriesScaleType.TimeInterval &&
+            scale instanceof TimeIntervalScale
+        ) {
             const interval = scaleConfig.properties?.interval;
             if (typeof interval === "number") {
                 if (interval <= 0) {
-                    throw new Error("Interval value must be greater than zero.");
+                    throw new Error(
+                        "Interval value must be greater than zero."
+                    );
                 }
                 scale.interval(duration(interval, "seconds"));
             }

@@ -1,10 +1,14 @@
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
+import {
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { DrilldownWidgetTestComponent } from "./drilldown-widget-test.component";
-
 
 describe("Drilldown", () => {
     let component: DrilldownWidgetTestComponent;
@@ -36,7 +40,8 @@ describe("Drilldown", () => {
 
     describe("general > ", () => {
         it("should set data", async () => {
-            const listWidget = (component as any).drilldownRegistry.componentMap.listWidget;
+            const listWidget = (component as any).drilldownRegistry.componentMap
+                .listWidget;
 
             await fixture.whenStable();
             fixture.detectChanges();
@@ -45,8 +50,10 @@ describe("Drilldown", () => {
         });
 
         it("should drilldown", async () => {
-            const listWidget = (component as any).drilldownRegistry.componentMap.listWidget;
-            const adapter = (component as any).drilldownRegistry.providersMap.listWidget.adapter;
+            const listWidget = (component as any).drilldownRegistry.componentMap
+                .listWidget;
+            const adapter = (component as any).drilldownRegistry.providersMap
+                .listWidget.adapter;
 
             await fixture.whenStable();
             fixture.detectChanges();
@@ -63,15 +70,17 @@ describe("Drilldown", () => {
     });
 
     describe("navigation bar > ", () => {
-
         beforeEach(() => {
             fixture.detectChanges();
         });
 
         it("should navigate back", async () => {
-            const listWidget = (component as any).drilldownRegistry.componentMap.listWidget;
-            const navigationBar = (component as any).drilldownRegistry.componentMap.navigationBar;
-            const adapter = (component as any).drilldownRegistry.providersMap.listWidget.adapter;
+            const listWidget = (component as any).drilldownRegistry.componentMap
+                .listWidget;
+            const navigationBar = (component as any).drilldownRegistry
+                .componentMap.navigationBar;
+            const adapter = (component as any).drilldownRegistry.providersMap
+                .listWidget.adapter;
 
             await fixture.whenStable();
             fixture.detectChanges();
@@ -94,9 +103,12 @@ describe("Drilldown", () => {
         });
 
         it("should navigate home", async () => {
-            const listWidget = (component as any).drilldownRegistry.componentMap.listWidget;
-            const navigationBar = (component as any).drilldownRegistry.componentMap.navigationBar;
-            const adapter = (component as any).drilldownRegistry.providersMap.listWidget.adapter;
+            const listWidget = (component as any).drilldownRegistry.componentMap
+                .listWidget;
+            const navigationBar = (component as any).drilldownRegistry
+                .componentMap.navigationBar;
+            const adapter = (component as any).drilldownRegistry.providersMap
+                .listWidget.adapter;
 
             await fixture.whenStable();
             fixture.detectChanges();
@@ -119,21 +131,30 @@ describe("Drilldown", () => {
         });
 
         it("should be hidden on home page", async () => {
-            const navigationBar = (component as any).drilldownRegistry.componentMap.navigationBar;
-            const adapter = (component as any).drilldownRegistry.providersMap.listWidget.adapter;
+            const navigationBar = (component as any).drilldownRegistry
+                .componentMap.navigationBar;
+            const adapter = (component as any).drilldownRegistry.providersMap
+                .listWidget.adapter;
 
             await fixture.whenStable();
             fixture.detectChanges();
 
             expect(adapter.drillstate.length).toBe(0);
             expect(navigationBar.navBarConfig.isRoot).toBe(true);
-            expect(fixture.nativeElement.querySelector("nui-navigation-bar .list-nav-bar")).toBeFalsy();
+            expect(
+                fixture.nativeElement.querySelector(
+                    "nui-navigation-bar .list-nav-bar"
+                )
+            ).toBeFalsy();
         });
 
         it("should be visible after drilldown", async () => {
-            const listWidget = (component as any).drilldownRegistry.componentMap.listWidget;
-            const navigationBar = (component as any).drilldownRegistry.componentMap.navigationBar;
-            const adapter = (component as any).drilldownRegistry.providersMap.listWidget.adapter;
+            const listWidget = (component as any).drilldownRegistry.componentMap
+                .listWidget;
+            const navigationBar = (component as any).drilldownRegistry
+                .componentMap.navigationBar;
+            const adapter = (component as any).drilldownRegistry.providersMap
+                .listWidget.adapter;
 
             await fixture.whenStable();
             fixture.detectChanges();
@@ -145,7 +166,11 @@ describe("Drilldown", () => {
 
             expect(adapter.drillstate.length).toBe(1);
             expect(navigationBar.navBarConfig.isRoot).toBe(false);
-            expect(fixture.nativeElement.querySelector("nui-navigation-bar .list-nav-bar")).toBeTruthy();
+            expect(
+                fixture.nativeElement.querySelector(
+                    "nui-navigation-bar .list-nav-bar"
+                )
+            ).toBeTruthy();
         });
     });
 });

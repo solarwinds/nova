@@ -1,16 +1,19 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { AfterViewInit, Component, OnDestroy, ViewChild } from "@angular/core";
-import { OverlayComponent, OVERLAY_WITH_POPUP_STYLES_CLASS } from "@nova-ui/bits";
+import {
+    OverlayComponent,
+    OVERLAY_WITH_POPUP_STYLES_CLASS,
+} from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
-
 
 @Component({
     selector: "nui-overlay-popup-styles-example",
     templateUrl: "./overlay-popup-styles.example.component.html",
 })
-export class OverlayPopupStylesExampleComponent implements AfterViewInit, OnDestroy {
-
+export class OverlayPopupStylesExampleComponent
+    implements AfterViewInit, OnDestroy
+{
     private destroy$: Subject<any> = new Subject();
 
     public overlayConfig: OverlayConfig = {
@@ -23,11 +26,11 @@ export class OverlayPopupStylesExampleComponent implements AfterViewInit, OnDest
     ngAfterViewInit() {
         this.overlayWithStyles.clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe(_ => this.overlayWithStyles.hide());
+            .subscribe((_) => this.overlayWithStyles.hide());
 
         this.overlayNoStyles.clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe(_ => this.overlayNoStyles.hide());
+            .subscribe((_) => this.overlayNoStyles.hide());
     }
 
     ngOnDestroy(): void {

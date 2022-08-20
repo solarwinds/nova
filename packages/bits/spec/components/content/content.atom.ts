@@ -9,8 +9,16 @@ export class ContentAtom extends Atom {
         if (!element) {
             throw new Error("element is not defined");
         }
-        return element.getAttribute("clientHeight").then((clientHeight: string) =>
-            element.getAttribute("scrollHeight").then((scrollHeight: string) =>
-                parseInt(scrollHeight, 10) > parseInt(clientHeight, 10)));
-    }
+        return element
+            .getAttribute("clientHeight")
+            .then((clientHeight: string) =>
+                element
+                    .getAttribute("scrollHeight")
+                    .then(
+                        (scrollHeight: string) =>
+                            parseInt(scrollHeight, 10) >
+                            parseInt(clientHeight, 10)
+                    )
+            );
+    };
 }

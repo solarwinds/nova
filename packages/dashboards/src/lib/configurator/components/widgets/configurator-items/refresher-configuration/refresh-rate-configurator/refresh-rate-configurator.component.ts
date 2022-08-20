@@ -43,15 +43,13 @@ import { NumberValidationParams } from "./types";
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RefreshRateConfiguratorComponent implements ControlValueAccessor, OnInit, OnDestroy {
+export class RefreshRateConfiguratorComponent
+    implements ControlValueAccessor, OnInit, OnDestroy
+{
     @Input() minSeconds: number;
     @Input() maxSeconds: number;
 
-    possibleUnits = [
-        TimeUnit.Second,
-        TimeUnit.Minute,
-        TimeUnit.Hour,
-    ];
+    possibleUnits = [TimeUnit.Second, TimeUnit.Minute, TimeUnit.Hour];
 
     unitItems: any[] = [];
     displayedUnitItems: any[] = [];
@@ -66,9 +64,7 @@ export class RefreshRateConfiguratorComponent implements ControlValueAccessor, O
     private onChange: (value: number | null) => void;
     private destroy$$ = new Subject();
 
-    constructor(private fb: FormBuilder,
-                private cd: ChangeDetectorRef) {
-    }
+    constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.generateUnitItems();
@@ -86,7 +82,10 @@ export class RefreshRateConfiguratorComponent implements ControlValueAccessor, O
             return undefined;
         }
 
-        const ratio = getTimeUnitsRatio(TimeUnit.Second, this.unitControl.value.id);
+        const ratio = getTimeUnitsRatio(
+            TimeUnit.Second,
+            this.unitControl.value.id
+        );
         return Math.ceil(this.minSeconds * ratio);
     }
 
@@ -95,13 +94,23 @@ export class RefreshRateConfiguratorComponent implements ControlValueAccessor, O
             return undefined;
         }
 
-        const ratio = getTimeUnitsRatio(TimeUnit.Second, this.unitControl.value.id);
+        const ratio = getTimeUnitsRatio(
+            TimeUnit.Second,
+            this.unitControl.value.id
+        );
         return Math.floor(this.maxSeconds * ratio);
     }
 
     writeValue(seconds: number): void {
-        if (isFinite(seconds) && this.isRangeValid() && this.unitControl.value) {
-            const ratio = getTimeUnitsRatio(TimeUnit.Second, this.unitControl.value.id);
+        if (
+            isFinite(seconds) &&
+            this.isRangeValid() &&
+            this.unitControl.value
+        ) {
+            const ratio = getTimeUnitsRatio(
+                TimeUnit.Second,
+                this.unitControl.value.id
+            );
             const num = seconds * ratio;
 
             this.numberControl.setValue(num);
@@ -115,17 +124,15 @@ export class RefreshRateConfiguratorComponent implements ControlValueAccessor, O
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: any): void {
-
-    }
+    registerOnTouched(fn: any): void {}
 
     setDisabledState(isDisabled: boolean): void {
         if (isDisabled) {
-            this.numberControl.disable({emitEvent: false});
-            this.unitControl.disable({emitEvent: false});
+            this.numberControl.disable({ emitEvent: false });
+            this.unitControl.disable({ emitEvent: false });
         } else {
-            this.numberControl.enable({emitEvent: false});
-            this.unitControl.enable({emitEvent: false});
+            this.numberControl.enable({ emitEvent: false });
+            this.unitControl.enable({ emitEvent: false });
         }
         this.cd.markForCheck();
     }
@@ -168,18 +175,17 @@ export class RefreshRateConfiguratorComponent implements ControlValueAccessor, O
             this.currentUnit = this.unitControl.value.id;
         }
 
-        this.form.valueChanges.pipe(takeUntil(this.destroy$$))
-            .subscribe(() => {
-                this.updateError();
-                this.emitValueChange();
-            });
+        this.form.valueChanges.pipe(takeUntil(this.destroy$$)).subscribe(() => {
+            this.updateError();
+            this.emitValueChange();
+        });
     }
 
     private updateError() {
         if (this.isNumberValid()) {
             this.numberControl.setErrors(null);
         } else {
-            this.numberControl.setErrors({invalidNumber: true});
+            this.numberControl.setErrors({ invalidNumber: true });
         }
     }
 
@@ -233,8 +239,10 @@ export class RefreshRateConfiguratorComponent implements ControlValueAccessor, O
         return this.getLocalizedNumberValidationMessage(validationParams);
     }
 
-    public getLocalizedNumberValidationMessage(params: NumberValidationParams): string {
-        const {min, max, whole} = params;
+    public getLocalizedNumberValidationMessage(
+        params: NumberValidationParams
+    ): string {
+        const { min, max, whole } = params;
         let numberTypeText: string;
         if (whole) {
             numberTypeText = $localize`a whole number`;

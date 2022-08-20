@@ -16,10 +16,14 @@ export interface IValueChange {
  * @param changes
  */
 export function mergeChanges<T>(result: T, ...changes: IValueChange[]): T {
-    const validChanges = changes.filter(c => typeof c.previousValue !== "undefined" || typeof c.currentValue !== "undefined");
+    const validChanges = changes.filter(
+        (c) =>
+            typeof c.previousValue !== "undefined" ||
+            typeof c.currentValue !== "undefined"
+    );
 
     // there were no changes in the provided values, so just return the input object
-    if (!some(validChanges, c => c.currentValue !== c.previousValue)) {
+    if (!some(validChanges, (c) => c.currentValue !== c.previousValue)) {
         return result;
     }
 
@@ -37,16 +41,33 @@ export function mergeChanges<T>(result: T, ...changes: IValueChange[]): T {
     }
 
     // collect all the keys of all the objects in given changes
-    const keys: string[] = union(...validChanges.map(c => typeof c.currentValue === "object" ? Object.keys(c.currentValue || {}) : []));
+    const keys: string[] = union(
+        ...validChanges.map((c) =>
+            typeof c.currentValue === "object"
+                ? Object.keys(c.currentValue || {})
+                : []
+        )
+    );
 
     const accTemplate = valueType === "object[]" ? [] : {};
 
     return keys.reduce((acc: Record<string, any>, key) => {
-        const checkedResult = typeof result === "undefined" || result === null
-        || typeof (<Record<string, any>>result)[key] === "undefined" ? undefined : (<Record<string, any>>result)[key];
-        const nestedChanges = validChanges.map(c => ({
-            previousValue: typeof c.previousValue === "undefined" || c.previousValue == null ? undefined : c.previousValue[key],
-            currentValue: typeof c.currentValue === "undefined" || c.currentValue == null ? undefined : c.currentValue[key],
+        const checkedResult =
+            typeof result === "undefined" ||
+            result === null ||
+            typeof (<Record<string, any>>result)[key] === "undefined"
+                ? undefined
+                : (<Record<string, any>>result)[key];
+        const nestedChanges = validChanges.map((c) => ({
+            previousValue:
+                typeof c.previousValue === "undefined" ||
+                c.previousValue == null
+                    ? undefined
+                    : c.previousValue[key],
+            currentValue:
+                typeof c.currentValue === "undefined" || c.currentValue == null
+                    ? undefined
+                    : c.currentValue[key],
         }));
 
         // recursively execute this method for given property

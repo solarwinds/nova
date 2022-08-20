@@ -1,5 +1,11 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
 import { DataSourceService, IFilteringOutputs } from "@nova-ui/bits";
 import {
     DATA_SOURCE,
@@ -27,7 +33,10 @@ import { finalize } from "rxjs/operators";
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class AverageRatingKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     public static providerId = "AverageRatingKpiDataSource";
     public busy = new BehaviorSubject<boolean>(false);
 
@@ -39,7 +48,8 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
         this.busy.next(true);
         return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -86,8 +96,7 @@ export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
         private widgetTypesService: WidgetTypesService,
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         this.setupDashboard();
@@ -104,7 +113,6 @@ export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
         this.initializeDashboard();
     }
 
-
     /** Used for restoring widgets state */
     public reInitializeDashboard() {
         // destroys the components and their providers so the dashboard can re init data
@@ -115,28 +123,41 @@ export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
     }
 
     private setupCustomPalletteDescription() {
-        const kpiWidgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);
+        const kpiWidgetTemplate = this.widgetTypesService.getWidgetType(
+            "kpi",
+            1
+        );
         this.widgetTypesService.setNode(
             kpiWidgetTemplate,
             "configurator",
             WellKnownPathKey.TileDescriptionBackgroundColors,
             [
                 { color: "var(--nui-color-chart-one)", label: "Blue" },
-                { color: "var(--nui-color-chart-one-light)", label: "Blue Light" },
-                { color: "var(--nui-color-chart-one-dark)", label: "Blue Dark" },
+                {
+                    color: "var(--nui-color-chart-one-light)",
+                    label: "Blue Light",
+                },
+                {
+                    color: "var(--nui-color-chart-one-dark)",
+                    label: "Blue Dark",
+                },
             ]
         );
     }
 
     private setupCustomPalletteRules() {
-        const kpiWidgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);
+        const kpiWidgetTemplate = this.widgetTypesService.getWidgetType(
+            "kpi",
+            1
+        );
         this.widgetTypesService.setNode(
             kpiWidgetTemplate,
             "configurator",
             WellKnownPathKey.TileBackgroundColorRulesBackgroundColors,
             [
                 { color: "red", label: "Native Red" },
-                ...DEFAULT_KPI_BACKGROUND_COLORS]
+                ...DEFAULT_KPI_BACKGROUND_COLORS,
+            ]
         );
     }
 
@@ -171,7 +192,8 @@ export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
     private initializeDashboard(): void {
         const kpiWidget = widgetConfig;
         const widgetIndex: IWidgets = {
-            [kpiWidget.id]: this.widgetTypesService.mergeWithWidgetType(kpiWidget),
+            [kpiWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
 
         const positions: Record<string, GridsterItem> = {
@@ -188,7 +210,6 @@ export class KpiWidgetBackgroundColorExampleComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -196,49 +217,49 @@ const widgetConfig: IWidget = {
     type: "kpi",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
-                "properties": {
-                    "title": "Harry Potter and the Sorcerer's Stone",
-                    "subtitle": "By J. K. Rowling",
+            header: {
+                properties: {
+                    title: "Harry Potter and the Sorcerer's Stone",
+                    subtitle: "By J. K. Rowling",
                 },
             },
-            "tiles": {
-                "properties": {
-                    "nodes": ["kpi1"],
+            tiles: {
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "componentType": KpiComponent.lateLoadKey,
-                "properties": {
-                    "widgetData": {
-                        "units": `out of 5 Stars`,
-                        "label": `Average Rating`,
+            kpi1: {
+                id: "kpi1",
+                componentType: KpiComponent.lateLoadKey,
+                properties: {
+                    widgetData: {
+                        units: `out of 5 Stars`,
+                        label: `Average Rating`,
                         // Configuration color "Blue"
-                        "backgroundColor": "var(--nui-color-chart-one)",
+                        backgroundColor: "var(--nui-color-chart-one)",
                     },
                 },
-                "providers": {
+                providers: {
                     [WellKnownProviders.DataSource]: {
-                        "providerId": AverageRatingKpiDataSource.providerId,
+                        providerId: AverageRatingKpiDataSource.providerId,
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
-                        "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                        "properties": {
-                            "componentId": "kpi1",
-                            "propertyPath": "widgetData",
+                        providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                        properties: {
+                            componentId: "kpi1",
+                            propertyPath: "widgetData",
                         },
                     } as IProviderConfiguration,
                     [WellKnownProviders.KpiColorPrioritizer]: {
-                        "providerId": NOVA_KPI_COLOR_PRIORITIZER,
-                        "properties": {
+                        providerId: NOVA_KPI_COLOR_PRIORITIZER,
+                        properties: {
                             // Color Prioritizer Rules
                             // settings rules - if the value is more than "2" display "Violet" color
-                            "rules": [
+                            rules: [
                                 {
-                                    "comparisonType": ">",
-                                    "value": 2,
-                                    "color": "var(--nui-color-chart-four)",
+                                    comparisonType: ">",
+                                    value: 2,
+                                    color: "var(--nui-color-chart-four)",
                                 },
                             ] as IKpiColorRules[],
                         },

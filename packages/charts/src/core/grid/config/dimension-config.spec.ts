@@ -1,8 +1,7 @@
 import { DimensionConfig } from "./dimension-config";
 
-describe("dimension-config", ()=> {
-
-    it("doesn't allow for negative width to be set", ()=> {
+describe("dimension-config", () => {
+    it("doesn't allow for negative width to be set", () => {
         const dc = new DimensionConfig();
         dc.margin.left = 10;
         dc.margin.right = 10;
@@ -11,7 +10,7 @@ describe("dimension-config", ()=> {
         expect(dc.width()).toEqual(0);
     });
 
-    it("doesn't allow for negative height to be set", ()=> {
+    it("doesn't allow for negative height to be set", () => {
         const dc = new DimensionConfig();
         dc.margin.top = 10;
         dc.margin.bottom = 10;
@@ -19,5 +18,4 @@ describe("dimension-config", ()=> {
 
         expect(dc.height()).toEqual(0);
     });
-
 });

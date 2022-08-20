@@ -1,5 +1,12 @@
 import {
-    ChangeDetectorRef, Component, ElementRef, forwardRef, Input, Optional, ViewChild, ViewEncapsulation,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    forwardRef,
+    Input,
+    Optional,
+    ViewChild,
+    ViewEncapsulation,
 } from "@angular/core";
 
 import { MenuActionType } from "../../public-api";
@@ -16,9 +23,20 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
 @Component({
     selector: "nui-menu-action",
     template: `
-        <a class="nui-menu-item__action nui-menu-item__link" href="#"
-           role="button" (click)="handleClick($event)" [ngClass]="'nui-menu-item__action-' + type" #menuAction tabindex="-1">
-            <nui-icon *ngIf="icon" [icon]="icon" [iconColor]="getIconColor()"></nui-icon>
+        <a
+            class="nui-menu-item__action nui-menu-item__link"
+            href="#"
+            role="button"
+            (click)="handleClick($event)"
+            [ngClass]="'nui-menu-item__action-' + type"
+            #menuAction
+            tabindex="-1"
+        >
+            <nui-icon
+                *ngIf="icon"
+                [icon]="icon"
+                [iconColor]="getIconColor()"
+            ></nui-icon>
             <ng-content></ng-content>
         </a>
     `,
@@ -30,7 +48,7 @@ import { MenuItemBaseComponent } from "../menu-item/menu-item-base";
     ],
     styleUrls: ["./menu-action.component.less"],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "menuitem" },
+    host: { role: "menuitem" },
 })
 export class MenuActionComponent extends MenuItemBaseComponent {
     /**
@@ -42,7 +60,10 @@ export class MenuActionComponent extends MenuItemBaseComponent {
 
     @ViewChild("menuAction") menuItem: ElementRef;
 
-    constructor(@Optional() readonly group: MenuGroupComponent, cd: ChangeDetectorRef) {
+    constructor(
+        @Optional() readonly group: MenuGroupComponent,
+        cd: ChangeDetectorRef
+    ) {
         super(group, cd);
 
         this.disabled = false;

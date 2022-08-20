@@ -25,10 +25,16 @@ export class DonutGaugeBasicExampleComponent implements OnInit {
         this.gaugeConfig = this.getGaugeConfig(initialValue);
 
         // Creating the chart assist
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
 
         // Assembling the series
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
 
         // Updating the chart
         this.chartAssist.update(this.seriesSet);

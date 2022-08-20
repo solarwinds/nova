@@ -1,8 +1,8 @@
-import {ComponentFixture, TestBed} from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import {DialogComponent} from "./dialog.component";
-import {Subject} from "rxjs";
-import {Router} from "@angular/router";
+import { DialogComponent } from "./dialog.component";
+import { Subject } from "rxjs";
+import { Router } from "@angular/router";
 
 describe("components >", () => {
     describe("dialog >", () => {
@@ -11,8 +11,7 @@ describe("components >", () => {
         beforeEach(() => {
             const mockRouter = {
                 events: new Subject<any>(),
-
-            }
+            };
 
             TestBed.configureTestingModule({
                 declarations: [DialogComponent],
@@ -26,7 +25,8 @@ describe("components >", () => {
                 fixture.detectChanges();
 
                 const modalEl: Element = fixture.nativeElement;
-                const dialogEl: Element = fixture.nativeElement.querySelector(".modal-dialog");
+                const dialogEl: Element =
+                    fixture.nativeElement.querySelector(".modal-dialog");
 
                 expect(modalEl.className).toContain("nui-dialog");
                 expect(dialogEl.className).toContain("modal-dialog");
@@ -36,7 +36,8 @@ describe("components >", () => {
                 fixture.componentInstance.size = "sm";
                 fixture.detectChanges();
 
-                const dialogEl: Element = fixture.nativeElement.querySelector(".modal-dialog");
+                const dialogEl: Element =
+                    fixture.nativeElement.querySelector(".modal-dialog");
                 expect(dialogEl.className).toContain("modal-dialog");
                 expect(dialogEl.className).toContain("dialog-sm");
             });
@@ -45,20 +46,27 @@ describe("components >", () => {
                 fixture.componentInstance.windowClass = "custom-class";
                 fixture.detectChanges();
 
-                expect(fixture.nativeElement.className).toContain("custom-class");
+                expect(fixture.nativeElement.className).toContain(
+                    "custom-class"
+                );
             });
 
             it("aria attributes", () => {
                 fixture.detectChanges();
 
-                expect(fixture.nativeElement.getAttribute("role")).toBe("dialog");
+                expect(fixture.nativeElement.getAttribute("role")).toBe(
+                    "dialog"
+                );
             });
 
             it("should contain focus trap attribute", () => {
                 fixture.detectChanges();
-                const dialogEl: Element = fixture.nativeElement.querySelector(".modal-dialog");
+                const dialogEl: Element =
+                    fixture.nativeElement.querySelector(".modal-dialog");
 
-                expect(dialogEl.attributes.getNamedItem("cdkTrapFocus")).not.toBeFalsy();
+                expect(
+                    dialogEl.attributes.getNamedItem("cdkTrapFocus")
+                ).not.toBeFalsy();
             });
         });
     });

@@ -4,7 +4,11 @@ import { browser } from "protractor";
 
 import { Helpers } from "../../helpers";
 
-import { IToastDeclaration, ToastPositionClass, ToastTestPage } from "./toast-test.po";
+import {
+    IToastDeclaration,
+    ToastPositionClass,
+    ToastTestPage,
+} from "./toast-test.po";
 import { ToastAtom } from "./toast.atom";
 
 describe("USERCONTROL Toast > ", () => {
@@ -53,8 +57,10 @@ describe("USERCONTROL Toast > ", () => {
         await page.showToasts(toastConfig);
         const toast = page.getToast();
         await toast.hover();
-        await browser.sleep((toastConfig.options.timeOut) * 2);
-        expect(await toast.isPresent() && await toast.isDisplayed()).toEqual(true);
+        await browser.sleep(toastConfig.options.timeOut * 2);
+        expect(
+            (await toast.isPresent()) && (await toast.isDisplayed())
+        ).toEqual(true);
     });
 
     it("should honor the timeout specified", async () => {
@@ -70,7 +76,10 @@ describe("USERCONTROL Toast > ", () => {
         const endPoint: number = performance.now();
 
         // rounding measured time to the nearest thousand, for this toast example it will be equal to 3000 milliseconds
-        const timeBenchmark: number = _round(endPoint - startPoint - ToastAtom.animationTimeout, -3);
+        const timeBenchmark: number = _round(
+            endPoint - startPoint - ToastAtom.animationTimeout,
+            -3
+        );
         expect(timeBenchmark).toEqual(toastConfig.options.timeOut);
     });
 
@@ -87,11 +96,16 @@ describe("USERCONTROL Toast > ", () => {
         await toast.unhover();
 
         const startPoint: number = performance.now();
-        await toast.waitUntilNotDisplayed(toastConfig.options.extendedTimeOut * 1.5);
+        await toast.waitUntilNotDisplayed(
+            toastConfig.options.extendedTimeOut * 1.5
+        );
         const endPoint: number = performance.now();
 
         // rounding measured time to the nearest thousand, for this toast example it will be equal to 3000 milliseconds
-        const timeBenchmark: number = _round(endPoint - startPoint - ToastAtom.animationTimeout, -3);
+        const timeBenchmark: number = _round(
+            endPoint - startPoint - ToastAtom.animationTimeout,
+            -3
+        );
         expect(timeBenchmark).toEqual(toastConfig.options.extendedTimeOut);
     });
 
@@ -103,21 +117,37 @@ describe("USERCONTROL Toast > ", () => {
         await page.showToasts(toastConfig);
         const toast = page.getToast();
 
-        expect(await toast.getToastsContainerPositioning(toastConfig.options.positionClass)).toBe(true);
+        expect(
+            await toast.getToastsContainerPositioning(
+                toastConfig.options.positionClass
+            )
+        ).toBe(true);
     });
 
     describe("html fragment", async () => {
         const message: string = `<a href="#">Link</a>`;
         it(" should be rendered", async () => {
-            await page.showToasts({...toastConfig, message, options: {enableHtml: true}});
-            expect(await page.getToast().getBody()).not.toContain(`<a href="#">`);
+            await page.showToasts({
+                ...toastConfig,
+                message,
+                options: { enableHtml: true },
+            });
+            expect(await page.getToast().getBody()).not.toContain(
+                `<a href="#">`
+            );
         });
 
         it(" should not be rendered", async () => {
-            await page.showToasts({...toastConfig, message, options: {enableHtml: false}});
+            await page.showToasts({
+                ...toastConfig,
+                message,
+                options: { enableHtml: false },
+            });
 
             const toast = page.getToast();
-            expect(await toast.isPresent() && await toast.isDisplayed()).toEqual(true);
+            expect(
+                (await toast.isPresent()) && (await toast.isDisplayed())
+            ).toEqual(true);
             expect(await toast.getBody()).toContain(`<a href="#">`);
         });
 
@@ -127,7 +157,11 @@ describe("USERCONTROL Toast > ", () => {
                 <object width="400" height="400"></object>
                 <iframe src="https://www.solarwinds.com/"></iframe>
                 <embed src="https://www.solarwinds.com/">`;
-            await page.showToasts({...toastConfig, message: messageWithForbiddenTags, options: {enableHtml: true}});
+            await page.showToasts({
+                ...toastConfig,
+                message: messageWithForbiddenTags,
+                options: { enableHtml: true },
+            });
             const toastBody = await page.getToast().getBody();
             expect(toastBody).not.toContain(`<script>`);
             expect(toastBody).not.toContain(`<object>`);
@@ -147,14 +181,18 @@ describe("USERCONTROL Toast > ", () => {
 
         it("shouldn't close toast by click when set to 'false'", async () => {
             if (!toastConfig.options) {
-                throw new Error("ToastConfig options property is not available");
+                throw new Error(
+                    "ToastConfig options property is not available"
+                );
             }
             toastConfig.options.clickToDismiss = false;
             await page.showToasts(toastConfig);
             const toast = page.getToast();
 
             await toast.click();
-            expect(await toast.isPresent() && await toast.isDisplayed()).toEqual(true);
+            expect(
+                (await toast.isPresent()) && (await toast.isDisplayed())
+            ).toEqual(true);
         });
     });
 

@@ -2,7 +2,13 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule, NuiToastModule } from "@nova-ui/bits";
+import {
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+    NuiToastModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { PersistenceHandlerSetupDocsComponent } from "./persistence-handler-setup-docs.component";
@@ -13,8 +19,8 @@ const routes = [
         path: "",
         component: PersistenceHandlerSetupDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -23,8 +29,8 @@ const routes = [
         path: "example",
         component: PersistenceHandlerSetupComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -46,7 +52,6 @@ const routes = [
         PersistenceHandlerSetupDocsComponent,
         PersistenceHandlerSetupComponent,
     ],
-    entryComponents: [
-    ],
+    entryComponents: [],
 })
-export class PersistenceHandlerSetupModule { }
+export class PersistenceHandlerSetupModule {}

@@ -55,7 +55,8 @@ export const tableConfigurator: IPizzagna = {
         // /presentation/titleAndDescription
         titleAndDescription: {
             id: "titleAndDescription",
-            componentType: TitleAndDescriptionConfigurationComponent.lateLoadKey,
+            componentType:
+                TitleAndDescriptionConfigurationComponent.lateLoadKey,
             providers: {
                 [WellKnownProviders.Converter]: {
                     providerId: NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
@@ -101,7 +102,8 @@ export const tableConfigurator: IPizzagna = {
                                 keys: ["providerId", "properties"],
                             },
                             {
-                                previewPath: "table.providers.adapter.properties.dataSource",
+                                previewPath:
+                                    "table.providers.adapter.properties.dataSource",
                                 keys: ["properties"],
                             },
                         ],

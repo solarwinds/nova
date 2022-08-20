@@ -3,9 +3,7 @@ import { assertA11y, Helpers } from "../../helpers";
 import { ButtonAtom } from "../public_api";
 
 describe("a11y: button", () => {
-    let rulesToDisable: string[] = [
-        "duplicate-id-active",
-    ];
+    let rulesToDisable: string[] = ["duplicate-id-active"];
 
     beforeAll(async () => {
         await browser.waitForAngularEnabled(false);

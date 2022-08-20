@@ -6,17 +6,8 @@ import { SourceInspectorComponent } from "./source-inspector.component";
 
 /** @ignore */
 @NgModule({
-    declarations: [
-        SourceInspectorComponent,
-    ],
-    imports: [
-        CommonModule,
-        NuiDocsModule,
-        NuiSelectModule,
-        NuiTabsModule,
-    ],
-    exports: [
-        SourceInspectorComponent,
-    ],
+    declarations: [SourceInspectorComponent],
+    imports: [CommonModule, NuiDocsModule, NuiSelectModule, NuiTabsModule],
+    exports: [SourceInspectorComponent],
 })
-export class SourceInspectorModule { }
+export class SourceInspectorModule {}

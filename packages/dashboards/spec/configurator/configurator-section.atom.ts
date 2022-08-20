@@ -8,13 +8,20 @@ export class ConfiguratorSectionAtom extends Atom {
 
     private root = this.getElement();
 
-    public getAccordionByIndex = (index: number): AccordionAtom => Atom.findIn<AccordionAtom>(AccordionAtom, this.root, index);
+    public getAccordionByIndex = (index: number): AccordionAtom =>
+        Atom.findIn<AccordionAtom>(AccordionAtom, this.root, index);
 
-    public async getAccordionByLabel(label: string): Promise<AccordionAtom | undefined> {
-        const accordions = this.root.all(by.className("nui-widget-editor-accordion"));
+    public async getAccordionByLabel(
+        label: string
+    ): Promise<AccordionAtom | undefined> {
+        const accordions = this.root.all(
+            by.className("nui-widget-editor-accordion")
+        );
         let accordion: ElementFinder | undefined;
         await accordions.each(async (element: ElementFinder | undefined) => {
-            const text = await element?.element(by.className("nui-text-label")).getText();
+            const text = await element
+                ?.element(by.className("nui-text-label"))
+                .getText();
             if (text === label) {
                 accordion = element;
             }
@@ -24,5 +31,4 @@ export class ConfiguratorSectionAtom extends Atom {
             return Atom.findIn<AccordionAtom>(AccordionAtom, accordion);
         }
     }
-
 }

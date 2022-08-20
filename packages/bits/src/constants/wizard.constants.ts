@@ -20,8 +20,8 @@ export const WIZARD_STEP_STATE_DEFAULT_CONFIG: WizardStepStateConfig = {
         icon: "step-active",
         iconColor: "black",
     },
-}
+};
 
 export const WIZARD_CONFIG_DEFAULT: IWizardConfig = {
-    stepState: {...WIZARD_STEP_STATE_DEFAULT_CONFIG},
-}
+    stepState: { ...WIZARD_STEP_STATE_DEFAULT_CONFIG },
+};

@@ -29,12 +29,12 @@ describe("RadialPopoverPlugin >", () => {
                 interactionType: InteractionType.MouseMove,
                 dataPoints: {
                     "series-1": {
-                        "index": 5,
-                        "position": { "x": 400, "y": 30 },
+                        index: 5,
+                        position: { x: 400, y: 30 },
                     },
                     "series-2": {
-                        "index": 5,
-                        "position": { "x": 560, "y": 50 },
+                        index: 5,
+                        position: { x: 560, y: 50 },
                     },
                 },
             },
@@ -54,8 +54,13 @@ describe("RadialPopoverPlugin >", () => {
         };
 
         // @ts-ignore: Disabled for testing purposes
-        spyOnProperty(chart.target?.node(), "parentNode").and.returnValue(parentNodeValues);
-        chart.getEventBus().getStream(INTERACTION_DATA_POINTS_EVENT).next(interactionDataPointsEventPayload);
+        spyOnProperty(chart.target?.node(), "parentNode").and.returnValue(
+            parentNodeValues
+        );
+        chart
+            .getEventBus()
+            .getStream(INTERACTION_DATA_POINTS_EVENT)
+            .next(interactionDataPointsEventPayload);
 
         expect(plugin.popoverTargetPosition).toEqual({
             top: 40,

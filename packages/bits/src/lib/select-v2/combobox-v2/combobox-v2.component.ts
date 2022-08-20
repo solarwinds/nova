@@ -58,8 +58,8 @@ import { LiveAnnouncer } from "@angular/cdk/a11y";
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
     host: {
-        "class": "nui-combobox-v2",
-        "role": "combobox",
+        class: "nui-combobox-v2",
+        role: "combobox",
         "[attr.aria-expanded]": "isDropdownOpen || false",
         "aria-haspopup": "listbox",
         "aria-owns": "nui-overlay",
@@ -67,8 +67,10 @@ import { LiveAnnouncer } from "@angular/cdk/a11y";
 })
 
 // Will be renamed in scope of the NUI-5797
-export class ComboboxV2Component extends BaseSelectV2 implements AfterContentInit, OnDestroy, OnChanges, AfterViewInit {
-
+export class ComboboxV2Component
+    extends BaseSelectV2
+    implements AfterContentInit, OnDestroy, OnChanges, AfterViewInit
+{
     /** Function that maps an Option's control value to its display value */
     @Input() public displayWith: ((value: any) => string) | null = null;
 
@@ -85,8 +87,12 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     @Output() public canCreateOption = new EventEmitter<boolean>(false);
 
     /** Grabs and init keyboard navigation service for the "Selected Items" */
-    @ContentChildren(MarkAsSelectedItemDirective, {descendants: true}) set selectedItems(elems: QueryList<MarkAsSelectedItemDirective>) {
-        this.selectedItemsKeyControlService.initSelectedItemsKeyManager(elems, this);
+    @ContentChildren(MarkAsSelectedItemDirective, { descendants: true })
+    set selectedItems(elems: QueryList<MarkAsSelectedItemDirective>) {
+        this.selectedItemsKeyControlService.initSelectedItemsKeyManager(
+            elems,
+            this
+        );
     }
 
     /** Value of the Combobox Input */
@@ -95,17 +101,20 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     /** Text of the Clear Button tooltip */
     public clearValueButtonTooltip: string;
 
-    constructor(elRef: ElementRef,
-                optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
-                cdRef: ChangeDetectorRef,
-                private selectedItemsKeyControlService: SelectedItemsKeyControlService,
-                public liveAnnouncer: LiveAnnouncer
+    constructor(
+        elRef: ElementRef,
+        optionKeyControlService: OptionKeyControlService<SelectV2OptionComponent>,
+        cdRef: ChangeDetectorRef,
+        private selectedItemsKeyControlService: SelectedItemsKeyControlService,
+        public liveAnnouncer: LiveAnnouncer
     ) {
         super(optionKeyControlService, cdRef, elRef, liveAnnouncer);
     }
 
     public ngAfterContentInit(): void {
-        this.clearValueButtonTooltip = this.multiselect ? $localize `Remove all` : $localize `Remove`;
+        this.clearValueButtonTooltip = this.multiselect
+            ? $localize`Remove all`
+            : $localize`Remove`;
         // applying changes to content immediately after it was initialized (checked)
         // causes "Expression has changed after it was checked" error
         setTimeout(() => {
@@ -123,7 +132,10 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
         this.optionsChanged().subscribe(() => {
             this.filterItems(this.inputValue.toString());
             // We need the active option to always stay visible during the options filtering.
-            this.optionKeyControlService.scrollToActiveItem({block: "start", behavior: "smooth"});
+            this.optionKeyControlService.scrollToActiveItem({
+                block: "start",
+                behavior: "smooth",
+            });
             this.cdRef.markForCheck();
         });
     }
@@ -150,7 +162,10 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     public onMouseUp(target: HTMLElement): void {
         this.mouseDown = false;
         if (!this.manualDropdownControl) {
-            if (target !== this.inputElement.nativeElement && !this.dropdown.showing) {
+            if (
+                target !== this.inputElement.nativeElement &&
+                !this.dropdown.showing
+            ) {
                 this.inputElement.nativeElement.focus();
                 return;
             }
@@ -168,7 +183,6 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
         } else if (this.optionKeyControlService.getActiveItemIndex() === -1) {
             this.optionKeyControlService.setFirstItemActive();
         }
-
     }
 
     /** Toggles dropdown and removes focus from Selected Items */
@@ -204,10 +218,12 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
         let option: SelectV2OptionComponent | undefined;
 
         if (typeof item === "number" && this.multiselect) {
-            const value = (this.value as Array<IOptionValueObject>)[item as number];
-            option = this.options.find(o => isEqual(o.value, value));
+            const value = (this.value as Array<IOptionValueObject>)[
+                item as number
+            ];
+            option = this.options.find((o) => isEqual(o.value, value));
         } else {
-            option = this.options.find(o => isEqual(o.value, item));
+            option = this.options.find((o) => isEqual(o.value, item));
         }
 
         if (option) {
@@ -274,16 +290,22 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
         super.ngOnDestroy();
     }
 
-    protected handleValueChange (value: OptionValueType | OptionValueType[] | null): void {
+    protected handleValueChange(
+        value: OptionValueType | OptionValueType[] | null
+    ): void {
         if (this.multiselect) {
-            this.selectedOptions.forEach(selectedOption => selectedOption.outfiltered = false);
+            this.selectedOptions.forEach(
+                (selectedOption) => (selectedOption.outfiltered = false)
+            );
         }
         super.handleValueChange(value);
     }
 
     private setInputValue(value: any): void {
         const inputValueToSet = this.multiselect ? "" : value;
-        const toDisplay = this.displayWith ? this.displayWith(inputValueToSet) : inputValueToSet;
+        const toDisplay = this.displayWith
+            ? this.displayWith(inputValueToSet)
+            : inputValueToSet;
         // Simply falling back to an empty string if the display value is falsy does not work properly.
         // The display value can also be the number zero and shouldn't fall back to an empty string.
         this.inputValue = toDisplay || "";
@@ -296,18 +318,22 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
 
             if (!this.multiselect) {
                 // if inputValue is the same as selectedOption, search for "" to display all the options
-                filterValue = this.getLastSelectedOption()?.viewValue.toLowerCase() === filterValue
-                    ? ""
-                    : filterValue;
+                filterValue =
+                    this.getLastSelectedOption()?.viewValue.toLowerCase() ===
+                    filterValue
+                        ? ""
+                        : filterValue;
             }
 
-            this.options.forEach(option => {
+            this.options.forEach((option) => {
                 const optionName = option.viewValue.toLowerCase();
                 option.outfiltered = !includes(optionName, filterValue);
             });
 
             if (this.multiselect) {
-                this.selectedOptions.forEach(selectedOption => selectedOption.outfiltered = true);
+                this.selectedOptions.forEach(
+                    (selectedOption) => (selectedOption.outfiltered = true)
+                );
             }
 
             this.emitSearchResults();
@@ -315,15 +341,23 @@ export class ComboboxV2Component extends BaseSelectV2 implements AfterContentIni
     }
 
     private emitSearchResults(): void {
-        const allOutfiltered = !this.options.some((option => !option.outfiltered));
+        const allOutfiltered = !this.options.some(
+            (option) => !option.outfiltered
+        );
         this.searchEmpty.emit(allOutfiltered);
         this.canCreateOption.emit(this.isInputValueUnique());
     }
 
     private isInputValueUnique(): boolean {
-        const optionName = (option: SelectV2OptionComponent) => option?.viewValue.toLowerCase();
+        const optionName = (option: SelectV2OptionComponent) =>
+            option?.viewValue.toLowerCase();
         const inputValue = this.inputValue.toString().toLowerCase();
 
-        return Boolean(this.inputValue && !this.options.find(option => optionName(option) === inputValue));
+        return Boolean(
+            this.inputValue &&
+                !this.options.find(
+                    (option) => optionName(option) === inputValue
+                )
+        );
     }
 }

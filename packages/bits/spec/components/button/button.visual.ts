@@ -20,7 +20,7 @@ describe(`Visual tests: ${name}`, () => {
         basicButton = Atom.find(ButtonAtom, "basic-button");
         primaryButton = Atom.find(ButtonAtom, "primary-button");
         actionButton = Atom.find(ButtonAtom, "action-button");
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 

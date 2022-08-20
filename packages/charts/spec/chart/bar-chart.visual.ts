@@ -18,8 +18,14 @@ describe(`Visual tests: Charts - ${name}`, () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/bar/test");
         barChartVertical = Atom.find(ChartAtom, "nui-demo-bar-chart-vertical");
-        barChartHorizontalWithLegend = Atom.find(ChartAtom, "nui-demo-bar-chart-horizontal-with-legend");
-        legendOfVerticalBarChart = Atom.findIn(LegendAtom, element(by.id("nui-demo-bar-chart-vertical-with-legend")));
+        barChartHorizontalWithLegend = Atom.find(
+            ChartAtom,
+            "nui-demo-bar-chart-horizontal-with-legend"
+        );
+        legendOfVerticalBarChart = Atom.findIn(
+            LegendAtom,
+            element(by.id("nui-demo-bar-chart-vertical-with-legend"))
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });
@@ -27,23 +33,37 @@ describe(`Visual tests: Charts - ${name}`, () => {
     it(`${name} - Default look`, async () => {
         await camera.turn.on();
 
-        let dataSeries = await barChartVertical.getDataSeriesById(SeriesAtom, "chrome");
+        let dataSeries = await barChartVertical.getDataSeriesById(
+            SeriesAtom,
+            "chrome"
+        );
         if (dataSeries) {
-            await (dataSeries).hover();
+            await dataSeries.hover();
         }
-        await camera.say.cheese(`${name} - Default look with first series highlighted for vertical bar chart`);
+        await camera.say.cheese(
+            `${name} - Default look with first series highlighted for vertical bar chart`
+        );
 
-        dataSeries = await barChartHorizontalWithLegend.getDataSeriesById(SeriesAtom, "other");
+        dataSeries = await barChartHorizontalWithLegend.getDataSeriesById(
+            SeriesAtom,
+            "other"
+        );
         if (dataSeries) {
-            await (dataSeries).hover();
+            await dataSeries.hover();
         }
-        await camera.say.cheese(`${name} - Default look with last series highlighted for horizontal bar chart`);
+        await camera.say.cheese(
+            `${name} - Default look with last series highlighted for horizontal bar chart`
+        );
 
         await legendOfVerticalBarChart.getSeriesByIndex(3).hover();
-        await camera.say.cheese(`${name} - Default look with middle legend tile hovered`);
+        await camera.say.cheese(
+            `${name} - Default look with middle legend tile hovered`
+        );
 
         await Helpers.prepareBrowser("chart-types/bar/dst-time-interval-test");
-        await camera.say.cheese(`${name} - Time Interval Daylight Saving Time Scenarios`);
+        await camera.say.cheese(
+            `${name} - Time Interval Daylight Saving Time Scenarios`
+        );
 
         await camera.turn.off();
     }, 100000);

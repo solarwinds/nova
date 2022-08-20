@@ -16,7 +16,10 @@ describe(`Visual tests: ${name}`, () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("repeat/repeat-visual-test");
         singleSelectList = Atom.find(RepeatAtom, "nui-demo-single-highlight");
-        singleSelectListRequired = Atom.find(RepeatAtom, "nui-demo-single-required-selection");
+        singleSelectListRequired = Atom.find(
+            RepeatAtom,
+            "nui-demo-single-required-selection"
+        );
         reorderSelectList = Atom.find(RepeatAtom, "nui-demo-reorder-config");
         toggleDragging = browser.element(by.css(".nui-switch__bar"));
         camera = new Camera().loadFilm(browser, name);
@@ -27,10 +30,14 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Default`);
 
         await singleSelectList.hover();
-        await camera.say.cheese(`Repeat in Required Single Selection Mode with Radio Buttons`);
+        await camera.say.cheese(
+            `Repeat in Required Single Selection Mode with Radio Buttons`
+        );
 
         await singleSelectListRequired.hover();
-        await camera.say.cheese(`Repeat in Single Selection Mode with Item Highlight`);
+        await camera.say.cheese(
+            `Repeat in Single Selection Mode with Item Highlight`
+        );
 
         await reorderSelectList.hover();
         await camera.say.cheese(`Item Drag/Drop Enabled`);

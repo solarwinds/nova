@@ -52,7 +52,9 @@ export class LegendMetadataExampleComponent implements OnInit {
         const averageData = calculateAverageSeries(dataSeries);
         // We are using the base XYRenderer so the metadata does not get displayed on the chart.
         // Set `ignoreForDomainCalculation` to true to prevent the metadata from affecting the domain.
-        const metaDataRenderer = new XYRenderer({ ignoreForDomainCalculation: true });
+        const metaDataRenderer = new XYRenderer({
+            ignoreForDomainCalculation: true,
+        });
         // Here we create an accessor for our average metadata
         const avgAccessors = new XYAccessors();
         // This is so the legend knows the value for the y
@@ -70,12 +72,14 @@ export class LegendMetadataExampleComponent implements OnInit {
         } as IChartSeries<XYAccessors>;
 
         // Here we assemble the complete chart series.
-        let seriesSet: Partial<IChartSeries<IAccessors>>[] = dataSeries.map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        let seriesSet: Partial<IChartSeries<IAccessors>>[] = dataSeries.map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         // Combining both sets in an array of series
         seriesSet = [...seriesSet, this.avgSeries];
@@ -85,14 +89,16 @@ export class LegendMetadataExampleComponent implements OnInit {
     }
 }
 
-function calculateAverageSeries(seriesSet: Partial<IDataSeries<XYAccessors>>[]): Partial<IDataSeries<XYAccessors>> {
+function calculateAverageSeries(
+    seriesSet: Partial<IDataSeries<XYAccessors>>[]
+): Partial<IDataSeries<XYAccessors>> {
     const averageSeries: Partial<IDataSeries<XYAccessors>> = {
         id: "average",
         name: "Average Speed",
         data: [],
-    }
+    };
 
-    const numSeries = seriesSet.length
+    const numSeries = seriesSet.length;
     if (numSeries === 0) {
         return averageSeries;
     }
@@ -105,7 +111,7 @@ function calculateAverageSeries(seriesSet: Partial<IDataSeries<XYAccessors>>[]):
             const series = seriesSet[i];
             avg += series?.data?.[n].value ?? 0;
         }
-        avg = avg / numSeries
+        avg = avg / numSeries;
         data.push({ x: seriesSet[0].data?.[n].x, value: avg });
     }
 

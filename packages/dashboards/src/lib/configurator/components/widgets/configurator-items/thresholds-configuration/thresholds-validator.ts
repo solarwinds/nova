@@ -2,7 +2,6 @@ import { AbstractControl, ValidatorFn } from "@angular/forms";
 import { removeErrors } from "@nova-ui/bits";
 import _isNil from "lodash/isNil";
 
-
 export const thresholdsValidator: ValidatorFn = (form: AbstractControl) => {
     const critical = form.get("criticalThresholdValue");
     const warning = form.get("warningThresholdValue");
@@ -18,7 +17,6 @@ export const thresholdsValidator: ValidatorFn = (form: AbstractControl) => {
         throw new Error("warningThresholdValue formControl is not defined");
     }
     removeErrors(warning, "min", "max");
-
 
     if (show?.value) {
         if (_isNil(warning.value)) {

@@ -14,10 +14,7 @@ import { SelectComponent } from "./select.component";
 // eslint-disable-next-line max-len
 /** @ignore @deprecated in v11 SelectComponent and ComboboxComponent in this module have been deprecated in favor of SelectV2Component and ComboboxV2Component which can be imported from SelectV2Module */
 @NgModule({
-    declarations: [
-        ComboboxComponent,
-        SelectComponent,
-    ],
+    declarations: [ComboboxComponent, SelectComponent],
     imports: [
         NuiCommonModule,
         ReactiveFormsModule,
@@ -27,11 +24,7 @@ import { SelectComponent } from "./select.component";
         NuiButtonModule,
         NuiMenuModule,
     ],
-    exports: [
-        ComboboxComponent,
-        SelectComponent,
-        ReactiveFormsModule,
-    ],
+    exports: [ComboboxComponent, SelectComponent, ReactiveFormsModule],
     providers: [],
 })
-export class NuiSelectModule { }
+export class NuiSelectModule {}

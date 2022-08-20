@@ -1,22 +1,33 @@
-<div class="h-100"
-     [ngClass]="{ 'd-none': fallbackKey,
-                  'd-flex': !fallbackKey }">
-    <ng-container nuiComponentPortal
-                  #componentPortal="nuiComponentPortal"
-                  [componentId]="nodeConfigs[0].id"
-                  [componentType]="nodeConfigs[0].componentType"
-                  [providers]="nodeConfigs[0].providers"
-                  [properties]="nodeConfigs[0].properties">
-        <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)"></ng-template>
+<div
+    class="h-100"
+    [ngClass]="{ 'd-none': fallbackKey, 'd-flex': !fallbackKey }"
+>
+    <ng-container
+        nuiComponentPortal
+        #componentPortal="nuiComponentPortal"
+        [componentId]="nodeConfigs[0].id"
+        [componentType]="nodeConfigs[0].componentType"
+        [providers]="nodeConfigs[0].providers"
+        [properties]="nodeConfigs[0].properties"
+    >
+        <ng-template
+            [cdkPortalOutlet]="componentPortal.portal"
+            (attached)="componentPortal.attached($event)"
+        ></ng-template>
     </ng-container>
 </div>
 <div class="d-flex h-100" *ngIf="fallbackKey">
-    <ng-container nuiComponentPortal
-                  #componentPortal="nuiComponentPortal"
-                  [componentId]="nodeConfigs[1].id"
-                  [componentType]="nodeConfigs[1].componentType"
-                  [providers]="nodeConfigs[1].providers"
-                  [properties]="nodeConfigs[1].properties">
-        <ng-template [cdkPortalOutlet]="componentPortal.portal" (attached)="componentPortal.attached($event)"></ng-template>
+    <ng-container
+        nuiComponentPortal
+        #componentPortal="nuiComponentPortal"
+        [componentId]="nodeConfigs[1].id"
+        [componentType]="nodeConfigs[1].componentType"
+        [providers]="nodeConfigs[1].providers"
+        [properties]="nodeConfigs[1].properties"
+    >
+        <ng-template
+            [cdkPortalOutlet]="componentPortal.portal"
+            (attached)="componentPortal.attached($event)"
+        ></ng-template>
     </ng-container>
 </div>

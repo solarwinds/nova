@@ -26,8 +26,7 @@ describe("LineChartComponent", () => {
                     useValue: {},
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -38,6 +37,9 @@ describe("LineChartComponent", () => {
     });
 
     it("should set the left axis to fit", () => {
-        expect((component.chartAssist.chart.getGrid().config() as XYGridConfig).axis.left.fit).toEqual(true);
+        expect(
+            (component.chartAssist.chart.getGrid().config() as XYGridConfig)
+                .axis.left.fit
+        ).toEqual(true);
     });
 });

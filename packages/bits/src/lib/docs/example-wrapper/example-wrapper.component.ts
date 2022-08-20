@@ -1,12 +1,7 @@
 /// <reference path="../../../../node_modules/highlight.js/types/index.d.ts" />
 
 import { DOCUMENT } from "@angular/common";
-import {
-    Component,
-    Inject,
-    Input,
-    OnInit,
-} from "@angular/core";
+import { Component, Inject, Input, OnInit } from "@angular/core";
 
 import { SourcesService } from "../services/sources.service";
 
@@ -42,14 +37,23 @@ export class ExampleWrapperComponent implements OnInit {
     public availableThemes = ["light theme", "dark theme"];
     public selectedTheme = this.availableThemes[0];
 
-    public componentSources: { ts: string, html: string, less?: string, [key: string]: any };
+    public componentSources: {
+        ts: string;
+        html: string;
+        less?: string;
+        [key: string]: any;
+    };
 
     public getTooltip() {
         return this.showSource ? "Hide source code" : "Show source code";
     }
 
     public openPlunker() {
-        this.plunkerProjectService.open(this.filenamePrefix, this.componentSources, this.sourcesService.getTranslations());
+        this.plunkerProjectService.open(
+            this.filenamePrefix,
+            this.componentSources,
+            this.sourcesService.getTranslations()
+        );
     }
 
     constructor(
@@ -65,6 +69,8 @@ export class ExampleWrapperComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.componentSources = this.sourcesService.getSourcesByFilenamePrefix(this.filenamePrefix);
+        this.componentSources = this.sourcesService.getSourcesByFilenamePrefix(
+            this.filenamePrefix
+        );
     }
 }

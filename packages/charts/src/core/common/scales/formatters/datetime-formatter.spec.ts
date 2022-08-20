@@ -3,7 +3,6 @@ import moment from "moment/moment";
 import { datetimeFormatter } from "./datetime-formatter";
 
 describe("datetime formatter >", () => {
-
     it("uses seconds format", () => {
         const date = moment("2019-01-08 09:31:45");
         expect(datetimeFormatter(date.toDate())).toEqual("9:31:45 AM");
@@ -31,5 +30,4 @@ describe("datetime formatter >", () => {
         const date = moment("2019-01-01 00:00:00");
         expect(datetimeFormatter(date.toDate())).toEqual("2019");
     });
-
 });

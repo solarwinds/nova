@@ -19,13 +19,8 @@ import { TimePickerComponent } from "./time-picker.component";
         NuiOverlayModule,
         NuiMenuModule,
     ],
-    declarations: [
-        TimePickerComponent,
-    ],
-    exports: [
-        TimePickerComponent,
-    ],
+    declarations: [TimePickerComponent],
+    exports: [TimePickerComponent],
     providers: [],
 })
-export class NuiTimePickerModule {
-}
+export class NuiTimePickerModule {}

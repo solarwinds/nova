@@ -1,6 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    barAccessors, barGrid, BarRenderer, barScales, BarSeriesHighlightStrategy, BarTooltipsPlugin, Chart, ChartAssist, InteractionLabelPlugin,
+    barAccessors,
+    barGrid,
+    BarRenderer,
+    barScales,
+    BarSeriesHighlightStrategy,
+    BarTooltipsPlugin,
+    Chart,
+    ChartAssist,
+    InteractionLabelPlugin,
 } from "@nova-ui/charts";
 
 @Component({
@@ -22,18 +30,25 @@ export class BarChartWithTooltipsExampleComponent implements OnInit {
         this.grid.config().interactionPlugins = false;
 
         // map each category to a specific color
-        const accessors = barAccessors(undefined, this.chartAssist.palette.standardColors);
+        const accessors = barAccessors(
+            undefined,
+            this.chartAssist.palette.standardColors
+        );
 
-        const renderer = new BarRenderer({ highlightStrategy: new BarSeriesHighlightStrategy("x") });
+        const renderer = new BarRenderer({
+            highlightStrategy: new BarSeriesHighlightStrategy("x"),
+        });
         const scales = barScales();
 
         // tell the chart assist to populate the chart
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            renderer,
-            scales,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                renderer,
+                scales,
+            }))
+        );
     }
 }
 

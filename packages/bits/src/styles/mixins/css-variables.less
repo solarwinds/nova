@@ -1,7 +1,7 @@
-.setCssVariable(@property, @value){
-    @evaluated : "@{value}";
+.setCssVariable(@property, @value) {
+    @evaluated: "@{value}";
     //the double @ forces a indirection evaluation, kinda like a pointer
-    @fallback : @@evaluated;
+    @fallback: @@evaluated;
 
     @{property}: ~"var(--@{value},@{fallback})";
 }

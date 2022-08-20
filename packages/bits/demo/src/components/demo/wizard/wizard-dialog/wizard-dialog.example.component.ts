@@ -1,5 +1,10 @@
 import { Component, Inject, TemplateRef, ViewChild } from "@angular/core";
-import { DialogService, NuiDialogRef, ToastService, WizardComponent } from "@nova-ui/bits";
+import {
+    DialogService,
+    NuiDialogRef,
+    ToastService,
+    WizardComponent,
+} from "@nova-ui/bits";
 
 @Component({
     selector: "nui-wizard-dialog-example",
@@ -10,11 +15,18 @@ export class WizardDialogExampleComponent {
 
     public activeDialog: NuiDialogRef;
 
-    constructor(@Inject(DialogService) private dialogService: DialogService,
-        @Inject(ToastService) private toastService: ToastService) { }
+    constructor(
+        @Inject(DialogService) private dialogService: DialogService,
+        @Inject(ToastService) private toastService: ToastService
+    ) {}
 
-    public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
-    public selectedVegetables = [$localize `Potato`, $localize `Tomato`];
+    public vegetables = [
+        $localize`Cabbage`,
+        $localize`Potato`,
+        $localize`Tomato`,
+        $localize`Carrot`,
+    ];
+    public selectedVegetables = [$localize`Potato`, $localize`Tomato`];
 
     public isChecked(vegetable: string): boolean {
         return this.selectedVegetables.indexOf(vegetable) > -1;
@@ -25,7 +37,7 @@ export class WizardDialogExampleComponent {
     }
 
     public openDialog(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "lg"});
+        this.activeDialog = this.dialogService.open(content, { size: "lg" });
     }
 
     public closeDialog() {

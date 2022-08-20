@@ -14,10 +14,12 @@ import { VerticalBarAccessors } from "./vertical-bar-accessors";
  * @param {IValueProvider<IChartMarker>} [markerProvider]
  * @returns {IBarAccessors}
  */
-export function barAccessors(config?: IBarChartConfig,
-                             colorProvider?: IValueProvider<string>,
-                             markerProvider?: IValueProvider<IChartMarker>): IBarAccessors {
-    return (config && config.horizontal)
+export function barAccessors(
+    config?: IBarChartConfig,
+    colorProvider?: IValueProvider<string>,
+    markerProvider?: IValueProvider<IChartMarker>
+): IBarAccessors {
+    return config && config.horizontal
         ? new HorizontalBarAccessors(colorProvider, markerProvider)
         : new VerticalBarAccessors(colorProvider, markerProvider);
 }

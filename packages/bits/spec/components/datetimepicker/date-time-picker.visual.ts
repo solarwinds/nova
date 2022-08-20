@@ -16,11 +16,19 @@ describe(`Visual tests: ${name}`, () => {
     let dialogButtonElem: ElementFinder;
 
     beforeAll(async () => {
-        await Helpers.prepareBrowser("date-time-picker/date-time-picker-visual-test");
-        dateTimePickerBasic = Atom.find(DateTimepickerAtom, "nui-basic-date-time-picker");
-        dateTimePickerRanged = Atom.find(DateTimepickerAtom, "nui-date-time-picker-ranged");
+        await Helpers.prepareBrowser(
+            "date-time-picker/date-time-picker-visual-test"
+        );
+        dateTimePickerBasic = Atom.find(
+            DateTimepickerAtom,
+            "nui-basic-date-time-picker"
+        );
+        dateTimePickerRanged = Atom.find(
+            DateTimepickerAtom,
+            "nui-date-time-picker-ranged"
+        );
         dialogButtonElem = element(by.id("nui-visual-test-dialog-btn"));
-        
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -40,7 +48,10 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese(`Ranged picker disables dates out of range`);
 
         await dialogButtonElem.click();
-        dateTimePickerDialog = Atom.find(DateTimepickerAtom, "nui-date-time-picker-dialog");
+        dateTimePickerDialog = Atom.find(
+            DateTimepickerAtom,
+            "nui-date-time-picker-dialog"
+        );
 
         await dateTimePickerDialog.getDatePicker().toggle();
         await camera.say.cheese(`Date Time Picker Dialog Date`);

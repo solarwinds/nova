@@ -1,7 +1,9 @@
 <nui-wizard-horizontal #wizardComponent>
-
     <!--  content of the 1st step -->
-    <nui-wizard-step-v2 i18n-label label="Very long header text. Very long header text">
+    <nui-wizard-step-v2
+        i18n-label
+        label="Very long header text. Very long header text"
+    >
         <!-- content of the current step -->
         <div class="p-5">
             <span i18n>Step with long header text</span>
@@ -32,7 +34,7 @@
 
     <!--  Step with custom label template and tooltip-->
     <nui-wizard-step-v2>
-        <ng-template nuiWizardStepLabel >
+        <ng-template nuiWizardStepLabel>
             <span i18n-nuiTooltip nuiTooltip="Custom Label template">
                 <i>Custom Label template</i>
             </span>
@@ -44,32 +46,52 @@
         <ng-template nuiWizardStepFooter>
             <ng-container *ngTemplateOutlet="wizardCancel"></ng-container>
             <ng-container *ngTemplateOutlet="wizardPrevious"></ng-container>
-            <button type="button" displayStyle="primary" nui-button (click)="finishWizard()" i18n>
+            <button
+                type="button"
+                displayStyle="primary"
+                nui-button
+                (click)="finishWizard()"
+                i18n
+            >
                 Finish
             </button>
         </ng-template>
     </nui-wizard-step-v2>
 
     <ng-template #wizardCancel>
-        <button type="button" displayStyle="action" nui-button (click)="resetWizard()" i18n>
+        <button
+            type="button"
+            displayStyle="action"
+            nui-button
+            (click)="resetWizard()"
+            i18n
+        >
             Cancel
         </button>
     </ng-template>
 
     <ng-template #wizardPrevious>
-        <button i18n type="button" nuiWizardPrevious nui-button icon="caret-left">
+        <button
+            i18n
+            type="button"
+            nuiWizardPrevious
+            nui-button
+            icon="caret-left"
+        >
             Back
         </button>
     </ng-template>
 
     <ng-template #wizardNext>
-        <button nuiWizardNext
-                i18n
-                type="button"
-                nui-button
-                displayStyle="primary"
-                icon="caret-right"
-                iconRight="true">
+        <button
+            nuiWizardNext
+            i18n
+            type="button"
+            nui-button
+            displayStyle="primary"
+            icon="caret-right"
+            iconRight="true"
+        >
             Next
         </button>
     </ng-template>

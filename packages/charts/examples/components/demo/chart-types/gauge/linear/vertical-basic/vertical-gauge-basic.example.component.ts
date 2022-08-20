@@ -25,10 +25,16 @@ export class VerticalGaugeBasicExampleComponent implements OnInit {
         this.gaugeConfig = this.getGaugeConfig(initialValue);
 
         // Creating the chart assist
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Vertical);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Vertical
+        );
 
         // Assembling the series
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Vertical);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Vertical
+        );
 
         // Updating the chart
         this.chartAssist.update(this.seriesSet);

@@ -14,28 +14,54 @@ export class ConfiguratorAtom extends Atom {
 
     private root = this.getElement();
 
-    public getSectionByIndex = (index: number): ConfiguratorSectionAtom => Atom.findIn<ConfiguratorSectionAtom>(ConfiguratorSectionAtom, this.root, index);
+    public getSectionByIndex = (index: number): ConfiguratorSectionAtom =>
+        Atom.findIn<ConfiguratorSectionAtom>(
+            ConfiguratorSectionAtom,
+            this.root,
+            index
+        );
 
-    public async getAccordion(sectionHeaderSubstring: string, accordionLabel: string): Promise<AccordionAtom | undefined> {
-        const section = await this.getSectionByHeaderText(sectionHeaderSubstring, true);
+    public async getAccordion(
+        sectionHeaderSubstring: string,
+        accordionLabel: string
+    ): Promise<AccordionAtom | undefined> {
+        const section = await this.getSectionByHeaderText(
+            sectionHeaderSubstring,
+            true
+        );
         return section?.getAccordionByLabel(accordionLabel);
     }
 
     public getResetColumnsButton() {
         return this.root.element(by.id("table-widget-reset-indicator-btn"));
     }
-    public async getSectionByHeaderText(text: string, isSubstring = false): Promise<ConfiguratorSectionAtom | undefined> {
-        const configSections = this.root.all(by.css("nui-widget-configurator-section"));
+    public async getSectionByHeaderText(
+        text: string,
+        isSubstring = false
+    ): Promise<ConfiguratorSectionAtom | undefined> {
+        const configSections = this.root.all(
+            by.css("nui-widget-configurator-section")
+        );
         let section: ElementFinder | undefined;
-        await configSections.each(async (element: ElementFinder | undefined) => {
-            const headerText = await element?.element(by.css(".widget-configurator-section__header")).getText();
-            if ((isSubstring && headerText?.includes(text)) || text === headerText) {
-                section = element;
+        await configSections.each(
+            async (element: ElementFinder | undefined) => {
+                const headerText = await element
+                    ?.element(by.css(".widget-configurator-section__header"))
+                    .getText();
+                if (
+                    (isSubstring && headerText?.includes(text)) ||
+                    text === headerText
+                ) {
+                    section = element;
+                }
             }
-        });
+        );
 
         if (section) {
-            return Atom.findIn<ConfiguratorSectionAtom>(ConfiguratorSectionAtom, section);
+            return Atom.findIn<ConfiguratorSectionAtom>(
+                ConfiguratorSectionAtom,
+                section
+            );
         }
     }
 

@@ -12,16 +12,8 @@ import {
     ViewContainerRef,
     ViewEncapsulation,
 } from "@angular/core";
-import {
-    fromEvent,
-    merge,
-    Subject,
-    timer,
-} from "rxjs";
-import {
-    filter,
-    takeUntil,
-} from "rxjs/operators";
+import { fromEvent, merge, Subject, timer } from "rxjs";
+import { filter, takeUntil } from "rxjs/operators";
 
 import { buttonConstants } from "../../constants/button.constants";
 import { LoggerService } from "../../services/log-service";
@@ -36,14 +28,13 @@ import { ButtonSizeType } from "./public-api";
     templateUrl: "./button.component.html",
     host: {
         "[attr.aria-busy]": "isBusy || null",
-        "class": "nui-button btn",
+        class: "nui-button btn",
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ["./button.component.less"],
     encapsulation: ViewEncapsulation.None,
 })
 /* eslint-enable @angular-eslint/component-selector */
-
 export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     /**
      * Optionally, specify the display style. Supported values are "default", "primary", "action", and "destructive".
@@ -59,7 +50,7 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     @Input() public get iconColor(): string {
         return this._iconColor ? this._iconColor : "";
     }
-    public set iconColor (value) {
+    public set iconColor(value) {
         this._iconColor = value;
     }
     /**
@@ -79,7 +70,7 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
     @Input() public isEmpty: boolean;
 
     /** Sets aria-label for the component */
-    @Input() public ariaLabel: string = ""
+    @Input() public ariaLabel: string = "";
 
     /**
      * Optionally, set whether to fire a "click" event repeatedly while the button is pressed.
@@ -89,18 +80,31 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
      * Optionally, set the size of the button. Supported values are "compact", "default", and "large".
      */
     // TODO: Remove this setter/getter logic in scope of NUI-3475
-    @Input() public get size(): ButtonSizeType { return this._size; }
+    @Input() public get size(): ButtonSizeType {
+        return this._size;
+    }
     public set size(value: ButtonSizeType) {
-        this._size = (value as string) === "small" ? ButtonSizeType.compact : value;
+        this._size =
+            (value as string) === "small" ? ButtonSizeType.compact : value;
     }
 
-    @HostBinding("class.btn-lg") public get sizeClassLarge() { return this.size === "large"; }
-    @HostBinding("class.btn-xs") public get sizeClassCompact() {return this.size === "compact"; }
+    @HostBinding("class.btn-lg") public get sizeClassLarge() {
+        return this.size === "large";
+    }
+    @HostBinding("class.btn-xs") public get sizeClassCompact() {
+        return this.size === "compact";
+    }
 
-    @HostBinding("class.icon-right") public get iconRightClass() { return this.iconRight; }
-    @HostBinding("class.icon-left") public get iconleftClass() { return !this.iconRight; }
+    @HostBinding("class.icon-right") public get iconRightClass() {
+        return this.iconRight;
+    }
+    @HostBinding("class.icon-left") public get iconleftClass() {
+        return !this.iconRight;
+    }
 
-    @HostBinding("class.is-busy") public get isBusyClass() { return this.isBusy; }
+    @HostBinding("class.is-busy") public get isBusyClass() {
+        return this.isBusy;
+    }
     @HostBinding("class.is-empty") public get isEmptyClass() {
         if (this.isEmpty === undefined) {
             return this._isContentEmpty;
@@ -108,31 +112,50 @@ export class ButtonComponent implements OnInit, OnDestroy, AfterContentChecked {
             return this.isEmpty;
         }
     }
-    @HostBinding("class.btn-primary") public get dispStylePrimClass() { return this.displayStyle === "primary"; }
-    @HostBinding("class.btn-action") public get dispStyleActionClass() { return this.displayStyle === "action"; }
-    @HostBinding("class.btn-destructive") public get displayStyleDestructiveClass() {
+    @HostBinding("class.btn-primary") public get dispStylePrimClass() {
+        return this.displayStyle === "primary";
+    }
+    @HostBinding("class.btn-action") public get dispStyleActionClass() {
+        return this.displayStyle === "action";
+    }
+    @HostBinding("class.btn-destructive")
+    public get displayStyleDestructiveClass() {
         return this.displayStyle === "destructive";
     }
     @HostBinding("class.btn-default") public get dispStyleDefaultClass() {
-        return this.displayStyle === "default" || !(this.dispStylePrimClass ||
-            this.dispStyleActionClass || this.displayStyleDestructiveClass);
+        return (
+            this.displayStyle === "default" ||
+            !(
+                this.dispStylePrimClass ||
+                this.dispStyleActionClass ||
+                this.displayStyleDestructiveClass
+            )
+        );
     }
 
-    @HostBinding("attr.aria-label") public get ariaIconLabel() { return this.ariaLabel || this.getAriaLabel(); }
+    @HostBinding("attr.aria-label") public get ariaIconLabel() {
+        return this.ariaLabel || this.getAriaLabel();
+    }
 
-    @ViewChild("contentContainer", {static: true, read: ViewContainerRef }) private contentContainer: ViewContainerRef;
+    @ViewChild("contentContainer", { static: true, read: ViewContainerRef })
+    private contentContainer: ViewContainerRef;
 
     private ngUnsubscribe: Subject<void> = new Subject<void>();
     private _iconColor: string;
     private _isContentEmpty: boolean;
     private _size: ButtonSizeType;
 
-    constructor(@Attribute("type") private type: string,
-                private el: ElementRef,
-                private logger: LoggerService) {
+    constructor(
+        @Attribute("type") private type: string,
+        private el: ElementRef,
+        private logger: LoggerService
+    ) {
         if (this.getHostElement().tagName === "BUTTON" && !type) {
-            this.logger.error(`No type specified for button element. To avoid potential problems, the "type" attribute \
-should be set explicitly: `, el.nativeElement);
+            this.logger.error(
+                `No type specified for button element. To avoid potential problems, the "type" attribute \
+should be set explicitly: `,
+                el.nativeElement
+            );
         }
     }
 
@@ -155,7 +178,9 @@ should be set explicitly: `, el.nativeElement);
      * Passes correct size of icon to inner HTML template.
      */
     public getIconSize(): string {
-        return this.size ? buttonConstants.iconSizeMap[this.size.toLowerCase()] : "";
+        return this.size
+            ? buttonConstants.iconSizeMap[this.size.toLowerCase()]
+            : "";
     }
 
     /**
@@ -177,7 +202,9 @@ should be set explicitly: `, el.nativeElement);
 
     private getAriaLabel() {
         // In chrome once innerText gets touched in a native element this caused issues in table-sticky-header NUI-6033
-        return this._isContentEmpty ? this.icon : this.contentContainer.element.nativeElement.textContent.trim();
+        return this._isContentEmpty
+            ? this.icon
+            : this.contentContainer.element.nativeElement.textContent.trim();
     }
 
     private setIsContentEmptyValue() {
@@ -187,14 +214,27 @@ should be set explicitly: `, el.nativeElement);
 
     private setupRepeatEvent() {
         const hostElement = this.getHostElement();
-        const mouseUp$ = fromEvent(hostElement, "mouseup").pipe(takeUntil(this.ngUnsubscribe));
-        const mouseLeave$ = fromEvent(hostElement, "mouseleave").pipe(takeUntil(this.ngUnsubscribe));
-        fromEvent(hostElement, "mousedown").pipe(
-            takeUntil(this.ngUnsubscribe),
-            filter(() => this.isRepeat))
+        const mouseUp$ = fromEvent(hostElement, "mouseup").pipe(
+            takeUntil(this.ngUnsubscribe)
+        );
+        const mouseLeave$ = fromEvent(hostElement, "mouseleave").pipe(
+            takeUntil(this.ngUnsubscribe)
+        );
+        fromEvent(hostElement, "mousedown")
+            .pipe(
+                takeUntil(this.ngUnsubscribe),
+                filter(() => this.isRepeat)
+            )
             .subscribe(() => {
-                const repeatSubscription = timer(buttonConstants.repeatDelay, buttonConstants.repeatInterval).pipe(
-                    takeUntil(merge(mouseUp$, mouseLeave$, this.ngUnsubscribe)))
+                const repeatSubscription = timer(
+                    buttonConstants.repeatDelay,
+                    buttonConstants.repeatInterval
+                )
+                    .pipe(
+                        takeUntil(
+                            merge(mouseUp$, mouseLeave$, this.ngUnsubscribe)
+                        )
+                    )
                     .subscribe(() => {
                         if (hostElement.disabled) {
                             repeatSubscription.unsubscribe();

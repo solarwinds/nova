@@ -1,5 +1,13 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, ElementRef, getDebugNode, Injectable, ViewChild} from "@angular/core";
-import {ComponentFixture, inject, TestBed} from "@angular/core/testing";
+import {
+    Component,
+    CUSTOM_ELEMENTS_SCHEMA,
+    DebugElement,
+    ElementRef,
+    getDebugNode,
+    Injectable,
+    ViewChild,
+} from "@angular/core";
+import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { LoggerService } from "../../services/log-service";
@@ -17,7 +25,7 @@ import { BusyComponent } from "./busy.component";
             <div tabindex="1"></div>
             <button>button</button>
             <a href="#" tabindex="2">link</a>
-            <input type="text" value="empty"/>
+            <input type="text" value="empty" />
         </div>
     `,
 })
@@ -31,7 +39,7 @@ class MockTabNavigationService extends TabNavigationService {}
 
 describe("components >", () => {
     describe("busy >", () => {
-        beforeEach(async() => {
+        beforeEach(async () => {
             TestBed.configureTestingModule({
                 declarations: [
                     BusyComponent,
@@ -42,10 +50,7 @@ describe("components >", () => {
                     TestBusyWithTabNavigatableChildrensComponent,
                 ],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
-                providers: [
-                    LoggerService,
-                    TabNavigationService,
-                ],
+                providers: [LoggerService, TabNavigationService],
             }).compileComponents();
         });
 
@@ -64,7 +69,9 @@ describe("components >", () => {
                 fixture.detectChanges();
 
                 setTimeout(() => {
-                    const progressBar = fixture.debugElement.query(By.css(".nui-spinner"));
+                    const progressBar = fixture.debugElement.query(
+                        By.css(".nui-spinner")
+                    );
                     fixture.detectChanges();
                     expect(progressBar).toBeTruthy();
                     done();
@@ -76,7 +83,9 @@ describe("components >", () => {
                 fixture.detectChanges();
 
                 setTimeout(() => {
-                    const progressBar = fixture.debugElement.query(By.css(".nui-spinner"));
+                    const progressBar = fixture.debugElement.query(
+                        By.css(".nui-spinner")
+                    );
                     fixture.detectChanges();
                     expect(progressBar).toBeFalsy();
                     done();
@@ -95,57 +104,87 @@ describe("components >", () => {
             let tabNavigationService: TabNavigationService;
             let componentTabNavigationService: TabNavigationService | undefined;
 
-            beforeEach( () => {
+            beforeEach(() => {
                 // configure the component with another set of Providers
-                TestBed.overrideComponent(
-                    BusyComponent,
-                    { set: { providers: [{ provide: TabNavigationService, useClass: MockTabNavigationService }] } }
-                );
+                TestBed.overrideComponent(BusyComponent, {
+                    set: {
+                        providers: [
+                            {
+                                provide: TabNavigationService,
+                                useClass: MockTabNavigationService,
+                            },
+                        ],
+                    },
+                });
 
                 // create component and test fixture
-                fixture = TestBed.createComponent(TestBusyWithTabNavigatableChildrensComponent);
+                fixture = TestBed.createComponent(
+                    TestBusyWithTabNavigatableChildrensComponent
+                );
 
                 // TabNavigationService provided to the TestBed
                 tabNavigationService = TestBed.inject(TabNavigationService);
 
-                debugElement = fixture.debugElement.query(By.directive(BusyComponent));
+                debugElement = fixture.debugElement.query(
+                    By.directive(BusyComponent)
+                );
 
                 // get test component from the fixture
                 hostComponent = fixture.componentInstance;
 
                 // TabNavigationService provided by Component, (should return MockTabNavigationService)
-                componentTabNavigationService = getDebugNode(debugElement.nativeElement)?.injector.get(TabNavigationService);
+                componentTabNavigationService = getDebugNode(
+                    debugElement.nativeElement
+                )?.injector.get(TabNavigationService);
             });
 
             it("should inject TabNavigationService", () => {
                 // service injected via inject(...) and TestBed.get(...) should be the same instance
-                inject([TabNavigationService], (injectService: TabNavigationService) => {
-                    expect(injectService).toBe(tabNavigationService);
-                });
+                inject(
+                    [TabNavigationService],
+                    (injectService: TabNavigationService) => {
+                        expect(injectService).toBe(tabNavigationService);
+                    }
+                );
 
                 // service injected via component should be an instance of MockAuthService
-                expect(componentTabNavigationService instanceof MockTabNavigationService).toBeTruthy();
+                expect(
+                    componentTabNavigationService instanceof
+                        MockTabNavigationService
+                ).toBeTruthy();
             });
 
             it("should detect navigatable elements and disable tab navigation for them", () => {
                 if (!componentTabNavigationService) {
-                    throw new Error("componentTabNavigationService is not defined");
+                    throw new Error(
+                        "componentTabNavigationService is not defined"
+                    );
                 }
-                const spy = spyOn(componentTabNavigationService, "disableTabNavigation");
+                const spy = spyOn(
+                    componentTabNavigationService,
+                    "disableTabNavigation"
+                );
 
                 // enable busy
                 hostComponent.busy = true;
                 fixture.detectChanges();
 
                 expect(spy).toHaveBeenCalledTimes(1);
-                expect(spy).toHaveBeenCalledWith(hostComponent.busyComponentElRef);
+                expect(spy).toHaveBeenCalledWith(
+                    hostComponent.busyComponentElRef
+                );
             });
 
             it("should enable tab navigation after busy is disabled and restore tabindex", () => {
                 if (!componentTabNavigationService) {
-                    throw new Error("componentTabNavigationService is not defined");
+                    throw new Error(
+                        "componentTabNavigationService is not defined"
+                    );
                 }
-                const spy = spyOn(componentTabNavigationService, "restoreTabNavigation");
+                const spy = spyOn(
+                    componentTabNavigationService,
+                    "restoreTabNavigation"
+                );
 
                 // enable busy in order to trigger automatically ngOnChanges
                 hostComponent.busy = true;
@@ -159,6 +198,5 @@ describe("components >", () => {
                 expect(spy).toHaveBeenCalledTimes(1);
             });
         });
-
     });
 });

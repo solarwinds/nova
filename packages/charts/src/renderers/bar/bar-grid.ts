@@ -14,7 +14,11 @@ import { IBarChartConfig } from "./types";
 export function barGrid(config?: IBarChartConfig): XYGrid {
     const grid = new XYGrid();
 
-    grid.config((config && config.horizontal) ? new BarHorizontalGridConfig() : new BarGridConfig());
+    grid.config(
+        config && config.horizontal
+            ? new BarHorizontalGridConfig()
+            : new BarGridConfig()
+    );
 
     return grid;
 }

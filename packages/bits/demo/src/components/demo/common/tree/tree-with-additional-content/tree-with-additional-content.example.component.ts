@@ -3,7 +3,6 @@ import { NestedTreeControl } from "@angular/cdk/tree";
 import { Component } from "@angular/core";
 import { EventBusService, expand } from "@nova-ui/bits";
 
-
 interface FoodNode {
     name: string;
     children?: FoodNode[];
@@ -39,7 +38,6 @@ const TREE_DATA: FoodNode[] = [
     },
 ];
 
-
 @Component({
     selector: "nui-tree-with-additional-content-example",
     templateUrl: "tree-with-additional-content.example.component.html",
@@ -53,12 +51,14 @@ export class TreeWithAdditionalContentExampleComponent {
 
     public items = ["Item 1", "Item 2", "Item 3"];
 
-    public hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+    public hasChild = (_: number, node: FoodNode) =>
+        !!node.children && node.children.length > 0;
 
-    constructor(private eventBusService: EventBusService) {
-    }
+    constructor(private eventBusService: EventBusService) {}
 
     public onToggleClick() {
-        this.eventBusService.getStream({id: "document-click"}).next(new MouseEvent("click"));
+        this.eventBusService
+            .getStream({ id: "document-click" })
+            .next(new MouseEvent("click"));
     }
 }

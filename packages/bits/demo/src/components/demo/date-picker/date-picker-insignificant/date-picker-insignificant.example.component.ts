@@ -12,10 +12,12 @@ export class DatePickerInsignificantExampleComponent {
     public selectedDate: Date;
     public control = new FormControl(this.dt);
 
-    constructor(@Inject(ToastService) private toastService: IToastService) { }
+    constructor(@Inject(ToastService) private toastService: IToastService) {}
 
     public dateChanged(event: Moment) {
         this.selectedDate = new Date(event.valueOf());
-        this.toastService.info({message: $localize `Selected date: ${event.toString()}`});
+        this.toastService.info({
+            message: $localize`Selected date: ${event.toString()}`,
+        });
     }
 }

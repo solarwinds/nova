@@ -3,7 +3,6 @@ import { AreaAccessors } from "./area-accessors";
 const RANDOM_NUMBER = 4;
 
 describe("Area Accessors >", () => {
-
     it("falls back to x if x0 / x1 is not defined", () => {
         const accessors = new AreaAccessors();
         accessors.data.x = () => RANDOM_NUMBER;
@@ -22,5 +21,4 @@ describe("Area Accessors >", () => {
         // @ts-ignore: Disabled for testing purposes
         expect(accessors.data.y1(null, null, null, null)).toBe(RANDOM_NUMBER);
     });
-
 });

@@ -1,8 +1,5 @@
 import { DOCUMENT } from "@angular/common";
-import {
-    Inject,
-    Injectable,
-} from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import _isNil from "lodash/isNil";
 
 import { popoverConstants } from "../../constants/popover.constants";
@@ -50,26 +47,51 @@ export interface IPopoverPosition {
  */
 @Injectable()
 export class PopoverModalService {
-    constructor(private positionService: PositionService,
-                @Inject(DOCUMENT) private document: Document,
-                private edgeDetector: EdgeDetectionService) {}
+    constructor(
+        private positionService: PositionService,
+        @Inject(DOCUMENT) private document: Document,
+        private edgeDetector: EdgeDetectionService
+    ) {}
 
-    public setPosition (popoverModal: HTMLElement, popoverTrigger: HTMLElement, appendToBody: boolean,
-                        contextPlacement: PopoverPlacement): IPopoverPosition {
+    public setPosition(
+        popoverModal: HTMLElement,
+        popoverTrigger: HTMLElement,
+        appendToBody: boolean,
+        contextPlacement: PopoverPlacement
+    ): IPopoverPosition {
         // Element with dimensions
-        const popoverElement = <HTMLElement>popoverModal.querySelector(".nui-popover-container");
-        const edgeDetectionResult = this.edgeDetector.canBe(popoverTrigger, popoverElement);
+        const popoverElement = <HTMLElement>(
+            popoverModal.querySelector(".nui-popover-container")
+        );
+        const edgeDetectionResult = this.edgeDetector.canBe(
+            popoverTrigger,
+            popoverElement
+        );
 
         if (_isNil(edgeDetectionResult)) {
             throw new Error("edgeDetectionResult is Nil");
         }
 
-        const placementAndAlignment = this.getPlacementAndAlignment(edgeDetectionResult, contextPlacement);
+        const placementAndAlignment = this.getPlacementAndAlignment(
+            edgeDetectionResult,
+            contextPlacement
+        );
         const placement = placementAndAlignment.placement;
         const arrowPosition = placementAndAlignment.alignment;
-        const position = this.positionService.getPosition(popoverTrigger, popoverElement, `${placement}-${arrowPosition}`, appendToBody);
-        position.top += this.getYAdjustment(popoverTrigger, placementAndAlignment);
-        position.left += this.getXAdjustment(popoverTrigger, placementAndAlignment);
+        const position = this.positionService.getPosition(
+            popoverTrigger,
+            popoverElement,
+            `${placement}-${arrowPosition}`,
+            appendToBody
+        );
+        position.top += this.getYAdjustment(
+            popoverTrigger,
+            placementAndAlignment
+        );
+        position.left += this.getXAdjustment(
+            popoverTrigger,
+            placementAndAlignment
+        );
         return {
             placement,
             position,
@@ -77,69 +99,127 @@ export class PopoverModalService {
         };
     }
 
-    private getPlacementAndAlignment(edgeDetectionResult: IEdgeDetectionResult, contextPlacement: PopoverPlacement): IPopoverPlacementAlignment {
-        const canOpenHorizontally = edgeDetectionResult.placed.right || edgeDetectionResult.placed.left;
-        const canOpenVertically = edgeDetectionResult.placed.top || edgeDetectionResult.placed.bottom;
+    private getPlacementAndAlignment(
+        edgeDetectionResult: IEdgeDetectionResult,
+        contextPlacement: PopoverPlacement
+    ): IPopoverPlacementAlignment {
+        const canOpenHorizontally =
+            edgeDetectionResult.placed.right || edgeDetectionResult.placed.left;
+        const canOpenVertically =
+            edgeDetectionResult.placed.top || edgeDetectionResult.placed.bottom;
         // placements
-        const canBePlacedRight = edgeDetectionResult.placed.right ? "right" : "left";
-        const canBePlacedLeft = edgeDetectionResult.placed.left ? "left" : "right";
-        const canBePlacedBottom = edgeDetectionResult.placed.bottom ? "bottom" : "top";
-        const canBePlacedTop = edgeDetectionResult.placed.top ? "top" : "bottom";
+        const canBePlacedRight = edgeDetectionResult.placed.right
+            ? "right"
+            : "left";
+        const canBePlacedLeft = edgeDetectionResult.placed.left
+            ? "left"
+            : "right";
+        const canBePlacedBottom = edgeDetectionResult.placed.bottom
+            ? "bottom"
+            : "top";
+        const canBePlacedTop = edgeDetectionResult.placed.top
+            ? "top"
+            : "bottom";
         // alignments
-        const canBeAlignedTop = edgeDetectionResult.aligned.top ? "top" : "bottom";
-        const canBeAlignedRight =  edgeDetectionResult.aligned.right ? "right" : "left";
-        const canBeAlignedLeft = edgeDetectionResult.aligned.left ? "left" : "right";
+        const canBeAlignedTop = edgeDetectionResult.aligned.top
+            ? "top"
+            : "bottom";
+        const canBeAlignedRight = edgeDetectionResult.aligned.right
+            ? "right"
+            : "left";
+        const canBeAlignedLeft = edgeDetectionResult.aligned.left
+            ? "left"
+            : "right";
         // if horizontal/vertical placement is possible opening left/right/top/bottom respectively
         switch (contextPlacement) {
             case "left":
                 return {
-                    placement: canOpenHorizontally ? canBePlacedLeft : canBePlacedBottom,
-                    alignment: canOpenHorizontally ? canBeAlignedTop : canBeAlignedRight,
+                    placement: canOpenHorizontally
+                        ? canBePlacedLeft
+                        : canBePlacedBottom,
+                    alignment: canOpenHorizontally
+                        ? canBeAlignedTop
+                        : canBeAlignedRight,
                 };
             case "right":
                 return {
-                    placement: canOpenHorizontally ? canBePlacedRight : canBePlacedBottom,
-                    alignment: canOpenHorizontally ? canBeAlignedTop : canBeAlignedRight,
+                    placement: canOpenHorizontally
+                        ? canBePlacedRight
+                        : canBePlacedBottom,
+                    alignment: canOpenHorizontally
+                        ? canBeAlignedTop
+                        : canBeAlignedRight,
                 };
             case "bottom":
                 return {
-                    placement: canOpenVertically ? canBePlacedBottom : canBePlacedRight,
-                    alignment: canOpenVertically ? canBeAlignedLeft : canBeAlignedTop,
+                    placement: canOpenVertically
+                        ? canBePlacedBottom
+                        : canBePlacedRight,
+                    alignment: canOpenVertically
+                        ? canBeAlignedLeft
+                        : canBeAlignedTop,
                 };
             case "top":
                 return {
-                    placement: canOpenVertically ? canBePlacedTop : canBePlacedRight,
-                    alignment: canOpenVertically ? canBeAlignedLeft : canBeAlignedTop,
+                    placement: canOpenVertically
+                        ? canBePlacedTop
+                        : canBePlacedRight,
+                    alignment: canOpenVertically
+                        ? canBeAlignedLeft
+                        : canBeAlignedTop,
                 };
             default:
                 return {
-                    placement: canOpenHorizontally ? canBePlacedRight : canBePlacedBottom,
-                    alignment: canOpenHorizontally ? canBeAlignedTop : canBeAlignedRight,
+                    placement: canOpenHorizontally
+                        ? canBePlacedRight
+                        : canBePlacedBottom,
+                    alignment: canOpenHorizontally
+                        ? canBeAlignedTop
+                        : canBeAlignedRight,
                 };
         }
-
     }
 
     // calculating adjustments for popover modal on Y axis
-    private getYAdjustment(popoverTrigger: HTMLElement, placementAndAlignment: IPopoverPlacementAlignment): number {
+    private getYAdjustment(
+        popoverTrigger: HTMLElement,
+        placementAndAlignment: IPopoverPlacementAlignment
+    ): number {
         // y-adjustment not needed for top or bottom placement
-        if (placementAndAlignment.placement === "top" || placementAndAlignment.placement === "bottom") {
+        if (
+            placementAndAlignment.placement === "top" ||
+            placementAndAlignment.placement === "bottom"
+        ) {
             return 0;
         }
 
-        const yAdjustment = popoverTrigger.offsetHeight / 2 - (popoverConstants.arrowOffset + popoverConstants.arrowBorderWidth);
-        return placementAndAlignment.alignment === "top" ? yAdjustment : -yAdjustment;
+        const yAdjustment =
+            popoverTrigger.offsetHeight / 2 -
+            (popoverConstants.arrowOffset + popoverConstants.arrowBorderWidth);
+        return placementAndAlignment.alignment === "top"
+            ? yAdjustment
+            : -yAdjustment;
     }
 
     // calculating adjustments for popover modal on X axis
     // popover modal should be always on center on X axis
-    private getXAdjustment(popoverTrigger: HTMLElement, placementAndAlignment: IPopoverPlacementAlignment): number {
+    private getXAdjustment(
+        popoverTrigger: HTMLElement,
+        placementAndAlignment: IPopoverPlacementAlignment
+    ): number {
         // x-adjustment not needed for left or right placement
-        if (placementAndAlignment.placement === "left" || placementAndAlignment.placement === "right") {
+        if (
+            placementAndAlignment.placement === "left" ||
+            placementAndAlignment.placement === "right"
+        ) {
             return 0;
         }
 
-        const xAdjustment = popoverTrigger.offsetWidth / 2 - (popoverConstants.arrowOffset + popoverConstants.arrowBorderWidth);
-        return placementAndAlignment.alignment === "left" ? xAdjustment : -xAdjustment;
+        const xAdjustment =
+            popoverTrigger.offsetWidth / 2 -
+            (popoverConstants.arrowOffset + popoverConstants.arrowBorderWidth);
+        return placementAndAlignment.alignment === "left"
+            ? xAdjustment
+            : -xAdjustment;
     }
 }

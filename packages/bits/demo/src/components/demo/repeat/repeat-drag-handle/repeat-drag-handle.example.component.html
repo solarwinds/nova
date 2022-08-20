@@ -3,12 +3,12 @@
     [dragHandleTemplateRef]="dragHandleTemplate"
     [repeatItemTemplateRef]="repeatItemTemplate"
     (itemsReordered)="onItemsReordered($event)"
-    >
+>
 </nui-repeat>
 
 <!-- Content template for each item -->
 <ng-template #repeatItemTemplate let-item="item">
-    {{item}}
+    {{ item }}
 </ng-template>
 
 <!-- Drag handle template -->

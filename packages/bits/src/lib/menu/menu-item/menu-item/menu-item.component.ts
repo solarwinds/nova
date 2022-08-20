@@ -22,7 +22,12 @@ import { MenuItemBaseComponent } from "./menu-item-base";
 @Component({
     selector: "nui-menu-item",
     template: `
-        <span class="nui-menu-item__default" (click)="handleClick($event)" #menuItemDefault tabIndex="-1">
+        <span
+            class="nui-menu-item__default"
+            (click)="handleClick($event)"
+            #menuItemDefault
+            tabIndex="-1"
+        >
             <ng-content></ng-content>
         </span>
     `,
@@ -34,12 +39,15 @@ import { MenuItemBaseComponent } from "./menu-item-base";
         },
     ],
     encapsulation: ViewEncapsulation.None,
-    host: { "role": "menuitem" },
+    host: { role: "menuitem" },
 })
 export class MenuItemComponent extends MenuItemBaseComponent {
     @ViewChild("menuItemDefault") menuItem: ElementRef;
 
-    constructor(@Optional() readonly group: MenuGroupComponent, cd: ChangeDetectorRef) {
+    constructor(
+        @Optional() readonly group: MenuGroupComponent,
+        cd: ChangeDetectorRef
+    ) {
         super(group, cd);
 
         this.disabled = false;

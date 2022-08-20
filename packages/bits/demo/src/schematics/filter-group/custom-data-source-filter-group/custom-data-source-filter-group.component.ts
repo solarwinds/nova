@@ -10,25 +10,36 @@ import {
 import { DialogService, IFilter, IFilterPub } from "@nova-ui/bits";
 import _orderBy from "lodash/orderBy";
 
-import { IFilterGroupItem, IFilterGroupMultiFilterMetadata, IFilterGroupOption } from "./public-api";
+import {
+    IFilterGroupItem,
+    IFilterGroupMultiFilterMetadata,
+    IFilterGroupOption,
+} from "./public-api";
 
 @Component({
     selector: "app-custom-data-source-filter-group",
     templateUrl: "./custom-data-source-filter-group.component.html",
     styleUrls: ["./custom-data-source-filter-group.component.less"],
 })
-export class CustomDataSourceFilterGroupCompositeComponent implements IFilterPub, OnInit {
+export class CustomDataSourceFilterGroupCompositeComponent
+    implements IFilterPub, OnInit
+{
     @Input() filterGroupItem: IFilterGroupItem;
     @Input() checkboxTemplateRef: TemplateRef<string>;
     @Input() expanderTemplateRef: TemplateRef<string>;
 
-    @Output() filterChanged: EventEmitter<IFilterGroupItem> = new EventEmitter();
+    @Output() filterChanged: EventEmitter<IFilterGroupItem> =
+        new EventEmitter();
     @Output() showAllButtonClicked: EventEmitter<any> = new EventEmitter();
 
     constructor(@Inject(DialogService) private dialogService: DialogService) {}
 
     ngOnInit() {
-        this.filterGroupItem.allFilterOptions = _orderBy(this.filterGroupItem.allFilterOptions, "value", "asc");
+        this.filterGroupItem.allFilterOptions = _orderBy(
+            this.filterGroupItem.allFilterOptions,
+            "value",
+            "asc"
+        );
     }
 
     public isChecked(value: string): boolean {
@@ -49,7 +60,9 @@ export class CustomDataSourceFilterGroupCompositeComponent implements IFilterPub
             type: "string[]",
             value: this.filterGroupItem.selectedFilterValues,
             metadata: {
-                allCategories: this.getAllFilterOptionsList(this.filterGroupItem.allFilterOptions),
+                allCategories: this.getAllFilterOptionsList(
+                    this.filterGroupItem.allFilterOptions
+                ),
                 expanded: Boolean(this.filterGroupItem.expanded),
             },
         };
@@ -60,14 +73,18 @@ export class CustomDataSourceFilterGroupCompositeComponent implements IFilterPub
     }
 
     public getDisplayedFiltersCount() {
-        return this.filterGroupItem.itemsToDisplay ? this.filterGroupItem.itemsToDisplay : 10;
+        return this.filterGroupItem.itemsToDisplay
+            ? this.filterGroupItem.itemsToDisplay
+            : 10;
     }
 
     public hasFilterOptions(): boolean {
         return this.filterGroupItem.allFilterOptions.length > 0;
     }
 
-    private getAllFilterOptionsList(filterGroupItems: IFilterGroupOption[]): string[] {
+    private getAllFilterOptionsList(
+        filterGroupItems: IFilterGroupOption[]
+    ): string[] {
         return filterGroupItems.map((item) => item.value);
     }
 }

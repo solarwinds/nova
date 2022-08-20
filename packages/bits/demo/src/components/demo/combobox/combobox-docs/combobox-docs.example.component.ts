@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-combobox-docs-example",
     templateUrl: "./combobox-docs.example.component.html",
 })
-export class ComboboxDocsComponent {
-}
+export class ComboboxDocsComponent {}

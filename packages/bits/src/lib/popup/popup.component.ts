@@ -19,7 +19,7 @@ import {
     ViewEncapsulation,
 } from "@angular/core";
 import _isUndefined from "lodash/isUndefined";
-import {Subject, Subscription} from "rxjs";
+import { Subject, Subscription } from "rxjs";
 
 import { DOCUMENT_CLICK_EVENT } from "../../constants/event.constants";
 import { EdgeDetectionService } from "../../services/edge-detection.service";
@@ -49,21 +49,34 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
 @Component({
     selector: "nui-popup-deprecated",
     host: {
-        "class": "nui-popup",
-        "role": "dialog",
+        class: "nui-popup",
+        role: "dialog",
         "[attr.aria-label]": "ariaLabel",
     },
     template: `
-        <div class="nui-popup-container" [class.nui-popup--opened]="isOpen" nuiClickInterceptor>
+        <div
+            class="nui-popup-container"
+            [class.nui-popup--opened]="isOpen"
+            nuiClickInterceptor
+        >
             <div class="nui-popup__content">
                 <ng-content></ng-content>
             </div>
-            <div #popupArea class="nui-popup__area {{contextClass}}"
+            <div
+                #popupArea
+                class="nui-popup__area {{ contextClass }}"
                 [style.width]="width"
                 [class.nui-popup__area--visible]="visible"
                 [class.nui-popup__area--top]="_directionTop && !appendToBody"
-                [class.nui-popup__area--right]="_directionRight && !appendToBody">
-                <div #popupAreaContainer tabindex="-1" class="nui-popup__area--container">
+                [class.nui-popup__area--right]="
+                    _directionRight && !appendToBody
+                "
+            >
+                <div
+                    #popupAreaContainer
+                    tabindex="-1"
+                    class="nui-popup__area--container"
+                >
                     <ng-content select="[popupAreaContent]"></ng-content>
                 </div>
             </div>
@@ -73,7 +86,9 @@ import { PopupToggleDirective } from "./popup-toggle.directive";
     encapsulation: ViewEncapsulation.None,
 })
 /* eslint-disable @angular-eslint/no-host-metadata-property */
-export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, OnInit {
+export class PopupDeprecatedComponent
+    implements AfterContentInit, OnDestroy, OnInit
+{
     @Input() width: string;
     /**
      * If additional styles should be applied to popup
@@ -115,14 +130,16 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
     @ViewChild("popupAreaContainer")
     public popupAreaContainer: ElementRef;
 
-    @ViewChild("popupArea", {static: true})
+    @ViewChild("popupArea", { static: true })
     public popupAreaContent: ElementRef;
 
     private popupSubscriptions: Subscription[] = [];
     private lastEventType: string;
     private _popupInstance?: ComponentRef<PopupContainerComponent>;
 
-    public get popupInstance(): ComponentRef<PopupContainerComponent> | undefined {
+    public get popupInstance():
+        | ComponentRef<PopupContainerComponent>
+        | undefined {
         return this._popupInstance;
     }
     /** @ignore */
@@ -134,28 +151,32 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
      */
     public visible = false;
 
-    constructor(private elementRef: ElementRef,
-                private edgeDetector: EdgeDetectionService,
-                private changeDetectorRef: ChangeDetectorRef,
-                private eventBusService: EventBusService,
-                private componentFactoryResolver: ComponentFactoryResolver,
-                private injector: Injector,
-                private appRef: ApplicationRef,
-                private logger: LoggerService,
-                @Optional() private popupContainer: PopupContainerService) {
-
-        this.logger.warn("<nui-popup-deprecated> is deprecated as of Nova v11. Please use <nui-popup> instead.");
+    constructor(
+        private elementRef: ElementRef,
+        private edgeDetector: EdgeDetectionService,
+        private changeDetectorRef: ChangeDetectorRef,
+        private eventBusService: EventBusService,
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private injector: Injector,
+        private appRef: ApplicationRef,
+        private logger: LoggerService,
+        @Optional() private popupContainer: PopupContainerService
+    ) {
+        this.logger.warn(
+            "<nui-popup-deprecated> is deprecated as of Nova v11. Please use <nui-popup> instead."
+        );
     }
     public ngOnInit() {
         if (this.manualOpenControl) {
             this.popupSubscriptions.push(
-                this.manualOpenControl.subscribe(event => {
+                this.manualOpenControl.subscribe((event) => {
                     this.toggleOpened(event);
                 })
             );
         }
         this.popupSubscriptions.push(
-            this.eventBusService.getStream({id: DOCUMENT_CLICK_EVENT})
+            this.eventBusService
+                .getStream({ id: DOCUMENT_CLICK_EVENT })
                 .subscribe((event: MouseEvent) => {
                     if (this.isOpen) {
                         this.closePopup(event);
@@ -204,13 +225,25 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
             this.changeDetectorRef.detach();
             if (this.isOpen) {
                 if (!this._popupInstance && this.appendToBody) {
-                    const popupContainerFactory = this.componentFactoryResolver.resolveComponentFactory(PopupContainerComponent);
-                    this._popupInstance = popupContainerFactory.create(this.injector, [[this.popupAreaContent.nativeElement]]);
-                    this._popupInstance.instance.hostElement = this.popupToggle.host.nativeElement;
+                    const popupContainerFactory =
+                        this.componentFactoryResolver.resolveComponentFactory(
+                            PopupContainerComponent
+                        );
+                    this._popupInstance = popupContainerFactory.create(
+                        this.injector,
+                        [[this.popupAreaContent.nativeElement]]
+                    );
+                    this._popupInstance.instance.hostElement =
+                        this.popupToggle.host.nativeElement;
                     this.appRef.attachView(this._popupInstance.hostView);
-                    const hostElement = (this._popupInstance.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+                    const hostElement = (
+                        this._popupInstance.hostView as EmbeddedViewRef<any>
+                    ).rootNodes[0] as HTMLElement;
                     if (this.popupContainer?.parent) {
-                        hostElement.setAttribute("parent", this.popupContainer.parent.constructor.name);
+                        hostElement.setAttribute(
+                            "parent",
+                            this.popupContainer.parent.constructor.name
+                        );
                     }
                     document.body.appendChild(hostElement);
                 } else {
@@ -220,7 +253,7 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
                 this.visible = true;
                 this.changeDetectorRef.detectChanges();
                 this.changeDetectorRef.detach();
-            // If closed, remove popup instance from DOM if there's one
+                // If closed, remove popup instance from DOM if there's one
             } else if (this._popupInstance && this.appendToBody) {
                 this.deletePopupInstance();
             }
@@ -230,8 +263,12 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
     }
 
     public closePopup(event?: MouseEvent): void {
-        const isToggle = this.popupToggle && event ? (this.popupToggle.host.nativeElement as HTMLElement)
-            .contains(event.target as HTMLElement) : false;
+        const isToggle =
+            this.popupToggle && event
+                ? (this.popupToggle.host.nativeElement as HTMLElement).contains(
+                      event.target as HTMLElement
+                  )
+                : false;
 
         if (!isToggle) {
             this.deletePopupInstance();
@@ -252,16 +289,25 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
         if (this.popupToggle) {
             parentEl = this.popupToggle.host.nativeElement;
         } else {
-            parentEl = document.querySelector<HTMLElement>(this.baseElementSelector) ?? undefined;
+            parentEl =
+                document.querySelector<HTMLElement>(this.baseElementSelector) ??
+                undefined;
         }
 
         if (!parentEl) {
             return;
         }
 
-        const canBe = this.edgeDetector.canBe(<HTMLElement>parentEl, this.popupAreaContent.nativeElement);
-        this._directionTop =  _isUndefined(this.directionTop) ? !canBe?.placed.bottom : this.directionTop;
-        this._directionRight = _isUndefined(this.directionRight) ? !canBe?.aligned.left : this.directionRight;
+        const canBe = this.edgeDetector.canBe(
+            <HTMLElement>parentEl,
+            this.popupAreaContent.nativeElement
+        );
+        this._directionTop = _isUndefined(this.directionTop)
+            ? !canBe?.placed.bottom
+            : this.directionTop;
+        this._directionRight = _isUndefined(this.directionRight)
+            ? !canBe?.aligned.left
+            : this.directionRight;
     }
 
     private deletePopupInstance() {
@@ -273,7 +319,9 @@ export class PopupDeprecatedComponent implements AfterContentInit, OnDestroy, On
     }
 
     public ngOnDestroy(): void {
-        this.popupSubscriptions.forEach(subscription => subscription.unsubscribe());
+        this.popupSubscriptions.forEach((subscription) =>
+            subscription.unsubscribe()
+        );
         this.deletePopupInstance();
     }
 }

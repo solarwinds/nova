@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-time-picker-basic",
     templateUrl: "./time-picker-basic.example.component.html",
 })
-
 export class TimePickerBasicExampleComponent {}

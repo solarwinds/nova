@@ -39,8 +39,7 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
         return this.axesStyles?.[this.yRightScale.id] ?? {};
     }
 
-    constructor(public changeDetector: ChangeDetectorRef) {
-    }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     public ngOnInit() {
         const xScale = new TimeScale();
@@ -65,23 +64,26 @@ export class LineChartWith2YAxesExampleComponent implements OnInit, OnDestroy {
 
         const accessors = new LineAccessors();
         const renderer = new LineRenderer();
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales: {
-                x: xScale,
-                // In this case, we're using the right-hand scale only for "series-3"
-                y: d.id === "series-3" ? this.yRightScale : this.yLeftScale,
-            },
-            unitLabel: d.id === "series-3" ? "GB" : "%",
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales: {
+                    x: xScale,
+                    // In this case, we're using the right-hand scale only for "series-3"
+                    y: d.id === "series-3" ? this.yRightScale : this.yLeftScale,
+                },
+                unitLabel: d.id === "series-3" ? "GB" : "%",
+            })
+        );
 
         // chart assist needs to be used to update data
         this.chartAssist.update(seriesSet);
 
         // Here we subscribe to an event indicating changes on axis styling. We use that information to style axis labels
-        this.chart.eventBus.getStream(AXES_STYLE_CHANGE_EVENT)
+        this.chart.eventBus
+            .getStream(AXES_STYLE_CHANGE_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IChartEvent<IAxesStyleChangeEventPayload>) => {
                 this.axesStyles = event.data;

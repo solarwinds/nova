@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, HostBinding, Inject, Input, OnDestroy, OnInit } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    HostBinding,
+    Inject,
+    Input,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
 
@@ -12,7 +20,10 @@ import { BaseLayout } from "../../layouts/base-layout";
     templateUrl: "./widget-body.component.html",
     styleUrls: ["./widget-body.component.less"],
 })
-export class WidgetBodyComponent extends BaseLayout implements OnInit, OnDestroy {
+export class WidgetBodyComponent
+    extends BaseLayout
+    implements OnInit, OnDestroy
+{
     public static lateLoadKey = "WidgetBodyComponent";
 
     /**
@@ -39,10 +50,12 @@ export class WidgetBodyComponent extends BaseLayout implements OnInit, OnDestroy
 
     public readonly defaultClasses = "d-flex h-100 w-100";
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
-                changeDetector: ChangeDetectorRef,
-                pizzagnaService: PizzagnaService,
-                logger: LoggerService) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
+        changeDetector: ChangeDetectorRef,
+        pizzagnaService: PizzagnaService,
+        logger: LoggerService
+    ) {
         super(changeDetector, pizzagnaService, logger);
     }
 
@@ -50,14 +63,18 @@ export class WidgetBodyComponent extends BaseLayout implements OnInit, OnDestroy
         this.classNames = `${this.defaultClasses} ${this.elementClass}`;
 
         // subscribing to dashboard event to set 'edit mode'
-        this.eventBus.getStream(DASHBOARD_EDIT_MODE)
+        this.eventBus
+            .getStream(DASHBOARD_EDIT_MODE)
             .pipe(takeUntil(this.destroyed$))
-            .subscribe(event => {
-                this.pizzagnaService.setProperty({
-                    componentId: this.componentId,
-                    pizzagnaKey: PizzagnaLayer.Data,
-                    propertyPath: ["editMode"],
-                }, !!event.payload);
+            .subscribe((event) => {
+                this.pizzagnaService.setProperty(
+                    {
+                        componentId: this.componentId,
+                        pizzagnaKey: PizzagnaLayer.Data,
+                        propertyPath: ["editMode"],
+                    },
+                    !!event.payload
+                );
             });
     }
 

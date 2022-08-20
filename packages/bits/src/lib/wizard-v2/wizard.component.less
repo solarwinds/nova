@@ -1,7 +1,8 @@
 @import "./wizard-vars";
 @import (reference) "../../styles/mixins.less";
 
-.nui-wizard-vertical, .nui-wizard-horizontal {
+.nui-wizard-vertical,
+.nui-wizard-horizontal {
     display: block;
 
     .nui-dialog & {
@@ -119,7 +120,7 @@
     &-content {
         outline: 0;
 
-        &[aria-expanded='false'] {
+        &[aria-expanded="false"] {
             height: 0;
             overflow: hidden;
         }

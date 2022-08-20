@@ -16,11 +16,19 @@ export class WizardV2Atom extends Atom {
     }
 
     public get steps(): ElementArrayFinder {
-        return this.root.all(by.css(".nui-wizard-horizontal-content-container > .nui-wizard-horizontal-content"));
+        return this.root.all(
+            by.css(
+                ".nui-wizard-horizontal-content-container > .nui-wizard-horizontal-content"
+            )
+        );
     }
 
     public getStep(index: number): WizardV2StepAtom {
-        const steps = this.root.all(by.css(".nui-wizard-horizontal-content-container > .nui-wizard-horizontal-content"));
+        const steps = this.root.all(
+            by.css(
+                ".nui-wizard-horizontal-content-container > .nui-wizard-horizontal-content"
+            )
+        );
         const step = steps.get(index);
 
         return new WizardV2StepAtom(step);
@@ -34,7 +42,9 @@ export class WizardV2Atom extends Atom {
     }
 
     public get footer(): WizardV2FooterAtom {
-        const footer = this.root.element(by.className("nui-wizard-horizontal-footer-container"));
+        const footer = this.root.element(
+            by.className("nui-wizard-horizontal-footer-container")
+        );
 
         return new WizardV2FooterAtom(footer);
     }

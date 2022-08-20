@@ -28,7 +28,10 @@ describe("PizzagnaBroadcasterService > ", () => {
     beforeEach(() => {
         eventBus = new EventBus();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
         broadcaster = new PizzagnaBroadcasterService(pizzagnaService);
 
         mockComponent = new TitleAndDescriptionConfigurationComponent(
@@ -47,11 +50,13 @@ describe("PizzagnaBroadcasterService > ", () => {
             expect(v.payload.path).toEqual(testPath);
         });
 
-        broadcaster["configs"] = [{
-            trackOn: "component",
-            key: "form.controls.title.valueChanges",
-            paths: [testPath],
-        }];
+        broadcaster["configs"] = [
+            {
+                trackOn: "component",
+                key: "form.controls.title.valueChanges",
+                paths: [testPath],
+            },
+        ];
         broadcaster.setComponent(mockComponent, "mockComponentId");
 
         mockComponent.form.controls.title.setValue(testValue);
@@ -66,15 +71,17 @@ describe("PizzagnaBroadcasterService > ", () => {
             expect(v.payload.path).toEqual(testPath);
         });
 
-        broadcaster["configs"] = [{
-            trackOn: "pizzagna",
-            key: "someComponent.properties.title",
-            paths: [testPath],
-        }];
+        broadcaster["configs"] = [
+            {
+                trackOn: "pizzagna",
+                key: "someComponent.properties.title",
+                paths: [testPath],
+            },
+        ];
         broadcaster.setComponent(mockComponent, "mockComponentId");
 
         pizzagnaService.pizzaChanged.next({
-            "someComponent": {
+            someComponent: {
                 id: "someComponent",
                 componentType: "someComponent",
                 properties: {

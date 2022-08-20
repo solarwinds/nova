@@ -16,7 +16,11 @@ describe("getAutomaticDomainWithTicks", () => {
         config = new XYGridConfig();
     });
     it("should set the domain based off of the d3 ticks", () => {
-        domainCalculator = getAutomaticDomainWithTicks(config.axis.left, axisLeft, getAutomaticDomain);
+        domainCalculator = getAutomaticDomainWithTicks(
+            config.axis.left,
+            axisLeft,
+            getAutomaticDomain
+        );
 
         const scales: Scales = {
             x: new LinearScale(),
@@ -50,7 +54,11 @@ describe("getAutomaticDomainWithTicks", () => {
 
     it("should escape out of function if ticks array is smaller than 1", () => {
         config.axis.left.approximateTicks = 1;
-        domainCalculator = getAutomaticDomainWithTicks(config.axis.left, axisLeft, getAutomaticDomain);
+        domainCalculator = getAutomaticDomainWithTicks(
+            config.axis.left,
+            axisLeft,
+            getAutomaticDomain
+        );
         const scales: Scales = {
             x: new LinearScale(),
             y: new LinearScale(),
@@ -80,5 +88,4 @@ describe("getAutomaticDomainWithTicks", () => {
         expect(domain[0]).toBe(15);
         expect(domain[1]).toBe(95);
     });
-
 });

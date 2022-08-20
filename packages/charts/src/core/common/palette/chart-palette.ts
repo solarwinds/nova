@@ -13,19 +13,30 @@ export class ChartPalette implements IChartPalette {
     private _textColors: TextColorProvider;
     private _backgroundColors: IValueProvider<string>;
 
-    constructor(colors: string[] | IValueProvider<string>, options = {backgroundOpacity: 0.15}) {
+    constructor(
+        colors: string[] | IValueProvider<string>,
+        options = { backgroundOpacity: 0.15 }
+    ) {
         if (isArray(colors)) {
-            this._standardColors = new SequentialColorProvider(<string[]> colors);
+            this._standardColors = new SequentialColorProvider(
+                <string[]>colors
+            );
         } else {
-            this._standardColors = <IValueProvider<string>> colors;
+            this._standardColors = <IValueProvider<string>>colors;
         }
-        this._textColors = new TextColorProvider(this.standardColors, {light: "white", dark: "black"}); // TODO: oops!
-        this._backgroundColors = new ProcessedColorProvider(this.standardColors, (c: string) => {
-            const color = getColorValueByName(c);
-            const rgbColor = rgb(color);
-            rgbColor.opacity = options.backgroundOpacity;
-            return rgbColor.toString();
-        });
+        this._textColors = new TextColorProvider(this.standardColors, {
+            light: "white",
+            dark: "black",
+        }); // TODO: oops!
+        this._backgroundColors = new ProcessedColorProvider(
+            this.standardColors,
+            (c: string) => {
+                const color = getColorValueByName(c);
+                const rgbColor = rgb(color);
+                rgbColor.opacity = options.backgroundOpacity;
+                return rgbColor.toString();
+            }
+        );
     }
 
     public get standardColors(): IValueProvider<string> {

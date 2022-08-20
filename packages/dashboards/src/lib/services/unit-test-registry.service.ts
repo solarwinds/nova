@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class UnitTestRegistryService {
     public static providerId = "UnitTestRegistryService";
     public componentMap: any = {};

@@ -30,10 +30,7 @@ import { DatePickerComponent } from "./date-picker.component";
         DayPickerComponent,
         DatePickerComponent,
     ],
-    exports: [
-        DatePickerComponent,
-    ],
+    exports: [DatePickerComponent],
     providers: [],
 })
-export class NuiDatePickerModule {
-}
+export class NuiDatePickerModule {}

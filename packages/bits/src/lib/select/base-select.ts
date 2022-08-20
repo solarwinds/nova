@@ -1,4 +1,13 @@
-import { Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef } from "@angular/core";
+import {
+    Directive,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+    SimpleChanges,
+    TemplateRef,
+} from "@angular/core";
 import { ControlValueAccessor } from "@angular/forms";
 import _includes from "lodash/includes";
 import _isEqual from "lodash/isEqual";
@@ -19,7 +28,9 @@ import { ISelectChangedEvent, ISelectGroup } from "./public-api";
  */
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAccessor, NuiFormFieldControl {
+export abstract class BaseSelect
+    implements OnInit, OnChanges, ControlValueAccessor, NuiFormFieldControl
+{
     /**
      * The option to disable the select.
      */
@@ -86,7 +97,7 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
      */
     @Output() changed = new EventEmitter<ISelectChangedEvent<any>>();
 
-    @Output() valueChange = this.changed.pipe(map(({newValue}) => newValue));
+    @Output() valueChange = this.changed.pipe(map(({ newValue }) => newValue));
 
     public name: string;
     public selectedItem: any;
@@ -104,7 +115,9 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
     ngOnChanges(changes: SimpleChanges) {
         if (changes["value"] && !changes["value"].firstChange) {
             const value = changes["value"].currentValue;
-            const isInArray = this.displayValue ? _some(this.itemsSource, value) : _includes(this.itemsSource, value);
+            const isInArray = this.displayValue
+                ? _some(this.itemsSource, value)
+                : _includes(this.itemsSource, value);
 
             if (isInArray) {
                 this.select(changes["value"].currentValue);
@@ -113,10 +126,16 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
 
         if (changes.itemsSource && this.selectedItem && this.modelValue) {
             if (_isString(this.selectedItem)) {
-                const newItemsSource = changes.itemsSource.currentValue as any[] | ISelectGroup[];
+                const newItemsSource = changes.itemsSource.currentValue as
+                    | any[]
+                    | ISelectGroup[];
 
-                const itemToSelect = newItemsSource.find(i => i[this.modelValue] === this.selectedItem);
-                if (itemToSelect) { this.select(itemToSelect); }
+                const itemToSelect = newItemsSource.find(
+                    (i) => i[this.modelValue] === this.selectedItem
+                );
+                if (itemToSelect) {
+                    this.select(itemToSelect);
+                }
             }
         }
     }
@@ -157,7 +176,10 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
                 return "";
             }
 
-            return this.utilService.formatString(this.displayFormat, displayedItem);
+            return this.utilService.formatString(
+                this.displayFormat,
+                displayedItem
+            );
         }
 
         return this.getItemDisplay(item);
@@ -169,9 +191,10 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
 
     public isItemSelected(item: any): boolean {
         const selectedItem = this.getSelectedItem();
-        const currentItem = this.displayValue && !_isObject(selectedItem)
-            ? item[this.displayValue]
-            : item;
+        const currentItem =
+            this.displayValue && !_isObject(selectedItem)
+                ? item[this.displayValue]
+                : item;
 
         return _isEqual(selectedItem, currentItem);
     }
@@ -201,22 +224,24 @@ export abstract class BaseSelect implements OnInit, OnChanges, ControlValueAcces
         return item && this.modelValue ? item[this.modelValue] : item;
     }
 
-    public onChange(value: any) {
-    }
+    public onChange(value: any) {}
 
-    public onTouched() {
-    }
+    public onTouched() {}
 
     public writeValue(value: any): void {
         let selectedItem: any;
         if (this.modelValue && this.itemsSource && this.itemsSource.length) {
-            selectedItem = this.itemsSource.find(item => this.getItemModel(item) === value);
+            selectedItem = this.itemsSource.find(
+                (item) => this.getItemModel(item) === value
+            );
         } else {
             selectedItem = value;
         }
         this.selectedItem = selectedItem;
 
-        this.inputValue = _isObject(selectedItem) ? this.getItemDisplay(selectedItem) : selectedItem;
+        this.inputValue = _isObject(selectedItem)
+            ? this.getItemDisplay(selectedItem)
+            : selectedItem;
     }
 
     public registerOnChange(fn: () => void) {

@@ -2,7 +2,16 @@ import { Directionality } from "@angular/cdk/bidi";
 import { BooleanInput } from "@angular/cdk/coercion";
 import { CdkStepper } from "@angular/cdk/stepper";
 import { DOCUMENT } from "@angular/common";
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, Input, Optional, ViewEncapsulation } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    Inject,
+    Input,
+    Optional,
+    ViewEncapsulation,
+} from "@angular/core";
 
 import { WizardDirective } from "../wizard.directive";
 
@@ -14,9 +23,9 @@ import { WizardDirective } from "../wizard.directive";
     templateUrl: "wizard-vertical.component.html",
     styleUrls: ["../wizard.component.less"],
     host: {
-        "class": "nui-wizard-vertical-layout",
+        class: "nui-wizard-vertical-layout",
         "aria-orientation": "vertical",
-        "role": "tablist",
+        role: "tablist",
     },
     providers: [
         { provide: WizardDirective, useExisting: WizardVerticalComponent },
@@ -41,8 +50,8 @@ export class WizardVerticalComponent extends WizardDirective {
 
     constructor(
         @Optional() dir: Directionality,
-                    changeDetectorRef: ChangeDetectorRef,
-                    elementRef: ElementRef<HTMLElement>,
+        changeDetectorRef: ChangeDetectorRef,
+        elementRef: ElementRef<HTMLElement>,
         @Inject(DOCUMENT) _document: any
     ) {
         super(dir, changeDetectorRef, elementRef, _document);

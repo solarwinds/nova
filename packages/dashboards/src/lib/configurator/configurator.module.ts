@@ -36,7 +36,10 @@ import { NuiDashboardsCommonModule } from "../common/common.module";
 import { TimeseriesChartPresetService } from "../components/timeseries-widget/timeseries-chart-preset.service";
 import { TimeseriesScalesService } from "../components/timeseries-widget/timeseries-scales.service";
 import { NuiPizzagnaModule } from "../pizzagna/pizzagna.module";
-import { ComponentRegistryService, IComponentWithLateLoadKey } from "../pizzagna/services/component-registry.service";
+import {
+    ComponentRegistryService,
+    IComponentWithLateLoadKey,
+} from "../pizzagna/services/component-registry.service";
 
 import { ColorPickerComponent } from "./components/color-picker/color-picker.component";
 import { ConfiguratorComponent } from "./components/configurator/configurator.component";
@@ -213,9 +216,7 @@ const exportedDeclarations = [
         NuiRepeatModule,
         NuiImageModule,
     ],
-    declarations: [
-        ...exportedDeclarations,
-    ],
+    declarations: [...exportedDeclarations],
     providers: [
         ConfiguratorService,
         ConfiguratorHeadingService,
@@ -230,11 +231,11 @@ const exportedDeclarations = [
     entryComponents: entryComponents,
 })
 export class NuiDashboardConfiguratorModule {
-
     constructor(componentRegistry: ComponentRegistryService) {
-        for (const ec of entryComponents.filter((c: IComponentWithLateLoadKey) => c.lateLoadKey)) {
+        for (const ec of entryComponents.filter(
+            (c: IComponentWithLateLoadKey) => c.lateLoadKey
+        )) {
             componentRegistry.registerByLateLoadKey(ec);
         }
     }
-
 }

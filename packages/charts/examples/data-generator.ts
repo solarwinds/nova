@@ -7,19 +7,29 @@ export interface IDateValue {
 }
 
 export class DataGenerator {
-    public static generateMockStatusSeriesSet(seriesCount: number, pointCountPerSeries: number, statuses: string[]) {
+    public static generateMockStatusSeriesSet(
+        seriesCount: number,
+        pointCountPerSeries: number,
+        statuses: string[]
+    ) {
         const dataSet = [];
         for (let i = 0; i < seriesCount; i++) {
             dataSet.push({
                 id: `series-${i + 1}`,
                 name: `Series ${i + 1}`,
-                data: DataGenerator.mockStatusData(pointCountPerSeries, statuses),
+                data: DataGenerator.mockStatusData(
+                    pointCountPerSeries,
+                    statuses
+                ),
             });
         }
         return dataSet;
     }
 
-    public static generateMockLineSeriesSet(seriesCount: number, pointCountPerSeries: number) {
+    public static generateMockLineSeriesSet(
+        seriesCount: number,
+        pointCountPerSeries: number
+    ) {
         const dataSet = [];
         for (let i = 0; i < seriesCount; i++) {
             dataSet.push({
@@ -31,16 +41,22 @@ export class DataGenerator {
         return dataSet;
     }
 
-    public static generateMockTimeLineSeriesSet(seriesCount: number,
-                                                pointCountPerSeries: number,
-                                                startTime?: string,
-                                                endTime?: string) {
+    public static generateMockTimeLineSeriesSet(
+        seriesCount: number,
+        pointCountPerSeries: number,
+        startTime?: string,
+        endTime?: string
+    ) {
         const dataSet = [];
         for (let i = 0; i < seriesCount; i++) {
             dataSet.push({
                 id: `series-${i + 1}`,
                 name: `Series ${i + 1}`,
-                data: DataGenerator.mockTimeLineData(pointCountPerSeries, startTime, endTime),
+                data: DataGenerator.mockTimeLineData(
+                    pointCountPerSeries,
+                    startTime,
+                    endTime
+                ),
             });
         }
         return dataSet;
@@ -52,16 +68,20 @@ export class DataGenerator {
      * @param {number} seriesCount
      * @returns {IDataSeries[]}
      */
-    public static generateMockOrdinalSeriesSet(groupNames: string[],
-                                               seriesCount: number = 1): IDataSeries<IAccessors>[] {
+    public static generateMockOrdinalSeriesSet(
+        groupNames: string[],
+        seriesCount: number = 1
+    ): IDataSeries<IAccessors>[] {
         return groupNames.map((el, index) => ({
             id: `series-${index + 1}`,
             name: el,
             // for ordinal scale it is useful to identify each data point here somehow
-            data: Array(seriesCount).fill(undefined).map((_: any, i: any) => ({
-                value: Math.floor(Math.random() * 100),
-                description: `Category ${i + 1}`,
-            })),
+            data: Array(seriesCount)
+                .fill(undefined)
+                .map((_: any, i: any) => ({
+                    value: Math.floor(Math.random() * 100),
+                    description: `Category ${i + 1}`,
+                })),
             accessors: {
                 data: {
                     category: (d: any) => d.description,
@@ -92,11 +112,14 @@ export class DataGenerator {
             }
             prev = next;
             return {
-                x: start.clone().add(step * index, "ms").toDate(),
+                x: start
+                    .clone()
+                    .add(step * index, "ms")
+                    .toDate(),
                 y: next,
             };
         });
-    }
+    };
 
     public static mockLineData = (
         pointCount = 40,
@@ -117,24 +140,30 @@ export class DataGenerator {
             }
             prev = next;
             return {
-                x: startData + (step * index),
+                x: startData + step * index,
                 y: next,
             };
         });
-    }
+    };
 
     public static mockStatusData = (pointCount = 40, statuses: string[]) => {
-        const generateValue = () => statuses[Math.floor(Math.random() * statuses.length)];
-        return DataGenerator.range(0, pointCount).map((index: any) =>
-            ({
-                x: index,
-                y: generateValue(),
-            }));
-    }
+        const generateValue = () =>
+            statuses[Math.floor(Math.random() * statuses.length)];
+        return DataGenerator.range(0, pointCount).map((index: any) => ({
+            x: index,
+            y: generateValue(),
+        }));
+    };
 
-    public static buildTimeSeriesFromData(from: Moment, to: Moment, data: number[]): { x: Moment, y: number }[] {
+    public static buildTimeSeriesFromData(
+        from: Moment,
+        to: Moment,
+        data: number[]
+    ): { x: Moment; y: number }[] {
         const count = data.length;
-        if (!from || !to || count === 0) { return []; }
+        if (!from || !to || count === 0) {
+            return [];
+        }
 
         const interval = count > 1 ? to.diff(from) / (count - 1) : 0;
         return data.map((y, i) => ({
@@ -144,6 +173,8 @@ export class DataGenerator {
     }
 
     private static range(start: number, end: number) {
-        return (new Array(end - start + 1)).fill(undefined).map((_, i) => i + start);
+        return new Array(end - start + 1)
+            .fill(undefined)
+            .map((_, i) => i + start);
     }
 }

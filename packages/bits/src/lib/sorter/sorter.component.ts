@@ -21,7 +21,11 @@ import _values from "lodash/values";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { IFilter, IFilterPub, ISorterFilter } from "../../services/data-source/public-api";
+import {
+    IFilter,
+    IFilterPub,
+    ISorterFilter,
+} from "../../services/data-source/public-api";
 import { LoggerService } from "../../services/log-service";
 import { IMenuGroup, IMenuItem } from "../menu/public-api";
 import { OVERLAY_WITH_POPUP_STYLES_CLASS } from "../overlay/constants";
@@ -35,15 +39,16 @@ import { MenuPopupComponent } from "../menu";
 @Component({
     selector: "nui-sorter",
     host: {
-        "class": "nui-sorter",
+        class: "nui-sorter",
     },
     templateUrl: "./sorter.component.html",
     styleUrls: ["./sorter.component.less"],
     encapsulation: ViewEncapsulation.None,
     providers: [SorterKeyboardService],
 })
-
-export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit, IFilterPub {
+export class SorterComponent
+    implements OnChanges, OnInit, OnDestroy, AfterViewInit, IFilterPub
+{
     @Input() appendToBody: boolean = false;
     @Input() caption: string;
 
@@ -58,7 +63,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
     @Output() sorterAction = new EventEmitter<ISorterChanges>();
 
-    @ViewChild("popupArea", {static: true}) popupArea: ElementRef;
+    @ViewChild("popupArea", { static: true }) popupArea: ElementRef;
     @ViewChild(OverlayComponent) public overlay: OverlayComponent;
     @ViewChild("popup") public menuPopup: MenuPopupComponent;
 
@@ -68,14 +73,16 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
 
     public customContainer: ElementRef | undefined;
     public onDestroy$ = new Subject<void>();
-    public items: IMenuGroup[] = [{
-        itemsSource: [],
-    }];
+    public items: IMenuGroup[] = [
+        {
+            itemsSource: [],
+        },
+    ];
     public overlayConfig: OverlayConfig = {
         panelClass: [OVERLAY_WITH_POPUP_STYLES_CLASS],
     };
 
-    @ViewChild("toggleRef", {static: true}) private toggleRef: ElementRef;
+    @ViewChild("toggleRef", { static: true }) private toggleRef: ElementRef;
     private sortConfig: ISortedItem;
     private sortIcons: { [key: string]: string } = {
         [SorterDirection.ascending]: "arrow-up",
@@ -83,37 +90,61 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     };
     private menuKeyControlListeners: Function[] = [];
 
-    constructor(private logger: LoggerService,
-                private sorterKeyboardService: SorterKeyboardService,
-                private elRef: ElementRef,
-                private renderer: Renderer2) {}
+    constructor(
+        private logger: LoggerService,
+        private sorterKeyboardService: SorterKeyboardService,
+        private elRef: ElementRef,
+        private renderer: Renderer2
+    ) {}
 
     public ngOnInit() {
         this.onAppendToBodyChange(this.appendToBody);
     }
 
     public ngOnChanges(changes: SimpleChanges) {
-        if (changes.itemsSource && !_isEqual(changes.itemsSource.previousValue, changes.itemsSource.currentValue)) {
-            if (this.itemsSource?.length > 0 && typeof this.itemsSource[0] === "string") {
-                this.logger.warn(`The 'string[]' type for the sorter's itemsSource input is deprecated as of Nova v9. \
+        if (
+            changes.itemsSource &&
+            !_isEqual(
+                changes.itemsSource.previousValue,
+                changes.itemsSource.currentValue
+            )
+        ) {
+            if (
+                this.itemsSource?.length > 0 &&
+                typeof this.itemsSource[0] === "string"
+            ) {
+                this.logger
+                    .warn(`The 'string[]' type for the sorter's itemsSource input is deprecated as of Nova v9. \
                                   Instead, use type 'IMenuItem[]' which is internationalizable with title and value properties for each item.`);
             }
             this.initSelectedItem();
             this.initPopupItems();
         }
 
-        if (changes.selectedItem && this.sortConfig?.sortBy !== changes.selectedItem.currentValue && !changes.selectedItem.firstChange) {
-            const oldValue = _assign({}, this.sortConfig, {sortBy: changes.selectedItem.previousValue});
+        if (
+            changes.selectedItem &&
+            this.sortConfig?.sortBy !== changes.selectedItem.currentValue &&
+            !changes.selectedItem.firstChange
+        ) {
+            const oldValue = _assign({}, this.sortConfig, {
+                sortBy: changes.selectedItem.previousValue,
+            });
 
             this.selectedItem = changes.selectedItem.currentValue;
-            this.sortConfig = _assign({}, this.sortConfig, {sortBy: changes.selectedItem.currentValue});
+            this.sortConfig = _assign({}, this.sortConfig, {
+                sortBy: changes.selectedItem.currentValue,
+            });
 
             this.triggerSorterAction(oldValue);
 
             this.setPopupSelection();
         }
 
-        if (changes.sortDirection && !changes.sortDirection.firstChange && this.sortConfig?.direction !== changes.sortDirection.currentValue) {
+        if (
+            changes.sortDirection &&
+            !changes.sortDirection.firstChange &&
+            this.sortConfig?.direction !== changes.sortDirection.currentValue
+        ) {
             const oldValue = this.sortConfig;
             this.sortDirection = changes.sortDirection.currentValue;
             this.sortConfig = _assign({}, this.sortConfig, {
@@ -138,15 +169,19 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         };
         this.overlay.clickOutside
             .pipe(takeUntil(this.onDestroy$))
-            .subscribe(_ => this.overlay.hide());
+            .subscribe((_) => this.overlay.hide());
 
         this.updateOverlayWidth();
         this.initKeyboardService();
         this.menuKeyControlListeners.push(
-            this.renderer.listen(this.elRef.nativeElement, "keydown", (event: KeyboardEvent) => {
-                this.sorterKeyboardService.handleKeydown(event);
-            })
-        )
+            this.renderer.listen(
+                this.elRef.nativeElement,
+                "keydown",
+                (event: KeyboardEvent) => {
+                    this.sorterKeyboardService.handleKeydown(event);
+                }
+            )
+        );
     }
 
     public select(item: IMenuItem) {
@@ -169,8 +204,10 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     public toggleSortDirection(): void {
         const oldValue = this.sortConfig;
 
-        this.sortDirection = (this.sortDirection === SorterDirection.ascending) ?
-            SorterDirection.descending : SorterDirection.ascending;
+        this.sortDirection =
+            this.sortDirection === SorterDirection.ascending
+                ? SorterDirection.descending
+                : SorterDirection.ascending;
         this.sortConfig = _assign({}, this.sortConfig, {
             direction: this.sortDirection,
         });
@@ -182,7 +219,9 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     }
 
     public getSelectedItemTitle(): string {
-        return this.items[0].itemsSource.find((item: IMenuItem) => item.isSelected)?.title;
+        return this.items[0].itemsSource.find(
+            (item: IMenuItem) => item.isSelected
+        )?.title;
     }
 
     public getSortIcon(): string {
@@ -197,7 +236,9 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     }
 
     public updateOverlayWidth() {
-        this.overlayConfig.minWidth = (this.toggleRef.nativeElement as HTMLElement).offsetWidth;
+        this.overlayConfig.minWidth = (
+            this.toggleRef.nativeElement as HTMLElement
+        ).offsetWidth;
     }
 
     public getAriaLabelForSortingButton(): string {
@@ -207,7 +248,7 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
     }
 
     public ngOnDestroy() {
-        this.menuKeyControlListeners.forEach(listener => listener());
+        this.menuKeyControlListeners.forEach((listener) => listener());
         this.onDestroy$.next();
         this.onDestroy$.complete();
     }
@@ -225,15 +266,23 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         }
 
         const firstItem = this.itemsSource[0];
-        this.selectedItem = typeof firstItem === "string" ? firstItem : (firstItem as IMenuItem).value;
+        this.selectedItem =
+            typeof firstItem === "string"
+                ? firstItem
+                : (firstItem as IMenuItem).value;
     }
 
     private initPopupItems() {
-        this.items[0].itemsSource = (this.itemsSource as any[]).map((item: string | IMenuItem) => {
-            const menuItem: IMenuItem = typeof item === "string" ? { title: item, value: item } : item as IMenuItem;
-            menuItem.isSelected = this.selectedItem === menuItem.value;
-            return menuItem;
-        });
+        this.items[0].itemsSource = (this.itemsSource as any[]).map(
+            (item: string | IMenuItem) => {
+                const menuItem: IMenuItem =
+                    typeof item === "string"
+                        ? { title: item, value: item }
+                        : (item as IMenuItem);
+                menuItem.isSelected = this.selectedItem === menuItem.value;
+                return menuItem;
+            }
+        );
     }
 
     private initSortDirection(): void {
@@ -256,10 +305,9 @@ export class SorterComponent implements OnChanges, OnInit, OnDestroy, AfterViewI
         this.customContainer = appendToBody ? undefined : this.popupArea;
     }
 
-    private initKeyboardService (): void {
+    private initKeyboardService(): void {
         this.sorterKeyboardService.menuItems = this.menuPopup?.menuItems;
         this.sorterKeyboardService.overlay = this.overlay;
         this.sorterKeyboardService.initKeyboardManager();
     }
-
 }

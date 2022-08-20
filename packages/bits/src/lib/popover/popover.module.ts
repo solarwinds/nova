@@ -18,15 +18,8 @@ import { PopoverComponent } from "./popover.component";
         NuiOverlayModule,
         NuiOverlayAdditionsModule,
     ],
-    declarations: [
-        PopoverModalComponent,
-        PopoverComponent,
-    ],
-    exports: [
-        PopoverComponent,
-        PopoverModalComponent,
-    ],
+    declarations: [PopoverModalComponent, PopoverComponent],
+    exports: [PopoverComponent, PopoverModalComponent],
     providers: [],
 })
-export class NuiPopoverModule {
-}
+export class NuiPopoverModule {}

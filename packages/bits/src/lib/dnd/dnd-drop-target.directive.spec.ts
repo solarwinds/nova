@@ -1,9 +1,19 @@
-import {CdkDropList, DragDropModule} from "@angular/cdk/drag-drop";
-import {Component, CUSTOM_ELEMENTS_SCHEMA, DebugElement, ViewChild} from "@angular/core";
-import {ComponentFixture, fakeAsync, flush, TestBed} from "@angular/core/testing";
-import {By} from "@angular/platform-browser";
+import { CdkDropList, DragDropModule } from "@angular/cdk/drag-drop";
+import {
+    Component,
+    CUSTOM_ELEMENTS_SCHEMA,
+    DebugElement,
+    ViewChild,
+} from "@angular/core";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+} from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
 
-import {DndDropTargetDirective} from "./dnd-drop-target.directive";
+import { DndDropTargetDirective } from "./dnd-drop-target.directive";
 
 @Component({
     template: `
@@ -28,20 +38,31 @@ describe("directives >", () => {
         beforeEach(() => {
             TestBed.configureTestingModule({
                 imports: [DragDropModule],
-                declarations: [DndDropTargetDirective, DropTargetTestingComponent],
+                declarations: [
+                    DndDropTargetDirective,
+                    DropTargetTestingComponent,
+                ],
                 schemas: [CUSTOM_ELEMENTS_SCHEMA],
             });
 
             fixture = TestBed.createComponent(DropTargetTestingComponent);
             subject = fixture.componentInstance;
-            dropTargetElement = fixture.debugElement.query(By.directive(DndDropTargetDirective));
-            dropTargetDirective = dropTargetElement.injector.get(DndDropTargetDirective) as DndDropTargetDirective;
+            dropTargetElement = fixture.debugElement.query(
+                By.directive(DndDropTargetDirective)
+            );
+            dropTargetDirective = dropTargetElement.injector.get(
+                DndDropTargetDirective
+            ) as DndDropTargetDirective;
         });
 
         it("should assign CSS class 'nui-dnd-dropzone' to host element", () => {
             expect(dropTargetElement.nativeElement).not.toBeNull();
             fixture.detectChanges();
-            expect(dropTargetElement.nativeElement.classList.contains("nui-dnd-dropzone")).toBeTruthy();
+            expect(
+                dropTargetElement.nativeElement.classList.contains(
+                    "nui-dnd-dropzone"
+                )
+            ).toBeTruthy();
         });
 
         it("should have some draggable items", () => {
@@ -56,15 +77,28 @@ describe("directives >", () => {
                 // dropzone should not be active since dragging hasn't start
                 expect(dropTargetDirective.isDropZoneActive).toBeFalsy();
 
-                startDraggingViaMouse(fixture, dropTargetDirective.draggables.first.element.nativeElement);
-                const dropListRect = subject.dropListInstance.element.nativeElement.getBoundingClientRect();
-                dispatchMouseEvent(document, "mousemove", dropListRect.right, dropListRect.top);
+                startDraggingViaMouse(
+                    fixture,
+                    dropTargetDirective.draggables.first.element.nativeElement
+                );
+                const dropListRect =
+                    subject.dropListInstance.element.nativeElement.getBoundingClientRect();
+                dispatchMouseEvent(
+                    document,
+                    "mousemove",
+                    dropListRect.right,
+                    dropListRect.top
+                );
                 flush();
 
                 fixture.whenStable().then(() => {
                     fixture.detectChanges();
                     expect(dropTargetDirective.isDropZoneActive).toBeTruthy();
-                    expect(dropTargetElement.nativeElement.classList.contains("nui-dnd-dropzone--active")).toBeTruthy();
+                    expect(
+                        dropTargetElement.nativeElement.classList.contains(
+                            "nui-dnd-dropzone--active"
+                        )
+                    ).toBeTruthy();
                 });
             }));
 
@@ -79,8 +113,14 @@ describe("directives >", () => {
                 // dropzone should not be active since dragging hasn't start
                 expect(dropTargetDirective.isDropZoneActive).toBeFalsy();
 
-                const dropListRect = subject.dropListInstance.element.nativeElement.getBoundingClientRect();
-                dragElementViaMouse(fixture, dropTargetDirective.draggables.first.element.nativeElement, dropListRect.right + 100, dropListRect.top + 100);
+                const dropListRect =
+                    subject.dropListInstance.element.nativeElement.getBoundingClientRect();
+                dragElementViaMouse(
+                    fixture,
+                    dropTargetDirective.draggables.first.element.nativeElement,
+                    dropListRect.right + 100,
+                    dropListRect.top + 100
+                );
                 flush();
 
                 fixture.whenStable().then(() => {
@@ -93,7 +133,11 @@ describe("directives >", () => {
 
                     // - finally the dropzone should not be active since dragging stopped
                     expect(dropTargetDirective.isDropZoneActive).toBeFalsy();
-                    expect(dropTargetElement.nativeElement.classList.contains("nui-dnd-dropzone--active")).toBeFalsy();
+                    expect(
+                        dropTargetElement.nativeElement.classList.contains(
+                            "nui-dnd-dropzone--active"
+                        )
+                    ).toBeFalsy();
                 });
             }));
         });
@@ -102,10 +146,15 @@ describe("directives >", () => {
             it("- allow an item to be dropped", fakeAsync(() => {
                 fixture.detectChanges();
 
-                const spyItemCanBeDropped = jasmine.createSpy("canBeDropped spy").and.returnValue(true);
+                const spyItemCanBeDropped = jasmine
+                    .createSpy("canBeDropped spy")
+                    .and.returnValue(true);
                 dropTargetDirective.canBeDropped = spyItemCanBeDropped;
 
-                startDraggingViaMouse(fixture, dropTargetDirective.draggables.first.element.nativeElement);
+                startDraggingViaMouse(
+                    fixture,
+                    dropTargetDirective.draggables.first.element.nativeElement
+                );
                 expect(spyItemCanBeDropped).not.toHaveBeenCalled();
                 dispatchMouseEvent(document, "mousemove", 50, 100);
                 flush();
@@ -114,19 +163,31 @@ describe("directives >", () => {
                     fixture.detectChanges();
 
                     expect(spyItemCanBeDropped).toHaveBeenCalledTimes(1);
-                    expect(spyItemCanBeDropped).toHaveBeenCalledWith("allowed", subject.dropListInstance);
+                    expect(spyItemCanBeDropped).toHaveBeenCalledWith(
+                        "allowed",
+                        subject.dropListInstance
+                    );
 
-                    expect(dropTargetElement.nativeElement.classList.contains("nui-dnd-dropzone--drop-allowed")).toBeTruthy();
+                    expect(
+                        dropTargetElement.nativeElement.classList.contains(
+                            "nui-dnd-dropzone--drop-allowed"
+                        )
+                    ).toBeTruthy();
                 });
             }));
 
             it("- NOT allow an item to be dropped", fakeAsync(() => {
                 fixture.detectChanges();
 
-                const spyItemCanBeDropped = jasmine.createSpy("canBeDropped spy").and.returnValue(false);
+                const spyItemCanBeDropped = jasmine
+                    .createSpy("canBeDropped spy")
+                    .and.returnValue(false);
                 dropTargetDirective.canBeDropped = spyItemCanBeDropped;
 
-                startDraggingViaMouse(fixture, dropTargetDirective.draggables.last.element.nativeElement);
+                startDraggingViaMouse(
+                    fixture,
+                    dropTargetDirective.draggables.last.element.nativeElement
+                );
                 expect(spyItemCanBeDropped).not.toHaveBeenCalled();
                 dispatchMouseEvent(document, "mousemove", 50, 100);
 
@@ -136,13 +197,19 @@ describe("directives >", () => {
                     fixture.detectChanges();
 
                     expect(spyItemCanBeDropped).toHaveBeenCalledTimes(1);
-                    expect(spyItemCanBeDropped).toHaveBeenCalledWith("not-allowed", subject.dropListInstance);
+                    expect(spyItemCanBeDropped).toHaveBeenCalledWith(
+                        "not-allowed",
+                        subject.dropListInstance
+                    );
 
-                    expect(dropTargetElement.nativeElement.classList.contains("nui-dnd-dropzone--drop-not-allowed")).toBeTruthy();
+                    expect(
+                        dropTargetElement.nativeElement.classList.contains(
+                            "nui-dnd-dropzone--drop-not-allowed"
+                        )
+                    ).toBeTruthy();
                 });
             }));
         });
-
     });
 });
 
@@ -151,8 +218,13 @@ function dispatchEvent(node: Node | Window, event: Event): Event {
     return event;
 }
 
-function dispatchMouseEvent(node: Node, type: string, x = 0, y = 0,
-                            event = createMouseEvent(type, x, y)): MouseEvent {
+function dispatchMouseEvent(
+    node: Node,
+    type: string,
+    x = 0,
+    y = 0,
+    event = createMouseEvent(type, x, y)
+): MouseEvent {
     return dispatchEvent(node, event) as MouseEvent;
 }
 
@@ -163,25 +235,27 @@ export function createMouseEvent(type: string, x = 0, y = 0, button = 0) {
     const event = document.createEvent("MouseEvent");
     const originalPreventDefault = event.preventDefault.bind(event);
 
-    event.initMouseEvent(type,
-                         true, /* canBubble */
-                         true, /* cancelable */
-                         window, /* view */
-                         0, /* detail */
-                         x, /* screenX */
-                         y, /* screenY */
-                         x, /* clientX */
-                         y, /* clientY */
-                         false, /* ctrlKey */
-                         false, /* altKey */
-                         false, /* shiftKey */
-                         false, /* metaKey */
-                         button, /* button */
-                         null /* relatedTarget */);
+    event.initMouseEvent(
+        type,
+        true /* canBubble */,
+        true /* cancelable */,
+        window /* view */,
+        0 /* detail */,
+        x /* screenX */,
+        y /* screenY */,
+        x /* clientX */,
+        y /* clientY */,
+        false /* ctrlKey */,
+        false /* altKey */,
+        false /* shiftKey */,
+        false /* metaKey */,
+        button /* button */,
+        null /* relatedTarget */
+    );
 
     // `initMouseEvent` doesn't allow us to pass the `buttons` and
     // defaults it to 0 which looks like a fake event.
-    Object.defineProperty(event, "buttons", {get: () => 1});
+    Object.defineProperty(event, "buttons", { get: () => 1 });
 
     // IE won't set `defaultPrevented` on synthetic events so we need to do it manually.
     event.preventDefault = () => {
@@ -199,8 +273,12 @@ export function createMouseEvent(type: string, x = 0, y = 0, button = 0) {
  * @param x Position along the x axis to which to drag the element.
  * @param y Position along the y axis to which to drag the element.
  */
-function startDraggingViaMouse(fixture: ComponentFixture<any>,
-                               element: Element, x?: number, y?: number) {
+function startDraggingViaMouse(
+    fixture: ComponentFixture<any>,
+    element: Element,
+    x?: number,
+    y?: number
+) {
     dispatchMouseEvent(element, "mousedown", x, y);
     fixture.detectChanges();
 
@@ -215,9 +293,12 @@ function startDraggingViaMouse(fixture: ComponentFixture<any>,
  * @param x Position along the x axis to which to drag the element.
  * @param y Position along the y axis to which to drag the element.
  */
-function dragElementViaMouse(fixture: ComponentFixture<any>,
-                             element: Element, x: number, y: number) {
-
+function dragElementViaMouse(
+    fixture: ComponentFixture<any>,
+    element: Element,
+    x: number,
+    y: number
+) {
     startDraggingViaMouse(fixture, element);
 
     dispatchMouseEvent(document, "mousemove", x, y);

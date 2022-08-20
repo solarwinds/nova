@@ -10,7 +10,16 @@ import { DataManager } from "./common/data-manager";
 import { EventBus } from "./common/event-bus";
 import { Lasagna } from "./common/lasagna";
 import { RenderEngine } from "./common/render-engine";
-import { D3Selection, IAccessors, IChart, IChartConfiguration, IChartEvent, IChartPlugin, IChartSeries, IRenderStateData } from "./common/types";
+import {
+    D3Selection,
+    IAccessors,
+    IChart,
+    IChartConfiguration,
+    IChartEvent,
+    IChartPlugin,
+    IChartSeries,
+    IRenderStateData,
+} from "./common/types";
 import { IDimensionConfig, IDimensions, IGrid } from "./grid/types";
 import { RenderEnginePlugin } from "./plugins/render-engine-plugin";
 import { CssFilterId, GRAYSCALE_COLOR_MATRIX } from "./types";
@@ -30,7 +39,10 @@ export class Chart implements IChart {
 
     private plugins: IChartPlugin[] = [];
 
-    constructor(private grid: IGrid, public configuration?: IChartConfiguration) {
+    constructor(
+        private grid: IGrid,
+        public configuration?: IChartConfiguration
+    ) {
         if (!grid) {
             throw new Error("Grid has to be defined!");
         }
@@ -60,7 +72,9 @@ export class Chart implements IChart {
     }
 
     public removePlugin(classRef: typeof ChartPlugin) {
-        const pluginIndex = this.plugins.findIndex(plugin => plugin instanceof classRef);
+        const pluginIndex = this.plugins.findIndex(
+            (plugin) => plugin instanceof classRef
+        );
         if (-1 !== pluginIndex) {
             this.plugins[pluginIndex].destroy();
             this.plugins.splice(pluginIndex, 1);
@@ -73,14 +87,17 @@ export class Chart implements IChart {
         }
     }
 
-    public removePlugins(...classRefs: (typeof ChartPlugin)[]) {
+    public removePlugins(...classRefs: typeof ChartPlugin[]) {
         for (const classRef of classRefs) {
             this.removePlugin(classRef);
         }
     }
 
     public hasPlugin(classRef: typeof ChartPlugin) {
-        return -1 !== this.plugins.findIndex(plugin => plugin instanceof classRef);
+        return (
+            -1 !==
+            this.plugins.findIndex((plugin) => plugin instanceof classRef)
+        );
     }
 
     public build(element: HTMLElement) {
@@ -90,16 +107,19 @@ export class Chart implements IChart {
         this.target = select<HTMLElement, SVGElement>(this.element)
             .append("svg")
             .attrs({
-                "class": "nui-chart",
-                "height": "100%",
-                "width": "100%",
+                class: "nui-chart",
+                height: "100%",
+                width: "100%",
             });
 
         this.configureCssFilters();
         this.buildGrid();
 
         this.dataManager = this.buildDataManager();
-        this.renderEngine = this.buildRenderEngine(this.grid.getLasagna(), this.dataManager);
+        this.renderEngine = this.buildRenderEngine(
+            this.grid.getLasagna(),
+            this.dataManager
+        );
 
         // Put the render engine at the front of the list since other plugins may be relying on renderers to be updated first
         const renderEnginePlugin = new RenderEnginePlugin();
@@ -112,12 +132,16 @@ export class Chart implements IChart {
 
         this.initialize();
 
-        const untilDestroy = <T>() => takeUntil<T>(this.getEventBus().getStream(DESTROY_EVENT));
-        this.updateSubject.pipe(untilDestroy())
+        const untilDestroy = <T>() =>
+            takeUntil<T>(this.getEventBus().getStream(DESTROY_EVENT));
+        this.updateSubject
+            .pipe(untilDestroy())
             .subscribe((d: IChartSeries<IAccessors>[]) => this.onUpdate(d));
-        this.updateDimensionsSubject.pipe(untilDestroy())
+        this.updateDimensionsSubject
+            .pipe(untilDestroy())
             .subscribe(() => this.onUpdateDimensions());
-        this.seriesStatesSubject.pipe(untilDestroy())
+        this.seriesStatesSubject
+            .pipe(untilDestroy())
             .subscribe((rs: IRenderStateData[]) => this.onSetSeriesStates(rs));
     }
 
@@ -125,7 +149,8 @@ export class Chart implements IChart {
         this.filterDefs = this.target?.append("defs");
 
         // filter for applying a grayscale appearance to svg elements
-        this.filterDefs?.append("filter")
+        this.filterDefs
+            ?.append("filter")
             .attr("id", CssFilterId.Grayscale)
             .append("feColorMatrix")
             .attr("type", "matrix")
@@ -145,7 +170,10 @@ export class Chart implements IChart {
         }
     }
 
-    protected buildRenderEngine(lasagna: Lasagna, dataManager: DataManager): RenderEngine {
+    protected buildRenderEngine(
+        lasagna: Lasagna,
+        dataManager: DataManager
+    ): RenderEngine {
         return new RenderEngine(lasagna, dataManager);
     }
 
@@ -167,7 +195,7 @@ export class Chart implements IChart {
         this.eventBus.getStream(DESTROY_EVENT).next({ data: null });
         this.eventBus.destroy();
 
-        this.plugins.forEach(p => p.destroy());
+        this.plugins.forEach((p) => p.destroy());
 
         this.target?.remove();
         this.target = undefined;
@@ -175,7 +203,9 @@ export class Chart implements IChart {
 
     public setSeriesStates(renderStateData: IRenderStateData[]) {
         this.seriesStatesSubject.next(renderStateData);
-        this.eventBus.getStream(SERIES_STATE_CHANGE_EVENT).next({ data: renderStateData });
+        this.eventBus
+            .getStream(SERIES_STATE_CHANGE_EVENT)
+            .next({ data: renderStateData });
     }
 
     private onUpdate(seriesSet: IChartSeries<IAccessors>[]) {
@@ -185,7 +215,7 @@ export class Chart implements IChart {
         this.dataManager.updateScaleDomains();
         this.grid.updateRanges();
 
-        this.plugins.forEach(p => p.update());
+        this.plugins.forEach((p) => p.update());
     }
 
     private onUpdateDimensions() {
@@ -203,7 +233,7 @@ export class Chart implements IChart {
         }
         this.grid.updateDimensions(dimensions);
 
-        this.plugins.forEach(p => p.updateDimensions());
+        this.plugins.forEach((p) => p.updateDimensions());
     }
 
     private updateTargetDimensions(dimensionConfig: IDimensionConfig) {

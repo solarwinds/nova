@@ -1,5 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, CHART_MARKERS, IChartSeries, ILineAccessors, LineAccessors, LinearScale, LineRenderer, XYGrid } from "@nova-ui/charts";
+import {
+    Chart,
+    CHART_MARKERS,
+    IChartSeries,
+    ILineAccessors,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    XYGrid,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-markers-custom-accessor-example",
@@ -19,12 +28,14 @@ export class RendererMarkersCustomAccessorExampleComponent implements OnInit {
         // Custom marker accessor
         accessors.series.marker = () => CHART_MARKERS[2];
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            scales,
-            renderer,
-            accessors,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                scales,
+                renderer,
+                accessors,
+            })
+        );
 
         this.chart.update(seriesSet);
     }

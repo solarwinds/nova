@@ -12,17 +12,15 @@ const routes: Routes = [
         path: "",
         component: SparkPrototypeComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
 ];
 
 @NgModule({
-    declarations: [
-        SparkPrototypeComponent,
-    ],
+    declarations: [SparkPrototypeComponent],
     imports: [
         DemoCommonModule,
         NuiButtonModule,
@@ -31,5 +29,4 @@ const routes: Routes = [
         RouterModule.forChild(routes),
     ],
 })
-export class SparkPrototypeModule {
-}
+export class SparkPrototypeModule {}

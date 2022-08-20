@@ -1,5 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { Chart, ChartAssist, PieRenderer, radial, RadialAccessors, radialGrid, radialScales } from "@nova-ui/charts";
+import {
+    Chart,
+    ChartAssist,
+    PieRenderer,
+    radial,
+    RadialAccessors,
+    radialGrid,
+    radialScales,
+} from "@nova-ui/charts";
 
 @Component({
     selector: "nui-pie-chart-example",
@@ -23,12 +31,14 @@ export class PieChartExampleComponent implements OnInit {
         const renderer = new PieRenderer();
 
         // Invoke the chart assist's update method with the IChartAssistSeries collection as the argument
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            scales,
-            renderer,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                scales,
+                renderer,
+            }))
+        );
     }
 }
 

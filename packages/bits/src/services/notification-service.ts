@@ -17,15 +17,21 @@ export type NotificationHandler = (args: any) => void;
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class NotificationService implements INotificationService {
-    private channels: {[channelId: string]: Subject<any>} = {};
+    private channels: { [channelId: string]: Subject<any> } = {};
 
     private ensureChannel(channelId: string): Subject<any> {
-        return this.channels[channelId] || (this.channels[channelId] = new Subject<any>());
+        return (
+            this.channels[channelId] ||
+            (this.channels[channelId] = new Subject<any>())
+        );
     }
 
-    public subscribe(channelId: string, action: NotificationHandler): Subscription {
+    public subscribe(
+        channelId: string,
+        action: NotificationHandler
+    ): Subscription {
         const channel = this.ensureChannel(channelId);
         return channel.subscribe(action);
     }

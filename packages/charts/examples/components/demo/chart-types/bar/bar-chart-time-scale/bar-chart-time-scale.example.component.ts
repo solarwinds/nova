@@ -1,7 +1,19 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    BandScale, barAccessors, barGrid, BarRenderer, Chart, getAutomaticDomainWithIncludedInterval, IAccessors, IChartSeries, LinearScale, NoopAccessors,
-    NoopRenderer, NoopScale, TimeScale, XYGrid,
+    BandScale,
+    barAccessors,
+    barGrid,
+    BarRenderer,
+    Chart,
+    getAutomaticDomainWithIncludedInterval,
+    IAccessors,
+    IChartSeries,
+    LinearScale,
+    NoopAccessors,
+    NoopRenderer,
+    NoopScale,
+    TimeScale,
+    XYGrid,
 } from "@nova-ui/charts";
 import moment, { Moment } from "moment/moment";
 
@@ -18,21 +30,25 @@ export class BarChartTimeScaleExampleComponent implements OnInit {
 
         const bandScale = new BandScale();
         const linearScale = new LinearScale();
-        linearScale.domainCalculator = getAutomaticDomainWithIncludedInterval([0, 0]);
+        linearScale.domainCalculator = getAutomaticDomainWithIncludedInterval([
+            0, 0,
+        ]);
         const scales: any = {
             x: bandScale,
             y: linearScale,
         };
 
         const start = moment([2018, 7, 4]);
-        const seriesSet = getData(start).map((d): IChartSeries<IAccessors> => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet = getData(start).map(
+            (d): IChartSeries<IAccessors> => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
-        bandScale.fixDomain(seriesSet.map(s => s.data[0].category));
+        bandScale.fixDomain(seriesSet.map((s) => s.data[0].category));
 
         const scaleId = "bottom";
         const time = new TimeScale(scaleId);
@@ -69,17 +85,18 @@ function getData(start: Moment) {
         dataSet.push({
             id: `id-${i}`,
             name: date.toString(),
-            data: [{
-                value: values[i],
-                category: date.toString(),
-                ["__bar"]: {
-                    start: 0,
-                    end: values[i],
+            data: [
+                {
+                    value: values[i],
+                    category: date.toString(),
+                    ["__bar"]: {
+                        start: 0,
+                        end: values[i],
+                    },
                 },
-            }],
+            ],
         });
     }
 
     return dataSet;
 }
-

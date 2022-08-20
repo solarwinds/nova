@@ -1,4 +1,7 @@
-import { GaugeMode, StandardLinearGaugeThickness } from "../../../gauge/constants";
+import {
+    GaugeMode,
+    StandardLinearGaugeThickness,
+} from "../../../gauge/constants";
 import { DimensionConfig } from "./dimension-config";
 
 import { XYGridConfig } from "./xy-grid-config";
@@ -11,7 +14,10 @@ import { XYGridConfig } from "./xy-grid-config";
  *
  * @returns {XYGridConfig} A linear gauge grid configuration
  */
-export function linearGaugeGridConfig(mode: GaugeMode.Vertical | GaugeMode.Horizontal, thickness = StandardLinearGaugeThickness.Large): XYGridConfig {
+export function linearGaugeGridConfig(
+    mode: GaugeMode.Vertical | GaugeMode.Horizontal,
+    thickness = StandardLinearGaugeThickness.Large
+): XYGridConfig {
     const gridConfig = new XYGridConfig();
     gridConfig.interactionPlugins = false;
     gridConfig.disableRenderAreaHeightCorrection = true;

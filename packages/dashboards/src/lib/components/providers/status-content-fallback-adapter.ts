@@ -11,14 +11,17 @@ import { IDataSourceOutputPayload } from "./types";
 
 @Injectable()
 export class StatusContentFallbackAdapter implements OnDestroy, IHasComponent {
-
     protected destroy$ = new Subject();
     protected componentId: string;
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
-                protected pizzagnaService: PizzagnaService) {
-        this.eventBus.getStream(DATA_SOURCE_OUTPUT)
-            .pipe(takeUntil(this.destroy$)).subscribe((event: IEvent<any | IDataSourceOutputPayload<any>>) => {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) protected eventBus: EventBus<IEvent>,
+        protected pizzagnaService: PizzagnaService
+    ) {
+        this.eventBus
+            .getStream(DATA_SOURCE_OUTPUT)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((event: IEvent<any | IDataSourceOutputPayload<any>>) => {
                 this.handleDataSourceOutput(event);
             });
     }
@@ -32,11 +35,18 @@ export class StatusContentFallbackAdapter implements OnDestroy, IHasComponent {
         this.componentId = componentId;
     }
 
-    protected handleDataSourceOutput(event: IEvent<any | IDataSourceOutputPayload<any>>) {
-        this.pizzagnaService.setProperty({
-            componentId: this.componentId,
-            propertyPath: ["fallbackKey"],
-            pizzagnaKey: PizzagnaLayer.Data,
-        }, typeof event.payload?.error?.type !== "undefined" ? event.payload?.error?.type.toString() : undefined);
+    protected handleDataSourceOutput(
+        event: IEvent<any | IDataSourceOutputPayload<any>>
+    ) {
+        this.pizzagnaService.setProperty(
+            {
+                componentId: this.componentId,
+                propertyPath: ["fallbackKey"],
+                pizzagnaKey: PizzagnaLayer.Data,
+            },
+            typeof event.payload?.error?.type !== "undefined"
+                ? event.payload?.error?.type.toString()
+                : undefined
+        );
     }
 }

@@ -6,8 +6,10 @@ import { IChartAssistSeries, IChartSeries } from "../../core/common/types";
 import { IBarAccessors } from "./accessors/bar-accessors";
 import { gatherCategories } from "./preprocessor-utils";
 
-export function stackedPreprocessor(chartSeriesSet: IChartSeries<IBarAccessors>[],
-                                    isVisible: (chartSeries: IChartSeries<IBarAccessors>) => boolean): IChartSeries<IBarAccessors>[] {
+export function stackedPreprocessor(
+    chartSeriesSet: IChartSeries<IBarAccessors>[],
+    isVisible: (chartSeries: IChartSeries<IBarAccessors>) => boolean
+): IChartSeries<IBarAccessors>[] {
     // No need to preprocess empty series.
     if (chartSeriesSet.length === 0) {
         return chartSeriesSet;
@@ -28,11 +30,13 @@ export function stackedPreprocessor(chartSeriesSet: IChartSeries<IBarAccessors>[
             throw new Error("valueAccessor is not defined");
         }
         // index makes algorithm faster
-        const dataIndex = chartSeries.data.reduce((accInner: any, next: any, i: number) =>
-            ({
+        const dataIndex = chartSeries.data.reduce(
+            (accInner: any, next: any, i: number) => ({
                 ...accInner,
                 [categoryAccessor(next, i, chartSeries.data, chartSeries)]: i,
-            }), {});
+            }),
+            {}
+        );
         const reorderedData: any[] = [];
 
         categories.forEach((category: string, i) => {
@@ -42,7 +46,13 @@ export function stackedPreprocessor(chartSeriesSet: IChartSeries<IBarAccessors>[
                 const metadata: any = {};
                 const coef = isVisible(chartSeries) ? 1 : 0;
                 metadata.start = acc[i];
-                acc[i] += (valueAccessor(datum, dataIndex[category], chartSeries.data, chartSeries) || 0) * coef;
+                acc[i] +=
+                    (valueAccessor(
+                        datum,
+                        dataIndex[category],
+                        chartSeries.data,
+                        chartSeries
+                    ) || 0) * coef;
                 metadata.end = acc[i];
                 datum["__bar"] = metadata;
                 reorderedData.push(datum);
@@ -56,6 +66,12 @@ export function stackedPreprocessor(chartSeriesSet: IChartSeries<IBarAccessors>[
     return chartSeriesSet;
 }
 
-export function stack(this: ChartAssist, chartSeriesSet: IChartAssistSeries<IBarAccessors>[]):  IChartAssistSeries<IBarAccessors>[] {
-    return stackedPreprocessor(chartSeriesSet, (series: IChartSeries<IBarAccessors>) => !this.isSeriesHidden(series.id));
+export function stack(
+    this: ChartAssist,
+    chartSeriesSet: IChartAssistSeries<IBarAccessors>[]
+): IChartAssistSeries<IBarAccessors>[] {
+    return stackedPreprocessor(
+        chartSeriesSet,
+        (series: IChartSeries<IBarAccessors>) => !this.isSeriesHidden(series.id)
+    );
 }

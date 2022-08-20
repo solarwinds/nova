@@ -33,12 +33,10 @@ export class DataSourceErrorComponent implements OnDestroy, OnChanges {
 
     private dataSourceClear$: Subject<void> = new Subject<void>();
 
-    constructor(
-        public changeDetector: ChangeDetectorRef
-    ) {}
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     ngOnChanges(changes: SimpleChanges) {
-        if(changes.dataSource) {
+        if (changes.dataSource) {
             this.onDataSourceChanged();
         }
     }
@@ -46,13 +44,15 @@ export class DataSourceErrorComponent implements OnDestroy, OnChanges {
     onDataSourceChanged() {
         this.dataSourceClear$.next();
 
-        this.dataSource?.busy?.pipe(takeUntil(this.dataSourceClear$))
+        this.dataSource?.busy
+            ?.pipe(takeUntil(this.dataSourceClear$))
             .subscribe((isBusy: boolean) => {
                 this.busy = isBusy;
                 this.changeDetector.markForCheck();
             });
 
-        this.dataSource?.outputsSubject.pipe(takeUntil(this.dataSourceClear$))
+        this.dataSource?.outputsSubject
+            .pipe(takeUntil(this.dataSourceClear$))
             .subscribe((value) => {
                 this.data = isUndefined(value?.result) ? value : value?.result;
                 this.dataSourceError = value?.error;

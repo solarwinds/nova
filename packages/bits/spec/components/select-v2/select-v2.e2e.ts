@@ -34,7 +34,10 @@ describe("USERCONTROL Select V2 >", () => {
         buttonToggle = element(by.id("toggle"));
         buttonDialog = element(by.id("dialog-btn"));
 
-        switchToOutsideClicksEnabled = Atom.findIn(SwitchAtom, element(by.id("switch")));
+        switchToOutsideClicksEnabled = Atom.findIn(
+            SwitchAtom,
+            element(by.id("switch"))
+        );
 
         focusdrop = element(by.className("select-test-focus-drop"));
     });
@@ -44,7 +47,6 @@ describe("USERCONTROL Select V2 >", () => {
     });
 
     describe("select-v2 >", () => {
-
         describe("custom control", () => {
             it("should not be clickable", async () => {
                 await selectCustomControl.click();
@@ -80,11 +82,19 @@ describe("USERCONTROL Select V2 >", () => {
 
                 // Detect when option within a scrollable div are in view
                 // https://stackoverflow.com/questions/16308037/detect-when-elements-within-a-scrollable-div-are-out-of-view
-                const containerHeight = (await selectBasic.getPopupElement().getSize()).height;
-                const containerTop = +await selectBasic.getPopupElement().getAttribute("scrollTop");
-                const optionTop = +await (option).getElement().getAttribute("offsetTop");
+                const containerHeight = (
+                    await selectBasic.getPopupElement().getSize()
+                ).height;
+                const containerTop = +(await selectBasic
+                    .getPopupElement()
+                    .getAttribute("scrollTop"));
+                const optionTop = +(await option
+                    .getElement()
+                    .getAttribute("offsetTop"));
 
-                const isOptionVisibleInScrollBox = (optionTop > containerTop) && (optionTop < (containerTop + containerHeight));
+                const isOptionVisibleInScrollBox =
+                    optionTop > containerTop &&
+                    optionTop < containerTop + containerHeight;
 
                 expect(isOptionVisibleInScrollBox).toBeTruthy();
             });
@@ -108,15 +118,21 @@ describe("USERCONTROL Select V2 >", () => {
             });
 
             it("should only one item be active", async () => {
-                await expect(await selectErrorState.getActiveItemsCount()).toBe(1);
+                await expect(await selectErrorState.getActiveItemsCount()).toBe(
+                    1
+                );
             });
 
             it("should navigate with UP and DOWN buttons", async () => {
                 await Helpers.pressKey(Key.DOWN, 5);
-                await expect(await (await selectErrorState.getOption(5)).isActive()).toBe(true);
+                await expect(
+                    await (await selectErrorState.getOption(5)).isActive()
+                ).toBe(true);
 
                 await Helpers.pressKey(Key.UP);
-                await expect(await (await selectErrorState.getOption(4)).isActive()).toBe(true);
+                await expect(
+                    await (await selectErrorState.getOption(4)).isActive()
+                ).toBe(true);
             });
 
             it("should close on focus out", async () => {
@@ -139,36 +155,54 @@ describe("USERCONTROL Select V2 >", () => {
                 await Helpers.pressKey(Key.DOWN, 2);
                 await Helpers.pressKey(Key.ENTER);
 
-                await expect(await selectErrorState.isOpened()).toBe(false, "Popup wasn't closed after selection!");
-                await expect(await selectErrorState.getInputText()).toEqual("Item 2");
+                await expect(await selectErrorState.isOpened()).toBe(
+                    false,
+                    "Popup wasn't closed after selection!"
+                );
+                await expect(await selectErrorState.getInputText()).toEqual(
+                    "Item 2"
+                );
             });
 
             it("should reach the bottom of the list on PAGE_DOWN button pressed", async () => {
-                const lastItemText = await (await selectErrorState.getLastOption()).getElement().getText();
+                const lastItemText = await (
+                    await selectErrorState.getLastOption()
+                )
+                    .getElement()
+                    .getText();
                 await Helpers.pressKey(Key.PAGE_DOWN);
                 await Helpers.pressKey(Key.ENTER);
 
-                await expect(await selectErrorState.getInputText()).toEqual(lastItemText);
+                await expect(await selectErrorState.getInputText()).toEqual(
+                    lastItemText
+                );
             });
 
             it("should reach the bottom of the list on PAGE_UP button pressed", async () => {
-                const firstItemText = await (await selectErrorState.getFirstOption()).getElement().getText();
+                const firstItemText = await (
+                    await selectErrorState.getFirstOption()
+                )
+                    .getElement()
+                    .getText();
                 await Helpers.pressKey(Key.PAGE_DOWN);
                 await Helpers.pressKey(Key.PAGE_UP);
                 await Helpers.pressKey(Key.ENTER);
 
-                await expect(await selectErrorState.getInputText()).toEqual(firstItemText);
+                await expect(await selectErrorState.getInputText()).toEqual(
+                    firstItemText
+                );
             });
         });
 
         describe("work with modals and overlays", () => {
-
             it("should remove overlay if select gets destroyed", async () => {
                 await buttonDialog.click();
                 await selectInsideDialog.toggle();
                 await DialogAtom.dismissDialog();
 
-                expect(await OverlayAtom.cdkContainerPane.isPresent()).toBe(false);
+                expect(await OverlayAtom.cdkContainerPane.isPresent()).toBe(
+                    false
+                );
             });
         });
     });

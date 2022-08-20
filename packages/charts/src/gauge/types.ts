@@ -2,7 +2,7 @@ import { Formatter } from "../core/common/scales/types";
 
 /**
  * Configuration for a gauge
-*/
+ */
 export interface IGaugeConfig {
     /** The value of the gauge */
     value: number;
@@ -77,7 +77,7 @@ export interface IGaugeThresholdDef {
 
 /**
  * Interface for a gauge threshold datum
-*/
+ */
 export interface IGaugeThresholdDatum extends IGaugeThresholdDef {
     /** Boolean indicating whether the threshold is hit */
     hit?: boolean;

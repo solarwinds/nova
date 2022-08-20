@@ -40,8 +40,8 @@ const exampleRoutes: Routes = [
         component: ChartDocsGaugeComponent,
         data: {
             showThemeSwitcher: true,
-            "srlc": {
-                "stage": SrlcStage.ga,
+            srlc: {
+                stage: SrlcStage.ga,
             },
         },
     },
@@ -49,8 +49,8 @@ const exampleRoutes: Routes = [
         path: "visual-test",
         component: GaugeVisualTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -58,8 +58,8 @@ const exampleRoutes: Routes = [
         path: "donut-basic",
         component: DonutGaugeBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -67,8 +67,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-content",
         component: DonutGaugeWithContentExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -76,8 +76,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-custom-labels",
         component: DonutGaugeWithCustomThresholdLabelsExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -85,8 +85,8 @@ const exampleRoutes: Routes = [
         path: "donut-without-markers",
         component: DonutGaugeWithoutThresholdMarkersExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -94,8 +94,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-marker-toggling",
         component: DonutGaugeWithThresholdMarkerTogglingExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -103,8 +103,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-thresholds",
         component: DonutGaugeWithThresholdsExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -112,8 +112,8 @@ const exampleRoutes: Routes = [
         path: "donut-with-threshold-toggling",
         component: DonutGaugeWithThresholdTogglingExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -121,8 +121,8 @@ const exampleRoutes: Routes = [
         path: "horizontal-basic",
         component: HorizontalGaugeBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -130,8 +130,8 @@ const exampleRoutes: Routes = [
         path: "vertical-basic",
         component: VerticalGaugeBasicExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -139,8 +139,8 @@ const exampleRoutes: Routes = [
         path: "linear-with-thresholds",
         component: LinearGaugeWithThresholdsExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -148,8 +148,8 @@ const exampleRoutes: Routes = [
         path: "linear-thickness",
         component: LinearGaugeWithThresholdsExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -188,8 +188,15 @@ const exampleRoutes: Routes = [
         RouterModule.forChild(exampleRoutes),
     ],
     providers: [
-        { provide: DEMO_PATH_TOKEN, useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/) },
+        {
+            provide: DEMO_PATH_TOKEN,
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
+        },
     ],
 })
-export class ChartDocsGaugeModule {
-}
+export class ChartDocsGaugeModule {}

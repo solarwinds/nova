@@ -4,17 +4,20 @@ import { MenuGroupComponent } from "../menu-group/menu-group.component";
 import { MenuLinkComponent } from "./menu-link.component";
 
 describe("components >", () => {
-
     describe("menu-link >", () => {
-
         describe("handleClick function >", () => {
-
             let mockEvent: MouseEvent;
             let menuLink: MenuLinkComponent;
 
             beforeEach(() => {
-                mockEvent = jasmine.createSpyObj("event", ["preventDefault", "stopPropagation"]);
-                menuLink = new MenuLinkComponent(new MenuGroupComponent(), new MockedChangeDetectorRef());
+                mockEvent = jasmine.createSpyObj("event", [
+                    "preventDefault",
+                    "stopPropagation",
+                ]);
+                menuLink = new MenuLinkComponent(
+                    new MenuGroupComponent(),
+                    new MockedChangeDetectorRef()
+                );
             });
 
             it("should prevent default behavior and stop propagation of click event if disabled", () => {
@@ -32,9 +35,6 @@ describe("components >", () => {
                 expect(mockEvent.preventDefault).not.toHaveBeenCalled();
                 expect(mockEvent.stopPropagation).not.toHaveBeenCalled();
             });
-
         });
-
     });
-
 });

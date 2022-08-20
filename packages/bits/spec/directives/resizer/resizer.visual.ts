@@ -1,4 +1,3 @@
-
 import { browser } from "protractor";
 
 import { Atom } from "../../atom";
@@ -15,9 +14,15 @@ describe(`Visual tests: ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("resizer/resizer-visual-test");
-        resizerNested1 = Atom.find(ResizerAtom, "nui-visual-test-resize-nested-1");
-        resizerNested2 = Atom.find(ResizerAtom, "nui-visual-test-resize-nested-2");
-        
+        resizerNested1 = Atom.find(
+            ResizerAtom,
+            "nui-visual-test-resize-nested-1"
+        );
+        resizerNested2 = Atom.find(
+            ResizerAtom,
+            "nui-visual-test-resize-nested-2"
+        );
+
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -27,12 +32,18 @@ describe(`Visual tests: ${name}`, () => {
         await resizerNested1.hover();
         await camera.say.cheese("Hovered resizer");
 
-        await browser.actions().mouseDown(resizerNested2.getElement()).perform();
+        await browser
+            .actions()
+            .mouseDown(resizerNested2.getElement())
+            .perform();
         await camera.say.cheese("Resizer on MouseDown");
 
         Helpers.switchDarkTheme("on");
         await resizerNested1.hover();
-        await browser.actions().mouseDown(resizerNested2.getElement()).perform();
+        await browser
+            .actions()
+            .mouseDown(resizerNested2.getElement())
+            .perform();
         await camera.say.cheese("Dark theme");
 
         await camera.turn.off();

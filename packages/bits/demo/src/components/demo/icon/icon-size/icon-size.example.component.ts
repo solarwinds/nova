@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-icon-size-example",
     templateUrl: "./icon-size.example.component.html",
 })
-
 export class IconSizeExampleComponent {}

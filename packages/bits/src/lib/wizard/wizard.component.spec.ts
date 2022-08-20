@@ -14,12 +14,11 @@ import { WizardComponent } from "./wizard.component";
 
 @Component({
     selector: "nui-test-cmp",
-    template: `
-        <nui-wizard finishText="Finish">
-            <nui-wizard-step [title]="'step1'"></nui-wizard-step>
-            <nui-wizard-step [title]="'step2'"></nui-wizard-step>
-            <nui-wizard-step [title]="'step3'"></nui-wizard-step>
-        </nui-wizard>`,
+    template: ` <nui-wizard finishText="Finish">
+        <nui-wizard-step [title]="'step1'"></nui-wizard-step>
+        <nui-wizard-step [title]="'step2'"></nui-wizard-step>
+        <nui-wizard-step [title]="'step3'"></nui-wizard-step>
+    </nui-wizard>`,
 })
 class TestWrapperComponent {}
 
@@ -37,14 +36,11 @@ describe("components >", () => {
                     IconComponent,
                 ],
                 schemas: [NO_ERRORS_SCHEMA],
-                providers: [
-                    IconService,
-                    LoggerService,
-                ],
+                providers: [IconService, LoggerService],
             });
             TestBed.overrideModule(BrowserDynamicTestingModule, {
                 set: {
-                    entryComponents: [ WizardStepComponent ],
+                    entryComponents: [WizardStepComponent],
                 },
             });
         });
@@ -66,7 +62,9 @@ describe("components >", () => {
                 } as IWizardSelectionEvent;
 
                 component.selectStep(component.steps.toArray()[0]);
-                expect(component.selectionChange.emit).toHaveBeenCalledWith(selectEventMock);
+                expect(component.selectionChange.emit).toHaveBeenCalledWith(
+                    selectEventMock
+                );
             });
         });
 
@@ -129,17 +127,28 @@ describe("components >", () => {
             });
 
             it("should move to next wizard step", () => {
-
                 component.onNextClick();
-                expect(component.currentStep).toBe(component.steps.toArray()[1]);
+                expect(component.currentStep).toBe(
+                    component.steps.toArray()[1]
+                );
             });
 
             it("should move to next step only after delay (simulating long action on exit step)", () => {
-                component.navigationControl.next({busyState: {busy: false}, allowStepChange: false});
+                component.navigationControl.next({
+                    busyState: { busy: false },
+                    allowStepChange: false,
+                });
                 component.onNextClick();
-                expect(component.currentStep).toBe(component.steps.toArray()[0]);
-                component.navigationControl.next({busyState: {busy: false}, allowStepChange: true});
-                expect(component.currentStep).toBe(component.steps.toArray()[1]);
+                expect(component.currentStep).toBe(
+                    component.steps.toArray()[0]
+                );
+                component.navigationControl.next({
+                    busyState: { busy: false },
+                    allowStepChange: true,
+                });
+                expect(component.currentStep).toBe(
+                    component.steps.toArray()[1]
+                );
             });
         });
 
@@ -166,7 +175,9 @@ describe("components >", () => {
                 component.onNextClick();
 
                 component.onBackClick();
-                expect(component.currentStep).toBe(component.steps.toArray()[0]);
+                expect(component.currentStep).toBe(
+                    component.steps.toArray()[0]
+                );
             });
 
             it("should notify on Back button click", () => {
@@ -182,21 +193,27 @@ describe("components >", () => {
             it("should set height of wizard body container to 200px", () => {
                 component.bodyContainerHeight = "200px";
                 fixture.detectChanges();
-                const wizardBodyContainer = fixture.debugElement.query(By.css(".nui-wizard__container")).nativeElement;
+                const wizardBodyContainer = fixture.debugElement.query(
+                    By.css(".nui-wizard__container")
+                ).nativeElement;
                 expect(wizardBodyContainer.style.height).toEqual("200px");
             });
 
             it("should apply show-scroll class", () => {
                 component.enableScroll = true;
                 fixture.detectChanges();
-                const wizardBodyContainer = fixture.debugElement.query(By.css(".nui-wizard__container")).nativeElement;
+                const wizardBodyContainer = fixture.debugElement.query(
+                    By.css(".nui-wizard__container")
+                ).nativeElement;
                 expect(wizardBodyContainer.classList).toContain("show-scroll");
             });
 
             it("should dynamically change height when input changes", () => {
                 component.bodyContainerHeight = "200px";
                 fixture.detectChanges();
-                const wizardBodyContainer = fixture.debugElement.query(By.css(".nui-wizard__container")).nativeElement;
+                const wizardBodyContainer = fixture.debugElement.query(
+                    By.css(".nui-wizard__container")
+                ).nativeElement;
                 expect(wizardBodyContainer.style.height).toEqual("200px");
                 component.bodyContainerHeight = "300px";
                 fixture.detectChanges();
@@ -206,7 +223,9 @@ describe("components >", () => {
             it("should accept different CSS units", () => {
                 component.bodyContainerHeight = "5vh";
                 fixture.detectChanges();
-                const wizardBodyContainer = fixture.debugElement.query(By.css(".nui-wizard__container")).nativeElement;
+                const wizardBodyContainer = fixture.debugElement.query(
+                    By.css(".nui-wizard__container")
+                ).nativeElement;
                 expect(wizardBodyContainer.style.height).toEqual("5vh");
                 component.bodyContainerHeight = "10%";
                 fixture.detectChanges();
@@ -245,12 +264,14 @@ describe("components >", () => {
                 component.removeStep(index);
                 expect(spy).toHaveBeenCalled();
             });
-        })
+        });
 
         describe("reset resetStep >", () => {
             it("should reset step statuses", () => {
                 const firstStep = component.steps.get(0) as WizardStepComponent;
-                const stepToReset = component.steps.get(1) as WizardStepComponent;
+                const stepToReset = component.steps.get(
+                    1
+                ) as WizardStepComponent;
 
                 component.selectStep(stepToReset);
                 component.selectStep(firstStep);
@@ -263,7 +284,9 @@ describe("components >", () => {
 
             it("should reset 'complete' status for previous step", () => {
                 const firstStep = component.steps.get(0) as WizardStepComponent;
-                const stepToReset = component.steps.get(1) as WizardStepComponent;
+                const stepToReset = component.steps.get(
+                    1
+                ) as WizardStepComponent;
 
                 component.selectStep(stepToReset);
                 component.selectStep(firstStep);
@@ -274,7 +297,9 @@ describe("components >", () => {
 
             it("should reset step statuses for next step", () => {
                 const firstStep = component.steps.get(0) as WizardStepComponent;
-                const stepToReset = component.steps.get(1) as WizardStepComponent;
+                const stepToReset = component.steps.get(
+                    1
+                ) as WizardStepComponent;
                 const nextStep = component.steps.get(2) as WizardStepComponent;
 
                 component.selectStep(stepToReset);
@@ -286,6 +311,6 @@ describe("components >", () => {
                 expect(nextStep.complete).toBeFalse();
                 expect(nextStep.icon).toEqual("step");
             });
-        })
+        });
     });
 });

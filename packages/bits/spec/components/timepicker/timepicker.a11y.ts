@@ -12,7 +12,10 @@ describe("a11y: timepicker", () => {
     beforeAll(async () => {
         await Helpers.prepareBrowser("time-picker/time-picker-visual-test");
 
-        basicTimepicker = Atom.find(TimepickerAtom, "nui-visual-test-timepicker-basic");
+        basicTimepicker = Atom.find(
+            TimepickerAtom,
+            "nui-visual-test-timepicker-basic"
+        );
     });
 
     it("should check a11y of timepicker", async () => {

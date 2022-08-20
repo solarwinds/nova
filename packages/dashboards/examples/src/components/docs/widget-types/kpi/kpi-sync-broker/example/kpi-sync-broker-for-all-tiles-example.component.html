@@ -2,7 +2,15 @@
     <nui-switch class="ml-3 py-2" [(value)]="editMode" i18n>
         Edit Mode
     </nui-switch>
-    <button *ngIf="!(dashboard?.widgets['kpiWidgetId'])" type="button" displayStyle="action" (click)="reInitializeDashboard()" nui-button>Restore Widget</button>
+    <button
+        *ngIf="!dashboard?.widgets['kpiWidgetId']"
+        type="button"
+        displayStyle="action"
+        (click)="reInitializeDashboard()"
+        nui-button
+    >
+        Restore Widget
+    </button>
 </div>
 
 <div class="w-100 dashboard">
@@ -15,6 +23,7 @@
         [(dashboard)]="dashboard"
         [editMode]="editMode"
         [(gridsterConfig)]="gridsterConfig"
-        nuiWidgetEditor>
+        nuiWidgetEditor
+    >
     </nui-dashboard>
 </div>

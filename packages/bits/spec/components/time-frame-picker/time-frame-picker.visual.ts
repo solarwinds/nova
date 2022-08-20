@@ -19,13 +19,30 @@ describe(`Visual tests: ${name}`, () => {
     let timeFramePicker: TimeFramePickerAtom;
 
     beforeAll(async () => {
-        await Helpers.prepareBrowser("time-frame-picker/time-frame-picker-visual-test");
+        await Helpers.prepareBrowser(
+            "time-frame-picker/time-frame-picker-visual-test"
+        );
 
-        popoverWithTimeframePicker = Atom.find(PopoverAtom, "nui-demo-visual-default-popover");
-        popoverWithDatePicker = Atom.find(PopoverAtom, "nui-demo-visual-datepicker-popover");
-        popoverComplex = Atom.find(PopoverAtom, "nui-demo-visual-complex-popover");
-        quickpickerWithTimeramePicker = Atom.findIn(QuickPickerAtom, popoverWithTimeframePicker.getPopoverBody());
-        timeFramePicker = Atom.findIn(TimeFramePickerAtom, popoverWithTimeframePicker.getPopoverBody());
+        popoverWithTimeframePicker = Atom.find(
+            PopoverAtom,
+            "nui-demo-visual-default-popover"
+        );
+        popoverWithDatePicker = Atom.find(
+            PopoverAtom,
+            "nui-demo-visual-datepicker-popover"
+        );
+        popoverComplex = Atom.find(
+            PopoverAtom,
+            "nui-demo-visual-complex-popover"
+        );
+        quickpickerWithTimeramePicker = Atom.findIn(
+            QuickPickerAtom,
+            popoverWithTimeframePicker.getPopoverBody()
+        );
+        timeFramePicker = Atom.findIn(
+            TimeFramePickerAtom,
+            popoverWithTimeframePicker.getPopoverBody()
+        );
         camera = new Camera().loadFilm(browser, name);
     });
 
@@ -40,11 +57,20 @@ describe(`Visual tests: ${name}`, () => {
         await camera.say.cheese("With date picker opened");
 
         await timeFramePicker.getStartDatetimePicker().getDatePicker().toggle();
-        await timeFramePicker.getEndDatetimePicker().getTimePicker().icon.getElement().click();
+        await timeFramePicker
+            .getEndDatetimePicker()
+            .getTimePicker()
+            .icon.getElement()
+            .click();
         await camera.say.cheese("With time picker opened");
 
-        await timeFramePicker.getEndDatetimePicker().getTimePicker().menuPopup.clickItemByText("1:00 AM");
-        await camera.say.cheese("Checking the confirmation buttons alignment and styling");
+        await timeFramePicker
+            .getEndDatetimePicker()
+            .getTimePicker()
+            .menuPopup.clickItemByText("1:00 AM");
+        await camera.say.cheese(
+            "Checking the confirmation buttons alignment and styling"
+        );
 
         await popoverWithTimeframePicker.togglePopover();
 
@@ -59,7 +85,9 @@ describe(`Visual tests: ${name}`, () => {
         await Helpers.switchDarkTheme("off");
 
         await popoverComplex.open();
-        await camera.say.cheese("Complex popover with timeframepicker and datepicker");
+        await camera.say.cheese(
+            "Complex popover with timeframepicker and datepicker"
+        );
 
         await camera.turn.off();
     }, 200000);

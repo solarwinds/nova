@@ -20,8 +20,7 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
     private componentId: string;
     private parentComponentId: string;
 
-    constructor(private pizzagnaService: PizzagnaService) {
-    }
+    constructor(private pizzagnaService: PizzagnaService) {}
 
     public setComponent(component: any, componentId: string) {
         this.component = component;
@@ -40,7 +39,10 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
             const observable = this.getObservableFor(config);
 
             if (!observable) {
-                console.warn("no observable found on 'PizzagnaBroadcasterService', for part: ", config);
+                console.warn(
+                    "no observable found on 'PizzagnaBroadcasterService', for part: ",
+                    config
+                );
                 return;
             }
 
@@ -55,19 +57,20 @@ export class PizzagnaBroadcasterService implements IConfigurable, OnDestroy {
     }
 
     private getObservableFor(config: IBroadcasterConfig) {
-        const trackOn: BroadcasterTrackOnType = config.trackOn || this.defaultTrackOn;
-        const observable: Observable<any> = trackOn === "component"
-            ? this.getComponentObservableFor(config)
-            : this.getPizzagnaObservableFor(config);
+        const trackOn: BroadcasterTrackOnType =
+            config.trackOn || this.defaultTrackOn;
+        const observable: Observable<any> =
+            trackOn === "component"
+                ? this.getComponentObservableFor(config)
+                : this.getPizzagnaObservableFor(config);
         return observable;
     }
 
     private getPizzagnaObservableFor(part: IBroadcasterConfig) {
-        return this.pizzagnaService.pizzaChanged
-            .pipe(
-                map(v => get(v, part.key)),
-                distinctUntilChanged()
-            );
+        return this.pizzagnaService.pizzaChanged.pipe(
+            map((v) => get(v, part.key)),
+            distinctUntilChanged()
+        );
     }
 
     private getComponentObservableFor(part: IBroadcasterConfig) {

@@ -6,13 +6,11 @@ import { icons as iconsData } from "../../../../../../src/lib/icon/icons";
     selector: "nui-icon-list-example",
     templateUrl: "./icon-list.example.component.html",
 })
-
 export class IconListExampleComponent implements OnInit {
     public icons: any[];
     public categories: any[];
 
     public ngOnInit(): void {
-
         this.icons = iconsData;
         this.categories = this.getCategories(iconsData);
     }

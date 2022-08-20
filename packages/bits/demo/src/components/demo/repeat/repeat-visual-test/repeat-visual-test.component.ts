@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-repeat-visual-test",
     templateUrl: "./repeat-visual-test.component.html",
 })
-export class RepeatVisualTestComponent {
-}
+export class RepeatVisualTestComponent {}

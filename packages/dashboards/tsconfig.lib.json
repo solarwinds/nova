@@ -1,27 +1,22 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../../out-tsc/lib",
-    "declarationMap": true,
-    "declaration": true,
-    "inlineSources": true,
-    "target": "es2015",
-    "module": "es2015",
-    "types": ["node"]
-  },
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "enableResourceInlining": true
-  },
-  "include": [
-    "src/**/*.ts",
-  ],
-  "exclude": [
-    "src/test.ts",
-    "**/*.spec.ts"
-  ]
+    "angularCompilerOptions": {
+        "annotateForClosureCompiler": true,
+        "skipTemplateCodegen": true,
+        "strictMetadataEmit": true,
+        "fullTemplateTypeCheck": true,
+        "strictInjectionParameters": true,
+        "enableResourceInlining": true
+    },
+    "compilerOptions": {
+        "outDir": "../../out-tsc/lib",
+        "declarationMap": true,
+        "declaration": true,
+        "inlineSources": true,
+        "target": "es2015",
+        "module": "es2015",
+        "types": ["node"]
+    },
+    "exclude": ["src/test.ts", "**/*.spec.ts"],
+    "extends": "./tsconfig.json",
+    "include": ["src/**/*.ts"]
 }

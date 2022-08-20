@@ -15,16 +15,16 @@ describe("DataSourceConfigurationComponent", () => {
             providers: [
                 ProviderRegistryService,
                 {
-                    useValue: () => {
-                    },
+                    useValue: () => {},
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TitleAndDescriptionConfigurationComponent);
+        fixture = TestBed.createComponent(
+            TitleAndDescriptionConfigurationComponent
+        );
         component = fixture.componentInstance;
     });
 

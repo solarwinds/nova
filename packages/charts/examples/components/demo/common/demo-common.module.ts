@@ -5,16 +5,8 @@ import { FormsModule } from "@angular/forms";
 import { ChartsTestHarnessComponent } from "./charts-test-harness.component";
 
 @NgModule({
-    declarations: [
-        ChartsTestHarnessComponent,
-    ],
-    imports: [
-        FormsModule,
-        CommonModule,
-    ],
-    exports: [
-        ChartsTestHarnessComponent,
-        CommonModule,
-    ],
+    declarations: [ChartsTestHarnessComponent],
+    imports: [FormsModule, CommonModule],
+    exports: [ChartsTestHarnessComponent, CommonModule],
 })
-export class DemoCommonModule { }
+export class DemoCommonModule {}

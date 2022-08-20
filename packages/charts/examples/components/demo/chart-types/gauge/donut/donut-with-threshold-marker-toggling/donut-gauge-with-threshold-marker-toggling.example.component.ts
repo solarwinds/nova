@@ -12,10 +12,15 @@ import {
 
 @Component({
     selector: "donut-gauge-with-threshold-marker-toggling-example",
-    templateUrl: "./donut-gauge-with-threshold-marker-toggling.example.component.html",
-    styleUrls: ["./donut-gauge-with-threshold-marker-toggling.example.component.less"],
+    templateUrl:
+        "./donut-gauge-with-threshold-marker-toggling.example.component.html",
+    styleUrls: [
+        "./donut-gauge-with-threshold-marker-toggling.example.component.less",
+    ],
 })
-export class DonutGaugeWithThresholdMarkerTogglingExampleComponent implements OnInit {
+export class DonutGaugeWithThresholdMarkerTogglingExampleComponent
+    implements OnInit
+{
     public chartAssist: ChartAssist;
     public value = 128;
     public gaugeConfig: IGaugeConfig;
@@ -25,17 +30,25 @@ export class DonutGaugeWithThresholdMarkerTogglingExampleComponent implements On
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
     // Generating a standard set of thresholds with warning and critical levels
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
+    private thresholds: IGaugeThresholdsConfig =
+        GaugeUtil.createStandardThresholdsConfig(100, 158);
 
     public ngOnInit(): void {
         // Setting up the gauge config
         this.gaugeConfig = this.getGaugeConfig();
 
         // Setting up the chart assist with a local instance of the labels plugin for direct control of the label display
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut, this.labelsPlugin);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Donut,
+            this.labelsPlugin
+        );
 
         // Assembling the series
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
 
         // Updating the chart
         this.chartAssist.update(this.seriesSet);

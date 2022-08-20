@@ -12,7 +12,10 @@ describe(`Visual tests: Dashboards - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("test/proportional");
-        proportionalWidget = Atom.find(ProportionalWidgetAtom, "proportional-widget");
+        proportionalWidget = Atom.find(
+            ProportionalWidgetAtom,
+            "proportional-widget"
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });

@@ -7,10 +7,9 @@ describe("card", () => {
     let cardComponent: CardComponent;
 
     beforeEach(() => {
-        TestBed
-            .configureTestingModule({
-                declarations: [CardComponent],
-            });
+        TestBed.configureTestingModule({
+            declarations: [CardComponent],
+        });
         fixture = TestBed.createComponent(CardComponent);
         cardComponent = fixture.componentInstance;
         fixture.detectChanges();

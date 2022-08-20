@@ -1,5 +1,15 @@
-import { ChangeDetectorRef, Component, Injectable, OnInit } from "@angular/core";
-import { DataSourceService, IDataSource, INovaFilters, ITimeframe } from "@nova-ui/bits";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnInit,
+} from "@angular/core";
+import {
+    DataSourceService,
+    IDataSource,
+    INovaFilters,
+    ITimeframe,
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -33,12 +43,17 @@ import { BehaviorSubject } from "rxjs";
  * A simple Timeseries data source implementation
  */
 @Injectable()
-export class BeerVsReadingMockDataSource extends DataSourceService<ITimeseriesWidgetData> implements IDataSource<ITimeseriesOutput> {
+export class BeerVsReadingMockDataSource
+    extends DataSourceService<ITimeseriesWidgetData>
+    implements IDataSource<ITimeseriesOutput>
+{
     public static providerId = "BeerVsReadingMockDataSource";
 
     public busy = new BehaviorSubject<boolean>(false);
 
-    public async getFilteredData(filters: INovaFilters): Promise<IDataSourceOutput<ITimeseriesOutput>> {
+    public async getFilteredData(
+        filters: INovaFilters
+    ): Promise<IDataSourceOutput<ITimeseriesOutput>> {
         // In this example we're using some static mock data located at the bottom of this file. In a real-world
         // scenario, the data for the chart would likely be retrieved via an asynchronous backend call.
         let filteredData = getData();
@@ -48,14 +63,19 @@ export class BeerVsReadingMockDataSource extends DataSourceService<ITimeseriesWi
         // Filtering using the filter registered by the TimeFrameBar
         const timeframeFilter = filters.timeframe?.value as ITimeframe;
         if (timeframeFilter) {
-            filteredData = filteredData.map((item: ITimeseriesWidgetData) =>
-                ({
-                    id: item.id,
-                    name: item.name,
-                    description: item.description,
-                    data: item.data.filter((seriesData: ITimeseriesWidgetSeriesData) =>
-                        filterDates(seriesData.x, timeframeFilter.startDatetime, timeframeFilter.endDatetime)),
-                }));
+            filteredData = filteredData.map((item: ITimeseriesWidgetData) => ({
+                id: item.id,
+                name: item.name,
+                description: item.description,
+                data: item.data.filter(
+                    (seriesData: ITimeseriesWidgetSeriesData) =>
+                        filterDates(
+                            seriesData.x,
+                            timeframeFilter.startDatetime,
+                            timeframeFilter.endDatetime
+                        )
+                ),
+            }));
         }
 
         this.busy.next(false);
@@ -66,7 +86,11 @@ export class BeerVsReadingMockDataSource extends DataSourceService<ITimeseriesWi
 
 function filterDates(dateToCheck: Date, startDate: Moment, endDate: Moment) {
     const mom = moment(dateToCheck);
-    return mom.isBetween(startDate, endDate) || mom.isSame(startDate) || mom.isSame(endDate);
+    return (
+        mom.isBetween(startDate, endDate) ||
+        mom.isSame(startDate) ||
+        mom.isSame(endDate)
+    );
 }
 
 /**
@@ -98,11 +122,14 @@ export class TimeseriesWidgetExampleComponent implements OnInit {
 
         // Angular's ChangeDetectorRef
         private changeDetectorRef: ChangeDetectorRef
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
-        const widgetTemplate = this.widgetTypesService.getWidgetType("timeseries", 1);
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "timeseries",
+            1
+        );
         // Registering our data sources as dropdown options in the widget editor/configurator
         // Note: This could also be done in the parent module's constructor so that
         // multiple dashboards could have access to the same widget template modification.
@@ -133,9 +160,10 @@ export class TimeseriesWidgetExampleComponent implements OnInit {
     public initializeDashboard(): void {
         // We're using a static configuration object for this example, but this is where
         // the widget's configuration could potentially be populated from a database
-        const widgetsWithStructure = widgetConfigs.map(w => this.widgetTypesService.mergeWithWidgetType(w));
+        const widgetsWithStructure = widgetConfigs.map((w) =>
+            this.widgetTypesService.mergeWithWidgetType(w)
+        );
         const widgetsIndex = keyBy(widgetsWithStructure, (w: IWidget) => w.id);
-
 
         // Finally, assigning the variables we created above to the dashboard
         this.dashboard = {
@@ -152,7 +180,6 @@ export class TimeseriesWidgetExampleComponent implements OnInit {
 
         this.initializeDashboard();
     }
-
 }
 
 const widgetConfigs: IWidget[] = [
@@ -162,25 +189,25 @@ const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
                             // Setting the initially selected data source providerId
-                            "providerId": BeerVsReadingMockDataSource.providerId,
+                            providerId: BeerVsReadingMockDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Line Chart",
-                        "subtitle": "Survey of 1000 Solarians",
+                header: {
+                    properties: {
+                        title: "Line Chart",
+                        subtitle: "Survey of 1000 Solarians",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
+                            properties: {
                                 // Setting the series and corresponding labels to initially display on the chart
-                                "series": [
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Beer Tasting",
@@ -195,12 +222,12 @@ const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
+                    properties: {
                         // Setting the general chart configuration
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Solarians (%)",
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Solarians (%)",
                             // You can optionally define custom colors for the chart by setting the 'chartColors' configuration property
                             // "chartColors": [
                             //     "var(--nui-color-chart-eight)",
@@ -210,14 +237,14 @@ const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
+                timeframeSelection: {
+                    properties: {
                         // Setting the initial timeframe selected in the timeframe bar
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "minDate": moment().subtract(60, "days").format(),
-                        "maxDate": moment().format(),
+                        minDate: moment().subtract(60, "days").format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -229,25 +256,25 @@ const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
                             // Setting the initially selected data source providerId
-                            "providerId": BeerVsReadingMockDataSource.providerId,
+                            providerId: BeerVsReadingMockDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Stacked Area Chart",
-                        "subtitle": "Survey of 1000 Solarians",
+                header: {
+                    properties: {
+                        title: "Stacked Area Chart",
+                        subtitle: "Survey of 1000 Solarians",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
+                            properties: {
                                 // Setting the series and corresponding labels to initially display on the chart
-                                "series": [
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Beer Tasting",
@@ -262,14 +289,14 @@ const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
+                    properties: {
                         // Setting the general chart configuration
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
                             // Setting the preset to stacked area
                             preset: TimeseriesChartPreset.StackedArea,
-                            "leftAxisLabel": "Solarians (%)",
+                            leftAxisLabel: "Solarians (%)",
                             // You can optionally define custom colors for the chart by setting the 'chartColors' configuration property
                             // "chartColors": [
                             //     "var(--nui-color-chart-eight)",
@@ -279,14 +306,14 @@ const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
+                timeframeSelection: {
+                    properties: {
                         // Setting the initial timeframe selected in the timeframe bar
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "minDate": moment().subtract(60, "days").format(),
-                        "maxDate": moment().format(),
+                        minDate: moment().subtract(60, "days").format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -298,25 +325,25 @@ const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
                             // Setting the initially selected data source providerId
-                            "providerId": BeerVsReadingMockDataSource.providerId,
+                            providerId: BeerVsReadingMockDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Stacked Percentage Area Chart",
-                        "subtitle": "Survey of 1000 Solarians",
+                header: {
+                    properties: {
+                        title: "Stacked Percentage Area Chart",
+                        subtitle: "Survey of 1000 Solarians",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
+                            properties: {
                                 // Setting the series and corresponding labels to initially display on the chart
-                                "series": [
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Beer Tasting",
@@ -331,14 +358,14 @@ const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
+                    properties: {
                         // Setting the general chart configuration
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
                             // Setting the preset to stacked percentage area
                             preset: TimeseriesChartPreset.StackedPercentageArea,
-                            "leftAxisLabel": "Solarians (%)",
+                            leftAxisLabel: "Solarians (%)",
                             // You can optionally define custom colors for the chart by setting the 'chartColors' configuration property
                             // "chartColors": [
                             //     "var(--nui-color-chart-eight)",
@@ -348,14 +375,14 @@ const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
+                timeframeSelection: {
+                    properties: {
                         // Setting the initial timeframe selected in the timeframe bar
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "minDate": moment().subtract(60, "days").format(),
-                        "maxDate": moment().format(),
+                        minDate: moment().subtract(60, "days").format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -367,25 +394,25 @@ const widgetConfigs: IWidget[] = [
         pizzagna: {
             [PizzagnaLayer.Configuration]: {
                 [DEFAULT_PIZZAGNA_ROOT]: {
-                    "providers": {
+                    providers: {
                         [WellKnownProviders.DataSource]: {
                             // Setting the initially selected data source providerId
-                            "providerId": BeerVsReadingMockDataSource.providerId,
+                            providerId: BeerVsReadingMockDataSource.providerId,
                         } as IProviderConfiguration,
                     },
                 },
-                "header": {
-                    "properties": {
-                        "title": "Stacked Bar Chart",
-                        "subtitle": "Survey of 1000 Solarians",
+                header: {
+                    properties: {
+                        title: "Stacked Bar Chart",
+                        subtitle: "Survey of 1000 Solarians",
                     },
                 },
-                "chart": {
-                    "providers": {
+                chart: {
+                    providers: {
                         [WellKnownProviders.Adapter]: {
-                            "properties": {
+                            properties: {
                                 // Setting the series and corresponding labels to initially display on the chart
-                                "series": [
+                                series: [
                                     {
                                         id: "series-1",
                                         label: "Beer Tasting",
@@ -400,11 +427,11 @@ const widgetConfigs: IWidget[] = [
                             },
                         } as Partial<IProviderConfiguration>,
                     },
-                    "properties": {
-                        "configuration": {
-                            "legendPlacement": LegendPlacement.Right,
-                            "enableZoom": true,
-                            "leftAxisLabel": "Solarians (%)",
+                    properties: {
+                        configuration: {
+                            legendPlacement: LegendPlacement.Right,
+                            enableZoom: true,
+                            leftAxisLabel: "Solarians (%)",
                             // Setting the preset to stacked bar
                             preset: TimeseriesChartPreset.StackedBar,
                             scales: {
@@ -418,14 +445,14 @@ const widgetConfigs: IWidget[] = [
                         } as ITimeseriesWidgetConfig,
                     },
                 },
-                "timeframeSelection": {
-                    "properties": {
+                timeframeSelection: {
+                    properties: {
                         // Setting the initial timeframe selected in the timeframe bar
-                        "timeframe": {
-                            "selectedPresetId": "last7Days",
+                        timeframe: {
+                            selectedPresetId: "last7Days",
                         } as ISerializableTimeframe,
-                        "minDate": moment().subtract(60, "days").format(),
-                        "maxDate": moment().format(),
+                        minDate: moment().subtract(60, "days").format(),
+                        maxDate: moment().format(),
                     },
                 },
             },
@@ -436,63 +463,62 @@ const widgetConfigs: IWidget[] = [
 // using startOf("day") so that each band for the bar chart corresponds to a calendar day
 const now = moment().startOf("day");
 
-export const getData = (): ITimeseriesWidgetData[] =>
-    [
-        {
-            id: "series-1",
-            name: "Beer Tasting",
-            description: "Havin' some suds",
-            data: [
-                { x: now.clone().subtract(20, "day").toDate(), y: 30 },
-                { x: now.clone().subtract(19, "day").toDate(), y: 35 },
-                { x: now.clone().subtract(18, "day").toDate(), y: 33 },
-                { x: now.clone().subtract(17, "day").toDate(), y: 40 },
-                { x: now.clone().subtract(16, "day").toDate(), y: 35 },
-                { x: now.clone().subtract(15, "day").toDate(), y: 30 },
-                { x: now.clone().subtract(14, "day").toDate(), y: 35 },
-                { x: now.clone().subtract(13, "day").toDate(), y: 15 },
-                { x: now.clone().subtract(12, "day").toDate(), y: 30 },
-                { x: now.clone().subtract(11, "day").toDate(), y: 45 },
-                { x: now.clone().subtract(10, "day").toDate(), y: 60 },
-                { x: now.clone().subtract(9, "day").toDate(), y: 54 },
-                { x: now.clone().subtract(8, "day").toDate(), y: 42 },
-                { x: now.clone().subtract(7, "day").toDate(), y: 44 },
-                { x: now.clone().subtract(6, "day").toDate(), y: 54 },
-                { x: now.clone().subtract(5, "day").toDate(), y: 43 },
-                { x: now.clone().subtract(4, "day").toDate(), y: 76 },
-                { x: now.clone().subtract(3, "day").toDate(), y: 54 },
-                { x: now.clone().subtract(2, "day").toDate(), y: 42 },
-                { x: now.clone().subtract(1, "day").toDate(), y: 34 },
-            ],
-        },
-        {
-            id: "series-2",
-            name: "Reading",
-            description: "Hittin' the books",
-            data: [
-                { x: now.clone().subtract(20, "day").toDate(), y: 60 },
-                { x: now.clone().subtract(19, "day").toDate(), y: 64 },
-                { x: now.clone().subtract(18, "day").toDate(), y: 70 },
-                { x: now.clone().subtract(17, "day").toDate(), y: 55 },
-                { x: now.clone().subtract(16, "day").toDate(), y: 55 },
-                { x: now.clone().subtract(15, "day").toDate(), y: 45 },
-                { x: now.clone().subtract(14, "day").toDate(), y: 60 },
-                { x: now.clone().subtract(13, "day").toDate(), y: 65 },
-                { x: now.clone().subtract(12, "day").toDate(), y: 63 },
-                { x: now.clone().subtract(11, "day").toDate(), y: 60 },
-                { x: now.clone().subtract(10, "day").toDate(), y: 61 },
-                { x: now.clone().subtract(9, "day").toDate(), y: 65 },
-                { x: now.clone().subtract(8, "day").toDate(), y: 63 },
-                { x: now.clone().subtract(7, "day").toDate(), y: 58 },
-                { x: now.clone().subtract(6, "day").toDate(), y: 64 },
-                { x: now.clone().subtract(5, "day").toDate(), y: 63 },
-                { x: now.clone().subtract(4, "day").toDate(), y: 60 },
-                { x: now.clone().subtract(3, "day").toDate(), y: 62 },
-                { x: now.clone().subtract(2, "day").toDate(), y: 61 },
-                { x: now.clone().subtract(1, "day").toDate(), y: 62 },
-            ],
-        },
-    ];
+export const getData = (): ITimeseriesWidgetData[] => [
+    {
+        id: "series-1",
+        name: "Beer Tasting",
+        description: "Havin' some suds",
+        data: [
+            { x: now.clone().subtract(20, "day").toDate(), y: 30 },
+            { x: now.clone().subtract(19, "day").toDate(), y: 35 },
+            { x: now.clone().subtract(18, "day").toDate(), y: 33 },
+            { x: now.clone().subtract(17, "day").toDate(), y: 40 },
+            { x: now.clone().subtract(16, "day").toDate(), y: 35 },
+            { x: now.clone().subtract(15, "day").toDate(), y: 30 },
+            { x: now.clone().subtract(14, "day").toDate(), y: 35 },
+            { x: now.clone().subtract(13, "day").toDate(), y: 15 },
+            { x: now.clone().subtract(12, "day").toDate(), y: 30 },
+            { x: now.clone().subtract(11, "day").toDate(), y: 45 },
+            { x: now.clone().subtract(10, "day").toDate(), y: 60 },
+            { x: now.clone().subtract(9, "day").toDate(), y: 54 },
+            { x: now.clone().subtract(8, "day").toDate(), y: 42 },
+            { x: now.clone().subtract(7, "day").toDate(), y: 44 },
+            { x: now.clone().subtract(6, "day").toDate(), y: 54 },
+            { x: now.clone().subtract(5, "day").toDate(), y: 43 },
+            { x: now.clone().subtract(4, "day").toDate(), y: 76 },
+            { x: now.clone().subtract(3, "day").toDate(), y: 54 },
+            { x: now.clone().subtract(2, "day").toDate(), y: 42 },
+            { x: now.clone().subtract(1, "day").toDate(), y: 34 },
+        ],
+    },
+    {
+        id: "series-2",
+        name: "Reading",
+        description: "Hittin' the books",
+        data: [
+            { x: now.clone().subtract(20, "day").toDate(), y: 60 },
+            { x: now.clone().subtract(19, "day").toDate(), y: 64 },
+            { x: now.clone().subtract(18, "day").toDate(), y: 70 },
+            { x: now.clone().subtract(17, "day").toDate(), y: 55 },
+            { x: now.clone().subtract(16, "day").toDate(), y: 55 },
+            { x: now.clone().subtract(15, "day").toDate(), y: 45 },
+            { x: now.clone().subtract(14, "day").toDate(), y: 60 },
+            { x: now.clone().subtract(13, "day").toDate(), y: 65 },
+            { x: now.clone().subtract(12, "day").toDate(), y: 63 },
+            { x: now.clone().subtract(11, "day").toDate(), y: 60 },
+            { x: now.clone().subtract(10, "day").toDate(), y: 61 },
+            { x: now.clone().subtract(9, "day").toDate(), y: 65 },
+            { x: now.clone().subtract(8, "day").toDate(), y: 63 },
+            { x: now.clone().subtract(7, "day").toDate(), y: 58 },
+            { x: now.clone().subtract(6, "day").toDate(), y: 64 },
+            { x: now.clone().subtract(5, "day").toDate(), y: 63 },
+            { x: now.clone().subtract(4, "day").toDate(), y: 60 },
+            { x: now.clone().subtract(3, "day").toDate(), y: 62 },
+            { x: now.clone().subtract(2, "day").toDate(), y: 61 },
+            { x: now.clone().subtract(1, "day").toDate(), y: 62 },
+        ],
+    },
+];
 
 // Setting the widget dimensions and position (this is for gridster)
 const positions: Record<string, GridsterItem> = {

@@ -16,7 +16,7 @@ export class LineChartTestPage {
         return Atom.findIn(ChartAtom, this.root);
     }
 
-    public async changeData(input: number [][]): Promise<void> {
+    public async changeData(input: number[][]): Promise<void> {
         await this.dataInput.clear();
         return this.dataInput.sendKeys(JSON.stringify(input));
     }

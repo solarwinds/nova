@@ -32,7 +32,7 @@
         cursor: move;
         border: @dnd-zone-border-width solid @nui-color-selected-contrast !important;
         background-color: @nui-color-selected-active;
-    };
+    }
     &.nui-dnd-dropzone--drop-not-allowed {
         cursor: move;
         border: @dnd-zone-border-width solid @nui-color-semantic-critical !important;
@@ -40,7 +40,8 @@
     }
 
     /** other customziations */
-    .centered-overlay, .nui-icon-item:before {
+    .centered-overlay,
+    .nui-icon-item:before {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -59,7 +60,7 @@
     }
 
     // @TODO fix/remove this hacking style once nui-icon gets proper support for size, bg color and fill color
-    .drop-circle{
+    .drop-circle {
         &-permanent {
             & .nui-icon-item {
                 &:before {

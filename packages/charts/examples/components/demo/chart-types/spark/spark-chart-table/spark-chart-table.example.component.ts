@@ -1,6 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    ChartPopoverPlugin, IChartAssistSeries, ILineAccessors, IXYScales, LineAccessors, LinearScale, LineRenderer, SparkChartAssist, TimeScale,
+    ChartPopoverPlugin,
+    IChartAssistSeries,
+    ILineAccessors,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    SparkChartAssist,
+    TimeScale,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 
@@ -27,7 +35,7 @@ export class SparkChartTableExampleComponent implements OnInit {
             // color provider within to provide the same color for each sparkline
             const accessors = new LineAccessors();
             const yScale = new LinearScale();
-            yScale.formatters.value = v => (Number(v).toPrecision(4));
+            yScale.formatters.value = (v) => Number(v).toPrecision(4);
             const scales: IXYScales = {
                 // using the same scale id for the x-axes is necessary to achieve synchronized hover interaction between charts
                 // - sharing the same instance of the scale would work as well

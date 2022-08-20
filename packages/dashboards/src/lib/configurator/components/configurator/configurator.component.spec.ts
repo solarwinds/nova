@@ -23,12 +23,14 @@ describe("ConfiguratorComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        }).overrideComponent(ConfiguratorComponent, {
-            // disable styles to prevent configurator backdrop from covering the karma browser gui
-            set: {
-                styles: [],
-            },
-        }).compileComponents();
+        })
+            .overrideComponent(ConfiguratorComponent, {
+                // disable styles to prevent configurator backdrop from covering the karma browser gui
+                set: {
+                    styles: [],
+                },
+            })
+            .compileComponents();
     }));
 
     beforeEach(() => {

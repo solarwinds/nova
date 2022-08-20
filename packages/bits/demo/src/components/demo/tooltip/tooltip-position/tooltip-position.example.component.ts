@@ -6,8 +6,7 @@ import { TooltipPosition } from "@nova-ui/bits";
     templateUrl: "tooltip-position.example.component.html",
     styleUrls: ["./tooltip-position.example.component.less"],
 })
-
 export class TooltipPositionExampleComponent {
-    public positions: TooltipPosition[] = [ "top", "bottom", "left", "right" ];
+    public positions: TooltipPosition[] = ["top", "bottom", "left", "right"];
     public selectedPosition: string;
 }

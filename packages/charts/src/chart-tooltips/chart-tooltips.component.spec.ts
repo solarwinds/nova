@@ -1,5 +1,10 @@
 import { SimpleChange } from "@angular/core";
-import { ComponentFixture, fakeAsync, flush, TestBed } from "@angular/core/testing";
+import {
+    ComponentFixture,
+    fakeAsync,
+    flush,
+    TestBed,
+} from "@angular/core/testing";
 import { NuiPopoverModule } from "@nova-ui/bits";
 
 import { ChartTooltipsPlugin } from "../core/plugins/tooltips";
@@ -19,11 +24,8 @@ describe("ChartTooltipsComponent", () => {
                 ChartTooltipDirective,
                 ChartTooltipComponent,
             ],
-            imports: [
-                NuiPopoverModule,
-            ],
-        })
-            .compileComponents();
+            imports: [NuiPopoverModule],
+        }).compileComponents();
     });
 
     beforeEach(() => {
@@ -39,7 +41,9 @@ describe("ChartTooltipsComponent", () => {
 
     describe("hideSubject observer", () => {
         it("should emit the closeTooltips subject after a timeout", fakeAsync(() => {
-            component.ngOnChanges({ plugin: new SimpleChange(null, component.plugin, true) });
+            component.ngOnChanges({
+                plugin: new SimpleChange(null, component.plugin, true),
+            });
             spyOn(component.closeTooltips, "next");
             component.plugin.hideSubject.next();
 

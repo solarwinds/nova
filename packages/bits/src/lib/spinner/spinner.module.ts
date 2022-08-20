@@ -10,17 +10,9 @@ import { SpinnerComponent } from "./spinner.component";
  * @ignore
  */
 @NgModule({
-    declarations: [
-        SpinnerComponent,
-    ],
-    imports: [
-        NuiCommonModule,
-        NuiButtonModule,
-        NuiTooltipModule,
-    ],
-    exports: [
-        SpinnerComponent,
-    ],
+    declarations: [SpinnerComponent],
+    imports: [NuiCommonModule, NuiButtonModule, NuiTooltipModule],
+    exports: [SpinnerComponent],
     providers: [],
 })
-export class NuiSpinnerModule { }
+export class NuiSpinnerModule {}

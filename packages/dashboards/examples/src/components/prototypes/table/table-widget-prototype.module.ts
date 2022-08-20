@@ -2,7 +2,15 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { NuiBusyModule, NuiButtonModule, NuiDocsModule, NuiIconModule, NuiImageModule, NuiRepeatModule, NuiSwitchModule } from "@nova-ui/bits";
+import {
+    NuiBusyModule,
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiIconModule,
+    NuiImageModule,
+    NuiRepeatModule,
+    NuiSwitchModule,
+} from "@nova-ui/bits";
 import {
     ComponentRegistryService,
     DataSourceConfigurationV2Component,
@@ -15,14 +23,24 @@ import {
 } from "@nova-ui/dashboards";
 
 import { AcmeProportionalDSConfigComponent } from "../components/data-source-configuration/proportional-ds-config.component";
-import { AcmeKpiDataSource, AcmeKpiDataSource2, AcmeKpiDataSource3 } from "../data/kpi-datasources";
-import { AcmeProportionalDataSource, AcmeProportionalDataSource2 } from "../data/proportional-datasources";
+import {
+    AcmeKpiDataSource,
+    AcmeKpiDataSource2,
+    AcmeKpiDataSource3,
+} from "../data/kpi-datasources";
+import {
+    AcmeProportionalDataSource,
+    AcmeProportionalDataSource2,
+} from "../data/proportional-datasources";
 import { AcmeTableDataSource } from "../data/table/acme-table-data-source.service";
 import { AcmeTableDataSource2 } from "../data/table/acme-table-data-source2.service";
 import { AcmeTableDataSourceNoColumnGeneration } from "../data/table/acme-table-data-source3.service";
 import { AcmeTableGBooksDataSource } from "../data/table/acme-table-gbooks-data-source.service";
 import { AcmeTableMockDataSource } from "../data/table/acme-table-mock-data-source.service";
-import { AcmeTimeseriesDataSource, AcmeTimeseriesDataSource2 } from "../data/timeseries-data-sources";
+import {
+    AcmeTimeseriesDataSource,
+    AcmeTimeseriesDataSource2,
+} from "../data/timeseries-data-sources";
 
 import { AcmeCloneSelectionComponent } from "./acme-clone-selection/acme-clone-selection.component";
 import { AcmeEditWithClonerComponent } from "./acme-clone-selection/acme-edit-with-cloner.component";
@@ -33,8 +51,8 @@ const routes = [
         path: "",
         component: AcmeDashboardComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -60,25 +78,35 @@ const routes = [
         AcmeCloneSelectionComponent,
         AcmeEditWithClonerComponent,
     ],
-    providers: [
-        ProviderRegistryService,
-    ],
+    providers: [ProviderRegistryService],
 })
 export class TableWidgetPrototypeModule {
-    constructor(private widgetTypesService: WidgetTypesService, private componentRegistry: ComponentRegistryService) {
+    constructor(
+        private widgetTypesService: WidgetTypesService,
+        private componentRegistry: ComponentRegistryService
+    ) {
         this.setupDataSourceProviders();
         this.setupCustomProportionalWidgetDSConfig();
     }
 
     private setupCustomProportionalWidgetDSConfig() {
-
         // For testing purposes, delete the refresher to prove that the widget gets refreshed on configuration change
-        const widgetTemplate = this.widgetTypesService.getWidgetType("proportional", 1);
-        delete widgetTemplate.widget.structure[DEFAULT_PIZZAGNA_ROOT].providers?.refresher;
+        const widgetTemplate = this.widgetTypesService.getWidgetType(
+            "proportional",
+            1
+        );
+        delete widgetTemplate.widget.structure[DEFAULT_PIZZAGNA_ROOT].providers
+            ?.refresher;
 
-        this.widgetTypesService.setNode(widgetTemplate, "configurator",
-                                        WellKnownPathKey.DataSourceConfigComponentType, AcmeProportionalDSConfigComponent.lateLoadKey);
-        this.componentRegistry.registerByLateLoadKey(AcmeProportionalDSConfigComponent);
+        this.widgetTypesService.setNode(
+            widgetTemplate,
+            "configurator",
+            WellKnownPathKey.DataSourceConfigComponentType,
+            AcmeProportionalDSConfigComponent.lateLoadKey
+        );
+        this.componentRegistry.registerByLateLoadKey(
+            AcmeProportionalDSConfigComponent
+        );
     }
 
     private setupDataSourceProviders() {
@@ -89,7 +117,10 @@ export class TableWidgetPrototypeModule {
             AcmeTableMockDataSource.providerId,
             AcmeTableGBooksDataSource.providerId,
         ]);
-        const kpiWidgetTemplate = this.widgetTypesService.getWidgetType("kpi", 1);
+        const kpiWidgetTemplate = this.widgetTypesService.getWidgetType(
+            "kpi",
+            1
+        );
 
         this.widgetTypesService.setNode(
             // This is the template we grabbed above with getWidgetType
@@ -105,7 +136,8 @@ export class TableWidgetPrototypeModule {
             {
                 providerId: AcmeKpiDataSource.providerId,
                 label: "Acme KPI Data Source 1",
-            }, {
+            },
+            {
                 providerId: AcmeKpiDataSource2.providerId,
                 label: "Acme KPI Data Source 2",
                 properties: {
@@ -115,13 +147,28 @@ export class TableWidgetPrototypeModule {
             {
                 providerId: AcmeKpiDataSource3.providerId,
                 label: "Acme KPI Data Source 3",
-            }]);
-        this.setDataSourceProviders("proportional", [AcmeProportionalDataSource.providerId, AcmeProportionalDataSource2.providerId]);
-        this.setDataSourceProviders("timeseries", [AcmeTimeseriesDataSource.providerId, AcmeTimeseriesDataSource2.providerId]);
+            },
+        ]);
+        this.setDataSourceProviders("proportional", [
+            AcmeProportionalDataSource.providerId,
+            AcmeProportionalDataSource2.providerId,
+        ]);
+        this.setDataSourceProviders("timeseries", [
+            AcmeTimeseriesDataSource.providerId,
+            AcmeTimeseriesDataSource2.providerId,
+        ]);
     }
 
-    private setDataSourceProviders(type: string, providers: string[] | IProviderConfigurationForDisplay[]) {
+    private setDataSourceProviders(
+        type: string,
+        providers: string[] | IProviderConfigurationForDisplay[]
+    ) {
         const widgetTemplate = this.widgetTypesService.getWidgetType(type, 1);
-        this.widgetTypesService.setNode(widgetTemplate, "configurator", WellKnownPathKey.DataSourceProviders, providers);
+        this.widgetTypesService.setNode(
+            widgetTemplate,
+            "configurator",
+            WellKnownPathKey.DataSourceProviders,
+            providers
+        );
     }
 }

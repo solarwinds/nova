@@ -8,19 +8,31 @@ import { AcmeComponentsModule } from "./components/components.module";
 const routes = [
     {
         path: "prototype-1",
-        loadChildren: async () => import("../prototypes/prototype-1/prototype-1.module").then(m => m.Prototype1Module),
+        loadChildren: async () =>
+            import("../prototypes/prototype-1/prototype-1.module").then(
+                (m) => m.Prototype1Module
+            ),
     },
     {
         path: "timeseries",
-        loadChildren: async () => import("../prototypes/timeseries/timeseries-widget-prototype.module").then(m => m.TimeseriesWidgetPrototypeModule),
+        loadChildren: async () =>
+            import(
+                "../prototypes/timeseries/timeseries-widget-prototype.module"
+            ).then((m) => m.TimeseriesWidgetPrototypeModule),
     },
     {
         path: "table",
-        loadChildren: async () => import("../prototypes/table/table-widget-prototype.module").then(m => m.TableWidgetPrototypeModule),
+        loadChildren: async () =>
+            import("../prototypes/table/table-widget-prototype.module").then(
+                (m) => m.TableWidgetPrototypeModule
+            ),
     },
     {
         path: "many-widgets",
-        loadChildren: async () => import("../prototypes/many-widgets/many-widgets.module").then(m => m.ManyWidgetsModule),
+        loadChildren: async () =>
+            import("../prototypes/many-widgets/many-widgets.module").then(
+                (m) => m.ManyWidgetsModule
+            ),
     },
 ];
 
@@ -32,4 +44,4 @@ const routes = [
     ],
     providers: [ConfiguratorHeadingService],
 })
-export class DashboardPrototypesModule { }
+export class DashboardPrototypesModule {}

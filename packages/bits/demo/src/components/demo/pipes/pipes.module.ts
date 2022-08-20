@@ -5,28 +5,33 @@ import { DEMO_PATH_TOKEN, NuiDocsModule } from "@nova-ui/bits";
 const routes = [
     {
         path: "highlight",
-        loadChildren: () => import("./highlight/highlight-pipe-example.module").then(m => m.HighlightPipeExampleModule),
+        loadChildren: () =>
+            import("./highlight/highlight-pipe-example.module").then(
+                (m) => m.HighlightPipeExampleModule
+            ),
     },
     {
         path: "unit-conversion",
-        loadChildren: () => import("./unit-conversion/unit-conversion-pipe-example.module").then(m => m.UnitConversionPipeExampleModule),
+        loadChildren: () =>
+            import(
+                "./unit-conversion/unit-conversion-pipe-example.module"
+            ).then((m) => m.UnitConversionPipeExampleModule),
     },
 ];
 
 @NgModule({
-    imports: [
-        NuiDocsModule,
-        RouterModule.forChild(routes),
-    ],
+    imports: [NuiDocsModule, RouterModule.forChild(routes)],
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
-    exports: [
-        RouterModule,
-    ],
+    exports: [RouterModule],
 })
-export class PipesModule {
-}
+export class PipesModule {}

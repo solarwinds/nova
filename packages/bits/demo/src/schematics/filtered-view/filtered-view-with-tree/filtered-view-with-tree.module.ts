@@ -38,14 +38,7 @@ import { FilteredViewWithTreeComponent } from "./filtered-view-with-tree.compone
         NuiPopoverModule,
         CdkTreeModule,
     ],
-    declarations: [
-        FilteredViewWithTreeComponent,
-        FilteredViewTreeComponent,
-    ],
-    exports: [
-        FilteredViewWithTreeComponent,
-        FilteredViewTreeComponent,
-    ],
+    declarations: [FilteredViewWithTreeComponent, FilteredViewTreeComponent],
+    exports: [FilteredViewWithTreeComponent, FilteredViewTreeComponent],
 })
-
 export class FilteredViewWithTreeModule {}

@@ -10,18 +10,9 @@ import { ProgressComponent } from "./progress.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiButtonModule,
-        NuiTooltipModule,
-    ],
-    declarations: [
-        ProgressComponent,
-    ],
-    exports: [
-        ProgressComponent,
-    ],
+    imports: [NuiCommonModule, NuiButtonModule, NuiTooltipModule],
+    declarations: [ProgressComponent],
+    exports: [ProgressComponent],
     providers: [],
 })
-export class NuiProgressModule {
-}
+export class NuiProgressModule {}

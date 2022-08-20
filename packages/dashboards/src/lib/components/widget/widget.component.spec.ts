@@ -16,8 +16,7 @@ describe("WidgetComponent", () => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
             providers: [ProviderRegistryService],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -44,14 +43,22 @@ describe("WidgetComponent", () => {
     describe("ngOnChanges > ", () => {
         it("should not invoke widgetConfigurationService.updateWidget if the widget input hasn't changed", () => {
             spyOn((<any>component).widgetConfigurationService, "updateWidget");
-            component.ngOnChanges({ test: new SimpleChange(null, null, false) });
-            expect((<any>component).widgetConfigurationService.updateWidget).not.toHaveBeenCalled();
+            component.ngOnChanges({
+                test: new SimpleChange(null, null, false),
+            });
+            expect(
+                (<any>component).widgetConfigurationService.updateWidget
+            ).not.toHaveBeenCalled();
         });
 
         it("should invoke widgetConfigurationService.updateWidget if the widget input changes", () => {
             spyOn((<any>component).widgetConfigurationService, "updateWidget");
-            component.ngOnChanges({ widget: new SimpleChange(null, null, false) });
-            expect((<any>component).widgetConfigurationService.updateWidget).toHaveBeenCalledWith(component.widget);
+            component.ngOnChanges({
+                widget: new SimpleChange(null, null, false),
+            });
+            expect(
+                (<any>component).widgetConfigurationService.updateWidget
+            ).toHaveBeenCalledWith(component.widget);
         });
     });
 

@@ -10,11 +10,10 @@ describe("components >", () => {
 
         beforeEach(waitForAsync(() => {
             TestBed.configureTestingModule({
-                declarations: [ ChipsOverflowComponent ],
+                declarations: [ChipsOverflowComponent],
                 imports: [],
-                schemas: [ NO_ERRORS_SCHEMA ],
-            })
-                .compileComponents();
+                schemas: [NO_ERRORS_SCHEMA],
+            }).compileComponents();
         }));
 
         beforeEach(() => {
@@ -30,28 +29,32 @@ describe("components >", () => {
 
         it("should emit data on clear", () => {
             const chipRemovedEmitSpy = spyOn(component.chipRemoved, "emit");
-            
+
             const items = [
-                {id: "statusGroupItem1", label: "Down"},
-                {id: "statusGroupItem2", label: "Critical"},
-                {id: "statusGroupItem3", label: "Warning"},
-                {id: "statusGroupItem4", label: "Unknown"},
-                {id: "statusGroupItem5", label: "Ok"},
+                { id: "statusGroupItem1", label: "Down" },
+                { id: "statusGroupItem2", label: "Critical" },
+                { id: "statusGroupItem3", label: "Warning" },
+                { id: "statusGroupItem4", label: "Unknown" },
+                { id: "statusGroupItem5", label: "Ok" },
             ];
 
-            component.itemsSource.groupedItems = [{
-                id: "statusGroupId",
-                items: items,
-                label: "Status",
-            }];
-            
+            component.itemsSource.groupedItems = [
+                {
+                    id: "statusGroupId",
+                    items: items,
+                    label: "Status",
+                },
+            ];
+
             const data = {
                 item: {
                     id: "statusGroupItem1",
                     label: "Down",
                 },
                 group: {
-                    id: "statusGroupId", label: "Status", items: items,
+                    id: "statusGroupId",
+                    label: "Status",
+                    items: items,
                 },
             };
 

@@ -1,6 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import {
-    Chart, ChartAssist, CHART_PALETTE_CS_S, MappedValueProvider, radial, RadialAccessors, radialGrid, RadialRenderer, radialScales,
+    Chart,
+    ChartAssist,
+    CHART_PALETTE_CS_S,
+    MappedValueProvider,
+    radial,
+    RadialAccessors,
+    radialGrid,
+    RadialRenderer,
+    radialScales,
 } from "@nova-ui/charts";
 import zipObject from "lodash/zipObject";
 
@@ -27,10 +35,19 @@ export class DonutChartInteractiveExampleComponent implements OnInit {
         // If custom colors are needed, instantiate a custom color provider in the form of a MappedValueProvider.
         // This is only needed if your chart requires colors that deviate from the ones provided by the default
         // color provider.
-        const statusColorProvider = new MappedValueProvider<string>(zipObject(
-            [Status.Down, Status.Critical, Status.Warning, Status.Unknown, Status.Up, Status.Unmanaged],
-            CHART_PALETTE_CS_S
-        ));
+        const statusColorProvider = new MappedValueProvider<string>(
+            zipObject(
+                [
+                    Status.Down,
+                    Status.Critical,
+                    Status.Warning,
+                    Status.Unknown,
+                    Status.Up,
+                    Status.Unmanaged,
+                ],
+                CHART_PALETTE_CS_S
+            )
+        );
 
         // Instantiate the RadialAccessors and set the series color accessor to the new
         // color provider's get method
@@ -42,12 +59,14 @@ export class DonutChartInteractiveExampleComponent implements OnInit {
         const renderer = new RadialRenderer();
 
         // Invoke the chart assist's update method with the IChartAssistSeries collection as the argument
-        this.chartAssist.update(getData().map(s => ({
-            ...s,
-            accessors,
-            scales,
-            renderer,
-        })));
+        this.chartAssist.update(
+            getData().map((s) => ({
+                ...s,
+                accessors,
+                scales,
+                renderer,
+            }))
+        );
     }
 }
 
@@ -60,5 +79,5 @@ function getData() {
         { status: Status.Down, value: 7 },
         { status: Status.Unmanaged, value: 5 },
         { status: Status.Unknown, value: 3 },
-    ].map(d => ({ id: d.status, name: d.status, data: [d.value] }));
+    ].map((d) => ({ id: d.status, name: d.status, data: [d.value] }));
 }

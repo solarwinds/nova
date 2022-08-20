@@ -12,15 +12,18 @@ import { IComponentPortalBundle, IWidgetEditor } from "./types";
 
 @Injectable()
 export class WidgetEditorService {
-
-    constructor(private configuratorService: ConfiguratorService,
-                private componentPortalService: ComponentPortalService) {
-    }
+    constructor(
+        private configuratorService: ConfiguratorService,
+        private componentPortalService: ComponentPortalService
+    ) {}
 
     public open(widgetEditor: IWidgetEditor): Observable<void> {
         if (!widgetEditor.portalBundle) {
             const formPortal: IComponentPortalBundle<WidgetEditorComponent> = {
-                portal: this.componentPortalService.createComponentPortal(WidgetEditorComponent, null),
+                portal: this.componentPortalService.createComponentPortal(
+                    WidgetEditorComponent,
+                    null
+                ),
                 attached: (componentRef) => {
                     const editorComponent = componentRef.instance;
                     editorComponent.formPizzagna = widgetEditor.formPizzagna;
@@ -41,5 +44,4 @@ export class WidgetEditorService {
 
         return this.configuratorService.open(widgetEditor);
     }
-
 }

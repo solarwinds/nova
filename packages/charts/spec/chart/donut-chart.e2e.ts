@@ -23,7 +23,9 @@ describe("Donut chart", async () => {
     beforeAll(async () => {
         await browser.manage().window().setSize(1920, 1080);
         await Helpers.prepareBrowser("chart-types/pie-and-donut/donut-test");
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
         allSeries = await page.chart.getAllVisibleDataSeries(RadialSeriesAtom);
         blueArc = allSeries?.[0];
         pinkArc = allSeries?.[1];

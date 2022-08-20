@@ -11,10 +11,15 @@ import {
 
 @Component({
     selector: "donut-gauge-without-threshold-markers-example",
-    templateUrl: "./donut-gauge-without-threshold-markers.example.component.html",
-    styleUrls: ["./donut-gauge-without-threshold-markers.example.component.less"],
+    templateUrl:
+        "./donut-gauge-without-threshold-markers.example.component.html",
+    styleUrls: [
+        "./donut-gauge-without-threshold-markers.example.component.less",
+    ],
 })
-export class DonutGaugeWithoutThresholdMarkersExampleComponent implements OnInit {
+export class DonutGaugeWithoutThresholdMarkersExampleComponent
+    implements OnInit
+{
     public chartAssist: ChartAssist;
     public value = 128;
     public gaugeConfig: IGaugeConfig;
@@ -24,15 +29,21 @@ export class DonutGaugeWithoutThresholdMarkersExampleComponent implements OnInit
 
     public ngOnInit(): void {
         // Generating a standard set of thresholds with warning and critical levels
-        this.thresholds= GaugeUtil.createStandardThresholdsConfig(100, 158);
+        this.thresholds = GaugeUtil.createStandardThresholdsConfig(100, 158);
 
         // Turning off the markers
         this.thresholds.disableMarkers = true;
 
         this.gaugeConfig = this.getGaugeConfig();
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
         this.chartAssist.update(this.seriesSet);
     }
 

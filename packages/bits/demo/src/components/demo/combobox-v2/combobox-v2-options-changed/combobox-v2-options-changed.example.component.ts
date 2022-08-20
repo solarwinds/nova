@@ -11,16 +11,16 @@ export class ComboboxV2OpitionsChangedExampleComponent implements OnInit {
     public multiselectItems: string[] = [];
     private itemSet = [
         [
-            $localize `Item 1`,
-            $localize `Item 2`,
-            $localize `Item 3`,
-            $localize `Item 4`,
+            $localize`Item 1`,
+            $localize`Item 2`,
+            $localize`Item 3`,
+            $localize`Item 4`,
         ],
         [
-            $localize `Item 3`,
-            $localize `Item 4`,
-            $localize `Item 5`,
-            $localize `Item 6`,
+            $localize`Item 3`,
+            $localize`Item 4`,
+            $localize`Item 5`,
+            $localize`Item 6`,
         ],
     ];
     public comboboxControl = new FormControl();
@@ -40,6 +40,6 @@ export class ComboboxV2OpitionsChangedExampleComponent implements OnInit {
     }
 
     public convertToChip(value: string) {
-        return ({ label: value });
+        return { label: value };
     }
 }

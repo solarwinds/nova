@@ -1,5 +1,5 @@
-import {ComponentRef} from "@angular/core";
-import {Observable} from "rxjs";
+import { ComponentRef } from "@angular/core";
+import { Observable } from "rxjs";
 
 export interface IToastService {
     setConfig(config: IToastConfig, itemIdentificator?: string): void;

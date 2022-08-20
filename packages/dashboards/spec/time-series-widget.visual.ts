@@ -21,9 +21,14 @@ describe(`Visual tests: Dashboards - ${name}`, () => {
 
         await camera.say.cheese(`${name} - Default`);
 
-        const barWidget = await page.dashboard.getWidgetByHeaderTitleText("Bar Chart with Time Interval Scale");
+        const barWidget = await page.dashboard.getWidgetByHeaderTitleText(
+            "Bar Chart with Time Interval Scale"
+        );
         await barWidget?.scrollTo();
-        const barChart = Atom.findIn(ChartAtom, barWidget?.getElement() as ElementFinder);
+        const barChart = Atom.findIn(
+            ChartAtom,
+            barWidget?.getElement() as ElementFinder
+        );
         await barChart?.hover();
 
         await camera.say.cheese(`${name} - Chart hovered in right hand column`);

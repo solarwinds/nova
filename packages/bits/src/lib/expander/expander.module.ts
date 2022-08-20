@@ -9,17 +9,9 @@ import { ExpanderComponent } from "./expander.component";
  * @ignore
  */
 @NgModule({
-    imports: [
-        NuiCommonModule,
-        NuiIconModule,
-    ],
-    declarations: [
-        ExpanderComponent,
-    ],
-    exports: [
-        ExpanderComponent,
-    ],
+    imports: [NuiCommonModule, NuiIconModule],
+    declarations: [ExpanderComponent],
+    exports: [ExpanderComponent],
     providers: [],
 })
-export class NuiExpanderModule {
-}
+export class NuiExpanderModule {}

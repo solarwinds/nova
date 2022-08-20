@@ -12,12 +12,13 @@
 // --------------------------------------------------
 
 // == Fonts
-@font-family-open-sans: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-open-sans: "Open Sans", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
 @font-family-source-code-pro: "Source Code Pro", monospace;
 @font-family-roboto: "Roboto", @font-family-open-sans;
 
 @nui-font-weight-light: 300;
-@nui-font-weight-regular:  400;
+@nui-font-weight-regular: 400;
 @nui-font-weight-semibold: 600;
 @nui-font-weight-bold: 700;
 
@@ -35,25 +36,23 @@
 //
 //## Settings for some of the most global styles.
 
-
 //** Link hover decoration.
 @link-hover-decoration: underline;
 
 //== Disabled state for non-form element controls (so used for buttons, etc.)
-@disabled-opacity: .4;
-
+@disabled-opacity: 0.4;
 
 //== Typography
 //
 //** Unit-less `line-height` for use in components like buttons.
 //TODO: review those variables and possibly replace them with @nui-line-height variables
-@line-height-base:        1.666666666666667; // 20/12
+@line-height-base: 1.666666666666667; // 20/12
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
-@line-height-computed:    floor((12px * @line-height-base)); // ~20px
+@line-height-computed: floor((12px * @line-height-base)); // ~20px
 
 //** By default, this inherits from the `<body>`.
-@headings-font-family:    inherit;
-@headings-line-height:    1.1;
+@headings-font-family: inherit;
+@headings-line-height: 1.1;
 
 //== Images
 //
@@ -61,12 +60,11 @@
 //** Base width
 @image-size-base: 70%;
 
-
 //== Components
 //
 //TODO: those paddings/margings should be removed and nui-space variables should be used
-@padding-small-vertical:    4px;
-@padding-xs-vertical:       2px;
+@padding-small-vertical: 4px;
+@padding-xs-vertical: 2px;
 
 @nui-radius-default: 3px;
 
@@ -74,25 +72,20 @@
 //
 //## For each of Bootstrap's buttons, define text, background and border color.
 
-
-
 //== Forms
 //
 //##
 
-
-
 // TODO: Rename `@input-border-radius` to `@input-border-radius-base` in v4
 //** Default `.form-control` border radius
 // This has no effect on `<select>`s in some browsers, due to the limited stylability of `<select>`s in CSS.
-@input-border-radius:            0;
+@input-border-radius: 0;
 
 //** Default `.form-control` height
-@input-height-base:              (@line-height-computed + (@nui-space-xs * 2));
+@input-height-base: (@line-height-computed + (@nui-space-xs * 2));
 
 //** Disabled cursor for form controls and buttons.
-@cursor-disabled:                not-allowed;
-
+@cursor-disabled: not-allowed;
 
 //== Switch
 @switch-width: 40px;
@@ -114,20 +107,19 @@
 //
 // Note: These variables are not generated into the Customizer.
 
-@zindex-active:             500;
+@zindex-active: 500;
 
-@zindex-navbar:            1000;
-@zindex-busy:              1030;
-@zindex-modal-background:  1040;
-@zindex-modal:             1050;
-@zindex-dropdown:          1050;
-@zindex-popover:           1060;
-@zindex-busy-in-modal:     1060;
-@zindex-tooltip:           1070;
-@zindex-toast:             1070;
-@zindex-drag:              2000;
-@zindex-theme-switcher:    2100;
-
+@zindex-navbar: 1000;
+@zindex-busy: 1030;
+@zindex-modal-background: 1040;
+@zindex-modal: 1050;
+@zindex-dropdown: 1050;
+@zindex-popover: 1060;
+@zindex-busy-in-modal: 1060;
+@zindex-tooltip: 1070;
+@zindex-toast: 1070;
+@zindex-drag: 2000;
+@zindex-theme-switcher: 2100;
 
 //== Media queries breakpoints
 //
@@ -135,118 +127,114 @@
 
 // Extra small screen / phone
 //** Deprecated `@screen-xs` as of v3.0.1
-@screen-xs:                  480px;
+@screen-xs: 480px;
 //** Deprecated `@screen-xs-min` as of v3.2.0
-@screen-xs-min:              @screen-xs;
+@screen-xs-min: @screen-xs;
 //** Deprecated `@screen-phone` as of v3.0.1
-@screen-phone:               @screen-xs-min;
+@screen-phone: @screen-xs-min;
 
 // Small screen / tablet
 //** Deprecated `@screen-sm` as of v3.0.1
-@screen-sm:                  768px;
-@screen-sm-min:              @screen-sm;
+@screen-sm: 768px;
+@screen-sm-min: @screen-sm;
 //** Deprecated `@screen-tablet` as of v3.0.1
-@screen-tablet:              @screen-sm-min;
+@screen-tablet: @screen-sm-min;
 
 // Medium screen / desktop
 //** Deprecated `@screen-md` as of v3.0.1
-@screen-md:                  992px;
-@screen-md-min:              @screen-md;
+@screen-md: 992px;
+@screen-md-min: @screen-md;
 //** Deprecated `@screen-desktop` as of v3.0.1
-@screen-desktop:             @screen-md-min;
+@screen-desktop: @screen-md-min;
 
 // Large screen / wide desktop
 //** Deprecated `@screen-lg` as of v3.0.1
-@screen-lg:                  1200px;
-@screen-lg-min:              @screen-lg;
+@screen-lg: 1200px;
+@screen-lg-min: @screen-lg;
 //** Deprecated `@screen-lg-desktop` as of v3.0.1
-@screen-lg-desktop:          @screen-lg-min;
+@screen-lg-desktop: @screen-lg-min;
 
 // So media queries don't overlap when required, provide a maximum
-@screen-xs-max:              (@screen-sm-min - 1);
-@screen-sm-max:              (@screen-md-min - 1);
-@screen-md-max:              (@screen-lg-min - 1);
-
+@screen-xs-max: (@screen-sm-min - 1);
+@screen-sm-max: (@screen-md-min - 1);
+@screen-md-max: (@screen-lg-min - 1);
 
 //== Grid system
 //
 //## Define your custom responsive grid.
 
 //** Number of columns in the grid.
-@grid-columns:              12;
+@grid-columns: 12;
 //** Padding between columns. Gets divided in half for the left and right.
-@grid-gutter-width:         30px;
+@grid-gutter-width: 30px;
 // Navbar collapse
 //** Point at which the navbar becomes uncollapsed.
-@grid-float-breakpoint:     @screen-sm-min;
+@grid-float-breakpoint: @screen-sm-min;
 //** Point at which the navbar begins collapsing.
 @grid-float-breakpoint-max: (@grid-float-breakpoint - 1);
-
 
 //== Container sizes
 //
 //## Define the maximum width of `.container` for different screen sizes.
 
 // Small screen / tablet
-@container-tablet:             (720px + @grid-gutter-width);
+@container-tablet: (720px + @grid-gutter-width);
 //** For `@screen-sm-min` and up.
-@container-sm:                 @container-tablet;
+@container-sm: @container-tablet;
 
 // Medium screen / desktop
-@container-desktop:            (940px + @grid-gutter-width);
+@container-desktop: (940px + @grid-gutter-width);
 //** For `@screen-md-min` and up.
-@container-md:                 @container-desktop;
+@container-md: @container-desktop;
 
 // Large screen / wide desktop
-@container-large-desktop:      (1140px + @grid-gutter-width);
+@container-large-desktop: (1140px + @grid-gutter-width);
 //** For `@screen-lg-min` and up.
-@container-lg:                 @container-large-desktop;
-
+@container-lg: @container-large-desktop;
 
 //== Popovers
 //
 //##
 
 //** Popover arrow width
-@popover-arrow-width:                 9px;
+@popover-arrow-width: 9px;
 //** Popover outer arrow width
-@popover-arrow-outer-width:           @popover-arrow-width;
+@popover-arrow-outer-width: @popover-arrow-width;
 //** Popover outer arrow color
-@popover-arrow-outer-color:           fadein(@nui-color-line-dark, 5%);
-@nui-popover-min-width:               200px;
-@nui-popover-max-width:               350px;
+@popover-arrow-outer-color: fadein(@nui-color-line-dark, 5%);
+@nui-popover-min-width: 200px;
+@nui-popover-max-width: 350px;
 
 //== Dialog
 //
 //##
 
 //** margin applied to the dialog content
-@dialog-content-margin:        80px;
+@dialog-content-margin: 80px;
 
 //** Dialog backdrop opacity
-@dialog-backdrop-opacity:      .5;
+@dialog-backdrop-opacity: 0.5;
 
-@dialog-lg:                    900px;
-@dialog-md:                    600px;
-@dialog-sm:                    400px;
+@dialog-lg: 900px;
+@dialog-md: 600px;
+@dialog-sm: 400px;
 
 //== Repeat group
 //
 //##
 
 //** Repeat group border radius
-@repeat-group-border-radius:      0;
-
+@repeat-group-border-radius: 0;
 
 //== Thumbnails
 //
 //##
 
 //** Padding around the thumbnail image
-@thumbnail-padding:           4px;
+@thumbnail-padding: 4px;
 
 //** Thumbnail border radius
-@thumbnail-border-radius:     0;
+@thumbnail-border-radius: 0;
 
 //== Textbox
 //
@@ -260,8 +248,7 @@
 //
 //##
 
-@pre-scrollable-max-height:   340px;
-
+@pre-scrollable-max-height: 340px;
 
 //== Type
 //
@@ -271,9 +258,9 @@
 @component-offset-horizontal: 180px;
 
 //** Blockquote font size
-@blockquote-font-size:        (@nui-font-size-default * 1.25);
+@blockquote-font-size: (@nui-font-size-default * 1.25);
 //** Width of horizontal description list titles
-@dl-horizontal-offset:        @component-offset-horizontal;
+@dl-horizontal-offset: @component-offset-horizontal;
 
 //== nui-table
 //
@@ -298,35 +285,15 @@
 //
 //
 
-@enable-grid-classes : true;
-@grid-breakpoints:
-    xs 0,
-    sm 576px,
-    md 768px,
-    lg 992px,
-    xl 1200px;
-@container-max-widths:
-    sm 540px,
-    md 720px,
-    lg 960px,
-    xl 1140px;
+@enable-grid-classes: true;
+@grid-breakpoints: xs 0, sm 576px, md 768px, lg 992px, xl 1200px;
+@container-max-widths: sm 540px, md 720px, lg 960px, xl 1140px;
 @spacer: 10px;
-@spacers:
-    0 0,
-    1 @nui-space-xxs,
-    2 @nui-space-xs,
-    3 @nui-space-sm,
-    4 @nui-space-md,
-    5 @nui-space-md;
+@spacers: 0 0, 1 @nui-space-xxs, 2 @nui-space-xs, 3 @nui-space-sm,
+    4 @nui-space-md, 5 @nui-space-md;
 
 // This variable affects the `.h-*` and `.w-*` classes.
-@sizes:
-    25 25%,
-    50 50%,
-    75 75%,
-    100 100%,
-    auto auto;
-
+@sizes: 25 25%, 50 50%, 75 75%, 100 100%, auto auto;
 
 //== Badge
 //
@@ -356,4 +323,3 @@
 @nui-tag-border-radius: (@nui-tag-height / 2);
 
 @nui-border-solid: solid;
-

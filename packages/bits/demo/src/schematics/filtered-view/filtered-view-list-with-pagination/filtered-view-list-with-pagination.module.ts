@@ -39,5 +39,4 @@ import { FilteredViewListComponent } from "./filtered-view-list/filtered-view-li
         FilteredViewListComponent,
     ],
 })
-
 export class FilteredViewListWithPaginationModule {}

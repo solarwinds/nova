@@ -15,25 +15,25 @@ export const timeseriesConfig: IWidget = {
     id: "timeseriesWidgetId",
     type: "timeseries",
     pizzagna: {
-        "configuration": {
+        configuration: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": {
+                providers: {
                     [WellKnownProviders.DataSource]: {
-                        "providerId": BeerVsReadingMockDataSource.providerId,
+                        providerId: BeerVsReadingMockDataSource.providerId,
                     } as IProviderConfiguration,
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Primary Leisure Activity Over Time",
-                    "subtitle": "Survey of 1000 Solarians",
+            header: {
+                properties: {
+                    title: "Primary Leisure Activity Over Time",
+                    subtitle: "Survey of 1000 Solarians",
                 },
             },
-            "chart": {
-                "providers": {
+            chart: {
+                providers: {
                     [WellKnownProviders.Adapter]: {
-                        "properties": {
-                            "series": [
+                        properties: {
+                            series: [
                                 {
                                     id: "series-1",
                                     label: "Beer Tasting",
@@ -48,21 +48,21 @@ export const timeseriesConfig: IWidget = {
                         },
                     } as Partial<IProviderConfiguration>,
                 },
-                "properties": {
-                    "configuration": {
-                        "legendPlacement": LegendPlacement.Right,
-                        "enableZoom": true,
-                        "leftAxisLabel": "Solarians (%)",
+                properties: {
+                    configuration: {
+                        legendPlacement: LegendPlacement.Right,
+                        enableZoom: true,
+                        leftAxisLabel: "Solarians (%)",
                     },
                 },
             },
-            "timeframeSelection": {
-                "properties": {
-                    "timeframe": {
-                        "selectedPresetId": "last7Days",
+            timeframeSelection: {
+                properties: {
+                    timeframe: {
+                        selectedPresetId: "last7Days",
                     } as ISerializableTimeframe,
-                    "minDate": moment().subtract(10, "days").format(),
-                    "maxDate": moment().format(),
+                    minDate: moment().subtract(10, "days").format(),
+                    maxDate: moment().format(),
                 },
             },
         },

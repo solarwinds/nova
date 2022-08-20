@@ -1,5 +1,18 @@
-import { ChangeDetectorRef, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, ViewChild } from "@angular/core";
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
+import {
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    NO_ERRORS_SCHEMA,
+    QueryList,
+    ViewChild,
+} from "@angular/core";
+import {
+    ComponentFixture,
+    fakeAsync,
+    TestBed,
+    tick,
+    waitForAsync,
+} from "@angular/core/testing";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
@@ -11,22 +24,26 @@ import { SelectV2OptionComponent } from "../option/select-v2-option.component";
 
 import { ComboboxV2Component } from "./combobox-v2.component";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { ANNOUNCER_CLOSE_MESSAGE, ANNOUNCER_OPEN_MESSAGE_SUFFIX } from "../constants";
+import {
+    ANNOUNCER_CLOSE_MESSAGE,
+    ANNOUNCER_OPEN_MESSAGE_SUFFIX,
+} from "../constants";
 
 const selectedValuesMock: OptionValueType[] = [
-    {id: "item-0", name: "Item 0"},
-    {id: "item-1", name: "Item 1"},
-    {id: "item-2", name: "Item 2"},
+    { id: "item-0", name: "Item 0" },
+    { id: "item-1", name: "Item 1" },
+    { id: "item-2", name: "Item 2" },
 ];
 
-const nonExistentItem = {id: "item-101", name: "Item 101"};
-
+const nonExistentItem = { id: "item-101", name: "Item 101" };
 
 @Component({
     template: `
-        <nui-combobox-v2 placeholder="Select Item"
+        <nui-combobox-v2
+            placeholder="Select Item"
             [formControl]="comboboxControl"
-            #combobox>
+            #combobox
+        >
             <nui-select-v2-option *ngFor="let item of items" [value]="item">
                 <span [nuiComboboxV2OptionHighlight]="item"></span>
             </nui-select-v2-option>
@@ -34,10 +51,10 @@ const nonExistentItem = {id: "item-101", name: "Item 101"};
     `,
 })
 class ComboboxV2WrapperComponent {
-    public items = Array.from({ length : 10 }).map((_, i) => `Item ${i}`);
+    public items = Array.from({ length: 10 }).map((_, i) => `Item ${i}`);
     public comboboxControl = new FormControl();
     @ViewChild(ComboboxV2Component) combobox: ComboboxV2Component;
-    constructor(public elRef: ElementRef<HTMLElement>) { }
+    constructor(public elRef: ElementRef<HTMLElement>) {}
 }
 
 describe("components >", () => {
@@ -61,14 +78,9 @@ describe("components >", () => {
                     OptionKeyControlService,
                     LiveAnnouncer,
                 ],
-                imports: [
-                    NuiOverlayModule,
-                    ReactiveFormsModule,
-                    FormsModule,
-                ],
-                schemas: [ NO_ERRORS_SCHEMA ],
-            })
-                .compileComponents();
+                imports: [NuiOverlayModule, ReactiveFormsModule, FormsModule],
+                schemas: [NO_ERRORS_SCHEMA],
+            }).compileComponents();
 
             // component
             fixture = TestBed.createComponent(ComboboxV2Component);
@@ -76,19 +88,26 @@ describe("components >", () => {
             fixture.detectChanges();
 
             // options
-            const optionComponentMocks = Array.from({ length: 3 }).map(() => TestBed.createComponent(SelectV2OptionComponent));
-            selectedOptionsMock =  optionComponentMocks.map(c => c.componentInstance);
+            const optionComponentMocks = Array.from({ length: 3 }).map(() =>
+                TestBed.createComponent(SelectV2OptionComponent)
+            );
+            selectedOptionsMock = optionComponentMocks.map(
+                (c) => c.componentInstance
+            );
             optionComponentMocks.forEach((c, i) => {
                 c.componentInstance.value = selectedValuesMock[i];
-                (<HTMLElement>c.elementRef.nativeElement).textContent = (<IOptionValueObject>selectedValuesMock[i]).name;
+                (<HTMLElement>c.elementRef.nativeElement).textContent = (<
+                    IOptionValueObject
+                >selectedValuesMock[i]).name;
             });
 
             // wrapper component
-            wrapperFixture = TestBed.createComponent(ComboboxV2WrapperComponent);
+            wrapperFixture = TestBed.createComponent(
+                ComboboxV2WrapperComponent
+            );
             wrapperComponent = wrapperFixture.componentInstance;
             wrapperFixture.detectChanges();
         }));
-
 
         it("should create", () => {
             expect(component).toBeTruthy();
@@ -106,11 +125,13 @@ describe("components >", () => {
             it("should set correct input value if one's been preselected on init", fakeAsync(() => {
                 component.options = new QueryList<SelectV2OptionComponent>();
                 component.options.reset([...selectedOptionsMock]);
-                component.selectedOptions = [ selectedOptionsMock[0] ];
+                component.selectedOptions = [selectedOptionsMock[0]];
                 component.displayWith = df;
                 component.ngAfterContentInit();
                 tick();
-                expect(component.inputValue).toEqual((<IOptionValueObject>selectedOptionsMock[0].value).name);
+                expect(component.inputValue).toEqual(
+                    (<IOptionValueObject>selectedOptionsMock[0].value).name
+                );
             }));
         });
 
@@ -127,13 +148,17 @@ describe("components >", () => {
 
             it("should add selected items", () => {
                 expect(component.selectedOptions.length).toBeGreaterThan(0);
-                expect(component.selectedOptions[0]).toEqual(selectedOptionsMock[0]);
+                expect(component.selectedOptions[0]).toEqual(
+                    selectedOptionsMock[0]
+                );
             });
 
             it("should not add more than one item in single select mode", () => {
                 component.selectOption(selectedOptionsMock[1]);
                 expect(component.selectedOptions.length).toBeLessThan(2);
-                expect(component.selectedOptions[0]).toEqual(selectedOptionsMock[1]);
+                expect(component.selectedOptions[0]).toEqual(
+                    selectedOptionsMock[1]
+                );
             });
 
             it("should selected item get active", () => {
@@ -144,7 +169,11 @@ describe("components >", () => {
                 component.multiselect = true;
                 component.selectOption(selectedOptionsMock[1]);
                 expect(component.selectedOptions.length).toEqual(2);
-                expect(component.selectedOptions[component.selectedOptions.length - 1]).toEqual(selectedOptionsMock[1]);
+                expect(
+                    component.selectedOptions[
+                        component.selectedOptions.length - 1
+                    ]
+                ).toEqual(selectedOptionsMock[1]);
             });
         });
 
@@ -174,7 +203,7 @@ describe("components >", () => {
                 component.options.reset([...selectedOptionsMock]);
                 component.deselectItem(selectedValuesMock[0]);
 
-                component.options.toArray().forEach(option => {
+                component.options.toArray().forEach((option) => {
                     expect(option.outfiltered).toEqual(false);
                 });
             });
@@ -186,9 +215,15 @@ describe("components >", () => {
                 component.deselectItem(selectedValuesMock[0]);
 
                 expect(component.selectedOptions.length).toEqual(2);
-                expect(component.options.toArray()[0].outfiltered).toEqual(false);
-                expect(component.options.toArray()[1].outfiltered).toEqual(true);
-                expect(component.options.toArray()[2].outfiltered).toEqual(true);
+                expect(component.options.toArray()[0].outfiltered).toEqual(
+                    false
+                );
+                expect(component.options.toArray()[1].outfiltered).toEqual(
+                    true
+                );
+                expect(component.options.toArray()[2].outfiltered).toEqual(
+                    true
+                );
                 expect(component.selectedOptions[0].outfiltered).toEqual(true);
                 expect(component.selectedOptions[1].outfiltered).toEqual(true);
             });
@@ -200,7 +235,7 @@ describe("components >", () => {
             });
 
             it("should not reduce selected options in multiselect mode on attempt to remove non-existent item", () => {
-                const value = {id: "item-101", name: "Item 101"};
+                const value = { id: "item-101", name: "Item 101" };
                 component.multiselect = true;
                 component.deselectItem(value);
                 expect(component.selectedOptions.length).toEqual(1);
@@ -218,7 +253,9 @@ describe("components >", () => {
             it("should set correct value in single select mode", () => {
                 component.writeValue(selectedValuesMock[0]);
                 expect(component.value).toEqual(selectedValuesMock[0]);
-                expect(component.selectedOptions[0].value).toEqual(selectedValuesMock[0]);
+                expect(component.selectedOptions[0].value).toEqual(
+                    selectedValuesMock[0]
+                );
             });
 
             it("should set correct value in single select mode", () => {
@@ -228,15 +265,17 @@ describe("components >", () => {
 
             it("should set correct value in multi select mode", () => {
                 component.multiselect = true;
-                component.writeValue([ selectedValuesMock[0] ]);
+                component.writeValue([selectedValuesMock[0]]);
 
-                expect(component.value).toEqual([ selectedValuesMock[0] ]);
-                expect(component.selectedOptions.includes(selectedOptionsMock[0])).toBe(true);
+                expect(component.value).toEqual([selectedValuesMock[0]]);
+                expect(
+                    component.selectedOptions.includes(selectedOptionsMock[0])
+                ).toBe(true);
             });
 
             it("should mark items as filtered in multi select mode", () => {
                 component.multiselect = true;
-                component.writeValue([ selectedValuesMock[0] ]);
+                component.writeValue([selectedValuesMock[0]]);
 
                 expect(component.selectedOptions[0].outfiltered).toBe(true);
             });
@@ -265,14 +304,23 @@ describe("components >", () => {
                 component["dropdown"].show();
                 component.clearValue();
 
-                expect(component.selectedOptions.length).toEqual(0, "selected option were NOT cleared!");
+                expect(component.selectedOptions.length).toEqual(
+                    0,
+                    "selected option were NOT cleared!"
+                );
                 expect(component.inputValue).toEqual("", "Input is NOT empty!");
 
-                component.options.forEach(o => {
-                    expect(o.outfiltered).toBe(false, "Some items in the list are still filtered out!");
+                component.options.forEach((o) => {
+                    expect(o.outfiltered).toBe(
+                        false,
+                        "Some items in the list are still filtered out!"
+                    );
                 });
 
-                expect(component.options.toArray()[0].active).toBe(true, "First item of the dropdown list IS NOT active!");
+                expect(component.options.toArray()[0].active).toBe(
+                    true,
+                    "First item of the dropdown list IS NOT active!"
+                );
                 expect(valueChangedSpy).toHaveBeenCalled();
             });
 
@@ -309,9 +357,13 @@ describe("components >", () => {
 
                 component.handleInput("2");
                 fixture.detectChanges();
-                const filterdOptions = component.options.filter(o => !o.outfiltered);
+                const filterdOptions = component.options.filter(
+                    (o) => !o.outfiltered
+                );
                 expect(filterdOptions.length).toEqual(1);
-                expect(filterdOptions.find(o => o.viewValue === "Item 2")).toBeTruthy();
+                expect(
+                    filterdOptions.find((o) => o.viewValue === "Item 2")
+                ).toBeTruthy();
             });
 
             it("should open dropdown", () => {
@@ -326,8 +378,16 @@ describe("components >", () => {
 
         describe("string value", () => {
             beforeEach(() => {
-                const selectedOptionsMockStrings = Array.from({ length: 3 }).map(() => TestBed.createComponent(SelectV2OptionComponent).componentInstance);
-                selectedOptionsMockStrings.forEach((option, i) => option.value = `Item ${i}`);
+                const selectedOptionsMockStrings = Array.from({
+                    length: 3,
+                }).map(
+                    () =>
+                        TestBed.createComponent(SelectV2OptionComponent)
+                            .componentInstance
+                );
+                selectedOptionsMockStrings.forEach(
+                    (option, i) => (option.value = `Item ${i}`)
+                );
 
                 component.options = new QueryList<SelectV2OptionComponent>();
                 component.options.reset([...selectedOptionsMockStrings]);
@@ -337,7 +397,7 @@ describe("components >", () => {
             });
 
             it("should select item with 'value' as a string", () => {
-                const itemName =  "Item 2";
+                const itemName = "Item 2";
 
                 component.writeValue(itemName);
 
@@ -372,7 +432,7 @@ describe("components >", () => {
             let result;
             const mock = <any>{};
 
-            component.clickOutsideDropdown.subscribe((v: any) => result = v);
+            component.clickOutsideDropdown.subscribe((v: any) => (result = v));
             component["dropdown"].clickOutside.emit(mock);
 
             expect(result).toEqual(mock);
@@ -383,13 +443,17 @@ describe("components >", () => {
                 const itemToSet = wrapperComponent.items[3];
                 wrapperComponent.comboboxControl.setValue(itemToSet);
 
-                expect(wrapperComponent.combobox.getLastSelectedOption()?.value).toEqual(itemToSet);
+                expect(
+                    wrapperComponent.combobox.getLastSelectedOption()?.value
+                ).toEqual(itemToSet);
             });
 
             it("should make form control touched on focusout", () => {
                 expect(wrapperComponent.comboboxControl.touched).toBeFalsy();
 
-                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                const input = wrapperFixture.debugElement.query(
+                    By.css(".nui-combobox-v2__input")
+                );
                 input.nativeElement.focus();
                 document.body.click();
 
@@ -408,9 +472,13 @@ describe("components >", () => {
             it("should set the control to dirty when the value changes in DOM", () => {
                 expect(wrapperComponent.comboboxControl.dirty).toBeFalsy();
 
-                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                const input = wrapperFixture.debugElement.query(
+                    By.css(".nui-combobox-v2__input")
+                );
                 input.nativeElement.focus();
-                const option = wrapperFixture.debugElement.query(By.css("nui-select-v2-option"));
+                const option = wrapperFixture.debugElement.query(
+                    By.css("nui-select-v2-option")
+                );
                 option.nativeElement.click();
 
                 expect(wrapperComponent.comboboxControl.dirty).toBeTruthy();
@@ -420,19 +488,32 @@ describe("components >", () => {
                 const itemToSet = wrapperComponent.items[3];
                 wrapperComponent.comboboxControl.setValue(itemToSet);
 
-                expect(wrapperComponent.combobox.getLastSelectedOption()?.active).toBeTruthy();
+                expect(
+                    wrapperComponent.combobox.getLastSelectedOption()?.active
+                ).toBeTruthy();
             });
 
             it("should items be correctly outfiltered if value sets using formControl", () => {
-                expect(wrapperComponent.combobox.options.toArray()[3].outfiltered).toBe(false);
-                expect(wrapperComponent.combobox.options.toArray()[4].outfiltered).toBe(false);
+                expect(
+                    wrapperComponent.combobox.options.toArray()[3].outfiltered
+                ).toBe(false);
+                expect(
+                    wrapperComponent.combobox.options.toArray()[4].outfiltered
+                ).toBe(false);
 
                 wrapperComponent.combobox.multiselect = true;
-                const itemsToSet = [wrapperComponent.items[3], wrapperComponent.items[4]];
+                const itemsToSet = [
+                    wrapperComponent.items[3],
+                    wrapperComponent.items[4],
+                ];
                 wrapperComponent.comboboxControl.setValue(itemsToSet);
 
-                expect(wrapperComponent.combobox.options.toArray()[3].outfiltered).toBe(true);
-                expect(wrapperComponent.combobox.options.toArray()[4].outfiltered).toBe(true);
+                expect(
+                    wrapperComponent.combobox.options.toArray()[3].outfiltered
+                ).toBe(true);
+                expect(
+                    wrapperComponent.combobox.options.toArray()[4].outfiltered
+                ).toBe(true);
             });
         });
 
@@ -440,53 +521,87 @@ describe("components >", () => {
             it("should keep the same value in case options changed and value is present", fakeAsync(() => {
                 const itemToSet = wrapperComponent.items[9];
                 wrapperComponent.comboboxControl.setValue(itemToSet);
-                expect(wrapperComponent.comboboxControl.value).toEqual(itemToSet);
-                wrapperComponent.items = Array.from({ length : 10 }).map((_, i) => `Item ${i + 5}`);
+                expect(wrapperComponent.comboboxControl.value).toEqual(
+                    itemToSet
+                );
+                wrapperComponent.items = Array.from({ length: 10 }).map(
+                    (_, i) => `Item ${i + 5}`
+                );
                 wrapperFixture.detectChanges();
                 tick(0);
-                expect(wrapperComponent.comboboxControl.value).toEqual(itemToSet);
+                expect(wrapperComponent.comboboxControl.value).toEqual(
+                    itemToSet
+                );
             }));
 
             it("should NOT keep the same value in case options changed and value is NOT present, but should keep inputValue", fakeAsync(() => {
                 const itemToSet = wrapperComponent.items[3];
                 wrapperComponent.comboboxControl.setValue(itemToSet);
-                expect(wrapperComponent.comboboxControl.value).toEqual(itemToSet);
-                wrapperComponent.items = Array.from({ length : 10 }).map((_, i) => `Item ${i + 5}`);
+                expect(wrapperComponent.comboboxControl.value).toEqual(
+                    itemToSet
+                );
+                wrapperComponent.items = Array.from({ length: 10 }).map(
+                    (_, i) => `Item ${i + 5}`
+                );
                 wrapperFixture.detectChanges();
                 tick(0);
-                expect(wrapperComponent.comboboxControl.value).toEqual(undefined);
+                expect(wrapperComponent.comboboxControl.value).toEqual(
+                    undefined
+                );
                 expect(wrapperComponent.combobox.inputValue).toEqual(itemToSet);
             }));
 
             it("should filter selected options in case of multiselect", fakeAsync(() => {
                 wrapperComponent.combobox.multiselect = true;
-                wrapperComponent.comboboxControl.setValue(["Item 3", "Item 5", "Item 9"]);
-                expect(wrapperComponent.comboboxControl.value).toEqual(["Item 3", "Item 5", "Item 9"]);
-                wrapperComponent.items = Array.from({ length : 10 }).map((_, i) => `Item ${i + 6}`);
+                wrapperComponent.comboboxControl.setValue([
+                    "Item 3",
+                    "Item 5",
+                    "Item 9",
+                ]);
+                expect(wrapperComponent.comboboxControl.value).toEqual([
+                    "Item 3",
+                    "Item 5",
+                    "Item 9",
+                ]);
+                wrapperComponent.items = Array.from({ length: 10 }).map(
+                    (_, i) => `Item ${i + 6}`
+                );
                 wrapperFixture.detectChanges();
                 tick(0);
-                expect(wrapperComponent.comboboxControl.value).toEqual(["Item 9"]);
+                expect(wrapperComponent.comboboxControl.value).toEqual([
+                    "Item 9",
+                ]);
             }));
         });
 
-        describe("LiveAnnouncer >", () =>  {
+        describe("LiveAnnouncer >", () => {
             it("should announce dropdown list on focusin", () => {
-                const spy = spyOn(wrapperComponent.combobox.liveAnnouncer, "announce");
+                const spy = spyOn(
+                    wrapperComponent.combobox.liveAnnouncer,
+                    "announce"
+                );
                 expect(wrapperComponent.comboboxControl.touched).toBeFalsy();
 
                 const msg = `${wrapperComponent.combobox.options.length} ${ANNOUNCER_OPEN_MESSAGE_SUFFIX}`;
-                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                const input = wrapperFixture.debugElement.query(
+                    By.css(".nui-combobox-v2__input")
+                );
                 input.nativeElement.focus();
 
                 expect(spy).toHaveBeenCalledWith(msg);
             });
 
             it("should announce dropdown is closed on focusout", () => {
-                const spy = spyOn(wrapperComponent.combobox.liveAnnouncer, "announce");
+                const spy = spyOn(
+                    wrapperComponent.combobox.liveAnnouncer,
+                    "announce"
+                );
                 expect(wrapperComponent.comboboxControl.touched).toBeFalsy();
 
                 const msg = ANNOUNCER_CLOSE_MESSAGE;
-                const input = wrapperFixture.debugElement.query(By.css(".nui-combobox-v2__input"));
+                const input = wrapperFixture.debugElement.query(
+                    By.css(".nui-combobox-v2__input")
+                );
                 input.nativeElement.focus();
                 document.body.click();
 
@@ -495,4 +610,3 @@ describe("components >", () => {
         });
     });
 });
-

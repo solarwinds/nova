@@ -1,17 +1,13 @@
 import { ListRange } from "@angular/cdk/collections";
-import {
-    Inject,
-    Injectable,
-} from "@angular/core";
-import {
-    IFilter,
-    IFilterPub,
-} from "@nova-ui/bits";
+import { Inject, Injectable } from "@angular/core";
+import { IFilter, IFilterPub } from "@nova-ui/bits";
 
 import { CUSTOM_SCROLL_ITEMS_PER_PAGE } from "./table-with-custom-virtual-scroll-data";
 
 @Injectable()
-export class VirtualScrollCustomStrategyService implements IFilterPub<IFilter<ListRange>> {
+export class VirtualScrollCustomStrategyService
+    implements IFilterPub<IFilter<ListRange>>
+{
     public itemsPerPage: number;
 
     protected virtualScrollRange: ListRange;
@@ -38,7 +34,8 @@ export class VirtualScrollCustomStrategyService implements IFilterPub<IFilter<Li
         } else {
             // advances "pagination" to the next pages
             this.virtualScrollRange.start += this.itemsPerPage;
-            this.virtualScrollRange.end = this.virtualScrollRange.start + this.itemsPerPage;
+            this.virtualScrollRange.end =
+                this.virtualScrollRange.start + this.itemsPerPage;
         }
     }
 }

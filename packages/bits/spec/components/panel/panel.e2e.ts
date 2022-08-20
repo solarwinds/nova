@@ -12,23 +12,47 @@ describe("USERCONTROL Panel", () => {
     });
 
     describe("Collapsible", () => {
-        const panelCollapsible = Atom.find(PanelAtom, "nui-demo-collapsible-panel");
+        const panelCollapsible = Atom.find(
+            PanelAtom,
+            "nui-demo-collapsible-panel"
+        );
 
         it("Should toggle panel css class upon icon click ", async () => {
-            await browser.wait(async () => await panelCollapsible.isCollapsed(), 1000);
+            await browser.wait(
+                async () => await panelCollapsible.isCollapsed(),
+                1000
+            );
 
-            expect(await panelCollapsible.isExpanded()).toBe(false, "initial state of panel to be collapsed");
-            expect(await panelCollapsible.isCollapsed()).toBe(true, "initial state of panel to be collapsed");
+            expect(await panelCollapsible.isExpanded()).toBe(
+                false,
+                "initial state of panel to be collapsed"
+            );
+            expect(await panelCollapsible.isCollapsed()).toBe(
+                true,
+                "initial state of panel to be collapsed"
+            );
 
             await panelCollapsible.toggleExpanded();
 
-            expect(await panelCollapsible.isCollapsed()).toBe(false, "check if panel is expanded upon click");
-            expect(await panelCollapsible.isExpanded()).toBe(true, "check if panel is expanded upon click");
+            expect(await panelCollapsible.isCollapsed()).toBe(
+                false,
+                "check if panel is expanded upon click"
+            );
+            expect(await panelCollapsible.isExpanded()).toBe(
+                true,
+                "check if panel is expanded upon click"
+            );
 
             await panelCollapsible.toggleExpanded();
 
-            expect(await panelCollapsible.isCollapsed()).toBe(true, "check if panel is collapsed upon second click");
-            expect(await panelCollapsible.isExpanded()).toBe(false, "check if panel is collapsed upon second click");
+            expect(await panelCollapsible.isCollapsed()).toBe(
+                true,
+                "check if panel is collapsed upon second click"
+            );
+            expect(await panelCollapsible.isExpanded()).toBe(
+                false,
+                "check if panel is collapsed upon second click"
+            );
         });
     });
 
@@ -46,9 +70,11 @@ describe("USERCONTROL Panel", () => {
         const panelFloating = Atom.find(PanelAtom, "nui-demo-floating-panel");
 
         it("should not change width of center pane while displaying floating panel", async () => {
-            const oldCenterPaneSize: ISize = await panelFloating.getCenterPaneElementSize();
+            const oldCenterPaneSize: ISize =
+                await panelFloating.getCenterPaneElementSize();
             await panelFloating.hoverOnSidePane();
-            const newCenterPaneSize: ISize = await panelFloating.getCenterPaneElementSize();
+            const newCenterPaneSize: ISize =
+                await panelFloating.getCenterPaneElementSize();
             expect(oldCenterPaneSize.width).toEqual(newCenterPaneSize.width);
         });
     });
@@ -61,26 +87,40 @@ describe("USERCONTROL Panel", () => {
             const origWinSize = await browser.manage().window().getSize();
             const gutterMoveDistance = 300;
             browser.driver.manage().window().setSize(900, 890);
-            const oldCenterPaneSize = await panelResize.getCenterPaneElementSize();
+            const oldCenterPaneSize =
+                await panelResize.getCenterPaneElementSize();
             await gutter.moveRight(gutterMoveDistance);
-            const newCenterPaneSize = await panelResize.getCenterPaneElementSize();
-            await expect(oldCenterPaneSize.width).toEqual(newCenterPaneSize.width + gutterMoveDistance);
+            const newCenterPaneSize =
+                await panelResize.getCenterPaneElementSize();
+            await expect(oldCenterPaneSize.width).toEqual(
+                newCenterPaneSize.width + gutterMoveDistance
+            );
             // Return to initial state
             await gutter.moveLeft(gutterMoveDistance);
-            await browser.manage().window().setSize(origWinSize.width, origWinSize.height);
+            await browser
+                .manage()
+                .window()
+                .setSize(origWinSize.width, origWinSize.height);
         });
 
         it("should make side panel smaller", async () => {
             const origWinSize = await browser.manage().window().getSize();
             const gutterMoveDistance = 20;
             browser.driver.manage().window().setSize(1200, 880);
-            const oldCenterPaneSize = await panelResize.getCenterPaneElementSize();
+            const oldCenterPaneSize =
+                await panelResize.getCenterPaneElementSize();
             await gutter.moveLeft(gutterMoveDistance);
-            const newCenterPaneSize = await panelResize.getCenterPaneElementSize();
-            await expect(oldCenterPaneSize.width).toEqual(newCenterPaneSize.width - gutterMoveDistance);
+            const newCenterPaneSize =
+                await panelResize.getCenterPaneElementSize();
+            await expect(oldCenterPaneSize.width).toEqual(
+                newCenterPaneSize.width - gutterMoveDistance
+            );
             // Return to initial state
             await gutter.moveRight(gutterMoveDistance);
-            await browser.manage().window().setSize(origWinSize.width, origWinSize.height);
+            await browser
+                .manage()
+                .window()
+                .setSize(origWinSize.width, origWinSize.height);
         });
 
         it("should not resize when panel is collapsed", async () => {
@@ -90,11 +130,15 @@ describe("USERCONTROL Panel", () => {
 
             await panelResize.toggleExpanded();
             await expect(await panelResize.isCollapsed()).toBe(false);
-            const oldExpandedCenterPaneSize = await panelResize.getCenterPaneElementSize();
+            const oldExpandedCenterPaneSize =
+                await panelResize.getCenterPaneElementSize();
             await gutter.moveRight(gutterMoveDistance);
 
-            const newExpandedCenterPaneSize = await panelResize.getCenterPaneElementSize();
-            await expect(oldExpandedCenterPaneSize.width).toBeGreaterThan(newExpandedCenterPaneSize.width);
+            const newExpandedCenterPaneSize =
+                await panelResize.getCenterPaneElementSize();
+            await expect(oldExpandedCenterPaneSize.width).toBeGreaterThan(
+                newExpandedCenterPaneSize.width
+            );
 
             // Return to initial state
             await gutter.moveLeft(gutterMoveDistance);
@@ -106,20 +150,30 @@ describe("USERCONTROL Panel", () => {
             try {
                 await browser.manage().window().setSize(600, 880);
 
-                const oldSidePaneSize = await panelResize.getSidePaneElementSize();
+                const oldSidePaneSize =
+                    await panelResize.getSidePaneElementSize();
                 await gutter.moveRight(200);
-                const newSidePaneSize = await panelResize.getSidePaneElementSize();
-                await expect(newSidePaneSize.width).toBeGreaterThan(oldSidePaneSize.width);
+                const newSidePaneSize =
+                    await panelResize.getSidePaneElementSize();
+                await expect(newSidePaneSize.width).toBeGreaterThan(
+                    oldSidePaneSize.width
+                );
 
                 await browser.manage().window().setSize(1200, 880);
-                const oldSidePaneSizeResized = await panelResize.getSidePaneElementSize();
+                const oldSidePaneSizeResized =
+                    await panelResize.getSidePaneElementSize();
                 await gutter.moveLeft(200);
-                const newSidePaneSizeResized = await panelResize.getSidePaneElementSize();
-                await expect(oldSidePaneSizeResized.width).toBeGreaterThan(newSidePaneSizeResized.width);
-
+                const newSidePaneSizeResized =
+                    await panelResize.getSidePaneElementSize();
+                await expect(oldSidePaneSizeResized.width).toBeGreaterThan(
+                    newSidePaneSizeResized.width
+                );
             } finally {
                 // Restoring the initial window size
-                await browser.manage().window().setSize(origWinSize.width, origWinSize.height);
+                await browser
+                    .manage()
+                    .window()
+                    .setSize(origWinSize.width, origWinSize.height);
             }
         });
     });

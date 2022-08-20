@@ -7,14 +7,18 @@ import { CHART_PALETTE_CS1 } from "../../core/common/palette/palettes";
 import { SequentialColorProvider } from "../../core/common/palette/sequential-color-provider";
 import { LinearScale } from "../../core/common/scales/linear-scale";
 import { EMPTY_CONTINUOUS_DOMAIN } from "../../core/common/scales/types";
-import { D3Selection, IDataSeries, IRenderContainers, IRendererEventPayload } from "../../core/common/types";
+import {
+    D3Selection,
+    IDataSeries,
+    IRenderContainers,
+    IRendererEventPayload,
+} from "../../core/common/types";
 import { IRenderSeries, RenderLayerName } from "../types";
 
 import { AreaAccessors, IAreaAccessors } from "./area-accessors";
 import { AreaRenderer } from "./area-renderer";
 
 describe("Area Renderer >", () => {
-
     let renderer: AreaRenderer;
     let accessors: IAreaAccessors;
     let dataSeries: IDataSeries<IAreaAccessors>;
@@ -25,7 +29,10 @@ describe("Area Renderer >", () => {
         dataSeries = {
             id: "1",
             name: "Series 1",
-            data: [{x: 0, y: 0}, {x: 1, y: 1}],
+            data: [
+                { x: 0, y: 0 },
+                { x: 1, y: 1 },
+            ],
             accessors: accessors,
         };
     });
@@ -34,7 +41,9 @@ describe("Area Renderer >", () => {
         const layers = renderer.getRequiredLayers();
         expect(layers.length).toBe(2);
         expect(layers).toContain(STANDARD_RENDER_LAYERS[RenderLayerName.data]);
-        expect(layers).toContain(STANDARD_RENDER_LAYERS[RenderLayerName.foreground]);
+        expect(layers).toContain(
+            STANDARD_RENDER_LAYERS[RenderLayerName.foreground]
+        );
     });
 
     describe("draw()", () => {
@@ -50,7 +59,7 @@ describe("Area Renderer >", () => {
             renderSeries = {
                 dataSeries,
                 containers,
-                scales: {x: new LinearScale(), y: new LinearScale()},
+                scales: { x: new LinearScale(), y: new LinearScale() },
             };
             renderer.draw(renderSeries, new Subject<IRendererEventPayload>());
             path = containers[RenderLayerName.data].select("path");
@@ -65,7 +74,10 @@ describe("Area Renderer >", () => {
 
         it("should update the path with new data", () => {
             const newSeries = cloneDeep(renderSeries);
-            newSeries.dataSeries.data = [{x: 1, y: 1}, {x: 0, y: 0}];
+            newSeries.dataSeries.data = [
+                { x: 1, y: 1 },
+                { x: 0, y: 0 },
+            ];
             renderer.draw(newSeries, new Subject<IRendererEventPayload>());
 
             expect(path.attr("d")).toBe("M1,1L0,0L0,0L1,1Z");
@@ -78,12 +90,13 @@ describe("Area Renderer >", () => {
 
             expect(path.attr("d")).toBe("");
         });
-
     });
 
     describe("getDomain", () => {
         it("should return EMPTY_CONTINUOUS_DOMAIN if the data is null", () => {
-            expect(renderer.getDomain([], dataSeries, "x", new LinearScale())).toEqual(EMPTY_CONTINUOUS_DOMAIN);
+            expect(
+                renderer.getDomain([], dataSeries, "x", new LinearScale())
+            ).toEqual(EMPTY_CONTINUOUS_DOMAIN);
         });
     });
 
@@ -101,30 +114,54 @@ describe("Area Renderer >", () => {
         });
 
         it("should not filter out data whose y0 and y1 are fully within the domain", () => {
-            const filteredData = renderer.filterDataByDomain(dataSeries.data, dataSeries, "y", [1, 5]);
+            const filteredData = renderer.filterDataByDomain(
+                dataSeries.data,
+                dataSeries,
+                "y",
+                [1, 5]
+            );
             expect(filteredData).toContain(dataSeries.data[0]);
         });
 
         it("should not filter out data whose y0 is within the domain", () => {
-            const filteredData = renderer.filterDataByDomain(dataSeries.data, dataSeries, "y", [1, 3]);
+            const filteredData = renderer.filterDataByDomain(
+                dataSeries.data,
+                dataSeries,
+                "y",
+                [1, 3]
+            );
             expect(filteredData).toContain(dataSeries.data[0]);
         });
 
         it("should not filter out data whose y1 is within the domain", () => {
-            const filteredData = renderer.filterDataByDomain(dataSeries.data, dataSeries, "y", [3, 5]);
+            const filteredData = renderer.filterDataByDomain(
+                dataSeries.data,
+                dataSeries,
+                "y",
+                [3, 5]
+            );
             expect(filteredData).toContain(dataSeries.data[0]);
         });
 
         it("should filter out data whose y0 and y1 are both less than the domain", () => {
-            const filteredData = renderer.filterDataByDomain(dataSeries.data, dataSeries, "y", [5, 7]);
+            const filteredData = renderer.filterDataByDomain(
+                dataSeries.data,
+                dataSeries,
+                "y",
+                [5, 7]
+            );
             expect(filteredData).not.toContain(dataSeries.data[0]);
         });
 
         it("should filter out data whose y0 and y1 are both greater than the domain", () => {
-            const filteredData = renderer.filterDataByDomain(dataSeries.data, dataSeries, "y", [-1, 1]);
+            const filteredData = renderer.filterDataByDomain(
+                dataSeries.data,
+                dataSeries,
+                "y",
+                [-1, 1]
+            );
             expect(filteredData).not.toContain(dataSeries.data[0]);
         });
-
     });
 
     describe("getDomain", () => {
@@ -145,18 +182,27 @@ describe("Area Renderer >", () => {
         });
 
         it("works with Date types", () => {
-            const xDomain = renderer.getDomain(dataSeries.data, dataSeries, "x", undefined as any);
+            const xDomain = renderer.getDomain(
+                dataSeries.data,
+                dataSeries,
+                "x",
+                undefined as any
+            );
 
             expect(xDomain[0]).toEqual(new Date(2020, 1, 1));
             expect(xDomain[1]).toEqual(new Date(2020, 1, 3));
         });
 
         it("works with number types", () => {
-            const yDomain = renderer.getDomain(dataSeries.data, dataSeries, "y", undefined as any);
+            const yDomain = renderer.getDomain(
+                dataSeries.data,
+                dataSeries,
+                "y",
+                undefined as any
+            );
 
             expect(yDomain[0]).toEqual(1);
             expect(yDomain[1]).toEqual(4);
         });
-
     });
 });

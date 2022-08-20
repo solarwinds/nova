@@ -10,8 +10,13 @@ export class Lasagna {
     public layers: ILasagnaLayer[] = [];
     private readonly container: D3Selection<SVGGElement>;
 
-    constructor(target: D3Selection<SVGSVGElement>, private readonly clipPath: string) {
-        this.container = target.append("g").attr("class", `${Lasagna.CONTAINER_CLASS} pointer-events`);
+    constructor(
+        target: D3Selection<SVGSVGElement>,
+        private readonly clipPath: string
+    ) {
+        this.container = target
+            .append("g")
+            .attr("class", `${Lasagna.CONTAINER_CLASS} pointer-events`);
     }
 
     public addLayer(layer: ILasagnaLayer): D3Selection {
@@ -23,7 +28,9 @@ export class Lasagna {
     }
 
     public removeLayer(layerName: string): void {
-        const index = this.layers.findIndex((layer) => layer.name === layerName);
+        const index = this.layers.findIndex(
+            (layer) => layer.name === layerName
+        );
         if (index === -1) {
             return;
         }
@@ -41,19 +48,22 @@ export class Lasagna {
     }
 
     private update() {
-        const layerContainers = this.container.selectAll<SVGElement, ILasagnaLayer>(`g.${Lasagna.LAYER_CLASS}`)
+        const layerContainers = this.container
+            .selectAll<SVGElement, ILasagnaLayer>(`g.${Lasagna.LAYER_CLASS}`)
             .data(this.layers, (d: ILasagnaLayer) => d.name)
             .order();
 
-        layerContainers.enter()
+        layerContainers
+            .enter()
             .append("g")
             .attrs({
-                "class": (d: ILasagnaLayer) => `${Lasagna.LAYER_CLASS} ${Lasagna.LAYER_CLASS}-${d.name}`,
-                "clip-path": (d: ILasagnaLayer) => d.clipped ? `url(#${this.clipPath})` : "",
+                class: (d: ILasagnaLayer) =>
+                    `${Lasagna.LAYER_CLASS} ${Lasagna.LAYER_CLASS}-${d.name}`,
+                "clip-path": (d: ILasagnaLayer) =>
+                    d.clipped ? `url(#${this.clipPath})` : "",
                 "pointer-events": "none",
             });
 
-        layerContainers.exit()
-            .remove();
+        layerContainers.exit().remove();
     }
 }

@@ -25,12 +25,14 @@ export class ComboboxSeparatorsExampleComponent {
     };
     public displayedItems = this.dataset.itemsInGroups;
 
-    constructor() { }
+    constructor() {}
 
     public textboxChanged(searchQuery: ISelectChangedEvent<string>) {
         this.displayedItems = _cloneDeep(this.dataset.itemsInGroups);
-        this.displayedItems.forEach(items => {
-            items.items = items.items.filter(item => item.includes(searchQuery.newValue));
+        this.displayedItems.forEach((items) => {
+            items.items = items.items.filter((item) =>
+                item.includes(searchQuery.newValue)
+            );
         });
     }
 }

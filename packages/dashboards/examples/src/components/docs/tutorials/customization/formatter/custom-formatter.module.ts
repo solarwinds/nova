@@ -2,21 +2,39 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 // eslint-disable-next-line max-len
-import { NuiButtonModule, NuiDocsModule, NuiFormFieldModule, NuiIconModule, NuiMessageModule, NuiSelectV2Module, NuiSwitchModule, NuiTextboxModule, NuiValidationMessageModule } from "@nova-ui/bits";
+import {
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiFormFieldModule,
+    NuiIconModule,
+    NuiMessageModule,
+    NuiSelectV2Module,
+    NuiSwitchModule,
+    NuiTextboxModule,
+    NuiValidationMessageModule,
+} from "@nova-ui/bits";
 import { NuiDashboardsModule } from "@nova-ui/dashboards";
 
 import { CustomDonutContentFormatterDocComponent } from "./donut-content-formatter-example/custom-donut-content-formatter-docs.component";
-import { CustomDonutContentFormatterComponent, CustomDonutContentFormatterConfiguratorComponent, CustomDonutContentFormatterExampleComponent } from "./donut-content-formatter-example/custom-donut-content-formatter-example.component";
+import {
+    CustomDonutContentFormatterComponent,
+    CustomDonutContentFormatterConfiguratorComponent,
+    CustomDonutContentFormatterExampleComponent,
+} from "./donut-content-formatter-example/custom-donut-content-formatter-example.component";
 import { CustomFormatterDocComponent } from "./formatter-example/custom-formatter-docs.component";
-import { CustomFormatterComponent, CustomFormatterConfiguratorComponent, CustomFormatterExampleComponent } from "./formatter-example/custom-formatter-example.component";
+import {
+    CustomFormatterComponent,
+    CustomFormatterConfiguratorComponent,
+    CustomFormatterExampleComponent,
+} from "./formatter-example/custom-formatter-example.component";
 
 const routes: Routes = [
     {
         path: "table-formatter",
         component: CustomFormatterDocComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -25,8 +43,8 @@ const routes: Routes = [
         path: "donut-content-formatter",
         component: CustomDonutContentFormatterDocComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -47,7 +65,7 @@ const routes: Routes = [
         NuiValidationMessageModule,
         NuiIconModule,
         ReactiveFormsModule,
-    ] ,
+    ],
     declarations: [
         CustomDonutContentFormatterComponent,
         CustomDonutContentFormatterExampleComponent,
@@ -59,5 +77,4 @@ const routes: Routes = [
         CustomFormatterComponent,
     ],
 })
-export class CustomFormatterModuleRoute {
-}
+export class CustomFormatterModuleRoute {}

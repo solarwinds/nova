@@ -1,31 +1,45 @@
 import { Inject } from "@angular/core";
-import { EventBus, IDataSourceDrilldown, IEvent, IFilteringOutputs } from "@nova-ui/bits";
+import {
+    EventBus,
+    IDataSourceDrilldown,
+    IEvent,
+    IFilteringOutputs,
+} from "@nova-ui/bits";
 import { takeUntil } from "rxjs/operators";
 
 import { PizzagnaService } from "../../pizzagna/services/pizzagna.service";
 import { DRILLDOWN, REFRESH } from "../../services/types";
-import { DATA_SOURCE, IProperties, PizzagnaLayer, PIZZAGNA_EVENT_BUS } from "../../types";
+import {
+    DATA_SOURCE,
+    IProperties,
+    PizzagnaLayer,
+    PIZZAGNA_EVENT_BUS,
+} from "../../types";
 
 import { DataSourceAdapter } from "./data-source-adapter";
 import { IDrilldownComponentsConfiguration } from "./types";
 
 export class DrilldownDataSourceAdapter extends DataSourceAdapter {
-
     protected dataPath: string;
     protected navigationBarId: string;
     protected drillstate: string[] = [];
     protected groupBy: string[];
     protected componentsConfig: IDrilldownComponentsConfiguration;
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
-                @Inject(DATA_SOURCE) public dataSource: IDataSourceDrilldown,
-                                            pizzagnaService: PizzagnaService) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) eventBus: EventBus<IEvent>,
+        @Inject(DATA_SOURCE) public dataSource: IDataSourceDrilldown,
+        pizzagnaService: PizzagnaService
+    ) {
         super(eventBus, dataSource, pizzagnaService);
 
-        this.eventBus.getStream(DRILLDOWN)
+        this.eventBus
+            .getStream(DRILLDOWN)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IEvent) => {
-                if (this.dataSource.busy?.value ) { return; }
+                if (this.dataSource.busy?.value) {
+                    return;
+                }
                 this.onDrilldown(event);
             });
 
@@ -41,7 +55,10 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
     }
 
     protected updateOutput(output: IFilteringOutputs | undefined) {
-        const widgetInput = this.getWidgetInput(output, this.drillstate.length !== this.groupBy.length);
+        const widgetInput = this.getWidgetInput(
+            output,
+            this.drillstate.length !== this.groupBy.length
+        );
         const widgetPath = `${PizzagnaLayer.Data}.${this.componentId}.properties`;
         this.pizzagnaService.setProperty(widgetPath, widgetInput);
 
@@ -50,9 +67,18 @@ export class DrilldownDataSourceAdapter extends DataSourceAdapter {
             const navBarPath = `${PizzagnaLayer.Data}.${this.navigationBarId}.properties.navBarConfig.label`;
             const navBarIsRootPath = `${PizzagnaLayer.Data}.${this.navigationBarId}.properties.navBarConfig.isRoot`;
             const navBarBackPath = `${PizzagnaLayer.Data}.${this.navigationBarId}.properties.navBarConfig.buttons.back.disabled`;
-            this.pizzagnaService.setProperty(navBarPath, this.drillstate[this.drillstate.length - 1]);
-            this.pizzagnaService.setProperty(navBarBackPath, !!this.drillstate.length);
-            this.pizzagnaService.setProperty(navBarIsRootPath, !this.drillstate.length);
+            this.pizzagnaService.setProperty(
+                navBarPath,
+                this.drillstate[this.drillstate.length - 1]
+            );
+            this.pizzagnaService.setProperty(
+                navBarBackPath,
+                !!this.drillstate.length
+            );
+            this.pizzagnaService.setProperty(
+                navBarIsRootPath,
+                !this.drillstate.length
+            );
         }
     }
 

@@ -9,14 +9,9 @@ describe("WidgetErrorComponent", () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                WidgetErrorComponent,
-            ],
-            imports: [
-                NuiImageModule,
-            ],
-        })
-            .compileComponents();
+            declarations: [WidgetErrorComponent],
+            imports: [NuiImageModule],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

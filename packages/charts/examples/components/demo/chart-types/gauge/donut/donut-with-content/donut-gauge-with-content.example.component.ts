@@ -21,18 +21,25 @@ export class DonutGaugeWithContentExampleComponent implements OnInit {
     public gaugeConfig: IGaugeConfig;
 
     private seriesSet: IChartAssistSeries<IAccessors>[];
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
+    private thresholds: IGaugeThresholdsConfig =
+        GaugeUtil.createStandardThresholdsConfig(100, 158);
 
     public ngOnInit(): void {
         const initialValue = 128;
         this.gaugeConfig = this.getGaugeConfig(initialValue);
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
 
         // Adding the plugin for the donut inner content
         this.contentPlugin = new ChartDonutContentPlugin();
         this.chartAssist.chart.addPlugin(this.contentPlugin);
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
         this.chartAssist.update(this.seriesSet);
     }
 

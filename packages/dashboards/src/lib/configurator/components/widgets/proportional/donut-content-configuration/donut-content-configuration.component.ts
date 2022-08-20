@@ -10,14 +10,22 @@ import {
     OnInit,
     Output,
     SimpleChanges,
-} from "@angular/core";import { FormBuilder, FormGroup } from "@angular/forms";
+} from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { EventBus, IDataField, IDataSource, IEvent } from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { ProportionalWidgetChartTypes } from "../../../../../components/proportional-widget/types";
-import { IFormatter, IFormatterConfigurator, IFormatterDefinition } from "../../../../../components/types";
-import { IProportionalDonutContentAggregator, IProportionalDonutContentAggregatorDefinition } from "../../../../../functions/proportional-aggregators/types";
+import {
+    IFormatter,
+    IFormatterConfigurator,
+    IFormatterDefinition,
+} from "../../../../../components/types";
+import {
+    IProportionalDonutContentAggregator,
+    IProportionalDonutContentAggregatorDefinition,
+} from "../../../../../functions/proportional-aggregators/types";
 import { ProportionalContentAggregatorsRegistryService } from "../../../../../services/proportional-content-aggregators-registry.service";
 import { ProportionalDonutContentFormattersRegistryService } from "../../../../../services/table-formatter-registry.service";
 import { IHasChangeDetector, PIZZAGNA_EVENT_BUS } from "../../../../../types";
@@ -30,7 +38,9 @@ import { IAggregatorConfiguratorProperties } from "../aggregators-configurators/
     styleUrls: ["./donut-content-configuration.component.less"],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DonutContentConfigurationComponent implements OnInit, OnChanges, IHasChangeDetector, OnDestroy {
+export class DonutContentConfigurationComponent
+    implements OnInit, OnChanges, IHasChangeDetector, OnDestroy
+{
     static lateLoadKey = "DonutContentConfigurationComponent";
 
     @Input() public chartType: ProportionalWidgetChartTypes;
@@ -57,23 +67,27 @@ export class DonutContentConfigurationComponent implements OnInit, OnChanges, IH
     public currentFormatterDefinition: IFormatterDefinition | undefined;
     public formatterConfiguratorProps: IFormatterConfigurator;
 
-    public currentAggregatorDefinition: IProportionalDonutContentAggregatorDefinition | undefined;
+    public currentAggregatorDefinition:
+        | IProportionalDonutContentAggregatorDefinition
+        | undefined;
     public aggregatorConfiguratorProps: IAggregatorConfiguratorProperties;
 
     private destroy$ = new Subject();
 
-    constructor(private formBuilder: FormBuilder,
+    constructor(
+        private formBuilder: FormBuilder,
         public changeDetector: ChangeDetectorRef,
         @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>,
         private contentFormattersRegistry: ProportionalDonutContentFormattersRegistryService,
         private aggregatorRegistry: ProportionalContentAggregatorsRegistryService
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         this.watchFormChanges();
         this.setFromRegistry();
 
-        this.eventBus.getStream(DATA_SOURCE_CREATED)
+        this.eventBus
+            .getStream(DATA_SOURCE_CREATED)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event: IEvent<IDataSource>) => {
                 const dataSource = event.payload;
@@ -114,7 +128,10 @@ export class DonutContentConfigurationComponent implements OnInit, OnChanges, IH
     }
 
     public onFormReady(formControlName: string, form: FormGroup) {
-        (<FormGroup>this.form.get(formControlName)).setControl("properties", form);
+        (<FormGroup>this.form.get(formControlName)).setControl(
+            "properties",
+            form
+        );
     }
 
     public get subtitleText() {
@@ -125,33 +142,47 @@ export class DonutContentConfigurationComponent implements OnInit, OnChanges, IH
         this.formatters = this.contentFormattersRegistry.getItems();
         this.aggregators = this.aggregatorRegistry.getItems();
 
-        let formatterToSet = this.formatters.find((formatter) => formatter.componentType === this.formatter?.componentType);
+        let formatterToSet = this.formatters.find(
+            (formatter) =>
+                formatter.componentType === this.formatter?.componentType
+        );
         if (!formatterToSet) {
             formatterToSet = this.formatters[0];
         }
-        this.form.get("formatter.componentType")?.setValue(formatterToSet.componentType);
+        this.form
+            .get("formatter.componentType")
+            ?.setValue(formatterToSet.componentType);
 
-        let aggregatorToSet = this.aggregators.find((aggregator) => aggregator.aggregatorType === this.aggregator?.aggregatorType);
+        let aggregatorToSet = this.aggregators.find(
+            (aggregator) =>
+                aggregator.aggregatorType === this.aggregator?.aggregatorType
+        );
         if (!aggregatorToSet) {
             aggregatorToSet = this.aggregators[0];
         }
-        this.form.get("aggregator.aggregatorType")?.setValue(aggregatorToSet.aggregatorType);
+        this.form
+            .get("aggregator.aggregatorType")
+            ?.setValue(aggregatorToSet.aggregatorType);
     }
 
     private watchFormChanges() {
-        this.form.get("aggregator.aggregatorType")?.valueChanges
-            .pipe(takeUntil(this.destroy$))
+        this.form
+            .get("aggregator.aggregatorType")
+            ?.valueChanges.pipe(takeUntil(this.destroy$))
             .subscribe((aggregatorType: string) => {
-                this.currentAggregatorDefinition = this.aggregators
-                    .find((f) => f.aggregatorType === aggregatorType) as IProportionalDonutContentAggregatorDefinition;
+                this.currentAggregatorDefinition = this.aggregators.find(
+                    (f) => f.aggregatorType === aggregatorType
+                ) as IProportionalDonutContentAggregatorDefinition;
                 this.updateAggregatorConfiguratorProps();
             });
 
-        this.form.get("formatter.componentType")?.valueChanges
-            .pipe(takeUntil(this.destroy$))
+        this.form
+            .get("formatter.componentType")
+            ?.valueChanges.pipe(takeUntil(this.destroy$))
             .subscribe((componentType: string) => {
-                this.currentFormatterDefinition = this.formatters
-                    .find((f) => f.componentType === componentType) as IFormatterDefinition;
+                this.currentFormatterDefinition = this.formatters.find(
+                    (f) => f.componentType === componentType
+                ) as IFormatterDefinition;
                 this.updateAggregatorConfiguratorProps();
             });
     }

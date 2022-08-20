@@ -1,7 +1,23 @@
-import { AfterViewInit, Component, Inject, OnDestroy, ViewChild } from "@angular/core";
 import {
-    DataSourceService, IFilter, IMenuItem, IMultiFilterMetadata, INovaFilteringOutputs,
-    ISorterChanges, LocalFilteringDataSource, PaginatorComponent, RepeatComponent, SearchComponent, SorterComponent, SorterDirection,
+    AfterViewInit,
+    Component,
+    Inject,
+    OnDestroy,
+    ViewChild,
+} from "@angular/core";
+import {
+    DataSourceService,
+    IFilter,
+    IMenuItem,
+    IMultiFilterMetadata,
+    INovaFilteringOutputs,
+    ISorterChanges,
+    LocalFilteringDataSource,
+    PaginatorComponent,
+    RepeatComponent,
+    SearchComponent,
+    SorterComponent,
+    SorterDirection,
 } from "@nova-ui/bits";
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
@@ -68,13 +84,16 @@ const RANDOM_ARRAY = [
     selector: "nui-client-side-filtering-data-source-example",
     templateUrl: "./client-side-filtering.example.component.html",
     styleUrls: ["./client-side-filtering.example.component.less"],
-    providers: [{
-        provide: DataSourceService,
-        useClass: LocalFilteringDataSource,
-    }],
+    providers: [
+        {
+            provide: DataSourceService,
+            useClass: LocalFilteringDataSource,
+        },
+    ],
 })
-export class DataSourceClientSideFilteringExampleComponent implements AfterViewInit, OnDestroy {
-
+export class DataSourceClientSideFilteringExampleComponent
+    implements AfterViewInit, OnDestroy
+{
     public panelOptions: PanelOptions = {
         panelMode: "collapsible",
         heading: "Filters",
@@ -91,29 +110,25 @@ export class DataSourceClientSideFilteringExampleComponent implements AfterViewI
     };
 
     public statusIcons: IconsOptions = {
-        "Critical": { iconName: "status_critical" },
-        "Warning": { iconName: "status_warning" },
-        "Up": { iconName: "status_up" },
+        Critical: { iconName: "status_critical" },
+        Warning: { iconName: "status_warning" },
+        Up: { iconName: "status_up" },
     };
 
     public colorIcons: IconsOptions = {
-        "azure": { iconName: "record" },
-        "black": { iconName: "status_up" },
-        "blue": { iconName: "signal-0" },
-        "cyan": { iconName: "signal-0" },
-        "green": { iconName: "signal-1" },
-        "orange": { iconName: "signal-2" },
-        "rose": { iconName: "signal-0" },
-        "violet": { iconName: "signal-0" },
-        "yellow": { iconName: "signal-0" },
-        "brown": { iconName: "signal-0" },
+        azure: { iconName: "record" },
+        black: { iconName: "status_up" },
+        blue: { iconName: "signal-0" },
+        cyan: { iconName: "signal-0" },
+        green: { iconName: "signal-1" },
+        orange: { iconName: "signal-2" },
+        rose: { iconName: "signal-0" },
+        violet: { iconName: "signal-0" },
+        yellow: { iconName: "signal-0" },
+        brown: { iconName: "signal-0" },
     };
 
-    public allStatuses: string[] = [
-        "Warning",
-        "Critical",
-        "Up",
-    ];
+    public allStatuses: string[] = ["Warning", "Critical", "Up"];
 
     public allColors: string[] = [
         "azure",
@@ -128,13 +143,9 @@ export class DataSourceClientSideFilteringExampleComponent implements AfterViewI
         "brown",
     ];
 
-    public selectedColorTypes: string[] = [
-        "Up",
-    ];
+    public selectedColorTypes: string[] = ["Up"];
 
-    public selectedCriteriaColors: string[] = [
-        "azure",
-    ];
+    public selectedCriteriaColors: string[] = ["azure"];
 
     public readonly sorterItems: IMenuItem[] = [
         {
@@ -171,22 +182,30 @@ export class DataSourceClientSideFilteringExampleComponent implements AfterViewI
 
     private outputsSubscription: Subscription;
 
-    constructor(@Inject(DataSourceService) public dataSourceService: LocalFilteringDataSource<ExampleItem>) {
+    constructor(
+        @Inject(DataSourceService)
+        public dataSourceService: LocalFilteringDataSource<ExampleItem>
+    ) {
         this.dataSourceService.setData(RANDOM_ARRAY);
     }
 
     async ngAfterViewInit() {
         this.chosenColors = [...this.selectedCriteriaColors];
         this.chosenStatuses = [...this.selectedColorTypes];
-        this.dataSourceService.registerComponent({ ...this.registerComponents() });
-
-        this.outputsSubscription = this.dataSourceService.outputsSubject.subscribe((data: INovaFilteringOutputs) => {
-            this.filteringState = data;
-            if (data && data.paginator && data.paginator.reset) {
-                // This allows to go back to first page after filtering/search/sorting has changed
-                this.filteringPaginator.goToPage(1);
-            }
+        this.dataSourceService.registerComponent({
+            ...this.registerComponents(),
         });
+
+        this.outputsSubscription =
+            this.dataSourceService.outputsSubject.subscribe(
+                (data: INovaFilteringOutputs) => {
+                    this.filteringState = data;
+                    if (data && data.paginator && data.paginator.reset) {
+                        // This allows to go back to first page after filtering/search/sorting has changed
+                        this.filteringPaginator.goToPage(1);
+                    }
+                }
+            );
 
         await this.applyFilters();
     }
@@ -204,13 +223,14 @@ export class DataSourceClientSideFilteringExampleComponent implements AfterViewI
                 // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
                 // before any new search is performed
                 detectFilterChanges: true,
-                getFilters: () => <IFilter<string[], IMultiFilterMetadata>>({
-                    type: "string[]",
-                    value: this.chosenColors,
-                    metadata: {
-                        allCategories: this.allColors,
+                getFilters: () =>
+                    <IFilter<string[], IMultiFilterMetadata>>{
+                        type: "string[]",
+                        value: this.chosenColors,
+                        metadata: {
+                            allCategories: this.allColors,
+                        },
                     },
-                }),
             },
         },
         status: {
@@ -218,13 +238,14 @@ export class DataSourceClientSideFilteringExampleComponent implements AfterViewI
                 // mark this filter to be monitored by our datasource for any changes in order reset other filters(eg: pagination)
                 // before any new search is performed
                 detectFilterChanges: true,
-                getFilters: () => <IFilter<string[], IMultiFilterMetadata>>({
-                    type: "string[]",
-                    value: this.chosenStatuses,
-                    metadata: {
-                        allCategories: this.allStatuses,
+                getFilters: () =>
+                    <IFilter<string[], IMultiFilterMetadata>>{
+                        type: "string[]",
+                        value: this.chosenStatuses,
+                        metadata: {
+                            allCategories: this.allStatuses,
+                        },
                     },
-                }),
             },
         },
         search: {
@@ -236,7 +257,7 @@ export class DataSourceClientSideFilteringExampleComponent implements AfterViewI
         paginator: {
             componentInstance: this.filteringPaginator,
         },
-    })
+    });
 
     public async applyFilters() {
         await this.dataSourceService.applyFilters();
@@ -270,15 +291,18 @@ export class DataSourceClientSideFilteringExampleComponent implements AfterViewI
     }
 
     public showStatus(status: string) {
-        return this.filteringState.status ? this.filteringState.status[status] : this.filteringState.status;
+        return this.filteringState.status
+            ? this.filteringState.status[status]
+            : this.filteringState.status;
     }
 
     public showColor(color: string) {
-        return this.filteringState.color ? this.filteringState.color[color] : this.filteringState.color;
+        return this.filteringState.color
+            ? this.filteringState.color[color]
+            : this.filteringState.color;
     }
 
     public isGreaterThanZero(amount: number): boolean {
         return amount > 0;
     }
-
 }

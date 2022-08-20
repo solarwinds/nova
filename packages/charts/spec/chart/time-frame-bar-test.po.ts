@@ -17,7 +17,10 @@ export class TimeFrameBarTestPage {
     }
 
     public get timeFrameBar(): TimeFrameBarAtom {
-        return Atom.findIn(TimeFrameBarAtom, element(by.className("time-frame-bar")));
+        return Atom.findIn(
+            TimeFrameBarAtom,
+            element(by.className("time-frame-bar"))
+        );
     }
 
     public async removeDelay(): Promise<void> {

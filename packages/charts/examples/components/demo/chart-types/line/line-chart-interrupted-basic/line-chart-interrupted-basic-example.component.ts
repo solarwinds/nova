@@ -40,10 +40,15 @@ export class LineChartInterruptedBasicExampleComponent implements OnInit {
         // The line renderer will make the chart look like a line chart.
         const renderer = new LineRenderer();
         // Line accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
 
         // Renderer for the missing dataSeries
-        const rendererMissing = new LineRenderer(new MissingDataLineRendererConfig());
+        const rendererMissing = new LineRenderer(
+            new MissingDataLineRendererConfig()
+        );
         const accessorsMissing = new LineAccessors();
         // We need to store the original value of the 'defined' accessor
         const origDefinedAccessor = accessorsMissing.data.defined;
@@ -88,40 +93,100 @@ function getData() {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2016-12-25T15:14:29.909Z", format).toDate(), y: 30 },
-                { x: moment("2016-12-27T15:14:29.909Z", format).toDate(), y: 95 },
+                {
+                    x: moment("2016-12-25T15:14:29.909Z", format).toDate(),
+                    y: 30,
+                },
+                {
+                    x: moment("2016-12-27T15:14:29.909Z", format).toDate(),
+                    y: 95,
+                },
 
                 // missing data segment
-                { x: moment("2016-12-27T15:14:29.909Z", format).toDate(), y: 95, defined: false },
-                { x: moment("2016-12-29T15:14:29.909Z", format).toDate(), y: 30, defined: false  },
+                {
+                    x: moment("2016-12-27T15:14:29.909Z", format).toDate(),
+                    y: 95,
+                    defined: false,
+                },
+                {
+                    x: moment("2016-12-29T15:14:29.909Z", format).toDate(),
+                    y: 30,
+                    defined: false,
+                },
 
                 // single defined data point surrounded by missing data segments
-                { x: moment("2016-12-29T15:14:29.909Z", format).toDate(), y: 30 },
+                {
+                    x: moment("2016-12-29T15:14:29.909Z", format).toDate(),
+                    y: 30,
+                },
 
                 // missing data segment
-                { x: moment("2016-12-29T15:14:29.909Z", format).toDate(), y: 30, defined: false  },
-                { x: moment("2016-12-31T15:14:29.909Z", format).toDate(), y: 60, defined: false },
+                {
+                    x: moment("2016-12-29T15:14:29.909Z", format).toDate(),
+                    y: 30,
+                    defined: false,
+                },
+                {
+                    x: moment("2016-12-31T15:14:29.909Z", format).toDate(),
+                    y: 60,
+                    defined: false,
+                },
 
-                { x: moment("2016-12-31T15:14:29.909Z", format).toDate(), y: 60 },
-                { x: moment("2017-01-03T15:14:29.909Z", format).toDate(), y: 35 },
+                {
+                    x: moment("2016-12-31T15:14:29.909Z", format).toDate(),
+                    y: 60,
+                },
+                {
+                    x: moment("2017-01-03T15:14:29.909Z", format).toDate(),
+                    y: 35,
+                },
 
                 // missing data segment
-                { x: moment("2017-01-03T15:14:29.909Z", format).toDate(), y: 35, defined: false },
-                { x: moment("2017-01-04T15:14:29.909Z", format).toDate(), y: 20, defined: false },
+                {
+                    x: moment("2017-01-03T15:14:29.909Z", format).toDate(),
+                    y: 35,
+                    defined: false,
+                },
+                {
+                    x: moment("2017-01-04T15:14:29.909Z", format).toDate(),
+                    y: 20,
+                    defined: false,
+                },
 
-                { x: moment("2017-01-04T15:14:29.909Z", format).toDate(), y: 20 },
-                { x: moment("2017-01-05T15:14:29.909Z", format).toDate(), y: 35 },
+                {
+                    x: moment("2017-01-04T15:14:29.909Z", format).toDate(),
+                    y: 20,
+                },
+                {
+                    x: moment("2017-01-05T15:14:29.909Z", format).toDate(),
+                    y: 35,
+                },
             ],
         },
         {
             id: "series-2",
             name: "Series 2",
             data: [
-                { x: moment("2016-12-25T15:14:29.909Z", format).toDate(), y: 60 },
-                { x: moment("2016-12-27T15:14:29.909Z", format).toDate(), y: 40 },
-                { x: moment("2016-12-29T15:14:29.909Z", format).toDate(), y: 70 },
-                { x: moment("2016-12-31T15:14:29.909Z", format).toDate(), y: 45 },
-                { x: moment("2017-01-03T15:14:29.909Z", format).toDate(), y: 90 },
+                {
+                    x: moment("2016-12-25T15:14:29.909Z", format).toDate(),
+                    y: 60,
+                },
+                {
+                    x: moment("2016-12-27T15:14:29.909Z", format).toDate(),
+                    y: 40,
+                },
+                {
+                    x: moment("2016-12-29T15:14:29.909Z", format).toDate(),
+                    y: 70,
+                },
+                {
+                    x: moment("2016-12-31T15:14:29.909Z", format).toDate(),
+                    y: 45,
+                },
+                {
+                    x: moment("2017-01-03T15:14:29.909Z", format).toDate(),
+                    y: 90,
+                },
             ],
         },
     ];

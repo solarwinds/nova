@@ -18,7 +18,10 @@ describe("a11y: form-field", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("form-field/form-field-test");
-        toggleButton = Atom.find(ButtonAtom, "nui-form-field-test-toggle-disable-state-button");
+        toggleButton = Atom.find(
+            ButtonAtom,
+            "nui-form-field-test-toggle-disable-state-button"
+        );
     });
 
     it("button", async () => {

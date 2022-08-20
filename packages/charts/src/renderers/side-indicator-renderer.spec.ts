@@ -3,14 +3,22 @@ import { Subject } from "rxjs";
 
 import { LinearScale } from "../core/common/scales/linear-scale";
 import { TimeScale } from "../core/common/scales/time-scale";
-import { D3Selection, IDataSeries, IRenderContainers, IRendererEventPayload } from "../core/common/types";
+import {
+    D3Selection,
+    IDataSeries,
+    IRenderContainers,
+    IRendererEventPayload,
+} from "../core/common/types";
 import { GRAYSCALE_FILTER } from "../core/types";
 
-import { ISideIndicatorAccessors, SideIndicatorAccessors, SideIndicatorRenderer } from "./side-indicator-renderer";
+import {
+    ISideIndicatorAccessors,
+    SideIndicatorAccessors,
+    SideIndicatorRenderer,
+} from "./side-indicator-renderer";
 import { IRenderSeries, RenderLayerName } from "./types";
 
 describe("Side Indicator Renderer >", () => {
-
     let renderer: SideIndicatorRenderer;
     let accessors: ISideIndicatorAccessors;
 
@@ -22,7 +30,12 @@ describe("Side Indicator Renderer >", () => {
     it("should have correct render layers", () => {
         const layers = renderer.getRequiredLayers();
         expect(layers.length).toBe(1);
-        expect(-1 !== layers.findIndex(layer => layer.name === RenderLayerName.unclippedData)).toEqual(true);
+        expect(
+            -1 !==
+                layers.findIndex(
+                    (layer) => layer.name === RenderLayerName.unclippedData
+                )
+        ).toEqual(true);
     });
 
     describe("draw()", () => {
@@ -36,13 +49,15 @@ describe("Side Indicator Renderer >", () => {
         const rendererSubject = new Subject<IRendererEventPayload>();
 
         beforeEach(() => {
-            svg = select(document.createElement("div")).append("svg").attr("height", 10);
+            svg = select(document.createElement("div"))
+                .append("svg")
+                .attr("height", 10);
             containers[RenderLayerName.unclippedData] = svg.append("g");
             yScale = new LinearScale();
             xScale = new TimeScale();
             dataSeries = {
-                "id": "series-1__error-0__side-indicator",
-                "data": [{ active: true }],
+                id: "series-1__error-0__side-indicator",
+                data: [{ active: true }],
                 accessors,
                 renderer,
             };
@@ -98,7 +113,13 @@ describe("Side Indicator Renderer >", () => {
             dataSeries.data[0].active = false;
             renderer.draw(renderSeries, rendererSubject);
             expect(svg.select("rect").attr("fill")).toEqual(expectedColor);
-            expect(svg.select("rect").node().attributeStyleMap.get("filter").toString()).toEqual(GRAYSCALE_FILTER);
+            expect(
+                svg
+                    .select("rect")
+                    .node()
+                    .attributeStyleMap.get("filter")
+                    .toString()
+            ).toEqual(GRAYSCALE_FILTER);
         });
 
         it("should not apply the grayscale filter if 'active' is false but 'inactiveColor' accessor is 'defined'", () => {
@@ -107,7 +128,9 @@ describe("Side Indicator Renderer >", () => {
             dataSeries.data[0].active = false;
             renderer.draw(renderSeries, rendererSubject);
             expect(svg.select("rect").attr("fill")).toEqual(expectedColor);
-            expect(svg.select("rect").node().attributeStyleMap.get("filter")).toBeNull();
+            expect(
+                svg.select("rect").node().attributeStyleMap.get("filter")
+            ).toBeNull();
         });
 
         it("should set the 'rect' position and 'width'", () => {
@@ -120,8 +143,12 @@ describe("Side Indicator Renderer >", () => {
             const expectedWidth = 2;
             renderer.draw(renderSeries, rendererSubject);
             expect(svg.select("rect").attr("x")).toEqual(`-${expectedWidth}`);
-            expect(svg.select("rect").attr("y")).toEqual(yScale.convert(endValue).toString());
-            expect(svg.select("rect").attr("width")).toEqual(expectedWidth.toString());
+            expect(svg.select("rect").attr("y")).toEqual(
+                yScale.convert(endValue).toString()
+            );
+            expect(svg.select("rect").attr("width")).toEqual(
+                expectedWidth.toString()
+            );
         });
 
         it("should calculate the 'rect' height based on the zone series 'start' and 'end' values", () => {
@@ -132,7 +159,12 @@ describe("Side Indicator Renderer >", () => {
             accessors.series.start = () => startValue;
             accessors.series.end = () => endValue;
             renderer.draw(renderSeries, rendererSubject);
-            expect(svg.select("rect").attr("height")).toEqual(Math.min(yScale.range()[0], yScale.convert(startValue)).toString());
+            expect(svg.select("rect").attr("height")).toEqual(
+                Math.min(
+                    yScale.range()[0],
+                    yScale.convert(startValue)
+                ).toString()
+            );
         });
 
         it("should calculate the 'rect' size based on the 'start' and 'end' and not extend past the bottom line of the chart", () => {
@@ -143,7 +175,11 @@ describe("Side Indicator Renderer >", () => {
             accessors.series.start = () => startValue;
             accessors.series.end = () => endValue;
             renderer.draw(renderSeries, rendererSubject);
-            const result = (yScale.convert(startValue) < 0 ? 0 : yScale.convert(startValue) - yScale.convert(endValue)).toString();
+            const result = (
+                yScale.convert(startValue) < 0
+                    ? 0
+                    : yScale.convert(startValue) - yScale.convert(endValue)
+            ).toString();
             expect(svg.select("rect").attr("height")).toEqual(result);
         });
 
@@ -155,7 +191,9 @@ describe("Side Indicator Renderer >", () => {
             accessors.series.start = () => undefined;
             accessors.series.end = () => endValue;
             renderer.draw(renderSeries, rendererSubject);
-            expect(svg.select("rect").attr("height")).toEqual((yScale.range()[0] - yScale.convert(endValue)).toString());
+            expect(svg.select("rect").attr("height")).toEqual(
+                (yScale.range()[0] - yScale.convert(endValue)).toString()
+            );
         });
 
         it("should use a value of zero for the top of the 'rect' if the end accessor result is 'undefined'", () => {
@@ -166,8 +204,9 @@ describe("Side Indicator Renderer >", () => {
             accessors.series.end = () => undefined;
             renderer.draw(renderSeries, rendererSubject);
             expect(svg.select("rect").attr("y")).toEqual("0");
-            expect(svg.select("rect").attr("height")).toEqual((yScale.convert(startValue) - 0).toString());
+            expect(svg.select("rect").attr("height")).toEqual(
+                (yScale.convert(startValue) - 0).toString()
+            );
         });
-
     });
 });

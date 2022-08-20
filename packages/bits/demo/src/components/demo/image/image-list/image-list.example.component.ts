@@ -5,8 +5,8 @@ import { IImagesPresetItem, imagesPresetToken } from "@nova-ui/bits";
     selector: "nui-image-list-example",
     templateUrl: "./image-list.example.component.html",
 })
-
 export class ImageListExampleComponent {
-    constructor(@Inject(imagesPresetToken) public images: Array<IImagesPresetItem>) {
-    }
+    constructor(
+        @Inject(imagesPresetToken) public images: Array<IImagesPresetItem>
+    ) {}
 }

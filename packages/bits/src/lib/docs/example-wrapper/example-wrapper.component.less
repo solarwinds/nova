@@ -1,5 +1,5 @@
-@import (reference) url('../../../styles/nui-framework-variables.less');
-@import (reference) url('../../../styles/mixins.less');
+@import (reference) url("../../../styles/nui-framework-variables.less");
+@import (reference) url("../../../styles/mixins.less");
 
 //== Example-wrapper
 //
@@ -15,7 +15,7 @@
 @example-wrapper-title-flex-grow: 1;
 
 .nui-example-wrapper {
-    &__theme{
+    &__theme {
         display: inline-block;
     }
 
@@ -28,7 +28,8 @@
         flex-direction: column;
         border: @example-wrapper-container-border-width solid;
         .setCssVariable(border-color, nui-color-line-default);
-        box-shadow: @example-wrapper-container-box-shadow-inset @nui-space-xxs @nui-space-xxs @nui-shadow-color;
+        box-shadow: @example-wrapper-container-box-shadow-inset @nui-space-xxs
+            @nui-space-xxs @nui-shadow-color;
         margin-bottom: (@nui-space-sm * 2);
     }
 

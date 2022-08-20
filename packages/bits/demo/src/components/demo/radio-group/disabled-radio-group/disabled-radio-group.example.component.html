@@ -1,11 +1,11 @@
-<h1 i18n>Selected fruit: {{selectedFruit}}</h1>
-<nui-radio-group id="fruit-radio-group"
-                 name="fruit"
-                 [(value)]="selectedFruit">
-    <nui-radio *ngFor="let fruit of fruits"
-               [value]="fruit"
-               [checked]="fruit === 'Orange'"
-               [disabled]="fruit === 'Banana'">
-        {{fruit}}
+<h1 i18n>Selected fruit: {{ selectedFruit }}</h1>
+<nui-radio-group id="fruit-radio-group" name="fruit" [(value)]="selectedFruit">
+    <nui-radio
+        *ngFor="let fruit of fruits"
+        [value]="fruit"
+        [checked]="fruit === 'Orange'"
+        [disabled]="fruit === 'Banana'"
+    >
+        {{ fruit }}
     </nui-radio>
 </nui-radio-group>

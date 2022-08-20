@@ -21,7 +21,9 @@ xdescribe("USERCONTROL image", () => {
     });
 
     it("should render images with predefined margins", async () => {
-        expect(await marginImage.hasClass("nui-image__margin-centered")).toBe(true);
+        expect(await marginImage.hasClass("nui-image__margin-centered")).toBe(
+            true
+        );
     });
 
     it("should render custom size images with correct dimensions", async () => {

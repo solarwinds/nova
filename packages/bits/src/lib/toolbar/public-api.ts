@@ -1,4 +1,4 @@
-import {ToolbarItemComponent} from "./toolbar-item.component";
+import { ToolbarItemComponent } from "./toolbar-item.component";
 
 export enum ToolbarItemType {
     secondary = "secondary",

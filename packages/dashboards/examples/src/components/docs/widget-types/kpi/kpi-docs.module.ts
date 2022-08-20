@@ -1,7 +1,16 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiMessageModule, NuiSwitchModule } from "@nova-ui/bits";
-import { KpiColorComparatorsRegistryService, NuiDashboardsModule } from "@nova-ui/dashboards";
+import {
+    DEMO_PATH_TOKEN,
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiMessageModule,
+    NuiSwitchModule,
+} from "@nova-ui/bits";
+import {
+    KpiColorComparatorsRegistryService,
+    NuiDashboardsModule,
+} from "@nova-ui/dashboards";
 
 import { KpiBackgroundColorDocsComponent } from "./kpi-background-color/docs/kpi-background-color-docs.component";
 import { KpiWidgetBackgroundColorExampleComponent } from "./kpi-background-color/example/kpi-widget-background-color-example.component";
@@ -17,8 +26,8 @@ const routes: Routes = [
         path: "",
         component: KpiDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
             showThemeSwitcher: true,
         },
@@ -27,8 +36,8 @@ const routes: Routes = [
         path: "example",
         component: KpiWidgetExampleComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -36,8 +45,8 @@ const routes: Routes = [
         path: "background-color",
         component: KpiBackgroundColorDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -45,8 +54,8 @@ const routes: Routes = [
         path: "sync-broker",
         component: KpiSyncBrokerDocsComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -74,7 +83,9 @@ const routes: Routes = [
     providers: [KpiColorComparatorsRegistryService],
 })
 export class KpiDocsModule {
-    constructor(private comparatorsRegistry: KpiColorComparatorsRegistryService) {
+    constructor(
+        private comparatorsRegistry: KpiColorComparatorsRegistryService
+    ) {
         this.backgroundColorDocsSetup();
     }
 
@@ -82,7 +93,8 @@ export class KpiDocsModule {
         this.comparatorsRegistry.registerComparators({
             "!=": {
                 // eslint-disable-next-line eqeqeq
-                comparatorFn: (actual: any, reference: any) => actual != reference,
+                comparatorFn: (actual: any, reference: any) =>
+                    actual != reference,
                 label: "Not equal",
             },
         });

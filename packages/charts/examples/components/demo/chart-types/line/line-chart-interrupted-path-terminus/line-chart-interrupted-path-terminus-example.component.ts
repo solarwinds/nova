@@ -17,9 +17,12 @@ import moment from "moment/moment";
 
 @Component({
     selector: "line-chart-interrupted-path-terminus-example",
-    templateUrl: "./line-chart-interrupted-path-terminus-example.component.html",
+    templateUrl:
+        "./line-chart-interrupted-path-terminus-example.component.html",
 })
-export class LineChartInterruptedPathTerminusExampleComponent implements OnInit {
+export class LineChartInterruptedPathTerminusExampleComponent
+    implements OnInit
+{
     // XYGrid is used for rendering axes as well as other grid elements
     public chart = new Chart(new XYGrid());
     public chartAssist: ChartAssist = new ChartAssist(this.chart);
@@ -40,10 +43,15 @@ export class LineChartInterruptedPathTerminusExampleComponent implements OnInit 
         // The line renderer will make the chart look like a line chart.
         const renderer = new LineRenderer();
         // Line accessors let the renderer know how to access x and y domain data respectively from a chart's input data set(s).
-        const accessors = new LineAccessors(this.chartAssist.palette.standardColors, this.chartAssist.markers);
+        const accessors = new LineAccessors(
+            this.chartAssist.palette.standardColors,
+            this.chartAssist.markers
+        );
 
         // Renderer for the missing dataSeries
-        const rendererMissing = new LineRenderer(new MissingDataLineRendererConfig());
+        const rendererMissing = new LineRenderer(
+            new MissingDataLineRendererConfig()
+        );
         const accessorsMissing = new LineAccessors();
         // we need to store the original value of the `defined` accessor
         const origDefinedAccessor = accessorsMissing.data.defined;
@@ -86,15 +94,46 @@ function getData() {
             id: "series-1",
             name: "Series 1",
             data: [
-                { x: moment("2016-12-25T15:14:29.909Z", format).toDate(), y: 30, defined: false },
-                { x: moment("2016-12-27T15:14:29.909Z", format).toDate(), y: 95, defined: false },
-                { x: moment("2016-12-27T15:14:29.909Z", format).toDate(), y: 95 },
-                { x: moment("2016-12-28T15:14:29.909Z", format).toDate(), y: 35 },
-                { x: moment("2016-12-31T15:14:29.909Z", format).toDate(), y: 60 },
-                { x: moment("2017-01-03T15:14:29.909Z", format).toDate(), y: 35 },
-                { x: moment("2017-01-04T15:14:29.909Z", format).toDate(), y: 20 },
-                { x: moment("2017-01-04T15:14:29.909Z", format).toDate(), y: 20, defined: false },
-                { x: moment("2017-01-05T15:14:29.909Z", format).toDate(), y: 35, defined: false },
+                {
+                    x: moment("2016-12-25T15:14:29.909Z", format).toDate(),
+                    y: 30,
+                    defined: false,
+                },
+                {
+                    x: moment("2016-12-27T15:14:29.909Z", format).toDate(),
+                    y: 95,
+                    defined: false,
+                },
+                {
+                    x: moment("2016-12-27T15:14:29.909Z", format).toDate(),
+                    y: 95,
+                },
+                {
+                    x: moment("2016-12-28T15:14:29.909Z", format).toDate(),
+                    y: 35,
+                },
+                {
+                    x: moment("2016-12-31T15:14:29.909Z", format).toDate(),
+                    y: 60,
+                },
+                {
+                    x: moment("2017-01-03T15:14:29.909Z", format).toDate(),
+                    y: 35,
+                },
+                {
+                    x: moment("2017-01-04T15:14:29.909Z", format).toDate(),
+                    y: 20,
+                },
+                {
+                    x: moment("2017-01-04T15:14:29.909Z", format).toDate(),
+                    y: 20,
+                    defined: false,
+                },
+                {
+                    x: moment("2017-01-05T15:14:29.909Z", format).toDate(),
+                    y: 35,
+                    defined: false,
+                },
             ],
         },
     ];

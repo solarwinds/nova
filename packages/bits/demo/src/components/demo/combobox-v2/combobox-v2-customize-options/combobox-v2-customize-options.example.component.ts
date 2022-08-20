@@ -13,12 +13,11 @@ interface IExampleItem {
 })
 export class ComboboxV2CustomizeOptionsExampleComponent {
     public icons: any[] = ["check", "email", "execute"];
-    public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) =>
-        ({
-            id: `value-${i}`,
-            name: $localize `Item ${i}`,
-            icon: this.getRandomIcon(),
-        }));
+    public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) => ({
+        id: `value-${i}`,
+        name: $localize`Item ${i}`,
+        icon: this.getRandomIcon(),
+    }));
     public comboboxControl = new FormControl();
 
     public displayFn(item: IExampleItem): string {

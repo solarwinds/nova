@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, Input, SimpleChange } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    Input,
+    SimpleChange,
+} from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { EventBus, IEvent, LoggerService } from "@nova-ui/bits";
 
@@ -16,9 +21,11 @@ import { BaseLayout } from "./base-layout";
 class TestLayoutComponent extends BaseLayout {
     @Input() nodes: string[] = ["myId"];
 
-    constructor(changeDetector: ChangeDetectorRef,
-                pizzagnaService: PizzagnaService,
-                logger: LoggerService) {
+    constructor(
+        changeDetector: ChangeDetectorRef,
+        pizzagnaService: PizzagnaService,
+        logger: LoggerService
+    ) {
         super(changeDetector, pizzagnaService, logger);
     }
 
@@ -47,7 +54,10 @@ describe("BaseLayout", () => {
     beforeEach(waitForAsync(() => {
         eventBus = new EventBus();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
         pizzagnaService.updateComponents(testComponents);
 
         TestBed.configureTestingModule({
@@ -62,11 +72,8 @@ describe("BaseLayout", () => {
                     useValue: eventBus,
                 },
             ],
-            declarations: [
-                TestLayoutComponent,
-            ],
-        })
-            .compileComponents();
+            declarations: [TestLayoutComponent],
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -80,14 +87,18 @@ describe("BaseLayout", () => {
 
     describe("ngOnChanges > ", () => {
         it("should not invoke updateNodeConfigs when the nodes input does not change", () => {
-            spyOn((<any>component), "updateNodeConfigs");
-            component.ngOnChanges({ test: new SimpleChange(null, null, false) });
+            spyOn(<any>component, "updateNodeConfigs");
+            component.ngOnChanges({
+                test: new SimpleChange(null, null, false),
+            });
             expect((<any>component).updateNodeConfigs).not.toHaveBeenCalled();
         });
 
         it("should invoke updateNodeConfigs when the nodes input changes", () => {
-            spyOn((<any>component), "updateNodeConfigs");
-            component.ngOnChanges({ nodes: new SimpleChange(null, null, false) });
+            spyOn(<any>component, "updateNodeConfigs");
+            component.ngOnChanges({
+                nodes: new SimpleChange(null, null, false),
+            });
             expect((<any>component).updateNodeConfigs).toHaveBeenCalled();
         });
 
@@ -95,7 +106,9 @@ describe("BaseLayout", () => {
             component.nodeComponentsConfigs = [testComponents["component1"]];
             component.nodes = ["component2"];
             component.ngOnChanges({ nodes: {} as SimpleChange });
-            expect(component.nodeComponentsConfigs).toEqual([testComponents["component2"]]);
+            expect(component.nodeComponentsConfigs).toEqual([
+                testComponents["component2"],
+            ]);
         });
     });
 
@@ -113,7 +126,9 @@ describe("BaseLayout", () => {
             component.nodeComponentsConfigs = testNodeConfigs;
             component.nodes = ["component2"];
             component.ngDoCheck();
-            expect(component.nodeComponentsConfigs).toEqual([testComponents["component2"]]);
+            expect(component.nodeComponentsConfigs).toEqual([
+                testComponents["component2"],
+            ]);
             expect(component.nodeComponentsConfigs).not.toBe(testNodeConfigs);
         });
 
@@ -128,15 +143,21 @@ describe("BaseLayout", () => {
             component.nodes = ["component2"];
 
             const previousComponent2 = testComponents["component2"];
-            const previousComponent2JSON = JSON.stringify(testComponents["component2"]);
+            const previousComponent2JSON = JSON.stringify(
+                testComponents["component2"]
+            );
 
             component.ngDoCheck();
 
-            expect(component.nodeComponentsConfigs).toEqual([testComponents["component2"]]);
+            expect(component.nodeComponentsConfigs).toEqual([
+                testComponents["component2"],
+            ]);
             expect(component.nodeComponentsConfigs).not.toBe(testNodeConfigs);
 
             expect(testComponents["component2"]).toBe(previousComponent2);
-            expect(JSON.stringify(testComponents["component2"])).toBe(previousComponent2JSON);
+            expect(JSON.stringify(testComponents["component2"])).toBe(
+                previousComponent2JSON
+            );
         });
     });
 });

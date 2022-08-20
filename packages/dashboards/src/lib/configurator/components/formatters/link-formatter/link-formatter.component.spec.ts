@@ -10,9 +10,7 @@ describe(LinkFormatterComponent.name, () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [
-                LinkFormatterComponent,
-            ],
+            declarations: [LinkFormatterComponent],
         }).compileComponents();
 
         fixture = TestBed.createComponent(LinkFormatterComponent);
@@ -23,7 +21,8 @@ describe(LinkFormatterComponent.name, () => {
         };
     });
 
-    const getLink = (): DebugElement | null => fixture.debugElement.query(By.css("a"));
+    const getLink = (): DebugElement | null =>
+        fixture.debugElement.query(By.css("a"));
 
     const assertLinkTarget = (expectedTarget: string) => {
         const link = getLink();

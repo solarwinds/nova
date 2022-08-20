@@ -25,13 +25,20 @@ export class DonutGaugeWithThresholdTogglingExampleComponent implements OnInit {
     private seriesSet: IChartAssistSeries<IAccessors>[];
 
     // Generating a standard set of thresholds with warning and critical levels
-    private thresholds: IGaugeThresholdsConfig = GaugeUtil.createStandardThresholdsConfig(100, 158);
+    private thresholds: IGaugeThresholdsConfig =
+        GaugeUtil.createStandardThresholdsConfig(100, 158);
 
     public ngOnInit(): void {
         this.gaugeConfig = this.getGaugeConfig();
-        this.chartAssist = GaugeUtil.createChartAssist(this.gaugeConfig, GaugeMode.Donut);
+        this.chartAssist = GaugeUtil.createChartAssist(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
 
-        this.seriesSet = GaugeUtil.assembleSeriesSet(this.gaugeConfig, GaugeMode.Donut);
+        this.seriesSet = GaugeUtil.assembleSeriesSet(
+            this.gaugeConfig,
+            GaugeMode.Donut
+        );
         this.chartAssist.update(this.seriesSet);
     }
 
@@ -44,7 +51,8 @@ export class DonutGaugeWithThresholdTogglingExampleComponent implements OnInit {
         this.warningEnabled = enabled;
 
         // Enabling or disabling the warning threshold
-        this.thresholds.definitions[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
+        this.thresholds.definitions[StandardGaugeThresholdId.Warning].enabled =
+            this.warningEnabled;
 
         this.updateGauge();
     }
@@ -53,7 +61,8 @@ export class DonutGaugeWithThresholdTogglingExampleComponent implements OnInit {
         this.criticalEnabled = enabled;
 
         // Enabling or disabling the critical threshold
-        this.thresholds.definitions[StandardGaugeThresholdId.Critical].enabled = this.criticalEnabled;
+        this.thresholds.definitions[StandardGaugeThresholdId.Critical].enabled =
+            this.criticalEnabled;
 
         this.updateGauge();
     }

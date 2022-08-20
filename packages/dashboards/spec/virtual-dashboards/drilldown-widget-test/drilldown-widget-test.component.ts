@@ -1,5 +1,12 @@
 import { HttpClient } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from "@angular/core";
 import { DataSourceService, IFilters, INovaFilters } from "@nova-ui/bits";
 import {
     DashboardComponent,
@@ -35,7 +42,10 @@ import { GRAPH_DATA_MOCK } from "./data-mock";
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class DrilldownDataSource extends DataSourceService<any> implements OnDestroy {
+export class DrilldownDataSource
+    extends DataSourceService<any>
+    implements OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "DrilldownDataSource";
 
@@ -51,11 +61,11 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
 
     constructor() {
         super();
-        this.applyFilters$.pipe(
-            switchMap(filters => this.getData(filters))
-        ).subscribe(async (res) => {
-            this.outputsSubject.next(await this.getFilteredData(res));
-        });
+        this.applyFilters$
+            .pipe(switchMap((filters) => this.getData(filters)))
+            .subscribe(async (res) => {
+                this.outputsSubject.next(await this.getFilteredData(res));
+            });
     }
 
     private groupedDataHistory: any[] = [];
@@ -63,23 +73,26 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     // In this example, getFilteredData is invoked every 10 minutes (Take a look at the refresher
     // provider definition in the widget configuration below to see how the interval is set)
     public async getFilteredData(data: any): Promise<any> {
-        return of(data).pipe(
-            map(countries => {
-                const widgetInput = this.getOutput(countries);
+        return of(data)
+            .pipe(
+                map((countries) => {
+                    const widgetInput = this.getOutput(countries);
 
-                if (this.isDrillDown()) {
-                    const activeDrillLvl = this.drillState.length;
-                    const group = this.groupBy[activeDrillLvl];
-                    const [lastGroupedValue, groupedData] = this.getTransformedDataForGroup(widgetInput, group);
+                    if (this.isDrillDown()) {
+                        const activeDrillLvl = this.drillState.length;
+                        const group = this.groupBy[activeDrillLvl];
+                        const [lastGroupedValue, groupedData] =
+                            this.getTransformedDataForGroup(widgetInput, group);
 
-                    this.groupedDataHistory.push(lastGroupedValue);
+                        this.groupedDataHistory.push(lastGroupedValue);
 
-                    return groupedData;
-                }
+                        return groupedData;
+                    }
 
-                return widgetInput;
-            })
-        ).toPromise();
+                    return widgetInput;
+                })
+            )
+            .toPromise();
     }
 
     public ngOnDestroy(): void {
@@ -97,25 +110,27 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
 
         this.busy.next(true);
 
-        return of(this.cache || GRAPH_DATA_MOCK)
-            .pipe(
-                // delay(1000),
-                tap(data => this.cache = data),
-                map(data => data.data.countries),
-                catchError(e => of([])),
-                finalize(() => this.busy.next(false))
-            );
+        return of(this.cache || GRAPH_DATA_MOCK).pipe(
+            // delay(1000),
+            tap((data) => (this.cache = data)),
+            map((data) => data.data.countries),
+            catchError((e) => of([])),
+            finalize(() => this.busy.next(false))
+        );
     }
 
     private getTransformedDataForGroup(data: any, groupName: string) {
         const groupedDict = groupBy(data, groupName);
-        const dataArr = Object.keys(groupedDict).map(property => ({
+        const dataArr = Object.keys(groupedDict).map((property) => ({
             id: property,
             label: property,
             // TODO: apply groups mapping here
             statuses: [
                 { key: "state_ok", value: groupedDict[property].length },
-                { key: "status_unreachable", value: generateNumberUpTo(100000) },
+                {
+                    key: "status_unreachable",
+                    value: generateNumberUpTo(100000),
+                },
                 { key: "status_warning", value: generateNumberUpTo(10000) },
                 { key: "status_unknown", value: generateNumberUpTo(1000) },
             ],
@@ -129,7 +144,10 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     }
 
     private isBack(): boolean {
-        return (this.groupedDataHistory.length > this.drillState.length) && !this.isHome();
+        return (
+            this.groupedDataHistory.length > this.drillState.length &&
+            !this.isHome()
+        );
     }
 
     private isDrillDown(): boolean {
@@ -161,28 +179,35 @@ export class DrilldownDataSource extends DataSourceService<any> implements OnDes
     styleUrls: ["./drilldown-widget-test.component.less"],
 })
 export class DrilldownWidgetTestComponent implements OnInit {
-
     public dashboard: IDashboard | undefined;
     public gridsterConfig: GridsterConfig = {};
     public editMode: boolean = false;
 
-    @ViewChild(DashboardComponent) public dashboardComponent: DashboardComponent;
+    @ViewChild(DashboardComponent)
+    public dashboardComponent: DashboardComponent;
 
     constructor(
         private drilldownRegistry: UnitTestRegistryService,
         private widgetTypesService: WidgetTypesService,
         private providerRegistry: ProviderRegistryService,
         private changeDetectorRef: ChangeDetectorRef
-
     ) {
-        const drilldownWidget = _cloneDeep(this.widgetTypesService.getWidgetType("drilldown"));
-        drilldownWidget.widget[PizzagnaLayer.Structure].navigationBar.providers = {
+        const drilldownWidget = _cloneDeep(
+            this.widgetTypesService.getWidgetType("drilldown")
+        );
+        drilldownWidget.widget[
+            PizzagnaLayer.Structure
+        ].navigationBar.providers = {
             DrilldownRegistry: {
                 providerId: NOVA_TEST_REGISTRY,
                 properties: {},
             },
         };
-        this.widgetTypesService.registerWidgetType("drilldown", 2, drilldownWidget);
+        this.widgetTypesService.registerWidgetType(
+            "drilldown",
+            2,
+            drilldownWidget
+        );
     }
 
     /** Used for restoring widgets state */
@@ -218,7 +243,8 @@ export class DrilldownWidgetTestComponent implements OnInit {
         const drilldownWidget = widgetConfig;
         const widgets: IWidgets = {
             // Complete the widget with information coming from its type definition
-            [drilldownWidget.id]: this.widgetTypesService.mergeWithWidgetType(drilldownWidget),
+            [drilldownWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(drilldownWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -234,7 +260,6 @@ export class DrilldownWidgetTestComponent implements OnInit {
         // Finally, assigning the variables we created above to the dashboard
         this.dashboard = { positions, widgets };
     }
-
 }
 
 const widgetConfig: IWidget = {
@@ -248,15 +273,14 @@ const widgetConfig: IWidget = {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
                         providerId: DrilldownDataSource.providerId,
-                        properties: {
-                        },
+                        properties: {},
                     } as IProviderConfiguration,
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Drilldown Widget",
-                    "subtitle": "Countries BY continent THEN currency",
+            header: {
+                properties: {
+                    title: "Drilldown Widget",
+                    subtitle: "Countries BY continent THEN currency",
                 },
             },
             listWidget: {
@@ -271,15 +295,13 @@ const widgetConfig: IWidget = {
 
                             // adapter props
                             // drillstate: [""],
-                            groupBy: [
-                                "continent.name",
-                                "currency",
-                            ],
+                            groupBy: ["continent.name", "currency"],
 
                             // components
                             componentsConfig: {
                                 group: {
-                                    componentType: ListGroupItemComponent.lateLoadKey,
+                                    componentType:
+                                        ListGroupItemComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             id: "id",
@@ -292,7 +314,8 @@ const widgetConfig: IWidget = {
                                     },
                                 },
                                 leaf: {
-                                    componentType: ListLeafItemComponent.lateLoadKey,
+                                    componentType:
+                                        ListLeafItemComponent.lateLoadKey,
                                     properties: {
                                         dataFieldIds: {
                                             icon: "icon",
@@ -336,4 +359,5 @@ const widgetConfig: IWidget = {
 
 const getLast = (arr: any[]) => arr[arr.length - 1];
 
-const generateNumberUpTo = (upperLimit: number): number => Math.floor((Math.random() * upperLimit) + 1);
+const generateNumberUpTo = (upperLimit: number): number =>
+    Math.floor(Math.random() * upperLimit + 1);

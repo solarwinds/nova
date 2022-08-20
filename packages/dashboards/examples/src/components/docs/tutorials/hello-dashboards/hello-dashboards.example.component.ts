@@ -1,5 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { IDashboard, IWidget, IWidgets, KpiComponent, PizzagnaLayer, WidgetTypesService } from "@nova-ui/dashboards";
+import {
+    IDashboard,
+    IWidget,
+    IWidgets,
+    KpiComponent,
+    PizzagnaLayer,
+    WidgetTypesService,
+} from "@nova-ui/dashboards";
 import { GridsterConfig, GridsterItem } from "angular-gridster2";
 
 /**
@@ -10,7 +17,6 @@ import { GridsterConfig, GridsterItem } from "angular-gridster2";
     templateUrl: "./hello-dashboards.example.component.html",
     styleUrls: ["./hello-dashboards.example.component.less"],
 })
-
 export class HelloDashboardsExampleComponent implements OnInit {
     // This variable will have all the data needed to render the widgets widgets.
     // Pass this to the dashboard component's dashboard input.
@@ -20,7 +26,7 @@ export class HelloDashboardsExampleComponent implements OnInit {
     public gridsterConfig: GridsterConfig = {};
 
     // WidgetTypesService provides the widget's necessary structure information
-    constructor(private widgetTypesService: WidgetTypesService) { }
+    constructor(private widgetTypesService: WidgetTypesService) {}
 
     public ngOnInit(): void {
         // Here we are hard-coding the widget config for this example, but this is where you
@@ -28,7 +34,8 @@ export class HelloDashboardsExampleComponent implements OnInit {
         const kpiWidget = widgetConfig;
         const widgetIndex: IWidgets = {
             // Complete the KPI widget with information coming from its type definition
-            [kpiWidget.id]: this.widgetTypesService.mergeWithWidgetType(kpiWidget),
+            [kpiWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
         // Setting widget position and dimensions (this is for gridster)
         const positions: Record<string, GridsterItem> = {
@@ -45,7 +52,6 @@ export class HelloDashboardsExampleComponent implements OnInit {
             widgets: widgetIndex,
         };
     }
-
 }
 
 // In a real-world scenario, this configuration would typically be fetched from a database or at least live in another file
@@ -54,26 +60,26 @@ const widgetConfig: IWidget = {
     type: "kpi",
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
-            "header": {
-                "properties": {
-                    "title": "Hello, KPI Widget!",
-                    "subtitle": "A Venue for Meaningful Values",
+            header: {
+                properties: {
+                    title: "Hello, KPI Widget!",
+                    subtitle: "A Venue for Meaningful Values",
                 },
             },
-            "tiles": {
-                "properties": {
-                    "nodes": ["kpi1"],
+            tiles: {
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "componentType": KpiComponent.lateLoadKey,
-                "properties": {
-                    "widgetData": {
-                        "id": "totalStorage",
-                        "value": 1,
-                        "label": "Total storage",
-                        "units": "TB",
+            kpi1: {
+                id: "kpi1",
+                componentType: KpiComponent.lateLoadKey,
+                properties: {
+                    widgetData: {
+                        id: "totalStorage",
+                        value: 1,
+                        label: "Total storage",
+                        units: "TB",
                     },
                 },
             },

@@ -46,7 +46,7 @@ export function getFixedProportionalWidgetData(citiesToInclude?: string[]) {
     ];
 
     if (citiesToInclude) {
-        data = data.filter(d => citiesToInclude.includes(d.value));
+        data = data.filter((d) => citiesToInclude.includes(d.value));
     }
 
     return data;
@@ -105,7 +105,7 @@ export function getRandomProportionalWidgetData(citiesToInclude?: string[]) {
     ];
 
     if (citiesToInclude) {
-        data = data.filter(d => citiesToInclude.includes(d.value));
+        data = data.filter((d) => citiesToInclude.includes(d.value));
     }
 
     return data;
@@ -436,25 +436,82 @@ export function getTimeseriesStatusData(): ITimeseriesWidgetData[] {
             description: "lastchance.demo.lab",
             link: "https://en.wikipedia.org/wiki/Austin",
             data: [
-                { x: moment(startOfToday).subtract(30, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(28, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(27, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(26, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(25, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(24, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(23, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(19, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(17, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(16, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(14, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(13, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(10, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(9 , "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(8 , "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(6 , "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(5 , "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(4 , "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(2 , "day").toDate(), y: Status.Up },
+                {
+                    x: moment(startOfToday).subtract(30, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(28, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(27, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(26, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(25, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(24, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(23, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(19, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(17, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(16, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(14, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(13, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(10, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(9, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(8, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(6, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(5, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(4, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(2, "day").toDate(),
+                    y: Status.Up,
+                },
                 { x: moment(startOfToday).toDate(), y: Status.Critical },
                 { x: moment().toDate(), y: Status.Critical },
             ],
@@ -465,25 +522,82 @@ export function getTimeseriesStatusData(): ITimeseriesWidgetData[] {
             description: "newhope.demo.lab",
             link: "https://en.wikipedia.org/wiki/Brno",
             data: [
-                { x: moment(startOfToday).subtract(30, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(28, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(27, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(26, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(25, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(24, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(23, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(19, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(17, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(16, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(14, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(12, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(10, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(9 , "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(7 , "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(6 , "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(5 , "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(3 , "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(2 , "day").toDate(), y: Status.Critical },
+                {
+                    x: moment(startOfToday).subtract(30, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(28, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(27, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(26, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(25, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(24, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(23, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(19, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(17, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(16, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(14, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(12, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(10, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(9, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(7, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(6, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(5, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(3, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(2, "day").toDate(),
+                    y: Status.Critical,
+                },
                 { x: moment(startOfToday).toDate(), y: Status.Warning },
                 { x: moment().toDate(), y: Status.Warning },
             ],
@@ -516,65 +630,242 @@ export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData[] {
             description: "lastchance.demo.lab",
             link: "https://en.wikipedia.org/wiki/Brno",
             data: [
-                { x: moment(startOfToday).subtract(59, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(58, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(57, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(56, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(55, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(54, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(53, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(52, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(51, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(50, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(49, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(48, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(47, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(46, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(45, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(44, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(43, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(42, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(41, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(40, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(39, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(38, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(37, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(36, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(35, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(34, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(33, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(32, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(31, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(30, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(29, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(28, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(27, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(26, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(25, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(24, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(23, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(22, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(21, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(20, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(19, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(18, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(17, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(16, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(15, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(14, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(13, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(12, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(11, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(10, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(9 , "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(8 , "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(7 , "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(6 , "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(5 , "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(4 , "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(3 , "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(2 , "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(1 , "day").toDate(), y: Status.Critical },
+                {
+                    x: moment(startOfToday).subtract(59, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(58, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(57, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(56, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(55, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(54, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(53, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(52, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(51, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(50, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(49, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(48, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(47, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(46, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(45, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(44, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(43, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(42, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(41, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(40, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(39, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(38, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(37, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(36, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(35, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(34, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(33, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(32, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(31, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(30, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(29, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(28, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(27, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(26, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(25, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(24, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(23, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(22, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(21, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(20, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(19, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(18, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(17, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(16, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(15, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(14, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(13, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(12, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(11, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(10, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(9, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(8, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(7, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(6, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(5, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(4, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(3, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(2, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(1, "day").toDate(),
+                    y: Status.Critical,
+                },
                 { x: moment(startOfToday).toDate(), y: Status.Up },
             ],
         },
@@ -584,65 +875,242 @@ export function getTimeseriesStatusIntervalData(): ITimeseriesWidgetData[] {
             description: "newhope.demo.lab",
             link: "https://en.wikipedia.org/wiki/Austin",
             data: [
-                { x: moment(startOfToday).subtract(59, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(58, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(57, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(56, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(55, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(54, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(53, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(52, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(51, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(50, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(49, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(48, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(47, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(46, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(45, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(44, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(43, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(42, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(41, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(40, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(39, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(38, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(37, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(36, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(35, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(34, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(33, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(32, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(31, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(30, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(29, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(28, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(27, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(26, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(25, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(24, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(23, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(22, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(21, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(20, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(19, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(18, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(17, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(16, "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(15, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(14, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(13, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(12, "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(11, "day").toDate(), y: Status.Warning },
-                { x: moment(startOfToday).subtract(10, "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(9 , "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(8 , "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(7 , "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(6 , "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(5 , "day").toDate(), y: Status.Down },
-                { x: moment(startOfToday).subtract(4 , "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(3 , "day").toDate(), y: Status.Critical },
-                { x: moment(startOfToday).subtract(2 , "day").toDate(), y: Status.Up },
-                { x: moment(startOfToday).subtract(1 , "day").toDate(), y: Status.Warning },
+                {
+                    x: moment(startOfToday).subtract(59, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(58, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(57, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(56, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(55, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(54, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(53, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(52, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(51, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(50, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(49, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(48, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(47, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(46, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(45, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(44, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(43, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(42, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(41, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(40, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(39, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(38, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(37, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(36, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(35, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(34, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(33, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(32, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(31, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(30, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(29, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(28, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(27, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(26, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(25, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(24, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(23, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(22, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(21, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(20, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(19, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(18, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(17, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(16, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(15, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(14, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(13, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(12, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(11, "day").toDate(),
+                    y: Status.Warning,
+                },
+                {
+                    x: moment(startOfToday).subtract(10, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(9, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(8, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(7, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(6, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(5, "day").toDate(),
+                    y: Status.Down,
+                },
+                {
+                    x: moment(startOfToday).subtract(4, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(3, "day").toDate(),
+                    y: Status.Critical,
+                },
+                {
+                    x: moment(startOfToday).subtract(2, "day").toDate(),
+                    y: Status.Up,
+                },
+                {
+                    x: moment(startOfToday).subtract(1, "day").toDate(),
+                    y: Status.Warning,
+                },
                 { x: moment(startOfToday).toDate(), y: Status.Critical },
             ],
         },
@@ -700,7 +1168,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 3,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",
@@ -715,7 +1188,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 4,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -730,7 +1208,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 5,
         name: "Man-LT-JYJ425",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -745,7 +1228,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 6,
         name: "Man-LT-JYJ4333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -775,7 +1263,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 8,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -790,7 +1284,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 9,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -805,7 +1304,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 10,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -835,7 +1339,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 12,
         name: "Man-LT-2222",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -850,7 +1360,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 13,
         name: "Man-LT-333333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -865,7 +1380,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 14,
         name: "Man-LT-444444",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -880,7 +1400,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 15,
         name: "Man-LT-555555",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -925,7 +1450,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 18,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",
@@ -940,7 +1470,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 19,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -955,7 +1490,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 20,
         name: "Man-LT-JYJ425",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -970,7 +1510,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 21,
         name: "Man-LT-JYJ4333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1000,7 +1545,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 23,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -1015,7 +1566,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 24,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1030,7 +1586,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 25,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1060,7 +1621,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 27,
         name: "Man-LT-2222",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -1075,7 +1642,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 28,
         name: "Man-LT-333333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1090,7 +1662,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 29,
         name: "Man-LT-444444",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1105,7 +1682,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 30,
         name: "Man-LT-555555",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1150,7 +1732,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 33,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",
@@ -1165,7 +1752,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 34,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1180,7 +1772,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 35,
         name: "Man-LT-JYJ425",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1195,7 +1792,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 36,
         name: "Man-LT-JYJ4333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1225,7 +1827,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 38,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -1240,7 +1848,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 39,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1255,7 +1868,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 40,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1285,7 +1903,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 42,
         name: "Man-LT-2222",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -1300,7 +1924,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 43,
         name: "Man-LT-333333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1315,7 +1944,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 44,
         name: "Man-LT-444444",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -1330,7 +1964,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 45,
         name: "Man-LT-555555",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",

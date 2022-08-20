@@ -14,14 +14,11 @@ const collectionRoutes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        LineTimeSeriesTestComponent,
-    ],
+    declarations: [LineTimeSeriesTestComponent],
     imports: [
         DemoCommonModule,
         NuiChartsModule,
         RouterModule.forChild(collectionRoutes),
     ],
 })
-export class TimeBandsExampleModule {
-}
+export class TimeBandsExampleModule {}

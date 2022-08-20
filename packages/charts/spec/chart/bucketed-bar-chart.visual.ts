@@ -15,8 +15,14 @@ describe(`Visual tests: Charts - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/bucketed-bar/test");
-        horizontalStackedBarChart = Atom.find(ChartAtom, "nui-demo-horizontal-stacked-bat-chart");
-        verticalStackedBarChart = Atom.find(ChartAtom, "nui-demo-vertical-stacked-bar-chart");
+        horizontalStackedBarChart = Atom.find(
+            ChartAtom,
+            "nui-demo-horizontal-stacked-bat-chart"
+        );
+        verticalStackedBarChart = Atom.find(
+            ChartAtom,
+            "nui-demo-vertical-stacked-bar-chart"
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });
@@ -24,17 +30,34 @@ describe(`Visual tests: Charts - ${name}`, () => {
     it(`${name} - Default look`, async () => {
         await camera.turn.on();
 
-        const stackedBarHorizontalSeries: SeriesAtom | undefined = await horizontalStackedBarChart.getDataSeriesById(SeriesAtom, "Brno");
+        const stackedBarHorizontalSeries: SeriesAtom | undefined =
+            await horizontalStackedBarChart.getDataSeriesById(
+                SeriesAtom,
+                "Brno"
+            );
         if (stackedBarHorizontalSeries) {
-            await Atom.findIn(BarDataPointAtom, stackedBarHorizontalSeries.getElement(), 0).hover();
+            await Atom.findIn(
+                BarDataPointAtom,
+                stackedBarHorizontalSeries.getElement(),
+                0
+            ).hover();
         }
-        await camera.say.cheese(`${name} - Default look with first series highlighted for horizontal stacked bar chart`);
+        await camera.say.cheese(
+            `${name} - Default look with first series highlighted for horizontal stacked bar chart`
+        );
 
-        const stackedBarVerticalSeries: SeriesAtom | undefined = await verticalStackedBarChart.getDataSeriesById(SeriesAtom, "Brno");
+        const stackedBarVerticalSeries: SeriesAtom | undefined =
+            await verticalStackedBarChart.getDataSeriesById(SeriesAtom, "Brno");
         if (stackedBarVerticalSeries) {
-            await Atom.findIn(BarDataPointAtom, stackedBarVerticalSeries.getElement(), 3).hover();
+            await Atom.findIn(
+                BarDataPointAtom,
+                stackedBarVerticalSeries.getElement(),
+                3
+            ).hover();
         }
-        await camera.say.cheese(`${name} - Default look with last series highlighted for vertical stacked bar chart`);
+        await camera.say.cheese(
+            `${name} - Default look with last series highlighted for vertical stacked bar chart`
+        );
 
         await camera.turn.off();
     }, 100000);

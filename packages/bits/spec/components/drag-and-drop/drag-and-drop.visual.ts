@@ -20,13 +20,20 @@ xdescribe("Drag and Drop", () => {
     beforeEach(async () => {
         eyes = await Helpers.prepareEyes();
 
-        await Helpers.prepareBrowser("external-libraries/drag-and-drop/dropzone-visual");
-        dragList = Atom.findIn(CdkDropListAtom, element(by.id("nui-demo-drop-list-1")));
-        dropList = Atom.findIn(CdkDropListAtom, element(by.id("nui-demo-drop-list-2")));
+        await Helpers.prepareBrowser(
+            "external-libraries/drag-and-drop/dropzone-visual"
+        );
+        dragList = Atom.findIn(
+            CdkDropListAtom,
+            element(by.id("nui-demo-drop-list-1"))
+        );
+        dropList = Atom.findIn(
+            CdkDropListAtom,
+            element(by.id("nui-demo-drop-list-2"))
+        );
 
         dragListFirstItem = await dragList.getItem(0);
         dragListSecondItem = await dragList.getItem(1);
-
     });
 
     afterAll(async () => {
@@ -40,28 +47,24 @@ xdescribe("Drag and Drop", () => {
         await dragListFirstItem.hover();
         await eyes.checkWindow("CDK drag preview should appear");
 
-
         // SC2: Dragging an item to be able to see the drop container highlight
-        await dragListFirstItem.dragSelf({x: 5, y: 0});
+        await dragListFirstItem.dragSelf({ x: 5, y: 0 });
         await eyes.checkWindow("Drop target should be highlighted");
         await dragListFirstItem.mouseUp();
 
-
         // SC3: Dragging accepted item into the drop container
-        await dragListFirstItem.dragTo(dropList.getElement(), {x: 0, y: 50});
+        await dragListFirstItem.dragTo(dropList.getElement(), { x: 0, y: 50 });
         await eyes.checkWindow("Drop target should be highlighted with green");
         await dragListFirstItem.mouseUp();
-
 
         // SC4: Dragging rejected item into the drop container
         await dragListSecondItem.hover();
         // Using two move actions to let the container catch the mouse event,
         // otherwise it looks more like a teleport
-        await dragListSecondItem.dragTo(dropList.getElement(), {x: 0, y: 50});
+        await dragListSecondItem.dragTo(dropList.getElement(), { x: 0, y: 50 });
         await dragListSecondItem.move(dropList.getElement());
         await eyes.checkWindow("Drop target should be highlighted with red");
         await dragListFirstItem.mouseUp();
-
 
         await eyes.close();
     }, 100000);

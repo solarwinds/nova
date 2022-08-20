@@ -1,9 +1,4 @@
-import {
-    browser,
-    by,
-    element,
-    ExpectedConditions,
-} from "protractor";
+import { browser, by, element, ExpectedConditions } from "protractor";
 
 import { Atom } from "../../atom";
 import { OverlayAtom } from "../overlay/overlay.atom";
@@ -11,7 +6,10 @@ import { OverlayAtom } from "../overlay/overlay.atom";
 import { SelectV2OptionAtom } from "./select-v2-option.atom";
 
 export class BaseSelectV2Atom extends Atom {
-    public popup: OverlayAtom = Atom.findIn(OverlayAtom, element(by.tagName("body")));
+    public popup: OverlayAtom = Atom.findIn(
+        OverlayAtom,
+        element(by.tagName("body"))
+    );
 
     public getPopupElement() {
         return this.popup.getElement();
@@ -27,7 +25,7 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public async getOption(index: number): Promise<SelectV2OptionAtom> {
-        if (! await this.popup.isOpened()) {
+        if (!(await this.popup.isOpened())) {
             await this.toggle();
         }
         return Atom.findIn(SelectV2OptionAtom, this.popup.getElement(), index);
@@ -38,12 +36,15 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     public async getLastOption(): Promise<SelectV2OptionAtom> {
-        const count = await Atom.findCount(SelectV2OptionAtom, this.getElement());
+        const count = await Atom.findCount(
+            SelectV2OptionAtom,
+            this.getElement()
+        );
         return this.getOption(count - 1);
     }
 
     public async countOptions(): Promise<number> {
-        if (! await this.popup.isOpened()) {
+        if (!(await this.popup.isOpened())) {
             await this.toggle();
         }
         return Atom.findCount(SelectV2OptionAtom, this.popup.getElement());
@@ -70,17 +71,21 @@ export class BaseSelectV2Atom extends Atom {
     public click = async (): Promise<void> => this.getElement().click();
 
     public async isSelectDisabled(): Promise<boolean> {
-        const classAttr = await (this.getElement().getAttribute("class"));
+        const classAttr = await this.getElement().getAttribute("class");
         return classAttr.includes("disabled");
     }
 
     public async select(title: string): Promise<void> {
-        if (! await this.popup.isPresent()) {
+        if (!(await this.popup.isPresent())) {
             await this.toggle();
         }
 
-        const options = this.popup.getElement().all(by.css("nui-select-v2-option"));
-        const optionsText: string[] = await options.map(async option => await option?.getText());
+        const options = this.popup
+            .getElement()
+            .all(by.css("nui-select-v2-option"));
+        const optionsText: string[] = await options.map(
+            async (option) => await option?.getText()
+        );
         const titleIndex = optionsText.indexOf(title);
 
         if (titleIndex !== -1) {
@@ -89,6 +94,8 @@ export class BaseSelectV2Atom extends Atom {
     }
 
     private async waitForPopup() {
-        return await browser.wait(ExpectedConditions.visibilityOf(this.popup.getElement()));
+        return await browser.wait(
+            ExpectedConditions.visibilityOf(this.popup.getElement())
+        );
     }
 }

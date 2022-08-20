@@ -21,8 +21,7 @@ describe("DataSourceConfigurationComponent", () => {
                     useClass: EventBus,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -39,6 +38,8 @@ describe("DataSourceConfigurationComponent", () => {
 
     it("should setup the form when providerId is given", () => {
         fixture.detectChanges();
-        expect(component.form.get("providerId")?.value).toEqual(component.dataSourceProviders[0]);
+        expect(component.form.get("providerId")?.value).toEqual(
+            component.dataSourceProviders[0]
+        );
     });
 });

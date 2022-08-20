@@ -45,7 +45,14 @@ describe("components >", () => {
             const utilService = TestBed.inject(UtilService);
             const changeDetector = TestBed.inject(ChangeDetectorRef);
 
-            subject = new ImageComponent(new LoggerService(), utilService, changeDetector, imagesPreset, domSanitizer, elRef);
+            subject = new ImageComponent(
+                new LoggerService(),
+                utilService,
+                changeDetector,
+                imagesPreset,
+                domSanitizer,
+                elRef
+            );
         });
 
         describe("getImageTemplate", () => {

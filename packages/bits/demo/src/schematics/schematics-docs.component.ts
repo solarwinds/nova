@@ -23,12 +23,18 @@ export class SchematicsDocsComponent {
         const object = (this as any)[`${name}JsonScheme`];
         for (const prop of this.objectKeys(props)) {
             object[prop] = {
-                "description": props[prop].description,
-                "type": props[prop].type,
+                description: props[prop].description,
+                type: props[prop].type,
             };
-            if (props[prop].enum) { object[prop].enum = props[prop].enum; }
-            if (props[prop].default) { object[prop].default = props[prop].default; }
-            if (props[prop].alias) { object[prop].alias = props[prop].alias; }
+            if (props[prop].enum) {
+                object[prop].enum = props[prop].enum;
+            }
+            if (props[prop].default) {
+                object[prop].default = props[prop].default;
+            }
+            if (props[prop].alias) {
+                object[prop].alias = props[prop].alias;
+            }
         }
     }
 }

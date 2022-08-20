@@ -1,6 +1,11 @@
-<div #nuiDatetimePicker class="nui-datetime-picker" [attr.aria-label]="ariaLabel">
+<div
+    #nuiDatetimePicker
+    class="nui-datetime-picker"
+    [attr.aria-label]="ariaLabel"
+>
     <div class="nui-datetime-picker__group">
-        <nui-date-picker class="nui-datepicker--justified"
+        <nui-date-picker
+            class="nui-datepicker--justified"
             [value]="date"
             (valueChange)="onDateChanged($event)"
             (inputBlurred)="onInputBlurred()"
@@ -14,7 +19,8 @@
         ></nui-date-picker>
     </div>
     <div class="nui-datetime-picker__group nui-datetime-picker__group--last">
-        <nui-time-picker class="nui-dropdown--justified"
+        <nui-time-picker
+            class="nui-dropdown--justified"
             [initEmpty]="initEmpty"
             [model]="time"
             (timeChanged)="onTimeChanged($event)"
@@ -26,4 +32,3 @@
         ></nui-time-picker>
     </div>
 </div>
-

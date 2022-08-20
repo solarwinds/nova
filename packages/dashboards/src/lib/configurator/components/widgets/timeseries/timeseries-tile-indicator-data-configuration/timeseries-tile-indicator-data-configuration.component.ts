@@ -1,19 +1,39 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    SimpleChanges,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 
 import { ITimeseriesWidgetData } from "../../../../../components/timeseries-widget/types";
 import { PizzagnaService } from "../../../../../pizzagna/services/pizzagna.service";
-import { IHasChangeDetector, IHasForm, PizzagnaLayer } from "../../../../../types";
+import {
+    IHasChangeDetector,
+    IHasForm,
+    PizzagnaLayer,
+} from "../../../../../types";
 import { ConfiguratorHeadingService } from "../../../../services/configurator-heading.service";
 
 @Component({
     selector: "nui-timeseries-tile-indicator-data-configuration",
-    templateUrl: "./timeseries-tile-indicator-data-configuration.component.html",
-    styleUrls: ["./timeseries-tile-indicator-data-configuration.component.less"],
+    templateUrl:
+        "./timeseries-tile-indicator-data-configuration.component.html",
+    styleUrls: [
+        "./timeseries-tile-indicator-data-configuration.component.less",
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TimeseriesTileIndicatorDataConfigurationComponent implements IHasChangeDetector, IHasForm, OnInit, OnDestroy, OnChanges {
+export class TimeseriesTileIndicatorDataConfigurationComponent
+    implements IHasChangeDetector, IHasForm, OnInit, OnDestroy, OnChanges
+{
     static lateLoadKey = "TimeseriesTileIndicatorDataConfigurationComponent";
 
     @Input() componentId: string;
@@ -21,8 +41,10 @@ export class TimeseriesTileIndicatorDataConfigurationComponent implements IHasCh
     @Input() allSeries: ITimeseriesWidgetData[];
     @Input() availableSeries: ITimeseriesWidgetData[];
 
-    @Output() formReady: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
-    @Output() formDestroy: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+    @Output() formReady: EventEmitter<FormGroup> =
+        new EventEmitter<FormGroup>();
+    @Output() formDestroy: EventEmitter<FormGroup> =
+        new EventEmitter<FormGroup>();
 
     public set selectedSeries(value: ITimeseriesWidgetData | undefined) {
         this._selectedSeries = value;
@@ -57,12 +79,18 @@ export class TimeseriesTileIndicatorDataConfigurationComponent implements IHasCh
 
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes.allSeries) {
-            this.selectedSeries = this.allSeries.find(s => this.selectedSeriesId === s.id);
+            this.selectedSeries = this.allSeries.find(
+                (s) => this.selectedSeriesId === s.id
+            );
         }
 
         if (changes.selectedSeriesId) {
-            if (!this.allSeries) { return; }
-            this.selectedSeries = this.allSeries.find(s => this.selectedSeriesId === s.id);
+            if (!this.allSeries) {
+                return;
+            }
+            this.selectedSeries = this.allSeries.find(
+                (s) => this.selectedSeriesId === s.id
+            );
         }
     }
 
@@ -71,7 +99,10 @@ export class TimeseriesTileIndicatorDataConfigurationComponent implements IHasCh
         this.selectedSeries = selectedSeries;
         this.form.patchValue({ id: selectedSeries.id });
         setTimeout(() => {
-            this.pizzagnaService.setProperty(`${PizzagnaLayer.Data}.${this.componentId}.properties.selectedSeriesId`, selectedSeries.id);
+            this.pizzagnaService.setProperty(
+                `${PizzagnaLayer.Data}.${this.componentId}.properties.selectedSeriesId`,
+                selectedSeries.id
+            );
             this.changeDetector.markForCheck();
         });
     }

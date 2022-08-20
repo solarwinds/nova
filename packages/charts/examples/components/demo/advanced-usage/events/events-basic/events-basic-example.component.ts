@@ -1,6 +1,21 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import {
-    Chart, IChartEvent, IChartSeries, ILineAccessors, INTERACTION_VALUES_EVENT, IXYScales, LineAccessors, LinearScale, LineRenderer, TimeScale, XYGrid,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+} from "@angular/core";
+import {
+    Chart,
+    IChartEvent,
+    IChartSeries,
+    ILineAccessors,
+    INTERACTION_VALUES_EVENT,
+    IXYScales,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    TimeScale,
+    XYGrid,
 } from "@nova-ui/charts";
 import moment from "moment/moment";
 
@@ -13,8 +28,7 @@ export class EventsBasicExampleComponent implements OnInit {
     public chart = new Chart(new XYGrid());
     public payload: string;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef) {
-    }
+    constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
     public ngOnInit() {
         const accessors = new LineAccessors();
@@ -25,23 +39,28 @@ export class EventsBasicExampleComponent implements OnInit {
             y: new LinearScale(),
         };
 
-        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(d => ({
-            ...d,
-            accessors,
-            renderer,
-            scales,
-        }));
+        const seriesSet: IChartSeries<ILineAccessors>[] = getData().map(
+            (d) => ({
+                ...d,
+                accessors,
+                renderer,
+                scales,
+            })
+        );
 
         // - subscribe to a chosen chart event
         // - unsubscribing is not necessary as the chart will be destroyed when the component used to place it on the page will be destroyed;
         //   the subscription will be unsubscribed automatically
-        this.chart.getEventBus().getStream(INTERACTION_VALUES_EVENT).subscribe((event: IChartEvent) => {
-            // process the event
-            this.payload = JSON.stringify(event.data, null, 4);
-            // in case of using a OnPush change detection strategy you need to detectChanges manually as the event is internal to this component and
-            // wouldn't cause the UI to update
-            this.changeDetectorRef.detectChanges();
-        });
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_VALUES_EVENT)
+            .subscribe((event: IChartEvent) => {
+                // process the event
+                this.payload = JSON.stringify(event.data, null, 4);
+                // in case of using a OnPush change detection strategy you need to detectChanges manually as the event is internal to this component and
+                // wouldn't cause the UI to update
+                this.changeDetectorRef.detectChanges();
+            });
 
         this.chart.update(seriesSet);
     }

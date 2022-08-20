@@ -39,5 +39,4 @@ const collectionRoutes: Routes = [
         RouterModule.forChild(collectionRoutes),
     ],
 })
-export class ChartStatusExampleModule {
-}
+export class ChartStatusExampleModule {}

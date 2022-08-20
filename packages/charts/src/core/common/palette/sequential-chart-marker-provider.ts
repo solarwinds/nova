@@ -7,9 +7,7 @@ import { SequentialValueProvider } from "./sequential-value-provider";
  * It keeps track of already given markers to given entities to avoid conflicts.
  */
 export class SequentialChartMarkerProvider extends SequentialValueProvider<IChartMarker> {
-
     constructor(private markers: IChartMarker[]) {
         super(markers);
     }
-
 }

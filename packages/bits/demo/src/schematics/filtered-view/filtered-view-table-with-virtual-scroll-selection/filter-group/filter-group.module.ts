@@ -36,5 +36,4 @@ import { ItemPickerModule } from "./item-picker/item-picker.module";
     ],
     providers: [FilterGroupService],
 })
-
 export class FilterGroupModule {}

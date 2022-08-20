@@ -17,7 +17,10 @@ import { ComponentPortalDirective } from "../../pizzagna/directives/component-po
 import { WIDGET_EDIT, WIDGET_REMOVE } from "../../services/types";
 import { WidgetTypesService } from "../../services/widget-types.service";
 import { IWidget } from "../../components/widget/types";
-import { IDashboard, IDashboardPersistenceHandler } from "../../components/dashboard/types";
+import {
+    IDashboard,
+    IDashboardPersistenceHandler,
+} from "../../components/dashboard/types";
 import { kpi } from "../../widget-types/kpi/kpi";
 import { GridsterItemWidgetIdDirective } from "../gridster-item-widget-id/gridster-item-widget-id.directive";
 
@@ -25,7 +28,10 @@ import { WidgetEditorDirective } from "./widget-editor.directive";
 
 @Injectable()
 class MockSubmitHandler implements IDashboardPersistenceHandler {
-    public trySubmit(widget: IWidget, source: IConfiguratorSource): Observable<IWidget> {
+    public trySubmit(
+        widget: IWidget,
+        source: IConfiguratorSource
+    ): Observable<IWidget> {
         // @ts-ignore: Suppressed for test purposes
         return null;
     }
@@ -33,15 +39,17 @@ class MockSubmitHandler implements IDashboardPersistenceHandler {
 
 @Component({
     template: `
-        <nui-dashboard [nuiWidgetEditor]="submitHandler"
-                          [(dashboard)]="dashboard"
-                          [(gridsterConfig)]="gridsterConfig">
+        <nui-dashboard
+            [nuiWidgetEditor]="submitHandler"
+            [(dashboard)]="dashboard"
+            [(gridsterConfig)]="gridsterConfig"
+        >
         </nui-dashboard>
     `,
     providers: [MockSubmitHandler],
 })
 class WidgetEditorDirectiveTestComponent {
-    constructor(public submitHandler: MockSubmitHandler) { }
+    constructor(public submitHandler: MockSubmitHandler) {}
 
     public gridsterConfig = {
         minCols: 12,
@@ -81,36 +89,42 @@ describe("WidgetEditorDirective >", () => {
         widgetTypesService = new WidgetTypesService();
         widgetTypesService.registerWidgetType("kpi", 1, kpi);
 
-        TestBed
-            .configureTestingModule({
-                imports: [
-                    GridsterModule,
-                    PortalModule,
-                    RouterTestingModule.withRoutes([]),
-                ],
-                declarations: [
-                    GridsterItemWidgetIdDirective,
-                    DashboardComponent,
-                    ComponentPortalDirective,
-                    PizzagnaComponent,
-                    WidgetComponent,
-                    WidgetEditorDirectiveTestComponent,
-                    WidgetEditorDirective,
-                ],
-                providers: [
-                    ConfiguratorService,
-                    WidgetEditorService,
-                    { provide: WidgetTypesService, useValue: widgetTypesService },
-                    {
-                        provide: LoggerService, useValue: mockLoggerService,
-                    },
-                ],
-            });
+        TestBed.configureTestingModule({
+            imports: [
+                GridsterModule,
+                PortalModule,
+                RouterTestingModule.withRoutes([]),
+            ],
+            declarations: [
+                GridsterItemWidgetIdDirective,
+                DashboardComponent,
+                ComponentPortalDirective,
+                PizzagnaComponent,
+                WidgetComponent,
+                WidgetEditorDirectiveTestComponent,
+                WidgetEditorDirective,
+            ],
+            providers: [
+                ConfiguratorService,
+                WidgetEditorService,
+                { provide: WidgetTypesService, useValue: widgetTypesService },
+                {
+                    provide: LoggerService,
+                    useValue: mockLoggerService,
+                },
+            ],
+        });
         fixture = TestBed.createComponent(WidgetEditorDirectiveTestComponent);
         fixture.autoDetectChanges(true);
         component = fixture.componentInstance;
-        widgetEditorDirective = fixture.debugElement.childNodes[0].injector.get<WidgetEditorDirective>(WidgetEditorDirective);
-        dashboardComponent = fixture.debugElement.childNodes[0].injector.get<DashboardComponent>(DashboardComponent);
+        widgetEditorDirective =
+            fixture.debugElement.childNodes[0].injector.get<WidgetEditorDirective>(
+                WidgetEditorDirective
+            );
+        dashboardComponent =
+            fixture.debugElement.childNodes[0].injector.get<DashboardComponent>(
+                DashboardComponent
+            );
     });
 
     afterEach(() => {
@@ -122,31 +136,50 @@ describe("WidgetEditorDirective >", () => {
     });
 
     it("should open the widget editor on event bus WIDGET_EDIT", () => {
-        const spy = spyOn((<any>widgetEditorDirective).widgetEditorService, "open").and.returnValue(new Observable());
-        dashboardComponent.eventBus.getStream(WIDGET_EDIT).next({ widgetId: component.mockWidgetId });
+        const spy = spyOn(
+            (<any>widgetEditorDirective).widgetEditorService,
+            "open"
+        ).and.returnValue(new Observable());
+        dashboardComponent.eventBus
+            .getStream(WIDGET_EDIT)
+            .next({ widgetId: component.mockWidgetId });
         expect(spy).toHaveBeenCalled();
     });
 
     it("should handle removal of a widget on event bus WIDGET_REMOVE", () => {
-        const spy = spyOn((<any>widgetEditorDirective).widgetRemovalService, "handleRemove").and.returnValue(new Observable());
-        dashboardComponent.eventBus.getStream(WIDGET_REMOVE).next({ widgetId: component.mockWidgetId });
+        const spy = spyOn(
+            (<any>widgetEditorDirective).widgetRemovalService,
+            "handleRemove"
+        ).and.returnValue(new Observable());
+        dashboardComponent.eventBus
+            .getStream(WIDGET_REMOVE)
+            .next({ widgetId: component.mockWidgetId });
         expect(spy).toHaveBeenCalled();
     });
 
     describe("ngOnDestroy", () => {
         it("should unsubscribe from the event bus WIDGET_EDIT stream", () => {
             widgetEditorDirective.ngOnDestroy();
-            const spy = spyOn((<any>widgetEditorDirective).widgetEditorService, "open").and.returnValue(new Observable());
-            dashboardComponent.eventBus.getStream(WIDGET_EDIT).next({ widgetId: component.mockWidgetId });
+            const spy = spyOn(
+                (<any>widgetEditorDirective).widgetEditorService,
+                "open"
+            ).and.returnValue(new Observable());
+            dashboardComponent.eventBus
+                .getStream(WIDGET_EDIT)
+                .next({ widgetId: component.mockWidgetId });
             expect(spy).not.toHaveBeenCalled();
         });
 
         it("should unsubscribe from the event bus WIDGET_REMOVE stream", () => {
             widgetEditorDirective.ngOnDestroy();
-            const spy = spyOn((<any>widgetEditorDirective).widgetRemovalService, "handleRemove").and.returnValue(new Observable());
-            dashboardComponent.eventBus.getStream(WIDGET_REMOVE).next({ widgetId: component.mockWidgetId });
+            const spy = spyOn(
+                (<any>widgetEditorDirective).widgetRemovalService,
+                "handleRemove"
+            ).and.returnValue(new Observable());
+            dashboardComponent.eventBus
+                .getStream(WIDGET_REMOVE)
+                .next({ widgetId: component.mockWidgetId });
             expect(spy).not.toHaveBeenCalled();
         });
     });
-
 });

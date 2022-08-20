@@ -9,17 +9,23 @@ import { IComponentPortalBundle, IWidgetSelector } from "./types";
 
 @Injectable()
 export class WidgetClonerService {
-
-    constructor(private configuratorService: ConfiguratorService,
-                private componentPortalService: ComponentPortalService) {
-    }
+    constructor(
+        private configuratorService: ConfiguratorService,
+        private componentPortalService: ComponentPortalService
+    ) {}
 
     public open(cloner: IWidgetSelector): Observable<void> {
         if (!cloner.portalBundle) {
             const formPortal: IComponentPortalBundle<WidgetClonerComponent> = {
-                portal: this.componentPortalService.createComponentPortal(WidgetClonerComponent, null),
-                attached: (componentRef: ComponentRef<WidgetClonerComponent>) => {
-                    componentRef.instance.cloneSelectionComponentType = cloner.widgetSelectionComponentType;
+                portal: this.componentPortalService.createComponentPortal(
+                    WidgetClonerComponent,
+                    null
+                ),
+                attached: (
+                    componentRef: ComponentRef<WidgetClonerComponent>
+                ) => {
+                    componentRef.instance.cloneSelectionComponentType =
+                        cloner.widgetSelectionComponentType;
                 },
             };
 
@@ -28,5 +34,4 @@ export class WidgetClonerService {
 
         return this.configuratorService.open(cloner);
     }
-
 }

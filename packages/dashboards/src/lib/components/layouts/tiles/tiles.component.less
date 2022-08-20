@@ -8,7 +8,10 @@
     height: 100%;
     gap: @nui-space-sm;
 
-    grid-template-columns: repeat(auto-fit, minmax(calc(@font-size * @line-height + 2 * @nui-space-md), 1fr));
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(calc(@font-size * @line-height + 2 * @nui-space-md), 1fr)
+    );
     // 15px - minimal value for row, get experimentally, confirmed with UX
     grid-template-rows: repeat(auto-fit, minmax(15px, 1fr));
     line-height: @line-height;

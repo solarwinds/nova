@@ -13,12 +13,13 @@ describe("EmbeddedContentConfigurationComponent > ", () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(EmbeddedContentConfigurationComponent);
+        fixture = TestBed.createComponent(
+            EmbeddedContentConfigurationComponent
+        );
         component = fixture.componentInstance;
     });
 
@@ -29,7 +30,9 @@ describe("EmbeddedContentConfigurationComponent > ", () => {
     describe("ngOnInit > ", () => {
         it("should build a form", () => {
             component.ngOnInit();
-            expect(component.form.get("customEmbeddedContent")?.value).toEqual("");
+            expect(component.form.get("customEmbeddedContent")?.value).toEqual(
+                ""
+            );
         });
 
         it("should emit formReady", () => {
@@ -45,12 +48,17 @@ describe("EmbeddedContentConfigurationComponent > ", () => {
             component.ngOnInit();
             component.customEmbeddedContent = "https://www.ventusky.com/";
             const changes = {
-                customEmbeddedContent: new SimpleChange("", component.customEmbeddedContent, false),
+                customEmbeddedContent: new SimpleChange(
+                    "",
+                    component.customEmbeddedContent,
+                    false
+                ),
             };
 
             component.ngOnChanges(changes);
-            expect(component.form.get("urlCustomContent")?.value).toEqual(component.customEmbeddedContent);
+            expect(component.form.get("urlCustomContent")?.value).toEqual(
+                component.customEmbeddedContent
+            );
         });
     });
-
 });

@@ -1,7 +1,27 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChildren } from "@angular/core";
 import {
-    Chart, ChartAssist, ChartComponent, getAutomaticDomainWithIncludedInterval, IAccessors, IChart, IChartAssistSeries, IDataSeries, IScale, LineAccessors,
-    LinearScale, LineRenderer, Scales, TimeScale, XYGrid,
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    QueryList,
+    ViewChildren,
+} from "@angular/core";
+import {
+    Chart,
+    ChartAssist,
+    ChartComponent,
+    getAutomaticDomainWithIncludedInterval,
+    IAccessors,
+    IChart,
+    IChartAssistSeries,
+    IDataSeries,
+    IScale,
+    LineAccessors,
+    LinearScale,
+    LineRenderer,
+    Scales,
+    TimeScale,
+    XYGrid,
 } from "@nova-ui/charts";
 
 import { DataGenerator } from "../../../../../data-generator";
@@ -26,8 +46,7 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
 
     public chartAssists: ChartAssist[] = [];
 
-    constructor(private changeDetector: ChangeDetectorRef) {
-    }
+    constructor(private changeDetector: ChangeDetectorRef) {}
 
     ngOnInit() {
         const numCharts = 3;
@@ -40,25 +59,33 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
         }
 
         // this.scales[0].y.domainCalculation = getAutomaticDomain; // Default
-        this.scales[1].y.domainCalculator = getAutomaticDomainWithIncludedInterval([-40, 160]);
-        this.scales[2].y.domainCalculator = getAutomaticDomainWithIncludedInterval([0, 0]);
+        this.scales[1].y.domainCalculator =
+            getAutomaticDomainWithIncludedInterval([-40, 160]);
+        this.scales[2].y.domainCalculator =
+            getAutomaticDomainWithIncludedInterval([0, 0]);
 
         this.dataRenderer = new LineRenderer();
     }
 
     ngAfterViewInit() {
-        const timeLineSeriesSet: any[] = DataGenerator.generateMockTimeLineSeriesSet(2, 40);
+        const timeLineSeriesSet: any[] =
+            DataGenerator.generateMockTimeLineSeriesSet(2, 40);
 
         this.chartComponents.forEach((chart: ChartComponent, index: number) => {
             this.chartAssists.push(new ChartAssist(this.charts[index]));
-            this.chartAssists[index].update(this.generateChartAssistSeriesSet(timeLineSeriesSet, index));
+            this.chartAssists[index].update(
+                this.generateChartAssistSeriesSet(timeLineSeriesSet, index)
+            );
         });
         this.changeDetector.detectChanges();
     }
 
-    private generateChartAssistSeriesSet(dataSeriesSet: IDataSeries<IAccessors>[], chartIndex: number): IChartAssistSeries<IAccessors>[] {
+    private generateChartAssistSeriesSet(
+        dataSeriesSet: IDataSeries<IAccessors>[],
+        chartIndex: number
+    ): IChartAssistSeries<IAccessors>[] {
         const accessors = new LineAccessors();
-        return dataSeriesSet.map(dataSeries => ({
+        return dataSeriesSet.map((dataSeries) => ({
             ...dataSeries,
             scales: this.scales[chartIndex],
             renderer: this.dataRenderer,
@@ -79,16 +106,22 @@ export class ChartDomainExampleComponent implements OnInit, AfterViewInit {
 
     public resetDomain() {
         this.xScale.isDomainFixed = false;
-        this.chartAssists.forEach(chartAssist => {
+        this.chartAssists.forEach((chartAssist) => {
             chartAssist.update(chartAssist.inputSeriesSet);
         });
     }
 
     public refresh() {
-        const seriesSet: any[] = DataGenerator.generateMockTimeLineSeriesSet(Math.floor(Math.random() * 6), 40);
-        this.chartAssists.forEach((chartAssist: ChartAssist, chartIndex: number) => {
-            chartAssist.update(this.generateChartAssistSeriesSet(seriesSet, chartIndex));
-        });
+        const seriesSet: any[] = DataGenerator.generateMockTimeLineSeriesSet(
+            Math.floor(Math.random() * 6),
+            40
+        );
+        this.chartAssists.forEach(
+            (chartAssist: ChartAssist, chartIndex: number) => {
+                chartAssist.update(
+                    this.generateChartAssistSeriesSet(seriesSet, chartIndex)
+                );
+            }
+        );
     }
-
 }

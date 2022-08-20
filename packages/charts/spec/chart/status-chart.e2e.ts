@@ -14,15 +14,25 @@ describe("Status chart", () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/status/test");
-        await Helpers.disableCSSAnimations(Animations.TRANSITIONS_AND_ANIMATIONS);
-        statusChartWithIcons = Atom.find(StatusChartAtom, "nui-status-chart-with-icons");
-        allStatusBars = await statusChartWithIcons.getAllBarDataPointsBySeriesID(statusSeriesID);
+        await Helpers.disableCSSAnimations(
+            Animations.TRANSITIONS_AND_ANIMATIONS
+        );
+        statusChartWithIcons = Atom.find(
+            StatusChartAtom,
+            "nui-status-chart-with-icons"
+        );
+        allStatusBars =
+            await statusChartWithIcons.getAllBarDataPointsBySeriesID(
+                statusSeriesID
+            );
     });
 
     describe("basic", async () => {
-
         it("should display status bar series", async () => {
-            const series = await statusChartWithIcons.getDataSeriesById(SeriesAtom, statusSeriesID);
+            const series = await statusChartWithIcons.getDataSeriesById(
+                SeriesAtom,
+                statusSeriesID
+            );
             await expect(await series?.isDisplayed()).toBe(true);
         });
 
@@ -45,7 +55,10 @@ describe("Status chart", () => {
 
     describe("interactions", async () => {
         it("should hover a bar and keep default opacity + de-emphasize others", async () => {
-            const bar = await statusChartWithIcons.getStatusBarDataPointByIndex(statusSeriesID, 5);
+            const bar = await statusChartWithIcons.getStatusBarDataPointByIndex(
+                statusSeriesID,
+                5
+            );
             await bar.hover();
             for (let idx = 0; idx < allStatusBars.length; idx++) {
                 const b = allStatusBars[idx];
@@ -54,24 +67,32 @@ describe("Status chart", () => {
                 } else {
                     await expect(await b.getOpacity()).toBe(1);
                 }
-
             }
         });
     });
 
     describe("content", async () => {
         it("should contain an icon", async () => {
-            const bar = await statusChartWithIcons.getStatusBarDataPointByIndex(statusSeriesID, -2);
+            const bar = await statusChartWithIcons.getStatusBarDataPointByIndex(
+                statusSeriesID,
+                -2
+            );
 
             await expect(await bar.hasIcon()).toBe(true);
         });
 
         it("should not display icon if one of its sizes is less than the icon's", async () => {
-            const bar = await statusChartWithIcons.getStatusBarDataPointByIndex(statusSeriesID, 0);
+            const bar = await statusChartWithIcons.getStatusBarDataPointByIndex(
+                statusSeriesID,
+                0
+            );
             const barSize = await bar.getElement().getSize();
 
             await expect(barSize.height).toBeLessThan(minIconSize);
-            await expect(await bar.hasIcon()).toBe(false, "Icon is displayed despite bar height is less than the min icon size!");
+            await expect(await bar.hasIcon()).toBe(
+                false,
+                "Icon is displayed despite bar height is less than the min icon size!"
+            );
         });
     });
 
@@ -79,8 +100,14 @@ describe("Status chart", () => {
         it("should hide icons on page or container resize", async (done) => {
             const originalSize = await browser.manage().window().getSize();
             const bars = [
-                await statusChartWithIcons.getStatusBarDataPointByIndex(statusSeriesID, 1),
-                await statusChartWithIcons.getStatusBarDataPointByIndex(statusSeriesID, 2),
+                await statusChartWithIcons.getStatusBarDataPointByIndex(
+                    statusSeriesID,
+                    1
+                ),
+                await statusChartWithIcons.getStatusBarDataPointByIndex(
+                    statusSeriesID,
+                    2
+                ),
             ];
 
             await browser.manage().window().setSize(340, 800);
@@ -88,9 +115,11 @@ describe("Status chart", () => {
             await expect(await bars[0].hasIcon()).toBe(false);
             await expect(await bars[1].hasIcon()).toBe(false);
 
-            await browser.manage().window().setSize(originalSize.width, originalSize.height);
+            await browser
+                .manage()
+                .window()
+                .setSize(originalSize.width, originalSize.height);
             done();
         });
     });
-
 });

@@ -21,14 +21,14 @@ export class AcmeFormSubmitHandler implements IDashboardPersistenceHandler {
             if (this.allowSubmit) {
                 subject.next(widget);
             } else {
-                const error = $localize `Submit failed.`;
+                const error = $localize`Submit failed.`;
                 this.toastService.error({ title: error });
                 subject.error(error);
             }
         }, 1000);
 
         return subject.asObservable();
-    }
+    };
 
     public tryRemove = (widgetId: string): Observable<string> => {
         const subject = new Subject<string>();
@@ -37,12 +37,12 @@ export class AcmeFormSubmitHandler implements IDashboardPersistenceHandler {
             if (this.allowRemoval) {
                 subject.next(widgetId);
             } else {
-                const error = $localize `Widget removal failed.`;
+                const error = $localize`Widget removal failed.`;
                 this.toastService.error({ title: error });
                 subject.error(error);
             }
         }, 200);
 
         return subject.asObservable();
-    }
+    };
 }

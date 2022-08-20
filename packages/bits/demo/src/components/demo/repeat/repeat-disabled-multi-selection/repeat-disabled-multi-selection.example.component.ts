@@ -6,18 +6,15 @@ import { Component } from "@angular/core";
 })
 export class RepeatDisabledMultiSelectionExampleComponent {
     public colors = Object.freeze([
-        { color: $localize `blue`, disabled: true },
-        { color: $localize `green`, disabled: false },
-        { color: $localize `yellow` },
-        { color: $localize `cyan` },
-        { color: $localize `magenta`, disabled: true },
-        { color: $localize `black` },
+        { color: $localize`blue`, disabled: true },
+        { color: $localize`green`, disabled: false },
+        { color: $localize`yellow` },
+        { color: $localize`cyan` },
+        { color: $localize`magenta`, disabled: true },
+        { color: $localize`black` },
     ]);
 
     public preventRowClick: boolean = false;
 
-    public selectedColors = [
-        this.colors[0],
-        this.colors[5],
-    ];
+    public selectedColors = [this.colors[0], this.colors[5]];
 }

@@ -17,15 +17,8 @@ import { PopupDeprecatedComponent } from "./popup.component";
         PopupDeprecatedComponent,
         PopupContainerComponent,
     ],
-    imports: [
-        NuiCommonModule,
-        PopupAdapterModule,
-    ],
-    exports: [
-        PopupToggleDirective,
-        PopupDeprecatedComponent,
-        PopupComponent,
-    ],
+    imports: [NuiCommonModule, PopupAdapterModule],
+    exports: [PopupToggleDirective, PopupDeprecatedComponent, PopupComponent],
     entryComponents: [PopupContainerComponent],
 })
-export class NuiPopupModule { }
+export class NuiPopupModule {}

@@ -9,8 +9,18 @@ import { CheckboxChangeEvent } from "@nova-ui/bits";
 export class RadioGroupTestComponent implements OnInit {
     public disabledForm: FormGroup;
 
-    public fruits = [$localize `Banana`, $localize `Orange`, $localize `Kiwi`, $localize `Papaya`];
-    public vegetables = [$localize `Cabbage`, $localize `Potato`, $localize `Tomato`, $localize `Carrot`];
+    public fruits = [
+        $localize`Banana`,
+        $localize`Orange`,
+        $localize`Kiwi`,
+        $localize`Papaya`,
+    ];
+    public vegetables = [
+        $localize`Cabbage`,
+        $localize`Potato`,
+        $localize`Tomato`,
+        $localize`Carrot`,
+    ];
 
     public selectedFruit: string;
     public selectedFruitInline: string;
@@ -19,11 +29,13 @@ export class RadioGroupTestComponent implements OnInit {
 
     public ngOnInit() {
         this.disabledForm = this.formBuilder.group({
-            radioGroup: this.formBuilder.control({value: "", disabled: true}),
+            radioGroup: this.formBuilder.control({ value: "", disabled: true }),
         });
     }
 
     public toggleDisabled(event: CheckboxChangeEvent) {
-        this.disabledForm.get("radioGroup")?.[!event.target.checked ? "enable" : "disable"]();
+        this.disabledForm
+            .get("radioGroup")
+            ?.[!event.target.checked ? "enable" : "disable"]();
     }
 }

@@ -17,7 +17,11 @@ export class Camera {
 
     constructor() {}
 
-    public loadFilm(browser: ProtractorBrowser, testName: string, suiteName: string = "NUI"): this {
+    public loadFilm(
+        browser: ProtractorBrowser,
+        testName: string,
+        suiteName: string = "NUI"
+    ): this {
         this.currentBrowser = browser;
 
         this.cameraSettings = new CameraSettings();
@@ -26,7 +30,10 @@ export class Camera {
         this.be = { ...this.cameraSettings.actions };
         this.info = this.cameraSettings.currentSettings;
 
-        this.engine = new CameraEngine(this.currentBrowser, this.cameraSettings.currentSettings);
+        this.engine = new CameraEngine(
+            this.currentBrowser,
+            this.cameraSettings.currentSettings
+        );
         this.turn = new CameraToggle(this.engine);
 
         return this;

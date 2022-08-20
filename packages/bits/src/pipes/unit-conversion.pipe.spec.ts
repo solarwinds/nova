@@ -5,7 +5,6 @@ import { UnitConversionService } from "../services/unit-conversion.service";
 
 import { UnitConversionPipe } from "./unit-conversion.pipe";
 
-
 describe("pipes >", () => {
     describe("unit conversion pipe >", () => {
         let pipe: UnitConversionPipe;
@@ -15,7 +14,9 @@ describe("pipes >", () => {
                 providers: [LoggerService, UnitConversionService],
             });
 
-            pipe = new UnitConversionPipe(TestBed.inject(UnitConversionService));
+            pipe = new UnitConversionPipe(
+                TestBed.inject(UnitConversionService)
+            );
         });
 
         it(`should use UnitBase.Bytes for the 'bytes' unit`, () => {

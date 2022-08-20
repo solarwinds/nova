@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup } from "@angular/forms";
     selector: "nui-textbox-number-test",
     templateUrl: "./textbox-number-test.component.html",
 })
-
 export class TextboxNumberTestComponent {
     public value = 10;
 
@@ -13,7 +12,7 @@ export class TextboxNumberTestComponent {
 
     constructor(public formBuilder: FormBuilder) {
         this.reactiveForm = formBuilder.group({
-            "number": [1],
+            number: [1],
         });
     }
 }

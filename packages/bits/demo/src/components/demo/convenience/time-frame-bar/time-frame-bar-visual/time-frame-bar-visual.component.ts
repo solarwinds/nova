@@ -14,9 +14,11 @@ class TestBar {
         this.history.restart(this.timeFrame);
     }
 
-    public zoomIn = (value: ITimeframe) => this.timeFrame = this.history.save(value);
-    public undo = () => this.timeFrame = this.history.undo();
-    public change = (value?: ITimeframe) => this.timeFrame = this.history.restart(value);
+    public zoomIn = (value: ITimeframe) =>
+        (this.timeFrame = this.history.save(value));
+    public undo = () => (this.timeFrame = this.history.undo());
+    public change = (value?: ITimeframe) =>
+        (this.timeFrame = this.history.restart(value));
 
     private getDefaultTF(): ITimeframe {
         return {
@@ -31,11 +33,12 @@ class TestBar {
     templateUrl: "./time-frame-bar-visual.component.html",
 })
 export class TimeFrameBarVisualTestComponent implements OnInit {
-    public bars: TestBar[] = ["first", "second", "third"].map(id => new TestBar(id));
+    public bars: TestBar[] = ["first", "second", "third"].map(
+        (id) => new TestBar(id)
+    );
     public barNoQuickPick = new TestBar("bar-no-quick-pick");
 
-    constructor(private timeframeService: TimeframeService) {
-    }
+    constructor(private timeframeService: TimeframeService) {}
 
     ngOnInit(): void {
         setTimeout(() => {
@@ -58,8 +61,11 @@ export class TimeFrameBarVisualTestComponent implements OnInit {
     }
 
     public changeTimeFrame(value: ITimeframe, bar: TestBar) {
-        const tf = this.timeframeService.reconcileTimeframe(value, undefined, bar.baseDate);
+        const tf = this.timeframeService.reconcileTimeframe(
+            value,
+            undefined,
+            bar.baseDate
+        );
         bar.change(tf);
     }
-
 }

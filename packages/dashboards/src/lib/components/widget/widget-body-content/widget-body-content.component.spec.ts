@@ -19,7 +19,10 @@ describe("WidgetBodyContentComponent", () => {
     beforeEach(waitForAsync(() => {
         eventBus = new EventBus();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
 
         TestBed.configureTestingModule({
             imports: [NuiDashboardsModule],
@@ -34,8 +37,7 @@ describe("WidgetBodyContentComponent", () => {
                     useValue: pizzagnaService,
                 },
             ],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -59,7 +61,10 @@ describe("WidgetBodyContentComponent", () => {
         it("should include ErrorNodeKey.ErrorUnknown node key in its result if the 'fallbackMap' is undefined", () => {
             component.primaryContent = "primaryContent";
             component.fallbackKey = "fallbackKey";
-            expect(component.getNodes()).toEqual([component.primaryContent, ErrorNodeKey.ErrorUnknown]);
+            expect(component.getNodes()).toEqual([
+                component.primaryContent,
+                ErrorNodeKey.ErrorUnknown,
+            ]);
         });
 
         it(`should include ErrorNodeKey.ErrorUnknown node key in its result if the
@@ -67,19 +72,24 @@ describe("WidgetBodyContentComponent", () => {
             component.primaryContent = "primaryContent";
             component.fallbackKey = "fallbackKey";
             component.fallbackMap = {
-                "otherFallbackKey": "fallbackNodeKey",
+                otherFallbackKey: "fallbackNodeKey",
             };
-            expect(component.getNodes()).toEqual([component.primaryContent, ErrorNodeKey.ErrorUnknown]);
+            expect(component.getNodes()).toEqual([
+                component.primaryContent,
+                ErrorNodeKey.ErrorUnknown,
+            ]);
         });
 
         it("should include the mapped node key in its result if the 'fallbackMap' is defined and contains the specified callback key", () => {
             component.primaryContent = "primaryContent";
             component.fallbackKey = "fallbackKey";
             component.fallbackMap = {
-                "fallbackKey": "fallbackNodeKey",
+                fallbackKey: "fallbackNodeKey",
             };
-            expect(component.getNodes()).toEqual([component.primaryContent, component.fallbackMap[component.fallbackKey]]);
+            expect(component.getNodes()).toEqual([
+                component.primaryContent,
+                component.fallbackMap[component.fallbackKey],
+            ]);
         });
     });
-
 });

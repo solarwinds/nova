@@ -1,8 +1,25 @@
 import { OverlayConfig } from "@angular/cdk/overlay";
 import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
-import { AfterViewInit, Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-import { ComboboxV2Component, DialogService, NuiDialogRef, OVERLAY_WITH_POPUP_STYLES_CLASS, ToastService } from "@nova-ui/bits";
+import {
+    AfterViewInit,
+    Component,
+    OnInit,
+    TemplateRef,
+    ViewChild,
+} from "@angular/core";
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from "@angular/forms";
+import {
+    ComboboxV2Component,
+    DialogService,
+    NuiDialogRef,
+    OVERLAY_WITH_POPUP_STYLES_CLASS,
+    ToastService,
+} from "@nova-ui/bits";
 import { Observable, of, Subject } from "rxjs";
 import { delay, filter, takeUntil, tap } from "rxjs/operators";
 
@@ -22,7 +39,9 @@ const defaultContainerHeight: number = 300;
     host: { class: "combobox-container" },
 })
 export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
-    public virtualItems = Array.from({ length: 100000 }).map((_, i) => $localize `Item ${i}`);
+    public virtualItems = Array.from({ length: 100000 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public filteredItems: Observable<any[]> = of([...this.virtualItems]);
     public containerHeight: number = defaultContainerHeight;
 
@@ -33,22 +52,28 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     };
 
     // Data
-    public options = Array.from({ length: 3 }).map((_, i) => $localize `Item ${i}`);
-    public optionsMulti: IExampleItem[] = Array.from({ length: 3 }).map((_, i) =>
-        ({
+    public options = Array.from({ length: 3 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
+    public optionsMulti: IExampleItem[] = Array.from({ length: 3 }).map(
+        (_, i) => ({
             id: `value-${i}`,
-            name: $localize `Item ${i}`,
+            name: $localize`Item ${i}`,
             disabled: i % 2 ? true : false,
-        }));
+        })
+    );
     public optionsMultiDimensions = this.getOptions(50, false);
-    public items = Array.from({ length: 100 }).map((_, i) => $localize `Item ${i}`);
+    public items = Array.from({ length: 100 }).map(
+        (_, i) => $localize`Item ${i}`
+    );
     public icons: any[] = ["check", "email", "execute"];
-    public customizedItems: IExampleItem[] = Array.from({ length: 100 }).map((_, i) =>
-        ({
+    public customizedItems: IExampleItem[] = Array.from({ length: 100 }).map(
+        (_, i) => ({
             id: `value-${i}`,
-            name: $localize `Item ${i}`,
+            name: $localize`Item ${i}`,
             icon: this.getRandomIcon(),
-        }));
+        })
+    );
     public selectedItem: IExampleItem;
     public selectedSingleItem: IExampleItem;
     public isComboboxDisabled = false;
@@ -90,12 +115,18 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     private destroy$: Subject<any> = new Subject<any>();
     private scrollOffset: number = 0;
 
-    @ViewChild(CdkVirtualScrollViewport) private viewport: CdkVirtualScrollViewport;
+    @ViewChild(CdkVirtualScrollViewport)
+    private viewport: CdkVirtualScrollViewport;
     @ViewChild("virtual") private virtualCombobox: ComboboxV2Component;
     @ViewChild("comboboxSingle") public comboboxSingle: ComboboxV2Component;
-    @ViewChild("comboboxMultiDimensions") public comboboxMultiDimensions: ComboboxV2Component;
+    @ViewChild("comboboxMultiDimensions")
+    public comboboxMultiDimensions: ComboboxV2Component;
 
-    constructor(private formBuilder: FormBuilder, private dialogService: DialogService, private toastService: ToastService) {}
+    constructor(
+        private formBuilder: FormBuilder,
+        private dialogService: DialogService,
+        private toastService: ToastService
+    ) {}
 
     public closePopover() {
         this.closePopoverSubject.next();
@@ -113,7 +144,10 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         };
 
         this.optionsMulti.push(option);
-        this.comboboxControlMulti.setValue([...(this.comboboxControlMulti.value || []), option]);
+        this.comboboxControlMulti.setValue([
+            ...(this.comboboxControlMulti.value || []),
+            option,
+        ]);
     }
 
     public displayFn(item: IExampleItem): string {
@@ -121,10 +155,10 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     }
 
     public convertToChip(value: IExampleItem) {
-        return ({
+        return {
             id: value.id,
             label: value.name,
-        });
+        };
     }
 
     public isInErrorState() {
@@ -132,16 +166,15 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     }
 
     public isDisabled(option: string) {
-        return !!(parseInt(option.slice(-1) , 10) % 2);
+        return !!(parseInt(option.slice(-1), 10) % 2);
     }
 
     public getOptions(amount: number, isDisabled?: boolean) {
-        return Array.from({ length: amount }).map((_, i) =>
-            ({
-                id: `value-${i}`,
-                name: $localize `Item ${i}`,
-                disabled: isDisabled || i % 2 ? true : false,
-            }));
+        return Array.from({ length: amount }).map((_, i) => ({
+            id: `value-${i}`,
+            name: $localize`Item ${i}`,
+            disabled: isDisabled || i % 2 ? true : false,
+        }));
     }
 
     public showList(event: Event): void {
@@ -166,26 +199,41 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
             combobox: this.formBuilder.control("", Validators.required),
         });
 
-        this.comboboxControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => { this.selectedItem = value; });
-        this.comboboxControlSingle.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => { this.selectedSingleItem = value; });
+        this.comboboxControl.valueChanges
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((value) => {
+                this.selectedItem = value;
+            });
+        this.comboboxControlSingle.valueChanges
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((value) => {
+                this.selectedSingleItem = value;
+            });
     }
 
     ngAfterViewInit() {
-        this.virtualCombobox.valueSelected.pipe(takeUntil(this.destroy$)).subscribe(() => {
-            this.scrollOffset = this.viewport.measureScrollOffset();
-        });
+        this.virtualCombobox.valueSelected
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+                this.scrollOffset = this.viewport.measureScrollOffset();
+            });
 
-        this.virtualCombobox.valueChanged.pipe(
-            filter(v => v !== undefined),
-            tap(v => this.filteredItems = of(this.filterItems(v as string))),
-            delay(0),
-            tap(this.calculateContainerHeight),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.virtualCombobox.valueChanged
+            .pipe(
+                filter((v) => v !== undefined),
+                tap(
+                    (v) =>
+                        (this.filteredItems = of(this.filterItems(v as string)))
+                ),
+                delay(0),
+                tap(this.calculateContainerHeight),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public open(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "sm"});
+        this.activeDialog = this.dialogService.open(content, { size: "sm" });
     }
 
     public confirm(event: MouseEvent) {
@@ -197,16 +245,25 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
     }
 
     public openInOverlay(content: TemplateRef<string>) {
-        this.activeDialog = this.dialogService.open(content, {size: "lg", useOverlay: true});
+        this.activeDialog = this.dialogService.open(content, {
+            size: "lg",
+            useOverlay: true,
+        });
     }
 
     public actionDone(): void {
-        this.toastService.success({message: $localize `Action Done!`, title: $localize `Event`});
+        this.toastService.success({
+            message: $localize`Action Done!`,
+            title: $localize`Event`,
+        });
         this.activeDialog.close();
     }
 
     public actionCanceled(): void {
-        this.toastService.info({message: $localize `Action Cancelled!`, title: $localize `Event`});
+        this.toastService.info({
+            message: $localize`Action Cancelled!`,
+            title: $localize`Event`,
+        });
         this.activeDialog.close();
     }
 
@@ -214,7 +271,7 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         title === "Action" ? this.actionDone() : this.actionCanceled();
         this.activeDialog.close();
     }
-  
+
     private getRandomIcon() {
         return this.icons[Math.round(Math.random() * 2)];
     }
@@ -225,14 +282,19 @@ export class ComboboxV2TestExampleComponent implements OnInit, AfterViewInit {
         }
         const filterValue = value?.toLowerCase();
 
-        return this.virtualItems.filter(option => option.toLowerCase().includes(filterValue));
+        return this.virtualItems.filter((option) =>
+            option.toLowerCase().includes(filterValue)
+        );
     }
 
     private calculateContainerHeight = (): void => {
-        if (this.virtualCombobox.inputValue && (this.viewport.measureRenderedContentSize() < defaultContainerHeight)) {
+        if (
+            this.virtualCombobox.inputValue &&
+            this.viewport.measureRenderedContentSize() < defaultContainerHeight
+        ) {
             this.containerHeight = this.viewport.measureRenderedContentSize();
             return;
         }
         this.containerHeight = defaultContainerHeight;
-    }
+    };
 }

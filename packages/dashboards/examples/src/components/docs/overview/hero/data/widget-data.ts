@@ -232,7 +232,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 3,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",
@@ -247,7 +252,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 4,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -262,7 +272,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 5,
         name: "Man-LT-JYJ425",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -277,7 +292,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 6,
         name: "Man-LT-JYJ4333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -307,7 +327,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 8,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -322,7 +348,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 9,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -337,7 +368,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 10,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -367,7 +403,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 12,
         name: "Man-LT-2222",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -382,7 +424,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 13,
         name: "Man-LT-333333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -397,7 +444,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 14,
         name: "Man-LT-444444",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -412,7 +464,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 15,
         name: "Man-LT-555555",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -457,7 +514,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 18,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",
@@ -472,7 +534,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 19,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -487,7 +554,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 20,
         name: "Man-LT-JYJ425",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -502,7 +574,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 21,
         name: "Man-LT-JYJ4333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -532,7 +609,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 23,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -547,7 +630,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 24,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -562,7 +650,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 25,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -592,7 +685,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 27,
         name: "Man-LT-2222",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -607,7 +706,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 28,
         name: "Man-LT-333333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -622,7 +726,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 29,
         name: "Man-LT-444444",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -637,7 +746,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 30,
         name: "Man-LT-555555",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -682,7 +796,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 33,
         name: "FOCUS-SVR-02258",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_down",
@@ -697,7 +816,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 34,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -712,7 +836,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 35,
         name: "Man-LT-JYJ425",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -727,7 +856,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 36,
         name: "Man-LT-JYJ4333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -757,7 +891,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 38,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -772,7 +912,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 39,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -787,7 +932,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 40,
         name: "Man-LT-JYJ4AD5",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -817,7 +967,13 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 42,
         name: "Man-LT-2222",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_inactive",
@@ -832,7 +988,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 43,
         name: "Man-LT-333333",
-        features: ["remote-access-vpn-tunnel", "tools", "database", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "tools",
+            "database",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -847,7 +1008,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 44,
         name: "Man-LT-444444",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",
@@ -862,7 +1028,12 @@ export const TABLE_DATA: BasicTableModel[] = [
     {
         position: 45,
         name: "Man-LT-555555",
-        features: ["remote-access-vpn-tunnel", "database", "orion-ape-backup", "patch-manager01"],
+        features: [
+            "remote-access-vpn-tunnel",
+            "database",
+            "orion-ape-backup",
+            "patch-manager01",
+        ],
         status: "Active",
         checks: {
             icon: "status_up",

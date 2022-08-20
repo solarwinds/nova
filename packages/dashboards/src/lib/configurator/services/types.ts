@@ -37,5 +37,11 @@ export interface ISerializableTimeframe {
     title?: string;
 }
 
-export type WidgetUpdateOperation = (widget: IWidget, source: IConfiguratorSource) => Observable<IWidget>;
-export type WidgetRemovalOperation = (widgetId: string, source: IConfiguratorSource) => Observable<string>;
+export type WidgetUpdateOperation = (
+    widget: IWidget,
+    source: IConfiguratorSource
+) => Observable<IWidget>;
+export type WidgetRemovalOperation = (
+    widgetId: string,
+    source: IConfiguratorSource
+) => Observable<string>;

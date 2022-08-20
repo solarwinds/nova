@@ -11,9 +11,8 @@ import _isNil from "lodash/isNil";
  * @dynamic
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class PositionService {
-
     constructor(@Inject(DOCUMENT) private document: Document) {}
     /**
      * __Description:__
@@ -32,37 +31,54 @@ export class PositionService {
      * @returns Object literal { top:number, left:number } that contains
      * coordinates for the top left corner of targetElement.
      */
-    public getPosition(hostElement: HTMLElement, targetElement: HTMLElement,
-                       placementAndAlign: string, appendToBody?: boolean): { top: number, left: number } {
+    public getPosition(
+        hostElement: HTMLElement,
+        targetElement: HTMLElement,
+        placementAndAlign: string,
+        appendToBody?: boolean
+    ): { top: number; left: number } {
         const placement = placementAndAlign.split("-")[0];
         const align = placementAndAlign.split("-")[1];
         let shiftByX: number;
         let shiftByY: number;
-        const hostElementPosition = appendToBody ? this.offset(hostElement) : this.position(hostElement);
+        const hostElementPosition = appendToBody
+            ? this.offset(hostElement)
+            : this.position(hostElement);
         switch (align) {
             case "right":
-                shiftByX = hostElementPosition.width - targetElement.offsetWidth;
-                shiftByY = (hostElementPosition.height - targetElement.offsetHeight) / 2;
+                shiftByX =
+                    hostElementPosition.width - targetElement.offsetWidth;
+                shiftByY =
+                    (hostElementPosition.height - targetElement.offsetHeight) /
+                    2;
                 break;
             case "left":
                 shiftByX = 0;
-                shiftByY = (hostElementPosition.height - targetElement.offsetHeight) / 2;
+                shiftByY =
+                    (hostElementPosition.height - targetElement.offsetHeight) /
+                    2;
                 break;
             case "top":
-                shiftByX = (hostElementPosition.width - targetElement.offsetWidth) / 2;
+                shiftByX =
+                    (hostElementPosition.width - targetElement.offsetWidth) / 2;
                 shiftByY = 0;
                 break;
             case "bottom":
-                shiftByX = (hostElementPosition.width - targetElement.offsetWidth) / 2;
-                shiftByY = hostElementPosition.height - targetElement.offsetHeight;
+                shiftByX =
+                    (hostElementPosition.width - targetElement.offsetWidth) / 2;
+                shiftByY =
+                    hostElementPosition.height - targetElement.offsetHeight;
                 break;
             case "center":
             default:
-                shiftByX = (hostElementPosition.width - targetElement.offsetWidth) / 2;
-                shiftByY = (hostElementPosition.height - targetElement.offsetHeight) / 2;
+                shiftByX =
+                    (hostElementPosition.width - targetElement.offsetWidth) / 2;
+                shiftByY =
+                    (hostElementPosition.height - targetElement.offsetHeight) /
+                    2;
                 break;
         }
-        let targetElementPosition: { top: number, left: number };
+        let targetElementPosition: { top: number; left: number };
         switch (placement) {
             case "right":
                 targetElementPosition = {
@@ -93,15 +109,22 @@ export class PositionService {
         return targetElementPosition;
     }
 
-    private position(nativeElement: HTMLElement): { width: number, height: number, top: number, left: number } {
+    private position(nativeElement: HTMLElement): {
+        width: number;
+        height: number;
+        top: number;
+        left: number;
+    } {
         let offsetParentBoundingClientRect = { top: 0, left: 0 };
         const elementBoundingClientRect = this.offset(nativeElement);
         const offsetParentElement = this.parentOffsetEl(nativeElement);
 
         if (offsetParentElement !== this.document) {
             offsetParentBoundingClientRect = this.offset(offsetParentElement);
-            offsetParentBoundingClientRect.top += offsetParentElement.clientTop - offsetParentElement.scrollTop;
-            offsetParentBoundingClientRect.left += offsetParentElement.clientLeft - offsetParentElement.scrollLeft;
+            offsetParentBoundingClientRect.top +=
+                offsetParentElement.clientTop - offsetParentElement.scrollTop;
+            offsetParentBoundingClientRect.left +=
+                offsetParentElement.clientLeft - offsetParentElement.scrollLeft;
         }
 
         const boundingClientRect = nativeElement.getBoundingClientRect();
@@ -109,12 +132,21 @@ export class PositionService {
         return {
             width: boundingClientRect.width || nativeElement.offsetWidth,
             height: boundingClientRect.height || nativeElement.offsetHeight,
-            top: elementBoundingClientRect.top - offsetParentBoundingClientRect.top,
-            left: elementBoundingClientRect.left - offsetParentBoundingClientRect.left,
+            top:
+                elementBoundingClientRect.top -
+                offsetParentBoundingClientRect.top,
+            left:
+                elementBoundingClientRect.left -
+                offsetParentBoundingClientRect.left,
         };
     }
 
-    private offset(nativeElement: any): { width: number, height: number, top: number, left: number } {
+    private offset(nativeElement: any): {
+        width: number;
+        height: number;
+        top: number;
+        left: number;
+    } {
         const boundingClientRect = nativeElement.getBoundingClientRect();
         if (_isNil(this.document.defaultView)) {
             throw new Error("Document defaultView is not available");
@@ -123,8 +155,14 @@ export class PositionService {
         return {
             width: boundingClientRect.width || nativeElement.offsetWidth,
             height: boundingClientRect.height || nativeElement.offsetHeight,
-            top: boundingClientRect.top + (this.document.defaultView.pageYOffset || this.document.documentElement.scrollTop),
-            left: boundingClientRect.left + (this.document.defaultView.pageXOffset || this.document.documentElement.scrollLeft),
+            top:
+                boundingClientRect.top +
+                (this.document.defaultView.pageYOffset ||
+                    this.document.documentElement.scrollTop),
+            left:
+                boundingClientRect.left +
+                (this.document.defaultView.pageXOffset ||
+                    this.document.documentElement.scrollLeft),
         };
     }
 
@@ -134,21 +172,35 @@ export class PositionService {
         }
 
         if (this.document.defaultView.getComputedStyle) {
-            return (this.document.defaultView.getComputedStyle(nativeElement) as CSSStyleDeclaration & { [key: string]: any })[cssProp];
+            return (
+                this.document.defaultView.getComputedStyle(
+                    nativeElement
+                ) as CSSStyleDeclaration & {
+                    [key: string]: any;
+                }
+            )[cssProp];
         }
 
         // finally try and get inline style
-        return (nativeElement.style as CSSStyleDeclaration & { [key: string]: any })[cssProp];
+        return (
+            nativeElement.style as CSSStyleDeclaration & { [key: string]: any }
+        )[cssProp];
     }
 
     private isStaticPositioned(nativeElement: HTMLElement): boolean {
-        return (this.getStyle(nativeElement, "position") || "static" ) === "static";
+        return (
+            (this.getStyle(nativeElement, "position") || "static") === "static"
+        );
     }
 
     private parentOffsetEl(nativeElement: HTMLElement): any {
         let offsetParent: any = nativeElement.offsetParent || this.document;
 
-        while (offsetParent && offsetParent !== this.document && this.isStaticPositioned(offsetParent)) {
+        while (
+            offsetParent &&
+            offsetParent !== this.document &&
+            this.isStaticPositioned(offsetParent)
+        ) {
             offsetParent = offsetParent.offsetParent;
         }
 

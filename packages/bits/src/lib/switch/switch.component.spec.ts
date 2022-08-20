@@ -6,7 +6,6 @@ import { SwitchComponent } from "./switch.component";
 import createSpy = jasmine.createSpy;
 import Spy = jasmine.Spy;
 
-
 describe("components >", () => {
     describe("switch >", () => {
         let switchFixture: ComponentFixture<SwitchComponent>;
@@ -16,9 +15,7 @@ describe("components >", () => {
 
         beforeEach(() => {
             TestBed.configureTestingModule({
-                declarations: [
-                    SwitchComponent,
-                ],
+                declarations: [SwitchComponent],
                 providers: [ChangeDetectorRef],
             });
 

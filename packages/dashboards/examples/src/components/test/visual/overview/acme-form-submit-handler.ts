@@ -1,6 +1,10 @@
 import { Injectable } from "@angular/core";
 import { ToastService } from "@nova-ui/bits";
-import { IConfiguratorSource, IDashboardPersistenceHandler, IWidget } from "@nova-ui/dashboards";
+import {
+    IConfiguratorSource,
+    IDashboardPersistenceHandler,
+    IWidget,
+} from "@nova-ui/dashboards";
 import { Observable, Subject } from "rxjs";
 
 @Injectable()
@@ -14,21 +18,24 @@ export class AcmeFormSubmitHandler implements IDashboardPersistenceHandler {
         });
     }
 
-    public trySubmit = (widget: IWidget, source: IConfiguratorSource): Observable<IWidget> => {
+    public trySubmit = (
+        widget: IWidget,
+        source: IConfiguratorSource
+    ): Observable<IWidget> => {
         const subject = new Subject<IWidget>();
 
         setTimeout(() => {
             if (this.allowSubmit) {
                 subject.next(widget);
             } else {
-                const error = $localize `Submit failed.`;
+                const error = $localize`Submit failed.`;
                 this.toastService.error({ title: error });
                 subject.error(error);
             }
         }, 1000);
 
         return subject.asObservable();
-    }
+    };
 
     public tryRemove = (widgetId: string): Observable<string> => {
         const subject = new Subject<string>();
@@ -37,12 +44,12 @@ export class AcmeFormSubmitHandler implements IDashboardPersistenceHandler {
             if (this.allowRemoval) {
                 subject.next(widgetId);
             } else {
-                const error = $localize `Widget removal failed.`;
+                const error = $localize`Widget removal failed.`;
                 this.toastService.error({ title: error });
                 subject.error(error);
             }
         }, 200);
 
         return subject.asObservable();
-    }
+    };
 }

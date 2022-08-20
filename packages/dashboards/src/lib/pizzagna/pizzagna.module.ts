@@ -7,20 +7,8 @@ import { PizzagnaComponent } from "./components/pizzagna/pizzagna.component";
 import { ComponentPortalDirective } from "./directives/component-portal/component-portal.directive";
 
 @NgModule({
-    imports: [
-        PortalModule,
-        NuiDashboardsCommonModule,
-    ],
-    declarations: [
-        PizzagnaComponent,
-        ComponentPortalDirective,
-    ],
-    exports: [
-        PortalModule,
-        PizzagnaComponent,
-        ComponentPortalDirective,
-    ],
+    imports: [PortalModule, NuiDashboardsCommonModule],
+    declarations: [PizzagnaComponent, ComponentPortalDirective],
+    exports: [PortalModule, PizzagnaComponent, ComponentPortalDirective],
 })
-export class NuiPizzagnaModule {
-
-}
+export class NuiPizzagnaModule {}

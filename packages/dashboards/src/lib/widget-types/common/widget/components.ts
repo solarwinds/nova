@@ -3,8 +3,16 @@ import { LoadingComponent } from "../../../components/loading/loading.component"
 import { WidgetBodyContentComponent } from "../../../components/widget/widget-body-content/widget-body-content.component";
 import { WidgetBodyComponent } from "../../../components/widget/widget-body/widget-body.component";
 import { WidgetHeaderComponent } from "../../../components/widget/widget-header/widget-header.component";
-import { NOVA_LOADING_ADAPTER, NOVA_STATUS_CONTENT_FALLBACK_ADAPTER } from "../../../services/types";
-import { HttpStatusCode, IComponentConfiguration, IProviderConfiguration, WellKnownProviders } from "../../../types";
+import {
+    NOVA_LOADING_ADAPTER,
+    NOVA_STATUS_CONTENT_FALLBACK_ADAPTER,
+} from "../../../services/types";
+import {
+    HttpStatusCode,
+    IComponentConfiguration,
+    IProviderConfiguration,
+    WellKnownProviders,
+} from "../../../types";
 import { IWidgetErrorDisplayProperties } from "../../../components/widget/types";
 
 import { ErrorNodeKey } from "./types";

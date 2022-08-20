@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, Output } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Inject,
+    Input,
+    Output,
+} from "@angular/core";
 import { EventBus, IEvent } from "@nova-ui/bits";
 
 import { DRILLDOWN } from "../../../../services/types";
@@ -18,18 +26,22 @@ export class ListNavigationBarComponent {
 
     @Output() public navigated = new EventEmitter();
 
-    constructor(public changeDetector: ChangeDetectorRef,
-        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
-    }
+    constructor(
+        public changeDetector: ChangeDetectorRef,
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
+    ) {}
 
     onBack() {
         if (this.navBarConfig) {
-            this.eventBus.getStream(DRILLDOWN).next({ payload: { back: this.navBarConfig?.buttons?.back?.disabled } });
+            this.eventBus.getStream(DRILLDOWN).next({
+                payload: {
+                    back: this.navBarConfig?.buttons?.back?.disabled,
+                },
+            });
         }
     }
 
     onHome() {
         this.eventBus.getStream(DRILLDOWN).next({ payload: { reset: true } });
     }
-
 }

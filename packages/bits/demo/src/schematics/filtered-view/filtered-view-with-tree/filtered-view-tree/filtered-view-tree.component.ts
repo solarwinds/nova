@@ -9,19 +9,16 @@ import {
     OnDestroy,
 } from "@angular/core";
 import {
-    DataSourceService, expand,
+    DataSourceService,
+    expand,
     IMenuItem,
     INovaFilteringOutputs,
 } from "@nova-ui/bits";
-import {
-    Subject,
-} from "rxjs";
+import { Subject } from "rxjs";
 import { takeUntil, tap } from "rxjs/operators";
 
 import { FilteredViewWithTreeDataSource } from "../filtered-view-with-tree-data-source.service";
-import {
-    IServer,
-} from "../types";
+import { IServer } from "../types";
 
 @Component({
     selector: "app-filtered-view-tree",
@@ -31,7 +28,6 @@ import {
     animations: [expand],
 })
 export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
-
     treeControl = new NestedTreeControl<any>((node) => node.children);
     dataSourceTree: ArrayDataSource<any>;
 
@@ -55,25 +51,30 @@ export class FilteredViewTreeComponent implements OnDestroy, AfterViewInit {
     private destroy$ = new Subject();
 
     constructor(
-        @Inject(DataSourceService) private dataSource: FilteredViewWithTreeDataSource<IServer>,
+        @Inject(DataSourceService)
+        private dataSource: FilteredViewWithTreeDataSource<IServer>,
         private cdRef: ChangeDetectorRef
-    ) {
-    }
+    ) {}
 
     async ngAfterViewInit() {
-        this.dataSource.outputsSubject.pipe(
-            tap((data: any) => {
-                // update the list of items to be rendered
-                this.dataSourceTree = new ArrayDataSource(data.tree.itemsSource);
-                this.cdRef.detectChanges();
-            }),
-            takeUntil(this.destroy$)
-        ).subscribe();
+        this.dataSource.outputsSubject
+            .pipe(
+                tap((data: any) => {
+                    // update the list of items to be rendered
+                    this.dataSourceTree = new ArrayDataSource(
+                        data.tree.itemsSource
+                    );
+                    this.cdRef.detectChanges();
+                }),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
 
         await this.applyFilters();
     }
 
-    hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
+    hasChild = (_: number, node: any) =>
+        !!node.children && node.children.length > 0;
 
     public ngOnDestroy() {
         this.destroy$.next();

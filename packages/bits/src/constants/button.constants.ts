@@ -9,7 +9,5 @@ export interface IButtonConstants {
 export const buttonConstants: IButtonConstants = {
     repeatDelay: 400,
     repeatInterval: 100,
-    iconSizeMap: { "large": "",
-        "default": "",
-        "compact": "small" },
+    iconSizeMap: { large: "", default: "", compact: "small" },
 };

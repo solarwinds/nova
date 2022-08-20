@@ -6,26 +6,12 @@ import { PreviewOverlayComponent } from "./components/preview-overlay/preview-ov
 import { WidgetErrorComponent } from "./components/widget-error/widget-error.component";
 import { DashboardUnitConversionPipe } from "./pipes/dashboard-unit-conversion-pipe";
 
-const commonComponents = [
-    PreviewOverlayComponent,
-    WidgetErrorComponent,
-];
+const commonComponents = [PreviewOverlayComponent, WidgetErrorComponent];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        NuiImageModule,
-    ],
-    declarations: [
-        DashboardUnitConversionPipe,
-        ...commonComponents,
-    ],
-    exports: [
-        CommonModule,
-        DashboardUnitConversionPipe,
-        ...commonComponents,
-    ],
+    imports: [CommonModule, NuiImageModule],
+    declarations: [DashboardUnitConversionPipe, ...commonComponents],
+    exports: [CommonModule, DashboardUnitConversionPipe, ...commonComponents],
     entryComponents: commonComponents,
 })
-export class NuiDashboardsCommonModule {
-}
+export class NuiDashboardsCommonModule {}

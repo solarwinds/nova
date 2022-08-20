@@ -33,7 +33,7 @@ export class SelectV2ColorPickerComponent {
         // To automatically calculate the max-width use the approach below if you want to optionally change the amount of color boxes per row,
         // but for most cases just hardcoding the necessary value will be enough
         maxWidth: this.cols
-            ? (this.cols * BOX_WIDTH_PX) + CONTAINER_SIDE_PADDINGS_PX + "px"
+            ? this.cols * BOX_WIDTH_PX + CONTAINER_SIDE_PADDINGS_PX + "px"
             : "150px", // defaults to 4 columns picker
     };
     public backgroundColors: string[] = CHART_PALETTE_CS1;

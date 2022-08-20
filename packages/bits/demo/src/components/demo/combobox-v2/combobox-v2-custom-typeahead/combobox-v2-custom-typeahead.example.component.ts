@@ -12,11 +12,10 @@ interface IExampleItem {
     host: { class: "combobox-container" },
 })
 export class ComboboxV2CustomTypeaheadExampleComponent {
-    public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) =>
-        ({
-            id: `value-${i}`,
-            name: $localize `Item ${i}`,
-        }));
+    public items: IExampleItem[] = Array.from({ length: 100 }).map((_, i) => ({
+        id: `value-${i}`,
+        name: $localize`Item ${i}`,
+    }));
 
     public comboboxControl = new FormControl();
 
@@ -31,7 +30,7 @@ export class ComboboxV2CustomTypeaheadExampleComponent {
         // Use this value to filter out the array of items
         value
             ? this.filteredItems$.next(this.filterItems(String(value)))
-            : this.filteredItems$.next(this.items.slice())
+            : this.filteredItems$.next(this.items.slice());
     }
 
     public displayFn(item: IExampleItem): string {
@@ -43,6 +42,8 @@ export class ComboboxV2CustomTypeaheadExampleComponent {
     private filterItems(value: string): IExampleItem[] {
         const filterValue = value.toLowerCase();
 
-        return this.items.filter(option => option.name.toLowerCase().includes(filterValue));
+        return this.items.filter((option) =>
+            option.name.toLowerCase().includes(filterValue)
+        );
     }
 }

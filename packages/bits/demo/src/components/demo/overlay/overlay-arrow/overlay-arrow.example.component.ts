@@ -1,7 +1,20 @@
-import { FlexibleConnectedPositionStrategy, OverlayConfig } from "@angular/cdk/overlay";
-import { AfterViewInit, Component, OnDestroy, ViewChild, ViewEncapsulation } from "@angular/core";
+import {
+    FlexibleConnectedPositionStrategy,
+    OverlayConfig,
+} from "@angular/cdk/overlay";
+import {
+    AfterViewInit,
+    Component,
+    OnDestroy,
+    ViewChild,
+    ViewEncapsulation,
+} from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { IOverlayPositionServiceConfig, OverlayComponent, OverlayPlacement } from "@nova-ui/bits";
+import {
+    IOverlayPositionServiceConfig,
+    OverlayComponent,
+    OverlayPlacement,
+} from "@nova-ui/bits";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
@@ -36,19 +49,25 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
 
         this.overlay.clickOutside
             .pipe(takeUntil(this.destroy$))
-            .subscribe(_ => this.overlay.hide());
+            .subscribe((_) => this.overlay.hide());
     }
 
     public handlePosition() {
         // set the positions when showing the popup
         this.overlay.show$.subscribe(() => {
-            this.overlay.overlayPositionService.setOverlayPositionConfig(this.getPositionServiceConfig());
+            this.overlay.overlayPositionService.setOverlayPositionConfig(
+                this.getPositionServiceConfig()
+            );
             // get available positions for the overlay from overlay.overlayPositionService
-            const availablePositions = this.overlay.overlayPositionService.getPossiblePositionsForPlacement(this.positionSelectControl.value);
+            const availablePositions =
+                this.overlay.overlayPositionService.getPossiblePositionsForPlacement(
+                    this.positionSelectControl.value
+                );
             // FlexibleConnectedPositionStrategy is default strategy of overlay component.
-            const positionStrategy = this.overlay.getOverlayRef().getConfig().positionStrategy as FlexibleConnectedPositionStrategy;
+            const positionStrategy = this.overlay.getOverlayRef().getConfig()
+                .positionStrategy as FlexibleConnectedPositionStrategy;
             positionStrategy
-            // !!! using default '30' value breaks the edges, when displaying overlay from right, for the sake of the example, it's set to '0'.
+                // !!! using default '30' value breaks the edges, when displaying overlay from right, for the sake of the example, it's set to '0'.
                 .withViewportMargin(0)
                 .withPositions(availablePositions);
         });
@@ -59,7 +78,9 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
         this.destroy$.complete();
     }
 
-    private getPositionServiceConfig(): IOverlayPositionServiceConfig | undefined {
+    private getPositionServiceConfig():
+        | IOverlayPositionServiceConfig
+        | undefined {
         const isArrowNeeded = this.arrowSelectControl.value;
         // define config with NO paddings for the overlay in case there's no arrow
         const noArrowCfg = {
@@ -68,7 +89,7 @@ export class OverlayArrowExampleComponent implements AfterViewInit, OnDestroy {
         };
 
         // 'undefined' is set to take default paddings and arrow size as in the style guides.
-        const positionServiceConfig  = isArrowNeeded ? undefined : noArrowCfg;
+        const positionServiceConfig = isArrowNeeded ? undefined : noArrowCfg;
 
         return positionServiceConfig;
     }

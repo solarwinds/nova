@@ -4,16 +4,13 @@ import { NuiCommonModule } from "../../common/common.module";
 
 import { ImageComponent } from "./image.component";
 
-
 /**
  * @ignore
  */
 @NgModule({
     declarations: [ImageComponent],
-    imports: [
-        NuiCommonModule,
-    ],
+    imports: [NuiCommonModule],
     exports: [ImageComponent],
     providers: [],
 })
-export class NuiImageModule { }
+export class NuiImageModule {}

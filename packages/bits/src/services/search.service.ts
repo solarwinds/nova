@@ -27,7 +27,7 @@ import { ISearchService } from "./public-api";
 /**
  * @ignore
  */
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class SearchService implements ISearchService {
     /**
      *  __Description :__
@@ -49,30 +49,47 @@ export class SearchService implements ISearchService {
      *  return {any[]} Items resulted after the search.
      *
      */
-    constructor(private logger: LoggerService,
-                private datePipe: DatePipe) {}
+    constructor(private logger: LoggerService, private datePipe: DatePipe) {}
 
-    public search = (items: any[], properties: string[], searchValue: any, dateFormat?: string): any[] => {
+    public search = (
+        items: any[],
+        properties: string[],
+        searchValue: any,
+        dateFormat?: string
+    ): any[] => {
         // TODO: in case of interest, create options as object, put dateFormat in, put caseSensitive in
         if (!isArray(items)) {
-            this.logger.error("nuiSearchService needs items parameter as an Array");
+            this.logger.error(
+                "nuiSearchService needs items parameter as an Array"
+            );
         }
         if (!isArray(properties)) {
-            this.logger.error("nuiSearchService needs properties parameter as an Array");
+            this.logger.error(
+                "nuiSearchService needs properties parameter as an Array"
+            );
         }
         if (isEmpty(properties)) {
             properties = this.getSearchableColumns(items);
-            this.logger.warn("No properties specified to search on, so all of the fields will be used");
+            this.logger.warn(
+                "No properties specified to search on, so all of the fields will be used"
+            );
         }
         if (isUndefined(searchValue)) {
-            this.logger.warn("No searchValue specified to search by, the whole list will be the result");
+            this.logger.warn(
+                "No searchValue specified to search by, the whole list will be the result"
+            );
             return items;
         }
 
         return this.filterResults(items, properties, searchValue, dateFormat);
-    }
+    };
 
-    protected filterResults(items: any[], properties: string[], searchValue: any, dateFormat?: string) {
+    protected filterResults(
+        items: any[],
+        properties: string[],
+        searchValue: any,
+        dateFormat?: string
+    ) {
         return items.filter((item) => {
             if (isString(item) || isNumber(item)) {
                 return this.filterPredicate(item, searchValue);
@@ -93,16 +110,24 @@ export class SearchService implements ISearchService {
         });
     }
 
-    protected transformDate(value: Date, dateFormat: string | undefined): string | null {
+    protected transformDate(
+        value: Date,
+        dateFormat: string | undefined
+    ): string | null {
         return this.datePipe.transform(value, dateFormat);
     }
 
     protected filterPredicate(item: any, searchValue: any) {
-        return item.toString().toLowerCase().indexOf(searchValue.toString().toLowerCase()) !== -1;
+        return (
+            item
+                .toString()
+                .toLowerCase()
+                .indexOf(searchValue.toString().toLowerCase()) !== -1
+        );
     }
 
     protected getSearchableColumns = (items: any[]): string[] => {
-        const props: {[key: string]: boolean} = {};
+        const props: { [key: string]: boolean } = {};
         for (const item of items) {
             keys(item).map((key: any) => {
                 if (!startsWith(key, "$")) {
@@ -111,5 +136,5 @@ export class SearchService implements ISearchService {
             });
         }
         return keys(props);
-    }
+    };
 }

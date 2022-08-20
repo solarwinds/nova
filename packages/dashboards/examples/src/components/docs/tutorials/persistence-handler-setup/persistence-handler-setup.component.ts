@@ -1,6 +1,17 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { DataSourceService, IFilteringOutputs, ToastService, uuid } from "@nova-ui/bits";
+import {
+    ChangeDetectorRef,
+    Component,
+    Injectable,
+    OnDestroy,
+    OnInit,
+} from "@angular/core";
+import {
+    DataSourceService,
+    IFilteringOutputs,
+    ToastService,
+    uuid,
+} from "@nova-ui/bits";
 import {
     DATA_SOURCE,
     DEFAULT_PIZZAGNA_ROOT,
@@ -29,7 +40,6 @@ import { finalize } from "rxjs/operators";
 @Injectable()
 // The realizer of IDashboardPersistenceHandler may implement a trySubmit and/or a tryRemove method.
 export class PersistenceHandler implements IDashboardPersistenceHandler {
-
     // This variable is just to show how to handle error handling.
     private persistenceSucceeded: boolean = true;
 
@@ -61,7 +71,9 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
                 // Passes along the new widget after one second.
                 subject.next(widget);
                 // Toast on the page on success.
-                this.toastService.success({ title: $localize`Submit succeeded.` });
+                this.toastService.success({
+                    title: $localize`Submit succeeded.`,
+                });
             } else {
                 const errorText = $localize`Submit failed.`;
                 // Toast on the page on failure.
@@ -75,8 +87,7 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
 
         // Returns the subject as an observable.
         return subject.asObservable();
-
-    }
+    };
 
     // This method will be invoked anytime there's a widget removal attempt.
     public tryRemove = (widgetId: string): Observable<string> => {
@@ -86,7 +97,9 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
             if (this.persistenceSucceeded) {
                 // Pass through the id of the widget that was removed.
                 subject.next(widgetId);
-                this.toastService.success({ title: $localize`Removal succeeded.` });
+                this.toastService.success({
+                    title: $localize`Removal succeeded.`,
+                });
             } else {
                 const errorText = $localize`Removal failed.`;
                 this.toastService.error({ title: errorText });
@@ -96,9 +109,8 @@ export class PersistenceHandler implements IDashboardPersistenceHandler {
         }, 1000);
 
         return subject.asObservable();
-    }
+    };
 }
-
 
 /**
  * A component that instantiates the dashboard
@@ -132,8 +144,7 @@ export class PersistenceHandlerSetupComponent implements OnInit {
         // We are injecting the PersistenceHandler we created and assigning it to a property we use in the template.
         public persistenceHandler: PersistenceHandler,
         private changeDetectorRef: ChangeDetectorRef
-
-    ) { }
+    ) {}
 
     public ngOnInit(): void {
         // Grabbing the widget's default template which will be needed as a parameter for setNode
@@ -150,7 +161,10 @@ export class PersistenceHandlerSetupComponent implements OnInit {
             // the data source providers available for selection in the editor.
             WellKnownPathKey.DataSourceProviders,
             // We are setting the data sources available for selection in the editor
-            [AverageRatingKpiDataSource.providerId, RatingsCountKpiDataSource.providerId]
+            [
+                AverageRatingKpiDataSource.providerId,
+                RatingsCountKpiDataSource.providerId,
+            ]
         );
 
         // Registering the data sources available for injection into the KPI tiles.
@@ -187,7 +201,8 @@ export class PersistenceHandlerSetupComponent implements OnInit {
         const kpiWidget = widgetConfig;
         const widgetIndex: IWidgets = {
             // Complete the KPI widget with information coming from its type definition
-            [kpiWidget.id]: this.widgetTypesService.mergeWithWidgetType(kpiWidget),
+            [kpiWidget.id]:
+                this.widgetTypesService.mergeWithWidgetType(kpiWidget),
         };
 
         // Setting the widget dimensions and position (this is for gridster)
@@ -212,7 +227,10 @@ export class PersistenceHandlerSetupComponent implements OnInit {
  * A simple KPI data source to retrieve the average rating of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class AverageRatingKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     // This is the ID we'll use to identify the provider
     public static providerId = "AverageRatingKpiDataSource";
 
@@ -229,7 +247,8 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
         this.busy.next(true);
         return new Promise((resolve) => {
             // *** Make a resource request to an external API (if needed)
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -260,7 +279,10 @@ export class AverageRatingKpiDataSource extends DataSourceService<IKpiData> impl
  * A simple KPI data source to retrieve the ratings count of Harry Potter and the Sorcerer's Stone (book) via googleapis
  */
 @Injectable()
-export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> implements OnDestroy {
+export class RatingsCountKpiDataSource
+    extends DataSourceService<IKpiData>
+    implements OnDestroy
+{
     public static providerId = "RatingsCountKpiDataSource";
 
     // Use this subject to communicate the data source's busy state
@@ -273,7 +295,8 @@ export class RatingsCountKpiDataSource extends DataSourceService<IKpiData> imple
     public async getFilteredData(): Promise<IFilteringOutputs> {
         this.busy.next(true);
         return new Promise((resolve) => {
-            this.http.get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
+            this.http
+                .get("https://www.googleapis.com/books/v1/volumes/5MQFrgEACAAJ")
                 .pipe(finalize(() => this.busy.next(false)))
                 .subscribe({
                     next: (data: any) => {
@@ -306,46 +329,46 @@ const widgetConfig: IWidget = {
     pizzagna: {
         [PizzagnaLayer.Configuration]: {
             [DEFAULT_PIZZAGNA_ROOT]: {
-                "providers": {
+                providers: {
                     [WellKnownProviders.Refresher]: {
-                        "properties": {
+                        properties: {
                             // Configuring the refresher interval so that our data source is invoked every ten minutes
-                            "interval": 60 * 10,
-                            "enabled": true,
+                            interval: 60 * 10,
+                            enabled: true,
                         } as IRefresherProperties,
                     } as Partial<IProviderConfiguration>,
                 },
             },
-            "header": {
-                "properties": {
-                    "title": "Harry Potter and the Sorcerer's Stone",
-                    "subtitle": "By J. K. Rowling",
+            header: {
+                properties: {
+                    title: "Harry Potter and the Sorcerer's Stone",
+                    subtitle: "By J. K. Rowling",
                 },
             },
-            "tiles": {
-                "properties": {
-                    "nodes": ["kpi1"],
+            tiles: {
+                properties: {
+                    nodes: ["kpi1"],
                 },
             },
-            "kpi1": {
-                "id": "kpi1",
-                "componentType": KpiComponent.lateLoadKey,
-                "properties": {
-                    "widgetData": {
-                        "units": "out of 5 Stars",
-                        "label": "Average Rating",
+            kpi1: {
+                id: "kpi1",
+                componentType: KpiComponent.lateLoadKey,
+                properties: {
+                    widgetData: {
+                        units: "out of 5 Stars",
+                        label: "Average Rating",
                     },
                 },
-                "providers": {
+                providers: {
                     [WellKnownProviders.DataSource]: {
                         // Setting the data source providerId for the tile with id "kpi1"
-                        "providerId": AverageRatingKpiDataSource.providerId,
+                        providerId: AverageRatingKpiDataSource.providerId,
                     } as IProviderConfiguration,
                     [WellKnownProviders.Adapter]: {
-                        "providerId": NOVA_KPI_DATASOURCE_ADAPTER,
-                        "properties": {
-                            "componentId": "kpi1",
-                            "propertyPath": "widgetData",
+                        providerId: NOVA_KPI_DATASOURCE_ADAPTER,
+                        properties: {
+                            componentId: "kpi1",
+                            propertyPath: "widgetData",
                         },
                     } as IProviderConfiguration,
                 },

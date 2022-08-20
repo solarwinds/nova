@@ -39,5 +39,4 @@ import { ToolbarComponent } from "./toolbar.component";
     ],
     providers: [],
 })
-export class NuiToolbarModule {
-}
+export class NuiToolbarModule {}

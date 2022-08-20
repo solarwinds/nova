@@ -78,7 +78,8 @@ interface IDndItemDropped<T = unknown> {
     },
 })
 export class RepeatComponent<T extends IRepeatItem = unknown>
-implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub {
+    implements OnInit, OnDestroy, AfterViewInit, DoCheck, IFilterPub
+{
     /**
      * Turns on/off dragging functionality
      */

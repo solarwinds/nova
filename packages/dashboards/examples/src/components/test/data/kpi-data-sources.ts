@@ -1,5 +1,9 @@
 import { Injectable, OnDestroy } from "@angular/core";
-import { HttpStatusCode, IDataSourceOutput, IKpiData } from "@nova-ui/dashboards";
+import {
+    HttpStatusCode,
+    IDataSourceOutput,
+    IKpiData,
+} from "@nova-ui/dashboards";
 import { Subject } from "rxjs";
 
 @Injectable()
@@ -21,7 +25,10 @@ export class TestKpiDataSource implements OnDestroy {
             this.outputsSubject.next({
                 // @ts-ignore: Mock
                 result: null,
-                error: { type: HttpStatusCode.Unknown, message: "Http Status Code Unknown" },
+                error: {
+                    type: HttpStatusCode.Unknown,
+                    message: "Http Status Code Unknown",
+                },
             });
         }
     }
@@ -29,7 +36,6 @@ export class TestKpiDataSource implements OnDestroy {
     public ngOnDestroy(): void {
         this.outputsSubject.complete();
     }
-
 }
 
 @Injectable()
@@ -72,7 +78,7 @@ export class TestKpiDataSourceSmallNumber implements OnDestroy {
                 value: 0.000000000000432453453,
                 units: "Lack_of_white_spaces_often_break_the_markup",
             });
-        }  else {
+        } else {
             this.outputsSubject.next({
                 // @ts-ignore: Mock
                 result: null,

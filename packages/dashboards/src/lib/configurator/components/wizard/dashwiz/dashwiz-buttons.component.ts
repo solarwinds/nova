@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    Input,
+    Output,
+} from "@angular/core";
 
 import { IDashwizButtonsComponent } from "../types";
 
@@ -6,40 +12,48 @@ import { IDashwizButtonsComponent } from "../types";
     selector: "nui-dashwiz-buttons",
     template: `
         <div class="d-flex justify-content-end p-4">
-            <button nui-button
-                    class="nui-dashwiz-buttons__cancel-button"
-                    type="button"
-                    [disabled]="busy"
-                    (click)="onCancel()">
+            <button
+                nui-button
+                class="nui-dashwiz-buttons__cancel-button"
+                type="button"
+                [disabled]="busy"
+                (click)="onCancel()"
+            >
                 <span i18n>Cancel</span>
             </button>
-            <button *ngIf="!isFirstStepActive"
-                    class="ml-3 nui-dashwiz-buttons__back-button"
-                    nui-button
-                    icon="caret-left"
-                    type="button"
-                    [disabled]="busy"
-                    (click)="onBack()">
+            <button
+                *ngIf="!isFirstStepActive"
+                class="ml-3 nui-dashwiz-buttons__back-button"
+                nui-button
+                icon="caret-left"
+                type="button"
+                [disabled]="busy"
+                (click)="onBack()"
+            >
                 <span i18n>Back</span>
             </button>
-            <button *ngIf="!isLastStepActive && canProceed"
-                    class="ml-3 nui-dashwiz-buttons__next-button"
-                    nui-button
-                    type="button"
-                    [displayStyle]="canFinish ? 'default' : 'primary'"
-                    [disabled]="busy"
-                    (click)="onNext()">
-                <span>{{nextText}}</span>
+            <button
+                *ngIf="!isLastStepActive && canProceed"
+                class="ml-3 nui-dashwiz-buttons__next-button"
+                nui-button
+                type="button"
+                [displayStyle]="canFinish ? 'default' : 'primary'"
+                [disabled]="busy"
+                (click)="onNext()"
+            >
+                <span>{{ nextText }}</span>
             </button>
-            <button *ngIf="canFinish || isLastStepActive"
-                    class="ml-3 nui-dashwiz-buttons__finish-button"
-                    nui-button
-                    type="button"
-                    displayStyle="primary"
-                    [isBusy]="busy"
-                    [disabled]="busy"
-                    (click)="onFinish()">
-                <span>{{finishText}}</span>
+            <button
+                *ngIf="canFinish || isLastStepActive"
+                class="ml-3 nui-dashwiz-buttons__finish-button"
+                nui-button
+                type="button"
+                displayStyle="primary"
+                [isBusy]="busy"
+                [disabled]="busy"
+                (click)="onFinish()"
+            >
+                <span>{{ finishText }}</span>
             </button>
         </div>
     `,
@@ -47,7 +61,7 @@ import { IDashwizButtonsComponent } from "../types";
 export class DashwizButtonsComponent implements IDashwizButtonsComponent {
     static lateLoadKey = "DashwizButtonsComponent";
 
-    constructor(public changeDetector: ChangeDetectorRef) { }
+    constructor(public changeDetector: ChangeDetectorRef) {}
 
     @Input() public busy = false;
     @Input() public canFinish = false;

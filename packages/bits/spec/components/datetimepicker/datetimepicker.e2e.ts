@@ -14,13 +14,23 @@ describe("USERCONTROL date-time-picker", () => {
 
     beforeEach(async () => {
         await Helpers.prepareBrowser("date-time-picker/date-time-picker-test");
-        dateTimePicker = Atom.find(DateTimepickerAtom, "nui-demo-date-time-picker");
+        dateTimePicker = Atom.find(
+            DateTimepickerAtom,
+            "nui-demo-date-time-picker"
+        );
     });
 
     describe("when the datetime picker is displayed, it", () => {
         it("contains initial value", async () => {
-            expect(await dateTimePicker.getDatePicker().getInput().getAttribute("value")).toEqual("15 Mar 1970");
-            expect(await dateTimePicker.getTimePicker().textbox.getValue()).toEqual("3:30 PM");
+            expect(
+                await dateTimePicker
+                    .getDatePicker()
+                    .getInput()
+                    .getAttribute("value")
+            ).toEqual("15 Mar 1970");
+            expect(
+                await dateTimePicker.getTimePicker().textbox.getValue()
+            ).toEqual("3:30 PM");
         });
     });
 

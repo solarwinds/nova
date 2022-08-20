@@ -31,13 +31,17 @@ export interface IItemPickerOption {
 @Component({
     selector: "nui-item-picker-composite",
     templateUrl: "./item-picker.component.html",
-    providers: [{
-        provide: DataSourceService,
-        useClass: LocalFilteringDataSource,
-    }],
+    providers: [
+        {
+            provide: DataSourceService,
+            useClass: LocalFilteringDataSource,
+        },
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ItemPickerCompositeComponent implements AfterViewInit, OnInit, OnDestroy {
+export class ItemPickerCompositeComponent
+    implements AfterViewInit, OnInit, OnDestroy
+{
     @Input() itemPickerOptions: IItemPickerOption[];
     @Input() selectedValues: string[] = [];
 
@@ -71,12 +75,16 @@ export class ItemPickerCompositeComponent implements AfterViewInit, OnInit, OnDe
 
     private outputsSubscription: Subscription;
 
-    constructor(@Inject(DataSourceService) public dataSource: DataSourceService<IFilterGroupOption>,
-                public changeDetection: ChangeDetectorRef) {
-    }
+    constructor(
+        @Inject(DataSourceService)
+        public dataSource: DataSourceService<IFilterGroupOption>,
+        public changeDetection: ChangeDetectorRef
+    ) {}
 
     ngOnInit() {
-        (this.dataSource as LocalFilteringDataSource<IFilterGroupOption>).setData(this.itemPickerOptions);
+        (
+            this.dataSource as LocalFilteringDataSource<IFilterGroupOption>
+        ).setData(this.itemPickerOptions);
         this.selection = {
             isAllPages: false,
             include: this.getSelectedOptions(),
@@ -89,9 +97,11 @@ export class ItemPickerCompositeComponent implements AfterViewInit, OnInit, OnDe
 
         // this.dataSource.registerComponent(this.listComposite.getFilterComponents());
 
-        this.outputsSubscription = this.dataSource.outputsSubject.subscribe((data: IFilteringOutputs) => {
-            this.filteringState = data;
-        });
+        this.outputsSubscription = this.dataSource.outputsSubject.subscribe(
+            (data: IFilteringOutputs) => {
+                this.filteringState = data;
+            }
+        );
 
         await this.dataSource.applyFilters();
     }
@@ -112,6 +122,8 @@ export class ItemPickerCompositeComponent implements AfterViewInit, OnInit, OnDe
     }
 
     public getSelectedOptions(): IFilterGroupOption[] {
-        return this.itemPickerOptions.filter(item => this.selectedValues.indexOf(item.value) !== -1);
+        return this.itemPickerOptions.filter(
+            (item) => this.selectedValues.indexOf(item.value) !== -1
+        );
     }
 }

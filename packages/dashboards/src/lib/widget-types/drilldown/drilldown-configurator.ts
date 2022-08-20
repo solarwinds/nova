@@ -6,8 +6,16 @@ import { TitleAndDescriptionConfigurationComponent } from "../../configurator/co
 import { EntityFormattingConfigurationComponent } from "../../configurator/components/widgets/drilldown/entity-formatting-configuration/entity-formatting-configuration.component";
 import { GroupingConfigurationComponent } from "../../configurator/components/widgets/drilldown/grouping-configuration/grouping-configuration.component";
 import { IConverterFormPartsProperties } from "../../configurator/services/converters/types";
-import { DEFAULT_PIZZAGNA_ROOT, NOVA_GENERIC_CONVERTER, NOVA_TITLE_AND_DESCRIPTION_CONVERTER } from "../../services/types";
-import { IProviderConfiguration, PizzagnaLayer, WellKnownProviders } from "../../types";
+import {
+    DEFAULT_PIZZAGNA_ROOT,
+    NOVA_GENERIC_CONVERTER,
+    NOVA_TITLE_AND_DESCRIPTION_CONVERTER,
+} from "../../services/types";
+import {
+    IProviderConfiguration,
+    PizzagnaLayer,
+    WellKnownProviders,
+} from "../../types";
 /* eslint-enable max-len */
 
 export const drilldownConfigurator = {
@@ -19,10 +27,7 @@ export const drilldownConfigurator = {
             properties: {
                 elementClass: "flex-grow-1 overflow-auto nui-scroll-shadows",
                 // references to other components laid out in this form
-                nodes: [
-                    "presentation",
-                    "dataAndCalculations",
-                ],
+                nodes: ["presentation", "dataAndCalculations"],
             },
         },
         // /presentation
@@ -37,7 +42,8 @@ export const drilldownConfigurator = {
         // /presentation/titleAndDescription
         titleAndDescription: {
             id: "titleAndDescription",
-            componentType: TitleAndDescriptionConfigurationComponent.lateLoadKey,
+            componentType:
+                TitleAndDescriptionConfigurationComponent.lateLoadKey,
             providers: {
                 converter: {
                     providerId: NOVA_TITLE_AND_DESCRIPTION_CONVERTER,

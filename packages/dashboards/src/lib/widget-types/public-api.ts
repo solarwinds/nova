@@ -5,4 +5,4 @@ export {
     DEFAULT_PROPORTIONAL_CONTENT_AGGREGATORS,
     DEFAULT_LEGEND_FORMATTERS,
 } from "./proportional/proportional-configurator";
-export * from"./proportional/donut-content-configurator-slice";
+export * from "./proportional/donut-content-configurator-slice";

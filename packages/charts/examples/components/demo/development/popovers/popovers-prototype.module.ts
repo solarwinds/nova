@@ -1,6 +1,13 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DEMO_PATH_TOKEN, NuiButtonModule, NuiDocsModule, NuiIconModule, NuiSwitchModule, SrlcStage } from "@nova-ui/bits";
+import {
+    DEMO_PATH_TOKEN,
+    NuiButtonModule,
+    NuiDocsModule,
+    NuiIconModule,
+    NuiSwitchModule,
+    SrlcStage,
+} from "@nova-ui/bits";
 import { NuiChartsModule } from "@nova-ui/charts";
 
 import { DemoCommonModule } from "../../common/demo-common.module";
@@ -14,8 +21,8 @@ const routes: Routes = [
         path: "line",
         component: LineChartPopoverPrototypeComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -23,8 +30,8 @@ const routes: Routes = [
         path: "performance",
         component: PopoverPerformanceTestComponent,
         data: {
-            "srlc": {
-                "hideIndicator": true,
+            srlc: {
+                hideIndicator: true,
             },
         },
     },
@@ -32,12 +39,11 @@ const routes: Routes = [
         path: "data-point",
         component: DataPointPopoversPrototypeComponent,
         data: {
-            "srlc": {
-                "stage": SrlcStage.beta,
+            srlc: {
+                stage: SrlcStage.beta,
             },
         },
     },
-
 ];
 
 @NgModule({
@@ -58,9 +64,13 @@ const routes: Routes = [
     providers: [
         {
             provide: DEMO_PATH_TOKEN,
-            useFactory: () => (<any>require).context(`!!raw-loader!./`, true, /.*\.(ts|html|less)$/),
+            useFactory: () =>
+                (<any>require).context(
+                    `!!raw-loader!./`,
+                    true,
+                    /.*\.(ts|html|less)$/
+                ),
         },
     ],
 })
-export class PopoversPrototypeModule {
-}
+export class PopoversPrototypeModule {}

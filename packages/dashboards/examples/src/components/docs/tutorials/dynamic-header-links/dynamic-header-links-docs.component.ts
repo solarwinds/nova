@@ -4,5 +4,4 @@ import { Component } from "@angular/core";
     selector: "nui-dynamic-header-links-docs",
     templateUrl: "./dynamic-header-links-docs.component.html",
 })
-export class DynamicHeaderLinksDocsComponent {
-}
+export class DynamicHeaderLinksDocsComponent {}

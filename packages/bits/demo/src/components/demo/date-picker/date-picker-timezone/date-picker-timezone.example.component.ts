@@ -12,8 +12,12 @@ moment.tz.add(zonesData.zones);
 })
 export class DatePickerTimezoneExampleComponent {
     public control = new FormControl(moment(), Validators.required);
-    get selectedDate() { return this.control.value.toString(); }
-    public zones: string[] = zonesData.zones.map((z: string) => z.split("|")[0]);
+    get selectedDate() {
+        return this.control.value.toString();
+    }
+    public zones: string[] = zonesData.zones.map(
+        (z: string) => z.split("|")[0]
+    );
     public displayedZones = this.zones;
     public initialZone = "Australia/Sydney";
 
@@ -23,9 +27,11 @@ export class DatePickerTimezoneExampleComponent {
 
     public textboxChanged(searchQuery: ISelectChangedEvent<any>) {
         const val = searchQuery.newValue;
-        this.displayedZones = this.zones.filter(z => z.toLowerCase().includes(val.toLowerCase()));
+        this.displayedZones = this.zones.filter((z) =>
+            z.toLowerCase().includes(val.toLowerCase())
+        );
 
-        if (this.zones.find(z => z === val)) {
+        if (this.zones.find((z) => z === val)) {
             this.control.setValue(this.control.value.tz(val));
         }
     }

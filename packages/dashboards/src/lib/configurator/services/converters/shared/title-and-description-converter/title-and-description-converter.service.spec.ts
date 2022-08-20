@@ -23,8 +23,15 @@ describe("TitleAndDescriptionConverterService", () => {
         eventBus = new EventBus();
         previewService = new PreviewService();
         dynamicComponentCreator = new DynamicComponentCreator();
-        pizzagnaService = new PizzagnaService(eventBus, dynamicComponentCreator);
-        service = new TitleAndDescriptionConverterService(eventBus, previewService, pizzagnaService);
+        pizzagnaService = new PizzagnaService(
+            eventBus,
+            dynamicComponentCreator
+        );
+        service = new TitleAndDescriptionConverterService(
+            eventBus,
+            previewService,
+            pizzagnaService
+        );
         const formBuilder = new FormBuilder();
         form = formBuilder.group({
             title: "",
@@ -58,7 +65,12 @@ describe("TitleAndDescriptionConverterService", () => {
             };
             preview.header.properties = testValue;
             service.buildForm();
-            expect(get(pizzagnaService.pizzagna, TitleAndDescriptionConverterService.PROPERTIES_PATH)).toEqual(testValue);
+            expect(
+                get(
+                    pizzagnaService.pizzagna,
+                    TitleAndDescriptionConverterService.PROPERTIES_PATH
+                )
+            ).toEqual(testValue);
         });
     });
 
@@ -92,7 +104,6 @@ describe("TitleAndDescriptionConverterService", () => {
             expect(spy).toHaveBeenCalled();
         });
     });
-
 
     describe("ngOnDestroy", () => {
         it("should unsubscribe from form value changes", () => {

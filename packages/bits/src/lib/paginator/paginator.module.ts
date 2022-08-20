@@ -19,13 +19,8 @@ import { PaginatorComponent } from "./paginator.component";
         ScrollingModule,
         NuiSelectV2Module,
     ],
-    declarations: [
-        PaginatorComponent,
-    ],
-    exports: [
-        PaginatorComponent,
-    ],
+    declarations: [PaginatorComponent],
+    exports: [PaginatorComponent],
     providers: [],
 })
-export class NuiPaginatorModule {
-}
+export class NuiPaginatorModule {}

@@ -39,18 +39,28 @@ export class GaugeTestPageComponent implements OnDestroy {
     private originalWithRefreshRoute: boolean;
     private labelFormatter: Formatter<string>;
 
-    constructor(public themeSwitcher: ThemeSwitchService, private unitConversionSvc: UnitConversionService) {
+    constructor(
+        public themeSwitcher: ThemeSwitchService,
+        private unitConversionSvc: UnitConversionService
+    ) {
         // disable route refreshing because the theme service currently always reverts to
         // the light theme on route refresh unless route.data.showThemeSwitcher is 'true'
         this.originalWithRefreshRoute = this.themeSwitcher.withRefreshRoute;
         this.themeSwitcher.withRefreshRoute = false;
 
         this.labelFormatter = (d: string) => {
-            const conversion = this.unitConversionSvc.convert(parseFloat(d), 1000, 2);
+            const conversion = this.unitConversionSvc.convert(
+                parseFloat(d),
+                1000,
+                2
+            );
             return this.unitConversionSvc.getFullDisplay(conversion, "generic");
         };
 
-        this.thresholds = GaugeUtil.createStandardThresholdsConfig(this.lowThreshold, this.highThreshold);
+        this.thresholds = GaugeUtil.createStandardThresholdsConfig(
+            this.lowThreshold,
+            this.highThreshold
+        );
         this.gaugeConfig = this.getGaugeConfig();
     }
 
@@ -120,15 +130,21 @@ export class GaugeTestPageComponent implements OnDestroy {
 
     private updateThresholdsConfig() {
         if (this.warningEnabled) {
-            this.thresholds.definitions[StandardGaugeThresholdId.Warning].value = this.reversed ? this.highThreshold : this.lowThreshold;
+            this.thresholds.definitions[
+                StandardGaugeThresholdId.Warning
+            ].value = this.reversed ? this.highThreshold : this.lowThreshold;
         }
 
         if (this.criticalEnabled) {
-            this.thresholds.definitions[StandardGaugeThresholdId.Critical].value = this.reversed ? this.lowThreshold : this.highThreshold;
+            this.thresholds.definitions[
+                StandardGaugeThresholdId.Critical
+            ].value = this.reversed ? this.lowThreshold : this.highThreshold;
         }
 
-        this.thresholds.definitions[StandardGaugeThresholdId.Warning].enabled = this.warningEnabled;
-        this.thresholds.definitions[StandardGaugeThresholdId.Critical].enabled = this.criticalEnabled;
+        this.thresholds.definitions[StandardGaugeThresholdId.Warning].enabled =
+            this.warningEnabled;
+        this.thresholds.definitions[StandardGaugeThresholdId.Critical].enabled =
+            this.criticalEnabled;
         this.thresholds.reversed = this.reversed;
         this.thresholds.disableMarkers = !this.thresholdMarkersEnabled;
     }

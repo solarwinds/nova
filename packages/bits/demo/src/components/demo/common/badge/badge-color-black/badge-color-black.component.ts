@@ -5,5 +5,4 @@ import { Component } from "@angular/core";
     templateUrl: "./badge-color-black.component.html",
     styleUrls: ["./badge-color-black.component.less"],
 })
-export class BadgeColorBlackComponent {
-}
+export class BadgeColorBlackComponent {}

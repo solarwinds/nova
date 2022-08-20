@@ -2,7 +2,12 @@ import isEmpty from "lodash/isEmpty";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { INTERACTION_COORDINATES_EVENT, INTERACTION_VALUES_ACTIVE_EVENT, INTERACTION_VALUES_EVENT, MOUSE_ACTIVE_EVENT } from "../../constants";
+import {
+    INTERACTION_COORDINATES_EVENT,
+    INTERACTION_VALUES_ACTIVE_EVENT,
+    INTERACTION_VALUES_EVENT,
+    MOUSE_ACTIVE_EVENT,
+} from "../../constants";
 import { ChartPlugin } from "../common/chart-plugin";
 import { MouseInteractiveArea } from "../common/mouse-interactive-area";
 import { IInteractionEvent, InteractionType } from "../common/types";
@@ -20,11 +25,18 @@ export class MouseInteractiveAreaPlugin extends ChartPlugin {
     }
 
     public initialize(): void {
-        this.mouseInteractiveArea.active.pipe(takeUntil(this.destroy$)).subscribe((active: boolean) => {
-            this.chart.getEventBus().getStream(MOUSE_ACTIVE_EVENT).next({ data: active });
-        });
+        this.mouseInteractiveArea.active
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((active: boolean) => {
+                this.chart
+                    .getEventBus()
+                    .getStream(MOUSE_ACTIVE_EVENT)
+                    .next({ data: active });
+            });
 
-        this.chart.getEventBus().getStream(MOUSE_ACTIVE_EVENT)
+        this.chart
+            .getEventBus()
+            .getStream(MOUSE_ACTIVE_EVENT)
             .pipe(takeUntil(this.destroy$))
             .subscribe((event) => {
                 const active: boolean = event.data;
@@ -33,9 +45,11 @@ export class MouseInteractiveAreaPlugin extends ChartPlugin {
                 }
             });
 
-        this.chart.getEventBus().getStream(INTERACTION_VALUES_ACTIVE_EVENT)
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_VALUES_ACTIVE_EVENT)
             .pipe(takeUntil(this.destroy$))
-            .subscribe((event) => this.interactionValuesActive = event.data);
+            .subscribe((event) => (this.interactionValuesActive = event.data));
 
         this.mouseInteractiveArea.interaction
             .pipe(takeUntil(this.destroy$))
@@ -51,13 +65,30 @@ export class MouseInteractiveAreaPlugin extends ChartPlugin {
                     const xCoordinate = event.coordinates.x;
                     const yCoordinate = event.coordinates.y;
 
-                    const values: IInteractionValues = UtilityService.getXYValues(xScales, yScales, xCoordinate, yCoordinate);
-                    this.chart.getEventBus().getStream(INTERACTION_VALUES_EVENT).next({ data: { interactionType: event.type, values } });
+                    const values: IInteractionValues =
+                        UtilityService.getXYValues(
+                            xScales,
+                            yScales,
+                            xCoordinate,
+                            yCoordinate
+                        );
+                    this.chart
+                        .getEventBus()
+                        .getStream(INTERACTION_VALUES_EVENT)
+                        .next({
+                            data: { interactionType: event.type, values },
+                        });
                 }
 
-                this.chart.getEventBus().getStream(INTERACTION_COORDINATES_EVENT).next({
-                    data: { interactionType: event.type, coordinates: event.coordinates },
-                });
+                this.chart
+                    .getEventBus()
+                    .getStream(INTERACTION_COORDINATES_EVENT)
+                    .next({
+                        data: {
+                            interactionType: event.type,
+                            coordinates: event.coordinates,
+                        },
+                    });
             });
     }
 
@@ -75,6 +106,14 @@ export class MouseInteractiveAreaPlugin extends ChartPlugin {
     }
 
     private highlightReset() {
-        this.chart.getEventBus().getStream(INTERACTION_VALUES_EVENT).next({ data: { interactionType: InteractionType.MouseMove, values: {} } });
+        this.chart
+            .getEventBus()
+            .getStream(INTERACTION_VALUES_EVENT)
+            .next({
+                data: {
+                    interactionType: InteractionType.MouseMove,
+                    values: {},
+                },
+            });
     }
 }

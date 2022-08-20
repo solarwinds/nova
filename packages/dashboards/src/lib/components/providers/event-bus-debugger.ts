@@ -10,14 +10,16 @@ import { PIZZAGNA_EVENT_BUS } from "../../types";
  */
 @Injectable()
 export class EventBusDebugger implements OnDestroy {
-
     private destroy$ = new Subject();
 
-    constructor(@Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>) {
+    constructor(
+        @Inject(PIZZAGNA_EVENT_BUS) private eventBus: EventBus<IEvent>
+    ) {
         eventBus.streamAdded
             .pipe(takeUntil(this.destroy$))
             .subscribe((stream) => {
-                eventBus.getStream({ id: stream })
+                eventBus
+                    .getStream({ id: stream })
                     .pipe(takeUntil(this.destroy$))
                     .subscribe((event) => {
                         console.log(`${event.id}: `, event.payload);
@@ -29,5 +31,4 @@ export class EventBusDebugger implements OnDestroy {
         this.destroy$.next();
         this.destroy$.complete();
     }
-
 }

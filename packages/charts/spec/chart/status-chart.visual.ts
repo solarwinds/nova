@@ -13,7 +13,10 @@ describe(`Visual tests: Charts - ${name}`, () => {
 
     beforeAll(async () => {
         await Helpers.prepareBrowser("chart-types/status/test");
-        statusChartWithIcons = Atom.find(StatusChartAtom, "nui-status-chart-with-icons");
+        statusChartWithIcons = Atom.find(
+            StatusChartAtom,
+            "nui-status-chart-with-icons"
+        );
 
         camera = new Camera().loadFilm(browser, name);
     });
@@ -22,14 +25,24 @@ describe(`Visual tests: Charts - ${name}`, () => {
         await camera.turn.on();
         await camera.say.cheese(`${name} - Default`);
 
-        await (await statusChartWithIcons.getStatusBarDataPointByIndex(firstStatusChartSeriesID, 5)).hover();
+        await (
+            await statusChartWithIcons.getStatusBarDataPointByIndex(
+                firstStatusChartSeriesID,
+                5
+            )
+        ).hover();
         await camera.say.cheese(`${name} - Middle status bar hovered`);
 
         const originalSize = await browser.manage().window().getSize();
         await browser.manage().window().setSize(340, 800);
-        await camera.say.cheese(`${name} - Layout is not affected by resize + icons are not be displayed if bar size is too low`);
+        await camera.say.cheese(
+            `${name} - Layout is not affected by resize + icons are not be displayed if bar size is too low`
+        );
 
-        await browser.manage().window().setSize(originalSize.width, originalSize.height);
+        await browser
+            .manage()
+            .window()
+            .setSize(originalSize.width, originalSize.height);
 
         await camera.turn.off();
     }, 100000);
