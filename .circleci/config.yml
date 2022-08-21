@@ -61,10 +61,13 @@ jobs:
             -   persist_to_workspace:
                     root: .
                     paths:
+                        - .git
                         - packages
                         - scripts
-                        - .git
+                        - .editorconfig
+                        - .eslintignore
                         - .eslintrc.json
+                        - .prettierignore
                         - .prettierrc.js
                         - .prettierrc.json
                         - docker-compose.yml
