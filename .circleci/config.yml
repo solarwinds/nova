@@ -64,11 +64,13 @@ jobs:
                         - packages
                         - scripts
                         - .git
-                        - docker-compose.yml
-                        - tsconfig.main.json
-                        - package.json
-                        - LICENSE
                         - .eslintrc.json
+                        - .prettierrc.js
+                        - .prettierrc.json
+                        - docker-compose.yml
+                        - LICENSE
+                        - package.json
+                        - tsconfig.main.json
                         - yarn.lock
     bits-unit-test:
         working_directory: ~/nova/packages/bits
