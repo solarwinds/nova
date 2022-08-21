@@ -62,7 +62,6 @@ jobs:
                     root: .
                     paths:
                         - packages
-                        - ts-lint-rules
                         - scripts
                         - .git
                         - docker-compose.yml
@@ -70,6 +69,7 @@ jobs:
                         - package.json
                         - LICENSE
                         - .eslintrc.json
+                        - yarn.lock
     bits-unit-test:
         working_directory: ~/nova/packages/bits
         docker:
