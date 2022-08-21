@@ -152,8 +152,8 @@ describe("Thresholds summary", () => {
 
                         // @ts-ignore
                         await checkDataPoints(mainChartSeries, mainRectangles);
-                        // @ts-ignore
                         await checkDataPoints(
+                            // @ts-ignore
                             summaryChartSeries,
                             summaryRectangles
                         );
